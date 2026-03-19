@@ -31,7 +31,9 @@ Examples:
 
 ## Project Status
 
-This project is in the **design and planning phase**. There is no implementation code yet. The repository contains design documents, specifications, planning documents, and research that define what the system will be.
+This project is entering **Phase 1 implementation**. The repository contains design documents, specifications, planning documents, and research — and implementation code is now being written.
+
+The binding contract for implementation is `work/spec/phase-1-specification.md`. The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
 
 ## Two Workflows
 
@@ -86,6 +88,7 @@ If you need to understand the project, read in this order:
 Then refer to these as needed:
 
 - `work/design/workflow-system-design.md` — earlier system design document
+- `work/design/machine-context-design.md` — machine-to-machine context model (Phase 2, but Phase 1 must not preclude it)
 - `work/design/product-instance-boundary.md` — product vs. instance separation
 - `work/plan/phase-1-implementation-plan.md` — concrete execution plan
 - `work/plan/phase-1-decision-log.md` — architectural decisions
@@ -103,13 +106,14 @@ Then refer to these as needed:
 | How to write commits | `work/design/git-commit-policy.md` | both |
 | Architectural decisions made | `work/plan/phase-1-decision-log.md` | both |
 | Implementation plan and work breakdown | `work/plan/phase-1-implementation-plan.md` | kbz |
+| Machine context model (Phase 2) | `work/design/machine-context-design.md` | kbz |
 
 ## Decision-Making Rules
 
-When making a non-trivial change to any document:
+When making a non-trivial change to any document or code:
 
 1. Identify which spec or design document owns the topic.
-2. Check whether a prior decision — in the relevant design documents or in `work/plan/phase-1-decision-log.md` — has already resolved the question.
+2. Check `work/plan/phase-1-decision-log.md` — there are 12 accepted architectural decisions covering ID allocation, YAML format, lifecycle transitions, required fields, file layout, and more. Do not reinvent or contradict them.
 3. Check whether the design basis or specification says something different from what you intend.
 4. If there is a conflict or ambiguity, surface it to the human rather than guessing.
 
@@ -175,6 +179,35 @@ Do not let document changes accumulate uncommitted across long sessions.
 - **Code is truth** — if documentation conflicts with code, fix the documentation.
 - **Spec is intent** — if code conflicts with the specification, surface the conflict to the human.
 - Do not silently resolve spec-vs-code conflicts in either direction without human input.
+
+## Phase 1 Scope Guard
+
+Phase 1 is the workflow kernel. Build only what the spec requires. Do not build:
+
+- Orchestration or agent delegation
+- Context packing, context profiles, or knowledge management (Phase 2)
+- Incident or RCA entities
+- GitHub automation or webhook integration
+- Semantic search or embedding-based retrieval
+- Worktree automation
+- Broad self-hosting automation
+
+If you think something outside this scope is needed, stop and ask. Do not add it speculatively.
+
+The implementation plan (`work/plan/phase-1-implementation-plan.md` §9) defines additional constraints: no silent scope expansion, no conflation of product and project state, no reliance on future orchestration, no destructive workflows by default.
+
+## YAML Serialisation Rules
+
+Entity state and documents are stored as YAML. Deterministic, canonical serialisation is a core requirement — not a nice-to-have. The accepted decision P1-DEC-008 in the decision log defines the exact rules:
+
+- Block style for mappings and sequences (no flow style)
+- Double-quoted strings only when required by YAML syntax
+- Deterministic field order (defined per entity type)
+- UTF-8, LF line endings, trailing newline
+- No YAML tags, anchors, or aliases
+- No multi-document streams
+
+Do not rely on Go's default YAML marshaller to produce correct output. The serialisation must be explicit and tested with round-trip tests (write → read → write → compare).
 
 ## Build and Test Commands
 
