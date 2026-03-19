@@ -1,6 +1,7 @@
 # Document-Centric Interface Design
 
-- Status: draft design
+- Status: approved design
+- Approved: 2026-03-18
 - Purpose: define the document-centric human interface model for Kanbanzai
 - Date: 2026-03-18
 - Related:
