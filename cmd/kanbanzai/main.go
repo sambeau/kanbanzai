@@ -10,8 +10,10 @@ import (
 
 	"kanbanzai/internal/cache"
 	"kanbanzai/internal/core"
+	"kanbanzai/internal/document"
 	kbzmcp "kanbanzai/internal/mcp"
 	"kanbanzai/internal/service"
+	"kanbanzai/internal/validate"
 )
 
 type entityService interface {
@@ -24,20 +26,38 @@ type entityService interface {
 	List(entityType string) ([]service.ListResult, error)
 	UpdateStatus(service.UpdateStatusInput) (service.GetResult, error)
 	UpdateEntity(service.UpdateEntityInput) (service.GetResult, error)
+	ValidateCandidate(entityType string, fields map[string]any) []validate.ValidationError
+	HealthCheck() (*validate.HealthReport, error)
 	RebuildCache() (int, error)
 	SetCache(c *cache.Cache)
 }
 
+type docService interface {
+	ScaffoldDocument(docType document.DocType, title string) (string, error)
+	Submit(input document.SubmitInput) (document.DocumentResult, error)
+	Approve(input document.ApproveInput) (document.DocumentResult, error)
+	Retrieve(docType document.DocType, id string) (document.Document, error)
+	Validate(doc document.Document) []document.ValidationError
+	ListByType(docType document.DocType) ([]document.DocumentResult, error)
+	ListAll() ([]document.DocumentResult, error)
+}
+
 type dependencies struct {
 	stdout           io.Writer
+	stdin            io.Reader
 	newEntityService func(root string) entityService
+	newDocService    func(root string) docService
 }
 
 func defaultDependencies() dependencies {
 	return dependencies{
 		stdout: os.Stdout,
+		stdin:  os.Stdin,
 		newEntityService: func(root string) entityService {
 			return service.NewEntityService(root)
+		},
+		newDocService: func(root string) docService {
+			return document.NewDocService(root)
 		},
 	}
 }
@@ -53,9 +73,17 @@ func run(args []string, deps dependencies) error {
 	if deps.stdout == nil {
 		deps.stdout = os.Stdout
 	}
+	if deps.stdin == nil {
+		deps.stdin = os.Stdin
+	}
 	if deps.newEntityService == nil {
 		deps.newEntityService = func(root string) entityService {
 			return service.NewEntityService(root)
+		}
+	}
+	if deps.newDocService == nil {
+		deps.newDocService = func(root string) docService {
+			return document.NewDocService(root)
 		}
 	}
 
@@ -81,6 +109,12 @@ func run(args []string, deps dependencies) error {
 		return runList(args[1:], deps)
 	case "update":
 		return runUpdate(args[1:], deps)
+	case "doc":
+		return runDoc(args[1:], deps)
+	case "health":
+		return runHealth(deps)
+	case "validate":
+		return runValidate(args[1:], deps)
 	case "cache":
 		return runCache(args[1:], deps)
 	default:
@@ -398,6 +432,289 @@ func printStatusUpdateResult(w io.Writer, result service.GetResult) error {
 	return err
 }
 
+func runDoc(args []string, deps dependencies) error {
+	if len(args) == 0 {
+		return fmt.Errorf("missing doc subcommand\n\n%s", docUsageText)
+	}
+
+	svc := deps.newDocService("")
+
+	switch args[0] {
+	case "scaffold":
+		values, err := parseFlags(args[1:])
+		if err != nil {
+			return err
+		}
+		docType := values["type"]
+		if docType == "" {
+			return fmt.Errorf("type is required\n\n%s", docUsageText)
+		}
+		title := values["title"]
+		if title == "" {
+			title = "Untitled"
+		}
+		content, err := svc.ScaffoldDocument(document.DocType(docType), title)
+		if err != nil {
+			return err
+		}
+		_, err = fmt.Fprint(deps.stdout, content)
+		return err
+
+	case "submit":
+		values, err := parseFlags(args[1:])
+		if err != nil {
+			return err
+		}
+		docType := values["type"]
+		if docType == "" {
+			return fmt.Errorf("type is required\n\n%s", docUsageText)
+		}
+		title := values["title"]
+		if title == "" {
+			return fmt.Errorf("title is required\n\n%s", docUsageText)
+		}
+		createdBy := values["created_by"]
+		if createdBy == "" {
+			createdBy = values["created-by"]
+		}
+		if createdBy == "" {
+			return fmt.Errorf("created_by is required\n\n%s", docUsageText)
+		}
+		body := values["body"]
+		if body == "" {
+			data, readErr := io.ReadAll(deps.stdin)
+			if readErr != nil {
+				return fmt.Errorf("read document body: %w", readErr)
+			}
+			body = string(data)
+		}
+		result, err := svc.Submit(document.SubmitInput{
+			Type:      document.DocType(docType),
+			Title:     title,
+			Feature:   values["feature"],
+			Body:      body,
+			CreatedBy: createdBy,
+		})
+		if err != nil {
+			return err
+		}
+		return printDocumentResult(deps.stdout, "submitted", result)
+
+	case "approve":
+		values, err := parseFlags(args[1:])
+		if err != nil {
+			return err
+		}
+		docType := values["type"]
+		if docType == "" {
+			return fmt.Errorf("type is required\n\n%s", docUsageText)
+		}
+		id := values["id"]
+		if id == "" {
+			return fmt.Errorf("id is required\n\n%s", docUsageText)
+		}
+		approvedBy := values["approved_by"]
+		if approvedBy == "" {
+			approvedBy = values["approved-by"]
+		}
+		if approvedBy == "" {
+			return fmt.Errorf("approved_by is required\n\n%s", docUsageText)
+		}
+		result, err := svc.Approve(document.ApproveInput{
+			Type:       document.DocType(docType),
+			ID:         id,
+			ApprovedBy: approvedBy,
+		})
+		if err != nil {
+			return err
+		}
+		return printDocumentResult(deps.stdout, "approved", result)
+
+	case "retrieve":
+		values, err := parseFlags(args[1:])
+		if err != nil {
+			return err
+		}
+		docType := values["type"]
+		if docType == "" {
+			return fmt.Errorf("type is required\n\n%s", docUsageText)
+		}
+		id := values["id"]
+		if id == "" {
+			return fmt.Errorf("id is required\n\n%s", docUsageText)
+		}
+		doc, err := svc.Retrieve(document.DocType(docType), id)
+		if err != nil {
+			return err
+		}
+		_, err = fmt.Fprint(deps.stdout, doc.Body)
+		return err
+
+	case "validate":
+		values, err := parseFlags(args[1:])
+		if err != nil {
+			return err
+		}
+		docType := values["type"]
+		if docType == "" {
+			return fmt.Errorf("type is required\n\n%s", docUsageText)
+		}
+		id := values["id"]
+		if id == "" {
+			return fmt.Errorf("id is required\n\n%s", docUsageText)
+		}
+		doc, err := svc.Retrieve(document.DocType(docType), id)
+		if err != nil {
+			return err
+		}
+		return printDocumentValidationResults(deps.stdout, svc.Validate(doc))
+
+	case "list":
+		values, err := parseFlags(args[1:])
+		if err != nil {
+			return err
+		}
+		docType := values["type"]
+		if docType == "" {
+			results, err := svc.ListAll()
+			if err != nil {
+				return err
+			}
+			return printDocumentListResults(deps.stdout, results)
+		}
+		results, err := svc.ListByType(document.DocType(docType))
+		if err != nil {
+			return err
+		}
+		return printDocumentListResults(deps.stdout, results)
+
+	default:
+		return fmt.Errorf("unknown doc subcommand %q\n\n%s", args[0], docUsageText)
+	}
+}
+
+func runHealth(deps dependencies) error {
+	svc := deps.newEntityService("")
+	report, err := svc.HealthCheck()
+	if err != nil {
+		return err
+	}
+
+	if _, err := fmt.Fprintf(
+		deps.stdout,
+		"health check\nentities: %d\nerrors: %d\nwarnings: %d\n",
+		report.Summary.TotalEntities,
+		report.Summary.ErrorCount,
+		report.Summary.WarningCount,
+	); err != nil {
+		return err
+	}
+
+	for _, validationErr := range report.Errors {
+		if _, err := fmt.Fprintf(deps.stdout, "error: %s\n", validationErr.Error()); err != nil {
+			return err
+		}
+	}
+	for _, warning := range report.Warnings {
+		if _, err := fmt.Fprintf(deps.stdout, "%s\n", warning.Error()); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func runValidate(args []string, deps dependencies) error {
+	values, err := parseFlags(args)
+	if err != nil {
+		return err
+	}
+
+	entityType := values["type"]
+	if entityType == "" {
+		return fmt.Errorf("type is required\n\n%s", validateUsageText)
+	}
+
+	fields := make(map[string]any, len(values)-1)
+	for k, v := range values {
+		if k == "type" {
+			continue
+		}
+		fields[k] = v
+	}
+
+	svc := deps.newEntityService("")
+	return printValidationResults(deps.stdout, svc.ValidateCandidate(entityType, fields))
+}
+
+func printDocumentResult(w io.Writer, action string, result document.DocumentResult) error {
+	_, err := fmt.Fprintf(
+		w,
+		"%s document\nid: %s\ntype: %s\ntitle: %s\nstatus: %s\npath: %s\n",
+		action,
+		result.ID,
+		result.Type,
+		result.Title,
+		result.Status,
+		result.Path,
+	)
+	return err
+}
+
+func printDocumentValidationResults(w io.Writer, errs []document.ValidationError) error {
+	if len(errs) == 0 {
+		_, err := fmt.Fprintln(w, "document is valid")
+		return err
+	}
+
+	if _, err := fmt.Fprintf(w, "document validation errors: %d\n", len(errs)); err != nil {
+		return err
+	}
+	for _, validationErr := range errs {
+		if _, err := fmt.Fprintf(w, "%s\n", validationErr.Error()); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func printDocumentListResults(w io.Writer, results []document.DocumentResult) error {
+	if _, err := fmt.Fprintln(w, "listed documents"); err != nil {
+		return err
+	}
+	for _, result := range results {
+		if _, err := fmt.Fprintf(
+			w,
+			"%s\t%s\t%s\t%s\t%s\n",
+			result.ID,
+			result.Type,
+			result.Title,
+			result.Status,
+			result.Path,
+		); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func printValidationResults(w io.Writer, errs []validate.ValidationError) error {
+	if len(errs) == 0 {
+		_, err := fmt.Fprintln(w, "candidate is valid")
+		return err
+	}
+
+	if _, err := fmt.Fprintf(w, "validation errors: %d\n", len(errs)); err != nil {
+		return err
+	}
+	for _, validationErr := range errs {
+		if _, err := fmt.Fprintf(w, "%s\n", validationErr.Error()); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func printUsage(w io.Writer) {
 	_, _ = fmt.Fprint(w, usageText)
 }
@@ -417,6 +734,9 @@ Commands:
   get        Get a Phase 1 entity
   list       List Phase 1 entities
   update     Update Phase 1 entity state
+  doc        Manage Phase 1 documents
+  health     Run a health check against canonical state
+  validate   Validate a candidate entity without persisting it
   cache      Manage the local derived cache
 
 Notes:
@@ -483,6 +803,46 @@ Collections:
   tasks
   bugs
   decisions
+`
+
+const docUsageText = `kanbanzai doc <subcommand> [flags]
+
+Subcommands:
+  scaffold
+    --type
+    [--title]
+
+  submit
+    --type
+    --title
+    --created_by
+    [--feature]
+    [--body]
+
+  approve
+    --type
+    --id
+    --approved_by
+
+  retrieve
+    --type
+    --id
+
+  validate
+    --type
+    --id
+
+  list
+    [--type]
+`
+
+const validateUsageText = `kanbanzai validate [flags]
+
+Flags:
+  --type
+  --<field_name> <value>
+
+All flags other than --type are treated as candidate entity fields.
 `
 
 func runCache(args []string, deps dependencies) error {

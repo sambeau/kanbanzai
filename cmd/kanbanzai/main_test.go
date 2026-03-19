@@ -5,9 +5,12 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+	"time"
 
 	"kanbanzai/internal/cache"
+	"kanbanzai/internal/document"
 	"kanbanzai/internal/service"
+	"kanbanzai/internal/validate"
 )
 
 func TestRun_NoArgs_PrintsUsage(t *testing.T) {
@@ -334,6 +337,169 @@ func TestRunList_PrintsEntityCountAndEntries(t *testing.T) {
 	}
 }
 
+func TestRunDoc_SubmitApproveRetrieveValidateAndList(t *testing.T) {
+	fakeEntity := newFakeEntityService()
+	fakeDoc := newFakeDocService()
+	deps, output := testDependenciesWithServices(fakeEntity, fakeDoc)
+
+	submitArgs := []string{
+		"doc", "submit",
+		"--type", "proposal",
+		"--title", "Test Proposal",
+		"--created_by", "sam",
+		"--body", "# Test Proposal\n\n## Summary\n\nA summary.\n\n## Problem\n\nA problem.\n\n## Proposal\n\nA proposal.\n",
+	}
+	if err := run(submitArgs, deps); err != nil {
+		t.Fatalf("run(doc submit) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "submitted document") {
+		t.Fatalf("stdout missing submit header:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "id: DOC-001") {
+		t.Fatalf("stdout missing submitted doc id:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "type: proposal") {
+		t.Fatalf("stdout missing submitted doc type:\n%s", stdout)
+	}
+
+	output.Reset()
+
+	approveArgs := []string{
+		"doc", "approve",
+		"--type", "proposal",
+		"--id", "DOC-001",
+		"--approved_by", "reviewer",
+	}
+	if err := run(approveArgs, deps); err != nil {
+		t.Fatalf("run(doc approve) error = %v", err)
+	}
+
+	stdout = output.String()
+	if !strings.Contains(stdout, "approved document") {
+		t.Fatalf("stdout missing approve header:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "status: approved") {
+		t.Fatalf("stdout missing approved status:\n%s", stdout)
+	}
+
+	output.Reset()
+
+	retrieveArgs := []string{
+		"doc", "retrieve",
+		"--type", "proposal",
+		"--id", "DOC-001",
+	}
+	if err := run(retrieveArgs, deps); err != nil {
+		t.Fatalf("run(doc retrieve) error = %v", err)
+	}
+
+	stdout = output.String()
+	if !strings.Contains(stdout, "## Summary") {
+		t.Fatalf("stdout missing retrieved body:\n%s", stdout)
+	}
+
+	output.Reset()
+
+	validateArgs := []string{
+		"doc", "validate",
+		"--type", "proposal",
+		"--id", "DOC-001",
+	}
+	if err := run(validateArgs, deps); err != nil {
+		t.Fatalf("run(doc validate) error = %v", err)
+	}
+
+	stdout = output.String()
+	if !strings.Contains(stdout, "document is valid") {
+		t.Fatalf("stdout missing validation success:\n%s", stdout)
+	}
+
+	output.Reset()
+
+	listArgs := []string{
+		"doc", "list",
+		"--type", "proposal",
+	}
+	if err := run(listArgs, deps); err != nil {
+		t.Fatalf("run(doc list) error = %v", err)
+	}
+
+	stdout = output.String()
+	if !strings.Contains(stdout, "listed documents") {
+		t.Fatalf("stdout missing document list header:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "DOC-001") {
+		t.Fatalf("stdout missing listed doc id:\n%s", stdout)
+	}
+}
+
+func TestRunDoc_Scaffold_PrintsTemplate(t *testing.T) {
+	fakeEntity := newFakeEntityService()
+	fakeDoc := newFakeDocService()
+	deps, output := testDependenciesWithServices(fakeEntity, fakeDoc)
+
+	err := run([]string{
+		"doc", "scaffold",
+		"--type", "proposal",
+		"--title", "Scaffolded Proposal",
+	}, deps)
+	if err != nil {
+		t.Fatalf("run(doc scaffold) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "# Scaffolded Proposal") {
+		t.Fatalf("stdout missing scaffold title:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "## Summary") {
+		t.Fatalf("stdout missing scaffold section:\n%s", stdout)
+	}
+}
+
+func TestRunHealth_PrintsSummary(t *testing.T) {
+	fake := newFakeEntityService()
+	deps, output := testDependenciesWithService(fake)
+
+	if err := run([]string{"health"}, deps); err != nil {
+		t.Fatalf("run(health) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "health check") {
+		t.Fatalf("stdout missing health header:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "entities: 2") {
+		t.Fatalf("stdout missing entity count:\n%s", stdout)
+	}
+}
+
+func TestRunValidate_PrintsCandidateValidationResult(t *testing.T) {
+	fake := newFakeEntityService()
+	deps, output := testDependenciesWithService(fake)
+
+	err := run([]string{
+		"validate",
+		"--type", "feature",
+		"--id", "FEAT-001",
+		"--slug", "storage-layer",
+		"--epic", "E-001",
+		"--status", "draft",
+		"--summary", "Implement storage",
+		"--created", "2025-01-15",
+		"--created_by", "sam",
+	}, deps)
+	if err != nil {
+		t.Fatalf("run(validate) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "candidate is valid") {
+		t.Fatalf("stdout missing validation success:\n%s", stdout)
+	}
+}
+
 func TestRunUpdateStatus_MissingTarget_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 
@@ -493,13 +659,21 @@ func testDependencies() (dependencies, *bytes.Buffer) {
 }
 
 func testDependenciesWithService(svc entityService) (dependencies, *bytes.Buffer) {
+	return testDependenciesWithServices(svc, newFakeDocService())
+}
+
+func testDependenciesWithServices(entitySvc entityService, docSvc docService) (dependencies, *bytes.Buffer) {
 	buf := &bytes.Buffer{}
 	currentTestStdout = buf
 
 	return dependencies{
 		stdout: buf,
+		stdin:  strings.NewReader(""),
 		newEntityService: func(root string) entityService {
-			return svc
+			return entitySvc
+		},
+		newDocService: func(root string) docService {
+			return docSvc
 		},
 	}, buf
 }
@@ -724,6 +898,131 @@ func (f *fakeEntityService) RebuildCache() (int, error) {
 }
 
 func (f *fakeEntityService) SetCache(c *cache.Cache) {
+}
+
+func (f *fakeEntityService) ValidateCandidate(entityType string, fields map[string]any) []validate.ValidationError {
+	return nil
+}
+
+func (f *fakeEntityService) HealthCheck() (*validate.HealthReport, error) {
+	return &validate.HealthReport{
+		Summary: validate.HealthSummary{
+			TotalEntities: 2,
+			ErrorCount:    0,
+			WarningCount:  0,
+			EntitiesByType: map[string]int{
+				"feature": 2,
+			},
+		},
+	}, nil
+}
+
+type fakeDocService struct {
+	docs map[string]document.Document
+}
+
+func newFakeDocService() *fakeDocService {
+	created := time.Date(2025, 1, 15, 10, 0, 0, 0, time.UTC)
+	approvedAt := time.Date(2025, 1, 16, 10, 0, 0, 0, time.UTC)
+
+	return &fakeDocService{
+		docs: map[string]document.Document{
+			"proposal:DOC-001": {
+				Meta: document.DocMeta{
+					ID:         "DOC-001",
+					Type:       document.DocTypeProposal,
+					Title:      "Test Proposal",
+					Status:     document.DocStatusApproved,
+					CreatedBy:  "sam",
+					Created:    created,
+					Updated:    approvedAt,
+					ApprovedBy: "reviewer",
+					ApprovedAt: &approvedAt,
+				},
+				Body: "# Test Proposal\n\n## Summary\n\nA summary.\n\n## Problem\n\nA problem.\n\n## Proposal\n\nA proposal.\n",
+			},
+		},
+	}
+}
+
+func (f *fakeDocService) ScaffoldDocument(docType document.DocType, title string) (string, error) {
+	return "# " + title + "\n\n## Summary\n\n", nil
+}
+
+func (f *fakeDocService) Submit(input document.SubmitInput) (document.DocumentResult, error) {
+	key := string(input.Type) + ":DOC-001"
+	now := time.Date(2025, 1, 15, 10, 0, 0, 0, time.UTC)
+	f.docs[key] = document.Document{
+		Meta: document.DocMeta{
+			ID:        "DOC-001",
+			Type:      input.Type,
+			Title:     input.Title,
+			Status:    document.DocStatusSubmitted,
+			Feature:   input.Feature,
+			CreatedBy: input.CreatedBy,
+			Created:   now,
+			Updated:   now,
+		},
+		Body: input.Body,
+	}
+	return document.DocumentResult{
+		ID:     "DOC-001",
+		Type:   input.Type,
+		Title:  input.Title,
+		Status: document.DocStatusSubmitted,
+		Path:   "test/docs/DOC-001-test-proposal.md",
+	}, nil
+}
+
+func (f *fakeDocService) Approve(input document.ApproveInput) (document.DocumentResult, error) {
+	key := string(input.Type) + ":" + input.ID
+	doc := f.docs[key]
+	now := time.Date(2025, 1, 16, 10, 0, 0, 0, time.UTC)
+	doc.Meta.Status = document.DocStatusApproved
+	doc.Meta.ApprovedBy = input.ApprovedBy
+	doc.Meta.ApprovedAt = &now
+	doc.Meta.Updated = now
+	f.docs[key] = doc
+
+	return document.DocumentResult{
+		ID:     input.ID,
+		Type:   input.Type,
+		Title:  doc.Meta.Title,
+		Status: document.DocStatusApproved,
+		Path:   "test/docs/DOC-001-test-proposal.md",
+	}, nil
+}
+
+func (f *fakeDocService) Retrieve(docType document.DocType, id string) (document.Document, error) {
+	return f.docs[string(docType)+":"+id], nil
+}
+
+func (f *fakeDocService) Validate(doc document.Document) []document.ValidationError {
+	return nil
+}
+
+func (f *fakeDocService) ListByType(docType document.DocType) ([]document.DocumentResult, error) {
+	return []document.DocumentResult{
+		{
+			ID:     "DOC-001",
+			Type:   docType,
+			Title:  "Test Proposal",
+			Status: document.DocStatusApproved,
+			Path:   "test/docs/DOC-001-test-proposal.md",
+		},
+	}, nil
+}
+
+func (f *fakeDocService) ListAll() ([]document.DocumentResult, error) {
+	return []document.DocumentResult{
+		{
+			ID:     "DOC-001",
+			Type:   document.DocTypeProposal,
+			Title:  "Test Proposal",
+			Status: document.DocStatusApproved,
+			Path:   "test/docs/DOC-001-test-proposal.md",
+		},
+	}, nil
 }
 
 func normalizeTestSlug(value string) string {
