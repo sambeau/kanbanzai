@@ -360,6 +360,15 @@ The CLI, if present, should be useful for:
 
 It should not be the primary human interaction model.
 
+#### CLI design principles
+
+The CLI is a human interface. Its design should follow these principles:
+
+- **Read like English.** Prefer `kbz create epic` over `kbz epic create`. Commands should form natural verb-noun phrases where possible. When English word order doesn't fit (e.g., compound operations or queries with filters), consult a human on the phrasing rather than guessing.
+- **Be predictable.** Similar operations should follow the same pattern. If `create` comes first for one entity type, it comes first for all of them.
+- **Be strict.** The CLI does not guess. If a required argument is missing, it fails with a clear error rather than prompting interactively or inferring a default.
+- **Match the MCP semantics, not the MCP names.** The CLI wraps the same core logic as the MCP server, but its command surface is designed for human ergonomics, not machine protocol conventions.
+
 ### 6.3 Material Taxonomy
 
 The system should explicitly distinguish four classes of material.

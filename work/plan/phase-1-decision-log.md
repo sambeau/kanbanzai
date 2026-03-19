@@ -212,6 +212,8 @@ This decision must answer:
 - which commands are primarily for humans vs CI
 - how strict/non-interactive the CLI is
 
+Design constraint: the CLI is a human interface. Wherever possible, commands should read like English — `kbz create epic` rather than `kbz epic create`. This isn't always achievable (some operations don't map to natural verb-noun phrasing), so cases that don't fit should be consulted on rather than forced into the pattern.
+
 This is important because it affects:
 - bootstrap usability
 - manual stewardship
@@ -1100,10 +1102,15 @@ To be determined.
 - Scope: secondary interface
 - Related:
   - `work/plan/phase-1-implementation-plan.md`
+  - `work/design/workflow-design-basis.md` §6.2
 
 ### Decision
 
-To be determined.
+To be determined. The following design constraint is established:
+
+**CLI commands should read like English wherever possible.** Prefer `kbz create epic` over `kbz epic create`. The verb comes first, then the object. When a natural English phrasing doesn't fit an operation, consult rather than force the pattern.
+
+The CLI is a human interface — it is secondary to MCP for agents, but it is the primary way humans interact with the tool directly. Its design is a user interface question, not an implementation detail.
 
 ### Rationale
 
@@ -1122,6 +1129,7 @@ To be determined.
 ### Follow-up Needed
 
 - define command surface before implementation
+- consult on commands that don't naturally fit verb-noun English phrasing
 
 ---
 
