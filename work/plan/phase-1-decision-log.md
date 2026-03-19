@@ -1369,6 +1369,166 @@ The project needs a language that produces a single distributable binary with fa
 
 ---
 
+## `P1-DEC-017: Link resolution support deferred to Phase 2`
+
+- Status: accepted
+- Date: 2026-03-19
+- Scope: spec-compliance
+- Related:
+  - `work/spec/phase-1-specification.md` §17.2
+  - `work/plan/phase-1-audit-remediation.md` Track R5, item S4
+
+### Decision
+
+Link resolution from loose references is deferred to Phase 2.
+
+Phase 1 validates explicit references (e.g. a Feature's `epic` field must reference an existing Epic) but does not infer likely links from free text in titles, descriptions, or document content.
+
+### Rationale
+
+The spec (§17.2) uses "should" language and explicitly permits deferral: "If not implemented in Phase 1, this must be explicitly deferred."
+
+Link resolution requires either text-matching heuristics or semantic search — both add complexity disproportionate to Phase 1's scope. Phase 1 focuses on the workflow kernel: entities, lifecycle, documents, and deterministic storage. Explicit references already provide referential integrity where it matters (Feature→Epic, Task→Feature).
+
+### Alternatives Considered
+
+- **Simple substring matching** — fragile, high false-positive rate, and would need to be replaced by something better in Phase 2 anyway. Not worth the implementation and maintenance cost.
+- **Defer entirely** — chosen. Phase 2's context and knowledge management features (machine-context-design.md) are the natural home for link resolution.
+
+### Consequences
+
+- agents must create explicit references when creating entities; the system will not infer them
+- free-text references in documents remain unresolved until Phase 2
+- no additional indexing or search infrastructure is needed in Phase 1
+
+### Follow-up Needed
+
+- Phase 2 design should include link resolution as part of the context/knowledge layer
+- evaluate whether the local cache (P1-DEC-013) could support simple link resolution as an incremental step
+
+---
+
+## `P1-DEC-018: Duplicate detection deferred to Phase 2`
+
+- Status: accepted
+- Date: 2026-03-19
+- Scope: spec-compliance
+- Related:
+  - `work/spec/phase-1-specification.md` §17.3
+  - `work/plan/phase-1-audit-remediation.md` Track R5, item S5
+
+### Decision
+
+Duplicate detection for bug and feature creation is deferred to Phase 2.
+
+Phase 1 relies on health checks (which detect referential integrity issues) and human review to identify duplicates. Agents can use `list_entities` to manually check for existing similar entities before creating new ones.
+
+### Rationale
+
+The spec (§17.3) uses "should" language and explicitly permits deferral: "If not implemented in Phase 1, this must be explicitly deferred."
+
+Meaningful duplicate detection requires either fuzzy text matching or semantic similarity — both are Phase 2 concerns that depend on the context and knowledge management layer. A naive exact-title-match would catch almost nothing useful and give false confidence.
+
+### Alternatives Considered
+
+- **Exact title matching** — too narrow to be useful. Duplicates rarely have identical titles.
+- **Fuzzy matching (edit distance, n-grams)** — adds a dependency and tuning burden without the semantic understanding needed to do this well. Better deferred to Phase 2 where embeddings or structured search are available.
+- **Defer entirely** — chosen. Agents can perform manual checks using existing list/get operations.
+
+### Consequences
+
+- duplicate entities may be created if agents do not check before creating
+- health checks do not currently detect duplicates (this is consistent with the deferral)
+- the `list_entities` operation provides a manual workaround
+
+### Follow-up Needed
+
+- Phase 2 should include duplicate detection as part of entity creation validation
+- evaluate whether the local cache (P1-DEC-013) could support duplicate detection queries
+
+---
+
+## `P1-DEC-019: Document-to-entity extraction is agent-driven, not automated`
+
+- Status: accepted
+- Date: 2026-03-19
+- Scope: spec-compliance
+- Related:
+  - `work/spec/phase-1-specification.md` §15.5
+  - `work/plan/phase-1-audit-remediation.md` Track R5, item S6
+
+### Decision
+
+Automated extraction of structured entity data from approved documents is deferred. Phase 1 provides the document lifecycle (scaffold, submit, approve, retrieve) and entity creation tools; extraction is performed by agents using these tools manually.
+
+When a document is approved, an agent reads the document content via `get_document`, identifies decisions, entity updates, and cross-references, and then records them using the existing entity and decision tools. The system does not perform this extraction automatically.
+
+### Rationale
+
+The spec (§15.5) requires that the system "must support extraction of structured entity data from documents" but qualifies that "this extraction is internal — the human does not need to see or manage it." The requirement is satisfied by agents performing extraction using existing tools — the spec does not require a dedicated extraction mechanism.
+
+Building automated extraction tooling would require NLP or structured parsing of free-form document content — complexity that belongs in Phase 2's agent-assistance layer, not in the workflow kernel.
+
+### Alternatives Considered
+
+- **Template-based extraction** — parse documents for structured sections (e.g. "## Decisions") and extract entities automatically. Fragile, tightly coupled to document templates, and would need constant maintenance as templates evolve.
+- **Agent-driven extraction using existing tools** — chosen. Agents already have the tools to read documents and create entities. This satisfies the spec requirement without new infrastructure.
+
+### Consequences
+
+- document approval does not trigger automatic entity creation or updates
+- agents are responsible for extracting and recording decisions, entity updates, and references after document approval
+- no additional document parsing infrastructure is needed in Phase 1
+
+### Follow-up Needed
+
+- Phase 2 may add dedicated extraction tooling or agent prompts to streamline this workflow
+- monitor whether manual extraction by agents is reliable enough or creates a bottleneck
+
+---
+
+## `P1-DEC-020: Phase 1 entity query is list-by-type only`
+
+- Status: accepted
+- Date: 2026-03-19
+- Scope: spec-compliance
+- Related:
+  - `work/spec/phase-1-specification.md` §16.2
+  - `work/plan/phase-1-audit-remediation.md` Track R5, item S3
+  - `P1-DEC-013` (local cache scope)
+
+### Decision
+
+Phase 1 entity query is limited to list-by-type via the `list_entities` operation. Attribute filtering, text search, and cross-entity queries are deferred to the local cache track (P1-DEC-013).
+
+The `list_entities` operation returns all entities of a given type. Agents perform client-side filtering (by status, priority, assignee, etc.) on the returned results. This satisfies the spec's "search/query objects" requirement at minimum scope.
+
+### Rationale
+
+The spec (§16.2) requires "search/query objects" as a Phase 1 operation but does not define the query language, filter syntax, or minimum filter capabilities. List-by-type with client-side filtering is the simplest implementation that satisfies the requirement.
+
+Server-side filtering requires either scanning all YAML files with in-memory filtering (workable but adds complexity) or the local derived cache (P1-DEC-013, currently proposed). Rather than build throwaway filtering logic, deferring rich query to the cache track keeps Phase 1 focused on the kernel.
+
+### Alternatives Considered
+
+- **In-memory filtering on list** — load all entities of a type, filter by requested fields, return matches. Viable for small projects but adds code that would be replaced by cache queries. Deferred rather than built twice.
+- **SQLite cache with query support** — the intended long-term solution (P1-DEC-013). Deferred to Track R6 / Track G.
+- **List-by-type only** — chosen. Minimal, sufficient, and does not preclude richer query later.
+
+### Consequences
+
+- agents receive all entities of a type and must filter client-side
+- performance is acceptable for small-to-medium projects (dozens to low hundreds of entities per type)
+- the `list_entities` response may be large for projects with many entities; this is acceptable for Phase 1
+- richer query capability depends on resolving P1-DEC-013 and implementing the local cache
+
+### Follow-up Needed
+
+- resolve P1-DEC-013 (local cache scope) to enable server-side filtering and search
+- if cache is deferred beyond Phase 1, consider adding simple in-memory filters to `list_entities` as a stopgap
+
+---
+
 ## 8. Acceptance Criteria
 
 This decision log is acceptable as a Phase 1 planning artifact if:
