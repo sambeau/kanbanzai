@@ -18,9 +18,18 @@ func (e ValidationError) Error() string {
 	return e.Message
 }
 
+// EntityExistsFunc reports whether an entity of the given type and ID exists.
+type EntityExistsFunc func(entityType, id string) bool
+
 // ValidateDocument validates a document's metadata and structure against its template.
 // Returns a list of validation errors (empty if valid).
 func ValidateDocument(doc Document) []ValidationError {
+	return ValidateDocumentWithRefs(doc, nil)
+}
+
+// ValidateDocumentWithRefs validates a document's metadata and structure against its
+// template, and optionally verifies referenced entities exist.
+func ValidateDocumentWithRefs(doc Document, entityExists EntityExistsFunc) []ValidationError {
 	var errs []ValidationError
 
 	// Validate type
@@ -62,6 +71,12 @@ func ValidateDocument(doc Document) []ValidationError {
 		errs = append(errs, ValidationError{
 			Field:   "feature",
 			Message: fmt.Sprintf("feature reference required for %s documents", doc.Meta.Type),
+		})
+	} else if entityExists != nil && strings.TrimSpace(doc.Meta.Feature) != "" &&
+		!entityExists("feature", doc.Meta.Feature) {
+		errs = append(errs, ValidationError{
+			Field:   "feature",
+			Message: fmt.Sprintf("references non-existent feature %q", doc.Meta.Feature),
 		})
 	}
 

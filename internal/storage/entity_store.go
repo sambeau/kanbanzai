@@ -266,6 +266,7 @@ func fieldOrderForEntityType(entityType string) []string {
 			"rationale",
 			"decided_by",
 			"date",
+			"status",
 			"affects",
 			"supersedes",
 			"superseded_by",

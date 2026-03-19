@@ -154,6 +154,14 @@ func TestValidateDocument_DesignMissingFeatureRef(t *testing.T) {
 	requireFieldError(t, errs, "feature")
 }
 
+func TestValidateDocument_DesignNonExistentFeatureRef(t *testing.T) {
+	doc := validDesignDoc()
+	doc.Meta.Feature = "FEAT-999"
+
+	errs := ValidateDocument(doc)
+	requireNoErrors(t, errs)
+}
+
 func TestValidateDocument_SpecificationMissingFeatureRef(t *testing.T) {
 	now := time.Now()
 	doc := Document{

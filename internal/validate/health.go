@@ -1,6 +1,11 @@
 package validate
 
-import "fmt"
+import (
+	"fmt"
+
+	"kanbanzai/internal/id"
+	"kanbanzai/internal/model"
+)
 
 // ValidationWarning is a non-blocking issue found during health checks.
 type ValidationWarning struct {
@@ -50,6 +55,7 @@ type entityKey struct {
 // loadAll returns all entities across all types.
 // entityExists checks whether a specific entity of a given type and ID exists.
 func CheckHealth(loadAll func() ([]EntityInfo, error), entityExists func(entityType, id string) bool) (*HealthReport, error) {
+	allocator := id.NewAllocator()
 	entities, err := loadAll()
 	if err != nil {
 		return nil, fmt.Errorf("loading entities: %w", err)
@@ -74,6 +80,20 @@ func CheckHealth(loadAll func() ([]EntityInfo, error), entityExists func(entityT
 		// Field validation.
 		errs := ValidateRecord(e.Type, e.Fields)
 		report.Errors = append(report.Errors, errs...)
+
+		featureID := ""
+		if e.Type == string(EntityTask) {
+			featureID = toString(e.Fields["feature"])
+		}
+
+		if err := allocator.Validate(model.EntityKind(e.Type), e.ID, featureID); err != nil {
+			report.Errors = append(report.Errors, ValidationError{
+				EntityType: e.Type,
+				EntityID:   e.ID,
+				Field:      "id",
+				Message:    err.Error(),
+			})
+		}
 
 		// Cross-reference checks.
 		checkRef := func(field, targetType, targetID string) {

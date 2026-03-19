@@ -237,10 +237,60 @@ func (s *DocService) Retrieve(docType DocType, id string) (Document, error) {
 	return doc, nil
 }
 
+// ExtractFromDocument returns approved document metadata and body for agent parsing.
+func (s *DocService) ExtractFromDocument(id string) (ExtractedDocument, error) {
+	doc, err := s.findDocumentByID(id)
+	if err != nil {
+		return ExtractedDocument{}, err
+	}
+	if doc.Meta.Status != DocStatusApproved {
+		return ExtractedDocument{}, fmt.Errorf(
+			"cannot extract from document in %s state (must be approved)",
+			doc.Meta.Status,
+		)
+	}
+
+	return ExtractedDocument{
+		Meta: ExtractedDocumentMeta{
+			ID:         doc.Meta.ID,
+			Type:       doc.Meta.Type,
+			Title:      doc.Meta.Title,
+			Status:     doc.Meta.Status,
+			Feature:    doc.Meta.Feature,
+			CreatedBy:  doc.Meta.CreatedBy,
+			Created:    doc.Meta.Created,
+			Updated:    doc.Meta.Updated,
+			ApprovedBy: doc.Meta.ApprovedBy,
+			ApprovedAt: doc.Meta.ApprovedAt,
+		},
+		Body: doc.Body,
+	}, nil
+}
+
 // Validate validates a document's structure against its template.
 // Returns validation errors (empty if valid).
 func (s *DocService) Validate(doc Document) []ValidationError {
-	return ValidateDocument(doc)
+	return ValidateDocumentWithRefs(doc, func(entityType, id string) bool {
+		if strings.TrimSpace(entityType) != "feature" || strings.TrimSpace(id) == "" {
+			return false
+		}
+
+		docPaths, err := s.store.ListAll()
+		if err != nil {
+			return false
+		}
+		for _, path := range docPaths {
+			loadedDoc, loadErr := s.store.LoadByPath(path)
+			if loadErr != nil {
+				continue
+			}
+			if loadedDoc.Meta.Feature == id {
+				return true
+			}
+		}
+
+		return false
+	})
 }
 
 // ListByType lists all documents of a given type.
@@ -311,6 +361,30 @@ func (s *DocService) findDocument(docType DocType, id string) (Document, string,
 	}
 
 	return Document{}, "", fmt.Errorf("document not found: %s/%s", docType, id)
+}
+
+// findDocumentByID locates a document by ID across all document types.
+func (s *DocService) findDocumentByID(id string) (Document, error) {
+	paths, err := s.store.ListAll()
+	if err != nil {
+		return Document{}, err
+	}
+
+	prefix := id + "-"
+	for _, path := range paths {
+		base := filepath.Base(path)
+		if !strings.HasPrefix(base, prefix) {
+			continue
+		}
+
+		doc, err := s.store.LoadByPath(path)
+		if err != nil {
+			return Document{}, err
+		}
+		return doc, nil
+	}
+
+	return Document{}, fmt.Errorf("document not found: %s", id)
 }
 
 // removeIfDifferent removes the old file if the new path is different.

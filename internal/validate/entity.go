@@ -2,7 +2,10 @@ package validate
 
 import (
 	"fmt"
+	"regexp"
+	"strings"
 
+	"kanbanzai/internal/id"
 	"kanbanzai/internal/model"
 )
 
@@ -42,6 +45,8 @@ var validBugTypes = map[string]struct{}{
 	string(model.BugTypeDesignProblem):        {},
 }
 
+var slugPattern = regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)
+
 // ValidateBugSeverity returns an error if value is not a valid bug severity.
 func ValidateBugSeverity(value string) error {
 	if _, ok := validBugSeverities[value]; !ok {
@@ -66,6 +71,24 @@ func ValidateBugType(value string) error {
 	return nil
 }
 
+// ValidateSlug returns an error if slug is not a non-empty lowercase kebab-case value.
+func ValidateSlug(slug string) error {
+	trimmed := strings.TrimSpace(slug)
+	if trimmed == "" {
+		return fmt.Errorf("invalid slug %q: must not be empty", slug)
+	}
+	if trimmed != slug {
+		return fmt.Errorf("invalid slug %q: must not contain leading or trailing whitespace", slug)
+	}
+	if strings.ContainsAny(slug, `/\`) {
+		return fmt.Errorf("invalid slug %q: must not contain path separators", slug)
+	}
+	if !slugPattern.MatchString(slug) {
+		return fmt.Errorf("invalid slug %q: must be lowercase kebab-case using only letters, numbers, and hyphens", slug)
+	}
+	return nil
+}
+
 var requiredFields = map[EntityKind][]string{
 	EntityEpic:     {"id", "slug", "title", "status", "summary", "created", "created_by"},
 	EntityFeature:  {"id", "slug", "epic", "status", "summary", "created", "created_by"},
@@ -77,6 +100,7 @@ var requiredFields = map[EntityKind][]string{
 // ValidateRecord checks an entity record's fields for correctness.
 // It validates:
 //   - required fields are present and non-empty
+//   - slug format is valid
 //   - enum fields contain valid values
 //   - status is a known lifecycle state
 //   - ID format is valid for the entity type
@@ -113,6 +137,33 @@ func ValidateRecord(entityType string, fields map[string]any) []ValidationError 
 				EntityID:   entityID,
 				Field:      field,
 				Message:    "required field is empty",
+			})
+		}
+	}
+
+	if slug, ok := stringField(fields, "slug"); ok && slug != "" {
+		if err := ValidateSlug(slug); err != nil {
+			errs = append(errs, ValidationError{
+				EntityType: entityType,
+				EntityID:   entityID,
+				Field:      "slug",
+				Message:    err.Error(),
+			})
+		}
+	}
+
+	if entityID != "" {
+		allocator := id.NewAllocator()
+		featureID := ""
+		if kind == EntityTask {
+			featureID, _ = stringField(fields, "feature")
+		}
+		if err := allocator.Validate(model.EntityKind(kind), entityID, featureID); err != nil {
+			errs = append(errs, ValidationError{
+				EntityType: entityType,
+				EntityID:   entityID,
+				Field:      "id",
+				Message:    err.Error(),
 			})
 		}
 	}

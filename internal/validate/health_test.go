@@ -160,6 +160,29 @@ func TestCheckHealth_TaskBrokenFeatureRef(t *testing.T) {
 	}
 }
 
+func TestCheckHealth_MalformedEntityID(t *testing.T) {
+	t.Parallel()
+
+	feature := EntityInfo{
+		Type:   string(EntityFeature),
+		ID:     "E-001",
+		Fields: featureFields("E-001", "test-feat", "E-123"),
+	}
+
+	loadAll := func() ([]EntityInfo, error) { return []EntityInfo{feature}, nil }
+	exists := func(entityType, id string) bool {
+		return entityType == string(EntityEpic) && id == "E-123"
+	}
+
+	report, err := CheckHealth(loadAll, exists)
+	if err != nil {
+		t.Fatalf("CheckHealth returned error: %v", err)
+	}
+	if !hasErrorMatching(report.Errors, "id", "expected prefix FEAT") {
+		t.Fatalf("expected malformed ID error, got errors: %v", report.Errors)
+	}
+}
+
 func TestCheckHealth_BugBrokenDuplicateRef(t *testing.T) {
 	t.Parallel()
 

@@ -87,7 +87,7 @@ func TestValidateBugType(t *testing.T) {
 
 func validEpicFields() map[string]any {
 	return map[string]any{
-		"id":         "EPIC-001",
+		"id":         "E-001",
 		"slug":       "my-epic",
 		"title":      "My Epic",
 		"status":     "proposed",
@@ -111,7 +111,7 @@ func validFeatureFields() map[string]any {
 
 func validTaskFields() map[string]any {
 	return map[string]any{
-		"id":      "TASK-001",
+		"id":      "FEAT-001.1",
 		"feature": "FEAT-001",
 		"slug":    "my-task",
 		"summary": "A summary of the task",
@@ -171,6 +171,40 @@ func TestValidateRecord_ValidDecision(t *testing.T) {
 	errs := ValidateRecord("decision", validDecisionFields())
 	if len(errs) != 0 {
 		t.Errorf("expected no errors for valid decision, got %v", errs)
+	}
+}
+
+func TestValidateSlug(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name    string
+		slug    string
+		wantErr bool
+	}{
+		{name: "valid kebab case", slug: "my-valid-slug", wantErr: false},
+		{name: "valid single word", slug: "feature", wantErr: false},
+		{name: "empty", slug: "", wantErr: true},
+		{name: "uppercase", slug: "My-Slug", wantErr: true},
+		{name: "underscore", slug: "my_slug", wantErr: true},
+		{name: "space", slug: "my slug", wantErr: true},
+		{name: "slash", slug: "my/slug", wantErr: true},
+		{name: "backslash", slug: "my\\slug", wantErr: true},
+		{name: "special chars", slug: "my.slug!", wantErr: true},
+		{name: "leading hyphen", slug: "-my-slug", wantErr: true},
+		{name: "trailing hyphen", slug: "my-slug-", wantErr: true},
+		{name: "double hyphen", slug: "my--slug", wantErr: true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			err := ValidateSlug(tt.slug)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ValidateSlug(%q) error = %v, wantErr %v", tt.slug, err, tt.wantErr)
+			}
+		})
 	}
 }
 
