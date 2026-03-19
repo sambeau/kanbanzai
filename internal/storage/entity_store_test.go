@@ -742,3 +742,78 @@ type fixtureStringer string
 func (s fixtureStringer) String() string {
 	return string(s)
 }
+
+func TestMarshalCanonicalYAML_ConsecutiveBackslashRoundTrip(t *testing.T) {
+	t.Parallel()
+
+	fields := map[string]any{
+		"id":      "BUG-001",
+		"slug":    "double-backslash",
+		"comment": `path\\with\\double`,
+	}
+
+	content, err := MarshalCanonicalYAML("bug", fields)
+	if err != nil {
+		t.Fatalf("MarshalCanonicalYAML() error = %v", err)
+	}
+
+	got, err := UnmarshalCanonicalYAML(content)
+	if err != nil {
+		t.Fatalf("UnmarshalCanonicalYAML() error = %v", err)
+	}
+
+	if got["comment"] != `path\\with\\double` {
+		t.Fatalf("consecutive backslash round-trip mismatch: got %q, want %q", got["comment"], `path\\with\\double`)
+	}
+}
+
+func TestMarshalCanonicalYAML_EmbeddedNewlineRoundTrip(t *testing.T) {
+	t.Parallel()
+
+	fields := map[string]any{
+		"id":      "BUG-001",
+		"slug":    "embedded-newline",
+		"comment": "hello\nworld",
+	}
+
+	content, err := MarshalCanonicalYAML("bug", fields)
+	if err != nil {
+		t.Fatalf("MarshalCanonicalYAML() error = %v", err)
+	}
+
+	got, err := UnmarshalCanonicalYAML(content)
+	if err != nil {
+		t.Fatalf("UnmarshalCanonicalYAML() error = %v", err)
+	}
+
+	if got["comment"] != "hello\nworld" {
+		t.Fatalf("embedded newline round-trip mismatch: got %q, want %q", got["comment"], "hello\nworld")
+	}
+}
+
+func TestMarshalCanonicalYAML_YAMLBooleanVariantsAreQuoted(t *testing.T) {
+	t.Parallel()
+
+	variants := []string{"True", "FALSE", "Yes", "no", "ON", "off", "~"}
+	for _, v := range variants {
+		fields := map[string]any{
+			"id":      "BUG-001",
+			"slug":    "bool-variant",
+			"comment": v,
+		}
+
+		content, err := MarshalCanonicalYAML("bug", fields)
+		if err != nil {
+			t.Fatalf("MarshalCanonicalYAML(%q) error = %v", v, err)
+		}
+
+		got, err := UnmarshalCanonicalYAML(content)
+		if err != nil {
+			t.Fatalf("UnmarshalCanonicalYAML(%q) error = %v", v, err)
+		}
+
+		if got["comment"] != v {
+			t.Fatalf("YAML boolean variant round-trip mismatch for %q: got %v (type %T)", v, got["comment"], got["comment"])
+		}
+	}
+}

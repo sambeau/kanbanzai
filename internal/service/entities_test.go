@@ -7,7 +7,6 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/core"
 	"kanbanzai/internal/model"
 	"kanbanzai/internal/storage"
 	"kanbanzai/internal/validate"
@@ -64,6 +63,16 @@ func TestEntityService_CreateFeature_AllocatesSequentialID(t *testing.T) {
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
+	_, err := service.CreateEpic(CreateEpicInput{
+		Slug:      "parent-epic",
+		Title:     "Parent Epic",
+		Summary:   "Required parent",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
+
 	first, err := service.CreateFeature(CreateFeatureInput{
 		Slug:      "storage layer",
 		Epic:      "E-001",
@@ -100,6 +109,36 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	_, err := service.CreateEpic(CreateEpicInput{
+		Slug:      "parent-epic",
+		Title:     "Parent Epic",
+		Summary:   "Required parent",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
+
+	_, err = service.CreateFeature(CreateFeatureInput{
+		Slug:      "feature-one",
+		Epic:      "E-001",
+		Summary:   "First feature",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature(FEAT-001) error = %v", err)
+	}
+
+	_, err = service.CreateFeature(CreateFeatureInput{
+		Slug:      "feature-two",
+		Epic:      "E-001",
+		Summary:   "Second feature",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature(FEAT-002) error = %v", err)
+	}
 
 	first, err := service.CreateTask(CreateTaskInput{
 		Feature: "FEAT-001",
@@ -276,6 +315,16 @@ func TestEntityService_Get_ReturnsStoredEntity(t *testing.T) {
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
+	_, err := service.CreateEpic(CreateEpicInput{
+		Slug:      "parent-epic",
+		Title:     "Parent Epic",
+		Summary:   "Required parent",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
+
 	created, err := service.CreateFeature(CreateFeatureInput{
 		Slug:      "entity retrieval",
 		Epic:      "E-001",
@@ -301,7 +350,7 @@ func TestEntityService_Get_ReturnsStoredEntity(t *testing.T) {
 		t.Fatalf("Get() slug = %q, want %q", got.Slug, created.Slug)
 	}
 
-	wantPath := filepath.Join(core.StatePath(), "features", "FEAT-001-entity-retrieval.yaml")
+	wantPath := filepath.Join(root, "features", "FEAT-001-entity-retrieval.yaml")
 	if got.Path != wantPath {
 		t.Fatalf("Get() path = %q, want %q", got.Path, wantPath)
 	}
@@ -315,6 +364,16 @@ func TestEntityService_List_ReturnsEntitiesSortedByID(t *testing.T) {
 
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	_, err := service.CreateEpic(CreateEpicInput{
+		Slug:      "parent-epic",
+		Title:     "Parent Epic",
+		Summary:   "Required parent",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
 
 	createdFirst, err := service.CreateFeature(CreateFeatureInput{
 		Slug:      "storage layer",
@@ -368,6 +427,16 @@ func TestEntityService_StatusUpdate_UsesLifecycleValidation(t *testing.T) {
 
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	_, err := service.CreateEpic(CreateEpicInput{
+		Slug:      "parent-epic",
+		Title:     "Parent Epic",
+		Summary:   "Required parent",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
 
 	created, err := service.CreateFeature(CreateFeatureInput{
 		Slug:      "status updates",
@@ -968,6 +1037,45 @@ func TestEntityService_HealthCheck_EmptyProject(t *testing.T) {
 	}
 	if report.Summary.ErrorCount != 0 {
 		t.Fatalf("ErrorCount = %d, want 0", report.Summary.ErrorCount)
+	}
+}
+
+func TestEntityService_CreateFeature_RejectsNonExistentEpic(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	_, err := svc.CreateFeature(CreateFeatureInput{
+		Slug:      "orphan-feature",
+		Epic:      "E-999",
+		Summary:   "Feature referencing non-existent epic",
+		CreatedBy: "sam",
+	})
+	if err == nil {
+		t.Fatal("CreateFeature() should fail when epic does not exist")
+	}
+	if !strings.Contains(err.Error(), "E-999") {
+		t.Fatalf("error should mention the missing epic ID, got: %v", err)
+	}
+}
+
+func TestEntityService_CreateTask_RejectsNonExistentFeature(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	_, err := svc.CreateTask(CreateTaskInput{
+		Feature: "FEAT-999",
+		Slug:    "orphan-task",
+		Summary: "Task referencing non-existent feature",
+	})
+	if err == nil {
+		t.Fatal("CreateTask() should fail when feature does not exist")
+	}
+	if !strings.Contains(err.Error(), "FEAT-999") {
+		t.Fatalf("error should mention the missing feature ID, got: %v", err)
 	}
 }
 

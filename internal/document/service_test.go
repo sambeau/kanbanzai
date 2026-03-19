@@ -1,6 +1,9 @@
 package document
 
 import (
+	"errors"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -840,5 +843,95 @@ func TestDocService_Approve_AlreadyApproved(t *testing.T) {
 	})
 	if err == nil {
 		t.Fatal("expected error when approving already-approved document")
+	}
+}
+
+func TestRemoveIfDifferent_RemovesOldFile(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	oldPath := filepath.Join(dir, "old-file.md")
+	newPath := filepath.Join(dir, "new-file.md")
+
+	if err := os.WriteFile(oldPath, []byte("old"), 0o644); err != nil {
+		t.Fatalf("WriteFile() error = %v", err)
+	}
+	if err := os.WriteFile(newPath, []byte("new"), 0o644); err != nil {
+		t.Fatalf("WriteFile() error = %v", err)
+	}
+
+	if err := removeIfDifferent(oldPath, newPath); err != nil {
+		t.Fatalf("removeIfDifferent() error = %v", err)
+	}
+
+	if _, err := os.Stat(oldPath); !errors.Is(err, os.ErrNotExist) {
+		t.Fatalf("old file should have been removed, but Stat error = %v", err)
+	}
+
+	if _, err := os.Stat(newPath); err != nil {
+		t.Fatalf("new file should still exist, but Stat error = %v", err)
+	}
+}
+
+func TestRemoveIfDifferent_SamePathIsNoOp(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	path := filepath.Join(dir, "same-file.md")
+
+	if err := os.WriteFile(path, []byte("content"), 0o644); err != nil {
+		t.Fatalf("WriteFile() error = %v", err)
+	}
+
+	if err := removeIfDifferent(path, path); err != nil {
+		t.Fatalf("removeIfDifferent() error = %v", err)
+	}
+
+	if _, err := os.Stat(path); err != nil {
+		t.Fatalf("file should still exist when paths are the same, but Stat error = %v", err)
+	}
+}
+
+func TestDocService_IDsDoNotCollideAcrossInstances(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+
+	// First service instance creates two documents.
+	svc1 := NewDocService(root)
+	body := "# Test\n\n## Summary\n\nTest.\n\n## Problem\n\nTest.\n\n## Proposal\n\nTest.\n"
+	_, err := svc1.Submit(SubmitInput{
+		Type:      DocTypeProposal,
+		Title:     "First",
+		Body:      body,
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("Submit() error = %v", err)
+	}
+	_, err = svc1.Submit(SubmitInput{
+		Type:      DocTypeProposal,
+		Title:     "Second",
+		Body:      body,
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("Submit() error = %v", err)
+	}
+
+	// Second service instance (simulating restart) should continue from DOC-003.
+	svc2 := NewDocService(root)
+	result, err := svc2.Submit(SubmitInput{
+		Type:      DocTypeProposal,
+		Title:     "Third",
+		Body:      body,
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("Submit() error = %v", err)
+	}
+
+	if result.ID != "DOC-003" {
+		t.Fatalf("expected DOC-003 after restart, got %s", result.ID)
 	}
 }

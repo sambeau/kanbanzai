@@ -141,6 +141,11 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		return CreateResult{}, err
 	}
 
+	epicID := strings.TrimSpace(input.Epic)
+	if !s.entityExists(string(model.EntityKindEpic), epicID) {
+		return CreateResult{}, fmt.Errorf("epic %s does not exist", epicID)
+	}
+
 	idValue, err := s.allocateTypedID(model.EntityKindFeature)
 	if err != nil {
 		return CreateResult{}, err
@@ -149,7 +154,7 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 	entity := model.Feature{
 		ID:        idValue,
 		Slug:      normalizeSlug(input.Slug),
-		Epic:      strings.TrimSpace(input.Epic),
+		Epic:      epicID,
 		Status:    model.FeatureStatus("draft"),
 		Summary:   strings.TrimSpace(input.Summary),
 		Created:   s.now(),
@@ -175,6 +180,10 @@ func (s *EntityService) CreateTask(input CreateTaskInput) (CreateResult, error) 
 	featureID := strings.TrimSpace(input.Feature)
 	if err := s.allocator.Validate(model.EntityKindFeature, featureID, ""); err != nil {
 		return CreateResult{}, fmt.Errorf("feature: %w", err)
+	}
+
+	if !s.entityExists(string(model.EntityKindFeature), featureID) {
+		return CreateResult{}, fmt.Errorf("feature %s does not exist", featureID)
 	}
 
 	existingTaskIDs, err := s.listEntityIDs(string(model.EntityKindTask))
@@ -358,7 +367,7 @@ func (s *EntityService) Get(entityType, entityID, slug string) (GetResult, error
 		Type:  record.Type,
 		ID:    record.ID,
 		Slug:  record.Slug,
-		Path:  filepath.Join(core.StatePath(), entityDirectory(record.Type), entityFileName(record.ID, record.Slug)),
+		Path:  filepath.Join(s.root, entityDirectory(record.Type), entityFileName(record.ID, record.Slug)),
 		State: record.Fields,
 	}, nil
 }
@@ -513,6 +522,20 @@ func (s *EntityService) listEntityIDs(entityType string) ([]string, error) {
 	}
 
 	return ids, nil
+}
+
+// entityExists checks whether an entity with the given type and ID exists on disk.
+func (s *EntityService) entityExists(entityType, entityID string) bool {
+	ids, err := s.listEntityIDs(entityType)
+	if err != nil {
+		return false
+	}
+	for _, id := range ids {
+		if id == entityID {
+			return true
+		}
+	}
+	return false
 }
 
 func (s *EntityService) loadRecordFromPath(entityType, path string) (storage.EntityRecord, error) {

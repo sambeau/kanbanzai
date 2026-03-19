@@ -256,7 +256,7 @@ type Decision struct {
 	Rationale string         `yaml:"rationale"`
 	DecidedBy string         `yaml:"decided_by"`
 	Date      time.Time      `yaml:"date"`
-	Status    DecisionStatus `yaml:"status,omitempty"`
+	Status    DecisionStatus `yaml:"status"`
 
 	Affects      []string `yaml:"affects,omitempty"`
 	Supersedes   string   `yaml:"supersedes,omitempty"`

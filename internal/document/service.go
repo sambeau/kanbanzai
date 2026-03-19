@@ -3,7 +3,9 @@ package document
 import (
 	"errors"
 	"fmt"
+	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 
@@ -57,9 +59,11 @@ func NewDocService(root string) *DocService {
 		root = DocsPath()
 	}
 
-	counter := 0
+	store := NewDocStore(root)
+	counter := scanMaxDocID(store)
+
 	return &DocService{
-		store: NewDocStore(root),
+		store: store,
 		now: func() time.Time {
 			return time.Now().UTC()
 		},
@@ -68,6 +72,37 @@ func NewDocService(root string) *DocService {
 			return fmt.Sprintf("DOC-%03d", counter)
 		},
 	}
+}
+
+// scanMaxDocID scans existing documents and returns the highest numeric doc ID found.
+func scanMaxDocID(store *DocStore) int {
+	paths, err := store.ListAll()
+	if err != nil {
+		return 0
+	}
+
+	maxID := 0
+	for _, p := range paths {
+		base := filepath.Base(p)
+		if !strings.HasPrefix(base, "DOC-") {
+			continue
+		}
+		// Extract the numeric part from "DOC-NNN-slug.md"
+		rest := base[4:] // after "DOC-"
+		dashIdx := strings.Index(rest, "-")
+		if dashIdx < 0 {
+			continue
+		}
+		numStr := rest[:dashIdx]
+		n, err := strconv.Atoi(numStr)
+		if err != nil {
+			continue
+		}
+		if n > maxID {
+			maxID = n
+		}
+	}
+	return maxID
 }
 
 // ScaffoldDocument generates a starter document from a template.
@@ -279,7 +314,12 @@ func (s *DocService) findDocument(docType DocType, id string) (Document, string,
 }
 
 // removeIfDifferent removes the old file if the new path is different.
-func removeIfDifferent(_, _ string) error {
-	// Overwrite-in-place is the norm; no removal needed currently.
+func removeIfDifferent(oldPath, newPath string) error {
+	if oldPath == newPath {
+		return nil
+	}
+	if err := os.Remove(oldPath); err != nil && !errors.Is(err, os.ErrNotExist) {
+		return fmt.Errorf("remove old document file: %w", err)
+	}
 	return nil
 }

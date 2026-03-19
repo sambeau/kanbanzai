@@ -549,11 +549,16 @@ func needsQuotes(value string) bool {
 	}
 
 	lower := strings.ToLower(value)
-	if lower == "true" || lower == "false" || lower == "null" {
+	switch lower {
+	case "true", "false", "null", "yes", "no", "on", "off", "~":
 		return true
 	}
 
 	if strings.TrimSpace(value) != value {
+		return true
+	}
+
+	if strings.ContainsAny(value, "\n\r") {
 		return true
 	}
 
@@ -580,7 +585,7 @@ func needsQuotes(value string) bool {
 
 func quoteString(value string) string {
 	replacer := strings.NewReplacer(
-		`\\`, `\\\\`,
+		`\`, `\\`,
 		`"`, `\"`,
 		"\n", `\n`,
 	)
