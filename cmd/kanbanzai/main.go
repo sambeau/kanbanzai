@@ -6,6 +6,10 @@ import (
 	"os"
 	"strings"
 
+	"path/filepath"
+
+	"kanbanzai/internal/cache"
+	"kanbanzai/internal/core"
 	kbzmcp "kanbanzai/internal/mcp"
 	"kanbanzai/internal/service"
 )
@@ -20,6 +24,8 @@ type entityService interface {
 	List(entityType string) ([]service.ListResult, error)
 	UpdateStatus(service.UpdateStatusInput) (service.GetResult, error)
 	UpdateEntity(service.UpdateEntityInput) (service.GetResult, error)
+	RebuildCache() (int, error)
+	SetCache(c *cache.Cache)
 }
 
 type dependencies struct {
@@ -75,6 +81,8 @@ func run(args []string, deps dependencies) error {
 		return runList(args[1:], deps)
 	case "update":
 		return runUpdate(args[1:], deps)
+	case "cache":
+		return runCache(args[1:], deps)
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
 	}
@@ -409,6 +417,7 @@ Commands:
   get        Get a Phase 1 entity
   list       List Phase 1 entities
   update     Update Phase 1 entity state
+  cache      Manage the local derived cache
 
 Notes:
   - Phase 1 is MCP-first; the CLI is a secondary, strict interface.
@@ -476,7 +485,34 @@ Collections:
   decisions
 `
 
-const updateUsageText = `kanbanzai update <subcommand> [flags]
+func runCache(args []string, deps dependencies) error {
+	if len(args) == 0 {
+		return fmt.Errorf("missing cache subcommand\n\n%s", cacheUsageText)
+	}
+
+	if args[0] != "rebuild" {
+		return fmt.Errorf("unknown cache subcommand %q\n\n%s", args[0], cacheUsageText)
+	}
+
+	svc := deps.newEntityService("")
+	cacheDir := filepath.Join(core.InstanceRootDir, cache.CacheDir)
+	c, err := cache.Open(cacheDir)
+	if err != nil {
+		return fmt.Errorf("open cache: %w", err)
+	}
+	defer c.Close()
+
+	svc.SetCache(c)
+	count, err := svc.RebuildCache()
+	if err != nil {
+		return fmt.Errorf("rebuild cache: %w", err)
+	}
+
+	fmt.Fprintf(deps.stdout, "cache rebuilt: %d entities cached\npath: %s\n", count, c.Path())
+	return nil
+}
+
+const updateUsageText = `kanbanzai update status [flags]
 
 Subcommands:
   status    Update the lifecycle status of an entity
@@ -495,4 +531,13 @@ fields flags:
   --<field_name> <value>   (any other flags become field updates)
 
 Cannot change id (immutable) or status (use update status).
+`
+
+const cacheUsageText = `kanbanzai cache <subcommand>
+
+Subcommands:
+  rebuild   Rebuild the local derived cache from canonical entity files
+
+The cache accelerates queries but is not required for correctness.
+It is stored in .kbz/cache/ and is not committed to Git.
 `

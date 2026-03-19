@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"kanbanzai/internal/cache"
 	"kanbanzai/internal/service"
 )
 
@@ -716,6 +717,13 @@ func (f *fakeEntityService) UpdateEntity(input service.UpdateEntityInput) (servi
 		result.State[k] = v
 	}
 	return result, nil
+}
+
+func (f *fakeEntityService) RebuildCache() (int, error) {
+	return 0, nil
+}
+
+func (f *fakeEntityService) SetCache(c *cache.Cache) {
 }
 
 func normalizeTestSlug(value string) string {

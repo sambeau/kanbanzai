@@ -77,6 +77,7 @@ func TestServer_ListTools(t *testing.T) {
 		"update_entity",
 		"validate_candidate",
 		"health_check",
+		"rebuild_cache",
 	}
 	expectedDocTools := []string{
 		"scaffold_document",

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -9,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"kanbanzai/internal/cache"
 	"kanbanzai/internal/core"
 	"kanbanzai/internal/id"
 	"kanbanzai/internal/model"
@@ -91,6 +93,7 @@ type EntityService struct {
 	store     *storage.EntityStore
 	allocator *id.Allocator
 	now       func() time.Time
+	cache     *cache.Cache
 }
 
 func NewEntityService(root string) *EntityService {
@@ -106,6 +109,47 @@ func NewEntityService(root string) *EntityService {
 			return time.Now().UTC()
 		},
 	}
+}
+
+// SetCache attaches an optional local derived cache.
+// When set, mutations update the cache best-effort, and lookups
+// may use the cache for acceleration. All operations fall back
+// to filesystem if the cache is nil.
+func (s *EntityService) SetCache(c *cache.Cache) {
+	s.cache = c
+}
+
+// RebuildCache scans all canonical entity files and repopulates the cache.
+// Returns the number of entities cached.
+func (s *EntityService) RebuildCache() (int, error) {
+	if s.cache == nil {
+		return 0, fmt.Errorf("no cache configured")
+	}
+
+	var records []cache.RebuildRecord
+	for _, kind := range []string{
+		string(model.EntityKindEpic),
+		string(model.EntityKindFeature),
+		string(model.EntityKindTask),
+		string(model.EntityKindBug),
+		string(model.EntityKindDecision),
+	} {
+		results, err := s.List(kind)
+		if err != nil {
+			return 0, fmt.Errorf("listing %s entities for cache rebuild: %w", kind, err)
+		}
+		for _, r := range results {
+			records = append(records, cache.RebuildRecord{
+				EntityType: r.Type,
+				ID:         r.ID,
+				Slug:       r.Slug,
+				FilePath:   r.Path,
+				Fields:     r.State,
+			})
+		}
+	}
+
+	return s.cache.Rebuild(records)
 }
 
 func (s *EntityService) CreateEpic(input CreateEpicInput) (CreateResult, error) {
@@ -137,7 +181,12 @@ func (s *EntityService) CreateEpic(input CreateEpicInput) (CreateResult, error) 
 		return CreateResult{}, err
 	}
 
-	return s.write(entity)
+	result, err := s.write(entity)
+	if err != nil {
+		return result, err
+	}
+	s.cacheUpsertFromResult(result)
+	return result, nil
 }
 
 func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, error) {
@@ -174,7 +223,12 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		return CreateResult{}, err
 	}
 
-	return s.write(entity)
+	result, err := s.write(entity)
+	if err != nil {
+		return result, err
+	}
+	s.cacheUpsertFromResult(result)
+	return result, nil
 }
 
 func (s *EntityService) CreateTask(input CreateTaskInput) (CreateResult, error) {
@@ -217,7 +271,12 @@ func (s *EntityService) CreateTask(input CreateTaskInput) (CreateResult, error) 
 		return CreateResult{}, err
 	}
 
-	return s.write(entity)
+	result, err := s.write(entity)
+	if err != nil {
+		return result, err
+	}
+	s.cacheUpsertFromResult(result)
+	return result, nil
 }
 
 func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
@@ -269,7 +328,12 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		return CreateResult{}, err
 	}
 
-	return s.write(entity)
+	result, err := s.write(entity)
+	if err != nil {
+		return result, err
+	}
+	s.cacheUpsertFromResult(result)
+	return result, nil
 }
 
 func (s *EntityService) CreateDecision(input CreateDecisionInput) (CreateResult, error) {
@@ -301,7 +365,12 @@ func (s *EntityService) CreateDecision(input CreateDecisionInput) (CreateResult,
 		return CreateResult{}, err
 	}
 
-	return s.write(entity)
+	result, err := s.write(entity)
+	if err != nil {
+		return result, err
+	}
+	s.cacheUpsertFromResult(result)
+	return result, nil
 }
 
 // ValidateCandidate validates candidate entity data without persisting it.
@@ -458,13 +527,15 @@ func (s *EntityService) UpdateStatus(input UpdateStatusInput) (GetResult, error)
 		return GetResult{}, err
 	}
 
-	return GetResult{
+	result := GetResult{
 		Type:  record.Type,
 		ID:    record.ID,
 		Slug:  record.Slug,
 		Path:  path,
 		State: record.Fields,
-	}, nil
+	}
+	s.cacheUpsertFromResult(result)
+	return result, nil
 }
 
 // UpdateEntity updates fields of an existing entity for error correction.
@@ -524,13 +595,15 @@ func (s *EntityService) UpdateEntity(input UpdateEntityInput) (GetResult, error)
 		_ = os.Remove(oldPath)
 	}
 
-	return GetResult{
+	result := GetResult{
 		Type:  record.Type,
 		ID:    record.ID,
 		Slug:  record.Slug,
 		Path:  path,
 		State: record.Fields,
-	}, nil
+	}
+	s.cacheUpsertFromResult(result)
+	return result, nil
 }
 
 func (s *EntityService) write(entity model.Entity) (CreateResult, error) {
@@ -890,6 +963,57 @@ func bugFields(e model.Bug) map[string]any {
 		fields["release_target"] = e.ReleaseTarget
 	}
 	return fields
+}
+
+// cacheUpsertFromResult updates the cache with the entity from a create/update result.
+// Failures are silently ignored — the cache is derived and non-essential.
+func (s *EntityService) cacheUpsertFromResult(result CreateResult) {
+	if s.cache == nil {
+		return
+	}
+	fieldsJSON, err := json.Marshal(result.State)
+	if err != nil {
+		return
+	}
+	_ = s.cache.Upsert(cache.EntityRow{
+		EntityType: result.Type,
+		ID:         result.ID,
+		Slug:       result.Slug,
+		Status:     stringFromState(result.State, "status"),
+		Title:      stringFromState(result.State, "title"),
+		Summary:    stringFromState(result.State, "summary"),
+		ParentRef:  extractParentRefFromState(result.Type, result.State),
+		FilePath:   result.Path,
+		FieldsJSON: string(fieldsJSON),
+	})
+}
+
+func stringFromState(state map[string]any, key string) string {
+	if state == nil {
+		return ""
+	}
+	v, ok := state[key]
+	if !ok {
+		return ""
+	}
+	s, ok := v.(string)
+	if !ok {
+		return fmt.Sprint(v)
+	}
+	return s
+}
+
+func extractParentRefFromState(entityType string, state map[string]any) string {
+	switch strings.ToLower(entityType) {
+	case "feature":
+		return stringFromState(state, "epic")
+	case "task":
+		return stringFromState(state, "feature")
+	case "bug":
+		return stringFromState(state, "origin_feature")
+	default:
+		return ""
+	}
 }
 
 func decisionFields(e model.Decision) map[string]any {

@@ -24,6 +24,7 @@ func EntityTools(svc *service.EntityService) []server.ServerTool {
 		updateEntityTool(svc),
 		validateCandidateTool(svc),
 		healthCheckTool(svc),
+		rebuildCacheTool(svc),
 	}
 }
 
@@ -437,6 +438,23 @@ func healthCheckTool(svc *service.EntityService) server.ServerTool {
 			return mcp.NewToolResultErrorFromErr("health check failed", err), nil
 		}
 		return jsonResult(report)
+	}
+	return server.ServerTool{Tool: tool, Handler: handler}
+}
+
+func rebuildCacheTool(svc *service.EntityService) server.ServerTool {
+	tool := mcp.NewTool("rebuild_cache",
+		mcp.WithDescription("Rebuild the local derived cache from canonical entity files. The cache accelerates queries but is not required for correctness."),
+	)
+	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+		count, err := svc.RebuildCache()
+		if err != nil {
+			return mcp.NewToolResultErrorFromErr("rebuild cache failed", err), nil
+		}
+		return jsonResult(map[string]any{
+			"status":          "ok",
+			"entities_cached": count,
+		})
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
