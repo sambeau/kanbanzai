@@ -4,10 +4,10 @@
 - Purpose: define how Git commits should be created, structured, described, and managed in the workflow system
 - Date: 2026-03-18
 - Related:
-  - `docs/design/workflow-design-basis.md`
-  - `docs/design/agent-interaction-protocol.md`
-  - `docs/design/quality-gates-and-review-policy.md`
-  - `docs/spec/phase-1-specification.md`
+  - `work/design/workflow-design-basis.md`
+  - `work/design/agent-interaction-protocol.md`
+  - `work/design/quality-gates-and-review-policy.md`
+  - `work/spec/phase-1-specification.md`
 
 ---
 
@@ -524,9 +524,9 @@ Phase 1 does not need to implement all of this, but the implementation should no
 
 This policy works together with:
 
-- `docs/design/agent-interaction-protocol.md`
+- `work/design/agent-interaction-protocol.md`
   - defines how agents behave around normalization and commit safety
-- `docs/design/quality-gates-and-review-policy.md`
+- `work/design/quality-gates-and-review-policy.md`
   - defines how work is evaluated before being considered complete
 
 This commit policy defines:

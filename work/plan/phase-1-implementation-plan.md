@@ -4,12 +4,12 @@
 - Purpose: define the implementation plan for Phase 1 of the workflow system
 - Date: 2026-03-18
 - Based on:
-  - `docs/design/workflow-design-basis.md`
-  - `docs/spec/phase-1-specification.md`
-  - `docs/design/agent-interaction-protocol.md`
-  - `docs/design/quality-gates-and-review-policy.md`
-  - `docs/design/git-commit-policy.md`
-  - `docs/design/product-instance-boundary.md`
+  - `work/design/workflow-design-basis.md`
+  - `work/spec/phase-1-specification.md`
+  - `work/design/agent-interaction-protocol.md`
+  - `work/design/quality-gates-and-review-policy.md`
+  - `work/design/git-commit-policy.md`
+  - `work/design/product-instance-boundary.md`
 
 ---
 
@@ -62,7 +62,7 @@ Implementation of Phase 1 must follow these planning principles.
 
 ### 3.1 The specification is binding
 
-`docs/spec/phase-1-specification.md` is the implementation contract for Phase 1.
+`work/spec/phase-1-specification.md` is the implementation contract for Phase 1.
 
 Implementation should not exceed the required scope without an explicit decision.
 
@@ -485,7 +485,7 @@ Phase 1 implementation work must follow the existing policy documents.
 
 Implementation work involving agents must follow:
 
-- `docs/design/agent-interaction-protocol.md`
+- `work/design/agent-interaction-protocol.md`
 
 Especially:
 - normalize before commit
@@ -497,7 +497,7 @@ Especially:
 
 Implementation review must follow:
 
-- `docs/design/quality-gates-and-review-policy.md`
+- `work/design/quality-gates-and-review-policy.md`
 
 At minimum, implementation review must consider:
 - specification conformance
@@ -510,7 +510,7 @@ At minimum, implementation review must consider:
 
 Implementation commits must follow:
 
-- `docs/design/git-commit-policy.md`
+- `work/design/git-commit-policy.md`
 
 This means:
 - one coherent change per commit
@@ -565,7 +565,7 @@ The implementation should include stable fixtures or examples for:
 
 Implementation is not complete until it is explicitly checked against the acceptance criteria in:
 
-- `docs/spec/phase-1-specification.md`
+- `work/spec/phase-1-specification.md`
 
 A simple “it seems to work” is not sufficient.
 
@@ -641,7 +641,7 @@ Risk:
 Current project state pollutes reusable product assets.
 
 Mitigation:
-- follow `docs/design/product-instance-boundary.md`
+- follow `work/design/product-instance-boundary.md`
 - keep reusable assets and current instance state conceptually separate from the start
 - delay promotion until deliberate
 
@@ -680,7 +680,7 @@ These decisions should be recorded as decisions, not left implicit.
 
 This plan is complete enough to begin implementation when:
 
-1. it is consistent with `docs/spec/phase-1-specification.md`
+1. it is consistent with `work/spec/phase-1-specification.md`
 2. it is consistent with the product-instance boundary
 3. it keeps phase 1 scope acceptably narrow
 4. it provides a clear implementation order

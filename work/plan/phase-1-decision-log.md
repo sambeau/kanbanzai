@@ -4,9 +4,9 @@
 - Purpose: record the key implementation decisions that must be made early in Phase 1 and track their status
 - Date: 2026-03-18
 - Related:
-  - `docs/plan/phase-1-implementation-plan.md`
-  - `docs/spec/phase-1-specification.md`
-  - `docs/design/workflow-design-basis.md`
+  - `work/plan/phase-1-implementation-plan.md`
+  - `work/spec/phase-1-specification.md`
+  - `work/design/workflow-design-basis.md`
 
 ---
 
@@ -279,8 +279,8 @@ This is important because it affects:
 - Date: 2026-03-18
 - Scope: Phase 1 entity model
 - Related:
-  - `docs/spec/phase-1-specification.md`
-  - `docs/plan/phase-1-implementation-plan.md`
+  - `work/spec/phase-1-specification.md`
+  - `work/plan/phase-1-implementation-plan.md`
 
 ### Decision
 
@@ -320,8 +320,8 @@ This is the minimum entity set needed to solve the most serious consistency fail
 - Date: 2026-03-18
 - Scope: Phase 1 object model
 - Related:
-  - `docs/spec/phase-1-specification.md`
-  - `docs/design/workflow-design-basis.md`
+  - `work/spec/phase-1-specification.md`
+  - `work/design/workflow-design-basis.md`
 
 ### Decision
 
@@ -361,8 +361,8 @@ This keeps Phase 1 simpler while still allowing the system to represent the curr
 - Date: 2026-03-18
 - Scope: interfaces
 - Related:
-  - `docs/spec/phase-1-specification.md`
-  - `docs/design/agent-interaction-protocol.md`
+  - `work/spec/phase-1-specification.md`
+  - `work/design/agent-interaction-protocol.md`
 
 ### Decision
 
@@ -397,8 +397,8 @@ Humans are expected to work primarily through natural-language chat with agents,
 - Date: 2026-03-18
 - Scope: phase boundary
 - Related:
-  - `docs/spec/phase-1-specification.md`
-  - `docs/plan/phase-1-implementation-plan.md`
+  - `work/spec/phase-1-specification.md`
+  - `work/plan/phase-1-implementation-plan.md`
 
 ### Decision
 
@@ -432,8 +432,8 @@ The workflow kernel must be trustworthy before automation is layered on top of i
 - Date: 2026-03-18
 - Scope: bootstrap behavior
 - Related:
-  - `docs/design/product-instance-boundary.md`
-  - `docs/spec/phase-1-specification.md`
+  - `work/design/product-instance-boundary.md`
+  - `work/spec/phase-1-specification.md`
 
 ### Decision
 
@@ -484,9 +484,9 @@ This order is recommended because early decisions constrain later interface and 
 - Date: 2026-03-18
 - Scope: storage boundary
 - Related:
-  - `docs/design/product-instance-boundary.md`
-  - `docs/plan/phase-1-implementation-plan.md`
-  - `docs/spec/phase-1-specification.md`
+  - `work/design/product-instance-boundary.md`
+  - `work/plan/phase-1-implementation-plan.md`
+  - `work/spec/phase-1-specification.md`
 
 ### Decision
 
@@ -572,9 +572,9 @@ This also means future promotion of reusable templates, schemas, and default pol
 - Date: 2026-03-18
 - Scope: identity
 - Related:
-  - `docs/spec/phase-1-specification.md`
-  - `docs/plan/phase-1-implementation-plan.md`
-  - `docs/design/workflow-design-basis.md`
+  - `work/spec/phase-1-specification.md`
+  - `work/plan/phase-1-implementation-plan.md`
+  - `work/design/workflow-design-basis.md`
 
 ### Decision
 
@@ -663,8 +663,8 @@ Embedding developer, designer, or manager identity in IDs was rejected because o
 - Date: 2026-03-18
 - Scope: canonical representation
 - Related:
-  - `docs/spec/phase-1-specification.md`
-  - `docs/plan/phase-1-implementation-plan.md`
+  - `work/spec/phase-1-specification.md`
+  - `work/plan/phase-1-implementation-plan.md`
   - `work/design/workflow-design-basis.md`
 
 ### Decision
@@ -748,8 +748,8 @@ Switching immediately to another textual format such as TOML was considered unne
 - Date: 2026-03-18
 - Scope: entity schemas
 - Related:
-  - `docs/spec/phase-1-specification.md`
-  - `docs/design/agent-interaction-protocol.md`
+  - `work/spec/phase-1-specification.md`
+  - `work/design/agent-interaction-protocol.md`
 
 ### Decision
 
@@ -895,8 +895,8 @@ This approach avoids the complexity of a staged required-field model (where diff
 - Date: 2026-03-18
 - Scope: validation
 - Related:
-  - `docs/spec/phase-1-specification.md`
-  - `docs/design/workflow-system-design.md`
+  - `work/spec/phase-1-specification.md`
+  - `work/design/workflow-system-design.md`
 
 ### Decision
 
@@ -1065,7 +1065,7 @@ The `cannot-reproduce → triaged` reopening path is the one exception to strict
 - Date: 2026-03-18
 - Scope: MCP interface
 - Related:
-  - `docs/plan/phase-1-implementation-plan.md`
+  - `work/plan/phase-1-implementation-plan.md`
 
 ### Decision
 
@@ -1097,7 +1097,7 @@ To be determined.
 - Date: 2026-03-18
 - Scope: secondary interface
 - Related:
-  - `docs/plan/phase-1-implementation-plan.md`
+  - `work/plan/phase-1-implementation-plan.md`
 
 ### Decision
 
@@ -1129,7 +1129,7 @@ To be determined.
 - Date: 2026-03-18
 - Scope: cache/query support
 - Related:
-  - `docs/plan/phase-1-implementation-plan.md`
+  - `work/plan/phase-1-implementation-plan.md`
 
 ### Decision
 
@@ -1161,7 +1161,7 @@ To be determined.
 - Date: 2026-03-18
 - Scope: document support
 - Related:
-  - `docs/spec/phase-1-specification.md`
+  - `work/spec/phase-1-specification.md`
   - `work/design/workflow-design-basis.md`
   - `work/design/product-instance-boundary.md`
 
@@ -1259,7 +1259,7 @@ The chosen approach is staged template strictness: typed markdown with required 
 - Date: 2026-03-18
 - Scope: self-use bootstrap
 - Related:
-  - `docs/design/product-instance-boundary.md`
+  - `work/design/product-instance-boundary.md`
 
 ### Decision
 

@@ -4,10 +4,10 @@
 - Purpose: define the boundary between the reusable workflow system, the current project instance using it, and the current project’s design/implementation materials
 - Date: 2026-03-18
 - Related:
-  - `docs/design/workflow-design-basis.md`
-  - `docs/spec/phase-1-specification.md`
-  - `docs/design/agent-interaction-protocol.md`
-  - `docs/design/git-commit-policy.md`
+  - `work/design/workflow-design-basis.md`
+  - `work/spec/phase-1-specification.md`
+  - `work/design/agent-interaction-protocol.md`
+  - `work/design/git-commit-policy.md`
 
 ---
 
@@ -453,16 +453,17 @@ A good long-term model is:
 
 - reusable product assets in product-oriented directories
 - current project instance state in one dedicated instance root
-- design/research/planning docs in `docs/`
+- design/research/planning/bootstrap docs in `work/`
 
 A likely conceptual layout is:
 
 - product code and reusable assets
 - project instance root
-- `docs/research/`
-- `docs/design/`
-- `docs/spec/`
-- `docs/plan/`
+- `work/research/`
+- `work/design/`
+- `work/spec/`
+- `work/plan/`
+- `work/bootstrap/`
 
 The exact implementation layout can still evolve, but the domains must remain visible.
 
@@ -508,7 +509,7 @@ These must be kept distinct.
 
 ## 12.1 Draft policy
 
-A design-time document under `docs/design/`.
+A design-time document under `work/design/`.
 
 ## 12.2 Active project policy
 
@@ -635,12 +636,14 @@ Until the product and instance are fully separated in implementation, the reposi
 
 Current practical rules:
 
-1. `docs/research/` remains the research trail
-2. `docs/design/` contains active design and policy drafts
-3. `docs/spec/` contains implementation-facing specifications
-4. `docs/plan/` contains implementation plans
-5. future reusable product assets should not be assumed to live in these directories unless explicitly promoted
-6. current project workflow state should eventually move into a dedicated instance root rather than being confused with product templates or design docs
+1. `work/research/` contains the research trail
+2. `work/design/` contains active design and policy drafts
+3. `work/spec/` contains implementation-facing specifications
+4. `work/plan/` contains implementation plans and decision records
+5. `work/bootstrap/` contains bootstrap-workflow process documents
+6. `docs/` is reserved for future user-facing product documentation (Domain A)
+7. future reusable product assets should not be assumed to live in these directories unless explicitly promoted
+8. current project workflow state should eventually move into a dedicated instance root rather than being confused with product templates or design docs
 
 ---
 
