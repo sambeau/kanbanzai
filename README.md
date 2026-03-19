@@ -78,16 +78,25 @@ User-facing and reference documentation for the reusable workflow system, such a
 
 ## Implementation status
 
-Phase 1 implementation has started.
+Phase 1 implementation is substantially complete.
 
 Current status:
 - design, specification, and planning documents are in place
-- initial Go module scaffolding has begun
-- the implementation work is being started from the Phase 1 plan in `work/plan/phase-1-implementation-plan.md`
+- the Go implementation is present under `cmd/kanbanzai/` and `internal/`
+- canonical YAML-backed entity storage is implemented under `.kbz/state/`
+- ID allocation, lifecycle validation, health checks, and local derived cache support are implemented
+- MCP tools are implemented for entity operations and document lifecycle operations
+- the CLI now supports entity operations, document lifecycle operations, health checks, candidate validation, and cache rebuild
+- bootstrap self-use has been exercised locally, but bootstrap instance state is not yet committed
 
-Near-term implementation focus:
+Current Phase 1 capabilities:
 - core entity model for `Epic`, `Feature`, `Task`, `Bug`, and `Decision`
 - deterministic YAML-backed storage under `.kbz/`
 - ID allocation and lifecycle validation
-- MCP-first workflow operations with a thin CLI layer
-- health checks and bootstrap self-use support
+- MCP-first workflow operations with a supporting CLI layer
+- document submission, approval, retrieval, validation, listing, and extraction support
+- health checks, candidate validation, cache rebuild, and bootstrap self-use support
+
+Remaining work before Phase 1 can be considered fully closed:
+- finish validating bootstrap self-use and decide when `.kbz/state/` should be committed
+- complete any final audit-remediation follow-through recorded in `work/plan/phase-1-audit-2-remediation.md`
