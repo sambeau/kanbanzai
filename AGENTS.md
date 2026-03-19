@@ -4,7 +4,11 @@
 
 Kanbanzai is a Git-native workflow system for human-AI collaborative software development.
 
-It stores structured workflow state (epics, features, tasks, bugs, and decisions) as schema-validated YAML files tracked in Git, and exposes them through an MCP server that AI agents use as their primary interface and a CLI for humans. The core idea is that humans own intent — goals, priorities, approvals, and product direction — while AI agents own execution: decomposing work, implementing, verifying, and tracking status, all within strict guardrails. Agents normalise informal human input into clean canonical records through a clarify-before-commit pipeline, the system enforces lifecycle state machines and referential integrity, and every unit of work carries attached verification. It is designed to be simple for small projects and to scale to concurrent multi-agent teams working in isolated Git worktrees, while always staying simpler than the project it manages.
+Its primary purpose is the coordination of AI agent teams to efficiently turn designs into working software. It does this through an MCP server that replaces ad-hoc search, grep, and manual context-gathering with structured operations — presenting the right instructions, the right context, and the right constraints to each agent at the right time. Internally, it maintains structured workflow state (epics, features, tasks, bugs, and decisions) as schema-validated YAML files tracked in Git, enforces lifecycle state machines and referential integrity, and attaches verification to every unit of work.
+
+Humans interact with the system through documents and chat, not by managing entities directly. They write and review design documents, make decisions in conversation, and approve results. AI agents mediate between this document interface and the structured internal model — extracting decisions, creating entity records, assembling targeted context for other agents, and maintaining consistency across the project. The core idea is that humans own intent — goals, priorities, approvals, and product direction — while AI agents own execution: decomposing work, implementing, verifying, and tracking status, all within strict guardrails.
+
+It is designed to be simple for small projects and to scale to concurrent multi-agent teams working in isolated Git worktrees, while always staying simpler than the project it manages.
 
 ## Naming Conventions
 
@@ -73,10 +77,11 @@ If you need to understand the project, read in this order:
 
 1. `work/bootstrap/bootstrap-workflow.md` — how we work right now (bootstrap-workflow)
 2. `work/design/workflow-design-basis.md` — consolidated design vision (kbz-workflow)
-3. `work/spec/phase-1-specification.md` — Phase 1 scope and verification basis (kbz-workflow)
-4. `work/design/agent-interaction-protocol.md` — agent behavior and normalization protocol
-5. `work/design/quality-gates-and-review-policy.md` — review expectations and quality gates
-6. `work/design/git-commit-policy.md` — commit message and commit discipline policy
+3. `work/design/document-centric-interface.md` — document-centric human interface model (kbz-workflow)
+4. `work/spec/phase-1-specification.md` — Phase 1 scope and verification basis (kbz-workflow)
+5. `work/design/agent-interaction-protocol.md` — agent behavior and normalization protocol
+6. `work/design/quality-gates-and-review-policy.md` — review expectations and quality gates
+7. `work/design/git-commit-policy.md` — commit message and commit discipline policy
 
 Then refer to these as needed:
 
@@ -91,6 +96,7 @@ Then refer to these as needed:
 |---|---|---|
 | What we do right now | `work/bootstrap/bootstrap-workflow.md` | bootstrap |
 | What the system is and why | `work/design/workflow-design-basis.md` | kbz |
+| How humans interact with the system | `work/design/document-centric-interface.md` | kbz |
 | What Phase 1 must deliver | `work/spec/phase-1-specification.md` | kbz |
 | How agents should behave | `work/design/agent-interaction-protocol.md` | both |
 | How to review and verify work | `work/design/quality-gates-and-review-policy.md` | both |
@@ -103,7 +109,7 @@ Then refer to these as needed:
 When making a non-trivial change to any document:
 
 1. Identify which spec or design document owns the topic.
-2. Check whether a decision in `work/plan/phase-1-decision-log.md` has already resolved the question.
+2. Check whether a prior decision — in the relevant design documents or in `work/plan/phase-1-decision-log.md` — has already resolved the question.
 3. Check whether the design basis or specification says something different from what you intend.
 4. If there is a conflict or ambiguity, surface it to the human rather than guessing.
 
