@@ -1138,33 +1138,66 @@ To be determined.
 
 ## `P1-DEC-013: Local cache scope and rebuild behavior`
 
-- Status: proposed
-- Date: 2026-03-18
+- Status: accepted
+- Date: 2026-03-19
 - Scope: cache/query support
 - Related:
-  - `work/plan/phase-1-implementation-plan.md`
+  - `work/spec/phase-1-specification.md` §14.4
+  - `work/plan/phase-1-implementation-plan.md` §6.6, §7.7
+  - `work/plan/phase-1-audit-remediation.md` Track R6
 
 ### Decision
 
-To be determined.
+Phase 1 implements a local derived SQLite cache for entity query acceleration. The cache is stored at `.kbz/cache/kbz.db`, is rebuildable from canonical YAML state, is not canonical, and must not be committed to Git.
+
+**Schema.** A single `entities` table with columns: `entity_type`, `id`, `slug`, `status`, `title`, `summary`, `parent_ref`, `file_path`, `fields_json`. Primary key is `(entity_type, id)`. Indexes on `entity_type`, `id`, `(entity_type, status)`, and `(entity_type, parent_ref)`.
+
+**Scope.** The cache supports:
+- entity lookup by ID without requiring slug (`LookupByID`, `FindByID`)
+- entity existence checks (`EntityExists`)
+- list-by-type with cached field data (`ListByType`, `ListAll`)
+- full fields retrieval from cached JSON (`GetFields`)
+- count queries by type or total (`Count`)
+
+**Rebuild.** The `Rebuild` operation clears the cache and repopulates it in a single transaction from all canonical entity files. It is exposed as:
+- `rebuild_cache` MCP tool
+- `kbz cache rebuild` CLI command
+- `EntityService.RebuildCache()` in the service layer
+
+**Integration.** The cache is optional. `EntityService.SetCache(c)` attaches it. When attached, create/update/status-change operations update the cache best-effort (failures are silently ignored). When the cache is nil, all operations fall back to filesystem reads with no behavior change.
+
+**SQLite library.** `modernc.org/sqlite` (pure Go, no CGO) as specified in P1-DEC-016.
 
 ### Rationale
 
-To be determined.
+The spec (§14.4) requires a local derived cache for query performance. The implementation plan (§6.6) positions it as derived, disposable, and rebuildable. SQLite provides indexed queries without building a custom query engine. The single-table design is simple, covers all Phase 1 query patterns, and avoids premature normalisation.
+
+Storing the full fields as JSON in the cache enables the cache to serve as a complete read-through layer without requiring filesystem reads for most operations. This is acceptable because the cache is derived and rebuild is cheap (scanning YAML files is O(n) where n is small for Phase 1 projects).
+
+Best-effort cache updates on mutations keep the cache reasonably fresh without making it a correctness dependency. If the cache drifts, `rebuild_cache` restores consistency.
 
 ### Alternatives Considered
 
-- very minimal cache for search/health only
-- richer cache for broader queries
-- delayed cache introduction
+- **No cache (filesystem only)** — satisfies correctness but violates the spec requirement (§14.4) and leaves entity-by-ID lookup requiring a directory scan. Rejected.
+- **In-memory cache (map-based)** — simpler but lost on process restart. Every MCP server launch would require a full scan. SQLite persists across invocations and supports indexed queries.
+- **Richer cache with multiple tables** — normalised tables for references, cross-entity indexes, full-text search. Premature for Phase 1; the single-table design with JSON fields covers all current query patterns. Can be extended in Phase 2.
+- **Cache as mandatory dependency** — rejected. The spec requires the cache to be derived and non-canonical. All operations must work without it.
 
 ### Consequences
 
-To be determined.
+- `.kbz/cache/kbz.db` is created on first MCP server start or `kbz cache rebuild`
+- the cache directory is covered by the existing `.kbz/` gitignore rule
+- `modernc.org/sqlite` is added as a dependency (pure Go, no CGO)
+- entity lookup by ID without slug is now possible via the cache
+- cache staleness is bounded by best-effort updates on mutations
+- `rebuild_cache` is the recovery mechanism for any cache inconsistency
+- the cache does not store documents (document queries remain filesystem-based in Phase 1)
 
 ### Follow-up Needed
 
-- decide what depends on the cache in Phase 1
+- consider adding document metadata to the cache if document query performance becomes a concern
+- evaluate whether Phase 2's richer query needs (attribute filtering, text search) require schema changes or a separate cache layer
+- monitor whether best-effort cache updates are sufficient or whether stronger consistency guarantees are needed
 
 ---
 
