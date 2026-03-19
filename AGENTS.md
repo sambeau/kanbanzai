@@ -176,11 +176,112 @@ Do not let document changes accumulate uncommitted across long sessions.
 - **Spec is intent** — if code conflicts with the specification, surface the conflict to the human.
 - Do not silently resolve spec-vs-code conflicts in either direction without human input.
 
-## When Implementation Begins
+## Build and Test Commands
 
-Once the project has implementation code, this file should be updated to include:
+```
+go build ./...          # build everything
+go test ./...           # run all tests
+go test -race ./...     # run tests with race detector
+go vet ./...            # static analysis
+go fmt ./...            # format all code
+goimports -w .          # organise imports
+go mod tidy             # clean up dependencies
+```
 
-- Build and test commands
-- Test policy and definition of done
-- Code style and language conventions
-- Project-specific tooling instructions
+## Go Code Style
+
+### Formatting
+- Write idiomatic Go
+- Run `go fmt` before committing
+- Use `goimports` for import organisation
+- Maximum line length: 100 characters (soft limit)
+
+### Naming
+- Use camelCase for unexported identifiers
+- Use PascalCase for exported identifiers
+- Acronyms should be consistent case: `URL`, `HTTP`, `ID` (not `Url`, `Http`, `Id`)
+- Package names: lowercase, single word, no underscores
+
+### Error Handling
+- Always check errors; never use `_` to ignore them
+- Wrap errors with context: `fmt.Errorf("doing X: %w", err)`
+- Return errors, don't panic (except for truly unrecoverable situations)
+- Define sentinel errors with `errors.New` for errors that callers need to check
+
+### Comments
+- Exported functions must have doc comments
+- Doc comments start with the function name: `// FunctionName does...`
+- Use `// TODO:` for planned improvements
+- Use `// FIXME:` for known issues
+
+### Interfaces
+- Accept interfaces, return structs
+- Define interfaces at the consumer, not the provider
+- Keep interfaces small — one or two methods is ideal
+- Do not define interfaces preemptively; extract them when a second implementation or a test double is needed
+
+### Concurrency
+- Do not use goroutines unless there is a demonstrated need
+- Phase 1 is a request-response system — no concurrent workflows
+- If goroutines are needed later, pass `context.Context` and use it for cancellation
+
+### Package Design
+- Keep packages small and focused on a single responsibility
+- No circular imports — if two packages need each other, extract shared types into a third
+- The `internal/` directory is not importable from outside this module
+- No `init()` functions — they create hidden coupling and make testing harder
+
+## File Organisation
+```
+cmd/kanbanzai/    # binary entry point
+internal/         # all private packages (core logic, MCP server, CLI)
+```
+
+This is not a library. There is no `pkg/` directory.
+
+## Dependencies
+- Prefer the standard library when reasonable
+- Run `go mod tidy` after adding/removing dependencies
+- Commit `go.sum` with `go.mod`
+
+## Testing
+
+### Conventions
+- Test files: `*_test.go` in the same package
+- Test functions: `TestFunctionName_Scenario`
+- Use table-driven tests for multiple cases
+- Aim for meaningful coverage, not 100%
+
+### Test isolation
+- Tests must not depend on external services or network calls
+- Use `t.TempDir()` for filesystem tests — never write to the working directory
+- Test fixtures live in `testdata/` directories alongside the test files
+- Test helpers must call `t.Helper()` so failures report the caller's line number
+
+### What to test
+- Core validation logic (field validation, lifecycle transitions, referential integrity)
+- Serialisation and deterministic formatting (round-trip: write → read → compare)
+- ID allocation edge cases
+- Document validation (valid and invalid cases)
+- MCP operations (integration tests where practical)
+- CLI behaviour (integration tests where practical)
+
+### What not to test
+- Do not test the standard library
+- Do not write tests that only assert that a mock was called — test behaviour, not wiring
+- Do not test unexported functions directly unless they contain complex logic worth isolating
+
+## Code Knowledge Graph (codebase-memory-mcp)
+
+This project is indexed by `codebase-memory-mcp`, which provides a persistent
+knowledge graph of the Go codebase. When exploring code structure, prefer graph
+queries over grep for structural questions:
+
+- **"What calls this function?"** → `trace_call_path(function_name="X", direction="inbound")`
+- **"Show the architecture"** → `get_architecture(aspects=["all"])`
+- **"Find dead code"** → `search_graph(label="Function", max_degree=0, relationship="CALLS", direction="inbound", exclude_entry_points=true)`
+- **"What depends on package X?"** → Cypher queries via `query_graph`
+- **"What changed and what's affected?"** → `detect_changes()`
+
+The graph auto-syncs after the initial index. If it seems stale, run
+`index_repository(repo_path="/absolute/path/to/kanbanzai")` to force a refresh.
