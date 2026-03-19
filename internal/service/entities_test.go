@@ -3,11 +3,13 @@ package service
 import (
 	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 	"time"
 
 	"kanbanzai/internal/core"
 	"kanbanzai/internal/model"
+	"kanbanzai/internal/storage"
 	"kanbanzai/internal/validate"
 )
 
@@ -714,4 +716,305 @@ func newTestEntityService(root string, now string) *EntityService {
 	}
 
 	return svc
+}
+
+func TestEntityService_CreateBug_RejectsInvalidSeverity(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	_, err := svc.CreateBug(CreateBugInput{
+		Slug:       "test-bug",
+		Title:      "Test",
+		ReportedBy: "sam",
+		Observed:   "Bad",
+		Expected:   "Good",
+		Severity:   "extreme",
+	})
+	if err == nil {
+		t.Fatal("expected error for invalid severity, got nil")
+	}
+	if !strings.Contains(err.Error(), "severity") {
+		t.Fatalf("error should mention severity, got: %v", err)
+	}
+}
+
+func TestEntityService_CreateBug_RejectsInvalidPriority(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	_, err := svc.CreateBug(CreateBugInput{
+		Slug:       "test-bug",
+		Title:      "Test",
+		ReportedBy: "sam",
+		Observed:   "Bad",
+		Expected:   "Good",
+		Priority:   "urgent",
+	})
+	if err == nil {
+		t.Fatal("expected error for invalid priority, got nil")
+	}
+	if !strings.Contains(err.Error(), "priority") {
+		t.Fatalf("error should mention priority, got: %v", err)
+	}
+}
+
+func TestEntityService_CreateBug_RejectsInvalidType(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	_, err := svc.CreateBug(CreateBugInput{
+		Slug:       "test-bug",
+		Title:      "Test",
+		ReportedBy: "sam",
+		Observed:   "Bad",
+		Expected:   "Good",
+		Type:       "typo",
+	})
+	if err == nil {
+		t.Fatal("expected error for invalid bug type, got nil")
+	}
+	if !strings.Contains(err.Error(), "bug type") {
+		t.Fatalf("error should mention bug type, got: %v", err)
+	}
+}
+
+func TestEntityService_CreateBug_AcceptsValidEnums(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	got, err := svc.CreateBug(CreateBugInput{
+		Slug:       "test-bug",
+		Title:      "Test",
+		ReportedBy: "sam",
+		Observed:   "Bad",
+		Expected:   "Good",
+		Severity:   "critical",
+		Priority:   "high",
+		Type:       "specification-defect",
+	})
+	if err != nil {
+		t.Fatalf("CreateBug() error = %v", err)
+	}
+	if got.State["severity"] != "critical" {
+		t.Fatalf("severity = %q, want %q", got.State["severity"], "critical")
+	}
+	if got.State["priority"] != "high" {
+		t.Fatalf("priority = %q, want %q", got.State["priority"], "high")
+	}
+	if got.State["type"] != "specification-defect" {
+		t.Fatalf("type = %q, want %q", got.State["type"], "specification-defect")
+	}
+}
+
+func TestEntityService_ValidateCandidate_ValidEpic(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	errs := svc.ValidateCandidate("epic", map[string]any{
+		"id":         "E-001",
+		"slug":       "test",
+		"title":      "Test Epic",
+		"status":     "proposed",
+		"summary":    "A test epic",
+		"created":    "2026-03-19T12:00:00Z",
+		"created_by": "agent",
+	})
+	if len(errs) != 0 {
+		t.Fatalf("expected no errors, got %d: %v", len(errs), errs)
+	}
+}
+
+func TestEntityService_ValidateCandidate_MissingField(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	errs := svc.ValidateCandidate("epic", map[string]any{
+		"id":      "E-001",
+		"slug":    "test",
+		"status":  "proposed",
+		"summary": "A test epic",
+		"created": "2026-03-19T12:00:00Z",
+	})
+	if len(errs) == 0 {
+		t.Fatal("expected validation errors for missing fields, got none")
+	}
+
+	foundTitle := false
+	foundCreatedBy := false
+	for _, e := range errs {
+		if e.Field == "title" {
+			foundTitle = true
+		}
+		if e.Field == "created_by" {
+			foundCreatedBy = true
+		}
+	}
+	if !foundTitle {
+		t.Error("expected error for missing title field")
+	}
+	if !foundCreatedBy {
+		t.Error("expected error for missing created_by field")
+	}
+}
+
+func TestEntityService_ValidateCandidate_InvalidBugEnums(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	errs := svc.ValidateCandidate("bug", map[string]any{
+		"id":          "BUG-001",
+		"slug":        "test",
+		"title":       "Test Bug",
+		"status":      "reported",
+		"severity":    "extreme",
+		"priority":    "urgent",
+		"type":        "typo",
+		"reported_by": "sam",
+		"reported":    "2026-03-19T12:00:00Z",
+		"observed":    "Bad",
+		"expected":    "Good",
+	})
+	if len(errs) == 0 {
+		t.Fatal("expected validation errors for invalid enums, got none")
+	}
+
+	fieldErrors := make(map[string]bool)
+	for _, e := range errs {
+		fieldErrors[e.Field] = true
+	}
+	for _, f := range []string{"severity", "priority", "type"} {
+		if !fieldErrors[f] {
+			t.Errorf("expected error for invalid %s field", f)
+		}
+	}
+}
+
+func TestEntityService_HealthCheck_CleanProject(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	// Create a valid epic and a feature referencing it.
+	epicResult, err := svc.CreateEpic(CreateEpicInput{
+		Slug:      "health-test",
+		Title:     "Health Test Epic",
+		Summary:   "An epic for health checking",
+		CreatedBy: "agent",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
+
+	_, err = svc.CreateFeature(CreateFeatureInput{
+		Slug:      "health-feat",
+		Epic:      epicResult.ID,
+		Summary:   "A feature for health checking",
+		CreatedBy: "agent",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+
+	report, err := svc.HealthCheck()
+	if err != nil {
+		t.Fatalf("HealthCheck() error = %v", err)
+	}
+
+	if report.Summary.TotalEntities != 2 {
+		t.Fatalf("TotalEntities = %d, want 2", report.Summary.TotalEntities)
+	}
+	if report.Summary.ErrorCount != 0 {
+		t.Fatalf("ErrorCount = %d, want 0; errors: %v", report.Summary.ErrorCount, report.Errors)
+	}
+	if report.Summary.WarningCount != 0 {
+		t.Fatalf("WarningCount = %d, want 0; warnings: %v", report.Summary.WarningCount, report.Warnings)
+	}
+	if report.Summary.EntitiesByType["epic"] != 1 {
+		t.Fatalf("epic count = %d, want 1", report.Summary.EntitiesByType["epic"])
+	}
+	if report.Summary.EntitiesByType["feature"] != 1 {
+		t.Fatalf("feature count = %d, want 1", report.Summary.EntitiesByType["feature"])
+	}
+}
+
+func TestEntityService_HealthCheck_EmptyProject(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	report, err := svc.HealthCheck()
+	if err != nil {
+		t.Fatalf("HealthCheck() error = %v", err)
+	}
+
+	if report.Summary.TotalEntities != 0 {
+		t.Fatalf("TotalEntities = %d, want 0", report.Summary.TotalEntities)
+	}
+	if report.Summary.ErrorCount != 0 {
+		t.Fatalf("ErrorCount = %d, want 0", report.Summary.ErrorCount)
+	}
+}
+
+func TestEntityService_HealthCheck_DetectsBrokenReference(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	// Create a feature that references a non-existent epic.
+	// We need to bypass normal validation to get this state,
+	// so we write directly via the store.
+	featureFields := map[string]any{
+		"id":         "FEAT-001",
+		"slug":       "orphan-feat",
+		"epic":       "E-999",
+		"status":     "draft",
+		"summary":    "Feature with broken epic ref",
+		"created":    "2026-03-19T12:00:00Z",
+		"created_by": "agent",
+	}
+	_, err := svc.store.Write(storage.EntityRecord{
+		Type:   "feature",
+		ID:     "FEAT-001",
+		Slug:   "orphan-feat",
+		Fields: featureFields,
+	})
+	if err != nil {
+		t.Fatalf("store.Write() error = %v", err)
+	}
+
+	report, err := svc.HealthCheck()
+	if err != nil {
+		t.Fatalf("HealthCheck() error = %v", err)
+	}
+
+	if report.Summary.ErrorCount == 0 {
+		t.Fatal("expected errors for broken epic reference, got none")
+	}
+
+	foundEpicError := false
+	for _, e := range report.Errors {
+		if e.Field == "epic" && strings.Contains(e.Message, "E-999") {
+			foundEpicError = true
+		}
+	}
+	if !foundEpicError {
+		t.Fatalf("expected error about non-existent epic E-999, errors: %v", report.Errors)
+	}
 }

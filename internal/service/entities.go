@@ -218,14 +218,29 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		return CreateResult{}, err
 	}
 
+	severity := defaultString(input.Severity, string(model.BugSeverityMedium))
+	if err := validate.ValidateBugSeverity(severity); err != nil {
+		return CreateResult{}, err
+	}
+
+	priority := defaultString(input.Priority, string(model.BugPriorityMedium))
+	if err := validate.ValidateBugPriority(priority); err != nil {
+		return CreateResult{}, err
+	}
+
+	bugType := defaultString(input.Type, string(model.BugTypeImplementationDefect))
+	if err := validate.ValidateBugType(bugType); err != nil {
+		return CreateResult{}, err
+	}
+
 	entity := model.Bug{
 		ID:         idValue,
 		Slug:       normalizeSlug(input.Slug),
 		Title:      strings.TrimSpace(input.Title),
 		Status:     model.BugStatus("reported"),
-		Severity:   model.BugSeverity(defaultString(input.Severity, string(model.BugSeverityMedium))),
-		Priority:   model.BugPriority(defaultString(input.Priority, string(model.BugPriorityMedium))),
-		Type:       model.BugType(defaultString(input.Type, string(model.BugTypeImplementationDefect))),
+		Severity:   model.BugSeverity(severity),
+		Priority:   model.BugPriority(priority),
+		Type:       model.BugType(bugType),
 		ReportedBy: strings.TrimSpace(input.ReportedBy),
 		Reported:   s.now(),
 		Observed:   strings.TrimSpace(input.Observed),
@@ -269,6 +284,54 @@ func (s *EntityService) CreateDecision(input CreateDecisionInput) (CreateResult,
 	}
 
 	return s.write(entity)
+}
+
+// ValidateCandidate validates candidate entity data without persisting it.
+// It returns a list of validation errors, or an empty slice if the data is valid.
+func (s *EntityService) ValidateCandidate(entityType string, fields map[string]any) []validate.ValidationError {
+	return validate.ValidateRecord(entityType, fields)
+}
+
+// HealthCheck runs a comprehensive health check across all entities in the store.
+func (s *EntityService) HealthCheck() (*validate.HealthReport, error) {
+	loadAll := func() ([]validate.EntityInfo, error) {
+		var all []validate.EntityInfo
+		for _, kind := range []string{
+			string(model.EntityKindEpic),
+			string(model.EntityKindFeature),
+			string(model.EntityKindTask),
+			string(model.EntityKindBug),
+			string(model.EntityKindDecision),
+		} {
+			results, err := s.List(kind)
+			if err != nil {
+				return nil, fmt.Errorf("listing %s entities: %w", kind, err)
+			}
+			for _, r := range results {
+				all = append(all, validate.EntityInfo{
+					Type:   r.Type,
+					ID:     r.ID,
+					Fields: r.State,
+				})
+			}
+		}
+		return all, nil
+	}
+
+	entityExists := func(entityType, id string) bool {
+		results, err := s.List(entityType)
+		if err != nil {
+			return false
+		}
+		for _, r := range results {
+			if r.ID == id {
+				return true
+			}
+		}
+		return false
+	}
+
+	return validate.CheckHealth(loadAll, entityExists)
 }
 
 func (s *EntityService) Get(entityType, entityID, slug string) (GetResult, error) {
