@@ -74,6 +74,7 @@ func TestServer_ListTools(t *testing.T) {
 		"get_entity",
 		"list_entities",
 		"update_status",
+		"update_entity",
 		"validate_candidate",
 		"health_check",
 	}

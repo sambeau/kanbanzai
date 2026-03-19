@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -815,5 +816,71 @@ func TestMarshalCanonicalYAML_YAMLBooleanVariantsAreQuoted(t *testing.T) {
 		if got["comment"] != v {
 			t.Fatalf("YAML boolean variant round-trip mismatch for %q: got %v (type %T)", v, got["comment"], got["comment"])
 		}
+	}
+}
+
+func TestEntityStore_Load_NonExistentFile(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewEntityStore(root)
+
+	_, err := store.Load("epic", "E-999", "does-not-exist")
+	if err == nil {
+		t.Fatal("Load() error = nil, want non-nil for non-existent file")
+	}
+
+	errMsg := err.Error()
+	if !strings.Contains(errMsg, "not exist") && !strings.Contains(errMsg, "no such file") {
+		t.Fatalf("Load() error = %v, want error indicating file does not exist", err)
+	}
+}
+
+func TestEntityStore_Load_CorruptYAML(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewEntityStore(root)
+
+	dir := filepath.Join(root, "epics")
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		t.Fatalf("MkdirAll() error = %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(dir, "E-001-corrupt.yaml"), []byte("{{{{"), 0o644); err != nil {
+		t.Fatalf("WriteFile() error = %v", err)
+	}
+
+	_, err := store.Load("epic", "E-001", "corrupt")
+	if err == nil {
+		t.Fatal("Load() error = nil, want non-nil for corrupt YAML")
+	}
+
+	errMsg := err.Error()
+	if !strings.Contains(errMsg, "unmarshal") && !strings.Contains(errMsg, "parse") && !strings.Contains(errMsg, "invalid") {
+		t.Fatalf("Load() error = %v, want error about parsing/unmarshalling", err)
+	}
+}
+
+func TestEntityStore_Load_EmptyFile(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewEntityStore(root)
+
+	dir := filepath.Join(root, "epics")
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		t.Fatalf("MkdirAll() error = %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(dir, "E-001-empty.yaml"), []byte(""), 0o644); err != nil {
+		t.Fatalf("WriteFile() error = %v", err)
+	}
+
+	got, err := store.Load("epic", "E-001", "empty")
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+
+	if len(got.Fields) != 0 {
+		t.Fatalf("Load() fields = %v, want empty map for empty file", got.Fields)
 	}
 }

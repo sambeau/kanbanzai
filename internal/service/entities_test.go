@@ -1079,6 +1079,198 @@ func TestEntityService_CreateTask_RejectsNonExistentFeature(t *testing.T) {
 	}
 }
 
+func TestEntityService_UpdateEntity_CorrectField(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	created, err := svc.CreateEpic(CreateEpicInput{
+		Slug:      "phase-1-kernel",
+		Title:     "Phase 1 Kernel",
+		Summary:   "Build the initial workflow kernel",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
+
+	updated, err := svc.UpdateEntity(UpdateEntityInput{
+		Type:   created.Type,
+		ID:     created.ID,
+		Slug:   created.Slug,
+		Fields: map[string]string{"title": "Phase 1 Kernel (Revised)"},
+	})
+	if err != nil {
+		t.Fatalf("UpdateEntity() error = %v", err)
+	}
+
+	if updated.State["title"] != "Phase 1 Kernel (Revised)" {
+		t.Fatalf("UpdateEntity() title = %v, want %q", updated.State["title"], "Phase 1 Kernel (Revised)")
+	}
+
+	got, err := svc.Get(created.Type, created.ID, created.Slug)
+	if err != nil {
+		t.Fatalf("Get() after update error = %v", err)
+	}
+	if got.State["title"] != "Phase 1 Kernel (Revised)" {
+		t.Fatalf("persisted title = %v, want %q", got.State["title"], "Phase 1 Kernel (Revised)")
+	}
+}
+
+func TestEntityService_UpdateEntity_RejectsIDChange(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	created, err := svc.CreateEpic(CreateEpicInput{
+		Slug:      "phase-1-kernel",
+		Title:     "Phase 1 Kernel",
+		Summary:   "Build the initial workflow kernel",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
+
+	_, err = svc.UpdateEntity(UpdateEntityInput{
+		Type:   created.Type,
+		ID:     created.ID,
+		Slug:   created.Slug,
+		Fields: map[string]string{"id": "E-999"},
+	})
+	if err == nil {
+		t.Fatal("UpdateEntity() error = nil, want error about immutable id")
+	}
+	if !strings.Contains(err.Error(), "immutable") && !strings.Contains(err.Error(), "cannot") {
+		t.Fatalf("unexpected error: %v", err)
+	}
+}
+
+func TestEntityService_UpdateEntity_RejectsStatusChange(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	created, err := svc.CreateEpic(CreateEpicInput{
+		Slug:      "phase-1-kernel",
+		Title:     "Phase 1 Kernel",
+		Summary:   "Build the initial workflow kernel",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
+
+	_, err = svc.UpdateEntity(UpdateEntityInput{
+		Type:   created.Type,
+		ID:     created.ID,
+		Slug:   created.Slug,
+		Fields: map[string]string{"status": "done"},
+	})
+	if err == nil {
+		t.Fatal("UpdateEntity() error = nil, want error about status")
+	}
+	if !strings.Contains(err.Error(), "status") {
+		t.Fatalf("unexpected error: %v", err)
+	}
+}
+
+func TestEntityService_UpdateEntity_ValidatesResult(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	created, err := svc.CreateEpic(CreateEpicInput{
+		Slug:      "phase-1-kernel",
+		Title:     "Phase 1 Kernel",
+		Summary:   "Build the initial workflow kernel",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
+
+	_, err = svc.UpdateEntity(UpdateEntityInput{
+		Type:   created.Type,
+		ID:     created.ID,
+		Slug:   created.Slug,
+		Fields: map[string]string{"title": ""},
+	})
+	if err == nil {
+		t.Fatal("UpdateEntity() error = nil, want validation error for empty title")
+	}
+	if !strings.Contains(err.Error(), "validation") {
+		t.Fatalf("unexpected error: %v", err)
+	}
+}
+
+func TestEntityService_UpdateEntity_CorrectEpicReference(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	_, err := svc.CreateEpic(CreateEpicInput{
+		Slug:      "first-epic",
+		Title:     "First Epic",
+		Summary:   "The first epic",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic(first) error = %v", err)
+	}
+
+	_, err = svc.CreateEpic(CreateEpicInput{
+		Slug:      "second-epic",
+		Title:     "Second Epic",
+		Summary:   "The second epic",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic(second) error = %v", err)
+	}
+
+	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Slug:      "my-feature",
+		Epic:      "E-001",
+		Summary:   "A feature under first epic",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+
+	if feat.State["epic"] != "E-001" {
+		t.Fatalf("initial epic = %v, want %q", feat.State["epic"], "E-001")
+	}
+
+	updated, err := svc.UpdateEntity(UpdateEntityInput{
+		Type:   feat.Type,
+		ID:     feat.ID,
+		Slug:   feat.Slug,
+		Fields: map[string]string{"epic": "E-002"},
+	})
+	if err != nil {
+		t.Fatalf("UpdateEntity() error = %v", err)
+	}
+
+	if updated.State["epic"] != "E-002" {
+		t.Fatalf("updated epic = %v, want %q", updated.State["epic"], "E-002")
+	}
+
+	got, err := svc.Get(feat.Type, feat.ID, feat.Slug)
+	if err != nil {
+		t.Fatalf("Get() after update error = %v", err)
+	}
+	if got.State["epic"] != "E-002" {
+		t.Fatalf("persisted epic = %v, want %q", got.State["epic"], "E-002")
+	}
+}
+
 func TestEntityService_HealthCheck_DetectsBrokenReference(t *testing.T) {
 	t.Parallel()
 
@@ -1124,5 +1316,232 @@ func TestEntityService_HealthCheck_DetectsBrokenReference(t *testing.T) {
 	}
 	if !foundEpicError {
 		t.Fatalf("expected error about non-existent epic E-999, errors: %v", report.Errors)
+	}
+}
+
+func TestEntityService_EpicLifecycle(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	created, err := svc.CreateEpic(CreateEpicInput{
+		Slug:      "lifecycle-epic",
+		Title:     "Lifecycle Epic",
+		Summary:   "Test epic lifecycle transitions",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
+
+	if created.State["status"] != "proposed" {
+		t.Fatalf("initial status = %v, want %q", created.State["status"], "proposed")
+	}
+
+	transitions := []string{"approved", "active", "on-hold", "active", "done"}
+	current := created
+	for _, next := range transitions {
+		prev := current.State["status"]
+		updated, err := svc.UpdateStatus(UpdateStatusInput{
+			Type:   current.Type,
+			ID:     current.ID,
+			Slug:   current.Slug,
+			Status: next,
+		})
+		if err != nil {
+			t.Fatalf("UpdateStatus(%v -> %q) error = %v", prev, next, err)
+		}
+		if updated.State["status"] != next {
+			t.Fatalf("status after transition = %v, want %q", updated.State["status"], next)
+		}
+		current = CreateResult(updated)
+	}
+
+	// Terminal state: further transitions should be rejected.
+	_, err = svc.UpdateStatus(UpdateStatusInput{
+		Type:   current.Type,
+		ID:     current.ID,
+		Slug:   current.Slug,
+		Status: "proposed",
+	})
+	if err == nil {
+		t.Fatal("UpdateStatus() from terminal state should fail, got nil error")
+	}
+}
+
+func TestEntityService_TaskLifecycle(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	_, err := svc.CreateEpic(CreateEpicInput{
+		Slug:      "task-parent-epic",
+		Title:     "Task Parent Epic",
+		Summary:   "Epic for task lifecycle test",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
+
+	_, err = svc.CreateFeature(CreateFeatureInput{
+		Slug:      "task-parent-feature",
+		Epic:      "E-001",
+		Summary:   "Feature for task lifecycle test",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+
+	created, err := svc.CreateTask(CreateTaskInput{
+		Feature: "FEAT-001",
+		Slug:    "lifecycle-task",
+		Summary: "Test task lifecycle transitions",
+	})
+	if err != nil {
+		t.Fatalf("CreateTask() error = %v", err)
+	}
+
+	if created.State["status"] != "queued" {
+		t.Fatalf("initial status = %v, want %q", created.State["status"], "queued")
+	}
+
+	transitions := []string{"ready", "active", "needs-review", "done"}
+	current := created
+	for _, next := range transitions {
+		prev := current.State["status"]
+		updated, err := svc.UpdateStatus(UpdateStatusInput{
+			Type:   current.Type,
+			ID:     current.ID,
+			Slug:   current.Slug,
+			Status: next,
+		})
+		if err != nil {
+			t.Fatalf("UpdateStatus(%v -> %q) error = %v", prev, next, err)
+		}
+		if updated.State["status"] != next {
+			t.Fatalf("status after transition = %v, want %q", updated.State["status"], next)
+		}
+		current = CreateResult(updated)
+	}
+
+	// Terminal state: further transitions should be rejected.
+	_, err = svc.UpdateStatus(UpdateStatusInput{
+		Type:   current.Type,
+		ID:     current.ID,
+		Slug:   current.Slug,
+		Status: "active",
+	})
+	if err == nil {
+		t.Fatal("UpdateStatus() from terminal state should fail, got nil error")
+	}
+}
+
+func TestEntityService_DecisionLifecycle(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	created, err := svc.CreateDecision(CreateDecisionInput{
+		Slug:      "lifecycle-decision",
+		Summary:   "Test decision lifecycle transitions",
+		Rationale: "Verify lifecycle state machine",
+		DecidedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateDecision() error = %v", err)
+	}
+
+	if created.State["status"] != "proposed" {
+		t.Fatalf("initial status = %v, want %q", created.State["status"], "proposed")
+	}
+
+	transitions := []string{"accepted", "superseded"}
+	current := created
+	for _, next := range transitions {
+		prev := current.State["status"]
+		updated, err := svc.UpdateStatus(UpdateStatusInput{
+			Type:   current.Type,
+			ID:     current.ID,
+			Slug:   current.Slug,
+			Status: next,
+		})
+		if err != nil {
+			t.Fatalf("UpdateStatus(%v -> %q) error = %v", prev, next, err)
+		}
+		if updated.State["status"] != next {
+			t.Fatalf("status after transition = %v, want %q", updated.State["status"], next)
+		}
+		current = CreateResult(updated)
+	}
+
+	// Terminal state: further transitions should be rejected.
+	_, err = svc.UpdateStatus(UpdateStatusInput{
+		Type:   current.Type,
+		ID:     current.ID,
+		Slug:   current.Slug,
+		Status: "proposed",
+	})
+	if err == nil {
+		t.Fatal("UpdateStatus() from terminal state should fail, got nil error")
+	}
+}
+
+func TestEntityService_BugLifecycle_FullPath(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	created, err := svc.CreateBug(CreateBugInput{
+		Slug:       "lifecycle-bug",
+		Title:      "Lifecycle Bug",
+		ReportedBy: "sam",
+		Observed:   "Something broke",
+		Expected:   "It should work",
+	})
+	if err != nil {
+		t.Fatalf("CreateBug() error = %v", err)
+	}
+
+	if created.State["status"] != "reported" {
+		t.Fatalf("initial status = %v, want %q", created.State["status"], "reported")
+	}
+
+	transitions := []string{
+		"triaged", "reproduced", "planned", "in-progress",
+		"needs-review", "verified", "closed",
+	}
+	current := created
+	for _, next := range transitions {
+		prev := current.State["status"]
+		updated, err := svc.UpdateStatus(UpdateStatusInput{
+			Type:   current.Type,
+			ID:     current.ID,
+			Slug:   current.Slug,
+			Status: next,
+		})
+		if err != nil {
+			t.Fatalf("UpdateStatus(%v -> %q) error = %v", prev, next, err)
+		}
+		if updated.State["status"] != next {
+			t.Fatalf("status after transition = %v, want %q", updated.State["status"], next)
+		}
+		current = CreateResult(updated)
+	}
+
+	// Terminal state: further transitions should be rejected.
+	_, err = svc.UpdateStatus(UpdateStatusInput{
+		Type:   current.Type,
+		ID:     current.ID,
+		Slug:   current.Slug,
+		Status: "reported",
+	})
+	if err == nil {
+		t.Fatal("UpdateStatus() from terminal state should fail, got nil error")
 	}
 }
