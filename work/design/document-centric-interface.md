@@ -15,9 +15,11 @@
 
 This document defines the document-centric interface model for Kanbanzai.
 
-The core proposition is that the human interface to the workflow system should be **documents and chat**, not entity management. Humans write and read documents. Humans make decisions in conversation. The system and its agents handle the structured bookkeeping behind the scenes.
+Kanbanzai's primary purpose is the coordination of AI agent teams to efficiently turn designs into working software. It does this through an MCP server that replaces ad-hoc search, grep, and manual context-gathering with structured operations — presenting the right instructions, the right context, and the right constraints to each agent at the right time. The management and coordination of AI agents is as important as, and arguably more important than, the creation and management of design documents.
 
-This is a design-level change to how the system presents itself to humans. It does not eliminate or downgrade the internal entity model — it separates the human interface from the internal representation.
+This document addresses one side of that system: the human interface. The core proposition is that the human interface should be **documents and chat**, not entity management. Humans write and read documents. Humans make decisions in conversation. The system and its agents handle the structured bookkeeping behind the scenes.
+
+This is a design-level change to how the system presents itself to humans. It does not eliminate or downgrade the internal entity model, the agent coordination layer, or the MCP interface — it separates the human interface from the internal representation.
 
 ## 2. Problem Statement
 
@@ -198,7 +200,17 @@ It does not matter to the human how documents are stored internally. What matter
 - The system does not radically change meaning or make substantive changes to prose without approval.
 - The system may clean language, tidy formatting, and normalise structure on the way in — but the human approves before the document becomes canonical.
 
-### 7.2 The approve-before-canon workflow
+### 7.2 Document normalisation on ingest
+
+When a document enters the system, agents may normalise it: cleaning spelling and grammar, tightening prose, improving structure, resolving minor ambiguities. This is expected and desirable. In a team setting, normalisation helps maintain a consistent house style and level of verbosity — different contributors write differently, and the system should smooth those differences.
+
+Normalisation may rewrite substantially, not just patch individual words. Good prose sometimes requires restructuring a paragraph rather than correcting a sentence. This is acceptable provided the meaning is preserved and the human approves the result before the document becomes canonical.
+
+On subsequent edits, it is preferable to normalise only the changed sections. However, for coherence of prose this is not always possible — a change to one paragraph may require adjusting the flow of surrounding text. The agent should use judgement, and the human has the final say.
+
+The normalisation style — how formal, how terse, how much rewriting is acceptable — should be configurable at the project level, so teams can tune it to their preferences.
+
+### 7.3 The approve-before-canon workflow
 
 1. A human writes or discusses a document (or changes to a document) in chat.
 2. The agent normalises — cleans language, resolves ambiguity, structures internally — and presents the result: "I've updated the document, take a look."
@@ -207,13 +219,13 @@ It does not matter to the human how documents are stored internally. What matter
 
 This is the standard conversational editing workflow: the human says what they want, the agent makes it so, the human verifies. The system formalises this into the approval contract.
 
-### 7.3 Canonical documents are stable
+### 7.4 Canonical documents are stable
 
 Once a document is approved and committed to the system as canonical, the system returns it verbatim on retrieval. The system does not re-render, re-summarise, or re-normalise canonical documents on the way out. The approved form is the stored form.
 
 This ensures multi-user consistency: every person who retrieves a canonical document sees the same document, word for word.
 
-### 7.4 Chat as the decision-making interface
+### 7.5 Chat as the decision-making interface
 
 Humans make design decisions through conversation with AI agents. The agent is responsible for:
 
@@ -224,7 +236,7 @@ Humans make design decisions through conversation with AI agents. The agent is r
 
 The human never has to file a decision record, allocate an ID, or set a status. They have a conversation and approve the result.
 
-### 7.5 Two retrieval modes
+### 7.6 Two retrieval modes
 
 The system serves two audiences with different needs:
 
@@ -258,7 +270,17 @@ However, some degree of internal structuring is necessary for the system to do i
 
 The principle is: fragment internally for consistency, present externally as whole documents.
 
-### 8.4 Decision as an internal entity
+### 8.4 Context assembly for agents
+
+Internal fragmentation serves a second purpose beyond consistency: it enables precise context assembly for AI agents.
+
+The central problem in coordinating AI agent teams is context. Every agent has a finite context window. If each agent must ingest the full design library to understand its task, the system does not scale — contexts fill with irrelevant material, agents work slowly, and the risk of misinterpretation grows.
+
+By structuring documents internally — indexing decisions, linking requirements to features, connecting spec sections to design rationale, linking tasks to the specific parts of a plan and spec they implement — the system can compose a targeted context for each agent. An agent implementing a specific task receives the relevant slice of the design, the relevant specification sections, the relevant decisions, and the relevant constraints — assembled from fragments across the document layers — without receiving every design document in the project.
+
+This is the architectural payoff of the document-to-entity mapping. Humans work with whole documents because that is how humans think. The system fragments documents internally because that is how it can efficiently coordinate many agents working in parallel, each with precisely the context they need and nothing more.
+
+### 8.5 Decision as an internal entity
 
 Decision remains a first-class entity in the system's internal model. It has an ID, a lifecycle, links to affected entities, rationale, and the other fields defined in the current specification.
 
@@ -381,6 +403,7 @@ The existing supersession model (§10 of the design basis) may apply: the old do
 - It is **not a proposal to remove entities**. The internal entity model is preserved. This document changes how humans interact with the system, not what the system tracks internally.
 - It is **not a proposal to turn the system into a document store**. The system maintains policy, enforces lifecycles, validates consistency, and manages structured state. Documents are the interface, not the whole system.
 - It is **not a proposal to eliminate decisions**. Decisions are tracked, indexed, linked, and enforceable. They just aren't a human-facing workflow step.
+- It is **not the whole system design**. This document addresses the human interface layer. The coordination and management of AI agent teams — context assembly, task delegation, progress tracking, verification — is the system's primary function and is addressed by the broader design basis and specification. This document complements that work; it does not supersede it.
 
 ## 14. Acceptance Criteria for This Design
 
