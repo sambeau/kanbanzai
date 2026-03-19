@@ -691,6 +691,33 @@ func (f *fakeEntityService) UpdateStatus(input service.UpdateStatusInput) (servi
 	return result, nil
 }
 
+func (f *fakeEntityService) UpdateEntity(input service.UpdateEntityInput) (service.GetResult, error) {
+	if strings.TrimSpace(input.Type) == "" {
+		return service.GetResult{}, &testError{"type is required"}
+	}
+	if strings.TrimSpace(input.ID) == "" {
+		return service.GetResult{}, &testError{"id is required"}
+	}
+	if strings.TrimSpace(input.Slug) == "" {
+		return service.GetResult{}, &testError{"slug is required"}
+	}
+	if _, ok := input.Fields["id"]; ok {
+		return service.GetResult{}, &testError{"cannot update id: field is immutable"}
+	}
+	if _, ok := input.Fields["status"]; ok {
+		return service.GetResult{}, &testError{"cannot update status: use update_status instead"}
+	}
+
+	result, err := f.Get(input.Type, input.ID, input.Slug)
+	if err != nil {
+		return service.GetResult{}, err
+	}
+	for k, v := range input.Fields {
+		result.State[k] = v
+	}
+	return result, nil
+}
+
 func normalizeTestSlug(value string) string {
 	value = strings.TrimSpace(strings.ToLower(value))
 	value = strings.ReplaceAll(value, " ", "-")

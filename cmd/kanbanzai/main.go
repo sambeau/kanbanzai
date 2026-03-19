@@ -19,6 +19,7 @@ type entityService interface {
 	Get(entityType, entityID, slug string) (service.GetResult, error)
 	List(entityType string) ([]service.ListResult, error)
 	UpdateStatus(service.UpdateStatusInput) (service.GetResult, error)
+	UpdateEntity(service.UpdateEntityInput) (service.GetResult, error)
 }
 
 type dependencies struct {
@@ -221,35 +222,77 @@ func runUpdate(args []string, deps dependencies) error {
 		return fmt.Errorf("missing update target\n\n%s", updateUsageText)
 	}
 
-	if args[0] != "status" {
+	switch args[0] {
+	case "status":
+		values, err := parseFlags(args[1:])
+		if err != nil {
+			return err
+		}
+
+		entityType := values["type"]
+		if entityType == "" {
+			entityType = values["entity"]
+		}
+		if entityType == "" {
+			return fmt.Errorf("type is required\n\n%s", updateUsageText)
+		}
+
+		svc := deps.newEntityService("")
+		result, err := svc.UpdateStatus(service.UpdateStatusInput{
+			Type:   entityType,
+			ID:     values["id"],
+			Slug:   values["slug"],
+			Status: values["status"],
+		})
+		if err != nil {
+			return err
+		}
+
+		return printStatusUpdateResult(deps.stdout, result)
+
+	case "fields":
+		values, err := parseFlags(args[1:])
+		if err != nil {
+			return err
+		}
+
+		entityType := values["type"]
+		if entityType == "" {
+			return fmt.Errorf("type is required\n\n%s", updateUsageText)
+		}
+		id := values["id"]
+		if id == "" {
+			return fmt.Errorf("id is required\n\n%s", updateUsageText)
+		}
+		slug := values["slug"]
+		if slug == "" {
+			return fmt.Errorf("slug is required\n\n%s", updateUsageText)
+		}
+
+		fields := make(map[string]string, len(values))
+		for k, v := range values {
+			if k == "type" || k == "id" || k == "slug" {
+				continue
+			}
+			fields[k] = v
+		}
+
+		svc := deps.newEntityService("")
+		result, err := svc.UpdateEntity(service.UpdateEntityInput{
+			Type:   entityType,
+			ID:     id,
+			Slug:   slug,
+			Fields: fields,
+		})
+		if err != nil {
+			return err
+		}
+
+		return printGetResult(deps.stdout, result)
+
+	default:
 		return fmt.Errorf("unknown update target %q\n\n%s", args[0], updateUsageText)
 	}
-
-	values, err := parseFlags(args[1:])
-	if err != nil {
-		return err
-	}
-
-	entityType := values["type"]
-	if entityType == "" {
-		entityType = values["entity"]
-	}
-	if entityType == "" {
-		return fmt.Errorf("type is required\n\n%s", updateUsageText)
-	}
-
-	svc := deps.newEntityService("")
-	result, err := svc.UpdateStatus(service.UpdateStatusInput{
-		Type:   entityType,
-		ID:     values["id"],
-		Slug:   values["slug"],
-		Status: values["status"],
-	})
-	if err != nil {
-		return err
-	}
-
-	return printStatusUpdateResult(deps.stdout, result)
 }
 
 func parseFlags(args []string) (map[string]string, error) {
@@ -433,11 +476,23 @@ Collections:
   decisions
 `
 
-const updateUsageText = `kanbanzai update status [flags]
+const updateUsageText = `kanbanzai update <subcommand> [flags]
 
-Flags:
+Subcommands:
+  status    Update the lifecycle status of an entity
+  fields    Update fields of an existing entity (error correction)
+
+status flags:
   --type
   --id
   --slug
   --status
+
+fields flags:
+  --type
+  --id
+  --slug
+  --<field_name> <value>   (any other flags become field updates)
+
+Cannot change id (immutable) or status (use update status).
 `
