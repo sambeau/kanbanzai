@@ -360,11 +360,22 @@ Optional but recommended in Phase 1:
 - `rationale`
 - `decided_by`
 - `date`
+- `status`
 
 Optional but recommended in Phase 1:
 - `affects`
 - `supersedes`
 - `superseded_by`
+
+> **Correction (2026-03-19):** `status` was added to this list. It was originally
+> omitted, but §10.5 defines Decision lifecycle states (`proposed`, `accepted`,
+> `rejected`, `superseded`) and P1-DEC-010 defines the entry state as `proposed`
+> with explicit transition rules — all of which require a `status` field on the
+> canonical record. Every other entity type already listed `status` in its §9
+> minimum fields. The implementation correctly included `status` from the start;
+> this edit aligns the spec with itself. The field is system-generated with the
+> entry-state value `proposed`, consistent with P1-DEC-009's classification
+> pattern for other entity types.
 
 ---
 

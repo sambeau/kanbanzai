@@ -7,6 +7,7 @@
 *.dll
 *.so
 *.dylib
+kanbanzai
 
 # Test binary, built with `go test -c`
 *.test
@@ -48,5 +49,7 @@ Desktop.ini
 # Linux
 .directory
 
-# Kanbanzai instance cache (derived, not committed)
-.kbz/cache/
+# Kanbanzai instance state and cache
+.kbz/
+!.kbz/
+!.kbz/.gitkeep

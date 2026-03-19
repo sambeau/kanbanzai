@@ -828,6 +828,7 @@ Caller supplies: `slug`, `title`, `reported_by`, `observed`, `expected` (5 field
 | Field | Category | Default |
 |---|---|---|
 | `id` | system-generated | allocated via `id_allocate` |
+| `status` | system-generated | `proposed` |
 | `date` | system-generated | current timestamp |
 | `slug` | caller-must-supply | — |
 | `summary` | caller-must-supply | — |
@@ -835,6 +836,8 @@ Caller supplies: `slug`, `title`, `reported_by`, `observed`, `expected` (5 field
 | `decided_by` | caller-must-supply | — |
 
 Caller supplies: `slug`, `summary`, `rationale`, `decided_by` (4 fields).
+
+Note: `status` was added to this table as a correction. The original version omitted it, but Decision lifecycle states (`proposed`, `accepted`, `rejected`, `superseded`) are defined in P1-DEC-010 and require a `status` field. The omission was an oversight — every other entity type included `status` as system-generated. The implementation has always set `status: "proposed"` at creation time. See also the corresponding correction in spec §9.5.
 
 #### Default values for Bug fields
 

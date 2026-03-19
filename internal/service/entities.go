@@ -1,0 +1,751 @@
+package service
+
+import (
+	"fmt"
+	"path/filepath"
+	"sort"
+	"strings"
+	"time"
+
+	"kanbanzai/internal/core"
+	"kanbanzai/internal/id"
+	"kanbanzai/internal/model"
+	"kanbanzai/internal/storage"
+	"kanbanzai/internal/validate"
+)
+
+type CreateEpicInput struct {
+	Slug      string
+	Title     string
+	Summary   string
+	CreatedBy string
+}
+
+type CreateFeatureInput struct {
+	Slug      string
+	Epic      string
+	Summary   string
+	CreatedBy string
+}
+
+type CreateTaskInput struct {
+	Feature string
+	Slug    string
+	Summary string
+}
+
+type CreateBugInput struct {
+	Slug       string
+	Title      string
+	ReportedBy string
+	Observed   string
+	Expected   string
+	Severity   string
+	Priority   string
+	Type       string
+}
+
+type CreateDecisionInput struct {
+	Slug      string
+	Summary   string
+	Rationale string
+	DecidedBy string
+}
+
+type UpdateStatusInput struct {
+	Type   string
+	ID     string
+	Slug   string
+	Status string
+}
+
+type CreateResult struct {
+	Type  string
+	ID    string
+	Slug  string
+	Path  string
+	State map[string]any
+}
+
+type GetResult = CreateResult
+
+type ListResult struct {
+	Type  string
+	ID    string
+	Slug  string
+	Path  string
+	State map[string]any
+}
+
+type EntityService struct {
+	root      string
+	store     *storage.EntityStore
+	allocator *id.Allocator
+	now       func() time.Time
+}
+
+func NewEntityService(root string) *EntityService {
+	if strings.TrimSpace(root) == "" {
+		root = core.StatePath()
+	}
+
+	return &EntityService{
+		root:      root,
+		store:     storage.NewEntityStore(root),
+		allocator: id.NewAllocator(),
+		now: func() time.Time {
+			return time.Now().UTC()
+		},
+	}
+}
+
+func (s *EntityService) CreateEpic(input CreateEpicInput) (CreateResult, error) {
+	if err := validateRequired(
+		field("slug", input.Slug),
+		field("title", input.Title),
+		field("summary", input.Summary),
+		field("created_by", input.CreatedBy),
+	); err != nil {
+		return CreateResult{}, err
+	}
+
+	idValue, err := s.allocateTypedID(model.EntityKindEpic)
+	if err != nil {
+		return CreateResult{}, err
+	}
+
+	entity := model.Epic{
+		ID:        idValue,
+		Slug:      normalizeSlug(input.Slug),
+		Title:     strings.TrimSpace(input.Title),
+		Status:    model.EpicStatus("proposed"),
+		Summary:   strings.TrimSpace(input.Summary),
+		Created:   s.now(),
+		CreatedBy: strings.TrimSpace(input.CreatedBy),
+	}
+
+	if err := validate.ValidateInitialState(validate.EntityEpic, string(entity.Status)); err != nil {
+		return CreateResult{}, err
+	}
+
+	return s.write(entity)
+}
+
+func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, error) {
+	if err := validateRequired(
+		field("slug", input.Slug),
+		field("epic", input.Epic),
+		field("summary", input.Summary),
+		field("created_by", input.CreatedBy),
+	); err != nil {
+		return CreateResult{}, err
+	}
+
+	idValue, err := s.allocateTypedID(model.EntityKindFeature)
+	if err != nil {
+		return CreateResult{}, err
+	}
+
+	entity := model.Feature{
+		ID:        idValue,
+		Slug:      normalizeSlug(input.Slug),
+		Epic:      strings.TrimSpace(input.Epic),
+		Status:    model.FeatureStatus("draft"),
+		Summary:   strings.TrimSpace(input.Summary),
+		Created:   s.now(),
+		CreatedBy: strings.TrimSpace(input.CreatedBy),
+	}
+
+	if err := validate.ValidateInitialState(validate.EntityFeature, string(entity.Status)); err != nil {
+		return CreateResult{}, err
+	}
+
+	return s.write(entity)
+}
+
+func (s *EntityService) CreateTask(input CreateTaskInput) (CreateResult, error) {
+	if err := validateRequired(
+		field("feature", input.Feature),
+		field("slug", input.Slug),
+		field("summary", input.Summary),
+	); err != nil {
+		return CreateResult{}, err
+	}
+
+	featureID := strings.TrimSpace(input.Feature)
+	if err := s.allocator.Validate(model.EntityKindFeature, featureID, ""); err != nil {
+		return CreateResult{}, fmt.Errorf("feature: %w", err)
+	}
+
+	existingTaskIDs, err := s.listEntityIDs(string(model.EntityKindTask))
+	if err != nil {
+		return CreateResult{}, err
+	}
+
+	idValue, err := s.allocator.Allocate(model.EntityKindTask, existingTaskIDs, featureID)
+	if err != nil {
+		return CreateResult{}, err
+	}
+
+	entity := model.Task{
+		ID:      idValue,
+		Feature: featureID,
+		Slug:    normalizeSlug(input.Slug),
+		Summary: strings.TrimSpace(input.Summary),
+		Status:  model.TaskStatus("queued"),
+	}
+
+	if err := validate.ValidateInitialState(validate.EntityTask, string(entity.Status)); err != nil {
+		return CreateResult{}, err
+	}
+
+	return s.write(entity)
+}
+
+func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
+	if err := validateRequired(
+		field("slug", input.Slug),
+		field("title", input.Title),
+		field("reported_by", input.ReportedBy),
+		field("observed", input.Observed),
+		field("expected", input.Expected),
+	); err != nil {
+		return CreateResult{}, err
+	}
+
+	idValue, err := s.allocateTypedID(model.EntityKindBug)
+	if err != nil {
+		return CreateResult{}, err
+	}
+
+	entity := model.Bug{
+		ID:         idValue,
+		Slug:       normalizeSlug(input.Slug),
+		Title:      strings.TrimSpace(input.Title),
+		Status:     model.BugStatus("reported"),
+		Severity:   model.BugSeverity(defaultString(input.Severity, string(model.BugSeverityMedium))),
+		Priority:   model.BugPriority(defaultString(input.Priority, string(model.BugPriorityMedium))),
+		Type:       model.BugType(defaultString(input.Type, string(model.BugTypeImplementationDefect))),
+		ReportedBy: strings.TrimSpace(input.ReportedBy),
+		Reported:   s.now(),
+		Observed:   strings.TrimSpace(input.Observed),
+		Expected:   strings.TrimSpace(input.Expected),
+	}
+
+	if err := validate.ValidateInitialState(validate.EntityBug, string(entity.Status)); err != nil {
+		return CreateResult{}, err
+	}
+
+	return s.write(entity)
+}
+
+func (s *EntityService) CreateDecision(input CreateDecisionInput) (CreateResult, error) {
+	if err := validateRequired(
+		field("slug", input.Slug),
+		field("summary", input.Summary),
+		field("rationale", input.Rationale),
+		field("decided_by", input.DecidedBy),
+	); err != nil {
+		return CreateResult{}, err
+	}
+
+	idValue, err := s.allocateTypedID(model.EntityKindDecision)
+	if err != nil {
+		return CreateResult{}, err
+	}
+
+	entity := model.Decision{
+		ID:        idValue,
+		Slug:      normalizeSlug(input.Slug),
+		Summary:   strings.TrimSpace(input.Summary),
+		Rationale: strings.TrimSpace(input.Rationale),
+		DecidedBy: strings.TrimSpace(input.DecidedBy),
+		Date:      s.now(),
+		Status:    model.DecisionStatus("proposed"),
+	}
+
+	if err := validate.ValidateInitialState(validate.EntityDecision, string(entity.Status)); err != nil {
+		return CreateResult{}, err
+	}
+
+	return s.write(entity)
+}
+
+func (s *EntityService) Get(entityType, entityID, slug string) (GetResult, error) {
+	entityType = strings.ToLower(strings.TrimSpace(entityType))
+	entityID = strings.TrimSpace(entityID)
+	slug = normalizeSlug(slug)
+
+	if entityType == "" {
+		return GetResult{}, fmt.Errorf("entity type is required")
+	}
+	if entityID == "" {
+		return GetResult{}, fmt.Errorf("entity id is required")
+	}
+	if slug == "" {
+		return GetResult{}, fmt.Errorf("entity slug is required")
+	}
+
+	record, err := s.store.Load(entityType, entityID, slug)
+	if err != nil {
+		return GetResult{}, err
+	}
+
+	return GetResult{
+		Type:  record.Type,
+		ID:    record.ID,
+		Slug:  record.Slug,
+		Path:  filepath.Join(core.StatePath(), entityDirectory(record.Type), entityFileName(record.ID, record.Slug)),
+		State: record.Fields,
+	}, nil
+}
+
+func (s *EntityService) List(entityType string) ([]ListResult, error) {
+	entityType = strings.ToLower(strings.TrimSpace(entityType))
+	if entityType == "" {
+		return nil, fmt.Errorf("entity type is required")
+	}
+
+	dir := filepath.Join(s.root, entityDirectory(entityType))
+	entries, err := filepath.Glob(filepath.Join(dir, "*.yaml"))
+	if err != nil {
+		return nil, fmt.Errorf("list %s entities: %w", entityType, err)
+	}
+
+	sort.Strings(entries)
+
+	results := make([]ListResult, 0, len(entries))
+	for _, entry := range entries {
+		record, err := s.loadRecordFromPath(entityType, entry)
+		if err != nil {
+			return nil, err
+		}
+
+		results = append(results, ListResult{
+			Type:  record.Type,
+			ID:    record.ID,
+			Slug:  record.Slug,
+			Path:  entry,
+			State: record.Fields,
+		})
+	}
+
+	return results, nil
+}
+
+func (s *EntityService) UpdateStatus(input UpdateStatusInput) (GetResult, error) {
+	entityType := strings.ToLower(strings.TrimSpace(input.Type))
+	entityID := strings.TrimSpace(input.ID)
+	slug := normalizeSlug(input.Slug)
+	nextStatus := strings.TrimSpace(input.Status)
+
+	if err := validateRequired(
+		field("type", entityType),
+		field("id", entityID),
+		field("slug", slug),
+		field("status", nextStatus),
+	); err != nil {
+		return GetResult{}, err
+	}
+
+	record, err := s.store.Load(entityType, entityID, slug)
+	if err != nil {
+		return GetResult{}, err
+	}
+
+	currentStatus, ok := record.Fields["status"]
+	if !ok {
+		return GetResult{}, fmt.Errorf("%s %s has no status field", entityType, entityID)
+	}
+
+	kind, err := validateKindForType(entityType)
+	if err != nil {
+		return GetResult{}, err
+	}
+
+	currentStatusText := strings.TrimSpace(fmt.Sprint(currentStatus))
+	if err := validate.ValidateTransition(kind, currentStatusText, nextStatus); err != nil {
+		return GetResult{}, err
+	}
+
+	record.Fields["status"] = nextStatus
+	path, err := s.store.Write(record)
+	if err != nil {
+		return GetResult{}, err
+	}
+
+	return GetResult{
+		Type:  record.Type,
+		ID:    record.ID,
+		Slug:  record.Slug,
+		Path:  path,
+		State: record.Fields,
+	}, nil
+}
+
+func (s *EntityService) write(entity model.Entity) (CreateResult, error) {
+	record, err := recordFromEntity(entity)
+	if err != nil {
+		return CreateResult{}, err
+	}
+
+	path, err := s.store.Write(record)
+	if err != nil {
+		return CreateResult{}, err
+	}
+
+	return CreateResult{
+		Type:  record.Type,
+		ID:    record.ID,
+		Slug:  record.Slug,
+		Path:  path,
+		State: record.Fields,
+	}, nil
+}
+
+func (s *EntityService) allocateTypedID(entityKind model.EntityKind) (string, error) {
+	existingIDs, err := s.listEntityIDs(string(entityKind))
+	if err != nil {
+		return "", err
+	}
+
+	idValue, err := s.allocator.Allocate(entityKind, existingIDs, "")
+	if err != nil {
+		return "", err
+	}
+
+	return idValue, nil
+}
+
+func (s *EntityService) listEntityIDs(entityType string) ([]string, error) {
+	dir := filepath.Join(s.root, entityDirectory(entityType))
+	entries, err := filepath.Glob(filepath.Join(dir, "*.yaml"))
+	if err != nil {
+		return nil, fmt.Errorf("list existing %s ids: %w", entityType, err)
+	}
+
+	ids := make([]string, 0, len(entries))
+	for _, entry := range entries {
+		base := filepath.Base(entry)
+		idPart := strings.TrimSuffix(base, filepath.Ext(base))
+
+		switch entityType {
+		case "epic", "feature", "bug", "decision":
+			firstDash := strings.Index(idPart, "-")
+			if firstDash > 0 {
+				secondDash := strings.Index(idPart[firstDash+1:], "-")
+				if secondDash > 0 {
+					ids = append(ids, idPart[:firstDash+1+secondDash])
+				}
+			}
+		case "task":
+			firstDash := strings.Index(idPart, "-")
+			if firstDash > 0 {
+				slugDash := strings.Index(idPart[firstDash+1:], "-")
+				if slugDash > 0 {
+					ids = append(ids, idPart[:firstDash+1+slugDash])
+				}
+			}
+		}
+	}
+
+	return ids, nil
+}
+
+func (s *EntityService) loadRecordFromPath(entityType, path string) (storage.EntityRecord, error) {
+	base := filepath.Base(path)
+	idPart := strings.TrimSuffix(base, filepath.Ext(base))
+
+	idValue, slug, err := parseRecordIdentity(entityType, idPart)
+	if err != nil {
+		return storage.EntityRecord{}, err
+	}
+
+	record, err := s.store.Load(entityType, idValue, slug)
+	if err != nil {
+		return storage.EntityRecord{}, err
+	}
+
+	return record, nil
+}
+
+func entityDirectory(entityType string) string {
+	return strings.ToLower(strings.TrimSpace(entityType)) + "s"
+}
+
+func entityFileName(idValue, slug string) string {
+	return fmt.Sprintf("%s-%s.yaml", idValue, slug)
+}
+
+type requiredField struct {
+	name  string
+	value string
+}
+
+func field(name, value string) requiredField {
+	return requiredField{name: name, value: value}
+}
+
+func validateRequired(fields ...requiredField) error {
+	for _, f := range fields {
+		if strings.TrimSpace(f.value) == "" {
+			return fmt.Errorf("%s is required", f.name)
+		}
+	}
+	return nil
+}
+
+func normalizeSlug(value string) string {
+	value = strings.TrimSpace(strings.ToLower(value))
+	value = strings.ReplaceAll(value, " ", "-")
+	for strings.Contains(value, "--") {
+		value = strings.ReplaceAll(value, "--", "-")
+	}
+	return strings.Trim(value, "-")
+}
+
+func defaultString(value, fallback string) string {
+	value = strings.TrimSpace(value)
+	if value == "" {
+		return fallback
+	}
+	return value
+}
+
+func validateKindForType(entityType string) (validate.EntityKind, error) {
+	switch entityType {
+	case string(model.EntityKindEpic):
+		return validate.EntityEpic, nil
+	case string(model.EntityKindFeature):
+		return validate.EntityFeature, nil
+	case string(model.EntityKindTask):
+		return validate.EntityTask, nil
+	case string(model.EntityKindBug):
+		return validate.EntityBug, nil
+	case string(model.EntityKindDecision):
+		return validate.EntityDecision, nil
+	default:
+		return "", fmt.Errorf("unknown entity type %q", entityType)
+	}
+}
+
+func parseRecordIdentity(entityType, idPart string) (string, string, error) {
+	switch entityType {
+	case string(model.EntityKindEpic), string(model.EntityKindFeature),
+		string(model.EntityKindBug), string(model.EntityKindDecision):
+		firstDash := strings.Index(idPart, "-")
+		if firstDash <= 0 {
+			return "", "", fmt.Errorf("invalid %s record filename %q", entityType, idPart)
+		}
+
+		secondDash := strings.Index(idPart[firstDash+1:], "-")
+		if secondDash <= 0 {
+			return "", "", fmt.Errorf("invalid %s record filename %q", entityType, idPart)
+		}
+
+		idEnd := firstDash + 1 + secondDash
+		return idPart[:idEnd], idPart[idEnd+1:], nil
+	case string(model.EntityKindTask):
+		firstDash := strings.Index(idPart, "-")
+		if firstDash <= 0 {
+			return "", "", fmt.Errorf("invalid %s record filename %q", entityType, idPart)
+		}
+
+		slugDash := strings.Index(idPart[firstDash+1:], "-")
+		if slugDash <= 0 {
+			return "", "", fmt.Errorf("invalid %s record filename %q", entityType, idPart)
+		}
+
+		idEnd := firstDash + 1 + slugDash
+		return idPart[:idEnd], idPart[idEnd+1:], nil
+	default:
+		return "", "", fmt.Errorf("unknown entity type %q", entityType)
+	}
+}
+
+func recordFromEntity(entity model.Entity) (storage.EntityRecord, error) {
+	switch e := entity.(type) {
+	case model.Epic:
+		return storage.EntityRecord{
+			Type:   string(model.EntityKindEpic),
+			ID:     e.ID,
+			Slug:   e.Slug,
+			Fields: epicFields(e),
+		}, nil
+	case model.Feature:
+		return storage.EntityRecord{
+			Type:   string(model.EntityKindFeature),
+			ID:     e.ID,
+			Slug:   e.Slug,
+			Fields: featureFields(e),
+		}, nil
+	case model.Task:
+		return storage.EntityRecord{
+			Type:   string(model.EntityKindTask),
+			ID:     e.ID,
+			Slug:   e.Slug,
+			Fields: taskFields(e),
+		}, nil
+	case model.Bug:
+		return storage.EntityRecord{
+			Type:   string(model.EntityKindBug),
+			ID:     e.ID,
+			Slug:   e.Slug,
+			Fields: bugFields(e),
+		}, nil
+	case model.Decision:
+		return storage.EntityRecord{
+			Type:   string(model.EntityKindDecision),
+			ID:     e.ID,
+			Slug:   e.Slug,
+			Fields: decisionFields(e),
+		}, nil
+	default:
+		return storage.EntityRecord{}, fmt.Errorf("unsupported entity type %T", entity)
+	}
+}
+
+func epicFields(e model.Epic) map[string]any {
+	fields := map[string]any{
+		"id":         e.ID,
+		"slug":       e.Slug,
+		"title":      e.Title,
+		"status":     string(e.Status),
+		"summary":    e.Summary,
+		"created":    e.Created.Format(time.RFC3339),
+		"created_by": e.CreatedBy,
+	}
+	if len(e.Features) > 0 {
+		fields["features"] = append([]string(nil), e.Features...)
+	}
+	return fields
+}
+
+func featureFields(e model.Feature) map[string]any {
+	fields := map[string]any{
+		"id":         e.ID,
+		"slug":       e.Slug,
+		"epic":       e.Epic,
+		"status":     string(e.Status),
+		"summary":    e.Summary,
+		"created":    e.Created.Format(time.RFC3339),
+		"created_by": e.CreatedBy,
+	}
+	if e.Spec != "" {
+		fields["spec"] = e.Spec
+	}
+	if e.Plan != "" {
+		fields["plan"] = e.Plan
+	}
+	if len(e.Tasks) > 0 {
+		fields["tasks"] = append([]string(nil), e.Tasks...)
+	}
+	if len(e.Decisions) > 0 {
+		fields["decisions"] = append([]string(nil), e.Decisions...)
+	}
+	if e.Branch != "" {
+		fields["branch"] = e.Branch
+	}
+	if e.Supersedes != "" {
+		fields["supersedes"] = e.Supersedes
+	}
+	if e.SupersededBy != "" {
+		fields["superseded_by"] = e.SupersededBy
+	}
+	return fields
+}
+
+func taskFields(e model.Task) map[string]any {
+	fields := map[string]any{
+		"id":      e.ID,
+		"feature": e.Feature,
+		"slug":    e.Slug,
+		"summary": e.Summary,
+		"status":  string(e.Status),
+	}
+	if e.Assignee != "" {
+		fields["assignee"] = e.Assignee
+	}
+	if len(e.DependsOn) > 0 {
+		fields["depends_on"] = append([]string(nil), e.DependsOn...)
+	}
+	if len(e.FilesPlanned) > 0 {
+		fields["files_planned"] = append([]string(nil), e.FilesPlanned...)
+	}
+	if e.Started != nil {
+		fields["started"] = e.Started.Format(time.RFC3339)
+	}
+	if e.Completed != nil {
+		fields["completed"] = e.Completed.Format(time.RFC3339)
+	}
+	if e.Verification != "" {
+		fields["verification"] = e.Verification
+	}
+	return fields
+}
+
+func bugFields(e model.Bug) map[string]any {
+	fields := map[string]any{
+		"id":          e.ID,
+		"slug":        e.Slug,
+		"title":       e.Title,
+		"status":      string(e.Status),
+		"severity":    string(e.Severity),
+		"priority":    string(e.Priority),
+		"type":        string(e.Type),
+		"reported_by": e.ReportedBy,
+		"reported":    e.Reported.Format(time.RFC3339),
+		"observed":    e.Observed,
+		"expected":    e.Expected,
+	}
+	if len(e.Affects) > 0 {
+		fields["affects"] = append([]string(nil), e.Affects...)
+	}
+	if e.OriginFeature != "" {
+		fields["origin_feature"] = e.OriginFeature
+	}
+	if e.OriginTask != "" {
+		fields["origin_task"] = e.OriginTask
+	}
+	if e.Environment != "" {
+		fields["environment"] = e.Environment
+	}
+	if e.Reproduction != "" {
+		fields["reproduction"] = e.Reproduction
+	}
+	if e.DuplicateOf != "" {
+		fields["duplicate_of"] = e.DuplicateOf
+	}
+	if e.FixedBy != "" {
+		fields["fixed_by"] = e.FixedBy
+	}
+	if e.VerifiedBy != "" {
+		fields["verified_by"] = e.VerifiedBy
+	}
+	if e.ReleaseTarget != "" {
+		fields["release_target"] = e.ReleaseTarget
+	}
+	return fields
+}
+
+func decisionFields(e model.Decision) map[string]any {
+	fields := map[string]any{
+		"id":         e.ID,
+		"slug":       e.Slug,
+		"summary":    e.Summary,
+		"rationale":  e.Rationale,
+		"decided_by": e.DecidedBy,
+		"date":       e.Date.Format(time.RFC3339),
+		"status":     string(e.Status),
+	}
+	if len(e.Affects) > 0 {
+		fields["affects"] = append([]string(nil), e.Affects...)
+	}
+	if e.Supersedes != "" {
+		fields["supersedes"] = e.Supersedes
+	}
+	if e.SupersededBy != "" {
+		fields["superseded_by"] = e.SupersededBy
+	}
+	return fields
+}

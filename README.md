@@ -75,3 +75,19 @@ Background analysis, comparative thinking, and review memos retained as the rese
 
 ### `docs/`
 User-facing and reference documentation for the reusable workflow system, such as manuals, setup guides, reference docs, and future product documentation. Currently empty; reserved for later.
+
+## Implementation status
+
+Phase 1 implementation has started.
+
+Current status:
+- design, specification, and planning documents are in place
+- initial Go module scaffolding has begun
+- the implementation work is being started from the Phase 1 plan in `work/plan/phase-1-implementation-plan.md`
+
+Near-term implementation focus:
+- core entity model for `Epic`, `Feature`, `Task`, `Bug`, and `Decision`
+- deterministic YAML-backed storage under `.kbz/`
+- ID allocation and lifecycle validation
+- MCP-first workflow operations with a thin CLI layer
+- health checks and bootstrap self-use support

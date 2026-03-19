@@ -1,0 +1,11 @@
+id: BUG-001
+slug: bad-yaml-output
+title: Writer produces unstable YAML
+status: reported
+severity: medium
+priority: medium
+type: implementation-defect
+reported_by: sam
+reported: "2026-03-19T12:00:00Z"
+observed: Repeated writes produce different output
+expected: Repeated writes should be stable

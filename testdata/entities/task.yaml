@@ -1,0 +1,12 @@
+id: FEAT-001.1
+feature: FEAT-001
+slug: write-entity-files
+summary: Write canonical entity files to disk
+status: queued
+assignee: sam
+depends_on:
+  - FEAT-001.0
+files_planned:
+  - internal/storage/entity_store.go
+  - internal/storage/entity_store_test.go
+verification: go test ./...
