@@ -751,6 +751,55 @@ func TestDocService_Validate_MissingSections(t *testing.T) {
 	}
 }
 
+func TestDocService_ExtractFromDocument_ApprovedSuccess(t *testing.T) {
+	svc := NewDocService(t.TempDir())
+
+	body := "# Approved Proposal\n\n## Summary\n\nReady for extraction.\n"
+	submitted := submitProposal(t, svc, "Approved Proposal", body)
+	normalise(t, svc, DocTypeProposal, submitted.ID, body)
+	approve(t, svc, DocTypeProposal, submitted.ID)
+
+	doc, err := svc.ExtractFromDocument(submitted.ID)
+	if err != nil {
+		t.Fatalf("extract from approved document: %v", err)
+	}
+	if doc.Meta.ID != submitted.ID {
+		t.Errorf("expected ID %q, got %q", submitted.ID, doc.Meta.ID)
+	}
+	if doc.Meta.Status != DocStatusApproved {
+		t.Errorf("expected status %s, got %s", DocStatusApproved, doc.Meta.Status)
+	}
+	if doc.Body != body {
+		t.Errorf("body mismatch\ngot:  %q\nwant: %q", doc.Body, body)
+	}
+}
+
+func TestDocService_ExtractFromDocument_NonApprovedError(t *testing.T) {
+	svc := NewDocService(t.TempDir())
+
+	submitted := submitProposal(t, svc, "Submitted Proposal", "body")
+
+	_, err := svc.ExtractFromDocument(submitted.ID)
+	if err == nil {
+		t.Fatal("expected error for non-approved document")
+	}
+	if !strings.Contains(err.Error(), "approved") {
+		t.Errorf("error should mention approved state: %v", err)
+	}
+}
+
+func TestDocService_ExtractFromDocument_NotFoundError(t *testing.T) {
+	svc := NewDocService(t.TempDir())
+
+	_, err := svc.ExtractFromDocument("DOC-999")
+	if err == nil {
+		t.Fatal("expected error for non-existent document")
+	}
+	if !strings.Contains(err.Error(), "not found") {
+		t.Errorf("error should mention not found: %v", err)
+	}
+}
+
 func TestDocService_UpdateBody_PreservesMetadata(t *testing.T) {
 	svc := NewDocService(t.TempDir())
 

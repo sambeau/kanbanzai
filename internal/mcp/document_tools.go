@@ -28,6 +28,7 @@ func DocumentTools(svc *document.DocService) []server.ServerTool {
 		updateDocumentBodyTool(svc),
 		approveDocumentTool(svc),
 		retrieveDocumentTool(svc),
+		extractFromDocumentTool(svc),
 		listDocumentsTool(svc),
 		validateDocumentTool(svc),
 	}
@@ -249,6 +250,32 @@ func retrieveDocumentTool(svc *document.DocService) server.ServerTool {
 		}
 
 		return mcp.NewToolResultText(doc.Body), nil
+	}
+
+	return server.ServerTool{Tool: tool, Handler: handler}
+}
+
+func extractFromDocumentTool(svc *document.DocService) server.ServerTool {
+	tool := mcp.NewTool("extract_from_document",
+		mcp.WithDescription("Retrieve an approved document for agent-mediated extraction. Use the returned metadata and body to create structured records with create_* tools and record_decision; extraction is only allowed for approved documents."),
+		mcp.WithString("doc_id",
+			mcp.Description("Approved document ID"),
+			mcp.Required(),
+		),
+	)
+
+	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+		docID, err := request.RequireString("doc_id")
+		if err != nil {
+			return mcp.NewToolResultError("doc_id is required"), nil
+		}
+
+		result, err := svc.ExtractFromDocument(docID)
+		if err != nil {
+			return mcp.NewToolResultErrorFromErr("extract failed", err), nil
+		}
+
+		return jsonResult(result)
 	}
 
 	return server.ServerTool{Tool: tool, Handler: handler}

@@ -67,3 +67,23 @@ type Document struct {
 	Meta DocMeta
 	Body string
 }
+
+// ExtractedDocument is the structured extraction payload returned for approved documents.
+type ExtractedDocument struct {
+	Meta ExtractedDocumentMeta `json:"meta"`
+	Body string                `json:"body"`
+}
+
+// ExtractedDocumentMeta is the metadata returned alongside extracted document body content.
+type ExtractedDocumentMeta struct {
+	ID         string     `json:"id"`
+	Type       DocType    `json:"type"`
+	Title      string     `json:"title"`
+	Status     DocStatus  `json:"status"`
+	Feature    string     `json:"feature,omitempty"`
+	CreatedBy  string     `json:"created_by"`
+	Created    time.Time  `json:"created"`
+	Updated    time.Time  `json:"updated"`
+	ApprovedBy string     `json:"approved_by,omitempty"`
+	ApprovedAt *time.Time `json:"approved_at,omitempty"`
+}

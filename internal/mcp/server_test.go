@@ -85,6 +85,7 @@ func TestServer_ListTools(t *testing.T) {
 		"update_document_body",
 		"approve_document",
 		"retrieve_document",
+		"extract_from_document",
 		"list_documents",
 		"validate_document",
 	}
