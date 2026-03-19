@@ -5,6 +5,7 @@
 - Date: 2026-03-18
 - Related:
   - `work/design/product-instance-boundary.md`
+  - `work/design/document-centric-interface.md`
   - `work/spec/phase-1-specification.md` §22
   - `work/plan/phase-1-decision-log.md` P1-DEC-005, P1-DEC-015
 
@@ -41,9 +42,9 @@ Bootstrap-workflow tracks the same five entity types as kbz-workflow, but withou
 | **Features** | Described in planning documents and the implementation plan |
 | **Tasks** | Described in the implementation plan's work breakdown |
 | **Bugs** | Filed as issues or tracked in planning documents |
-| **Decisions** | Recorded in `work/plan/phase-1-decision-log.md` |
+| **Decisions** | Made in design documents and conversation; indexed by agents in `work/plan/phase-1-decision-log.md` |
 
-The decision log is the most mature bootstrap artifact — it already follows a structured format that closely mirrors what kbz-workflow will use.
+Decisions are made through the natural design process — in conversation between the human designer and AI agents, and in design documents. Agents are responsible for extracting decisions from these sources and recording them in the decision log. The human designer does not need to write decision records directly.
 
 ## 4. Which Policies Apply Now
 
@@ -92,15 +93,40 @@ These depend on kbz tooling and are not part of bootstrap-workflow:
 
 ## 5. Bootstrap Conventions
 
+### Document-centric working
+
+Per `work/design/document-centric-interface.md`, the human interface to the workflow is documents and chat. During bootstrap this means:
+
+- Humans write and review design documents and make decisions in conversation.
+- Agents normalise documents on ingest — cleaning language, tightening prose, improving structure — and present the result for human approval before the document becomes canonical.
+- Approved documents are returned unchanged on retrieval.
+- The formality gradient applies: early documents (proposals, draft designs) are informal prose; later documents (specifications, plans) are formal and precise.
+
 ### Decision records
 
-Continue using the format established in `work/plan/phase-1-decision-log.md`. This format is already close to what kbz-workflow will use and can be migrated directly.
+Decisions are made in design documents and in conversation. Agents extract and record them in `work/plan/phase-1-decision-log.md` as an internal tracking artifact. The human designer does not need to write decision records directly — the agent maintains the log.
 
-### Document changes
+The format established in the decision log is already close to what kbz-workflow will use and can be migrated directly.
 
-- Design changes go in `work/design/`.
-- Spec changes go in `work/spec/`.
-- Planning changes go in `work/plan/`.
+### Document types during bootstrap
+
+The document types defined in `work/design/document-centric-interface.md` apply during bootstrap in simplified form:
+
+| Document type | Bootstrap practice |
+|---|---|
+| **Proposal** | Written by the human designer, usually pasted into chat |
+| **Draft design** | Created collaboratively in chat; stored in `work/design/` when substantive |
+| **Design** | Distilled by the agent from drafts and conversation; stored in `work/design/` |
+| **Specification** | Created by the agent from approved designs; stored in `work/spec/` |
+| **Implementation plan** | Created by the agent from specifications; stored in `work/plan/` |
+| **Research report** | Created by agents; stored in `work/research/` |
+
+### Document placement
+
+- Design documents go in `work/design/`.
+- Spec documents go in `work/spec/`.
+- Planning documents go in `work/plan/`.
+- Research reports go in `work/research/`.
 - Bootstrap-specific process documents go in `work/bootstrap/`.
 
 ### Commits during bootstrap
@@ -130,9 +156,10 @@ When formal IDs exist (post-tool), switch to them.
 
 When the kbz tool reaches sufficient maturity (per P1-DEC-015, still to be decided):
 
-1. Existing decisions in the decision log are migrated to canonical Decision records.
-2. Epics, features, and tasks described in planning documents are created as canonical records.
-3. The bootstrap-workflow process is gradually replaced by kbz-workflow.
-4. This document is archived or removed.
+1. Existing design documents are ingested into the system; the system extracts and indexes decisions, requirements, and entity relationships.
+2. Existing decisions in the decision log are reconciled with the decisions extracted from design documents and migrated to canonical Decision records.
+3. Epics, features, and tasks described in planning documents are created as canonical records.
+4. The bootstrap-workflow process is gradually replaced by kbz-workflow.
+5. This document is archived or removed.
 
 The goal is not a big-bang migration. It is a gradual transition where bootstrap-workflow shrinks as kbz-workflow grows, until bootstrap-workflow is no longer needed.

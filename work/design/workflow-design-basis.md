@@ -7,6 +7,7 @@
   - `workflow-system-design.md`
   - `initial-workflow-analysis.md`
   - `initial-workflow-analysis-review.md`
+  - `document-centric-interface.md`
 - Notes:
   - This document should track the current consolidated design proposal closely enough to serve as the basis for planning
   - The workflow system should be built so that, over time, its own development can increasingly be managed through the workflow process it defines
@@ -128,12 +129,13 @@ The workflow system must stay simpler than the project it manages.
 
 It should also be designed so that the process remains usable while the tool is immature. Early versions must not require features that only later versions of the tool can provide.
 
-### 4.2 Workflow State Is the Source of Truth, Conversation Is the Interface
+### 4.2 Workflow State Is the Source of Truth, Documents and Chat Are the Interface
 
 Canonical truth lives in structured workflow state.
-Humans interact through conversation.
-Markdown supports human understanding, review, and drafting.
-Conversation is the interface; workflow state is the source of truth.
+Humans interact through documents and chat — not by managing entities directly.
+Documents are the human-facing form of canonical truth: they go in as prose, the system extracts structure, and they come back out as the same prose.
+Agents mediate between the document interface and the internal entity model.
+Conversation is the interface for decisions and edits; workflow state is the source of truth.
 
 ### 4.3 Strict Core, Forgiving Interface
 
@@ -358,40 +360,60 @@ The CLI, if present, should be useful for:
 
 It should not be the primary human interaction model.
 
-### 6.3 Intake / Canonical / Projection Taxonomy
+### 6.3 Material Taxonomy
 
-The system should explicitly distinguish three classes of material.
+The system should explicitly distinguish four classes of material.
 
 #### Intake artifacts
 
-Human-provided material that has not yet been normalized into canonical state.
+Human-provided material that has not yet been normalized or approved.
 
 Examples:
 
 - brainstorm notes
-- rough markdown specs
+- rough markdown pasted into chat
 - pasted bug reports
 - review comments
-- draft designs
 - free-form change requests
+- proposal documents before approval
 
-#### Canonical records
+#### Documents
 
-Validated structured workflow objects written through formal operations.
+Human-facing prose artifacts that flow through the design-to-implementation process. Documents are authored by humans and agents collaboratively, normalised by agents, and approved by humans before becoming canonical.
+
+Once approved, a document is canonical in its own right — the system returns it verbatim on retrieval. Internally, the system indexes and fragments document content to extract structured entities (decisions, requirements, links), but the document's prose identity is preserved.
+
+Documents are not intake artifacts (they persist after approval), not entity records (they are prose, not YAML), and not projections (they are authored, not generated). They are the human-canonical form of project truth.
+
+Document types, listed in order of the design-to-implementation progression:
+
+- proposal
+- research report
+- draft design
+- design
+- specification
+- implementation plan
+- user documentation
+
+See `document-centric-interface.md` for the full taxonomy, formality gradient, and interface contract.
+
+#### Canonical entity records
+
+Validated structured workflow objects maintained by the system as the internal source of truth.
 
 Examples:
 
+- Epic
 - Feature
-- Specification
-- Plan
 - Task
 - Bug
 - Decision
-- Approval
+
+Entity records are the system's internal representation. Humans do not manage them directly — agents extract entity data from documents and conversations, create and update entity records through formal operations, and maintain lifecycle state, referential integrity, and cross-document consistency.
 
 #### Projections
 
-Generated human-facing views derived from canonical state.
+Generated views derived from canonical state.
 
 Examples:
 
@@ -402,37 +424,38 @@ Examples:
 - dashboards
 - generated markdown summaries
 
-This taxonomy is important because it prevents the ambiguity that caused drift in the previous workflow.
+This taxonomy is important because it prevents the ambiguity that caused drift in the previous workflow and because it separates the human interface (documents) from the internal model (entity records) while keeping both canonical.
 
 ### 6.4 AI-Mediated Normalization Pipeline
 
-The system should use a formal normalization pipeline:
+The system should use a formal normalization pipeline. The pipeline operates in two layers: document normalization (human-facing) and entity extraction (internal).
 
 1. intake
 2. interpretation
 3. clarification
-4. normalization
-5. formal commit through MCP
-6. projection
+4. document normalization
+5. human approval
+6. entity extraction
+7. formal commit through MCP
+8. projection
 
 #### Intake
 
 Input may arrive through:
 
-- chat
-- markdown
+- chat conversation
+- markdown documents
 - pasted text
-- comments
-- rough reports
-- draft docs
+- rough proposals
+- draft designs
 
 #### Interpretation
 
 The AI identifies:
 
 - likely workflow intent
-- affected objects
-- explicit facts
+- affected documents and entities
+- explicit facts and decisions
 - implied facts
 - ambiguities
 - missing information
@@ -441,25 +464,41 @@ The AI identifies:
 
 The AI asks focused follow-up questions where needed.
 
-#### Normalization
+#### Document normalization
 
-The AI prepares candidate structured data:
+The AI prepares a normalized document:
 
-- object type
-- fields
-- links
-- metadata
-- state transitions
-- supersession relationships
-- verification expectations
+- cleans spelling, grammar, and prose style
+- tightens structure and removes redundancy
+- resolves minor ambiguities
+- maintains the document's appropriate level of formality (informal for proposals, formal for specifications)
+- preserves meaning — the AI does not silently change intent
+
+The normalized document is presented to the human for review.
+
+#### Human approval
+
+The human reviews the normalized document and either approves it or requests changes. Once approved, the document becomes canonical and the system returns it verbatim on subsequent retrieval. No further AI rewriting occurs on the way out.
+
+#### Entity extraction
+
+The AI extracts structured data from the approved document:
+
+- decisions, with rationale and links to affected entities
+- requirements and specification elements
+- entity updates (feature records, task records, status changes)
+- cross-document links and references
+- metadata, state transitions, and supersession relationships
+
+This extraction is internal — the human does not need to see or manage it.
 
 #### Formal commit
 
-The AI uses MCP tools to create or update canonical records.
+The AI uses MCP tools to create or update canonical entity records based on the extracted data.
 
 #### Projection
 
-The system regenerates or updates human-facing views.
+The system regenerates or updates generated views (status reports, roadmaps, dashboards) from canonical state.
 
 ### 6.5 Normalization Reliability and Review
 
@@ -564,9 +603,29 @@ Benefits:
 
 ## 8. Object Model
 
-### 8.1 Phase 1 Core Entity Types
+The object model has two layers: the document type model (the human interface) and the entity model (the internal representation). Both are canonical — they represent the same underlying reality through different lenses.
 
-The phase 1 system should focus on a deliberately small core set of entities:
+### 8.1 Document Type Model
+
+The system recognises a set of document types that flow through the design-to-implementation process. These are the objects humans work with directly.
+
+Document types, in order of the design-to-implementation progression:
+
+- Proposal
+- Research report
+- Draft design
+- Design
+- Specification
+- Implementation plan
+- User documentation
+
+Documents move from informal prose toward formal definitions as they progress. The system must understand this formality gradient because it affects how documents are normalised, stored, and retrieved.
+
+See `document-centric-interface.md` for the full taxonomy, formality gradient, lifecycle, and interface contract.
+
+### 8.2 Phase 1 Core Entity Types
+
+The phase 1 system should focus on a deliberately small core set of internal entities:
 
 - Epic
 - Feature
@@ -576,28 +635,28 @@ The phase 1 system should focus on a deliberately small core set of entities:
 
 These are enough to solve most of the current consistency problems without overbuilding.
 
-### 8.2 Deferred Entity Types
+Humans do not manage these entities directly. Agents extract entity data from documents and conversations, create and update entity records through formal operations, and maintain lifecycle state and referential integrity. The entity model is the system's internal truth; the document type model is the human-facing truth.
+
+### 8.3 Deferred Entity Types
 
 The system should explicitly recognize likely future entities, even if they are not implemented in phase 1:
 
 - Project
 - Milestone
-- Specification
-- Plan
 - Approval
 - Release
 - Incident
 - RootCauseAnalysis
-- ResearchNote
-- Design
 - KnowledgeEntry
 - TeamMemoryEntry
 
 This is important because some of the current phase 1 simplifications are intentional, not eternal.
 
-It also matters for self-hosting: once the workflow tool begins to manage more of its own development, entities such as Approval, Release, and Milestone will become more important for governing the tool’s own roadmap and operation.
+It also matters for self-hosting: once the workflow tool begins to manage more of its own development, entities such as Approval, Release, and Milestone will become more important for governing the tool's own roadmap and operation.
 
-### 8.3 Composite vs First-Class Modeling
+Note: `Specification`, `Plan`, `Design`, and `ResearchNote` appeared in earlier versions of this deferred list as potential first-class entities. Under the document-centric interface model, these are document types rather than entities — they are the human-facing form of project truth and flow through the document lifecycle. The system indexes and fragments their content to extract entity data, but the documents themselves are the canonical human-facing artifacts, not entity records.
+
+### 8.4 Composite vs First-Class Modeling
 
 One major design question remains open:
 
@@ -611,11 +670,13 @@ Should `Feature` remain a composite v1 object that carries:
 
 or should the system make `Specification` and `Plan` first-class entities earlier?
 
+Under the document-centric interface model, specifications and plans are document types with their own lifecycle and formality. Feature references these documents (the design, the spec, the plan) rather than embedding their content as flat fields. This partially resolves the composite-vs-first-class question: the documents are distinct objects in the document layer, even if Feature remains the coordination entity in the internal model.
+
 This document adopts the following position:
 
-- for phase 1, `Feature` may remain composite
-- but this should be treated as a deliberate simplification
-- the likely evolution path is toward first-class `Specification` and `Plan` entities
+- for phase 1, `Feature` may remain the composite coordination entity
+- specifications and plans exist as distinct documents linked from the Feature record
+- the evolution path is toward richer document-to-entity mapping, not necessarily toward making Specification and Plan into separate entity types
 
 This distinction matters for:
 
@@ -625,7 +686,18 @@ This distinction matters for:
 - bug vs spec defect handling
 - plan invalidation
 
-### 8.4 Task Hierarchy
+### 8.5 Document-to-Entity Relationship
+
+Documents and entities relate bidirectionally:
+
+- **On the way in:** when a document is ingested, agents extract structured information. A design document may produce or update Feature records, Decision records, and links between them. A specification maps to the spec content linked from a Feature. An implementation plan spawns Tasks.
+- **On the way out:** when a document is retrieved, the system returns the canonical approved form. For new documents not yet approved, agents may assemble drafts from entity data, but once approved, the document's prose identity is fixed.
+
+Internal fragmentation of documents — indexing decisions, linking requirements to features, connecting spec sections to design rationale — enables the system to compose targeted context for each agent. An agent implementing a specific task receives the relevant slices from across the document layers, not the entire design library.
+
+The principle is: fragment internally for consistency and context assembly, present externally as whole documents.
+
+### 8.6 Task Hierarchy
 
 Recommended hierarchy:
 
@@ -641,7 +713,7 @@ Alongside:
 
 The roadmap may initially remain a generated view rather than a first-class stored object.
 
-### 8.5 Example Core Entity Fields
+### 8.7 Example Core Entity Fields
 
 #### Epic
 

@@ -6,6 +6,7 @@
 - Based on:
   - `workflow-design-basis.md`
   - `workflow-system-design.md`
+  - `document-centric-interface.md`
 
 ---
 
@@ -152,30 +153,50 @@ Phase 1 excludes:
 
 ## 6. Material Taxonomy
 
-Phase 1 must explicitly distinguish three classes of material.
+Phase 1 must explicitly distinguish four classes of material.
 
 ### 6.1 Intake artifacts
 
-These are human-provided or conversational inputs that are not yet canonical workflow state.
+These are human-provided or conversational inputs that have not yet been normalised or approved.
 
 Examples:
 - brainstorm notes
-- rough markdown drafts
+- rough markdown pasted into chat
 - pasted bug descriptions
 - free-form requests
 - review comments
+- proposal documents before approval
 
 Phase 1 does not need to fully model intake artifacts as first-class stored objects, but it must assume they exist conceptually.
 
-### 6.2 Canonical records
+### 6.2 Documents
 
-These are validated structured workflow objects stored by the system as the source of truth.
+These are human-facing prose artifacts that flow through the design-to-implementation process. Documents are authored by humans and agents collaboratively, normalised by agents, and approved by humans before becoming canonical.
 
-Phase 1 must implement canonical records.
+Once approved, a document is canonical in its own right — the system must return it verbatim on retrieval. Internally, the system indexes and fragments document content to extract structured entities (decisions, requirements, links), but the document's prose identity is preserved.
 
-### 6.3 Projections
+Phase 1 must recognise the following document types:
+- proposal
+- research report
+- draft design
+- design
+- specification
+- implementation plan
+- user documentation
 
-These are generated or derived human-facing views based on canonical state.
+Phase 1 must support document submission, approval, and verbatim retrieval. See `document-centric-interface.md` for the full taxonomy, formality gradient, and interface contract.
+
+### 6.3 Canonical entity records
+
+These are validated structured workflow objects maintained by the system as the internal source of truth.
+
+Humans do not manage entity records directly. Agents extract entity data from documents and conversations, create and update records through formal operations, and maintain lifecycle state and referential integrity.
+
+Phase 1 must implement canonical entity records.
+
+### 6.4 Projections
+
+These are generated or derived views based on canonical state.
 
 Phase 1 may support only a limited set of projections, but must preserve the distinction.
 
@@ -566,33 +587,65 @@ SQLite is the expected implementation direction, but this specification does not
 
 ## 15. Document Requirements
 
-Phase 1 must support document scaffolding and validation.
+Phase 1 must support the document-centric interface model defined in `document-centric-interface.md`.
 
-## 15.1 Required document categories
+## 15.1 Required document types
 
-Phase 1 must support at least:
+Phase 1 must recognise and support at least:
+- proposal documents
+- draft design documents
+- design documents linked from features
 - specification documents linked from features
-- plan documents linked from features
-- bug report templates or equivalent bug-related documents
+- implementation plan documents linked from features
+- research reports
 
-## 15.2 Scaffolding
+## 15.2 Document submission and normalisation
 
-Phase 1 must be able to scaffold documents using stable templates.
+Phase 1 must support document submission through the MCP interface. On submission, agents may normalise documents — cleaning language, tightening prose, improving structure — and must present the normalised result for human approval before the document becomes canonical.
 
-## 15.3 Validation
+## 15.3 Approve-before-canon
+
+Phase 1 must enforce the rule that documents are not canonical until approved by a human. The approval workflow is:
+1. Document is submitted or updated.
+2. Agent normalises and presents the result.
+3. Human approves or requests changes.
+4. Once approved, the document is canonical.
+
+## 15.4 Verbatim retrieval
+
+Phase 1 must return approved canonical documents verbatim on retrieval. The system must not re-render, re-summarise, or re-normalise canonical documents on the way out. The approved form is the stored form.
+
+This ensures multi-user consistency: every user who retrieves a canonical document sees the same document.
+
+## 15.5 Document-to-entity extraction
+
+Phase 1 must support extraction of structured entity data from documents. When a document is approved, the system (via agents) must be able to extract:
+- decisions, with rationale and links to affected entities
+- entity updates (feature records, task records, status changes)
+- cross-document links and references
+
+This extraction is internal — the human does not need to see or manage it.
+
+## 15.6 Scaffolding
+
+Phase 1 must be able to scaffold documents using stable templates for each recognised document type.
+
+## 15.7 Validation
 
 Phase 1 must validate documents for:
+- document type recognition
 - required frontmatter where applicable
 - required sections where applicable
 - naming conventions
 - basic referential integrity
 - schema conformity for templated documents
 
-## 15.4 Human-authored content
+## 15.8 Human-authored content
 
 Phase 1 must preserve the principle that:
 - operational views are generated where possible
-- human-authored design/spec content is validated, not replaced wholesale by tooling
+- human-authored design/spec content is validated and normalised, not replaced wholesale by tooling
+- the human approves all substantive changes before they become canonical
 
 ---
 
@@ -626,6 +679,10 @@ At minimum, Phase 1 must support operations functionally equivalent to:
 - update status
 - approve where phase-1 composite model requires it
 - validate candidate data
+- submit document
+- retrieve document (verbatim for approved documents)
+- list documents by type or by feature
+- approve document
 - scaffold documents
 - validate documents
 - run health checks
@@ -853,7 +910,11 @@ Broken references must be detectable by validation or health checks.
 
 ## 24.6 Document support
 
-The system must be able to scaffold and validate at least the required phase 1 document types.
+The system must support the document-centric interface:
+- documents can be submitted, normalised, and approved through the MCP interface
+- approved documents are returned verbatim on retrieval — the system does not alter canonical prose
+- the system can scaffold and validate at least the required phase 1 document types
+- entity data (decisions, requirements, links) can be extracted from approved documents
 
 ## 24.7 Health checks
 
@@ -866,10 +927,15 @@ An AI agent must be able to use the MCP interface to translate rough human inten
 - bug creation
 - status updates
 - decision recording
+- document submission and approval
 
-## 24.9 Bootstrap usability
+## 24.9 Document round-trip integrity
 
-The Phase 1 kernel must be sufficient to begin tracking the workflow tool’s own work in a limited way without requiring Phase 2+ systems.
+A document submitted and approved must be retrievable verbatim. The system must not introduce meaning changes, re-render prose, or lose content during the store-and-retrieve cycle.
+
+## 24.10 Bootstrap usability
+
+The Phase 1 kernel must be sufficient to begin tracking the workflow tool's own work in a limited way without requiring Phase 2+ systems.
 
 ---
 
