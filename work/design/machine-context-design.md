@@ -207,6 +207,42 @@ Narrower speciality means less breadth of context but potentially more depth. A 
 
 The tradeoff: more specialised agents need more coordination. Their tasks must be well-defined and scoped precisely to their domain. This is the same tradeoff seen in human teams, and it has the same resolution: a coordination layer (§7) manages the handoffs.
 
+### 6.6 Profile inheritance
+
+Context profiles form an inheritance hierarchy. A profile can declare a parent, inheriting all of the parent's conventions, architecture knowledge, and tool guidance, then adding or overriding with its own.
+
+A natural hierarchy for a typical project:
+
+```
+base                  ← all agents get this (project-wide conventions)
+├── developer         ← inherits base, adds code conventions
+│   ├── backend       ← inherits developer, adds backend specifics
+│   │   └── sql       ← inherits backend, adds database specifics
+│   └── frontend      ← inherits developer, adds frontend specifics
+├── testing           ← inherits base, adds test strategy
+└── documentation     ← inherits base, adds doc conventions
+```
+
+In the profile YAML, this is expressed with an `inherits` field:
+
+```yaml
+id: backend
+inherits: developer
+scope:
+  description: "Backend development — core logic, MCP service layer, CLI"
+  packages:
+    - internal/core
+    - internal/mcp
+    - cmd/kanbanzai
+# ... role-specific conventions added here
+```
+
+When context is assembled for a `backend` agent, the system walks the inheritance chain (`base` → `developer` → `backend`) and layers each profile's content in order. More specific profiles override more general ones where there is a conflict.
+
+This solves the cross-role knowledge scoping problem: knowledge that applies to all developers but not to documentation agents lives in the `developer` profile. Knowledge that applies to all agents lives in `base`. An agent contributing knowledge can specify the scope it belongs to, and a coordinator reviews whether the contribution belongs at the scope the agent suggested or should be promoted or demoted in the hierarchy.
+
+Projects define their own inheritance trees. A small project might have only `base` and `developer`. A large project might have deep chains with multiple specialisations. The system does not enforce a specific hierarchy — it only requires that inheritance references resolve and do not form cycles.
+
 ---
 
 ## 7. Coordination Agents
@@ -263,7 +299,21 @@ The assembly follows a **need-to-know principle**: include only what is relevant
 
 ### 8.3 Context budget
 
-Each context packet should be assembled with a token budget in mind. The system should be aware of approximate context sizes and warn (or trim) when a packet would consume too large a fraction of the model's context window. Leaving adequate room for the agent's reasoning and output is as important as providing the right input context.
+Each context packet should be assembled with a size budget. The system does not know which model will consume the packet — the MCP protocol does not expose the calling model's identity, context window size, or tokenizer. Models cannot reliably self-report their context limits at runtime, and there is no universal tokenizer across model families. Token counting on the server side would be inaccurate for half of users and would create a maintenance burden tracking tokenizer changes.
+
+**Budget in bytes, not tokens.** Bytes are universal and observable. For YAML and English prose, a conservative ratio of ~1 token per 3.5 bytes provides a rough mental model, but the system expresses all limits in bytes.
+
+**Default ceiling.** A single context packet should not exceed 30KB of text (~8–10K tokens across most tokenizers). This fits comfortably in even a 32K context window alongside system prompts, conversation history, and tool schemas. For teams using large-context models, this ceiling is configurable via a project setting.
+
+**Tiered retrieval, not monolithic assembly.** Rather than trying to estimate the model's limit and assemble the maximum, the system provides tiered access:
+
+1. `get_task` — compact essentials: task requirements, acceptance criteria, immediate constraints (~2–4KB)
+2. `get_task_context` / `context_assemble` — full context packet: design fragments, role profile, architecture knowledge, session knowledge (~10–30KB)
+3. `get_document` / `context_get` — individual documents and knowledge entries on demand
+
+Agents request more detail when they need it. This pull-based model avoids over-stuffing context and works across models with different window sizes.
+
+**Priority annotations.** Context entries include a priority indicator (high, normal, low). When a packet approaches the byte ceiling, low-priority entries are trimmed first. This can leverage the MCP `Annotations.priority` field so that smart clients can also participate in trimming decisions.
 
 ### 8.4 Relationship to the four-layer instruction stack
 
@@ -301,6 +351,15 @@ The agent is instructed: "When you discover a convention, pattern, or constraint
 
 This is deliberate and opt-in. Agents contribute when they have something worth sharing, not automatically after every session.
 
+#### Deduplication on contribution
+
+When an agent calls `context_contribute`, the system checks for existing entries that cover the same knowledge before creating a new entry:
+
+1. **Exact topic match** — if an entry with the same `topic` key already exists in the same scope, the contribution is rejected with a pointer to the existing entry. The agent can update the existing entry instead.
+2. **Near-duplicate detection** — the system computes Jaccard similarity over normalised word-sets (lowercase, stop words removed) between the new content and existing entries in the same scope. If similarity exceeds 0.65, the contribution is flagged as a potential duplicate and either rejected with a pointer or queued for merge review.
+
+This is cheap (microseconds per comparison, no ML or embedding infrastructure) and catches the majority of same-branch duplicates. Cross-branch duplicates are handled by post-merge compaction (§9.6).
+
 ### 9.3 Knowledge review
 
 Contributed knowledge should be reviewed before it becomes part of the canonical context:
@@ -315,8 +374,25 @@ Knowledge entries have a lifecycle:
 
 1. **Contributed** — proposed by an agent, not yet confirmed
 2. **Confirmed** — accepted (by review or repeated observation)
-3. **Stale** — flagged because the code it describes has changed significantly
-4. **Retired** — explicitly marked as no longer applicable
+3. **Disputed** — contradicts another entry; both flagged for resolution
+4. **Stale** — flagged because the code it describes has changed significantly
+5. **Retired** — explicitly marked as no longer applicable
+
+#### Confidence scoring
+
+Each knowledge entry carries a confidence score derived from usage feedback. The score uses a Wilson score lower bound over `(use_count, miss_count)` — the same algorithm used by Reddit for comment ranking. This handles the key problem with raw ratios: an entry used once successfully (1/1 = 100%) should not outrank an entry used 50 times with 2 misses (48/50 = 96%). Wilson score naturally penalises low sample sizes.
+
+New entries start with a prior confidence of 0.5 (uncertain). As they accumulate usage data, the score converges on true reliability.
+
+Confidence is used during context assembly as a tier-dependent filter:
+
+| Tier | Minimum confidence | Rationale |
+|---|---|---|
+| Tier 1 (conventions) | No filter | Human-curated, authoritative |
+| Tier 2 (architecture) | 0.3 | Exclude entries that are mostly wrong |
+| Tier 3 (session) | 0.5 | Higher bar — unproven entries excluded from context |
+
+Confidence thresholds can be adjusted by context type: instructional knowledge ("how to do X") requires a higher threshold than informational knowledge ("X is structured as Y"), because wrong instructions cause cascading failures.
 
 ### 9.5 Preventing context rot
 
@@ -325,6 +401,47 @@ Knowledge goes stale as the codebase evolves. Mechanisms to address this:
 - **Timestamp tracking** — entries have creation and last-confirmed timestamps
 - **Git anchoring** — entries can be tied to specific file paths or code ranges; when those files change beyond a threshold, the entry is flagged for review
 - **Confirmation on use** — when an agent retrieves a knowledge entry and finds it still accurate, it can confirm it (updating the timestamp); when it finds it inaccurate, it can flag or retract it
+
+#### Usage reporting
+
+When an agent completes a task, it reports which knowledge entries were used and whether they were accurate. This is bundled with task completion — not a separate API call — and kept lightweight:
+
+- Default is "all entries were fine" (no elaboration needed)
+- Only negatives require detail: "Entry KE-042 was wrong because the API endpoint changed"
+- Reports update `use_count` (incremented when used and task succeeds) and `miss_count` (incremented when entry found wrong or unhelpful)
+
+The reporting overhead is negligible (~50–100 tokens per report). A single prevented bad-knowledge incident — where a wrong entry causes a task to fail and retry — wastes 5K–50K tokens. The reporting pays for itself many times over.
+
+#### Retention policy
+
+Knowledge retention follows a cache-like model analogous to generational garbage collection: Tier 3 is the young generation (high churn, frequent collection), Tier 2 is the old generation (survives via promotion), Tier 1 is the permanent generation (manually managed).
+
+| Rule | Tier 3 (session) | Tier 2 (architecture) | Tier 1 (conventions) |
+|---|---|---|---|
+| Default TTL | 14–30 days | 90 days | No expiry |
+| TTL reset on use | Yes, reset to 30 days | Yes, reset to 90 days | N/A |
+| Pruned when | TTL expires AND use_count < 3 | TTL expires AND confidence < 0.5 | Only by human |
+| Promotion trigger | use_count ≥ 5 AND miss_count = 0 → Tier 2 | Human review | N/A |
+| Immediate retirement | miss_count ≥ 2 OR flagged wrong | Flagged wrong by human | Human decision |
+
+New entries receive a grace period (7 days) before pruning logic applies, avoiding premature removal of entries that haven't had the opportunity to be used.
+
+Promotion from Tier 3 to Tier 2 creates a quality signal for human reviewers: "these session entries keep proving useful and may warrant review as architecture knowledge."
+
+### 9.6 Post-merge compaction
+
+In a multi-developer team using Git, parallel branches produce knowledge independently. When branches merge, duplicate or contradictory entries may appear. A post-merge compaction step resolves this.
+
+**Detection.** After a merge, the system identifies knowledge files added or modified by the merge and compares them against existing entries:
+
+1. **Exact duplicates** (same topic, same normalised content) — keep the entry with higher confidence; transfer usage counts from the discarded entry.
+2. **Near-duplicates** (same topic or Jaccard similarity > 0.65 in the same scope) — auto-merge if both entries have confidence > 0.5 (take the union of content, sum usage counts, recompute confidence). Flag for human review if confidence scores diverge significantly.
+3. **Contradictions** (same scope and topic overlap, but content diverges — Jaccard between 0.3 and 0.6) — never auto-resolve. Both entries are marked `status: disputed` until resolved by a human or coordinator agent. Both are included in context assembly with an annotation noting the conflict.
+4. **Independent entries** (different topic or different scope) — no action needed.
+
+**Scope.** Compaction applies freely to Tier 3 entries (ephemeral, agent-contributed). Tier 2 entries are flagged but not auto-modified (they've been reviewed). Tier 1 entries are never compacted — conflicts at this level are Git merge conflicts in the YAML files, handled by normal merge resolution.
+
+**Triggering.** Compaction can be triggered automatically via a post-merge hook, manually via `kbz compact`, or by a coordinator agent after reviewing merge results. At realistic scales (hundreds of entries), pairwise comparison completes in under a second.
 
 ---
 
@@ -432,9 +549,13 @@ context_retract(
 ```
 context_assemble(
   task_id: string,
-  role: string
+  role: string,
+  max_bytes: int (optional, default 30720)
 ) → complete context packet for a task + role
+
 ```
+
+The `max_bytes` parameter controls the byte ceiling for the assembled packet. When the assembled content exceeds this limit, low-priority entries are trimmed first (Tier 3 before Tier 2, lower confidence before higher). The default of 30KB (~8–10K tokens) fits comfortably in even a 32K context window.
 
 ### 12.4 Confirmation operations
 
@@ -449,6 +570,28 @@ context_flag(
 ) → confirmation (marks entry for review)
 ```
 
+### 12.5 Reporting operations
+
+```
+context_report(
+  task_id: string,
+  used: list of entry IDs,
+  flagged: list of { entry_id: string, reason: string } (optional)
+) → confirmation (updates use_count, miss_count, and confidence)
+```
+
+Bundled with task completion. The `used` list increments `use_count` for each entry. The `flagged` list increments `miss_count` and, if `miss_count` reaches the retirement threshold, marks the entry for review or retirement.
+
+### 12.6 Compaction operations
+
+```
+context_compact(
+  scope: "all" | "tier3" | "tier2" (default "tier3")
+) → compaction report (duplicates merged, contradictions flagged, entries pruned)
+```
+
+Runs deduplication and retention policy enforcement across knowledge entries. Typically triggered after a merge or on a schedule. Tier 3 entries are compacted freely; Tier 2 entries are flagged but not auto-modified; Tier 1 entries are never compacted.
+
 ---
 
 ## 13. Storage Model
@@ -462,6 +605,8 @@ Context is stored alongside entity state in the Kanbanzai instance root. This is
 │   ├── project/     # Tier 1: project-wide conventions and knowledge
 │   │   └── conventions.yaml
 │   ├── roles/       # context profiles per role
+│   │   ├── base.yaml
+│   │   ├── developer.yaml
 │   │   ├── backend.yaml
 │   │   ├── frontend.yaml
 │   │   └── testing.yaml
@@ -477,6 +622,64 @@ Context is stored alongside entity state in the Kanbanzai instance root. This is
 ```
 
 Context files follow the same principles as entity files: schema-validated YAML, deterministic serialisation, Git-tracked, tool-written.
+
+### 13.1 Knowledge entry fields
+
+Knowledge entries (Tier 2 and Tier 3) carry lifecycle and retention metadata:
+
+```yaml
+id: KE-042
+tier: 2
+topic: api-json-naming-convention
+scope: backend
+content: "API responses use camelCase for JSON field names. Nested objects also use camelCase."
+learned_from: TASK-152.3
+
+# Lifecycle
+status: confirmed         # contributed | confirmed | disputed | stale | retired
+
+# Retention metadata
+created: 2025-01-15
+last_used: 2025-01-20
+use_count: 4
+miss_count: 0
+confidence: 0.83          # Wilson score lower bound over (use_count, miss_count)
+ttl_days: 90              # tier-dependent; resets on use
+
+# Provenance
+promoted_from: SE-017     # if promoted from Tier 3
+merged_from: []           # entry IDs merged during compaction
+deprecated_reason: null
+git_anchors:              # optional file paths for staleness detection
+  - internal/api/handler.go
+```
+
+### 13.2 Role profile fields
+
+Role profiles include an `inherits` field for the profile inheritance chain:
+
+```yaml
+id: backend
+inherits: developer
+scope:
+  description: "Backend development — core logic, MCP service layer, CLI"
+  packages:
+    - internal/core
+    - internal/mcp
+    - cmd/kanbanzai
+conventions:
+  - "Error handling: use internal/errors.Wrap, never bare fmt.Errorf"
+  - "Tests: table-driven, no mocks for pure functions"
+architecture:
+  summary: "MCP layer is a thin adapter; all business logic in internal/core"
+  key_interfaces:
+    - "core.Store — canonical read/write interface for entities"
+    - "core.Validator — schema and transition validation"
+context_retrieval:
+  task: "kbz context get --task {task-id}"
+  role: "kbz context get --role backend"
+  project: "kbz context get --scope project"
+```
 
 ---
 
@@ -512,7 +715,7 @@ Phase 1 builds the entity kernel. For context management, Phase 1 must:
 
 - **Not preclude** any of the context operations described here
 - **Reserve namespace** in the MCP operation set for context operations
-- **Design the storage layout** to accommodate context entries alongside entities
+- **Design the storage layout** to accommodate context entries alongside entities, including the `context/roles/` hierarchy and knowledge entry schema
 
 Phase 1 does not implement context profiles, assembly, or contribution.
 
@@ -520,9 +723,14 @@ Phase 1 does not implement context profiles, assembly, or contribution.
 
 Phase 2 implements retrieval and context packing (per the workflow design basis §24). This includes:
 
-- Context profile definition and retrieval
-- Context assembly for tasks
-- Knowledge contribution and lifecycle
+- Context profile definition, inheritance resolution, and retrieval
+- Context assembly for tasks with byte-based budgeting and tiered retrieval
+- Knowledge contribution with deduplication on write
+- Confidence scoring (Wilson score lower bound) and tier-dependent filtering
+- Knowledge lifecycle management (contribution → confirmation → staleness → retirement)
+- Usage reporting bundled with task completion
+- Retention policy enforcement (TTL-based pruning, promotion triggers)
+- Post-merge compaction for Tier 3 entries
 - Integration of design context and implementation context in assembled packets
 
 ### 15.3 Phase 3 and beyond
@@ -532,6 +740,9 @@ Later phases may add:
 - Automatic context assembly optimisation (learning which context entries are most useful)
 - Cross-project knowledge sharing (conventions that apply to all projects by a team)
 - Orchestration-driven decomposition informed by context profiles
+- Embedding-based semantic similarity for deduplication (if algorithmic dedup proves insufficient)
+- Integration with code-aware retrieval tools (e.g., codebase-memory-mcp) for hybrid knowledge retrieval
+- Confidence score time decay (reducing confidence for entries that haven't been used recently)
 
 ---
 
@@ -546,23 +757,23 @@ Per the Parsley aesthetic, this design should remain:
 
 ---
 
-## 17. Open Questions
+## 17. Resolved Design Questions
 
-The following questions are deferred to Phase 2 planning:
+The following questions were originally deferred as open questions. They have been resolved and their answers are incorporated into the relevant sections of this document.
 
-1. **Token budget management** — how does the system measure and manage context packet size? Does it need model-specific token counting, or are rough estimates sufficient?
+1. **Token budget management** (resolved → §8.3) — the system budgets in bytes, not tokens. The MCP protocol does not expose the calling model's identity, context window, or tokenizer. There is no universal tokenizer across model families, and server-side token counting would be inaccurate. The system sets a configurable byte ceiling (default 30KB per packet) and provides tiered retrieval so agents pull more detail on demand.
 
-2. **Knowledge deduplication** — when multiple agents contribute similar knowledge, how is it deduplicated?
+2. **Knowledge deduplication** (resolved → §9.2, §9.6) — deduplication operates at two points. On contribution: exact topic match rejects, Jaccard word-set similarity > 0.65 flags near-duplicates. On merge: post-merge compaction detects exact duplicates (keep highest confidence), near-duplicates (auto-merge or flag), and contradictions (mark `disputed`, never auto-resolve). No embedding infrastructure is required — algorithmic comparison is sufficient at realistic scales.
 
-3. **Cross-role knowledge** — some knowledge applies to multiple roles but not all. How is this scoped?
+3. **Cross-role knowledge** (resolved → §6.6) — profile inheritance solves this. Knowledge that applies to multiple roles but not all lives at the appropriate ancestor in the inheritance tree. A `developer` profile is inherited by both `backend` and `frontend`. A `base` profile is inherited by all roles. Agents contributing knowledge specify the scope; coordinators review whether the scope is appropriate.
 
-4. **Confidence scoring** — should knowledge entries have confidence levels? How would these be used in assembly?
+4. **Confidence scoring** (resolved → §9.4) — yes, knowledge entries carry confidence scores. The system uses Wilson score lower bound over `(use_count, miss_count)`, which handles low sample sizes gracefully. Confidence is used as a tier-dependent filter during context assembly (Tier 1: no filter, Tier 2: > 0.3, Tier 3: > 0.5). New entries start at 0.5 (uncertain) and converge as they accumulate usage data.
 
-5. **Session knowledge pruning** — Tier 3 knowledge is high-volume. What is the retention policy?
+5. **Session knowledge pruning** (resolved → §9.5) — retention follows a generational cache model. Tier 3 entries have a 14–30 day TTL that resets on use. Entries with low use counts are pruned on TTL expiry. Entries found wrong are immediately retired (miss_count ≥ 2). Entries that prove consistently useful are promoted to Tier 2 (use_count ≥ 5, miss_count = 0). Usage reporting is bundled with task completion at negligible token cost (~50–100 tokens per report).
 
-6. **Context profile inheritance** — can roles inherit from a base profile? (e.g., all roles share project conventions, then specialise)
+6. **Context profile inheritance** (resolved → §6.6) — yes, profiles inherit via an `inherits` field. The system walks the inheritance chain and layers each profile's content in order, with more specific profiles overriding more general ones. Projects define their own inheritance trees. The system enforces only that references resolve and do not form cycles.
 
-7. **Integration with code-aware tools** — if a project also uses codebase-memory-mcp or similar, how do the knowledge stores interact?
+7. **Integration with code-aware tools** (resolved → §15.3, deferred to Phase 3+) — code-aware retrieval tools like codebase-memory-mcp are complementary, not competitive. They manage code knowledge; Kanbanzai manages workflow and project knowledge. In Phase 1 and Phase 2, integration is limited to role profiles informing agents about available tools ("you have access to codebase-memory-mcp; use it for X"). Deeper integration (hybrid retrieval combining Kanbanzai knowledge entries with embedding-based code search) is a Phase 3+ exploration.
 
 ---
 
