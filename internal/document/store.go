@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
+
+	"kanbanzai/internal/fsutil"
 )
 
 // DocStore handles filesystem storage of documents.
@@ -40,7 +42,7 @@ func (s *DocStore) Write(doc Document) (string, error) {
 	content := marshalDocument(doc)
 
 	path := filepath.Join(typeDir, docFileName(doc.Meta))
-	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+	if err := fsutil.WriteFileAtomic(path, []byte(content), 0o644); err != nil {
 		return "", fmt.Errorf("write document file: %w", err)
 	}
 

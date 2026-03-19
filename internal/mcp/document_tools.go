@@ -2,7 +2,6 @@ package mcp
 
 import (
 	"context"
-	"encoding/json"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
@@ -124,7 +123,7 @@ func submitDocumentTool(svc *document.DocService) server.ServerTool {
 			return mcp.NewToolResultErrorFromErr("submit failed", err), nil
 		}
 
-		return marshalResult(result)
+		return jsonResult(result)
 	}
 
 	return server.ServerTool{Tool: tool, Handler: handler}
@@ -167,7 +166,7 @@ func updateDocumentBodyTool(svc *document.DocService) server.ServerTool {
 			return mcp.NewToolResultErrorFromErr("update body failed", err), nil
 		}
 
-		return marshalResult(result)
+		return jsonResult(result)
 	}
 
 	return server.ServerTool{Tool: tool, Handler: handler}
@@ -214,7 +213,7 @@ func approveDocumentTool(svc *document.DocService) server.ServerTool {
 			return mcp.NewToolResultErrorFromErr("approve failed", err), nil
 		}
 
-		return marshalResult(result)
+		return jsonResult(result)
 	}
 
 	return server.ServerTool{Tool: tool, Handler: handler}
@@ -260,6 +259,7 @@ func listDocumentsTool(svc *document.DocService) server.ServerTool {
 		mcp.WithDescription("List documents. If doc_type is provided, lists only that type; otherwise lists all documents."),
 		mcp.WithString("doc_type",
 			mcp.Description("Document type to filter by (omit to list all)"),
+			mcp.Enum(docTypeEnum...),
 		),
 	)
 
@@ -282,7 +282,7 @@ func listDocumentsTool(svc *document.DocService) server.ServerTool {
 			results = []document.DocumentResult{}
 		}
 
-		return marshalResult(results)
+		return jsonResult(results)
 	}
 
 	return server.ServerTool{Tool: tool, Handler: handler}
@@ -322,17 +322,8 @@ func validateDocumentTool(svc *document.DocService) server.ServerTool {
 			validationErrors = []document.ValidationError{}
 		}
 
-		return marshalResult(validationErrors)
+		return jsonResult(validationErrors)
 	}
 
 	return server.ServerTool{Tool: tool, Handler: handler}
-}
-
-// marshalResult marshals v to JSON and returns it as a tool result text.
-func marshalResult(v any) (*mcp.CallToolResult, error) {
-	data, err := json.Marshal(v)
-	if err != nil {
-		return mcp.NewToolResultErrorFromErr("failed to marshal result", err), nil
-	}
-	return mcp.NewToolResultText(string(data)), nil
 }

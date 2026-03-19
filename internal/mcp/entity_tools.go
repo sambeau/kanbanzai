@@ -21,6 +21,7 @@ func EntityTools(svc *service.EntityService) []server.ServerTool {
 		getEntityTool(svc),
 		listEntitiesTool(svc),
 		updateStatusTool(svc),
+		updateEntityTool(svc),
 		validateCandidateTool(svc),
 		healthCheckTool(svc),
 	}
@@ -350,10 +351,62 @@ func updateStatusTool(svc *service.EntityService) server.ServerTool {
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
 
+func updateEntityTool(svc *service.EntityService) server.ServerTool {
+	tool := mcp.NewTool("update_entity",
+		mcp.WithDescription("Update fields of an existing entity. Cannot change id or status."),
+		mcp.WithString("entity_type",
+			mcp.Description("Type of entity to update"),
+			mcp.Required(),
+			mcp.Enum("epic", "feature", "task", "bug", "decision"),
+		),
+		mcp.WithString("id", mcp.Description("Entity ID"), mcp.Required()),
+		mcp.WithString("slug", mcp.Description("Entity slug"), mcp.Required()),
+	)
+	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+		entityType, err := request.RequireString("entity_type")
+		if err != nil {
+			return mcp.NewToolResultError(err.Error()), nil
+		}
+		id, err := request.RequireString("id")
+		if err != nil {
+			return mcp.NewToolResultError(err.Error()), nil
+		}
+		slug, err := request.RequireString("slug")
+		if err != nil {
+			return mcp.NewToolResultError(err.Error()), nil
+		}
+		args := request.GetArguments()
+		fields := make(map[string]string, len(args))
+		for k, v := range args {
+			if k == "entity_type" || k == "id" || k == "slug" {
+				continue
+			}
+			if s, ok := v.(string); ok {
+				fields[k] = s
+			}
+		}
+		result, err := svc.UpdateEntity(service.UpdateEntityInput{
+			Type:   entityType,
+			ID:     id,
+			Slug:   slug,
+			Fields: fields,
+		})
+		if err != nil {
+			return mcp.NewToolResultErrorFromErr("update entity failed", err), nil
+		}
+		return jsonResult(result)
+	}
+	return server.ServerTool{Tool: tool, Handler: handler}
+}
+
 func validateCandidateTool(svc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("validate_candidate",
 		mcp.WithDescription("Validate candidate entity data without persisting it"),
-		mcp.WithString("entity_type", mcp.Description("Type of entity to validate"), mcp.Required()),
+		mcp.WithString("entity_type",
+			mcp.Description("Type of entity to validate"),
+			mcp.Required(),
+			mcp.Enum("epic", "feature", "task", "bug", "decision"),
+		),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityType, err := request.RequireString("entity_type")

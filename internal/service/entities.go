@@ -1,7 +1,9 @@
 package service
 
 import (
+	"errors"
 	"fmt"
+	"os"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -57,6 +59,13 @@ type UpdateStatusInput struct {
 	ID     string
 	Slug   string
 	Status string
+}
+
+type UpdateEntityInput struct {
+	Type   string            // entity type: "epic", "feature", "task", "bug", "decision"
+	ID     string            // entity ID
+	Slug   string            // entity slug
+	Fields map[string]string // field name → new value (string values only)
 }
 
 type CreateResult struct {
@@ -143,7 +152,7 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 
 	epicID := strings.TrimSpace(input.Epic)
 	if !s.entityExists(string(model.EntityKindEpic), epicID) {
-		return CreateResult{}, fmt.Errorf("epic %s does not exist", epicID)
+		return CreateResult{}, fmt.Errorf("epic %s: %w", epicID, ErrReferenceNotFound)
 	}
 
 	idValue, err := s.allocateTypedID(model.EntityKindFeature)
@@ -183,7 +192,7 @@ func (s *EntityService) CreateTask(input CreateTaskInput) (CreateResult, error) 
 	}
 
 	if !s.entityExists(string(model.EntityKindFeature), featureID) {
-		return CreateResult{}, fmt.Errorf("feature %s does not exist", featureID)
+		return CreateResult{}, fmt.Errorf("feature %s: %w", featureID, ErrReferenceNotFound)
 	}
 
 	existingTaskIDs, err := s.listEntityIDs(string(model.EntityKindTask))
@@ -360,6 +369,9 @@ func (s *EntityService) Get(entityType, entityID, slug string) (GetResult, error
 
 	record, err := s.store.Load(entityType, entityID, slug)
 	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return GetResult{}, fmt.Errorf("get %s %s: %w", entityType, entityID, ErrNotFound)
+		}
 		return GetResult{}, err
 	}
 
@@ -437,13 +449,79 @@ func (s *EntityService) UpdateStatus(input UpdateStatusInput) (GetResult, error)
 
 	currentStatusText := strings.TrimSpace(fmt.Sprint(currentStatus))
 	if err := validate.ValidateTransition(kind, currentStatusText, nextStatus); err != nil {
-		return GetResult{}, err
+		return GetResult{}, fmt.Errorf("%s: %w", err.Error(), ErrInvalidTransition)
 	}
 
 	record.Fields["status"] = nextStatus
 	path, err := s.store.Write(record)
 	if err != nil {
 		return GetResult{}, err
+	}
+
+	return GetResult{
+		Type:  record.Type,
+		ID:    record.ID,
+		Slug:  record.Slug,
+		Path:  path,
+		State: record.Fields,
+	}, nil
+}
+
+// UpdateEntity updates fields of an existing entity for error correction.
+// It cannot change the id (immutable) or status (use UpdateStatus instead).
+func (s *EntityService) UpdateEntity(input UpdateEntityInput) (GetResult, error) {
+	entityType := strings.ToLower(strings.TrimSpace(input.Type))
+	entityID := strings.TrimSpace(input.ID)
+	slug := normalizeSlug(input.Slug)
+
+	if err := validateRequired(
+		field("type", entityType),
+		field("id", entityID),
+		field("slug", slug),
+	); err != nil {
+		return GetResult{}, err
+	}
+
+	if _, ok := input.Fields["id"]; ok {
+		return GetResult{}, fmt.Errorf("cannot update id: field is immutable")
+	}
+	if _, ok := input.Fields["status"]; ok {
+		return GetResult{}, fmt.Errorf("cannot update status: use update_status instead")
+	}
+
+	record, err := s.store.Load(entityType, entityID, slug)
+	if err != nil {
+		return GetResult{}, err
+	}
+
+	oldSlug := record.Slug
+
+	for k, v := range input.Fields {
+		record.Fields[k] = v
+	}
+
+	if newSlug, ok := input.Fields["slug"]; ok {
+		record.Slug = normalizeSlug(newSlug)
+		record.Fields["slug"] = record.Slug
+	}
+
+	errs := validate.ValidateRecord(entityType, record.Fields)
+	if len(errs) > 0 {
+		msgs := make([]string, len(errs))
+		for i, e := range errs {
+			msgs[i] = fmt.Sprintf("%s: %s", e.Field, e.Message)
+		}
+		return GetResult{}, fmt.Errorf("validation failed: %s", strings.Join(msgs, "; "))
+	}
+
+	path, err := s.store.Write(record)
+	if err != nil {
+		return GetResult{}, err
+	}
+
+	if record.Slug != oldSlug {
+		oldPath := filepath.Join(s.root, entityDirectory(entityType), entityFileName(entityID, oldSlug))
+		_ = os.Remove(oldPath)
 	}
 
 	return GetResult{

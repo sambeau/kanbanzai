@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 
+	"kanbanzai/internal/fsutil"
 	"kanbanzai/internal/model"
 )
 
@@ -44,7 +45,7 @@ func (s *EntityStore) Write(record EntityRecord) (string, error) {
 		return "", fmt.Errorf("marshal canonical yaml: %w", err)
 	}
 
-	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+	if err := fsutil.WriteFileAtomic(path, []byte(content), 0o644); err != nil {
 		return "", fmt.Errorf("write entity file: %w", err)
 	}
 
