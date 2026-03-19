@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	kbzmcp "kanbanzai/internal/mcp"
 	"kanbanzai/internal/service"
 )
 
@@ -21,7 +22,7 @@ type entityService interface {
 }
 
 type dependencies struct {
-	stdout         io.Writer
+	stdout           io.Writer
 	newEntityService func(root string) entityService
 }
 
@@ -63,6 +64,8 @@ func run(args []string, deps dependencies) error {
 	case "version", "--version":
 		fmt.Fprintln(deps.stdout, "kanbanzai phase-1-dev")
 		return nil
+	case "serve":
+		return kbzmcp.Serve()
 	case "create":
 		return runCreate(args[1:], deps)
 	case "get":
@@ -358,6 +361,7 @@ Usage:
 Commands:
   help       Show this help text
   version    Show the current development version
+  serve      Start the MCP server (stdio transport)
   create     Create a Phase 1 entity
   get        Get a Phase 1 entity
   list       List Phase 1 entities
