@@ -7,7 +7,7 @@
 *.dll
 *.so
 *.dylib
-kanbanzai
+/kanbanzai
 
 # Test binary, built with `go test -c`
 *.test
