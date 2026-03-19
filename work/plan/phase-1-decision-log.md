@@ -1,12 +1,14 @@
 # Phase 1 Decision Log
 
-- Status: decision log draft
-- Purpose: record the key implementation decisions that must be made early in Phase 1 and track their status
+- Status: active — agent-maintained internal record
+- Purpose: index decisions made during design conversations and in design documents
 - Date: 2026-03-18
 - Related:
+  - `work/design/document-centric-interface.md`
   - `work/plan/phase-1-implementation-plan.md`
   - `work/spec/phase-1-specification.md`
   - `work/design/workflow-design-basis.md`
+- Note: Under the document-centric interface model, decisions are made in design documents and in conversation between human designers and AI agents. This log is maintained by agents as an internal index — the human designer does not need to write decision records directly. Decisions recorded here should also appear in the design documents they inform.
 
 ---
 

@@ -1,9 +1,10 @@
 # Review: Initial Workflow Analysis
 
-- Status: review
+- Status: historical — research trail
 - Reviewing: initial-workflow-analysis.md
 - In light of: workflow-system-design.md
 - Date: 2026-03-18
+- Note: This review fed into the consolidation that produced `work/design/workflow-design-basis.md`. Retained as part of the research trail.
 
 ---
 

@@ -1,8 +1,9 @@
 # Initial Workflow Analysis
 
-- Status: discussion draft
+- Status: historical — research trail
 - Purpose: capture initial analysis and recommendations for designing a human-and-AI workflow system for large software projects
 - Date: 2026-03-18
+- Note: This analysis fed into `work/design/workflow-design-basis.md` via the consolidation process. Retained as part of the research trail.
 
 ## Summary
 

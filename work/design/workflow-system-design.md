@@ -1,9 +1,11 @@
 # Workflow System Design
 
-- Status: design proposal (consolidated)
+- Status: superseded
+- Superseded by: `work/design/workflow-design-basis.md`
 - Author: Sam & Claude
 - Date: 2026-03-18
 - Incorporates: initial-workflow-analysis.md, initial-workflow-analysis-review.md, workflow-system-design-review.md
+- Note: This was the original consolidated design proposal. Its content has been incorporated into the workflow design basis document. Retained as part of the design history.
 
 ---
 

@@ -1,11 +1,12 @@
 # Workflow System Design Review
 
-- Status: review memo
+- Status: historical — research trail
 - Author: Claude
 - Date: 2026-03-18
 - Reviews: `workflow-system-design.md`
 - Related:
   - `initial-workflow-analysis.md`
+- Note: This review fed into the consolidation that produced `work/design/workflow-design-basis.md`. Retained as part of the research trail.
 
 ---
 
