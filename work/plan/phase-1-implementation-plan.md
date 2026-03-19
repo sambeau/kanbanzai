@@ -6,6 +6,8 @@
 - Based on:
   - `work/design/workflow-design-basis.md`
   - `work/spec/phase-1-specification.md`
+  - `work/design/document-centric-interface.md`
+  - `work/design/machine-context-design.md`
   - `work/design/agent-interaction-protocol.md`
   - `work/design/quality-gates-and-review-policy.md`
   - `work/design/git-commit-policy.md`
@@ -44,7 +46,7 @@ At the end of Phase 1, the project should have a working workflow kernel that ca
    - Bug
    - Decision
 2. validate records, transitions, references, and naming
-3. scaffold and validate at least the required phase 1 documents
+3. support the document-centric interface: submission, normalisation, approval, verbatim retrieval, scaffolding, and validation for required phase 1 document types
 4. expose the required formal operations through MCP
 5. support a strict CLI using the same core logic
 6. maintain deterministic canonical state on disk
@@ -85,10 +87,12 @@ Phase 1 should remain minimal, but it must not block later evolution toward:
 
 - first-class Specification and Plan entities
 - richer policy query
-- context packing
+- context packing and role-scoped context assembly (see `work/design/machine-context-design.md`)
 - worktree automation
 - orchestration
 - greater process self-management
+
+In particular, Phase 1 must reserve namespace in the MCP operation set and storage layout for context management operations, even though those operations are not implemented until Phase 2.
 
 ### 3.4 Build the product, not the instance
 
@@ -207,25 +211,27 @@ This layer should operate independently of MCP and CLI presentation.
 
 ## 6.3 Layer 3: document support
 
-Implement:
+Implement the document-centric interface model defined in `work/design/document-centric-interface.md`:
 
-- document templates for required phase 1 docs
+- document templates for all required phase 1 document types (proposals, draft designs, designs, specifications, implementation plans, research reports)
 - scaffolding routines
-- document validation routines
-- basic schema/frontmatter/section checking
+- document validation routines (type recognition, frontmatter, required sections, naming, referential integrity)
+- document submission and storage
+- normalisation support (agents normalise; the system stores and presents for human approval)
+- approve-before-canon enforcement (documents are not canonical until a human approves)
+- verbatim retrieval of approved canonical documents (no re-rendering or re-summarisation on retrieval)
+- document-to-entity extraction on approval (extracting decisions, entity updates, and cross-references)
+- document lifecycle tracking (submitted → normalised → approved → canonical)
 
-This layer should treat human-authored content as validated, not generated wholesale.
+This layer should treat human-authored content as validated, not generated wholesale. The normalisation step is performed by agents, not by the system — the system stores the result and enforces the approval gate.
 
 ## 6.4 Layer 4: MCP service layer
 
 Implement the formal machine interface for:
 
-- create
-- read/query
-- update status
-- candidate validation
-- document scaffold
-- document validation
+- entity operations: create, read/query, update status, candidate validation
+- document operations: submit, normalise, approve, retrieve (verbatim), scaffold, validate
+- extraction operations: extract entities and decisions from approved documents
 - health checks
 
 This layer should remain thin and strict.
@@ -321,23 +327,29 @@ Outputs:
 - working phase 1 allocator
 - documented limits and assumptions
 
-## 7.4 Track D — Document scaffolding and validation
+## 7.4 Track D — Document lifecycle
 
 Goal:
-Support required phase 1 documents.
+Implement the document-centric interface for required phase 1 document types.
 
 Tasks:
-- define templates for feature specification docs
-- define templates for feature plan docs
-- define template or scaffold support for bug-related docs if needed
-- implement scaffold routines
-- implement validation routines for required frontmatter/sections/naming/links
-- ensure docs align with phase 1 scope
+- define templates for all required phase 1 document types: proposals, draft designs, designs, specifications, implementation plans, research reports
+- implement scaffold routines for each document type
+- implement document submission and storage
+- implement normalisation support (store normalised result, present for approval)
+- implement approve-before-canon enforcement
+- implement verbatim retrieval of approved canonical documents
+- implement document-to-entity extraction on approval (decisions, entity updates, cross-references)
+- implement document lifecycle state tracking (submitted → normalised → approved → canonical)
+- implement validation routines for type recognition, required frontmatter, required sections, naming conventions, and referential integrity
 
 Outputs:
-- phase 1 templates
+- phase 1 templates for all required document types
 - scaffold commands/operations
-- doc validation logic
+- document submission/approval pipeline
+- verbatim retrieval
+- entity extraction from documents
+- document validation logic
 
 ## 7.5 Track E — MCP interface
 
@@ -346,12 +358,14 @@ Expose the workflow kernel through a strict MCP surface.
 
 Tasks:
 - define phase 1 operation contracts
-- implement create operations
-- implement query/get/search operations
-- implement status update operations
-- implement approve where required by the composite feature model
+- implement entity create operations
+- implement entity query/get/search operations
+- implement entity status update operations
+- implement entity approve where required by the composite feature model
 - implement candidate validation
-- implement document scaffold/validate
+- implement document submit/normalise/approve/retrieve operations
+- implement document scaffold/validate operations
+- implement document-to-entity extraction operations
 - implement health check access
 - ensure structured return values and clear failures
 
@@ -410,7 +424,7 @@ Outputs:
 
 Implementation must support operations functionally equivalent to the following.
 
-## 8.1 Required create operations
+## 8.1 Required entity create operations
 
 - create epic
 - create feature
@@ -418,13 +432,13 @@ Implementation must support operations functionally equivalent to the following.
 - create bug
 - record decision
 
-## 8.2 Required read/query operations
+## 8.2 Required entity read/query operations
 
-- get object by identity
-- search/query objects
+- get entity by identity
+- search/query entities
 - inspect canonical state reliably
 
-## 8.3 Required update operations
+## 8.3 Required entity update operations
 
 - update status
 - perform approval where needed by phase 1
@@ -436,10 +450,17 @@ Implementation must support operations functionally equivalent to the following.
 - validate documents
 - run health checks
 
-## 8.5 Required document operations
+## 8.5 Required document lifecycle operations
 
-- scaffold required document types
-- validate required document types
+- scaffold document from template (by document type)
+- submit document (store as submitted, ready for normalisation)
+- approve document (transition from normalised to canonical, enforce human approval gate)
+- retrieve approved document verbatim (no re-rendering or modification)
+- validate document (type recognition, frontmatter, sections, naming, referential integrity)
+
+## 8.6 Required extraction operations
+
+- extract entities and decisions from approved documents
 
 ---
 
@@ -659,20 +680,18 @@ Mitigation:
 
 ## 14. Decisions Needed Before or Early in Implementation
 
-The following decisions should be made explicitly during implementation planning or very early implementation:
+The following decisions are needed. Items marked ✓ have been resolved as accepted decisions in the decision log. Remaining items should be resolved during early implementation and recorded as decisions.
 
-1. exact phase 1 ID allocation strategy
-2. exact canonical file layout for product and instance concerns
-3. exact YAML subset/formatting constraints
-4. exact minimum required field set per entity
-5. exact lifecycle transition graph
-6. exact document template structures
-7. exact MCP operation names and request/response shapes
-8. exact CLI command mapping
-9. exact local cache scope and rebuild behavior
-10. initial bootstrap approach for using the kernel on this project
-
-These decisions should be recorded as decisions, not left implicit.
+1. ✓ exact phase 1 ID allocation strategy (P1-DEC-007 — accepted)
+2. ✓ exact canonical file layout for product and instance concerns (P1-DEC-006 — accepted)
+3. ✓ exact YAML subset/formatting constraints (P1-DEC-008 — accepted)
+4. ✓ exact minimum required field set per entity (P1-DEC-009 — accepted)
+5. ✓ exact lifecycle transition graph (P1-DEC-010 — accepted)
+6. ✓ exact document template structures (P1-DEC-014 — accepted)
+7. exact MCP operation names and request/response shapes (P1-DEC-011 — implementation decision, resolve during Track E)
+8. exact CLI command mapping (P1-DEC-012 — design decision requiring human input; CLI commands should read like English, see design basis §6.2)
+9. exact local cache scope and rebuild behavior (P1-DEC-013 — implementation decision, resolve during Track G)
+10. initial bootstrap approach for using the kernel on this project (P1-DEC-015 — process decision, resolve when kernel is stable enough for self-use)
 
 ---
 
@@ -696,8 +715,8 @@ Phase 1 implementation should proceed by building the workflow kernel in layers:
 
 1. core model and deterministic storage
 2. validation engine
-3. document support
-4. MCP interface
+3. document lifecycle (submission, normalisation, approval, verbatim retrieval, scaffolding, validation, entity extraction)
+4. MCP interface (entity operations + document lifecycle operations)
 5. CLI interface
 6. local cache
 7. limited bootstrap use on the project itself
@@ -709,5 +728,6 @@ The goal is not to build the whole future system at once.
 The goal is to build a trustworthy kernel that:
 - solves the biggest consistency failures now
 - is usable by agents through MCP
+- supports the document-centric interface for human-authored design and planning materials
 - can begin managing limited current-project work
 - provides a strong base for later phases
