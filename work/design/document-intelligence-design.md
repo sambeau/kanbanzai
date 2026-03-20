@@ -430,7 +430,32 @@ The tool maintains a concept registry — a deduplicated set of concept names wi
 
 Concepts are corpus-wide. A concept introduced in one document and used in another creates an edge that connects those documents through the graph. This is what enables vertical slicing — following concept edges to find everything related to a single idea.
 
-### 12.4 Relationship to knowledge entries
+### 12.4 Extraction scope
+
+Concept extraction is **not restricted** to a predefined project vocabulary.
+
+New design documents introduce new concepts by definition. Implementation documents reference general engineering concepts (concurrency models, error handling patterns, API design principles) that are genuinely useful for cross-referencing. Specialised teams need specialised concepts. Restricting extraction to a predefined vocabulary assumes we know the vocabulary before the work happens — which defeats the purpose of a system that learns from its documents.
+
+The noise filter is the **classifying agent's semantic judgement**, not a vocabulary list. The classification protocol instructs the agent to tag concepts that a section meaningfully introduces or depends on — not every word that appears. A section that mentions "authentication" in passing ("...unlike authentication, which is handled elsewhere...") should not be tagged. A section that discusses authentication design in depth should. The agent can tell the difference. That is the whole point of AI-at-ingest-time.
+
+The **INTRODUCES vs USES** edge distinction provides an additional relevance signal at query time. A vertical slice anchored on INTRODUCES returns the definition and the sections that meaningfully depend on it, not every passing mention. This is the primary mechanism for keeping query results precise even as the concept registry grows.
+
+If noise proves to be a problem at scale, the mitigation path is **query-time filtering** — by scope, by document type, by occurrence count, by the INTRODUCES/USES distinction — not extraction-time restriction. This is consistent with the machine-context design's approach to knowledge scoping: extract broadly, filter at assembly time through context profiles and role scoping.
+
+This is an area where we expect to iterate based on real usage. The design deliberately avoids premature restriction. It is easier to add filtering to a broad registry than to retroactively extract concepts that were excluded by an over-narrow vocabulary.
+
+### 12.5 Concept lifecycle
+
+Concepts do not have an explicit lifecycle with states and transitions. They are **derived from the document graph** and stay current as documents are classified and re-classified.
+
+- When a new document is classified that introduces a concept, the concept appears in the registry.
+- When a document is superseded, the concept's introduction point may migrate to the superseding document if it re-introduces the concept. If the superseding document does not mention the concept, the introduction still points to the original document — that is provenance, not staleness.
+- A concept with zero remaining references (all introducing and using documents have been removed or re-classified without it) can be pruned from the registry automatically.
+- Concepts do not need manual curation, promotion, or retirement. Their presence and connectivity in the graph is their lifecycle.
+
+This is simpler than the knowledge entry lifecycle (`work/design/machine-context-design.md` §9.4) because concepts are lightweight — a name and a set of edges — rather than content-bearing entries with confidence scores and TTLs.
+
+### 12.6 Relationship to knowledge entries
 
 The machine-context design (`work/design/machine-context-design.md` §9) defines knowledge entries as contributed implementation context. Concepts are different: they are extracted from design documents, not contributed by agents during implementation. However, a concept may have a corresponding knowledge entry — the concept "TSID13" in the design corpus may correspond to a knowledge entry about how TSID13 is implemented in code. Linking these is a future integration point.
 
@@ -616,19 +641,23 @@ The classification cost is amortised across all subsequent reads. If a section i
 
 ## 17. Open Questions
 
-1. **Graph storage format.** Is a flat YAML edge list sufficient, or does the graph need a more efficient representation? At what corpus size does flat YAML become a bottleneck?
+### 17.1 Design questions
 
-2. **Incremental re-classification.** When a document changes, should the entire document be re-classified or only the changed sections? Content hashes per section enable incremental detection, but the classification of one section may depend on context from surrounding sections.
+1. **Cross-document consistency checking.** The `doc_consistency` operation is described but the mechanism is not defined. What does consistency checking actually compare? How are potential inconsistencies surfaced — as warnings, errors, or informational notes? This needs design work before implementation, but does not block the rest of the system.
 
-3. **Cross-document consistency checking.** The `doc_consistency` operation is described but the mechanism is not defined. What does consistency checking actually compare? How are potential inconsistencies surfaced — as warnings, errors, or informational notes?
+### 17.2 Implementation questions
 
-4. **Concept deduplication boundaries.** Simple string normalization catches obvious duplicates ("Normalization Pipeline" = "normalization-pipeline") but not synonyms ("normalization pipeline" ≠ "ingest pipeline" even if they refer to the same thing). Is synonym detection worth the complexity?
+The following are implementation questions that should be resolved during implementation planning, not in this design document. They are recorded here for completeness.
 
-5. **Classification stability across models.** Different LLMs may classify the same fragment differently. Is this a problem in practice? Should the system record which model produced a classification for reproducibility?
+- **Graph storage format.** Is a flat YAML edge list sufficient, or does the graph need a more efficient representation? At what corpus size does flat YAML become a bottleneck?
+- **Incremental re-classification.** When a document changes, should the entire document be re-classified or only the changed sections? Content hashes per section enable incremental detection, but the classification of one section may depend on context from surrounding sections.
+- **Concept deduplication boundaries.** Simple string normalization catches obvious duplicates ("Normalization Pipeline" = "normalization-pipeline") but not synonyms ("normalization pipeline" ≠ "ingest pipeline" even if they refer to the same thing). Is synonym detection worth the complexity, or can it wait until the concept registry is large enough to show the problem?
+- **Classification stability across models.** Different LLMs may classify the same fragment differently. Is this a problem in practice? Should the system record which model produced a classification?
+- **Index bootstrapping.** When the system is first adopted on a project with existing documents, all documents need Layer 3 classification. Batch classification by a dedicated agent, or incremental classification as documents are touched?
 
-6. **Index bootstrapping.** When the system is first adopted on a project with existing documents, all documents need Layer 3 classification. What is the bootstrapping workflow? Batch classification by a dedicated agent? Incremental classification as documents are touched?
+### 17.3 Resolved questions
 
-7. **Scope of concept extraction.** Should concepts be restricted to the project's design vocabulary, or should they include general software engineering concepts? A narrow scope keeps the concept registry small and meaningful. A broad scope captures more relationships but risks noise.
+1. **Scope of concept extraction.** Resolved: concept extraction is not restricted to a predefined vocabulary. The noise filter is the classifying agent's semantic judgement at ingest time, combined with the INTRODUCES/USES distinction at query time. If noise becomes a problem at scale, the mitigation is query-time filtering, not extraction-time restriction. See §12.4.
 
 ---
 
