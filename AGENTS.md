@@ -304,17 +304,16 @@ This is not a library. There is no `pkg/` directory.
 - Do not write tests that only assert that a mock was called — test behaviour, not wiring
 - Do not test unexported functions directly unless they contain complex logic worth isolating
 
-## Code Knowledge Graph (codebase-memory-mcp)
+## Codebase Knowledge Graph (`codebase-memory-mcp`)
 
-This project is indexed by `codebase-memory-mcp`, which provides a persistent
-knowledge graph of the Go codebase. When exploring code structure, prefer graph
-queries over grep for structural questions:
+This project uses `codebase-memory-mcp` for structural code exploration. Prefer graph tools over file-by-file search for questions about code structure, dependencies, callers and callees, routes, hotspots, and architecture.
 
-- **"What calls this function?"** → `trace_call_path(function_name="X", direction="inbound")`
-- **"Show the architecture"** → `get_architecture(aspects=["all"])`
-- **"Find dead code"** → `search_graph(label="Function", max_degree=0, relationship="CALLS", direction="inbound", exclude_entry_points=true)`
-- **"What depends on package X?"** → Cypher queries via `query_graph`
-- **"What changed and what's affected?"** → `detect_changes()`
+The graph auto-syncs after the initial index. If it seems stale, run `index_repository(repo_path="/absolute/path/to/kanbanzai")` to force a refresh.
 
-The graph auto-syncs after the initial index. If it seems stale, run
-`index_repository(repo_path="/absolute/path/to/kanbanzai")` to force a refresh.
+### Fallback policy
+
+- Use graph queries first for structural questions.
+- Use text search (`grep`) for string literals, error messages, config values, and other non-structural content.
+- Use `search_graph` to discover exact names before `trace_call_path`.
+- Check `list_projects` first; if the project is missing or stale, run `index_repository`.
+- When agent-native skills or instruction files are available, prefer those over duplicating long tool-usage instructions in this repository.
