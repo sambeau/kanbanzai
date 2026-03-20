@@ -443,6 +443,8 @@ Then use as needed:
 - `work/plan/phase-1-decision-log.md`
 - `work/plan/phase-1-audit-remediation.md`
 - `work/plan/phase-1-audit-2-remediation.md`
+- `work/design/document-intelligence-design.md`
+- `work/design/machine-context-design.md`
 
 ### Build and test
 

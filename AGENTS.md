@@ -89,6 +89,7 @@ Then refer to these as needed:
 
 - `work/design/workflow-system-design.md` — earlier system design document
 - `work/design/machine-context-design.md` — machine-to-machine context model (Phase 2, but Phase 1 must not preclude it)
+- `work/design/document-intelligence-design.md` — structural analysis backend for design documents (Phase 2)
 - `work/design/product-instance-boundary.md` — product vs. instance separation
 - `work/plan/phase-1-implementation-plan.md` — concrete execution plan
 - `work/plan/phase-1-decision-log.md` — architectural decisions
@@ -107,6 +108,7 @@ Then refer to these as needed:
 | Architectural decisions made | `work/plan/phase-1-decision-log.md` | both |
 | Implementation plan and work breakdown | `work/plan/phase-1-implementation-plan.md` | kbz |
 | Machine context model (Phase 2) | `work/design/machine-context-design.md` | kbz |
+| Document intelligence (Phase 2) | `work/design/document-intelligence-design.md` | kbz |
 
 ## Decision-Making Rules
 
