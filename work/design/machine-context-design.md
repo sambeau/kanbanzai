@@ -6,6 +6,7 @@
 - Related:
   - `work/design/workflow-design-basis.md` §14, §15, §18
   - `work/design/document-centric-interface.md` §8.4
+  - `work/design/document-intelligence-design.md` §5, §7, §12, §14.2
   - `work/spec/phase-1-specification.md` §20
   - `work/design/agent-interaction-protocol.md`
 
@@ -65,7 +66,7 @@ The system distinguishes two fundamentally different types of context that agent
 
 Design context is information about **what we are trying to build**. It flows top-down through the entity hierarchy: project goals → epics → features → tasks. It originates in human-authored documents — proposals, designs, specifications, implementation plans — and is fragmented internally by the system for targeted assembly.
 
-Design context assembly is already described in the document-centric interface design (§8.4) and the workflow design basis (§8.5, §18.4). It works by:
+Design context assembly is described in the document-centric interface design (§8.4) and the workflow design basis (§8.5, §18.4). The concrete mechanism — a four-layer analysis model producing a queryable document graph — is defined in `work/design/document-intelligence-design.md`. It works by:
 
 - Indexing decisions, linking requirements to features, connecting spec sections to design rationale
 - Composing a targeted slice for each agent: the relevant design sections, specification requirements, decisions, and constraints for a specific task
@@ -288,7 +289,7 @@ When an agent is assigned a task, the system assembles a **context packet** — 
 
 1. **Role profile** — the agent's speciality conventions, scope, and architecture overview
 2. **Project context** — project-wide conventions and knowledge (Tier 1)
-3. **Design context** — task-specific design fragments assembled from the entity hierarchy (epic goals → feature spec → task requirements → relevant decisions)
+3. **Design context** — task-specific design fragments from the document graph (epic goals → feature spec → task requirements → relevant decisions); the entity hierarchy provides scoping, the document graph (`work/design/document-intelligence-design.md` §7) provides the indexed fragments
 4. **Implementation context** — role-scoped Tier 2 architecture knowledge relevant to the task's code area
 5. **Session context** — recent Tier 3 knowledge from related tasks
 6. **Task instructions** — acceptance criteria, constraints, verification requirements
@@ -460,6 +461,8 @@ The workflow design basis (§15) already defines memory classes, knowledge gover
 
 The knowledge entry format suggested in the design basis (§15.4) — with fields for id, team, topic, tags, summary, detail, learned_from, date — maps directly to the contribution model described here.
 
+The document intelligence design (`work/design/document-intelligence-design.md` §12) introduces a separate lightweight structure — **concepts** — for tracking shared vocabulary across design documents. Concepts are graph-derived (extracted from documents by agents at ingest time, not contributed during implementation) and carry no lifecycle states, confidence scores, or TTLs. A concept may have a corresponding knowledge entry — the concept "TSID13" in the design corpus may correspond to a knowledge entry about how TSID13 is implemented in code — but the two structures are distinct. Concepts enable vertical slicing of the document corpus; knowledge entries capture implementation experience.
+
 ---
 
 ## 11. Relationship to Existing Tools and Prior Art
@@ -616,6 +619,10 @@ Context is stored alongside entity state in the Kanbanzai instance root. This is
 │   └── sessions/    # Tier 3: session knowledge (may be pruned)
 │       ├── SE-001.yaml
 │       └── SE-002.yaml
+├── index/           # document intelligence index (see document-intelligence-design.md §13)
+│   ├── documents/   # per-document structural index + classifications
+│   ├── concepts.yaml
+│   └── graph.yaml
 ├── specs/           # existing document storage
 ├── plans/           # existing document storage
 └── cache/           # existing derived cache
@@ -732,6 +739,7 @@ Phase 2 implements retrieval and context packing (per the workflow design basis 
 - Retention policy enforcement (TTL-based pruning, promotion triggers)
 - Post-merge compaction for Tier 3 entries
 - Integration of design context and implementation context in assembled packets
+- Document intelligence backend — structural analysis, AI-assisted classification, and the document graph that provides design fragments for context assembly (see `work/design/document-intelligence-design.md` §18.2)
 
 ### 15.3 Phase 3 and beyond
 

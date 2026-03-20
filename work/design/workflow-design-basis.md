@@ -8,6 +8,9 @@
   - `initial-workflow-analysis.md`
   - `initial-workflow-analysis-review.md`
   - `document-centric-interface.md`
+- Related:
+  - `work/design/document-intelligence-design.md` §5, §6, §14.3 (extends §6.4 entity extraction, implements §8.5 internal fragmentation)
+  - `work/design/machine-context-design.md` (Phase 2 context assembly)
 - Notes:
   - This document should track the current consolidated design proposal closely enough to serve as the basis for planning
   - The workflow system should be built so that, over time, its own development can increasingly be managed through the workflow process it defines
@@ -501,6 +504,8 @@ The AI extracts structured data from the approved document:
 
 This extraction is internal — the human does not need to see or manage it.
 
+The document intelligence design (`work/design/document-intelligence-design.md` §6, §14.3) extends this stage with structural classification — fragment role tagging, concept extraction, and section summarisation — performed by the agent during the same ingest pass.
+
 #### Formal commit
 
 The AI uses MCP tools to create or update canonical entity records based on the extracted data.
@@ -705,6 +710,8 @@ Documents and entities relate bidirectionally:
 Internal fragmentation of documents — indexing decisions, linking requirements to features, connecting spec sections to design rationale — enables the system to compose targeted context for each agent. An agent implementing a specific task receives the relevant slices from across the document layers, not the entire design library.
 
 The principle is: fragment internally for consistency and context assembly, present externally as whole documents.
+
+The mechanism for this internal fragmentation — a four-layer analysis model producing a queryable document graph — is defined in `work/design/document-intelligence-design.md`.
 
 ### 8.6 Task Hierarchy
 

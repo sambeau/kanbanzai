@@ -9,6 +9,7 @@
   - `work/spec/phase-1-specification.md` §6, §7, §15
   - `work/design/agent-interaction-protocol.md`
   - `work/design/product-instance-boundary.md`
+  - `work/design/document-intelligence-design.md` §5, §6, §7, §14
 
 ---
 
@@ -271,6 +272,8 @@ However, some degree of internal structuring is necessary for the system to do i
 
 The principle is: fragment internally for consistency, present externally as whole documents.
 
+The mechanism for this internal structuring — a four-layer analysis model producing a queryable document graph — is defined in `work/design/document-intelligence-design.md`.
+
 ### 8.4 Context assembly for agents
 
 Internal fragmentation serves a second purpose beyond consistency: it enables precise context assembly for AI agents.
@@ -280,6 +283,8 @@ The central problem in coordinating AI agent teams is context. Every agent has a
 By structuring documents internally — indexing decisions, linking requirements to features, connecting spec sections to design rationale, linking tasks to the specific parts of a plan and spec they implement — the system can compose a targeted context for each agent. An agent implementing a specific task receives the relevant slice of the design, the relevant specification sections, the relevant decisions, and the relevant constraints — assembled from fragments across the document layers — without receiving every design document in the project.
 
 This is the architectural payoff of the document-to-entity mapping. Humans work with whole documents because that is how humans think. The system fragments documents internally because that is how it can efficiently coordinate many agents working in parallel, each with precisely the context they need and nothing more.
+
+The document graph defined in `work/design/document-intelligence-design.md` is the backend for this context assembly — it provides the indexed fragments that the context assembler composes into targeted packets.
 
 ### 8.5 Decision as an internal entity
 
