@@ -22,7 +22,7 @@ This document defines the ID system for all Kanbanzai workflow entities. The sys
 - safe for parallel work across multiple agents, worktrees, and branches
 - human-friendly at the levels where humans interact
 - machine-friendly at the levels where agents interact
-- time-sortable where possible
+- time-sortable
 - URL-safe
 - stable (never change after creation)
 
@@ -56,7 +56,7 @@ Embedding metadata in IDs creates coupling between the identifier and facts that
 
 ### 3.2 Entropy eliminates coordination
 
-High-entropy random IDs (ULIDs, UUIDs) do not require a central allocator, a lock file, a counter, or any form of coordination between agents. Two agents generating IDs independently, on different machines, in different worktrees, at the same millisecond, will produce different IDs with overwhelming probability.
+Time-sorted IDs with a random component do not require a central allocator, a lock file, a counter, or any form of coordination between agents. Two agents generating IDs independently, on different machines, in different worktrees, at the same millisecond, will produce different IDs with overwhelming probability.
 
 This is the only ID strategy that is safe by construction for parallel work.
 
@@ -64,17 +64,17 @@ This is the only ID strategy that is safe by construction for parallel work.
 
 Humans do not need short IDs. They need short *addressing*. Git commits have 40-character hex SHAs; nobody types all 40 characters. Users type `git show a1b2c3` and Git resolves the prefix. The identifier is long; the interface is short.
 
-The same principle applies here. The canonical ID can be long. The CLI, the UI, and conversational references accept any unique prefix. The display layer shows the shortest unique prefix within the current project context.
+The same principle applies here. The canonical ID is moderately long. The CLI, the UI, and conversational references accept any unique prefix. The display layer shows the shortest unique prefix within the current project context.
 
-### 3.4 The entropy gradient
+### 3.4 Right-sized entropy
 
-Not all entities need the same amount of entropy. The entity hierarchy has a natural gradient:
+Kanbanzai is a small workflow database, not a global-scale distributed system. Standard ULIDs provide 80 bits of randomness per millisecond — enough to generate 10²⁴ unique IDs per millisecond without coordination. This is massive overkill for a system that creates a handful of entities per day.
 
-- **Epics** are few, human-created, and human-discussed. Collision risk is negligible.
-- **Features and bugs** are moderate in number, created by both humans and agents. They sit on the human-AI boundary.
-- **Tasks and decisions** are many, primarily agent-created and agent-managed. Collision risk is highest.
+The 48-bit millisecond timestamp already separates any two IDs created more than 1ms apart — which is virtually all of them. The random component only needs to handle the near-impossible case of two agents creating the same entity type in the exact same millisecond. Additionally, the local database provides a collision check as a safety net, allowing immediate retry on the rare collision.
 
-The ID format follows this gradient: human-chosen identifiers at the top, full machine-generated entropy at the bottom.
+Three characters of Crockford base32 randomness (15 bits = 32,768 values per millisecond) is more than sufficient. Even without a collision check (cross-worktree scenario), the probability of two agents creating the same entity type in the exact same millisecond AND drawing the same 1-in-32,768 random value is negligible.
+
+This produces compact 13-character IDs (10 timestamp + 3 random) that are short enough to recognise at a glance, while remaining collision-safe for any realistic workflow scenario.
 
 ---
 
@@ -92,29 +92,31 @@ The ID format follows this gradient: human-chosen identifiers at the top, full m
 
 Rationale: There are few epics in any project (typically 5–30 over a project lifetime). They are created one at a time by humans, in conversation or design documents. The probability of two humans independently choosing the same epic slug on different branches is extremely low, and if it happens, it almost certainly represents the same epic and should be merged manually.
 
-### 4.2 Features, Bugs, Decisions — Type prefix + ULID
+### 4.2 Features, Bugs, Decisions — Type prefix + compact time-sorted ID
 
 | Property     | Value                                     |
 | ------------ | ----------------------------------------- |
-| Format       | `{TYPE}-{ULID}`                           |
-| Examples     | `FEAT-01J3K7MXP3RTE5K9Z2QFHVWA`, `BUG-01J4AR7WHN4F2DX8T12QAZBYC`, `DEC-01J3KABCDEFGH1234567890WX` |
+| Format       | `{TYPE}-{TSID13}`                         |
+| Examples     | `FEAT-01J3K7MXP3RT5`, `BUG-01J4AR7WHN4F2`, `DEC-01J3KABCDE7MX` |
 | Type prefix  | `FEAT`, `BUG`, `DEC`                      |
-| ULID         | 26-character Crockford base32, standard ULID format |
-| Uniqueness   | 128-bit ULID — collision probability is negligible (2⁻¹²⁸) |
-| Entropy      | Full — 48-bit millisecond timestamp + 80-bit cryptographic random |
+| TSID13       | 13-character Crockford base32: 10-char timestamp + 3-char random |
+| Uniqueness   | 48-bit ms timestamp + 15-bit random; local collision check with retry |
+| Entropy      | 15 bits per millisecond (32,768 values)   |
 
-Rationale: Features, bugs, and decisions are created by both humans and agents, sometimes in parallel across worktrees. Sequential IDs are unsafe here. Full ULIDs provide collision safety by construction with no coordination needed. The type prefix preserves immediate recognition of what kind of entity an ID refers to.
+Rationale: Features, bugs, and decisions are created by both humans and agents, sometimes in parallel across worktrees. Sequential IDs are unsafe here. The compact time-sorted ID provides collision safety without coordination, time-sortability, and a reasonable length for filenames and references. The type prefix preserves immediate recognition of what kind of entity an ID refers to.
 
-### 4.3 Tasks — Type prefix + ULID (independent)
+### 4.3 Tasks — Type prefix + compact time-sorted ID (independent)
 
 | Property     | Value                                     |
 | ------------ | ----------------------------------------- |
-| Format       | `TASK-{ULID}`                             |
-| Example      | `TASK-01J3KZZZBBBBCCCCDDDDEEEEQQ`        |
-| Uniqueness   | 128-bit ULID                              |
+| Format       | `TASK-{TSID13}`                           |
+| Example      | `TASK-01J3KZZZBB4KF`                     |
+| Uniqueness   | Same as §4.2                              |
 | Parent       | Stored as a metadata field (`parent_feature`), not embedded in the ID |
 
-Rationale: Tasks are the most numerous entity type and the most likely to be created concurrently by multiple agents. They require maximum entropy. The parent feature relationship is tracked in entity metadata, not in the ID, because:
+Rationale: Tasks use the same ID format as other entities for consistency. One format means one generator, one parser, one set of tests, one thing to document. 15 bits of randomness per millisecond is adequate even for burst creation of many tasks — and the local collision check provides a safety net.
+
+The parent feature relationship is tracked in entity metadata, not in the ID, because:
 
 - IDs must be stable; relationships are data that can change
 - Embedding the parent would make task IDs dependent on feature IDs
@@ -122,37 +124,84 @@ Rationale: Tasks are the most numerous entity type and the most likely to be cre
 
 ### 4.4 Format summary
 
-| Entity   | Format           | Example                                    | Created by | Entropy  |
-| -------- | ---------------- | ------------------------------------------ | ---------- | -------- |
-| Epic     | `EPIC-{SLUG}`    | `EPIC-IDS`                                 | Human      | None     |
-| Feature  | `FEAT-{ULID}`    | `FEAT-01J3K7MXP3RTE5K9Z2QFHVWA`           | Human/AI   | 128-bit  |
-| Bug      | `BUG-{ULID}`     | `BUG-01J4AR7WHN4F2DX8T12QAZBYC`            | Human/AI   | 128-bit  |
-| Decision | `DEC-{ULID}`     | `DEC-01J3KABCDEFGH1234567890WX`            | Human/AI   | 128-bit  |
-| Task     | `TASK-{ULID}`    | `TASK-01J3KZZZBBBBCCCCDDDDEEEEQQ`          | AI         | 128-bit  |
+| Entity   | Format            | Example                 | Created by | ID length |
+| -------- | ----------------- | ----------------------- | ---------- | --------- |
+| Epic     | `EPIC-{SLUG}`     | `EPIC-IDS`              | Human      | Variable  |
+| Feature  | `FEAT-{TSID13}`   | `FEAT-01J3K7MXP3RT5`   | Human/AI   | 17 chars  |
+| Bug      | `BUG-{TSID13}`    | `BUG-01J4AR7WHN4F2`    | Human/AI   | 16 chars  |
+| Decision | `DEC-{TSID13}`    | `DEC-01J3KABCDE7MX`    | Human/AI   | 16 chars  |
+| Task     | `TASK-{TSID13}`   | `TASK-01J3KZZZBB4KF`   | AI         | 17 chars  |
+| Document | `DOC-{TSID13}`    | `DOC-01J3K7MXP3RT5`    | AI         | 16 chars  |
 
 ---
 
-## 5. ULID Specification
+## 5. Compact Time-Sorted ID Specification (TSID13)
 
-All ULID-based IDs use standard ULIDs as defined by the [ULID specification](https://github.com/ulid/spec):
+### 5.1 Structure
 
-- **Encoding:** Crockford base32 (`0123456789ABCDEFGHJKMNPQRSTVWXYZ`)
-- **Length:** 26 characters
-- **Structure:** 10-character timestamp (48-bit millisecond Unix epoch) + 16-character randomness (80-bit)
-- **Monotonicity:** Within the same millisecond, ULIDs must be monotonically increasing (use a monotonic entropy source)
-- **Sortability:** ULIDs sort lexicographically by creation time
-- **Case:** Canonical form is uppercase; matching is case-insensitive (Crockford property)
+A TSID13 is a 13-character string encoded in Crockford base32, composed of two parts:
 
-### 5.1 Go implementation
+| Component  | Characters | Bits | Content                                |
+| ---------- | ---------- | ---- | -------------------------------------- |
+| Timestamp  | 1–10       | 48   | Milliseconds since Unix epoch (unsigned) |
+| Random     | 11–13      | 15   | Cryptographic random                   |
+| **Total**  | **13**     | **63** | Effectively 65 bits (13 × 5), 2 unused |
 
-Use `github.com/oklog/ulid/v2` with a monotonic entropy source:
+The encoding uses 13 characters × 5 bits = 65 bits total. The timestamp occupies 48 bits (with the top 2 bits of the first character always zero for current dates), and the random component occupies 15 bits. This leaves 2 bits unused in the encoding, which are set to zero.
+
+### 5.2 Encoding
+
+- **Alphabet:** Crockford base32 (`0123456789ABCDEFGHJKMNPQRSTVWXYZ`)
+- **Canonical case:** Uppercase
+- **Case sensitivity:** Case-insensitive for matching and input; normalised to uppercase for storage
+- **Sortability:** TSID13 values sort lexicographically by creation time (timestamp is most significant)
+
+### 5.3 Timestamp
+
+The timestamp is the number of milliseconds since the Unix epoch (1970-01-01T00:00:00Z), encoded as the most significant 50 bits of the first 10 Crockford base32 characters (48 bits of timestamp, 2 high bits zero).
+
+This is the same timestamp encoding used by the ULID specification, ensuring compatibility with ULID tooling for the timestamp portion.
+
+The maximum representable timestamp is 2⁴⁸ − 1 milliseconds ≈ year 10889. Overflow is not a concern.
+
+### 5.4 Random component
+
+The random component is 15 bits generated from a cryptographically secure random source (`crypto/rand`). It is encoded as the final 3 Crockford base32 characters.
+
+For each ID generated, a fresh random value is produced. There is no monotonic increment within the same millisecond — this is unnecessary given the low ID generation rate and the local collision check.
+
+### 5.5 Collision safety
+
+The collision model for TSID13:
+
+- Two IDs generated **more than 1ms apart:** guaranteed unique (different timestamps)
+- Two IDs generated **within the same millisecond:** 1-in-32,768 collision probability per pair
+- **With local collision check:** the system detects the collision and regenerates the random component immediately; effective collision probability is zero within a single process
+- **Cross-worktree (no shared check):** collision requires same entity type + same millisecond + same 15-bit random value; negligible probability for any realistic workflow
+
+### 5.6 Go implementation
 
 ```
-entropy := ulid.Monotonic(cryptorand.Reader, 0)
-id := ulid.MustNew(ulid.Timestamp(time.Now()), entropy)
+import "crypto/rand"
+
+func generateTSID13() string {
+    // 48-bit millisecond timestamp
+    now := uint64(time.Now().UnixMilli())
+
+    // 15-bit random
+    var rb [2]byte
+    crypto_rand.Read(rb[:])
+    random := uint16(rb[0])<<8 | uint16(rb[1])
+    random &= 0x7FFF // mask to 15 bits
+
+    // Encode as 13 Crockford base32 characters
+    // First 10 chars: timestamp (most significant)
+    // Last 3 chars: random
+    return encodeCrockford(now, random)
+}
 ```
 
-The entropy source must be safe for concurrent use. `ulid.Monotonic` wraps a reader with a mutex and provides monotonic ordering within the same millisecond.
+The `encodeCrockford` function encodes the timestamp as 10 characters and the random value as 3 characters using the Crockford base32 alphabet. The implementation must produce uppercase output and accept case-insensitive input.
 
 ---
 
@@ -160,16 +209,16 @@ The entropy source must be safe for concurrent use. `ulid.Monotonic` wraps a rea
 
 ### 6.1 The break hyphen
 
-ULID-based IDs are displayed with a break hyphen after the fifth ULID character to create a natural visual boundary between the "short form" and the "entropy tail":
+TSID-based IDs are displayed with a break hyphen after the fifth TSID character to create a natural visual boundary between the "short form" and the "tail":
 
-| Canonical (stored)                     | Displayed                                |
-| -------------------------------------- | ---------------------------------------- |
-| `FEAT-01J3K7MXP3RTE5K9Z2QFHVWA`      | `FEAT-01J3K-7MXP3RTE5K9Z2QFHVWA`       |
-| `BUG-01J4AR7WHN4F2DX8T12QAZBYC`       | `BUG-01J4A-R7WHN4F2DX8T12QAZBYC`        |
+| Canonical (stored)         | Displayed                    |
+| -------------------------- | ---------------------------- |
+| `FEAT-01J3K7MXP3RT5`      | `FEAT-01J3K-7MXP3RT5`       |
+| `BUG-01J4AR7WHN4F2`       | `BUG-01J4A-R7WHN4F2`        |
 
 The break hyphen is a **display convention only**. It is not part of the canonical ID and is not stored in YAML files, filenames, or entity references. The system inserts it when displaying IDs and strips it when accepting input.
 
-**Why position 5:** Five ULID characters encode the most significant 25 bits of the millisecond timestamp, providing ~9.3 hours of resolution. In a typical project cadence (features created hours or days apart), the first five characters are almost always unique. The resulting short form — `FEAT-01J3K` at 10 characters — is comparable in length to a JIRA key.
+**Why position 5:** Five TSID characters encode the most significant 25 bits of the millisecond timestamp, providing ~9.3 hours of resolution. In a typical project cadence (features created hours or days apart), the first five characters are almost always unique. The resulting short form — `FEAT-01J3K` at 10 characters — is comparable in length to a JIRA key.
 
 ### 6.2 Prefix matching
 
@@ -181,8 +230,8 @@ The CLI and MCP operations accept any unique prefix of an ID:
 
 Resolution rules:
 
-1. Strip the type prefix and all hyphens from the input; this yields the ULID prefix
-2. Find all entities of that type whose ULID starts with the given prefix
+1. Strip the type prefix and all hyphens from the input; this yields the TSID prefix
+2. Find all entities of that type whose TSID starts with the given prefix
 3. If exactly one match: use it
 4. If multiple matches: return all candidates and ask the user to be more specific
 5. If no match: error
@@ -198,7 +247,7 @@ FEAT-01J4A  auth-overhaul         planning
 FEAT-01J5D  id-redesign           active
 ```
 
-If a new feature `FEAT-01J3KZ...` is later created, the first feature's display lengthens to `FEAT-01J3K7` to remain unambiguous.
+If a new feature with a TSID starting with `01J3KZ...` is later created, the first feature's display lengthens to `FEAT-01J3K7` to remain unambiguous.
 
 In YAML files and git references, the full canonical ID is always used. Short prefixes are a human interface convenience, not a storage format.
 
@@ -211,10 +260,11 @@ In YAML files and git references, the full canonical ID is always used. Short pr
 The canonical form of an ID — used in YAML entity files, filenames, cross-references, commit messages, and any persistent storage — does **not** include the break hyphen:
 
 - Epic: `EPIC-IDS`
-- Feature: `FEAT-01J3K7MXP3RTE5K9Z2QFHVWA`
-- Bug: `BUG-01J4AR7WHN4F2DX8T12QAZBYC`
-- Decision: `DEC-01J3KABCDEFGH1234567890WX`
-- Task: `TASK-01J3KZZZBBBBCCCCDDDDEEEEQQ`
+- Feature: `FEAT-01J3K7MXP3RT5`
+- Bug: `BUG-01J4AR7WHN4F2`
+- Decision: `DEC-01J3KABCDE7MX`
+- Task: `TASK-01J3KZZZBB4KF`
+- Document: `DOC-01J3K7MXP3RT5`
 
 ### 7.2 Case handling
 
@@ -225,22 +275,22 @@ Canonical form is uppercase. Matching and input parsing are case-insensitive. Th
 Entity files use the format `{CANONICAL-ID}-{slug}.yaml`:
 
 - `EPIC-IDS-id-system-redesign.yaml`
-- `FEAT-01J3K7MXP3RTE5K9Z2QFHVWA-profile-editing.yaml`
-- `TASK-01J3KZZZBBBBCCCCDDDDEEEEQQ-implement-ulid-allocator.yaml`
+- `FEAT-01J3K7MXP3RT5-profile-editing.yaml`
+- `TASK-01J3KZZZBB4KF-implement-id-allocator.yaml`
 
-The canonical ID contains no break hyphen, and the ULID portion is always exactly 26 characters. The parser identifies the slug boundary by:
+The canonical ID contains no break hyphen, and the TSID portion is always exactly 13 characters. The parser identifies the slug boundary by:
 
 1. Stripping the `.yaml` extension
 2. Extracting the known type prefix (before the first hyphen)
-3. For ULID-based types: the next 26 characters after the first hyphen are the ULID; the remainder (after the subsequent hyphen) is the slug
-4. For epics: everything between the first hyphen and the slug-start is the epic slug — which is also the full ID suffix
+3. For TSID-based types: the next 13 characters after the first hyphen are the TSID; the remainder (after the subsequent hyphen) is the slug
+4. For epics: everything after `EPIC-` up to the slug boundary is the epic slug identifier
 
 ### 7.4 YAML references
 
 Cross-references between entities use the full canonical ID:
 
 ```
-id: FEAT-01J3K7MXP3RTE5K9Z2QFHVWA
+id: FEAT-01J3K7MXP3RT5
 title: Profile editing
 parent_epic: EPIC-IDS
 status: active
@@ -289,20 +339,21 @@ Migration from the Phase 1 sequential ID system happens now. There is no product
 
 ### 10.2 Code changes
 
-- The `internal/id` package is replaced with a ULID-based allocator (for FEAT, BUG, DEC, TASK) and a slug-based allocator (for EPIC)
-- The `internal/storage` package filename parser is updated to handle both the new format and legacy sequential IDs (for robustness, even though no legacy data exists)
+- The `internal/id` package is replaced with a TSID13-based allocator (for FEAT, BUG, DEC, TASK, DOC) and a slug-based allocator (for EPIC)
+- The `internal/storage` package filename parser is updated to handle the new 13-character TSID format, with legacy sequential ID recognition retained for robustness
 - The `internal/service` entity creation methods use the new allocator
-- The `internal/document` ID allocation (currently an in-memory counter closure) is updated to use ULIDs with a `DOC` type prefix
+- The `internal/document` ID allocation (currently an in-memory counter closure) is updated to use TSID13 with a `DOC` type prefix
 - The `internal/validate` package ID validation rules are updated to accept the new formats
 - Prefix resolution is added to the service layer for get/update operations
+- A local collision check is added: on ID generation, verify the ID does not already exist in the local store; if it does, regenerate the random component and retry
 
 ### 10.3 Document IDs
 
 Document IDs follow the same pattern as entity IDs:
 
-- Format: `DOC-{ULID}`
-- Example: `DOC-01J3K7MXP3RTE5K9Z2QFHVWA`
-- The Phase 1 in-memory counter closure is replaced with ULID generation
+- Format: `DOC-{TSID13}`
+- Example: `DOC-01J3K7MXP3RT5`
+- The Phase 1 in-memory counter closure is replaced with TSID13 generation
 
 ---
 
@@ -322,10 +373,11 @@ These concerns are addressed by the concurrency and worktree design (separate do
 
 This document establishes the following decisions, which should be recorded in the decision log:
 
-1. **ULIDs replace sequential IDs** for all entity types except epics. The sequential scan-max-increment strategy is retired.
+1. **Compact time-sorted IDs (TSID13) replace sequential IDs** for all entity types except epics. The format is 10 characters of Crockford base32 timestamp + 3 characters of random (48-bit ms + 15-bit random = 13 characters total). The sequential scan-max-increment strategy is retired.
 2. **Epics use human-chosen slugs** rather than any form of generated ID. Uniqueness is enforced at creation and detected at merge.
-3. **Tasks have independent IDs** (`TASK-{ULID}`), not hierarchical IDs (`FEAT-xxx.n`). The parent feature relationship is metadata.
-4. **The break hyphen is display-only.** The canonical stored form does not include it. The display layer adds it at position 5 of the ULID.
-5. **Prefix matching is the human interface model.** Humans address entities by shortest unique prefix; the system resolves prefixes to full canonical IDs.
-6. **Provenance is metadata, not identity.** Creator information is stored in entity fields and git history, not embedded in IDs.
-7. **Document IDs follow the same ULID pattern** (`DOC-{ULID}`), replacing the Phase 1 in-memory counter.
+3. **Tasks have independent IDs** (`TASK-{TSID13}`), not hierarchical IDs (`FEAT-xxx.n`). The parent feature relationship is metadata.
+4. **One ID format for all generated entities.** Features, bugs, decisions, tasks, and documents all use the same TSID13 format. Consistency over marginal entropy differentiation.
+5. **The break hyphen is display-only.** The canonical stored form does not include it. The display layer adds it at position 5 of the TSID.
+6. **Prefix matching is the human interface model.** Humans address entities by shortest unique prefix; the system resolves prefixes to full canonical IDs.
+7. **Provenance is metadata, not identity.** Creator information is stored in entity fields and git history, not embedded in IDs.
+8. **Local collision check with retry.** On ID generation, the system checks the local store for duplicates and regenerates the random component if a collision is detected. This provides a safety net beyond the statistical guarantees.
