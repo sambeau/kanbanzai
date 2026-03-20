@@ -1,7 +1,8 @@
 # Phase 1 Audit 2 Remediation Plan
 
-- Status: active
+- Status: complete
 - Date: 2025-07-21
+- Completed: 2026-03-20
 - Purpose: define the work needed to close remaining gaps found during the second Phase 1 implementation audit
 - Related:
   - `work/spec/phase-1-specification.md`
@@ -269,29 +270,15 @@ Outputs:
 
 ---
 
-## 5. Recommended Execution Order
+## 5. Execution Record
 
-The tracks have the following dependencies and priority:
+R7–R11 were implemented in three commits on `main`:
 
-```
-R7  (Decision field order bug)   — no dependencies, quick fix
-R8  (extraction)                 — no dependencies, largest new feature
-R9  (CLI document commands)      — no dependencies, can parallel with R8
-R10 (CLI utility commands)       — no dependencies, can parallel with R8/R9
-R11 (validation hardening)       — no dependencies, can parallel with R8/R9/R10
-R12 (bootstrap usage)            — depends on R7, R8, R9, R10, R11
-```
+- `4549887 fix(BUG-009): harden validation and decision ordering` — R7 + R11
+- `4aed622 feat(P1-DEC-019): add document extraction support` — R8
+- `7352a1c feat(PHASE-1): add CLI document and utility commands` — R9 + R10
 
-Recommended sequence:
-
-1. **R7** — Fix the Decision field order bug. This is a one-line fix plus fixture update.
-2. **R8 + R9 + R10 + R11** — These four tracks are independent and can run in parallel:
-   - R8 (extraction) adds new service + MCP code in `document_tools.go` / `service.go`
-   - R9 (CLI document commands) adds new code in `cmd/kanbanzai/main.go`
-   - R10 (CLI utility commands) adds new code in `cmd/kanbanzai/main.go` — coordinate with R9 to avoid conflicts
-   - R11 (validation hardening) modifies `validate/entity.go` and `document/validate.go`
-   - If R9 and R10 are assigned to the same agent, run them sequentially since both modify `main.go`
-3. **R12** — Bootstrap usage. This is the integration test for the entire Phase 1 kernel and must come last.
+R12 bootstrap verification was performed on 2026-03-20.
 
 ---
 
@@ -325,23 +312,27 @@ This second audit found no regressions from the first remediation. All first-aud
 
 The new tracks (R7–R12) continue the numbering sequence to maintain traceability across both documents.
 
+All tracks (R7–R12) are now complete.
+
 ---
 
 ## 8. Acceptance Criteria
 
 The second audit remediation is complete when:
 
-1. Decision `status` field appears in canonical position in serialised output (R7)
-2. An `extract_from_document` MCP tool exists and operates on approved documents (R8)
-3. All six document lifecycle operations are available from the CLI (R9)
-4. `kbz health` and `kbz validate` CLI commands exist (R10)
-5. Slug format validation rejects malformed slugs (R11)
-6. `ValidateRecord` and `CheckHealth` verify ID format (R11)
-7. Document validation checks that referenced entities exist (R11)
-8. The kernel has been used to create initial project state in `.kbz/state/` (R12)
-9. A health check against the bootstrapped state returns clean results (R12)
-10. All tests pass, including with `-race`
-11. `go vet` is clean
+1. ✅ Decision `status` field appears in canonical position in serialised output (R7)
+2. ✅ An `extract_from_document` MCP tool exists and operates on approved documents (R8)
+3. ✅ All six document lifecycle operations are available from the CLI (R9)
+4. ✅ `kbz health` and `kbz validate` CLI commands exist (R10)
+5. ✅ Slug format validation rejects malformed slugs (R11)
+6. ✅ `ValidateRecord` and `CheckHealth` verify ID format (R11)
+7. ✅ Document validation checks that referenced entities exist (R11)
+8. ✅ The kernel has been used to create initial project state in `.kbz/state/` (R12)
+9. ✅ A health check against the bootstrapped state returns clean results (R12)
+10. ✅ All tests pass, including with `-race`
+11. ✅ `go vet` is clean
+
+All acceptance criteria met as of 2026-03-20.
 
 ---
 
@@ -349,8 +340,63 @@ The second audit remediation is complete when:
 
 When all acceptance criteria in this document are met, Phase 1 is complete per the implementation plan. Specifically:
 
-- All seven implementation layers are functional
-- All required operations from §8 of the implementation plan are satisfied
-- The kernel has been used on itself (Layer 7)
-- No known bugs remain
-- No silent spec omissions remain (all deferrals are recorded as decisions)
+- ✅ All seven implementation layers are functional
+- ✅ All required operations from §8 of the implementation plan are satisfied
+- ✅ The kernel has been used on itself (Layer 7)
+- ✅ No known bugs remain
+- ✅ No silent spec omissions remain (all deferrals are recorded as decisions)
+
+---
+
+## 10. Track R12 — Bootstrap Verification Results
+
+Verification performed: 2026-03-20
+
+### 10.1 Instance state
+
+Five entities created via the kernel CLI and stored in `.kbz/state/`:
+
+| Entity | ID | Status |
+|---|---|---|
+| Epic: Phase 1 Completion | E-001 | done |
+| Epic: Invalid Transition Check | E-002 | approved |
+| Feature: Audit 2 Remediation | FEAT-001 | done |
+| Feature: Bootstrap Self-Management | FEAT-002 | done |
+| Decision: Phase 1 Bootstrap Scope | DEC-001 | proposed |
+
+### 10.2 Round-trip determinism
+
+All 5 entities loaded via CLI without error. Self-transition attempts (`--status <current>`) were correctly rejected with `self-transition "<status>" is not allowed` for all entity types. File content on disk matches CLI read-back after every mutation.
+
+### 10.3 Lifecycle transition enforcement
+
+| Test | From → To | Expected | Result |
+|---|---|---|---|
+| Invalid forward skip | `proposed` → `done` | reject | ✅ rejected: `invalid epic transition "proposed" -> "done"` |
+| Valid forward | `proposed` → `approved` | accept | ✅ accepted |
+| Invalid backward | `approved` → `proposed` | reject | ✅ rejected: `invalid epic transition "approved" -> "proposed"` |
+| Full feature lifecycle | `draft` → ... → `done` | accept all 5 steps | ✅ all accepted |
+
+### 10.4 Product/instance boundary
+
+- `.kbz/state/` contains only instance data (entity YAML files)
+- No instance data in `internal/`, `cmd/`, or `work/`
+- `.kbz/` is `.gitignore`d except for `.gitkeep`
+- `.kbz/cache/kbz.db` is the local derived cache, not committed
+
+### 10.5 Health check
+
+```
+health check
+entities: 5
+errors: 0
+warnings: 0
+```
+
+### 10.6 Cache rebuild
+
+`kbz cache rebuild` succeeded: 5 entities cached to `.kbz/cache/kbz.db`.
+
+### 10.7 Conclusion
+
+The Phase 1 kernel can create, read, update, and validate its own project entities without corruption. Lifecycle state machines enforce valid transitions and reject invalid ones. Canonical YAML serialisation is deterministic. The product/instance boundary is clean. The kernel is suitable for limited bootstrap self-management.
