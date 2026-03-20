@@ -207,20 +207,29 @@ The `encodeCrockford` function encodes the timestamp as 10 characters and the ra
 
 ## 6. Display Conventions
 
-### 6.1 The break hyphen
+### 6.1 Three forms of an ID
 
-TSID-based IDs are displayed with a break hyphen after the fifth TSID character to create a natural visual boundary between the "short form" and the "tail":
+Every TSID-based ID has three representations:
 
-| Canonical (stored)         | Displayed                    |
-| -------------------------- | ---------------------------- |
-| `FEAT-01J3K7MXP3RT5`      | `FEAT-01J3K-7MXP3RT5`       |
-| `BUG-01J4AR7WHN4F2`       | `BUG-01J4A-R7WHN4F2`        |
+| Form | Purpose | Feature example | Bug example |
+| ---- | ------- | --------------- | ----------- |
+| **Canonical** | Stored in YAML, filenames, references | `FEAT-01J3K7MXP3RT5` | `BUG-01J4AR7WHN4F2` |
+| **Full display** | Shown when the full ID is needed, with break hyphen for readability | `FEAT-01J3K-7MXP3RT5` | `BUG-01J4A-R7WHN4F2` |
+| **Short display** | Shown in listings and conversation — shortest unique prefix, with break hyphen | `FEAT-01J3K-7MX` | `BUG-01J4A-R7W` |
+
+The **canonical form** is what the system stores. It contains no break hyphen. This appears in YAML entity files, filenames, cross-references, and commit messages.
+
+The **full display form** inserts a break hyphen after the fifth TSID character. This is used when the complete ID must be shown (e.g., copy-to-clipboard, disambiguation output, verbose mode). Humans rarely need to read or type the full form.
+
+The **short display form** is what humans normally see. It shows only enough characters to be unique among all entities of the same type within the project, with the break hyphen inserted at position 5 when the prefix is long enough. This is the default in CLI listings, status output, and conversational references.
+
+### 6.2 The break hyphen
 
 The break hyphen is a **display convention only**. It is not part of the canonical ID and is not stored in YAML files, filenames, or entity references. The system inserts it when displaying IDs and strips it when accepting input.
 
 **Why position 5:** Five TSID characters encode the most significant 25 bits of the millisecond timestamp, providing ~9.3 hours of resolution. In a typical project cadence (features created hours or days apart), the first five characters are almost always unique. The resulting short form — `FEAT-01J3K` at 10 characters — is comparable in length to a JIRA key.
 
-### 6.2 Prefix matching
+### 6.3 Prefix matching
 
 The CLI and MCP operations accept any unique prefix of an ID:
 
@@ -236,7 +245,7 @@ Resolution rules:
 4. If multiple matches: return all candidates and ask the user to be more specific
 5. If no match: error
 
-### 6.3 Display length
+### 6.4 Short display length
 
 When listing entities, the display layer shows the shortest unique prefix among all entities of the same type within the project. This is computed, not stored, and changes as entities are added:
 
