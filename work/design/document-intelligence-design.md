@@ -601,6 +601,26 @@ The formality gradient (`work/design/document-centric-interface.md` §5) affects
 
 The system does not vary its classification approach by formality — it uses the same taxonomy everywhere — but downstream consumers may weight results from formal documents more heavily than those from informal ones.
 
+### 14.5 Document type extensibility
+
+The document-centric interface design (`work/design/document-centric-interface.md` §4) defines eight document types: proposal, research report, other report, draft design, design, specification, implementation plan, and user documentation. These are **recognised types** — the system knows their role in the design-to-implementation pipeline, their formality level, their entity extraction patterns, and their review expectations.
+
+The document intelligence layer is **type-agnostic**. All four layers of structural analysis — markdown parsing, pattern-based extraction, AI-assisted classification, and graph construction — operate on any markdown document regardless of its type. The fragment role taxonomy, the concept model, and the entity reference extraction apply equally to a specification, a postmortem, a runbook, or a document type that does not yet exist.
+
+This means:
+
+- **Any document can be added to the system.** The system does not reject documents that do not match a predefined type.
+- **Recognised types get pipeline behaviour.** Documents with a known type receive type-specific normalisation, entity extraction patterns, formality treatment, and review expectations. These are the documents that participate in the design-to-implementation pipeline and the refinement chain.
+- **Unrecognised or custom-typed documents get structural analysis.** They are parsed, indexed, classified, connected through the graph, and queryable — but they receive no type-specific pipeline behaviour. They are first-class citizens of the document graph without being recognised participants in the pipeline.
+- **The set of recognised types is extensible per project.** A project that uses ADRs, postmortems, runbooks, vendor evaluations, or any other document type as standard practice can register those as recognised types with their own pipeline rules. The eight default types are a starting set, not a fixed ceiling.
+
+This design separates two concerns that are easy to conflate:
+
+- **Document intelligence** (structural analysis, classification, graph queries) — works on everything, type-agnostic
+- **Pipeline behaviour** (normalisation, entity extraction, review gates, refinement chain position) — works on recognised types, type-specific
+
+The intelligence layer does not need to know about types to be useful. A custom-typed document ingested into the system gets the same structural analysis, the same fragment classification, the same concept extraction, and the same entity reference detection as a specification. It participates in vertical and horizontal slicing. It appears in search results. It connects to other documents through shared concepts and entity references. The only thing it does not get is type-specific pipeline behaviour — and that is added by registering the type, not by changing the intelligence layer.
+
 ---
 
 ## 15. Cost Model

@@ -143,6 +143,17 @@ Documentation content is derived from the design document and the specification.
 - Style: varies by audience and scope
 - Audience: end users of the product
 
+### 4.9 Custom and unrecognised types
+
+The eight types listed above are the **recognised types** — the system knows their role in the pipeline, their formality level, their entity extraction patterns, and their review expectations.
+
+The system is not limited to these types. Any markdown document can be added to the system regardless of its type. Projects that use ADRs, postmortems, runbooks, vendor evaluations, onboarding guides, or any other document type as standard practice can register those as recognised types with their own pipeline rules (normalisation style, entity extraction patterns, review expectations, formality level).
+
+- **Recognised types** receive type-specific pipeline behaviour: normalisation, entity extraction, formality treatment, review gates, and a defined position in the refinement chain.
+- **Unrecognised or custom-typed documents** are stored, indexed, and queryable but receive no type-specific pipeline behaviour. They are full participants in the document graph — structurally analysed, classified, connected through shared concepts and entity references — without being recognised participants in the design-to-implementation pipeline.
+
+The document intelligence layer (`work/design/document-intelligence-design.md` §14.5) is type-agnostic — structural analysis, fragment classification, concept extraction, and entity reference detection work identically on all documents regardless of type.
+
 ## 5. The Formality Gradient
 
 Documents move from informal to formal as they progress from early design toward implementation. This is not just a change in precision — it is a change in style, from sentences of prose toward definitions and structured lists.
