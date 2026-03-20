@@ -572,13 +572,14 @@ This also means future promotion of reusable templates, schemas, and default pol
 
 ## `P1-DEC-007: Phase 1 ID allocation strategy`
 
-- Status: accepted
+- Status: superseded by P1-DEC-021
 - Date: 2026-03-18
 - Scope: identity
 - Related:
   - `work/spec/phase-1-specification.md`
   - `work/plan/phase-1-implementation-plan.md`
   - `work/design/workflow-design-basis.md`
+  - `work/design/id-system-design.md`
 
 ### Decision
 
@@ -1571,6 +1572,97 @@ This decision log is acceptable as a Phase 1 planning artifact if:
 3. unresolved decisions are framed in a way that supports planning
 4. future decisions can be added without changing the structure
 5. the implementation plan can reference this log instead of relying on implicit assumptions
+
+---
+
+## `P1-DEC-021: Compact time-sorted IDs replace sequential IDs`
+
+- Status: accepted
+- Date: 2026-03-20
+- Scope: identity
+- Supersedes: P1-DEC-007
+- Related:
+  - `work/design/id-system-design.md`
+  - `work/spec/phase-1-specification.md` §13
+  - `work/design/workflow-design-basis.md` §11
+
+### Decision
+
+The Phase 1 sequential ID strategy (P1-DEC-007) is retired. All entity and document IDs now use one of two formats:
+
+**Epics — human-chosen slugs:**
+
+- Format: `EPIC-{SLUG}`
+- Examples: `EPIC-IDS`, `EPIC-CONCURRENCY`, `EPIC-CONTEXT-ASSEMBLY`
+- Slug: uppercase alphanumeric and hyphens, 2–20 characters, URL-safe
+- Uniqueness enforced at creation time; health check detects duplicates after merge
+
+**All other entities and documents — compact time-sorted IDs (TSID13):**
+
+- Format: `{TYPE}-{TSID13}` where TYPE is `FEAT`, `BUG`, `DEC`, `TASK`, or `DOC`
+- Structure: 10 characters of Crockford base32 timestamp (48-bit millisecond) + 3 characters of Crockford base32 random (15-bit)
+- Total: 13 characters after the type prefix
+- Examples: `FEAT-01J3K7MXP3RT5`, `BUG-01J4AR7WHN4F2`, `TASK-01J3KZZZBB4KF`
+- Time-sortable, URL-safe, case-insensitive matching
+- Local collision check with retry on generation
+
+**Tasks are independent entities** with their own TSID13 IDs. The Phase 1 hierarchical task ID format (`FEAT-001.3`) is retired. The parent feature relationship is stored as a metadata field (`parent_feature`), not embedded in the ID.
+
+**Display conventions:**
+
+- A break hyphen is inserted after the fifth TSID character for display: `FEAT-01J3K-7MXP3RT5`
+- The break hyphen is display-only — not stored in YAML, filenames, or references
+- The CLI and MCP operations accept any unique prefix: `FEAT-01J3K` resolves to the full match
+- Listings show the shortest unique prefix: `FEAT-01J3K-7MX`
+
+**Provenance is metadata, not identity.** Creator information is stored in entity fields (`created_by`) and git history, not embedded in IDs.
+
+### Rationale
+
+The Phase 1 sequential strategy (scan-max-increment) fails in every concurrent scenario:
+
+- Same worktree, two agents: both scan the same max, both allocate the same ID
+- Separate worktrees: both independently allocate the same sequential ID, guaranteed filename collision at merge
+- Unmerged branches: IDs are not claimed until committed and merged
+
+P1-DEC-007 explicitly acknowledged concurrency testing as open follow-up and required the strategy to remain replaceable. With the project entering parallel multi-agent work, the replacement is now due.
+
+The TSID13 format provides collision safety without coordination. The 48-bit millisecond timestamp separates any IDs created more than 1ms apart. The 15-bit random component (32,768 values per millisecond) handles the near-impossible case of same-millisecond creation. A local collision check provides a safety net.
+
+Full ULIDs (128-bit, 26 characters) were considered but rejected as massive overkill for a small workflow database. The system creates a handful of entities per day, not millions per second. 15 bits of randomness per millisecond is more than sufficient, and the shorter IDs (13 vs 26 characters) significantly improve readability in filenames, YAML references, and commit messages.
+
+One format for all generated entities (features, bugs, decisions, tasks, documents) was chosen over a graduated entropy scheme for consistency — one generator, one parser, one set of tests.
+
+Epics use human-chosen slugs because they are few (5–30 per project), always human-created, and benefit from maximum memorability.
+
+### Alternatives Considered
+
+- **Full ULIDs (128-bit, 26 chars):** Collision-safe but far more entropy than needed. Produces unwieldy IDs for a small database.
+- **Truncated ULIDs (first N chars):** The ULID monotonic increment operates on least-significant bits, so truncation loses the monotonicity guarantee. Custom generation is cleaner.
+- **Block allocation with person identifiers:** Partitions the namespace by creator identity. Rejected because it conflates identity with ownership, doesn't solve within-partition collisions, and is unnecessary when time-sorted random IDs eliminate the coordination problem entirely.
+- **Hierarchical task IDs (`FEAT-xxx.Txxx`):** Preserves visual grouping but embeds the parent relationship in the ID, making tasks dependent on their parent feature. Rejected in favour of independent task IDs with parent as metadata.
+- **Different ID lengths per entity type (entropy gradient):** More entropy for tasks, less for features. Rejected for consistency — 15 bits per millisecond is adequate for all entity types, and one format is simpler.
+
+### Consequences
+
+- The `internal/id` package is replaced with a TSID13 allocator and an epic slug allocator
+- The `internal/storage` filename parser handles 13-character TSID format (legacy sequential format retained for robustness)
+- The `internal/document` in-memory counter closure is replaced with TSID13 generation
+- The `internal/validate` ID validation rules are updated for both formats
+- Prefix resolution is added to the service layer for get/update operations
+- All entity creation and document operations use the new allocators
+- The local collision check adds a verify-and-retry step to ID generation
+- Task entities gain a `parent_feature` metadata field to replace the hierarchical ID relationship
+- Existing Phase 1 test fixtures using sequential IDs (`FEAT-001`, etc.) must be updated
+
+### Follow-up Needed
+
+- implement the Crockford base32 encoder for TSID13 generation
+- implement prefix resolution in the service and MCP layers
+- update the display layer (CLI, MCP responses) to insert break hyphens and compute shortest unique prefixes
+- update P1-DEC-009 (minimum required fields) to add `parent_feature` as a required field for tasks
+- update P1-DEC-006 (file layout) to reflect new filename format with 13-char TSID
+- design the concurrency model for the remaining parallel-work concerns (lost updates, state machine violations) that IDs alone do not solve
 
 ---
 
