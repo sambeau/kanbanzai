@@ -1563,3 +1563,174 @@ func TestEntityService_BugLifecycle_FullPath(t *testing.T) {
 		t.Fatal("UpdateStatus() from terminal state should fail, got nil error")
 	}
 }
+
+func TestEntityService_ResolvePrefix(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	epic, err := svc.CreateEpic(CreateEpicInput{
+		Slug:      "prefix-epic",
+		Title:     "Prefix Epic",
+		Summary:   "Epic for prefix resolution tests",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
+
+	feat1, err := svc.CreateFeature(CreateFeatureInput{
+		Slug:      "alpha-feature",
+		Epic:      epic.ID,
+		Summary:   "First feature",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature(alpha) error = %v", err)
+	}
+
+	feat2, err := svc.CreateFeature(CreateFeatureInput{
+		Slug:      "beta-feature",
+		Epic:      epic.ID,
+		Summary:   "Second feature",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature(beta) error = %v", err)
+	}
+
+	tests := []struct {
+		name       string
+		entityType string
+		prefix     string
+		wantID     string
+		wantSlug   string
+		wantErr    bool
+		errContain string
+	}{
+		{
+			name:       "exact full ID match",
+			entityType: "feature",
+			prefix:     feat1.ID,
+			wantID:     feat1.ID,
+			wantSlug:   feat1.Slug,
+		},
+		{
+			name:       "unambiguous prefix",
+			entityType: "feature",
+			prefix:     feat1.ID[:len(feat1.ID)-2],
+			wantID:     feat1.ID,
+			wantSlug:   feat1.Slug,
+		},
+		{
+			name:       "case insensitive",
+			entityType: "feature",
+			prefix:     strings.ToLower(feat1.ID[:len(feat1.ID)-2]),
+			wantID:     feat1.ID,
+			wantSlug:   feat1.Slug,
+		},
+		{
+			name:       "break hyphen stripping",
+			entityType: "feature",
+			// Insert a break hyphen into the TSID portion: FEAT-XXXXX-YYYYYYYY
+			prefix:   feat1.ID[:10] + "-" + feat1.ID[10:],
+			wantID:   feat1.ID,
+			wantSlug: feat1.Slug,
+		},
+		{
+			name:       "epic prefix resolution",
+			entityType: "epic",
+			prefix:     epic.ID[:7],
+			wantID:     epic.ID,
+			wantSlug:   epic.Slug,
+		},
+		{
+			name:       "ambiguous prefix",
+			entityType: "feature",
+			prefix:     "FEAT",
+			wantErr:    true,
+			errContain: "ambiguous",
+		},
+		{
+			name:       "no match",
+			entityType: "feature",
+			prefix:     "FEAT-ZZZZZZZZZZZZZ",
+			wantErr:    true,
+			errContain: "no feature entity found",
+		},
+	}
+
+	// Verify both features were created (sanity check for ambiguous test)
+	_ = feat2
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			gotID, gotSlug, err := svc.ResolvePrefix(tt.entityType, tt.prefix)
+			if tt.wantErr {
+				if err == nil {
+					t.Fatalf("ResolvePrefix() error = nil, want error containing %q", tt.errContain)
+				}
+				if !strings.Contains(err.Error(), tt.errContain) {
+					t.Fatalf("ResolvePrefix() error = %v, want error containing %q", err, tt.errContain)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatalf("ResolvePrefix() error = %v", err)
+			}
+			if gotID != tt.wantID {
+				t.Errorf("ResolvePrefix() id = %q, want %q", gotID, tt.wantID)
+			}
+			if gotSlug != tt.wantSlug {
+				t.Errorf("ResolvePrefix() slug = %q, want %q", gotSlug, tt.wantSlug)
+			}
+		})
+	}
+}
+
+func TestEntityService_Get_WithEmptySlug(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	epic, err := svc.CreateEpic(CreateEpicInput{
+		Slug:      "get-epic",
+		Title:     "Get Epic",
+		Summary:   "Epic for get-with-prefix tests",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateEpic() error = %v", err)
+	}
+
+	created, err := svc.CreateFeature(CreateFeatureInput{
+		Slug:      "prefix-get",
+		Epic:      epic.ID,
+		Summary:   "Feature for prefix get",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+
+	// Get with prefix and empty slug should resolve
+	got, err := svc.Get("feature", created.ID[:10], "")
+	if err != nil {
+		t.Fatalf("Get() with prefix error = %v", err)
+	}
+	if got.ID != created.ID {
+		t.Errorf("Get() id = %q, want %q", got.ID, created.ID)
+	}
+	if got.Slug != created.Slug {
+		t.Errorf("Get() slug = %q, want %q", got.Slug, created.Slug)
+	}
+
+	// Get with non-existent prefix and empty slug should error
+	_, err = svc.Get("feature", "FEAT-ZZZZZZZZZZZZZ", "")
+	if err == nil {
+		t.Fatal("Get() with non-existent prefix error = nil, want non-nil")
+	}
+}

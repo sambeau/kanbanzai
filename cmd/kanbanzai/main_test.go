@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"reflect"
 	"strings"
 	"testing"
@@ -258,12 +259,12 @@ func TestRunGet_UnknownTarget_ReturnsUsageError(t *testing.T) {
 func TestRunGet_MissingFlags_ReturnsValidationError(t *testing.T) {
 	deps, _ := testDependenciesWithService(newFakeEntityService())
 
-	err := run([]string{"get", "feature", "--id", "FEAT-001"}, deps)
+	err := run([]string{"get", "feature"}, deps)
 	if err == nil {
-		t.Fatal("run(get feature missing slug) error = nil, want non-nil")
+		t.Fatal("run(get feature missing id) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), "entity slug is required") {
+	if !strings.Contains(err.Error(), "entity id is required") {
 		t.Fatalf("unexpected error: %v", err)
 	}
 }
@@ -288,6 +289,27 @@ func TestRunGet_PrintsEntityDetails(t *testing.T) {
 	}
 	if !strings.Contains(stdout, "status: draft") {
 		t.Fatalf("stdout missing status:\n%s", stdout)
+	}
+}
+
+func TestRunGet_PrefixResolution(t *testing.T) {
+	fake := newFakeEntityService()
+	deps, output := testDependenciesWithService(fake)
+
+	// Get feature with --id only (no --slug) — prefix resolution in fake service
+	if err := run([]string{"get", "feature", "--id", "FEAT-001"}, deps); err != nil {
+		t.Fatalf("run(get feature with prefix) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "type: feature") {
+		t.Fatalf("stdout missing type:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "id: FEAT-001") {
+		t.Fatalf("stdout missing id:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "slug: storage-layer") {
+		t.Fatalf("stdout missing slug:\n%s", stdout)
 	}
 }
 
@@ -821,16 +843,31 @@ func (f *fakeEntityService) Get(entityType, entityID, slug string) (service.GetR
 	if strings.TrimSpace(entityID) == "" {
 		return service.GetResult{}, &testError{"entity id is required"}
 	}
-	if strings.TrimSpace(slug) == "" {
-		return service.GetResult{}, &testError{"entity slug is required"}
+
+	if strings.TrimSpace(slug) != "" {
+		key := entityType + ":" + entityID + ":" + slug
+		if result, ok := f.getResults[key]; ok {
+			return result, nil
+		}
+		return service.GetResult{}, &testError{"entity not found"}
 	}
 
-	key := entityType + ":" + entityID + ":" + slug
-	if result, ok := f.getResults[key]; ok {
-		return result, nil
+	// Prefix resolution: find by type and ID prefix
+	var matches []service.GetResult
+	for key, result := range f.getResults {
+		parts := strings.SplitN(key, ":", 3)
+		if parts[0] == entityType && strings.HasPrefix(parts[1], entityID) {
+			matches = append(matches, result)
+		}
 	}
-
-	return service.GetResult{}, &testError{"entity not found"}
+	switch len(matches) {
+	case 0:
+		return service.GetResult{}, &testError{fmt.Sprintf("no %s entity found matching prefix %q", entityType, entityID)}
+	case 1:
+		return matches[0], nil
+	default:
+		return service.GetResult{}, &testError{fmt.Sprintf("ambiguous prefix %q for %s", entityID, entityType)}
+	}
 }
 
 func (f *fakeEntityService) List(entityType string) ([]service.ListResult, error) {
@@ -846,9 +883,6 @@ func (f *fakeEntityService) UpdateStatus(input service.UpdateStatusInput) (servi
 	}
 	if strings.TrimSpace(input.ID) == "" {
 		return service.GetResult{}, &testError{"id is required"}
-	}
-	if strings.TrimSpace(input.Slug) == "" {
-		return service.GetResult{}, &testError{"slug is required"}
 	}
 	if strings.TrimSpace(input.Status) == "" {
 		return service.GetResult{}, &testError{"status is required"}
@@ -872,9 +906,6 @@ func (f *fakeEntityService) UpdateEntity(input service.UpdateEntityInput) (servi
 	}
 	if strings.TrimSpace(input.ID) == "" {
 		return service.GetResult{}, &testError{"id is required"}
-	}
-	if strings.TrimSpace(input.Slug) == "" {
-		return service.GetResult{}, &testError{"slug is required"}
 	}
 	if _, ok := input.Fields["id"]; ok {
 		return service.GetResult{}, &testError{"cannot update id: field is immutable"}

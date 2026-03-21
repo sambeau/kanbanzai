@@ -308,9 +308,6 @@ func runUpdate(args []string, deps dependencies) error {
 			return fmt.Errorf("id is required\n\n%s", updateUsageText)
 		}
 		slug := values["slug"]
-		if slug == "" {
-			return fmt.Errorf("slug is required\n\n%s", updateUsageText)
-		}
 
 		fields := make(map[string]string, len(values))
 		for k, v := range values {

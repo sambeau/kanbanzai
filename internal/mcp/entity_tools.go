@@ -261,8 +261,8 @@ func getEntityTool(svc *service.EntityService) server.ServerTool {
 			mcp.Required(),
 			mcp.Enum("epic", "feature", "task", "bug", "decision"),
 		),
-		mcp.WithString("id", mcp.Description("Entity ID"), mcp.Required()),
-		mcp.WithString("slug", mcp.Description("Entity slug"), mcp.Required()),
+		mcp.WithString("id", mcp.Description("Entity ID or unambiguous prefix"), mcp.Required()),
+		mcp.WithString("slug", mcp.Description("Entity slug (optional, resolved from ID prefix if omitted)")),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityType, err := request.RequireString("entity_type")
@@ -273,10 +273,7 @@ func getEntityTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
-		slug, err := request.RequireString("slug")
-		if err != nil {
-			return mcp.NewToolResultError(err.Error()), nil
-		}
+		slug := request.GetString("slug", "")
 		result, err := svc.Get(entityType, id, slug)
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("get entity failed", err), nil
@@ -317,8 +314,8 @@ func updateStatusTool(svc *service.EntityService) server.ServerTool {
 			mcp.Required(),
 			mcp.Enum("epic", "feature", "task", "bug", "decision"),
 		),
-		mcp.WithString("id", mcp.Description("Entity ID"), mcp.Required()),
-		mcp.WithString("slug", mcp.Description("Entity slug"), mcp.Required()),
+		mcp.WithString("id", mcp.Description("Entity ID or unambiguous prefix"), mcp.Required()),
+		mcp.WithString("slug", mcp.Description("Entity slug (optional, resolved from ID prefix if omitted)")),
 		mcp.WithString("status", mcp.Description("New lifecycle status"), mcp.Required()),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -330,10 +327,7 @@ func updateStatusTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
-		slug, err := request.RequireString("slug")
-		if err != nil {
-			return mcp.NewToolResultError(err.Error()), nil
-		}
+		slug := request.GetString("slug", "")
 		status, err := request.RequireString("status")
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
@@ -360,8 +354,8 @@ func updateEntityTool(svc *service.EntityService) server.ServerTool {
 			mcp.Required(),
 			mcp.Enum("epic", "feature", "task", "bug", "decision"),
 		),
-		mcp.WithString("id", mcp.Description("Entity ID"), mcp.Required()),
-		mcp.WithString("slug", mcp.Description("Entity slug"), mcp.Required()),
+		mcp.WithString("id", mcp.Description("Entity ID or unambiguous prefix"), mcp.Required()),
+		mcp.WithString("slug", mcp.Description("Entity slug (optional, resolved from ID prefix if omitted)")),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityType, err := request.RequireString("entity_type")
@@ -372,10 +366,7 @@ func updateEntityTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
-		slug, err := request.RequireString("slug")
-		if err != nil {
-			return mcp.NewToolResultError(err.Error()), nil
-		}
+		slug := request.GetString("slug", "")
 		args := request.GetArguments()
 		fields := make(map[string]string, len(args))
 		for k, v := range args {

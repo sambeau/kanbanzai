@@ -421,6 +421,54 @@ func (s *EntityService) HealthCheck() (*validate.HealthReport, error) {
 	return validate.CheckHealth(loadAll, entityExists)
 }
 
+// ResolvePrefix resolves an ID prefix to the unique (id, slug) pair for the
+// given entity type. It scans filenames without loading YAML.
+func (s *EntityService) ResolvePrefix(entityType, prefix string) (resolvedID, resolvedSlug string, err error) {
+	entityType = strings.ToLower(strings.TrimSpace(entityType))
+	prefix = strings.ToUpper(strings.TrimSpace(prefix))
+	prefix = id.StripBreakHyphens(prefix)
+
+	dir := filepath.Join(s.root, entityDirectory(entityType))
+	entries, err := filepath.Glob(filepath.Join(dir, "*.yaml"))
+	if err != nil {
+		return "", "", fmt.Errorf("resolve prefix for %s: %w", entityType, err)
+	}
+
+	type match struct {
+		id   string
+		slug string
+	}
+	var matches []match
+
+	for _, entry := range entries {
+		base := filepath.Base(entry)
+		baseName := strings.TrimSuffix(base, ".yaml")
+
+		fileID, fileSlug, err := parseRecordIdentity(entityType, baseName)
+		if err != nil {
+			continue
+		}
+
+		normalizedID := strings.ToUpper(fileID)
+		if strings.HasPrefix(normalizedID, prefix) {
+			matches = append(matches, match{id: fileID, slug: fileSlug})
+		}
+	}
+
+	switch len(matches) {
+	case 0:
+		return "", "", fmt.Errorf("no %s entity found matching prefix %q", entityType, prefix)
+	case 1:
+		return matches[0].id, matches[0].slug, nil
+	default:
+		ids := make([]string, len(matches))
+		for i, m := range matches {
+			ids[i] = m.id
+		}
+		return "", "", fmt.Errorf("ambiguous prefix %q for %s: matches %s", prefix, entityType, strings.Join(ids, ", "))
+	}
+}
+
 func (s *EntityService) Get(entityType, entityID, slug string) (GetResult, error) {
 	entityType = strings.ToLower(strings.TrimSpace(entityType))
 	entityID = strings.TrimSpace(entityID)
@@ -433,7 +481,12 @@ func (s *EntityService) Get(entityType, entityID, slug string) (GetResult, error
 		return GetResult{}, fmt.Errorf("entity id is required")
 	}
 	if slug == "" {
-		return GetResult{}, fmt.Errorf("entity slug is required")
+		resolvedID, resolvedSlug, err := s.ResolvePrefix(entityType, entityID)
+		if err != nil {
+			return GetResult{}, err
+		}
+		entityID = resolvedID
+		slug = resolvedSlug
 	}
 
 	record, err := s.store.Load(entityType, entityID, slug)
@@ -495,10 +548,18 @@ func (s *EntityService) UpdateStatus(input UpdateStatusInput) (GetResult, error)
 	if err := validateRequired(
 		field("type", entityType),
 		field("id", entityID),
-		field("slug", slug),
 		field("status", nextStatus),
 	); err != nil {
 		return GetResult{}, err
+	}
+
+	if slug == "" {
+		resolvedID, resolvedSlug, err := s.ResolvePrefix(entityType, entityID)
+		if err != nil {
+			return GetResult{}, err
+		}
+		entityID = resolvedID
+		slug = resolvedSlug
 	}
 
 	record, err := s.store.Load(entityType, entityID, slug)
@@ -548,9 +609,17 @@ func (s *EntityService) UpdateEntity(input UpdateEntityInput) (GetResult, error)
 	if err := validateRequired(
 		field("type", entityType),
 		field("id", entityID),
-		field("slug", slug),
 	); err != nil {
 		return GetResult{}, err
+	}
+
+	if slug == "" {
+		resolvedID, resolvedSlug, err := s.ResolvePrefix(entityType, entityID)
+		if err != nil {
+			return GetResult{}, err
+		}
+		entityID = resolvedID
+		slug = resolvedSlug
 	}
 
 	if _, ok := input.Fields["id"]; ok {
