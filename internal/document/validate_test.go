@@ -12,7 +12,7 @@ func validDoc() Document {
 	t := time.Date(2025, 1, 15, 10, 0, 0, 0, time.UTC)
 	return Document{
 		Meta: DocMeta{
-			ID:        "DOC-001",
+			ID:        "DOC-01J3KDOCTEST01",
 			Type:      DocTypeProposal,
 			Title:     "Test Proposal",
 			Status:    DocStatusDraft,
@@ -29,11 +29,11 @@ func validDesignDoc() Document {
 	t := time.Date(2025, 1, 15, 10, 0, 0, 0, time.UTC)
 	return Document{
 		Meta: DocMeta{
-			ID:        "DOC-002",
+			ID:        "DOC-01J3KDOCTEST02",
 			Type:      DocTypeDesign,
 			Title:     "Test Design",
 			Status:    DocStatusDraft,
-			Feature:   "FEAT-001",
+			Feature:   "FEAT-01J3K7MXP3RT5",
 			CreatedBy: "bob",
 			Created:   t,
 			Updated:   t,
@@ -156,7 +156,7 @@ func TestValidateDocument_DesignMissingFeatureRef(t *testing.T) {
 
 func TestValidateDocument_DesignNonExistentFeatureRef(t *testing.T) {
 	doc := validDesignDoc()
-	doc.Meta.Feature = "FEAT-999"
+	doc.Meta.Feature = "FEAT-01J3KNOTEXST1"
 
 	errs := ValidateDocument(doc)
 	requireNoErrors(t, errs)
@@ -166,7 +166,7 @@ func TestValidateDocument_SpecificationMissingFeatureRef(t *testing.T) {
 	now := time.Now()
 	doc := Document{
 		Meta: DocMeta{
-			ID:        "DOC-003",
+			ID:        "DOC-01J3KDOCTEST03",
 			Type:      DocTypeSpecification,
 			Title:     "Test Spec",
 			Status:    DocStatusDraft,
@@ -185,7 +185,7 @@ func TestValidateDocument_ImplementationPlanMissingFeatureRef(t *testing.T) {
 	now := time.Now()
 	doc := Document{
 		Meta: DocMeta{
-			ID:        "DOC-004",
+			ID:        "DOC-01J3KDOCTEST04",
 			Type:      DocTypeImplementationPlan,
 			Title:     "Test Plan",
 			Status:    DocStatusDraft,
@@ -540,7 +540,7 @@ func TestScaffold_OutputPassesValidation(t *testing.T) {
 
 			doc := Document{
 				Meta: DocMeta{
-					ID:        "DOC-100",
+					ID:        "DOC-01J3KDOCSTN01",
 					Type:      dt,
 					Title:     "Test Doc",
 					Status:    DocStatusDraft,
@@ -553,7 +553,7 @@ func TestScaffold_OutputPassesValidation(t *testing.T) {
 
 			// Set feature ref for types that require it
 			if requiresFeatureRef(dt) {
-				doc.Meta.Feature = "FEAT-001"
+				doc.Meta.Feature = "FEAT-01J3K7MXP3RT5"
 			}
 
 			errs := ValidateDocument(doc)

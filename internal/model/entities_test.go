@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"kanbanzai/internal/model"
+	"kanbanzai/internal/testutil"
 
 	"gopkg.in/yaml.v3"
 )
@@ -22,14 +23,14 @@ func TestEpic_YAMLRoundTrip(t *testing.T) {
 	ts := time.Date(2025, 1, 15, 10, 30, 0, 0, time.UTC)
 
 	original := model.Epic{
-		ID:        "E-001",
+		ID:        testutil.TestEpicID,
 		Slug:      "phase-1-kernel",
 		Title:     "Phase 1 Kernel",
 		Status:    model.EpicStatusActive,
 		Summary:   "Build the initial workflow kernel",
 		Created:   ts,
 		CreatedBy: "sam",
-		Features:  []string{"FEAT-001", "FEAT-002"},
+		Features:  []string{testutil.TestFeatureID, testutil.TestFeatureID2},
 	}
 
 	data, err := yaml.Marshal(original)
@@ -79,20 +80,20 @@ func TestFeature_YAMLRoundTrip(t *testing.T) {
 	ts := time.Date(2025, 1, 15, 10, 30, 0, 0, time.UTC)
 
 	original := model.Feature{
-		ID:           "FEAT-001",
+		ID:           testutil.TestFeatureID,
 		Slug:         "initial-kernel",
-		Epic:         "E-001",
+		Epic:         testutil.TestEpicID,
 		Status:       model.FeatureStatusInProgress,
 		Summary:      "Start the workflow kernel",
 		Created:      ts,
 		CreatedBy:    "sam",
 		Spec:         "spec/kernel.md",
 		Plan:         "plan/kernel.md",
-		Tasks:        []string{"FEAT-001.1", "FEAT-001.2"},
-		Decisions:    []string{"DEC-001"},
+		Tasks:        []string{testutil.TestTaskID, "TASK-01J3KZZZCC5LG"},
+		Decisions:    []string{testutil.TestDecisionID},
 		Branch:       "feat/kernel",
-		Supersedes:   "FEAT-000",
-		SupersededBy: "FEAT-002",
+		Supersedes:   "FEAT-01J3K0SUPER00",
+		SupersededBy: testutil.TestFeatureID2,
 	}
 
 	data, err := yaml.Marshal(original)
@@ -166,13 +167,13 @@ func TestTask_YAMLRoundTrip_WithPointers(t *testing.T) {
 	completed := time.Date(2025, 1, 16, 14, 0, 0, 0, time.UTC)
 
 	original := model.Task{
-		ID:            "FEAT-001.1",
-		ParentFeature: "FEAT-001",
+		ID:            testutil.TestTaskID,
+		ParentFeature: testutil.TestFeatureID,
 		Slug:          "write-entity-files",
 		Summary:       "Write canonical entity files to disk",
 		Status:        model.TaskStatusDone,
 		Assignee:      "agent-1",
-		DependsOn:     []string{"FEAT-001.2"},
+		DependsOn:     []string{"TASK-01J3KZZZCC5LG"},
 		FilesPlanned:  []string{"internal/storage/entity_store.go"},
 		Started:       &started,
 		Completed:     &completed,
@@ -255,8 +256,8 @@ func TestTask_YAMLRoundTrip_NilPointers(t *testing.T) {
 	t.Parallel()
 
 	original := model.Task{
-		ID:            "FEAT-002.1",
-		ParentFeature: "FEAT-002",
+		ID:            "TASK-01J3KZZZCC5LG",
+		ParentFeature: testutil.TestFeatureID2,
 		Slug:          "minimal-task",
 		Summary:       "A task with no optional fields",
 		Status:        model.TaskStatusQueued,
@@ -301,7 +302,7 @@ func TestBug_YAMLRoundTrip(t *testing.T) {
 	ts := time.Date(2025, 1, 15, 10, 30, 0, 0, time.UTC)
 
 	original := model.Bug{
-		ID:            "BUG-001",
+		ID:            testutil.TestBugID,
 		Slug:          "yaml-output-unstable",
 		Title:         "Writer produces unstable YAML",
 		Status:        model.BugStatusTriaged,
@@ -312,9 +313,9 @@ func TestBug_YAMLRoundTrip(t *testing.T) {
 		Reported:      ts,
 		Observed:      "Repeated writes produce different output",
 		Expected:      "Repeated writes should be stable",
-		Affects:       []string{"FEAT-001", "FEAT-002"},
-		OriginFeature: "FEAT-001",
-		OriginTask:    "FEAT-001.1",
+		Affects:       []string{testutil.TestFeatureID, testutil.TestFeatureID2},
+		OriginFeature: testutil.TestFeatureID,
+		OriginTask:    testutil.TestTaskID,
 		Environment:   "CI pipeline, Go 1.23",
 		Reproduction:  "Run write 10 times, compare output",
 		DuplicateOf:   "",
@@ -394,16 +395,16 @@ func TestDecision_YAMLRoundTrip(t *testing.T) {
 	ts := time.Date(2025, 1, 15, 10, 30, 0, 0, time.UTC)
 
 	original := model.Decision{
-		ID:           "DEC-001",
+		ID:           testutil.TestDecisionID,
 		Slug:         "strict-yaml-subset",
 		Summary:      "Use a strict canonical YAML subset",
 		Rationale:    "Deterministic output is required for Git-friendly state",
 		DecidedBy:    "sam",
 		Date:         ts,
 		Status:       model.DecisionStatusAccepted,
-		Affects:      []string{"FEAT-001", "FEAT-003"},
-		Supersedes:   "DEC-000",
-		SupersededBy: "DEC-002",
+		Affects:      []string{testutil.TestFeatureID, "FEAT-01J3K9NPQ5TW7"},
+		Supersedes:   "DEC-01J3KABCDG9PZ",
+		SupersededBy: "DEC-01J3KABCDF8NY",
 	}
 
 	data, err := yaml.Marshal(original)
@@ -470,6 +471,9 @@ func TestEntityKind_Values(t *testing.T) {
 	}
 	if model.EntityKindDecision != "decision" {
 		t.Errorf("EntityKindDecision = %q, want %q", model.EntityKindDecision, "decision")
+	}
+	if model.EntityKindDocument != "document" {
+		t.Errorf("EntityKindDocument = %q, want %q", model.EntityKindDocument, "document")
 	}
 }
 
@@ -642,11 +646,11 @@ func TestEntity_GetKind(t *testing.T) {
 		e    model.Entity
 		want model.EntityKind
 	}{
-		{"Epic", model.Epic{ID: "E-001", Slug: "test"}, model.EntityKindEpic},
-		{"Feature", model.Feature{ID: "FEAT-001", Slug: "test"}, model.EntityKindFeature},
-		{"Task", model.Task{ID: "FEAT-001.1", Slug: "test"}, model.EntityKindTask},
-		{"Bug", model.Bug{ID: "BUG-001", Slug: "test"}, model.EntityKindBug},
-		{"Decision", model.Decision{ID: "DEC-001", Slug: "test"}, model.EntityKindDecision},
+		{"Epic", model.Epic{ID: testutil.TestEpicID, Slug: "test"}, model.EntityKindEpic},
+		{"Feature", model.Feature{ID: testutil.TestFeatureID, Slug: "test"}, model.EntityKindFeature},
+		{"Task", model.Task{ID: testutil.TestTaskID, Slug: "test"}, model.EntityKindTask},
+		{"Bug", model.Bug{ID: testutil.TestBugID, Slug: "test"}, model.EntityKindBug},
+		{"Decision", model.Decision{ID: testutil.TestDecisionID, Slug: "test"}, model.EntityKindDecision},
 	}
 
 	for _, tt := range tests {

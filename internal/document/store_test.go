@@ -23,11 +23,11 @@ func sampleDoc(t *testing.T) Document {
 	ts := fixedTime(t)
 	return Document{
 		Meta: DocMeta{
-			ID:        "DOC-001",
+			ID:        "DOC-01J3KDOCTEST01",
 			Type:      DocTypeProposal,
 			Title:     "Widget Redesign",
 			Status:    DocStatusDraft,
-			Feature:   "FEAT-042",
+			Feature:   "FEAT-01J3K7MXP3RT5",
 			CreatedBy: "alice",
 			Created:   ts,
 			Updated:   ts,
@@ -134,18 +134,18 @@ func TestDocFileName_Format(t *testing.T) {
 	}{
 		{
 			name: "basic",
-			meta: DocMeta{ID: "DOC-001", Title: "Widget Redesign"},
-			want: "DOC-001-widget-redesign.md",
+			meta: DocMeta{ID: "DOC-01J3KDOCTEST01", Title: "Widget Redesign"},
+			want: "DOC-01J3KDOCTEST01-widget-redesign.md",
 		},
 		{
 			name: "title with special chars",
-			meta: DocMeta{ID: "DOC-042", Title: "My Great Plan!"},
-			want: "DOC-042-my-great-plan.md",
+			meta: DocMeta{ID: "DOC-01J3KDOCFM042", Title: "My Great Plan!"},
+			want: "DOC-01J3KDOCFM042-my-great-plan.md",
 		},
 		{
 			name: "title with spaces",
-			meta: DocMeta{ID: "DOC-100", Title: "Phase 1 Implementation Plan"},
-			want: "DOC-100-phase-1-implementation-plan.md",
+			meta: DocMeta{ID: "DOC-01J3KDOCFM100", Title: "Phase 1 Implementation Plan"},
+			want: "DOC-01J3KDOCFM100-phase-1-implementation-plan.md",
 		},
 	}
 
@@ -215,7 +215,7 @@ func TestMarshalDocument_IncludesOptionalFieldsWhenSet(t *testing.T) {
 	doc := sampleDocWithApproval(t)
 	serialised := marshalDocument(doc)
 
-	if !strings.Contains(serialised, "feature: FEAT-042") {
+	if !strings.Contains(serialised, "feature: FEAT-01J3K7MXP3RT5") {
 		t.Error("marshalled output should contain feature when set")
 	}
 	if !strings.Contains(serialised, "approved_by: bob") {
@@ -313,7 +313,7 @@ func TestUnmarshalDocument_MissingOpeningDelimiter(t *testing.T) {
 func TestUnmarshalDocument_MissingClosingDelimiter(t *testing.T) {
 	t.Parallel()
 
-	_, err := unmarshalDocument("---\nid: DOC-001\ntype: proposal\n")
+	_, err := unmarshalDocument("---\nid: DOC-01J3KDOCTEST01\ntype: proposal\n")
 	if err == nil {
 		t.Fatal("expected error for missing closing delimiter")
 	}
@@ -422,7 +422,7 @@ func TestDocStoreWrite_CorrectFileName(t *testing.T) {
 		t.Fatalf("Write() error = %v", err)
 	}
 
-	wantName := "DOC-001-widget-redesign.md"
+	wantName := "DOC-01J3KDOCTEST01-widget-redesign.md"
 	gotName := filepath.Base(path)
 	if gotName != wantName {
 		t.Errorf("file name = %q, want %q", gotName, wantName)
@@ -500,7 +500,7 @@ func TestDocStoreLoad_NonExistentFile(t *testing.T) {
 	root := t.TempDir()
 	store := NewDocStore(root)
 
-	_, err := store.Load(DocTypeProposal, "DOC-999", "nonexistent")
+	_, err := store.Load(DocTypeProposal, "DOC-01J3KDOCNF999", "nonexistent")
 	if err == nil {
 		t.Fatal("expected error for non-existent document")
 	}
@@ -515,7 +515,7 @@ func TestDocStoreLoad_InvalidType(t *testing.T) {
 	root := t.TempDir()
 	store := NewDocStore(root)
 
-	_, err := store.Load("bogus", "DOC-001", "anything")
+	_, err := store.Load("bogus", "DOC-01J3KDOCTEST01", "anything")
 	if err == nil {
 		t.Fatal("expected error for invalid document type")
 	}
@@ -582,21 +582,21 @@ func TestDocStoreList_ReturnsMatchingDocs(t *testing.T) {
 	docs := []Document{
 		{
 			Meta: DocMeta{
-				ID: "DOC-001", Type: DocTypeProposal, Title: "First Proposal",
+				ID: "DOC-01J3KDOCTEST01", Type: DocTypeProposal, Title: "First Proposal",
 				Status: DocStatusDraft, CreatedBy: "alice", Created: ts, Updated: ts,
 			},
 			Body: "First body.\n",
 		},
 		{
 			Meta: DocMeta{
-				ID: "DOC-002", Type: DocTypeProposal, Title: "Second Proposal",
+				ID: "DOC-01J3KDOCTEST02", Type: DocTypeProposal, Title: "Second Proposal",
 				Status: DocStatusDraft, CreatedBy: "bob", Created: ts, Updated: ts,
 			},
 			Body: "Second body.\n",
 		},
 		{
 			Meta: DocMeta{
-				ID: "DOC-003", Type: DocTypeDesign, Title: "A Design",
+				ID: "DOC-01J3KDOCTEST03", Type: DocTypeDesign, Title: "A Design",
 				Status: DocStatusDraft, CreatedBy: "carol", Created: ts, Updated: ts,
 			},
 			Body: "Design body.\n",
@@ -663,10 +663,11 @@ func TestDocStoreListAll_CombinesAcrossTypes(t *testing.T) {
 
 	ts := fixedTime(t)
 	types := []DocType{DocTypeProposal, DocTypeDesign, DocTypeSpecification}
+	docIDs := []string{"DOC-01J3KDOCLA001", "DOC-01J3KDOCLA002", "DOC-01J3KDOCLA003"}
 	for i, dt := range types {
 		doc := Document{
 			Meta: DocMeta{
-				ID:        fmt.Sprintf("DOC-%03d", i+1),
+				ID:        docIDs[i],
 				Type:      dt,
 				Title:     "Doc " + string(dt),
 				Status:    DocStatusDraft,
@@ -704,7 +705,7 @@ func TestDocStoreWrite_AllDocTypes(t *testing.T) {
 			t.Parallel()
 			doc := Document{
 				Meta: DocMeta{
-					ID:        "DOC-100",
+					ID:        "DOC-01J3KDOCSTN01",
 					Type:      dt,
 					Title:     "Test " + string(dt),
 					Status:    DocStatusDraft,
@@ -825,3 +826,6 @@ func TestDocStoreWrite_RejectsWhitespaceOnlyTitle(t *testing.T) {
 		t.Fatal("expected error for whitespace-only title")
 	}
 }
+
+// Ensure fmt is used (for TestDocStoreListAll_CombinesAcrossTypes).
+var _ = fmt.Sprintf
