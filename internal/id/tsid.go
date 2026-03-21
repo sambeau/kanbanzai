@@ -4,7 +4,6 @@ import (
 	"crypto/rand"
 	"fmt"
 	"math/big"
-	"strings"
 	"time"
 )
 
@@ -97,11 +96,16 @@ func ValidateTSID13(s string) error {
 	return nil
 }
 
-// NormalizeTSID converts a TSID string to canonical uppercase form.
-// It validates the input and returns an error for invalid characters.
+// NormalizeTSID converts a TSID string to canonical Crockford base32 form.
+// It validates the input, uppercases, and substitutes ambiguous characters
+// (I/L → 1, O → 0) per the Crockford base32 spec.
 func NormalizeTSID(s string) (string, error) {
 	if err := ValidateTSID13(s); err != nil {
 		return "", err
 	}
-	return strings.ToUpper(s), nil
+	var buf [13]byte
+	for i := 0; i < 13; i++ {
+		buf[i] = crockfordAlphabet[crockfordDecode[s[i]]]
+	}
+	return string(buf[:]), nil
 }
