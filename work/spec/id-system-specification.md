@@ -350,11 +350,46 @@ The following components must be updated:
 5. **Validation** (`internal/validate`): update ID format validation to accept TSID13-based IDs. Validate epic slugs against §8 rules.
 6. **Display layer**: implement break hyphen insertion and shortest-unique-prefix computation.
 
-### 13.3 Legacy ID recognition
+### 13.3 Unified allocator interface
+
+The system must provide a single allocator interface that accepts an entity type and returns a correctly formatted ID.
+
+- For entity type **Epic**: the allocator accepts a human-provided slug and returns an `EPIC-{SLUG}` ID after validation per §8.
+- For all other entity types (**Feature**, **Bug**, **Decision**, **Task**, **Document**): the allocator generates a TSID13 and returns a `{TYPE}-{TSID13}` ID.
+- The allocator must enforce the collision check (§6.2) for TSID-based types and the uniqueness check for epic slugs.
+- Callers must not construct IDs manually or implement type-specific allocation logic.
+
+### 13.4 Task field rename
+
+The Task entity's `feature` field is renamed to `parent_feature` to reflect that task IDs are now independent (not embedded in the feature ID).
+
+This rename affects:
+
+1. **Entity model** (`internal/model`): the struct field tag changes from `yaml:"feature"` to `yaml:"parent_feature"`.
+2. **Validation** (`internal/validate`): any rules referencing the `feature` field must use the new name.
+3. **Service layer** (`internal/service`): task creation and update code must use `parent_feature`.
+4. **MCP and CLI interfaces**: input parameters and output fields must use `parent_feature`.
+5. **Decision log** (P1-DEC-009): the Task minimum fields table must be updated to list `parent_feature` instead of `feature`.
+6. **Phase 1 specification** (§9.3): the Task minimum fields list must be updated.
+
+No data migration is required because §13.7 confirms no production state exists.
+
+### 13.5 Test fixture migration
+
+All test fixtures and test data must be updated to use TSID13-format IDs.
+
+Specifically:
+
+1. Test fixtures in `testdata/` directories that use sequential IDs (`FEAT-001`, `BUG-002`, `TASK-001.1`, etc.) must be rewritten with TSID13-format IDs.
+2. Test helpers that construct entity IDs must use the allocator or well-known test constants in TSID13 format.
+3. Tests must not hard-code sequential-format IDs in assertions unless explicitly testing legacy ID recognition (§13.6).
+4. At least one test must verify that the system correctly reads a file with a legacy sequential ID without error (covering the §13.6 robustness guarantee).
+
+### 13.6 Legacy ID recognition
 
 The system should continue to recognise legacy sequential IDs (`FEAT-001`, `BUG-002`) in stored files for robustness. It must not generate new sequential IDs.
 
-### 13.4 Timing
+### 13.7 Timing
 
 Migration happens before production state exists. There is no existing entity data to convert.
 
@@ -428,6 +463,16 @@ Writing an entity to disk, reading it back, and writing it again must produce id
 ### 14.11 Time sortability
 
 Creating two entities of the same type with a delay of at least 2 milliseconds between them must produce IDs where the second sorts lexicographically after the first.
+
+### 14.12 Unified allocator routing
+
+- Calling the allocator with each of the six entity types must return an ID in the correct format for that type.
+- Calling the allocator with an invalid entity type must return an error.
+- No code path outside the allocator may construct entity IDs.
+
+### 14.13 Test fixture consistency
+
+All test fixtures must use TSID13-format IDs. No test outside of explicit legacy-recognition tests may depend on sequential ID formats. At least one test must verify that a legacy sequential ID (`FEAT-001`) is recognised without error.
 
 ---
 
