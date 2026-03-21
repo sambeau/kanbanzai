@@ -166,17 +166,17 @@ func TestTask_YAMLRoundTrip_WithPointers(t *testing.T) {
 	completed := time.Date(2025, 1, 16, 14, 0, 0, 0, time.UTC)
 
 	original := model.Task{
-		ID:           "FEAT-001.1",
-		Feature:      "FEAT-001",
-		Slug:         "write-entity-files",
-		Summary:      "Write canonical entity files to disk",
-		Status:       model.TaskStatusDone,
-		Assignee:     "agent-1",
-		DependsOn:    []string{"FEAT-001.2"},
-		FilesPlanned: []string{"internal/storage/entity_store.go"},
-		Started:      &started,
-		Completed:    &completed,
-		Verification: "go test ./internal/storage/...",
+		ID:            "FEAT-001.1",
+		ParentFeature: "FEAT-001",
+		Slug:          "write-entity-files",
+		Summary:       "Write canonical entity files to disk",
+		Status:        model.TaskStatusDone,
+		Assignee:      "agent-1",
+		DependsOn:     []string{"FEAT-001.2"},
+		FilesPlanned:  []string{"internal/storage/entity_store.go"},
+		Started:       &started,
+		Completed:     &completed,
+		Verification:  "go test ./internal/storage/...",
 	}
 
 	data, err := yaml.Marshal(original)
@@ -192,8 +192,8 @@ func TestTask_YAMLRoundTrip_WithPointers(t *testing.T) {
 	if decoded.ID != original.ID {
 		t.Errorf("ID = %q, want %q", decoded.ID, original.ID)
 	}
-	if decoded.Feature != original.Feature {
-		t.Errorf("Feature = %q, want %q", decoded.Feature, original.Feature)
+	if decoded.ParentFeature != original.ParentFeature {
+		t.Errorf("ParentFeature = %q, want %q", decoded.ParentFeature, original.ParentFeature)
 	}
 	if decoded.Slug != original.Slug {
 		t.Errorf("Slug = %q, want %q", decoded.Slug, original.Slug)
@@ -255,11 +255,11 @@ func TestTask_YAMLRoundTrip_NilPointers(t *testing.T) {
 	t.Parallel()
 
 	original := model.Task{
-		ID:      "FEAT-002.1",
-		Feature: "FEAT-002",
-		Slug:    "minimal-task",
-		Summary: "A task with no optional fields",
-		Status:  model.TaskStatusQueued,
+		ID:            "FEAT-002.1",
+		ParentFeature: "FEAT-002",
+		Slug:          "minimal-task",
+		Summary:       "A task with no optional fields",
+		Status:        model.TaskStatusQueued,
 	}
 
 	data, err := yaml.Marshal(original)
@@ -275,8 +275,8 @@ func TestTask_YAMLRoundTrip_NilPointers(t *testing.T) {
 	if decoded.ID != original.ID {
 		t.Errorf("ID = %q, want %q", decoded.ID, original.ID)
 	}
-	if decoded.Feature != original.Feature {
-		t.Errorf("Feature = %q, want %q", decoded.Feature, original.Feature)
+	if decoded.ParentFeature != original.ParentFeature {
+		t.Errorf("ParentFeature = %q, want %q", decoded.ParentFeature, original.ParentFeature)
 	}
 	if decoded.Slug != original.Slug {
 		t.Errorf("Slug = %q, want %q", decoded.Slug, original.Slug)

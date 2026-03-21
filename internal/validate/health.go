@@ -81,12 +81,7 @@ func CheckHealth(loadAll func() ([]EntityInfo, error), entityExists func(entityT
 		errs := ValidateRecord(e.Type, e.Fields)
 		report.Errors = append(report.Errors, errs...)
 
-		featureID := ""
-		if e.Type == string(EntityTask) {
-			featureID = toString(e.Fields["feature"])
-		}
-
-		if err := allocator.Validate(model.EntityKind(e.Type), e.ID, featureID); err != nil {
+		if err := allocator.Validate(model.EntityKind(e.Type), e.ID); err != nil {
 			report.Errors = append(report.Errors, ValidationError{
 				EntityType: e.Type,
 				EntityID:   e.ID,
@@ -138,7 +133,7 @@ func CheckHealth(loadAll func() ([]EntityInfo, error), entityExists func(entityT
 			checkRefSlice("decisions", string(EntityDecision), toStringSlice(e.Fields["decisions"]))
 
 		case string(EntityTask):
-			checkRef("feature", string(EntityFeature), toString(e.Fields["feature"]))
+			checkRef("parent_feature", string(EntityFeature), toString(e.Fields["parent_feature"]))
 			checkRefSlice("depends_on", string(EntityTask), toStringSlice(e.Fields["depends_on"]))
 
 		case string(EntityBug):

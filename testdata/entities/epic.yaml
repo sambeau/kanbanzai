@@ -1,4 +1,4 @@
-id: E-001
+id: EPIC-PHASE1KERNEL
 slug: phase-1-kernel
 title: Phase 1 Kernel
 status: proposed
@@ -6,5 +6,5 @@ summary: Build the initial workflow kernel
 created: "2026-03-19T12:00:00Z"
 created_by: sam
 features:
-  - FEAT-001
-  - FEAT-002
+  - FEAT-01J3K7MXP3RT5
+  - FEAT-01J3K8NYQ4SU6

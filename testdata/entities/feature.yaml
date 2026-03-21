@@ -1,6 +1,6 @@
-id: FEAT-001
+id: FEAT-01J3K7MXP3RT5
 slug: initial-kernel
-epic: E-001
+epic: EPIC-PHASE1KERNEL
 status: draft
 summary: Start the workflow kernel
 created: "2026-03-19T12:00:00Z"
@@ -8,8 +8,8 @@ created_by: sam
 spec: work/spec/phase-1-specification.md
 plan: work/plan/phase-1-implementation-plan.md
 tasks:
-  - FEAT-001.1
-  - FEAT-001.2
+  - TASK-01J3KZZZBB4KF
+  - TASK-01J3L0AACC5LG
 decisions:
-  - DEC-001
-branch: feat/feat-001-initial-kernel
+  - DEC-01J3KABCDE7MX
+branch: feat/feat-01j3k7mxp3rt5-initial-kernel

@@ -256,21 +256,20 @@ func TestDocService_Submit_WhitespaceOnlyTitle(t *testing.T) {
 	}
 }
 
-func TestDocService_Submit_IDsAreSequential(t *testing.T) {
+func TestDocService_Submit_IDsAreUnique(t *testing.T) {
 	svc := NewDocService(t.TempDir())
 
 	r1 := submitProposal(t, svc, "First", "body one")
 	r2 := submitProposal(t, svc, "Second", "body two")
 	r3 := submitProposal(t, svc, "Third", "body three")
 
-	if r1.ID != "DOC-001" {
-		t.Errorf("expected DOC-001, got %s", r1.ID)
+	for _, r := range []DocumentResult{r1, r2, r3} {
+		if !strings.HasPrefix(r.ID, "DOC-") {
+			t.Errorf("expected DOC- prefix, got %s", r.ID)
+		}
 	}
-	if r2.ID != "DOC-002" {
-		t.Errorf("expected DOC-002, got %s", r2.ID)
-	}
-	if r3.ID != "DOC-003" {
-		t.Errorf("expected DOC-003, got %s", r3.ID)
+	if r1.ID == r2.ID || r1.ID == r3.ID || r2.ID == r3.ID {
+		t.Errorf("expected unique IDs, got %s, %s, %s", r1.ID, r2.ID, r3.ID)
 	}
 }
 
@@ -506,9 +505,12 @@ func TestDocService_ListByType_MultipleDocuments(t *testing.T) {
 			t.Errorf("expected type %s, got %s", DocTypeProposal, r.Type)
 		}
 	}
-	for _, id := range []string{"DOC-001", "DOC-002", "DOC-003"} {
-		if !ids[id] {
-			t.Errorf("missing expected ID %s in results", id)
+	if len(ids) != 3 {
+		t.Errorf("expected 3 unique IDs, got %d", len(ids))
+	}
+	for id := range ids {
+		if !strings.HasPrefix(id, "DOC-") {
+			t.Errorf("expected DOC- prefix, got %s", id)
 		}
 	}
 }
@@ -949,7 +951,7 @@ func TestDocService_IDsDoNotCollideAcrossInstances(t *testing.T) {
 	// First service instance creates two documents.
 	svc1 := NewDocService(root)
 	body := "# Test\n\n## Summary\n\nTest.\n\n## Problem\n\nTest.\n\n## Proposal\n\nTest.\n"
-	_, err := svc1.Submit(SubmitInput{
+	r1, err := svc1.Submit(SubmitInput{
 		Type:      DocTypeProposal,
 		Title:     "First",
 		Body:      body,
@@ -958,7 +960,7 @@ func TestDocService_IDsDoNotCollideAcrossInstances(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Submit() error = %v", err)
 	}
-	_, err = svc1.Submit(SubmitInput{
+	r2, err := svc1.Submit(SubmitInput{
 		Type:      DocTypeProposal,
 		Title:     "Second",
 		Body:      body,
@@ -968,9 +970,9 @@ func TestDocService_IDsDoNotCollideAcrossInstances(t *testing.T) {
 		t.Fatalf("Submit() error = %v", err)
 	}
 
-	// Second service instance (simulating restart) should continue from DOC-003.
+	// Second service instance (simulating restart) should produce a unique ID.
 	svc2 := NewDocService(root)
-	result, err := svc2.Submit(SubmitInput{
+	r3, err := svc2.Submit(SubmitInput{
 		Type:      DocTypeProposal,
 		Title:     "Third",
 		Body:      body,
@@ -980,7 +982,10 @@ func TestDocService_IDsDoNotCollideAcrossInstances(t *testing.T) {
 		t.Fatalf("Submit() error = %v", err)
 	}
 
-	if result.ID != "DOC-003" {
-		t.Fatalf("expected DOC-003 after restart, got %s", result.ID)
+	if !strings.HasPrefix(r3.ID, "DOC-") {
+		t.Fatalf("expected DOC- prefix, got %s", r3.ID)
+	}
+	if r3.ID == r1.ID || r3.ID == r2.ID {
+		t.Fatalf("expected unique ID from second instance, got duplicate %s", r3.ID)
 	}
 }

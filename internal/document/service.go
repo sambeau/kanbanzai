@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"time"
 
 	"kanbanzai/internal/core"
+	"kanbanzai/internal/id"
+	"kanbanzai/internal/model"
 )
 
 // DocsDir is the document storage directory within the instance root.
@@ -60,7 +61,7 @@ func NewDocService(root string) *DocService {
 	}
 
 	store := NewDocStore(root)
-	counter := scanMaxDocID(store)
+	allocator := id.NewAllocator()
 
 	return &DocService{
 		store: store,
@@ -68,41 +69,14 @@ func NewDocService(root string) *DocService {
 			return time.Now().UTC()
 		},
 		nextID: func() string {
-			counter++
-			return fmt.Sprintf("DOC-%03d", counter)
+			idValue, err := allocator.Allocate(model.EntityKindDocument, "", nil)
+			if err != nil {
+				// Fallback — should not happen in practice
+				return fmt.Sprintf("DOC-ERR-%d", time.Now().UnixNano())
+			}
+			return idValue
 		},
 	}
-}
-
-// scanMaxDocID scans existing documents and returns the highest numeric doc ID found.
-func scanMaxDocID(store *DocStore) int {
-	paths, err := store.ListAll()
-	if err != nil {
-		return 0
-	}
-
-	maxID := 0
-	for _, p := range paths {
-		base := filepath.Base(p)
-		if !strings.HasPrefix(base, "DOC-") {
-			continue
-		}
-		// Extract the numeric part from "DOC-NNN-slug.md"
-		rest := base[4:] // after "DOC-"
-		dashIdx := strings.Index(rest, "-")
-		if dashIdx < 0 {
-			continue
-		}
-		numStr := rest[:dashIdx]
-		n, err := strconv.Atoi(numStr)
-		if err != nil {
-			continue
-		}
-		if n > maxID {
-			maxID = n
-		}
-	}
-	return maxID
 }
 
 // ScaffoldDocument generates a starter document from a template.

@@ -109,12 +109,12 @@ func createFeatureTool(svc *service.EntityService) server.ServerTool {
 func createTaskTool(svc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("create_task",
 		mcp.WithDescription("Create a new task entity"),
-		mcp.WithString("feature", mcp.Description("Parent feature ID"), mcp.Required()),
+		mcp.WithString("parent_feature", mcp.Description("Parent feature ID"), mcp.Required()),
 		mcp.WithString("slug", mcp.Description("URL-friendly identifier for the task"), mcp.Required()),
 		mcp.WithString("summary", mcp.Description("Brief summary of the task"), mcp.Required()),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		feature, err := request.RequireString("feature")
+		parentFeature, err := request.RequireString("parent_feature")
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
@@ -127,9 +127,9 @@ func createTaskTool(svc *service.EntityService) server.ServerTool {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
 		result, err := svc.CreateTask(service.CreateTaskInput{
-			Feature: feature,
-			Slug:    slug,
-			Summary: summary,
+			ParentFeature: parentFeature,
+			Slug:          slug,
+			Summary:       summary,
 		})
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("create task failed", err), nil

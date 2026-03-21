@@ -136,6 +136,7 @@ func runCreate(args []string, deps dependencies) error {
 			return err
 		}
 		result, err := svc.CreateEpic(service.CreateEpicInput{
+			EpicSlug:  values["epic_slug"],
 			Slug:      values["slug"],
 			Title:     values["title"],
 			Summary:   values["summary"],
@@ -166,9 +167,9 @@ func runCreate(args []string, deps dependencies) error {
 			return err
 		}
 		result, err := svc.CreateTask(service.CreateTaskInput{
-			Feature: values["feature"],
-			Slug:    values["slug"],
-			Summary: values["summary"],
+			ParentFeature: values["parent_feature"],
+			Slug:          values["slug"],
+			Summary:       values["summary"],
 		})
 		if err != nil {
 			return err
@@ -752,6 +753,7 @@ Entities:
     --title
     --summary
     --created_by
+    [--epic_slug]
 
   feature
     --slug
@@ -761,7 +763,7 @@ Entities:
 
   task
     --slug
-    --feature
+    --parent_feature
     --summary
 
   bug

@@ -11,6 +11,7 @@ const (
 	EntityKindTask     EntityKind = "task"
 	EntityKindBug      EntityKind = "bug"
 	EntityKindDecision EntityKind = "decision"
+	EntityKindDocument EntityKind = "document"
 )
 
 // EpicStatus is the lifecycle state for an Epic.
@@ -179,11 +180,11 @@ func (f Feature) GetSlug() string {
 
 // Task is the canonical Phase 1 representation of a Task.
 type Task struct {
-	ID      string     `yaml:"id"`
-	Feature string     `yaml:"feature"`
-	Slug    string     `yaml:"slug"`
-	Summary string     `yaml:"summary"`
-	Status  TaskStatus `yaml:"status"`
+	ID            string     `yaml:"id"`
+	ParentFeature string     `yaml:"parent_feature"`
+	Slug          string     `yaml:"slug"`
+	Summary       string     `yaml:"summary"`
+	Status        TaskStatus `yaml:"status"`
 
 	Assignee     string     `yaml:"assignee,omitempty"`
 	DependsOn    []string   `yaml:"depends_on,omitempty"`

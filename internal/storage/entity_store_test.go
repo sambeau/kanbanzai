@@ -251,69 +251,69 @@ func TestEntityStore_Load_FixtureFiles(t *testing.T) {
 			name:       "epic",
 			sourcePath: filepath.Join("..", "..", "testdata", "entities", "epic.yaml"),
 			entityType: "epic",
-			id:         "E-001",
+			id:         "EPIC-PHASE1KERNEL",
 			slug:       "phase-1-kernel",
 			wantFields: map[string]any{
-				"id":         "E-001",
+				"id":         "EPIC-PHASE1KERNEL",
 				"slug":       "phase-1-kernel",
 				"title":      "Phase 1 Kernel",
 				"status":     "proposed",
 				"summary":    "Build the initial workflow kernel",
 				"created":    "2026-03-19T12:00:00Z",
 				"created_by": "sam",
-				"features":   []any{"FEAT-001", "FEAT-002"},
+				"features":   []any{"FEAT-01J3K7MXP3RT5", "FEAT-01J3K8NYQ4SU6"},
 			},
-			wantFilePath: filepath.Join(root, "epics", "E-001-phase-1-kernel.yaml"),
+			wantFilePath: filepath.Join(root, "epics", "EPIC-PHASE1KERNEL-phase-1-kernel.yaml"),
 		},
 		{
 			name:       "feature",
 			sourcePath: filepath.Join("..", "..", "testdata", "entities", "feature.yaml"),
 			entityType: "feature",
-			id:         "FEAT-001",
+			id:         "FEAT-01J3K7MXP3RT5",
 			slug:       "initial-kernel",
 			wantFields: map[string]any{
-				"id":         "FEAT-001",
+				"id":         "FEAT-01J3K7MXP3RT5",
 				"slug":       "initial-kernel",
-				"epic":       "E-001",
+				"epic":       "EPIC-PHASE1KERNEL",
 				"status":     "draft",
 				"summary":    "Start the workflow kernel",
 				"created":    "2026-03-19T12:00:00Z",
 				"created_by": "sam",
 				"spec":       "work/spec/phase-1-specification.md",
 				"plan":       "work/plan/phase-1-implementation-plan.md",
-				"tasks":      []any{"FEAT-001.1", "FEAT-001.2"},
-				"decisions":  []any{"DEC-001"},
-				"branch":     "feat/feat-001-initial-kernel",
+				"tasks":      []any{"TASK-01J3KZZZBB4KF", "TASK-01J3L0AACC5LG"},
+				"decisions":  []any{"DEC-01J3KABCDE7MX"},
+				"branch":     "feat/feat-01j3k7mxp3rt5-initial-kernel",
 			},
-			wantFilePath: filepath.Join(root, "features", "FEAT-001-initial-kernel.yaml"),
+			wantFilePath: filepath.Join(root, "features", "FEAT-01J3K7MXP3RT5-initial-kernel.yaml"),
 		},
 		{
 			name:       "task",
 			sourcePath: filepath.Join("..", "..", "testdata", "entities", "task.yaml"),
 			entityType: "task",
-			id:         "FEAT-001.1",
+			id:         "TASK-01J3KZZZBB4KF",
 			slug:       "write-entity-files",
 			wantFields: map[string]any{
-				"id":            "FEAT-001.1",
-				"feature":       "FEAT-001",
-				"slug":          "write-entity-files",
-				"summary":       "Write canonical entity files to disk",
-				"status":        "queued",
-				"assignee":      "sam",
-				"depends_on":    []any{"FEAT-001.0"},
-				"files_planned": []any{"internal/storage/entity_store.go", "internal/storage/entity_store_test.go"},
-				"verification":  "go test ./...",
+				"id":             "TASK-01J3KZZZBB4KF",
+				"parent_feature": "FEAT-01J3K7MXP3RT5",
+				"slug":           "write-entity-files",
+				"summary":        "Write canonical entity files to disk",
+				"status":         "queued",
+				"assignee":       "sam",
+				"depends_on":     []any{"TASK-01J3KYYY9A3JE"},
+				"files_planned":  []any{"internal/storage/entity_store.go", "internal/storage/entity_store_test.go"},
+				"verification":   "go test ./...",
 			},
-			wantFilePath: filepath.Join(root, "tasks", "FEAT-001.1-write-entity-files.yaml"),
+			wantFilePath: filepath.Join(root, "tasks", "TASK-01J3KZZZBB4KF-write-entity-files.yaml"),
 		},
 		{
 			name:       "bug",
 			sourcePath: filepath.Join("..", "..", "testdata", "entities", "bug.yaml"),
 			entityType: "bug",
-			id:         "BUG-001",
+			id:         "BUG-01J4AR7WHN4F2",
 			slug:       "bad-yaml-output",
 			wantFields: map[string]any{
-				"id":          "BUG-001",
+				"id":          "BUG-01J4AR7WHN4F2",
 				"slug":        "bad-yaml-output",
 				"title":       "Writer produces unstable YAML",
 				"status":      "reported",
@@ -325,16 +325,16 @@ func TestEntityStore_Load_FixtureFiles(t *testing.T) {
 				"observed":    "Repeated writes produce different output",
 				"expected":    "Repeated writes should be stable",
 			},
-			wantFilePath: filepath.Join(root, "bugs", "BUG-001-bad-yaml-output.yaml"),
+			wantFilePath: filepath.Join(root, "bugs", "BUG-01J4AR7WHN4F2-bad-yaml-output.yaml"),
 		},
 		{
 			name:       "decision",
 			sourcePath: filepath.Join("..", "..", "testdata", "entities", "decision.yaml"),
 			entityType: "decision",
-			id:         "DEC-001",
+			id:         "DEC-01J3KABCDE7MX",
 			slug:       "strict-yaml-subset",
 			wantFields: map[string]any{
-				"id":         "DEC-001",
+				"id":         "DEC-01J3KABCDE7MX",
 				"slug":       "strict-yaml-subset",
 				"summary":    "Use a strict canonical YAML subset",
 				"rationale":  "Deterministic output is required for Git-friendly state",
@@ -342,7 +342,7 @@ func TestEntityStore_Load_FixtureFiles(t *testing.T) {
 				"date":       "2026-03-19T12:00:00Z",
 				"status":     "proposed",
 			},
-			wantFilePath: filepath.Join(root, "decisions", "DEC-001-strict-yaml-subset.yaml"),
+			wantFilePath: filepath.Join(root, "decisions", "DEC-01J3KABCDE7MX-strict-yaml-subset.yaml"),
 		},
 	}
 
@@ -859,6 +859,52 @@ func TestEntityStore_Load_CorruptYAML(t *testing.T) {
 	if !strings.Contains(errMsg, "unmarshal") && !strings.Contains(errMsg, "parse") && !strings.Contains(errMsg, "invalid") {
 		t.Fatalf("Load() error = %v, want error about parsing/unmarshalling", err)
 	}
+}
+
+func TestEntityStore_Load_LegacySequentialID(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	store := NewEntityStore(dir)
+
+	// Write a feature file using the legacy sequential ID format (FEAT-001).
+	// The system must read it without error per ID spec §13.6 / §14.13.
+	legacyFields := map[string]any{
+		"id":         "FEAT-001",
+		"slug":       "legacy-feature",
+		"epic":       "EPIC-TESTEPIC",
+		"status":     "draft",
+		"summary":    "A feature with a legacy sequential ID",
+		"created":    "2025-01-01T00:00:00Z",
+		"created_by": "test",
+	}
+
+	record := EntityRecord{
+		Type:   "feature",
+		ID:     "FEAT-001",
+		Slug:   "legacy-feature",
+		Fields: legacyFields,
+	}
+
+	path, err := store.Write(record)
+	if err != nil {
+		t.Fatalf("Write() error = %v", err)
+	}
+
+	loaded, err := store.Load("feature", "FEAT-001", "legacy-feature")
+	if err != nil {
+		t.Fatalf("Load() error = %v (legacy sequential IDs must be readable)", err)
+	}
+
+	if loaded.ID != "FEAT-001" {
+		t.Fatalf("Load() ID = %q, want %q", loaded.ID, "FEAT-001")
+	}
+
+	if loaded.Fields["id"] != "FEAT-001" {
+		t.Fatalf("Load() fields[id] = %q, want %q", loaded.Fields["id"], "FEAT-001")
+	}
+
+	_ = path
 }
 
 func TestEntityStore_Load_EmptyFile(t *testing.T) {

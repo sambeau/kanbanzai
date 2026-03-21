@@ -361,11 +361,11 @@ func TestRebuild(t *testing.T) {
 			Slug:       "gamma",
 			FilePath:   "tasks/FEAT-001.1-gamma.yaml",
 			Fields: map[string]any{
-				"id":      "FEAT-001.1",
-				"feature": "FEAT-001",
-				"slug":    "gamma",
-				"status":  "queued",
-				"summary": "Gamma task",
+				"id":             "FEAT-001.1",
+				"parent_feature": "FEAT-001",
+				"slug":           "gamma",
+				"status":         "queued",
+				"summary":        "Gamma task",
 			},
 		},
 	}
@@ -456,7 +456,7 @@ func TestExtractParentRef(t *testing.T) {
 		want       string
 	}{
 		{"feature", map[string]any{"epic": "E-001"}, "E-001"},
-		{"task", map[string]any{"feature": "FEAT-001"}, "FEAT-001"},
+		{"task", map[string]any{"parent_feature": "FEAT-001"}, "FEAT-001"},
 		{"bug", map[string]any{"origin_feature": "FEAT-002"}, "FEAT-002"},
 		{"epic", map[string]any{"title": "No parent"}, ""},
 		{"decision", map[string]any{}, ""},

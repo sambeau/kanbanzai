@@ -341,7 +341,7 @@ func extractParentRef(entityType string, fields map[string]any) string {
 	case "feature":
 		return stringFromFields(fields, "epic")
 	case "task":
-		return stringFromFields(fields, "feature")
+		return stringFromFields(fields, "parent_feature")
 	case "bug":
 		return stringFromFields(fields, "origin_feature")
 	default:

@@ -1,4 +1,4 @@
-id: DEC-001
+id: DEC-01J3KABCDE7MX
 slug: strict-yaml-subset
 summary: Use a strict canonical YAML subset
 rationale: Deterministic output is required for Git-friendly state

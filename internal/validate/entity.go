@@ -92,7 +92,7 @@ func ValidateSlug(slug string) error {
 var requiredFields = map[EntityKind][]string{
 	EntityEpic:     {"id", "slug", "title", "status", "summary", "created", "created_by"},
 	EntityFeature:  {"id", "slug", "epic", "status", "summary", "created", "created_by"},
-	EntityTask:     {"id", "feature", "slug", "summary", "status"},
+	EntityTask:     {"id", "parent_feature", "slug", "summary", "status"},
 	EntityBug:      {"id", "slug", "title", "status", "severity", "priority", "type", "reported_by", "reported", "observed", "expected"},
 	EntityDecision: {"id", "slug", "summary", "rationale", "decided_by", "date", "status"},
 }
@@ -154,11 +154,7 @@ func ValidateRecord(entityType string, fields map[string]any) []ValidationError 
 
 	if entityID != "" {
 		allocator := id.NewAllocator()
-		featureID := ""
-		if kind == EntityTask {
-			featureID, _ = stringField(fields, "feature")
-		}
-		if err := allocator.Validate(model.EntityKind(kind), entityID, featureID); err != nil {
+		if err := allocator.Validate(model.EntityKind(kind), entityID); err != nil {
 			errs = append(errs, ValidationError{
 				EntityType: entityType,
 				EntityID:   entityID,

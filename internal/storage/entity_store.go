@@ -224,7 +224,7 @@ func fieldOrderForEntityType(entityType string) []string {
 	case string(model.EntityKindTask):
 		return []string{
 			"id",
-			"feature",
+			"parent_feature",
 			"slug",
 			"summary",
 			"status",

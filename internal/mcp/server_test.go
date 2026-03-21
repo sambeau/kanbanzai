@@ -137,8 +137,8 @@ func TestServer_CreateEpic(t *testing.T) {
 		t.Fatalf("expected non-empty ID in result, got: %v", parsed["ID"])
 	}
 
-	if !strings.HasPrefix(id, "E-") {
-		t.Errorf("expected ID to start with E-, got %q", id)
+	if !strings.HasPrefix(id, "EPIC-") {
+		t.Errorf("expected ID to start with EPIC-, got %q", id)
 	}
 }
 
@@ -249,7 +249,7 @@ func TestServer_UpdateStatus_InvalidTransition(t *testing.T) {
 	defer ts.Close()
 
 	createResult := callTool(t, ts, "create_epic", map[string]any{
-		"slug":       "invalid-transition-epic",
+		"slug":       "inv-trans-epic",
 		"title":      "Invalid Transition Epic",
 		"summary":    "Test invalid status transition",
 		"created_by": "tester",

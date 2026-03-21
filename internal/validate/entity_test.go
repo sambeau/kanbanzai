@@ -87,7 +87,7 @@ func TestValidateBugType(t *testing.T) {
 
 func validEpicFields() map[string]any {
 	return map[string]any{
-		"id":         "E-001",
+		"id":         "EPIC-TESTEPIC",
 		"slug":       "my-epic",
 		"title":      "My Epic",
 		"status":     "proposed",
@@ -111,11 +111,11 @@ func validFeatureFields() map[string]any {
 
 func validTaskFields() map[string]any {
 	return map[string]any{
-		"id":      "FEAT-001.1",
-		"feature": "FEAT-001",
-		"slug":    "my-task",
-		"summary": "A summary of the task",
-		"status":  "queued",
+		"id":             "TASK-01J3KZZZBB4KF",
+		"parent_feature": "FEAT-001",
+		"slug":           "my-task",
+		"summary":        "A summary of the task",
+		"status":         "queued",
 	}
 }
 
@@ -225,7 +225,7 @@ func TestValidateRecord_MissingRequiredFields(t *testing.T) {
 		{name: "epic missing created_by", entityType: "epic", baseFields: validEpicFields, missingField: "created_by"},
 		{name: "feature missing epic", entityType: "feature", baseFields: validFeatureFields, missingField: "epic"},
 		{name: "feature missing slug", entityType: "feature", baseFields: validFeatureFields, missingField: "slug"},
-		{name: "task missing feature", entityType: "task", baseFields: validTaskFields, missingField: "feature"},
+		{name: "task missing feature", entityType: "task", baseFields: validTaskFields, missingField: "parent_feature"},
 		{name: "task missing slug", entityType: "task", baseFields: validTaskFields, missingField: "slug"},
 		{name: "bug missing severity", entityType: "bug", baseFields: validBugFields, missingField: "severity"},
 		{name: "bug missing priority", entityType: "bug", baseFields: validBugFields, missingField: "priority"},

@@ -19,6 +19,7 @@ import (
 )
 
 type CreateEpicInput struct {
+	EpicSlug  string // human-chosen slug for the EPIC-{SLUG} ID; derived from Slug if empty
 	Slug      string
 	Title     string
 	Summary   string
@@ -33,9 +34,9 @@ type CreateFeatureInput struct {
 }
 
 type CreateTaskInput struct {
-	Feature string
-	Slug    string
-	Summary string
+	ParentFeature string
+	Slug          string
+	Summary       string
 }
 
 type CreateBugInput struct {
@@ -162,7 +163,15 @@ func (s *EntityService) CreateEpic(input CreateEpicInput) (CreateResult, error) 
 		return CreateResult{}, err
 	}
 
-	idValue, err := s.allocateTypedID(model.EntityKindEpic)
+	epicSlug := strings.TrimSpace(input.EpicSlug)
+	if epicSlug == "" {
+		epicSlug = strings.ToUpper(strings.ReplaceAll(normalizeSlug(input.Slug), " ", "-"))
+	}
+
+	exists := func(candidateID string) bool {
+		return s.entityExists(string(model.EntityKindEpic), candidateID)
+	}
+	idValue, err := s.allocator.Allocate(model.EntityKindEpic, epicSlug, exists)
 	if err != nil {
 		return CreateResult{}, err
 	}
@@ -204,7 +213,7 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		return CreateResult{}, fmt.Errorf("epic %s: %w", epicID, ErrReferenceNotFound)
 	}
 
-	idValue, err := s.allocateTypedID(model.EntityKindFeature)
+	idValue, err := s.allocateID(model.EntityKindFeature)
 	if err != nil {
 		return CreateResult{}, err
 	}
@@ -233,38 +242,29 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 
 func (s *EntityService) CreateTask(input CreateTaskInput) (CreateResult, error) {
 	if err := validateRequired(
-		field("feature", input.Feature),
+		field("parent_feature", input.ParentFeature),
 		field("slug", input.Slug),
 		field("summary", input.Summary),
 	); err != nil {
 		return CreateResult{}, err
 	}
 
-	featureID := strings.TrimSpace(input.Feature)
-	if err := s.allocator.Validate(model.EntityKindFeature, featureID, ""); err != nil {
-		return CreateResult{}, fmt.Errorf("feature: %w", err)
-	}
-
+	featureID := strings.TrimSpace(input.ParentFeature)
 	if !s.entityExists(string(model.EntityKindFeature), featureID) {
 		return CreateResult{}, fmt.Errorf("feature %s: %w", featureID, ErrReferenceNotFound)
 	}
 
-	existingTaskIDs, err := s.listEntityIDs(string(model.EntityKindTask))
-	if err != nil {
-		return CreateResult{}, err
-	}
-
-	idValue, err := s.allocator.Allocate(model.EntityKindTask, existingTaskIDs, featureID)
+	idValue, err := s.allocateID(model.EntityKindTask)
 	if err != nil {
 		return CreateResult{}, err
 	}
 
 	entity := model.Task{
-		ID:      idValue,
-		Feature: featureID,
-		Slug:    normalizeSlug(input.Slug),
-		Summary: strings.TrimSpace(input.Summary),
-		Status:  model.TaskStatus("queued"),
+		ID:            idValue,
+		ParentFeature: featureID,
+		Slug:          normalizeSlug(input.Slug),
+		Summary:       strings.TrimSpace(input.Summary),
+		Status:        model.TaskStatus("queued"),
 	}
 
 	if err := validate.ValidateInitialState(validate.EntityTask, string(entity.Status)); err != nil {
@@ -290,7 +290,7 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		return CreateResult{}, err
 	}
 
-	idValue, err := s.allocateTypedID(model.EntityKindBug)
+	idValue, err := s.allocateID(model.EntityKindBug)
 	if err != nil {
 		return CreateResult{}, err
 	}
@@ -346,7 +346,7 @@ func (s *EntityService) CreateDecision(input CreateDecisionInput) (CreateResult,
 		return CreateResult{}, err
 	}
 
-	idValue, err := s.allocateTypedID(model.EntityKindDecision)
+	idValue, err := s.allocateID(model.EntityKindDecision)
 	if err != nil {
 		return CreateResult{}, err
 	}
@@ -626,67 +626,22 @@ func (s *EntityService) write(entity model.Entity) (CreateResult, error) {
 	}, nil
 }
 
-func (s *EntityService) allocateTypedID(entityKind model.EntityKind) (string, error) {
-	existingIDs, err := s.listEntityIDs(string(entityKind))
-	if err != nil {
-		return "", err
+func (s *EntityService) allocateID(entityKind model.EntityKind) (string, error) {
+	exists := func(candidateID string) bool {
+		return s.entityExists(string(entityKind), candidateID)
 	}
-
-	idValue, err := s.allocator.Allocate(entityKind, existingIDs, "")
-	if err != nil {
-		return "", err
-	}
-
-	return idValue, nil
-}
-
-func (s *EntityService) listEntityIDs(entityType string) ([]string, error) {
-	dir := filepath.Join(s.root, entityDirectory(entityType))
-	entries, err := filepath.Glob(filepath.Join(dir, "*.yaml"))
-	if err != nil {
-		return nil, fmt.Errorf("list existing %s ids: %w", entityType, err)
-	}
-
-	ids := make([]string, 0, len(entries))
-	for _, entry := range entries {
-		base := filepath.Base(entry)
-		idPart := strings.TrimSuffix(base, filepath.Ext(base))
-
-		switch entityType {
-		case "epic", "feature", "bug", "decision":
-			firstDash := strings.Index(idPart, "-")
-			if firstDash > 0 {
-				secondDash := strings.Index(idPart[firstDash+1:], "-")
-				if secondDash > 0 {
-					ids = append(ids, idPart[:firstDash+1+secondDash])
-				}
-			}
-		case "task":
-			firstDash := strings.Index(idPart, "-")
-			if firstDash > 0 {
-				slugDash := strings.Index(idPart[firstDash+1:], "-")
-				if slugDash > 0 {
-					ids = append(ids, idPart[:firstDash+1+slugDash])
-				}
-			}
-		}
-	}
-
-	return ids, nil
+	return s.allocator.Allocate(entityKind, "", exists)
 }
 
 // entityExists checks whether an entity with the given type and ID exists on disk.
 func (s *EntityService) entityExists(entityType, entityID string) bool {
-	ids, err := s.listEntityIDs(entityType)
+	dir := filepath.Join(s.root, entityDirectory(entityType))
+	pattern := filepath.Join(dir, entityID+"-*.yaml")
+	matches, err := filepath.Glob(pattern)
 	if err != nil {
 		return false
 	}
-	for _, id := range ids {
-		if id == entityID {
-			return true
-		}
-	}
-	return false
+	return len(matches) > 0
 }
 
 func (s *EntityService) loadRecordFromPath(entityType, path string) (storage.EntityRecord, error) {
@@ -768,35 +723,76 @@ func validateKindForType(entityType string) (validate.EntityKind, error) {
 
 func parseRecordIdentity(entityType, idPart string) (string, string, error) {
 	switch entityType {
-	case string(model.EntityKindEpic), string(model.EntityKindFeature),
-		string(model.EntityKindBug), string(model.EntityKindDecision):
-		firstDash := strings.Index(idPart, "-")
-		if firstDash <= 0 {
-			return "", "", fmt.Errorf("invalid %s record filename %q", entityType, idPart)
+	case string(model.EntityKindEpic):
+		// New format: EPIC-{EPICSLUG}-{filename-slug}
+		// Epic slug is uppercase letters, digits, hyphens.
+		// Filename slug starts with a lowercase letter.
+		if strings.HasPrefix(idPart, "EPIC-") {
+			rest := idPart[5:] // after "EPIC-"
+			for i := 0; i < len(rest); i++ {
+				c := rest[i]
+				if c >= 'a' && c <= 'z' {
+					if i > 0 && rest[i-1] == '-' {
+						return idPart[:5+i-1], rest[i:], nil
+					}
+					break
+				}
+			}
 		}
+		// Fall back to legacy format
+		return parseLegacyRecordIdentity(entityType, idPart)
 
-		secondDash := strings.Index(idPart[firstDash+1:], "-")
-		if secondDash <= 0 {
-			return "", "", fmt.Errorf("invalid %s record filename %q", entityType, idPart)
+	case string(model.EntityKindFeature), string(model.EntityKindBug),
+		string(model.EntityKindDecision), string(model.EntityKindTask),
+		string(model.EntityKindDocument):
+		// New format: {PREFIX}-{13-char-TSID}-{filename-slug}
+		prefix := typePrefixForEntityType(entityType)
+		if prefix == "" {
+			return "", "", fmt.Errorf("unknown entity type %q", entityType)
 		}
-
-		idEnd := firstDash + 1 + secondDash
-		return idPart[:idEnd], idPart[idEnd+1:], nil
-	case string(model.EntityKindTask):
-		firstDash := strings.Index(idPart, "-")
-		if firstDash <= 0 {
-			return "", "", fmt.Errorf("invalid %s record filename %q", entityType, idPart)
+		prefixWithDash := prefix + "-"
+		if strings.HasPrefix(idPart, prefixWithDash) {
+			afterPrefix := idPart[len(prefixWithDash):]
+			if len(afterPrefix) >= 14 && afterPrefix[13] == '-' {
+				return idPart[:len(prefixWithDash)+13], afterPrefix[14:], nil
+			}
 		}
+		// Fall back to legacy format
+		return parseLegacyRecordIdentity(entityType, idPart)
 
-		slugDash := strings.Index(idPart[firstDash+1:], "-")
-		if slugDash <= 0 {
-			return "", "", fmt.Errorf("invalid %s record filename %q", entityType, idPart)
-		}
-
-		idEnd := firstDash + 1 + slugDash
-		return idPart[:idEnd], idPart[idEnd+1:], nil
 	default:
 		return "", "", fmt.Errorf("unknown entity type %q", entityType)
+	}
+}
+
+func parseLegacyRecordIdentity(entityType, idPart string) (string, string, error) {
+	// Legacy format: {PREFIX}-{NNN}-{slug}
+	firstDash := strings.Index(idPart, "-")
+	if firstDash <= 0 {
+		return "", "", fmt.Errorf("invalid %s record filename %q", entityType, idPart)
+	}
+	secondDash := strings.Index(idPart[firstDash+1:], "-")
+	if secondDash <= 0 {
+		return "", "", fmt.Errorf("invalid %s record filename %q", entityType, idPart)
+	}
+	idEnd := firstDash + 1 + secondDash
+	return idPart[:idEnd], idPart[idEnd+1:], nil
+}
+
+func typePrefixForEntityType(entityType string) string {
+	switch entityType {
+	case "feature":
+		return "FEAT"
+	case "bug":
+		return "BUG"
+	case "decision":
+		return "DEC"
+	case "task":
+		return "TASK"
+	case "document":
+		return "DOC"
+	default:
+		return ""
 	}
 }
 
@@ -894,11 +890,11 @@ func featureFields(e model.Feature) map[string]any {
 
 func taskFields(e model.Task) map[string]any {
 	fields := map[string]any{
-		"id":      e.ID,
-		"feature": e.Feature,
-		"slug":    e.Slug,
-		"summary": e.Summary,
-		"status":  string(e.Status),
+		"id":             e.ID,
+		"parent_feature": e.ParentFeature,
+		"slug":           e.Slug,
+		"summary":        e.Summary,
+		"status":         string(e.Status),
 	}
 	if e.Assignee != "" {
 		fields["assignee"] = e.Assignee
@@ -1008,7 +1004,7 @@ func extractParentRefFromState(entityType string, state map[string]any) string {
 	case "feature":
 		return stringFromState(state, "epic")
 	case "task":
-		return stringFromState(state, "feature")
+		return stringFromState(state, "parent_feature")
 	case "bug":
 		return stringFromState(state, "origin_feature")
 	default:

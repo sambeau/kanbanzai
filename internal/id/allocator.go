@@ -2,20 +2,17 @@ package id
 
 import (
 	"fmt"
-	"regexp"
-	"sort"
-	"strconv"
 	"strings"
 
 	"kanbanzai/internal/model"
 )
 
-var (
-	typedIDPattern    = regexp.MustCompile(`^(E|FEAT|BUG|DEC)-(\d{3,})$`)
-	featureTaskIDExpr = regexp.MustCompile(`^(FEAT-\d{3,})\.(\d+)$`)
-)
+const maxCollisionRetries = 3
 
-// Allocator allocates canonical Phase 1 IDs from an existing set.
+// ExistsFunc checks whether a given ID already exists in the store.
+type ExistsFunc func(id string) bool
+
+// Allocator generates canonical IDs for all entity types.
 type Allocator struct{}
 
 // NewAllocator creates a new Allocator.
@@ -23,218 +20,188 @@ func NewAllocator() *Allocator {
 	return &Allocator{}
 }
 
-// Allocate returns the next canonical ID for the given entity type.
+// Allocate returns a new canonical ID for the given entity type.
 //
-// For Epics, Features, Bugs, and Decisions, IDs are global typed sequential IDs:
-//   - E-001
-//   - FEAT-001
-//   - BUG-001
-//   - DEC-001
+// For Epics, epicSlug must be provided. It is validated per §8 rules and
+// formatted as EPIC-{SLUG}. The exists function is used to check uniqueness.
 //
-// For Tasks, IDs are feature-local sub-IDs:
-//   - FEAT-001.1
-//   - FEAT-001.2
-func (a *Allocator) Allocate(entityKind model.EntityKind, existingIDs []string, featureID string) (string, error) {
-	switch entityKind {
-	case model.EntityKindEpic, model.EntityKindFeature, model.EntityKindBug, model.EntityKindDecision:
-		return allocateTypedID(entityKind, existingIDs)
-	case model.EntityKindTask:
-		return allocateTaskID(existingIDs, featureID)
-	default:
-		return "", fmt.Errorf("allocate id for %q: unknown entity kind", entityKind)
+// For all other entity types (Feature, Bug, Decision, Task, Document),
+// a TSID13 is generated and formatted as {TYPE}-{TSID13}. The exists
+// function is used for local collision checking with retry.
+//
+// epicSlug is ignored for non-Epic types.
+// exists may be nil if collision checking is not available.
+func (a *Allocator) Allocate(entityKind model.EntityKind, epicSlug string, exists ExistsFunc) (string, error) {
+	if entityKind == model.EntityKindEpic {
+		return a.allocateEpic(epicSlug, exists)
 	}
-}
 
-// Validate returns an error if id is not valid for the given entity type.
-func (a *Allocator) Validate(entityKind model.EntityKind, id string, featureID string) error {
-	switch entityKind {
-	case model.EntityKindEpic, model.EntityKindFeature, model.EntityKindBug, model.EntityKindDecision:
-		return validateTypedID(entityKind, id)
-	case model.EntityKindTask:
-		return validateTaskID(id, featureID)
-	default:
-		return fmt.Errorf("validate id %q: unknown entity kind %q", id, entityKind)
-	}
-}
-
-// SortIDs returns a stable canonical ordering for a slice of IDs of the same family.
-func (a *Allocator) SortIDs(ids []string) []string {
-	out := append([]string(nil), ids...)
-	sort.Slice(out, func(i, j int) bool {
-		return compareID(out[i], out[j]) < 0
-	})
-	return out
-}
-
-func allocateTypedID(entityKind model.EntityKind, existingIDs []string) (string, error) {
-	prefix, err := prefixForEntityKind(entityKind)
+	prefix, err := TypePrefix(entityKind)
 	if err != nil {
 		return "", err
 	}
 
-	maxValue := 0
-	for _, existing := range existingIDs {
-		foundPrefix, value, parseErr := parseTypedID(existing)
-		if parseErr != nil {
-			continue
-		}
-		if foundPrefix != prefix {
-			continue
-		}
-		if value > maxValue {
-			maxValue = value
-		}
-	}
-
-	return fmt.Sprintf("%s-%03d", prefix, maxValue+1), nil
+	return a.allocateTSID(prefix, exists)
 }
 
-func allocateTaskID(existingIDs []string, featureID string) (string, error) {
-	if err := validateTypedID(model.EntityKindFeature, featureID); err != nil {
-		return "", fmt.Errorf("allocate task id: invalid feature id: %w", err)
+// Validate returns an error if id is not a valid canonical ID for the given entity type.
+func (a *Allocator) Validate(entityKind model.EntityKind, id string) error {
+	if entityKind == model.EntityKindEpic {
+		return validateEpicID(id)
 	}
 
-	maxValue := 0
-	for _, existing := range existingIDs {
-		parentFeatureID, value, ok := parseTaskID(existing)
-		if !ok || parentFeatureID != featureID {
-			continue
-		}
-		if value > maxValue {
-			maxValue = value
-		}
-	}
-
-	return fmt.Sprintf("%s.%d", featureID, maxValue+1), nil
-}
-
-func validateTypedID(entityKind model.EntityKind, id string) error {
-	expectedPrefix, err := prefixForEntityKind(entityKind)
+	prefix, err := TypePrefix(entityKind)
 	if err != nil {
-		return err
+		return fmt.Errorf("validate id %q: %w", id, err)
 	}
 
-	prefix, _, parseErr := parseTypedID(id)
-	if parseErr != nil {
-		return fmt.Errorf("invalid %s id %q: %w", entityKind, id, parseErr)
-	}
-	if prefix != expectedPrefix {
-		return fmt.Errorf("invalid %s id %q: expected prefix %s", entityKind, id, expectedPrefix)
-	}
-
-	return nil
+	return validateTSIDBasedID(prefix, id)
 }
 
-func validateTaskID(id string, featureID string) error {
-	if err := validateTypedID(model.EntityKindFeature, featureID); err != nil {
-		return fmt.Errorf("invalid task feature id: %w", err)
-	}
-
-	parentFeatureID, value, ok := parseTaskID(id)
-	if !ok {
-		return fmt.Errorf("invalid task id %q: must match %s.N", id, featureID)
-	}
-	if parentFeatureID != featureID {
-		return fmt.Errorf("invalid task id %q: expected feature prefix %s", id, featureID)
-	}
-	if value < 1 {
-		return fmt.Errorf("invalid task id %q: sequence must be >= 1", id)
-	}
-
-	return nil
-}
-
-func prefixForEntityKind(entityKind model.EntityKind) (string, error) {
+// TypePrefix returns the ID type prefix for an entity kind.
+func TypePrefix(entityKind model.EntityKind) (string, error) {
 	switch entityKind {
 	case model.EntityKindEpic:
-		return "E", nil
+		return "EPIC", nil
 	case model.EntityKindFeature:
 		return "FEAT", nil
 	case model.EntityKindBug:
 		return "BUG", nil
 	case model.EntityKindDecision:
 		return "DEC", nil
+	case model.EntityKindTask:
+		return "TASK", nil
+	case model.EntityKindDocument:
+		return "DOC", nil
 	default:
-		return "", fmt.Errorf("unknown typed entity kind %q", entityKind)
+		return "", fmt.Errorf("unknown entity kind %q", entityKind)
 	}
 }
 
-func parseTypedID(id string) (string, int, error) {
-	matches := typedIDPattern.FindStringSubmatch(strings.TrimSpace(id))
-	if matches == nil {
-		return "", 0, fmt.Errorf("must match PREFIX-NNN")
+// EntityKindFromPrefix returns the entity kind for a given type prefix.
+func EntityKindFromPrefix(prefix string) (model.EntityKind, error) {
+	switch strings.ToUpper(prefix) {
+	case "EPIC":
+		return model.EntityKindEpic, nil
+	case "FEAT":
+		return model.EntityKindFeature, nil
+	case "BUG":
+		return model.EntityKindBug, nil
+	case "DEC":
+		return model.EntityKindDecision, nil
+	case "TASK":
+		return model.EntityKindTask, nil
+	case "DOC":
+		return model.EntityKindDocument, nil
+	default:
+		return "", fmt.Errorf("unknown type prefix %q", prefix)
 	}
+}
 
-	value, err := strconv.Atoi(matches[2])
+// ParseCanonicalID splits a canonical ID into its type prefix and the identifier portion.
+// For "FEAT-01J3K7MXP3RT5" returns ("FEAT", "01J3K7MXP3RT5", nil).
+// For "EPIC-MYPROJECT" returns ("EPIC", "MYPROJECT", nil).
+func ParseCanonicalID(id string) (prefix, ident string, err error) {
+	idx := strings.Index(id, "-")
+	if idx <= 0 || idx >= len(id)-1 {
+		return "", "", fmt.Errorf("invalid ID format %q: missing type prefix", id)
+	}
+	return id[:idx], id[idx+1:], nil
+}
+
+// IsLegacyID returns true if the ID uses the old sequential format (e.g., FEAT-001, E-001, FEAT-001.1).
+func IsLegacyID(id string) bool {
+	// Old format: E-NNN, FEAT-NNN, BUG-NNN, DEC-NNN, FEAT-NNN.N
+	if strings.HasPrefix(id, "E-") {
+		rest := id[2:]
+		return isAllDigits(rest)
+	}
+	for _, prefix := range []string{"FEAT-", "BUG-", "DEC-"} {
+		if strings.HasPrefix(id, prefix) {
+			rest := id[len(prefix):]
+			// Check for FEAT-NNN.N (task) or FEAT-NNN
+			if dotIdx := strings.Index(rest, "."); dotIdx > 0 {
+				return isAllDigits(rest[:dotIdx]) && isAllDigits(rest[dotIdx+1:])
+			}
+			return isAllDigits(rest)
+		}
+	}
+	return false
+}
+
+func (a *Allocator) allocateEpic(slug string, exists ExistsFunc) (string, error) {
+	normalized, err := ValidateEpicSlug(slug)
 	if err != nil {
-		return "", 0, fmt.Errorf("parse numeric component: %w", err)
-	}
-	if value < 1 {
-		return "", 0, fmt.Errorf("numeric component must be >= 1")
+		return "", err
 	}
 
-	return matches[1], value, nil
+	id := "EPIC-" + normalized
+	if exists != nil && exists(id) {
+		return "", fmt.Errorf("epic slug %q is already in use", normalized)
+	}
+
+	return id, nil
 }
 
-func parseTaskID(id string) (string, int, bool) {
-	matches := featureTaskIDExpr.FindStringSubmatch(strings.TrimSpace(id))
-	if matches == nil {
-		return "", 0, false
-	}
-
-	value, err := strconv.Atoi(matches[2])
-	if err != nil || value < 1 {
-		return "", 0, false
-	}
-
-	return matches[1], value, true
-}
-
-func compareID(left string, right string) int {
-	if left == right {
-		return 0
-	}
-
-	leftFeature, leftTaskValue, leftIsTask := parseTaskID(left)
-	rightFeature, rightTaskValue, rightIsTask := parseTaskID(right)
-
-	switch {
-	case leftIsTask && rightIsTask:
-		if leftFeature != rightFeature {
-			return strings.Compare(leftFeature, rightFeature)
+func (a *Allocator) allocateTSID(prefix string, exists ExistsFunc) (string, error) {
+	for attempt := 0; attempt <= maxCollisionRetries; attempt++ {
+		tsid, err := GenerateTSID13()
+		if err != nil {
+			return "", fmt.Errorf("generate TSID: %w", err)
 		}
-		return compareInts(leftTaskValue, rightTaskValue)
-	case leftIsTask:
-		return 1
-	case rightIsTask:
-		return -1
-	}
 
-	leftPrefix, leftValue, leftErr := parseTypedID(left)
-	rightPrefix, rightValue, rightErr := parseTypedID(right)
+		id := prefix + "-" + tsid
 
-	switch {
-	case leftErr == nil && rightErr == nil:
-		if leftPrefix != rightPrefix {
-			return strings.Compare(leftPrefix, rightPrefix)
+		if exists == nil || !exists(id) {
+			return id, nil
 		}
-		return compareInts(leftValue, rightValue)
-	case leftErr == nil:
-		return -1
-	case rightErr == nil:
-		return 1
-	default:
-		return strings.Compare(left, right)
 	}
+
+	return "", fmt.Errorf("ID collision persisted after %d retries", maxCollisionRetries)
 }
 
-func compareInts(left int, right int) int {
-	switch {
-	case left < right:
-		return -1
-	case left > right:
-		return 1
-	default:
-		return 0
+func validateEpicID(id string) error {
+	if !strings.HasPrefix(id, "EPIC-") {
+		return fmt.Errorf("invalid epic ID %q: must start with EPIC-", id)
 	}
+
+	slug := id[5:]
+	_, err := ValidateEpicSlug(slug)
+	if err != nil {
+		return fmt.Errorf("invalid epic ID %q: %w", id, err)
+	}
+	return nil
+}
+
+func validateTSIDBasedID(expectedPrefix, id string) error {
+	prefix, ident, err := ParseCanonicalID(id)
+	if err != nil {
+		return fmt.Errorf("invalid %s ID %q: %w", expectedPrefix, id, err)
+	}
+
+	if strings.ToUpper(prefix) != expectedPrefix {
+		return fmt.Errorf("invalid %s ID %q: wrong prefix %q", expectedPrefix, id, prefix)
+	}
+
+	if err := ValidateTSID13(ident); err != nil {
+		// Accept legacy IDs for robustness
+		if IsLegacyID(id) {
+			return nil
+		}
+		return fmt.Errorf("invalid %s ID %q: %w", expectedPrefix, id, err)
+	}
+
+	return nil
+}
+
+func isAllDigits(s string) bool {
+	if s == "" {
+		return false
+	}
+	for _, c := range s {
+		if c < '0' || c > '9' {
+			return false
+		}
+	}
+	return true
 }

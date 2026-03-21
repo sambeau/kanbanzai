@@ -1,11 +1,11 @@
-id: FEAT-001.1
-feature: FEAT-001
+id: TASK-01J3KZZZBB4KF
+parent_feature: FEAT-01J3K7MXP3RT5
 slug: write-entity-files
 summary: Write canonical entity files to disk
 status: queued
 assignee: sam
 depends_on:
-  - FEAT-001.0
+  - TASK-01J3KYYY9A3JE
 files_planned:
   - internal/storage/entity_store.go
   - internal/storage/entity_store_test.go
