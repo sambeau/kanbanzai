@@ -314,7 +314,7 @@ Optional but recommended in Phase 1:
 ## 9.3 Task minimum fields
 
 - `id`
-- `feature`
+- `parent_feature`
 - `slug`
 - `summary`
 - `status`

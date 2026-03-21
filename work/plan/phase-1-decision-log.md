@@ -655,10 +655,12 @@ Embedding developer, designer, or manager identity in IDs was rejected because o
 
 ### Follow-up Needed
 
-- define the exact allocation mechanism for sequential Epic/Feature/Bug/Decision IDs
-- define how task sub-IDs are allocated safely within a feature
-- test the chosen strategy against normal concurrent-use scenarios
-- ensure filenames and commit references consistently use `ID + slug`
+~~Superseded by P1-DEC-021, which replaced sequential IDs with TSID13 for all entity types.~~
+
+- ~~define the exact allocation mechanism for sequential Epic/Feature/Bug/Decision IDs~~
+- ~~define how task sub-IDs are allocated safely within a feature~~
+- ~~test the chosen strategy against normal concurrent-use scenarios~~
+- ~~ensure filenames and commit references consistently use `ID + slug`~~
 
 ---
 
@@ -798,13 +800,13 @@ Caller supplies: `slug`, `epic`, `summary`, `created_by` (4 fields).
 
 | Field | Category | Default |
 |---|---|---|
-| `id` | system-generated | allocated as feature-local sub-ID |
+| `id` | system-generated | allocated via TSID13 |
 | `status` | system-generated | `queued` |
 | `slug` | caller-must-supply | — |
-| `feature` | caller-must-supply | — |
+| `parent_feature` | caller-must-supply | — |
 | `summary` | caller-must-supply | — |
 
-Caller supplies: `slug`, `feature`, `summary` (3 fields).
+Caller supplies: `slug`, `parent_feature`, `summary` (3 fields).
 
 #### Bug
 
@@ -1836,10 +1838,10 @@ Epics use human-chosen slugs because they are few (5–30 per project), always h
 
 ### Follow-up Needed
 
-- implement the Crockford base32 encoder for TSID13 generation
-- implement prefix resolution in the service and MCP layers
-- update the display layer (CLI, MCP responses) to insert break hyphens and compute shortest unique prefixes
-- update P1-DEC-009 (minimum required fields) to add `parent_feature` as a required field for tasks
+- ~~implement the Crockford base32 encoder for TSID13 generation~~ — done
+- ~~implement prefix resolution in the service and MCP layers~~ — done (basic support)
+- ~~update the display layer (CLI, MCP responses) to insert break hyphens and compute shortest unique prefixes~~ — done
+- ~~update P1-DEC-009 (minimum required fields) to add `parent_feature` as a required field for tasks~~ — done
 - update P1-DEC-006 (file layout) to reflect new filename format with 13-char TSID
 - design the concurrency model for the remaining parallel-work concerns (lost updates, state machine violations) that IDs alone do not solve
 
