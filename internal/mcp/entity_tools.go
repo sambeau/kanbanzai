@@ -7,6 +7,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"kanbanzai/internal/id"
 	"kanbanzai/internal/service"
 )
 
@@ -62,7 +63,7 @@ func createEpicTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("create epic failed", err), nil
 		}
-		return jsonResult(result)
+		return jsonResult(createResultWithDisplay(result))
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
@@ -101,7 +102,7 @@ func createFeatureTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("create feature failed", err), nil
 		}
-		return jsonResult(result)
+		return jsonResult(createResultWithDisplay(result))
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
@@ -134,7 +135,7 @@ func createTaskTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("create task failed", err), nil
 		}
-		return jsonResult(result)
+		return jsonResult(createResultWithDisplay(result))
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
@@ -209,7 +210,7 @@ func createBugTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("create bug failed", err), nil
 		}
-		return jsonResult(result)
+		return jsonResult(createResultWithDisplay(result))
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
@@ -248,7 +249,7 @@ func recordDecisionTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("record decision failed", err), nil
 		}
-		return jsonResult(result)
+		return jsonResult(createResultWithDisplay(result))
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
@@ -278,7 +279,7 @@ func getEntityTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("get entity failed", err), nil
 		}
-		return jsonResult(result)
+		return jsonResult(getResultWithDisplay(result))
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
@@ -301,7 +302,7 @@ func listEntitiesTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("list entities failed", err), nil
 		}
-		return jsonResult(results)
+		return jsonResult(listResultsWithDisplay(results))
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
@@ -341,7 +342,7 @@ func updateStatusTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("update status failed", err), nil
 		}
-		return jsonResult(result)
+		return jsonResult(getResultWithDisplay(result))
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
@@ -386,7 +387,7 @@ func updateEntityTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("update entity failed", err), nil
 		}
-		return jsonResult(result)
+		return jsonResult(getResultWithDisplay(result))
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
@@ -448,6 +449,43 @@ func rebuildCacheTool(svc *service.EntityService) server.ServerTool {
 		})
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
+}
+
+func createResultWithDisplay(r service.CreateResult) map[string]any {
+	return map[string]any{
+		"Type":      r.Type,
+		"ID":        r.ID,
+		"DisplayID": id.FormatFullDisplay(r.ID),
+		"Slug":      r.Slug,
+		"Path":      r.Path,
+		"State":     r.State,
+	}
+}
+
+func getResultWithDisplay(r service.GetResult) map[string]any {
+	return map[string]any{
+		"Type":      r.Type,
+		"ID":        r.ID,
+		"DisplayID": id.FormatFullDisplay(r.ID),
+		"Slug":      r.Slug,
+		"Path":      r.Path,
+		"State":     r.State,
+	}
+}
+
+func listResultsWithDisplay(results []service.ListResult) []map[string]any {
+	out := make([]map[string]any, len(results))
+	for i, r := range results {
+		out[i] = map[string]any{
+			"Type":      r.Type,
+			"ID":        r.ID,
+			"DisplayID": id.FormatFullDisplay(r.ID),
+			"Slug":      r.Slug,
+			"Path":      r.Path,
+			"State":     r.State,
+		}
+	}
+	return out
 }
 
 func jsonResult(v any) (*mcp.CallToolResult, error) {

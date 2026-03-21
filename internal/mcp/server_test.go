@@ -140,6 +140,15 @@ func TestServer_CreateEpic(t *testing.T) {
 	if !strings.HasPrefix(id, "EPIC-") {
 		t.Errorf("expected ID to start with EPIC-, got %q", id)
 	}
+
+	displayID, ok := parsed["DisplayID"].(string)
+	if !ok || displayID == "" {
+		t.Fatalf("expected non-empty DisplayID in result, got: %v", parsed["DisplayID"])
+	}
+	// Epic IDs pass through FormatFullDisplay unchanged
+	if displayID != id {
+		t.Errorf("DisplayID = %q, want %q (epic IDs should be unchanged)", displayID, id)
+	}
 }
 
 func TestServer_CreateAndGetEpic(t *testing.T) {
@@ -165,6 +174,10 @@ func TestServer_CreateAndGetEpic(t *testing.T) {
 	epicID := created["ID"].(string)
 	epicSlug := created["Slug"].(string)
 
+	if _, ok := created["DisplayID"].(string); !ok {
+		t.Errorf("create result missing DisplayID field")
+	}
+
 	getResult := callTool(t, ts, "get_entity", map[string]any{
 		"entity_type": "epic",
 		"id":          epicID,
@@ -185,6 +198,9 @@ func TestServer_CreateAndGetEpic(t *testing.T) {
 	}
 	if got["Slug"] != epicSlug {
 		t.Errorf("get Slug = %v, want %v", got["Slug"], epicSlug)
+	}
+	if _, ok := got["DisplayID"].(string); !ok {
+		t.Errorf("get result missing DisplayID field")
 	}
 
 	state, ok := got["State"].(map[string]any)
@@ -233,6 +249,10 @@ func TestServer_UpdateStatus(t *testing.T) {
 	var updated map[string]any
 	if err := json.Unmarshal([]byte(resultText(t, updateResult)), &updated); err != nil {
 		t.Fatalf("failed to parse update result: %v", err)
+	}
+
+	if _, ok := updated["DisplayID"].(string); !ok {
+		t.Errorf("update_status result missing DisplayID field")
 	}
 
 	state, ok := updated["State"].(map[string]any)
@@ -492,6 +512,9 @@ func TestServer_GetEntityWithoutSlug(t *testing.T) {
 
 	if gotPrefix["ID"] != epicID {
 		t.Errorf("prefix get ID = %v, want %v", gotPrefix["ID"], epicID)
+	}
+	if _, ok := gotPrefix["DisplayID"].(string); !ok {
+		t.Errorf("prefix get result missing DisplayID field")
 	}
 }
 
