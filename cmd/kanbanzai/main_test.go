@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"reflect"
 	"strings"
 	"testing"
@@ -111,7 +112,7 @@ func TestRunCreate_CreatesEntities(t *testing.T) {
 			args: []string{
 				"create", "feature",
 				"--slug", "storage layer",
-				"--epic", "E-001",
+				"--epic", "EPIC-TESTEPIC",
 				"--summary", "Implement canonical storage",
 				"--created_by", "sam",
 			},
@@ -124,7 +125,7 @@ func TestRunCreate_CreatesEntities(t *testing.T) {
 			args: []string{
 				"create", "task",
 				"--slug", "write entity files",
-				"--feature", "FEAT-001",
+				"--parent_feature", "FEAT-01J3K7MXP3RT5",
 				"--summary", "Write canonical entity files to disk",
 			},
 			wantEntity: "task",
@@ -200,16 +201,16 @@ func TestRunCreate_CreatesEntities(t *testing.T) {
 
 			switch tt.wantEntity {
 			case "epic":
-				if !strings.HasPrefix(idValue, "E-") {
-					t.Fatalf("epic id %q does not have E- prefix:\n%s", idValue, stdout)
+				if !strings.HasPrefix(idValue, "EPIC-") {
+					t.Fatalf("epic id %q does not have EPIC- prefix:\n%s", idValue, stdout)
 				}
 			case "feature":
 				if !strings.HasPrefix(idValue, "FEAT-") {
 					t.Fatalf("feature id %q does not have FEAT- prefix:\n%s", idValue, stdout)
 				}
 			case "task":
-				if !strings.HasPrefix(idValue, "FEAT-") || !strings.Contains(idValue, ".") {
-					t.Fatalf("task id %q is not feature-local:\n%s", idValue, stdout)
+				if !strings.HasPrefix(idValue, "TASK-") {
+					t.Fatalf("task id %q does not have TASK- prefix:\n%s", idValue, stdout)
 				}
 			case "bug":
 				if !strings.HasPrefix(idValue, "BUG-") {
@@ -258,12 +259,12 @@ func TestRunGet_UnknownTarget_ReturnsUsageError(t *testing.T) {
 func TestRunGet_MissingFlags_ReturnsValidationError(t *testing.T) {
 	deps, _ := testDependenciesWithService(newFakeEntityService())
 
-	err := run([]string{"get", "feature", "--id", "FEAT-001"}, deps)
+	err := run([]string{"get", "feature"}, deps)
 	if err == nil {
-		t.Fatal("run(get feature missing slug) error = nil, want non-nil")
+		t.Fatal("run(get feature missing id) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), "entity slug is required") {
+	if !strings.Contains(err.Error(), "entity id is required") {
 		t.Fatalf("unexpected error: %v", err)
 	}
 }
@@ -272,7 +273,7 @@ func TestRunGet_PrintsEntityDetails(t *testing.T) {
 	fake := newFakeEntityService()
 	deps, output := testDependenciesWithService(fake)
 
-	if err := run([]string{"get", "feature", "--id", "FEAT-001", "--slug", "storage-layer"}, deps); err != nil {
+	if err := run([]string{"get", "feature", "--id", "FEAT-01J3K7MXP3RT5", "--slug", "storage-layer"}, deps); err != nil {
 		t.Fatalf("run(get feature) error = %v", err)
 	}
 
@@ -280,7 +281,7 @@ func TestRunGet_PrintsEntityDetails(t *testing.T) {
 	if !strings.Contains(stdout, "type: feature") {
 		t.Fatalf("stdout missing type:\n%s", stdout)
 	}
-	if !strings.Contains(stdout, "id: FEAT-001") {
+	if !strings.Contains(stdout, "id: FEAT-01J3K-7MXP3RT5") {
 		t.Fatalf("stdout missing id:\n%s", stdout)
 	}
 	if !strings.Contains(stdout, "slug: storage-layer") {
@@ -288,6 +289,27 @@ func TestRunGet_PrintsEntityDetails(t *testing.T) {
 	}
 	if !strings.Contains(stdout, "status: draft") {
 		t.Fatalf("stdout missing status:\n%s", stdout)
+	}
+}
+
+func TestRunGet_PrefixResolution(t *testing.T) {
+	fake := newFakeEntityService()
+	deps, output := testDependenciesWithService(fake)
+
+	// Get feature with --id only (no --slug) — prefix resolution in fake service
+	if err := run([]string{"get", "feature", "--id", "FEAT-01J3K7"}, deps); err != nil {
+		t.Fatalf("run(get feature with prefix) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "type: feature") {
+		t.Fatalf("stdout missing type:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "id: FEAT-01J3K-7MXP3RT5") {
+		t.Fatalf("stdout missing id:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "slug: storage-layer") {
+		t.Fatalf("stdout missing slug:\n%s", stdout)
 	}
 }
 
@@ -357,7 +379,7 @@ func TestRunDoc_SubmitApproveRetrieveValidateAndList(t *testing.T) {
 	if !strings.Contains(stdout, "submitted document") {
 		t.Fatalf("stdout missing submit header:\n%s", stdout)
 	}
-	if !strings.Contains(stdout, "id: DOC-001") {
+	if !strings.Contains(stdout, "id: DOC-01J3KDOC0TEST") {
 		t.Fatalf("stdout missing submitted doc id:\n%s", stdout)
 	}
 	if !strings.Contains(stdout, "type: proposal") {
@@ -369,7 +391,7 @@ func TestRunDoc_SubmitApproveRetrieveValidateAndList(t *testing.T) {
 	approveArgs := []string{
 		"doc", "approve",
 		"--type", "proposal",
-		"--id", "DOC-001",
+		"--id", "DOC-01J3KDOC0TEST",
 		"--approved_by", "reviewer",
 	}
 	if err := run(approveArgs, deps); err != nil {
@@ -389,7 +411,7 @@ func TestRunDoc_SubmitApproveRetrieveValidateAndList(t *testing.T) {
 	retrieveArgs := []string{
 		"doc", "retrieve",
 		"--type", "proposal",
-		"--id", "DOC-001",
+		"--id", "DOC-01J3KDOC0TEST",
 	}
 	if err := run(retrieveArgs, deps); err != nil {
 		t.Fatalf("run(doc retrieve) error = %v", err)
@@ -405,7 +427,7 @@ func TestRunDoc_SubmitApproveRetrieveValidateAndList(t *testing.T) {
 	validateArgs := []string{
 		"doc", "validate",
 		"--type", "proposal",
-		"--id", "DOC-001",
+		"--id", "DOC-01J3KDOC0TEST",
 	}
 	if err := run(validateArgs, deps); err != nil {
 		t.Fatalf("run(doc validate) error = %v", err)
@@ -430,7 +452,7 @@ func TestRunDoc_SubmitApproveRetrieveValidateAndList(t *testing.T) {
 	if !strings.Contains(stdout, "listed documents") {
 		t.Fatalf("stdout missing document list header:\n%s", stdout)
 	}
-	if !strings.Contains(stdout, "DOC-001") {
+	if !strings.Contains(stdout, "DOC-01J3KDOC0TEST") {
 		t.Fatalf("stdout missing listed doc id:\n%s", stdout)
 	}
 }
@@ -482,9 +504,9 @@ func TestRunValidate_PrintsCandidateValidationResult(t *testing.T) {
 	err := run([]string{
 		"validate",
 		"--type", "feature",
-		"--id", "FEAT-001",
+		"--id", "FEAT-01J3K7MXP3RT5",
 		"--slug", "storage-layer",
-		"--epic", "E-001",
+		"--epic", "EPIC-TESTEPIC",
 		"--status", "draft",
 		"--summary", "Implement storage",
 		"--created", "2025-01-15",
@@ -532,7 +554,7 @@ func TestRunUpdateStatus_MissingRequiredFlags_ReturnsValidationError(t *testing.
 	err := run([]string{
 		"update", "status",
 		"--type", "feature",
-		"--id", "FEAT-001",
+		"--id", "FEAT-01J3K7MXP3RT5",
 		"--slug", "storage-layer",
 	}, deps)
 	if err == nil {
@@ -551,7 +573,7 @@ func TestRunUpdateStatus_UpdatesEntityStatus(t *testing.T) {
 	err := run([]string{
 		"update", "status",
 		"--type", "feature",
-		"--id", "FEAT-007",
+		"--id", "FEAT-01J3K9ABC5DE7",
 		"--slug", "status-updates",
 		"--status", "in-review",
 	}, deps)
@@ -566,7 +588,7 @@ func TestRunUpdateStatus_UpdatesEntityStatus(t *testing.T) {
 	if !strings.Contains(updateOutput, "status: in-review") {
 		t.Fatalf("stdout missing updated status:\n%s", updateOutput)
 	}
-	if !strings.Contains(updateOutput, "id: FEAT-007") {
+	if !strings.Contains(updateOutput, "id: FEAT-01J3K-9ABC5DE7") {
 		t.Fatalf("stdout missing updated id:\n%s", updateOutput)
 	}
 }
@@ -578,7 +600,7 @@ func TestRunUpdateStatus_RejectsIllegalTransition(t *testing.T) {
 	err := run([]string{
 		"update", "status",
 		"--type", "epic",
-		"--id", "E-001",
+		"--id", "EPIC-TESTEPIC",
 		"--slug", "phase-1-kernel",
 		"--status", "done",
 	}, deps)
@@ -691,18 +713,18 @@ func newFakeEntityService() *fakeEntityService {
 			"feature": {
 				{
 					Type: "feature",
-					ID:   "FEAT-001",
+					ID:   "FEAT-01J3K7MXP3RT5",
 					Slug: "storage-layer",
-					Path: "test/state/features/FEAT-001-storage-layer.yaml",
+					Path: "test/state/features/FEAT-01J3K7MXP3RT5-storage-layer.yaml",
 					State: map[string]any{
 						"status": "draft",
 					},
 				},
 				{
 					Type: "feature",
-					ID:   "FEAT-002",
+					ID:   "FEAT-01J3K8NPQ4RS6",
 					Slug: "validation-engine",
-					Path: "test/state/features/FEAT-002-validation-engine.yaml",
+					Path: "test/state/features/FEAT-01J3K8NPQ4RS6-validation-engine.yaml",
 					State: map[string]any{
 						"status": "draft",
 					},
@@ -710,29 +732,29 @@ func newFakeEntityService() *fakeEntityService {
 			},
 		},
 		getResults: map[string]service.GetResult{
-			"feature:FEAT-001:storage-layer": {
+			"feature:FEAT-01J3K7MXP3RT5:storage-layer": {
 				Type: "feature",
-				ID:   "FEAT-001",
+				ID:   "FEAT-01J3K7MXP3RT5",
 				Slug: "storage-layer",
-				Path: "test/state/features/FEAT-001-storage-layer.yaml",
+				Path: "test/state/features/FEAT-01J3K7MXP3RT5-storage-layer.yaml",
 				State: map[string]any{
 					"status": "draft",
 				},
 			},
-			"epic:E-001:phase-1-kernel": {
+			"epic:EPIC-TESTEPIC:phase-1-kernel": {
 				Type: "epic",
-				ID:   "E-001",
+				ID:   "EPIC-TESTEPIC",
 				Slug: "phase-1-kernel",
-				Path: "test/state/epics/E-001-phase-1-kernel.yaml",
+				Path: "test/state/epics/EPIC-TESTEPIC-phase-1-kernel.yaml",
 				State: map[string]any{
 					"status": "proposed",
 				},
 			},
-			"feature:FEAT-007:status-updates": {
+			"feature:FEAT-01J3K9ABC5DE7:status-updates": {
 				Type: "feature",
-				ID:   "FEAT-007",
+				ID:   "FEAT-01J3K9ABC5DE7",
 				Slug: "status-updates",
-				Path: "test/state/features/FEAT-007-status-updates.yaml",
+				Path: "test/state/features/FEAT-01J3K9ABC5DE7-status-updates.yaml",
 				State: map[string]any{
 					"status": "draft",
 				},
@@ -744,9 +766,9 @@ func newFakeEntityService() *fakeEntityService {
 func (f *fakeEntityService) CreateEpic(input service.CreateEpicInput) (service.CreateResult, error) {
 	return service.CreateResult{
 		Type: "epic",
-		ID:   "E-001",
+		ID:   "EPIC-TESTEPIC",
 		Slug: "phase-1-kernel",
-		Path: "test/state/epics/E-001-phase-1-kernel.yaml",
+		Path: "test/state/epics/EPIC-TESTEPIC-phase-1-kernel.yaml",
 		State: map[string]any{
 			"status": "proposed",
 		},
@@ -757,20 +779,20 @@ func (f *fakeEntityService) CreateFeature(input service.CreateFeatureInput) (ser
 	slug := normalizeTestSlug(input.Slug)
 	result := service.CreateResult{
 		Type: "feature",
-		ID:   "FEAT-001",
+		ID:   "FEAT-01J3K7MXP3RT5",
 		Slug: slug,
-		Path: "test/state/features/FEAT-001-" + slug + ".yaml",
+		Path: "test/state/features/FEAT-01J3K7MXP3RT5-" + slug + ".yaml",
 		State: map[string]any{
 			"status": "draft",
 		},
 	}
 	if slug == "validation-engine" {
-		result.ID = "FEAT-002"
-		result.Path = "test/state/features/FEAT-002-validation-engine.yaml"
+		result.ID = "FEAT-01J3K8NPQ4RS6"
+		result.Path = "test/state/features/FEAT-01J3K8NPQ4RS6-validation-engine.yaml"
 	}
 	if slug == "status-updates" {
-		result.ID = "FEAT-007"
-		result.Path = "test/state/features/FEAT-007-status-updates.yaml"
+		result.ID = "FEAT-01J3K9ABC5DE7"
+		result.Path = "test/state/features/FEAT-01J3K9ABC5DE7-status-updates.yaml"
 	}
 	return result, nil
 }
@@ -779,9 +801,9 @@ func (f *fakeEntityService) CreateTask(input service.CreateTaskInput) (service.C
 	slug := normalizeTestSlug(input.Slug)
 	return service.CreateResult{
 		Type: "task",
-		ID:   "FEAT-001.1",
+		ID:   "TASK-01J3KZZZBB4KF",
 		Slug: slug,
-		Path: "test/state/tasks/FEAT-001.1-" + slug + ".yaml",
+		Path: "test/state/tasks/TASK-01J3KZZZBB4KF-" + slug + ".yaml",
 		State: map[string]any{
 			"status": "queued",
 		},
@@ -792,9 +814,9 @@ func (f *fakeEntityService) CreateBug(input service.CreateBugInput) (service.Cre
 	slug := normalizeTestSlug(input.Slug)
 	return service.CreateResult{
 		Type: "bug",
-		ID:   "BUG-001",
+		ID:   "BUG-01J4AR7WHN4F2",
 		Slug: slug,
-		Path: "test/state/bugs/BUG-001-" + slug + ".yaml",
+		Path: "test/state/bugs/BUG-01J4AR7WHN4F2-" + slug + ".yaml",
 		State: map[string]any{
 			"status": "reported",
 		},
@@ -805,9 +827,9 @@ func (f *fakeEntityService) CreateDecision(input service.CreateDecisionInput) (s
 	slug := normalizeTestSlug(input.Slug)
 	return service.CreateResult{
 		Type: "decision",
-		ID:   "DEC-001",
+		ID:   "DEC-01J3KABCDE7MX",
 		Slug: slug,
-		Path: "test/state/decisions/DEC-001-" + slug + ".yaml",
+		Path: "test/state/decisions/DEC-01J3KABCDE7MX-" + slug + ".yaml",
 		State: map[string]any{
 			"status": "proposed",
 		},
@@ -821,16 +843,31 @@ func (f *fakeEntityService) Get(entityType, entityID, slug string) (service.GetR
 	if strings.TrimSpace(entityID) == "" {
 		return service.GetResult{}, &testError{"entity id is required"}
 	}
-	if strings.TrimSpace(slug) == "" {
-		return service.GetResult{}, &testError{"entity slug is required"}
+
+	if strings.TrimSpace(slug) != "" {
+		key := entityType + ":" + entityID + ":" + slug
+		if result, ok := f.getResults[key]; ok {
+			return result, nil
+		}
+		return service.GetResult{}, &testError{"entity not found"}
 	}
 
-	key := entityType + ":" + entityID + ":" + slug
-	if result, ok := f.getResults[key]; ok {
-		return result, nil
+	// Prefix resolution: find by type and ID prefix
+	var matches []service.GetResult
+	for key, result := range f.getResults {
+		parts := strings.SplitN(key, ":", 3)
+		if parts[0] == entityType && strings.HasPrefix(parts[1], entityID) {
+			matches = append(matches, result)
+		}
 	}
-
-	return service.GetResult{}, &testError{"entity not found"}
+	switch len(matches) {
+	case 0:
+		return service.GetResult{}, &testError{fmt.Sprintf("no %s entity found matching prefix %q", entityType, entityID)}
+	case 1:
+		return matches[0], nil
+	default:
+		return service.GetResult{}, &testError{fmt.Sprintf("ambiguous prefix %q for %s", entityID, entityType)}
+	}
 }
 
 func (f *fakeEntityService) List(entityType string) ([]service.ListResult, error) {
@@ -847,14 +884,11 @@ func (f *fakeEntityService) UpdateStatus(input service.UpdateStatusInput) (servi
 	if strings.TrimSpace(input.ID) == "" {
 		return service.GetResult{}, &testError{"id is required"}
 	}
-	if strings.TrimSpace(input.Slug) == "" {
-		return service.GetResult{}, &testError{"slug is required"}
-	}
 	if strings.TrimSpace(input.Status) == "" {
 		return service.GetResult{}, &testError{"status is required"}
 	}
 
-	if input.Type == "epic" && input.ID == "E-001" && input.Slug == "phase-1-kernel" && input.Status == "done" {
+	if input.Type == "epic" && input.ID == "EPIC-TESTEPIC" && input.Slug == "phase-1-kernel" && input.Status == "done" {
 		return service.GetResult{}, &testError{`invalid epic transition "proposed" -> "done"`}
 	}
 
@@ -872,9 +906,6 @@ func (f *fakeEntityService) UpdateEntity(input service.UpdateEntityInput) (servi
 	}
 	if strings.TrimSpace(input.ID) == "" {
 		return service.GetResult{}, &testError{"id is required"}
-	}
-	if strings.TrimSpace(input.Slug) == "" {
-		return service.GetResult{}, &testError{"slug is required"}
 	}
 	if _, ok := input.Fields["id"]; ok {
 		return service.GetResult{}, &testError{"cannot update id: field is immutable"}
@@ -927,9 +958,9 @@ func newFakeDocService() *fakeDocService {
 
 	return &fakeDocService{
 		docs: map[string]document.Document{
-			"proposal:DOC-001": {
+			"proposal:DOC-01J3KDOC0TEST": {
 				Meta: document.DocMeta{
-					ID:         "DOC-001",
+					ID:         "DOC-01J3KDOC0TEST",
 					Type:       document.DocTypeProposal,
 					Title:      "Test Proposal",
 					Status:     document.DocStatusApproved,
@@ -950,11 +981,11 @@ func (f *fakeDocService) ScaffoldDocument(docType document.DocType, title string
 }
 
 func (f *fakeDocService) Submit(input document.SubmitInput) (document.DocumentResult, error) {
-	key := string(input.Type) + ":DOC-001"
+	key := string(input.Type) + ":DOC-01J3KDOC0TEST"
 	now := time.Date(2025, 1, 15, 10, 0, 0, 0, time.UTC)
 	f.docs[key] = document.Document{
 		Meta: document.DocMeta{
-			ID:        "DOC-001",
+			ID:        "DOC-01J3KDOC0TEST",
 			Type:      input.Type,
 			Title:     input.Title,
 			Status:    document.DocStatusSubmitted,
@@ -966,11 +997,11 @@ func (f *fakeDocService) Submit(input document.SubmitInput) (document.DocumentRe
 		Body: input.Body,
 	}
 	return document.DocumentResult{
-		ID:     "DOC-001",
+		ID:     "DOC-01J3KDOC0TEST",
 		Type:   input.Type,
 		Title:  input.Title,
 		Status: document.DocStatusSubmitted,
-		Path:   "test/docs/DOC-001-test-proposal.md",
+		Path:   "test/docs/DOC-01J3KDOC0TEST-test-proposal.md",
 	}, nil
 }
 
@@ -989,7 +1020,7 @@ func (f *fakeDocService) Approve(input document.ApproveInput) (document.Document
 		Type:   input.Type,
 		Title:  doc.Meta.Title,
 		Status: document.DocStatusApproved,
-		Path:   "test/docs/DOC-001-test-proposal.md",
+		Path:   "test/docs/DOC-01J3KDOC0TEST-test-proposal.md",
 	}, nil
 }
 
@@ -1004,11 +1035,11 @@ func (f *fakeDocService) Validate(doc document.Document) []document.ValidationEr
 func (f *fakeDocService) ListByType(docType document.DocType) ([]document.DocumentResult, error) {
 	return []document.DocumentResult{
 		{
-			ID:     "DOC-001",
+			ID:     "DOC-01J3KDOC0TEST",
 			Type:   docType,
 			Title:  "Test Proposal",
 			Status: document.DocStatusApproved,
-			Path:   "test/docs/DOC-001-test-proposal.md",
+			Path:   "test/docs/DOC-01J3KDOC0TEST-test-proposal.md",
 		},
 	}, nil
 }
@@ -1016,11 +1047,11 @@ func (f *fakeDocService) ListByType(docType document.DocType) ([]document.Docume
 func (f *fakeDocService) ListAll() ([]document.DocumentResult, error) {
 	return []document.DocumentResult{
 		{
-			ID:     "DOC-001",
+			ID:     "DOC-01J3KDOC0TEST",
 			Type:   document.DocTypeProposal,
 			Title:  "Test Proposal",
 			Status: document.DocStatusApproved,
-			Path:   "test/docs/DOC-001-test-proposal.md",
+			Path:   "test/docs/DOC-01J3KDOC0TEST-test-proposal.md",
 		},
 	}, nil
 }

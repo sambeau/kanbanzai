@@ -531,7 +531,7 @@ func TestDocService_ListByType_DoesNotIncludeOtherTypes(t *testing.T) {
 	svc := NewDocService(t.TempDir())
 
 	submitProposal(t, svc, "A Proposal", "body")
-	submitDesign(t, svc, "A Design", "body", "FEAT-001")
+	submitDesign(t, svc, "A Design", "body", "FEAT-01J3K7MXP3RT5")
 
 	results, err := svc.ListByType(DocTypeProposal)
 	if err != nil {
@@ -560,7 +560,7 @@ func TestDocService_ListAll_MultipleTypes(t *testing.T) {
 		t.Fatalf("submit research report: %v", err)
 	}
 
-	submitDesign(t, svc, "Design", "design body", "FEAT-001")
+	submitDesign(t, svc, "Design", "design body", "FEAT-01J3K7MXP3RT5")
 
 	results, err := svc.ListAll()
 	if err != nil {
@@ -642,7 +642,7 @@ func TestDocService_Submit_DesignWithFeature(t *testing.T) {
 	result, err := svc.Submit(SubmitInput{
 		Type:      DocTypeDesign,
 		Title:     "Design Doc",
-		Feature:   "FEAT-001",
+		Feature:   "FEAT-01J3K7MXP3RT5",
 		Body:      "design body",
 		CreatedBy: "user",
 	})
@@ -657,8 +657,8 @@ func TestDocService_Submit_DesignWithFeature(t *testing.T) {
 	if err != nil {
 		t.Fatalf("retrieve: %v", err)
 	}
-	if doc.Meta.Feature != "FEAT-001" {
-		t.Errorf("expected feature FEAT-001, got %s", doc.Meta.Feature)
+	if doc.Meta.Feature != "FEAT-01J3K7MXP3RT5" {
+		t.Errorf("expected feature FEAT-01J3K7MXP3RT5, got %s", doc.Meta.Feature)
 	}
 }
 

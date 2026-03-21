@@ -11,6 +11,7 @@ import (
 	"kanbanzai/internal/cache"
 	"kanbanzai/internal/core"
 	"kanbanzai/internal/document"
+	"kanbanzai/internal/id"
 	kbzmcp "kanbanzai/internal/mcp"
 	"kanbanzai/internal/service"
 	"kanbanzai/internal/validate"
@@ -308,9 +309,6 @@ func runUpdate(args []string, deps dependencies) error {
 			return fmt.Errorf("id is required\n\n%s", updateUsageText)
 		}
 		slug := values["slug"]
-		if slug == "" {
-			return fmt.Errorf("slug is required\n\n%s", updateUsageText)
-		}
 
 		fields := make(map[string]string, len(values))
 		for k, v := range values {
@@ -374,7 +372,7 @@ func printCreateResult(w io.Writer, result service.CreateResult) error {
 		w,
 		"created %s\nid: %s\nslug: %s\npath: %s\n",
 		result.Type,
-		result.ID,
+		id.FormatFullDisplay(result.ID),
 		result.Slug,
 		result.Path,
 	)
@@ -386,7 +384,7 @@ func printGetResult(w io.Writer, result service.GetResult) error {
 		w,
 		"type: %s\nid: %s\nslug: %s\npath: %s\nstatus: %v\n",
 		result.Type,
-		result.ID,
+		id.FormatFullDisplay(result.ID),
 		result.Slug,
 		result.Path,
 		result.State["status"],
@@ -408,7 +406,7 @@ func printListResults(w io.Writer, entityType string, svc entityService) error {
 		if _, err := fmt.Fprintf(
 			w,
 			"%s\t%s\t%s\t%v\n",
-			result.ID,
+			id.FormatFullDisplay(result.ID),
 			result.Slug,
 			result.Path,
 			result.State["status"],
@@ -425,7 +423,7 @@ func printStatusUpdateResult(w io.Writer, result service.GetResult) error {
 		w,
 		"updated %s\nid: %s\nslug: %s\npath: %s\nstatus: %v\n",
 		result.Type,
-		result.ID,
+		id.FormatFullDisplay(result.ID),
 		result.Slug,
 		result.Path,
 		result.State["status"],

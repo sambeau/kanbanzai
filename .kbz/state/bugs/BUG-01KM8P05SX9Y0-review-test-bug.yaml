@@ -1,0 +1,11 @@
+id: BUG-01KM8P05SX9Y0
+slug: review-test-bug
+title: Bootstrap bug creation test
+status: reported
+severity: medium
+priority: medium
+type: implementation-defect
+reported_by: agent
+reported: "2026-03-21T17:10:03Z"
+observed: Bug creation was untested during bootstrap
+expected: Bug creation should work with valid TSID13 ID

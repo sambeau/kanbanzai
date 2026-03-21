@@ -118,6 +118,33 @@ func TestValidateTSID13_InvalidChar(t *testing.T) {
 	}
 }
 
+func TestNormalizeTSID_CrockfordSubstitution(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name  string
+		input string
+		want  string
+	}{
+		{"O to 0", "01J3K7MXP3RTO", "01J3K7MXP3RT0"},
+		{"l to 1", "01J3K7MXP3RTl", "01J3K7MXP3RT1"},
+		{"i to 1", "01J3K7MXP3RTi", "01J3K7MXP3RT1"},
+		{"L to 1 with lowercase", "01j3k7mxp3rtL", "01J3K7MXP3RT1"},
+		{"no substitution needed", "01J3K7MXP3RT5", "01J3K7MXP3RT5"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got, err := NormalizeTSID(tt.input)
+			if err != nil {
+				t.Fatalf("NormalizeTSID(%q) error = %v", tt.input, err)
+			}
+			if got != tt.want {
+				t.Fatalf("NormalizeTSID(%q) = %q, want %q", tt.input, got, tt.want)
+			}
+		})
+	}
+}
+
 func TestNormalizeTSID_Lowercase(t *testing.T) {
 	t.Parallel()
 	got, err := NormalizeTSID("01j3k7mxp3rt5")
