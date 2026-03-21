@@ -516,6 +516,15 @@ Within Phase 1, the instance root should contain at least:
 - `.kbz/cache/` or another clearly derived local-cache location
 - additional instance-scoped directories only where clearly justified by phase-1 scope
 
+Entity files within `.kbz/state/` use the format `{TYPE-PREFIX}-{TSID13}-{slug}.yaml` for TSID-based types and `{EPIC}-{SLUG}-{slug}.yaml` for epics. Example filenames:
+
+- `FEAT-01J3K7MXP3RT5-profile-editing.yaml`
+- `EPIC-PHASE1-phase-1-kernel.yaml`
+- `TASK-01J3KZZZBB4KF-write-entity-files.yaml`
+- `BUG-01J4AR7WHN4F2-avatar-upload-hang.yaml`
+- `DEC-01J3KABCDE7MX-no-client-side-cropping.yaml`
+- `DOC-01J3KDOCTEST01-workflow-design-basis.yaml`
+
 This means the current repository will explicitly separate:
 
 - reusable system code and reusable assets
@@ -1578,9 +1587,9 @@ The project needs a language that produces a single distributable binary with fa
 
 ### Follow-up Needed
 
-- confirm minimum Go version requirement
-- evaluate whether any Go MCP library is worth adopting vs. implementing the thin JSON-RPC layer directly
-- set up the initial Go module structure (`go mod init`)
+- ~~confirm minimum Go version requirement~~ — resolved: Go 1.25.0, see `go.mod`
+- ~~evaluate whether any Go MCP library is worth adopting vs. implementing the thin JSON-RPC layer directly~~ — resolved: `mcp-go v0.45.0` adopted, see `go.mod`
+- ~~set up the initial Go module structure (`go mod init`)~~ — resolved: module structure created, see `go.mod`
 
 ---
 
