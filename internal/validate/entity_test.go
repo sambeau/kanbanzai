@@ -99,7 +99,7 @@ func validEpicFields() map[string]any {
 
 func validFeatureFields() map[string]any {
 	return map[string]any{
-		"id":         "FEAT-001",
+		"id":         "FEAT-01J3K7MXP3RT5",
 		"slug":       "my-feature",
 		"epic":       "EPIC-001",
 		"status":     "draft",
@@ -112,7 +112,7 @@ func validFeatureFields() map[string]any {
 func validTaskFields() map[string]any {
 	return map[string]any{
 		"id":             "TASK-01J3KZZZBB4KF",
-		"parent_feature": "FEAT-001",
+		"parent_feature": "FEAT-01J3K7MXP3RT5",
 		"slug":           "my-task",
 		"summary":        "A summary of the task",
 		"status":         "queued",
@@ -121,7 +121,7 @@ func validTaskFields() map[string]any {
 
 func validBugFields() map[string]any {
 	return map[string]any{
-		"id":          "BUG-001",
+		"id":          "BUG-01J4AR7WHN4F2",
 		"slug":        "my-bug",
 		"title":       "My Bug",
 		"status":      "reported",
@@ -137,7 +137,7 @@ func validBugFields() map[string]any {
 
 func validDecisionFields() map[string]any {
 	return map[string]any{
-		"id":         "DEC-001",
+		"id":         "DEC-01J3KABCDE7MX",
 		"slug":       "my-decision",
 		"summary":    "We decided something",
 		"rationale":  "Because reasons",

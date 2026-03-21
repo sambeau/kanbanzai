@@ -85,7 +85,7 @@ func TestCheckHealth_AllValid(t *testing.T) {
 	t.Parallel()
 
 	epic := EntityInfo{Type: string(EntityEpic), ID: "EPIC-TESTEPIC", Fields: epicFields("EPIC-TESTEPIC", "test")}
-	feat := EntityInfo{Type: string(EntityFeature), ID: "FEAT-001", Fields: featureFields("FEAT-001", "test-feat", "EPIC-TESTEPIC")}
+	feat := EntityInfo{Type: string(EntityFeature), ID: "FEAT-01J3K7MXP3RT5", Fields: featureFields("FEAT-01J3K7MXP3RT5", "test-feat", "EPIC-TESTEPIC")}
 
 	entities := []EntityInfo{epic, feat}
 	loadAll := func() ([]EntityInfo, error) { return entities, nil }
@@ -123,8 +123,8 @@ func TestCheckHealth_BrokenReference(t *testing.T) {
 
 	feat := EntityInfo{
 		Type:   string(EntityFeature),
-		ID:     "FEAT-001",
-		Fields: featureFields("FEAT-001", "test-feat", "EPIC-MISSING"),
+		ID:     "FEAT-01J3K7MXP3RT5",
+		Fields: featureFields("FEAT-01J3K7MXP3RT5", "test-feat", "EPIC-MISSING"),
 	}
 
 	loadAll := func() ([]EntityInfo, error) { return []EntityInfo{feat}, nil }
@@ -186,15 +186,15 @@ func TestCheckHealth_MalformedEntityID(t *testing.T) {
 func TestCheckHealth_BugBrokenDuplicateRef(t *testing.T) {
 	t.Parallel()
 
-	fields := bugFields("BUG-001", "broken-dup")
+	fields := bugFields("BUG-01J4AR7WHN4F2", "broken-dup")
 	fields["duplicate_of"] = "BUG-999"
 
-	bug := EntityInfo{Type: string(EntityBug), ID: "BUG-001", Fields: fields}
+	bug := EntityInfo{Type: string(EntityBug), ID: "BUG-01J4AR7WHN4F2", Fields: fields}
 
 	loadAll := func() ([]EntityInfo, error) { return []EntityInfo{bug}, nil }
 	exists := func(entityType, id string) bool {
 		// The bug itself exists, but BUG-999 does not.
-		return entityType == string(EntityBug) && id == "BUG-001"
+		return entityType == string(EntityBug) && id == "BUG-01J4AR7WHN4F2"
 	}
 
 	report, err := CheckHealth(loadAll, exists)
@@ -209,14 +209,14 @@ func TestCheckHealth_BugBrokenDuplicateRef(t *testing.T) {
 func TestCheckHealth_SupersessionConsistencyWarning(t *testing.T) {
 	t.Parallel()
 
-	fields1 := featureFields("FEAT-001", "feat-one", "EPIC-TESTEPIC")
-	fields1["supersedes"] = "FEAT-002"
+	fields1 := featureFields("FEAT-01J3K7MXP3RT5", "feat-one", "EPIC-TESTEPIC")
+	fields1["supersedes"] = "FEAT-01J3K8NXQ4SV6"
 
-	fields2 := featureFields("FEAT-002", "feat-two", "EPIC-TESTEPIC")
-	// FEAT-002 does NOT have superseded_by=FEAT-001
+	fields2 := featureFields("FEAT-01J3K8NXQ4SV6", "feat-two", "EPIC-TESTEPIC")
+	// FEAT-01J3K8NXQ4SV6 does NOT have superseded_by=FEAT-01J3K7MXP3RT5
 
-	feat1 := EntityInfo{Type: string(EntityFeature), ID: "FEAT-001", Fields: fields1}
-	feat2 := EntityInfo{Type: string(EntityFeature), ID: "FEAT-002", Fields: fields2}
+	feat1 := EntityInfo{Type: string(EntityFeature), ID: "FEAT-01J3K7MXP3RT5", Fields: fields1}
+	feat2 := EntityInfo{Type: string(EntityFeature), ID: "FEAT-01J3K8NXQ4SV6", Fields: fields2}
 
 	entities := []EntityInfo{feat1, feat2}
 	loadAll := func() ([]EntityInfo, error) { return entities, nil }
@@ -240,14 +240,14 @@ func TestCheckHealth_SupersessionConsistencyWarning(t *testing.T) {
 func TestCheckHealth_SupersessionConsistent(t *testing.T) {
 	t.Parallel()
 
-	fields1 := featureFields("FEAT-001", "feat-one", "EPIC-TESTEPIC")
-	fields1["supersedes"] = "FEAT-002"
+	fields1 := featureFields("FEAT-01J3K7MXP3RT5", "feat-one", "EPIC-TESTEPIC")
+	fields1["supersedes"] = "FEAT-01J3K8NXQ4SV6"
 
-	fields2 := featureFields("FEAT-002", "feat-two", "EPIC-TESTEPIC")
-	fields2["superseded_by"] = "FEAT-001"
+	fields2 := featureFields("FEAT-01J3K8NXQ4SV6", "feat-two", "EPIC-TESTEPIC")
+	fields2["superseded_by"] = "FEAT-01J3K7MXP3RT5"
 
-	feat1 := EntityInfo{Type: string(EntityFeature), ID: "FEAT-001", Fields: fields1}
-	feat2 := EntityInfo{Type: string(EntityFeature), ID: "FEAT-002", Fields: fields2}
+	feat1 := EntityInfo{Type: string(EntityFeature), ID: "FEAT-01J3K7MXP3RT5", Fields: fields1}
+	feat2 := EntityInfo{Type: string(EntityFeature), ID: "FEAT-01J3K8NXQ4SV6", Fields: fields2}
 
 	entities := []EntityInfo{feat1, feat2}
 	loadAll := func() ([]EntityInfo, error) { return entities, nil }
@@ -271,14 +271,14 @@ func TestCheckHealth_SupersessionConsistent(t *testing.T) {
 func TestCheckHealth_DecisionSupersessionWarning(t *testing.T) {
 	t.Parallel()
 
-	fields1 := decisionFields("DEC-001", "dec-one")
-	fields1["superseded_by"] = "DEC-002"
+	fields1 := decisionFields("DEC-01J3KABCDE7MX", "dec-one")
+	fields1["superseded_by"] = "DEC-01J3KBCDEF8NY"
 
-	fields2 := decisionFields("DEC-002", "dec-two")
-	// DEC-002 does NOT have supersedes=DEC-001
+	fields2 := decisionFields("DEC-01J3KBCDEF8NY", "dec-two")
+	// DEC-01J3KBCDEF8NY does NOT have supersedes=DEC-01J3KABCDE7MX
 
-	dec1 := EntityInfo{Type: string(EntityDecision), ID: "DEC-001", Fields: fields1}
-	dec2 := EntityInfo{Type: string(EntityDecision), ID: "DEC-002", Fields: fields2}
+	dec1 := EntityInfo{Type: string(EntityDecision), ID: "DEC-01J3KABCDE7MX", Fields: fields1}
+	dec2 := EntityInfo{Type: string(EntityDecision), ID: "DEC-01J3KBCDEF8NY", Fields: fields2}
 
 	entities := []EntityInfo{dec1, dec2}
 	loadAll := func() ([]EntityInfo, error) { return entities, nil }
@@ -372,8 +372,8 @@ func TestCheckHealth_SummaryCountsCorrect(t *testing.T) {
 	// Feature referencing non-existent epic → produces a reference error.
 	feat := EntityInfo{
 		Type:   string(EntityFeature),
-		ID:     "FEAT-001",
-		Fields: featureFields("FEAT-001", "test-feat", "EPIC-MISSING"),
+		ID:     "FEAT-01J3K7MXP3RT5",
+		Fields: featureFields("FEAT-01J3K7MXP3RT5", "test-feat", "EPIC-MISSING"),
 	}
 
 	// Task with missing required field "parent_feature" → produces a validation error.
@@ -386,10 +386,10 @@ func TestCheckHealth_SummaryCountsCorrect(t *testing.T) {
 	task := EntityInfo{Type: string(EntityTask), ID: "TASK-01J3KZZZBB4KF", Fields: brokenTaskFields}
 
 	// Two features with inconsistent supersession → produces a warning.
-	fields1 := featureFields("FEAT-002", "feat-two", "EPIC-TESTEPIC")
+	fields1 := featureFields("FEAT-01J3K8NXQ4SV6", "feat-two", "EPIC-TESTEPIC")
 	fields1["supersedes"] = "FEAT-003"
 	fields2 := featureFields("FEAT-003", "feat-three", "EPIC-TESTEPIC")
-	feat2 := EntityInfo{Type: string(EntityFeature), ID: "FEAT-002", Fields: fields1}
+	feat2 := EntityInfo{Type: string(EntityFeature), ID: "FEAT-01J3K8NXQ4SV6", Fields: fields1}
 	feat3 := EntityInfo{Type: string(EntityFeature), ID: "FEAT-003", Fields: fields2}
 
 	entities := []EntityInfo{epic, feat, task, feat2, feat3}
@@ -458,7 +458,7 @@ func TestCheckHealth_EpicBrokenFeatureRef(t *testing.T) {
 func TestCheckHealth_TaskBrokenDependency(t *testing.T) {
 	t.Parallel()
 
-	fields := taskFields("TASK-01J3KZZZBB4KF", "FEAT-001", "do-thing")
+	fields := taskFields("TASK-01J3KZZZBB4KF", "FEAT-01J3K7MXP3RT5", "do-thing")
 	fields["depends_on"] = []string{"TASK-01J4BBBBCC5DF"}
 
 	task := EntityInfo{Type: string(EntityTask), ID: "TASK-01J3KZZZBB4KF", Fields: fields}
@@ -467,7 +467,7 @@ func TestCheckHealth_TaskBrokenDependency(t *testing.T) {
 	exists := func(entityType, id string) bool {
 		// Task itself and its feature exist, but the dependency does not.
 		return (entityType == string(EntityTask) && id == "TASK-01J3KZZZBB4KF") ||
-			(entityType == string(EntityFeature) && id == "FEAT-001")
+			(entityType == string(EntityFeature) && id == "FEAT-01J3K7MXP3RT5")
 	}
 
 	report, err := CheckHealth(loadAll, exists)
@@ -491,11 +491,11 @@ func TestValidationWarning_Error(t *testing.T) {
 			name: "with entity ID",
 			warning: ValidationWarning{
 				EntityType: "feature",
-				EntityID:   "FEAT-001",
+				EntityID:   "FEAT-01J3K7MXP3RT5",
 				Field:      "supersedes",
 				Message:    "inconsistent supersession",
 			},
-			want: "warning: feature FEAT-001: supersedes: inconsistent supersession",
+			want: "warning: feature FEAT-01J3K7MXP3RT5: supersedes: inconsistent supersession",
 		},
 		{
 			name: "without entity ID",

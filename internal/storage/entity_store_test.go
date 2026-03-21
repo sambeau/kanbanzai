@@ -13,7 +13,7 @@ func TestMarshalCanonicalYAML_DeterministicKeyOrder(t *testing.T) {
 
 	fields := map[string]any{
 		"summary": "Kernel storage",
-		"id":      "FEAT-001",
+		"id":      "FEAT-01J3K7MXP3RT5",
 		"slug":    "kernel-storage",
 		"status":  "draft",
 		"tags":    []string{"phase-1", "storage"},
@@ -29,7 +29,7 @@ func TestMarshalCanonicalYAML_DeterministicKeyOrder(t *testing.T) {
 	}
 
 	want := "" +
-		"id: FEAT-001\n" +
+		"id: FEAT-01J3K7MXP3RT5\n" +
 		"slug: kernel-storage\n" +
 		"status: draft\n" +
 		"summary: Kernel storage\n" +
@@ -49,7 +49,7 @@ func TestCanonicalYAML_RoundTrip(t *testing.T) {
 	t.Parallel()
 
 	input := map[string]any{
-		"id":      "BUG-001",
+		"id":      "BUG-01J4AR7WHN4F2",
 		"slug":    "yaml-round-trip",
 		"title":   "Round-trip preserves structure",
 		"status":  "reported",
@@ -74,7 +74,7 @@ func TestCanonicalYAML_RoundTrip(t *testing.T) {
 	}
 
 	want := map[string]any{
-		"id":      "BUG-001",
+		"id":      "BUG-01J4AR7WHN4F2",
 		"slug":    "yaml-round-trip",
 		"title":   "Round-trip preserves structure",
 		"status":  "reported",
@@ -101,17 +101,17 @@ func TestEntityStore_WriteAndLoad(t *testing.T) {
 
 	record := EntityRecord{
 		Type: "feature",
-		ID:   "FEAT-001",
+		ID:   "FEAT-01J3K7MXP3RT5",
 		Slug: "initial-kernel",
 		Fields: map[string]any{
-			"id":         "FEAT-001",
+			"id":         "FEAT-01J3K7MXP3RT5",
 			"slug":       "initial-kernel",
-			"epic":       "E-001",
+			"epic":       "EPIC-TESTEPIC",
 			"status":     "draft",
 			"summary":    "Start the workflow kernel",
 			"created":    "2026-03-19T00:00:00Z",
 			"created_by": "sam",
-			"tasks":      []string{"FEAT-001.1", "FEAT-001.2"},
+			"tasks":      []string{"TASK-01J3KZZZBB4KF", "TASK-01J3L0AACC5LG"},
 		},
 	}
 
@@ -120,12 +120,12 @@ func TestEntityStore_WriteAndLoad(t *testing.T) {
 		t.Fatalf("Write() error = %v", err)
 	}
 
-	wantPath := filepath.Join(root, "features", "FEAT-001-initial-kernel.yaml")
+	wantPath := filepath.Join(root, "features", "FEAT-01J3K7MXP3RT5-initial-kernel.yaml")
 	if path != wantPath {
 		t.Fatalf("Write() path mismatch: want %q, got %q", wantPath, path)
 	}
 
-	got, err := store.Load("feature", "FEAT-001", "initial-kernel")
+	got, err := store.Load("feature", "FEAT-01J3K7MXP3RT5", "initial-kernel")
 	if err != nil {
 		t.Fatalf("Load() error = %v", err)
 	}
@@ -133,19 +133,19 @@ func TestEntityStore_WriteAndLoad(t *testing.T) {
 	want := map[string]any{
 		"created":    "2026-03-19T00:00:00Z",
 		"created_by": "sam",
-		"epic":       "E-001",
-		"id":         "FEAT-001",
+		"epic":       "EPIC-TESTEPIC",
+		"id":         "FEAT-01J3K7MXP3RT5",
 		"slug":       "initial-kernel",
 		"status":     "draft",
 		"summary":    "Start the workflow kernel",
-		"tasks":      []any{"FEAT-001.1", "FEAT-001.2"},
+		"tasks":      []any{"TASK-01J3KZZZBB4KF", "TASK-01J3L0AACC5LG"},
 	}
 
 	if got.Type != "feature" {
 		t.Fatalf("Load() type mismatch: want %q, got %q", "feature", got.Type)
 	}
-	if got.ID != "FEAT-001" {
-		t.Fatalf("Load() id mismatch: want %q, got %q", "FEAT-001", got.ID)
+	if got.ID != "FEAT-01J3K7MXP3RT5" {
+		t.Fatalf("Load() id mismatch: want %q, got %q", "FEAT-01J3K7MXP3RT5", got.ID)
 	}
 	if got.Slug != "initial-kernel" {
 		t.Fatalf("Load() slug mismatch: want %q, got %q", "initial-kernel", got.Slug)
@@ -162,10 +162,10 @@ func TestEntityStore_Write_RejectsMismatchedIdentity(t *testing.T) {
 
 	record := EntityRecord{
 		Type: "epic",
-		ID:   "E-001",
+		ID:   "EPIC-TESTEPIC",
 		Slug: "phase-1",
 		Fields: map[string]any{
-			"id":      "E-999",
+			"id":      "EPIC-MISMATCH",
 			"slug":    "phase-1",
 			"title":   "Phase 1",
 			"status":  "proposed",
@@ -182,7 +182,7 @@ func TestUnmarshalCanonicalYAML_RejectsUnexpectedIndentation(t *testing.T) {
 	t.Parallel()
 
 	content := "" +
-		"id: FEAT-001\n" +
+		"id: FEAT-01J3K7MXP3RT5\n" +
 		"  slug: bad-indent\n"
 
 	if _, err := UnmarshalCanonicalYAML(content); err == nil {
@@ -388,7 +388,7 @@ func TestMarshalCanonicalYAML_NestedMapsInsideListItems(t *testing.T) {
 	t.Parallel()
 
 	fields := map[string]any{
-		"id":   "BUG-001",
+		"id":   "BUG-01J4AR7WHN4F2",
 		"slug": "nested-list-maps",
 		"steps": []any{
 			map[string]any{
@@ -414,7 +414,7 @@ func TestMarshalCanonicalYAML_NestedMapsInsideListItems(t *testing.T) {
 	}
 
 	want := "" +
-		"id: BUG-001\n" +
+		"id: BUG-01J4AR7WHN4F2\n" +
 		"slug: nested-list-maps\n" +
 		"steps:\n" +
 		"  -\n" +
@@ -437,7 +437,7 @@ func TestMarshalCanonicalYAML_SerializesNilValue(t *testing.T) {
 	t.Parallel()
 
 	fields := map[string]any{
-		"id":      "BUG-001",
+		"id":      "BUG-01J4AR7WHN4F2",
 		"slug":    "nil-value",
 		"comment": nil,
 	}
@@ -448,7 +448,7 @@ func TestMarshalCanonicalYAML_SerializesNilValue(t *testing.T) {
 	}
 
 	want := "" +
-		"id: BUG-001\n" +
+		"id: BUG-01J4AR7WHN4F2\n" +
 		"slug: nil-value\n" +
 		"comment: null\n"
 
@@ -461,7 +461,7 @@ func TestUnmarshalCanonicalYAML_ParsesNumericScalars(t *testing.T) {
 	t.Parallel()
 
 	content := "" +
-		"id: BUG-001\n" +
+		"id: BUG-01J4AR7WHN4F2\n" +
 		"slug: numeric-scalars\n" +
 		"attempts: 2\n" +
 		"ratio: 3.5\n" +
@@ -475,7 +475,7 @@ func TestUnmarshalCanonicalYAML_ParsesNumericScalars(t *testing.T) {
 	}
 
 	want := map[string]any{
-		"id":       "BUG-001",
+		"id":       "BUG-01J4AR7WHN4F2",
 		"slug":     "numeric-scalars",
 		"attempts": 2,
 		"ratio":    3.5,
@@ -491,7 +491,7 @@ func TestMarshalCanonicalYAML_UsesStringer(t *testing.T) {
 	t.Parallel()
 
 	fields := map[string]any{
-		"id":      "BUG-001",
+		"id":      "BUG-01J4AR7WHN4F2",
 		"slug":    "stringer-value",
 		"comment": fixtureStringer("needs:quotes"),
 	}
@@ -502,7 +502,7 @@ func TestMarshalCanonicalYAML_UsesStringer(t *testing.T) {
 	}
 
 	want := "" +
-		"id: BUG-001\n" +
+		"id: BUG-01J4AR7WHN4F2\n" +
 		"slug: stringer-value\n" +
 		"comment: \"needs:quotes\"\n"
 
@@ -515,7 +515,7 @@ func TestMarshalCanonicalYAML_IdempotentWrite(t *testing.T) {
 	t.Parallel()
 
 	fields := map[string]any{
-		"id":       "BUG-001",
+		"id":       "BUG-01J4AR7WHN4F2",
 		"slug":     "idempotent-write",
 		"title":    "Idempotent output",
 		"status":   "reported",
@@ -553,7 +553,7 @@ func TestMarshalCanonicalYAML_BackslashEscapingRoundTrip(t *testing.T) {
 	t.Parallel()
 
 	fields := map[string]any{
-		"id":      "BUG-001",
+		"id":      "BUG-01J4AR7WHN4F2",
 		"slug":    "backslash-round-trip",
 		"comment": `C:\temp\kbz\state`,
 	}
@@ -579,7 +579,7 @@ func TestUnmarshalCanonicalYAML_ParsesBareListItems(t *testing.T) {
 	// Bare `-` at end of input (i+1 >= len(lines) branch)
 	// and bare `-` followed by same-indent line (nextIndent <= indent branch)
 	content := "" +
-		"id: BUG-001\n" +
+		"id: BUG-01J4AR7WHN4F2\n" +
 		"slug: bare-list\n" +
 		"steps:\n" +
 		"  -\n" +
@@ -593,7 +593,7 @@ func TestUnmarshalCanonicalYAML_ParsesBareListItems(t *testing.T) {
 	}
 
 	want := map[string]any{
-		"id":   "BUG-001",
+		"id":   "BUG-01J4AR7WHN4F2",
 		"slug": "bare-list",
 		"steps": []any{
 			map[string]any{"action": "first"},
@@ -611,7 +611,7 @@ func TestUnmarshalCanonicalYAML_RejectsInvalidListItem(t *testing.T) {
 	t.Parallel()
 
 	content := "" +
-		"id: BUG-001\n" +
+		"id: BUG-01J4AR7WHN4F2\n" +
 		"slug: bad-list\n" +
 		"items:\n" +
 		"  - good\n" +
@@ -626,7 +626,7 @@ func TestUnmarshalCanonicalYAML_RejectsUnexpectedListIndentation(t *testing.T) {
 	t.Parallel()
 
 	content := "" +
-		"id: BUG-001\n" +
+		"id: BUG-01J4AR7WHN4F2\n" +
 		"slug: bad-indent\n" +
 		"items:\n" +
 		"  - good\n" +
@@ -641,7 +641,7 @@ func TestMarshalCanonicalYAML_FormatsIntegerValues(t *testing.T) {
 	t.Parallel()
 
 	fields := map[string]any{
-		"id":       "BUG-001",
+		"id":       "BUG-01J4AR7WHN4F2",
 		"slug":     "int-values",
 		"attempts": int(42),
 	}
@@ -652,7 +652,7 @@ func TestMarshalCanonicalYAML_FormatsIntegerValues(t *testing.T) {
 	}
 
 	want := "" +
-		"id: BUG-001\n" +
+		"id: BUG-01J4AR7WHN4F2\n" +
 		"slug: int-values\n" +
 		"attempts: 42\n"
 
@@ -665,7 +665,7 @@ func TestMarshalCanonicalYAML_FormatsFloatValues(t *testing.T) {
 	t.Parallel()
 
 	fields := map[string]any{
-		"id":    "BUG-001",
+		"id":    "BUG-01J4AR7WHN4F2",
 		"slug":  "float-values",
 		"ratio": float64(3.14),
 	}
@@ -676,7 +676,7 @@ func TestMarshalCanonicalYAML_FormatsFloatValues(t *testing.T) {
 	}
 
 	want := "" +
-		"id: BUG-001\n" +
+		"id: BUG-01J4AR7WHN4F2\n" +
 		"slug: float-values\n" +
 		"ratio: \"3.14\"\n"
 
@@ -689,7 +689,7 @@ func TestMarshalCanonicalYAML_FormatsBooleanFalse(t *testing.T) {
 	t.Parallel()
 
 	fields := map[string]any{
-		"id":      "BUG-001",
+		"id":      "BUG-01J4AR7WHN4F2",
 		"slug":    "bool-false",
 		"enabled": false,
 	}
@@ -700,7 +700,7 @@ func TestMarshalCanonicalYAML_FormatsBooleanFalse(t *testing.T) {
 	}
 
 	want := "" +
-		"id: BUG-001\n" +
+		"id: BUG-01J4AR7WHN4F2\n" +
 		"slug: bool-false\n" +
 		"enabled: false\n"
 
@@ -718,7 +718,7 @@ func TestMarshalCanonicalYAML_FormatsUnknownType(t *testing.T) {
 	}
 
 	fields := map[string]any{
-		"id":    "BUG-001",
+		"id":    "BUG-01J4AR7WHN4F2",
 		"slug":  "unknown-type",
 		"point": customStruct{X: 1, Y: 2},
 	}
@@ -729,7 +729,7 @@ func TestMarshalCanonicalYAML_FormatsUnknownType(t *testing.T) {
 	}
 
 	want := "" +
-		"id: BUG-001\n" +
+		"id: BUG-01J4AR7WHN4F2\n" +
 		"slug: unknown-type\n" +
 		"point: \"{1 2}\"\n"
 
@@ -748,7 +748,7 @@ func TestMarshalCanonicalYAML_ConsecutiveBackslashRoundTrip(t *testing.T) {
 	t.Parallel()
 
 	fields := map[string]any{
-		"id":      "BUG-001",
+		"id":      "BUG-01J4AR7WHN4F2",
 		"slug":    "double-backslash",
 		"comment": `path\\with\\double`,
 	}
@@ -772,7 +772,7 @@ func TestMarshalCanonicalYAML_EmbeddedNewlineRoundTrip(t *testing.T) {
 	t.Parallel()
 
 	fields := map[string]any{
-		"id":      "BUG-001",
+		"id":      "BUG-01J4AR7WHN4F2",
 		"slug":    "embedded-newline",
 		"comment": "hello\nworld",
 	}
@@ -798,7 +798,7 @@ func TestMarshalCanonicalYAML_YAMLBooleanVariantsAreQuoted(t *testing.T) {
 	variants := []string{"True", "FALSE", "Yes", "no", "ON", "off", "~"}
 	for _, v := range variants {
 		fields := map[string]any{
-			"id":      "BUG-001",
+			"id":      "BUG-01J4AR7WHN4F2",
 			"slug":    "bool-variant",
 			"comment": v,
 		}
@@ -825,7 +825,7 @@ func TestEntityStore_Load_NonExistentFile(t *testing.T) {
 	root := t.TempDir()
 	store := NewEntityStore(root)
 
-	_, err := store.Load("epic", "E-999", "does-not-exist")
+	_, err := store.Load("epic", "EPIC-NONEXIST", "does-not-exist")
 	if err == nil {
 		t.Fatal("Load() error = nil, want non-nil for non-existent file")
 	}
@@ -846,11 +846,11 @@ func TestEntityStore_Load_CorruptYAML(t *testing.T) {
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		t.Fatalf("MkdirAll() error = %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(dir, "E-001-corrupt.yaml"), []byte("{{{{"), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(dir, "EPIC-TESTEPIC-corrupt.yaml"), []byte("{{{{"), 0o644); err != nil {
 		t.Fatalf("WriteFile() error = %v", err)
 	}
 
-	_, err := store.Load("epic", "E-001", "corrupt")
+	_, err := store.Load("epic", "EPIC-TESTEPIC", "corrupt")
 	if err == nil {
 		t.Fatal("Load() error = nil, want non-nil for corrupt YAML")
 	}
@@ -917,11 +917,11 @@ func TestEntityStore_Load_EmptyFile(t *testing.T) {
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		t.Fatalf("MkdirAll() error = %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(dir, "E-001-empty.yaml"), []byte(""), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(dir, "EPIC-TESTEPIC-empty.yaml"), []byte(""), 0o644); err != nil {
 		t.Fatalf("WriteFile() error = %v", err)
 	}
 
-	got, err := store.Load("epic", "E-001", "empty")
+	got, err := store.Load("epic", "EPIC-TESTEPIC", "empty")
 	if err != nil {
 		t.Fatalf("Load() error = %v", err)
 	}
