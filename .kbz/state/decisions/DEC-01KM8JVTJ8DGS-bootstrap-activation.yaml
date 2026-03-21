@@ -1,0 +1,7 @@
+id: DEC-01KM8JVTJ8DGS
+slug: bootstrap-activation
+summary: Activate bootstrap self-hosting
+rationale: All prerequisites met per bootstrap spec §3
+decided_by: human
+date: "2026-03-21T16:15:15Z"
+status: proposed

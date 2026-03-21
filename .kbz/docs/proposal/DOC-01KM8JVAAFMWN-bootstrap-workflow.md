@@ -1,0 +1,174 @@
+---
+id: DOC-01KM8JVAAFMWN
+type: proposal
+title: Bootstrap Workflow
+status: submitted
+created_by: human
+created: 2026-03-21T16:14:58Z
+updated: 2026-03-21T16:14:58Z
+---
+# Bootstrap Workflow
+
+- Status: active
+- Purpose: define the simplified workflow process used to build Kanbanzai before the tool exists
+- Date: 2026-03-18
+- Related:
+  - `work/design/product-instance-boundary.md`
+  - `work/design/document-centric-interface.md`
+  - `work/spec/phase-1-specification.md` §22
+  - `work/plan/phase-1-decision-log.md` P1-DEC-005, P1-DEC-015
+
+---
+
+## 1. What This Document Is
+
+This document defines **bootstrap-workflow** — the process we follow right now to build Kanbanzai.
+
+It exists because of a fundamental duality: we are building a workflow tool before the workflow tool exists. That creates two distinct workflows that must not be confused:
+
+- **kbz-workflow** — the workflow process the Kanbanzai tool will implement and enforce. Described in `work/design/` and `work/spec/`. This is what we are *building*.
+- **bootstrap-workflow** — the simplified process we use right now to build Kanbanzai. Described in this document. This is what we *follow*.
+
+Bootstrap-workflow is a minimal viable near-subset of kbz-workflow. Everything in it should be compatible with the future tool — just simpler, manual, and without automated enforcement.
+
+## 2. Why the Distinction Matters
+
+Without clear separation:
+
+- Agents apply kbz-workflow rules that depend on tooling that doesn't exist yet (MCP operations, automated validation, health checks).
+- Humans and agents confuse design documents (describing what the tool will do) with operational instructions (describing what to do now).
+- Bootstrap-specific simplifications leak into the tool's design, or kbz-workflow complexity creeps into current practice.
+
+The rule is simple: **when working on this project, follow bootstrap-workflow. When designing or implementing the tool, refer to kbz-workflow.**
+
+## 3. What We Track Today
+
+Bootstrap-workflow tracks the same five entity types as kbz-workflow, but without formal YAML state files, MCP operations, or automated lifecycle enforcement.
+
+| Entity | How we track it today |
+|---|---|
+| **Epics** | Described in planning documents (`work/plan/`) |
+| **Features** | Described in planning documents and the implementation plan |
+| **Tasks** | Described in the implementation plan's work breakdown |
+| **Bugs** | Filed as issues or tracked in planning documents |
+| **Decisions** | Made in design documents and conversation; indexed by agents in `work/plan/phase-1-decision-log.md` |
+
+Decisions are made through the natural design process — in conversation between the human designer and AI agents, and in design documents. Agents are responsible for extracting decisions from these sources and recording them in the decision log. The human designer does not need to write decision records directly.
+
+## 4. Which Policies Apply Now
+
+### Fully applicable during bootstrap
+
+These policies describe human and agent behaviour, not tool automation. Follow them now.
+
+**Git commit policy** (`work/design/git-commit-policy.md`):
+- Commit message format: `<type>(<object-id>): <summary>`
+- Commit type vocabulary: `feat`, `fix`, `docs`, `test`, `refactor`, `workflow`, `decision`, `chore`
+- One coherent change per commit
+- No force-pushing shared branches, no vague checkpoint commits, no unrelated files
+- Object IDs in commit messages are best-effort — use descriptive scope when no formal ID exists (e.g., `docs(bootstrap): ...`)
+
+**Quality gates** (`work/design/quality-gates-and-review-policy.md`):
+- Multi-dimensional review (specification conformance, implementation quality, test adequacy, documentation currency, workflow integrity)
+- Structured review output when reviewing work
+- Agents may propose approval but must not claim human approval occurred
+
+**Agent interaction protocol** (`work/design/agent-interaction-protocol.md`):
+- Treat human input as intake, not canonical truth
+- Normalise before committing to documents
+- Do not fabricate important facts (severity, approval scope, rationale)
+- Ask for clarification when ambiguous
+- Show normalised results before important commits
+- Be explicit about uncertainty
+- Respect phase scope
+
+### Partially applicable — follow the intent, not the mechanism
+
+- **"Use the workflow system for canonical changes"** — the intent (don't bypass process) applies. The mechanism (MCP operations) doesn't exist yet. During bootstrap, canonical changes go through reviewed commits.
+- **"Preserve traceability"** — use best-effort references to decision IDs, document sections, and descriptive labels. Formal entity IDs don't exist yet.
+
+### Deferred until the tool exists
+
+These depend on kbz tooling and are not part of bootstrap-workflow:
+
+- MCP operations for creating/updating entities
+- Automated lifecycle state machine enforcement
+- YAML state files under `.kbz/state/`
+- Automated health checks and validation
+- ID allocation via `id_allocate`
+- Document scaffolding via `doc_scaffold`
+- Merge gates tied to workflow state
+- Multi-agent orchestration and delegation
+
+## 5. Bootstrap Conventions
+
+### Document-centric working
+
+Per `work/design/document-centric-interface.md`, the human interface to the workflow is documents and chat. During bootstrap this means:
+
+- Humans write and review design documents and make decisions in conversation.
+- Agents normalise documents on ingest — cleaning language, tightening prose, improving structure — and present the result for human approval before the document becomes canonical.
+- Approved documents are returned unchanged on retrieval.
+- The formality gradient applies: early documents (proposals, draft designs) are informal prose; later documents (specifications, plans) are formal and precise.
+
+### Decision records
+
+Decisions are made in design documents and in conversation. Agents extract and record them in `work/plan/phase-1-decision-log.md` as an internal tracking artifact. The human designer does not need to write decision records directly — the agent maintains the log.
+
+The format established in the decision log is already close to what kbz-workflow will use and can be migrated directly.
+
+### Document types during bootstrap
+
+The document types defined in `work/design/document-centric-interface.md` apply during bootstrap in simplified form:
+
+| Document type | Bootstrap practice |
+|---|---|
+| **Proposal** | Written by the human designer, usually pasted into chat |
+| **Draft design** | Created collaboratively in chat; stored in `work/design/` when substantive |
+| **Design** | Distilled by the agent from drafts and conversation; stored in `work/design/` |
+| **Specification** | Created by the agent from approved designs; stored in `work/spec/` |
+| **Implementation plan** | Created by the agent from specifications; stored in `work/plan/` |
+| **Research report** | Created by agents; stored in `work/research/` |
+
+### Document placement
+
+- Design documents go in `work/design/`.
+- Spec documents go in `work/spec/`.
+- Planning documents go in `work/plan/`.
+- Research reports go in `work/research/`.
+- Bootstrap-specific process documents go in `work/bootstrap/`.
+
+### Commits during bootstrap
+
+When no formal entity ID exists, use a descriptive scope:
+
+- `docs(design-basis): clarify normalisation rules`
+- `decision(P1-DEC-009): ratify minimum required fields`
+- `docs(bootstrap): add bootstrap workflow document`
+
+When formal IDs exist (post-tool), switch to them.
+
+### Review during bootstrap
+
+- Human review is the primary gate. The tool cannot enforce review yet.
+- Agents should apply the quality gate dimensions when asked to review work.
+- Review results are communicated in conversation or commit messages, not stored as workflow records.
+
+## 6. What Bootstrap-Workflow Is Not
+
+- It is **not a permanent process**. It exists only until the kbz tool can take over.
+- It is **not a lesser process**. Manual stewardship during bootstrap is a designed property, not a failing.
+- It is **not an excuse to skip discipline**. The behavioural rules (commit policy, review policy, agent protocol) apply in full. Only the automated enforcement is deferred.
+- It is **not part of the reusable product**. This document describes how we work on this project right now. It is not a template for future users of Kanbanzai.
+
+## 7. Migration Path
+
+When the kbz tool reaches sufficient maturity (per P1-DEC-015, still to be decided):
+
+1. Existing design documents are ingested into the system; the system extracts and indexes decisions, requirements, and entity relationships.
+2. Existing decisions in the decision log are reconciled with the decisions extracted from design documents and migrated to canonical Decision records.
+3. Epics, features, and tasks described in planning documents are created as canonical records.
+4. The bootstrap-workflow process is gradually replaced by kbz-workflow.
+5. This document is archived or removed.
+
+The goal is not a big-bang migration. It is a gradual transition where bootstrap-workflow shrinks as kbz-workflow grows, until bootstrap-workflow is no longer needed.

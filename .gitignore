@@ -49,7 +49,6 @@ Desktop.ini
 # Linux
 .directory
 
-# Kanbanzai instance state and cache
-.kbz/
-!.kbz/
-!.kbz/.gitkeep
+# Kanbanzai instance: commit state and docs, exclude derived cache and temp files
+.kbz/cache/
+.kbz-tmp-*

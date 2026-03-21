@@ -1,0 +1,5 @@
+id: TASK-01KM8JVTJ1ZC5
+parent_feature: FEAT-01KM8JTF0MK91
+slug: bootstrap-verification
+summary: Verify bootstrap acceptance criteria
+status: queued
