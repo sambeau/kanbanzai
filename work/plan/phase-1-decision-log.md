@@ -353,9 +353,9 @@ This keeps Phase 1 simpler while still allowing the system to represent the curr
 
 ### Follow-up Needed
 
-- define clear lifecycle transitions
-- avoid overcomplicating the composite model
-- preserve migration path toward first-class `Specification` and `Plan`
+- ~~define clear lifecycle transitions~~ — **Resolved:** P1-DEC-010 defines the exhaustive Feature lifecycle transition graph.
+- ~~avoid overcomplicating the composite model~~ — **Resolved:** ongoing design constraint; the composite model has remained simple through implementation.
+- ~~preserve migration path toward first-class `Specification` and `Plan`~~ — **Resolved:** this is a Phase 2 design concern. Phase 1's composite model does not preclude the split — Feature's optional `spec` and `plan` fields can become foreign keys to separate entities in a future phase without breaking existing records.
 
 ---
 
@@ -390,8 +390,8 @@ Humans are expected to work primarily through natural-language chat with agents,
 
 ### Follow-up Needed
 
-- define exact MCP operation names and shapes
-- define CLI mapping cleanly
+- ~~define exact MCP operation names and shapes~~ — **Resolved:** P1-DEC-011 accepted with full MCP tool surface documented.
+- ~~define CLI mapping cleanly~~ — **Resolved:** P1-DEC-012 accepted with full CLI command surface documented.
 
 ---
 
@@ -1061,79 +1061,213 @@ The `cannot-reproduce → triaged` reopening path is the one exception to strict
 
 ### Follow-up Needed
 
-- determine whether transition history should be stored on the entity record (e.g., a `transitions` log) or derived from Git history
-- define what metadata a transition carries (e.g., `transitioned_by`, `reason`, timestamp) — this feeds into P1-DEC-011
-- confirm whether `needs-rework` on Feature needs any disambiguation metadata to distinguish spec rework from implementation rework
+- ~~determine whether transition history should be stored on the entity record (e.g., a `transitions` log) or derived from Git history~~ — **Resolved:** Phase 1 derives transition history from Git commit history. No history is stored on entity records. A dedicated transition log feature is planned for post-Phase 1 (see `work/design/transition-log-design.md`).
+- ~~define what metadata a transition carries (e.g., `transitioned_by`, `reason`, timestamp) — this feeds into P1-DEC-011~~ — **Resolved:** No transition metadata is stored on entities in Phase 1. Commit messages carry context. The post-Phase 1 transition log will include `from`, `to`, `at`, `by`, and optional `reason` fields per entry.
+- ~~confirm whether `needs-rework` on Feature needs any disambiguation metadata to distinguish spec rework from implementation rework~~ — **Resolved:** No disambiguation metadata needed. The transition target already disambiguates: `needs-rework → in-review` indicates spec rework, `needs-rework → in-progress` indicates implementation rework. A free-text `reason` field in the future transition log will cover cases where additional context is useful.
 
 ---
 
 ## `P1-DEC-011: MCP operation names and request/response shapes`
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-03-18
+- Accepted: 2026-07-24
 - Scope: MCP interface
 - Related:
   - `work/plan/phase-1-implementation-plan.md`
+  - `work/spec/phase-1-specification.md` §16
 
 ### Decision
 
-To be determined.
+Phase 1 uses **object-specific operation naming** for entity creation (one tool per entity type) and **generic naming** for retrieval, status updates, and field updates (shared tools with an `entity_type` parameter). Document operations are namespaced under `*_document` names. The server exposes 20 MCP tools total: 12 entity tools and 8 document tools.
+
+#### Entity tools (12)
+
+| Tool | Required parameters | Notes |
+|---|---|---|
+| `create_epic` | `slug`, `title`, `summary`, `created_by` | |
+| `create_feature` | `slug`, `epic` (parent epic ID), `summary`, `created_by` | |
+| `create_task` | `feature` (parent feature ID), `slug`, `summary` | |
+| `create_bug` | `slug`, `title`, `reported_by`, `observed`, `expected`, `severity`, `priority`, `type` | `severity`/`priority`: `low`/`medium`/`high`/`critical`. `type`: `implementation-defect`/`specification-defect`/`design-problem` |
+| `record_decision` | `slug`, `summary`, `rationale`, `decided_by` | Named `record_decision` rather than `create_decision` to reflect the semantic that decisions are recorded, not created |
+| `get_entity` | `entity_type`, `id` or `slug` | Returns full entity as JSON |
+| `list_entities` | `entity_type` | Returns array of entity summaries |
+| `update_status` | `entity_type`, `id` or `slug`, `status` | Validates transition legality per P1-DEC-010 |
+| `update_entity` | `entity_type`, `id` or `slug`, plus arbitrary field key/value pairs | Cannot change `id` or `status`; for error correction (§21.2) |
+| `validate_candidate` | `entity_type`, plus arbitrary field key/value pairs | Validates without persisting; returns array of validation errors |
+| `health_check` | *(none)* | Returns health report across all entities |
+| `rebuild_cache` | *(none)* | Rebuilds SQLite cache from canonical YAML; returns entity count |
+
+#### Document tools (8)
+
+The `doc_type` parameter accepts: `proposal`, `research-report`, `draft-design`, `design`, `specification`, `implementation-plan`, `user-documentation`.
+
+| Tool | Required parameters | Optional parameters | Notes |
+|---|---|---|---|
+| `scaffold_document` | `doc_type`, `title` | — | Returns scaffolded markdown as plain text; does not persist |
+| `submit_document` | `doc_type`, `title`, `body`, `created_by` | `feature` (required for design/specification/implementation-plan) | Creates document in `submitted` state |
+| `update_document_body` | `doc_type`, `id`, `body` | — | Transitions to `normalised` state |
+| `approve_document` | `doc_type`, `id`, `approved_by` | — | Transitions to `approved` state |
+| `retrieve_document` | `doc_type`, `id` | — | Returns document body as plain text |
+| `extract_from_document` | `doc_id` | — | Returns metadata + body for agent-mediated extraction; approved documents only |
+| `list_documents` | *(none)* | `doc_type` | Omit `doc_type` to list all |
+| `validate_document` | `doc_type`, `id` | — | Returns array of validation errors |
+
+#### Response conventions
+
+- All tools return `mcp.CallToolResult` payloads.
+- Most responses are JSON-serialised structured data (entity records, arrays, health reports).
+- `scaffold_document` and `retrieve_document` return plain text.
+- Errors are returned as MCP error payloads, not transport-level failures — the caller always receives a result.
 
 ### Rationale
 
-To be determined.
+Object-specific creation tools (`create_epic`, `create_bug`, etc.) were chosen over a generic `create_entity` because each entity type has different required fields. A single `create_entity` tool would need complex conditional validation that is harder for agents to understand and use correctly. The type-specific tools make the required parameters explicit in the tool schema.
+
+Generic tools were used for retrieval, status updates, and field updates because these operations have the same shape across entity types — only the `entity_type` parameter varies. This avoids duplicating nearly-identical tools.
+
+Document tools are namespaced (`scaffold_document`, `submit_document`, etc.) to distinguish them from entity operations while maintaining the verb-first naming pattern.
+
+`record_decision` was chosen over `create_decision` to reflect that decisions are *recorded* (they happened in conversation and are being captured), not *created* by the tool.
 
 ### Alternatives Considered
 
-- object-specific operation naming
-- generic CRUD-like naming
-- mixed approach
+- **Object-specific naming for all operations** — `create_epic`, `get_epic`, `update_epic_status`, etc. Would produce ~35 tools with heavy duplication. Rejected for redundancy.
+- **Generic CRUD naming for all operations** — `create_entity`, `get_entity`, `update_entity`, etc. Would require all tools to accept `entity_type` and conditionally validate fields. Rejected because creation schemas differ significantly per type, making a single tool confusing.
+- **Mixed approach** (chosen) — type-specific creation, generic retrieval/update. Balances explicitness with compactness.
 
 ### Consequences
 
-To be determined.
+- agents must use the correct type-specific tool for creation but can use generic tools for retrieval and updates
+- the tool surface is compact (20 tools) while remaining explicit about per-type creation requirements
+- adding a new entity type requires adding a new `create_*` tool but no changes to `get_entity`, `list_entities`, `update_status`, or `update_entity`
+- document operations are clearly separated from entity operations by naming convention
 
 ### Follow-up Needed
 
-- define exact operation set and semantics
+- ~~define exact operation set and semantics~~ — **Resolved:** documented above from implementation in `internal/mcp/`
 
 ---
 
 ## `P1-DEC-012: CLI mapping`
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-03-18
+- Accepted: 2026-07-24
 - Scope: secondary interface
 - Related:
   - `work/plan/phase-1-implementation-plan.md`
   - `work/design/workflow-design-basis.md` §6.2
+  - P1-DEC-011 (MCP operation names)
 
 ### Decision
 
-To be determined. The following design constraint is established:
+The CLI follows the **verb-first, then object** pattern established during the proposal phase. The binary is `kanbanzai`; `kbz` is intended as a symlink alias for human use.
 
-**CLI commands should read like English wherever possible.** Prefer `kbz create epic` over `kbz epic create`. The verb comes first, then the object. When a natural English phrasing doesn't fit an operation, consult rather than force the pattern.
+All output is **plain text** — key-value lines for single entities, tab-separated columns for lists. No JSON or YAML output from the CLI.
 
-The CLI is a human interface — it is secondary to MCP for agents, but it is the primary way humans interact with the tool directly. Its design is a user interface question, not an implementation detail.
+#### Top-level commands
+
+| Command | Description |
+|---|---|
+| `help`, `-h`, `--help` | Print usage text |
+| `version`, `--version` | Print version string |
+| `serve` | Start MCP server (stdio transport) |
+| `create <entity>` | Create a workflow entity |
+| `get <entity>` | Retrieve a single entity |
+| `list <collection>` | List all entities of a type |
+| `update <subcommand>` | Update entity status or fields |
+| `doc <subcommand>` | Document management |
+| `health` | Run health check against canonical state |
+| `validate` | Validate a candidate entity without persisting |
+| `cache <subcommand>` | Manage local derived cache |
+
+#### `create <entity> [flags]`
+
+| Entity | Required flags | Optional flags |
+|---|---|---|
+| `epic` | `--slug`, `--title`, `--summary`, `--created_by` | — |
+| `feature` | `--slug`, `--epic`, `--summary`, `--created_by` | — |
+| `task` | `--slug`, `--feature`, `--summary` | — |
+| `bug` | `--slug`, `--title`, `--reported_by`, `--observed`, `--expected` | `--severity`, `--priority`, `--type` |
+| `decision` | `--slug`, `--summary`, `--rationale`, `--decided_by` | — |
+
+Output: `created <type>\nid: …\nslug: …\npath: …`
+
+#### `get <entity> [flags]`
+
+Entities: `epic`, `feature`, `task`, `bug`, `decision`. Accepts `--id` or `--slug`.
+
+Output: `type: …\nid: …\nslug: …\npath: …\nstatus: …`
+
+#### `list <collection>`
+
+Uses **plural** names: `epics`, `features`, `tasks`, `bugs`, `decisions`.
+
+Output: header line, then one tab-separated row per entity (`id\tslug\tpath\tstatus`).
+
+#### `update status [flags]`
+
+Flags: `--type` (or `--entity`), `--id` or `--slug`, `--status`.
+
+Output: `updated <type> status\nid: …\nslug: …\nold_status: …\nnew_status: …`
+
+#### `update fields [flags]`
+
+Flags: `--type`, `--id`, `--slug`, plus arbitrary `--<field>` flags for field updates. Cannot change `id` or `status`.
+
+#### `doc <subcommand> [flags]`
+
+| Subcommand | Required flags | Optional flags | Notes |
+|---|---|---|---|
+| `scaffold` | `--type` | `--title` | Outputs scaffolded content to stdout |
+| `submit` | `--type`, `--title`, `--created_by` | `--feature`, `--body` | If `--body` omitted, reads from stdin |
+| `approve` | `--type`, `--id`, `--approved_by` | — | |
+| `retrieve` | `--type`, `--id` | — | Outputs raw document body |
+| `validate` | `--type`, `--id` | — | |
+| `list` | — | `--type` | Omit `--type` to list all |
+
+#### `health`
+
+No arguments. Runs integrity check on canonical state.
+
+Output: `health check\nentities: <n>\nerrors: <n>\nwarnings: <n>`, followed by error/warning lines.
+
+#### `validate [flags]`
+
+Flags: `--type` (required), plus arbitrary `--<field>` flags as candidate data.
+
+Output: `candidate is valid` or `validation errors: <n>` followed by error lines.
+
+#### `cache rebuild`
+
+Rebuilds local derived cache from canonical YAML files.
+
+Output: `cache rebuilt: <n> entities cached\npath: …`
 
 ### Rationale
 
-To be determined.
+The verb-first pattern (`kbz create epic`, `kbz list tasks`, `kbz update status`) reads like natural English and is consistent with common CLI conventions (e.g., `git`, `kubectl`). The one exception is `doc`, which groups all document operations under a namespace (`kbz doc submit`, `kbz doc approve`) rather than using `kbz submit doc`. This was a pragmatic choice — document operations are a distinct subsystem with their own lifecycle, and grouping them under `doc` makes discoverability easier than scattering them across top-level verbs.
+
+Plain text output was chosen over JSON/YAML because the CLI is a human interface. Structured output is available through the MCP server for agents. Tab-separated columns for lists enable easy piping to standard Unix tools (`cut`, `sort`, `grep`).
 
 ### Alternatives Considered
 
-- mirror MCP closely
-- present a more human-oriented CLI wrapper
-- keep CLI minimal and narrow
+- **Mirror MCP closely** — expose the same tool names and JSON output. Rejected because the CLI is a human interface; JSON output and tool-style naming (`create_epic`) are less natural at a terminal.
+- **Human-oriented CLI wrapper with rich formatting** — colour output, tables, interactive prompts. Rejected as over-engineering for Phase 1. Plain text is sufficient and avoids terminal compatibility issues.
+- **Minimal CLI** — only `serve` and a few debugging commands. Rejected because humans need direct access to entity operations for bootstrapping, debugging, and CI.
 
 ### Consequences
 
-To be determined.
+- the CLI is thin: it parses flags, calls the shared service layer, and formats output as plain text
+- adding new entity types requires adding `create` subcommands but generic commands (`get`, `list`, `update`) work without changes
+- the `doc` namespace is the one departure from pure verb-noun; this is acceptable and may be revisited if other subsystems need similar grouping
+- the `kbz` symlink is not yet created; only the `kanbanzai` binary exists
 
 ### Follow-up Needed
 
-- define command surface before implementation
-- consult on commands that don't naturally fit verb-noun English phrasing
+- ~~define command surface before implementation~~ — **Resolved:** documented above from implementation in `cmd/kanbanzai/main.go`
+- ~~consult on commands that don't naturally fit verb-noun English phrasing~~ — **Resolved:** only `doc` departs from verb-noun; the namespace approach was chosen pragmatically and works well
 
 ---
 
@@ -1302,33 +1436,78 @@ The chosen approach is staged template strictness: typed markdown with required 
 
 ## `P1-DEC-015: Bootstrap introduction strategy`
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-03-18
+- Accepted: 2026-07-24
 - Scope: self-use bootstrap
 - Related:
   - `work/design/product-instance-boundary.md`
+  - `work/spec/phase-1-specification.md` §22
+  - `work/plan/phase-1-implementation-plan.md` §12
+  - P1-DEC-005 (Phase 1 must support limited bootstrap self-use)
 
 ### Decision
 
-To be determined.
+Bootstrap self-hosting begins now. The kernel is substantially complete (all 5 entity types, lifecycle enforcement, CRUD, documents, health checks, CLI, and MCP are implemented and tested). The remaining work (ID migration, decision-log housekeeping) does not block initial self-use.
+
+#### What gets committed
+
+The `.kbz/` directory is committed to the repository. The project's workflow state is version-controlled alongside its code. The workflow state is at least as important as the code — theoretically the code can be re-created from the workflow, but not the reverse.
+
+#### Initial records
+
+- **One Epic** representing Phase 1 itself.
+- **Features** for the remaining Phase 1 work (ID migration, bootstrap, decision-log cleanup, etc.), with links to related documents.
+- **Decisions** — the existing 21 decisions in `work/plan/phase-1-decision-log.md` may be migrated into the tool if practical, but the decision log document remains the authoritative record. New decisions going forward should be recorded through the tool.
+- **Tasks** are a planning/implementation detail — they can be preplanned or planned just-in-time. Humans are not required to be involved in task-level planning. No backfilling of historical tasks is needed.
+- **Bugs** — no backfilling of historical bugs. New bugs are recorded through the tool going forward.
+
+#### Document backfill
+
+All existing documents in `work/` (designs, specifications, research, plans) must be preserved and should be registered in the tool as documents. These are the project's primary intellectual record. Entity records are less critical — they are an index into the documents and the work, not the work itself.
+
+#### Relationship to bootstrap workflow
+
+The current bootstrap workflow (`work/bootstrap/bootstrap-workflow.md`) continues to operate in tandem with the tool during the transition period. The two systems of record overlap temporarily. The bootstrap workflow retires when the tool is demonstrably sufficient for day-to-day use — this is a gradual transition, not a hard cutover.
+
+#### Backfill scope
+
+| Material | Backfill? | Rationale |
+|---|---|---|
+| Documents (designs, specs, research, plans) | Yes — all | Primary intellectual record; must not be lost |
+| Epics | Yes | Top-level work structure |
+| Features | Yes, with document links | Genuinely useful for tracing design-to-implementation; links between epics, features, and documents are valuable |
+| Tasks | No | Historical record of tasks completed is less important; effort outweighs value |
+| Bugs | No | Same reasoning as tasks |
+| Decisions | Best-effort | Migrate if practical; the decision log document remains authoritative |
 
 ### Rationale
 
-To be determined.
+The kernel is feature-complete enough for limited self-use. Delaying further would mean continuing to operate without the process the tool is designed to enforce, while the tool sits idle and untested on real work.
+
+Committing `.kbz/` to the repo is the natural choice for a Git-native workflow system — the workflow state *is* the project's process record and should be versioned, reviewable, and recoverable just like code.
+
+The selective backfill strategy (all documents, epics and features with links, skip tasks and bugs) reflects the relative value of each record type. Documents and their structural relationships are irreplaceable. Task-level history is ephemeral — knowing *what was designed* matters more than knowing *which agent worked on which task*.
 
 ### Alternatives Considered
 
-- start self-use only after kernel validation
-- create a minimal first epic/feature set early
-- defer self-use until after core CRUD + validation + docs support exist
+- **Start self-use only after kernel validation (including ID migration).** Would delay bootstrapping until TSID13 is implemented, which means initial records would never need migration. Rejected because the delay is unnecessary — sequential IDs work fine for bootstrap use, and migrating a small set of initial records is trivial.
+- **Create a minimal first epic/feature set early (before kernel is proven).** Would have started self-use before the tool was trustworthy. Rejected because premature self-use risks corrupted state and undermines confidence in the tool.
+- **Defer self-use until after core CRUD + validation + docs support exist.** This was the original deferral condition. It is now met — all of these capabilities exist and are tested.
 
 ### Consequences
 
-To be determined.
+- the `.kbz/` directory appears in the repository and is committed like any other project artifact
+- the bootstrap workflow and the tool coexist temporarily; the team must be clear about which system of record to consult during the transition
+- document backfill is a meaningful task — all documents in `work/` need to be registered through the tool's document submission flow
+- the product/instance boundary must be maintained carefully: `.kbz/` contains this project's instance state, not reusable product configuration
+- initial records use sequential IDs (the current allocator); these will be migrated when TSID13 is implemented
 
 ### Follow-up Needed
 
-- choose explicit bootstrap milestone and first records
+- ~~choose explicit bootstrap milestone and first records~~ — **Resolved:** documented above. Bootstrap begins now with the scope described.
+- create the initial Epic, Features, and document registrations
+- determine the explicit retirement criteria for the bootstrap workflow
 
 ---
 
