@@ -322,14 +322,79 @@ This is not a library. There is no `pkg/` directory.
 
 ## Codebase Knowledge Graph (`codebase-memory-mcp`)
 
-This project uses `codebase-memory-mcp` for structural code exploration. Prefer graph tools over file-by-file search for questions about code structure, dependencies, callers and callees, routes, hotspots, and architecture.
+This project is indexed in `codebase-memory-mcp` under the project name **`Users-samphillips-Dev-kanbanzai`** with root path `/Users/samphillips/Dev/kanbanzai`.
 
-The graph auto-syncs after the initial index. If it seems stale, run `index_repository(repo_path="/absolute/path/to/kanbanzai")` to force a refresh.
+The graph is the preferred way to explore code structure. Use it **instead of** `grep` or `find_path` whenever you need to understand definitions, relationships, callers, callees, dependencies, or architecture.
+
+### When to use graph tools (preferred)
+
+| Question | Tool | Example |
+|----------|------|---------|
+| What does a function/type look like? | `get_code_snippet` | `get_code_snippet(qualified_name="EntityService.Get")` |
+| Who calls this function? | `trace_call_path` | `trace_call_path(function_name="ResolvePrefix", direction="inbound")` |
+| What does this function call? | `trace_call_path` | `trace_call_path(function_name="Get", direction="outbound")` |
+| Find a function/class/type by name | `search_graph` | `search_graph(name_pattern="Allocat")` |
+| Understand package structure | `get_architecture` | `get_architecture(project="Users-samphillips-Dev-kanbanzai")` |
+| Complex cross-package queries | `query_graph` | Cypher queries for multi-hop analysis |
+
+### When to use text search (fallback)
+
+Use `grep` only for content that is not structural:
+
+- String literals and error messages
+- Config values and magic constants
+- YAML field names in test fixtures
+- Comments and documentation text
+- Broad "does this string appear anywhere?" sweeps
+
+Use `find_path` only when searching by filename pattern, not by code content.
+
+### Keeping the graph current
+
+The graph auto-syncs after the initial index. If results seem stale or the project is missing from `list_projects`, force a refresh:
+
+```
+index_repository(repo_path="/Users/samphillips/Dev/kanbanzai")
+```
 
 ### Fallback policy
 
-- Use graph queries first for structural questions.
-- Use text search (`grep`) for string literals, error messages, config values, and other non-structural content.
-- Use `search_graph` to discover exact names before `trace_call_path`.
-- Check `list_projects` first; if the project is missing or stale, run `index_repository`.
-- When agent-native skills or instruction files are available, prefer those over duplicating long tool-usage instructions in this repository.
+1. Use graph queries first for structural questions.
+2. Use `search_graph` to discover exact qualified names before `trace_call_path` or `get_code_snippet`.
+3. Fall back to `grep` only for non-structural content searches.
+4. Fall back to `read_file` only when you need to see exact file content that the graph doesn't cover (e.g., full test bodies, YAML fixtures).
+
+---
+
+## Delegating to Sub-Agents
+
+When you spawn sub-agents (via `spawn_agent`), those agents do **not** see this file. They only know what you tell them. This means critical project context — tool preferences, conventions, the knowledge graph — is lost unless you explicitly propagate it.
+
+### Required context for every sub-agent
+
+Include the following in every `spawn_agent` message:
+
+1. **Codebase knowledge graph availability:**
+
+   > This project is indexed in `codebase-memory-mcp` as project `Users-samphillips-Dev-kanbanzai`. Prefer graph tools over grep/find for structural code questions:
+   > - `search_graph(name_pattern="...", project="Users-samphillips-Dev-kanbanzai")` to find functions, types, classes
+   > - `get_code_snippet(qualified_name="...", project="Users-samphillips-Dev-kanbanzai")` to read a specific symbol
+   > - `trace_call_path(function_name="...", project="Users-samphillips-Dev-kanbanzai")` to find callers/callees
+   > - `get_architecture(project="Users-samphillips-Dev-kanbanzai")` for package structure
+   > Use `grep` only for string literals, error messages, and non-structural content.
+
+2. **File scope boundaries** — which files the agent should and should not modify (to avoid conflicts with parallel agents).
+
+3. **Any relevant project conventions** — e.g., commit message format, test conventions, Go style rules — if the agent will be committing or writing tests.
+
+### Propagation rule
+
+If a sub-agent may itself spawn further sub-agents, include this instruction:
+
+> When you delegate work to sub-agents, include the codebase-memory-mcp context (project name, tool preferences) in your delegation message. Sub-agents do not see project instructions automatically.
+
+This ensures the context propagates through any depth of delegation, not just one level.
+
+### Why this matters
+
+Without this context, sub-agents will default to `grep` and `read_file` for everything — scanning files line by line instead of using the indexed graph. This is slower, noisier, and misses structural relationships that the graph captures directly.
