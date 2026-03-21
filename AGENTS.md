@@ -110,6 +110,20 @@ Then refer to these as needed:
 | Machine context model (Phase 2) | `work/design/machine-context-design.md` | kbz |
 | Document intelligence (Phase 2) | `work/design/document-intelligence-design.md` | kbz |
 
+## Communicating With Humans
+
+Documents are the human interface to the system. Decision records and their IDs are internal tracking mechanisms — important for system integrity and useful for agents, but not how humans navigate the project.
+
+When talking with humans:
+
+- Reference **documents** by name: "the ID system design", "the Phase 1 spec §10"
+- Use **prose descriptions** of decisions: "the decision about cache-based locking"
+- Do **not** lead with decision IDs: ~~"P1-DEC-021 defines the ID format"~~
+
+Decision IDs don't carry enough context for a human to act on without querying the system. A document name or a prose summary is immediately meaningful. Save decision IDs for commit messages, entity cross-references, and agent-to-agent communication.
+
+This rule is also codified in the agent interaction protocol (`work/design/agent-interaction-protocol.md` §6.11).
+
 ## Decision-Making Rules
 
 When making a non-trivial change to any document or code:

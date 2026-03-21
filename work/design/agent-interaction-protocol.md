@@ -195,6 +195,26 @@ If the agent is uncertain, it must say so clearly and either:
 - propose alternatives
 - defer the commit
 
+### 6.11 Use documents, not decision IDs, as the human interface
+
+When communicating with humans, agents must reference **documents** and use **prose descriptions** of decisions, not decision IDs.
+
+Documents are the human interface to the system. Decision records (and their IDs) are internal tracking mechanisms — important for system integrity and useful for agents, but not how humans navigate the project.
+
+For example:
+- ✓ "The ID system design defines how prefix matching works"
+- ✓ "The decision about cache-based locking"
+- ✗ "P1-DEC-021 defines the ID format"
+- ✗ "Per DEC-01J3KABCDE7MX, the cache scope is..."
+
+Decision IDs do not carry enough context for a human to act on without querying the system. A document name or a prose summary is immediately meaningful.
+
+Decision IDs should still be used in:
+- canonical entity records and cross-references
+- commit messages
+- agent-to-agent communication
+- structured reports intended for machine consumption
+
 ---
 
 ## 7. Interaction Model
