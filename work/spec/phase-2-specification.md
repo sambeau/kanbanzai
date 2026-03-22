@@ -384,7 +384,7 @@ Document records must be stored as one YAML file per record in `.kbz/state/docum
 
 The system must support:
 
-- **Submit** — register a document with the system, creating a document record in `draft` status. The system must compute and store the content hash.
+- **Submit** — register a document with the system, creating a document record in `draft` status. The system must compute and store the content hash. Submission includes Layers 1–2 ingest: the system must parse the document's structural skeleton and run pattern-based extraction, returning the skeleton to the caller for optional Layer 3 classification. Submit and ingest are a single operation — there is no reason to register a document without indexing it.
 - **Approve** — transition a document from `draft` to `approved`. The system must record the approver, the approval time, and update the content hash. Approval must trigger the appropriate lifecycle transition on the owning entity.
 - **Supersede** — transition a document from `approved` to `superseded`, linking to the superseding document. Supersession must trigger the appropriate backward transition on the owning entity.
 - **Retrieve** — return a document record and/or its content. Approved documents must be returned verbatim — the system must not alter canonical prose.
@@ -412,7 +412,11 @@ The system must validate:
 - The `content_hash` matches the file on disk (at registration and approval time)
 - Referential integrity: the `owner` entity exists
 
-### 11.6 Verbatim retrieval
+### 11.6 Content hash drift detection
+
+When the system reads a document record, it must compare the file's modification time against the record's `updated` timestamp. If the file is newer, the system must recompute the content hash and compare it to the stored hash. If the hashes differ, the document has drifted — the file was modified outside the system. The system must surface this as a warning on read and as an error in health checks. It must not silently serve drifted content as if it were the approved version.
+
+### 11.7 Verbatim retrieval
 
 Approved documents must be returned exactly as approved. The system must not re-render prose, alter formatting, or lose content during the store-and-retrieve cycle. The `content_hash` field must be usable to verify that the retrieved content matches the approved content.
 
@@ -707,7 +711,7 @@ Phase 2a must add MCP operations functionally equivalent to:
 
 **Document management operations:**
 
-- Submit document (register with metadata, compute content hash)
+- Submit document (register with metadata, compute content hash, run Layers 1–2 ingest, return structural skeleton)
 - Approve document (transition to approved, trigger entity lifecycle)
 - Supersede document (link to successor, trigger entity backward transition)
 - Get document record
@@ -716,7 +720,6 @@ Phase 2a must add MCP operations functionally equivalent to:
 
 **Document intelligence operations:**
 
-- Ingest document (run Layers 1–2, return structural skeleton)
 - Classify document (submit Layer 3 classifications from agent)
 - Get document outline (structural section tree)
 - Get document section (by section path)
@@ -879,10 +882,11 @@ Feature lifecycle transitions must be driven by document approvals:
 
 It must be possible to:
 
-- Submit a document (creating a tracked record in `draft` status)
+- Submit a document (creating a tracked record in `draft` status, running Layers 1–2 ingest, and returning the structural skeleton)
 - Approve a document (transitioning to `approved` with approver and timestamp)
 - Supersede a document (linking to the successor document)
 - Retrieve an approved document verbatim — the content must match the stored content hash
+- Detect content hash drift when a file has been modified outside the system
 - List documents filtered by type, status, and owner
 - Query a document's supersession chain
 
@@ -970,8 +974,6 @@ The system must support:
 2. Exact YAML field order for Plan entities and document records
 3. Exact ID-to-filename mapping for document records (the `{owner-id}/{slug}` format needs a filesystem-safe encoding)
 4. Exact cache schema for document metadata, document graph, and rich queries
-5. Exact behaviour when a document file is modified outside the system (content hash mismatch detection timing)
-6. How `doc_ingest` interacts with `submit_document` — are these the same operation or separate steps?
 
 ### 23.2 Phase 2b
 
