@@ -216,9 +216,11 @@ The Plan provides direction. The Feature is what gets designed and built.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `id` | string | yes | Format: `{X}{n}-{slug}` |
+| `id` | string | yes | Format: `{X}{n}-{slug}`, human-assigned |
+| `slug` | string | yes | Derived from ID (portion after `{X}{n}-`) |
 | `title` | string | yes | Human-readable title |
 | `status` | enum | yes | Current lifecycle state |
+| `summary` | string | yes | Brief description |
 | `design` | string | no | Reference to design document record |
 | `tags` | list of strings | no | Freeform tags |
 | `created` | timestamp | yes | Creation time |
@@ -226,6 +228,8 @@ The Plan provides direction. The Feature is what gets designed and built.
 | `updated` | timestamp | yes | Last modification time |
 | `supersedes` | string | no | ID of the Plan this supersedes |
 | `superseded_by` | string | no | ID of the Plan that supersedes this |
+
+Plan does not store a `features` list. The association between Plans and Features is defined by the Feature's `parent` field. To list a Plan's Features, query Features where `parent` matches the Plan ID. This follows the "one canonical fact in one place" principle.
 
 ### 8.2 Feature minimum fields (revised)
 
@@ -970,10 +974,140 @@ The system must support:
 
 ### 23.1 Phase 2a
 
-1. Exact MCP operation names and request/response shapes for Plan operations, document management operations, and document intelligence operations
-2. Exact YAML field order for Plan entities and document records
-3. Exact ID-to-filename mapping for document records (the `{owner-id}/{slug}` format needs a filesystem-safe encoding)
-4. Exact cache schema for document metadata, document graph, and rich queries
+All Phase 2a implementation questions have been resolved.
+
+**1. MCP operation names and request/response shapes**
+
+**Resolved.** Phase 2a follows P1-DEC-011 naming conventions: type-specific creation tools, generic retrieval/update tools, namespaced document and doc-intelligence tools.
+
+Plan operations (1 new tool; existing generic tools extended):
+
+| Tool | Required parameters | Notes |
+|---|---|---|
+| `create_plan` | `id`, `title`, `summary`, `created_by` | Caller provides full ID (e.g., `P2-basic-ui`). System validates format, checks prefix against registry, derives `slug`, sets `status: proposed` |
+| `get_entity` | `entity_type: plan`, `id` | Existing generic tool, extended for Plans |
+| `list_entities` | `entity_type: plan` | Extended with `status`, `prefix`, `tags` filters |
+| `update_status` | `entity_type: plan`, `id`, `status` | Validates transition per §9.1 |
+| `update_entity` | `entity_type: plan`, `id`, fields | Cannot change `id` or `status` |
+
+Document management operations (7 tools; revise Phase 1 document tools):
+
+| Tool | Required parameters | Optional parameters | Notes |
+|---|---|---|---|
+| `scaffold_document` | `doc_type`, `title` | — | Retained from Phase 1 |
+| `submit_document` | `path`, `type`, `title`, `slug`, `created_by` | `owner` | Creates record in `draft`, computes content hash, runs Layers 1–2, returns record + structural skeleton. ID is `{owner}/{slug}` if owner is provided, `{slug}` if not |
+| `approve_document` | `id`, `approved_by` | — | Transitions to `approved`, updates content hash, triggers owning entity lifecycle transition |
+| `supersede_document` | `id`, `successor_id` | — | Transitions to `superseded`, sets `superseded_by`, sets successor's `supersedes`, triggers owning entity backward transition |
+| `get_document` | `id` | `content: bool` | Returns record; if `content: true`, includes file content verbatim |
+| `list_documents` | — | `type`, `status`, `owner` | All filters optional |
+| `validate_document` | `id` | — | Returns validation errors (hash mismatch, missing file, broken refs) |
+
+Phase 1 document tools removed: `update_document_body` (files are edited directly at their canonical path), `extract_from_document` (deferred to Phase 2b), `retrieve_document` (replaced by `get_document`).
+
+Document intelligence operations (10 tools):
+
+| Tool | Required parameters | Optional parameters | Layers required |
+|---|---|---|---|
+| `doc_classify` | `id`, `classifications` | — | Populates Layer 3; validates against taxonomy schema |
+| `doc_outline` | `id` | — | 1 |
+| `doc_section` | `id`, `section_path` | — | 1 |
+| `doc_find_by_entity` | `entity_id` | — | 2 |
+| `doc_find_by_concept` | `concept` | — | 3 |
+| `doc_find_by_role` | `role` | `scope` | 3 |
+| `doc_gaps` | `feature_id` | — | 1–2 |
+| `doc_pending` | — | — | 1 |
+| `doc_trace` | `entity_id` | — | 2–3 |
+| `doc_impact` | `section_id` | — | 3 |
+
+Configuration operations (1 tool):
+
+| Tool | Required parameters | Notes |
+|---|---|---|
+| `get_project_config` | — | Returns full config including prefix registry |
+
+Response conventions follow P1-DEC-011: all tools return `mcp.CallToolResult` payloads with JSON-serialised structured data. Errors are MCP error payloads, not transport-level failures.
+
+**2. YAML field order for Plan entities and document records**
+
+**Resolved.** Field order follows the Phase 1 convention: identity → status → content → documents → relationships → tags → timestamps → supersession.
+
+Plan field order: `id`, `slug`, `title`, `status`, `summary`, `design`, `tags`, `created`, `created_by`, `updated`, `supersedes`, `superseded_by`
+
+Feature field order (revised): `id`, `slug`, `parent`, `status`, `summary`, `design`, `spec`, `dev_plan`, `tasks`, `decisions`, `tags`, `branch`, `created`, `created_by`, `supersedes`, `superseded_by`
+
+Document record field order: `id`, `path`, `type`, `title`, `status`, `owner`, `approved_by`, `approved_at`, `content_hash`, `supersedes`, `superseded_by`, `created`, `created_by`, `updated`
+
+**3. Document record ID-to-filename mapping**
+
+**Resolved.** The document record ID format `{owner-id}/{slug}` contains a slash. In filenames, the slash is replaced with `--` (double hyphen). The file extension is `.yaml`. For documents without an owner, the ID is just `{slug}` and the filename is `{slug}.yaml`.
+
+Examples:
+
+- ID `P2-basic-ui/design` → filename `P2-basic-ui--design.yaml`
+- ID `FEAT-A1B2C3D4E5F6G/specification` → filename `FEAT-A1B2C3D4E5F6G--specification.yaml`
+- ID `FEAT-A1B2C3D4E5F6G/dev-plan` → filename `FEAT-A1B2C3D4E5F6G--dev-plan.yaml`
+- ID `commit-policy` (no owner) → filename `commit-policy.yaml`
+
+The `--` separator is unambiguous: entity ID slugs use single hyphens, and no entity ID contains `--`.
+
+**4. Cache schema for document metadata, document graph, and rich queries**
+
+**Resolved.** The SQLite cache (`.kbz/cache/kbz.db`) is extended with three new tables and one column addition. The cache remains derived, non-canonical, and rebuildable. `rebuild_cache` is extended to populate all new tables from canonical YAML state and index files.
+
+The existing `entities` table gains a `tags_json` column (JSON array of tag strings) with an index on each tag value.
+
+New `documents` table:
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | text, primary key | |
+| `path` | text | Path to the document file |
+| `type` | text | Document type enum |
+| `title` | text | |
+| `status` | text | `draft`, `approved`, `superseded` |
+| `owner` | text, nullable | Owning Plan or Feature ID |
+| `approved_by` | text, nullable | |
+| `approved_at` | text, nullable | ISO 8601 |
+| `content_hash` | text | SHA-256 |
+| `supersedes` | text, nullable | |
+| `superseded_by` | text, nullable | |
+| `created` | text | ISO 8601 |
+| `created_by` | text | |
+| `updated` | text | ISO 8601 |
+| `file_path` | text | Path to the YAML record file |
+
+Indexes: `type`, `status`, `owner`, `(type, status)`.
+
+New `doc_sections` table:
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | integer, primary key | Auto-increment |
+| `doc_id` | text | Foreign key → documents |
+| `section_path` | text | Path in section tree |
+| `level` | integer | Heading level |
+| `title` | text | |
+| `byte_offset` | integer | |
+| `byte_count` | integer | |
+| `word_count` | integer | |
+| `content_hash` | text | |
+| `role` | text, nullable | Populated by Layer 3 |
+| `role_confidence` | text, nullable | `high`, `medium`, `low` |
+| `summary` | text, nullable | Layer 3 section summary |
+| `concepts_json` | text, nullable | JSON: introduced and used concepts |
+| `entity_refs_json` | text, nullable | JSON: entity references |
+
+Indexes: `doc_id`, `role`, `(doc_id, level)`.
+
+New `tags` table:
+
+| Column | Type | Notes |
+|---|---|---|
+| `entity_type` | text | |
+| `entity_id` | text | |
+| `tag` | text | |
+
+Primary key: `(entity_type, entity_id, tag)`. Indexes: `tag`, `(entity_type, tag)`.
 
 ### 23.2 Phase 2b
 
