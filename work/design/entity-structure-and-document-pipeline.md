@@ -47,7 +47,7 @@ Additionally, naming Phase 1's "Epic" proved contentious. "Epic" implies size ra
 
 1. **Documents and entities serve different purposes at different times.** During design, documents are primary — the designer thinks in documents. During implementation, entities are primary — agents work on tasks and track status. During review, both matter.
 
-2. **The document pipeline is the feature lifecycle, viewed from the designer's perspective.** "This feature is in design" means "we have design documents but no spec." "This feature is specified" means "we have an approved spec." The lifecycle is derivable from document state.
+2. **The document pipeline is the feature lifecycle, viewed from the designer's perspective.** "This feature is in design" means "we have a design document in progress." "This feature is specified" means "we have an approved spec." The lifecycle is driven by document approvals.
 
 3. **Entity types are distinguished by purpose, not size.** The system does not need "big features" and "small features." It needs entities with genuinely different lifecycles, ownership patterns, and structural roles.
 
@@ -67,42 +67,71 @@ The system has two entity types above Task, distinguished by purpose:
 
 | Entity | Purpose | Phase of work | Primary owner |
 |--------|---------|---------------|---------------|
-| **Plan** | Coordinate design work; explore a problem space; birth features when designs become specifications | Design | Human (designer) |
-| **Feature** | Track delivery of a concrete, specified piece of work through planning, implementation, and verification | Delivery | Shared (human approves, agents implement) |
+| **Plan** | Coordinate a body of work; provide direction; organise Features | Direction and coordination | Human (designer) |
+| **Feature** | Track delivery of a concrete piece of work through design, specification, planning, implementation, and verification | Design through delivery | Shared (human approves, agents implement) |
 
-The Plan is where design happens. A Feature is what gets built.
+The Plan provides direction. The Feature is what gets designed and built.
 
 The Plan has a **user-defined ID prefix** that lets each project name and categorise its Plans. See §4.6 for the ID scheme and §4.7 for the prefix registry. Throughout this document, examples use prefixes like `P`, `D`, `F`, but the system does not prescribe these — each project declares its own.
 
 ### 4.2 The Plan entity
 
-The Plan is a coordinated effort to explore a problem area, produce design documents, make decisions, and eventually carve out specifications that define concrete deliverables.
+The Plan is a coordination entity that organises a body of work, provides high-level direction, and groups related Features.
 
 A Plan:
 
-- owns one or more design documents
+- has one special document (type: `design`) that serves as its roadmap and direction
 - may own research reports and other exploratory material
-- accumulates decisions made during design
-- births Features when designs become specifications
-- may birth multiple Features over its lifetime
+- accumulates decisions made during its scope
+- organises Features — they can be added, removed, or re-parented at any time
 - does not have tasks, does not get "implemented"
 
-A Plan is active for as long as design work continues in its problem space. It may be long-lived. It is not a time-boxed container. It closes when the design space is considered mature and no further features are expected from it — or it may remain open indefinitely.
+A Plan's lifecycle is driven by its design document:
+
+**States:** `proposed → designing → active → done`
+
+**Transitions:**
+
+- `proposed → designing` — Plan's design document is created (draft)
+- `designing → active` — Plan's design document is approved
+- `active → done` — manual, human judgment ("this body of work is complete")
+
+**Terminal states:** `superseded` (replaced by another Plan), `cancelled` (dropped)
+
+A Plan in `active` can have Features added, removed, or re-parented at any time. The `done` transition is manual closure — it is not derived from child Feature state. A Plan may remain `active` indefinitely.
 
 ### 4.3 Feature
 
-A Feature is born when a specification is carved out of a Plan. A Feature is a concrete, independently deliverable piece of work with a clear scope defined by its specification.
+A Feature is a concrete, independently deliverable piece of work. Features are born at `proposed` — potentially before any documents exist — and progress through a document-driven lifecycle.
 
 A Feature:
 
-- is born from a specification (the primary path)
-- owns exactly one specification document
-- owns a dev plan document (when planning begins)
+- has up to three special documents: `design`, `specification`, `dev-plan`
+- the design document is optional — straightforward Features can skip design
 - owns tasks (born from the dev plan)
-- tracks delivery lifecycle: specifying → specified → planned → in-progress → done
-- links back to its parent Plan for design context
+- may link to a parent Plan, or may exist without one
+- tracks a document-driven lifecycle from proposal through delivery
 
-A Feature does not exist until it has a specification, or at minimum a specification in progress. A Feature without a spec is a design idea that hasn't crossed the design-to-delivery boundary yet — it belongs in a Plan.
+**States:** `proposed → designing → specifying → dev-planning → developing → done`
+
+**Transitions (forward):**
+
+- `proposed → designing` — design document is created (draft)
+- `proposed → specifying` — shortcut for straightforward Features that skip design
+- `designing → specifying` — design document is approved
+- `specifying → dev-planning` — specification is approved
+- `dev-planning → developing` — dev plan is approved
+- `developing → done` — all tasks are complete
+
+**Terminal states:** `superseded` (replaced by another Feature), `cancelled` (dropped)
+
+**Backward transitions** happen via document supersession, not explicit state changes:
+
+- If an approved design is superseded → Feature reverts to `designing`
+- If an approved spec is superseded → Feature reverts to `specifying`
+- If an approved dev plan is superseded → Feature reverts to `dev-planning`
+
+Feature status is stored but auto-updated. The rule: a Feature's status reflects the highest phase for which all prerequisite documents are approved (plus task completion for `done`).
 
 ### 4.4 Task
 
@@ -114,12 +143,13 @@ Tasks remain as defined in Phase 1. No structural change is needed.
 
 ```
 Plan (P2-basic-ui, D3-auth-redesign, etc.)
-  └── design documents (exploratory, iterative)
+  └── design document (roadmap / direction for the body of work)
   └── research reports
   └── decisions
-  └── births Features when designs → specs
+  └── Features (created at proposed, assigned to Plan)
         │
-Feature (delivery unit)
+Feature (design-through-delivery unit)
+  ├── design document (optional — detailed design for this Feature)
   ├── specification document (defines scope)
   ├── dev plan document (decomposes work)
   └── tasks (implementation units)
@@ -173,7 +203,7 @@ While the system can identify Plans by pattern alone, each project **must declar
 $ kbz status
 Phases:
   P2-basic-ui          active    (3 features, 1 in-progress)
-  P3-advanced-ui       exploring (0 features)
+  P3-advanced-ui       designing (0 features)
 
 Tracks:
   F1-frontend-core     active    (2 features, 2 done)
@@ -259,62 +289,72 @@ Tags serve different organisational needs:
 
 ## 5. The Document Pipeline as Feature Lifecycle
 
-A Feature's lifecycle status is derivable from its document and task state:
+A Feature's lifecycle is driven by document approvals and task completion. The status reflects what work is currently happening:
 
-| Document/task state | Feature status |
-|---------------------|----------------|
-| Spec in progress (draft, not yet approved) | `specifying` |
-| Spec approved | `specified` |
-| Dev plan approved | `planned` |
-| Tasks created, work in progress | `in-progress` |
+| Current state | Feature status |
+|---------------|----------------|
+| Feature exists, no design work started | `proposed` |
+| Design document exists (draft) | `designing` |
+| Design approved, spec in progress | `specifying` |
+| Spec approved, dev plan in progress | `dev-planning` |
+| Dev plan approved, tasks in progress | `developing` |
 | All tasks completed and verified | `done` |
 
-This means the Feature entity does not need an independently managed status field that is manually kept in sync with document state. The status is a projection of document and task reality. The system computes it.
+Feature status is stored and auto-updated by document approvals. Backward transitions occur via document supersession (e.g., if an approved spec is superseded, the Feature reverts to `specifying`).
 
-There is minimal independent state on a Feature that is not derivable from its documents and tasks:
+The minimal independent state on a Feature:
 
 - `id`, `slug` — identity
-- `parent` — parent Plan ID
-- `spec` — link to specification document
+- `parent` — parent Plan ID (nullable)
+- `status` — current lifecycle state (auto-updated)
+- `design` — link to design document (when it exists)
+- `spec` — link to specification document (when it exists)
 - `dev_plan` — link to dev plan document (when it exists)
 - `created`, `created_by` — provenance
 - `supersedes`, `superseded_by` — versioning
 - `tags` — organisational metadata
 
-Status, progress, and readiness are computed, not stored.
-
 ---
 
-## 6. The Spec-Births-Feature Principle
+## 6. The Document-Driven Feature Pipeline
 
 ### 6.1 The primary path
 
 The normal flow is:
 
-1. A designer works within a Plan, producing design documents.
-2. When a design is sufficiently mature, the designer (or an agent, with human approval) writes a specification.
-3. The act of creating a specification births a Feature. The Feature is linked to the Plan and owns the specification.
-4. The Feature then follows the delivery pipeline: dev plan → tasks → implementation → verification.
+1. A Plan is created to coordinate a body of work. Its design document provides direction.
+2. Features are created at `proposed` and assigned to the Plan.
+3. Each Feature goes through its own document-driven lifecycle: design → specification → dev plan → implementation → verification.
+4. Document approvals gate transitions between phases. The Feature's status auto-updates as documents are approved.
 
-### 6.2 Scoping principle: one spec, one feature
+Design is optional per Feature. Straightforward Features can skip from `proposed` directly to `specifying`.
 
-A specification should be scoped to a single independently deliverable piece of work. If a specification covers two independent things, it should be two specifications — and therefore two features.
+### 6.2 Scoping principle: one spec, one Feature
+
+A specification should be scoped to a single independently deliverable piece of work. If a specification covers two independent things, it should be two specifications — and therefore two Features.
 
 This is a scoping principle, not a hard system constraint. The system should encourage it (through guidance, documentation, and agent behaviour) but not enforce it mechanically.
 
-### 6.3 The secondary path: bottom-up features
+### 6.3 The secondary path: bottom-up Features
 
-Not all features originate from Plan work. Some arise from:
+Not all Features originate from Plan work. Some arise from:
 
 - a bug investigation that reveals the need for a significant fix
 - an operational need identified during implementation
 - a quick improvement spotted during other work
 
-For these cases, a Feature may be created directly with a specification, without a parent Plan. This is the secondary path. It is legitimate but should be the exception rather than the norm for substantial work.
+For these cases, a Feature may be created at `proposed` without a parent Plan. Its `parent` field is null. It still follows the same document-driven lifecycle. It can be assigned to a Plan later if one is created to coordinate related work.
 
-If a bottom-up feature grows complex enough to need design exploration, the system should encourage creating a Plan to house that exploration rather than trying to do design work within a Feature.
+### 6.4 Plan-Feature relationship
 
-### 6.4 Cross-cutting documents
+The Plan is a coordination entity, not a strict container:
+
+- Features can exist with or without a parent Plan.
+- Features can be assigned to or moved between Plans at any time.
+- A Plan's status is manually managed (for closure), not derived from child Feature state.
+- Both "ideal" (Plan first, then Features) and "loose" (Features first, grouped into Plan later) patterns work with the same mechanism.
+
+### 6.5 Cross-cutting documents
 
 Some documents do not belong to any specific Plan or Feature:
 
@@ -334,20 +374,20 @@ The `Epic` entity type from Phase 1 is replaced by the Plan with user-defined pr
 
 | Aspect | Epic (Phase 1) | Plan (Phase 2) |
 |--------|----------------|-------------------------------|
-| Purpose | Group related features | Coordinate design work, birth features |
+| Purpose | Group related features | Coordinate a body of work, provide direction, organise Features |
 | ID format | `EPIC-{slug}` (fixed prefix) | `{X}{n}-{slug}` (user-defined prefix) |
 | Naming | Fixed ("Epic") | Project-defined via prefix registry |
-| Lifecycle | Informal | Design-oriented: exploring → active → mature → closed |
-| Owns | Feature references | Design documents, research, decisions |
-| Relationship to features | Grouping (contains) | Generative (births) |
-| Document role | None | Primary home for design documents |
+| Lifecycle | Informal | `proposed → designing → active → done` (terminal: `superseded`, `cancelled`) |
+| Owns | Feature references | Its design document (roadmap) + Feature references |
+| Relationship to Features | Grouping (contains) | Coordination (organises); Features can be re-parented |
+| Document role | None | Owns a design document that serves as roadmap/direction |
 | Nesting | Not addressed | Explicitly flat; cross-cutting via tags |
 
 Migration path: existing Epic entities become Plans. The `epic` field on Feature entities is renamed to `parent`. The project must declare at least one prefix in the registry. See §10 for migration details.
 
 ### 7.2 Feature gains document ownership
 
-Feature retains its core Phase 1 role but gains explicit, tracked relationships to its specification and dev plan documents. The `spec` and `dev_plan` fields (optional strings in Phase 1) become references to tracked document records with lifecycle metadata.
+Feature retains its core Phase 1 role but gains explicit, tracked relationships to up to three special documents: design, specification, and dev plan. The `spec` and `dev_plan` fields (optional strings in Phase 1) become references to tracked document records with lifecycle metadata. A new `design` field is added for the optional design document.
 
 ### 7.3 Deferred entity types — resolved
 
@@ -357,9 +397,9 @@ The Phase 1 specification (§7.1) deferred twelve entity types. This design reso
 |---------------|------------|
 | `Specification` | **Not a separate entity type.** A specification is a document with tracked lifecycle metadata, owned by a Feature. It does not need its own entity type — it is a document, not a workflow object. |
 | `Dev Plan` | **Not a separate entity type.** A dev plan is a document with tracked lifecycle metadata, owned by a Feature. Same reasoning. (This was listed as `Plan` in the Phase 1 specification; that name now refers to the entity type that replaces Epic.) |
-| `Design` | **Not a separate entity type.** A design is a document with tracked lifecycle metadata, owned by a Plan. Same reasoning. |
+| `Design` | **Not a separate entity type.** A design is a document with tracked lifecycle metadata, owned by a Plan or a Feature. Same reasoning. |
 
-These document types have lifecycle (draft → review → approved → superseded) and metadata (author, approval status, dates, links). But they are tracked as documents with structured metadata, not as workflow entities with their own MCP operations and lifecycle state machines. The document intelligence layer provides the indexing and querying capabilities.
+These document types have lifecycle (`draft → approved → superseded`) and metadata (author, approval status, dates, links). But they are tracked as documents with structured metadata, not as workflow entities with their own MCP operations and lifecycle state machines. The document intelligence layer provides the indexing and querying capabilities.
 
 The remaining nine deferred types (`Project`, `Milestone`, `Approval`, `Release`, `Incident`, `RootCauseAnalysis`, `ResearchNote`, `KnowledgeEntry`, `TeamMemoryEntry`) are unaffected by this design and remain deferred.
 
@@ -369,12 +409,13 @@ Documents owned by Plans and Features have their own lifecycle:
 
 | Status | Meaning |
 |--------|---------|
-| `draft` | In progress, not yet submitted for review |
-| `review` | Submitted for human review |
+| `draft` | In progress; being written, discussed, and revised |
 | `approved` | Human-approved; canonical; returned verbatim on retrieval |
 | `superseded` | Replaced by a newer version; retained for history |
 
-This lifecycle is tracked as metadata on the document record, not as a separate entity. A document's approval status directly affects its owning entity's computed state (an approved spec means the Feature is at least `specified`).
+The `review` state is intentionally omitted. In an AI-mediated workflow, a document in `draft` is inherently in review — changes are discussed and applied conversationally, so there is no separate "waiting for review" state. The transition is directly from `draft` to `approved` when the human is satisfied.
+
+This lifecycle is tracked as metadata on the document record, not as a separate entity. A document's approval status directly drives its owning entity's lifecycle transitions (see §5).
 
 ---
 
@@ -386,24 +427,19 @@ The document-centric interface design (`document-centric-interface.md`) establis
 
 | Document type | Home | Entity effect |
 |---------------|------|---------------|
-| Proposal | Plan | May create the Plan itself; may surface initial design questions |
-| Draft design | Plan | Iterates on design thinking within the Plan |
-| Design | Plan | Finalises design thinking; may trigger spec readiness |
-| Specification | Feature (owned) | Births the Feature; defines its scope |
-| Dev plan | Feature (owned) | Decomposes the Feature into Tasks |
+| Proposal | Plan or Feature | May create a Plan or Feature at `proposed` |
+| Design (Plan level) | Plan | Roadmap/direction for the body of work; approval transitions Plan to `active` |
+| Design (Feature level) | Feature | Detailed design for the Feature; approval transitions Feature to `specifying` |
+| Specification | Feature (owned) | Approval transitions Feature to `dev-planning` |
+| Dev plan | Feature (owned) | Approval transitions Feature to `developing`; decomposes the Feature into Tasks |
 | Research report | Plan or project-level | May inform decisions; may create KnowledgeEntry records |
 | User documentation | Feature (linked) | Documents the delivered feature |
 
 ### 8.2 The design-to-delivery boundary
 
-The transition from Plan to Feature is the key structural boundary. It occurs when:
+The transition from design to delivery is a gradient within the Feature lifecycle, not a sharp structural boundary between entity types. A Feature progresses through design, specification, planning, and implementation — all within a single entity.
 
-1. A design within a Plan is judged mature enough to specify.
-2. A specification document is created (draft status).
-3. A Feature entity is created, linked to the Plan and owning the specification.
-4. The specification goes through review and approval.
-
-This is an agent-mediated process: the agent recognises that design work has reached spec-readiness, proposes creating a specification and birthing a feature, and the human approves.
+The Plan provides direction and coordination. The Feature owns the full design-through-delivery pipeline for its scope. Document approvals gate transitions between phases.
 
 ---
 
@@ -411,12 +447,12 @@ This is an agent-mediated process: the agent recognises that design work has rea
 
 The machine-context design (`machine-context-design.md`) defines how the system assembles targeted context for AI agents. The Plan → Feature structure affects context assembly:
 
-- An agent working on a **Task** receives: the task definition, the relevant sections of its Feature's specification and dev plan, relevant decisions from the parent Plan, and any applicable project-level policies.
-- An agent working on **design** within a Plan receives: the Plan's design documents, related research, decisions made so far, and relevant cross-cutting constraints.
-- An agent **creating a specification** receives: the mature design documents from the Plan, relevant decisions, and examples of existing specifications in the project.
+- An agent working on a **Task** receives: the task definition, the relevant sections of its Feature's specification and dev plan, the Feature's design document (if it exists), relevant decisions from the parent Plan, and any applicable project-level policies.
+- An agent working on **design** within a Feature receives: the Feature's design document, the parent Plan's design document (direction/roadmap), related research, decisions made so far, and relevant cross-cutting constraints.
+- An agent **creating a specification** receives: the Feature's approved design document, the parent Plan's direction, relevant decisions, and examples of existing specifications in the project.
 - An agent needing **project conventions** can query the prefix registry to understand the project's organisational structure without requiring external SKILL files.
 
-The Plan → Feature hierarchy provides a natural scoping mechanism for context assembly. Design context flows down from the Plan; implementation context stays within Feature.
+Design context lives primarily in the Feature's own design document. The Plan's design document provides broader direction and coordination context. Implementation context stays within Feature.
 
 ---
 
@@ -444,42 +480,33 @@ This migration should occur at the beginning of Phase 2 implementation, before n
 
 ## 11. Open Questions
 
-### 11.1 Plan lifecycle states
+### 11.1 Plan lifecycle states — RESOLVED
 
-The exact lifecycle states for a Plan need definition. A tentative model:
+Plan lifecycle: `proposed → designing → active → done`. Terminal states: `superseded`, `cancelled`.
 
-- `exploring` — initial design work, not yet focused
-- `active` — focused design work, may be birthing features
-- `mature` — design space well-understood, primarily birthing/supporting features
-- `closed` — no further design work expected
+- `proposed → designing` — Plan's design document is created
+- `designing → active` — Plan's design document is approved
+- `active → done` — manual, human judgment
 
-The transitions and constraints need to be specified. Key questions:
+A Plan does not auto-transition based on Feature state. Closure is a human decision.
 
-- Can a Plan move backward (e.g., `mature` → `active` if new design work is needed)?
-- Does a Plan auto-transition based on Feature state, or is it manually managed?
-- What happens to a Plan's Features when the Plan is closed?
+### 11.2 Can a Feature change its parent? — RESOLVED
 
-### 11.2 Can a Feature change its parent?
+Yes. Re-parenting is allowed. A Feature can be moved between Plans at any time as an administrative operation.
 
-If a Feature was born from one Plan but turns out to belong more naturally to another, can it be re-parented? Probably yes, as an administrative operation, but the constraints need definition.
+### 11.3 Parent-less Features — RESOLVED
 
-### 11.3 Parent-less Features
-
-The secondary path (§6.3) allows Features without a parent Plan. These Features simply have a null `parent` field.
+Yes. Features can exist without a parent Plan. The `parent` field is nullable. This supports the bottom-up secondary path (§6.3).
 
 ### 11.4 Document metadata schema
 
 The exact schema for tracked document metadata (lifecycle status, approval, authorship, links) needs definition. This is related to the document intelligence design and should be specified alongside it.
 
-### 11.5 Computed vs stored Feature status
+### 11.5 Computed vs stored Feature status — RESOLVED
 
-§5 proposes that Feature status is computed from document and task state rather than independently stored. This is elegant but has implications:
+Feature status is stored and auto-updated by document approvals and task completion. This is a hybrid approach: the status field exists on the entity (avoiding recomputation on every read), but the system automatically updates it when document lifecycle events occur.
 
-- Computing status requires querying document and task state, which may be slower than reading a stored field.
-- The Phase 1 entity model stores status as a field. Changing to computed status is a significant architectural shift.
-- Some status transitions may involve judgement (e.g., "is this feature really done?") that pure computation cannot capture.
-
-The tradeoffs between computed and stored status need to be evaluated during implementation planning. A hybrid approach — stored status that is automatically updated when document or task state changes — may be more practical than pure computation.
+Backward transitions are handled via document supersession: if an approved document is superseded, the Feature's status reverts to the corresponding phase (e.g., superseding an approved spec reverts the Feature to `specifying`).
 
 ### 11.6 Bug and Decision entity relationships
 
@@ -533,7 +560,7 @@ This design refines the internal model described in §8 of the document-centric 
 
 ### 12.3 Machine-context design
 
-The context assembly model in the machine-context design can use the Plan → Feature hierarchy as a natural scoping mechanism. Design context is scoped to Plans; implementation context is scoped to Features. This is consistent with the tiered retrieval model described in that design.
+The context assembly model in the machine-context design can use the Plan → Feature hierarchy as a natural scoping mechanism. Design context is scoped to the Feature's own design document, with broader direction from the Plan. Implementation context stays within Feature. This is consistent with the tiered retrieval model described in that design.
 
 The prefix registry also serves as a self-describing project convention mechanism, reducing the need for external SKILL files or per-project agent instructions. Agents discover the project's organisational vocabulary through MCP operations.
 
@@ -555,16 +582,16 @@ P1-DEC-002 anticipated this decision: "Feature's optional spec and dev_plan fiel
 
 The Kanbanzai entity model has two entity types above Task, distinguished by purpose:
 
-- The **Plan** coordinates design work, owns design documents, accumulates decisions, and births Features when designs become specifications. It uses a human-assigned ID with a project-defined prefix (`P2-basic-ui`, `D3-auth-redesign`, etc.), allowing each project to name and categorise its design work according to its own conventions.
+- The **Plan** coordinates a body of work, provides direction through its design document, and organises Features. It uses a human-assigned ID with a project-defined prefix (`P2-basic-ui`, `D3-auth-redesign`, etc.), allowing each project to name and categorise its work according to its own conventions. Its lifecycle is `proposed → designing → active → done`, with `active → done` as a manual human decision.
 
-- The **Feature** is the delivery entity. It is born when a specification is carved out of a Plan. It owns a specification, a dev plan, and tasks. It tracks delivery from specification through verification.
+- The **Feature** is the design-through-delivery entity. It is born at `proposed` and progresses through a document-driven lifecycle: `proposed → designing → specifying → dev-planning → developing → done`. Each phase transition is gated by document approval. It owns up to three special documents (design, specification, dev plan) and tasks. Design is optional — straightforward Features can skip from `proposed` to `specifying`.
+
+Features can exist with or without a parent Plan. They can be assigned to or moved between Plans at any time. The Plan is a coordination entity, not a strict container.
 
 The Plan ID format (`{X}{n}-{slug}`) is structurally distinct from all fixed entity types (`FEAT-`, `TASK-`, `BUG-`, `DEC-`) and requires no registry for type identification. However, each project must declare its prefixes in a registry that provides semantic names for display, validation against typos, and self-describing project conventions for agents.
 
 The entity hierarchy is flat. Plans do not nest within other Plans. Organisational concerns that cut across the design pipeline — phases, milestones, teams, sprints — are handled through tags on entities and views/projections derived from canonical state. This prevents the system from recreating the hierarchical project-management structures it is designed to replace.
 
-The document pipeline — design → specification → dev plan → implementation → verification — is the bridge between Plans and Features. Designers work in Plans, producing design documents. When a design is mature enough to specify, the specification births a Feature. The Feature then follows the delivery pipeline through planning, implementation, and verification.
+Documents (designs, specifications, dev plans) have their own tracked lifecycle (`draft → approved → superseded`) but are not workflow entities. The `review` state is omitted — in AI-mediated workflows, `draft` is inherently in review. Documents are tracked with structured metadata, owned by Plans or Features, indexed by the document intelligence layer, and queryable through MCP operations. Document approvals drive Feature lifecycle transitions; document supersession drives backward transitions.
 
-Documents (designs, specifications, dev plans) have their own tracked lifecycle (draft → review → approved → superseded) but are not workflow entities. They are documents with structured metadata, owned by Plans or Features, indexed by the document intelligence layer, and queryable through MCP operations.
-
-This model preserves the design-to-implementation pipeline that produces high-quality software — design → specify → plan → implement → verify — while giving both the design phase and the delivery phase entity types that match their distinct purposes, and allowing each project to organise its design work in whatever way makes sense for its team.
+This model preserves the design-to-implementation pipeline that produces high-quality software — design → specify → plan → implement → verify — while giving both the coordination phase (Plan) and the delivery phase (Feature) entity types that match their distinct purposes, and allowing each project to organise its work in whatever way makes sense for its team.

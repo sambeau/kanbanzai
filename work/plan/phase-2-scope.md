@@ -45,11 +45,11 @@ Source: `work/design/entity-structure-and-document-pipeline.md`
 
 - **Plan replaces Epic.** The Plan coordinates design work, owns design documents, accumulates decisions, and births Features when designs become specifications. It uses a human-assigned ID with a project-defined prefix (`{X}{n}-{slug}`) rather than a fixed type name, allowing each project to name and categorise its design work according to its own conventions.
 - **Prefix registry.** Each project declares its prefixes in `.kbz/config.yaml`, providing semantic names for display, validation against typos, and self-describing project conventions for agents. Agents discover the project's organisational vocabulary through MCP operations rather than requiring external SKILL files.
-- **Feature entity changes.** Feature is born when a specification is carved out. Feature status is derived from document and task state. The `epic` field is renamed to `parent`.
+- **Feature entity changes.** Feature is born when a specification is carved out. Feature lifecycle: `proposed → designing → specifying → dev-planning → developing → done` (terminal: `superseded`, `cancelled`). Transitions are driven by document approvals; shortcut `proposed → specifying` for features that skip design. Feature status is stored as a field but automatically updated when document approvals or task completions trigger transitions. Features can change parent Plan (administrative re-parenting). The `epic` field is renamed to `parent`.
 - **Flat entity hierarchy with tags.** Plans do not nest. Organisational concerns (phases, milestones, teams, sprints) are handled through tags on entities and views/projections derived from canonical state.
-- **Document metadata schema.** Documents (designs, specifications, dev plans) gain tracked lifecycle metadata: draft → review → approved → superseded. Documents are not separate entity types — they are documents with structured metadata owned by Plans or Features.
+- **Document metadata schema.** Documents (designs, specifications, dev plans) gain tracked lifecycle metadata: `draft → approved → superseded`. The `review` state was dropped — in AI workflows, a document in `draft` is inherently in review. Documents are not separate entity types — they are documents with structured metadata owned by Plans or Features.
 - **Migration tooling.** Epic → Plan migration, field renames, ID format changes, storage directory changes, prefix registry initialisation.
-- **Plan lifecycle definition.** States, transitions, and constraints.
+- **Plan lifecycle definition.** States: `proposed → designing → active → done` (terminal: `superseded`, `cancelled`). Transitions: `proposed→designing` (plan design doc created), `designing→active` (plan design doc approved), `active→done` (manual). A Plan in `active` can have Features added, removed, or re-parented at any time.
 
 ### 3.2 Document management
 
@@ -201,18 +201,14 @@ These must be resolved before a Phase 2a specification can be written.
 
 ### 8.1 Plan lifecycle states and transitions
 
-The entity-structure design (§11.1) proposed tentative states: exploring → active → mature → closed. The exact states, permitted transitions, and constraints need definition. Key questions:
-
-- Can a Plan move backward (e.g., `mature` → `active` if new design work is needed)?
-- Does a Plan auto-transition based on Feature state, or is it manually managed?
-- What happens to a Plan's Features when it is closed?
+**Resolved.** Plan lifecycle: `proposed → designing → active → done`. Terminal states: `superseded`, `cancelled`. Transitions: `proposed→designing` (plan design doc created), `designing→active` (plan design doc approved), `active→done` (manual). A Plan in `active` can have Features added, removed, or re-parented at any time. Plans do not auto-transition based on Feature state.
 
 ### 8.2 Document metadata schema
 
 What fields does a tracked document record have? Tentative minimum:
 
 - document identity (path, type, title)
-- lifecycle status (draft, review, approved, superseded)
+- lifecycle status (draft, approved, superseded)
 - ownership (which Plan or Feature owns this document)
 - approval metadata (approved_by, approved_at)
 - supersession (supersedes, superseded_by)
@@ -222,13 +218,7 @@ This needs to be specified precisely, including validation rules.
 
 ### 8.3 Computed vs stored Feature status
 
-The entity-structure design (§11.5) identified this as an open question. Options:
-
-- **Pure computation:** Feature status is always derived from document and task state. No stored status field. Clean but may be slow and can't capture human judgement.
-- **Stored with auto-update:** Feature has a stored status field that is automatically updated when document or task state changes. Pragmatic but needs a synchronisation mechanism.
-- **Hybrid:** Status is stored but the system warns if stored status is inconsistent with document/task state. Flexible but adds complexity.
-
-This must be resolved before the Feature entity schema can be finalised.
+**Resolved.** Stored with auto-update. Feature status is stored as a field but automatically updated when document approvals or task completions trigger lifecycle transitions. Backward transitions happen when approved documents are superseded. The stored field is authoritative.
 
 ### 8.4 Document storage model
 
