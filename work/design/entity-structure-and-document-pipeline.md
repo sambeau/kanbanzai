@@ -1,4 +1,4 @@
-# Entity Structure and Document Pipeline
+# Plan Entity and Document Pipeline
 
 - Status: draft design
 - Date: 2026-03-21
@@ -19,8 +19,8 @@
 This document defines the structural relationship between workflow entities and design documents in Kanbanzai. It resolves several questions deferred from Phase 1:
 
 - How documents and workflow entities relate to each other
-- What role the deferred entity types (`Specification`, `Plan`, `Design`) play
-- How the design-space entity is identified and named
+- What role the deferred types (`Specification`, `Dev Plan`, `Design`) play
+- How the Plan entity is identified and named
 - How cross-cutting organisational concerns (phases, teams, milestones) are handled without entity nesting
 
 The answer shapes the Phase 2 entity model, the document pipeline, context assembly, and the MCP operation surface.
@@ -29,17 +29,17 @@ The answer shapes the Phase 2 entity model, the document pipeline, context assem
 
 ## 2. The Problem
 
-Phase 1 built a workflow kernel with five entity types: Epic, Feature, Task, Bug, and Decision. It deferred twelve entity types, including `Specification`, `Plan`, and `Design` as potential first-class entities.
+Phase 1 built a workflow kernel with five entity types: Epic, Feature, Task, Bug, and Decision. It deferred twelve entity types, including `Specification`, `Dev Plan`, and `Design` as potential first-class entities.
 
-Phase 1 also established the document-centric interface model: humans work with documents (designs, specifications, plans); agents mediate between documents and structured entities. But it left open the structural question: what exactly is the relationship between a Feature entity and the design, specification, and plan documents that define it?
+Phase 1 also established the document-centric interface model: humans work with documents (designs, specifications, dev plans); agents mediate between documents and structured entities. But it left open the structural question: what exactly is the relationship between a Feature entity and the design, specification, and dev plan documents that define it?
 
 Three sources gave different answers:
 
-- The workflow design basis (§8.3) said Specification, Plan, and Design are **document types, not entities** — they are the human-facing form and flow through the document lifecycle.
+- The workflow design basis (§8.3) said specification, dev plan, and design are **document types, not entities** — they are the human-facing form and flow through the document lifecycle.
 - The Phase 1 specification (§7.1) listed them as **deferred entity types**.
-- P1-DEC-002 hedged: Feature's optional `spec` and `plan` fields "can become foreign keys to separate entities in a future phase."
+- P1-DEC-002 hedged: Feature's optional `spec` and `dev_plan` fields "can become foreign keys to separate entities in a future phase."
 
-Additionally, the naming of the design-space entity (Phase 1's "Epic") proved contentious. "Epic" implies size rather than purpose, and no single English word captures the concept of "a coordinated design effort that births features." This document resolves that problem structurally rather than linguistically.
+Additionally, naming Phase 1's "Epic" proved contentious. "Epic" implies size rather than purpose. This document resolves that problem with the **Plan** entity type — a name that captures the entity's design-coordination purpose — combined with user-defined ID prefixes that let each project categorise its Plans according to its own conventions.
 
 ---
 
@@ -55,7 +55,7 @@ Additionally, the naming of the design-space entity (Phase 1's "Epic") proved co
 
 5. **The entity hierarchy is flat.** Organisational concerns (phases, teams, milestones, sprints) are orthogonal to the design pipeline and are handled through tags, labels, and views — not through entity nesting.
 
-6. **The system is non-prescriptive about design-space organisation.** Different teams use the design-space entity differently — as phases, tracks, feature groups, or deep-work areas. The system supports this diversity through flexible naming rather than imposing a single vocabulary.
+6. **The system is non-prescriptive about how Plans are organised.** Different teams use Plans differently — as phases, tracks, feature groups, or deep-work areas. The system supports this diversity through user-defined ID prefixes and flexible naming rather than imposing a single vocabulary.
 
 ---
 
@@ -67,18 +67,18 @@ The system has two entity types above Task, distinguished by purpose:
 
 | Entity | Purpose | Phase of work | Primary owner |
 |--------|---------|---------------|---------------|
-| **Design-space entity** | Coordinate design work; explore a problem space; birth features when designs become specifications | Design | Human (designer) |
+| **Plan** | Coordinate design work; explore a problem space; birth features when designs become specifications | Design | Human (designer) |
 | **Feature** | Track delivery of a concrete, specified piece of work through planning, implementation, and verification | Delivery | Shared (human approves, agents implement) |
 
-The design-space entity is where design happens. A Feature is what gets built.
+The Plan is where design happens. A Feature is what gets built.
 
-The design-space entity has a **user-defined ID prefix** rather than a fixed type name. See §4.6 for the ID scheme and §4.7 for the prefix registry. Throughout this document, examples use prefixes like `P`, `D`, `F`, but the system does not prescribe these — each project declares its own.
+The Plan has a **user-defined ID prefix** that lets each project name and categorise its Plans. See §4.6 for the ID scheme and §4.7 for the prefix registry. Throughout this document, examples use prefixes like `P`, `D`, `F`, but the system does not prescribe these — each project declares its own.
 
-### 4.2 Design-space entity
+### 4.2 The Plan entity
 
-The design-space entity is a coordinated effort to explore a problem area, produce design documents, make decisions, and eventually carve out specifications that define concrete deliverables.
+The Plan is a coordinated effort to explore a problem area, produce design documents, make decisions, and eventually carve out specifications that define concrete deliverables.
 
-A design-space entity:
+A Plan:
 
 - owns one or more design documents
 - may own research reports and other exploratory material
@@ -87,33 +87,33 @@ A design-space entity:
 - may birth multiple Features over its lifetime
 - does not have tasks, does not get "implemented"
 
-A design-space entity is active for as long as design work continues in its problem space. It may be long-lived. It is not a time-boxed container. It closes when the design space is considered mature and no further features are expected from it — or it may remain open indefinitely.
+A Plan is active for as long as design work continues in its problem space. It may be long-lived. It is not a time-boxed container. It closes when the design space is considered mature and no further features are expected from it — or it may remain open indefinitely.
 
 ### 4.3 Feature
 
-A Feature is born when a specification is carved out of a design-space entity. A Feature is a concrete, independently deliverable piece of work with a clear scope defined by its specification.
+A Feature is born when a specification is carved out of a Plan. A Feature is a concrete, independently deliverable piece of work with a clear scope defined by its specification.
 
 A Feature:
 
 - is born from a specification (the primary path)
 - owns exactly one specification document
-- owns an implementation plan document (when planning begins)
-- owns tasks (born from the plan)
+- owns a dev plan document (when planning begins)
+- owns tasks (born from the dev plan)
 - tracks delivery lifecycle: specifying → specified → planned → in-progress → done
-- links back to its parent design-space entity for design context
+- links back to its parent Plan for design context
 
-A Feature does not exist until it has a specification, or at minimum a specification in progress. A Feature without a spec is a design idea that hasn't crossed the design-to-delivery boundary yet — it belongs in a design-space entity.
+A Feature does not exist until it has a specification, or at minimum a specification in progress. A Feature without a spec is a design idea that hasn't crossed the design-to-delivery boundary yet — it belongs in a Plan.
 
 ### 4.4 Task
 
-A Task is an implementation unit born from a Feature's plan. Tasks are not documents. They are operational entities that track bounded units of agent work.
+A Task is an implementation unit born from a Feature's dev plan. Tasks are not documents. They are operational entities that track bounded units of agent work.
 
 Tasks remain as defined in Phase 1. No structural change is needed.
 
 ### 4.5 The full pipeline
 
 ```
-Design-space entity (P2-basic-ui, D3-auth-redesign, etc.)
+Plan (P2-basic-ui, D3-auth-redesign, etc.)
   └── design documents (exploratory, iterative)
   └── research reports
   └── decisions
@@ -121,15 +121,15 @@ Design-space entity (P2-basic-ui, D3-auth-redesign, etc.)
         │
 Feature (delivery unit)
   ├── specification document (defines scope)
-  ├── implementation plan document (decomposes work)
+  ├── dev plan document (decomposes work)
   └── tasks (implementation units)
         └── implementation
         └── verification
 ```
 
-### 4.6 Design-space entity ID scheme
+### 4.6 Plan ID scheme
 
-Design-space entities use a human-assigned ID format that is structurally distinct from all other entity types:
+Plans use a human-assigned ID format that is structurally distinct from all other entity types:
 
 ```
 {X}{n}-{slug}
@@ -149,7 +149,7 @@ Examples:
 - `B5-api-layer` — a "Backend track" in a project that uses `B` for backend work
 - `k12-setup-environment` — a lowercase prefix in a project that uses `k` for kikaku
 
-This format is unambiguous with respect to all other entity types. Fixed entity types use multi-character alphabetic prefixes before the first hyphen (`FEAT-`, `TASK-`, `BUG-`, `DEC-`). Design-space entity IDs always start with exactly one non-digit character followed by one or more digits followed by a hyphen. These patterns never collide.
+This format is unambiguous with respect to all other entity types. Fixed entity types use multi-character alphabetic prefixes before the first hyphen (`FEAT-`, `TASK-`, `BUG-`, `DEC-`). Plan IDs always start with exactly one non-digit character followed by one or more digits followed by a hyphen. These patterns never collide.
 
 The system identifies entity type from the ID pattern:
 
@@ -159,13 +159,13 @@ The system identifies entity type from the ID pattern:
 | `TASK-{id}` | Task |
 | `BUG-{id}` | Bug |
 | `DEC-{id}` | Decision |
-| `{X}{n}-{slug}` (single non-digit char + digits + hyphen) | Design-space entity |
+| `{X}{n}-{slug}` (single non-digit char + digits + hyphen) | Plan |
 
 No registry lookup is needed for type identification. The pattern match is sufficient.
 
 ### 4.7 Prefix registry
 
-While the system can identify design-space entities by pattern alone, each project **must declare its prefixes** in project configuration. The registry serves three purposes:
+While the system can identify Plans by pattern alone, each project **must declare its prefixes** in project configuration. The registry serves three purposes:
 
 **1. Semantic display.** The system can present meaningful names in output:
 
@@ -213,9 +213,9 @@ The registry defines the prefix character, a human-readable name, and an optiona
 
 ### 4.8 Why not recursive nesting
 
-A natural question arises: if a project has phases and tracks, should a phase be able to contain tracks? Should design-space entities nest?
+A natural question arises: if a project has phases and tracks, should a phase be able to contain tracks? Should Plans nest?
 
-No. The entity hierarchy is flat. Design-space entities are all peers, and Features are their children. There is no nesting of design-space entities within other design-space entities.
+No. The entity hierarchy is flat. Plans are all peers, and Features are their children. Plans do not nest within other Plans.
 
 The reasoning:
 
@@ -229,7 +229,7 @@ The reasoning:
 
 Organisational concerns that don't fit the design pipeline — phases, milestones, teams, sprints, priorities — are handled through tags on entities.
 
-A design-space entity or Feature can carry tags:
+A Plan or Feature can carry tags:
 
 ```
 id: P2-basic-ui
@@ -247,9 +247,9 @@ Tags serve different organisational needs:
 
 | Concern | Mechanism | Not this |
 |---------|-----------|----------|
-| What are we designing? | Design-space entity (documents) | — |
+| What are we designing? | Plan (documents) | — |
 | What are we delivering? | Feature (specification) | — |
-| How are we building it? | Tasks (plan) | — |
+| How are we building it? | Tasks (dev plan) | — |
 | Which team works on it? | Tags on tasks or features | Entity hierarchy |
 | What phase is it part of? | Tags on entities | Entity hierarchy |
 | When does it ship? | Tags or milestone metadata | Entity hierarchy |
@@ -265,7 +265,7 @@ A Feature's lifecycle status is derivable from its document and task state:
 |---------------------|----------------|
 | Spec in progress (draft, not yet approved) | `specifying` |
 | Spec approved | `specified` |
-| Plan approved | `planned` |
+| Dev plan approved | `planned` |
 | Tasks created, work in progress | `in-progress` |
 | All tasks completed and verified | `done` |
 
@@ -274,9 +274,9 @@ This means the Feature entity does not need an independently managed status fiel
 There is minimal independent state on a Feature that is not derivable from its documents and tasks:
 
 - `id`, `slug` — identity
-- `parent` — parent design-space entity ID
+- `parent` — parent Plan ID
 - `spec` — link to specification document
-- `plan` — link to plan document (when it exists)
+- `dev_plan` — link to dev plan document (when it exists)
 - `created`, `created_by` — provenance
 - `supersedes`, `superseded_by` — versioning
 - `tags` — organisational metadata
@@ -291,10 +291,10 @@ Status, progress, and readiness are computed, not stored.
 
 The normal flow is:
 
-1. A designer works within a design-space entity, producing design documents.
+1. A designer works within a Plan, producing design documents.
 2. When a design is sufficiently mature, the designer (or an agent, with human approval) writes a specification.
-3. The act of creating a specification births a Feature. The Feature is linked to the design-space entity and owns the specification.
-4. The Feature then follows the delivery pipeline: plan → tasks → implementation → verification.
+3. The act of creating a specification births a Feature. The Feature is linked to the Plan and owns the specification.
+4. The Feature then follows the delivery pipeline: dev plan → tasks → implementation → verification.
 
 ### 6.2 Scoping principle: one spec, one feature
 
@@ -304,35 +304,35 @@ This is a scoping principle, not a hard system constraint. The system should enc
 
 ### 6.3 The secondary path: bottom-up features
 
-Not all features originate from design-space entity work. Some arise from:
+Not all features originate from Plan work. Some arise from:
 
 - a bug investigation that reveals the need for a significant fix
 - an operational need identified during implementation
 - a quick improvement spotted during other work
 
-For these cases, a Feature may be created directly with a specification, without a parent design-space entity. This is the secondary path. It is legitimate but should be the exception rather than the norm for substantial work.
+For these cases, a Feature may be created directly with a specification, without a parent Plan. This is the secondary path. It is legitimate but should be the exception rather than the norm for substantial work.
 
-If a bottom-up feature grows complex enough to need design exploration, the system should encourage creating a design-space entity to house that exploration rather than trying to do design work within a Feature.
+If a bottom-up feature grows complex enough to need design exploration, the system should encourage creating a Plan to house that exploration rather than trying to do design work within a Feature.
 
 ### 6.4 Cross-cutting documents
 
-Some documents do not belong to any specific design-space entity or Feature:
+Some documents do not belong to any specific Plan or Feature:
 
 - policies (commit policy, review policy, agent interaction protocol)
 - project-level conventions
 - cross-cutting design constraints
 
-These are project-level documents. They exist outside the design-space entity → Feature hierarchy but are indexed and queryable by the document intelligence layer. They may inform context assembly for any task.
+These are project-level documents. They exist outside the Plan → Feature hierarchy but are indexed and queryable by the document intelligence layer. They may inform context assembly for any task.
 
 ---
 
 ## 7. Effect on the Entity Model
 
-### 7.1 Design-space entity replaces Epic
+### 7.1 Plan replaces Epic
 
-The `Epic` entity type from Phase 1 is replaced by the design-space entity with user-defined prefixes. The structural role changes:
+The `Epic` entity type from Phase 1 is replaced by the Plan with user-defined prefixes. The structural role changes:
 
-| Aspect | Epic (Phase 1) | Design-space entity (Phase 2) |
+| Aspect | Epic (Phase 1) | Plan (Phase 2) |
 |--------|----------------|-------------------------------|
 | Purpose | Group related features | Coordinate design work, birth features |
 | ID format | `EPIC-{slug}` (fixed prefix) | `{X}{n}-{slug}` (user-defined prefix) |
@@ -343,11 +343,11 @@ The `Epic` entity type from Phase 1 is replaced by the design-space entity with 
 | Document role | None | Primary home for design documents |
 | Nesting | Not addressed | Explicitly flat; cross-cutting via tags |
 
-Migration path: existing Epic entities become design-space entities. The `epic` field on Feature entities is renamed to `parent`. The project must declare at least one prefix in the registry. See §10 for migration details.
+Migration path: existing Epic entities become Plans. The `epic` field on Feature entities is renamed to `parent`. The project must declare at least one prefix in the registry. See §10 for migration details.
 
 ### 7.2 Feature gains document ownership
 
-Feature retains its core Phase 1 role but gains explicit, tracked relationships to its specification and plan documents. The `spec` and `plan` fields (optional strings in Phase 1) become references to tracked document records with lifecycle metadata.
+Feature retains its core Phase 1 role but gains explicit, tracked relationships to its specification and dev plan documents. The `spec` and `dev_plan` fields (optional strings in Phase 1) become references to tracked document records with lifecycle metadata.
 
 ### 7.3 Deferred entity types — resolved
 
@@ -356,8 +356,8 @@ The Phase 1 specification (§7.1) deferred twelve entity types. This design reso
 | Deferred type | Resolution |
 |---------------|------------|
 | `Specification` | **Not a separate entity type.** A specification is a document with tracked lifecycle metadata, owned by a Feature. It does not need its own entity type — it is a document, not a workflow object. |
-| `Plan` | **Not a separate entity type.** An implementation plan is a document with tracked lifecycle metadata, owned by a Feature. Same reasoning. |
-| `Design` | **Not a separate entity type.** A design is a document with tracked lifecycle metadata, owned by a design-space entity. Same reasoning. |
+| `Dev Plan` | **Not a separate entity type.** A dev plan is a document with tracked lifecycle metadata, owned by a Feature. Same reasoning. (This was listed as `Plan` in the Phase 1 specification; that name now refers to the entity type that replaces Epic.) |
+| `Design` | **Not a separate entity type.** A design is a document with tracked lifecycle metadata, owned by a Plan. Same reasoning. |
 
 These document types have lifecycle (draft → review → approved → superseded) and metadata (author, approval status, dates, links). But they are tracked as documents with structured metadata, not as workflow entities with their own MCP operations and lifecycle state machines. The document intelligence layer provides the indexing and querying capabilities.
 
@@ -365,7 +365,7 @@ The remaining nine deferred types (`Project`, `Milestone`, `Approval`, `Release`
 
 ### 7.4 Document lifecycle
 
-Documents owned by design-space entities and Features have their own lifecycle:
+Documents owned by Plans and Features have their own lifecycle:
 
 | Status | Meaning |
 |--------|---------|
@@ -386,21 +386,21 @@ The document-centric interface design (`document-centric-interface.md`) establis
 
 | Document type | Home | Entity effect |
 |---------------|------|---------------|
-| Proposal | Design-space entity | May create the design-space entity itself; may surface initial design questions |
-| Draft design | Design-space entity | Iterates on design thinking within the design-space entity |
-| Design | Design-space entity | Finalises design thinking; may trigger spec readiness |
+| Proposal | Plan | May create the Plan itself; may surface initial design questions |
+| Draft design | Plan | Iterates on design thinking within the Plan |
+| Design | Plan | Finalises design thinking; may trigger spec readiness |
 | Specification | Feature (owned) | Births the Feature; defines its scope |
-| Implementation plan | Feature (owned) | Decomposes the Feature into Tasks |
-| Research report | Design-space entity or project-level | May inform decisions; may create KnowledgeEntry records |
+| Dev plan | Feature (owned) | Decomposes the Feature into Tasks |
+| Research report | Plan or project-level | May inform decisions; may create KnowledgeEntry records |
 | User documentation | Feature (linked) | Documents the delivered feature |
 
 ### 8.2 The design-to-delivery boundary
 
-The transition from design-space entity to Feature is the key structural boundary. It occurs when:
+The transition from Plan to Feature is the key structural boundary. It occurs when:
 
-1. A design within a design-space entity is judged mature enough to specify.
+1. A design within a Plan is judged mature enough to specify.
 2. A specification document is created (draft status).
-3. A Feature entity is created, linked to the design-space entity and owning the specification.
+3. A Feature entity is created, linked to the Plan and owning the specification.
 4. The specification goes through review and approval.
 
 This is an agent-mediated process: the agent recognises that design work has reached spec-readiness, proposes creating a specification and birthing a feature, and the human approves.
@@ -409,14 +409,14 @@ This is an agent-mediated process: the agent recognises that design work has rea
 
 ## 9. Effect on Context Assembly
 
-The machine-context design (`machine-context-design.md`) defines how the system assembles targeted context for AI agents. The design-space entity → Feature structure affects context assembly:
+The machine-context design (`machine-context-design.md`) defines how the system assembles targeted context for AI agents. The Plan → Feature structure affects context assembly:
 
-- An agent working on a **Task** receives: the task definition, the relevant sections of its Feature's specification and plan, relevant decisions from the parent design-space entity, and any applicable project-level policies.
-- An agent working on **design** within a design-space entity receives: the entity's design documents, related research, decisions made so far, and relevant cross-cutting constraints.
-- An agent **creating a specification** receives: the mature design documents from the design-space entity, relevant decisions, and examples of existing specifications in the project.
+- An agent working on a **Task** receives: the task definition, the relevant sections of its Feature's specification and dev plan, relevant decisions from the parent Plan, and any applicable project-level policies.
+- An agent working on **design** within a Plan receives: the Plan's design documents, related research, decisions made so far, and relevant cross-cutting constraints.
+- An agent **creating a specification** receives: the mature design documents from the Plan, relevant decisions, and examples of existing specifications in the project.
 - An agent needing **project conventions** can query the prefix registry to understand the project's organisational structure without requiring external SKILL files.
 
-The design-space entity → Feature hierarchy provides a natural scoping mechanism for context assembly. Design context flows down from the design-space entity; implementation context stays within Feature.
+The Plan → Feature hierarchy provides a natural scoping mechanism for context assembly. Design context flows down from the Plan; implementation context stays within Feature.
 
 ---
 
@@ -424,14 +424,14 @@ The design-space entity → Feature hierarchy provides a natural scoping mechani
 
 ### 10.1 Migration
 
-Phase 1's entity model uses `Epic` where this design uses design-space entities with user-defined prefixes. The migration is:
+Phase 1's entity model uses `Epic` where this design uses Plans with user-defined prefixes. The migration is:
 
-- Existing Epic entities become design-space entities
+- Existing Epic entities become Plans
 - The `epic` field on Feature entities is renamed to `parent`
 - The project must declare at least one prefix in `.kbz/config.yaml`
 - Existing `EPIC-*` IDs must be re-assigned to the new `{X}{n}-{slug}` format
-- Storage directory `.kbz/state/epics/` is renamed (see §11.4 for storage model)
-- MCP operations `create_epic`, `list_epics`, etc. are replaced by design-space entity operations
+- Storage directory `.kbz/state/epics/` is renamed (see §11.7 for storage model)
+- MCP operations `create_epic`, `list_epics`, etc. are replaced by Plan operations
 - ID pattern matching logic is updated to recognise the `{X}{n}-{slug}` format
 
 This is a breaking change relative to Phase 1 but is expected — Phase 1 explicitly anticipated entity model evolution.
@@ -444,9 +444,9 @@ This migration should occur at the beginning of Phase 2 implementation, before n
 
 ## 11. Open Questions
 
-### 11.1 Design-space entity lifecycle states
+### 11.1 Plan lifecycle states
 
-The exact lifecycle states for a design-space entity need definition. A tentative model:
+The exact lifecycle states for a Plan need definition. A tentative model:
 
 - `exploring` — initial design work, not yet focused
 - `active` — focused design work, may be birthing features
@@ -455,17 +455,17 @@ The exact lifecycle states for a design-space entity need definition. A tentativ
 
 The transitions and constraints need to be specified. Key questions:
 
-- Can a design-space entity move backward (e.g., `mature` → `active` if new design work is needed)?
-- Does a design-space entity auto-transition based on Feature state, or is it manually managed?
-- What happens to a design-space entity's Features when the entity is closed?
+- Can a Plan move backward (e.g., `mature` → `active` if new design work is needed)?
+- Does a Plan auto-transition based on Feature state, or is it manually managed?
+- What happens to a Plan's Features when the Plan is closed?
 
 ### 11.2 Can a Feature change its parent?
 
-If a Feature was born from one design-space entity but turns out to belong more naturally to another, can it be re-parented? Probably yes, as an administrative operation, but the constraints need definition.
+If a Feature was born from one Plan but turns out to belong more naturally to another, can it be re-parented? Probably yes, as an administrative operation, but the constraints need definition.
 
 ### 11.3 Parent-less Features
 
-The secondary path (§6.3) allows Features without a parent design-space entity. These Features simply have a null `parent` field.
+The secondary path (§6.3) allows Features without a parent Plan. These Features simply have a null `parent` field.
 
 ### 11.4 Document metadata schema
 
@@ -485,14 +485,14 @@ The tradeoffs between computed and stored status need to be evaluated during imp
 
 Phase 1 defined Bug and Decision as standalone entities. Under this design:
 
-- **Decisions** are born during design work and naturally belong to a design-space entity. They may also affect specific Features. The `affects` field on Decision should support references to both design-space entities and Features.
-- **Bugs** are born during implementation and naturally belong to a Feature (via `origin_feature`). No structural change is needed, but Bugs should be able to trigger new design work within a design-space entity if the fix requires it.
+- **Decisions** are born during design work and naturally belong to a Plan. They may also affect specific Features. The `affects` field on Decision should support references to both Plans and Features.
+- **Bugs** are born during implementation and naturally belong to a Feature (via `origin_feature`). No structural change is needed, but Bugs should be able to trigger new design work within a Plan if the fix requires it.
 
-### 11.7 Storage model for design-space entities
+### 11.7 Storage model for Plans
 
-Design-space entities need a storage directory. Options:
+Plans need a storage directory. Options:
 
-- A single directory for all design-space entities regardless of prefix (e.g., `.kbz/state/props/` or `.kbz/state/designs/`)
+- A single directory for all Plans regardless of prefix (e.g., `.kbz/state/plans/`)
 - Prefix-specific directories (e.g., `.kbz/state/P/`, `.kbz/state/D/`)
 
 The single directory is simpler and avoids directory proliferation. The prefix is already encoded in the ID and filename.
@@ -523,23 +523,23 @@ The prefix registry is proposed to live in `.kbz/config.yaml`. Questions:
 
 This design extends §8 (Object Model) of the workflow design basis. It resolves the open question in §8.4 about composite vs first-class modelling by taking a third path: documents are tracked with lifecycle metadata but are not workflow entities.
 
-It also resolves the note in §8.3 that Specification, Plan, Design, and ResearchNote are "document types rather than entities." This design agrees and makes the position concrete.
+It also resolves the note in §8.3 that specification, dev plan, design, and research note are "document types rather than entities." This design agrees and makes the position concrete.
 
 The material taxonomy (§6.3) defined "projections" as generated views derived from canonical state. This design uses that concept for organisational views (phase status, team dashboards) — these are projections over tagged entities, not structural relationships.
 
 ### 12.2 Document-centric interface
 
-This design refines the internal model described in §8 of the document-centric interface design. The principle "fragment internally for consistency, present externally as whole documents" is preserved. The design-space entity → Feature structure provides the organisational backbone that the document-centric interface assumed but did not define.
+This design refines the internal model described in §8 of the document-centric interface design. The principle "fragment internally for consistency, present externally as whole documents" is preserved. The Plan → Feature structure provides the organisational backbone that the document-centric interface assumed but did not define.
 
 ### 12.3 Machine-context design
 
-The context assembly model in the machine-context design can use the design-space entity → Feature hierarchy as a natural scoping mechanism. Design context is scoped to design-space entities; implementation context is scoped to Features. This is consistent with the tiered retrieval model described in that design.
+The context assembly model in the machine-context design can use the Plan → Feature hierarchy as a natural scoping mechanism. Design context is scoped to Plans; implementation context is scoped to Features. This is consistent with the tiered retrieval model described in that design.
 
 The prefix registry also serves as a self-describing project convention mechanism, reducing the need for external SKILL files or per-project agent instructions. Agents discover the project's organisational vocabulary through MCP operations.
 
 ### 12.4 Document intelligence design
 
-The document intelligence design provides the mechanism for indexing and querying documents within the design-space entity → Feature structure. The four-layer analysis model operates on documents regardless of which entity owns them. The document graph connects documents across design-space entities and Features through shared concepts and entity references.
+The document intelligence design provides the mechanism for indexing and querying documents within the Plan → Feature structure. The four-layer analysis model operates on documents regardless of which entity owns them. The document graph connects documents across Plans and Features through shared concepts and entity references.
 
 ### 12.5 Phase 1 specification
 
@@ -547,7 +547,7 @@ This design supersedes the entity model decisions in §7, §7.1, and §8 of the 
 
 ### 12.6 P1-DEC-002
 
-P1-DEC-002 anticipated this decision: "Feature's optional spec and plan fields can become foreign keys to separate entities in a future phase without breaking existing records." This design takes a slightly different path — spec and plan become references to tracked documents with lifecycle metadata, rather than to separate entity types — but the migration path P1-DEC-002 preserved remains valid.
+P1-DEC-002 anticipated this decision: "Feature's optional spec and dev_plan fields can become foreign keys to separate entities in a future phase without breaking existing records." This design takes a slightly different path — spec and dev plan become references to tracked documents with lifecycle metadata, rather than to separate entity types — but the migration path P1-DEC-002 preserved remains valid.
 
 ---
 
@@ -555,16 +555,16 @@ P1-DEC-002 anticipated this decision: "Feature's optional spec and plan fields c
 
 The Kanbanzai entity model has two entity types above Task, distinguished by purpose:
 
-- The **design-space entity** coordinates design work, owns design documents, accumulates decisions, and births Features when designs become specifications. It uses a human-assigned ID with a project-defined prefix (`P2-basic-ui`, `D3-auth-redesign`, etc.), allowing each project to name and categorise its design work according to its own conventions.
+- The **Plan** coordinates design work, owns design documents, accumulates decisions, and births Features when designs become specifications. It uses a human-assigned ID with a project-defined prefix (`P2-basic-ui`, `D3-auth-redesign`, etc.), allowing each project to name and categorise its design work according to its own conventions.
 
-- The **Feature** is the delivery entity. It is born when a specification is carved out of a design-space entity. It owns a specification, a plan, and tasks. It tracks delivery from specification through verification.
+- The **Feature** is the delivery entity. It is born when a specification is carved out of a Plan. It owns a specification, a dev plan, and tasks. It tracks delivery from specification through verification.
 
-The design-space entity ID format (`{X}{n}-{slug}`) is structurally distinct from all fixed entity types (`FEAT-`, `TASK-`, `BUG-`, `DEC-`) and requires no registry for type identification. However, each project must declare its prefixes in a registry that provides semantic names for display, validation against typos, and self-describing project conventions for agents.
+The Plan ID format (`{X}{n}-{slug}`) is structurally distinct from all fixed entity types (`FEAT-`, `TASK-`, `BUG-`, `DEC-`) and requires no registry for type identification. However, each project must declare its prefixes in a registry that provides semantic names for display, validation against typos, and self-describing project conventions for agents.
 
-The entity hierarchy is flat. Design-space entities do not nest within other design-space entities. Organisational concerns that cut across the design pipeline — phases, milestones, teams, sprints — are handled through tags on entities and views/projections derived from canonical state. This prevents the system from recreating the hierarchical project-management structures it is designed to replace.
+The entity hierarchy is flat. Plans do not nest within other Plans. Organisational concerns that cut across the design pipeline — phases, milestones, teams, sprints — are handled through tags on entities and views/projections derived from canonical state. This prevents the system from recreating the hierarchical project-management structures it is designed to replace.
 
-The document pipeline — design → specification → plan → implementation → verification — is the bridge between design-space entities and Features. Designers work in design-space entities, producing design documents. When a design is mature enough to specify, the specification births a Feature. The Feature then follows the delivery pipeline through planning, implementation, and verification.
+The document pipeline — design → specification → dev plan → implementation → verification — is the bridge between Plans and Features. Designers work in Plans, producing design documents. When a design is mature enough to specify, the specification births a Feature. The Feature then follows the delivery pipeline through planning, implementation, and verification.
 
-Documents (designs, specifications, plans) have their own tracked lifecycle (draft → review → approved → superseded) but are not workflow entities. They are documents with structured metadata, owned by design-space entities or Features, indexed by the document intelligence layer, and queryable through MCP operations.
+Documents (designs, specifications, dev plans) have their own tracked lifecycle (draft → review → approved → superseded) but are not workflow entities. They are documents with structured metadata, owned by Plans or Features, indexed by the document intelligence layer, and queryable through MCP operations.
 
 This model preserves the design-to-implementation pipeline that produces high-quality software — design → specify → plan → implement → verify — while giving both the design phase and the delivery phase entity types that match their distinct purposes, and allowing each project to organise its design work in whatever way makes sense for its team.

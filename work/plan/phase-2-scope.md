@@ -43,20 +43,20 @@ Phase 2b depends on Phase 2a. Context assembly requires the document intelligenc
 
 Source: `work/design/entity-structure-and-document-pipeline.md`
 
-- **Design-space entity replaces Epic.** The design-space entity coordinates design work, owns design documents, accumulates decisions, and births Features when designs become specifications. It uses a human-assigned ID with a project-defined prefix (`{X}{n}-{slug}`) rather than a fixed type name, allowing each project to name and categorise its design work according to its own conventions.
+- **Plan replaces Epic.** The Plan coordinates design work, owns design documents, accumulates decisions, and births Features when designs become specifications. It uses a human-assigned ID with a project-defined prefix (`{X}{n}-{slug}`) rather than a fixed type name, allowing each project to name and categorise its design work according to its own conventions.
 - **Prefix registry.** Each project declares its prefixes in `.kbz/config.yaml`, providing semantic names for display, validation against typos, and self-describing project conventions for agents. Agents discover the project's organisational vocabulary through MCP operations rather than requiring external SKILL files.
 - **Feature entity changes.** Feature is born when a specification is carved out. Feature status is derived from document and task state. The `epic` field is renamed to `parent`.
-- **Flat entity hierarchy with tags.** Design-space entities do not nest. Organisational concerns (phases, milestones, teams, sprints) are handled through tags on entities and views/projections derived from canonical state.
-- **Document metadata schema.** Documents (designs, specifications, plans) gain tracked lifecycle metadata: draft → review → approved → superseded. Documents are not separate entity types — they are documents with structured metadata owned by design-space entities or Features.
-- **Migration tooling.** Epic → design-space entity migration, field renames, ID format changes, storage directory changes, prefix registry initialisation.
-- **Design-space entity lifecycle definition.** States, transitions, and constraints.
+- **Flat entity hierarchy with tags.** Plans do not nest. Organisational concerns (phases, milestones, teams, sprints) are handled through tags on entities and views/projections derived from canonical state.
+- **Document metadata schema.** Documents (designs, specifications, dev plans) gain tracked lifecycle metadata: draft → review → approved → superseded. Documents are not separate entity types — they are documents with structured metadata owned by Plans or Features.
+- **Migration tooling.** Epic → Plan migration, field renames, ID format changes, storage directory changes, prefix registry initialisation.
+- **Plan lifecycle definition.** States, transitions, and constraints.
 
 ### 3.2 Document management
 
 Source: `work/design/document-centric-interface.md`, `work/spec/phase-1-specification.md` §15
 
 - **Document lifecycle operations.** Submit, review, approve, supersede, retrieve. Phase 1 has scaffolding and basic document support; Phase 2a makes the lifecycle fully operational.
-- **Document-to-entity linking.** Specifications own Features. Designs own design-space entities. Implementation plans own task decompositions. These links are explicit and tracked.
+- **Document-to-entity linking.** Specifications own Features. Designs own Plans. Dev plans own task decompositions. These links are explicit and tracked.
 - **Verbatim retrieval.** Approved documents are returned exactly as approved. This exists conceptually in Phase 1; Phase 2a enforces it with tracked approval metadata.
 - **Document versioning.** When a document is superseded, the previous version is retained. The supersession chain is queryable.
 - **Document validation.** Type recognition, required frontmatter, required sections, naming conventions, referential integrity.
@@ -77,7 +77,7 @@ Source: `work/design/document-intelligence-design.md` §18.2
 Source: P1-DEC-013, P1-DEC-020
 
 - **Cache schema expansion.** Extend the SQLite cache to support documents, document metadata, and document graph queries.
-- **Rich server-side query and filtering.** Move beyond list-by-type. Support filtering by status, parent, tags, date range, and other fields. Support cross-entity queries (e.g., "all tasks for features in this design-space entity") and tag-based queries (e.g., "all entities tagged `phase-2`").
+- **Rich server-side query and filtering.** Move beyond list-by-type. Support filtering by status, parent, tags, date range, and other fields. Support cross-entity queries (e.g., "all tasks for features in this Plan") and tag-based queries (e.g., "all entities tagged `phase-2`").
 - **Concurrency strategy.** Define and implement a concurrency model for multi-agent access. The SQLite cache provides local concurrency (WAL mode for concurrent reads, serialised writes). The Git state layer needs optimistic locking or equivalent (check file hash before write, fail if changed).
 
 ### 3.5 Phase 2a does NOT include
@@ -132,7 +132,7 @@ Source: P1-DEC-017, P1-DEC-018, P1-DEC-019
 | Phase | Name | Scope |
 |-------|------|-------|
 | 1 | Workflow Kernel | Entity model, validation, MCP interface, doc scaffolding, ID allocation, health checks, local cache ✅ |
-| 2a | Document Intelligence | Entity evolution (Prop/Feature), document management, document intelligence (4-layer model), rich queries, concurrency |
+| 2a | Document Intelligence | Entity evolution (Plan/Feature), document management, document intelligence (4-layer model), rich queries, concurrency |
 | 2b | Context Management | Context profiles, assembly, knowledge lifecycle, link resolution, duplicate detection |
 | 3 | Git Integration | Worktree management, branch tracking, merge readiness, PR integration |
 | 4 | Orchestration | Decomposition, dependency-aware scheduling, fresh-session dispatch, worker review against spec |
@@ -162,7 +162,7 @@ P1-DEC-013 and P1-DEC-020 must be resolved early in Phase 2a. They define the qu
 ```
 Entity model evolution (3.1)
   │
-  ├── Design-space entity, prefix registry, lifecycle, fields, MCP ops
+  ├── Plan, prefix registry, lifecycle, fields, MCP ops
   ├── Tag system for cross-cutting concerns
   ├── Document metadata schema
   ├── Feature status derivation
@@ -199,13 +199,13 @@ Document intelligence Layers 1–2 (markdown parsing, pattern extraction) are de
 
 These must be resolved before a Phase 2a specification can be written.
 
-### 8.1 Design-space entity lifecycle states and transitions
+### 8.1 Plan lifecycle states and transitions
 
 The entity-structure design (§11.1) proposed tentative states: exploring → active → mature → closed. The exact states, permitted transitions, and constraints need definition. Key questions:
 
-- Can a design-space entity move backward (e.g., `mature` → `active` if new design work is needed)?
-- Does a design-space entity auto-transition based on Feature state, or is it manually managed?
-- What happens to a design-space entity's Features when the entity is closed?
+- Can a Plan move backward (e.g., `mature` → `active` if new design work is needed)?
+- Does a Plan auto-transition based on Feature state, or is it manually managed?
+- What happens to a Plan's Features when it is closed?
 
 ### 8.2 Document metadata schema
 
@@ -213,7 +213,7 @@ What fields does a tracked document record have? Tentative minimum:
 
 - document identity (path, type, title)
 - lifecycle status (draft, review, approved, superseded)
-- ownership (which Prop or Feature owns this document)
+- ownership (which Plan or Feature owns this document)
 - approval metadata (approved_by, approved_at)
 - supersession (supersedes, superseded_by)
 - version or content hash
@@ -240,11 +240,11 @@ Where do tracked document records live? Options:
 
 The document intelligence design (§13) defines index storage but not document registration storage. This needs a decision.
 
-### 8.5 Design-space entity storage model
+### 8.5 Plan storage model
 
-Where do design-space entity YAML files live? Options:
+Where do Plan YAML files live? Options:
 
-- A single directory for all design-space entities regardless of prefix (e.g., `.kbz/state/designs/`)
+- A single directory for all Plans regardless of prefix (e.g., `.kbz/state/plans/`)
 - Prefix-specific directories (e.g., `.kbz/state/P/`, `.kbz/state/D/`)
 
 The single directory is simpler. The prefix is already encoded in the ID and filename.
@@ -330,7 +330,7 @@ Mitigation: build Layers 1–2 first and validate independently. Layer 3 can be 
 
 ### 10.3 Migration risk
 
-Replacing Epic with design-space entities is a breaking change. Existing `.kbz/state/` directories, entity files, ID formats, and cross-references all need updating. The ID format change (`EPIC-*` → `{X}{n}-{slug}`) is more significant than a simple rename. If the migration is incomplete or buggy, the system becomes inconsistent.
+Replacing Epic with Plans is a breaking change. Existing `.kbz/state/` directories, entity files, ID formats, and cross-references all need updating. The ID format change (`EPIC-*` → `{X}{n}-{slug}`) is more significant than a simple rename. If the migration is incomplete or buggy, the system becomes inconsistent.
 
 Mitigation: build migration as a tested, repeatable operation. Run it on the project's own `.kbz/` state as a validation step (self-hosting).
 
@@ -344,7 +344,7 @@ Mitigation: start with the simplest viable model (serialised writes through a si
 
 ## 11. Next Steps
 
-1. **Resolve open design questions (§8)** — particularly Prop lifecycle (§8.1), document metadata schema (§8.2), and computed vs stored status (§8.3). These gate the Phase 2a specification.
+1. **Resolve open design questions (§8)** — particularly Plan lifecycle (§8.1), document metadata schema (§8.2), and computed vs stored status (§8.3). These gate the Phase 2a specification.
 2. **Write the Phase 2a specification** — following the same structure as the Phase 1 specification, with acceptance criteria for each capability.
 3. **Write the Phase 2a implementation plan** — work breakdown, sequencing, and dependency ordering.
 4. **Begin Phase 2a implementation** — starting with cache expansion and entity model evolution, which are foundational.
@@ -357,8 +357,8 @@ Phase 2b planning can begin in parallel once Phase 2a implementation is underway
 
 Phase 2 is split into two sub-phases:
 
-- **Phase 2a** delivers entity model evolution (design-space entities with flexible prefixes replace Epic), document management with tracked lifecycle, the four-layer document intelligence backend, tags for cross-cutting organisational concerns, rich queries, and a concurrency model. It makes the system understand documents — their structure, relationships, and role in the design-to-delivery pipeline.
+- **Phase 2a** delivers entity model evolution (Plans with flexible prefixes replace Epic), document management with tracked lifecycle, the four-layer document intelligence backend, tags for cross-cutting organisational concerns, rich queries, and a concurrency model. It makes the system understand documents — their structure, relationships, and role in the design-to-delivery pipeline.
 
 - **Phase 2b** delivers context management (profiles, assembly, knowledge lifecycle) and agent capabilities (link resolution, duplicate detection, extraction guidance). It makes the system assemble targeted context for agents and persist knowledge across sessions.
 
-The design-to-delivery pipeline — design → specify → plan → implement → verify — is the structural backbone. Design-space entities own the design space; Features own delivery. Documents bridge the two with tracked lifecycle. The entity hierarchy is flat — organisational concerns are handled through tags and views, not nesting. The document intelligence layer indexes and queries document content for both human navigation and agent context assembly.
+The design-to-delivery pipeline — design → specify → plan → implement → verify — is the structural backbone. Plans own the design space; Features own delivery. Documents bridge the two with tracked lifecycle. The entity hierarchy is flat — organisational concerns are handled through tags and views, not nesting. The document intelligence layer indexes and queries document content for both human navigation and agent context assembly.

@@ -108,7 +108,7 @@ Projects with UI/UX work may also have final art and design files that accompany
 
 ### 4.6 Specification
 
-The formal specification for a feature. Used as the basis for the implementation plan and for verification after implementation to confirm that everything specified was implemented and that everything implemented meets the specification.
+The formal specification for a feature. Used as the basis for the dev plan and for verification after implementation to confirm that everything specified was implemented and that everything implemented meets the specification.
 
 The specification informs test planning. It may include specifications for documentation. It defines the basis for the definition of done.
 
@@ -118,11 +118,11 @@ In projects with UI/UX work, specifications may include art and UI designs as pa
 - Style: formal, precise, unambiguous — as terse as necessary to ensure unambiguous planning and testing
 - Audience: AI agents (primary), human designers (verification)
 
-### 4.7 Implementation plan
+### 4.7 Dev plan
 
 A formal plan for implementing the specification. Created by an AI agent acting as a development lead. This is a working document for AI agents — it can be as terse as necessary since only agents need to read it.
 
-The implementation plan should contain all the steps needed to create the code, tests, support scripts, definition of done, verification steps, and instructions to documentation agents on what needs to be done.
+The dev plan should contain all the steps needed to create the code, tests, support scripts, definition of done, verification steps, and instructions to documentation agents on what needs to be done.
 
 - Created by: AI agent
 - Style: terse, structured, task-oriented
@@ -137,7 +137,7 @@ The scope varies by project:
 - Medium projects: a reference document may be necessary.
 - Large projects: a multi-page manual.
 
-Documentation content is derived from the design document and the specification. Documentation is written to the design, with reference to the specification when formality is required. Documentation is never written to the implementation plan.
+Documentation content is derived from the design document and the specification. Documentation is written to the design, with reference to the specification when formality is required. Documentation is never written to the dev plan.
 
 - Created by: AI agent (usually), reviewed by human designer
 - Style: varies by audience and scope
@@ -164,7 +164,7 @@ Documents move from informal to formal as they progress from early design toward
 | Draft design | Medium-low | Semi-formal prose, reasoning visible | Medium — captures uncertainty explicitly |
 | Design | Medium-high | Formal prose, rationale, clear decisions | Low — decisions should be unambiguous |
 | Specification | High | Precise definitions, structured | None — precision is the point |
-| Implementation plan | High | Terse, structured, task-oriented | None — agents need unambiguous instructions |
+| Dev plan | High | Terse, structured, task-oriented | None — agents need unambiguous instructions |
 
 This gradient matters to the system because it affects how documents are treated:
 
@@ -182,10 +182,10 @@ The process that documents flow through:
 2. Draft design(s) + more research + decisions → design
 3. Design → formal specification
 4. Design + formal specification (with implementation as final truth) → documentation content
-5. Formal specification → implementation plan (including testing plan and documentation plan)
-6. Implementation plan → code implementation
-7. Implementation plan → test implementation
-8. Implementation plan + documentation content → documentation implementation
+5. Formal specification → dev plan (including testing plan and documentation plan)
+6. Dev plan → code implementation
+7. Dev plan → test implementation
+8. Dev plan + documentation content → documentation implementation
 
 ### 6.2 Design iteration
 
@@ -199,7 +199,7 @@ Decisions are made during the design stages (1 and 2) and are recorded in the de
 
 Implementation decisions — choices about how to realise the specification — belong to the implementors. In this system, the implementors are AI agents. If a human designer needs to make an implementation decision, there is a problem with the specification: it should be clarified rather than patched with an ad-hoc decision.
 
-This does not mean implementation decisions are unrecorded. It means they are recorded in the implementation plan, not in the design documents, and they do not require human approval.
+This does not mean implementation decisions are unrecorded. It means they are recorded in the dev plan, not in the design documents, and they do not require human approval.
 
 ## 7. The Human Interface Contract
 
@@ -266,7 +266,7 @@ What changes is that humans do not directly operate the entity model. Agents med
 
 ### 8.2 Documents and entities relate bidirectionally
 
-**On the way in:** when a document is ingested, agents extract structured information from it. A design document may produce or update Feature records, Decision records, and links between them. A specification maps to the spec content on a Feature. An implementation plan spawns Tasks.
+**On the way in:** when a document is ingested, agents extract structured information from it. A design document may produce or update Feature records, Decision records, and links between them. A specification maps to the spec content on a Feature. A dev plan spawns Tasks.
 
 **On the way out:** when a document is retrieved, the system returns the canonical stored form. For new documents that have not yet been approved, the system or agents may assemble drafts from entity data — pulling in relevant decisions, status, requirements — but once approved, the document's identity is fixed.
 
@@ -315,7 +315,7 @@ The system needs rules for how document types relate to entities.
 | Draft design | Updates Feature records; creates Decision records (including rejected alternatives); links decisions to features |
 | Design | Finalises Feature design; finalises Decision records; links to specification expectations |
 | Specification | Creates or updates the spec content linked from a Feature |
-| Implementation plan | Creates Tasks; links tasks to features; defines verification expectations |
+| Dev plan | Creates Tasks; links tasks to features; defines verification expectations |
 | Research report | May inform decisions; may create or update KnowledgeEntry records (post-Phase 1) |
 | User documentation | Links to features and specifications; does not create entities |
 
