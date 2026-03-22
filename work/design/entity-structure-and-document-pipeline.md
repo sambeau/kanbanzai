@@ -498,9 +498,9 @@ Yes. Re-parenting is allowed. A Feature can be moved between Plans at any time a
 
 Yes. Features can exist without a parent Plan. The `parent` field is nullable. This supports the bottom-up secondary path (§6.3).
 
-### 11.4 Document metadata schema
+### 11.4 Document metadata schema — RESOLVED
 
-The exact schema for tracked document metadata (lifecycle status, approval, authorship, links) needs definition. This is related to the document intelligence design and should be specified alongside it.
+Document record fields: `id` (format: `{owner-id}/{slug}`), `path` (relative path to file), `type` (enum: `design`, `specification`, `dev-plan`, `research`, `report`, `policy`), `title`, `status` (enum: `draft`, `approved`, `superseded`), `owner` (parent Plan or Feature ID), `approved_by`, `approved_at`, `content_hash` (SHA-256 of file at last registration/approval), `supersedes`, `superseded_by`, `created`, `created_by`, `updated`. No version counter — supersession chains handle versioning. Document records are stored in `.kbz/state/documents/`, one YAML file per record.
 
 ### 11.5 Computed vs stored Feature status — RESOLVED
 
@@ -508,39 +508,24 @@ Feature status is stored and auto-updated by document approvals and task complet
 
 Backward transitions are handled via document supersession: if an approved document is superseded, the Feature's status reverts to the corresponding phase (e.g., superseding an approved spec reverts the Feature to `specifying`).
 
-### 11.6 Bug and Decision entity relationships
+### 11.6 Bug and Decision entity relationships — RESOLVED
 
 Phase 1 defined Bug and Decision as standalone entities. Under this design:
 
-- **Decisions** are born during design work and naturally belong to a Plan. They may also affect specific Features. The `affects` field on Decision should support references to both Plans and Features.
-- **Bugs** are born during implementation and naturally belong to a Feature (via `origin_feature`). No structural change is needed, but Bugs should be able to trigger new design work within a Plan if the fix requires it.
+- **Decisions** are born during design work and naturally belong to a Plan. They may also affect specific Features. The `affects` field on Decision supports references to both Plans and Features. No schema change needed — the field already accepts entity IDs of any type.
+- **Bugs** are born during implementation and naturally belong to a Feature (via `origin_feature`). No structural change needed. If a bug fix requires new design work, the agent creates a design document within a Plan through the normal document workflow.
 
-### 11.7 Storage model for Plans
+### 11.7 Storage model for Plans — RESOLVED
 
-Plans need a storage directory. Options:
+Single directory `.kbz/state/plans/` for all Plans regardless of prefix. The prefix is encoded in the ID and filename (e.g., `P2-basic-ui.yaml`, `D3-auth-redesign.yaml`).
 
-- A single directory for all Plans regardless of prefix (e.g., `.kbz/state/plans/`)
-- Prefix-specific directories (e.g., `.kbz/state/P/`, `.kbz/state/D/`)
+### 11.8 Tag schema and conventions — RESOLVED
 
-The single directory is simpler and avoids directory proliferation. The prefix is already encoded in the ID and filename.
+Tags are freeform lowercase strings with optional namespacing via colon (e.g., `phase:2`, `team:frontend`). No tag registry, no enforcement. The system indexes tags for querying but does not enforce a vocabulary.
 
-### 11.8 Tag schema and conventions
+### 11.9 Prefix registry location and format — RESOLVED
 
-Tags are freeform strings. Questions:
-
-- Should the system enforce any tag format (e.g., lowercase, hyphenated)?
-- Should there be a tag registry (like the prefix registry) or are tags truly freeform?
-- Should tags be hierarchical (e.g., `team:frontend`, `phase:2`) or flat?
-
-A lightweight approach: tags are freeform lowercase strings with optional namespacing via colon (e.g., `phase:2`, `team:frontend`). No registry required. The system indexes tags for querying but does not enforce a vocabulary.
-
-### 11.9 Prefix registry location and format
-
-The prefix registry is proposed to live in `.kbz/config.yaml`. Questions:
-
-- Is this the right location? Should it be a separate file (e.g., `.kbz/prefixes.yaml`)?
-- What validation rules apply to prefix characters? (Must be non-digit, single character — anything else?)
-- Can prefixes be retired or renamed after entities have been created with them?
+The prefix registry lives in `.kbz/config.yaml` under a `prefixes` key. Prefix must be exactly one non-digit Unicode rune, case-sensitive, unique within the project. Default prefix `P` (name: "Plan") is created on `kbz init` if no prefixes are declared. Retired prefixes are marked `retired: true` (blocks new entity creation, existing entities remain valid). Prefixes cannot be renamed — that would invalidate existing entity IDs. MCP operation: `get_project_config` (returns full config including prefixes).
 
 ---
 

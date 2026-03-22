@@ -197,7 +197,7 @@ Document intelligence Layers 1–2 (markdown parsing, pattern extraction) are de
 
 ## 8. Open Design Questions for Phase 2a
 
-These must be resolved before a Phase 2a specification can be written.
+All Phase 2a design questions have been resolved. Decisions are recorded below.
 
 ### 8.1 Plan lifecycle states and transitions
 
@@ -205,16 +205,7 @@ These must be resolved before a Phase 2a specification can be written.
 
 ### 8.2 Document metadata schema
 
-What fields does a tracked document record have? Tentative minimum:
-
-- document identity (path, type, title)
-- lifecycle status (draft, approved, superseded)
-- ownership (which Plan or Feature owns this document)
-- approval metadata (approved_by, approved_at)
-- supersession (supersedes, superseded_by)
-- version or content hash
-
-This needs to be specified precisely, including validation rules.
+**Resolved.** Document record fields: `id` (format: `{owner-id}/{slug}`), `path` (relative path to file), `type` (enum: `design`, `specification`, `dev-plan`, `research`, `report`, `policy`), `title`, `status` (enum: `draft`, `approved`, `superseded`), `owner` (parent Plan or Feature ID), `approved_by`, `approved_at`, `content_hash` (SHA-256 of file at last registration/approval), `supersedes`, `superseded_by`, `created`, `created_by`, `updated`. No version counter — supersession chains handle versioning.
 
 ### 8.3 Computed vs stored Feature status
 
@@ -222,63 +213,31 @@ This needs to be specified precisely, including validation rules.
 
 ### 8.4 Document storage model
 
-Where do tracked document records live? Options:
-
-- Alongside entity YAML files in `.kbz/state/documents/`
-- As metadata sidecar files next to the documents themselves
-- In the cache only (derived, not in Git)
-
-The document intelligence design (§13) defines index storage but not document registration storage. This needs a decision.
+**Resolved.** `.kbz/state/documents/`, one YAML file per document record, tracked in Git. Document content stays at its real path (e.g., `work/design/foo.md`). The record is metadata only. Not sidecars (too scattered), not cache-only (must be durable and collaborative).
 
 ### 8.5 Plan storage model
 
-Where do Plan YAML files live? Options:
-
-- A single directory for all Plans regardless of prefix (e.g., `.kbz/state/plans/`)
-- Prefix-specific directories (e.g., `.kbz/state/P/`, `.kbz/state/D/`)
-
-The single directory is simpler. The prefix is already encoded in the ID and filename.
+**Resolved.** Single directory `.kbz/state/plans/` for all Plans regardless of prefix. The prefix is encoded in the ID and filename.
 
 ### 8.6 Tag schema
 
-Tags are proposed as freeform strings. Questions:
-
-- Should the system enforce any tag format (e.g., lowercase, hyphenated)?
-- Should tags support optional namespacing (e.g., `phase:2`, `team:frontend`)?
-- Should there be a tag registry or are tags truly freeform?
+**Resolved.** Freeform lowercase strings with optional namespacing via colon (e.g., `phase:2`, `team:frontend`). No tag registry, no enforcement. The system indexes tags for querying but does not enforce a vocabulary.
 
 ### 8.7 Prefix registry details
 
-The prefix registry lives in `.kbz/config.yaml`. Questions:
-
-- What validation rules apply to prefix characters? (Must be non-digit, single character — anything else?)
-- Can prefixes be retired or renamed after entities have been created with them?
-- What is the MCP operation for querying the registry?
+**Resolved.** Lives in `.kbz/config.yaml` under `prefixes`. Prefix must be exactly one non-digit Unicode rune, case-sensitive, unique. Default prefix `P` (name: "Plan") is created on `kbz init` if no prefixes are declared. Retired prefixes marked `retired: true` (blocks new entity creation, existing entities remain valid). Prefixes cannot be renamed. MCP operation: `get_project_config` (returns full config including prefixes).
 
 ### 8.8 Concurrency model
 
-Multi-agent access to entity and document state needs a defined strategy. The cache (SQLite with WAL mode) handles read concurrency. Write concurrency options:
-
-- **Optimistic locking:** read file, compute hash, write with hash check, fail if changed. Simple, no lock files.
-- **Advisory file locking:** lock file per entity during writes. More complex, risk of stale locks.
-- **Serialised writes through the MCP server:** all writes go through a single server instance that serialises them. Simplest if only one server runs at a time.
+**Resolved.** Optimistic locking. Read file, compute hash, write with hash check, fail-and-retry on conflict. SQLite WAL mode for cache read concurrency. No lock files, no single-server assumption.
 
 ### 8.9 Migration strategy
 
-How does the Phase 1 → Phase 2a migration work?
-
-- Is it a one-time migration tool, or does the system detect and migrate on startup?
-- What happens to existing Epic entities? They must be re-assigned to the new `{X}{n}-{slug}` format. The project must declare at least one prefix.
-- What happens to existing Feature entities that have no spec document? They become Features with a null spec — is that valid?
+**Resolved.** One-time `kbz migrate phase-2` command, not auto-on-startup. Idempotent. Requires prefix registry to exist first. Renames Epic→Plan, `epic`→`parent`, `plan`→`dev_plan` on Features, moves files from `.kbz/state/epics/` to `.kbz/state/plans/`, re-assigns `EPIC-*` IDs to `{X}{n}-{slug}` format. Features without spec documents become Features with null `spec` (valid — bottom-up features).
 
 ### 8.10 Document intelligence implementation questions
 
-From the document intelligence design (§17.2):
-
-- **Graph storage format:** flat YAML edge list, or something more efficient?
-- **Incremental re-classification:** whole document or changed sections only?
-- **Classification stability:** does the system record which model produced a classification?
-- **Index bootstrapping:** batch classification or incremental for existing document corpora?
+**Resolved.** Flat YAML edge list for graph storage (migrate to SQLite if scale demands). Whole-document re-classification (section-level incremental is a future optimisation). Record model/version on each classification. Incremental bootstrapping (classify on register/change, not batch). Classifications are immutable once recorded — re-classification is an explicit manual operation (`re-ingest`), never automatic.
 
 ---
 
