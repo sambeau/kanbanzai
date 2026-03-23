@@ -33,12 +33,12 @@ func TestMarshalCanonicalYAML_DeterministicKeyOrder(t *testing.T) {
 		"slug: kernel-storage\n" +
 		"status: draft\n" +
 		"summary: Kernel storage\n" +
-		"meta:\n" +
-		"  created: \"2026-03-19T00:00:00Z\"\n" +
-		"  owner: sam\n" +
 		"tags:\n" +
 		"  - phase-1\n" +
-		"  - storage\n"
+		"  - storage\n" +
+		"meta:\n" +
+		"  created: \"2026-03-19T00:00:00Z\"\n" +
+		"  owner: sam\n"
 
 	if got != want {
 		t.Fatalf("MarshalCanonicalYAML() mismatch\nwant:\n%s\ngot:\n%s", want, got)
@@ -149,6 +149,75 @@ func TestEntityStore_WriteAndLoad(t *testing.T) {
 	}
 	if got.Slug != "initial-kernel" {
 		t.Fatalf("Load() slug mismatch: want %q, got %q", "initial-kernel", got.Slug)
+	}
+	if !reflect.DeepEqual(got.Fields, want) {
+		t.Fatalf("Load() fields mismatch\nwant: %#v\ngot:  %#v", want, got.Fields)
+	}
+}
+
+func TestEntityStore_WriteAndLoad_Plan(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewEntityStore(root)
+
+	record := EntityRecord{
+		Type: "plan",
+		ID:   "P1-basic-ui",
+		Slug: "basic-ui",
+		Fields: map[string]any{
+			"id":         "P1-basic-ui",
+			"slug":       "basic-ui",
+			"title":      "Basic UI",
+			"status":     "proposed",
+			"summary":    "Build the basic UI",
+			"created":    "2026-03-22T12:00:00Z",
+			"created_by": "sam",
+			"updated":    "2026-03-22T12:00:00Z",
+		},
+	}
+
+	path, err := store.Write(record)
+	if err != nil {
+		t.Fatalf("Write() error = %v", err)
+	}
+
+	// Plan files must use {id}.yaml, not {id}-{slug}.yaml, because the
+	// Plan ID already contains the slug (spec §15.1).
+	wantPath := filepath.Join(root, "plans", "P1-basic-ui.yaml")
+	if path != wantPath {
+		t.Fatalf("Write() path = %q, want %q", path, wantPath)
+	}
+
+	// Verify the file actually exists at that path
+	if _, err := os.Stat(path); err != nil {
+		t.Fatalf("Plan file does not exist at %q: %v", path, err)
+	}
+
+	got, err := store.Load("plan", "P1-basic-ui", "basic-ui")
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+
+	if got.Type != "plan" {
+		t.Errorf("Load() type = %q, want %q", got.Type, "plan")
+	}
+	if got.ID != "P1-basic-ui" {
+		t.Errorf("Load() id = %q, want %q", got.ID, "P1-basic-ui")
+	}
+	if got.Slug != "basic-ui" {
+		t.Errorf("Load() slug = %q, want %q", got.Slug, "basic-ui")
+	}
+
+	want := map[string]any{
+		"id":         "P1-basic-ui",
+		"slug":       "basic-ui",
+		"title":      "Basic UI",
+		"status":     "proposed",
+		"summary":    "Build the basic UI",
+		"created":    "2026-03-22T12:00:00Z",
+		"created_by": "sam",
+		"updated":    "2026-03-22T12:00:00Z",
 	}
 	if !reflect.DeepEqual(got.Fields, want) {
 		t.Fatalf("Load() fields mismatch\nwant: %#v\ngot:  %#v", want, got.Fields)
