@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -997,5 +998,186 @@ func TestEntityStore_Load_EmptyFile(t *testing.T) {
 
 	if len(got.Fields) != 0 {
 		t.Fatalf("Load() fields = %v, want empty map for empty file", got.Fields)
+	}
+}
+
+func TestEntityStore_Load_PopulatesFileHash(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewEntityStore(root)
+
+	record := EntityRecord{
+		Type: "feature",
+		ID:   "FEAT-01HASH",
+		Slug: "hash-test",
+		Fields: map[string]any{
+			"id":         "FEAT-01HASH",
+			"slug":       "hash-test",
+			"status":     "draft",
+			"summary":    "Test file hash population",
+			"created":    "2026-03-19T00:00:00Z",
+			"created_by": "sam",
+		},
+	}
+
+	if _, err := store.Write(record); err != nil {
+		t.Fatalf("Write() error = %v", err)
+	}
+
+	got, err := store.Load("feature", "FEAT-01HASH", "hash-test")
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+
+	if got.FileHash == "" {
+		t.Fatal("Load() FileHash is empty, expected SHA-256 hex digest")
+	}
+	if len(got.FileHash) != 64 {
+		t.Fatalf("Load() FileHash length = %d, want 64 hex chars", len(got.FileHash))
+	}
+}
+
+func TestEntityStore_Write_SucceedsWithCorrectFileHash(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewEntityStore(root)
+
+	record := EntityRecord{
+		Type: "feature",
+		ID:   "FEAT-01LOCK",
+		Slug: "lock-ok",
+		Fields: map[string]any{
+			"id":         "FEAT-01LOCK",
+			"slug":       "lock-ok",
+			"status":     "draft",
+			"summary":    "Optimistic lock success",
+			"created":    "2026-03-19T00:00:00Z",
+			"created_by": "sam",
+		},
+	}
+
+	if _, err := store.Write(record); err != nil {
+		t.Fatalf("Write() error = %v", err)
+	}
+
+	loaded, err := store.Load("feature", "FEAT-01LOCK", "lock-ok")
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+
+	// Modify a field and write back with the correct FileHash.
+	loaded.Fields["summary"] = "Updated summary"
+	if _, err := store.Write(loaded); err != nil {
+		t.Fatalf("Write() with correct FileHash error = %v", err)
+	}
+}
+
+func TestEntityStore_Write_ReturnsErrConflictOnStaleFileHash(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewEntityStore(root)
+
+	record := EntityRecord{
+		Type: "feature",
+		ID:   "FEAT-01STALE",
+		Slug: "lock-stale",
+		Fields: map[string]any{
+			"id":         "FEAT-01STALE",
+			"slug":       "lock-stale",
+			"status":     "draft",
+			"summary":    "Will become stale",
+			"created":    "2026-03-19T00:00:00Z",
+			"created_by": "sam",
+		},
+	}
+
+	if _, err := store.Write(record); err != nil {
+		t.Fatalf("Write() error = %v", err)
+	}
+
+	loaded, err := store.Load("feature", "FEAT-01STALE", "lock-stale")
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+
+	// Simulate a concurrent modification by writing directly.
+	stale := loaded
+	loaded.Fields["summary"] = "Concurrent update"
+	loaded.FileHash = "" // bypass locking for the concurrent write
+	if _, err := store.Write(loaded); err != nil {
+		t.Fatalf("concurrent Write() error = %v", err)
+	}
+
+	// Now try to write with the stale hash.
+	stale.Fields["summary"] = "Late update"
+	_, err = store.Write(stale)
+	if err == nil {
+		t.Fatal("Write() with stale FileHash should return error")
+	}
+	if !errors.Is(err, ErrConflict) {
+		t.Fatalf("Write() error = %v, want ErrConflict", err)
+	}
+}
+
+func TestEntityStore_Write_SucceedsWithEmptyFileHash(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewEntityStore(root)
+
+	record := EntityRecord{
+		Type: "feature",
+		ID:   "FEAT-01EMPTY",
+		Slug: "no-hash",
+		Fields: map[string]any{
+			"id":         "FEAT-01EMPTY",
+			"slug":       "no-hash",
+			"status":     "draft",
+			"summary":    "No hash check",
+			"created":    "2026-03-19T00:00:00Z",
+			"created_by": "sam",
+		},
+	}
+
+	// First write — no FileHash, file doesn't exist yet.
+	if _, err := store.Write(record); err != nil {
+		t.Fatalf("Write() error = %v", err)
+	}
+
+	// Second write — no FileHash, file already exists. Should succeed without checking.
+	record.Fields["summary"] = "Overwritten without hash"
+	if _, err := store.Write(record); err != nil {
+		t.Fatalf("Write() with empty FileHash on existing file error = %v", err)
+	}
+}
+
+func TestEntityStore_Write_NewEntityWithFileHashSucceeds(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewEntityStore(root)
+
+	record := EntityRecord{
+		Type:     "feature",
+		ID:       "FEAT-01NEW",
+		Slug:     "brand-new",
+		FileHash: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+		Fields: map[string]any{
+			"id":         "FEAT-01NEW",
+			"slug":       "brand-new",
+			"status":     "draft",
+			"summary":    "New entity with a hash set",
+			"created":    "2026-03-19T00:00:00Z",
+			"created_by": "sam",
+		},
+	}
+
+	// File doesn't exist, so the hash check should be skipped even though
+	// FileHash is set.
+	if _, err := store.Write(record); err != nil {
+		t.Fatalf("Write() new entity with FileHash error = %v", err)
 	}
 }

@@ -1,6 +1,8 @@
 package storage
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"os"
@@ -18,7 +20,8 @@ type EntityRecord struct {
 	ID   string
 	Slug string
 
-	Fields map[string]any
+	Fields   map[string]any
+	FileHash string // SHA-256 hex digest of file contents at load time; used for optimistic locking
 }
 
 type EntityStore struct {
@@ -40,6 +43,19 @@ func (s *EntityStore) Write(record EntityRecord) (string, error) {
 	}
 
 	path := filepath.Join(dir, entityFileName(record))
+
+	// Optimistic locking: if FileHash is set, verify the file hasn't changed.
+	if record.FileHash != "" {
+		current, err := os.ReadFile(path)
+		if err == nil {
+			h := sha256.Sum256(current)
+			if hex.EncodeToString(h[:]) != record.FileHash {
+				return "", fmt.Errorf("write entity %s: %w", record.ID, ErrConflict)
+			}
+		}
+		// If the file doesn't exist (os.ErrNotExist), skip the check — new entity.
+	}
+
 	content, err := MarshalCanonicalYAML(record.Type, record.Fields)
 	if err != nil {
 		return "", fmt.Errorf("marshal canonical yaml: %w", err)
@@ -84,6 +100,10 @@ func (s *EntityStore) Load(entityType, id, slug string) (EntityRecord, error) {
 	}
 
 	record.Fields = fields
+
+	h := sha256.Sum256(data)
+	record.FileHash = hex.EncodeToString(h[:])
+
 	return record, nil
 }
 

@@ -20,8 +20,9 @@ const DocumentDir = "documents"
 
 // DocumentRecord is the storage representation of a document metadata record.
 type DocumentRecord struct {
-	ID     string
-	Fields map[string]any
+	ID       string
+	Fields   map[string]any
+	FileHash string // SHA-256 hex digest of file contents at load time; used for optimistic locking
 }
 
 // DocumentStore handles storage and retrieval of document metadata records.
@@ -47,6 +48,19 @@ func (s *DocumentStore) Write(record DocumentRecord) (string, error) {
 	}
 
 	path := filepath.Join(dir, documentFileName(record.ID))
+
+	// Optimistic locking: if FileHash is set, verify the file hasn't changed.
+	if record.FileHash != "" {
+		current, err := os.ReadFile(path)
+		if err == nil {
+			h := sha256.Sum256(current)
+			if hex.EncodeToString(h[:]) != record.FileHash {
+				return "", fmt.Errorf("write document %s: %w", record.ID, ErrConflict)
+			}
+		}
+		// If the file doesn't exist (os.ErrNotExist), skip the check — new document.
+	}
+
 	content, err := MarshalCanonicalYAML("document_record", record.Fields)
 	if err != nil {
 		return "", fmt.Errorf("marshal document record: %w", err)
@@ -82,6 +96,10 @@ func (s *DocumentStore) Load(id string) (DocumentRecord, error) {
 	}
 
 	record.Fields = fields
+
+	h := sha256.Sum256(data)
+	record.FileHash = hex.EncodeToString(h[:])
+
 	return record, nil
 }
 
