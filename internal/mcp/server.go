@@ -32,6 +32,7 @@ func NewServer(entityRoot, docsRoot string) *server.MCPServer {
 	// Documents are stored relative to the repository root (current directory)
 	repoRoot := "."
 	docRecordSvc := service.NewDocumentService(stateRoot, repoRoot)
+	docRecordSvc.SetEntityHook(service.NewEntityLifecycleHook(entitySvc))
 
 	// Open the local derived cache best-effort. If it fails, the service
 	// operates without cache acceleration — all queries fall back to

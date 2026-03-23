@@ -773,3 +773,332 @@ func TestIsValidEntityID(t *testing.T) {
 		})
 	}
 }
+
+// --- Lifecycle hook test helpers ---
+
+type mockEntityHook struct {
+	transitions []transitionCall
+	docRefs     []docRefCall
+	entityType  string
+	status      string
+	err         error
+}
+
+type transitionCall struct {
+	entityID  string
+	newStatus string
+}
+
+type docRefCall struct {
+	entityID string
+	docField string
+	docID    string
+}
+
+func (m *mockEntityHook) TransitionStatus(entityID, newStatus string) error {
+	m.transitions = append(m.transitions, transitionCall{entityID, newStatus})
+	return m.err
+}
+
+func (m *mockEntityHook) SetDocumentRef(entityID, docField, docID string) error {
+	m.docRefs = append(m.docRefs, docRefCall{entityID, docField, docID})
+	return m.err
+}
+
+func (m *mockEntityHook) GetEntityStatus(entityID string) (string, string, error) {
+	return m.entityType, m.status, m.err
+}
+
+// --- Lifecycle hook integration tests ---
+
+func TestApproveDocument_TransitionsFeatureOnSpecApproval(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	mock := &mockEntityHook{entityType: "feature", status: "specifying"}
+	svc.SetEntityHook(mock)
+
+	docPath := "spec.md"
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("spec content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	submitResult, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Feature Spec",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	// Reset recorded calls before the operation under test
+	mock.transitions = nil
+
+	approveResult, err := svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitResult.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err != nil {
+		t.Fatalf("ApproveDocument() error = %v", err)
+	}
+
+	if approveResult.Status != string(model.DocumentStatusApproved) {
+		t.Errorf("Status = %q, want %q", approveResult.Status, model.DocumentStatusApproved)
+	}
+
+	if len(mock.transitions) != 1 {
+		t.Fatalf("expected 1 transition call, got %d", len(mock.transitions))
+	}
+	if mock.transitions[0].entityID != "FEAT-123" {
+		t.Errorf("transition entityID = %q, want %q", mock.transitions[0].entityID, "FEAT-123")
+	}
+	if mock.transitions[0].newStatus != "dev-planning" {
+		t.Errorf("transition newStatus = %q, want %q", mock.transitions[0].newStatus, "dev-planning")
+	}
+}
+
+func TestApproveDocument_TransitionsPlanOnDesignApproval(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	mock := &mockEntityHook{entityType: "plan", status: "designing"}
+	svc.SetEntityHook(mock)
+
+	docPath := "design.md"
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("design content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	submitResult, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "design",
+		Title:     "Plan Design",
+		Owner:     "P1-basic-ui",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	mock.transitions = nil
+
+	_, err = svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitResult.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err != nil {
+		t.Fatalf("ApproveDocument() error = %v", err)
+	}
+
+	if len(mock.transitions) != 1 {
+		t.Fatalf("expected 1 transition call, got %d", len(mock.transitions))
+	}
+	if mock.transitions[0].entityID != "P1-basic-ui" {
+		t.Errorf("transition entityID = %q, want %q", mock.transitions[0].entityID, "P1-basic-ui")
+	}
+	if mock.transitions[0].newStatus != "active" {
+		t.Errorf("transition newStatus = %q, want %q", mock.transitions[0].newStatus, "active")
+	}
+}
+
+func TestSupersedeDocument_RevertsFeatureOnSpecSupersession(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	mock := &mockEntityHook{entityType: "feature", status: "dev-planning"}
+	svc.SetEntityHook(mock)
+
+	for _, name := range []string{"spec-v1.md", "spec-v2.md"} {
+		if err := os.WriteFile(filepath.Join(repoRoot, name), []byte("content"), 0o644); err != nil {
+			t.Fatalf("write file: %v", err)
+		}
+	}
+
+	submit1, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      "spec-v1.md",
+		Type:      "specification",
+		Title:     "Spec V1",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument(v1) error = %v", err)
+	}
+
+	_, err = svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submit1.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err != nil {
+		t.Fatalf("ApproveDocument(v1) error = %v", err)
+	}
+
+	submit2, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      "spec-v2.md",
+		Type:      "specification",
+		Title:     "Spec V2",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument(v2) error = %v", err)
+	}
+
+	// Reset before the operation under test
+	mock.transitions = nil
+
+	_, err = svc.SupersedeDocument(SupersedeDocumentInput{
+		ID:           submit1.ID,
+		SupersededBy: submit2.ID,
+	})
+	if err != nil {
+		t.Fatalf("SupersedeDocument() error = %v", err)
+	}
+
+	if len(mock.transitions) != 1 {
+		t.Fatalf("expected 1 transition call, got %d", len(mock.transitions))
+	}
+	if mock.transitions[0].entityID != "FEAT-123" {
+		t.Errorf("transition entityID = %q, want %q", mock.transitions[0].entityID, "FEAT-123")
+	}
+	if mock.transitions[0].newStatus != "specifying" {
+		t.Errorf("transition newStatus = %q, want %q", mock.transitions[0].newStatus, "specifying")
+	}
+}
+
+func TestSubmitDocument_SetsDocRefOnOwner(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	mock := &mockEntityHook{entityType: "feature", status: "proposed"}
+	svc.SetEntityHook(mock)
+
+	docPath := "my-spec.md"
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("spec content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	result, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Test Spec",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	if len(mock.docRefs) != 1 {
+		t.Fatalf("expected 1 docRef call, got %d", len(mock.docRefs))
+	}
+	if mock.docRefs[0].entityID != "FEAT-123" {
+		t.Errorf("docRef entityID = %q, want %q", mock.docRefs[0].entityID, "FEAT-123")
+	}
+	if mock.docRefs[0].docField != "spec" {
+		t.Errorf("docRef docField = %q, want %q", mock.docRefs[0].docField, "spec")
+	}
+	if mock.docRefs[0].docID != result.ID {
+		t.Errorf("docRef docID = %q, want %q", mock.docRefs[0].docID, result.ID)
+	}
+}
+
+func TestSubmitDocument_TransitionsFeatureOnDesignCreation(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	mock := &mockEntityHook{entityType: "feature", status: "proposed"}
+	svc.SetEntityHook(mock)
+
+	docPath := "design.md"
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("design content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	_, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "design",
+		Title:     "Test Design",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	if len(mock.transitions) != 1 {
+		t.Fatalf("expected 1 transition call, got %d", len(mock.transitions))
+	}
+	if mock.transitions[0].entityID != "FEAT-123" {
+		t.Errorf("transition entityID = %q, want %q", mock.transitions[0].entityID, "FEAT-123")
+	}
+	if mock.transitions[0].newStatus != "designing" {
+		t.Errorf("transition newStatus = %q, want %q", mock.transitions[0].newStatus, "designing")
+	}
+}
+
+func TestOperations_NoHook_StillWork(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	// No hook set — all operations must still work
+
+	for _, name := range []string{"doc1.md", "doc2.md"} {
+		if err := os.WriteFile(filepath.Join(repoRoot, name), []byte("content"), 0o644); err != nil {
+			t.Fatalf("write file: %v", err)
+		}
+	}
+
+	submit1, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      "doc1.md",
+		Type:      "design",
+		Title:     "Design",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	_, err = svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submit1.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err != nil {
+		t.Fatalf("ApproveDocument() error = %v", err)
+	}
+
+	submit2, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      "doc2.md",
+		Type:      "design",
+		Title:     "Design V2",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument(doc2) error = %v", err)
+	}
+
+	_, err = svc.SupersedeDocument(SupersedeDocumentInput{
+		ID:           submit1.ID,
+		SupersededBy: submit2.ID,
+	})
+	if err != nil {
+		t.Fatalf("SupersedeDocument() error = %v", err)
+	}
+}

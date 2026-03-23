@@ -69,10 +69,17 @@ type DocumentFilters struct {
 
 // DocumentService handles document record operations.
 type DocumentService struct {
-	stateRoot string
-	repoRoot  string
-	store     *storage.DocumentStore
-	now       func() time.Time
+	stateRoot  string
+	repoRoot   string
+	store      *storage.DocumentStore
+	now        func() time.Time
+	entityHook EntityLifecycleHook // optional, for lifecycle transitions
+}
+
+// SetEntityHook attaches an optional lifecycle hook that triggers entity
+// transitions when documents are submitted, approved, or superseded.
+func (s *DocumentService) SetEntityHook(hook EntityLifecycleHook) {
+	s.entityHook = hook
 }
 
 // NewDocumentService creates a new DocumentService.
@@ -169,7 +176,7 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 		return DocumentResult{}, fmt.Errorf("write document record: %w", err)
 	}
 
-	return DocumentResult{
+	result := DocumentResult{
 		ID:          doc.ID,
 		Path:        doc.Path,
 		RecordPath:  recordPath,
@@ -180,7 +187,38 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 		ContentHash: doc.ContentHash,
 		Created:     doc.Created,
 		Updated:     doc.Updated,
-	}, nil
+	}
+
+	// Trigger entity lifecycle hooks on submission
+	if s.entityHook != nil && owner != "" {
+		// Set document reference on the owning entity
+		var docField string
+		switch docType {
+		case model.DocumentTypeDesign:
+			docField = "design"
+		case model.DocumentTypeSpecification:
+			docField = "spec"
+		case model.DocumentTypeDevPlan:
+			docField = "dev_plan"
+		}
+		if docField != "" {
+			_ = s.entityHook.SetDocumentRef(owner, docField, doc.ID)
+		}
+
+		// Trigger creation-time lifecycle transition
+		var targetStatus string
+		switch docType {
+		case model.DocumentTypeDesign:
+			targetStatus = "designing"
+		case model.DocumentTypeSpecification:
+			targetStatus = "specifying"
+		}
+		if targetStatus != "" {
+			_ = s.entityHook.TransitionStatus(owner, targetStatus)
+		}
+	}
+
+	return result, nil
 }
 
 // ApproveDocument transitions a document from draft to approved.
@@ -233,7 +271,7 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 		return DocumentResult{}, fmt.Errorf("write document record: %w", err)
 	}
 
-	return DocumentResult{
+	result := DocumentResult{
 		ID:          doc.ID,
 		Path:        doc.Path,
 		RecordPath:  recordPath,
@@ -246,7 +284,28 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 		Updated:     doc.Updated,
 		ApprovedBy:  doc.ApprovedBy,
 		ApprovedAt:  doc.ApprovedAt,
-	}, nil
+	}
+
+	// Trigger entity lifecycle hooks on approval
+	if s.entityHook != nil && doc.Owner != "" {
+		entityType, _, _ := s.entityHook.GetEntityStatus(doc.Owner)
+		var targetStatus string
+		switch {
+		case entityType == "plan" && doc.Type == model.DocumentTypeDesign:
+			targetStatus = "active"
+		case entityType == "feature" && doc.Type == model.DocumentTypeDesign:
+			targetStatus = "specifying"
+		case entityType == "feature" && doc.Type == model.DocumentTypeSpecification:
+			targetStatus = "dev-planning"
+		case entityType == "feature" && doc.Type == model.DocumentTypeDevPlan:
+			targetStatus = "developing"
+		}
+		if targetStatus != "" {
+			_ = s.entityHook.TransitionStatus(doc.Owner, targetStatus)
+		}
+	}
+
+	return result, nil
 }
 
 // SupersedeDocument transitions a document from approved to superseded.
@@ -311,7 +370,7 @@ func (s *DocumentService) SupersedeDocument(input SupersedeDocumentInput) (Docum
 		return DocumentResult{}, fmt.Errorf("write document record: %w", err)
 	}
 
-	return DocumentResult{
+	result := DocumentResult{
 		ID:           doc.ID,
 		Path:         doc.Path,
 		RecordPath:   recordPath,
@@ -326,7 +385,28 @@ func (s *DocumentService) SupersedeDocument(input SupersedeDocumentInput) (Docum
 		ApprovedAt:   doc.ApprovedAt,
 		Supersedes:   doc.Supersedes,
 		SupersededBy: doc.SupersededBy,
-	}, nil
+	}
+
+	// Trigger entity lifecycle hooks on supersession
+	if s.entityHook != nil && doc.Owner != "" {
+		entityType, _, _ := s.entityHook.GetEntityStatus(doc.Owner)
+		if entityType == "feature" {
+			var targetStatus string
+			switch doc.Type {
+			case model.DocumentTypeDesign:
+				targetStatus = "designing"
+			case model.DocumentTypeSpecification:
+				targetStatus = "specifying"
+			case model.DocumentTypeDevPlan:
+				targetStatus = "dev-planning"
+			}
+			if targetStatus != "" {
+				_ = s.entityHook.TransitionStatus(doc.Owner, targetStatus)
+			}
+		}
+	}
+
+	return result, nil
 }
 
 // GetDocument retrieves a document record by ID.
