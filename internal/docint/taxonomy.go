@@ -101,6 +101,46 @@ var conventionalRoleKeywords = map[string]FragmentRole{
 	"context":                 RoleNarrative,
 }
 
+// conventionalRoleKeywordsOrdered is a deterministic ordering of keywords for substring matching.
+// Longer keywords appear first to ensure more specific patterns match before shorter ones.
+var conventionalRoleKeywordsOrdered = []struct {
+	keyword string
+	role    FragmentRole
+}{
+	{"alternatives considered", RoleAlternative},
+	{"acceptance criteria", RoleRequirement},
+	{"open questions", RoleQuestion},
+	{"open question", RoleQuestion},
+	{"alternatives", RoleAlternative},
+	{"alternative", RoleAlternative},
+	{"assumptions", RoleAssumption},
+	{"assumption", RoleAssumption},
+	{"background", RoleNarrative},
+	{"constraints", RoleConstraint},
+	{"constraint", RoleConstraint},
+	{"decisions", RoleDecision},
+	{"decision", RoleDecision},
+	{"definitions", RoleDefinition},
+	{"definition", RoleDefinition},
+	{"examples", RoleExample},
+	{"example", RoleExample},
+	{"glossary", RoleDefinition},
+	{"non-goals", RoleConstraint},
+	{"non-goal", RoleConstraint},
+	{"overview", RoleNarrative},
+	{"purpose", RoleNarrative},
+	{"questions", RoleQuestion},
+	{"question", RoleQuestion},
+	{"rationale", RoleRationale},
+	{"requirements", RoleRequirement},
+	{"requirement", RoleRequirement},
+	{"context", RoleNarrative},
+	{"risks", RoleRisk},
+	{"risk", RoleRisk},
+	{"scope", RoleConstraint},
+	{"summary", RoleNarrative},
+}
+
 // MatchConventionalRole checks if a heading title matches a conventional role keyword.
 // Returns the role and true if matched, or empty and false if not.
 func MatchConventionalRole(headingTitle string) (FragmentRole, bool) {
@@ -111,10 +151,10 @@ func MatchConventionalRole(headingTitle string) (FragmentRole, bool) {
 		return role, true
 	}
 
-	// Check if heading contains a keyword
-	for keyword, role := range conventionalRoleKeywords {
-		if strings.Contains(lower, keyword) {
-			return role, true
+	// Check if heading contains a keyword (ordered, deterministic)
+	for _, kw := range conventionalRoleKeywordsOrdered {
+		if strings.Contains(lower, kw.keyword) {
+			return kw.role, true
 		}
 	}
 

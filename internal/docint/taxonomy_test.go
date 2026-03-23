@@ -177,6 +177,7 @@ func TestMatchConventionalRole(t *testing.T) {
 		{"no match", "Foo bar", "", false},
 		{"empty string", "", "", false},
 		{"partial keyword in heading", "Project Assumptions", RoleAssumption, true},
+		{"multiple keywords deterministic", "Risk Assumptions", RoleAssumption, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
