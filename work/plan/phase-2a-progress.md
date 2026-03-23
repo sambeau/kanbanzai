@@ -1,6 +1,6 @@
 # Phase 2a Progress and Remaining Work
 
-**Last updated:** 2025-03-23
+**Last updated:** 2025-07-23
 
 **Purpose:** Track implementation status of Phase 2a deliverables against the Phase 2 specification (§22 acceptance criteria) and identify remaining work.
 
@@ -14,17 +14,17 @@ This document tracks what has been implemented for Phase 2a, what remains, and t
 
 | Area | Status | Notes |
 |------|--------|-------|
-| Plan creation and management | ✅ Complete | All CRUD, lifecycle, prefix validation |
+| Plan creation and management | ⚠️ Has issues | Lifecycle bug: `done` marked terminal, blocks `done→superseded` (see audit B1) |
 | Prefix registry | ✅ Complete | Config parsing, MCP exposure, validation, retirement |
-| Feature lifecycle driven by documents | ✅ Complete | Approval and supersession hooks wired |
-| Document management | ✅ Complete | Submit, approve, supersede, ingest, supersession chain |
-| Document intelligence — structural | ✅ Complete | Layers 1–2 in `internal/docint` |
-| Document intelligence — classification | ✅ Complete | Layer 3 classification protocol |
-| Document intelligence — graph/concepts | ✅ Complete | Layer 4 graph storage and concept registry |
+| Feature lifecycle driven by documents | ⚠️ Has issues | Lifecycle bugs, entry state stuck at Phase 1 `draft`, field renames incomplete at service layer (see audit B2, B3) |
+| Document management | ⚠️ Has issues | Optimistic locking bypassed in DocumentService (see audit B4) |
+| Document intelligence — structural | ⚠️ Has issues | Content blocks not identified (see audit report) |
+| Document intelligence — classification | ⚠️ Has issues | `ClassifiedAt` timestamp not set in `doc_classify` (see audit B5) |
+| Document intelligence — graph/concepts | ⚠️ Has issues | 3 edge types missing, non-deterministic role matching (see audit B6, B7) |
 | Rich queries | ✅ Complete | Date range, cross-entity, tag queries |
-| Concurrency (optimistic locking) | ✅ Complete | Content-hash based conflict detection |
+| Concurrency (optimistic locking) | ⚠️ Needs remediation | Bypassed in DocumentService — FileHash dropped during model conversion (see audit B4) |
 | Migration | ✅ Complete | Epic→Plan, feature field renames, idempotent |
-| Deterministic storage | ✅ Complete | All entity types produce canonical YAML |
+| Deterministic storage | ⚠️ Needs remediation | Index files use `yaml.Marshal`, not canonical serializer (see audit report) |
 | Tags | ✅ Complete | Cross-type queries, list all tags |
 | Extended health checks | ✅ Complete | Document, plan prefix, feature parent checks |
 | Cache schema expansion | ⚠️ Deferred | Low priority; not blocking acceptance |
@@ -36,15 +36,17 @@ This document tracks what has been implemented for Phase 2a, what remains, and t
 - Plan entity type with full lifecycle (proposed → designing → active → done/abandoned)
 - Plan ID format: `{Prefix}{SeqNum}-{slug}` with prefix registry validation
 - Document record type with lifecycle (draft → approved → superseded)
-- Feature model updated: `epic` → `parent`, `plan` → `dev_plan` field renames
+- Feature model updated: `epic` → `parent`, `plan` → `dev_plan` field renames at struct level
 - All Phase 2 lifecycle states defined for Plan, Feature, Task, Bug, Decision
+
+**Note:** Feature field renames (`epic` → `parent`, `plan` → `dev_plan`) are struct-level only. The service layer and MCP tool layer still use the old names (`epic`/`plan`) in several places. Full propagation is incomplete.
 
 ### 3.2 Prefix registry (spec §10)
 
 - `config.yaml` schema with prefix entries (prefix, label, retired flag)
 - `config.Load()` and `config.SaveTo()` for reading/writing
 - `DefaultConfig()` provides a default `P` prefix
-- MCP tools: `config_get`, `config_set_prefix`, `config_retire_prefix`
+- MCP tools: `get_project_config`, `add_prefix`, `retire_prefix`
 - Plan creation validates against declared prefixes
 
 ### 3.3 Lifecycle (spec §9)
@@ -78,10 +80,10 @@ This document tracks what has been implemented for Phase 2a, what remains, and t
 
 Phase 2a tools registered in `internal/mcp/server.go`:
 
-**Entity tools:** `create_entity`, `get_entity`, `list_entities`, `update_entity`, `update_status`
+**Entity tools:** `get_entity`, `list_entities`, `update_entity`, `update_status` (note: generic entity tools do not support Plan type — use dedicated plan tools)
 **Plan tools:** `create_plan`, `get_plan`, `list_plans`, `update_plan`, `update_plan_status`
-**Document record tools:** `doc_submit`, `doc_record_approve`, `doc_record_supersede`, `doc_record_get`, `doc_record_list`
-**Config tools:** `config_get`, `config_set_prefix`, `config_retire_prefix`
+**Document record tools:** `doc_record_submit`, `doc_record_approve`, `doc_record_supersede`, `doc_record_get`, `doc_record_get_content`, `doc_record_list`, `doc_record_list_pending`, `doc_record_validate`
+**Config tools:** `get_project_config`, `add_prefix`, `retire_prefix`, `get_prefix_registry`
 **Document intelligence tools:** `doc_classify`, `doc_outline`, `doc_section`, `doc_find_by_entity`, `doc_find_by_concept`, `doc_find_by_role`, `doc_trace`, `doc_gaps`, `doc_pending`, `doc_impact`
 **Query tools:** `list_tags`, `list_by_tag`, `query_plan_tasks`, `doc_supersession_chain`
 **Migration tools:** `migrate_phase2`
@@ -99,6 +101,8 @@ Phase 2a tools registered in `internal/mcp/server.go`:
 - `Load()` computes and stores file hash; `Write()` compares expected hash
 - `storage.ErrConflict` sentinel error on mismatch
 - Last-write-wins semantics preserved when no prior load (new records)
+
+**Note:** Optimistic locking is effectively bypassed in the `DocumentService` because `FileHash` is dropped during model conversion (storage record → service model → storage record). By the time a document record is written back, the hash used for comparison is zero-valued, so the conflict check always passes. See audit finding B4.
 
 ### 3.9 Document intelligence (spec §12, §13)
 
@@ -154,7 +158,7 @@ Comprehensive tests added across all new functionality:
 - `internal/service/supersession_test.go` — 7 tests for version chain traversal
 - `internal/docint/*_test.go` — comprehensive unit tests for each Layer 1–4 component
 - `internal/validate/doc_health_test.go` — tests for all new health check functions
-- All tests pass with race detector enabled
+- Most tests pass with race detector enabled. **Known failure:** `TestEntityService_ResolvePrefix` is flaky due to non-deterministic map iteration order (see audit finding B8).
 
 ## 4. Known Issues
 
@@ -176,19 +180,52 @@ Entity lifecycle hook errors in `DocumentService.SubmitDocument`, `ApproveDocume
 
 ### 4.5 Submit response does not include structural skeleton
 
-The `doc_submit` MCP tool response returns document record metadata but does not include the Layer 1–2 structural skeleton in the response body. Ingest runs as a side-effect on submit, and the structural skeleton is immediately available via `doc_outline`. This is a composable API design choice — agents call `doc_outline` after `doc_submit` if they need the skeleton.
+The `doc_record_submit` MCP tool response returns document record metadata but does not include the Layer 1–2 structural skeleton in the response body. Ingest runs as a side-effect on submit, and the structural skeleton is immediately available via `doc_outline`. This is a composable API design choice — agents call `doc_outline` after `doc_record_submit` if they need the skeleton.
+
+### 4.6 Plan `done` incorrectly marked terminal (B1)
+
+The Plan lifecycle state machine marks `done` as a terminal state. This blocks the `done → superseded` transition required by the spec. The spec defines `done` as a valid source for supersession. Remediation: remove `done` from terminal states for Plan.
+
+### 4.7 Feature `done` incorrectly marked terminal (B2)
+
+Same issue as §4.6 but for the Feature lifecycle. `done` is marked terminal, blocking `done → superseded`. Remediation: remove `done` from terminal states for Feature.
+
+### 4.8 Feature entry state stuck at Phase 1 `draft` (B3)
+
+The Feature lifecycle still uses `draft` as its entry state from Phase 1. Phase 2 specifies `proposed` as the entry state for Features. This means newly created Features enter the wrong initial state, and the Phase 2 lifecycle transitions that start from `proposed` are unreachable. Remediation: update Feature entry state to `proposed`.
+
+### 4.9 Optimistic locking bypassed in DocumentService (B4)
+
+`FileHash` is dropped during the round-trip between storage records and service-layer models. When `DocumentService` loads a document record, the hash is computed by the storage layer but lost during conversion to the service model. When the record is written back, the zero-valued hash always passes the conflict check. This effectively disables optimistic locking for all document operations. Remediation: propagate `FileHash` through the model conversion layer.
+
+### 4.10 `ClassifiedAt` timestamp not set in `doc_classify` (B5)
+
+The `doc_classify` MCP tool handler does not set the `ClassifiedAt` timestamp on classifications before storing them. Classifications are persisted without a timestamp, making it impossible to determine when a classification was applied. Remediation: set `ClassifiedAt` to `time.Now()` in the classify handler.
+
+### 4.11 `MatchConventionalRole` non-deterministic (B6)
+
+`MatchConventionalRole` iterates over a `map[string][]string` to match heading text against conventional role patterns. Go map iteration order is non-deterministic, so when a heading matches patterns for multiple roles, the returned role varies between runs. Remediation: use a deterministic iteration order (sorted keys or an ordered slice).
+
+### 4.12 `NormalizeConcept` produces double hyphens (B7)
+
+`NormalizeConcept` replaces non-alphanumeric characters with hyphens but does not collapse consecutive hyphens. Input like "model — overview" produces `model---overview` instead of `model-overview`. Remediation: collapse runs of hyphens after replacement.
+
+### 4.13 `TestEntityService_ResolvePrefix` flaky (B8)
+
+This test is sensitive to map iteration order when resolving prefixes. Under the race detector or on different platforms, the test can fail non-deterministically. Remediation: fix the test to not depend on map iteration order, or fix the underlying `ResolvePrefix` implementation to be deterministic.
 
 ## 5. Acceptance Criteria Status
 
 Tracking against spec §22 acceptance criteria for Phase 2a items.
 
-### §22.1 Plan creation and management — ✅ Met
+### §22.1 Plan creation and management — ⚠️ Has issues
 
 - [x] Create a Plan with a declared prefix
 - [x] Retrieve a Plan by ID
 - [x] List Plans with filtering by status, prefix, and tags
 - [x] Transition a Plan through its lifecycle states
 - [x] Reject Plan creation with an undeclared prefix
+- Note: `done → superseded` transition is blocked because `done` is incorrectly marked terminal (B1)
 
 ### §22.2 Prefix registry — ✅ Met
 
@@ -198,12 +235,14 @@ Tracking against spec §22 acceptance criteria for Phase 2a items.
 - [x] Support prefix retirement
 - [ ] Create a default `P` prefix on `kbz init` (init command not yet implemented, but `DefaultConfig()` provides it)
 
-### §22.3 Feature lifecycle driven by documents — ✅ Met
+### §22.3 Feature lifecycle driven by documents — ⚠️ Has issues
 
 - [x] Approving a Feature's specification transitions Feature to `dev-planning`
 - [x] Approving a Feature's dev plan transitions Feature to `developing`
 - [x] Superseding an approved document reverts Feature to appropriate earlier state
 - [x] Shortcut from `proposed` to `specifying` works (lifecycle states defined)
+- Note: Feature entry state is `draft` (Phase 1) instead of `proposed` (Phase 2), so newly created Features cannot reach Phase 2 lifecycle paths without manual status override (B3)
+- Note: `done → superseded` blocked because `done` is terminal (B2)
 
 ### §22.4 Document management — ✅ Met
 
@@ -216,15 +255,16 @@ Tracking against spec §22 acceptance criteria for Phase 2a items.
 - [x] Submit triggers Layers 1–2 ingest (skeleton available via `doc_outline`)
 - [x] Query a document's supersession chain (`doc_supersession_chain` tool)
 
-### §22.5 Document intelligence — structural analysis — ✅ Met
+### §22.5 Document intelligence — structural analysis — ⚠️ Has issues
 
 - [x] Parse a Markdown document into a structural section tree
 - [x] Extract entity references from document text
 - [x] Extract cross-document links
 - [x] Return a document outline with section titles, levels, and sizes
 - [x] Retrieve a specific section by path
+- Note: Content blocks (code fences, tables, lists) are not identified as distinct structural elements within sections (see audit report)
 
-### §22.6 Document intelligence — classification — ✅ Met
+### §22.6 Document intelligence — classification — ⚠️ Has issues
 
 - [x] Return structural skeleton with classification schema to agent
 - [x] Accept and validate agent-provided classifications
@@ -233,6 +273,7 @@ Tracking against spec §22 acceptance criteria for Phase 2a items.
 - [x] List documents pending classification
 - [x] Query fragments by role across corpus (`doc_find_by_role`)
 - [x] Query sections by concept (`doc_find_by_concept`)
+- Note: `ClassifiedAt` timestamp is not set when classifications are stored, so temporal queries and provenance tracking are broken (B5)
 
 ### §22.7 Rich queries — ✅ Met
 
@@ -242,9 +283,10 @@ Tracking against spec §22 acceptance criteria for Phase 2a items.
 - [x] Tag-based queries across entity types (`list_tags`, `list_by_tag`)
 - [x] Document listing with filtering by type, status, owner
 
-### §22.8 Concurrency — ✅ Met
+### §22.8 Concurrency — ⚠️ Has issues
 
 - [x] Optimistic locking detects conflicts and returns `storage.ErrConflict`
+- Note: Locking is bypassed in `DocumentService` because `FileHash` is dropped during model conversion — conflict detection is effectively disabled for document operations (B4)
 
 ### §22.9 Migration — ✅ Met
 
@@ -254,9 +296,10 @@ Tracking against spec §22 acceptance criteria for Phase 2a items.
 - [x] Idempotent (checks by slug, skips existing plans)
 - [x] Fail clearly if prefix registry not configured
 
-### §22.10 Deterministic storage — ✅ Met
+### §22.10 Deterministic storage — ⚠️ Has issues
 
-- [x] All new file types produce deterministic output
+- [x] All new entity file types produce deterministic output
+- Note: Index files (`.kbz/index/graph.yaml`, `.kbz/index/concepts.yaml`) use `yaml.Marshal` instead of the canonical serializer, so they do not meet the deterministic storage contract (see audit report)
 
 ### §22.11 Tags — ✅ Met
 
@@ -282,3 +325,5 @@ These items are not required for Phase 2a acceptance but are improvements for ro
 5. **Integration testing** — Exercise the full MCP tool surface in realistic multi-agent scenarios. Verify concurrent optimistic lock behavior under contention.
 
 6. **`doc_consistency` operation** — Hierarchical authority model designed (§8.3 of document-intelligence-design.md). Implementation deferred to Phase 3 per spec scope.
+
+See `work/plan/phase-2a-audit-report.md` for the complete remediation plan covering all audit findings (B1–B8).
