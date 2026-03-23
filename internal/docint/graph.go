@@ -35,7 +35,7 @@ func BuildGraphEdges(index *DocumentIndex) []GraphEdge {
 			From:     docID + "#" + link.SectionPath,
 			FromType: "section",
 			To:       link.TargetPath,
-			ToType:   "section",
+			ToType:   "document",
 			EdgeType: "LINKS_TO",
 		})
 	}

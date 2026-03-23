@@ -106,8 +106,9 @@ type DocumentGraph struct {
 
 // Concept represents an entry in the concept registry.
 type Concept struct {
-	Name         string   `yaml:"name"`                    // Canonical name (lowercase, hyphenated)
-	Aliases      []string `yaml:"aliases,omitempty"`       // Alternative forms
+	Name    string   `yaml:"name"`              // Canonical name (lowercase, hyphenated)
+	Aliases []string `yaml:"aliases,omitempty"` // Alternative forms
+	// TODO: Aliases field is currently unused - implement alias resolution or remove
 	IntroducedIn []string `yaml:"introduced_in,omitempty"` // Section IDs that INTRODUCE this concept
 	UsedIn       []string `yaml:"used_in,omitempty"`       // Section IDs that USE this concept
 }

@@ -89,7 +89,7 @@ func TestBuildGraphEdges_LinksToEdges(t *testing.T) {
 		t.Fatalf("expected 1 LINKS_TO edge, got %d", len(linkEdges))
 	}
 
-	assertEdge(t, linkEdges[0], "work/design/test.md#2", "section", "work/spec/phase-1.md", "section")
+	assertEdge(t, linkEdges[0], "work/design/test.md#2", "section", "work/spec/phase-1.md", "document")
 }
 
 func TestBuildGraphEdges_ConceptEdges(t *testing.T) {

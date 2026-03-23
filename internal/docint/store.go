@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"kanbanzai/internal/fsutil"
+
 	"gopkg.in/yaml.v3"
 )
 
@@ -117,11 +119,20 @@ func writeYAMLFile(path string, v any) error {
 	if err != nil {
 		return fmt.Errorf("marshal YAML: %w", err)
 	}
+
+	// Ensure trailing newline
+	if len(data) == 0 || data[len(data)-1] != '\n' {
+		data = append(data, '\n')
+	}
+
+	// Create directory
 	dir := filepath.Dir(path)
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		return fmt.Errorf("create directory: %w", err)
 	}
-	return os.WriteFile(path, data, 0o644)
+
+	// Use atomic write to prevent corruption
+	return fsutil.WriteFileAtomic(path, data, 0o644)
 }
 
 func readYAMLFile(path string, v any) error {

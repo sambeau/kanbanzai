@@ -287,9 +287,18 @@ func (s *IntelligenceService) FindByRole(role string, scope string) ([]RoleMatch
 			continue
 		}
 
+		// Deduplicate by (DocumentID, SectionPath) — Layer 3 takes precedence
+		type key struct {
+			docID       string
+			sectionPath string
+		}
+		seen := make(map[key]bool)
+
 		// Check Layer 3 agent classifications
 		for _, c := range index.Classifications {
 			if c.Role == role {
+				k := key{index.DocumentID, c.SectionPath}
+				seen[k] = true
 				title := sectionTitle(index.Sections, c.SectionPath)
 				matches = append(matches, RoleMatch{
 					DocumentID:   index.DocumentID,
@@ -302,9 +311,13 @@ func (s *IntelligenceService) FindByRole(role string, scope string) ([]RoleMatch
 			}
 		}
 
-		// Also check Layer 2 conventional roles
+		// Also check Layer 2 conventional roles (skip if Layer 3 already matched)
 		for _, cr := range index.ConventionalRoles {
 			if cr.Role == role {
+				k := key{index.DocumentID, cr.SectionPath}
+				if seen[k] {
+					continue // Skip duplicates — Layer 3 takes precedence
+				}
 				title := sectionTitle(index.Sections, cr.SectionPath)
 				matches = append(matches, RoleMatch{
 					DocumentID:   index.DocumentID,

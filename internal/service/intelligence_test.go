@@ -544,6 +544,62 @@ func TestFindByRole_WithScope(t *testing.T) {
 	}
 }
 
+func TestFindByRole_DeduplicatesWhenLayer2And3Agree(t *testing.T) {
+	tmp := t.TempDir()
+	indexRoot := filepath.Join(tmp, "index")
+
+	content := "# Doc\n\n## Requirements\n\nSome requirements here.\n"
+	docPath := writeTestDoc(t, tmp, "docs/design.md", content)
+
+	svc := NewIntelligenceService(indexRoot, tmp)
+	index, err := svc.IngestDocument("test-doc", docPath)
+	if err != nil {
+		t.Fatalf("IngestDocument: %v", err)
+	}
+
+	// At this point, Layer 2 has detected "Requirements" as a conventional role
+	matches1, err := svc.FindByRole("requirement", "")
+	if err != nil {
+		t.Fatalf("FindByRole before classification: %v", err)
+	}
+	if len(matches1) != 1 {
+		t.Fatalf("expected 1 match from Layer 2, got %d", len(matches1))
+	}
+
+	// Now classify with Layer 3, agreeing with Layer 2 (same section, same role)
+	submission := docint.ClassificationSubmission{
+		DocumentID:   "test-doc",
+		ContentHash:  index.ContentHash,
+		ModelName:    "test-model",
+		ModelVersion: "1.0",
+		ClassifiedAt: time.Now().UTC(),
+		Classifications: []docint.Classification{
+			{
+				SectionPath: matches1[0].SectionPath,
+				Role:        "requirement",
+				Confidence:  "high",
+				Summary:     "Requirements section",
+			},
+		},
+	}
+	if err := svc.ClassifyDocument(submission); err != nil {
+		t.Fatalf("ClassifyDocument: %v", err)
+	}
+
+	// After classification, should still get only 1 match (deduplicated)
+	matches2, err := svc.FindByRole("requirement", "")
+	if err != nil {
+		t.Fatalf("FindByRole after classification: %v", err)
+	}
+	if len(matches2) != 1 {
+		t.Fatalf("expected 1 deduplicated match after classification, got %d", len(matches2))
+	}
+	// Layer 3 should take precedence (higher confidence, has summary)
+	if matches2[0].Summary == "" {
+		t.Error("expected Layer 3 match with summary, got Layer 2 match")
+	}
+}
+
 func TestGetImpact(t *testing.T) {
 	tmp := t.TempDir()
 	indexRoot := filepath.Join(tmp, "index")

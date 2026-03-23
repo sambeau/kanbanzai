@@ -15,6 +15,7 @@ var entityPatterns = []struct {
 	{regexp.MustCompile(`\bBUG-[A-Za-z0-9]+\b`), "bug"},
 	{regexp.MustCompile(`\bDEC-[A-Za-z0-9]+\b`), "decision"},
 	{regexp.MustCompile(`\bEPIC-[A-Za-z0-9]+\b`), "epic"},
+	{regexp.MustCompile(`\bDOC-[A-Za-z0-9]+\b`), "document"},
 }
 
 // Plan ID pattern: letter + digits + hyphen + lowercase slug, e.g. "P1-basic-ui".

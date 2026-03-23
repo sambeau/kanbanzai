@@ -597,7 +597,6 @@ func (s *DocumentService) ValidateDocument(id string) ([]string, error) {
 	return issues, nil
 }
 
-// DocumentExists checks if a document record exists.
 // SupersessionChain follows supersedes/superseded_by links to build the full
 // chain of document versions. It walks backward (via supersedes) and forward
 // (via superseded_by) from the given document, returning results ordered from
@@ -660,6 +659,7 @@ func (s *DocumentService) SupersessionChain(docID string) ([]DocumentResult, err
 	return chain, nil
 }
 
+// DocumentExists checks if a document record exists.
 func (s *DocumentService) DocumentExists(id string) bool {
 	return s.store.Exists(id)
 }
