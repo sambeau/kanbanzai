@@ -29,7 +29,7 @@ func writeTestDocument(t *testing.T, stateRoot, repoRoot string, doc model.Docum
 	doc.ContentHash = hash
 
 	store := storage.NewDocumentStore(stateRoot)
-	record := storage.DocumentToRecord(doc)
+	record := storage.DocumentToRecord(doc, "")
 	if _, err := store.Write(record); err != nil {
 		t.Fatalf("write doc record %s: %v", doc.ID, err)
 	}

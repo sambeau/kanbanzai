@@ -1,11 +1,21 @@
 package id
 
-import "strings"
+import (
+	"strings"
+
+	"kanbanzai/internal/model"
+)
 
 // FormatFullDisplay formats an ID in full display form with break hyphen.
 // For TSID-based IDs: FEAT-01J3K-7MXP3RT5
 // For Epic IDs: returned as-is (EPIC-MYSLUG)
+// For Plan IDs: returned as-is (P1-basic)
 func FormatFullDisplay(canonicalID string) string {
+	// Plan IDs and Epic IDs pass through unchanged
+	if model.IsPlanID(canonicalID) {
+		return canonicalID
+	}
+
 	prefix, tsid, ok := splitCanonicalID(canonicalID)
 	if !ok || prefix == "EPIC" {
 		return canonicalID
@@ -20,6 +30,11 @@ func FormatFullDisplay(canonicalID string) string {
 // unique prefix. The ids slice should contain all canonical IDs of the same
 // entity type (used to compute uniqueness).
 func FormatShortDisplay(canonicalID string, sameTypeIDs []string) string {
+	// Plan IDs and Epic IDs pass through unchanged
+	if model.IsPlanID(canonicalID) {
+		return canonicalID
+	}
+
 	prefix, tsid, ok := splitCanonicalID(canonicalID)
 	if !ok || prefix == "EPIC" {
 		return canonicalID
@@ -63,8 +78,16 @@ func ShortestUniquePrefix(target string, otherTSIDs []string) int {
 
 // StripBreakHyphens removes display break hyphens from an ID, returning
 // the canonical form. It normalizes to uppercase.
+// Plan IDs pass through unchanged (the hyphen is structural, not a break hyphen).
 func StripBreakHyphens(input string) string {
-	upper := strings.ToUpper(strings.TrimSpace(input))
+	trimmed := strings.TrimSpace(input)
+
+	// Plan IDs pass through unchanged (no break hyphens, and slugs should remain lowercase)
+	if model.IsPlanID(trimmed) {
+		return trimmed
+	}
+
+	upper := strings.ToUpper(trimmed)
 
 	prefix, rest, ok := splitCanonicalID(upper)
 	if !ok {

@@ -98,7 +98,7 @@ func addPrefixTool() server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
-		description, _ := request.GetString("description")
+		description := request.GetString("description", "")
 
 		// Validate prefix format
 		if err := config.ValidatePrefix(prefix); err != nil {

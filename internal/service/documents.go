@@ -176,8 +176,8 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 		Updated:     now,
 	}
 
-	// Write the record
-	record := storage.DocumentToRecord(doc)
+	// Write the record (new document, no fileHash for optimistic locking)
+	record := storage.DocumentToRecord(doc, "")
 	recordPath, err := s.store.Write(record)
 	if err != nil {
 		return DocumentResult{}, fmt.Errorf("write document record: %w", err)
@@ -249,10 +249,7 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 		return DocumentResult{}, err
 	}
 
-	doc, err := storage.RecordToDocument(record)
-	if err != nil {
-		return DocumentResult{}, fmt.Errorf("parse document record: %w", err)
-	}
+	doc := storage.RecordToDocument(record)
 
 	// Validate current status
 	if doc.Status != model.DocumentStatusDraft {
@@ -277,8 +274,8 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 	doc.ApprovedAt = &now
 	doc.Updated = now
 
-	// Write the record
-	updatedRecord := storage.DocumentToRecord(doc)
+	// Write the record (preserve fileHash for optimistic locking)
+	updatedRecord := storage.DocumentToRecord(doc, record.FileHash)
 	recordPath, err := s.store.Write(updatedRecord)
 	if err != nil {
 		return DocumentResult{}, fmt.Errorf("write document record: %w", err)
@@ -336,10 +333,7 @@ func (s *DocumentService) SupersedeDocument(input SupersedeDocumentInput) (Docum
 		return DocumentResult{}, err
 	}
 
-	doc, err := storage.RecordToDocument(record)
-	if err != nil {
-		return DocumentResult{}, fmt.Errorf("parse document record: %w", err)
-	}
+	doc := storage.RecordToDocument(record)
 
 	// Validate current status
 	if doc.Status != model.DocumentStatusApproved {
@@ -357,15 +351,12 @@ func (s *DocumentService) SupersedeDocument(input SupersedeDocumentInput) (Docum
 		return DocumentResult{}, fmt.Errorf("load superseding document: %w", err)
 	}
 
-	supersedesDoc, err := storage.RecordToDocument(supersedesRecord)
-	if err != nil {
-		return DocumentResult{}, fmt.Errorf("parse superseding document: %w", err)
-	}
+	supersedesDoc := storage.RecordToDocument(supersedesRecord)
 
 	supersedesDoc.Supersedes = doc.ID
 	supersedesDoc.Updated = s.now()
 
-	supersedesUpdatedRecord := storage.DocumentToRecord(supersedesDoc)
+	supersedesUpdatedRecord := storage.DocumentToRecord(supersedesDoc, supersedesRecord.FileHash)
 	if _, err := s.store.Write(supersedesUpdatedRecord); err != nil {
 		return DocumentResult{}, fmt.Errorf("update superseding document: %w", err)
 	}
@@ -376,8 +367,8 @@ func (s *DocumentService) SupersedeDocument(input SupersedeDocumentInput) (Docum
 	doc.SupersededBy = input.SupersededBy
 	doc.Updated = now
 
-	// Write the record
-	updatedRecord := storage.DocumentToRecord(doc)
+	// Write the record (preserve fileHash for optimistic locking)
+	updatedRecord := storage.DocumentToRecord(doc, record.FileHash)
 	recordPath, err := s.store.Write(updatedRecord)
 	if err != nil {
 		return DocumentResult{}, fmt.Errorf("write document record: %w", err)
@@ -434,10 +425,7 @@ func (s *DocumentService) GetDocument(id string, checkDrift bool) (DocumentResul
 		return DocumentResult{}, err
 	}
 
-	doc, err := storage.RecordToDocument(record)
-	if err != nil {
-		return DocumentResult{}, fmt.Errorf("parse document record: %w", err)
-	}
+	doc := storage.RecordToDocument(record)
 
 	result := DocumentResult{
 		ID:           doc.ID,
@@ -504,10 +492,7 @@ func (s *DocumentService) ListDocuments(filters DocumentFilters) ([]DocumentResu
 
 	var results []DocumentResult
 	for _, record := range records {
-		doc, err := storage.RecordToDocument(record)
-		if err != nil {
-			continue
-		}
+		doc := storage.RecordToDocument(record)
 
 		// Apply filters
 		if filters.Type != "" && string(doc.Type) != filters.Type {
@@ -598,10 +583,14 @@ func (s *DocumentService) ValidateDocument(id string) ([]string, error) {
 
 	// Check owner reference if set
 	if result.Owner != "" && result.Owner != "PROJECT" {
-		// This would require checking if the owner entity exists
-		// For now, we just validate the format
 		if !isValidEntityID(result.Owner) {
 			issues = append(issues, fmt.Sprintf("invalid owner reference: %s", result.Owner))
+		} else if s.entityHook != nil {
+			// Check if owner entity exists
+			_, _, err := s.entityHook.GetEntityStatus(result.Owner)
+			if err != nil {
+				issues = append(issues, fmt.Sprintf("owner entity does not exist: %s", result.Owner))
+			}
 		}
 	}
 

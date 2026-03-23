@@ -222,7 +222,7 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		ID:        idValue,
 		Slug:      normalizeSlug(input.Slug),
 		Epic:      epicID,
-		Status:    model.FeatureStatus("draft"),
+		Status:    model.FeatureStatusProposed,
 		Summary:   strings.TrimSpace(input.Summary),
 		Created:   s.now(),
 		CreatedBy: strings.TrimSpace(input.CreatedBy),

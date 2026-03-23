@@ -288,6 +288,7 @@ func (c *Config) NextPlanNumber(prefix string, planIDScanner func() ([]string, e
 
 // parsePlanIDParts extracts prefix, number, and slug from a Plan ID.
 // This is a local helper that mirrors model.ParsePlanID to avoid import cycles.
+// TODO: Consider extracting shared Plan ID parsing logic to a leaf package to eliminate duplication.
 func parsePlanIDParts(id string) (prefix, number, slug string) {
 	if len(id) < 4 {
 		return "", "", ""

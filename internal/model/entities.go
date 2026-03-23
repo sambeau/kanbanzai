@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"time"
+	"unicode"
+)
 
 // EntityKind identifies a canonical entity type.
 type EntityKind string
@@ -451,7 +454,7 @@ func IsPlanID(id string) bool {
 	if len(runes) < 4 {
 		return false
 	}
-	if runes[0] >= '0' && runes[0] <= '9' {
+	if unicode.IsDigit(runes[0]) {
 		return false
 	}
 
@@ -460,7 +463,7 @@ func IsPlanID(id string) bool {
 	digitEnd := digitStart
 
 	// Find extent of digits
-	for digitEnd < len(runes) && runes[digitEnd] >= '0' && runes[digitEnd] <= '9' {
+	for digitEnd < len(runes) && unicode.IsDigit(runes[digitEnd]) {
 		digitEnd++
 	}
 
@@ -494,7 +497,7 @@ func ParsePlanID(id string) (prefix string, number string, slug string) {
 
 	// Find extent of digits
 	digitEnd := 1
-	for digitEnd < len(runes) && runes[digitEnd] >= '0' && runes[digitEnd] <= '9' {
+	for digitEnd < len(runes) && unicode.IsDigit(runes[digitEnd]) {
 		digitEnd++
 	}
 

@@ -466,19 +466,19 @@ func TestEntityService_StatusUpdate_UsesLifecycleValidation(t *testing.T) {
 		t.Fatalf("CreateFeature() error = %v", err)
 	}
 
-	if created.State["status"] != "draft" {
-		t.Fatalf("initial status = %#v, want %q", created.State["status"], "draft")
+	if created.State["status"] != "proposed" {
+		t.Fatalf("initial status = %#v, want %q", created.State["status"], "proposed")
 	}
 
 	transitions := []struct {
 		from string
 		to   string
 	}{
-		{from: "draft", to: "in-review"},
-		{from: "in-review", to: "approved"},
-		{from: "approved", to: "in-progress"},
-		{from: "in-progress", to: "review"},
-		{from: "review", to: "done"},
+		{from: "proposed", to: "designing"},
+		{from: "designing", to: "specifying"},
+		{from: "specifying", to: "dev-planning"},
+		{from: "dev-planning", to: "developing"},
+		{from: "developing", to: "done"},
 	}
 
 	current := created
@@ -1588,6 +1588,11 @@ func TestEntityService_ResolvePrefix(t *testing.T) {
 	})
 	if err != nil {
 		t.Fatalf("CreateFeature(alpha) error = %v", err)
+	}
+
+	// Advance time to ensure distinct ULID prefixes (B8 fix)
+	svc.now = func() time.Time {
+		return time.Date(2026, 3, 19, 12, 1, 0, 0, time.UTC)
 	}
 
 	feat2, err := svc.CreateFeature(CreateFeatureInput{

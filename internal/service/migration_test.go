@@ -16,7 +16,7 @@ func setupMigrationConfig(t *testing.T, prefix, label string) {
 	cfg := config.Config{
 		Version: "2",
 		Prefixes: []config.PrefixEntry{
-			{Prefix: prefix, Label: label},
+			{Prefix: prefix, Name: label},
 		},
 	}
 

@@ -277,7 +277,8 @@ func CheckContentDrift(docPath string, recordedHash string, recordedUpdated time
 }
 
 // DocumentToRecord converts a model.DocumentRecord to a storage DocumentRecord.
-func DocumentToRecord(doc model.DocumentRecord) DocumentRecord {
+// The fileHash parameter should be the FileHash from the loaded record for optimistic locking.
+func DocumentToRecord(doc model.DocumentRecord, fileHash string) DocumentRecord {
 	fields := make(map[string]any)
 
 	fields["id"] = doc.ID
@@ -310,13 +311,14 @@ func DocumentToRecord(doc model.DocumentRecord) DocumentRecord {
 	fields["updated"] = doc.Updated.Format(time.RFC3339)
 
 	return DocumentRecord{
-		ID:     doc.ID,
-		Fields: fields,
+		ID:       doc.ID,
+		Fields:   fields,
+		FileHash: fileHash,
 	}
 }
 
 // RecordToDocument converts a storage DocumentRecord to a model.DocumentRecord.
-func RecordToDocument(record DocumentRecord) (model.DocumentRecord, error) {
+func RecordToDocument(record DocumentRecord) model.DocumentRecord {
 	doc := model.DocumentRecord{}
 
 	doc.ID = record.ID
@@ -367,5 +369,5 @@ func RecordToDocument(record DocumentRecord) (model.DocumentRecord, error) {
 		}
 	}
 
-	return doc, nil
+	return doc
 }
