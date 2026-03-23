@@ -11,11 +11,13 @@ import (
 )
 
 // Compile-time Entity interface satisfaction checks.
+var _ model.Entity = model.Plan{}
 var _ model.Entity = model.Epic{}
 var _ model.Entity = model.Feature{}
 var _ model.Entity = model.Task{}
 var _ model.Entity = model.Bug{}
 var _ model.Entity = model.Decision{}
+var _ model.Entity = model.DocumentRecord{}
 
 func TestEpic_YAMLRoundTrip(t *testing.T) {
 	t.Parallel()

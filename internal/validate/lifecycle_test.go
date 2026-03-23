@@ -12,6 +12,12 @@ func TestEntryState(t *testing.T) {
 		wantOK    bool
 	}{
 		{
+			name:      "plan",
+			kind:      EntityPlan,
+			wantState: "proposed",
+			wantOK:    true,
+		},
+		{
 			name:      "epic",
 			kind:      EntityEpic,
 			wantState: "proposed",
@@ -254,6 +260,134 @@ func TestCanTransition(t *testing.T) {
 			to:   "accepted",
 			want: false,
 		},
+		// Plan full lifecycle (T3)
+		{
+			name: "plan proposed to designing",
+			kind: EntityPlan,
+			from: "proposed",
+			to:   "designing",
+			want: true,
+		},
+		{
+			name: "plan designing to active",
+			kind: EntityPlan,
+			from: "designing",
+			to:   "active",
+			want: true,
+		},
+		{
+			name: "plan active to done",
+			kind: EntityPlan,
+			from: "active",
+			to:   "done",
+			want: true,
+		},
+		{
+			name: "plan proposed to superseded",
+			kind: EntityPlan,
+			from: "proposed",
+			to:   "superseded",
+			want: true,
+		},
+		{
+			name: "plan proposed to cancelled",
+			kind: EntityPlan,
+			from: "proposed",
+			to:   "cancelled",
+			want: true,
+		},
+		{
+			name: "plan proposed to done is illegal",
+			kind: EntityPlan,
+			from: "proposed",
+			to:   "done",
+			want: false,
+		},
+		{
+			name: "plan active to proposed is illegal (backward)",
+			kind: EntityPlan,
+			from: "active",
+			to:   "proposed",
+			want: false,
+		},
+		{
+			name: "plan superseded to active is illegal (terminal)",
+			kind: EntityPlan,
+			from: "superseded",
+			to:   "active",
+			want: false,
+		},
+		{
+			name: "plan cancelled to active is illegal (terminal)",
+			kind: EntityPlan,
+			from: "cancelled",
+			to:   "active",
+			want: false,
+		},
+		// Phase 2 Feature full lifecycle (T4)
+		{
+			name: "feature proposed to designing",
+			kind: EntityFeature,
+			from: "proposed",
+			to:   "designing",
+			want: true,
+		},
+		{
+			name: "feature designing to specifying",
+			kind: EntityFeature,
+			from: "designing",
+			to:   "specifying",
+			want: true,
+		},
+		{
+			name: "feature specifying to dev-planning",
+			kind: EntityFeature,
+			from: "specifying",
+			to:   "dev-planning",
+			want: true,
+		},
+		{
+			name: "feature dev-planning to developing",
+			kind: EntityFeature,
+			from: "dev-planning",
+			to:   "developing",
+			want: true,
+		},
+		{
+			name: "feature developing to done",
+			kind: EntityFeature,
+			from: "developing",
+			to:   "done",
+			want: true,
+		},
+		{
+			name: "feature proposed to superseded shortcut",
+			kind: EntityFeature,
+			from: "proposed",
+			to:   "superseded",
+			want: true,
+		},
+		{
+			name: "feature proposed to cancelled shortcut",
+			kind: EntityFeature,
+			from: "proposed",
+			to:   "cancelled",
+			want: true,
+		},
+		{
+			name: "feature developing to proposed is illegal (backward)",
+			kind: EntityFeature,
+			from: "developing",
+			to:   "proposed",
+			want: false,
+		},
+		{
+			name: "feature superseded to developing is illegal (terminal)",
+			kind: EntityFeature,
+			from: "superseded",
+			to:   "developing",
+			want: false,
+		},
 		{
 			name: "self transition is illegal",
 			kind: EntityFeature,
@@ -306,6 +440,18 @@ func TestValidateInitialState(t *testing.T) {
 		state   string
 		wantErr bool
 	}{
+		{
+			name:    "valid plan entry state",
+			kind:    EntityPlan,
+			state:   "proposed",
+			wantErr: false,
+		},
+		{
+			name:    "invalid plan non entry state",
+			kind:    EntityPlan,
+			state:   "active",
+			wantErr: true,
+		},
 		{
 			name:    "valid epic entry state",
 			kind:    EntityEpic,

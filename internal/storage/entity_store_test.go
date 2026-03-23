@@ -268,6 +268,7 @@ func TestCanonicalYAML_FixturesRoundTrip(t *testing.T) {
 		path       string
 		entityType string
 	}{
+		{name: "plan", path: filepath.Join("..", "..", "testdata", "entities", "plan.yaml"), entityType: "plan"},
 		{name: "epic", path: filepath.Join("..", "..", "testdata", "entities", "epic.yaml"), entityType: "epic"},
 		{name: "feature", path: filepath.Join("..", "..", "testdata", "entities", "feature.yaml"), entityType: "feature"},
 		{name: "task", path: filepath.Join("..", "..", "testdata", "entities", "task.yaml"), entityType: "task"},
@@ -317,6 +318,26 @@ func TestEntityStore_Load_FixtureFiles(t *testing.T) {
 		wantFields   map[string]any
 		wantFilePath string
 	}{
+		{
+			name:       "plan",
+			sourcePath: filepath.Join("..", "..", "testdata", "entities", "plan.yaml"),
+			entityType: "plan",
+			id:         "P1-initial-kernel",
+			slug:       "initial-kernel",
+			wantFields: map[string]any{
+				"id":         "P1-initial-kernel",
+				"slug":       "initial-kernel",
+				"title":      "Phase 1 Kernel",
+				"status":     "active",
+				"summary":    "Build the initial workflow kernel",
+				"design":     "work/design/workflow-design-basis.md",
+				"tags":       []any{"phase:1", "core"},
+				"created":    "2026-03-19T12:00:00Z",
+				"created_by": "sam",
+				"updated":    "2026-03-20T10:00:00Z",
+			},
+			wantFilePath: filepath.Join(root, "plans", "P1-initial-kernel.yaml"),
+		},
 		{
 			name:       "epic",
 			sourcePath: filepath.Join("..", "..", "testdata", "entities", "epic.yaml"),
