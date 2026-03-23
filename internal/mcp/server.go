@@ -31,8 +31,14 @@ func NewServer(entityRoot, docsRoot string) *server.MCPServer {
 	}
 	// Documents are stored relative to the repository root (current directory)
 	repoRoot := "."
+
+	// Create intelligence service for document intelligence (Layers 1-4)
+	indexRoot := filepath.Join(core.InstanceRootDir, "index")
+	intelligenceSvc := service.NewIntelligenceService(indexRoot, repoRoot)
+
 	docRecordSvc := service.NewDocumentService(stateRoot, repoRoot)
 	docRecordSvc.SetEntityHook(service.NewEntityLifecycleHook(entitySvc))
+	docRecordSvc.SetIntelligenceService(intelligenceSvc)
 
 	// Open the local derived cache best-effort. If it fails, the service
 	// operates without cache acceleration — all queries fall back to
@@ -62,6 +68,15 @@ func NewServer(entityRoot, docsRoot string) *server.MCPServer {
 
 	// Phase 2a Config tools
 	mcpServer.AddTools(ConfigTools()...)
+
+	// Phase 2a Document intelligence tools
+	mcpServer.AddTools(DocIntelligenceTools(intelligenceSvc, docRecordSvc)...)
+
+	// Phase 2a Rich query tools
+	mcpServer.AddTools(QueryTools(entitySvc, docRecordSvc)...)
+
+	// Phase 2a Migration tools
+	mcpServer.AddTools(MigrationTools(entitySvc)...)
 
 	return mcpServer
 }

@@ -69,17 +69,24 @@ type DocumentFilters struct {
 
 // DocumentService handles document record operations.
 type DocumentService struct {
-	stateRoot  string
-	repoRoot   string
-	store      *storage.DocumentStore
-	now        func() time.Time
-	entityHook EntityLifecycleHook // optional, for lifecycle transitions
+	stateRoot       string
+	repoRoot        string
+	store           *storage.DocumentStore
+	now             func() time.Time
+	entityHook      EntityLifecycleHook  // optional, for lifecycle transitions
+	intelligenceSvc *IntelligenceService // optional, for auto-ingest on submit
 }
 
 // SetEntityHook attaches an optional lifecycle hook that triggers entity
 // transitions when documents are submitted, approved, or superseded.
 func (s *DocumentService) SetEntityHook(hook EntityLifecycleHook) {
 	s.entityHook = hook
+}
+
+// SetIntelligenceService attaches an optional intelligence service that
+// automatically ingests documents (Layers 1-2) when they are submitted.
+func (s *DocumentService) SetIntelligenceService(svc *IntelligenceService) {
+	s.intelligenceSvc = svc
 }
 
 // NewDocumentService creates a new DocumentService.
@@ -216,6 +223,12 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 		if targetStatus != "" {
 			_ = s.entityHook.TransitionStatus(owner, targetStatus)
 		}
+	}
+
+	// Best-effort ingest — run Layers 1-2 if intelligence service is available.
+	// Don't fail the submission if ingest fails.
+	if s.intelligenceSvc != nil {
+		s.intelligenceSvc.IngestDocument(doc.ID, doc.Path)
 	}
 
 	return result, nil
@@ -596,6 +609,68 @@ func (s *DocumentService) ValidateDocument(id string) ([]string, error) {
 }
 
 // DocumentExists checks if a document record exists.
+// SupersessionChain follows supersedes/superseded_by links to build the full
+// chain of document versions. It walks backward (via supersedes) and forward
+// (via superseded_by) from the given document, returning results ordered from
+// oldest to newest.
+func (s *DocumentService) SupersessionChain(docID string) ([]DocumentResult, error) {
+	if strings.TrimSpace(docID) == "" {
+		return nil, fmt.Errorf("document ID is required")
+	}
+
+	// Load the starting document.
+	start, err := s.GetDocument(docID, false)
+	if err != nil {
+		return nil, err
+	}
+
+	// Walk backward through supersedes links to find the oldest ancestor.
+	visited := map[string]bool{start.ID: true}
+	var backward []DocumentResult
+	cur := start
+	for cur.Supersedes != "" {
+		if visited[cur.Supersedes] {
+			break // cycle guard
+		}
+		visited[cur.Supersedes] = true
+		prev, err := s.GetDocument(cur.Supersedes, false)
+		if err != nil {
+			break // broken link — stop walking
+		}
+		backward = append(backward, prev)
+		cur = prev
+	}
+
+	// Reverse backward so oldest is first.
+	for i, j := 0, len(backward)-1; i < j; i, j = i+1, j-1 {
+		backward[i], backward[j] = backward[j], backward[i]
+	}
+
+	// Walk forward through superseded_by links.
+	var forward []DocumentResult
+	cur = start
+	for cur.SupersededBy != "" {
+		if visited[cur.SupersededBy] {
+			break // cycle guard
+		}
+		visited[cur.SupersededBy] = true
+		next, err := s.GetDocument(cur.SupersededBy, false)
+		if err != nil {
+			break // broken link — stop walking
+		}
+		forward = append(forward, next)
+		cur = next
+	}
+
+	// Combine: backward ancestors + start + forward successors.
+	chain := make([]DocumentResult, 0, len(backward)+1+len(forward))
+	chain = append(chain, backward...)
+	chain = append(chain, start)
+	chain = append(chain, forward...)
+
+	return chain, nil
+}
+
 func (s *DocumentService) DocumentExists(id string) bool {
 	return s.store.Exists(id)
 }
