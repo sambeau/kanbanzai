@@ -775,6 +775,8 @@ func defaultString(value, fallback string) string {
 
 func validateKindForType(entityType string) (validate.EntityKind, error) {
 	switch entityType {
+	case string(model.EntityKindPlan):
+		return validate.EntityPlan, nil
 	case string(model.EntityKindEpic):
 		return validate.EntityEpic, nil
 	case string(model.EntityKindFeature):
@@ -1071,14 +1073,38 @@ func stringFromState(state map[string]any, key string) string {
 func extractParentRefFromState(entityType string, state map[string]any) string {
 	switch strings.ToLower(entityType) {
 	case "feature":
+		// Phase 2: use "parent" field; fallback to "epic" for Phase 1 compatibility
+		if parent := stringFromState(state, "parent"); parent != "" {
+			return parent
+		}
 		return stringFromState(state, "epic")
 	case "task":
 		return stringFromState(state, "parent_feature")
 	case "bug":
 		return stringFromState(state, "origin_feature")
+	case "plan":
+		return "" // Plans have no parent
 	default:
 		return ""
 	}
+}
+
+// listDirectory returns the names of entries in a directory.
+// Returns nil, nil if the directory doesn't exist.
+func listDirectory(dir string) ([]string, error) {
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("read directory %s: %w", dir, err)
+	}
+
+	names := make([]string, 0, len(entries))
+	for _, entry := range entries {
+		names = append(names, entry.Name())
+	}
+	return names, nil
 }
 
 func decisionFields(e model.Decision) map[string]any {

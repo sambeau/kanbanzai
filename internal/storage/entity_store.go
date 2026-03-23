@@ -125,6 +125,12 @@ func entityDirectory(entityType string) string {
 }
 
 func entityFileName(record EntityRecord) string {
+	// Plan IDs already contain the slug (e.g., P1-basic-ui), so the
+	// filename is just {id}.yaml per spec §15.1. All other entity types
+	// use {id}-{slug}.yaml for human-readable filenames.
+	if strings.ToLower(strings.TrimSpace(record.Type)) == string(model.EntityKindPlan) {
+		return record.ID + ".yaml"
+	}
 	return fmt.Sprintf("%s-%s.yaml", record.ID, record.Slug)
 }
 
@@ -193,6 +199,21 @@ func orderedKeys(entityType string, fields map[string]any) []string {
 
 func fieldOrderForEntityType(entityType string) []string {
 	switch strings.ToLower(strings.TrimSpace(entityType)) {
+	case string(model.EntityKindPlan):
+		return []string{
+			"id",
+			"slug",
+			"title",
+			"status",
+			"summary",
+			"design",
+			"tags",
+			"created",
+			"created_by",
+			"updated",
+			"supersedes",
+			"superseded_by",
+		}
 	case string(model.EntityKindEpic):
 		return []string{
 			"id",
@@ -208,13 +229,18 @@ func fieldOrderForEntityType(entityType string) []string {
 		return []string{
 			"id",
 			"slug",
-			"epic",
+			"epic",   // Phase 1 field (keep first for backward compatibility)
+			"parent", // Phase 2 field (renamed from epic)
 			"status",
 			"summary",
 			"created",
 			"created_by",
+			"updated",
+			"design",
 			"spec",
-			"plan",
+			"plan",     // Phase 1 field (keep before dev_plan for backward compatibility)
+			"dev_plan", // Phase 2 field (renamed from plan)
+			"tags",
 			"tasks",
 			"decisions",
 			"branch",
@@ -234,6 +260,7 @@ func fieldOrderForEntityType(entityType string) []string {
 			"started",
 			"completed",
 			"verification",
+			"tags",
 		}
 	case string(model.EntityKindBug):
 		return []string{
@@ -257,6 +284,7 @@ func fieldOrderForEntityType(entityType string) []string {
 			"fixed_by",
 			"verified_by",
 			"release_target",
+			"tags",
 		}
 	case string(model.EntityKindDecision):
 		return []string{
@@ -270,6 +298,24 @@ func fieldOrderForEntityType(entityType string) []string {
 			"affects",
 			"supersedes",
 			"superseded_by",
+			"tags",
+		}
+	case string(model.EntityKindDocument), "document_record":
+		return []string{
+			"id",
+			"path",
+			"type",
+			"title",
+			"status",
+			"owner",
+			"approved_by",
+			"approved_at",
+			"content_hash",
+			"supersedes",
+			"superseded_by",
+			"created",
+			"created_by",
+			"updated",
 		}
 	default:
 		return nil
