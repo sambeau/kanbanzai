@@ -166,6 +166,11 @@ func TestClassifyDocument(t *testing.T) {
 	if loaded.ClassifiedBy != "test-model" {
 		t.Errorf("ClassifiedBy = %q, want %q", loaded.ClassifiedBy, "test-model")
 	}
+	if loaded.ClassifiedAt == nil {
+		t.Error("expected ClassifiedAt to be non-nil")
+	} else if loaded.ClassifiedAt.IsZero() {
+		t.Error("expected ClassifiedAt to be non-zero")
+	}
 	if len(loaded.Classifications) != 1 {
 		t.Fatalf("Classifications count = %d, want 1", len(loaded.Classifications))
 	}

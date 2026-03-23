@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"strings"
+	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
@@ -69,6 +70,7 @@ func docClassifyTool(svc *service.IntelligenceService) server.ServerTool {
 			ContentHash:     contentHash,
 			ModelName:       modelName,
 			ModelVersion:    modelVersion,
+			ClassifiedAt:    time.Now().UTC(),
 			Classifications: classifications,
 		}
 
