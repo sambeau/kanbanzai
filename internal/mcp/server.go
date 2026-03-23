@@ -13,16 +13,25 @@ import (
 
 const (
 	ServerName    = "kanbanzai"
-	ServerVersion = "phase-1-dev"
+	ServerVersion = "phase-2a-dev"
 )
 
-// NewServer creates a new MCP server with all Phase 1 tools registered.
+// NewServer creates a new MCP server with all Phase 1 and Phase 2a tools registered.
 // The entityRoot is the root path for entity storage (typically ".kbz/state").
 // The docsRoot is the root path for document storage (typically ".kbz/docs").
 // Pass empty strings to use the default paths.
 func NewServer(entityRoot, docsRoot string) *server.MCPServer {
 	entitySvc := service.NewEntityService(entityRoot)
 	docSvc := document.NewDocService(docsRoot)
+
+	// Create document record service for Phase 2a document management
+	stateRoot := entityRoot
+	if stateRoot == "" {
+		stateRoot = core.StatePath()
+	}
+	// Documents are stored relative to the repository root (current directory)
+	repoRoot := "."
+	docRecordSvc := service.NewDocumentService(stateRoot, repoRoot)
 
 	// Open the local derived cache best-effort. If it fails, the service
 	// operates without cache acceleration — all queries fall back to
@@ -38,8 +47,20 @@ func NewServer(entityRoot, docsRoot string) *server.MCPServer {
 		server.WithToolCapabilities(false),
 	)
 
+	// Phase 1 entity tools
 	mcpServer.AddTools(EntityTools(entitySvc)...)
+
+	// Phase 1 document tools (legacy)
 	mcpServer.AddTools(DocumentTools(docSvc)...)
+
+	// Phase 2a Plan tools
+	mcpServer.AddTools(PlanTools(entitySvc)...)
+
+	// Phase 2a Document record tools
+	mcpServer.AddTools(DocRecordTools(docRecordSvc)...)
+
+	// Phase 2a Config tools
+	mcpServer.AddTools(ConfigTools()...)
 
 	return mcpServer
 }
