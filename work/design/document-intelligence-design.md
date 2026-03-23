@@ -286,6 +286,28 @@ Each stage refines the same concept with increasing precision and decreasing amb
 - **Conventional:** document types have a natural refinement order (proposal → design → specification → plan). Documents of a more formal type that reference documents of a less formal type imply refinement.
 - **AI-assisted:** Layer 3 classification detects corresponding fragments across documents — sections that discuss the same concept at different levels of formality — and creates `DEPENDS_ON` edges between them.
 
+### 8.3 Cross-document consistency checking
+
+The refinement chain has a natural **authority hierarchy**. Each document type refines the one above it, and in any conflict between two levels, the more senior document is authoritative:
+
+**Plan design → Feature design → Specification → Dev plan**
+
+This hierarchy determines how inconsistencies are resolved:
+
+- **Vertical inconsistencies** (between documents at different levels of the refinement chain): the more senior document wins. If a specification says "lifecycle has 6 states" and the design says "lifecycle has 4 states", the design is authoritative — the specification must be corrected to match, or the design must be explicitly updated first. A junior document cannot silently override a senior one.
+
+- **Upward correction:** If, during the creation of a less senior document, a design flaw or logical error is discovered in a parent document, the correction must flow **up** the chain. The junior document cannot simply diverge. Either the senior document is updated (triggering re-review of everything downstream), or a decision is made and recorded that acknowledges the deviation. This maintains the invariant that the refinement chain is coherent from top to bottom.
+
+- **Horizontal inconsistencies** (between documents at the same level, or across unrelated branches): there is no automatic authority. Two design documents for different features might define the same concept differently, and neither is inherently senior. The system surfaces these as findings — potential inconsistencies for human or agent judgement — rather than resolving them automatically. Recency (timestamps) provides a heuristic but is not dispositive; a newer document is not automatically more correct than an older one at the same level.
+
+The `doc_consistency` operation (§9.4) implements this model. Given two documents, it walks their refinement chains, compares corresponding fragments, and reports inconsistencies classified by type:
+
+- **Authority violation** — a junior document contradicts a senior document in the same chain. This is always actionable: either the junior document is wrong, or the senior document needs to be updated.
+- **Horizontal divergence** — two documents at the same level or in different chains define the same concept differently. This requires human or agent judgement to determine which (if either) is correct.
+- **Staleness signal** — a senior document has been updated more recently than a junior document that depends on it, suggesting the junior document may be out of date.
+
+The consistency model does not attempt to resolve inconsistencies automatically. It surfaces them with enough context — which document is senior, what the conflicting statements are, where in the refinement chain the conflict occurs — for a human or agent to make the right call.
+
 ---
 
 ## 9. Query Operations
@@ -323,7 +345,7 @@ The document graph is exposed through MCP operations. These are the queries the 
 | `doc_trace(entity_id)` | Trace an entity through the refinement chain: proposal → design → spec → plan | 2–3 |
 | `doc_impact(section_id)` | What depends on this section? What would be affected by a change? | 3 |
 | `doc_gaps(feature_id)` | What document types are missing for this feature? (No spec? No plan?) | 1–2 |
-| `doc_consistency(doc_a, doc_b)` | Surface potential inconsistencies between two documents | 3 |
+| `doc_consistency(doc_a, doc_b)` | Surface potential inconsistencies between two documents using the refinement chain authority hierarchy (§8.3). Reports authority violations, horizontal divergences, and staleness signals | 3 |
 
 ### 9.5 Curation operations
 
@@ -663,7 +685,7 @@ The classification cost is amortised across all subsequent reads. If a section i
 
 ### 17.1 Design questions
 
-1. **Cross-document consistency checking.** The `doc_consistency` operation is described but the mechanism is not defined. What does consistency checking actually compare? How are potential inconsistencies surfaced — as warnings, errors, or informational notes? This needs design work before implementation, but does not block the rest of the system.
+No open design questions remain.
 
 ### 17.2 Implementation questions
 
@@ -678,6 +700,8 @@ The following are implementation questions that should be resolved during implem
 ### 17.3 Resolved questions
 
 1. **Scope of concept extraction.** Resolved: concept extraction is not restricted to a predefined vocabulary. The noise filter is the classifying agent's semantic judgement at ingest time, combined with the INTRODUCES/USES distinction at query time. If noise becomes a problem at scale, the mitigation is query-time filtering, not extraction-time restriction. See §12.4.
+
+2. **Cross-document consistency checking.** Resolved: consistency checking follows the refinement chain's authority hierarchy. The document type hierarchy — Plan design → Feature design → Specification → Dev plan — determines authority in vertical conflicts (the more senior document wins). Horizontal conflicts (documents at the same level or in unrelated branches) are surfaced as findings for human or agent judgement, not resolved automatically. Upward correction is required when a junior document discovers a flaw in a senior one — the fix flows up the chain rather than diverging silently. The `doc_consistency` operation reports three classes of finding: authority violations, horizontal divergences, and staleness signals. See §8.3 for the full model.
 
 ---
 
@@ -702,7 +726,7 @@ Phase 2 builds the core:
 ### 18.3 Phase 3 and beyond
 
 - Refinement chain analysis and full provenance tracing
-- Cross-document consistency checking
+- Cross-document consistency checking (design settled in §8.3; implementation deferred)
 - Argument structure detection
 - Embedding-based semantic search as an alternative query path (if graph queries prove insufficient at scale)
 - Concept synonym detection
