@@ -166,7 +166,7 @@ func TestNormalizeConcept(t *testing.T) {
 		{"UPPER_CASE", "upper-case"},
 		{"mixed-Case_Name", "mixed-case-name"},
 		{"already-normal", "already-normal"},
-		{"  spaces  everywhere  ", "spaces--everywhere"},
+		{"  spaces  everywhere  ", "spaces-everywhere"},
 	}
 
 	for _, tt := range tests {
