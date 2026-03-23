@@ -31,9 +31,11 @@ Examples:
 
 ## Project Status
 
-This project is entering **Phase 1 implementation**. The repository contains design documents, specifications, planning documents, and research — and implementation code is now being written.
+**Phase 1 is complete.** Phase 2a implementation is in progress. The repository contains design documents, specifications, planning documents, research, and working implementation code.
 
-The binding contract for implementation is `work/spec/phase-1-specification.md`. The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
+The binding contracts for implementation are `work/spec/phase-1-specification.md` (Phase 1) and `work/spec/phase-2-specification.md` (Phase 2). The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
+
+Current Phase 2a status is tracked in `work/plan/phase-2a-progress.md`.
 
 ## Two Workflows
 
@@ -52,18 +54,35 @@ If you are unsure which workflow a rule or instruction belongs to, ask.
 kanbanzai/
 ├── AGENTS.md              ← you are here
 ├── README.md              ← document map and reading guide
-├── docs/                  ← user-facing and reference documentation (empty, reserved for later)
-└── work/                  ← active design, spec, planning, and research documents
-    ├── bootstrap/         ← bootstrap-workflow: the process we follow now
-    ├── design/            ← kbz-workflow: design documents and policy documents
-    ├── spec/              ← kbz-workflow: formal specifications
-    ├── plan/              ← implementation plans and decision log
-    └── research/          ← background analysis and review memos
-
-When implementation begins:
-├── cmd/kanbanzai/         ← binary entry point
+├── cmd/kanbanzai/         ← binary entry point (CLI and MCP server)
 ├── internal/              ← core logic (shared by MCP server and CLI)
+│   ├── cache/             ← local derived SQLite cache
+│   ├── config/            ← project configuration and prefix registry (Phase 2a)
+│   ├── core/              ← instance paths and root utilities
+│   ├── document/          ← Phase 1 document store, templates, validation
+│   ├── fsutil/            ← filesystem utilities (atomic write)
+│   ├── id/                ← canonical ID allocation and display formatting
+│   ├── mcp/               ← MCP server and tools (Phase 1 + Phase 2a)
+│   ├── model/             ← entity type definitions and ID utilities
+│   ├── service/           ← entity, plan, and document record service logic
+│   ├── storage/           ← canonical YAML entity and document record storage
+│   ├── testutil/          ← shared test helpers
+│   └── validate/          ← lifecycle state machines, health checks
+├── docs/                  ← user-facing and reference documentation (reserved for later)
+├── work/                  ← active design, spec, planning, and research documents
+│   ├── bootstrap/         ← bootstrap-workflow: the process we follow now
+│   ├── design/            ← kbz-workflow: design documents and policy documents
+│   ├── spec/              ← kbz-workflow: formal specifications
+│   ├── plan/              ← implementation plans, decision log, and progress tracking
+│   └── research/          ← background analysis and review memos
 └── .kbz/                  ← instance root (project-local workflow state, not committed)
+    ├── config.yaml        ← project configuration including prefix registry
+    ├── state/             ← canonical entity records (plans, features, tasks, etc.)
+    │   ├── plans/         ← Plan entity files (Phase 2a)
+    │   ├── documents/     ← document metadata records (Phase 2a)
+    │   └── ...            ← other entity type directories
+    ├── docs/              ← Phase 1 managed documents
+    └── cache/             ← derived local cache (not committed)
 ```
 
 ## Before Any Task
@@ -81,12 +100,15 @@ If you need to understand the project, read in this order:
 2. `work/design/workflow-design-basis.md` — consolidated design vision (kbz-workflow)
 3. `work/design/document-centric-interface.md` — document-centric human interface model (kbz-workflow)
 4. `work/spec/phase-1-specification.md` — Phase 1 scope and verification basis (kbz-workflow)
-5. `work/design/agent-interaction-protocol.md` — agent behavior and normalization protocol
-6. `work/design/quality-gates-and-review-policy.md` — review expectations and quality gates
-7. `work/design/git-commit-policy.md` — commit message and commit discipline policy
+5. `work/spec/phase-2-specification.md` — Phase 2 scope and verification basis (kbz-workflow)
+6. `work/design/agent-interaction-protocol.md` — agent behavior and normalization protocol
+7. `work/design/quality-gates-and-review-policy.md` — review expectations and quality gates
+8. `work/design/git-commit-policy.md` — commit message and commit discipline policy
 
 Then refer to these as needed:
 
+- `work/plan/phase-2a-progress.md` — Phase 2a implementation status and remaining work
+- `work/plan/phase-2-scope.md` — Phase 2 scope and planning
 - `work/design/workflow-system-design.md` — earlier system design document
 - `work/design/machine-context-design.md` — machine-to-machine context model (Phase 2, but Phase 1 must not preclude it)
 - `work/design/document-intelligence-design.md` — structural analysis backend for design documents (Phase 2)
@@ -102,6 +124,9 @@ Then refer to these as needed:
 | What the system is and why | `work/design/workflow-design-basis.md` | kbz |
 | How humans interact with the system | `work/design/document-centric-interface.md` | kbz |
 | What Phase 1 must deliver | `work/spec/phase-1-specification.md` | kbz |
+| What Phase 2 must deliver | `work/spec/phase-2-specification.md` | kbz |
+| Phase 2a implementation status | `work/plan/phase-2a-progress.md` | both |
+| Phase 2 scope and planning | `work/plan/phase-2-scope.md` | kbz |
 | How agents should behave | `work/design/agent-interaction-protocol.md` | both |
 | How to review and verify work | `work/design/quality-gates-and-review-policy.md` | both |
 | How to write commits | `work/design/git-commit-policy.md` | both |

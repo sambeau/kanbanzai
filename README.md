@@ -56,25 +56,27 @@ This section is written for someone who wants the practical picture first.
 
 ### What you can try today
 
-The current implementation is a Phase 1 workflow kernel. It already supports a useful subset of the planned system:
+The current implementation includes a Phase 1 workflow kernel and Phase 2a entity model evolution, document management, and prefix registry. It supports a useful subset of the planned system:
 
-- creating and storing workflow entities
+- creating and storing workflow entities (including the new Plan entity)
 - validating lifecycle state and references
 - storing canonical YAML under `.kbz/`
-- managing documents through a simple lifecycle
+- managing documents through tracked lifecycle with content hash verification
+- configuring Plan ID prefixes through a prefix registry
 - exposing operations through both:
-  - a CLI
-  - an MCP server for AI-agent use
+  - a CLI (Phase 1 entities)
+  - an MCP server for AI-agent use (Phase 1 and Phase 2a entities)
 
-The main entity types currently implemented are:
+The entity types currently implemented are:
 
-- `Epic`
-- `Feature`
+- `Plan` (Phase 2a — replaces Epic, uses `{prefix}{number}-{slug}` IDs)
+- `Epic` (Phase 1, deprecated — retained for migration compatibility)
+- `Feature` (updated in Phase 2a with document ownership and document-driven lifecycle states)
 - `Task`
 - `Bug`
 - `Decision`
 
-The current document support includes:
+Phase 1 document support includes:
 
 - scaffolding
 - submission
@@ -83,6 +85,14 @@ The current document support includes:
 - validation
 - listing
 - extraction support for approved documents
+
+Phase 2a adds document record management — tracked metadata records for documents that remain at their canonical paths:
+
+- submit (register with content hash)
+- approve (with hash verification and approver tracking)
+- supersede (with bidirectional linking)
+- content drift detection
+- filtering by type, status, and owner
 
 ### Basic CLI usage
 
@@ -93,18 +103,11 @@ go run ./cmd/kanbanzai --help
 go run ./cmd/kanbanzai version
 ```
 
-Create a few example entities:
+Create a few example entities (CLI currently supports Phase 1 entity types):
 
 ```/dev/null/README.md#L1-20
-go run ./cmd/kanbanzai create epic \
-  --slug phase-1-completion \
-  --title "Phase 1 Completion" \
-  --summary "Track remaining Phase 1 work" \
-  --created_by sam
-
 go run ./cmd/kanbanzai create feature \
   --slug audit-2-remediation \
-  --epic E-001 \
   --summary "Complete audit remediation tracks" \
   --created_by sam
 ```
@@ -112,7 +115,6 @@ go run ./cmd/kanbanzai create feature \
 Read and inspect state:
 
 ```/dev/null/README.md#L1-20
-go run ./cmd/kanbanzai get epic --id E-001 --slug phase-1-completion
 go run ./cmd/kanbanzai list features
 go run ./cmd/kanbanzai health
 ```
@@ -147,11 +149,13 @@ Rebuild the local derived cache:
 go run ./cmd/kanbanzai cache rebuild
 ```
 
-Start the MCP server:
+Start the MCP server (exposes both Phase 1 and Phase 2a tools):
 
 ```/dev/null/README.md#L1-20
 go run ./cmd/kanbanzai serve
 ```
+
+Phase 2a entity operations (Plans, document records, prefix registry) are currently available through MCP tools only. CLI support for Phase 2a entities has not yet been added.
 
 ### What files it creates
 
@@ -159,10 +163,16 @@ Kanbanzai stores project-local instance state in `.kbz/`.
 
 In the current implementation, that includes things like:
 
+- `.kbz/config.yaml`
+  - project configuration including the prefix registry for Plan IDs
 - `.kbz/state/`
-  - canonical entity records
+  - canonical entity records (epics, features, tasks, bugs, decisions)
+- `.kbz/state/plans/`
+  - Plan entity records (Phase 2a)
+- `.kbz/state/documents/`
+  - document metadata records (Phase 2a)
 - `.kbz/docs/`
-  - managed documents
+  - managed documents (Phase 1 document store)
 - `.kbz/cache/`
   - derived local cache data
 
@@ -182,15 +192,19 @@ In the finished system, the normal experience should look more like this:
 2. The document is reviewed and approved
 
 3. An AI agent uses that approved document to create or update structured workflow state
-   - epics
+   - plans
    - features
    - tasks
    - decisions
    - links between them
 
-4. Agents implement and verify work while keeping workflow state consistent
+4. Document approvals automatically drive entity lifecycle transitions
+   - approving a specification advances its Feature to `dev-planning`
+   - approving a dev plan advances its Feature to `developing`
 
-5. Humans review the resulting code, decisions, and progress
+5. Agents implement and verify work while keeping workflow state consistent
+
+6. Humans review the resulting code, decisions, and progress
 
 So the human-facing workflow stays mostly document- and review-based, while the structured internals keep the project machine-readable and safer to automate.
 
@@ -200,12 +214,14 @@ This project is not fully finished yet.
 
 Some important caveats:
 
-- the current implementation is Phase 1, not the full long-term vision
+- the current implementation covers Phase 1 and partial Phase 2a, not the full long-term vision
+- Phase 2a document intelligence (structural analysis, classification, document graph) is not yet implemented
+- document-driven Feature lifecycle transitions (approval auto-advancing Feature status) are not yet wired up
+- the Epic → Plan migration command has not been implemented yet
 - broader multi-agent orchestration is not the focus yet
 - the repository still contains design and planning material alongside implementation
-- bootstrap self-use has been exercised locally, but project-local instance state is not yet being treated as final committed product state
 
-If you are trying it today, treat it as an evolving workflow kernel rather than a polished end-user product.
+If you are trying it today, treat it as an evolving workflow kernel rather than a polished end-user product. See `work/plan/phase-2a-progress.md` for detailed status.
 
 ---
 
@@ -215,7 +231,7 @@ This section is for contributors and technically curious readers.
 
 ### Current project status
 
-The repository has moved beyond planning-only work. The Phase 1 implementation kernel exists and is functioning.
+The repository has moved beyond planning-only work. The Phase 1 implementation kernel exists and is functioning, and Phase 2a is in progress.
 
 Broadly, the project now includes:
 
@@ -223,27 +239,30 @@ Broadly, the project now includes:
 - core internal packages in `internal/`
 - design, spec, planning, and research documents in `work/`
 
-The implementation currently covers:
+Phase 1 implementation covers:
 
 - canonical entity storage
 - deterministic YAML serialization
 - entity ID allocation
 - lifecycle validation
 - health checks
-- document lifecycle support
+- document lifecycle support (Phase 1 document store)
 - MCP tool surface
 - CLI support
 - local derived cache support
-
-Recent progress has also added:
-
 - document extraction support for approved documents
 - CLI parity for core document operations
-- CLI health and candidate validation commands
-- slug validation
-- ID-format validation
-- document feature-reference validation
-- local bootstrap self-use verification
+- slug validation, ID-format validation
+
+Phase 2a implementation (in progress) adds:
+
+- Plan entity type replacing Epic, with prefix-based IDs
+- prefix registry in `.kbz/config.yaml`
+- document metadata records with content hash tracking and drift detection
+- Feature model updates (parent, design, spec, dev_plan, tags fields)
+- Phase 2 Feature lifecycle states (document-driven)
+- Plan and document record MCP tools
+- configuration MCP tools for prefix registry management
 
 ### Repository structure
 
@@ -264,15 +283,19 @@ Key directories:
 - `cmd/kanbanzai/`
   - CLI and MCP server entrypoint
 - `internal/service/`
-  - entity application/service logic
+  - entity and document record service logic
 - `internal/document/`
-  - document store, lifecycle logic, templates, validation
+  - Phase 1 document store, lifecycle logic, templates, validation
 - `internal/storage/`
-  - canonical YAML entity storage
+  - canonical YAML entity storage and document record storage
+- `internal/config/`
+  - project configuration and prefix registry
 - `internal/validate/`
-  - entity and health validation
+  - entity and health validation, lifecycle state machines
 - `internal/mcp/`
-  - MCP server and tools
+  - MCP server and tools (Phase 1 and Phase 2a)
+- `internal/model/`
+  - entity type definitions and ID utilities
 - `internal/cache/`
   - local derived cache
 - `internal/id/`
@@ -316,23 +339,27 @@ It explicitly avoids broader future features such as:
 
 The current entity set is:
 
-- `Epic`
-- `Feature`
+- `Plan` (Phase 2a — coordinates work, organises Features)
+- `Epic` (Phase 1, deprecated — retained for migration)
+- `Feature` (updated in Phase 2a with document references and tags)
 - `Task`
 - `Bug`
 - `Decision`
+- `DocumentRecord` (Phase 2a — metadata for tracked documents)
 
 These are stored as YAML files under `.kbz/state/` using deterministic ordering rules.
 
 Examples of current ID families:
 
-- epics: `E-001`
+- plans: `P1-basic-ui`, `X2-infrastructure` (prefix + number + slug)
+- epics: `E-001` (deprecated)
 - features: `FEAT-001`
 - bugs: `BUG-001`
 - decisions: `DEC-001`
 - tasks: `FEAT-001.1`
+- document records: `FEAT-123/design-my-doc`, `PROJECT/policy-security`
 
-Tasks are feature-local IDs rather than global IDs.
+Tasks are feature-local IDs rather than global IDs. Plan IDs use a human-assigned prefix from the project's prefix registry.
 
 ### Deterministic YAML
 
@@ -357,43 +384,42 @@ This is important enough that the implementation does not simply rely on a defau
 
 ### Document lifecycle
 
-Documents currently move through a linear lifecycle:
+There are currently two document subsystems:
 
-- `draft`
-- `submitted`
-- `normalised`
-- `approved`
+**Phase 1 document store** (`internal/document/`) — documents move through a linear lifecycle:
 
-The document subsystem currently supports:
+- `draft` → `submitted` → `normalised` → `approved`
 
-- scaffold generation
-- submission
-- body update / normalisation step
-- approval
-- retrieval
-- validation
-- listing
-- extraction surface for approved documents
+This subsystem supports scaffold generation, submission, body update, approval, retrieval, validation, listing, and extraction for approved documents. It stores document content directly in `.kbz/docs/`.
 
-The extraction support is intentionally minimal in Phase 1: it exposes approved document content in a structured way so an agent can create entities through existing tools. It does not try to fully automate semantic extraction.
+**Phase 2a document records** (`internal/service/documents.go`, `internal/storage/document_store.go`) — metadata records for documents that remain at their canonical paths (e.g., `work/design/foo.md`):
+
+- `draft` → `approved` → `superseded`
+
+This subsystem tracks content hashes (SHA-256) for integrity verification, detects content drift when files are modified outside the system, and supports supersession chains for document versioning. Records are stored in `.kbz/state/documents/`.
+
+The Phase 2a document record system is intended to eventually replace the Phase 1 document store for document lifecycle management, while the Phase 1 store may be retained for scaffolding and template generation.
 
 ### MCP and CLI
 
 Kanbanzai is MCP-first, but the CLI is no longer just a placeholder.
 
-Current CLI support includes:
+Current CLI support includes (Phase 1 entities):
 
-- entity creation
-- entity retrieval and listing
-- entity status updates
-- field updates
+- entity creation, retrieval, listing, status updates, field updates
 - document scaffold / submit / approve / retrieve / validate / list
 - candidate validation
 - health check
 - cache rebuild
 - MCP server startup
 
-The MCP layer exposes corresponding tool operations for agent use.
+The MCP layer exposes Phase 1 tool operations plus Phase 2a operations:
+
+- Plan tools: `create_plan`, `get_plan`, `list_plans`, `update_plan_status`, `update_plan`
+- Document record tools: `doc_record_submit`, `doc_record_approve`, `doc_record_supersede`, `doc_record_get`, `doc_record_get_content`, `doc_record_list`, `doc_record_list_pending`, `doc_record_validate`
+- Config tools: `get_project_config`, `get_prefix_registry`, `add_prefix`, `retire_prefix`
+
+CLI support for Phase 2a entity types has not yet been added.
 
 ### Validation behavior
 
@@ -433,16 +459,17 @@ If you need to understand the project deeply, start here:
 2. `work/design/workflow-design-basis.md`
 3. `work/design/document-centric-interface.md`
 4. `work/spec/phase-1-specification.md`
-5. `work/design/agent-interaction-protocol.md`
-6. `work/design/quality-gates-and-review-policy.md`
-7. `work/design/git-commit-policy.md`
+5. `work/spec/phase-2-specification.md`
+6. `work/design/agent-interaction-protocol.md`
+7. `work/design/quality-gates-and-review-policy.md`
+8. `work/design/git-commit-policy.md`
 
 Then use as needed:
 
+- `work/plan/phase-2a-progress.md` — current implementation status
+- `work/plan/phase-2-scope.md` — Phase 2 scope and planning
 - `work/plan/phase-1-implementation-plan.md`
 - `work/plan/phase-1-decision-log.md`
-- `work/plan/phase-1-audit-remediation.md`
-- `work/plan/phase-1-audit-2-remediation.md`
 - `work/design/document-intelligence-design.md`
 - `work/design/machine-context-design.md`
 
@@ -466,4 +493,4 @@ Kanbanzai is trying to become a practical workflow kernel for human-AI software 
 - structured and enforceable for machines
 - Git-native for visibility and control
 
-The codebase is now far enough along to demonstrate the core model, but the larger vision is still being finished.
+The codebase now demonstrates the core entity model, document management with integrity tracking, and a prefix-based Plan system. Phase 2a work continues on document intelligence, migration, and lifecycle integration. See `work/plan/phase-2a-progress.md` for detailed status.
