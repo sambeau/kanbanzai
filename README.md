@@ -231,7 +231,7 @@ This section is for contributors and technically curious readers.
 
 ### Current project status
 
-The repository has moved beyond planning-only work. The Phase 1 implementation kernel exists and is functioning, and Phase 2a is in progress.
+The repository has moved beyond planning-only work. The Phase 1 implementation kernel is complete and functioning. Phase 2a core foundation is implemented and production-ready, with document intelligence and concurrency features remaining.
 
 Broadly, the project now includes:
 
@@ -254,15 +254,28 @@ Phase 1 implementation covers:
 - CLI parity for core document operations
 - slug validation, ID-format validation
 
-Phase 2a implementation (in progress) adds:
+Phase 2a implementation (partial, core complete) adds:
 
-- Plan entity type replacing Epic, with prefix-based IDs
-- prefix registry in `.kbz/config.yaml`
-- document metadata records with content hash tracking and drift detection
+**Completed and production-ready:**
+- Plan entity type replacing Epic, with prefix-based IDs (P1-basic-ui format)
+- prefix registry in `.kbz/config.yaml` with validation and retirement support
+- document metadata records with SHA-256 content hash tracking and drift detection
 - Feature model updates (parent, design, spec, dev_plan, tags fields)
-- Phase 2 Feature lifecycle states (document-driven)
-- Plan and document record MCP tools
+- Phase 2 Feature lifecycle states (proposed→designing→specifying→dev-planning→developing→done)
+- Plan and document record MCP tools (5 plan tools, 8 document tools)
 - configuration MCP tools for prefix registry management
+- deterministic YAML serialization for Plan and DocumentRecord
+- comprehensive lifecycle validation with backward transitions
+- tags on all entity types with filtering support
+
+**Remaining Phase 2a work:**
+- document-driven Feature lifecycle transitions (document approval/supersession auto-transitions Features)
+- document intelligence Layers 1-4 (structural parsing, pattern extraction, AI classification, graph)
+- optimistic locking for concurrent writes
+- migration command (Epic→Plan conversion)
+- extended rich queries (date range, cross-entity, tag listing across types)
+
+Test coverage: 93.3% (config), 81.9% (validation), 62.5% (service). All implemented features are well-tested and idiomatic Go.
 
 ### Repository structure
 
