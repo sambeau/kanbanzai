@@ -21,8 +21,8 @@ func TestDefaultConfig(t *testing.T) {
 	if cfg.Prefixes[0].Prefix != "P" {
 		t.Errorf("Prefixes[0].Prefix = %q, want %q", cfg.Prefixes[0].Prefix, "P")
 	}
-	if cfg.Prefixes[0].Label != "Plan" {
-		t.Errorf("Prefixes[0].Label = %q, want %q", cfg.Prefixes[0].Label, "Plan")
+	if cfg.Prefixes[0].Name != "Plan" {
+		t.Errorf("Prefixes[0].Name = %q, want %q", cfg.Prefixes[0].Name, "Plan")
 	}
 	if cfg.Prefixes[0].Retired {
 		t.Error("Prefixes[0].Retired = true, want false")
@@ -72,7 +72,7 @@ func TestConfig_Validate(t *testing.T) {
 			cfg: Config{
 				Version: "2",
 				Prefixes: []PrefixEntry{
-					{Prefix: "P", Label: "Plan"},
+					{Prefix: "P", Name: "Plan"},
 				},
 			},
 			wantErr: false,
@@ -82,8 +82,8 @@ func TestConfig_Validate(t *testing.T) {
 			cfg: Config{
 				Version: "2",
 				Prefixes: []PrefixEntry{
-					{Prefix: "P", Label: "Plan"},
-					{Prefix: "F", Label: "Feature Plan"},
+					{Prefix: "P", Name: "Plan"},
+					{Prefix: "F", Name: "Feature Plan"},
 				},
 			},
 			wantErr: false,
@@ -101,8 +101,8 @@ func TestConfig_Validate(t *testing.T) {
 			cfg: Config{
 				Version: "2",
 				Prefixes: []PrefixEntry{
-					{Prefix: "P", Label: "Plan"},
-					{Prefix: "P", Label: "Another Plan"},
+					{Prefix: "P", Name: "Plan"},
+					{Prefix: "P", Name: "Another Plan"},
 				},
 			},
 			wantErr: true,
@@ -112,7 +112,7 @@ func TestConfig_Validate(t *testing.T) {
 			cfg: Config{
 				Version: "2",
 				Prefixes: []PrefixEntry{
-					{Prefix: "P", Label: "Plan", Retired: true},
+					{Prefix: "P", Name: "Plan", Retired: true},
 				},
 			},
 			wantErr: true,
@@ -122,18 +122,28 @@ func TestConfig_Validate(t *testing.T) {
 			cfg: Config{
 				Version: "2",
 				Prefixes: []PrefixEntry{
-					{Prefix: "P", Label: "Plan", Retired: true},
-					{Prefix: "X", Label: "Active"},
+					{Prefix: "P", Name: "Plan", Retired: true},
+					{Prefix: "X", Name: "Active"},
 				},
 			},
 			wantErr: false,
+		},
+		{
+			name: "empty name",
+			cfg: Config{
+				Version: "2",
+				Prefixes: []PrefixEntry{
+					{Prefix: "P", Name: ""},
+				},
+			},
+			wantErr: true,
 		},
 		{
 			name: "invalid prefix format",
 			cfg: Config{
 				Version: "2",
 				Prefixes: []PrefixEntry{
-					{Prefix: "PP", Label: "Invalid"},
+					{Prefix: "PP", Name: "Invalid"},
 				},
 			},
 			wantErr: true,
@@ -158,8 +168,8 @@ func TestConfig_IsValidPrefix(t *testing.T) {
 	cfg := Config{
 		Version: "2",
 		Prefixes: []PrefixEntry{
-			{Prefix: "P", Label: "Plan"},
-			{Prefix: "X", Label: "Extra", Retired: true},
+			{Prefix: "P", Name: "Plan"},
+			{Prefix: "X", Name: "Extra", Retired: true},
 		},
 	}
 
@@ -180,8 +190,8 @@ func TestConfig_IsActivePrefix(t *testing.T) {
 	cfg := Config{
 		Version: "2",
 		Prefixes: []PrefixEntry{
-			{Prefix: "P", Label: "Plan"},
-			{Prefix: "X", Label: "Extra", Retired: true},
+			{Prefix: "P", Name: "Plan"},
+			{Prefix: "X", Name: "Extra", Retired: true},
 		},
 	}
 
@@ -202,7 +212,7 @@ func TestConfig_GetPrefixEntry(t *testing.T) {
 	cfg := Config{
 		Version: "2",
 		Prefixes: []PrefixEntry{
-			{Prefix: "P", Label: "Plan"},
+			{Prefix: "P", Name: "Plan"},
 		},
 	}
 
@@ -226,9 +236,9 @@ func TestConfig_ActivePrefixes(t *testing.T) {
 	cfg := Config{
 		Version: "2",
 		Prefixes: []PrefixEntry{
-			{Prefix: "P", Label: "Plan"},
-			{Prefix: "X", Label: "Extra", Retired: true},
-			{Prefix: "A", Label: "Active"},
+			{Prefix: "P", Name: "Plan"},
+			{Prefix: "X", Name: "Extra", Retired: true},
+			{Prefix: "A", Name: "Active"},
 		},
 	}
 
@@ -251,7 +261,7 @@ func TestConfig_AddPrefix(t *testing.T) {
 	cfg := DefaultConfig()
 
 	// Add a new prefix
-	err := cfg.AddPrefix("F", "Feature Plan")
+	err := cfg.AddPrefix("F", "Feature Plan", "")
 	if err != nil {
 		t.Fatalf("AddPrefix(F) error = %v", err)
 	}
@@ -261,13 +271,13 @@ func TestConfig_AddPrefix(t *testing.T) {
 	}
 
 	// Try to add duplicate
-	err = cfg.AddPrefix("F", "Duplicate")
+	err = cfg.AddPrefix("F", "Duplicate", "")
 	if err == nil {
 		t.Error("AddPrefix(F) should fail for duplicate")
 	}
 
 	// Try to add invalid prefix
-	err = cfg.AddPrefix("PP", "Invalid")
+	err = cfg.AddPrefix("PP", "Invalid", "")
 	if err == nil {
 		t.Error("AddPrefix(PP) should fail for invalid format")
 	}
@@ -279,8 +289,8 @@ func TestConfig_RetirePrefix(t *testing.T) {
 	cfg := Config{
 		Version: "2",
 		Prefixes: []PrefixEntry{
-			{Prefix: "P", Label: "Plan"},
-			{Prefix: "X", Label: "Extra"},
+			{Prefix: "P", Name: "Plan"},
+			{Prefix: "X", Name: "Extra"},
 		},
 	}
 
@@ -326,8 +336,8 @@ func TestConfig_SaveAndLoad(t *testing.T) {
 	cfg := Config{
 		Version: "2",
 		Prefixes: []PrefixEntry{
-			{Prefix: "P", Label: "Plan"},
-			{Prefix: "T", Label: "Test"},
+			{Prefix: "P", Name: "Plan"},
+			{Prefix: "T", Name: "Test"},
 		},
 	}
 

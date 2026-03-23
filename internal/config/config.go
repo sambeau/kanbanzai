@@ -15,9 +15,6 @@ import (
 	"kanbanzai/internal/core"
 )
 
-// ConfigDir is the directory within the instance root containing configuration.
-const ConfigDir = ".kbz"
-
 // ConfigFile is the configuration filename.
 const ConfigFile = "config.yaml"
 
@@ -25,8 +22,10 @@ const ConfigFile = "config.yaml"
 type PrefixEntry struct {
 	// Prefix is a single non-digit Unicode rune used as Plan ID prefix.
 	Prefix string `yaml:"prefix"`
-	// Label is a human-readable description of the prefix.
-	Label string `yaml:"label"`
+	// Name is a human-readable name for the prefix.
+	Name string `yaml:"name"`
+	// Description is an optional longer description of the prefix purpose.
+	Description string `yaml:"description,omitempty"`
 	// Retired indicates this prefix is no longer used for new Plans.
 	Retired bool `yaml:"retired,omitempty"`
 }
@@ -45,7 +44,7 @@ func DefaultConfig() Config {
 	return Config{
 		Version: "2",
 		Prefixes: []PrefixEntry{
-			{Prefix: "P", Label: "Plan"},
+			{Prefix: "P", Name: "Plan"},
 		},
 	}
 }
@@ -129,6 +128,10 @@ func (c *Config) Validate() error {
 			return fmt.Errorf("prefix %d: %w", i, err)
 		}
 
+		if entry.Name == "" {
+			return fmt.Errorf("prefix %d: name is required", i)
+		}
+
 		if seen[entry.Prefix] {
 			return fmt.Errorf("duplicate prefix: %q", entry.Prefix)
 		}
@@ -207,7 +210,7 @@ func (c *Config) ActivePrefixes() []PrefixEntry {
 }
 
 // AddPrefix adds a new prefix to the registry.
-func (c *Config) AddPrefix(prefix, label string) error {
+func (c *Config) AddPrefix(prefix, name, description string) error {
 	if err := ValidatePrefix(prefix); err != nil {
 		return err
 	}
@@ -217,8 +220,9 @@ func (c *Config) AddPrefix(prefix, label string) error {
 	}
 
 	c.Prefixes = append(c.Prefixes, PrefixEntry{
-		Prefix: prefix,
-		Label:  strings.TrimSpace(label),
+		Prefix:      prefix,
+		Name:        strings.TrimSpace(name),
+		Description: strings.TrimSpace(description),
 	})
 
 	return nil

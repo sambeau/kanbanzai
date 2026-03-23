@@ -86,17 +86,19 @@ func addPrefixTool() server.ServerTool {
 	tool := mcp.NewTool("add_prefix",
 		mcp.WithDescription("Add a new prefix to the Plan ID prefix registry. The prefix must be a single non-digit Unicode character."),
 		mcp.WithString("prefix", mcp.Description("Single non-digit character for the prefix"), mcp.Required()),
-		mcp.WithString("label", mcp.Description("Human-readable label describing the prefix purpose"), mcp.Required()),
+		mcp.WithString("name", mcp.Description("Human-readable name for the prefix"), mcp.Required()),
+		mcp.WithString("description", mcp.Description("Optional longer description of the prefix purpose")),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		prefix, err := request.RequireString("prefix")
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
-		label, err := request.RequireString("label")
+		name, err := request.RequireString("name")
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
+		description, _ := request.GetString("description")
 
 		// Validate prefix format
 		if err := config.ValidatePrefix(prefix); err != nil {
@@ -117,7 +119,7 @@ func addPrefixTool() server.ServerTool {
 		}
 
 		// Add the prefix
-		if err := cfg.AddPrefix(prefix, label); err != nil {
+		if err := cfg.AddPrefix(prefix, name, description); err != nil {
 			return mcp.NewToolResultError("add prefix failed: " + err.Error()), nil
 		}
 
@@ -126,14 +128,19 @@ func addPrefixTool() server.ServerTool {
 			return mcp.NewToolResultError("save config failed: " + err.Error()), nil
 		}
 
+		prefixMap := map[string]any{
+			"prefix":  prefix,
+			"name":    name,
+			"retired": false,
+		}
+		if description != "" {
+			prefixMap["description"] = description
+		}
+
 		response := map[string]any{
 			"success": true,
 			"message": "Prefix added successfully",
-			"prefix": map[string]any{
-				"prefix":  prefix,
-				"label":   label,
-				"retired": false,
-			},
+			"prefix":  prefixMap,
 		}
 
 		return configResultJSON(response)
@@ -183,7 +190,10 @@ func prefixesToMaps(prefixes []config.PrefixEntry) []map[string]any {
 	for _, p := range prefixes {
 		m := map[string]any{
 			"prefix": p.Prefix,
-			"label":  p.Label,
+			"name":   p.Name,
+		}
+		if p.Description != "" {
+			m["description"] = p.Description
 		}
 		if p.Retired {
 			m["retired"] = true
