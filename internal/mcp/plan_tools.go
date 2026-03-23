@@ -2,7 +2,6 @@ package mcp
 
 import (
 	"context"
-	"encoding/json"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
@@ -205,27 +204,6 @@ func listResultWithDisplay(r service.ListResult) map[string]any {
 		"Path":      r.Path,
 		"State":     r.State,
 	}
-}
-
-func planListResultsWithDisplay(results []service.ListResult) map[string]any {
-	out := make([]map[string]any, len(results))
-	for i, r := range results {
-		out[i] = listResultWithDisplay(r)
-	}
-	return map[string]any{
-		"success": true,
-		"count":   len(results),
-		"plans":   out,
-	}
-}
-
-// Helper to create JSON result from any value
-func jsonResultAny(v any) (*mcp.CallToolResult, error) {
-	data, err := json.MarshalIndent(v, "", "  ")
-	if err != nil {
-		return mcp.NewToolResultError("marshal result: " + err.Error()), nil
-	}
-	return mcp.NewToolResultText(string(data)), nil
 }
 
 // getStringArray extracts a string array from request arguments.

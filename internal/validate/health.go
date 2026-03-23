@@ -128,7 +128,14 @@ func CheckHealth(loadAll func() ([]EntityInfo, error), entityExists func(entityT
 			checkRefSlice("features", string(EntityFeature), toStringSlice(e.Fields["features"]))
 
 		case string(EntityFeature):
-			checkRef("epic", string(EntityEpic), toString(e.Fields["epic"]))
+			parent := toString(e.Fields["parent"])
+			if parent != "" {
+				if model.IsPlanID(parent) {
+					checkRef("parent", string(EntityPlan), parent)
+				} else {
+					checkRef("parent", string(EntityEpic), parent)
+				}
+			}
 			checkRef("supersedes", string(EntityFeature), toString(e.Fields["supersedes"]))
 			checkRef("superseded_by", string(EntityFeature), toString(e.Fields["superseded_by"]))
 			checkRefSlice("tasks", string(EntityTask), toStringSlice(e.Fields["tasks"]))

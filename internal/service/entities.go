@@ -28,7 +28,9 @@ type CreateEpicInput struct {
 
 type CreateFeatureInput struct {
 	Slug      string
-	Epic      string
+	Parent    string
+	Design    string
+	Tags      []string
 	Summary   string
 	CreatedBy string
 }
@@ -201,16 +203,16 @@ func (s *EntityService) CreateEpic(input CreateEpicInput) (CreateResult, error) 
 func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, error) {
 	if err := validateRequired(
 		field("slug", input.Slug),
-		field("epic", input.Epic),
+		field("parent", input.Parent),
 		field("summary", input.Summary),
 		field("created_by", input.CreatedBy),
 	); err != nil {
 		return CreateResult{}, err
 	}
 
-	epicID := strings.TrimSpace(input.Epic)
-	if !s.entityExists(string(model.EntityKindEpic), epicID) {
-		return CreateResult{}, fmt.Errorf("epic %s: %w", epicID, ErrReferenceNotFound)
+	parentID := strings.TrimSpace(input.Parent)
+	if !s.entityExists(string(model.EntityKindPlan), parentID) {
+		return CreateResult{}, fmt.Errorf("parent plan %s: %w", parentID, ErrReferenceNotFound)
 	}
 
 	idValue, err := s.allocateID(model.EntityKindFeature)
@@ -221,9 +223,11 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 	entity := model.Feature{
 		ID:        idValue,
 		Slug:      normalizeSlug(input.Slug),
-		Epic:      epicID,
+		Parent:    parentID,
 		Status:    model.FeatureStatusProposed,
 		Summary:   strings.TrimSpace(input.Summary),
+		Design:    strings.TrimSpace(input.Design),
+		Tags:      append([]string(nil), input.Tags...),
 		Created:   s.now(),
 		CreatedBy: strings.TrimSpace(input.CreatedBy),
 	}
@@ -383,6 +387,20 @@ func (s *EntityService) ValidateCandidate(entityType string, fields map[string]a
 func (s *EntityService) HealthCheck() (*validate.HealthReport, error) {
 	loadAll := func() ([]validate.EntityInfo, error) {
 		var all []validate.EntityInfo
+
+		// Load Plans via ListPlans (Plans use different filename format).
+		plans, err := s.ListPlans(PlanFilters{})
+		if err != nil {
+			return nil, fmt.Errorf("listing plan entities: %w", err)
+		}
+		for _, r := range plans {
+			all = append(all, validate.EntityInfo{
+				Type:   r.Type,
+				ID:     r.ID,
+				Fields: r.State,
+			})
+		}
+
 		for _, kind := range []string{
 			string(model.EntityKindEpic),
 			string(model.EntityKindFeature),
@@ -406,6 +424,10 @@ func (s *EntityService) HealthCheck() (*validate.HealthReport, error) {
 	}
 
 	entityExists := func(entityType, id string) bool {
+		// Plans use different storage, check via file directly.
+		if entityType == string(model.EntityKindPlan) {
+			return s.entityExists(entityType, id)
+		}
 		results, err := s.List(entityType)
 		if err != nil {
 			return false
@@ -705,6 +727,11 @@ func (s *EntityService) allocateID(entityKind model.EntityKind) (string, error) 
 // entityExists checks whether an entity with the given type and ID exists on disk.
 func (s *EntityService) entityExists(entityType, entityID string) bool {
 	dir := filepath.Join(s.root, entityDirectory(entityType))
+	// Plan files use {id}.yaml (no slug suffix), so check that first.
+	if strings.ToLower(strings.TrimSpace(entityType)) == string(model.EntityKindPlan) {
+		_, err := os.Stat(filepath.Join(dir, entityID+".yaml"))
+		return err == nil
+	}
 	pattern := filepath.Join(dir, entityID+"-*.yaml")
 	matches, err := filepath.Glob(pattern)
 	if err != nil {
@@ -929,23 +956,32 @@ func featureFields(e model.Feature) map[string]any {
 	fields := map[string]any{
 		"id":         e.ID,
 		"slug":       e.Slug,
-		"epic":       e.Epic,
+		"parent":     e.Parent,
 		"status":     string(e.Status),
 		"summary":    e.Summary,
 		"created":    e.Created.Format(time.RFC3339),
 		"created_by": e.CreatedBy,
 	}
+	if !e.Updated.IsZero() {
+		fields["updated"] = e.Updated.Format(time.RFC3339)
+	}
+	if e.Design != "" {
+		fields["design"] = e.Design
+	}
 	if e.Spec != "" {
 		fields["spec"] = e.Spec
 	}
-	if e.Plan != "" {
-		fields["plan"] = e.Plan
+	if e.DevPlan != "" {
+		fields["dev_plan"] = e.DevPlan
 	}
 	if len(e.Tasks) > 0 {
 		fields["tasks"] = append([]string(nil), e.Tasks...)
 	}
 	if len(e.Decisions) > 0 {
 		fields["decisions"] = append([]string(nil), e.Decisions...)
+	}
+	if len(e.Tags) > 0 {
+		fields["tags"] = append([]string(nil), e.Tags...)
 	}
 	if e.Branch != "" {
 		fields["branch"] = e.Branch

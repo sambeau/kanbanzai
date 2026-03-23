@@ -90,8 +90,9 @@ func ValidateSlug(slug string) error {
 }
 
 var requiredFields = map[EntityKind][]string{
+	EntityPlan:     {"id", "slug", "title", "status", "summary", "created", "created_by"},
 	EntityEpic:     {"id", "slug", "title", "status", "summary", "created", "created_by"},
-	EntityFeature:  {"id", "slug", "epic", "status", "summary", "created", "created_by"},
+	EntityFeature:  {"id", "slug", "parent", "status", "summary", "created", "created_by"},
 	EntityTask:     {"id", "parent_feature", "slug", "summary", "status"},
 	EntityBug:      {"id", "slug", "title", "status", "severity", "priority", "type", "reported_by", "reported", "observed", "expected"},
 	EntityDecision: {"id", "slug", "summary", "rationale", "decided_by", "date", "status"},

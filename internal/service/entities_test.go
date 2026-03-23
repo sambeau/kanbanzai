@@ -80,19 +80,12 @@ func TestEntityService_CreateFeature_AllocatesSequentialID(t *testing.T) {
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	epic, err := service.CreateEpic(CreateEpicInput{
-		Slug:      "parent-epic",
-		Title:     "Parent Epic",
-		Summary:   "Required parent",
-		CreatedBy: "sam",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
-	}
+	planID := "P1-parent"
+	writeTestPlan(t, service, planID)
 
 	first, err := service.CreateFeature(CreateFeatureInput{
 		Slug:      "storage layer",
-		Epic:      epic.ID,
+		Parent:    planID,
 		Summary:   "Implement canonical storage",
 		CreatedBy: "sam",
 	})
@@ -102,7 +95,7 @@ func TestEntityService_CreateFeature_AllocatesSequentialID(t *testing.T) {
 
 	second, err := service.CreateFeature(CreateFeatureInput{
 		Slug:      "validation engine",
-		Epic:      epic.ID,
+		Parent:    planID,
 		Summary:   "Implement lifecycle validation",
 		CreatedBy: "sam",
 	})
@@ -126,19 +119,12 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	epic, err := service.CreateEpic(CreateEpicInput{
-		Slug:      "parent-epic",
-		Title:     "Parent Epic",
-		Summary:   "Required parent",
-		CreatedBy: "sam",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
-	}
+	planID := "P1-parent"
+	writeTestPlan(t, service, planID)
 
 	feat1, err := service.CreateFeature(CreateFeatureInput{
 		Slug:      "feature-one",
-		Epic:      epic.ID,
+		Parent:    planID,
 		Summary:   "First feature",
 		CreatedBy: "sam",
 	})
@@ -148,7 +134,7 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 
 	feat2, err := service.CreateFeature(CreateFeatureInput{
 		Slug:      "feature-two",
-		Epic:      epic.ID,
+		Parent:    planID,
 		Summary:   "Second feature",
 		CreatedBy: "sam",
 	})
@@ -340,19 +326,12 @@ func TestEntityService_Get_ReturnsStoredEntity(t *testing.T) {
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	epic, err := service.CreateEpic(CreateEpicInput{
-		Slug:      "parent-epic",
-		Title:     "Parent Epic",
-		Summary:   "Required parent",
-		CreatedBy: "sam",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
-	}
+	planID := "P1-parent"
+	writeTestPlan(t, service, planID)
 
 	created, err := service.CreateFeature(CreateFeatureInput{
 		Slug:      "entity retrieval",
-		Epic:      epic.ID,
+		Parent:    planID,
 		Summary:   "Support entity reads by canonical identity",
 		CreatedBy: "sam",
 	})
@@ -390,19 +369,12 @@ func TestEntityService_List_ReturnsEntitiesSortedByID(t *testing.T) {
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	epic, err := service.CreateEpic(CreateEpicInput{
-		Slug:      "parent-epic",
-		Title:     "Parent Epic",
-		Summary:   "Required parent",
-		CreatedBy: "sam",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
-	}
+	planID := "P1-parent"
+	writeTestPlan(t, service, planID)
 
 	createdFirst, err := service.CreateFeature(CreateFeatureInput{
 		Slug:      "storage layer",
-		Epic:      epic.ID,
+		Parent:    planID,
 		Summary:   "Implement canonical storage",
 		CreatedBy: "sam",
 	})
@@ -412,7 +384,7 @@ func TestEntityService_List_ReturnsEntitiesSortedByID(t *testing.T) {
 
 	createdSecond, err := service.CreateFeature(CreateFeatureInput{
 		Slug:      "validation engine",
-		Epic:      epic.ID,
+		Parent:    planID,
 		Summary:   "Implement lifecycle validation",
 		CreatedBy: "sam",
 	})
@@ -446,19 +418,12 @@ func TestEntityService_StatusUpdate_UsesLifecycleValidation(t *testing.T) {
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	epic, err := service.CreateEpic(CreateEpicInput{
-		Slug:      "parent-epic",
-		Title:     "Parent Epic",
-		Summary:   "Required parent",
-		CreatedBy: "sam",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
-	}
+	planID := "P1-parent"
+	writeTestPlan(t, service, planID)
 
 	created, err := service.CreateFeature(CreateFeatureInput{
 		Slug:      "status updates",
-		Epic:      epic.ID,
+		Parent:    planID,
 		Summary:   "Support lifecycle status changes",
 		CreatedBy: "sam",
 	})
@@ -805,6 +770,32 @@ func newTestEntityService(root string, now string) *EntityService {
 	return svc
 }
 
+// writeTestPlan creates a Plan entity directly on disk via the store,
+// bypassing CreatePlan (which requires global config).
+func writeTestPlan(t *testing.T, svc *EntityService, id string) {
+	t.Helper()
+	_, _, slug := model.ParsePlanID(id)
+	fields := map[string]any{
+		"id":         id,
+		"slug":       slug,
+		"title":      "Test Plan",
+		"status":     "active",
+		"summary":    "Test plan for unit tests",
+		"created":    "2026-03-19T12:00:00Z",
+		"created_by": "test",
+		"updated":    "2026-03-19T12:00:00Z",
+	}
+	_, err := svc.store.Write(storage.EntityRecord{
+		Type:   string(model.EntityKindPlan),
+		ID:     id,
+		Slug:   slug,
+		Fields: fields,
+	})
+	if err != nil {
+		t.Fatalf("writeTestPlan(%s) error = %v", id, err)
+	}
+}
+
 func TestEntityService_CreateBug_RejectsInvalidSeverity(t *testing.T) {
 	t.Parallel()
 
@@ -996,20 +987,13 @@ func TestEntityService_HealthCheck_CleanProject(t *testing.T) {
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	// Create a valid epic and a feature referencing it.
-	epicResult, err := svc.CreateEpic(CreateEpicInput{
-		Slug:      "health-test",
-		Title:     "Health Test Epic",
-		Summary:   "An epic for health checking",
-		CreatedBy: "agent",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
-	}
+	// Create a valid plan and a feature referencing it.
+	planID := "P1-health-test"
+	writeTestPlan(t, svc, planID)
 
-	_, err = svc.CreateFeature(CreateFeatureInput{
+	_, err := svc.CreateFeature(CreateFeatureInput{
 		Slug:      "health-feat",
-		Epic:      epicResult.ID,
+		Parent:    planID,
 		Summary:   "A feature for health checking",
 		CreatedBy: "agent",
 	})
@@ -1031,8 +1015,8 @@ func TestEntityService_HealthCheck_CleanProject(t *testing.T) {
 	if report.Summary.WarningCount != 0 {
 		t.Fatalf("WarningCount = %d, want 0; warnings: %v", report.Summary.WarningCount, report.Warnings)
 	}
-	if report.Summary.EntitiesByType["epic"] != 1 {
-		t.Fatalf("epic count = %d, want 1", report.Summary.EntitiesByType["epic"])
+	if report.Summary.EntitiesByType["plan"] != 1 {
+		t.Fatalf("plan count = %d, want 1", report.Summary.EntitiesByType["plan"])
 	}
 	if report.Summary.EntitiesByType["feature"] != 1 {
 		t.Fatalf("feature count = %d, want 1", report.Summary.EntitiesByType["feature"])
@@ -1058,7 +1042,7 @@ func TestEntityService_HealthCheck_EmptyProject(t *testing.T) {
 	}
 }
 
-func TestEntityService_CreateFeature_RejectsNonExistentEpic(t *testing.T) {
+func TestEntityService_CreateFeature_RejectsNonExistentParent(t *testing.T) {
 	t.Parallel()
 
 	root := t.TempDir()
@@ -1066,15 +1050,15 @@ func TestEntityService_CreateFeature_RejectsNonExistentEpic(t *testing.T) {
 
 	_, err := svc.CreateFeature(CreateFeatureInput{
 		Slug:      "orphan-feature",
-		Epic:      "EPIC-DOESNOTEXIST",
-		Summary:   "Feature referencing non-existent epic",
+		Parent:    "P1-does-not-exist",
+		Summary:   "Feature referencing non-existent plan",
 		CreatedBy: "sam",
 	})
 	if err == nil {
-		t.Fatal("CreateFeature() should fail when epic does not exist")
+		t.Fatal("CreateFeature() should fail when parent plan does not exist")
 	}
-	if !strings.Contains(err.Error(), "EPIC-DOESNOTEXIST") {
-		t.Fatalf("error should mention the missing epic ID, got: %v", err)
+	if !strings.Contains(err.Error(), "P1-does-not-exist") {
+		t.Fatalf("error should mention the missing plan ID, got: %v", err)
 	}
 }
 
@@ -1226,66 +1210,52 @@ func TestEntityService_UpdateEntity_ValidatesResult(t *testing.T) {
 	}
 }
 
-func TestEntityService_UpdateEntity_CorrectEpicReference(t *testing.T) {
+func TestEntityService_UpdateEntity_CorrectParentReference(t *testing.T) {
 	t.Parallel()
 
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	epic1, err := svc.CreateEpic(CreateEpicInput{
-		Slug:      "first-epic",
-		Title:     "First Epic",
-		Summary:   "The first epic",
-		CreatedBy: "sam",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic(first) error = %v", err)
-	}
+	plan1ID := "P1-first-plan"
+	writeTestPlan(t, svc, plan1ID)
 
-	epic2, err := svc.CreateEpic(CreateEpicInput{
-		Slug:      "second-epic",
-		Title:     "Second Epic",
-		Summary:   "The second epic",
-		CreatedBy: "sam",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic(second) error = %v", err)
-	}
+	plan2ID := "P2-second-plan"
+	writeTestPlan(t, svc, plan2ID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
 		Slug:      "my-feature",
-		Epic:      epic1.ID,
-		Summary:   "A feature under first epic",
+		Parent:    plan1ID,
+		Summary:   "A feature under first plan",
 		CreatedBy: "sam",
 	})
 	if err != nil {
 		t.Fatalf("CreateFeature() error = %v", err)
 	}
 
-	if feat.State["epic"] != epic1.ID {
-		t.Fatalf("initial epic = %v, want %q", feat.State["epic"], epic1.ID)
+	if feat.State["parent"] != plan1ID {
+		t.Fatalf("initial parent = %v, want %q", feat.State["parent"], plan1ID)
 	}
 
 	updated, err := svc.UpdateEntity(UpdateEntityInput{
 		Type:   feat.Type,
 		ID:     feat.ID,
 		Slug:   feat.Slug,
-		Fields: map[string]string{"epic": epic2.ID},
+		Fields: map[string]string{"parent": plan2ID},
 	})
 	if err != nil {
 		t.Fatalf("UpdateEntity() error = %v", err)
 	}
 
-	if updated.State["epic"] != epic2.ID {
-		t.Fatalf("updated epic = %v, want %q", updated.State["epic"], epic2.ID)
+	if updated.State["parent"] != plan2ID {
+		t.Fatalf("updated parent = %v, want %q", updated.State["parent"], plan2ID)
 	}
 
 	got, err := svc.Get(feat.Type, feat.ID, feat.Slug)
 	if err != nil {
 		t.Fatalf("Get() after update error = %v", err)
 	}
-	if got.State["epic"] != epic2.ID {
-		t.Fatalf("persisted epic = %v, want %q", got.State["epic"], epic2.ID)
+	if got.State["parent"] != plan2ID {
+		t.Fatalf("persisted parent = %v, want %q", got.State["parent"], plan2ID)
 	}
 }
 
@@ -1295,15 +1265,15 @@ func TestEntityService_HealthCheck_DetectsBrokenReference(t *testing.T) {
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	// Create a feature that references a non-existent epic.
+	// Create a feature that references a non-existent plan.
 	// We need to bypass normal validation to get this state,
 	// so we write directly via the store.
 	featureFields := map[string]any{
 		"id":         "FEAT-01J3K7MXP3RT5",
 		"slug":       "orphan-feat",
-		"epic":       "EPIC-DOESNOTEXIST",
-		"status":     "draft",
-		"summary":    "Feature with broken epic ref",
+		"parent":     "P1-does-not-exist",
+		"status":     "proposed",
+		"summary":    "Feature with broken parent ref",
 		"created":    "2026-03-19T12:00:00Z",
 		"created_by": "agent",
 	}
@@ -1323,17 +1293,17 @@ func TestEntityService_HealthCheck_DetectsBrokenReference(t *testing.T) {
 	}
 
 	if report.Summary.ErrorCount == 0 {
-		t.Fatal("expected errors for broken epic reference, got none")
+		t.Fatal("expected errors for broken parent reference, got none")
 	}
 
-	foundEpicError := false
+	foundParentError := false
 	for _, e := range report.Errors {
-		if e.Field == "epic" && strings.Contains(e.Message, "EPIC-DOESNOTEXIST") {
-			foundEpicError = true
+		if e.Field == "parent" && strings.Contains(e.Message, "P1-does-not-exist") {
+			foundParentError = true
 		}
 	}
-	if !foundEpicError {
-		t.Fatalf("expected error about non-existent epic EPIC-DOESNOTEXIST, errors: %v", report.Errors)
+	if !foundParentError {
+		t.Fatalf("expected error about non-existent plan P1-does-not-exist, errors: %v", report.Errors)
 	}
 }
 
@@ -1394,19 +1364,12 @@ func TestEntityService_TaskLifecycle(t *testing.T) {
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	epic, err := svc.CreateEpic(CreateEpicInput{
-		Slug:      "task-parent-epic",
-		Title:     "Task Parent Epic",
-		Summary:   "Epic for task lifecycle test",
-		CreatedBy: "sam",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
-	}
+	planID := "P1-task-parent"
+	writeTestPlan(t, svc, planID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
 		Slug:      "task-parent-feature",
-		Epic:      epic.ID,
+		Parent:    planID,
 		Summary:   "Feature for task lifecycle test",
 		CreatedBy: "sam",
 	})
@@ -1580,9 +1543,12 @@ func TestEntityService_ResolvePrefix(t *testing.T) {
 		t.Fatalf("CreateEpic() error = %v", err)
 	}
 
+	planID := "P1-prefix-plan"
+	writeTestPlan(t, svc, planID)
+
 	feat1, err := svc.CreateFeature(CreateFeatureInput{
 		Slug:      "alpha-feature",
-		Epic:      epic.ID,
+		Parent:    planID,
 		Summary:   "First feature",
 		CreatedBy: "sam",
 	})
@@ -1597,7 +1563,7 @@ func TestEntityService_ResolvePrefix(t *testing.T) {
 
 	feat2, err := svc.CreateFeature(CreateFeatureInput{
 		Slug:      "beta-feature",
-		Epic:      epic.ID,
+		Parent:    planID,
 		Summary:   "Second feature",
 		CreatedBy: "sam",
 	})
@@ -1701,19 +1667,12 @@ func TestEntityService_Get_WithEmptySlug(t *testing.T) {
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	epic, err := svc.CreateEpic(CreateEpicInput{
-		Slug:      "get-epic",
-		Title:     "Get Epic",
-		Summary:   "Epic for get-with-prefix tests",
-		CreatedBy: "sam",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
-	}
+	planID := "P1-get"
+	writeTestPlan(t, svc, planID)
 
 	created, err := svc.CreateFeature(CreateFeatureInput{
 		Slug:      "prefix-get",
-		Epic:      epic.ID,
+		Parent:    planID,
 		Summary:   "Feature for prefix get",
 		CreatedBy: "sam",
 	})

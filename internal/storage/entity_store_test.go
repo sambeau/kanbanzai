@@ -344,13 +344,13 @@ func TestEntityStore_Load_FixtureFiles(t *testing.T) {
 			wantFields: map[string]any{
 				"id":         "FEAT-01J3K7MXP3RT5",
 				"slug":       "initial-kernel",
-				"epic":       "EPIC-PHASE1KERNEL",
+				"parent":     "EPIC-PHASE1KERNEL",
 				"status":     "draft",
 				"summary":    "Start the workflow kernel",
 				"created":    "2026-03-19T12:00:00Z",
 				"created_by": "sam",
 				"spec":       "work/spec/phase-1-specification.md",
-				"plan":       "work/plan/phase-1-implementation-plan.md",
+				"dev_plan":   "work/plan/phase-1-implementation-plan.md",
 				"tasks":      []any{"TASK-01J3KZZZBB4KF", "TASK-01J3L0AACC5LG"},
 				"decisions":  []any{"DEC-01J3KABCDE7MX"},
 				"branch":     "feat/feat-01j3k7mxp3rt5-initial-kernel",
@@ -1179,5 +1179,76 @@ func TestEntityStore_Write_NewEntityWithFileHashSucceeds(t *testing.T) {
 	// FileHash is set.
 	if _, err := store.Write(record); err != nil {
 		t.Fatalf("Write() new entity with FileHash error = %v", err)
+	}
+}
+
+func TestFeaturePhase2Fields_RoundTrip(t *testing.T) {
+	t.Parallel()
+
+	fields := map[string]any{
+		"id":         "FEAT-A1B2C3D4E5F6",
+		"slug":       "phase2-feature",
+		"parent":     "P1",
+		"status":     "proposed",
+		"summary":    "Feature with Phase 2 fields",
+		"design":     "P1/design-doc",
+		"spec":       "P1/spec-doc",
+		"dev_plan":   "P1/dev-plan-doc",
+		"tags":       []string{"api", "backend"},
+		"created":    "2025-01-15T10:00:00Z",
+		"created_by": "alice",
+		"updated":    "2025-01-16T12:30:00Z",
+	}
+
+	// Write
+	yaml, err := MarshalCanonicalYAML("feature", fields)
+	if err != nil {
+		t.Fatalf("MarshalCanonicalYAML() error = %v", err)
+	}
+
+	// Read back
+	got, err := UnmarshalCanonicalYAML(yaml)
+	if err != nil {
+		t.Fatalf("UnmarshalCanonicalYAML() error = %v", err)
+	}
+
+	// Convert expected for comparison (slices become []any in unmarshal)
+	want := map[string]any{
+		"id":         "FEAT-A1B2C3D4E5F6",
+		"slug":       "phase2-feature",
+		"parent":     "P1",
+		"status":     "proposed",
+		"summary":    "Feature with Phase 2 fields",
+		"design":     "P1/design-doc",
+		"spec":       "P1/spec-doc",
+		"dev_plan":   "P1/dev-plan-doc",
+		"tags":       []any{"api", "backend"},
+		"created":    "2025-01-15T10:00:00Z",
+		"created_by": "alice",
+		"updated":    "2025-01-16T12:30:00Z",
+	}
+
+	if !reflect.DeepEqual(got, want) {
+		t.Fatalf("Phase 2 Feature round-trip mismatch\nwant: %#v\ngot:  %#v", want, got)
+	}
+
+	// Verify field order matches spec
+	expectedOrder := []string{
+		"id", "slug", "parent", "status", "summary",
+		"design", "spec", "dev_plan", "tags",
+		"created", "created_by", "updated",
+	}
+
+	lines := strings.Split(strings.TrimSpace(yaml), "\n")
+	var actualOrder []string
+	for _, line := range lines {
+		if strings.Contains(line, ":") {
+			key := strings.TrimSpace(strings.Split(line, ":")[0])
+			actualOrder = append(actualOrder, key)
+		}
+	}
+
+	if !reflect.DeepEqual(actualOrder, expectedOrder) {
+		t.Fatalf("Phase 2 Feature field order mismatch\nwant: %v\ngot:  %v", expectedOrder, actualOrder)
 	}
 }

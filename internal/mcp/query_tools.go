@@ -2,6 +2,7 @@ package mcp
 
 import (
 	"context"
+	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
@@ -14,6 +15,7 @@ func QueryTools(entitySvc *service.EntityService, docSvc *service.DocumentServic
 	return []server.ServerTool{
 		listTagsTool(entitySvc),
 		listByTagTool(entitySvc),
+		listEntitiesFilteredTool(entitySvc),
 		queryPlanTasksTool(entitySvc),
 		docSupersessionChainTool(docSvc),
 	}
@@ -56,6 +58,91 @@ func listByTagTool(svc *service.EntityService) server.ServerTool {
 			"tag":      tag,
 			"count":    len(results),
 			"entities": listResultsWithDisplay(results),
+		})
+	}
+	return server.ServerTool{Tool: tool, Handler: handler}
+}
+
+func listEntitiesFilteredTool(svc *service.EntityService) server.ServerTool {
+	tool := mcp.NewTool("list_entities_filtered",
+		mcp.WithDescription("List entities of a given type with optional filters for status, tags, parent, and date ranges."),
+		mcp.WithString("entity_type",
+			mcp.Description("Type of entities to list"),
+			mcp.Required(),
+			mcp.Enum("epic", "feature", "task", "bug", "decision", "plan"),
+		),
+		mcp.WithString("status", mcp.Description("Filter by lifecycle status")),
+		mcp.WithArray("tags", mcp.Description("Filter by tags (entities must have at least one of the specified tags)")),
+		mcp.WithString("parent", mcp.Description("Filter by parent entity ID (for features)")),
+		mcp.WithString("created_after", mcp.Description("Filter by created timestamp (RFC3339 format, e.g., 2024-01-01T00:00:00Z)")),
+		mcp.WithString("created_before", mcp.Description("Filter by created timestamp (RFC3339 format)")),
+		mcp.WithString("updated_after", mcp.Description("Filter by updated timestamp (RFC3339 format)")),
+		mcp.WithString("updated_before", mcp.Description("Filter by updated timestamp (RFC3339 format)")),
+	)
+	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+		entityType, err := request.RequireString("entity_type")
+		if err != nil {
+			return mcp.NewToolResultError(err.Error()), nil
+		}
+
+		input := service.ListFilteredInput{
+			Type:   entityType,
+			Status: request.GetString("status", ""),
+			Parent: request.GetString("parent", ""),
+		}
+
+		// Get tags array
+		args := request.GetArguments()
+		if tagsRaw, ok := args["tags"]; ok {
+			if tagsArr, ok := tagsRaw.([]any); ok {
+				for _, t := range tagsArr {
+					if tagStr, ok := t.(string); ok {
+						input.Tags = append(input.Tags, tagStr)
+					}
+				}
+			}
+		}
+
+		// Parse optional date filters
+		if createdAfter := request.GetString("created_after", ""); createdAfter != "" {
+			t, err := time.Parse(time.RFC3339, createdAfter)
+			if err != nil {
+				return mcp.NewToolResultError("invalid created_after format: " + err.Error()), nil
+			}
+			input.CreatedAfter = &t
+		}
+		if createdBefore := request.GetString("created_before", ""); createdBefore != "" {
+			t, err := time.Parse(time.RFC3339, createdBefore)
+			if err != nil {
+				return mcp.NewToolResultError("invalid created_before format: " + err.Error()), nil
+			}
+			input.CreatedBefore = &t
+		}
+		if updatedAfter := request.GetString("updated_after", ""); updatedAfter != "" {
+			t, err := time.Parse(time.RFC3339, updatedAfter)
+			if err != nil {
+				return mcp.NewToolResultError("invalid updated_after format: " + err.Error()), nil
+			}
+			input.UpdatedAfter = &t
+		}
+		if updatedBefore := request.GetString("updated_before", ""); updatedBefore != "" {
+			t, err := time.Parse(time.RFC3339, updatedBefore)
+			if err != nil {
+				return mcp.NewToolResultError("invalid updated_before format: " + err.Error()), nil
+			}
+			input.UpdatedBefore = &t
+		}
+
+		results, err := svc.ListEntitiesFiltered(input)
+		if err != nil {
+			return mcp.NewToolResultErrorFromErr("list entities filtered failed", err), nil
+		}
+
+		return jsonResult(map[string]any{
+			"success": true,
+			"type":    entityType,
+			"count":   len(results),
+			"results": listResultsWithDisplay(results),
 		})
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}

@@ -15,7 +15,12 @@ import (
 	"kanbanzai/internal/service"
 )
 
-func setupTestServer(t *testing.T) *mcptest.Server {
+type testEnv struct {
+	server *mcptest.Server
+	docSvc *document.DocService
+}
+
+func setupTestServer(t *testing.T) *testEnv {
 	t.Helper()
 	entityRoot := t.TempDir()
 	docsRoot := t.TempDir()
@@ -27,16 +32,16 @@ func setupTestServer(t *testing.T) *mcptest.Server {
 	if err != nil {
 		t.Fatalf("start test server: %v", err)
 	}
-	return ts
+	return &testEnv{server: ts, docSvc: docSvc}
 }
 
-func callTool(t *testing.T, ts *mcptest.Server, name string, args map[string]any) *mcp.CallToolResult {
+func callTool(t *testing.T, ts *testEnv, name string, args map[string]any) *mcp.CallToolResult {
 	t.Helper()
 	ctx := context.Background()
 	request := mcp.CallToolRequest{}
 	request.Params.Name = name
 	request.Params.Arguments = args
-	result, err := ts.Client().CallTool(ctx, request)
+	result, err := ts.server.Client().CallTool(ctx, request)
 	if err != nil {
 		t.Fatalf("CallTool(%s): %v", name, err)
 	}
@@ -56,11 +61,11 @@ func resultText(t *testing.T, result *mcp.CallToolResult) string {
 }
 
 func TestServer_ListTools(t *testing.T) {
-	ts := setupTestServer(t)
-	defer ts.Close()
+	env := setupTestServer(t)
+	defer env.server.Close()
 
 	ctx := context.Background()
-	listResult, err := ts.Client().ListTools(ctx, mcp.ListToolsRequest{})
+	listResult, err := env.server.Client().ListTools(ctx, mcp.ListToolsRequest{})
 	if err != nil {
 		t.Fatalf("ListTools: %v", err)
 	}
@@ -82,10 +87,7 @@ func TestServer_ListTools(t *testing.T) {
 	expectedDocTools := []string{
 		"scaffold_document",
 		"submit_document",
-		"update_document_body",
 		"approve_document",
-		"retrieve_document",
-		"extract_from_document",
 		"list_documents",
 		"validate_document",
 	}
@@ -112,10 +114,10 @@ func TestServer_ListTools(t *testing.T) {
 }
 
 func TestServer_CreateEpic(t *testing.T) {
-	ts := setupTestServer(t)
-	defer ts.Close()
+	env := setupTestServer(t)
+	defer env.server.Close()
 
-	result := callTool(t, ts, "create_epic", map[string]any{
+	result := callTool(t, env, "create_epic", map[string]any{
 		"slug":       "test-epic",
 		"title":      "Test Epic",
 		"summary":    "A test epic for integration testing",
@@ -152,10 +154,10 @@ func TestServer_CreateEpic(t *testing.T) {
 }
 
 func TestServer_CreateAndGetEpic(t *testing.T) {
-	ts := setupTestServer(t)
-	defer ts.Close()
+	env := setupTestServer(t)
+	defer env.server.Close()
 
-	createResult := callTool(t, ts, "create_epic", map[string]any{
+	createResult := callTool(t, env, "create_epic", map[string]any{
 		"slug":       "roundtrip-epic",
 		"title":      "Roundtrip Epic",
 		"summary":    "Test create and get roundtrip",
@@ -178,7 +180,7 @@ func TestServer_CreateAndGetEpic(t *testing.T) {
 		t.Errorf("create result missing DisplayID field")
 	}
 
-	getResult := callTool(t, ts, "get_entity", map[string]any{
+	getResult := callTool(t, env, "get_entity", map[string]any{
 		"entity_type": "epic",
 		"id":          epicID,
 		"slug":        epicSlug,
@@ -213,10 +215,10 @@ func TestServer_CreateAndGetEpic(t *testing.T) {
 }
 
 func TestServer_UpdateStatus(t *testing.T) {
-	ts := setupTestServer(t)
-	defer ts.Close()
+	env := setupTestServer(t)
+	defer env.server.Close()
 
-	createResult := callTool(t, ts, "create_epic", map[string]any{
+	createResult := callTool(t, env, "create_epic", map[string]any{
 		"slug":       "status-epic",
 		"title":      "Status Epic",
 		"summary":    "Test status update",
@@ -235,7 +237,7 @@ func TestServer_UpdateStatus(t *testing.T) {
 	epicID := created["ID"].(string)
 	epicSlug := created["Slug"].(string)
 
-	updateResult := callTool(t, ts, "update_status", map[string]any{
+	updateResult := callTool(t, env, "update_status", map[string]any{
 		"entity_type": "epic",
 		"id":          epicID,
 		"slug":        epicSlug,
@@ -265,10 +267,10 @@ func TestServer_UpdateStatus(t *testing.T) {
 }
 
 func TestServer_UpdateStatus_InvalidTransition(t *testing.T) {
-	ts := setupTestServer(t)
-	defer ts.Close()
+	env := setupTestServer(t)
+	defer env.server.Close()
 
-	createResult := callTool(t, ts, "create_epic", map[string]any{
+	createResult := callTool(t, env, "create_epic", map[string]any{
 		"slug":       "inv-trans-epic",
 		"title":      "Invalid Transition Epic",
 		"summary":    "Test invalid status transition",
@@ -288,7 +290,7 @@ func TestServer_UpdateStatus_InvalidTransition(t *testing.T) {
 	epicSlug := created["Slug"].(string)
 
 	// proposed -> done is not a valid transition (must go proposed -> approved -> active -> done)
-	updateResult := callTool(t, ts, "update_status", map[string]any{
+	updateResult := callTool(t, env, "update_status", map[string]any{
 		"entity_type": "epic",
 		"id":          epicID,
 		"slug":        epicSlug,
@@ -302,10 +304,10 @@ func TestServer_UpdateStatus_InvalidTransition(t *testing.T) {
 }
 
 func TestServer_HealthCheck(t *testing.T) {
-	ts := setupTestServer(t)
-	defer ts.Close()
+	env := setupTestServer(t)
+	defer env.server.Close()
 
-	result := callTool(t, ts, "health_check", map[string]any{})
+	result := callTool(t, env, "health_check", map[string]any{})
 
 	if result.IsError {
 		t.Fatalf("health_check returned error: %s", resultText(t, result))
@@ -318,11 +320,11 @@ func TestServer_HealthCheck(t *testing.T) {
 }
 
 func TestServer_DocumentLifecycle(t *testing.T) {
-	ts := setupTestServer(t)
-	defer ts.Close()
+	env := setupTestServer(t)
+	defer env.server.Close()
 
 	// Step 1: Scaffold
-	scaffoldResult := callTool(t, ts, "scaffold_document", map[string]any{
+	scaffoldResult := callTool(t, env, "scaffold_document", map[string]any{
 		"doc_type": "proposal",
 		"title":    "Lifecycle Test Proposal",
 	})
@@ -338,7 +340,7 @@ func TestServer_DocumentLifecycle(t *testing.T) {
 
 	// Step 2: Submit
 	body := "# Lifecycle Test Proposal\n\n## Summary\n\nTest summary.\n\n## Problem\n\nTest problem.\n\n## Proposal\n\nTest proposal.\n"
-	submitResult := callTool(t, ts, "submit_document", map[string]any{
+	submitResult := callTool(t, env, "submit_document", map[string]any{
 		"doc_type":   "proposal",
 		"title":      "Lifecycle Test Proposal",
 		"body":       body,
@@ -356,20 +358,15 @@ func TestServer_DocumentLifecycle(t *testing.T) {
 
 	docID := submitted["ID"].(string)
 
-	// Step 3: Update body (normalise)
-	updatedBody := "# Lifecycle Test Proposal\n\n## Summary\n\nNormalised summary.\n\n## Problem\n\nNormalised problem.\n\n## Proposal\n\nNormalised proposal.\n"
-	updateResult := callTool(t, ts, "update_document_body", map[string]any{
-		"doc_type": "proposal",
-		"id":       docID,
-		"body":     updatedBody,
-	})
-
-	if updateResult.IsError {
-		t.Fatalf("update_document_body returned error: %s", resultText(t, updateResult))
+	// Step 3: Normalise via DocService directly (update_document_body was removed)
+	normBody := "# Lifecycle Test Proposal\n\n## Summary\n\nNormalised summary.\n\n## Problem\n\nNormalised problem.\n\n## Proposal\n\nNormalised proposal.\n"
+	_, err := env.docSvc.UpdateBody(document.DocTypeProposal, docID, normBody)
+	if err != nil {
+		t.Fatalf("UpdateBody (normalise) error: %v", err)
 	}
 
 	// Step 4: Approve
-	approveResult := callTool(t, ts, "approve_document", map[string]any{
+	approveResult := callTool(t, env, "approve_document", map[string]any{
 		"doc_type":    "proposal",
 		"id":          docID,
 		"approved_by": "reviewer",
@@ -379,28 +376,22 @@ func TestServer_DocumentLifecycle(t *testing.T) {
 		t.Fatalf("approve_document returned error: %s", resultText(t, approveResult))
 	}
 
-	// Step 5: Retrieve and verify verbatim round-trip
-	retrieveResult := callTool(t, ts, "retrieve_document", map[string]any{
-		"doc_type": "proposal",
-		"id":       docID,
-	})
-
-	if retrieveResult.IsError {
-		t.Fatalf("retrieve_document returned error: %s", resultText(t, retrieveResult))
+	var approved map[string]any
+	if err := json.Unmarshal([]byte(resultText(t, approveResult)), &approved); err != nil {
+		t.Fatalf("failed to parse approve result: %v", err)
 	}
 
-	retrievedBody := resultText(t, retrieveResult)
-	if retrievedBody != updatedBody {
-		t.Errorf("verbatim round-trip failed\nwant:\n%s\ngot:\n%s", updatedBody, retrievedBody)
+	if approved["Status"] != "approved" {
+		t.Errorf("approved status = %v, want %q", approved["Status"], "approved")
 	}
 }
 
 func TestServer_ListDocuments(t *testing.T) {
-	ts := setupTestServer(t)
-	defer ts.Close()
+	env := setupTestServer(t)
+	defer env.server.Close()
 
 	body := "# List Test\n\n## Summary\n\nTest.\n\n## Problem\n\nTest.\n\n## Proposal\n\nTest.\n"
-	submitResult := callTool(t, ts, "submit_document", map[string]any{
+	submitResult := callTool(t, env, "submit_document", map[string]any{
 		"doc_type":   "proposal",
 		"title":      "List Test Proposal",
 		"body":       body,
@@ -417,7 +408,7 @@ func TestServer_ListDocuments(t *testing.T) {
 	}
 	docID := submitted["ID"].(string)
 
-	listResult := callTool(t, ts, "list_documents", map[string]any{})
+	listResult := callTool(t, env, "list_documents", map[string]any{})
 
 	if listResult.IsError {
 		t.Fatalf("list_documents returned error: %s", resultText(t, listResult))
@@ -449,11 +440,11 @@ func TestServer_ListDocuments(t *testing.T) {
 }
 
 func TestServer_GetEntityWithoutSlug(t *testing.T) {
-	ts := setupTestServer(t)
-	defer ts.Close()
+	env := setupTestServer(t)
+	defer env.server.Close()
 
 	// Create an epic first
-	createResult := callTool(t, ts, "create_epic", map[string]any{
+	createResult := callTool(t, env, "create_epic", map[string]any{
 		"slug":       "prefix-test-epic",
 		"title":      "Prefix Test Epic",
 		"summary":    "Test get without slug",
@@ -473,7 +464,7 @@ func TestServer_GetEntityWithoutSlug(t *testing.T) {
 	epicSlug := created["Slug"].(string)
 
 	// Get entity using only entity_type and id (no slug) — prefix resolution
-	getResult := callTool(t, ts, "get_entity", map[string]any{
+	getResult := callTool(t, env, "get_entity", map[string]any{
 		"entity_type": "epic",
 		"id":          epicID,
 	})
@@ -496,7 +487,7 @@ func TestServer_GetEntityWithoutSlug(t *testing.T) {
 
 	// Also verify a prefix of the ID works
 	prefix := epicID[:7]
-	prefixResult := callTool(t, ts, "get_entity", map[string]any{
+	prefixResult := callTool(t, env, "get_entity", map[string]any{
 		"entity_type": "epic",
 		"id":          prefix,
 	})
@@ -519,10 +510,10 @@ func TestServer_GetEntityWithoutSlug(t *testing.T) {
 }
 
 func TestServer_ScaffoldDocument(t *testing.T) {
-	ts := setupTestServer(t)
-	defer ts.Close()
+	env := setupTestServer(t)
+	defer env.server.Close()
 
-	result := callTool(t, ts, "scaffold_document", map[string]any{
+	result := callTool(t, env, "scaffold_document", map[string]any{
 		"doc_type": "proposal",
 		"title":    "My Test Proposal",
 	})

@@ -51,11 +51,11 @@ func epicFields(id, slug string) map[string]any {
 	return f
 }
 
-func featureFields(id, slug, epic string) map[string]any {
+func featureFields(id, slug, parent string) map[string]any {
 	f := validFeatureFields()
 	f["id"] = id
 	f["slug"] = slug
-	f["epic"] = epic
+	f["parent"] = parent
 	return f
 }
 
@@ -134,8 +134,8 @@ func TestCheckHealth_BrokenReference(t *testing.T) {
 	if err != nil {
 		t.Fatalf("CheckHealth returned error: %v", err)
 	}
-	if !hasErrorMatching(report.Errors, "epic", "non-existent") {
-		t.Fatalf("expected error on field 'epic' about non-existent entity, got errors: %v", report.Errors)
+	if !hasErrorMatching(report.Errors, "parent", "non-existent") {
+		t.Fatalf("expected error on field 'parent' about non-existent entity, got errors: %v", report.Errors)
 	}
 }
 

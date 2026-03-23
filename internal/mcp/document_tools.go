@@ -25,10 +25,7 @@ func DocumentTools(svc *document.DocService) []server.ServerTool {
 	return []server.ServerTool{
 		scaffoldDocumentTool(svc),
 		submitDocumentTool(svc),
-		updateDocumentBodyTool(svc),
 		approveDocumentTool(svc),
-		retrieveDocumentTool(svc),
-		extractFromDocumentTool(svc),
 		listDocumentsTool(svc),
 		validateDocumentTool(svc),
 	}
@@ -130,49 +127,6 @@ func submitDocumentTool(svc *document.DocService) server.ServerTool {
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
 
-func updateDocumentBodyTool(svc *document.DocService) server.ServerTool {
-	tool := mcp.NewTool("update_document_body",
-		mcp.WithDescription("Update the body of a submitted document and transition it to normalised state."),
-		mcp.WithString("doc_type",
-			mcp.Description("Document type"),
-			mcp.Required(),
-			mcp.Enum(docTypeEnum...),
-		),
-		mcp.WithString("id",
-			mcp.Description("Document ID"),
-			mcp.Required(),
-		),
-		mcp.WithString("body",
-			mcp.Description("New document body content"),
-			mcp.Required(),
-		),
-	)
-
-	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		docType, err := request.RequireString("doc_type")
-		if err != nil {
-			return mcp.NewToolResultError("doc_type is required"), nil
-		}
-		id, err := request.RequireString("id")
-		if err != nil {
-			return mcp.NewToolResultError("id is required"), nil
-		}
-		body, err := request.RequireString("body")
-		if err != nil {
-			return mcp.NewToolResultError("body is required"), nil
-		}
-
-		result, err := svc.UpdateBody(document.DocType(docType), id, body)
-		if err != nil {
-			return mcp.NewToolResultErrorFromErr("update body failed", err), nil
-		}
-
-		return jsonResult(result)
-	}
-
-	return server.ServerTool{Tool: tool, Handler: handler}
-}
-
 func approveDocumentTool(svc *document.DocService) server.ServerTool {
 	tool := mcp.NewTool("approve_document",
 		mcp.WithDescription("Approve a normalised document, transitioning it to approved state."),
@@ -212,67 +166,6 @@ func approveDocumentTool(svc *document.DocService) server.ServerTool {
 		})
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("approve failed", err), nil
-		}
-
-		return jsonResult(result)
-	}
-
-	return server.ServerTool{Tool: tool, Handler: handler}
-}
-
-func retrieveDocumentTool(svc *document.DocService) server.ServerTool {
-	tool := mcp.NewTool("retrieve_document",
-		mcp.WithDescription("Retrieve a document by type and ID. Returns the document body as plain text."),
-		mcp.WithString("doc_type",
-			mcp.Description("Document type"),
-			mcp.Required(),
-			mcp.Enum(docTypeEnum...),
-		),
-		mcp.WithString("id",
-			mcp.Description("Document ID"),
-			mcp.Required(),
-		),
-	)
-
-	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		docType, err := request.RequireString("doc_type")
-		if err != nil {
-			return mcp.NewToolResultError("doc_type is required"), nil
-		}
-		id, err := request.RequireString("id")
-		if err != nil {
-			return mcp.NewToolResultError("id is required"), nil
-		}
-
-		doc, err := svc.Retrieve(document.DocType(docType), id)
-		if err != nil {
-			return mcp.NewToolResultErrorFromErr("retrieve failed", err), nil
-		}
-
-		return mcp.NewToolResultText(doc.Body), nil
-	}
-
-	return server.ServerTool{Tool: tool, Handler: handler}
-}
-
-func extractFromDocumentTool(svc *document.DocService) server.ServerTool {
-	tool := mcp.NewTool("extract_from_document",
-		mcp.WithDescription("Retrieve an approved document for agent-mediated extraction. Use the returned metadata and body to create structured records with create_* tools and record_decision; extraction is only allowed for approved documents."),
-		mcp.WithString("doc_id",
-			mcp.Description("Approved document ID"),
-			mcp.Required(),
-		),
-	)
-
-	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		docID, err := request.RequireString("doc_id")
-		if err != nil {
-			return mcp.NewToolResultError("doc_id is required"), nil
-		}
-
-		result, err := svc.ExtractFromDocument(docID)
-		if err != nil {
-			return mcp.NewToolResultErrorFromErr("extract failed", err), nil
 		}
 
 		return jsonResult(result)

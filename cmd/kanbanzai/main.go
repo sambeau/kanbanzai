@@ -154,7 +154,7 @@ func runCreate(args []string, deps dependencies) error {
 		}
 		result, err := svc.CreateFeature(service.CreateFeatureInput{
 			Slug:      values["slug"],
-			Epic:      values["epic"],
+			Parent:    values["parent"],
 			Summary:   values["summary"],
 			CreatedBy: values["created_by"],
 		})

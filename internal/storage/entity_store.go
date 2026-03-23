@@ -249,21 +249,19 @@ func fieldOrderForEntityType(entityType string) []string {
 		return []string{
 			"id",
 			"slug",
-			"epic",   // Phase 1 field (keep first for backward compatibility)
-			"parent", // Phase 2 field (renamed from epic)
+			"parent",
 			"status",
 			"summary",
+			"design",
+			"spec",
+			"dev_plan",
+			"tasks",
+			"decisions",
+			"tags",
+			"branch",
 			"created",
 			"created_by",
 			"updated",
-			"design",
-			"spec",
-			"plan",     // Phase 1 field (keep before dev_plan for backward compatibility)
-			"dev_plan", // Phase 2 field (renamed from plan)
-			"tags",
-			"tasks",
-			"decisions",
-			"branch",
 			"supersedes",
 			"superseded_by",
 		}

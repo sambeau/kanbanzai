@@ -46,6 +46,13 @@ func (a *Allocator) Allocate(entityKind model.EntityKind, epicSlug string, exist
 
 // Validate returns an error if id is not a valid canonical ID for the given entity type.
 func (a *Allocator) Validate(entityKind model.EntityKind, id string) error {
+	if entityKind == model.EntityKindPlan {
+		if !model.IsPlanID(id) {
+			return fmt.Errorf("invalid plan ID %q: must match {prefix}{number}-{slug} format", id)
+		}
+		return nil
+	}
+
 	if entityKind == model.EntityKindEpic {
 		return validateEpicID(id)
 	}

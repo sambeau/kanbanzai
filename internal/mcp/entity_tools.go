@@ -72,18 +72,25 @@ func createFeatureTool(svc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("create_feature",
 		mcp.WithDescription("Create a new feature entity"),
 		mcp.WithString("slug", mcp.Description("URL-friendly identifier for the feature"), mcp.Required()),
-		mcp.WithString("epic", mcp.Description("Parent epic ID"), mcp.Required()),
+		mcp.WithString("parent", mcp.Description("Parent plan ID"), mcp.Required()),
 		mcp.WithString("summary", mcp.Description("Brief summary of the feature"), mcp.Required()),
 		mcp.WithString("created_by", mcp.Description("Who created the feature"), mcp.Required()),
+		mcp.WithString("design", mcp.Description("Optional design document reference")),
+		mcp.WithArray("tags", mcp.Description("Optional tags for cross-cutting organization")),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		slug, err := request.RequireString("slug")
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
-		epic, err := request.RequireString("epic")
-		if err != nil {
-			return mcp.NewToolResultError(err.Error()), nil
+		// Support both 'parent' (Phase 2) and 'epic' (Phase 1 backward compatibility)
+		parent := request.GetString("parent", "")
+		if parent == "" {
+			// Fall back to 'epic' for backward compatibility
+			parent = request.GetString("epic", "")
+			if parent == "" {
+				return mcp.NewToolResultError("either 'parent' or 'epic' is required"), nil
+			}
 		}
 		summary, err := request.RequireString("summary")
 		if err != nil {
@@ -93,9 +100,26 @@ func createFeatureTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
+		design := request.GetString("design", "")
+		
+		// Get tags array
+		var tags []string
+		args := request.GetArguments()
+		if tagsRaw, ok := args["tags"]; ok {
+			if tagsArr, ok := tagsRaw.([]any); ok {
+				for _, t := range tagsArr {
+					if tagStr, ok := t.(string); ok {
+						tags = append(tags, tagStr)
+					}
+				}
+			}
+		}
+		
 		result, err := svc.CreateFeature(service.CreateFeatureInput{
 			Slug:      slug,
-			Epic:      epic,
+			Parent:    parent,
+			Design:    design,
+			Tags:      tags,
 			Summary:   summary,
 			CreatedBy: createdBy,
 		})
