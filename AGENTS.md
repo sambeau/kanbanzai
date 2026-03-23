@@ -31,7 +31,7 @@ Examples:
 
 ## Project Status
 
-**Phase 1 is complete.** Phase 2a implementation is in progress. The repository contains design documents, specifications, planning documents, research, and working implementation code.
+**Phase 1 is complete. Phase 2a is complete.** The repository contains design documents, specifications, planning documents, research, and working implementation code. All Phase 2a acceptance criteria are met, all audit bugs (B1–B8) are fixed, and all tests pass with race detector enabled.
 
 The binding contracts for implementation are `work/spec/phase-1-specification.md` (Phase 1) and `work/spec/phase-2-specification.md` (Phase 2). The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
 
@@ -59,6 +59,7 @@ kanbanzai/
 │   ├── cache/             ← local derived SQLite cache
 │   ├── config/            ← project configuration and prefix registry (Phase 2a)
 │   ├── core/              ← instance paths and root utilities
+│   ├── docint/            ← document intelligence (structural parsing, classification, graph)
 │   ├── document/          ← Phase 1 document store, templates, validation
 │   ├── fsutil/            ← filesystem utilities (atomic write)
 │   ├── id/                ← canonical ID allocation and display formatting
@@ -82,6 +83,7 @@ kanbanzai/
     │   ├── documents/     ← document metadata records (Phase 2a)
     │   └── ...            ← other entity type directories
     ├── docs/              ← Phase 1 managed documents
+    ├── index/             ← document intelligence index (structural, graph, concepts)
     └── cache/             ← derived local cache (not committed)
 ```
 
@@ -221,19 +223,21 @@ Do not let document changes accumulate uncommitted across long sessions.
 - **Spec is intent** — if code conflicts with the specification, surface the conflict to the human.
 - Do not silently resolve spec-vs-code conflicts in either direction without human input.
 
-## Phase 1 Scope Guard
+## Scope Guard
 
-Phase 1 is the workflow kernel. Build only what the spec requires. Do not build:
+Phase 1 (workflow kernel) and Phase 2a (entity model evolution, document intelligence, migration) are complete. Current work should focus on Phase 2b or later scope as directed by the human.
 
-- Orchestration or agent delegation
-- Context packing, context profiles, or knowledge management (Phase 2)
+Do not build beyond the current phase without explicit direction:
+
+- Orchestration or agent delegation (Phase 2b+)
+- Context packing, context profiles, or knowledge management (Phase 2b+)
 - Incident or RCA entities
 - GitHub automation or webhook integration
 - Semantic search or embedding-based retrieval
 - Worktree automation
 - Broad self-hosting automation
 
-If you think something outside this scope is needed, stop and ask. Do not add it speculatively.
+If you think something outside current scope is needed, stop and ask. Do not add it speculatively.
 
 The implementation plan (`work/plan/phase-1-implementation-plan.md` §9) defines additional constraints: no silent scope expansion, no conflation of product and project state, no reliance on future orchestration, no destructive workflows by default.
 

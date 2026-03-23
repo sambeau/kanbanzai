@@ -214,12 +214,10 @@ This project is not fully finished yet.
 
 Some important caveats:
 
-- the current implementation covers Phase 1 and partial Phase 2a, not the full long-term vision
-- Phase 2a document intelligence (structural analysis, classification, document graph) is not yet implemented
-- document-driven Feature lifecycle transitions (approval auto-advancing Feature status) are not yet wired up
-- the Epic → Plan migration command has not been implemented yet
+- the current implementation covers Phase 1 and Phase 2a, not the full long-term vision
 - broader multi-agent orchestration is not the focus yet
 - the repository still contains design and planning material alongside implementation
+- CLI support for Phase 2a entity types has not yet been added
 
 If you are trying it today, treat it as an evolving workflow kernel rather than a polished end-user product. See `work/plan/phase-2a-progress.md` for detailed status.
 
@@ -231,7 +229,7 @@ This section is for contributors and technically curious readers.
 
 ### Current project status
 
-The repository has moved beyond planning-only work. The Phase 1 implementation kernel is complete and functioning. Phase 2a core foundation is implemented and production-ready, with document intelligence and concurrency features remaining.
+The repository has moved beyond planning-only work. The Phase 1 implementation kernel is complete and functioning. Phase 2a implementation is complete — all acceptance criteria are met, all audit bugs are fixed, and all tests pass with race detector enabled.
 
 Broadly, the project now includes:
 
@@ -254,28 +252,26 @@ Phase 1 implementation covers:
 - CLI parity for core document operations
 - slug validation, ID-format validation
 
-Phase 2a implementation (partial, core complete) adds:
+Phase 2a implementation adds:
 
-**Completed and production-ready:**
 - Plan entity type replacing Epic, with prefix-based IDs (P1-basic-ui format)
 - prefix registry in `.kbz/config.yaml` with validation and retirement support
 - document metadata records with SHA-256 content hash tracking and drift detection
-- Feature model updates (parent, design, spec, dev_plan, tags fields)
+- Feature model updates (parent, design, spec, dev_plan, tags fields) at all layers
 - Phase 2 Feature lifecycle states (proposed→designing→specifying→dev-planning→developing→done)
-- Plan and document record MCP tools (5 plan tools, 8 document tools)
+- document-driven Feature lifecycle transitions (document approval/supersession auto-transitions Features)
+- document intelligence Layers 1–4 (structural parsing, pattern extraction, AI classification, document graph)
+- optimistic locking for concurrent writes with end-to-end FileHash propagation
+- Epic→Plan migration command (idempotent, with feature field renames)
+- rich queries: date range, cross-entity, tag listing across types, `list_entities_filtered`
+- Plan and document record MCP tools
 - configuration MCP tools for prefix registry management
-- deterministic YAML serialization for Plan and DocumentRecord
+- deterministic YAML serialization for all entity types and index files
 - comprehensive lifecycle validation with backward transitions
 - tags on all entity types with filtering support
+- extended health checks for documents, plan prefixes, and feature parent references
 
-**Remaining Phase 2a work:**
-- document-driven Feature lifecycle transitions (document approval/supersession auto-transitions Features)
-- document intelligence Layers 1-4 (structural parsing, pattern extraction, AI classification, graph)
-- optimistic locking for concurrent writes
-- migration command (Epic→Plan conversion)
-- extended rich queries (date range, cross-entity, tag listing across types)
-
-Test coverage: 93.3% (config), 81.9% (validation), 62.5% (service). All implemented features are well-tested and idiomatic Go.
+All tests pass with race detector enabled.
 
 ### Repository structure
 
@@ -299,10 +295,14 @@ Key directories:
   - entity and document record service logic
 - `internal/document/`
   - Phase 1 document store, lifecycle logic, templates, validation
+- `internal/docint/`
+  - document intelligence: structural parsing, pattern extraction, classification, document graph
 - `internal/storage/`
   - canonical YAML entity storage and document record storage
 - `internal/config/`
   - project configuration and prefix registry
+- `internal/core/`
+  - instance paths and root utilities
 - `internal/validate/`
   - entity and health validation, lifecycle state machines
 - `internal/mcp/`
@@ -313,6 +313,10 @@ Key directories:
   - local derived cache
 - `internal/id/`
   - canonical ID allocation and validation
+- `internal/fsutil/`
+  - filesystem utilities (atomic write)
+- `internal/testutil/`
+  - shared test helpers
 - `work/`
   - design, spec, planning, bootstrap, and research documents
 
@@ -429,8 +433,11 @@ Current CLI support includes (Phase 1 entities):
 The MCP layer exposes Phase 1 tool operations plus Phase 2a operations:
 
 - Plan tools: `create_plan`, `get_plan`, `list_plans`, `update_plan_status`, `update_plan`
-- Document record tools: `doc_record_submit`, `doc_record_approve`, `doc_record_supersede`, `doc_record_get`, `doc_record_get_content`, `doc_record_list`, `doc_record_list_pending`, `doc_record_validate`
-- Config tools: `get_project_config`, `get_prefix_registry`, `add_prefix`, `retire_prefix`
+- Document record tools: `doc_record_submit`, `doc_record_approve`, `doc_record_supersede`
+- Config tools: `get_project_config`, `get_prefix_registry`, `add_prefix`
+- Document intelligence tools: `doc_outline`, `doc_concepts`, `doc_classify`
+- Query tools: `list_tags`, `list_by_tag`, `list_entities_filtered`, `query_plan_tasks`, `doc_supersession_chain`
+- Migration tools: `migrate_phase2`
 
 CLI support for Phase 2a entity types has not yet been added.
 
@@ -506,4 +513,4 @@ Kanbanzai is trying to become a practical workflow kernel for human-AI software 
 - structured and enforceable for machines
 - Git-native for visibility and control
 
-The codebase now demonstrates the core entity model, document management with integrity tracking, and a prefix-based Plan system. Phase 2a work continues on document intelligence, migration, and lifecycle integration. See `work/plan/phase-2a-progress.md` for detailed status.
+The codebase now demonstrates the core entity model, document management with integrity tracking, document intelligence, a prefix-based Plan system, and end-to-end lifecycle integration. Phase 2a is complete. See `work/plan/phase-2a-progress.md` for detailed status.

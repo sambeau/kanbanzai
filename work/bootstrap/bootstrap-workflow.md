@@ -38,7 +38,7 @@ Bootstrap-workflow tracks the same five entity types as kbz-workflow, but withou
 
 | Entity | How we track it today |
 |---|---|
-| **Epics** | Described in planning documents (`work/plan/`) |
+| **Plans** | Described in planning documents (`work/plan/`) |
 | **Features** | Described in planning documents and the implementation plan |
 | **Tasks** | Described in the implementation plan's work breakdown |
 | **Bugs** | Filed as issues or tracked in planning documents |
@@ -78,16 +78,21 @@ These policies describe human and agent behaviour, not tool automation. Follow t
 - **"Use the workflow system for canonical changes"** — the intent (don't bypass process) applies. The mechanism (MCP operations) doesn't exist yet. During bootstrap, canonical changes go through reviewed commits.
 - **"Preserve traceability"** — use best-effort references to decision IDs, document sections, and descriptive labels. Formal entity IDs don't exist yet.
 
-### Deferred until the tool exists
+### Now available via the tool
 
-These depend on kbz tooling and are not part of bootstrap-workflow:
+These features have been implemented in Phase 1 and Phase 2a. They can be used during bootstrap-workflow through the MCP server or CLI, though manual alternatives remain acceptable:
 
-- MCP operations for creating/updating entities
-- Automated lifecycle state machine enforcement
-- YAML state files under `.kbz/state/`
-- Automated health checks and validation
-- ID allocation via `id_allocate`
-- Document scaffolding via `doc_scaffold`
+- MCP operations for creating/updating entities (Phase 1 + Phase 2a)
+- Automated lifecycle state machine enforcement (Phase 1)
+- YAML state files under `.kbz/state/` (Phase 1)
+- Automated health checks and validation (Phase 1 + Phase 2a)
+- ID allocation via `id_allocate` (Phase 1)
+- Document scaffolding via `doc_scaffold` (Phase 1)
+
+### Still deferred
+
+These depend on tooling not yet implemented:
+
 - Merge gates tied to workflow state
 - Multi-agent orchestration and delegation
 
@@ -158,7 +163,7 @@ When the kbz tool reaches sufficient maturity (per P1-DEC-015, still to be decid
 
 1. Existing design documents are ingested into the system; the system extracts and indexes decisions, requirements, and entity relationships.
 2. Existing decisions in the decision log are reconciled with the decisions extracted from design documents and migrated to canonical Decision records.
-3. Epics, features, and tasks described in planning documents are created as canonical records.
+3. Plans, features, and tasks described in planning documents are created as canonical records. (The Epic→Plan migration tool is available via `migrate_phase2`.)
 4. The bootstrap-workflow process is gradually replaced by kbz-workflow.
 5. This document is archived or removed.
 
