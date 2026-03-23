@@ -20,7 +20,7 @@ func TestEntryState(t *testing.T) {
 		{
 			name:      "feature",
 			kind:      EntityFeature,
-			wantState: "draft",
+			wantState: "proposed",
 			wantOK:    true,
 		},
 		{
@@ -73,10 +73,14 @@ func TestIsTerminalState(t *testing.T) {
 		state string
 		want  bool
 	}{
+		{name: "plan done", kind: EntityPlan, state: "done", want: false},
+		{name: "plan superseded", kind: EntityPlan, state: "superseded", want: true},
+		{name: "plan cancelled", kind: EntityPlan, state: "cancelled", want: true},
 		{name: "epic done", kind: EntityEpic, state: "done", want: true},
 		{name: "epic active", kind: EntityEpic, state: "active", want: false},
-		{name: "feature done", kind: EntityFeature, state: "done", want: true},
+		{name: "feature done", kind: EntityFeature, state: "done", want: false},
 		{name: "feature superseded", kind: EntityFeature, state: "superseded", want: true},
+		{name: "feature cancelled", kind: EntityFeature, state: "cancelled", want: true},
 		{name: "feature review", kind: EntityFeature, state: "review", want: false},
 		{name: "task done", kind: EntityTask, state: "done", want: true},
 		{name: "task active", kind: EntityTask, state: "active", want: false},
@@ -146,6 +150,20 @@ func TestCanTransition(t *testing.T) {
 		want bool
 	}{
 		{
+			name: "plan done to superseded",
+			kind: EntityPlan,
+			from: "done",
+			to:   "superseded",
+			want: true,
+		},
+		{
+			name: "plan done to cancelled",
+			kind: EntityPlan,
+			from: "done",
+			to:   "cancelled",
+			want: true,
+		},
+		{
 			name: "epic proposed to approved",
 			kind: EntityEpic,
 			from: "proposed",
@@ -172,6 +190,20 @@ func TestCanTransition(t *testing.T) {
 			from: "needs-rework",
 			to:   "review",
 			want: false,
+		},
+		{
+			name: "feature done to superseded",
+			kind: EntityFeature,
+			from: "done",
+			to:   "superseded",
+			want: true,
+		},
+		{
+			name: "feature done to cancelled",
+			kind: EntityFeature,
+			from: "done",
+			to:   "cancelled",
+			want: true,
 		},
 		{
 			name: "task blocked to active",

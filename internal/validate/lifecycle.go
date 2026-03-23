@@ -20,7 +20,7 @@ const (
 var entryStates = map[EntityKind]string{
 	EntityPlan:     string(model.PlanStatusProposed),
 	EntityEpic:     string(model.EpicStatusProposed),
-	EntityFeature:  string(model.FeatureStatusDraft), // Phase 1 entry state for backward compatibility
+	EntityFeature:  phase2FeatureEntryState, // Phase 2 entry state (document-driven lifecycle)
 	EntityTask:     string(model.TaskStatusQueued),
 	EntityBug:      string(model.BugStatusReported),
 	EntityDecision: string(model.DecisionStatusProposed),
@@ -31,7 +31,6 @@ const phase2FeatureEntryState = "proposed"
 
 var terminalStates = map[EntityKind]map[string]struct{}{
 	EntityPlan: {
-		string(model.PlanStatusDone):       {},
 		string(model.PlanStatusSuperseded): {},
 		string(model.PlanStatusCancelled):  {},
 	},
@@ -39,7 +38,6 @@ var terminalStates = map[EntityKind]map[string]struct{}{
 		string(model.EpicStatusDone): {},
 	},
 	EntityFeature: {
-		string(model.FeatureStatusDone):       {},
 		string(model.FeatureStatusSuperseded): {},
 		string(model.FeatureStatusCancelled):  {},
 	},
@@ -73,6 +71,10 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 		},
 		string(model.PlanStatusActive): {
 			string(model.PlanStatusDone):       {},
+			string(model.PlanStatusSuperseded): {},
+			string(model.PlanStatusCancelled):  {},
+		},
+		string(model.PlanStatusDone): {
 			string(model.PlanStatusSuperseded): {},
 			string(model.PlanStatusCancelled):  {},
 		},
@@ -156,6 +158,7 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 		// Shared terminal states
 		string(model.FeatureStatusDone): {
 			string(model.FeatureStatusSuperseded): {},
+			string(model.FeatureStatusCancelled):  {},
 		},
 	},
 	EntityTask: {
