@@ -436,6 +436,16 @@ func (s *IntelligenceService) AnalyzeGaps(featureID string, docSvc *DocumentServ
 	return gaps, nil
 }
 
+// GetDocumentIndex returns the full document index for a given document ID.
+// This is used by doc_extraction_guide to access sections, entity refs, and classifications.
+func (s *IntelligenceService) GetDocumentIndex(docID string) (*docint.DocumentIndex, error) {
+	index, err := s.indexStore.LoadDocumentIndex(docID)
+	if err != nil {
+		return nil, fmt.Errorf("load document index: %w", err)
+	}
+	return index, nil
+}
+
 // GetImpact finds all graph edges pointing to a given section ID.
 func (s *IntelligenceService) GetImpact(sectionID string) ([]docint.GraphEdge, error) {
 	graph, err := s.indexStore.LoadGraph()

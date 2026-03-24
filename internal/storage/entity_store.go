@@ -335,6 +335,29 @@ func fieldOrderForEntityType(entityType string) []string {
 			"created_by",
 			"updated",
 		}
+	case string(model.EntityKindKnowledgeEntry):
+		return []string{
+			"id",
+			"tier",
+			"topic",
+			"scope",
+			"content",
+			"learned_from",
+			"status",
+			"use_count",
+			"miss_count",
+			"confidence",
+			"last_used",
+			"ttl_days",
+			"promoted_from",
+			"merged_from",
+			"deprecated_reason",
+			"git_anchors",
+			"tags",
+			"created",
+			"created_by",
+			"updated",
+		}
 	default:
 		return nil
 	}
