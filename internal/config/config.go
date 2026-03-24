@@ -30,12 +30,25 @@ type PrefixEntry struct {
 	Retired bool `yaml:"retired,omitempty"`
 }
 
+// ImportTypeMapping maps a path glob pattern to a document type.
+type ImportTypeMapping struct {
+	Glob string `yaml:"glob"`
+	Type string `yaml:"type"`
+}
+
+// ImportConfig holds configuration for the batch document import feature.
+type ImportConfig struct {
+	TypeMappings []ImportTypeMapping `yaml:"type_mappings,omitempty"`
+}
+
 // Config is the project configuration structure stored in .kbz/config.yaml.
 type Config struct {
 	// Version is the configuration schema version.
 	Version string `yaml:"version"`
 	// Prefixes is the registry of Plan ID prefixes.
 	Prefixes []PrefixEntry `yaml:"prefixes"`
+	// Import holds configuration for batch document import.
+	Import ImportConfig `yaml:"import,omitempty"`
 }
 
 // DefaultConfig returns a new Config with sensible defaults.
@@ -46,6 +59,19 @@ func DefaultConfig() Config {
 		Prefixes: []PrefixEntry{
 			{Prefix: "P", Name: "Plan"},
 		},
+		Import: ImportConfig{
+			TypeMappings: defaultImportTypeMappings(),
+		},
+	}
+}
+
+// defaultImportTypeMappings returns the default path-to-document-type mappings.
+func defaultImportTypeMappings() []ImportTypeMapping {
+	return []ImportTypeMapping{
+		{Glob: "*/design/*", Type: "design"},
+		{Glob: "*/spec/*", Type: "specification"},
+		{Glob: "*/plan/*", Type: "report"},
+		{Glob: "*/research/*", Type: "research"},
 	}
 }
 
