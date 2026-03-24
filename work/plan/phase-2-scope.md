@@ -243,23 +243,23 @@ All Phase 2a design questions have been resolved. Decisions are recorded below.
 
 ## 9. Open Design Questions for Phase 2b
 
-These do not need to be resolved for Phase 2a but should be considered to avoid precluding them.
+These do not need to be resolved for Phase 2a but should be considered to avoid precluding them. All four questions have now been resolved.
 
 ### 9.1 Knowledge entry schema
 
-What fields does a KnowledgeEntry have? The machine-context design defines a model but it needs to be formalised as an entity schema.
+**Resolved (partially).** The machine-context design (§13.1) defines a detailed draft schema. The scope decision (P2-DEC-001) confirms which fields are functional in Phase 2b vs informational-only. Formalising the schema as a spec-grade entity definition (exact required/optional fields, canonical field order, ID format) is a remaining task for the Phase 2b specification.
 
 ### 9.2 Context profile inheritance
 
-How are inheritance conflicts resolved? The machine-context design (§6.6) says "more specific profiles override more general ones" but the exact merge semantics need definition.
+**Resolved.** Leaf-level replace semantics, following the CSS cascade model. Child profiles completely replace parent values at each key — no deep merge, no list concatenation. If a child wants the parent's entries plus its own, it includes them explicitly. See P2-DEC-002.
 
 ### 9.3 Knowledge lifecycle boundaries
 
-How much of the knowledge lifecycle ships in Phase 2b? The full model (contribution → confirmation → staleness → retirement, with Wilson scoring, TTL pruning, promotion, and post-merge compaction) is sophisticated. A minimum viable subset may be appropriate for initial delivery.
+**Resolved.** Phase 2b ships a minimum viable subset: contribute/retrieve, deduplication on write, status lifecycle (contributed/confirmed/disputed/stale/retired), Wilson confidence scoring, usage reporting, and tier-dependent confidence filtering. Git anchoring, TTL-based pruning, automatic promotion triggers, and post-merge compaction are deferred to Phase 3. See P2-DEC-001.
 
 ### 9.4 Bootstrap story for existing projects
 
-When adopting Kanbanzai on a project with existing documents, how does the system bootstrap? Batch classification by a dedicated agent, or incremental classification as documents are touched? This affects the Phase 2b MVP significantly.
+**Resolved.** Phase 2b includes a batch document import operation (`kbz import` / `batch_import_documents`) that submits existing files as document records with Layers 1–2 analysis. Classification remains incremental via `doc_pending` + `doc_classify`. Knowledge extraction from existing code is deferred to Phase 3. See P2-DEC-003. Additionally, `created_by` is auto-resolved from git config with local override to avoid placeholder attribution during bulk import. See P2-DEC-004.
 
 ---
 

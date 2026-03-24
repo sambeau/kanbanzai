@@ -1111,10 +1111,12 @@ Primary key: `(entity_type, entity_id, tag)`. Indexes: `tag`, `(entity_type, tag
 
 ### 23.2 Phase 2b
 
-1. Exact schema for KnowledgeEntry records
-2. Context profile inheritance conflict resolution semantics
-3. Minimum viable subset of the knowledge lifecycle for initial delivery
-4. Bootstrap story for existing projects with documents that predate adoption
+All Phase 2b design questions have been resolved. Decisions are recorded in `work/plan/phase-2-decision-log.md`.
+
+1. **Exact schema for KnowledgeEntry records** — **Resolved (partially).** The machine-context design (§13.1) defines a detailed draft schema. P2-DEC-001 confirms which fields are functional in Phase 2b vs informational-only. Formalising the schema as a spec-grade entity definition is a remaining task for Phase 2b specification work.
+2. **Context profile inheritance conflict resolution semantics** — **Resolved.** Leaf-level replace, following the CSS cascade model. No deep merge. See P2-DEC-002.
+3. **Minimum viable subset of the knowledge lifecycle for initial delivery** — **Resolved.** Phase 2b ships contribute/retrieve, deduplication on write, status lifecycle, Wilson confidence scoring, usage reporting, and tier-dependent filtering. Git anchoring, TTL pruning, promotion triggers, and post-merge compaction deferred to Phase 3. See P2-DEC-001.
+4. **Bootstrap story for existing projects with documents that predate adoption** — **Resolved.** Batch document import via `kbz import` / `batch_import_documents` with incremental classification. `created_by` auto-resolved from git config with local override. See P2-DEC-003, P2-DEC-004.
 
 ---
 
