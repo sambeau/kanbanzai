@@ -22,7 +22,7 @@ func TestRun_NoArgs_PrintsUsage(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "Phase 1 workflow kernel CLI.") {
+	if !strings.Contains(stdout, "Phase 2b workflow kernel CLI.") {
 		t.Fatalf("stdout missing usage header:\n%s", stdout)
 	}
 	if !strings.Contains(stdout, "create     Create a Phase 1 entity") {

@@ -7,9 +7,11 @@ import (
 	"strings"
 
 	"path/filepath"
+	"strconv"
 
 	"kanbanzai/internal/cache"
 	"kanbanzai/internal/config"
+	kbzctx "kanbanzai/internal/context"
 	"kanbanzai/internal/core"
 	"kanbanzai/internal/document"
 	"kanbanzai/internal/id"
@@ -121,6 +123,12 @@ func run(args []string, deps dependencies) error {
 		return runCache(args[1:], deps)
 	case "import":
 		return runImport(args[1:], deps)
+	case "knowledge":
+		return runKnowledge(args[1:], deps)
+	case "profile":
+		return runProfile(args[1:], deps)
+	case "context":
+		return runContext(args[1:], deps)
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
 	}
@@ -723,7 +731,7 @@ func printUsage(w io.Writer) {
 
 const usageText = `kanbanzai
 
-Phase 1 workflow kernel CLI.
+Phase 2b workflow kernel CLI.
 
 Usage:
   kanbanzai <command>
@@ -741,10 +749,12 @@ Commands:
   validate   Validate a candidate entity without persisting it
   cache      Manage the local derived cache
   import     Batch import document records from a directory
+  knowledge  Manage knowledge entries
+  profile    Manage context profiles
+  context    Assemble agent context packets
 
 Notes:
-  - Phase 1 is MCP-first; the CLI is a secondary, strict interface.
-  - This entrypoint is intentionally minimal while the kernel is being built.
+  - Phase 2b is MCP-first; the CLI is a secondary, strict interface.
 `
 
 const createUsageText = `kanbanzai create <entity> [flags]
@@ -900,10 +910,316 @@ Cannot change id (immutable) or status (use update status).
 const cacheUsageText = `kanbanzai cache <subcommand>
 
 Subcommands:
-  rebuild   Rebuild the local derived cache from canonical entity files
+  rebuild    Rebuild the local derived cache from canonical entity files
+`
 
-The cache accelerates queries but is not required for correctness.
-It is stored in .kbz/cache/ and is not committed to Git.
+// runKnowledge handles the `kbz knowledge` subcommands.
+func runKnowledge(args []string, deps dependencies) error {
+	if len(args) == 0 {
+		return fmt.Errorf("missing knowledge subcommand\n\n%s", knowledgeUsageText)
+	}
+
+	switch args[0] {
+	case "list":
+		return runKnowledgeList(args[1:], deps)
+	case "get":
+		return runKnowledgeGet(args[1:], deps)
+	default:
+		return fmt.Errorf("unknown knowledge subcommand %q\n\n%s", args[0], knowledgeUsageText)
+	}
+}
+
+func runKnowledgeList(args []string, deps dependencies) error {
+	flags, err := parseFlags(args)
+	if err != nil {
+		return err
+	}
+
+	svc := service.NewKnowledgeService("")
+
+	filters := service.KnowledgeFilters{}
+	if t := flags["tier"]; t != "" {
+		n, err := strconv.Atoi(t)
+		if err != nil {
+			return fmt.Errorf("--tier must be an integer: %w", err)
+		}
+		filters.Tier = n
+	}
+	filters.Scope = flags["scope"]
+	filters.Status = flags["status"]
+
+	records, err := svc.List(filters)
+	if err != nil {
+		return fmt.Errorf("list knowledge entries: %w", err)
+	}
+
+	if len(records) == 0 {
+		fmt.Fprintln(deps.stdout, "no knowledge entries found")
+		return nil
+	}
+
+	for _, r := range records {
+		id := toString2(r.Fields["id"])
+		topic := toString2(r.Fields["topic"])
+		status := toString2(r.Fields["status"])
+		tier := toAny(r.Fields["tier"])
+		scope := toString2(r.Fields["scope"])
+		fmt.Fprintf(deps.stdout, "%s  tier:%v  %s  scope:%s  status:%s\n", id, tier, topic, scope, status)
+	}
+	return nil
+}
+
+func runKnowledgeGet(args []string, deps dependencies) error {
+	if len(args) == 0 {
+		return fmt.Errorf("knowledge get requires an ID")
+	}
+	entryID := args[0]
+
+	svc := service.NewKnowledgeService("")
+	record, err := svc.Get(entryID)
+	if err != nil {
+		return fmt.Errorf("get knowledge entry: %w", err)
+	}
+
+	fmt.Fprintf(deps.stdout, "id:          %s\n", toString2(record.Fields["id"]))
+	fmt.Fprintf(deps.stdout, "tier:        %v\n", toAny(record.Fields["tier"]))
+	fmt.Fprintf(deps.stdout, "topic:       %s\n", toString2(record.Fields["topic"]))
+	fmt.Fprintf(deps.stdout, "scope:       %s\n", toString2(record.Fields["scope"]))
+	fmt.Fprintf(deps.stdout, "status:      %s\n", toString2(record.Fields["status"]))
+	fmt.Fprintf(deps.stdout, "confidence:  %.4f\n", toFloat2(record.Fields["confidence"]))
+	fmt.Fprintf(deps.stdout, "use_count:   %v\n", toAny(record.Fields["use_count"]))
+	fmt.Fprintf(deps.stdout, "miss_count:  %v\n", toAny(record.Fields["miss_count"]))
+	fmt.Fprintf(deps.stdout, "content:\n  %s\n", toString2(record.Fields["content"]))
+	return nil
+}
+
+// runProfile handles the `kbz profile` subcommands.
+func runProfile(args []string, deps dependencies) error {
+	if len(args) == 0 {
+		return fmt.Errorf("missing profile subcommand\n\n%s", profileUsageText)
+	}
+
+	switch args[0] {
+	case "list":
+		return runProfileList(deps)
+	case "get":
+		return runProfileGet(args[1:], deps)
+	default:
+		return fmt.Errorf("unknown profile subcommand %q\n\n%s", args[0], profileUsageText)
+	}
+}
+
+func runProfileList(deps dependencies) error {
+	profileRoot := filepath.Join(core.InstanceRootDir, "context", "roles")
+	store := kbzctx.NewProfileStore(profileRoot)
+
+	profiles, err := store.LoadAll()
+	if err != nil {
+		return fmt.Errorf("list profiles: %w", err)
+	}
+
+	if len(profiles) == 0 {
+		fmt.Fprintln(deps.stdout, "no profiles found in .kbz/context/roles/")
+		return nil
+	}
+
+	for _, p := range profiles {
+		if p.Inherits != "" {
+			fmt.Fprintf(deps.stdout, "%s (inherits: %s) — %s\n", p.ID, p.Inherits, p.Description)
+		} else {
+			fmt.Fprintf(deps.stdout, "%s — %s\n", p.ID, p.Description)
+		}
+	}
+	return nil
+}
+
+func runProfileGet(args []string, deps dependencies) error {
+	flags, err := parseFlags(args)
+	if err != nil {
+		return err
+	}
+
+	profileID := flags["id"]
+	if profileID == "" && len(args) > 0 && !strings.HasPrefix(args[0], "--") {
+		profileID = args[0]
+	}
+	if profileID == "" {
+		return fmt.Errorf("profile get requires a profile ID (--id <id> or positional)")
+	}
+
+	profileRoot := filepath.Join(core.InstanceRootDir, "context", "roles")
+	store := kbzctx.NewProfileStore(profileRoot)
+
+	raw := flags["raw"] == "true"
+	if raw {
+		p, err := store.Load(profileID)
+		if err != nil {
+			return fmt.Errorf("get profile: %w", err)
+		}
+		fmt.Fprintf(deps.stdout, "id:          %s\n", p.ID)
+		if p.Inherits != "" {
+			fmt.Fprintf(deps.stdout, "inherits:    %s\n", p.Inherits)
+		}
+		fmt.Fprintf(deps.stdout, "description: %s\n", p.Description)
+		if len(p.Packages) > 0 {
+			fmt.Fprintf(deps.stdout, "packages:    %s\n", strings.Join(p.Packages, ", "))
+		}
+		if len(p.Conventions) > 0 {
+			fmt.Fprintf(deps.stdout, "conventions:\n")
+			for _, c := range p.Conventions {
+				fmt.Fprintf(deps.stdout, "  - %s\n", c)
+			}
+		}
+		return nil
+	}
+
+	resolved, err := kbzctx.ResolveProfile(store, profileID)
+	if err != nil {
+		return fmt.Errorf("resolve profile: %w", err)
+	}
+	fmt.Fprintf(deps.stdout, "id:          %s (resolved)\n", resolved.ID)
+	fmt.Fprintf(deps.stdout, "description: %s\n", resolved.Description)
+	if len(resolved.Packages) > 0 {
+		fmt.Fprintf(deps.stdout, "packages:    %s\n", strings.Join(resolved.Packages, ", "))
+	}
+	if len(resolved.Conventions) > 0 {
+		fmt.Fprintf(deps.stdout, "conventions:\n")
+		for _, c := range resolved.Conventions {
+			fmt.Fprintf(deps.stdout, "  - %s\n", c)
+		}
+	}
+	if resolved.Architecture != nil {
+		fmt.Fprintf(deps.stdout, "architecture:\n")
+		if resolved.Architecture.Summary != "" {
+			fmt.Fprintf(deps.stdout, "  summary: %s\n", resolved.Architecture.Summary)
+		}
+		for _, ki := range resolved.Architecture.KeyInterfaces {
+			fmt.Fprintf(deps.stdout, "  - %s\n", ki)
+		}
+	}
+	return nil
+}
+
+// runContext handles the `kbz context` subcommands.
+func runContext(args []string, deps dependencies) error {
+	if len(args) == 0 {
+		return fmt.Errorf("missing context subcommand\n\n%s", contextUsageText)
+	}
+
+	switch args[0] {
+	case "assemble":
+		return runContextAssemble(args[1:], deps)
+	default:
+		return fmt.Errorf("unknown context subcommand %q\n\n%s", args[0], contextUsageText)
+	}
+}
+
+func runContextAssemble(args []string, deps dependencies) error {
+	flags, err := parseFlags(args)
+	if err != nil {
+		return err
+	}
+
+	role := flags["role"]
+	if role == "" {
+		return fmt.Errorf("--role is required\n\n%s", contextUsageText)
+	}
+
+	taskID := flags["task"]
+	maxBytes := 30720
+	if mb := flags["max-bytes"]; mb != "" {
+		n, err := strconv.Atoi(mb)
+		if err != nil {
+			return fmt.Errorf("--max-bytes must be an integer: %w", err)
+		}
+		maxBytes = n
+	}
+
+	profileRoot := filepath.Join(core.InstanceRootDir, "context", "roles")
+	profileStore := kbzctx.NewProfileStore(profileRoot)
+	knowledgeSvc := service.NewKnowledgeService("")
+	entitySvc := service.NewEntityService("")
+	indexRoot := filepath.Join(core.InstanceRootDir, "index")
+	intelligenceSvc := service.NewIntelligenceService(indexRoot, ".")
+
+	result, err := kbzctx.Assemble(kbzctx.AssemblyInput{
+		Role:     role,
+		TaskID:   taskID,
+		MaxBytes: maxBytes,
+	}, profileStore, knowledgeSvc, entitySvc, intelligenceSvc)
+	if err != nil {
+		return fmt.Errorf("context assemble: %w", err)
+	}
+
+	fmt.Fprintf(deps.stdout, "role: %s\n", result.Role)
+	if result.TaskID != "" {
+		fmt.Fprintf(deps.stdout, "task: %s\n", result.TaskID)
+	}
+	fmt.Fprintf(deps.stdout, "items: %d  bytes: %d", len(result.Items), result.ByteCount)
+	if result.Trimmed > 0 {
+		fmt.Fprintf(deps.stdout, "  trimmed: %d", result.Trimmed)
+	}
+	fmt.Fprintln(deps.stdout)
+	fmt.Fprintln(deps.stdout)
+	for _, item := range result.Items {
+		fmt.Fprintf(deps.stdout, "--- [%s] ---\n%s\n\n", item.Source, item.Content)
+	}
+	return nil
+}
+
+// toString2 is a local helper (avoids shadowing the validate package's toString).
+func toString2(v any) string {
+	if v == nil {
+		return ""
+	}
+	s, _ := v.(string)
+	return s
+}
+
+// toFloat2 extracts a float64 from an any value.
+func toFloat2(v any) float64 {
+	if v == nil {
+		return 0
+	}
+	f, _ := v.(float64)
+	return f
+}
+
+// toAny formats an any value for display.
+func toAny(v any) any {
+	if v == nil {
+		return ""
+	}
+	return v
+}
+
+const knowledgeUsageText = `kanbanzai knowledge <subcommand> [flags]
+
+Subcommands:
+  list    List knowledge entries
+    [--tier <2|3>]
+    [--scope <name>]
+    [--status <status>]
+
+  get <id>    Get a knowledge entry by ID
+`
+
+const profileUsageText = `kanbanzai profile <subcommand> [flags]
+
+Subcommands:
+  list    List available context profiles
+
+  get <id> [--raw]    Get a context profile (resolved by default)
+    --raw    Return the raw profile without inheritance resolution
+`
+
+const contextUsageText = `kanbanzai context <subcommand> [flags]
+
+Subcommands:
+  assemble    Assemble a context packet for a role
+    --role <name>        Profile ID (required)
+    [--task <id>]        Task ID for task-specific context
+    [--max-bytes <n>]    Byte ceiling (default: 30720)
 `
 
 func runImport(args []string, deps dependencies) error {

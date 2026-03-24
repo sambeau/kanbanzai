@@ -1,0 +1,27 @@
+id: developer
+inherits: base
+description: "General development conventions for implementing Kanbanzai features"
+packages:
+  - internal/
+  - cmd/kanbanzai/
+conventions:
+  - "Maximum line length: 100 characters (soft limit)"
+  - "Use camelCase for unexported identifiers, PascalCase for exported; acronyms consistent: URL, HTTP, ID"
+  - "Package names: lowercase, single word, no underscores"
+  - "Accept interfaces, return structs; define interfaces at the consumer, not the provider"
+  - "Keep interfaces small — one or two methods is ideal; extract only when a second implementation is needed"
+  - "Do not use goroutines unless there is a demonstrated need — Phase 2b is request-response"
+  - "Run go fmt and goimports before committing"
+  - "Run go test -race ./... before committing"
+  - "Prefer the standard library when reasonable; run go mod tidy after adding dependencies"
+architecture:
+  summary: "MCP layer (internal/mcp/) is a thin adapter — parameter extraction and delegation only. All business logic lives in service layer (internal/service/) and below. Storage layer (internal/storage/) handles canonical YAML serialisation. Validate layer (internal/validate/) enforces lifecycle state machines. The knowledge package (internal/knowledge/) holds pure functions: deduplication, confidence scoring, link resolution."
+  key_interfaces:
+    - "internal/mcp/server.go — NewServer() wires all services and registers all MCP tools"
+    - "internal/storage/entity_store.go — MarshalCanonicalYAML for deterministic YAML output"
+    - "internal/storage/knowledge_store.go — KnowledgeStore for knowledge entry persistence"
+    - "internal/context/profile.go — ProfileStore for reading .kbz/context/roles/*.yaml"
+    - "internal/context/resolve.go — ResolveProfile for inheritance chain resolution"
+    - "internal/context/assemble.go — Assemble for context packet construction"
+    - "internal/knowledge/dedup.go — NormalizeTopic, JaccardSimilarity, ContentWords"
+    - "internal/knowledge/confidence.go — WilsonScore for confidence computation"

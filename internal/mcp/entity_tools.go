@@ -10,10 +10,17 @@ import (
 	"kanbanzai/internal/config"
 	"kanbanzai/internal/id"
 	"kanbanzai/internal/service"
+	"kanbanzai/internal/validate"
 )
 
+// AdditionalHealthChecker is a function that performs additional health checks
+// and returns a report to be merged into the main health check result.
+type AdditionalHealthChecker func() (*validate.HealthReport, error)
+
 // EntityTools returns all entity-related MCP tool definitions with their handlers.
-func EntityTools(svc *service.EntityService) []server.ServerTool {
+// Optional additionalCheckers are called during the health_check tool and their
+// reports are merged into the main report.
+func EntityTools(svc *service.EntityService, additionalCheckers ...AdditionalHealthChecker) []server.ServerTool {
 	return []server.ServerTool{
 		createEpicTool(svc),
 		createFeatureTool(svc),
@@ -25,7 +32,7 @@ func EntityTools(svc *service.EntityService) []server.ServerTool {
 		updateStatusTool(svc),
 		updateEntityTool(svc),
 		validateCandidateTool(svc),
-		healthCheckTool(svc),
+		healthCheckTool(svc, additionalCheckers...),
 		rebuildCacheTool(svc),
 	}
 }
@@ -448,14 +455,21 @@ func validateCandidateTool(svc *service.EntityService) server.ServerTool {
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
 
-func healthCheckTool(svc *service.EntityService) server.ServerTool {
+func healthCheckTool(svc *service.EntityService, additionalCheckers ...AdditionalHealthChecker) server.ServerTool {
 	tool := mcp.NewTool("health_check",
-		mcp.WithDescription("Run a comprehensive health check across all entities"),
+		mcp.WithDescription("Run a comprehensive health check across all entities, knowledge entries, and context profiles"),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		report, err := svc.HealthCheck()
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("health check failed", err), nil
+		}
+		for _, checker := range additionalCheckers {
+			extra, err := checker()
+			if err != nil {
+				return mcp.NewToolResultErrorFromErr("health check failed", err), nil
+			}
+			report = validate.MergeReports(report, extra)
 		}
 		return jsonResult(report)
 	}

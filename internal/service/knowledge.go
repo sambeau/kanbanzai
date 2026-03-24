@@ -168,7 +168,13 @@ func (s *KnowledgeService) Contribute(input ContributeInput) (storage.KnowledgeR
 	return record, nil, nil
 }
 
-// Get retrieves a knowledge entry by ID.
+// LoadAllRaw returns all knowledge records without filtering.
+// This is intended for health checks and administrative operations.
+func (s *KnowledgeService) LoadAllRaw() ([]storage.KnowledgeRecord, error) {
+	return s.store.LoadAll()
+}
+
+// Get returns a knowledge entry by ID.
 func (s *KnowledgeService) Get(id string) (storage.KnowledgeRecord, error) {
 	record, err := s.store.Load(id)
 	if err != nil {

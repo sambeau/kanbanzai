@@ -1,0 +1,23 @@
+id: base
+description: "Project-wide conventions for all Kanbanzai agents"
+conventions:
+  - "Error handling: wrap errors with fmt.Errorf and %w for context propagation; return errors, never panic"
+  - "Tests: table-driven with t.TempDir() for filesystem tests; test functions named TestFunctionName_Scenario"
+  - "YAML serialisation: deterministic block style, canonical field order per entity type, LF line endings, trailing newline"
+  - "Imports: use goimports for organisation; no circular imports between packages"
+  - "Exported functions must have doc comments starting with the function name"
+  - "No init() functions; no global mutable state except package-level constants"
+  - "Commit format: <type>(<object-id>): <summary> — feat, fix, docs, test, refactor, workflow, decision, chore"
+  - "Spec is law: if code contradicts the specification, surface the conflict — do not resolve silently"
+  - "No scope creep: do not build beyond the current phase without explicit direction"
+architecture:
+  summary: "Kanbanzai is a Git-native workflow system. The MCP server is the primary interface; the CLI is secondary. All business logic lives in internal packages. The binary entry point is cmd/kanbanzai/."
+  key_interfaces:
+    - "storage.EntityStore — canonical read/write for entity YAML files"
+    - "storage.KnowledgeStore — read/write for knowledge entry YAML files"
+    - "service.EntityService — entity lifecycle operations"
+    - "service.KnowledgeService — knowledge contribution, retrieval, and reporting"
+    - "service.DocumentService — document record management"
+    - "service.IntelligenceService — document intelligence (Layers 1-4)"
+    - "context.ProfileStore — context profile reading and validation"
+    - "validate.CheckHealth — project-wide health check orchestration"
