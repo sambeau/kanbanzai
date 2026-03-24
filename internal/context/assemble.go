@@ -105,7 +105,7 @@ func Assemble(
 							}
 							designItems = append(designItems, AssemblyItem{
 								Source:   SourceDesign,
-								Priority: "low",
+								Priority: "normal",
 								Content:  fmt.Sprintf("=== Design: %s (%s) ===\n%s", title, match.DocumentID, string(sectionContent)),
 							})
 						}
@@ -116,56 +116,60 @@ func Assemble(
 		// If task not found, skip silently (best-effort).
 	}
 
-	// 4. Load Tier 2 knowledge (confidence >= 0.3), scoped to role or "project".
-	tier2Records, err := knowledgeSvc.List(kbzsvc.KnowledgeFilters{
-		Tier:          2,
-		MinConfidence: 0.3,
-	})
-	if err != nil {
-		return nil, fmt.Errorf("list tier-2 knowledge: %w", err)
-	}
-
+	// 4–5. Load knowledge entries (Tier 2 and Tier 3).
 	var tier2Items []AssemblyItem
-	for _, rec := range tier2Records {
-		scope, _ := rec.Fields["scope"].(string)
-		if !matchesScope(scope, input.Role) {
-			continue
-		}
-		entryID, _ := rec.Fields["id"].(string)
-		conf := assemblyFieldFloat(rec.Fields, "confidence")
-		tier2Items = append(tier2Items, AssemblyItem{
-			Source:     SourceKnowledgeT2,
-			EntryID:    entryID,
-			Priority:   "normal",
-			Content:    formatKnowledgeEntry(rec.Fields),
-			Confidence: conf,
-		})
-	}
-
-	// 5. Load Tier 3 knowledge (confidence >= 0.5), scoped to role or "project".
-	tier3Records, err := knowledgeSvc.List(kbzsvc.KnowledgeFilters{
-		Tier:          3,
-		MinConfidence: 0.5,
-	})
-	if err != nil {
-		return nil, fmt.Errorf("list tier-3 knowledge: %w", err)
-	}
-
 	var tier3Items []AssemblyItem
-	for _, rec := range tier3Records {
-		scope, _ := rec.Fields["scope"].(string)
-		if !matchesScope(scope, input.Role) {
-			continue
-		}
-		entryID, _ := rec.Fields["id"].(string)
-		conf := assemblyFieldFloat(rec.Fields, "confidence")
-		tier3Items = append(tier3Items, AssemblyItem{
-			Source:     SourceKnowledgeT3,
-			EntryID:    entryID,
-			Priority:   "low",
-			Content:    formatKnowledgeEntry(rec.Fields),
-			Confidence: conf,
+
+	if knowledgeSvc != nil {
+		// Tier 2 knowledge (confidence >= 0.3), scoped to role or "project".
+		tier2Records, err := knowledgeSvc.List(kbzsvc.KnowledgeFilters{
+			Tier:          2,
+			MinConfidence: 0.3,
 		})
+		if err != nil {
+			return nil, fmt.Errorf("list tier-2 knowledge: %w", err)
+		}
+
+		for _, rec := range tier2Records {
+			scope, _ := rec.Fields["scope"].(string)
+			if !matchesScope(scope, input.Role) {
+				continue
+			}
+			entryID, _ := rec.Fields["id"].(string)
+			conf := assemblyFieldFloat(rec.Fields, "confidence")
+			tier2Items = append(tier2Items, AssemblyItem{
+				Source:     SourceKnowledgeT2,
+				EntryID:    entryID,
+				Priority:   "normal",
+				Content:    formatKnowledgeEntry(rec.Fields),
+				Confidence: conf,
+			})
+		}
+
+		// Tier 3 knowledge (confidence >= 0.5), scoped to role or "project".
+		tier3Records, err := knowledgeSvc.List(kbzsvc.KnowledgeFilters{
+			Tier:          3,
+			MinConfidence: 0.5,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("list tier-3 knowledge: %w", err)
+		}
+
+		for _, rec := range tier3Records {
+			scope, _ := rec.Fields["scope"].(string)
+			if !matchesScope(scope, input.Role) {
+				continue
+			}
+			entryID, _ := rec.Fields["id"].(string)
+			conf := assemblyFieldFloat(rec.Fields, "confidence")
+			tier3Items = append(tier3Items, AssemblyItem{
+				Source:     SourceKnowledgeT3,
+				EntryID:    entryID,
+				Priority:   "low",
+				Content:    formatKnowledgeEntry(rec.Fields),
+				Confidence: conf,
+			})
+		}
 	}
 
 	// 6. Calculate initial byte count.

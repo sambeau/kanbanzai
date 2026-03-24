@@ -101,20 +101,20 @@ description: "Leaf profile"
 
 func TestResolveChain_cycleDetection(t *testing.T) {
 	dir := t.TempDir()
-	// a → b → a (cycle)
-	writeResolveProfile(t, dir, "a", `
-id: a
-inherits: b
-description: "Profile A"
+	// aa → bb → aa (cycle)
+	writeResolveProfile(t, dir, "aa", `
+id: aa
+inherits: bb
+description: "Profile AA"
 `)
-	writeResolveProfile(t, dir, "b", `
-id: b
-inherits: a
-description: "Profile B"
+	writeResolveProfile(t, dir, "bb", `
+id: bb
+inherits: aa
+description: "Profile BB"
 `)
 
 	store := NewProfileStore(dir)
-	_, err := ResolveChain(store, "a")
+	_, err := ResolveChain(store, "aa")
 	if err == nil {
 		t.Fatal("expected cycle error, got nil")
 	}

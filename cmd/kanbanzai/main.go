@@ -610,6 +610,25 @@ func runHealth(deps dependencies) error {
 		return err
 	}
 
+	// Phase 2b: knowledge health checks
+	stateRoot := core.StatePath()
+	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	profileRoot := filepath.Join(core.InstanceRootDir, "context", "roles")
+	profileStore := kbzctx.NewProfileStore(profileRoot)
+
+	knowledgeReport, err := runKnowledgeHealthCheck(knowledgeSvc, profileStore)
+	if err != nil {
+		return err
+	}
+	report = validate.MergeReports(report, knowledgeReport)
+
+	// Phase 2b: profile health checks
+	profileReport, err := runProfileHealthCheck(profileStore)
+	if err != nil {
+		return err
+	}
+	report = validate.MergeReports(report, profileReport)
+
 	if _, err := fmt.Fprintf(
 		deps.stdout,
 		"health check\nentities: %d\nerrors: %d\nwarnings: %d\n",
@@ -632,6 +651,44 @@ func runHealth(deps dependencies) error {
 	}
 
 	return nil
+}
+
+func runKnowledgeHealthCheck(knowledgeSvc *service.KnowledgeService, profileStore *kbzctx.ProfileStore) (*validate.HealthReport, error) {
+	loadAll := func() ([]validate.KnowledgeInfo, error) {
+		records, err := knowledgeSvc.LoadAllRaw()
+		if err != nil {
+			return nil, err
+		}
+		infos := make([]validate.KnowledgeInfo, len(records))
+		for i, r := range records {
+			infos[i] = validate.KnowledgeInfo{ID: r.ID, Fields: r.Fields}
+		}
+		return infos, nil
+	}
+	profileExists := func(id string) bool {
+		p, err := profileStore.Load(id)
+		return err == nil && p != nil
+	}
+	return validate.CheckKnowledgeHealth(loadAll, profileExists)
+}
+
+func runProfileHealthCheck(profileStore *kbzctx.ProfileStore) (*validate.HealthReport, error) {
+	loadAll := func() ([]validate.ProfileInfo, error) {
+		profiles, err := profileStore.LoadAll()
+		if err != nil {
+			return nil, err
+		}
+		infos := make([]validate.ProfileInfo, len(profiles))
+		for i, p := range profiles {
+			infos[i] = validate.ProfileInfo{ID: p.ID, Inherits: p.Inherits}
+		}
+		return infos, nil
+	}
+	resolveProfile := func(id string) error {
+		_, err := kbzctx.ResolveProfile(profileStore, id)
+		return err
+	}
+	return validate.CheckProfileHealth(loadAll, resolveProfile)
 }
 
 func runValidate(args []string, deps dependencies) error {
@@ -1236,6 +1293,7 @@ func runImport(args []string, deps dependencies) error {
 
 	defaultType := flags["type"]
 	owner := flags["owner"]
+	glob := flags["glob"]
 	createdByRaw := flags["created_by"]
 	if createdByRaw == "" {
 		createdByRaw = flags["created-by"]
@@ -1255,6 +1313,7 @@ func runImport(args []string, deps dependencies) error {
 		DefaultType: defaultType,
 		Owner:       owner,
 		CreatedBy:   createdBy,
+		Glob:        glob,
 	})
 	if err != nil {
 		return err
@@ -1285,7 +1344,8 @@ Arguments:
   <path>    Directory to scan for documents
 
 Flags:
-  --type    <type>   Default document type when no path pattern matches
-                     (design, specification, dev-plan, research, report, policy)
-  --owner   <id>     Optional parent Plan or Feature ID for imported documents
+  --type    <type>      Default document type when no path pattern matches
+                        (design, specification, dev-plan, research, report, policy)
+  --owner   <id>        Optional parent Plan or Feature ID for imported documents
+  --glob    <pattern>   Only import files matching this glob pattern (e.g. "*.md", "design-*.md")
 `

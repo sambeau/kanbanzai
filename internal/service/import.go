@@ -10,6 +10,16 @@ import (
 	"kanbanzai/internal/config"
 )
 
+// matchGlob reports whether name matches the glob pattern using filepath.Match.
+// An empty pattern matches everything.
+func matchGlob(pattern, name string) bool {
+	if pattern == "" {
+		return true
+	}
+	matched, _ := filepath.Match(pattern, name)
+	return matched
+}
+
 // BatchImportInput contains the parameters for a batch import operation.
 type BatchImportInput struct {
 	// Path is the directory to scan for documents.
@@ -20,6 +30,9 @@ type BatchImportInput struct {
 	Owner string
 	// CreatedBy is the already-resolved user identity.
 	CreatedBy string
+	// Glob is an optional filename glob pattern (e.g. "design-*.md").
+	// When non-empty, only files whose base name matches are imported.
+	Glob string
 }
 
 // BatchImportSkip records a file that was deliberately skipped during import.
@@ -87,6 +100,11 @@ func (s *BatchImportService) Import(cfg *config.Config, input BatchImportInput) 
 
 		// Only process Markdown files.
 		if !strings.HasSuffix(strings.ToLower(absPath), ".md") {
+			return nil
+		}
+
+		// Apply optional glob filter against the base filename.
+		if !matchGlob(input.Glob, filepath.Base(absPath)) {
 			return nil
 		}
 

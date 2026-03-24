@@ -25,6 +25,7 @@ func batchImportDocumentsTool(docSvc *service.DocumentService) server.ServerTool
 		mcp.WithString("default_type", mcp.Description("Fallback document type when no path pattern matches (design, specification, dev-plan, research, report, policy)")),
 		mcp.WithString("owner", mcp.Description("Optional parent Plan or Feature ID to assign as owner of imported documents")),
 		mcp.WithString("created_by", mcp.Description("Who is importing the documents. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
+		mcp.WithString("glob", mcp.Description("Optional glob pattern to filter files (e.g. '**/design/*.md'). Only files matching the pattern are imported. If empty, all .md files are imported.")),
 	)
 
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -47,6 +48,7 @@ func batchImportDocumentsTool(docSvc *service.DocumentService) server.ServerTool
 			DefaultType: request.GetString("default_type", ""),
 			Owner:       request.GetString("owner", ""),
 			CreatedBy:   createdBy,
+			Glob:        request.GetString("glob", ""),
 		})
 		if importErr != nil {
 			return mcp.NewToolResultErrorFromErr("batch import failed", importErr), nil

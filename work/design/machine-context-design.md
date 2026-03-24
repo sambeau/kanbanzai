@@ -1,6 +1,6 @@
 # Machine-to-Machine Context Design
 
-- Status: draft design
+- Status: design
 - Date: 2026-03-18
 - Purpose: define the context management model for AI agent teams in Kanbanzai
 - Related:
@@ -517,7 +517,9 @@ This is the gap Kanbanzai addresses.
 
 ## 12. MCP Operations
 
-The following operations extend the MCP interface for context management. These are Phase 2 deliverables; Phase 1 must not preclude them.
+The following operations extend the MCP interface for context management. These were Phase 2 deliverables; the core operations are now implemented in Phase 2b.
+
+Note: The Phase 2b specification refined these operation names. See `work/spec/phase-2b-specification.md` §17 for the implemented MCP tool surface.
 
 ### 12.1 Retrieval operations
 
@@ -716,19 +718,19 @@ The system should be useful at every stage:
 
 ## 15. Phasing
 
-### 15.1 Phase 1 (current)
+### 15.1 Phase 1 (complete)
 
-Phase 1 builds the entity kernel. For context management, Phase 1 must:
+Phase 1 built the entity kernel. For context management, Phase 1:
 
-- **Not preclude** any of the context operations described here
-- **Reserve namespace** in the MCP operation set for context operations
-- **Design the storage layout** to accommodate context entries alongside entities, including the `context/roles/` hierarchy and knowledge entry schema
+- **Did not preclude** any of the context operations described here
+- **Reserved namespace** in the MCP operation set for context operations
+- **Designed the storage layout** to accommodate context entries alongside entities, including the `context/roles/` hierarchy and knowledge entry schema
 
-Phase 1 does not implement context profiles, assembly, or contribution.
+Phase 1 did not implement context profiles, assembly, or contribution.
 
-### 15.2 Phase 2
+### 15.2 Phase 2 (core features implemented)
 
-Phase 2 implements retrieval and context packing (per the workflow design basis §24). This includes:
+Phase 2 implements retrieval and context packing (per the workflow design basis §24). The following core features were implemented in Phase 2b:
 
 - Context profile definition, inheritance resolution, and retrieval
 - Context assembly for tasks with byte-based budgeting and tiered retrieval
@@ -736,15 +738,24 @@ Phase 2 implements retrieval and context packing (per the workflow design basis 
 - Confidence scoring (Wilson score lower bound) and tier-dependent filtering
 - Knowledge lifecycle management (contribution → confirmation → staleness → retirement)
 - Usage reporting bundled with task completion
-- Retention policy enforcement (TTL-based pruning, promotion triggers)
-- Post-merge compaction for Tier 3 entries
 - Integration of design context and implementation context in assembled packets
-- Document intelligence backend — structural analysis, AI-assisted classification, and the document graph that provides design fragments for context assembly (see `work/design/document-intelligence-design.md` §18.2)
+- Document intelligence backend — structural analysis, AI-assisted classification, and the document graph that provides design fragments for context assembly (Phase 2a; see `work/design/document-intelligence-design.md` §18.2)
+
+The following items from the original Phase 2 design were deferred to Phase 3:
+
+- TTL-based pruning (retention policy enforcement)
+- Git anchoring for knowledge entries
+- Post-merge compaction for Tier 3 entries
+- Automatic promotion triggers
 
 ### 15.3 Phase 3 and beyond
 
 Later phases may add:
 
+- TTL-based pruning and retention policy enforcement (deferred from Phase 2)
+- Git anchoring for knowledge entries (deferred from Phase 2)
+- Post-merge compaction for Tier 3 entries (deferred from Phase 2)
+- Automatic promotion triggers (deferred from Phase 2)
 - Automatic context assembly optimisation (learning which context entries are most useful)
 - Cross-project knowledge sharing (conventions that apply to all projects by a team)
 - Orchestration-driven decomposition informed by context profiles

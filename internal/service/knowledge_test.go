@@ -516,8 +516,9 @@ func TestKnowledgeService_Flag_AutoRetireAt2(t *testing.T) {
 	if status, _ := retired.Fields["status"].(string); status != "retired" {
 		t.Errorf("Fields['status'] = %q, want 'retired' after second flag", status)
 	}
-	if reason, _ := retired.Fields["deprecated_reason"].(string); reason != "wrong twice" {
-		t.Errorf("Fields['deprecated_reason'] = %q, want 'wrong twice'", reason)
+	wantReason := "auto-retired: miss_count reached 2 (wrong twice)"
+	if reason, _ := retired.Fields["deprecated_reason"].(string); reason != wantReason {
+		t.Errorf("Fields['deprecated_reason'] = %q, want %q", reason, wantReason)
 	}
 }
 

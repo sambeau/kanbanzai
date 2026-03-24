@@ -80,7 +80,7 @@ These policies describe human and agent behaviour, not tool automation. Follow t
 
 ### Now available via the tool
 
-These features have been implemented in Phase 1 and Phase 2a. They can be used during bootstrap-workflow through the MCP server or CLI, though manual alternatives remain acceptable:
+These features have been implemented in Phase 1, Phase 2a, and Phase 2b. They can be used during bootstrap-workflow through the MCP server or CLI, though manual alternatives remain acceptable:
 
 - MCP operations for creating/updating entities (Phase 1 + Phase 2a)
 - Automated lifecycle state machine enforcement (Phase 1)
@@ -88,6 +88,12 @@ These features have been implemented in Phase 1 and Phase 2a. They can be used d
 - Automated health checks and validation (Phase 1 + Phase 2a)
 - ID allocation via `id_allocate` (Phase 1)
 - Document scaffolding via `doc_scaffold` (Phase 1)
+- Knowledge management: contribute, retrieve, and lifecycle management via MCP and CLI (Phase 2b)
+- Context profiles and inheritance resolution via MCP and CLI (Phase 2b)
+- Context assembly for agent sessions via MCP and CLI (Phase 2b)
+- Batch document import via MCP and CLI (Phase 2b)
+- Agent capabilities: link suggestions, duplicate detection, extraction guides via MCP (Phase 2b)
+- User identity auto-resolution from git config / local config (Phase 2b)
 
 ### Still deferred
 
@@ -161,10 +167,11 @@ When formal IDs exist (post-tool), switch to them.
 
 When the kbz tool reaches sufficient maturity (per P1-DEC-015, still to be decided):
 
-1. Existing design documents are ingested into the system; the system extracts and indexes decisions, requirements, and entity relationships.
+1. Existing design documents are ingested into the system; the system extracts and indexes decisions, requirements, and entity relationships. (Batch import is available via `kbz import` or the `doc_import` MCP operation.)
 2. Existing decisions in the decision log are reconciled with the decisions extracted from design documents and migrated to canonical Decision records.
 3. Plans, features, and tasks described in planning documents are created as canonical records. (The Epic→Plan migration tool is available via `migrate_phase2`.)
-4. The bootstrap-workflow process is gradually replaced by kbz-workflow.
-5. This document is archived or removed.
+4. Batch document import via `kbz import` can ingest multiple documents at once, accelerating migration of existing project materials.
+5. The bootstrap-workflow process is gradually replaced by kbz-workflow.
+6. This document is archived or removed.
 
 The goal is not a big-bang migration. It is a gradual transition where bootstrap-workflow shrinks as kbz-workflow grows, until bootstrap-workflow is no longer needed.

@@ -231,7 +231,7 @@ func TestProfileID_validation(t *testing.T) {
 		id    string
 		valid bool
 	}{
-		{"a", true},          // 1-char alphanumeric (matches second alternative)
+		{"a", false},         // 1-char rejected: minimum is 2 chars
 		{"ab", true},         // 2-char alphanumeric
 		{"abc", true},        // 3-char alphanumeric
 		{"my-role", true},    // hyphens in middle

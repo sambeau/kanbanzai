@@ -56,7 +56,7 @@ This section is written for someone who wants the practical picture first.
 
 ### What you can try today
 
-The current implementation includes a Phase 1 workflow kernel and Phase 2a entity model evolution, document management, and prefix registry. It supports a useful subset of the planned system:
+The current implementation includes a Phase 1 workflow kernel, Phase 2a entity model evolution, and Phase 2b knowledge management and context assembly. It supports a useful subset of the planned system:
 
 - creating and storing workflow entities (including the new Plan entity)
 - validating lifecycle state and references
@@ -65,7 +65,7 @@ The current implementation includes a Phase 1 workflow kernel and Phase 2a entit
 - configuring Plan ID prefixes through a prefix registry
 - exposing operations through both:
   - a CLI (Phase 1 entities)
-  - an MCP server for AI-agent use (Phase 1 and Phase 2a entities)
+  - an MCP server for AI-agent use (Phase 1, Phase 2a, and Phase 2b operations)
 
 The entity types currently implemented are:
 
@@ -75,6 +75,8 @@ The entity types currently implemented are:
 - `Task`
 - `Bug`
 - `Decision`
+
+- `KnowledgeEntry` (Phase 2b — persistent knowledge with lifecycle and confidence tracking)
 
 Phase 1 document support includes:
 
@@ -149,13 +151,13 @@ Rebuild the local derived cache:
 go run ./cmd/kanbanzai cache rebuild
 ```
 
-Start the MCP server (exposes both Phase 1 and Phase 2a tools):
+Start the MCP server (exposes Phase 1, Phase 2a, and Phase 2b tools):
 
 ```/dev/null/README.md#L1-20
 go run ./cmd/kanbanzai serve
 ```
 
-Phase 2a entity operations (Plans, document records, prefix registry) are currently available through MCP tools only. CLI support for Phase 2a entities has not yet been added.
+Phase 2a entity operations (Plans, document records, prefix registry) are available through MCP tools. Phase 2b operations (knowledge, context, agent capabilities, import) are available through both MCP tools and CLI commands.
 
 ### What files it creates
 
@@ -214,12 +216,12 @@ This project is not fully finished yet.
 
 Some important caveats:
 
-- the current implementation covers Phase 1 and Phase 2a, not the full long-term vision
+- the current implementation covers Phase 1, Phase 2a, and Phase 2b, not the full long-term vision
 - broader multi-agent orchestration is not the focus yet
 - the repository still contains design and planning material alongside implementation
 - CLI support for Phase 2a entity types has not yet been added
 
-If you are trying it today, treat it as an evolving workflow kernel rather than a polished end-user product. See `work/plan/phase-2a-progress.md` for detailed status.
+If you are trying it today, treat it as an evolving workflow kernel rather than a polished end-user product. See `work/plan/phase-2a-progress.md` and `work/plan/phase-2b-progress.md` for detailed status.
 
 ---
 
@@ -229,7 +231,7 @@ This section is for contributors and technically curious readers.
 
 ### Current project status
 
-The repository has moved beyond planning-only work. The Phase 1 implementation kernel is complete and functioning. Phase 2a implementation is complete — all acceptance criteria are met, all audit bugs are fixed, and all tests pass with race detector enabled.
+The repository has moved beyond planning-only work. The Phase 1 implementation kernel is complete and functioning. Phase 2a implementation is complete — all acceptance criteria are met, all audit bugs are fixed, and all tests pass with race detector enabled. Phase 2b implementation is complete.
 
 Broadly, the project now includes:
 
@@ -271,6 +273,15 @@ Phase 2a implementation adds:
 - tags on all entity types with filtering support
 - extended health checks for documents, plan prefixes, and feature parent references
 
+Phase 2b implementation adds:
+
+- knowledge entries with full lifecycle (candidate→confirmed→flagged→retired), Wilson confidence scoring, and content-based deduplication
+- context profiles with YAML-defined roles and inheritance
+- context assembly with byte-based budgeting
+- agent capability tools: link resolution, duplicate detection, extraction guidance
+- batch document import for project onboarding
+- user identity auto-resolution from git config
+
 All tests pass with race detector enabled.
 
 ### Repository structure
@@ -305,8 +316,12 @@ Key directories:
   - instance paths and root utilities
 - `internal/validate/`
   - entity and health validation, lifecycle state machines
+- `internal/knowledge/`
+  - knowledge entry storage, lifecycle, confidence scoring, and deduplication
+- `internal/context/`
+  - context profiles, context assembly, and byte-based budgeting
 - `internal/mcp/`
-  - MCP server and tools (Phase 1 and Phase 2a)
+  - MCP server and tools (Phase 1, Phase 2a, and Phase 2b)
 - `internal/model/`
   - entity type definitions and ID utilities
 - `internal/cache/`
@@ -363,6 +378,7 @@ The current entity set is:
 - `Bug`
 - `Decision`
 - `DocumentRecord` (Phase 2a — metadata for tracked documents)
+- `KnowledgeEntry` (Phase 2b — persistent knowledge with lifecycle and confidence tracking)
 
 These are stored as YAML files under `.kbz/state/` using deterministic ordering rules.
 
@@ -421,16 +437,20 @@ The Phase 2a document record system is intended to eventually replace the Phase 
 
 Kanbanzai is MCP-first, but the CLI is no longer just a placeholder.
 
-Current CLI support includes (Phase 1 entities):
+Current CLI support includes:
 
-- entity creation, retrieval, listing, status updates, field updates
+- entity creation, retrieval, listing, status updates, field updates (Phase 1)
 - document scaffold / submit / approve / retrieve / validate / list
 - candidate validation
 - health check
 - cache rebuild
 - MCP server startup
+- `kbz knowledge list/get` — knowledge entry management (Phase 2b)
+- `kbz profile list/get` — context profile inspection (Phase 2b)
+- `kbz context assemble` — context assembly (Phase 2b)
+- `kbz import` — batch document import (Phase 2b)
 
-The MCP layer exposes Phase 1 tool operations plus Phase 2a operations:
+The MCP layer exposes Phase 1, Phase 2a, and Phase 2b operations:
 
 - Plan tools: `create_plan`, `get_plan`, `list_plans`, `update_plan_status`, `update_plan`
 - Document record tools: `doc_record_submit`, `doc_record_approve`, `doc_record_supersede`
@@ -438,6 +458,10 @@ The MCP layer exposes Phase 1 tool operations plus Phase 2a operations:
 - Document intelligence tools: `doc_outline`, `doc_concepts`, `doc_classify`
 - Query tools: `list_tags`, `list_by_tag`, `list_entities_filtered`, `query_plan_tasks`, `doc_supersession_chain`
 - Migration tools: `migrate_phase2`
+- Knowledge tools: `knowledge_contribute`, `knowledge_get`, `knowledge_list`, `knowledge_update`, `knowledge_confirm`, `knowledge_flag`, `knowledge_retire`, `knowledge_promote`
+- Context tools: `context_assemble`, `context_report`, `profile_get`, `profile_list`
+- Agent capability tools: `suggest_links`, `check_duplicates`, `doc_extraction_guide`
+- Import tools: `batch_import_documents`
 
 CLI support for Phase 2a entity types has not yet been added.
 
@@ -486,8 +510,11 @@ If you need to understand the project deeply, start here:
 
 Then use as needed:
 
-- `work/plan/phase-2a-progress.md` — current implementation status
+- `work/plan/phase-2a-progress.md` — Phase 2a implementation status
+- `work/plan/phase-2b-progress.md` — Phase 2b implementation status
 - `work/plan/phase-2-scope.md` — Phase 2 scope and planning
+- `work/spec/phase-2b-specification.md` — Phase 2b specification
+- `work/plan/phase-2b-implementation-plan.md` — Phase 2b implementation plan
 - `work/plan/phase-1-implementation-plan.md`
 - `work/plan/phase-1-decision-log.md`
 - `work/design/document-intelligence-design.md`
@@ -513,4 +540,4 @@ Kanbanzai is trying to become a practical workflow kernel for human-AI software 
 - structured and enforceable for machines
 - Git-native for visibility and control
 
-The codebase now demonstrates the core entity model, document management with integrity tracking, document intelligence, a prefix-based Plan system, and end-to-end lifecycle integration. Phase 2a is complete. See `work/plan/phase-2a-progress.md` for detailed status.
+The codebase now demonstrates the core entity model, document management with integrity tracking, document intelligence, a prefix-based Plan system, end-to-end lifecycle integration, persistent knowledge management with confidence scoring, context assembly with role-based profiles and byte budgeting, and agent capability tools for link resolution and duplicate detection. Phase 2b is complete. See `work/plan/phase-2b-progress.md` for detailed status.

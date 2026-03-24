@@ -12,8 +12,8 @@ import (
 
 // idRegexp validates profile IDs: lowercase alphanumeric and hyphens, 2-30 chars.
 // The first alternative handles 2-30 char IDs that may contain hyphens (but not at start/end).
-// The second alternative handles 1-2 char purely alphanumeric IDs.
-var idRegexp = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$|^[a-z0-9]{1,2}$`)
+// The second alternative handles exactly 2-char purely alphanumeric IDs.
+var idRegexp = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$|^[a-z0-9]{2}$`)
 
 // Profile is a context profile definition as loaded from a YAML file.
 type Profile struct {

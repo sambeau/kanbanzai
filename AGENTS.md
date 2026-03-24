@@ -31,11 +31,11 @@ Examples:
 
 ## Project Status
 
-**Phase 1 is complete. Phase 2a is complete.** The repository contains design documents, specifications, planning documents, research, and working implementation code. All Phase 2a acceptance criteria are met, all audit bugs (B1–B8) are fixed, and all tests pass with race detector enabled.
+**Phase 1 is complete. Phase 2a is complete. Phase 2b is complete.** The repository contains design documents, specifications, planning documents, research, and working implementation code. All Phase 2a acceptance criteria are met, all audit bugs (B1–B8) are fixed, and all tests pass with race detector enabled. All Phase 2b acceptance criteria are met.
 
-The binding contracts for implementation are `work/spec/phase-1-specification.md` (Phase 1) and `work/spec/phase-2-specification.md` (Phase 2). The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
+The binding contracts for implementation are `work/spec/phase-1-specification.md` (Phase 1), `work/spec/phase-2-specification.md` (Phase 2), and `work/spec/phase-2b-specification.md` (Phase 2b). The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
 
-Current Phase 2a status is tracked in `work/plan/phase-2a-progress.md`.
+Current Phase 2a status is tracked in `work/plan/phase-2a-progress.md`. Phase 2b status is tracked in `work/plan/phase-2b-progress.md`.
 
 ## Two Workflows
 
@@ -57,13 +57,15 @@ kanbanzai/
 ├── cmd/kanbanzai/         ← binary entry point (CLI and MCP server)
 ├── internal/              ← core logic (shared by MCP server and CLI)
 │   ├── cache/             ← local derived SQLite cache
-│   ├── config/            ← project configuration and prefix registry (Phase 2a)
+│   ├── config/            ← project configuration and prefix registry (Phase 2a + Phase 2b user identity)
+│   ├── context/           ← context profiles, inheritance resolution, and assembly (Phase 2b)
 │   ├── core/              ← instance paths and root utilities
 │   ├── docint/            ← document intelligence (structural parsing, classification, graph)
 │   ├── document/          ← Phase 1 document store, templates, validation
 │   ├── fsutil/            ← filesystem utilities (atomic write)
 │   ├── id/                ← canonical ID allocation and display formatting
-│   ├── mcp/               ← MCP server and tools (Phase 1 + Phase 2a)
+│   ├── knowledge/         ← deduplication, confidence scoring, link resolution (Phase 2b)
+│   ├── mcp/               ← MCP server and tools (Phase 1 + Phase 2a + Phase 2b)
 │   ├── model/             ← entity type definitions and ID utilities
 │   ├── service/           ← entity, plan, and document record service logic
 │   ├── storage/           ← canonical YAML entity and document record storage
@@ -78,11 +80,15 @@ kanbanzai/
 │   └── research/          ← background analysis and review memos
 └── .kbz/                  ← instance root (project-local workflow state, not committed)
     ├── config.yaml        ← project configuration including prefix registry
+    ├── local.yaml            ← per-machine settings, not committed (Phase 2b)
     ├── state/             ← canonical entity records (plans, features, tasks, etc.)
     │   ├── plans/         ← Plan entity files (Phase 2a)
     │   ├── documents/     ← document metadata records (Phase 2a)
+    │   ├── knowledge/     ← KnowledgeEntry records (Phase 2b)
     │   └── ...            ← other entity type directories
     ├── docs/              ← Phase 1 managed documents
+    ├── context/
+    │   └── roles/            ← context profile YAML files (Phase 2b)
     ├── index/             ← document intelligence index (structural, graph, concepts)
     └── cache/             ← derived local cache (not committed)
 ```
@@ -111,8 +117,11 @@ Then refer to these as needed:
 
 - `work/plan/phase-2a-progress.md` — Phase 2a implementation status and remaining work
 - `work/plan/phase-2-scope.md` — Phase 2 scope and planning
+- `work/spec/phase-2b-specification.md` — Phase 2b scope and verification basis
+- `work/plan/phase-2b-implementation-plan.md` — Phase 2b implementation plan and audit remediation
+- `work/plan/phase-2-decision-log.md` — Phase 2 architectural decisions
 - `work/design/workflow-system-design.md` — earlier system design document
-- `work/design/machine-context-design.md` — machine-to-machine context model (Phase 2, but Phase 1 must not preclude it)
+- `work/design/machine-context-design.md` — machine-to-machine context model (implemented in Phase 2b)
 - `work/design/document-intelligence-design.md` — structural analysis backend for design documents (Phase 2)
 - `work/design/product-instance-boundary.md` — product vs. instance separation
 - `work/plan/phase-1-implementation-plan.md` — concrete execution plan
@@ -136,6 +145,9 @@ Then refer to these as needed:
 | Implementation plan and work breakdown | `work/plan/phase-1-implementation-plan.md` | kbz |
 | Machine context model (Phase 2) | `work/design/machine-context-design.md` | kbz |
 | Document intelligence (Phase 2) | `work/design/document-intelligence-design.md` | kbz |
+| Phase 2b specification | `work/spec/phase-2b-specification.md` | kbz |
+| Phase 2b implementation plan | `work/plan/phase-2b-implementation-plan.md` | kbz |
+| Phase 2 decisions | `work/plan/phase-2-decision-log.md` | both |
 
 ## Communicating With Humans
 
@@ -157,8 +169,9 @@ When making a non-trivial change to any document or code:
 
 1. Identify which spec or design document owns the topic.
 2. Check `work/plan/phase-1-decision-log.md` — there are 12 accepted architectural decisions covering ID allocation, YAML format, lifecycle transitions, required fields, file layout, and more. Do not reinvent or contradict them.
-3. Check whether the design basis or specification says something different from what you intend.
-4. If there is a conflict or ambiguity, surface it to the human rather than guessing.
+3. Check `work/plan/phase-2-decision-log.md` — there are Phase 2 architectural decisions (P2-DEC-001 through P2-DEC-004) covering context profiles, knowledge management, and related topics. Do not reinvent or contradict them.
+4. Check whether the design basis or specification says something different from what you intend.
+5. If there is a conflict or ambiguity, surface it to the human rather than guessing.
 
 ## Git Rules
 
@@ -225,12 +238,11 @@ Do not let document changes accumulate uncommitted across long sessions.
 
 ## Scope Guard
 
-Phase 1 (workflow kernel) and Phase 2a (entity model evolution, document intelligence, migration) are complete. Current work should focus on Phase 2b or later scope as directed by the human.
+Phase 1 (workflow kernel), Phase 2a (entity model evolution, document intelligence, migration), and Phase 2b (context profiles, knowledge management, user identity) are complete. Current work should focus on Phase 3 or later scope as directed by the human.
 
 Do not build beyond the current phase without explicit direction:
 
-- Orchestration or agent delegation (Phase 2b+)
-- Context packing, context profiles, or knowledge management (Phase 2b+)
+- Orchestration or agent delegation (Phase 3+)
 - Incident or RCA entities
 - GitHub automation or webhook integration
 - Semantic search or embedding-based retrieval

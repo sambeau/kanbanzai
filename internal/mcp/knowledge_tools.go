@@ -7,6 +7,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"kanbanzai/internal/config"
 	"kanbanzai/internal/service"
 )
 
@@ -52,7 +53,11 @@ func knowledgeContributeTool(svc *service.KnowledgeService) server.ServerTool {
 
 		tier := int(request.GetFloat("tier", 3))
 		learnedFrom := request.GetString("learned_from", "")
-		createdBy := request.GetString("created_by", "")
+		createdByRaw := request.GetString("created_by", "")
+		createdBy, err := config.ResolveIdentity(createdByRaw)
+		if err != nil {
+			return mcp.NewToolResultError(err.Error()), nil
+		}
 		tags := request.GetStringSlice("tags", nil)
 
 		input := service.ContributeInput{
@@ -217,7 +222,7 @@ func knowledgeFlagTool(svc *service.KnowledgeService) server.ServerTool {
 	tool := mcp.NewTool("knowledge_flag",
 		mcp.WithDescription("Flag a knowledge entry as incorrect or disputed. Increments miss_count and recomputes confidence. If miss_count reaches 2, the entry is automatically retired."),
 		mcp.WithString("id", mcp.Description("Knowledge entry ID (KE-...)"), mcp.Required()),
-		mcp.WithString("reason", mcp.Description("Reason for flagging the entry")),
+		mcp.WithString("reason", mcp.Description("Reason for flagging the entry"), mcp.Required()),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -225,6 +230,9 @@ func knowledgeFlagTool(svc *service.KnowledgeService) server.ServerTool {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
 		reason := request.GetString("reason", "")
+		if reason == "" {
+			return mcp.NewToolResultError("missing required parameter: reason"), nil
+		}
 
 		record, err := svc.Flag(id, reason)
 		if err != nil {
@@ -245,7 +253,7 @@ func knowledgeRetireTool(svc *service.KnowledgeService) server.ServerTool {
 	tool := mcp.NewTool("knowledge_retire",
 		mcp.WithDescription("Manually retire a knowledge entry, marking it as no longer valid. Retired entries are excluded from listing by default."),
 		mcp.WithString("id", mcp.Description("Knowledge entry ID (KE-...)"), mcp.Required()),
-		mcp.WithString("reason", mcp.Description("Reason for retiring the entry")),
+		mcp.WithString("reason", mcp.Description("Reason for retiring the entry"), mcp.Required()),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -253,6 +261,9 @@ func knowledgeRetireTool(svc *service.KnowledgeService) server.ServerTool {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
 		reason := request.GetString("reason", "")
+		if reason == "" {
+			return mcp.NewToolResultError("missing required parameter: reason"), nil
+		}
 
 		record, err := svc.Retire(id, reason)
 		if err != nil {
@@ -299,7 +310,7 @@ func knowledgeContextReportTool(svc *service.KnowledgeService) server.ServerTool
 	tool := mcp.NewTool("context_report",
 		mcp.WithDescription("Report knowledge entry usage from a completed task. For each used entry: increments use_count and updates last_used; auto-confirms if use_count >= 3 and miss_count == 0. For each flagged entry: increments miss_count; auto-retires if miss_count >= 2."),
 		mcp.WithString("task_id", mcp.Description("ID of the task that consumed the knowledge entries"), mcp.Required()),
-		mcp.WithArray("used", mcp.WithStringItems(), mcp.Description("List of knowledge entry IDs that were used and found helpful")),
+		mcp.WithArray("used", mcp.WithStringItems(), mcp.Description("List of knowledge entry IDs that were used and found helpful"), mcp.Required()),
 		mcp.WithString("flagged", mcp.Description("JSON array of flagged entries: [{\"entry_id\": \"KE-...\", \"reason\": \"...\"}]")),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -309,6 +320,9 @@ func knowledgeContextReportTool(svc *service.KnowledgeService) server.ServerTool
 		}
 
 		used := request.GetStringSlice("used", nil)
+		if len(used) == 0 {
+			return mcp.NewToolResultError("missing required parameter: used (list of knowledge entry IDs)"), nil
+		}
 
 		flaggedRaw := request.GetString("flagged", "")
 		flagged, err := service.ParseFlaggedEntries(flaggedRaw)

@@ -303,9 +303,11 @@ func (s *KnowledgeService) Flag(id, reason string) (storage.KnowledgeRecord, err
 
 	if missCount >= 2 {
 		record.Fields["status"] = string(model.KnowledgeStatusRetired)
+		sysReason := "auto-retired: miss_count reached 2"
 		if reason != "" {
-			record.Fields["deprecated_reason"] = reason
+			sysReason = fmt.Sprintf("auto-retired: miss_count reached 2 (%s)", reason)
 		}
+		record.Fields["deprecated_reason"] = sysReason
 	} else if validate.CanTransitionKnowledge(status, string(model.KnowledgeStatusDisputed)) {
 		record.Fields["status"] = string(model.KnowledgeStatusDisputed)
 	}
@@ -415,9 +417,11 @@ func (s *KnowledgeService) ContextReport(taskID string, used []string, flagged [
 		status, _ := record.Fields["status"].(string)
 		if missCount >= 2 && status != string(model.KnowledgeStatusRetired) {
 			record.Fields["status"] = string(model.KnowledgeStatusRetired)
+			sysReason := "auto-retired: miss_count reached 2"
 			if f.Reason != "" {
-				record.Fields["deprecated_reason"] = f.Reason
+				sysReason = fmt.Sprintf("auto-retired: miss_count reached 2 (%s)", f.Reason)
 			}
+			record.Fields["deprecated_reason"] = sysReason
 		}
 
 		s.store.Write(record) //nolint:errcheck // best-effort

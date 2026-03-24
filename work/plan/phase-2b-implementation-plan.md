@@ -597,7 +597,126 @@ Phase 2b is complete when:
 
 ---
 
-## 13. Summary
+## 13. Post-Implementation Audit Remediation
+
+A comprehensive audit of the Phase 2b implementation was conducted after all 9 tracks were complete. The audit verified spec compliance, code quality, test coverage, and documentation accuracy. All core functionality is implemented and working — these items are fixes and improvements identified during the review.
+
+Items are prioritised as **must fix** (blocks "done" per §12), **should fix** (spec compliance or quality gap), or **nice to have** (improvement, not blocking).
+
+### 13.1 Must fix
+
+**R1 — `knowledge_contribute` missing identity auto-resolution**
+
+Spec §15.3 lists `knowledge_contribute` as a tool where `created_by` auto-resolution applies. The implementation passes the raw value without calling `config.ResolveIdentity()`. Every other creation tool (`create_plan`, `create_feature`, `doc_record_submit`, `batch_import_documents`, etc.) correctly calls `ResolveIdentity`.
+
+- File: `internal/mcp/knowledge_tools.go` (line ~55)
+- Fix: call `config.ResolveIdentity(createdByRaw)` before passing to `ContributeInput`
+- Spec: §15.3, §17.1
+- Track: C (contribution)
+
+**R2 — Phase 2b health checks not wired into `kbz health` CLI**
+
+`CheckKnowledgeHealth` and `CheckProfileHealth` are wired into the MCP `health_check` tool (via `server.go`) but are not called by the CLI `kbz health` command. Spec §18.2 says health checks must be available via "the `health` MCP tool or `kbz health` CLI command."
+
+- File: `cmd/kanbanzai/main.go` (`runHealth` function, line ~606)
+- Fix: instantiate `KnowledgeService` and `ProfileStore`, call both Phase 2b health checkers, merge reports
+- Spec: §18.2
+- Track: I (health/CLI)
+
+**R3 — Documentation not updated for Phase 2b**
+
+All project documentation still describes the project as "Phase 2a complete" with Phase 2b as future work. Critical documents affected:
+
+- `AGENTS.md` — project status, scope guard (lists Phase 2b features as forbidden), repository structure (missing `knowledge/` and `context/` packages), no Phase 2b spec reference
+- `README.md` — no Phase 2b mention, missing `KnowledgeEntry` from entity model, no Phase 2b tools listed
+- `bootstrap-workflow.md` — doesn't mention Phase 2b tools are available
+- `machine-context-design.md` — status still says "draft design", phasing section is stale
+
+Additionally, `work/plan/phase-2b-progress.md` does not exist and should be created to track completion status, following the pattern established by `phase-2a-progress.md`.
+
+- Fix: update all four documents; create `phase-2b-progress.md`
+- Spec: §12 (definition of done point 8 — no known bugs)
+- Track: I (integration)
+
+### 13.2 Should fix
+
+**R4 — Nil-check `knowledgeSvc` in `Assemble()`**
+
+`context.Assemble()` nil-checks `entitySvc` and `intelligenceSvc` but calls `knowledgeSvc.List()` unconditionally. If `knowledgeSvc` is nil, this panics. Inconsistent with the graceful degradation principle (spec §4.4).
+
+- File: `internal/context/assemble.go` (line ~113)
+- Fix: add nil guard on `knowledgeSvc`, skip knowledge entries if nil
+- Spec: §4.4 (graceful degradation)
+- Track: F (assembly)
+
+**R5 — Profile ID regex accepts 1-character IDs**
+
+Spec §11.3 says profile IDs must be 2–30 characters. The regex second alternative `^[a-z0-9]{1,2}$` matches single-character IDs like `"a"`. The test explicitly asserts this is valid — both must be corrected.
+
+- File: `internal/context/profile.go` (line ~16), `internal/context/profile_test.go`
+- Fix: change `{1,2}` to `{2}` in the regex; update the test to expect `{"a", false}`
+- Spec: §11.3
+- Track: D (profiles)
+
+**R6 — Add tests for `links.go` and `duplicates.go`**
+
+`ScanEntityRefs`, `EntityTypeFromID` (link resolution), and `FindDuplicateCandidates` (duplicate detection) have zero unit tests. These are the algorithmic cores of two of the three agent capabilities.
+
+- Files: `internal/knowledge/links.go`, `internal/knowledge/duplicates.go`
+- Fix: add test files with cases for: no refs, single ref, multiple ref types, dedup, Plan ID matching, `KE-` prefix, empty input, threshold boundary, result ordering
+- Spec: §20.7 (agent capabilities acceptance criteria)
+- Track: G (agent capabilities)
+
+**R7 — Add `glob` parameter to `batch_import_documents` and `kbz import`**
+
+Spec §14.1 and §17.5 define an optional glob pattern parameter for filtering which files to import. Neither the MCP tool nor the CLI command implements it — all `.md` files in the directory are imported unconditionally.
+
+- Files: `internal/mcp/import_tools.go`, `internal/service/import.go`, `cmd/kanbanzai/main.go`
+- Fix: add `glob` parameter to MCP tool and `--glob` flag to CLI; filter matched files before import
+- Spec: §14.1, §17.5, §19.1
+- Track: H (batch import)
+
+### 13.3 Nice to have
+
+**R8 — Make `reason` required on `knowledge_flag` and `knowledge_retire`**
+
+Spec §17.1 places `reason` in the required parameters column for both tools. The implementation treats it as optional via `GetString("reason", "")`.
+
+- File: `internal/mcp/knowledge_tools.go` (lines ~218, ~243)
+- Fix: use `RequireString("reason")` instead of `GetString`
+- Spec: §17.1
+- Track: B (knowledge core)
+
+**R9 — System-generated `deprecated_reason` on auto-retirement**
+
+Spec §7.3 says auto-retirement must set `deprecated_reason` to a system-generated message. The implementation uses the caller's flag reason (which may be empty).
+
+- Files: `internal/service/knowledge.go` (`Flag` method line ~223, `ContextReport` method line ~279)
+- Fix: always set a system message like `"auto-retired: miss_count reached 2"`, optionally appending the flag reason
+- Spec: §7.3
+- Track: E (usage reporting)
+
+**R10 — Design context priority label is misleading**
+
+Design context items are assigned `Priority: "low"` despite being the highest-priority trimmable source (trimmed last, after T3 and T2). The label should reflect the actual trimming semantics.
+
+- File: `internal/context/assemble.go` (line ~106)
+- Fix: change `Priority: "low"` to `Priority: "normal"` or `"high"` for design items
+- Spec: §12.3
+- Track: F (assembly)
+
+**R11 — Make `used` required on `context_report`**
+
+Spec §17.3 places `used` in the required parameters column. The implementation treats it as optional. A report with no `used` and no `flagged` is a no-op.
+
+- File: `internal/mcp/knowledge_tools.go` (line ~311)
+- Fix: validate that `used` is non-empty, or document the no-op case as intentional
+- Spec: §17.3
+- Track: E (usage reporting)
+
+---
+
+## 14. Summary
 
 Phase 2b implementation is organised into 9 tracks (A–I), sequenced by dependency:
 
