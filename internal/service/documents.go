@@ -77,6 +77,11 @@ type DocumentService struct {
 	intelligenceSvc *IntelligenceService // optional, for auto-ingest on submit
 }
 
+// RepoRoot returns the repository root path used by this service.
+func (s *DocumentService) RepoRoot() string {
+	return s.repoRoot
+}
+
 // SetEntityHook attaches an optional lifecycle hook that triggers entity
 // transitions when documents are submitted, approved, or superseded.
 func (s *DocumentService) SetEntityHook(hook EntityLifecycleHook) {

@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 
 	"kanbanzai/internal/cache"
+	"kanbanzai/internal/config"
 	"kanbanzai/internal/core"
 	"kanbanzai/internal/document"
 	"kanbanzai/internal/id"
@@ -118,6 +119,8 @@ func run(args []string, deps dependencies) error {
 		return runValidate(args[1:], deps)
 	case "cache":
 		return runCache(args[1:], deps)
+	case "import":
+		return runImport(args[1:], deps)
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
 	}
@@ -737,6 +740,7 @@ Commands:
   health     Run a health check against canonical state
   validate   Validate a candidate entity without persisting it
   cache      Manage the local derived cache
+  import     Batch import document records from a directory
 
 Notes:
   - Phase 1 is MCP-first; the CLI is a secondary, strict interface.
@@ -900,4 +904,72 @@ Subcommands:
 
 The cache accelerates queries but is not required for correctness.
 It is stored in .kbz/cache/ and is not committed to Git.
+`
+
+func runImport(args []string, deps dependencies) error {
+	if len(args) == 0 {
+		return fmt.Errorf("path is required\n\n%s", importUsageText)
+	}
+
+	path := args[0]
+
+	flags, err := parseFlags(args[1:])
+	if err != nil {
+		return err
+	}
+
+	defaultType := flags["type"]
+	owner := flags["owner"]
+	createdByRaw := flags["created_by"]
+	if createdByRaw == "" {
+		createdByRaw = flags["created-by"]
+	}
+
+	createdBy, err := config.ResolveIdentity(createdByRaw)
+	if err != nil {
+		return err
+	}
+
+	cfg := config.LoadOrDefault()
+	docSvc := service.NewDocumentService(core.StatePath(), ".")
+	importSvc := service.NewBatchImportService(docSvc)
+
+	result, err := importSvc.Import(cfg, service.BatchImportInput{
+		Path:        path,
+		DefaultType: defaultType,
+		Owner:       owner,
+		CreatedBy:   createdBy,
+	})
+	if err != nil {
+		return err
+	}
+
+	fmt.Fprintf(deps.stdout, "imported: %d\n", result.Imported)
+	if len(result.Skipped) > 0 {
+		fmt.Fprintf(deps.stdout, "skipped:  %d\n", len(result.Skipped))
+		for _, s := range result.Skipped {
+			fmt.Fprintf(deps.stdout, "  skip  %s: %s\n", s.Path, s.Reason)
+		}
+	}
+	if len(result.Errors) > 0 {
+		fmt.Fprintf(deps.stdout, "errors:   %d\n", len(result.Errors))
+		for _, e := range result.Errors {
+			fmt.Fprintf(deps.stdout, "  error %s: %s\n", e.Path, e.Error)
+		}
+	}
+	return nil
+}
+
+const importUsageText = `kanbanzai import <path> [flags]
+
+Import document records from a directory. Scans recursively for Markdown files
+and creates document records. Already-imported files are skipped (idempotent).
+
+Arguments:
+  <path>    Directory to scan for documents
+
+Flags:
+  --type    <type>   Default document type when no path pattern matches
+                     (design, specification, dev-plan, research, report, policy)
+  --owner   <id>     Optional parent Plan or Feature ID for imported documents
 `

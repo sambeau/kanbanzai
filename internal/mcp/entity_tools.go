@@ -7,6 +7,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"kanbanzai/internal/config"
 	"kanbanzai/internal/id"
 	"kanbanzai/internal/service"
 )
@@ -35,7 +36,7 @@ func createEpicTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("slug", mcp.Description("URL-friendly identifier for the epic"), mcp.Required()),
 		mcp.WithString("title", mcp.Description("Title of the epic"), mcp.Required()),
 		mcp.WithString("summary", mcp.Description("Brief summary of the epic"), mcp.Required()),
-		mcp.WithString("created_by", mcp.Description("Who created the epic"), mcp.Required()),
+		mcp.WithString("created_by", mcp.Description("Who created the epic. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		slug, err := request.RequireString("slug")
@@ -50,7 +51,8 @@ func createEpicTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
-		createdBy, err := request.RequireString("created_by")
+		createdByRaw := request.GetString("created_by", "")
+		createdBy, err := config.ResolveIdentity(createdByRaw)
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
@@ -74,7 +76,7 @@ func createFeatureTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("slug", mcp.Description("URL-friendly identifier for the feature"), mcp.Required()),
 		mcp.WithString("parent", mcp.Description("Parent plan ID"), mcp.Required()),
 		mcp.WithString("summary", mcp.Description("Brief summary of the feature"), mcp.Required()),
-		mcp.WithString("created_by", mcp.Description("Who created the feature"), mcp.Required()),
+		mcp.WithString("created_by", mcp.Description("Who created the feature. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 		mcp.WithString("design", mcp.Description("Optional design document reference")),
 		mcp.WithArray("tags", mcp.Description("Optional tags for cross-cutting organization")),
 	)
@@ -96,12 +98,13 @@ func createFeatureTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
-		createdBy, err := request.RequireString("created_by")
+		createdByRaw := request.GetString("created_by", "")
+		createdBy, err := config.ResolveIdentity(createdByRaw)
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
 		design := request.GetString("design", "")
-		
+
 		// Get tags array
 		var tags []string
 		args := request.GetArguments()
@@ -114,7 +117,7 @@ func createFeatureTool(svc *service.EntityService) server.ServerTool {
 				}
 			}
 		}
-		
+
 		result, err := svc.CreateFeature(service.CreateFeatureInput{
 			Slug:      slug,
 			Parent:    parent,
@@ -245,7 +248,7 @@ func recordDecisionTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("slug", mcp.Description("URL-friendly identifier for the decision"), mcp.Required()),
 		mcp.WithString("summary", mcp.Description("Brief summary of the decision"), mcp.Required()),
 		mcp.WithString("rationale", mcp.Description("Rationale behind the decision"), mcp.Required()),
-		mcp.WithString("decided_by", mcp.Description("Who made the decision"), mcp.Required()),
+		mcp.WithString("decided_by", mcp.Description("Who made the decision. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		slug, err := request.RequireString("slug")
@@ -260,7 +263,8 @@ func recordDecisionTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
-		decidedBy, err := request.RequireString("decided_by")
+		decidedByRaw := request.GetString("decided_by", "")
+		decidedBy, err := config.ResolveIdentity(decidedByRaw)
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}

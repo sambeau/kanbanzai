@@ -7,6 +7,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"kanbanzai/internal/config"
 	"kanbanzai/internal/service"
 )
 
@@ -32,7 +33,7 @@ func docRecordSubmitTool(docSvc *service.DocumentService) server.ServerTool {
 		mcp.WithString("type", mcp.Description("Document type: design, specification, dev-plan, research, report, or policy"), mcp.Required()),
 		mcp.WithString("title", mcp.Description("Human-readable title for the document"), mcp.Required()),
 		mcp.WithString("owner", mcp.Description("Optional parent Plan or Feature ID that owns this document")),
-		mcp.WithString("created_by", mcp.Description("Who is submitting the document"), mcp.Required()),
+		mcp.WithString("created_by", mcp.Description("Who is submitting the document. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		path, err := request.RequireString("path")
@@ -47,7 +48,8 @@ func docRecordSubmitTool(docSvc *service.DocumentService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
-		createdBy, err := request.RequireString("created_by")
+		createdByRaw := request.GetString("created_by", "")
+		createdBy, err := config.ResolveIdentity(createdByRaw)
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
@@ -73,14 +75,15 @@ func docRecordApproveTool(docSvc *service.DocumentService) server.ServerTool {
 	tool := mcp.NewTool("doc_record_approve",
 		mcp.WithDescription("Transition a document from draft to approved status. The content hash must match the current file content. Approval triggers lifecycle transitions on the owning entity."),
 		mcp.WithString("id", mcp.Description("Document record ID"), mcp.Required()),
-		mcp.WithString("approved_by", mcp.Description("Who is approving the document"), mcp.Required()),
+		mcp.WithString("approved_by", mcp.Description("Who is approving the document. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
-		approvedBy, err := request.RequireString("approved_by")
+		approvedByRaw := request.GetString("approved_by", "")
+		approvedBy, err := config.ResolveIdentity(approvedByRaw)
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}

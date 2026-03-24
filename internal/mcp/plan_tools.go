@@ -6,6 +6,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"kanbanzai/internal/config"
 	"kanbanzai/internal/id"
 	"kanbanzai/internal/service"
 )
@@ -28,7 +29,7 @@ func createPlanTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("slug", mcp.Description("URL-friendly identifier for the Plan (appended after prefix and number)"), mcp.Required()),
 		mcp.WithString("title", mcp.Description("Human-readable title of the Plan"), mcp.Required()),
 		mcp.WithString("summary", mcp.Description("Brief description of the Plan's purpose and scope"), mcp.Required()),
-		mcp.WithString("created_by", mcp.Description("Who created the Plan"), mcp.Required()),
+		mcp.WithString("created_by", mcp.Description("Who created the Plan. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 		mcp.WithArray("tags", mcp.Description("Optional freeform tags for organisation (e.g., phase:2, priority:high)")),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -48,7 +49,8 @@ func createPlanTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
-		createdBy, err := request.RequireString("created_by")
+		createdByRaw := request.GetString("created_by", "")
+		createdBy, err := config.ResolveIdentity(createdByRaw)
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
