@@ -1,543 +1,153 @@
 # Kanbanzai
 
-Kanbanzai is a Git-native workflow system for human-AI collaborative software development.
+Kanbanzai is a workflow system for software projects where humans and AI agents work together.
 
-The idea is simple:
-
-- humans work through documents, reviews, and decisions
-- AI agents turn that intent into structured work
-- the project state is stored in plain files in Git
-- the workflow stays visible, reviewable, and recoverable
-
-Kanbanzai is still under active development. This repository currently contains both the implementation work and the design/specification documents that define what the finished system should do.
+The idea is simple: humans make the decisions — what to build, what matters, what's good enough — and AI agents handle the busywork of tracking, organising, and implementing. Everything is stored as plain files in Git, so the whole project stays visible and reviewable.
 
 ---
 
-## 1. What Kanbanzai is, and why it might be useful
+## How it works
 
-Software projects often end up with work scattered across chats, tickets, scratch notes, pull requests, and half-finished plans. That gets even messier when AI agents are involved. They may be helpful, but it can become hard to see:
+Most software projects end up with work scattered across chats, tickets, notes, and pull requests. When AI agents are involved, it gets worse — it becomes hard to see what was decided, what's in progress, and what an agent actually changed.
 
-- what was decided
-- what work exists
-- what depends on what
-- what is approved vs still in draft
-- what an agent changed, and why
+Kanbanzai keeps things organised by connecting documents to structured workflow state:
 
-Kanbanzai is meant to solve that problem.
+1. **A person writes a document** — a design, a specification, a plan
+2. **The document gets reviewed and approved**
+3. **An agent turns that approved document into structured work** — features, tasks, decisions, and the links between them
+4. **Document approvals drive progress automatically** — approving a spec advances its feature to the next stage
+5. **Agents implement and verify work**, keeping everything in sync
+6. **Humans review the results**
 
-When it is finished, Kanbanzai will provide a structured way to manage software work where:
-
-- **humans own intent**
-  - goals, priorities, designs, approvals, tradeoffs
-- **AI agents own execution**
-  - breaking work down, implementing changes, validating results, updating workflow state
-- **Git stores the source of truth**
-  - plans, entities, decisions, and state are all tracked as files
-- **documents remain the human interface**
-  - people do not need to manually maintain internal records one by one
-
-### Why that can be useful
-
-If Kanbanzai works as intended, it should help teams:
-
-- keep AI-assisted development auditable
-- make decisions and work status easier to review
-- avoid losing context between conversations
-- keep structured state in sync with real implementation work
-- scale from a small project to more coordinated multi-agent work without needing a heavy external system
-
-It is not trying to replace Git, design docs, or human review. It is trying to connect them into a workflow that is easier to trust.
+The human side of the workflow stays document-based. You write, review, and approve — you don't need to manage internal records by hand. The structured side stays machine-readable, so agents can pick up where others left off.
 
 ---
 
-## 2. Quick manual: how to try it now, and how it is intended to work later
+## What it manages
 
-This section is written for someone who wants the practical picture first.
+Kanbanzai tracks work using a small set of building blocks:
 
-### What you can try today
+| What | Purpose |
+|------|---------|
+| **Plan** | A body of work — a phase, a track, a project area |
+| **Feature** | Something to design and build, with a document-driven lifecycle |
+| **Task** | A concrete piece of implementation work |
+| **Bug** | Something broken that needs fixing |
+| **Decision** | A choice that was made, with rationale |
+| **Document** | A design, spec, or plan with tracked approval status |
+| **Knowledge entry** | A fact or convention learned during work, shared across agent sessions |
 
-The current implementation includes a Phase 1 workflow kernel, Phase 2a entity model evolution, and Phase 2b knowledge management and context assembly. It supports a useful subset of the planned system:
+Plans coordinate. Features deliver. Documents bridge the two — a Plan's design document sets direction, and a Feature's specification drives its lifecycle forward through approval.
 
-- creating and storing workflow entities (including the new Plan entity)
-- validating lifecycle state and references
-- storing canonical YAML under `.kbz/`
-- managing documents through tracked lifecycle with content hash verification
-- configuring Plan ID prefixes through a prefix registry
-- exposing operations through both:
-  - a CLI (Phase 1 entities)
-  - an MCP server for AI-agent use (Phase 1, Phase 2a, and Phase 2b operations)
+---
 
-The entity types currently implemented are:
+## Context and knowledge
 
-- `Plan` (Phase 2a — replaces Epic, uses `{prefix}{number}-{slug}` IDs)
-- `Epic` (Phase 1, deprecated — retained for migration compatibility)
-- `Feature` (updated in Phase 2a with document ownership and document-driven lifecycle states)
-- `Task`
-- `Bug`
-- `Decision`
+One of the hardest problems with AI agents is context. Every new session starts from scratch — the agent doesn't know what was tried before, what conventions matter, or what the team has learned.
 
-- `KnowledgeEntry` (Phase 2b — persistent knowledge with lifecycle and confidence tracking)
+Kanbanzai addresses this with three layers:
 
-Phase 1 document support includes:
+- **Context profiles** — role definitions that scope what each agent should know. A backend agent gets backend conventions; a testing agent gets test strategy. Profiles are simple YAML files with inheritance, so a `backend` profile can build on a `developer` profile, which builds on a shared `base`.
 
-- scaffolding
-- submission
-- approval
-- retrieval
-- validation
-- listing
-- extraction support for approved documents
+- **Knowledge entries** — persistent records of things learned during work. When an agent discovers a convention or a gotcha, it can save that knowledge for future sessions. Entries earn trust over time through a confidence system — new knowledge starts uncertain and becomes authoritative through successful reuse.
 
-Phase 2a adds document record management — tracked metadata records for documents that remain at their canonical paths:
+- **Context assembly** — when an agent starts a task, the system assembles a targeted context packet: the relevant design fragments, applicable knowledge entries, and role conventions, all fitted within a byte budget so it works regardless of the AI model's context window size.
 
-- submit (register with content hash)
-- approve (with hash verification and approver tracking)
-- supersede (with bidirectional linking)
-- content drift detection
-- filtering by type, status, and owner
+---
 
-### Basic CLI usage
+## Current status
 
-Build or run the CLI with Go:
+Kanbanzai is under active development. Three implementation phases are complete:
 
-```/dev/null/README.md#L1-20
+- **Phase 1** — the workflow kernel: entities, lifecycle rules, storage, validation, and the MCP and CLI interfaces
+- **Phase 2a** — document intelligence: Plans replacing Epics, document-driven Feature lifecycle, structural document analysis, and rich queries
+- **Phase 2b** — context management: knowledge entries, context profiles, context assembly, agent capabilities (link resolution, duplicate detection), and batch document import
+
+All tests pass. The system is functional and self-hosting — it manages its own project state.
+
+What's still ahead: Git worktree management, branch tracking, and multi-agent orchestration.
+
+---
+
+## Getting started
+
+Build and run with Go:
+
+```/dev/null/sh#L1-2
+go build ./cmd/kanbanzai
 go run ./cmd/kanbanzai --help
-go run ./cmd/kanbanzai version
 ```
 
-Create a few example entities (CLI currently supports Phase 1 entity types):
+Start the MCP server (for AI agent use):
 
-```/dev/null/README.md#L1-20
-go run ./cmd/kanbanzai create feature \
-  --slug audit-2-remediation \
-  --summary "Complete audit remediation tracks" \
-  --created_by sam
-```
-
-Read and inspect state:
-
-```/dev/null/README.md#L1-20
-go run ./cmd/kanbanzai list features
-go run ./cmd/kanbanzai health
-```
-
-Work with documents:
-
-```/dev/null/README.md#L1-20
-go run ./cmd/kanbanzai doc scaffold --type proposal --title "Example Proposal"
-
-go run ./cmd/kanbanzai doc submit \
-  --type proposal \
-  --title "Example Proposal" \
-  --created_by sam \
-  --body "# Example Proposal
-
-## Summary
-
-Short summary.
-
-## Problem
-
-What needs to change.
-
-## Proposal
-
-What to do."
-```
-
-Rebuild the local derived cache:
-
-```/dev/null/README.md#L1-20
-go run ./cmd/kanbanzai cache rebuild
-```
-
-Start the MCP server (exposes Phase 1, Phase 2a, and Phase 2b tools):
-
-```/dev/null/README.md#L1-20
+```/dev/null/sh#L1
 go run ./cmd/kanbanzai serve
 ```
 
-Phase 2a entity operations (Plans, document records, prefix registry) are available through MCP tools. Phase 2b operations (knowledge, context, agent capabilities, import) are available through both MCP tools and CLI commands.
+Some useful CLI commands:
 
-### What files it creates
-
-Kanbanzai stores project-local instance state in `.kbz/`.
-
-In the current implementation, that includes things like:
-
-- `.kbz/config.yaml`
-  - project configuration including the prefix registry for Plan IDs
-- `.kbz/state/`
-  - canonical entity records (epics, features, tasks, bugs, decisions)
-- `.kbz/state/plans/`
-  - Plan entity records (Phase 2a)
-- `.kbz/state/documents/`
-  - document metadata records (Phase 2a)
-- `.kbz/docs/`
-  - managed documents (Phase 1 document store)
-- `.kbz/cache/`
-  - derived local cache data
-
-The goal is that the important state is plain, inspectable, Git-friendly data rather than hidden in a separate service.
-
-### How it is intended to work when finished
-
-In the finished system, the normal experience should look more like this:
-
-1. A person writes or reviews a document
-   - proposal
-   - design
-   - specification
-   - implementation plan
-   - user documentation
-
-2. The document is reviewed and approved
-
-3. An AI agent uses that approved document to create or update structured workflow state
-   - plans
-   - features
-   - tasks
-   - decisions
-   - links between them
-
-4. Document approvals automatically drive entity lifecycle transitions
-   - approving a specification advances its Feature to `dev-planning`
-   - approving a dev plan advances its Feature to `developing`
-
-5. Agents implement and verify work while keeping workflow state consistent
-
-6. Humans review the resulting code, decisions, and progress
-
-So the human-facing workflow stays mostly document- and review-based, while the structured internals keep the project machine-readable and safer to automate.
-
-### Important current limitations
-
-This project is not fully finished yet.
-
-Some important caveats:
-
-- the current implementation covers Phase 1, Phase 2a, and Phase 2b, not the full long-term vision
-- broader multi-agent orchestration is not the focus yet
-- the repository still contains design and planning material alongside implementation
-- CLI support for Phase 2a entity types has not yet been added
-
-If you are trying it today, treat it as an evolving workflow kernel rather than a polished end-user product. See `work/plan/phase-2a-progress.md` and `work/plan/phase-2b-progress.md` for detailed status.
+```/dev/null/sh#L1-6
+kbz list features
+kbz health
+kbz knowledge list
+kbz profile list
+kbz context assemble --role backend
+kbz import work/design/
+```
 
 ---
 
-## 3. Developer details: progress, architecture, and internal behavior
+## What it stores
 
-This section is for contributors and technically curious readers.
+Kanbanzai keeps project state in a `.kbz/` directory, tracked in Git:
 
-### Current project status
-
-The repository has moved beyond planning-only work. The Phase 1 implementation kernel is complete and functioning. Phase 2a implementation is complete — all acceptance criteria are met, all audit bugs are fixed, and all tests pass with race detector enabled. Phase 2b implementation is complete.
-
-Broadly, the project now includes:
-
-- implementation entrypoint in `cmd/kanbanzai/`
-- core internal packages in `internal/`
-- design, spec, planning, and research documents in `work/`
-
-Phase 1 implementation covers:
-
-- canonical entity storage
-- deterministic YAML serialization
-- entity ID allocation
-- lifecycle validation
-- health checks
-- document lifecycle support (Phase 1 document store)
-- MCP tool surface
-- CLI support
-- local derived cache support
-- document extraction support for approved documents
-- CLI parity for core document operations
-- slug validation, ID-format validation
-
-Phase 2a implementation adds:
-
-- Plan entity type replacing Epic, with prefix-based IDs (P1-basic-ui format)
-- prefix registry in `.kbz/config.yaml` with validation and retirement support
-- document metadata records with SHA-256 content hash tracking and drift detection
-- Feature model updates (parent, design, spec, dev_plan, tags fields) at all layers
-- Phase 2 Feature lifecycle states (proposed→designing→specifying→dev-planning→developing→done)
-- document-driven Feature lifecycle transitions (document approval/supersession auto-transitions Features)
-- document intelligence Layers 1–4 (structural parsing, pattern extraction, AI classification, document graph)
-- optimistic locking for concurrent writes with end-to-end FileHash propagation
-- Epic→Plan migration command (idempotent, with feature field renames)
-- rich queries: date range, cross-entity, tag listing across types, `list_entities_filtered`
-- Plan and document record MCP tools
-- configuration MCP tools for prefix registry management
-- deterministic YAML serialization for all entity types and index files
-- comprehensive lifecycle validation with backward transitions
-- tags on all entity types with filtering support
-- extended health checks for documents, plan prefixes, and feature parent references
-
-Phase 2b implementation adds:
-
-- knowledge entries with full lifecycle (candidate→confirmed→flagged→retired), Wilson confidence scoring, and content-based deduplication
-- context profiles with YAML-defined roles and inheritance
-- context assembly with byte-based budgeting
-- agent capability tools: link resolution, duplicate detection, extraction guidance
-- batch document import for project onboarding
-- user identity auto-resolution from git config
-
-All tests pass with race detector enabled.
-
-### Repository structure
-
-At a high level:
-
-```/dev/null/README.md#L1-40
-kanbanzai/
-├── AGENTS.md
-├── README.md
-├── cmd/kanbanzai/
-├── internal/
-├── docs/
-└── work/
+```/dev/null/tree#L1-9
+.kbz/
+├── config.yaml          ← project settings and Plan prefix registry
+├── state/               ← entity records (plans, features, tasks, etc.)
+│   ├── knowledge/       ← knowledge entries
+│   └── documents/       ← document metadata records
+├── context/
+│   └── roles/           ← context profile definitions
+├── index/               ← document intelligence index
+└── cache/               ← local derived cache (not committed)
 ```
 
-Key directories:
+Everything important is plain YAML. You can read it, diff it, and review it in a pull request.
 
-- `cmd/kanbanzai/`
-  - CLI and MCP server entrypoint
-- `internal/service/`
-  - entity and document record service logic
-- `internal/document/`
-  - Phase 1 document store, lifecycle logic, templates, validation
-- `internal/docint/`
-  - document intelligence: structural parsing, pattern extraction, classification, document graph
-- `internal/storage/`
-  - canonical YAML entity storage and document record storage
-- `internal/config/`
-  - project configuration and prefix registry
-- `internal/core/`
-  - instance paths and root utilities
-- `internal/validate/`
-  - entity and health validation, lifecycle state machines
-- `internal/knowledge/`
-  - knowledge entry storage, lifecycle, confidence scoring, and deduplication
-- `internal/context/`
-  - context profiles, context assembly, and byte-based budgeting
-- `internal/mcp/`
-  - MCP server and tools (Phase 1, Phase 2a, and Phase 2b)
-- `internal/model/`
-  - entity type definitions and ID utilities
-- `internal/cache/`
-  - local derived cache
-- `internal/id/`
-  - canonical ID allocation and validation
-- `internal/fsutil/`
-  - filesystem utilities (atomic write)
-- `internal/testutil/`
-  - shared test helpers
-- `work/`
-  - design, spec, planning, bootstrap, and research documents
+---
 
-### Workflow model
+## Repository layout
 
-The project distinguishes between two workflows:
+```/dev/null/tree#L1-7
+kanbanzai/
+├── cmd/kanbanzai/       ← CLI and MCP server entry point
+├── internal/            ← core logic (not a library — all private packages)
+├── work/                ← design, specification, and planning documents
+│   ├── design/          ← design documents and policy
+│   ├── spec/            ← formal specifications
+│   └── plan/            ← implementation plans and progress tracking
+└── .kbz/                ← project instance state
+```
 
-- **bootstrap-workflow**
-  - the lightweight process used to build Kanbanzai right now
-- **kbz-workflow**
-  - the workflow Kanbanzai itself is intended to implement and enforce
+---
 
-That distinction matters. Much of the repository describes the target workflow, while the code implements the early kernel needed to support it.
+## For contributors
 
-### Phase 1 scope
+If you want to understand the project deeply, start with:
 
-Phase 1 is intentionally limited. It is the workflow kernel, not the whole future system.
+1. `work/bootstrap/bootstrap-workflow.md` — how we work right now
+2. `work/design/workflow-design-basis.md` — the design vision
+3. `work/spec/phase-1-specification.md` — Phase 1 scope
+4. `work/spec/phase-2-specification.md` — Phase 2 scope
+5. `work/spec/phase-2b-specification.md` — Phase 2b scope
 
-Its focus is on:
+Build and test:
 
-- local canonical state
-- deterministic persistence
-- lifecycle correctness
-- document support
-- MCP and CLI surfaces
-- validation and repair/debugging support
-
-It explicitly avoids broader future features such as:
-
-- orchestration-heavy multi-agent coordination
-- semantic retrieval / embeddings
-- broad GitHub automation
-- knowledge graph style context packing as a required runtime dependency
-- full worktree automation
-
-### Entity model
-
-The current entity set is:
-
-- `Plan` (Phase 2a — coordinates work, organises Features)
-- `Epic` (Phase 1, deprecated — retained for migration)
-- `Feature` (updated in Phase 2a with document references and tags)
-- `Task`
-- `Bug`
-- `Decision`
-- `DocumentRecord` (Phase 2a — metadata for tracked documents)
-- `KnowledgeEntry` (Phase 2b — persistent knowledge with lifecycle and confidence tracking)
-
-These are stored as YAML files under `.kbz/state/` using deterministic ordering rules.
-
-Examples of current ID families:
-
-- plans: `P1-basic-ui`, `X2-infrastructure` (prefix + number + slug)
-- epics: `E-001` (deprecated)
-- features: `FEAT-001`
-- bugs: `BUG-001`
-- decisions: `DEC-001`
-- tasks: `FEAT-001.1`
-- document records: `FEAT-123/design-my-doc`, `PROJECT/policy-security`
-
-Tasks are feature-local IDs rather than global IDs. Plan IDs use a human-assigned prefix from the project's prefix registry.
-
-### Deterministic YAML
-
-A core design constraint is deterministic canonical serialization.
-
-The implementation is expected to preserve stable output so that:
-
-- repeated writes do not churn Git diffs
-- round-trip write/read/write behavior is stable
-- records remain human-reviewable
-
-The canonical YAML rules include:
-
-- block style mappings/sequences
-- deterministic field order by entity type
-- LF line endings
-- trailing newline
-- no anchors, aliases, or tags
-- no multi-document streams
-
-This is important enough that the implementation does not simply rely on a default YAML marshaller for canonical output.
-
-### Document lifecycle
-
-There are currently two document subsystems:
-
-**Phase 1 document store** (`internal/document/`) — documents move through a linear lifecycle:
-
-- `draft` → `submitted` → `normalised` → `approved`
-
-This subsystem supports scaffold generation, submission, body update, approval, retrieval, validation, listing, and extraction for approved documents. It stores document content directly in `.kbz/docs/`.
-
-**Phase 2a document records** (`internal/service/documents.go`, `internal/storage/document_store.go`) — metadata records for documents that remain at their canonical paths (e.g., `work/design/foo.md`):
-
-- `draft` → `approved` → `superseded`
-
-This subsystem tracks content hashes (SHA-256) for integrity verification, detects content drift when files are modified outside the system, and supports supersession chains for document versioning. Records are stored in `.kbz/state/documents/`.
-
-The Phase 2a document record system is intended to eventually replace the Phase 1 document store for document lifecycle management, while the Phase 1 store may be retained for scaffolding and template generation.
-
-### MCP and CLI
-
-Kanbanzai is MCP-first, but the CLI is no longer just a placeholder.
-
-Current CLI support includes:
-
-- entity creation, retrieval, listing, status updates, field updates (Phase 1)
-- document scaffold / submit / approve / retrieve / validate / list
-- candidate validation
-- health check
-- cache rebuild
-- MCP server startup
-- `kbz knowledge list/get` — knowledge entry management (Phase 2b)
-- `kbz profile list/get` — context profile inspection (Phase 2b)
-- `kbz context assemble` — context assembly (Phase 2b)
-- `kbz import` — batch document import (Phase 2b)
-
-The MCP layer exposes Phase 1, Phase 2a, and Phase 2b operations:
-
-- Plan tools: `create_plan`, `get_plan`, `list_plans`, `update_plan_status`, `update_plan`
-- Document record tools: `doc_record_submit`, `doc_record_approve`, `doc_record_supersede`
-- Config tools: `get_project_config`, `get_prefix_registry`, `add_prefix`
-- Document intelligence tools: `doc_outline`, `doc_concepts`, `doc_classify`
-- Query tools: `list_tags`, `list_by_tag`, `list_entities_filtered`, `query_plan_tasks`, `doc_supersession_chain`
-- Migration tools: `migrate_phase2`
-- Knowledge tools: `knowledge_contribute`, `knowledge_get`, `knowledge_list`, `knowledge_update`, `knowledge_confirm`, `knowledge_flag`, `knowledge_retire`, `knowledge_promote`
-- Context tools: `context_assemble`, `context_report`, `profile_get`, `profile_list`
-- Agent capability tools: `suggest_links`, `check_duplicates`, `doc_extraction_guide`
-- Import tools: `batch_import_documents`
-
-CLI support for Phase 2a entity types has not yet been added.
-
-### Validation behavior
-
-The validation layer currently checks things such as:
-
-- required fields
-- known lifecycle states
-- slug format
-- entity ID format
-- bug enum values
-- cross-reference integrity
-- supersession consistency warnings
-- document feature-reference validity
-
-Health checks operate over stored canonical state and surface both errors and warnings.
-
-### Bootstrap self-use
-
-Bootstrap self-use has now been exercised locally against `.kbz/state/` to verify that the kernel can manage limited real project state without corruption.
-
-That verification included:
-
-- creating initial instance records
-- rebuilding cache
-- running health checks
-- reading back stored records
-- validating legal lifecycle transitions
-- validating rejection of illegal transitions
-
-At the moment, this bootstrap state is being treated as local proof rather than final committed project state.
-
-### Recommended reading for contributors
-
-If you need to understand the project deeply, start here:
-
-1. `work/bootstrap/bootstrap-workflow.md`
-2. `work/design/workflow-design-basis.md`
-3. `work/design/document-centric-interface.md`
-4. `work/spec/phase-1-specification.md`
-5. `work/spec/phase-2-specification.md`
-6. `work/design/agent-interaction-protocol.md`
-7. `work/design/quality-gates-and-review-policy.md`
-8. `work/design/git-commit-policy.md`
-
-Then use as needed:
-
-- `work/plan/phase-2a-progress.md` — Phase 2a implementation status
-- `work/plan/phase-2b-progress.md` — Phase 2b implementation status
-- `work/plan/phase-2-scope.md` — Phase 2 scope and planning
-- `work/spec/phase-2b-specification.md` — Phase 2b specification
-- `work/plan/phase-2b-implementation-plan.md` — Phase 2b implementation plan
-- `work/plan/phase-1-implementation-plan.md`
-- `work/plan/phase-1-decision-log.md`
-- `work/design/document-intelligence-design.md`
-- `work/design/machine-context-design.md`
-
-### Build and test
-
-Typical commands:
-
-```/dev/null/README.md#L1-20
+```/dev/null/sh#L1-3
 go build ./...
-go test ./...
 go test -race ./...
 go vet ./...
-go fmt ./...
 ```
 
-### In short
-
-Kanbanzai is trying to become a practical workflow kernel for human-AI software delivery:
-
-- document-centered for humans
-- structured and enforceable for machines
-- Git-native for visibility and control
-
-The codebase now demonstrates the core entity model, document management with integrity tracking, document intelligence, a prefix-based Plan system, end-to-end lifecycle integration, persistent knowledge management with confidence scoring, context assembly with role-based profiles and byte budgeting, and agent capability tools for link resolution and duplicate detection. Phase 2b is complete. See `work/plan/phase-2b-progress.md` for detailed status.
+See `AGENTS.md` for detailed contributor guidelines, code conventions, and AI agent instructions.
