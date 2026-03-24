@@ -771,6 +771,8 @@ All new MCP operations must reject invalid writes rather than silently repairing
 
 ## 19. Phase 2b: Context Management Requirements
 
+> **Note:** Phase 2b requirements have been expanded into a standalone specification: `work/spec/phase-2b-specification.md`. The sections below (§19–20) are the original high-level requirements that informed that specification. For binding Phase 2b requirements, refer to the Phase 2b specification.
+
 ### 19.1 Context profile definition
 
 The system must support named context profiles defined as YAML bundles with inheritance hierarchies. A context profile scopes what knowledge and document context an agent receives for a given role or task type.
@@ -953,6 +955,9 @@ Tags must be:
 
 ### 22.12 Context management (Phase 2b)
 
+> **Note:** Detailed acceptance criteria for Phase 2b are defined in `work/spec/phase-2b-specification.md` §20. The criteria below are the original high-level requirements.
+
+
 It must be possible to:
 
 - Define context profiles as named YAML bundles
@@ -962,6 +967,9 @@ It must be possible to:
 - Observe knowledge lifecycle transitions (contribution → confirmation → staleness → retirement)
 
 ### 22.13 Agent capabilities (Phase 2b)
+
+> **Note:** Detailed acceptance criteria for Phase 2b are defined in `work/spec/phase-2b-specification.md` §20. The criteria below are the original high-level requirements.
+
 
 The system must support:
 
