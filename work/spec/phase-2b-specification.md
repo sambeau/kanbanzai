@@ -310,7 +310,7 @@ When an agent calls `knowledge_contribute`, the system checks for existing entri
 
 2. **Near-duplicate detection** — the system computes Jaccard similarity over normalised word-sets (lowercase, stop words removed) between the new `content` and existing entries in the same `scope`. If similarity exceeds 0.65, the contribution is rejected with a pointer to the near-duplicate entry.
 
-The system must not silently discard contributions. Rejections must include the ID and topic of the conflicting entry so the agent can take appropriate action (update the existing entry, or contribute with a distinct topic).
+The system must not silently discard contributions. Rejections must include the ID, topic, and content of the conflicting entry so the agent can immediately decide whether to update the existing entry or contribute with a distinct topic — without a follow-up `knowledge_get` call.
 
 ### 9.3 Topic normalisation
 
