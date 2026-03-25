@@ -1,0 +1,18 @@
+id: KE-01KMJZCK15Q09
+tier: 2
+topic: phase-4b-scope-six-features
+scope: project
+content: "Phase 4b delivers six feature tracks: (1) feature decomposition (decompose_feature, decompose_review), (2) automatic dependency unblocking via StatusTransitionHook, (3) worker review (review_task_output), (4) conflict domain analysis (conflict_domain_check), (5) vertical slice decomposition guidance (slice_analysis), (6) incident/RCA entities. All developed under self-management using Phase 4a tooling."
+learned_from: TASK-01KMJVK9V8YTT
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - phase-4b
+  - orchestration
+  - scope
+created: "2026-03-25T17:06:31Z"
+created_by: unknown
+updated: "2026-03-25T17:06:31Z"
