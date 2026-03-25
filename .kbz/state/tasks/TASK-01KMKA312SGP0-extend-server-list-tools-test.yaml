@@ -2,4 +2,13 @@ id: TASK-01KMKA312SGP0
 parent_feature: FEAT-01KMKA278DFNV
 slug: extend-server-list-tools-test
 summary: "Extend TestServer_ListTools to include all Phase 4b tools, or add a TestServer_ListTools_Phase4b that verifies Phase 4b tool registration against a full-server instance (fixes R4B-6)"
-status: ready
+status: done
+files_planned:
+  - internal/mcp/server_test.go
+completed: "2026-03-25T21:37:26Z"
+claimed_at: "2026-03-25T21:35:59Z"
+dispatched_to: developer
+dispatched_at: "2026-03-25T21:35:59Z"
+dispatched_by: claude-assistant
+completion_summary: Verified that TestServer_ListTools_Phase4b test already exists and passes. Test creates full server with all Phase 4b services and validates Phase 4b tool registration.
+verification: Ran TestServer_ListTools_Phase4b - test passes and validates all Phase 4b tools are registered.

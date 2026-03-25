@@ -2,4 +2,15 @@ id: TASK-01KMKA2D8ZK1Z
 parent_feature: FEAT-01KMKA278DFNV
 slug: add-incident-field-ordering-and-fixture
 summary: Add incident field ordering to fieldOrderForEntityType; add testdata/entities/incident.yaml fixture; add to TestCanonicalYAML_FixturesRoundTrip (fixes R4B-1 and R4B-5)
-status: ready
+status: done
+files_planned:
+  - internal/storage/entity_store.go
+  - testdata/entities/incident.yaml
+  - internal/storage/entity_store_test.go
+completed: "2026-03-25T21:34:46Z"
+claimed_at: "2026-03-25T21:33:45Z"
+dispatched_to: backend
+dispatched_at: "2026-03-25T21:33:45Z"
+dispatched_by: claude-assistant
+completion_summary: "Verified that incident field ordering, fixture, and round-trip test were already implemented. All tests pass."
+verification: Ran TestCanonicalYAML_FixturesRoundTrip - all subtests including incident pass

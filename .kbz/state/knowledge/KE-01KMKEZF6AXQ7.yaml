@@ -1,0 +1,18 @@
+id: KE-01KMKEZF6AXQ7
+tier: 2
+topic: entity-lifecycle-state-machines
+scope: project
+content: "Entity lifecycle state machines are enforced by internal/validate/lifecycle.go. Each entity type has a directed graph of valid transitions. StatusTransitionHook is called after every successful transition to trigger side effects (e.g., auto-promoting unblocked tasks). Lifecycle validation ensures workflow integrity and prevents invalid state combinations."
+learned_from: P1-phase-4-orchestration
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - lifecycle
+  - validation
+  - architecture
+created: "2026-03-25T21:38:58Z"
+created_by: sambeau
+updated: "2026-03-25T21:38:58Z"

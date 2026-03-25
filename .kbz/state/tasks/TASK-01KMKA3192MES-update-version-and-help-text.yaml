@@ -2,4 +2,14 @@ id: TASK-01KMKA3192MES
 parent_feature: FEAT-01KMKA278DFNV
 slug: update-version-and-help-text
 summary: Update ServerVersion from phase-3-dev to phase-4b; update usageText to say Phase 4b; add feature/task/incident to top-level help (fixes R4B-7 and R4B-8)
-status: ready
+status: done
+files_planned:
+  - internal/mcp/server.go
+  - cmd/kanbanzai/main.go
+completed: "2026-03-25T21:36:12Z"
+claimed_at: "2026-03-25T21:36:00Z"
+dispatched_to: developer
+dispatched_at: "2026-03-25T21:36:00Z"
+dispatched_by: claude-assistant
+completion_summary: "Verified that ServerVersion is already set to 'phase-4b' and usageText includes incident commands. Version strings are correct."
+verification: "Inspected server.go (ServerVersion = 'phase-4b') and main.go (usageText includes feature/task/incident)."

@@ -1,0 +1,18 @@
+id: KE-01KMKF0DN6K84
+tier: 2
+topic: automatic-dependency-unblocking
+scope: project
+content: "Dependency management: Tasks default to 'queued' status. Use depends_on to declare explicit dependencies. StatusTransitionHook automatically promotes blocked→ready when dependencies reach terminal states (done, not-planned, duplicate). work_queue returns ready tasks sorted by estimate (ascending) then age (descending). This enables predictable, dependency-respecting execution order."
+learned_from: P1-phase-4-orchestration
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - dependencies
+  - workflow
+  - orchestration
+created: "2026-03-25T21:39:30Z"
+created_by: sambeau
+updated: "2026-03-25T21:39:30Z"

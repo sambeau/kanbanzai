@@ -1,0 +1,17 @@
+id: KE-01KMKEZNPQHZJ
+tier: 2
+topic: git-commit-message-format
+scope: project
+content: "Git commit messages follow conventional format: 'type(scope): description'. Types: feat, fix, docs, test, refactor, chore. Scope identifies affected component (e.g., entity, mcp, storage, cli). Keep first line under 72 chars. Body (optional) explains why, not what. Reference entity IDs in footer (e.g., 'Refs: FEAT-01KM..., TASK-01KM...')."
+learned_from: P2-phase-1-kernel
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - git
+  - conventions
+created: "2026-03-25T21:39:05Z"
+created_by: sambeau
+updated: "2026-03-25T21:39:05Z"

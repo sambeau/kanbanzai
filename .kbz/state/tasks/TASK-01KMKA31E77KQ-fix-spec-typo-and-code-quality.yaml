@@ -2,4 +2,15 @@ id: TASK-01KMKA31E77KQ
 parent_feature: FEAT-01KMKA278DFNV
 slug: fix-spec-typo-and-code-quality
 summary: "Fix §8.2 spec typo (needs-rework → needs-review); refactor incidentUpdateTool/incidentLinkBugTool to use jsonResult(); replace direct Params.Arguments access in conflict_tools.go with GetArguments() (fixes R4B-9, R4B-10, R4B-11)"
-status: ready
+status: done
+files_planned:
+  - work/spec/phase-4b-specification.md
+  - internal/mcp/incident_tools.go
+  - internal/mcp/conflict_tools.go
+completed: "2026-03-25T21:37:30Z"
+claimed_at: "2026-03-25T21:36:00Z"
+dispatched_to: developer
+dispatched_at: "2026-03-25T21:36:00Z"
+dispatched_by: claude-assistant
+completion_summary: "Verified all R4B-9/10/11 fixes already completed: spec §8.2 already says needs-review (not needs-rework); incidentUpdateTool and incidentLinkBugTool already use jsonResult(); conflict_tools.go already uses GetArguments()."
+verification: "Inspected spec line 283 (needs-review correct), incident_tools.go lines 122-126 & 175-179 (jsonResult used), conflict_tools.go line 54 (GetArguments used)."

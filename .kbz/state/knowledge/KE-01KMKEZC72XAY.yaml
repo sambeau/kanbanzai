@@ -1,0 +1,17 @@
+id: KE-01KMKEZC72XAY
+tier: 2
+topic: tsid13-id-system
+scope: project
+content: "TSID13 IDs use a single character prefix (FEAT-, TASK-, BUG-, INC-) followed by 13-character TSID (e.g. FEAT-01KMKA278DFNV). Plans use multi-char prefixes based on registry (e.g. P1-, P2-). All IDs are immutable once created. Slugs are URL-friendly suffixes that aid human readability but are not part of the canonical identifier."
+learned_from: P2-phase-1-kernel
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - id-system
+  - architecture
+created: "2026-03-25T21:38:55Z"
+created_by: sambeau
+updated: "2026-03-25T21:38:55Z"

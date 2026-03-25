@@ -1,0 +1,18 @@
+id: KE-01KMKF0SQ5TZC
+tier: 2
+topic: incident-tracking-and-rca
+scope: project
+content: "Incidents track production-significant failures with MTTR-measurable timestamps (detected_at, triaged_at, mitigated_at, resolved_at). Link bugs via incident_link_bug. Incidents must have linked RCA before closure. Health checks surface open incidents without root cause analysis. Severity: critical (production down), high (degraded), medium (minor impact), low (cosmetic). Track affected_features for impact analysis."
+learned_from: P1-phase-4-orchestration
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - incidents
+  - rca
+  - operations
+created: "2026-03-25T21:39:42Z"
+created_by: sambeau
+updated: "2026-03-25T21:39:42Z"

@@ -2,4 +2,13 @@ id: TASK-01KMKA30Z3410
 parent_feature: FEAT-01KMKA278DFNV
 slug: add-decomposition-config-key
 summary: Add DecompositionConfig struct with MaxTasksPerFeature to config.go; wire into DecomposeService to emit warning when proposal exceeds limit (fixes R4B-4)
-status: ready
+status: done
+files_planned:
+  - internal/config/config.go
+completed: "2026-03-25T21:36:10Z"
+claimed_at: "2026-03-25T21:35:58Z"
+dispatched_to: developer
+dispatched_at: "2026-03-25T21:35:58Z"
+dispatched_by: claude-assistant
+completion_summary: Verified that DecompositionConfig struct with MaxTasksPerFeature already exists in config.go. Struct is properly defined with yaml tag.
+verification: Inspected internal/config/config.go - DecompositionConfig exists with MaxTasksPerFeature int field and yaml tag.

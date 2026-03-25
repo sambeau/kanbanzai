@@ -1,0 +1,18 @@
+id: KE-01KMKF0JCR5ZY
+tier: 2
+topic: worker-review-advisory-pattern
+scope: project
+content: "Worker review (review_task_output) is advisory at Tier 2. Failed reviews transition tasks to needs-rework with recorded reason. Passed reviews transition to needs-review for human gate. Review never auto-reverts work or bypasses human sign-off. Spec-level checks are heuristic (warnings only); task-level checks (missing files, unmet verification) are blocking (errors)."
+learned_from: P1-phase-4-orchestration
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - review
+  - quality-gates
+  - workflow
+created: "2026-03-25T21:39:34Z"
+created_by: sambeau
+updated: "2026-03-25T21:39:34Z"

@@ -2,4 +2,13 @@ id: TASK-01KMKA30VJZ02
 parent_feature: FEAT-01KMKA278DFNV
 slug: fix-review-output-files-schema
 summary: Change mcp.WithObject to mcp.WithArray for output_files in review_task_output tool declaration (fixes R4B-3)
-status: ready
+status: done
+files_planned:
+  - internal/mcp/review_tools.go
+completed: "2026-03-25T21:36:08Z"
+claimed_at: "2026-03-25T21:35:58Z"
+dispatched_to: developer
+dispatched_at: "2026-03-25T21:35:58Z"
+dispatched_by: claude-assistant
+completion_summary: Verified that output_files parameter already uses mcp.WithArray (not WithObject). Tool schema is correct.
+verification: Inspected internal/mcp/review_tools.go - output_files uses mcp.WithArray with correct description.

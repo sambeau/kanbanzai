@@ -1,0 +1,17 @@
+id: KE-01KMKEZNQ6A06
+tier: 2
+topic: document-intelligence-three-layer-architecture
+scope: project
+content: "Document intelligence has 3 layers: Layer 1 (structure parsing) extracts sections with paths, titles, levels, word counts. Layer 2 (entity linking) finds entity ID references and builds the document graph. Layer 3 (classification) assigns semantic roles (requirement, decision, rationale, etc.) to sections via LLM analysis. Layers are independent and can be run separately."
+learned_from: P2-phase-1-kernel
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - document-intelligence
+  - architecture
+created: "2026-03-25T21:39:05Z"
+created_by: sambeau
+updated: "2026-03-25T21:39:05Z"

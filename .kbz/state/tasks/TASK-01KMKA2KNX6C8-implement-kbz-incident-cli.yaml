@@ -2,4 +2,15 @@ id: TASK-01KMKA2KNX6C8
 parent_feature: FEAT-01KMKA278DFNV
 slug: implement-kbz-incident-cli
 summary: Implement kbz incident create/list/show CLI commands; add to run() switch; update usageText; add CLI tests (fixes R4B-2)
-status: ready
+status: done
+files_planned:
+  - cmd/kanbanzai/incident_cmd.go
+  - cmd/kanbanzai/main.go
+  - cmd/kanbanzai/main_test.go
+completed: "2026-03-25T21:35:28Z"
+claimed_at: "2026-03-25T21:35:22Z"
+dispatched_to: developer
+dispatched_at: "2026-03-25T21:35:22Z"
+dispatched_by: claude-assistant
+completion_summary: "Verified that incident CLI commands (create/list/show), run() switch integration, usageText, and tests were already implemented. All tests pass."
+verification: "Ran TestRunIncident* tests - all pass. Verified usageText includes incident commands."

@@ -1,0 +1,17 @@
+id: KE-01KMKEZDSHC61
+tier: 2
+topic: canonical-yaml-field-ordering
+scope: project
+content: "Entity YAML files MUST be written in canonical field order defined by fieldOrderForEntityType(). This ensures deterministic diffs and clean version control. Field order is: identity fields (id, slug), status/estimate, content fields, relationships, timestamps. Any unrecognized fields are sorted alphabetically after the canonical fields."
+learned_from: P2-phase-1-kernel
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - storage
+  - conventions
+created: "2026-03-25T21:38:57Z"
+created_by: sambeau
+updated: "2026-03-25T21:38:57Z"

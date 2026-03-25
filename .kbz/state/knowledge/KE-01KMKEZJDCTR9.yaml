@@ -1,0 +1,17 @@
+id: KE-01KMKEZJDCTR9
+tier: 2
+topic: test-fixture-organization
+scope: developer
+content: "Test fixtures live in testdata/ and are active test assets, not passive examples. Fixtures are canonical examples of each entity type that exercise round-trip serialization. TestCanonicalYAML_FixturesRoundTrip verifies every entity type can be read and rewritten identically. Changes to entity schema MUST update corresponding fixtures."
+learned_from: P2-phase-1-kernel
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - testing
+  - fixtures
+created: "2026-03-25T21:39:02Z"
+created_by: sambeau
+updated: "2026-03-25T21:39:02Z"
