@@ -161,6 +161,10 @@ func NewServer(entityRoot string) *server.MCPServer {
 	decomposeSvc := service.NewDecomposeService(entitySvc, docRecordSvc)
 	mcpServer.AddTools(DecomposeTools(decomposeSvc)...)
 
+	// Phase 4b Review tools (review_task_output)
+	reviewSvc := service.NewReviewService(entitySvc, intelligenceSvc, repoRoot)
+	mcpServer.AddTools(ReviewTools(reviewSvc)...)
+
 	return mcpServer
 }
 

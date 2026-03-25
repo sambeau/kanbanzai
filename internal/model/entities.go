@@ -346,6 +346,7 @@ type Task struct {
 	DispatchedAt      *time.Time `yaml:"dispatched_at,omitempty"`
 	DispatchedBy      string     `yaml:"dispatched_by,omitempty"`
 	CompletionSummary string     `yaml:"completion_summary,omitempty"`
+	ReworkReason      string     `yaml:"rework_reason,omitempty"`
 
 	Verification string   `yaml:"verification,omitempty"`
 	Tags         []string `yaml:"tags,omitempty"`

@@ -182,6 +182,7 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 		string(model.TaskStatusActive): {
 			string(model.TaskStatusBlocked):     {},
 			string(model.TaskStatusNeedsReview): {},
+			string(model.TaskStatusNeedsRework): {}, // review_task_output fail from active
 			string(model.TaskStatusDone):        {}, // direct completion via complete_task
 			string(model.TaskStatusNotPlanned):  {},
 			string(model.TaskStatusDuplicate):   {},

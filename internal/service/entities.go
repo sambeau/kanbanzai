@@ -624,6 +624,12 @@ func (s *EntityService) UpdateStatus(input UpdateStatusInput) (GetResult, error)
 	}
 
 	record.Fields["status"] = nextStatus
+
+	// Clear rework_reason when a task transitions from needs-rework to active.
+	if entityType == "task" && currentStatusText == "needs-rework" && nextStatus == "active" {
+		delete(record.Fields, "rework_reason")
+	}
+
 	path, err := s.store.Write(record)
 	if err != nil {
 		return GetResult{}, err
@@ -1089,6 +1095,9 @@ func taskFields(e model.Task) map[string]any {
 	}
 	if e.CompletionSummary != "" {
 		fields["completion_summary"] = e.CompletionSummary
+	}
+	if e.ReworkReason != "" {
+		fields["rework_reason"] = e.ReworkReason
 	}
 	if e.Verification != "" {
 		fields["verification"] = e.Verification

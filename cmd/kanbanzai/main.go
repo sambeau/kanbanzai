@@ -124,6 +124,8 @@ func run(args []string, deps dependencies) error {
 		return runCleanup(args[1:], deps)
 	case "feature":
 		return runFeature(args[1:], deps)
+	case "task":
+		return runTask(args[1:], deps)
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
 	}

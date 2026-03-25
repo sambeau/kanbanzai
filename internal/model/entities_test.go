@@ -254,6 +254,56 @@ func TestTask_YAMLRoundTrip_WithPointers(t *testing.T) {
 	}
 }
 
+func TestTask_YAMLRoundTrip_WithReworkReason(t *testing.T) {
+	t.Parallel()
+
+	started := time.Date(2025, 1, 15, 10, 30, 0, 0, time.UTC)
+
+	original := model.Task{
+		ID:            testutil.TestTaskID,
+		ParentFeature: testutil.TestFeatureID,
+		Slug:          "rework-reason-task",
+		Summary:       "Task with rework reason for round-trip test",
+		Status:        model.TaskStatusNeedsRework,
+		Assignee:      "agent-1",
+		Started:       &started,
+		ReworkReason:  "output file missing: internal/auth.go; verification criteria not met",
+		Verification:  "go test ./internal/auth/...",
+	}
+
+	data, err := yaml.Marshal(original)
+	if err != nil {
+		t.Fatalf("Marshal() error = %v", err)
+	}
+
+	var decoded model.Task
+	if err := yaml.Unmarshal(data, &decoded); err != nil {
+		t.Fatalf("Unmarshal() error = %v", err)
+	}
+
+	if decoded.ReworkReason != original.ReworkReason {
+		t.Errorf("ReworkReason = %q, want %q", decoded.ReworkReason, original.ReworkReason)
+	}
+	if decoded.ID != original.ID {
+		t.Errorf("ID = %q, want %q", decoded.ID, original.ID)
+	}
+	if decoded.Status != original.Status {
+		t.Errorf("Status = %q, want %q", decoded.Status, original.Status)
+	}
+	if decoded.Verification != original.Verification {
+		t.Errorf("Verification = %q, want %q", decoded.Verification, original.Verification)
+	}
+
+	// Verify round-trip stability: marshal the decoded value and compare.
+	data2, err := yaml.Marshal(decoded)
+	if err != nil {
+		t.Fatalf("second Marshal() error = %v", err)
+	}
+	if string(data) != string(data2) {
+		t.Errorf("round-trip mismatch:\n--- first ---\n%s\n--- second ---\n%s", data, data2)
+	}
+}
+
 func TestTask_YAMLRoundTrip_NilPointers(t *testing.T) {
 	t.Parallel()
 

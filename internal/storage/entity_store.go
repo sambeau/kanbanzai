@@ -285,6 +285,7 @@ func fieldOrderForEntityType(entityType string) []string {
 			"dispatched_at",
 			"dispatched_by",
 			"completion_summary",
+			"rework_reason",
 			"verification",
 			"tags",
 		}
