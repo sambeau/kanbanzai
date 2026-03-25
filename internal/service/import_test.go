@@ -344,6 +344,114 @@ func TestInferDocType(t *testing.T) {
 	}
 }
 
+func TestBatchImport_GlobFilterFilename(t *testing.T) {
+	t.Parallel()
+
+	importSvc, docSvc, repoRoot, cfg := newTestImportSetup(t)
+
+	// Create files with different names in the same directory
+	writeTestFile(t, repoRoot, "work/design/api-design.md", "# API Design\n\nContent.")
+	writeTestFile(t, repoRoot, "work/design/ui-mockup.md", "# UI Mockup\n\nContent.")
+	writeTestFile(t, repoRoot, "work/design/api-spec.md", "# API Spec\n\nContent.")
+
+	// Import only files starting with "api-"
+	result, err := importSvc.Import(cfg, BatchImportInput{
+		Path:      filepath.Join(repoRoot, "work"),
+		CreatedBy: "tester",
+		Glob:      "api-*.md",
+	})
+	if err != nil {
+		t.Fatalf("Import() error = %v", err)
+	}
+
+	if result.Imported != 2 {
+		t.Errorf("Imported = %d, want 2 (api-design.md and api-spec.md)", result.Imported)
+	}
+
+	// Verify correct files were imported
+	docs, err := docSvc.ListDocuments(DocumentFilters{})
+	if err != nil {
+		t.Fatalf("ListDocuments() error = %v", err)
+	}
+	if len(docs) != 2 {
+		t.Fatalf("len(docs) = %d, want 2", len(docs))
+	}
+
+	titles := make(map[string]bool)
+	for _, doc := range docs {
+		titles[doc.Title] = true
+	}
+	if !titles["Api design"] {
+		t.Error("expected 'Api design' to be imported")
+	}
+	if !titles["Api spec"] {
+		t.Error("expected 'Api spec' to be imported")
+	}
+	if titles["Ui mockup"] {
+		t.Error("'Ui mockup' should not be imported")
+	}
+}
+
+func TestBatchImport_GlobFilterWithPath(t *testing.T) {
+	t.Parallel()
+
+	importSvc, docSvc, repoRoot, cfg := newTestImportSetup(t)
+
+	// Create files in different subdirectories
+	writeTestFile(t, repoRoot, "work/design/api.md", "# API\n\nContent.")
+	writeTestFile(t, repoRoot, "work/spec/api.md", "# API Spec\n\nContent.")
+	writeTestFile(t, repoRoot, "work/plan/roadmap.md", "# Roadmap\n\nContent.")
+
+	// Import only files in the design subdirectory
+	result, err := importSvc.Import(cfg, BatchImportInput{
+		Path:      filepath.Join(repoRoot, "work"),
+		CreatedBy: "tester",
+		Glob:      "design/*.md",
+	})
+	if err != nil {
+		t.Fatalf("Import() error = %v", err)
+	}
+
+	if result.Imported != 1 {
+		t.Errorf("Imported = %d, want 1 (only design/api.md)", result.Imported)
+	}
+
+	docs, err := docSvc.ListDocuments(DocumentFilters{})
+	if err != nil {
+		t.Fatalf("ListDocuments() error = %v", err)
+	}
+	if len(docs) != 1 {
+		t.Fatalf("len(docs) = %d, want 1", len(docs))
+	}
+	if docs[0].Type != "design" {
+		t.Errorf("Type = %q, want %q", docs[0].Type, "design")
+	}
+}
+
+func TestBatchImport_GlobFilterAllMd(t *testing.T) {
+	t.Parallel()
+
+	importSvc, _, repoRoot, cfg := newTestImportSetup(t)
+
+	writeTestFile(t, repoRoot, "work/design/doc1.md", "# Doc 1\n\nContent.")
+	writeTestFile(t, repoRoot, "work/design/doc2.md", "# Doc 2\n\nContent.")
+	writeTestFile(t, repoRoot, "work/design/readme.txt", "Plain text file")
+
+	// Glob "*.md" should match all .md files (filename-only matching)
+	result, err := importSvc.Import(cfg, BatchImportInput{
+		Path:      filepath.Join(repoRoot, "work"),
+		CreatedBy: "tester",
+		Glob:      "*.md",
+	})
+	if err != nil {
+		t.Fatalf("Import() error = %v", err)
+	}
+
+	if result.Imported != 2 {
+		t.Errorf("Imported = %d, want 2", result.Imported)
+	}
+}
+
 func TestExtractGlobSegment(t *testing.T) {
 	t.Parallel()
 

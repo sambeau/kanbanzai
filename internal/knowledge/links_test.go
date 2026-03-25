@@ -46,6 +46,11 @@ func TestScanEntityRefs(t *testing.T) {
 			wantSpans: []string{"KE-01J3K7MXP3RT5"},
 		},
 		{
+			name:      "single DOC reference",
+			text:      "See DOC-01KM8JV0G09V5 for details",
+			wantSpans: []string{"DOC-01KM8JV0G09V5"},
+		},
+		{
 			name:      "plan ID reference",
 			text:      "Part of P2-basic-ui",
 			wantSpans: []string{"P2-basic-ui"},
@@ -102,6 +107,7 @@ func TestEntityTypeFromID(t *testing.T) {
 		{"BUG-DEF", "bug"},
 		{"DEC-GHI", "decision"},
 		{"KE-01J3K7MXP3RT5", "knowledge_entry"},
+		{"DOC-01KM8JV0G09V5", "document"},
 		{"P2-basic-ui", "plan"},
 		{"unknown", "plan"},
 	}

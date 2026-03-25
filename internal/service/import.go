@@ -10,12 +10,27 @@ import (
 	"kanbanzai/internal/config"
 )
 
-// matchGlob reports whether name matches the glob pattern using filepath.Match.
+// matchGlob reports whether name matches the glob pattern.
 // An empty pattern matches everything.
+// Supports two matching modes:
+//   - If the pattern contains a path separator, it matches against the full relative path
+//   - Otherwise, it matches against just the filename (basename)
+//
+// Note: Go's filepath.Match does not support "**" for recursive matching.
+// Use patterns like "design/*.md" or "*.md" instead.
 func matchGlob(pattern, name string) bool {
 	if pattern == "" {
 		return true
 	}
+	// Normalize to forward slashes for consistent matching
+	pattern = filepath.ToSlash(pattern)
+	name = filepath.ToSlash(name)
+
+	// If pattern has no path separator, match against basename only
+	if !strings.Contains(pattern, "/") {
+		name = filepath.Base(name)
+	}
+
 	matched, _ := filepath.Match(pattern, name)
 	return matched
 }
@@ -30,8 +45,11 @@ type BatchImportInput struct {
 	Owner string
 	// CreatedBy is the already-resolved user identity.
 	CreatedBy string
-	// Glob is an optional filename glob pattern (e.g. "design-*.md").
-	// When non-empty, only files whose base name matches are imported.
+	// Glob is an optional glob pattern to filter files.
+	// If the pattern contains a path separator (e.g., "design/*.md"), it matches
+	// against the relative path from the import directory.
+	// If the pattern has no separator (e.g., "*.md"), it matches the filename only.
+	// Note: Go's filepath.Match does not support "**" for recursive matching.
 	Glob string
 }
 
@@ -103,8 +121,14 @@ func (s *BatchImportService) Import(cfg *config.Config, input BatchImportInput) 
 			return nil
 		}
 
-		// Apply optional glob filter against the base filename.
-		if !matchGlob(input.Glob, filepath.Base(absPath)) {
+		// Compute path relative to the import directory for glob matching.
+		relFromImport, _ := filepath.Rel(input.Path, absPath)
+		if relFromImport == "" {
+			relFromImport = filepath.Base(absPath)
+		}
+
+		// Apply optional glob filter.
+		if !matchGlob(input.Glob, relFromImport) {
 			return nil
 		}
 

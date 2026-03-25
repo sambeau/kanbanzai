@@ -403,3 +403,97 @@ func TestAssemble_UnknownRole_ReturnsError(t *testing.T) {
 		t.Fatal("Assemble() with unknown role: expected error, got nil")
 	}
 }
+
+func TestAssemble_MinConfidenceFiltering(t *testing.T) {
+	t.Parallel()
+
+	profileDir := t.TempDir()
+	stateDir := t.TempDir()
+
+	writeProfileFile(t, profileDir, "be.yaml", `
+id: be
+description: "Test role"
+`)
+	store := NewProfileStore(profileDir)
+	knowledgeSvc := service.NewKnowledgeService(stateDir)
+
+	// Create a Tier 2 entry with high confidence (will be included)
+	t2High, _, err := knowledgeSvc.Contribute(service.ContributeInput{
+		Topic: "t2-high-conf", Scope: "be", Content: "Always wrap errors with fmt.Errorf and the %w verb for proper error chain propagation", Tier: 2,
+	})
+	if err != nil {
+		t.Fatalf("Contribute T2 high: %v", err)
+	}
+
+	// Create a Tier 3 entry with high confidence (will be included)
+	t3High, _, err := knowledgeSvc.Contribute(service.ContributeInput{
+		Topic: "t3-high-conf", Scope: "be", Content: "Use table-driven tests with t.Parallel for concurrent execution of independent test cases", Tier: 3,
+	})
+	if err != nil {
+		t.Fatalf("Contribute T3 high: %v", err)
+	}
+
+	// Create another Tier 3 entry (starts at 0.5, exactly at threshold)
+	t3AtThreshold, _, err := knowledgeSvc.Contribute(service.ContributeInput{
+		Topic: "t3-at-threshold", Scope: "be", Content: "Run go vet and staticcheck before committing to catch common mistakes early", Tier: 3,
+	})
+	if err != nil {
+		t.Fatalf("Contribute T3 at threshold: %v", err)
+	}
+
+	// Create a Tier 3 entry and flag it to lower confidence below 0.5
+	t3Low, _, err := knowledgeSvc.Contribute(service.ContributeInput{
+		Topic: "t3-low-conf", Scope: "be", Content: "Prefer composition over inheritance when designing Go interfaces and structs", Tier: 3,
+	})
+	if err != nil {
+		t.Fatalf("Contribute T3 low: %v", err)
+	}
+	// Flag it to lower confidence (one flag brings confidence down)
+	if _, err := knowledgeSvc.Flag(t3Low.ID, "not accurate"); err != nil {
+		t.Fatalf("Flag T3 low: %v", err)
+	}
+
+	// Verify setup: check confidences
+	t3LowRecord, err := knowledgeSvc.Get(t3Low.ID)
+	if err != nil {
+		t.Fatalf("Get T3 low: %v", err)
+	}
+	t3LowConf, _ := t3LowRecord.Fields["confidence"].(float64)
+	if t3LowConf >= 0.5 {
+		t.Fatalf("Test setup failed: T3 low confidence = %v, want < 0.5", t3LowConf)
+	}
+
+	// Assemble context
+	result, err := Assemble(AssemblyInput{Role: "be"}, store, knowledgeSvc, nil, nil)
+	if err != nil {
+		t.Fatalf("Assemble() error = %v", err)
+	}
+
+	// Collect which entries appear in the result by checking the EntryID field
+	entryIDs := make(map[string]bool)
+	for _, item := range result.Items {
+		if item.Source == SourceKnowledgeT2 || item.Source == SourceKnowledgeT3 {
+			entryIDs[item.EntryID] = true
+		}
+	}
+
+	// T2 with default confidence (0.5 >= 0.3) should be included
+	if !entryIDs[t2High.ID] {
+		t.Errorf("T2 high confidence entry should be included (confidence 0.5 >= 0.3 threshold)")
+	}
+
+	// T3 with default confidence (0.5 >= 0.5) should be included
+	if !entryIDs[t3High.ID] {
+		t.Errorf("T3 high confidence entry should be included (confidence 0.5 >= 0.5 threshold)")
+	}
+
+	// T3 at threshold (0.5 = 0.5) should be included
+	if !entryIDs[t3AtThreshold.ID] {
+		t.Errorf("T3 at threshold entry should be included (confidence 0.5 >= 0.5 threshold)")
+	}
+
+	// T3 with low confidence (flagged, < 0.5) should be excluded
+	if entryIDs[t3Low.ID] {
+		t.Errorf("T3 low confidence entry should be excluded (confidence %v < 0.5 threshold)", t3LowConf)
+	}
+}

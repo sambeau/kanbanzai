@@ -14,6 +14,7 @@ var entityPatterns = []*regexp.Regexp{
 	regexp.MustCompile(`BUG-[A-Z0-9]+`),
 	regexp.MustCompile(`DEC-[A-Z0-9]+`),
 	regexp.MustCompile(`KE-[A-Z0-9]+`),
+	regexp.MustCompile(`DOC-[A-Z0-9]+`),
 	regexp.MustCompile(`[A-Z][0-9]+-[a-z0-9-]+`),
 }
 
@@ -79,6 +80,8 @@ func EntityTypeFromID(id string) string {
 		return "decision"
 	case strings.HasPrefix(id, "KE-"):
 		return "knowledge_entry"
+	case strings.HasPrefix(id, "DOC-"):
+		return "document"
 	default:
 		return "plan"
 	}
