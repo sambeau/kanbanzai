@@ -1,0 +1,7 @@
+id: TASK-01KMJVK9V8YTT
+parent_feature: FEAT-01KMJVK9V84TZ
+slug: write-phase-4b-spec
+summary: Write the Phase 4b specification document (work/spec/phase-4b-specification.md), covering feature decomposition, automatic dependency unblocking, worker review, conflict domain analysis, vertical slice guidance, and incident/RCA entities. Base the spec on the Phase 4b feature breakdown in work/plan/phase-4-scope.md §7 and the design decisions in work/plan/phase-4-decision-log.md.
+status: queued
+estimate: 5
+verification: Specification file exists at work/spec/phase-4b-specification.md. Document covers all six Phase 4b features from phase-4-scope.md §7. Each feature section includes MCP tool definitions, schema additions, and acceptance criteria. Storage model additions are specified with canonical field order. Open questions are identified and resolved or explicitly deferred.
