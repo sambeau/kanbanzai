@@ -10,6 +10,8 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/mcptest"
 
+	chk "kanbanzai/internal/checkpoint"
+	kbzctx "kanbanzai/internal/context"
 	"kanbanzai/internal/document"
 	kbzmcp "kanbanzai/internal/mcp"
 	"kanbanzai/internal/service"
@@ -24,10 +26,23 @@ func setupTestServer(t *testing.T) *testEnv {
 	t.Helper()
 	entityRoot := t.TempDir()
 	docsRoot := t.TempDir()
+	stateRoot := t.TempDir()
+	profileRoot := t.TempDir()
+	checkpointRoot := t.TempDir()
+	indexRoot := t.TempDir()
+	repoRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 	docSvc := document.NewDocService(docsRoot)
+	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
+	checkpointStore := chk.NewStore(checkpointRoot)
+	profileStore := kbzctx.NewProfileStore(profileRoot)
+	intelligenceSvc := service.NewIntelligenceService(indexRoot, repoRoot)
 
 	tools := append(kbzmcp.EntityTools(entitySvc), kbzmcp.DocumentTools(docSvc)...)
+	tools = append(tools, kbzmcp.EstimationTools(entitySvc, knowledgeSvc)...)
+	tools = append(tools, kbzmcp.QueueTools(entitySvc)...)
+	tools = append(tools, kbzmcp.DispatchTools(dispatchSvc, checkpointStore, profileStore, knowledgeSvc, entitySvc, intelligenceSvc)...)
 	ts, err := mcptest.NewServer(t, tools...)
 	if err != nil {
 		t.Fatalf("start test server: %v", err)
@@ -92,7 +107,23 @@ func TestServer_ListTools(t *testing.T) {
 		"validate_document",
 	}
 
+	expectedPhase4aTools := []string{
+		"estimate_set",
+		"estimate_query",
+		"estimate_reference_add",
+		"estimate_reference_remove",
+		"work_queue",
+		"dependency_status",
+		"dispatch_task",
+		"complete_task",
+		"human_checkpoint",
+		"human_checkpoint_respond",
+		"human_checkpoint_get",
+		"human_checkpoint_list",
+	}
+
 	expectedAll := append(expectedEntityTools, expectedDocTools...)
+	expectedAll = append(expectedAll, expectedPhase4aTools...)
 	sort.Strings(expectedAll)
 
 	var gotNames []string
