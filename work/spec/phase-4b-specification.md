@@ -757,12 +757,12 @@ decomposition:
 
 ### 16.7 Phase 1 document store removal
 
-- [ ] `internal/document/` package is removed
-- [ ] `.kbz/docs/` directory is removed from the repository
-- [ ] `doc` CLI command group is removed
-- [ ] `submit_document`, `approve_document`, `list_documents`, `scaffold_document`, `validate_document` MCP tools are removed or replaced by Phase 2a document record equivalents
-- [ ] `TestServer_ListTools` in `internal/mcp/server_test.go` is updated to reflect removed tools
-- [ ] The Phase 4b spec and implementation plan are registered as Phase 2a document records (path reference + content hash) before any removal occurs — this is the validation gate per P4-DES-007
+- [x] `internal/document/` package is removed
+- [x] `.kbz/docs/` directory is removed from the repository
+- [x] `doc` CLI command group is removed
+- [x] `submit_document`, `approve_document`, `list_documents`, `scaffold_document`, `validate_document` MCP tools are removed or replaced by Phase 2a document record equivalents
+- [x] `TestServer_ListTools` in `internal/mcp/server_test.go` is updated to reflect removed tools
+- [x] The Phase 4b spec and implementation plan are registered as Phase 2a document records (path reference + content hash) before any removal occurs — this is the validation gate per P4-DES-007
 
 ---
 

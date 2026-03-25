@@ -62,7 +62,6 @@ kanbanzai/
 │   ├── context/           ← context profiles, inheritance resolution, and assembly (Phase 2b)
 │   ├── core/              ← instance paths and root utilities
 │   ├── docint/            ← document intelligence (structural parsing, classification, graph)
-│   ├── document/          ← Phase 1 document store, templates, validation
 │   ├── fsutil/            ← filesystem utilities (atomic write)
 │   ├── git/               ← Git operations, branch tracking, staleness detection (Phase 3)
 │   ├── github/            ← GitHub API client, PR operations (Phase 3)
@@ -94,7 +93,6 @@ kanbanzai/
     │   ├── knowledge/     ← KnowledgeEntry records (Phase 2b)
     │   ├── worktrees/     ← worktree tracking records (Phase 3)
     │   └── ...            ← other entity type directories
-    ├── docs/              ← Phase 1 managed documents
     ├── context/
     │   └── roles/            ← context profile YAML files (Phase 2b)
     ├── index/             ← document intelligence index (structural, graph, concepts)
