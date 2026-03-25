@@ -158,34 +158,159 @@ gitignored.
 
 ## 5. Connect Zed to the MCP server
 
-A `.zed/settings.json` file is already committed to this repository. It
-configures:
+Zed's project-local settings (`.zed/settings.json`) and global settings
+(`~/Library/Application Support/Zed/settings.json`) allow different keys.
+The kanbanzai setup is split across both.
 
-- The `kanbanzai` context server
-- Auto-allow permissions for all core tools (no confirmation prompts per call)
-- Two agent profiles: `kanbanzai-developer` and `kanbanzai-orchestrator`
+### Project-local: `.zed/settings.json`
 
-The only value you may need to edit is the binary path if your `GOPATH` is not
-`~/go`:
+This file is already committed to the repository. It registers the kanbanzai
+context server for this workspace:
 
 ```json
-"context_servers": {
-  "kanbanzai": {
-    "command": "/Users/samphillips/go/bin/kanbanzai",
-    "args": ["serve"]
+{
+  "context_servers": {
+    "kanbanzai": {
+      "command": "/Users/you/go/bin/kanbanzai",
+      "args": ["serve"]
+    }
   }
 }
 ```
 
-Change `/Users/samphillips/go/bin/kanbanzai` to match your actual path
-(`go env GOPATH` to check).
+The only value you need to change is the binary path. Run `go env GOPATH` to
+find yours, then update the `command` value to `<GOPATH>/bin/kanbanzai`.
 
-> **Why project-local settings?** The server uses `.kbz/state` as a path
-> relative to its working directory. Zed launches MCP servers with the
-> workspace root as cwd when using project-local settings — so opening
-> `/path/to/your-project` in Zed automatically points the server at the right
-> `.kbz/` directory. A global `~/Library/Application Support/Zed/settings.json`
-> entry would work only if you always open this project as your root workspace.
+> **Why project-local for `context_servers`?** The server resolves `.kbz/state`
+> relative to its working directory. Zed uses the workspace root as cwd for
+> project-local servers — so opening this project in Zed automatically points
+> the server at the right `.kbz/` directory.
+
+### Global: `~/Library/Application Support/Zed/settings.json`
+
+Agent profiles and tool permissions are global-only keys — Zed will report
+`Property agent is not allowed` if you put them in `.zed/settings.json`.
+
+Add the following `agent` block to your global settings file, alongside any
+existing entries:
+
+```json
+{
+  "context_servers": {
+    // ... your existing servers ...
+  },
+  "agent": {
+    "tool_permissions": {
+      "mcp:kanbanzai:context_assemble":        { "default": "allow" },
+      "mcp:kanbanzai:work_queue":              { "default": "allow" },
+      "mcp:kanbanzai:dispatch_task":           { "default": "allow" },
+      "mcp:kanbanzai:complete_task":           { "default": "allow" },
+      "mcp:kanbanzai:review_task_output":      { "default": "allow" },
+      "mcp:kanbanzai:dependency_status":       { "default": "allow" },
+      "mcp:kanbanzai:get_entity":              { "default": "allow" },
+      "mcp:kanbanzai:list_entities":           { "default": "allow" },
+      "mcp:kanbanzai:list_entities_filtered":  { "default": "allow" },
+      "mcp:kanbanzai:update_status":           { "default": "allow" },
+      "mcp:kanbanzai:update_entity":           { "default": "allow" },
+      "mcp:kanbanzai:health_check":            { "default": "allow" },
+      "mcp:kanbanzai:human_checkpoint":        { "default": "allow" },
+      "mcp:kanbanzai:human_checkpoint_respond":{ "default": "allow" },
+      "mcp:kanbanzai:human_checkpoint_get":    { "default": "allow" },
+      "mcp:kanbanzai:human_checkpoint_list":   { "default": "allow" },
+      "mcp:kanbanzai:knowledge_contribute":    { "default": "allow" },
+      "mcp:kanbanzai:knowledge_get":           { "default": "allow" },
+      "mcp:kanbanzai:knowledge_list":          { "default": "allow" },
+      "mcp:kanbanzai:knowledge_update":        { "default": "allow" },
+      "mcp:kanbanzai:knowledge_confirm":       { "default": "allow" },
+      "mcp:kanbanzai:knowledge_flag":          { "default": "allow" },
+      "mcp:kanbanzai:context_report":          { "default": "allow" },
+      "mcp:kanbanzai:create_task":             { "default": "allow" },
+      "mcp:kanbanzai:create_bug":              { "default": "allow" },
+      "mcp:kanbanzai:record_decision":         { "default": "allow" },
+      "mcp:kanbanzai:validate_candidate":      { "default": "allow" },
+      "mcp:kanbanzai:decompose_feature":       { "default": "allow" },
+      "mcp:kanbanzai:decompose_review":        { "default": "allow" },
+      "mcp:kanbanzai:slice_analysis":          { "default": "allow" },
+      "mcp:kanbanzai:conflict_domain_check":   { "default": "allow" },
+      "mcp:kanbanzai:estimate_set":            { "default": "allow" },
+      "mcp:kanbanzai:estimate_query":          { "default": "allow" },
+      "mcp:kanbanzai:estimate_reference_add":  { "default": "allow" },
+      "mcp:kanbanzai:estimate_reference_remove":{ "default": "allow" },
+      "mcp:kanbanzai:incident_create":         { "default": "allow" },
+      "mcp:kanbanzai:incident_update":         { "default": "allow" },
+      "mcp:kanbanzai:incident_list":           { "default": "allow" },
+      "mcp:kanbanzai:incident_link_bug":       { "default": "allow" }
+    },
+    "profiles": {
+      "kanbanzai-developer": {
+        "name": "Kanbanzai Developer",
+        "tools": {
+          "thinking": true, "fetch": true, "diagnostics": true,
+          "read_file": true, "edit_file": true, "create_directory": true,
+          "list_directory": true, "find_path": true, "grep": true,
+          "move_path": true, "copy_path": true, "delete_path": true,
+          "terminal": true, "open": false
+        },
+        "enable_all_context_servers": false,
+        "context_servers": {
+          "kanbanzai": {
+            "tools": {
+              "context_assemble": true, "work_queue": true,
+              "dispatch_task": true, "complete_task": true,
+              "dependency_status": true, "review_task_output": true,
+              "human_checkpoint": true, "human_checkpoint_respond": true,
+              "human_checkpoint_get": true, "human_checkpoint_list": true,
+              "get_entity": true, "list_entities": true,
+              "list_entities_filtered": true, "update_status": true,
+              "update_entity": true, "health_check": true,
+              "knowledge_contribute": true, "knowledge_get": true,
+              "knowledge_list": true, "knowledge_update": true,
+              "knowledge_confirm": true, "knowledge_flag": true,
+              "context_report": true, "incident_list": true,
+              "validate_candidate": true
+            }
+          }
+        }
+      },
+      "kanbanzai-orchestrator": {
+        "name": "Kanbanzai Orchestrator",
+        "tools": {
+          "thinking": true, "fetch": true, "diagnostics": false,
+          "read_file": true, "edit_file": false, "create_directory": false,
+          "list_directory": true, "find_path": true, "grep": true,
+          "move_path": false, "copy_path": false, "delete_path": false,
+          "terminal": false, "open": false
+        },
+        "enable_all_context_servers": false,
+        "context_servers": {
+          "kanbanzai": {
+            "tools": {
+              "context_assemble": true, "work_queue": true,
+              "dispatch_task": true, "complete_task": true,
+              "dependency_status": true, "human_checkpoint": true,
+              "human_checkpoint_respond": true, "human_checkpoint_get": true,
+              "human_checkpoint_list": true, "get_entity": true,
+              "list_entities": true, "list_entities_filtered": true,
+              "update_status": true, "update_entity": true,
+              "health_check": true, "create_task": true, "create_bug": true,
+              "record_decision": true, "validate_candidate": true,
+              "decompose_feature": true, "decompose_review": true,
+              "slice_analysis": true, "conflict_domain_check": true,
+              "estimate_set": true, "estimate_query": true,
+              "estimate_reference_add": true, "estimate_reference_remove": true,
+              "incident_create": true, "incident_update": true,
+              "incident_list": true, "incident_link_bug": true,
+              "knowledge_contribute": true, "knowledge_get": true,
+              "knowledge_list": true, "knowledge_confirm": true,
+              "knowledge_flag": true, "context_report": true
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
 
 ---
 
@@ -200,6 +325,7 @@ If the dot is red or yellow, check:
 1. The binary path in `.zed/settings.json` is correct and the binary exists.
 2. The binary was built for the current architecture (`go install ./cmd/kanbanzai`).
 3. The Zed workspace root is the repository root (not a subdirectory).
+4. The `agent` block is in the **global** settings file, not in `.zed/settings.json`.
 
 You can also test the server manually:
 
@@ -693,6 +819,13 @@ can find the right tool without scanning a flat alphabetical list.
 3. Check that the Zed workspace root is the repository root, not a subdirectory.
 4. Restart the server from the Agent Panel settings (click the server name,
    then "Restart").
+
+### Zed reports "Property agent is not allowed"
+
+The `agent` key (profiles and tool_permissions) is only valid in the **global**
+settings file at `~/Library/Application Support/Zed/settings.json`. It cannot
+appear in the project-local `.zed/settings.json`. Move the `agent` block to
+your global settings — see [Section 5](#5-connect-zed-to-the-mcp-server).
 
 ### Identity errors on entity creation
 

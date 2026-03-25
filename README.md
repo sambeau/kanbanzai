@@ -87,7 +87,9 @@ If you skip `local.yaml`, identity falls back to `git config user.name` automati
 
 #### Zed
 
-Create `.zed/settings.json` in your project root:
+The setup is split across two files because Zed only allows `context_servers` in project-local settings — `agent` profiles and permissions must go in the global settings file.
+
+**`.zed/settings.json`** (already committed to this repo — edit the binary path if your `GOPATH` differs from `~/go`):
 
 ```json
 {
@@ -100,9 +102,11 @@ Create `.zed/settings.json` in your project root:
 }
 ```
 
-Open the project in Zed. The kanbanzai server should appear with a green dot in the Agent Panel settings. That's it — your agents now have access to the full tool surface.
+**`~/Library/Application Support/Zed/settings.json`** — add an `agent` block alongside any existing entries. See `docs/getting-started.md` for the full profiles and tool permissions to paste in.
 
-> The server runs with your project root as its working directory, which is how it finds `.kbz/`. Always open the project from its root, not a subdirectory.
+Open the project in Zed. The kanbanzai server should appear with a green dot in the Agent Panel settings. Select the **Kanbanzai Developer** or **Kanbanzai Orchestrator** profile from the profile picker to scope the tool surface for each session.
+
+> The server resolves `.kbz/` relative to its working directory. Zed uses the workspace root as cwd for project-local servers — always open the project from its root, not a subdirectory.
 
 #### Other MCP clients
 
