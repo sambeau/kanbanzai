@@ -101,7 +101,7 @@ func run(args []string, deps dependencies) error {
 		printUsage(deps.stdout)
 		return nil
 	case "version", "--version":
-		fmt.Fprintln(deps.stdout, "kanbanzai phase-1-dev")
+		fmt.Fprintln(deps.stdout, "kanbanzai phase-3-dev")
 		return nil
 	case "serve":
 		return kbzmcp.Serve()
@@ -133,6 +133,12 @@ func run(args []string, deps dependencies) error {
 		return runWorktree(args[1:], deps)
 	case "branch":
 		return runBranch(args[1:], deps)
+	case "merge":
+		return runMerge(args[1:], deps)
+	case "pr":
+		return runPR(args[1:], deps)
+	case "cleanup":
+		return runCleanup(args[1:], deps)
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
 	}
@@ -815,6 +821,9 @@ Commands:
   context    Assemble agent context packets
   worktree   Manage Git worktrees for feature/bug development
   branch     Check branch health for worktree branches
+  merge      Check merge readiness and execute merges
+  pr         Manage GitHub pull requests
+  cleanup    Manage post-merge cleanup of worktrees and branches
 
 Notes:
   - Phase 3 is MCP-first; the CLI is a secondary, strict interface.
@@ -987,6 +996,8 @@ func runKnowledge(args []string, deps dependencies) error {
 		return runKnowledgeList(args[1:], deps)
 	case "get":
 		return runKnowledgeGet(args[1:], deps)
+	case "check", "confirm", "prune", "compact", "resolve":
+		return runKnowledgeLifecycle(args[0], args[1:], deps)
 	default:
 		return fmt.Errorf("unknown knowledge subcommand %q\n\n%s", args[0], knowledgeUsageText)
 	}

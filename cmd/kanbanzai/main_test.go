@@ -37,7 +37,7 @@ func TestRun_Version_PrintsVersion(t *testing.T) {
 		t.Fatalf("run(version) error = %v", err)
 	}
 
-	if got, want := strings.TrimSpace(output.String()), "kanbanzai phase-1-dev"; got != want {
+	if got, want := strings.TrimSpace(output.String()), "kanbanzai phase-3-dev"; got != want {
 		t.Fatalf("version output = %q, want %q", got, want)
 	}
 }
@@ -49,7 +49,7 @@ func TestRun_VersionFlag_PrintsVersion(t *testing.T) {
 		t.Fatalf("run(--version) error = %v", err)
 	}
 
-	if got, want := strings.TrimSpace(output.String()), "kanbanzai phase-1-dev"; got != want {
+	if got, want := strings.TrimSpace(output.String()), "kanbanzai phase-3-dev"; got != want {
 		t.Fatalf("version output = %q, want %q", got, want)
 	}
 }
