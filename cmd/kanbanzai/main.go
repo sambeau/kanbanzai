@@ -126,6 +126,8 @@ func run(args []string, deps dependencies) error {
 		return runFeature(args[1:], deps)
 	case "task":
 		return runTask(args[1:], deps)
+	case "queue":
+		return runQueue(args[1:], deps)
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
 	}
@@ -628,6 +630,7 @@ Commands:
   merge      Check merge readiness and execute merges
   pr         Manage GitHub pull requests
   cleanup    Manage post-merge cleanup of worktrees and branches
+  queue      Show the current work queue with optional conflict checking
 
 Notes:
   - Phase 3 is MCP-first; the CLI is a secondary, strict interface.

@@ -12,7 +12,8 @@ import (
 
 // WorkQueueInput holds parameters for the work_queue operation.
 type WorkQueueInput struct {
-	Role string // optional: filter by role profile
+	Role          string // optional: filter by role profile
+	ConflictCheck bool   // when true, annotate each ready task with conflict risk
 }
 
 // WorkQueueItem represents a task in the ready queue.
@@ -25,6 +26,8 @@ type WorkQueueItem struct {
 	Estimate      *float64
 	AgeDays       int
 	Status        string
+	ConflictRisk  string   // only set when ConflictCheck=true
+	ConflictWith  []string // only set when ConflictCheck=true
 }
 
 // WorkQueueResult is the result of the work_queue operation.
@@ -174,6 +177,56 @@ func (s *EntityService) WorkQueue(input WorkQueueInput) (WorkQueueResult, error)
 		// Tie-break: task ID lexicographic
 		return a.TaskID < b.TaskID
 	})
+
+	// Conflict check: annotate each ready task with conflict risk against active tasks
+	if input.ConflictCheck && len(result.Queue) > 0 {
+		// Collect active task IDs
+		var activeTaskIDs []string
+		for _, t := range allTasks {
+			status := stringFromState(t.State, "status")
+			if status == string(model.TaskStatusActive) {
+				activeTaskIDs = append(activeTaskIDs, t.ID)
+			}
+		}
+
+		if len(activeTaskIDs) > 0 {
+			// We need a ConflictService — create one inline (no branch lookup for queue mode)
+			conflictSvc := NewConflictService(s, nil, "")
+
+			for i := range result.Queue {
+				item := &result.Queue[i]
+				checkIDs := append([]string{item.TaskID}, activeTaskIDs...)
+				checkResult, err := conflictSvc.Check(ConflictCheckInput{TaskIDs: checkIDs})
+				if err != nil {
+					continue // best-effort
+				}
+
+				// Find max risk for this task against active tasks
+				itemRisk := "none"
+				var conflictWith []string
+				for _, pair := range checkResult.Pairs {
+					// Only look at pairs involving this task
+					var otherID string
+					if pair.TaskA == item.TaskID {
+						otherID = pair.TaskB
+					} else if pair.TaskB == item.TaskID {
+						otherID = pair.TaskA
+					} else {
+						continue
+					}
+					if riskLevel(pair.Risk) > riskLevel(itemRisk) {
+						itemRisk = pair.Risk
+					}
+					if pair.Risk != "none" {
+						conflictWith = append(conflictWith, otherID)
+					}
+				}
+
+				item.ConflictRisk = itemRisk
+				item.ConflictWith = conflictWith
+			}
+		}
+	}
 
 	return result, nil
 }

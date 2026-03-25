@@ -23,11 +23,13 @@ func workQueueTool(entitySvc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("work_queue",
 		mcp.WithDescription("Return the current ready task queue, promoting eligible queued tasks first. This is a write-through query: it promotes queued tasks whose dependencies are all in terminal states (done, not-planned, or duplicate) to ready status as a side effect. Returns all ready tasks sorted by estimate (ascending, null last), then age (descending), then task ID."),
 		mcp.WithString("role", mcp.Description("Optional: filter results to tasks whose parent feature matches this role profile")),
+		mcp.WithBoolean("conflict_check", mcp.Description("When true, annotate each ready task with conflict risk against currently active tasks")),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		role := request.GetString("role", "")
+		conflictCheck := request.GetBool("conflict_check", false)
 
-		result, err := entitySvc.WorkQueue(service.WorkQueueInput{Role: role})
+		result, err := entitySvc.WorkQueue(service.WorkQueueInput{Role: role, ConflictCheck: conflictCheck})
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("work_queue failed", err), nil
 		}
@@ -41,6 +43,8 @@ func workQueueTool(entitySvc *service.EntityService) server.ServerTool {
 			Estimate      *float64 `json:"estimate"`
 			AgeDays       int      `json:"age_days"`
 			Status        string   `json:"status"`
+			ConflictRisk  string   `json:"conflict_risk,omitempty"`
+			ConflictWith  []string `json:"conflict_with,omitempty"`
 		}
 
 		items := make([]queueItem, len(result.Queue))
@@ -55,6 +59,8 @@ func workQueueTool(entitySvc *service.EntityService) server.ServerTool {
 				AgeDays:       item.AgeDays,
 				Status:        item.Status,
 			}
+			items[i].ConflictRisk = item.ConflictRisk
+			items[i].ConflictWith = item.ConflictWith
 		}
 
 		resp := map[string]any{

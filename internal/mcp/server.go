@@ -165,6 +165,10 @@ func NewServer(entityRoot string) *server.MCPServer {
 	reviewSvc := service.NewReviewService(entitySvc, intelligenceSvc, repoRoot)
 	mcpServer.AddTools(ReviewTools(reviewSvc)...)
 
+	// Phase 4b Conflict tools (conflict_domain_check)
+	conflictSvc := service.NewConflictService(entitySvc, newWorktreeBranchLookup(worktreeStore, repoRoot), repoRoot)
+	mcpServer.AddTools(ConflictTools(conflictSvc)...)
+
 	return mcpServer
 }
 
