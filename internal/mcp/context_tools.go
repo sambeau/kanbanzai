@@ -4,11 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
 	kbzctx "kanbanzai/internal/context"
+	"kanbanzai/internal/git"
+	"kanbanzai/internal/knowledge"
 	"kanbanzai/internal/service"
 )
 
@@ -55,12 +58,31 @@ func contextAssembleTool(
 			return mcp.NewToolResultErrorFromErr("context_assemble failed", err), nil
 		}
 
+		type stalenessInfo struct {
+			IsStale    bool     `json:"is_stale"`
+			StaleFiles []string `json:"stale_files,omitempty"`
+		}
+
 		type responseItem struct {
-			Source     string  `json:"source"`
-			EntryID    string  `json:"entry_id,omitempty"`
-			Priority   string  `json:"priority"`
-			Confidence float64 `json:"confidence,omitempty"`
-			Content    string  `json:"content"`
+			Source     string         `json:"source"`
+			EntryID    string         `json:"entry_id,omitempty"`
+			Priority   string         `json:"priority"`
+			Confidence float64        `json:"confidence,omitempty"`
+			Content    string         `json:"content"`
+			Staleness  *stalenessInfo `json:"staleness,omitempty"`
+		}
+
+		// Build a map of entry IDs to their fields for staleness checking
+		entryFieldsMap := make(map[string]map[string]any)
+		if knowledgeSvc != nil {
+			for _, item := range result.Items {
+				if item.EntryID != "" {
+					rec, err := knowledgeSvc.Get(item.EntryID)
+					if err == nil {
+						entryFieldsMap[item.EntryID] = rec.Fields
+					}
+				}
+			}
 		}
 
 		items := make([]responseItem, 0, len(result.Items))
@@ -72,6 +94,36 @@ func contextAssembleTool(
 			}
 			if item.EntryID != "" {
 				ri.EntryID = item.EntryID
+
+				// Check staleness for knowledge entries with git_anchors
+				if fields, ok := entryFieldsMap[item.EntryID]; ok {
+					anchorPaths := knowledge.GetGitAnchors(fields)
+					if len(anchorPaths) > 0 {
+						anchors := make([]git.GitAnchor, len(anchorPaths))
+						for i, path := range anchorPaths {
+							anchors[i] = git.GitAnchor{Path: path}
+						}
+
+						var lastConfirmed time.Time
+						if confirmedStr, ok := fields["last_confirmed"].(string); ok && confirmedStr != "" {
+							lastConfirmed, _ = time.Parse(time.RFC3339, confirmedStr)
+						} else if updatedStr, ok := fields["updated"].(string); ok && updatedStr != "" {
+							lastConfirmed, _ = time.Parse(time.RFC3339, updatedStr)
+						}
+
+						info, err := git.CheckStaleness(".", anchors, lastConfirmed)
+						if err == nil && info.IsStale {
+							var staleFilePaths []string
+							for _, sf := range info.StaleFiles {
+								staleFilePaths = append(staleFilePaths, sf.Path)
+							}
+							ri.Staleness = &stalenessInfo{
+								IsStale:    true,
+								StaleFiles: staleFilePaths,
+							}
+						}
+					}
+				}
 			}
 			if item.Confidence > 0 {
 				ri.Confidence = item.Confidence

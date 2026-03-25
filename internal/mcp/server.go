@@ -6,16 +6,19 @@ import (
 	"github.com/mark3labs/mcp-go/server"
 
 	"kanbanzai/internal/cache"
+	"kanbanzai/internal/config"
 	kbzctx "kanbanzai/internal/context"
 	"kanbanzai/internal/core"
 	"kanbanzai/internal/document"
+	"kanbanzai/internal/git"
 	"kanbanzai/internal/service"
 	"kanbanzai/internal/validate"
+	"kanbanzai/internal/worktree"
 )
 
 const (
 	ServerName    = "kanbanzai"
-	ServerVersion = "phase-2b-dev"
+	ServerVersion = "phase-3-dev"
 )
 
 // NewServer creates a new MCP server with all Phase 1, Phase 2a, and Phase 2b tools registered.
@@ -63,10 +66,19 @@ func NewServer(entityRoot, docsRoot string) *server.MCPServer {
 		server.WithToolCapabilities(false),
 	)
 
-	// Phase 1 entity tools (with Phase 2b health checkers)
+	// Phase 3 worktree store and git ops (needed for health checker and cleanup tools)
+	worktreeStore := worktree.NewStore(stateRoot)
+	gitOps := worktree.NewGit(repoRoot)
+	cfg := config.LoadOrDefault()
+
+	// Phase 3: load local config for GitHub token (best-effort)
+	localConfig, _ := config.LoadLocalConfig()
+
+	// Phase 1 entity tools (with Phase 2b and Phase 3 health checkers)
 	mcpServer.AddTools(EntityTools(entitySvc,
 		phase2bKnowledgeHealthChecker(knowledgeSvc, profileStore),
 		phase2bProfileHealthChecker(profileStore),
+		Phase3HealthChecker(worktreeStore, knowledgeSvc, cfg, repoRoot),
 	)...)
 
 	// Phase 1 document tools (legacy)
@@ -104,6 +116,24 @@ func NewServer(entityRoot, docsRoot string) *server.MCPServer {
 
 	// Phase 2b Batch import tools (batch_import_documents)
 	mcpServer.AddTools(BatchImportTools(docRecordSvc)...)
+
+	// Phase 3 worktree and branch tools
+	branchThresholds := git.BranchThresholds{
+		StaleAfterDays:      cfg.BranchTracking.StaleAfterDays,
+		DriftWarningCommits: cfg.BranchTracking.DriftWarningCommits,
+		DriftErrorCommits:   cfg.BranchTracking.DriftErrorCommits,
+	}
+	mcpServer.AddTools(WorktreeTools(worktreeStore, entitySvc, gitOps)...)
+	mcpServer.AddTools(BranchTools(worktreeStore, repoRoot, branchThresholds)...)
+
+	// Phase 3 cleanup tools
+	mcpServer.AddTools(CleanupTools(worktreeStore, gitOps, &cfg.Cleanup)...)
+
+	// Phase 3 merge tools (merge_readiness_check, merge_execute)
+	mcpServer.AddTools(MergeTools(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
+
+	// Phase 3 PR tools (pr_create, pr_update, pr_status)
+	mcpServer.AddTools(PRTools(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
 
 	return mcpServer
 }

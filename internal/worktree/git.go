@@ -114,6 +114,94 @@ func (g *Git) DeleteRemoteBranch(remote, branch string) error {
 	return nil
 }
 
+// MergeStrategy represents the strategy for merging branches.
+type MergeStrategy string
+
+const (
+	// MergeStrategySquash squashes all commits into one.
+	MergeStrategySquash MergeStrategy = "squash"
+	// MergeStrategyMerge creates a merge commit.
+	MergeStrategyMerge MergeStrategy = "merge"
+	// MergeStrategyRebase rebases the branch onto the target.
+	MergeStrategyRebase MergeStrategy = "rebase"
+)
+
+// MergeResult contains the result of a merge operation.
+type MergeResult struct {
+	// MergeCommit is the SHA of the merge commit (empty for rebase).
+	MergeCommit string
+	// Success indicates whether the merge was successful.
+	Success bool
+}
+
+// MergeBranch merges the specified branch into the current branch.
+// The strategy parameter controls how the merge is performed:
+//   - squash: squashes all commits and stages changes (requires manual commit)
+//   - merge: creates a merge commit
+//   - rebase: rebases the current branch onto the target branch
+func (g *Git) MergeBranch(branch string, strategy MergeStrategy, message string) (MergeResult, error) {
+	var result MergeResult
+
+	switch strategy {
+	case MergeStrategySquash:
+		// Squash merge: git merge --squash <branch>
+		if err := g.run("merge", "--squash", branch); err != nil {
+			return result, fmt.Errorf("git merge --squash: %w", err)
+		}
+		// Commit the squashed changes
+		if message == "" {
+			message = fmt.Sprintf("Squash merge branch '%s'", branch)
+		}
+		if err := g.run("commit", "-m", message); err != nil {
+			return result, fmt.Errorf("git commit after squash: %w", err)
+		}
+
+	case MergeStrategyMerge:
+		// Regular merge: git merge <branch> -m <message>
+		if message == "" {
+			message = fmt.Sprintf("Merge branch '%s'", branch)
+		}
+		if err := g.run("merge", branch, "-m", message); err != nil {
+			return result, fmt.Errorf("git merge: %w", err)
+		}
+
+	case MergeStrategyRebase:
+		// Rebase: git rebase <branch>
+		if err := g.run("rebase", branch); err != nil {
+			return result, fmt.Errorf("git rebase: %w", err)
+		}
+
+	default:
+		return result, fmt.Errorf("unknown merge strategy: %s", strategy)
+	}
+
+	// Get the HEAD commit SHA after merge
+	sha, err := g.output("rev-parse", "HEAD")
+	if err != nil {
+		return result, fmt.Errorf("get merge commit: %w", err)
+	}
+
+	result.MergeCommit = strings.TrimSpace(sha)
+	result.Success = true
+	return result, nil
+}
+
+// CheckoutBranch checks out the specified branch.
+func (g *Git) CheckoutBranch(branch string) error {
+	if err := g.run("checkout", branch); err != nil {
+		return fmt.Errorf("git checkout %s: %w", branch, err)
+	}
+	return nil
+}
+
+// FetchBranch fetches the specified branch from the remote.
+func (g *Git) FetchBranch(remote, branch string) error {
+	if err := g.run("fetch", remote, branch); err != nil {
+		return fmt.Errorf("git fetch %s %s: %w", remote, branch, err)
+	}
+	return nil
+}
+
 // CurrentBranch returns the name of the currently checked out branch.
 func (g *Git) CurrentBranch() (string, error) {
 	output, err := g.output("rev-parse", "--abbrev-ref", "HEAD")

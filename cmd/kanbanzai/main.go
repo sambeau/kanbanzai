@@ -129,6 +129,10 @@ func run(args []string, deps dependencies) error {
 		return runProfile(args[1:], deps)
 	case "context":
 		return runContext(args[1:], deps)
+	case "worktree":
+		return runWorktree(args[1:], deps)
+	case "branch":
+		return runBranch(args[1:], deps)
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
 	}
@@ -788,7 +792,7 @@ func printUsage(w io.Writer) {
 
 const usageText = `kanbanzai
 
-Phase 2b workflow kernel CLI.
+Phase 3 workflow kernel CLI.
 
 Usage:
   kanbanzai <command>
@@ -809,9 +813,11 @@ Commands:
   knowledge  Manage knowledge entries
   profile    Manage context profiles
   context    Assemble agent context packets
+  worktree   Manage Git worktrees for feature/bug development
+  branch     Check branch health for worktree branches
 
 Notes:
-  - Phase 2b is MCP-first; the CLI is a secondary, strict interface.
+  - Phase 3 is MCP-first; the CLI is a secondary, strict interface.
 `
 
 const createUsageText = `kanbanzai create <entity> [flags]
