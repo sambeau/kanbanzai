@@ -844,6 +844,8 @@ func validateKindForType(entityType string) (validate.EntityKind, error) {
 		return validate.EntityBug, nil
 	case string(model.EntityKindDecision):
 		return validate.EntityDecision, nil
+	case string(model.EntityKindIncident):
+		return validate.EntityIncident, nil
 	default:
 		return "", fmt.Errorf("unknown entity type %q", entityType)
 	}
@@ -879,7 +881,7 @@ func parseRecordIdentity(entityType, idPart string) (string, string, error) {
 
 	case string(model.EntityKindFeature), string(model.EntityKindBug),
 		string(model.EntityKindDecision), string(model.EntityKindTask),
-		string(model.EntityKindDocument):
+		string(model.EntityKindDocument), string(model.EntityKindIncident):
 		// New format: {PREFIX}-{13-char-TSID}-{filename-slug}
 		prefix := typePrefixForEntityType(entityType)
 		if prefix == "" {
@@ -926,6 +928,8 @@ func typePrefixForEntityType(entityType string) string {
 		return "TASK"
 	case "document":
 		return "DOC"
+	case "incident":
+		return "INC"
 	default:
 		return ""
 	}
@@ -967,6 +971,13 @@ func recordFromEntity(entity model.Entity) (storage.EntityRecord, error) {
 			ID:     e.ID,
 			Slug:   e.Slug,
 			Fields: decisionFields(e),
+		}, nil
+	case model.Incident:
+		return storage.EntityRecord{
+			Type:   string(model.EntityKindIncident),
+			ID:     e.ID,
+			Slug:   e.Slug,
+			Fields: incidentFields(e),
 		}, nil
 	default:
 		return storage.EntityRecord{}, fmt.Errorf("unsupported entity type %T", entity)
@@ -1225,6 +1236,41 @@ func decisionFields(e model.Decision) map[string]any {
 	}
 	if e.SupersededBy != "" {
 		fields["superseded_by"] = e.SupersededBy
+	}
+	return fields
+}
+
+func incidentFields(e model.Incident) map[string]any {
+	fields := map[string]any{
+		"id":          e.ID,
+		"slug":        e.Slug,
+		"title":       e.Title,
+		"status":      string(e.Status),
+		"severity":    string(e.Severity),
+		"reported_by": e.ReportedBy,
+		"detected_at": e.DetectedAt.Format(time.RFC3339),
+		"summary":     e.Summary,
+		"created":     e.Created.Format(time.RFC3339),
+		"created_by":  e.CreatedBy,
+		"updated":     e.Updated.Format(time.RFC3339),
+	}
+	if e.TriagedAt != nil {
+		fields["triaged_at"] = e.TriagedAt.Format(time.RFC3339)
+	}
+	if e.MitigatedAt != nil {
+		fields["mitigated_at"] = e.MitigatedAt.Format(time.RFC3339)
+	}
+	if e.ResolvedAt != nil {
+		fields["resolved_at"] = e.ResolvedAt.Format(time.RFC3339)
+	}
+	if len(e.AffectedFeatures) > 0 {
+		fields["affected_features"] = append([]string(nil), e.AffectedFeatures...)
+	}
+	if len(e.LinkedBugs) > 0 {
+		fields["linked_bugs"] = append([]string(nil), e.LinkedBugs...)
+	}
+	if e.LinkedRCA != "" {
+		fields["linked_rca"] = e.LinkedRCA
 	}
 	return fields
 }

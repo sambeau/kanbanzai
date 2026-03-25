@@ -1,6 +1,10 @@
 package validate
 
-import "testing"
+import (
+	"testing"
+
+	"kanbanzai/internal/model"
+)
 
 func TestEntryState(t *testing.T) {
 	t.Parallel()
@@ -609,6 +613,189 @@ func TestValidateTransition(t *testing.T) {
 				)
 			}
 		})
+	}
+}
+
+func TestIncidentLifecycle_ValidTransitions(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		from string
+		to   string
+	}{
+		{
+			name: "reported to triaged",
+			from: string(model.IncidentStatusReported),
+			to:   string(model.IncidentStatusTriaged),
+		},
+		{
+			name: "reported to closed",
+			from: string(model.IncidentStatusReported),
+			to:   string(model.IncidentStatusClosed),
+		},
+		{
+			name: "triaged to investigating",
+			from: string(model.IncidentStatusTriaged),
+			to:   string(model.IncidentStatusInvestigating),
+		},
+		{
+			name: "triaged to closed",
+			from: string(model.IncidentStatusTriaged),
+			to:   string(model.IncidentStatusClosed),
+		},
+		{
+			name: "investigating to root-cause-identified",
+			from: string(model.IncidentStatusInvestigating),
+			to:   string(model.IncidentStatusRootCauseIdentified),
+		},
+		{
+			name: "investigating to closed",
+			from: string(model.IncidentStatusInvestigating),
+			to:   string(model.IncidentStatusClosed),
+		},
+		{
+			name: "root-cause-identified to mitigated",
+			from: string(model.IncidentStatusRootCauseIdentified),
+			to:   string(model.IncidentStatusMitigated),
+		},
+		{
+			name: "root-cause-identified to investigating (root cause revised)",
+			from: string(model.IncidentStatusRootCauseIdentified),
+			to:   string(model.IncidentStatusInvestigating),
+		},
+		{
+			name: "root-cause-identified to closed",
+			from: string(model.IncidentStatusRootCauseIdentified),
+			to:   string(model.IncidentStatusClosed),
+		},
+		{
+			name: "mitigated to resolved",
+			from: string(model.IncidentStatusMitigated),
+			to:   string(model.IncidentStatusResolved),
+		},
+		{
+			name: "mitigated to investigating (mitigation incomplete)",
+			from: string(model.IncidentStatusMitigated),
+			to:   string(model.IncidentStatusInvestigating),
+		},
+		{
+			name: "mitigated to closed",
+			from: string(model.IncidentStatusMitigated),
+			to:   string(model.IncidentStatusClosed),
+		},
+		{
+			name: "resolved to closed",
+			from: string(model.IncidentStatusResolved),
+			to:   string(model.IncidentStatusClosed),
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			if !CanTransition(EntityIncident, tt.from, tt.to) {
+				t.Fatalf(
+					"CanTransition(%q, %q, %q) = false, want true",
+					EntityIncident, tt.from, tt.to,
+				)
+			}
+			if err := ValidateTransition(EntityIncident, tt.from, tt.to); err != nil {
+				t.Fatalf(
+					"ValidateTransition(%q, %q, %q) unexpected error: %v",
+					EntityIncident, tt.from, tt.to, err,
+				)
+			}
+		})
+	}
+}
+
+func TestIncidentLifecycle_InvalidTransitions(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		from string
+		to   string
+	}{
+		{
+			name: "reported to investigating (skip triaged)",
+			from: string(model.IncidentStatusReported),
+			to:   string(model.IncidentStatusInvestigating),
+		},
+		{
+			name: "closed to reported (terminal state)",
+			from: string(model.IncidentStatusClosed),
+			to:   string(model.IncidentStatusReported),
+		},
+		{
+			name: "resolved to reported (skip back)",
+			from: string(model.IncidentStatusResolved),
+			to:   string(model.IncidentStatusReported),
+		},
+		{
+			name: "triaged to resolved (skip intermediate)",
+			from: string(model.IncidentStatusTriaged),
+			to:   string(model.IncidentStatusResolved),
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			if CanTransition(EntityIncident, tt.from, tt.to) {
+				t.Fatalf(
+					"CanTransition(%q, %q, %q) = true, want false",
+					EntityIncident, tt.from, tt.to,
+				)
+			}
+			if err := ValidateTransition(EntityIncident, tt.from, tt.to); err == nil {
+				t.Fatalf(
+					"ValidateTransition(%q, %q, %q) expected error, got nil",
+					EntityIncident, tt.from, tt.to,
+				)
+			}
+		})
+	}
+}
+
+func TestIncidentLifecycle_EntryState(t *testing.T) {
+	t.Parallel()
+
+	gotState, gotOK := EntryState(EntityIncident)
+	if !gotOK {
+		t.Fatal("EntryState(incident) ok = false, want true")
+	}
+	want := string(model.IncidentStatusReported)
+	if gotState != want {
+		t.Fatalf("EntryState(incident) state = %q, want %q", gotState, want)
+	}
+}
+
+func TestIncidentLifecycle_TerminalState(t *testing.T) {
+	t.Parallel()
+
+	terminal := string(model.IncidentStatusClosed)
+	if !IsTerminalState(EntityIncident, terminal) {
+		t.Fatalf("IsTerminalState(%q, %q) = false, want true", EntityIncident, terminal)
+	}
+
+	nonTerminal := []string{
+		string(model.IncidentStatusReported),
+		string(model.IncidentStatusTriaged),
+		string(model.IncidentStatusInvestigating),
+		string(model.IncidentStatusRootCauseIdentified),
+		string(model.IncidentStatusMitigated),
+		string(model.IncidentStatusResolved),
+	}
+	for _, state := range nonTerminal {
+		if IsTerminalState(EntityIncident, state) {
+			t.Fatalf("IsTerminalState(%q, %q) = true, want false", EntityIncident, state)
+		}
 	}
 }
 

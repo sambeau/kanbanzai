@@ -15,6 +15,7 @@ const (
 	EntityTask     = model.EntityKindTask
 	EntityBug      = model.EntityKindBug
 	EntityDecision = model.EntityKindDecision
+	EntityIncident = model.EntityKindIncident
 )
 
 var entryStates = map[EntityKind]string{
@@ -24,6 +25,7 @@ var entryStates = map[EntityKind]string{
 	EntityTask:     string(model.TaskStatusQueued),
 	EntityBug:      string(model.BugStatusReported),
 	EntityDecision: string(model.DecisionStatusProposed),
+	EntityIncident: string(model.IncidentStatusReported),
 }
 
 // phase2FeatureEntryState is the entry state for Phase 2 features (document-driven lifecycle).
@@ -54,6 +56,9 @@ var terminalStates = map[EntityKind]map[string]struct{}{
 	EntityDecision: {
 		string(model.DecisionStatusRejected):   {},
 		string(model.DecisionStatusSuperseded): {},
+	},
+	EntityIncident: {
+		string(model.IncidentStatusClosed): {},
 	},
 }
 
@@ -235,6 +240,33 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 		},
 		string(model.DecisionStatusAccepted): {
 			string(model.DecisionStatusSuperseded): {},
+		},
+	},
+	EntityIncident: {
+		string(model.IncidentStatusReported): {
+			string(model.IncidentStatusTriaged): {},
+			string(model.IncidentStatusClosed):  {}, // trivial / false alarm
+		},
+		string(model.IncidentStatusTriaged): {
+			string(model.IncidentStatusInvestigating): {},
+			string(model.IncidentStatusClosed):        {}, // not reproducible
+		},
+		string(model.IncidentStatusInvestigating): {
+			string(model.IncidentStatusRootCauseIdentified): {},
+			string(model.IncidentStatusClosed):              {},
+		},
+		string(model.IncidentStatusRootCauseIdentified): {
+			string(model.IncidentStatusMitigated):     {},
+			string(model.IncidentStatusInvestigating): {}, // root cause revised
+			string(model.IncidentStatusClosed):        {},
+		},
+		string(model.IncidentStatusMitigated): {
+			string(model.IncidentStatusResolved):      {},
+			string(model.IncidentStatusInvestigating): {}, // mitigation incomplete
+			string(model.IncidentStatusClosed):        {},
+		},
+		string(model.IncidentStatusResolved): {
+			string(model.IncidentStatusClosed): {}, // after RCA approved
 		},
 	},
 }

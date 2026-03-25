@@ -93,6 +93,13 @@ type KnowledgeConfig struct {
 	Pruning KnowledgePruningConfig `yaml:"pruning"`
 }
 
+// IncidentsConfig holds settings for incident management.
+type IncidentsConfig struct {
+	// RCALinkWarnAfterDays is the number of days after resolution before warning
+	// about a missing linked RCA. Set to 0 to disable the check.
+	RCALinkWarnAfterDays int `yaml:"rca_link_warn_after_days"`
+}
+
 // DispatchConfig holds settings for task dispatch operations.
 type DispatchConfig struct {
 	// StallThresholdDays is the number of days after dispatch before a task is considered stalled.
@@ -116,6 +123,8 @@ type Config struct {
 	Knowledge KnowledgeConfig `yaml:"knowledge,omitempty"`
 	// Dispatch holds settings for task dispatch operations.
 	Dispatch DispatchConfig `yaml:"dispatch,omitempty"`
+	// Incidents holds settings for incident management.
+	Incidents IncidentsConfig `yaml:"incidents,omitempty"`
 }
 
 // DefaultConfig returns a new Config with sensible defaults.
@@ -133,6 +142,14 @@ func DefaultConfig() Config {
 		Cleanup:        DefaultCleanupConfig(),
 		Knowledge:      DefaultKnowledgeConfig(),
 		Dispatch:       DefaultDispatchConfig(),
+		Incidents:      DefaultIncidentsConfig(),
+	}
+}
+
+// DefaultIncidentsConfig returns default incident management settings.
+func DefaultIncidentsConfig() IncidentsConfig {
+	return IncidentsConfig{
+		RCALinkWarnAfterDays: 7,
 	}
 }
 
@@ -213,6 +230,9 @@ func LoadFrom(path string) (*Config, error) {
 
 	// Merge defaults for Phase 4a fields when zero (e.g., pre-Phase 4a config files)
 	cfg.mergePhase4aDefaults()
+
+	// Merge defaults for Phase 4b fields when zero (e.g., pre-Phase 4b config files)
+	cfg.mergePhase4bDefaults()
 
 	if err := cfg.Validate(); err != nil {
 		return nil, fmt.Errorf("invalid config: %w", err)
@@ -319,6 +339,10 @@ func (c *Config) Validate() error {
 	}
 	if c.Knowledge.Pruning.GracePeriodDays < 0 {
 		return errors.New("knowledge.pruning.grace_period_days must be non-negative")
+	}
+
+	if c.Incidents.RCALinkWarnAfterDays < 0 {
+		return errors.New("incidents.rca_link_warn_after_days must be non-negative")
 	}
 
 	return nil
@@ -467,6 +491,15 @@ func (c *Config) mergePhase4aDefaults() {
 	dispatchDefaults := DefaultDispatchConfig()
 	if c.Dispatch.StallThresholdDays == 0 {
 		c.Dispatch.StallThresholdDays = dispatchDefaults.StallThresholdDays
+	}
+}
+
+// mergePhase4bDefaults fills in zero-value Phase 4b config fields with sensible defaults.
+// This handles pre-Phase 4b config files that lack these sections.
+func (c *Config) mergePhase4bDefaults() {
+	incidentsDefaults := DefaultIncidentsConfig()
+	if c.Incidents.RCALinkWarnAfterDays == 0 {
+		c.Incidents.RCALinkWarnAfterDays = incidentsDefaults.RCALinkWarnAfterDays
 	}
 }
 

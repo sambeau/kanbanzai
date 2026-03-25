@@ -80,6 +80,8 @@ func TypePrefix(entityKind model.EntityKind) (string, error) {
 		return "TASK", nil
 	case model.EntityKindDocument:
 		return "DOC", nil
+	case model.EntityKindIncident:
+		return "INC", nil
 	default:
 		return "", fmt.Errorf("unknown entity kind %q", entityKind)
 	}
@@ -100,6 +102,8 @@ func EntityKindFromPrefix(prefix string) (model.EntityKind, error) {
 		return model.EntityKindTask, nil
 	case "DOC":
 		return model.EntityKindDocument, nil
+	case "INC":
+		return model.EntityKindIncident, nil
 	default:
 		return "", fmt.Errorf("unknown type prefix %q", prefix)
 	}

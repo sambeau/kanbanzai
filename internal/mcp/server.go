@@ -85,12 +85,13 @@ func NewServer(entityRoot string) *server.MCPServer {
 	checkpointStore := checkpoint.NewStore(stateRoot)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 
-	// Phase 1 entity tools (with Phase 2b, Phase 3, and Phase 4a health checkers)
+	// Phase 1 entity tools (with Phase 2b, Phase 3, Phase 4a, and Phase 4b health checkers)
 	mcpServer.AddTools(EntityTools(entitySvc,
 		phase2bKnowledgeHealthChecker(knowledgeSvc, profileStore),
 		phase2bProfileHealthChecker(profileStore),
 		Phase3HealthChecker(worktreeStore, knowledgeSvc, cfg, repoRoot),
 		Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
+		Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
 	)...)
 
 	// Phase 2a Plan tools
@@ -152,6 +153,9 @@ func NewServer(entityRoot string) *server.MCPServer {
 
 	// Phase 4a Dispatch tools (dispatch_task, complete_task, human_checkpoint*)
 	mcpServer.AddTools(DispatchTools(dispatchSvc, checkpointStore, profileStore, knowledgeSvc, entitySvc, intelligenceSvc)...)
+
+	// Phase 4b Incident tools (incident_create, incident_update, incident_list, incident_link_bug)
+	mcpServer.AddTools(IncidentTools(entitySvc)...)
 
 	return mcpServer
 }

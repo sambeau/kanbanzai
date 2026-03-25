@@ -25,6 +25,13 @@ func (e ValidationError) Error() string {
 	return fmt.Sprintf("%s: %s: %s", e.EntityType, e.Field, e.Message)
 }
 
+var validIncidentSeverities = map[string]struct{}{
+	string(model.IncidentSeverityCritical): {},
+	string(model.IncidentSeverityHigh):     {},
+	string(model.IncidentSeverityMedium):   {},
+	string(model.IncidentSeverityLow):      {},
+}
+
 var validBugSeverities = map[string]struct{}{
 	string(model.BugSeverityLow):      {},
 	string(model.BugSeverityMedium):   {},
@@ -71,6 +78,14 @@ func ValidateBugType(value string) error {
 	return nil
 }
 
+// ValidateIncidentSeverity returns an error if value is not a valid incident severity.
+func ValidateIncidentSeverity(value string) error {
+	if _, ok := validIncidentSeverities[value]; !ok {
+		return fmt.Errorf("invalid incident severity %q: must be one of critical, high, medium, low", value)
+	}
+	return nil
+}
+
 // ValidateSlug returns an error if slug is not a non-empty lowercase kebab-case value.
 func ValidateSlug(slug string) error {
 	trimmed := strings.TrimSpace(slug)
@@ -96,6 +111,7 @@ var requiredFields = map[EntityKind][]string{
 	EntityTask:     {"id", "parent_feature", "slug", "summary", "status"},
 	EntityBug:      {"id", "slug", "title", "status", "severity", "priority", "type", "reported_by", "reported", "observed", "expected"},
 	EntityDecision: {"id", "slug", "summary", "rationale", "decided_by", "date", "status"},
+	EntityIncident: {"id", "slug", "title", "status", "severity", "reported_by", "detected_at", "summary", "created", "created_by"},
 }
 
 // ValidateRecord checks an entity record's fields for correctness.
@@ -203,6 +219,19 @@ func ValidateRecord(entityType string, fields map[string]any) []ValidationError 
 					EntityType: entityType,
 					EntityID:   entityID,
 					Field:      "type",
+					Message:    err.Error(),
+				})
+			}
+		}
+	}
+
+	if kind == EntityIncident {
+		if severity, ok := stringField(fields, "severity"); ok && severity != "" {
+			if err := ValidateIncidentSeverity(severity); err != nil {
+				errs = append(errs, ValidationError{
+					EntityType: entityType,
+					EntityID:   entityID,
+					Field:      "severity",
 					Message:    err.Error(),
 				})
 			}

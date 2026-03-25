@@ -15,6 +15,7 @@ const (
 	EntityKindBug      EntityKind = "bug"
 	EntityKindDecision EntityKind = "decision"
 	EntityKindDocument EntityKind = "document"
+	EntityKindIncident EntityKind = "incident"
 
 	// EntityKindEpic is deprecated and will be removed after migration.
 	// Use EntityKindPlan instead.
@@ -120,6 +121,29 @@ const (
 	BugPriorityCritical BugPriority = "critical"
 )
 
+// IncidentStatus is the lifecycle state for an Incident.
+type IncidentStatus string
+
+const (
+	IncidentStatusReported            IncidentStatus = "reported"
+	IncidentStatusTriaged             IncidentStatus = "triaged"
+	IncidentStatusInvestigating       IncidentStatus = "investigating"
+	IncidentStatusRootCauseIdentified IncidentStatus = "root-cause-identified"
+	IncidentStatusMitigated           IncidentStatus = "mitigated"
+	IncidentStatusResolved            IncidentStatus = "resolved"
+	IncidentStatusClosed              IncidentStatus = "closed"
+)
+
+// IncidentSeverity classifies incident severity.
+type IncidentSeverity string
+
+const (
+	IncidentSeverityCritical IncidentSeverity = "critical"
+	IncidentSeverityHigh     IncidentSeverity = "high"
+	IncidentSeverityMedium   IncidentSeverity = "medium"
+	IncidentSeverityLow      IncidentSeverity = "low"
+)
+
 // BugType classifies the nature of a bug.
 type BugType string
 
@@ -149,6 +173,7 @@ const (
 	DocumentTypeResearch      DocumentType = "research"
 	DocumentTypeReport        DocumentType = "report"
 	DocumentTypePolicy        DocumentType = "policy"
+	DocumentTypeRCA           DocumentType = "rca"
 )
 
 // AllDocumentTypes returns the ordered list of recognised document types.
@@ -160,6 +185,7 @@ func AllDocumentTypes() []DocumentType {
 		DocumentTypeResearch,
 		DocumentTypeReport,
 		DocumentTypePolicy,
+		DocumentTypeRCA,
 	}
 }
 
@@ -452,6 +478,42 @@ func (d DocumentRecord) GetSlug() string {
 		}
 	}
 	return d.ID
+}
+
+// Incident is the canonical representation of an Incident.
+type Incident struct {
+	ID               string           `yaml:"id"`
+	Slug             string           `yaml:"slug"`
+	Title            string           `yaml:"title"`
+	Status           IncidentStatus   `yaml:"status"`
+	Severity         IncidentSeverity `yaml:"severity"`
+	ReportedBy       string           `yaml:"reported_by"`
+	DetectedAt       time.Time        `yaml:"detected_at"`
+	TriagedAt        *time.Time       `yaml:"triaged_at,omitempty"`
+	MitigatedAt      *time.Time       `yaml:"mitigated_at,omitempty"`
+	ResolvedAt       *time.Time       `yaml:"resolved_at,omitempty"`
+	AffectedFeatures []string         `yaml:"affected_features,omitempty"`
+	LinkedBugs       []string         `yaml:"linked_bugs,omitempty"`
+	LinkedRCA        string           `yaml:"linked_rca,omitempty"`
+	Summary          string           `yaml:"summary"`
+	Created          time.Time        `yaml:"created"`
+	CreatedBy        string           `yaml:"created_by"`
+	Updated          time.Time        `yaml:"updated"`
+}
+
+// GetKind returns the entity kind.
+func (Incident) GetKind() EntityKind {
+	return EntityKindIncident
+}
+
+// GetID returns the canonical ID.
+func (i Incident) GetID() string {
+	return i.ID
+}
+
+// GetSlug returns the human-readable slug.
+func (i Incident) GetSlug() string {
+	return i.Slug
 }
 
 // IsPlanID returns true if the given ID matches the Plan ID pattern.
