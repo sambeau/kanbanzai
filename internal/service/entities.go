@@ -851,6 +851,13 @@ func validateKindForType(entityType string) (validate.EntityKind, error) {
 
 func parseRecordIdentity(entityType, idPart string) (string, string, error) {
 	switch entityType {
+	case string(model.EntityKindPlan):
+		// Plan files use {id}.yaml with no slug suffix. The entire idPart is the ID.
+		if prefix, _, _ := model.ParsePlanID(idPart); prefix != "" {
+			return idPart, "", nil
+		}
+		return "", "", fmt.Errorf("invalid plan record filename %q", idPart)
+
 	case string(model.EntityKindEpic):
 		// New format: EPIC-{EPICSLUG}-{filename-slug}
 		// Epic slug is uppercase letters, digits, hyphens.
