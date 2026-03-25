@@ -1,0 +1,8 @@
+id: P1-phase-4-orchestration
+slug: phase-4-orchestration
+title: "Phase 4: Orchestration"
+status: proposed
+summary: "Deliver the orchestration layer: estimation, dependency enforcement, task dispatch and completion, decomposition, and self-managed capabilities."
+created: "2026-03-25T16:17:35Z"
+created_by: human
+updated: "2026-03-25T16:17:35Z"

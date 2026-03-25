@@ -1,6 +1,6 @@
 id: FEAT-01KMJVK9V84TZ
 slug: phase-4b-planning
-parent: EPIC-PHASE-4-ORCH
+parent: P1-phase-4-orchestration
 status: developing
 summary: "Write the Phase 4b specification and implementation plan, using Phase 4a orchestration tools to manage the work."
 created: "2026-03-25T16:00:42Z"

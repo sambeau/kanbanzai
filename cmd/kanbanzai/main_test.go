@@ -10,6 +10,7 @@ import (
 
 	"kanbanzai/internal/cache"
 	"kanbanzai/internal/document"
+	"kanbanzai/internal/model"
 	"kanbanzai/internal/service"
 	"kanbanzai/internal/validate"
 )
@@ -95,24 +96,25 @@ func TestRunCreate_CreatesEntities(t *testing.T) {
 		wantPath   string
 	}{
 		{
-			name: "epic",
+			name: "plan",
 			args: []string{
-				"create", "epic",
+				"create", "plan",
+				"--prefix", "P",
 				"--slug", "phase 1 kernel",
 				"--title", "Phase 1 Kernel",
 				"--summary", "Build the initial workflow kernel",
 				"--created_by", "sam",
 			},
-			wantEntity: "epic",
+			wantEntity: "plan",
 			wantSlug:   "phase-1-kernel",
-			wantPath:   "test/state/epics/",
+			wantPath:   "test/state/plans/",
 		},
 		{
 			name: "feature",
 			args: []string{
 				"create", "feature",
 				"--slug", "storage layer",
-				"--epic", "EPIC-TESTEPIC",
+				"--parent", "P1-phase-1-kernel",
 				"--summary", "Implement canonical storage",
 				"--created_by", "sam",
 			},
@@ -200,9 +202,9 @@ func TestRunCreate_CreatesEntities(t *testing.T) {
 			}
 
 			switch tt.wantEntity {
-			case "epic":
-				if !strings.HasPrefix(idValue, "EPIC-") {
-					t.Fatalf("epic id %q does not have EPIC- prefix:\n%s", idValue, stdout)
+			case "plan":
+				if !model.IsPlanID(idValue) {
+					t.Fatalf("plan id %q does not match plan ID format:\n%s", idValue, stdout)
 				}
 			case "feature":
 				if !strings.HasPrefix(idValue, "FEAT-") {
@@ -761,6 +763,33 @@ func newFakeEntityService() *fakeEntityService {
 			},
 		},
 	}
+}
+
+func (f *fakeEntityService) CreatePlan(input service.CreatePlanInput) (service.CreateResult, error) {
+	slug := normalizeTestSlug(input.Slug)
+	return service.CreateResult{
+		Type: "plan",
+		ID:   "P1-" + slug,
+		Slug: slug,
+		Path: "test/state/plans/P1-" + slug + ".yaml",
+		State: map[string]any{
+			"status": "proposed",
+		},
+	}, nil
+}
+
+func (f *fakeEntityService) GetPlan(id string) (service.ListResult, error) {
+	return service.ListResult{
+		Type:  "plan",
+		ID:    id,
+		Slug:  "phase-1-kernel",
+		Path:  "test/state/plans/" + id + ".yaml",
+		State: map[string]any{"status": "proposed"},
+	}, nil
+}
+
+func (f *fakeEntityService) ListPlans(filters service.PlanFilters) ([]service.ListResult, error) {
+	return nil, nil
 }
 
 func (f *fakeEntityService) CreateEpic(input service.CreateEpicInput) (service.CreateResult, error) {

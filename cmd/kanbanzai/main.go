@@ -21,13 +21,16 @@ import (
 )
 
 type entityService interface {
+	CreatePlan(service.CreatePlanInput) (service.CreateResult, error)
 	CreateEpic(service.CreateEpicInput) (service.CreateResult, error)
 	CreateFeature(service.CreateFeatureInput) (service.CreateResult, error)
 	CreateTask(service.CreateTaskInput) (service.CreateResult, error)
 	CreateBug(service.CreateBugInput) (service.CreateResult, error)
 	CreateDecision(service.CreateDecisionInput) (service.CreateResult, error)
+	GetPlan(id string) (service.ListResult, error)
 	Get(entityType, entityID, slug string) (service.GetResult, error)
 	List(entityType string) ([]service.ListResult, error)
+	ListPlans(filters service.PlanFilters) ([]service.ListResult, error)
 	UpdateStatus(service.UpdateStatusInput) (service.GetResult, error)
 	UpdateEntity(service.UpdateEntityInput) (service.GetResult, error)
 	ValidateCandidate(entityType string, fields map[string]any) []validate.ValidationError
@@ -152,13 +155,13 @@ func runCreate(args []string, deps dependencies) error {
 	svc := deps.newEntityService("")
 
 	switch args[0] {
-	case "epic":
+	case "plan":
 		values, err := parseFlags(args[1:])
 		if err != nil {
 			return err
 		}
-		result, err := svc.CreateEpic(service.CreateEpicInput{
-			EpicSlug:  values["epic_slug"],
+		result, err := svc.CreatePlan(service.CreatePlanInput{
+			Prefix:    values["prefix"],
 			Slug:      values["slug"],
 			Title:     values["title"],
 			Summary:   values["summary"],
@@ -168,6 +171,8 @@ func runCreate(args []string, deps dependencies) error {
 			return err
 		}
 		return printCreateResult(deps.stdout, result)
+	case "epic":
+		return fmt.Errorf("'epic' is deprecated; use 'create plan' instead")
 	case "feature":
 		values, err := parseFlags(args[1:])
 		if err != nil {
@@ -244,6 +249,22 @@ func runGet(args []string, deps dependencies) error {
 	svc := deps.newEntityService("")
 
 	switch args[0] {
+	case "plan":
+		values, err := parseFlags(args[1:])
+		if err != nil {
+			return err
+		}
+		listResult, err := svc.GetPlan(values["id"])
+		if err != nil {
+			return err
+		}
+		return printGetResult(deps.stdout, service.GetResult{
+			Type:  listResult.Type,
+			ID:    listResult.ID,
+			Slug:  listResult.Slug,
+			Path:  listResult.Path,
+			State: listResult.State,
+		})
 	case "epic", "feature", "task", "bug", "decision":
 		values, err := parseFlags(args[1:])
 		if err != nil {
@@ -267,6 +288,17 @@ func runList(args []string, deps dependencies) error {
 	svc := deps.newEntityService("")
 
 	switch args[0] {
+	case "plans":
+		results, err := svc.ListPlans(service.PlanFilters{})
+		if err != nil {
+			return fmt.Errorf("list plans: %w", err)
+		}
+		fmt.Fprintln(deps.stdout, "listed plan")
+		for _, r := range results {
+			status, _ := r.State["status"].(string)
+			fmt.Fprintf(deps.stdout, "%s\t%s\t%s\t%s\n", r.ID, r.Slug, r.Path, status)
+		}
+		return nil
 	case "epics":
 		return printListResults(deps.stdout, "epic", svc)
 	case "features":
@@ -832,16 +864,16 @@ Notes:
 const createUsageText = `kanbanzai create <entity> [flags]
 
 Entities:
-  epic
+  plan
+    --prefix
     --slug
     --title
     --summary
     --created_by
-    [--epic_slug]
 
   feature
     --slug
-    --epic
+    --parent
     --summary
     --created_by
 
@@ -870,7 +902,7 @@ Entities:
 const getUsageText = `kanbanzai get <entity> [flags]
 
 Entities:
-  epic
+  plan
   feature
   task
   bug
@@ -884,7 +916,7 @@ Flags:
 const listUsageText = `kanbanzai list <collection>
 
 Collections:
-  epics
+  plans
   features
   tasks
   bugs
