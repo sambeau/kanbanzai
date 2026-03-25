@@ -31,9 +31,9 @@ Examples:
 
 ## Project Status
 
-**Phase 1 is complete. Phase 2a is complete. Phase 2b is complete. Phase 3 is complete.** The repository contains design documents, specifications, planning documents, research, and working implementation code. All Phase 2a acceptance criteria are met, all audit bugs (B1–B8) are fixed, and all tests pass with race detector enabled. All Phase 2b acceptance criteria are met. All Phase 3 acceptance criteria (§20.1–§20.12) are met, all audit remediation items (R1–R17) are resolved, automatic worktree creation on task/bug transition is implemented, and all tests pass with race detector enabled. Phase 3 status is tracked in `work/plan/phase-3-progress.md`.
+**Phase 1 is complete. Phase 2a is complete. Phase 2b is complete. Phase 3 is complete. Phase 4a is complete.** The repository contains design documents, specifications, planning documents, research, and working implementation code. All Phase 2a acceptance criteria are met, all audit bugs (B1–B8) are fixed, and all tests pass with race detector enabled. All Phase 2b acceptance criteria are met. All Phase 3 acceptance criteria (§20.1–§20.12) are met, all audit remediation items (R1–R17) are resolved, automatic worktree creation on task/bug transition is implemented, and all tests pass with race detector enabled. All Phase 4a acceptance criteria are met: estimation tools, work queue, dispatch/complete task, human checkpoints, and orchestration health dashboard are implemented, and all tests pass with race detector enabled.
 
-The binding contracts for implementation are `work/spec/phase-1-specification.md` (Phase 1), `work/spec/phase-2-specification.md` (Phase 2), `work/spec/phase-2b-specification.md` (Phase 2b), and `work/spec/phase-3-specification.md` (Phase 3). The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
+The binding contracts for implementation are `work/spec/phase-1-specification.md` (Phase 1), `work/spec/phase-2-specification.md` (Phase 2), `work/spec/phase-2b-specification.md` (Phase 2b), `work/spec/phase-3-specification.md` (Phase 3), and `work/spec/phase-4a-specification.md` (Phase 4a). The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
 
 Current Phase 2a status is tracked in `work/plan/phase-2a-progress.md`. Phase 2b status is tracked in `work/plan/phase-2b-progress.md`. Phase 3 status is tracked in `work/plan/phase-3-progress.md`.
 
@@ -69,7 +69,8 @@ kanbanzai/
 │   ├── health/            ← health check categories and formatting (Phase 3)
 │   ├── id/                ← canonical ID allocation and display formatting
 │   ├── knowledge/         ← deduplication, confidence scoring, link resolution (Phase 2b), TTL pruning, promotion, compaction (Phase 3)
-│   ├── mcp/               ← MCP server and tools (Phase 1 + Phase 2a + Phase 2b + Phase 3)
+│   ├── checkpoint/        ← human checkpoint creation and management (Phase 4a)
+│   ├── mcp/               ← MCP server and tools (Phase 1 + Phase 2a + Phase 2b + Phase 3 + Phase 4a)
 │   ├── merge/             ← merge gate definitions, checker, override (Phase 3)
 │   ├── model/             ← entity type definitions and ID utilities
 │   ├── service/           ← entity, plan, and document record service logic
@@ -122,6 +123,7 @@ If you need to understand the project, read in this order:
 
 Then refer to these as needed:
 
+- `work/spec/phase-4a-specification.md` — Phase 4a scope and verification basis (kbz-workflow)
 - `work/plan/phase-2a-progress.md` — Phase 2a implementation status and remaining work
 - `work/plan/phase-2-scope.md` — Phase 2 scope and planning
 - `work/spec/phase-2b-specification.md` — Phase 2b scope and verification basis
@@ -156,6 +158,8 @@ Then refer to these as needed:
 | Phase 2b implementation plan | `work/plan/phase-2b-implementation-plan.md` | kbz |
 | Phase 2 decisions | `work/plan/phase-2-decision-log.md` | both |
 | Phase 3 spec and status | `work/spec/phase-3-specification.md`, `work/plan/phase-3-progress.md` | kbz |
+| Phase 4a specification | `work/spec/phase-4a-specification.md` | kbz |
+| Phase 4 decisions | `work/plan/phase-4-decision-log.md` | both |
 
 ## Communicating With Humans
 
@@ -179,8 +183,9 @@ When making a non-trivial change to any document or code:
 2. Check `work/plan/phase-1-decision-log.md` — there are 12 accepted architectural decisions covering ID allocation, YAML format, lifecycle transitions, required fields, file layout, and more. Do not reinvent or contradict them.
 3. Check `work/plan/phase-2-decision-log.md` — there are Phase 2 architectural decisions (P2-DEC-001 through P2-DEC-004) covering context profiles, knowledge management, and related topics. Do not reinvent or contradict them.
 4. Check `work/plan/phase-3-decision-log.md` — there are Phase 3 design decisions (P3-DES-001 through P3-DES-008) covering worktree lifecycle, branch naming, merge gates, PR scope, and cleanup behavior. Do not reinvent or contradict them.
-5. Check whether the design basis or specification says something different from what you intend.
-6. If there is a conflict or ambiguity, surface it to the human rather than guessing.
+5. Check `work/plan/phase-4-decision-log.md` — there are Phase 4 design decisions (P4-DES-001 through P4-DES-007) covering phase split, estimation, self-management thresholds, dependency modelling, agent delegation, incidents/RCA, and document store deprecation. Do not reinvent or contradict them.
+6. Check whether the design basis or specification says something different from what you intend.
+7. If there is a conflict or ambiguity, surface it to the human rather than guessing.
 
 ## Git Rules
 
@@ -247,12 +252,10 @@ Do not let document changes accumulate uncommitted across long sessions.
 
 ## Scope Guard
 
-Phase 1 (workflow kernel), Phase 2a (entity model evolution, document intelligence, migration), Phase 2b (context profiles, knowledge management, user identity), and Phase 3 (Git integration, knowledge lifecycle) are complete. Current work should focus on Phase 4 planning and implementation as directed by the human.
+Phase 1 (workflow kernel), Phase 2a (entity model evolution, document intelligence, migration), Phase 2b (context profiles, knowledge management, user identity), Phase 3 (Git integration, knowledge lifecycle), and Phase 4a (estimation, work queue, dispatch, human checkpoints, orchestration health) are complete. Current work should focus on Phase 4b planning and implementation as directed by the human.
 
 Do not build beyond the current phase without explicit direction:
 
-- Orchestration or agent delegation (Phase 4+)
-- Incident or RCA entities
 - Cross-project knowledge sharing
 - GitLab, Bitbucket, or other platform support (beyond GitHub)
 - Webhook-based real-time synchronisation
