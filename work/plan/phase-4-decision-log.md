@@ -23,6 +23,7 @@
 | P4-DES-004 | Dependency modelling            | accepted | 2026-03-25 |
 | P4-DES-005 | Agent delegation model          | accepted | 2026-03-25 |
 | P4-DES-006 | Incidents and root cause analysis | accepted | 2026-03-25 |
+| P4-DES-007 | Phase 1 document store deprecation and removal | accepted | 2026-03-25 |
 
 ---
 
@@ -305,9 +306,61 @@ Phase 4b placement is appropriate: incidents and RCA are not needed for the Phas
 
 ---
 
+---
+
+## `P4-DES-007: Phase 1 document store deprecation and removal`
+
+- Status: accepted
+- Date: 2026-03-25
+- Scope: phase-4, document-pipeline, technical-debt
+- Related:
+  - `work/spec/phase-1-specification.md` §11 (document pipeline)
+  - `work/spec/phase-2-specification.md` §6 (document record model)
+  - `internal/document/` (Phase 1 store — to be removed)
+  - `internal/storage/document_store.go` (Phase 2a store — canonical going forward)
+
+### Decision
+
+The Phase 1 document store (`internal/document/`, `.kbz/docs/`) is **deprecated immediately** and will be **removed at the start of Phase 4b**.
+
+Going forward, documents are registered as document records in `.kbz/state/documents/` using the Phase 2a `DocumentRecord` model: a YAML metadata file with a `path` field pointing to the source file in `work/` and a `content_hash` for staleness detection. No content is copied.
+
+The Phase 1 store (`internal/document/`, the `doc` CLI command, `kbz doc submit/approve/retrieve`, and the `.kbz/docs/` directory) are removed in Phase 4b once the replacement path is validated.
+
+**Removal gate:** The Phase 4b specification and implementation plan must be successfully registered and retrieved via the Phase 2a path before the Phase 1 store is deleted. This validates that the replacement is working end-to-end.
+
+### Rationale
+
+The Phase 1 design copied document content into `.kbz/docs/` with YAML front-matter prepended. This made sense when documents might arrive through a chat interface with no stable file path. In practice, all project documents live in `work/` within the git repository and are edited there directly. The copy in `.kbz/docs/` is never updated after the initial submit, so it drifts from the source immediately.
+
+The Phase 2a `DocumentRecord` model already solves this correctly: a metadata record with a `path` reference and a `content_hash` to detect staleness. The source file in `work/` is the single canonical copy; the system tracks it by reference, not by duplication.
+
+Keeping both systems running in parallel creates confusion about which is authoritative, causes agents to read stale document copies, and adds dead code that must be maintained.
+
+### Alternatives Considered
+
+- **Keep both systems and sync them.** Rejected — adds complexity without benefit. The Phase 1 copies are already stale and nothing reads them in Phase 2 or later.
+- **Migrate `.kbz/docs/` content back to `work/` and keep only the Phase 1 store.** Rejected — the Phase 2a approach (path reference + hash) is strictly better; the Phase 1 store is the thing to remove.
+- **Remove the Phase 1 store now (Phase 4a).** Rejected — premature. The Phase 2a document path has not been exercised for new documents yet. Validate it with the Phase 4b planning documents first, then remove with confidence.
+
+### Consequences
+
+- **Immediate:** Do not use `kbz doc submit` for new documents. Register new documents as Phase 2a document records (path reference) instead.
+- **Phase 4b start:** Remove `internal/document/` package, `.kbz/docs/` directory, `doc` CLI command group, and associated MCP tools (`doc_submit`, `doc_approve`, `doc_retrieve`, `doc_list`). Replace with Phase 2a document record operations where tools are still needed.
+- **Existing `.kbz/docs/` content:** The 25 Phase 1-era document copies in `.kbz/docs/` are deleted as part of the removal. Their canonical versions are in `work/` and are unaffected. Any document intelligence index entries pointing to `.kbz/docs/` paths will need to be rebuilt against the `work/` paths.
+- **`content_hash` staleness:** Once documents are tracked by path reference, the health check can detect when a registered document's hash no longer matches the file on disk, prompting re-registration. This is strictly better than the current situation where stale copies are silently returned.
+
+### Follow-up Needed
+
+- Register the Phase 4b specification and implementation plan as Phase 2a document records (path reference) when they are written — this is the validation gate for the removal.
+- At the start of Phase 4b: execute the removal of `internal/document/`, `.kbz/docs/`, and associated CLI/MCP surface.
+- Update `AGENTS.md` when the removal is complete to remove references to `doc submit` and `.kbz/docs/`.
+
+---
+
 ## Summary
 
-Phase 4 has six accepted design decisions covering product scope, orchestration model, and human UX concerns:
+Phase 4 has seven accepted design decisions covering product scope, orchestration model, human UX concerns, and technical debt:
 
 | ID         | Topic                      | Key Choice                                                   |
 |------------|----------------------------|--------------------------------------------------------------|
@@ -317,5 +370,6 @@ Phase 4 has six accepted design decisions covering product scope, orchestration 
 | P4-DES-004 | Dependency modelling       | Transition-validator enforcement (4a); automatic hook (4b)   |
 | P4-DES-005 | Agent delegation model     | Task state + four fields + dispatch_task tool; no new entity |
 | P4-DES-006 | Incidents and RCA          | Incident entity + RCA document type; both Phase 4b           |
+| P4-DES-007 | Phase 1 document store     | Deprecated now; removed at Phase 4b start after path validation |
 
 Implementation details and AI Agent UX decisions are deferred to the Phase 4a specification.
