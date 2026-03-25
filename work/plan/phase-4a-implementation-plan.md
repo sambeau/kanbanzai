@@ -575,7 +575,13 @@ Phase 4a is complete when:
 | Stalled dispatch check: should it check git activity on the branch or on the worktree path? | Branch activity via `git log` since `dispatched_at` on the worktree branch |
 | `complete_task` when task has no `dispatched_by` (manually transitioned to active): allow or reject? | Allow — `dispatched_by` is informational; completing a manually-activated task is valid |
 
-### 10.2 Potential Phase 4a.1 scope (defer if needed)
+### 10.2 Punch list (known gaps to fix before validation)
+
+| # | Gap | Location | Fix |
+|---|-----|----------|-----|
+| PL-1 | `update status --type plan` fails — `parseRecordIdentity` has no `plan` case, so the generic `UpdateStatus` path cannot resolve Plan filenames (`{id}.yaml`, no slug suffix) | `internal/service/entities.go` `parseRecordIdentity` | Add a `plan` case that calls `model.ParsePlanID` to extract the slug, matching how `entityFileName` writes Plan files |
+
+### 10.3 Potential Phase 4a.1 scope (defer if needed)
 
 If any track falls behind estimates, these items can be deferred without breaking the core orchestration loop:
 
