@@ -157,6 +157,10 @@ func NewServer(entityRoot string) *server.MCPServer {
 	// Phase 4b Incident tools (incident_create, incident_update, incident_list, incident_link_bug)
 	mcpServer.AddTools(IncidentTools(entitySvc)...)
 
+	// Phase 4b Decompose tools (decompose_feature, decompose_review)
+	decomposeSvc := service.NewDecomposeService(entitySvc, docRecordSvc)
+	mcpServer.AddTools(DecomposeTools(decomposeSvc)...)
+
 	return mcpServer
 }
 

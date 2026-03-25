@@ -492,6 +492,45 @@ func TestRunUpdateStatus_RejectsIllegalTransition(t *testing.T) {
 	}
 }
 
+func TestRunFeature_MissingSubcommand_ReturnsUsageError(t *testing.T) {
+	deps, _ := testDependencies()
+
+	err := run([]string{"feature"}, deps)
+	if err == nil {
+		t.Fatal("run(feature) error = nil, want non-nil")
+	}
+
+	if !strings.Contains(err.Error(), "missing feature subcommand") {
+		t.Fatalf("error missing subcommand message: %v", err)
+	}
+}
+
+func TestRunFeature_UnknownSubcommand_ReturnsUsageError(t *testing.T) {
+	deps, _ := testDependencies()
+
+	err := run([]string{"feature", "explode"}, deps)
+	if err == nil {
+		t.Fatal("run(feature explode) error = nil, want non-nil")
+	}
+
+	if !strings.Contains(err.Error(), "unknown feature subcommand") {
+		t.Fatalf("error missing unknown subcommand message: %v", err)
+	}
+}
+
+func TestRunFeatureDecompose_MissingID_ReturnsUsageError(t *testing.T) {
+	deps, _ := testDependencies()
+
+	err := run([]string{"feature", "decompose"}, deps)
+	if err == nil {
+		t.Fatal("run(feature decompose) error = nil, want non-nil")
+	}
+
+	if !strings.Contains(err.Error(), "missing feature ID") {
+		t.Fatalf("error missing feature ID message: %v", err)
+	}
+}
+
 func TestParseFlags(t *testing.T) {
 	tests := []struct {
 		name    string

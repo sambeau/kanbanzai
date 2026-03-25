@@ -1,0 +1,631 @@
+package service
+
+import (
+	"fmt"
+	"regexp"
+	"strings"
+)
+
+// DecomposeInput is the input for DecomposeService.DecomposeFeature.
+type DecomposeInput struct {
+	FeatureID string
+	Context   string // optional additional guidance
+}
+
+// ProposedTask is a single task in a decomposition proposal.
+type ProposedTask struct {
+	Slug      string   `json:"slug"`
+	Summary   string   `json:"summary"`
+	Role      string   `json:"role,omitempty"`
+	Estimate  *float64 `json:"estimate,omitempty"`
+	DependsOn []string `json:"depends_on,omitempty"`
+	Rationale string   `json:"rationale"`
+}
+
+// Proposal is the complete decomposition proposal for a feature.
+type Proposal struct {
+	Tasks          []ProposedTask `json:"tasks"`
+	TotalTasks     int            `json:"total_tasks"`
+	EstimatedTotal *float64       `json:"estimated_total,omitempty"`
+	Slices         []string       `json:"slices"`
+	Warnings       []string       `json:"warnings"`
+}
+
+// DecomposeResult is the output of DecomposeService.DecomposeFeature.
+type DecomposeResult struct {
+	FeatureID       string   `json:"feature_id"`
+	FeatureSlug     string   `json:"feature_slug"`
+	SpecDocumentID  string   `json:"spec_document_id"`
+	Proposal        Proposal `json:"proposal"`
+	GuidanceApplied []string `json:"guidance_applied"`
+}
+
+// DecomposeReviewInput is the input for DecomposeService.ReviewProposal.
+type DecomposeReviewInput struct {
+	FeatureID string
+	Proposal  Proposal
+}
+
+// Finding is a single review finding from decompose_review.
+type Finding struct {
+	Type     string `json:"type"`                // gap, overlap, oversized, ambiguous, cycle
+	TaskSlug string `json:"task_slug,omitempty"` // affected task slug, empty for feature-level findings
+	Detail   string `json:"detail"`
+}
+
+// DecomposeReviewResult is the output of DecomposeService.ReviewProposal.
+type DecomposeReviewResult struct {
+	FeatureID     string    `json:"feature_id"`
+	Status        string    `json:"status"` // pass, fail, warn
+	Findings      []Finding `json:"findings"`
+	TotalFindings int       `json:"total_findings"`
+	BlockingCount int       `json:"blocking_count"`
+}
+
+// DecomposeService provides feature decomposition and proposal review.
+type DecomposeService struct {
+	entitySvc *EntityService
+	docSvc    *DocumentService
+}
+
+// NewDecomposeService creates a new DecomposeService.
+func NewDecomposeService(entitySvc *EntityService, docSvc *DocumentService) *DecomposeService {
+	return &DecomposeService{entitySvc: entitySvc, docSvc: docSvc}
+}
+
+// DecomposeFeature loads a feature's spec document, applies decomposition
+// guidance, and returns a proposed task list. It never writes any tasks.
+func (s *DecomposeService) DecomposeFeature(input DecomposeInput) (DecomposeResult, error) {
+	if strings.TrimSpace(input.FeatureID) == "" {
+		return DecomposeResult{}, fmt.Errorf("feature_id is required")
+	}
+
+	// 1. Load the feature.
+	feat, err := s.entitySvc.Get("feature", input.FeatureID, "")
+	if err != nil {
+		return DecomposeResult{}, fmt.Errorf("load feature %s: %w", input.FeatureID, err)
+	}
+
+	featureSlug, _ := feat.State["slug"].(string)
+	specDocID, _ := feat.State["spec"].(string)
+
+	// 2. Verify a spec document is linked.
+	if specDocID == "" {
+		return DecomposeResult{}, fmt.Errorf("feature %s has no linked specification document", feat.ID)
+	}
+
+	// 3. Retrieve spec document content via the document record path.
+	content, docResult, err := s.docSvc.GetDocumentContent(specDocID)
+	if err != nil {
+		return DecomposeResult{}, fmt.Errorf("load spec document %s: %w", specDocID, err)
+	}
+
+	// 4. Parse the spec for structure.
+	spec := parseSpecStructure(content)
+
+	// 5. Generate proposal by applying embedded guidance.
+	proposal, guidance := generateProposal(spec, featureSlug, input.Context)
+
+	return DecomposeResult{
+		FeatureID:       feat.ID,
+		FeatureSlug:     featureSlug,
+		SpecDocumentID:  docResult.ID,
+		Proposal:        proposal,
+		GuidanceApplied: guidance,
+	}, nil
+}
+
+// ReviewProposal checks a decomposition proposal against the feature's spec
+// for gaps, oversized tasks, dependency cycles, and ambiguities.
+func (s *DecomposeService) ReviewProposal(input DecomposeReviewInput) (DecomposeReviewResult, error) {
+	if strings.TrimSpace(input.FeatureID) == "" {
+		return DecomposeReviewResult{}, fmt.Errorf("feature_id is required")
+	}
+
+	// 1. Load the feature to get the spec reference.
+	feat, err := s.entitySvc.Get("feature", input.FeatureID, "")
+	if err != nil {
+		return DecomposeReviewResult{}, fmt.Errorf("load feature %s: %w", input.FeatureID, err)
+	}
+
+	specDocID, _ := feat.State["spec"].(string)
+	if specDocID == "" {
+		return DecomposeReviewResult{}, fmt.Errorf("feature %s has no linked specification document", feat.ID)
+	}
+
+	// 2. Load spec content.
+	content, _, err := s.docSvc.GetDocumentContent(specDocID)
+	if err != nil {
+		return DecomposeReviewResult{}, fmt.Errorf("load spec document %s: %w", specDocID, err)
+	}
+
+	// 3. Parse spec for acceptance criteria.
+	spec := parseSpecStructure(content)
+
+	// 4. Run all review checks.
+	var findings []Finding
+	findings = append(findings, checkGaps(spec, input.Proposal)...)
+	findings = append(findings, checkOversized(input.Proposal)...)
+	findings = append(findings, checkCycles(input.Proposal)...)
+	findings = append(findings, checkAmbiguous(input.Proposal)...)
+
+	// 5. Determine status.
+	blockingCount := 0
+	for _, f := range findings {
+		if isBlockingFinding(f) {
+			blockingCount++
+		}
+	}
+
+	status := "pass"
+	if blockingCount > 0 {
+		status = "fail"
+	} else if len(findings) > 0 {
+		status = "warn"
+	}
+
+	return DecomposeReviewResult{
+		FeatureID:     feat.ID,
+		Status:        status,
+		Findings:      findings,
+		TotalFindings: len(findings),
+		BlockingCount: blockingCount,
+	}, nil
+}
+
+// ---------------------------------------------------------------------------
+// Spec structure parsing
+// ---------------------------------------------------------------------------
+
+// specStructure holds the parsed structural elements of a spec document.
+type specStructure struct {
+	sections           []specSection
+	acceptanceCriteria []acceptanceCriterion
+}
+
+type specSection struct {
+	title string
+	level int
+}
+
+type acceptanceCriterion struct {
+	text    string
+	section string // enclosing section title
+}
+
+var (
+	// Matches markdown checkbox lines: "- [ ] text" or "- [x] text"
+	reCheckbox = regexp.MustCompile(`(?m)^\s*-\s+\[[ xX]\]\s+(.+)$`)
+	// Matches markdown headers: "## Title" through "##### Title"
+	reHeader = regexp.MustCompile(`(?m)^(#{1,6})\s+(.+)$`)
+	// Matches numbered acceptance criteria: "1. text", "2. text" etc.
+	// Only within an "acceptance criteria" section.
+	reNumbered = regexp.MustCompile(`(?m)^\s*\d+\.\s+(.+)$`)
+)
+
+// parseSpecStructure extracts sections and acceptance criteria from a
+// markdown specification document.
+func parseSpecStructure(content string) specStructure {
+	var spec specStructure
+	lines := strings.Split(content, "\n")
+
+	currentSection := ""
+	inACSection := false
+
+	for _, line := range lines {
+		// Check for headers.
+		if m := reHeader.FindStringSubmatch(line); m != nil {
+			level := len(m[1])
+			title := strings.TrimSpace(m[2])
+			spec.sections = append(spec.sections, specSection{title: title, level: level})
+			currentSection = title
+			inACSection = isAcceptanceCriteriaSection(title)
+			continue
+		}
+
+		// Check for checkbox-style acceptance criteria (anywhere in doc).
+		if m := reCheckbox.FindStringSubmatch(line); m != nil {
+			spec.acceptanceCriteria = append(spec.acceptanceCriteria, acceptanceCriterion{
+				text:    strings.TrimSpace(m[1]),
+				section: currentSection,
+			})
+			continue
+		}
+
+		// Check for numbered items inside acceptance criteria sections.
+		if inACSection {
+			if m := reNumbered.FindStringSubmatch(line); m != nil {
+				spec.acceptanceCriteria = append(spec.acceptanceCriteria, acceptanceCriterion{
+					text:    strings.TrimSpace(m[1]),
+					section: currentSection,
+				})
+			}
+		}
+	}
+
+	return spec
+}
+
+// isAcceptanceCriteriaSection returns true if the section title looks like
+// it contains acceptance criteria.
+func isAcceptanceCriteriaSection(title string) bool {
+	lower := strings.ToLower(title)
+	return strings.Contains(lower, "acceptance criteria") ||
+		strings.Contains(lower, "acceptance") ||
+		strings.Contains(lower, "requirements") ||
+		strings.Contains(lower, "criteria")
+}
+
+// ---------------------------------------------------------------------------
+// Proposal generation
+// ---------------------------------------------------------------------------
+
+// guidanceRules are the six embedded decomposition guidance rules from §6.5.
+var guidanceRules = []string{
+	"vertical-slice-first",
+	"one-ac-per-task",
+	"size-soft-limit-8",
+	"explicit-dependencies",
+	"role-assignment",
+	"test-tasks-explicit",
+}
+
+// generateProposal builds a task proposal from the parsed spec structure,
+// applying the embedded decomposition guidance rules.
+func generateProposal(spec specStructure, featureSlug, context string) (Proposal, []string) {
+	var tasks []ProposedTask
+	var warnings []string
+	var appliedGuidance []string
+
+	// Identify vertical slices from top-level sections (level 2 headers).
+	slices := identifySlices(spec)
+	if len(slices) > 0 {
+		appliedGuidance = append(appliedGuidance, "vertical-slice-first")
+	}
+
+	if len(spec.acceptanceCriteria) > 0 {
+		// One task per acceptance criterion (guidance rule 2).
+		appliedGuidance = append(appliedGuidance, "one-ac-per-task")
+		for i, ac := range spec.acceptanceCriteria {
+			slug := buildTaskSlug(featureSlug, ac.text, i)
+			task := ProposedTask{
+				Slug:    slug,
+				Summary: ac.text,
+				Rationale: fmt.Sprintf(
+					"Covers acceptance criterion: %q (section: %s)",
+					ac.text, sectionOrDefault(ac.section),
+				),
+			}
+			tasks = append(tasks, task)
+		}
+	} else if len(spec.sections) > 0 {
+		// Fallback: one task per major section when no explicit ACs exist.
+		for i, sec := range spec.sections {
+			if sec.level > 3 {
+				continue // skip deeply nested sections
+			}
+			slug := buildTaskSlug(featureSlug, sec.title, i)
+			task := ProposedTask{
+				Slug:      slug,
+				Summary:   fmt.Sprintf("Implement %s", sec.title),
+				Rationale: fmt.Sprintf("Derived from spec section: %q", sec.title),
+			}
+			tasks = append(tasks, task)
+		}
+		if len(tasks) > 0 {
+			warnings = append(warnings, "No acceptance criteria found in spec; tasks derived from section headers")
+		}
+	}
+
+	if len(tasks) == 0 {
+		warnings = append(warnings, "No acceptance criteria or sections found in spec; empty proposal")
+	}
+
+	// Check if any tasks need a test companion (guidance rule 6).
+	hasTestTask := false
+	for _, t := range tasks {
+		lower := strings.ToLower(t.Summary)
+		if strings.Contains(lower, "test") {
+			hasTestTask = true
+			break
+		}
+	}
+	if len(tasks) > 0 && !hasTestTask {
+		tasks = append(tasks, ProposedTask{
+			Slug:      featureSlug + "-tests",
+			Summary:   "Write tests for " + featureSlug,
+			Rationale: "Guidance rule: test tasks are explicit. No test task was found among proposed tasks.",
+		})
+		appliedGuidance = append(appliedGuidance, "test-tasks-explicit")
+	}
+
+	// Size soft limit is always applied (guidance rule 3) — we note it as
+	// applied; actual flagging is done at review time since estimates are
+	// optional in the initial proposal.
+	appliedGuidance = append(appliedGuidance, "size-soft-limit-8")
+
+	// Explicit dependencies is always applied as guidance (rule 4).
+	appliedGuidance = append(appliedGuidance, "explicit-dependencies")
+
+	// Role assignment is always reported as considered (rule 5).
+	appliedGuidance = append(appliedGuidance, "role-assignment")
+
+	// Add context-driven guidance note.
+	if context != "" {
+		warnings = append(warnings, fmt.Sprintf("Additional orchestration context provided: %s", context))
+	}
+
+	// Calculate estimated total.
+	var estimatedTotal *float64
+	allEstimated := len(tasks) > 0
+	sum := 0.0
+	for _, t := range tasks {
+		if t.Estimate != nil {
+			sum += *t.Estimate
+		} else {
+			allEstimated = false
+		}
+	}
+	if allEstimated && len(tasks) > 0 {
+		estimatedTotal = &sum
+	}
+
+	return Proposal{
+		Tasks:          tasks,
+		TotalTasks:     len(tasks),
+		EstimatedTotal: estimatedTotal,
+		Slices:         slices,
+		Warnings:       warnings,
+	}, deduplicateStrings(appliedGuidance)
+}
+
+// identifySlices extracts vertical slice names from level-2 section headers,
+// skipping meta sections like "Introduction" or "References".
+func identifySlices(spec specStructure) []string {
+	var slices []string
+	skip := map[string]bool{
+		"introduction": true, "overview": true, "references": true,
+		"appendix": true, "glossary": true, "background": true,
+		"purpose": true, "scope": true, "definitions": true,
+	}
+	for _, sec := range spec.sections {
+		if sec.level == 2 {
+			lower := strings.ToLower(sec.title)
+			if !skip[lower] && !isAcceptanceCriteriaSection(sec.title) {
+				slices = append(slices, sec.title)
+			}
+		}
+	}
+	return slices
+}
+
+// buildTaskSlug creates a slug for a proposed task from the feature slug
+// and a text description.
+func buildTaskSlug(featureSlug, text string, index int) string {
+	slug := slugify(text)
+	if slug == "" {
+		slug = fmt.Sprintf("task-%d", index+1)
+	}
+	// Keep slugs reasonably short.
+	if len(slug) > 40 {
+		slug = slug[:40]
+		// Trim trailing hyphens from truncation.
+		slug = strings.TrimRight(slug, "-")
+	}
+	return featureSlug + "-" + slug
+}
+
+// slugify converts text to a URL-friendly slug.
+func slugify(text string) string {
+	lower := strings.ToLower(text)
+	// Replace non-alphanumeric characters with hyphens.
+	var b strings.Builder
+	prevHyphen := false
+	for _, r := range lower {
+		if (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') {
+			b.WriteRune(r)
+			prevHyphen = false
+		} else if !prevHyphen && b.Len() > 0 {
+			b.WriteByte('-')
+			prevHyphen = true
+		}
+	}
+	result := b.String()
+	return strings.TrimRight(result, "-")
+}
+
+func sectionOrDefault(section string) string {
+	if section == "" {
+		return "top-level"
+	}
+	return section
+}
+
+// ---------------------------------------------------------------------------
+// Review checks
+// ---------------------------------------------------------------------------
+
+const oversizedThreshold = 8.0
+
+// checkGaps detects acceptance criteria in the spec that are not covered
+// by any task in the proposal.
+func checkGaps(spec specStructure, proposal Proposal) []Finding {
+	var findings []Finding
+	for _, ac := range spec.acceptanceCriteria {
+		if !isACCovered(ac, proposal.Tasks) {
+			findings = append(findings, Finding{
+				Type:   "gap",
+				Detail: fmt.Sprintf("Uncovered acceptance criterion: %q (section: %s)", ac.text, sectionOrDefault(ac.section)),
+			})
+		}
+	}
+	return findings
+}
+
+// isACCovered returns true if any proposed task appears to cover the given
+// acceptance criterion, using keyword overlap as a heuristic.
+func isACCovered(ac acceptanceCriterion, tasks []ProposedTask) bool {
+	acWords := significantWords(ac.text)
+	if len(acWords) == 0 {
+		return true // vacuous criterion
+	}
+	for _, task := range tasks {
+		combined := strings.ToLower(task.Summary + " " + task.Rationale)
+		matched := 0
+		for _, w := range acWords {
+			if strings.Contains(combined, w) {
+				matched++
+			}
+		}
+		// Require at least two-thirds of significant words to match.
+		if matched*3 >= len(acWords)*2 {
+			return true
+		}
+	}
+	return false
+}
+
+// significantWords extracts lowercase words of 4+ characters, skipping
+// common stop words.
+func significantWords(text string) []string {
+	stopWords := map[string]bool{
+		"the": true, "and": true, "for": true, "are": true, "but": true,
+		"not": true, "you": true, "all": true, "can": true, "has": true,
+		"her": true, "was": true, "one": true, "our": true, "out": true,
+		"with": true, "this": true, "that": true, "from": true, "they": true,
+		"been": true, "have": true, "many": true, "some": true, "them": true,
+		"than": true, "each": true, "make": true, "like": true, "when": true,
+		"will": true, "must": true, "should": true, "shall": true, "also": true,
+	}
+
+	words := strings.Fields(strings.ToLower(text))
+	var result []string
+	for _, w := range words {
+		// Strip punctuation.
+		w = strings.Trim(w, ".,;:!?\"'`()[]{}#*-_/\\")
+		if len(w) >= 4 && !stopWords[w] {
+			result = append(result, w)
+		}
+	}
+	return result
+}
+
+// checkOversized detects tasks with estimates above the soft limit.
+func checkOversized(proposal Proposal) []Finding {
+	var findings []Finding
+	for _, task := range proposal.Tasks {
+		if task.Estimate != nil && *task.Estimate > oversizedThreshold {
+			findings = append(findings, Finding{
+				Type:     "oversized",
+				TaskSlug: task.Slug,
+				Detail:   fmt.Sprintf("Task %q estimated at %.0f points (soft limit: %.0f)", task.Slug, *task.Estimate, oversizedThreshold),
+			})
+		}
+	}
+	return findings
+}
+
+// checkCycles detects dependency cycles within the proposal using DFS.
+func checkCycles(proposal Proposal) []Finding {
+	// Build adjacency from slug → depends_on slugs.
+	adj := make(map[string][]string)
+	slugSet := make(map[string]bool)
+	for _, task := range proposal.Tasks {
+		slugSet[task.Slug] = true
+		if len(task.DependsOn) > 0 {
+			adj[task.Slug] = task.DependsOn
+		}
+	}
+
+	const (
+		white = 0 // unvisited
+		gray  = 1 // in current path
+		black = 2 // fully explored
+	)
+	color := make(map[string]int)
+	var cycleNodes []string
+
+	var dfs func(node string) bool
+	dfs = func(node string) bool {
+		color[node] = gray
+		for _, dep := range adj[node] {
+			if !slugSet[dep] {
+				continue // skip references to unknown slugs
+			}
+			switch color[dep] {
+			case gray:
+				cycleNodes = append(cycleNodes, node, dep)
+				return true
+			case white:
+				if dfs(dep) {
+					return true
+				}
+			}
+		}
+		color[node] = black
+		return false
+	}
+
+	var findings []Finding
+	for _, task := range proposal.Tasks {
+		if color[task.Slug] == white {
+			cycleNodes = nil
+			if dfs(task.Slug) {
+				findings = append(findings, Finding{
+					Type:   "cycle",
+					Detail: fmt.Sprintf("Dependency cycle detected involving: %s", strings.Join(cycleNodes, " → ")),
+				})
+				// Reset to find additional cycles.
+				for k := range color {
+					if color[k] == gray {
+						color[k] = white
+					}
+				}
+			}
+		}
+	}
+	return findings
+}
+
+// checkAmbiguous detects tasks with very short or generic summaries.
+func checkAmbiguous(proposal Proposal) []Finding {
+	var findings []Finding
+	for _, task := range proposal.Tasks {
+		summary := strings.TrimSpace(task.Summary)
+		if len(summary) < 10 {
+			findings = append(findings, Finding{
+				Type:     "ambiguous",
+				TaskSlug: task.Slug,
+				Detail:   fmt.Sprintf("Task %q has a very short summary (%d characters)", task.Slug, len(summary)),
+			})
+		}
+	}
+	return findings
+}
+
+// isBlockingFinding returns true for finding types that should block
+// confirmation of a proposal.
+func isBlockingFinding(f Finding) bool {
+	switch f.Type {
+	case "gap", "cycle":
+		return true
+	default:
+		return false
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+func deduplicateStrings(ss []string) []string {
+	seen := make(map[string]bool, len(ss))
+	var result []string
+	for _, s := range ss {
+		if !seen[s] {
+			seen[s] = true
+			result = append(result, s)
+		}
+	}
+	return result
+}
