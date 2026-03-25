@@ -31,11 +31,11 @@ Examples:
 
 ## Project Status
 
-**Phase 1 is complete. Phase 2a is complete. Phase 2b is complete.** The repository contains design documents, specifications, planning documents, research, and working implementation code. All Phase 2a acceptance criteria are met, all audit bugs (B1–B8) are fixed, and all tests pass with race detector enabled. All Phase 2b acceptance criteria are met.
+**Phase 1 is complete. Phase 2a is complete. Phase 2b is complete. Phase 3 is in remediation.** The repository contains design documents, specifications, planning documents, research, and working implementation code. All Phase 2a acceptance criteria are met, all audit bugs (B1–B8) are fixed, and all tests pass with race detector enabled. All Phase 2b acceptance criteria are met. Phase 3 implementation is complete; post-implementation audit identified remediation items tracked in `work/plan/phase-3-progress.md`.
 
-The binding contracts for implementation are `work/spec/phase-1-specification.md` (Phase 1), `work/spec/phase-2-specification.md` (Phase 2), and `work/spec/phase-2b-specification.md` (Phase 2b). The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
+The binding contracts for implementation are `work/spec/phase-1-specification.md` (Phase 1), `work/spec/phase-2-specification.md` (Phase 2), `work/spec/phase-2b-specification.md` (Phase 2b), and `work/spec/phase-3-specification.md` (Phase 3). The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
 
-Current Phase 2a status is tracked in `work/plan/phase-2a-progress.md`. Phase 2b status is tracked in `work/plan/phase-2b-progress.md`.
+Current Phase 2a status is tracked in `work/plan/phase-2a-progress.md`. Phase 2b status is tracked in `work/plan/phase-2b-progress.md`. Phase 3 status is tracked in `work/plan/phase-3-progress.md`.
 
 ## Two Workflows
 
@@ -57,20 +57,26 @@ kanbanzai/
 ├── cmd/kanbanzai/         ← binary entry point (CLI and MCP server)
 ├── internal/              ← core logic (shared by MCP server and CLI)
 │   ├── cache/             ← local derived SQLite cache
+│   ├── cleanup/           ← post-merge cleanup scheduling and execution (Phase 3)
 │   ├── config/            ← project configuration and prefix registry (Phase 2a + Phase 2b user identity)
 │   ├── context/           ← context profiles, inheritance resolution, and assembly (Phase 2b)
 │   ├── core/              ← instance paths and root utilities
 │   ├── docint/            ← document intelligence (structural parsing, classification, graph)
 │   ├── document/          ← Phase 1 document store, templates, validation
 │   ├── fsutil/            ← filesystem utilities (atomic write)
+│   ├── git/               ← Git operations, branch tracking, staleness detection (Phase 3)
+│   ├── github/            ← GitHub API client, PR operations (Phase 3)
+│   ├── health/            ← health check categories and formatting (Phase 3)
 │   ├── id/                ← canonical ID allocation and display formatting
-│   ├── knowledge/         ← deduplication, confidence scoring, link resolution (Phase 2b)
-│   ├── mcp/               ← MCP server and tools (Phase 1 + Phase 2a + Phase 2b)
+│   ├── knowledge/         ← deduplication, confidence scoring, link resolution (Phase 2b), TTL pruning, promotion, compaction (Phase 3)
+│   ├── mcp/               ← MCP server and tools (Phase 1 + Phase 2a + Phase 2b + Phase 3)
+│   ├── merge/             ← merge gate definitions, checker, override (Phase 3)
 │   ├── model/             ← entity type definitions and ID utilities
 │   ├── service/           ← entity, plan, and document record service logic
 │   ├── storage/           ← canonical YAML entity and document record storage
 │   ├── testutil/          ← shared test helpers
-│   └── validate/          ← lifecycle state machines, health checks
+│   ├── validate/          ← lifecycle state machines, health checks
+│   └── worktree/          ← worktree store, git worktree operations, naming (Phase 3)
 ├── docs/                  ← user-facing and reference documentation (reserved for later)
 ├── work/                  ← active design, spec, planning, and research documents
 │   ├── bootstrap/         ← bootstrap-workflow: the process we follow now
@@ -85,6 +91,7 @@ kanbanzai/
     │   ├── plans/         ← Plan entity files (Phase 2a)
     │   ├── documents/     ← document metadata records (Phase 2a)
     │   ├── knowledge/     ← KnowledgeEntry records (Phase 2b)
+    │   ├── worktrees/     ← worktree tracking records (Phase 3)
     │   └── ...            ← other entity type directories
     ├── docs/              ← Phase 1 managed documents
     ├── context/
@@ -148,6 +155,7 @@ Then refer to these as needed:
 | Phase 2b specification | `work/spec/phase-2b-specification.md` | kbz |
 | Phase 2b implementation plan | `work/plan/phase-2b-implementation-plan.md` | kbz |
 | Phase 2 decisions | `work/plan/phase-2-decision-log.md` | both |
+| Phase 3 spec and status | `work/spec/phase-3-specification.md`, `work/plan/phase-3-progress.md` | kbz |
 
 ## Communicating With Humans
 
@@ -170,8 +178,9 @@ When making a non-trivial change to any document or code:
 1. Identify which spec or design document owns the topic.
 2. Check `work/plan/phase-1-decision-log.md` — there are 12 accepted architectural decisions covering ID allocation, YAML format, lifecycle transitions, required fields, file layout, and more. Do not reinvent or contradict them.
 3. Check `work/plan/phase-2-decision-log.md` — there are Phase 2 architectural decisions (P2-DEC-001 through P2-DEC-004) covering context profiles, knowledge management, and related topics. Do not reinvent or contradict them.
-4. Check whether the design basis or specification says something different from what you intend.
-5. If there is a conflict or ambiguity, surface it to the human rather than guessing.
+4. Check `work/plan/phase-3-decision-log.md` — there are Phase 3 design decisions (P3-DES-001 through P3-DES-008) covering worktree lifecycle, branch naming, merge gates, PR scope, and cleanup behavior. Do not reinvent or contradict them.
+5. Check whether the design basis or specification says something different from what you intend.
+6. If there is a conflict or ambiguity, surface it to the human rather than guessing.
 
 ## Git Rules
 
@@ -238,15 +247,16 @@ Do not let document changes accumulate uncommitted across long sessions.
 
 ## Scope Guard
 
-Phase 1 (workflow kernel), Phase 2a (entity model evolution, document intelligence, migration), and Phase 2b (context profiles, knowledge management, user identity) are complete. Current work should focus on Phase 3 or later scope as directed by the human.
+Phase 1 (workflow kernel), Phase 2a (entity model evolution, document intelligence, migration), Phase 2b (context profiles, knowledge management, user identity), and Phase 3 (Git integration, knowledge lifecycle) are complete. Current work should focus on Phase 3 remediation or Phase 4 scope as directed by the human.
 
 Do not build beyond the current phase without explicit direction:
 
-- Orchestration or agent delegation (Phase 3+)
+- Orchestration or agent delegation (Phase 4+)
 - Incident or RCA entities
-- GitHub automation or webhook integration
+- Cross-project knowledge sharing
+- GitLab, Bitbucket, or other platform support (beyond GitHub)
+- Webhook-based real-time synchronisation
 - Semantic search or embedding-based retrieval
-- Worktree automation
 - Broad self-hosting automation
 
 If you think something outside current scope is needed, stop and ask. Do not add it speculatively.

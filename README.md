@@ -57,15 +57,16 @@ Kanbanzai addresses this with three layers:
 
 ## Current status
 
-Kanbanzai is under active development. Three implementation phases are complete:
+Kanbanzai is under active development. Four implementation phases are complete:
 
 - **Phase 1** — the workflow kernel: entities, lifecycle rules, storage, validation, and the MCP and CLI interfaces
 - **Phase 2a** — document intelligence: Plans replacing Epics, document-driven Feature lifecycle, structural document analysis, and rich queries
 - **Phase 2b** — context management: knowledge entries, context profiles, context assembly, agent capabilities (link resolution, duplicate detection), and batch document import
+- **Phase 3** — Git integration: worktree management, branch tracking, merge gates, GitHub PR integration, post-merge cleanup, knowledge lifecycle automation (git anchoring, TTL pruning, promotion, compaction)
 
 All tests pass. The system is functional and self-hosting — it manages its own project state.
 
-What's still ahead: Git worktree management, branch tracking, and multi-agent orchestration.
+What's still ahead: multi-agent orchestration and delegation.
 
 ---
 
@@ -93,6 +94,12 @@ kbz knowledge list
 kbz profile list
 kbz context assemble --role backend
 kbz import work/design/
+kbz worktree list              # list active worktrees
+kbz branch status FEAT-01JX... # check branch health
+kbz merge check FEAT-01JX...   # check merge readiness
+kbz pr create FEAT-01JX...     # create GitHub PR
+kbz cleanup list               # list pending cleanups
+kbz knowledge check             # check knowledge staleness
 ```
 
 ---
@@ -106,7 +113,8 @@ Kanbanzai keeps project state in a `.kbz/` directory, tracked in Git:
 ├── config.yaml          ← project settings and Plan prefix registry
 ├── state/               ← entity records (plans, features, tasks, etc.)
 │   ├── knowledge/       ← knowledge entries
-│   └── documents/       ← document metadata records
+│   ├── documents/       ← document metadata records
+│   └── worktrees/       ← worktree tracking records
 ├── context/
 │   └── roles/           ← context profile definitions
 ├── index/               ← document intelligence index
@@ -141,6 +149,7 @@ If you want to understand the project deeply, start with:
 3. `work/spec/phase-1-specification.md` — Phase 1 scope
 4. `work/spec/phase-2-specification.md` — Phase 2 scope
 5. `work/spec/phase-2b-specification.md` — Phase 2b scope
+6. `work/spec/phase-3-specification.md` — Phase 3 scope
 
 Build and test:
 
