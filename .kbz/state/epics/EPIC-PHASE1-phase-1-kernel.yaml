@@ -1,7 +1,0 @@
-id: EPIC-PHASE1
-slug: phase-1-kernel
-title: Phase 1 Workflow Kernel
-status: active
-summary: "Build the Phase 1 workflow kernel: entity model, lifecycle enforcement, document support, MCP server, CLI, and bootstrap self-hosting"
-created: "2026-03-21T16:14:14Z"
-created_by: human

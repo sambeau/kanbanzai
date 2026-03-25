@@ -1,6 +1,6 @@
 id: FEAT-01KM8JTF0MK91
 slug: bootstrap-self-hosting
-epic: EPIC-PHASE1
+parent: P2-phase-1-kernel
 status: in-progress
 summary: "Bootstrap self-hosting: create initial records, register documents, activate tool on its own work"
 created: "2026-03-21T16:14:30Z"
