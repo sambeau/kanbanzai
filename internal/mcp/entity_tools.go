@@ -377,7 +377,32 @@ func updateStatusTool(svc *service.EntityService) server.ServerTool {
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("update status failed", err), nil
 		}
-		return jsonResult(getResultWithDisplay(result))
+
+		resp := getResultWithDisplay(result)
+
+		// Include automatic worktree creation result when the hook fired.
+		if wt := result.WorktreeHookResult; wt != nil {
+			if wt.Created {
+				resp["worktree_created"] = map[string]any{
+					"worktree_id": wt.WorktreeID,
+					"entity_id":   wt.EntityID,
+					"branch":      wt.Branch,
+					"path":        wt.Path,
+				}
+			} else if wt.AlreadyExists {
+				resp["worktree_exists"] = map[string]any{
+					"worktree_id": wt.WorktreeID,
+					"entity_id":   wt.EntityID,
+					"branch":      wt.Branch,
+					"path":        wt.Path,
+				}
+			}
+			if wt.Warning != "" {
+				resp["worktree_warning"] = wt.Warning
+			}
+		}
+
+		return jsonResult(resp)
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }

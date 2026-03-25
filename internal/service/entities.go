@@ -79,6 +79,12 @@ type CreateResult struct {
 	Slug  string
 	Path  string
 	State map[string]any
+
+	// WorktreeHookResult is set by the status transition hook when a
+	// worktree was automatically created (or attempted) during a status
+	// update. It is nil for non-transition operations and for transitions
+	// that don't trigger worktree creation.
+	WorktreeHookResult *WorktreeResult `json:"-"`
 }
 
 type GetResult = CreateResult
@@ -92,11 +98,12 @@ type ListResult struct {
 }
 
 type EntityService struct {
-	root      string
-	store     *storage.EntityStore
-	allocator *id.Allocator
-	now       func() time.Time
-	cache     *cache.Cache
+	root       string
+	store      *storage.EntityStore
+	allocator  *id.Allocator
+	now        func() time.Time
+	cache      *cache.Cache
+	statusHook StatusTransitionHook // optional, for automatic worktree creation
 }
 
 func NewEntityService(root string) *EntityService {
@@ -112,6 +119,18 @@ func NewEntityService(root string) *EntityService {
 			return time.Now().UTC()
 		},
 	}
+}
+
+// SetStatusTransitionHook attaches an optional hook that fires after
+// successful status transitions. Used for automatic worktree creation
+// when tasks become active or bugs move to in-progress.
+func (s *EntityService) SetStatusTransitionHook(hook StatusTransitionHook) {
+	s.statusHook = hook
+}
+
+// Store returns the underlying entity store for low-level access in dispatch operations.
+func (s *EntityService) Store() *storage.EntityStore {
+	return s.store
 }
 
 // SetCache attaches an optional local derived cache.
@@ -618,6 +637,17 @@ func (s *EntityService) UpdateStatus(input UpdateStatusInput) (GetResult, error)
 		State: record.Fields,
 	}
 	s.cacheUpsertFromResult(result)
+
+	// Fire status transition hook (e.g. automatic worktree creation).
+	// The hook result is stored on the result for the caller to include
+	// in its response. Hook failures never block the transition.
+	if s.statusHook != nil {
+		wtResult := s.statusHook.OnStatusTransition(entityType, entityID, slug, currentStatusText, nextStatus, record.Fields)
+		if wtResult != nil {
+			result.WorktreeHookResult = wtResult
+		}
+	}
+
 	return result, nil
 }
 
@@ -946,6 +976,9 @@ func epicFields(e model.Epic) map[string]any {
 		"created":    e.Created.Format(time.RFC3339),
 		"created_by": e.CreatedBy,
 	}
+	if e.Estimate != nil {
+		fields["estimate"] = *e.Estimate
+	}
 	if len(e.Features) > 0 {
 		fields["features"] = append([]string(nil), e.Features...)
 	}
@@ -961,6 +994,9 @@ func featureFields(e model.Feature) map[string]any {
 		"summary":    e.Summary,
 		"created":    e.Created.Format(time.RFC3339),
 		"created_by": e.CreatedBy,
+	}
+	if e.Estimate != nil {
+		fields["estimate"] = *e.Estimate
 	}
 	if !e.Updated.IsZero() {
 		fields["updated"] = e.Updated.Format(time.RFC3339)
@@ -1003,6 +1039,9 @@ func taskFields(e model.Task) map[string]any {
 		"summary":        e.Summary,
 		"status":         string(e.Status),
 	}
+	if e.Estimate != nil {
+		fields["estimate"] = *e.Estimate
+	}
 	if e.Assignee != "" {
 		fields["assignee"] = e.Assignee
 	}
@@ -1017,6 +1056,21 @@ func taskFields(e model.Task) map[string]any {
 	}
 	if e.Completed != nil {
 		fields["completed"] = e.Completed.Format(time.RFC3339)
+	}
+	if e.ClaimedAt != nil {
+		fields["claimed_at"] = e.ClaimedAt.Format(time.RFC3339)
+	}
+	if e.DispatchedTo != "" {
+		fields["dispatched_to"] = e.DispatchedTo
+	}
+	if e.DispatchedAt != nil {
+		fields["dispatched_at"] = e.DispatchedAt.Format(time.RFC3339)
+	}
+	if e.DispatchedBy != "" {
+		fields["dispatched_by"] = e.DispatchedBy
+	}
+	if e.CompletionSummary != "" {
+		fields["completion_summary"] = e.CompletionSummary
 	}
 	if e.Verification != "" {
 		fields["verification"] = e.Verification
@@ -1037,6 +1091,9 @@ func bugFields(e model.Bug) map[string]any {
 		"reported":    e.Reported.Format(time.RFC3339),
 		"observed":    e.Observed,
 		"expected":    e.Expected,
+	}
+	if e.Estimate != nil {
+		fields["estimate"] = *e.Estimate
 	}
 	if len(e.Affects) > 0 {
 		fields["affects"] = append([]string(nil), e.Affects...)

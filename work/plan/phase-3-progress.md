@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-03-25
 
-**Status:** Complete — all tracks implemented, all audit remediation items (R1–R17) fixed, all tests pass with race detector enabled.
+**Status:** Complete — all tracks implemented, all audit remediation items (R1–R17) fixed, §20.1 automatic worktree creation implemented, all tests pass with race detector enabled.
 
 **Purpose:** Track implementation status of Phase 3 deliverables (Git integration and knowledge lifecycle) against the Phase 3 specification (§20 acceptance criteria), and record the results of the post-implementation audit.
 
@@ -42,14 +42,14 @@ A post-implementation audit identified 2 critical bugs, 11 correctness issues, 1
 
 Tracking against spec §20 acceptance criteria.
 
-### §20.1 Worktree management — ⚠️ Partially met (see §6.3)
+### §20.1 Worktree management — ✅ Met
 
 - [x] Worktree creation follows suggested branch naming convention
 - [x] Worktree-entity relationship is tracked in state
 - [x] `worktree_list` returns all worktrees with correct status
 - [x] `worktree_remove` removes worktree and updates state
-- [ ] Worktree is created automatically when first task in feature/bug starts — **not linked to task lifecycle; standalone tool only**
-- [ ] Worktree creation failure does not block task transition — **cannot evaluate; creation not linked to transitions**
+- [x] Worktree is created automatically when first task in feature/bug starts — via `StatusTransitionHook` / `WorktreeTransitionHook` in `EntityService.UpdateStatus()`
+- [x] Worktree creation failure does not block task transition — hook fires after transition is persisted; failures produce warnings, never errors
 
 ### §20.2 Branch tracking — ✅ Met
 
@@ -178,6 +178,7 @@ All tests pass: `go test -race ./... ✅` and `go vet ./... ✅`.
 
 | Package | Unit Tests | MCP Tool Tests | Rating |
 |---------|-----------|----------------|--------|
+| `service/` (hook) | ✅ Excellent (18 test funcs — mock hook, real git worktree, idempotency, E2E) | N/A | Strong |
 | `worktree/` | ✅ Excellent (23 test funcs) | ⚠️ Good (5 tests, minor gaps) | Strong |
 | `git/` | ✅ Excellent (real Git repos) | N/A | Strong |
 | `merge/` | ✅ Good (all gates, overrides, format) | ❌ None for `merge_tools.go` | Medium |
@@ -253,11 +254,19 @@ Updated current status, CLI examples, storage tree, and contributor reading orde
 
 All 16 implemented remediation items (R1–R6, R8–R17) are fixed. R7 (MCP tool integration tests) is deferred as non-blocking.
 
-### Automatic worktree creation (§20.1 criteria 1 and 6)
+### Automatic worktree creation (§20.1 criteria 1 and 6) — ✅ Implemented
 
-The spec requires worktrees to be created automatically when the first task in a feature/bug transitions to `in_progress`. This is not implemented — `worktree_create` is a standalone MCP tool. This is the largest structural gap and may require design discussion before implementation, since it touches the task lifecycle state machine in `internal/validate/`.
+Implemented via the `StatusTransitionHook` pattern (mirroring the existing `EntityLifecycleHook` used by `DocumentService`):
 
-This is recorded here but not assigned a remediation number because it represents a feature gap rather than a bug in existing code. It should be discussed with the human before proceeding.
+- **`StatusTransitionHook` interface** (`internal/service/status_transition_hook.go`): Defines `OnStatusTransition()` called after every successful `EntityService.UpdateStatus()`. Returns an informational `WorktreeResult` (never blocks the transition).
+- **`WorktreeTransitionHook`** (same file): Concrete implementation that triggers automatic worktree creation when:
+  - A **task** transitions to `active` → creates a worktree for the **parent feature** (looked up via `parent_feature` field)
+  - A **bug** transitions to `in-progress` → creates a worktree for the **bug itself**
+- **Idempotency**: If a worktree already exists for the entity, the hook returns `AlreadyExists: true` without error. Multiple tasks activating under the same feature share one worktree.
+- **Failure resilience**: Per spec §6.5, worktree creation failure produces a warning in the response but never blocks the status transition (the transition is persisted before the hook fires).
+- **Response enrichment**: The `update_status` MCP tool handler includes `worktree_created`, `worktree_exists`, or `worktree_warning` fields in its response when the hook fires.
+- **Wiring**: Hook is constructed and attached in `internal/mcp/server.go` via `entitySvc.SetStatusTransitionHook(NewWorktreeTransitionHook(...))`.
+- **Tests**: 18 new tests in `internal/service/status_transition_hook_test.go` covering mock hook integration, irrelevant transitions, missing parent features, real git worktree creation, idempotency, bug lifecycle, and end-to-end UpdateStatus flows. All pass with `-race`.
 
 ---
 

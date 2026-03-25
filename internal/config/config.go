@@ -93,6 +93,13 @@ type KnowledgeConfig struct {
 	Pruning KnowledgePruningConfig `yaml:"pruning"`
 }
 
+// DispatchConfig holds settings for task dispatch operations.
+type DispatchConfig struct {
+	// StallThresholdDays is the number of days after dispatch before a task is considered stalled.
+	// Set to 0 to disable the stalled dispatch health check.
+	StallThresholdDays int `yaml:"stall_threshold_days"`
+}
+
 // Config is the project configuration structure stored in .kbz/config.yaml.
 type Config struct {
 	// Version is the configuration schema version.
@@ -107,6 +114,8 @@ type Config struct {
 	Cleanup CleanupConfig `yaml:"cleanup,omitempty"`
 	// Knowledge holds lifecycle settings for knowledge entries.
 	Knowledge KnowledgeConfig `yaml:"knowledge,omitempty"`
+	// Dispatch holds settings for task dispatch operations.
+	Dispatch DispatchConfig `yaml:"dispatch,omitempty"`
 }
 
 // DefaultConfig returns a new Config with sensible defaults.
@@ -123,6 +132,14 @@ func DefaultConfig() Config {
 		BranchTracking: DefaultBranchTrackingConfig(),
 		Cleanup:        DefaultCleanupConfig(),
 		Knowledge:      DefaultKnowledgeConfig(),
+		Dispatch:       DefaultDispatchConfig(),
+	}
+}
+
+// DefaultDispatchConfig returns default dispatch settings.
+func DefaultDispatchConfig() DispatchConfig {
+	return DispatchConfig{
+		StallThresholdDays: 3,
 	}
 }
 
@@ -193,6 +210,9 @@ func LoadFrom(path string) (*Config, error) {
 
 	// Merge defaults for Phase 3 fields when zero (e.g., pre-Phase 3 config files)
 	cfg.mergePhase3Defaults()
+
+	// Merge defaults for Phase 4a fields when zero (e.g., pre-Phase 4a config files)
+	cfg.mergePhase4aDefaults()
 
 	if err := cfg.Validate(); err != nil {
 		return nil, fmt.Errorf("invalid config: %w", err)
@@ -439,6 +459,15 @@ func (c *Config) NextPlanNumber(prefix string, planIDScanner func() ([]string, e
 	}
 
 	return maxNum + 1, nil
+}
+
+// mergePhase4aDefaults fills in zero-value Phase 4a config fields with sensible defaults.
+// This handles pre-Phase 4a config files that lack these sections.
+func (c *Config) mergePhase4aDefaults() {
+	dispatchDefaults := DefaultDispatchConfig()
+	if c.Dispatch.StallThresholdDays == 0 {
+		c.Dispatch.StallThresholdDays = dispatchDefaults.StallThresholdDays
+	}
 }
 
 // mergePhase3Defaults fills in zero-value Phase 3 config fields with sensible defaults.

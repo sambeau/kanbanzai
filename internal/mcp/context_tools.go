@@ -38,6 +38,7 @@ func contextAssembleTool(
 		mcp.WithString("role", mcp.Description("Profile ID for the agent role (e.g. \"backend\", \"frontend\")"), mcp.Required()),
 		mcp.WithString("task_id", mcp.Description("Optional task entity ID to include task instructions and design context")),
 		mcp.WithNumber("max_bytes", mcp.Description("Maximum byte budget for the assembled packet (default: 30720)")),
+		mcp.WithString("orchestration_context", mcp.Description("Optional handoff note from the orchestrating agent, injected as an ephemeral Tier 3 entry into the context packet. Not persisted to the knowledge store.")),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		role, err := request.RequireString("role")
@@ -46,11 +47,13 @@ func contextAssembleTool(
 		}
 		taskID := request.GetString("task_id", "")
 		maxBytes := int(request.GetFloat("max_bytes", 0))
+		orchestrationContext := request.GetString("orchestration_context", "")
 
 		input := kbzctx.AssemblyInput{
-			Role:     role,
-			TaskID:   taskID,
-			MaxBytes: maxBytes,
+			Role:                 role,
+			TaskID:               taskID,
+			MaxBytes:             maxBytes,
+			OrchestrationContext: orchestrationContext,
 		}
 
 		result, err := kbzctx.Assemble(input, profileStore, knowledgeSvc, entitySvc, intelligenceSvc)
@@ -131,11 +134,30 @@ func contextAssembleTool(
 			items = append(items, ri)
 		}
 
+		type trimmedEntry struct {
+			EntryID   string `json:"entry_id,omitempty"`
+			Type      string `json:"type"`
+			Topic     string `json:"topic,omitempty"`
+			Tier      int    `json:"tier,omitempty"`
+			SizeBytes int    `json:"size_bytes"`
+		}
+
+		trimmedItems := make([]trimmedEntry, len(result.TrimmedEntries))
+		for i, te := range result.TrimmedEntries {
+			trimmedItems[i] = trimmedEntry{
+				EntryID:   te.EntryID,
+				Type:      te.Type,
+				Topic:     te.Topic,
+				Tier:      te.Tier,
+				SizeBytes: te.SizeBytes,
+			}
+		}
+
 		resp := map[string]any{
 			"success":    true,
 			"role":       result.Role,
 			"byte_count": result.ByteCount,
-			"trimmed":    result.Trimmed,
+			"trimmed":    trimmedItems,
 			"items":      items,
 		}
 		if result.TaskID != "" {

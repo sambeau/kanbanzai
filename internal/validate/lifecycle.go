@@ -42,7 +42,9 @@ var terminalStates = map[EntityKind]map[string]struct{}{
 		string(model.FeatureStatusCancelled):  {},
 	},
 	EntityTask: {
-		string(model.TaskStatusDone): {},
+		string(model.TaskStatusDone):       {},
+		string(model.TaskStatusNotPlanned): {},
+		string(model.TaskStatusDuplicate):  {},
 	},
 	EntityBug: {
 		string(model.BugStatusClosed):     {},
@@ -163,14 +165,21 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 	},
 	EntityTask: {
 		string(model.TaskStatusQueued): {
-			string(model.TaskStatusReady): {},
+			string(model.TaskStatusReady):      {},
+			string(model.TaskStatusNotPlanned): {},
+			string(model.TaskStatusDuplicate):  {},
 		},
 		string(model.TaskStatusReady): {
-			string(model.TaskStatusActive): {},
+			string(model.TaskStatusActive):     {},
+			string(model.TaskStatusNotPlanned): {},
+			string(model.TaskStatusDuplicate):  {},
 		},
 		string(model.TaskStatusActive): {
 			string(model.TaskStatusBlocked):     {},
 			string(model.TaskStatusNeedsReview): {},
+			string(model.TaskStatusDone):        {}, // direct completion via complete_task
+			string(model.TaskStatusNotPlanned):  {},
+			string(model.TaskStatusDuplicate):   {},
 		},
 		string(model.TaskStatusBlocked): {
 			string(model.TaskStatusActive): {},
@@ -388,6 +397,22 @@ func AllStates(kind EntityKind) []string {
 	return states
 }
 
+// DependencyTerminalStates returns the set of task states that satisfy a dependency.
+// A task in one of these states is considered "resolved" as a dependency.
+func DependencyTerminalStates() map[string]struct{} {
+	return map[string]struct{}{
+		string(model.TaskStatusDone):       {},
+		string(model.TaskStatusNotPlanned): {},
+		string(model.TaskStatusDuplicate):  {},
+	}
+}
+
+// IsTaskDependencySatisfied returns true if the given task status satisfies a dependency.
+func IsTaskDependencySatisfied(status string) bool {
+	_, ok := DependencyTerminalStates()[status]
+	return ok
+}
+
 // NextStates returns the valid next states from the given state for the entity kind.
 func NextStates(kind EntityKind, from string) []string {
 	if IsTerminalState(kind, from) {
@@ -404,4 +429,21 @@ func NextStates(kind EntityKind, from string) []string {
 		states = append(states, state)
 	}
 	return states
+}
+
+// ValidateTaskQueuedToReady validates the dependency gate for queued→ready task transitions.
+// dependsOn is the list of task IDs this task depends on.
+// depStatuses maps dependency task IDs to their current status strings.
+// Returns an error if any dependency is not in a terminal state.
+func ValidateTaskQueuedToReady(dependsOn []string, depStatuses map[string]string) error {
+	for _, depID := range dependsOn {
+		status, ok := depStatuses[depID]
+		if !ok {
+			return fmt.Errorf("dependency %s not found", depID)
+		}
+		if !IsTaskDependencySatisfied(status) {
+			return fmt.Errorf("dependency %s is blocking (status: %s) — must reach done, not-planned, or duplicate", depID, status)
+		}
+	}
+	return nil
 }

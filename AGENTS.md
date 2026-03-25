@@ -31,7 +31,7 @@ Examples:
 
 ## Project Status
 
-**Phase 1 is complete. Phase 2a is complete. Phase 2b is complete. Phase 3 is in remediation.** The repository contains design documents, specifications, planning documents, research, and working implementation code. All Phase 2a acceptance criteria are met, all audit bugs (B1–B8) are fixed, and all tests pass with race detector enabled. All Phase 2b acceptance criteria are met. Phase 3 implementation is complete; post-implementation audit identified remediation items tracked in `work/plan/phase-3-progress.md`.
+**Phase 1 is complete. Phase 2a is complete. Phase 2b is complete. Phase 3 is complete.** The repository contains design documents, specifications, planning documents, research, and working implementation code. All Phase 2a acceptance criteria are met, all audit bugs (B1–B8) are fixed, and all tests pass with race detector enabled. All Phase 2b acceptance criteria are met. All Phase 3 acceptance criteria (§20.1–§20.12) are met, all audit remediation items (R1–R17) are resolved, automatic worktree creation on task/bug transition is implemented, and all tests pass with race detector enabled. Phase 3 status is tracked in `work/plan/phase-3-progress.md`.
 
 The binding contracts for implementation are `work/spec/phase-1-specification.md` (Phase 1), `work/spec/phase-2-specification.md` (Phase 2), `work/spec/phase-2b-specification.md` (Phase 2b), and `work/spec/phase-3-specification.md` (Phase 3). The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
 
@@ -247,7 +247,7 @@ Do not let document changes accumulate uncommitted across long sessions.
 
 ## Scope Guard
 
-Phase 1 (workflow kernel), Phase 2a (entity model evolution, document intelligence, migration), Phase 2b (context profiles, knowledge management, user identity), and Phase 3 (Git integration, knowledge lifecycle) are complete. Current work should focus on Phase 3 remediation or Phase 4 scope as directed by the human.
+Phase 1 (workflow kernel), Phase 2a (entity model evolution, document intelligence, migration), Phase 2b (context profiles, knowledge management, user identity), and Phase 3 (Git integration, knowledge lifecycle) are complete. Current work should focus on Phase 4 planning and implementation as directed by the human.
 
 Do not build beyond the current phase without explicit direction:
 

@@ -10,9 +10,10 @@ import (
 
 // AssemblyInput contains the parameters for context assembly.
 type AssemblyInput struct {
-	Role     string // required: profile ID
-	TaskID   string // optional
-	MaxBytes int    // default 30720
+	Role                 string // required: profile ID
+	TaskID               string // optional
+	MaxBytes             int    // default 30720
+	OrchestrationContext string // optional: ephemeral handoff note, not persisted
 }
 
 // AssemblySource identifies where a piece of context came from.
@@ -35,13 +36,23 @@ type AssemblyItem struct {
 	Confidence float64 // for knowledge entries
 }
 
+// TrimmedEntry records metadata about a context entry that was trimmed to stay within budget.
+type TrimmedEntry struct {
+	EntryID   string `json:"entry_id,omitempty"`
+	Type      string `json:"type"` // "knowledge" or "design"
+	Topic     string `json:"topic"`
+	Tier      int    `json:"tier,omitempty"` // knowledge tier; 0 for design
+	SizeBytes int    `json:"size_bytes"`
+}
+
 // AssemblyResult is the output of context assembly.
 type AssemblyResult struct {
-	Role      string
-	TaskID    string
-	Items     []AssemblyItem
-	ByteCount int
-	Trimmed   int // number of items trimmed due to budget
+	Role           string
+	TaskID         string
+	Items          []AssemblyItem
+	ByteCount      int
+	Trimmed        int            // number of items trimmed (kept for backwards compatibility)
+	TrimmedEntries []TrimmedEntry // details of trimmed entries
 }
 
 const defaultMaxBytes = 30720
@@ -49,6 +60,8 @@ const defaultMaxBytes = 30720
 // Assemble assembles a context packet for the given role and optional task.
 // Profile and task instructions are never trimmed. When over budget, Tier 3
 // (lowest-confidence) is trimmed first, then Tier 2, then design context.
+// If OrchestrationContext is provided it is injected as an ephemeral Tier 3
+// entry with Confidence 1.0 (trimmed last within T3).
 func Assemble(
 	input AssemblyInput,
 	profileStore *ProfileStore,
@@ -172,6 +185,19 @@ func Assemble(
 		}
 	}
 
+	// 5b. Inject ephemeral orchestration context as a Tier 3 entry.
+	// Confidence 1.0 means it sorts last (highest) in the ascending-confidence trim order,
+	// so it is trimmed last among T3 items.
+	if input.OrchestrationContext != "" {
+		orchEntry := AssemblyItem{
+			Source:     SourceKnowledgeT3,
+			Priority:   "low",
+			Content:    fmt.Sprintf("[orchestration context]\n%s\n", input.OrchestrationContext),
+			Confidence: 1.0,
+		}
+		tier3Items = append(tier3Items, orchEntry)
+	}
+
 	// 6. Calculate initial byte count.
 	totalBytes := len(profileItem.Content)
 	for _, item := range tier2Items {
@@ -187,8 +213,9 @@ func Assemble(
 		totalBytes += len(taskItem.Content)
 	}
 
-	// 7. Trim if over budget.
+	// 7. Trim if over budget, capturing metadata for each trimmed entry.
 	trimmed := 0
+	var trimmedEntries []TrimmedEntry
 
 	// Trim T3 lowest-confidence first.
 	if totalBytes > maxBytes {
@@ -196,9 +223,23 @@ func Assemble(
 			return tier3Items[i].Confidence < tier3Items[j].Confidence
 		})
 		for len(tier3Items) > 0 && totalBytes > maxBytes {
-			totalBytes -= len(tier3Items[0].Content)
+			cut := tier3Items[0]
 			tier3Items = tier3Items[1:]
+			totalBytes -= len(cut.Content)
 			trimmed++
+			te := TrimmedEntry{
+				EntryID:   cut.EntryID,
+				Type:      "knowledge",
+				SizeBytes: len(cut.Content),
+			}
+			// Source is always SourceKnowledgeT3 here, but guard anyway.
+			if cut.Source == SourceKnowledgeT2 {
+				te.Tier = 2
+			} else {
+				te.Tier = 3
+			}
+			te.Topic = extractTopicFromContent(cut.Content)
+			trimmedEntries = append(trimmedEntries, te)
 		}
 	}
 
@@ -208,17 +249,33 @@ func Assemble(
 			return tier2Items[i].Confidence < tier2Items[j].Confidence
 		})
 		for len(tier2Items) > 0 && totalBytes > maxBytes {
-			totalBytes -= len(tier2Items[0].Content)
+			cut := tier2Items[0]
 			tier2Items = tier2Items[1:]
+			totalBytes -= len(cut.Content)
 			trimmed++
+			te := TrimmedEntry{
+				EntryID:   cut.EntryID,
+				Type:      "knowledge",
+				Tier:      2,
+				SizeBytes: len(cut.Content),
+			}
+			te.Topic = extractTopicFromContent(cut.Content)
+			trimmedEntries = append(trimmedEntries, te)
 		}
 	}
 
 	// Trim design context from the end, if still over budget.
 	for len(designItems) > 0 && totalBytes > maxBytes {
-		totalBytes -= len(designItems[len(designItems)-1].Content)
+		cut := designItems[len(designItems)-1]
 		designItems = designItems[:len(designItems)-1]
+		totalBytes -= len(cut.Content)
 		trimmed++
+		te := TrimmedEntry{
+			Type:      "design",
+			SizeBytes: len(cut.Content),
+		}
+		te.Topic = extractDesignTitle(cut.Content)
+		trimmedEntries = append(trimmedEntries, te)
 	}
 
 	// 8. Build final ordered list: profile, T2, T3, design, task.
@@ -242,11 +299,12 @@ func Assemble(
 	}
 
 	return &AssemblyResult{
-		Role:      input.Role,
-		TaskID:    input.TaskID,
-		Items:     finalItems,
-		ByteCount: actualBytes,
-		Trimmed:   trimmed,
+		Role:           input.Role,
+		TaskID:         input.TaskID,
+		Items:          finalItems,
+		ByteCount:      actualBytes,
+		Trimmed:        trimmed,
+		TrimmedEntries: trimmedEntries,
 	}, nil
 }
 
@@ -344,4 +402,38 @@ func assemblyFieldFloat(fields map[string]any, key string) float64 {
 		return float64(typed)
 	}
 	return 0
+}
+
+// extractTopicFromContent tries to extract the topic from a knowledge entry content string.
+// Knowledge entries are formatted as "[tier] topic (scope: X, confidence: Y)\n..."
+func extractTopicFromContent(content string) string {
+	lines := strings.SplitN(content, "\n", 2)
+	if len(lines) == 0 {
+		return ""
+	}
+	line := lines[0]
+	// Remove "[N] " prefix
+	if idx := strings.Index(line, "] "); idx >= 0 {
+		line = line[idx+2:]
+	}
+	// Remove " (scope: ...)" suffix
+	if idx := strings.Index(line, " (scope:"); idx >= 0 {
+		line = line[:idx]
+	}
+	return strings.TrimSpace(line)
+}
+
+// extractDesignTitle tries to extract the title from design context content.
+// Design content is formatted as "=== Design: <title> (<docID>) ===\n..."
+func extractDesignTitle(content string) string {
+	lines := strings.SplitN(content, "\n", 2)
+	if len(lines) == 0 {
+		return ""
+	}
+	line := strings.TrimSpace(lines[0])
+	// Remove "=== Design: " prefix and " ===" suffix
+	line = strings.TrimPrefix(line, "=== Design: ")
+	line = strings.TrimSuffix(line, " ===")
+	line = strings.TrimSuffix(strings.TrimSpace(line), "===")
+	return strings.TrimSpace(line)
 }

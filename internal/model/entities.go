@@ -78,6 +78,8 @@ const (
 	TaskStatusNeedsReview TaskStatus = "needs-review"
 	TaskStatusNeedsRework TaskStatus = "needs-rework"
 	TaskStatusDone        TaskStatus = "done"
+	TaskStatusNotPlanned  TaskStatus = "not-planned"
+	TaskStatusDuplicate   TaskStatus = "duplicate"
 )
 
 // BugStatus is the lifecycle state for a Bug.
@@ -228,6 +230,7 @@ type Epic struct {
 	Slug      string     `yaml:"slug"`
 	Title     string     `yaml:"title"`
 	Status    EpicStatus `yaml:"status"`
+	Estimate  *float64   `yaml:"estimate,omitempty"`
 	Summary   string     `yaml:"summary"`
 	Created   time.Time  `yaml:"created"`
 	CreatedBy string     `yaml:"created_by"`
@@ -257,6 +260,7 @@ type Feature struct {
 	Slug      string        `yaml:"slug"`
 	Parent    string        `yaml:"parent,omitempty"` // Parent Plan ID (renamed from epic)
 	Status    FeatureStatus `yaml:"status"`
+	Estimate  *float64      `yaml:"estimate,omitempty"`
 	Summary   string        `yaml:"summary"`
 	Created   time.Time     `yaml:"created"`
 	CreatedBy string        `yaml:"created_by"`
@@ -303,14 +307,22 @@ type Task struct {
 	Slug          string     `yaml:"slug"`
 	Summary       string     `yaml:"summary"`
 	Status        TaskStatus `yaml:"status"`
+	Estimate      *float64   `yaml:"estimate,omitempty"`
 
 	Assignee     string     `yaml:"assignee,omitempty"`
 	DependsOn    []string   `yaml:"depends_on,omitempty"`
 	FilesPlanned []string   `yaml:"files_planned,omitempty"`
 	Started      *time.Time `yaml:"started,omitempty"`
 	Completed    *time.Time `yaml:"completed,omitempty"`
-	Verification string     `yaml:"verification,omitempty"`
-	Tags         []string   `yaml:"tags,omitempty"`
+
+	ClaimedAt         *time.Time `yaml:"claimed_at,omitempty"`
+	DispatchedTo      string     `yaml:"dispatched_to,omitempty"`
+	DispatchedAt      *time.Time `yaml:"dispatched_at,omitempty"`
+	DispatchedBy      string     `yaml:"dispatched_by,omitempty"`
+	CompletionSummary string     `yaml:"completion_summary,omitempty"`
+
+	Verification string   `yaml:"verification,omitempty"`
+	Tags         []string `yaml:"tags,omitempty"`
 }
 
 // GetKind returns the entity kind.
@@ -334,6 +346,7 @@ type Bug struct {
 	Slug       string      `yaml:"slug"`
 	Title      string      `yaml:"title"`
 	Status     BugStatus   `yaml:"status"`
+	Estimate   *float64    `yaml:"estimate,omitempty"`
 	Severity   BugSeverity `yaml:"severity"`
 	Priority   BugPriority `yaml:"priority"`
 	Type       BugType     `yaml:"type"`

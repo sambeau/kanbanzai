@@ -6,6 +6,7 @@ import (
 	"github.com/mark3labs/mcp-go/server"
 
 	"kanbanzai/internal/cache"
+	"kanbanzai/internal/checkpoint"
 	"kanbanzai/internal/config"
 	kbzctx "kanbanzai/internal/context"
 	"kanbanzai/internal/core"
@@ -71,14 +72,24 @@ func NewServer(entityRoot, docsRoot string) *server.MCPServer {
 	gitOps := worktree.NewGit(repoRoot)
 	cfg := config.LoadOrDefault()
 
+	// Phase 3: automatic worktree creation on task→active / bug→in-progress
+	entitySvc.SetStatusTransitionHook(
+		service.NewWorktreeTransitionHook(worktreeStore, gitOps, entitySvc),
+	)
+
 	// Phase 3: load local config for GitHub token (best-effort)
 	localConfig, _ := config.LoadLocalConfig()
 
-	// Phase 1 entity tools (with Phase 2b and Phase 3 health checkers)
+	// Phase 4a: checkpoint store and dispatch service
+	checkpointStore := checkpoint.NewStore(stateRoot)
+	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
+
+	// Phase 1 entity tools (with Phase 2b, Phase 3, and Phase 4a health checkers)
 	mcpServer.AddTools(EntityTools(entitySvc,
 		phase2bKnowledgeHealthChecker(knowledgeSvc, profileStore),
 		phase2bProfileHealthChecker(profileStore),
 		Phase3HealthChecker(worktreeStore, knowledgeSvc, cfg, repoRoot),
+		Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
 	)...)
 
 	// Phase 1 document tools (legacy)
@@ -134,6 +145,15 @@ func NewServer(entityRoot, docsRoot string) *server.MCPServer {
 
 	// Phase 3 PR tools (pr_create, pr_update, pr_status)
 	mcpServer.AddTools(PRTools(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
+
+	// Phase 4a Queue tools (work_queue, dependency_status)
+	mcpServer.AddTools(QueueTools(entitySvc)...)
+
+	// Phase 4a Estimation tools (estimate_set, estimate_query, estimate_reference_add, estimate_reference_remove)
+	mcpServer.AddTools(EstimationTools(entitySvc, knowledgeSvc)...)
+
+	// Phase 4a Dispatch tools (dispatch_task, complete_task, human_checkpoint*)
+	mcpServer.AddTools(DispatchTools(dispatchSvc, checkpointStore, profileStore, knowledgeSvc, entitySvc, intelligenceSvc)...)
 
 	return mcpServer
 }
