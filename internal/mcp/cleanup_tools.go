@@ -121,7 +121,7 @@ func cleanupExecuteTool(store *worktree.Store, git *worktree.Git, cfg *config.Cl
 			results = append(results, result)
 		} else {
 			// Clean all ready items
-			results = cleanup.ExecuteAllReady(store, git, cfg.GracePeriodDays, opts)
+			results = cleanup.ExecuteAllReady(store, git, opts)
 		}
 
 		// Build response

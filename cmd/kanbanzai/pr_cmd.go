@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
@@ -78,7 +79,7 @@ func runPRCreate(args []string, deps dependencies) error {
 
 	description := buildPRDescription(&entity, entityID, entitySvc, record.Branch)
 
-	pr, err := client.CreatePR(repo, record.Branch, "main", title, description, draft)
+	pr, err := client.CreatePR(context.Background(), repo, record.Branch, "main", title, description, draft)
 	if err != nil {
 		return fmt.Errorf("create PR: %w", err)
 	}
@@ -131,7 +132,7 @@ func runPRUpdate(args []string, deps dependencies) error {
 	}
 
 	// Find existing PR by branch
-	existingPR, err := client.GetPRByBranch(repo, record.Branch)
+	existingPR, err := client.GetPRByBranch(context.Background(), repo, record.Branch)
 	if err != nil {
 		return fmt.Errorf("find PR for branch %s: %w", record.Branch, err)
 	}
@@ -143,7 +144,7 @@ func runPRUpdate(args []string, deps dependencies) error {
 
 	description := buildPRDescription(&entity, entityID, entitySvc, record.Branch)
 
-	updatedPR, err := client.UpdatePR(repo, existingPR.Number, title, description)
+	updatedPR, err := client.UpdatePR(context.Background(), repo, existingPR.Number, title, description)
 	if err != nil {
 		return fmt.Errorf("update PR: %w", err)
 	}
@@ -179,7 +180,7 @@ func runPRStatus(args []string, deps dependencies) error {
 		return fmt.Errorf("detect repository: %w", err)
 	}
 
-	pr, err := client.GetPRByBranch(repo, record.Branch)
+	pr, err := client.GetPRByBranch(context.Background(), repo, record.Branch)
 	if err != nil {
 		return fmt.Errorf("get PR for branch %s: %w", record.Branch, err)
 	}

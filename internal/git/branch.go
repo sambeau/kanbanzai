@@ -80,7 +80,7 @@ func GetBranchCreationTime(repoPath, branch string) (time.Time, error) {
 	}
 
 	// Find the base branch (main or master)
-	base, err := getDefaultBranch(repoPath)
+	base, err := GetDefaultBranch(repoPath)
 	if err != nil {
 		// If we can't find a default branch, use the branch's first commit
 		return getFirstCommitTime(repoPath, branch)
@@ -286,7 +286,7 @@ func ComputeBranchMetricsWithBase(repoPath, branch, base string) (BranchMetrics,
 	// Determine base branch if not specified
 	if base == "" {
 		var err error
-		base, err = getDefaultBranch(repoPath)
+		base, err = GetDefaultBranch(repoPath)
 		if err != nil {
 			return metrics, fmt.Errorf("determine default branch: %w", err)
 		}
@@ -391,8 +391,8 @@ func checkBranchExists(repoPath, branch string) error {
 	return nil
 }
 
-// getDefaultBranch returns the default branch name (main or master).
-func getDefaultBranch(repoPath string) (string, error) {
+// GetDefaultBranch returns the default branch name (main or master).
+func GetDefaultBranch(repoPath string) (string, error) {
 	// Try "main" first
 	if err := checkBranchExists(repoPath, "main"); err == nil {
 		return "main", nil

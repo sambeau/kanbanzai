@@ -87,7 +87,8 @@ func TestResetTTL(t *testing.T) {
 			"tier": 3,
 		}
 
-		result := ResetTTL(fields, 3, config)
+		now := time.Now().UTC()
+		result := ResetTTL(fields, 3, config, now)
 
 		if result["ttl_days"] != 30 {
 			t.Errorf("ttl_days = %v, want 30", result["ttl_days"])
@@ -110,7 +111,7 @@ func TestResetTTL(t *testing.T) {
 			"tier": 2,
 		}
 
-		result := ResetTTL(fields, 2, config)
+		result := ResetTTL(fields, 2, config, time.Now().UTC())
 
 		if result["ttl_days"] != 90 {
 			t.Errorf("ttl_days = %v, want 90", result["ttl_days"])
@@ -123,7 +124,7 @@ func TestResetTTL(t *testing.T) {
 			"tier": 1,
 		}
 
-		result := ResetTTL(fields, 1, config)
+		result := ResetTTL(fields, 1, config, time.Now().UTC())
 
 		if result["ttl_days"] != 0 {
 			t.Errorf("ttl_days = %v, want 0", result["ttl_days"])
@@ -136,7 +137,7 @@ func TestResetTTL(t *testing.T) {
 	})
 
 	t.Run("nil fields creates new map", func(t *testing.T) {
-		result := ResetTTL(nil, 3, config)
+		result := ResetTTL(nil, 3, config, time.Now().UTC())
 
 		if result == nil {
 			t.Error("result should not be nil")

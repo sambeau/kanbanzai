@@ -361,18 +361,6 @@ func TestComputeStats_Empty(t *testing.T) {
 	}
 }
 
-func TestExtractFields(t *testing.T) {
-	fields := map[string]any{
-		"id":   "KE-001",
-		"tier": 3,
-	}
-
-	result := ExtractFields(fields)
-	if result["id"] != "KE-001" {
-		t.Error("ExtractFields should return the same map")
-	}
-}
-
 func TestPruneExpiredEntries_CustomConfig(t *testing.T) {
 	// Custom config with shorter TTLs
 	config := TTLConfig{

@@ -1,6 +1,9 @@
 package health
 
-import "sort"
+import (
+	"sort"
+	"strconv"
+)
 
 // FormatHealthResult returns YAML-friendly structured output.
 func FormatHealthResult(result HealthResult) map[string]any {
@@ -128,36 +131,5 @@ func Summary(result HealthResult) string {
 
 // formatCount returns a string representation of a count.
 func formatCount(n int) string {
-	switch n {
-	case 0:
-		return "0"
-	case 1:
-		return "1"
-	case 2:
-		return "2"
-	case 3:
-		return "3"
-	case 4:
-		return "4"
-	case 5:
-		return "5"
-	case 6:
-		return "6"
-	case 7:
-		return "7"
-	case 8:
-		return "8"
-	case 9:
-		return "9"
-	default:
-		// For larger numbers, use fmt.Sprint equivalent
-		// Simple implementation without importing fmt
-		if n < 0 {
-			return "-" + formatCount(-n)
-		}
-		if n < 10 {
-			return string(rune('0' + n))
-		}
-		return formatCount(n/10) + string(rune('0'+n%10))
-	}
+	return strconv.Itoa(n)
 }

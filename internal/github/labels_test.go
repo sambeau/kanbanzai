@@ -1,6 +1,7 @@
 package github
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -178,7 +179,7 @@ func TestClient_EnsureLabel(t *testing.T) {
 			client.SetBaseURL(server.URL)
 
 			repo := RepoInfo{Owner: "owner", Repo: "repo"}
-			err := client.EnsureLabel(repo, "test-label", "#ff0000", "Test description")
+			err := client.EnsureLabel(context.Background(), repo, "test-label", "#ff0000", "Test description")
 
 			if tt.wantErr != nil {
 				if err != tt.wantErr {
@@ -209,7 +210,7 @@ func TestClient_EnsureLabel_StripsHashFromColor(t *testing.T) {
 	client.SetBaseURL(server.URL)
 
 	repo := RepoInfo{Owner: "owner", Repo: "repo"}
-	client.EnsureLabel(repo, "label", "#ff0000", "")
+	client.EnsureLabel(context.Background(), repo, "label", "#ff0000", "")
 
 	if receivedColor != "ff0000" {
 		t.Errorf("Color = %q, want %q (should strip #)", receivedColor, "ff0000")
@@ -276,7 +277,7 @@ func TestClient_SetPRLabels(t *testing.T) {
 			client.SetBaseURL(server.URL)
 
 			repo := RepoInfo{Owner: "owner", Repo: "repo"}
-			err := client.SetPRLabels(repo, 42, tt.labels)
+			err := client.SetPRLabels(context.Background(), repo, 42, tt.labels)
 
 			if tt.wantErr != nil {
 				if err != tt.wantErr {
@@ -311,7 +312,7 @@ func TestClient_AddPRLabels(t *testing.T) {
 	client.SetBaseURL(server.URL)
 
 	repo := RepoInfo{Owner: "owner", Repo: "repo"}
-	err := client.AddPRLabels(repo, 42, []string{"new-label"})
+	err := client.AddPRLabels(context.Background(), repo, 42, []string{"new-label"})
 
 	if err != nil {
 		t.Errorf("AddPRLabels() unexpected error = %v", err)
@@ -333,7 +334,7 @@ func TestClient_EnsureStandardLabels(t *testing.T) {
 	client.SetBaseURL(server.URL)
 
 	repo := RepoInfo{Owner: "owner", Repo: "repo"}
-	err := client.EnsureStandardLabels(repo)
+	err := client.EnsureStandardLabels(context.Background(), repo)
 
 	if err != nil {
 		t.Fatalf("EnsureStandardLabels() error = %v", err)

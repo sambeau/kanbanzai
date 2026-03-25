@@ -703,8 +703,8 @@ func TestWorktreeCreate_ForBug(t *testing.T) {
 	wt := parsed["worktree"].(map[string]any)
 	branch := wt["branch"].(string)
 
-	// Bug branches should use bugfix/ prefix
-	if !strings.HasPrefix(branch, "bugfix/") {
-		t.Errorf("expected bug branch to start with bugfix/, got: %s", branch)
+	// Bug branches should use bug/ prefix
+	if !strings.HasPrefix(branch, "bug/") {
+		t.Errorf("expected bug branch to start with bug/, got: %s", branch)
 	}
 }

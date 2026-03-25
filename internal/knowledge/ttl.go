@@ -40,22 +40,24 @@ func GetDefaultTTL(tier int) int {
 // ResetTTL resets an entry's TTL to its tier default.
 // Updates: last_used, ttl_days, ttl_expires_at
 // Returns the updated fields map.
-func ResetTTL(fields map[string]any, tier int, config TTLConfig) map[string]any {
-	if fields == nil {
-		fields = make(map[string]any)
+func ResetTTL(fields map[string]any, tier int, config TTLConfig, now time.Time) map[string]any {
+	result := make(map[string]any)
+	if fields != nil {
+		for k, v := range fields {
+			result[k] = v
+		}
 	}
 
 	ttlDays := getTTLDaysFromConfig(tier, config)
-	now := time.Now().UTC()
 
-	fields["last_used"] = now.Format(time.RFC3339)
-	fields["ttl_days"] = ttlDays
+	result["last_used"] = now.Format(time.RFC3339)
+	result["ttl_days"] = ttlDays
 	if ttlDays > 0 {
 		expiresAt := ComputeTTLExpiry(now, ttlDays)
-		fields["ttl_expires_at"] = expiresAt.Format(time.RFC3339)
+		result["ttl_expires_at"] = expiresAt.Format(time.RFC3339)
 	}
 
-	return fields
+	return result
 }
 
 // PruneCondition represents why an entry should be pruned.
@@ -246,24 +248,6 @@ func getFieldInt(fields map[string]any, key string) int {
 		return int(typed)
 	case float64:
 		return int(typed)
-	}
-	return 0
-}
-
-// getFieldFloat reads a float64 value from the fields map.
-// Handles float64 and int representations (from YAML round-trips).
-func getFieldFloat(fields map[string]any, key string) float64 {
-	if fields == nil {
-		return 0
-	}
-	v := fields[key]
-	switch typed := v.(type) {
-	case float64:
-		return typed
-	case int:
-		return float64(typed)
-	case int64:
-		return float64(typed)
 	}
 	return 0
 }

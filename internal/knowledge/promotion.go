@@ -197,11 +197,16 @@ func GetTopic(fields map[string]any) string {
 	return ""
 }
 
-// GetEntryID extracts entry_id from fields.
+// GetEntryID extracts the entry ID from fields.
+// Checks "id" first (canonical field name), then "entry_id" for backward compatibility.
 func GetEntryID(fields map[string]any) string {
 	if fields == nil {
 		return ""
 	}
+	if s, ok := fields["id"].(string); ok {
+		return s
+	}
+	// Fall back to entry_id for backward compatibility
 	if s, ok := fields["entry_id"].(string); ok {
 		return s
 	}

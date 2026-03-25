@@ -36,7 +36,7 @@ func GenerateWorktreePath(entityID string, slug string) string {
 func branchPrefix(entityID string) string {
 	upper := strings.ToUpper(entityID)
 	if strings.HasPrefix(upper, "BUG-") {
-		return "bugfix"
+		return "bug"
 	}
 	// Default to feature for FEAT- and any other entity types
 	return "feature"
@@ -59,6 +59,13 @@ func normalizeSlug(slug string) string {
 	for strings.Contains(s, "--") {
 		s = strings.ReplaceAll(s, "--", "-")
 	}
+
+	// Cap at 40 characters per spec §6.5
+	if len(s) > 40 {
+		s = s[:40]
+	}
+	// Trim trailing hyphens after truncation
+	s = strings.TrimRight(s, "-")
 
 	return s
 }

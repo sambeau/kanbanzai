@@ -447,6 +447,9 @@ func TestNoConflictsGate_Check(t *testing.T) {
 				ConflictChecker: func(repoPath, branch, base string) (bool, error) {
 					return tt.mockConflicts, tt.mockErr
 				},
+				DefaultBranchDetector: func(repoPath string) (string, error) {
+					return "main", nil
+				},
 			}
 
 			result := gate.Check(ctx)
@@ -464,17 +467,17 @@ func TestNoConflictsGate_Check(t *testing.T) {
 	}
 }
 
-func TestNoConflictsGate_FallsBackToMaster(t *testing.T) {
-	callCount := 0
+func TestNoConflictsGate_UsesDefaultBranchDetector(t *testing.T) {
+	var checkedBase string
 	ctx := GateContext{
 		EntityID: "FEAT-001",
 		Branch:   "feature/FEAT-001",
 		RepoPath: "/repo",
+		DefaultBranchDetector: func(repoPath string) (string, error) {
+			return "develop", nil
+		},
 		ConflictChecker: func(repoPath, branch, base string) (bool, error) {
-			callCount++
-			if base == "main" {
-				return false, errors.New("main not found")
-			}
+			checkedBase = base
 			return false, nil
 		},
 	}
@@ -485,8 +488,33 @@ func TestNoConflictsGate_FallsBackToMaster(t *testing.T) {
 	if result.Status != GateStatusPassed {
 		t.Errorf("Status: got %q, want %q", result.Status, GateStatusPassed)
 	}
-	if callCount != 2 {
-		t.Errorf("Expected 2 calls (main then master), got %d", callCount)
+	if checkedBase != "develop" {
+		t.Errorf("Expected conflict check against %q, got %q", "develop", checkedBase)
+	}
+}
+
+func TestNoConflictsGate_DefaultBranchDetectorError(t *testing.T) {
+	ctx := GateContext{
+		EntityID: "FEAT-001",
+		Branch:   "feature/FEAT-001",
+		RepoPath: "/repo",
+		DefaultBranchDetector: func(repoPath string) (string, error) {
+			return "", errors.New("no default branch found")
+		},
+		ConflictChecker: func(repoPath, branch, base string) (bool, error) {
+			t.Fatal("ConflictChecker should not be called when DefaultBranchDetector fails")
+			return false, nil
+		},
+	}
+
+	gate := NoConflictsGate{}
+	result := gate.Check(ctx)
+
+	if result.Status != GateStatusFailed {
+		t.Errorf("Status: got %q, want %q", result.Status, GateStatusFailed)
+	}
+	if result.Message == "" {
+		t.Error("Expected error message about default branch detection")
 	}
 }
 

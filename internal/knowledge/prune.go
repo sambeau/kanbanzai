@@ -60,23 +60,6 @@ func PruneExpiredEntries(entries []map[string]any, now time.Time, config TTLConf
 	return results
 }
 
-// ExtractFields extracts the fields map from a knowledge record structure.
-// This is a helper for adapting storage.KnowledgeRecord to map[string]any.
-// The caller should pass record.Fields directly.
-func ExtractFields(fields map[string]any) map[string]any {
-	return fields
-}
-
-// CollectFieldsFromRecords converts a slice of records (with Fields maps) to a slice of field maps.
-// This is useful when the caller has []storage.KnowledgeRecord and needs []map[string]any.
-func CollectFieldsFromRecords[T interface{ GetFields() map[string]any }](records []T) []map[string]any {
-	result := make([]map[string]any, len(records))
-	for i, rec := range records {
-		result[i] = rec.GetFields()
-	}
-	return result
-}
-
 // PruneStats contains aggregate statistics about a pruning operation.
 type PruneStats struct {
 	TotalChecked int

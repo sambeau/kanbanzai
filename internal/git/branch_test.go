@@ -2,6 +2,7 @@ package git
 
 import (
 	"os/exec"
+	"strings"
 	"testing"
 	"time"
 )
@@ -500,7 +501,7 @@ func TestEvaluateBranchStatus_DriftError(t *testing.T) {
 	// Check that the drift error is present
 	hasDriftError := false
 	for _, e := range status.Errors {
-		if contains(e, "critical drift") {
+		if strings.Contains(e, "critical drift") {
 			hasDriftError = true
 			break
 		}
@@ -535,7 +536,7 @@ func TestEvaluateBranchStatus_MergeConflicts(t *testing.T) {
 	}
 	hasConflictError := false
 	for _, e := range status.Errors {
-		if contains(e, "merge conflicts") {
+		if strings.Contains(e, "merge conflicts") {
 			hasConflictError = true
 			break
 		}
@@ -681,20 +682,6 @@ func TestEvaluateBranchStatus_NotARepository(t *testing.T) {
 	if err == nil {
 		t.Error("EvaluateBranchStatus() expected error for non-repository")
 	}
-}
-
-// contains checks if substr is in s.
-func contains(s, substr string) bool {
-	return len(s) >= len(substr) && (s == substr || len(s) > 0 && containsHelper(s, substr))
-}
-
-func containsHelper(s, substr string) bool {
-	for i := 0; i <= len(s)-len(substr); i++ {
-		if s[i:i+len(substr)] == substr {
-			return true
-		}
-	}
-	return false
 }
 
 // TestGetCurrentBranch is a helper test to verify git is working.

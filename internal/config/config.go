@@ -191,6 +191,9 @@ func LoadFrom(path string) (*Config, error) {
 		return nil, fmt.Errorf("parse config: %w", err)
 	}
 
+	// Merge defaults for Phase 3 fields when zero (e.g., pre-Phase 3 config files)
+	cfg.mergePhase3Defaults()
+
 	if err := cfg.Validate(); err != nil {
 		return nil, fmt.Errorf("invalid config: %w", err)
 	}
@@ -266,6 +269,36 @@ func (c *Config) Validate() error {
 
 	if !hasActive {
 		return errors.New("at least one non-retired prefix is required")
+	}
+
+	// Validate Phase 3 configuration fields
+	if c.BranchTracking.StaleAfterDays < 0 {
+		return errors.New("branch_tracking.stale_after_days must be non-negative")
+	}
+	if c.BranchTracking.DriftWarningCommits < 0 {
+		return errors.New("branch_tracking.drift_warning_commits must be non-negative")
+	}
+	if c.BranchTracking.DriftErrorCommits < 0 {
+		return errors.New("branch_tracking.drift_error_commits must be non-negative")
+	}
+	if c.BranchTracking.DriftWarningCommits > 0 && c.BranchTracking.DriftErrorCommits > 0 &&
+		c.BranchTracking.DriftWarningCommits >= c.BranchTracking.DriftErrorCommits {
+		return errors.New("branch_tracking.drift_warning_commits must be less than drift_error_commits")
+	}
+	if c.Cleanup.GracePeriodDays < 0 {
+		return errors.New("cleanup.grace_period_days must be non-negative")
+	}
+	if c.Knowledge.TTL.Tier3Days < 0 {
+		return errors.New("knowledge.ttl.tier_3_days must be non-negative")
+	}
+	if c.Knowledge.TTL.Tier2Days < 0 {
+		return errors.New("knowledge.ttl.tier_2_days must be non-negative")
+	}
+	if c.Knowledge.Promotion.MinConfidence < 0 || c.Knowledge.Promotion.MinConfidence > 1 {
+		return errors.New("knowledge.promotion.min_confidence must be between 0 and 1")
+	}
+	if c.Knowledge.Pruning.GracePeriodDays < 0 {
+		return errors.New("knowledge.pruning.grace_period_days must be non-negative")
 	}
 
 	return nil
@@ -406,6 +439,43 @@ func (c *Config) NextPlanNumber(prefix string, planIDScanner func() ([]string, e
 	}
 
 	return maxNum + 1, nil
+}
+
+// mergePhase3Defaults fills in zero-value Phase 3 config fields with sensible defaults.
+// This handles pre-Phase 3 config files that lack these sections.
+func (c *Config) mergePhase3Defaults() {
+	defaults := DefaultBranchTrackingConfig()
+	if c.BranchTracking.StaleAfterDays == 0 {
+		c.BranchTracking.StaleAfterDays = defaults.StaleAfterDays
+	}
+	if c.BranchTracking.DriftWarningCommits == 0 {
+		c.BranchTracking.DriftWarningCommits = defaults.DriftWarningCommits
+	}
+	if c.BranchTracking.DriftErrorCommits == 0 {
+		c.BranchTracking.DriftErrorCommits = defaults.DriftErrorCommits
+	}
+
+	cleanupDefaults := DefaultCleanupConfig()
+	if c.Cleanup.GracePeriodDays == 0 {
+		c.Cleanup.GracePeriodDays = cleanupDefaults.GracePeriodDays
+	}
+
+	knowledgeDefaults := DefaultKnowledgeConfig()
+	if c.Knowledge.TTL.Tier3Days == 0 {
+		c.Knowledge.TTL.Tier3Days = knowledgeDefaults.TTL.Tier3Days
+	}
+	if c.Knowledge.TTL.Tier2Days == 0 {
+		c.Knowledge.TTL.Tier2Days = knowledgeDefaults.TTL.Tier2Days
+	}
+	if c.Knowledge.Promotion.MinUseCount == 0 {
+		c.Knowledge.Promotion.MinUseCount = knowledgeDefaults.Promotion.MinUseCount
+	}
+	if c.Knowledge.Promotion.MinConfidence == 0 {
+		c.Knowledge.Promotion.MinConfidence = knowledgeDefaults.Promotion.MinConfidence
+	}
+	if c.Knowledge.Pruning.GracePeriodDays == 0 {
+		c.Knowledge.Pruning.GracePeriodDays = knowledgeDefaults.Pruning.GracePeriodDays
+	}
 }
 
 // parsePlanIDParts extracts prefix, number, and slug from a Plan ID.

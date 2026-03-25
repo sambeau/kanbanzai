@@ -1,6 +1,7 @@
 package github
 
 import (
+	"context"
 	"fmt"
 	"net/url"
 )
@@ -84,7 +85,7 @@ type UpdatePRRequest struct {
 }
 
 // CreatePR creates a new pull request.
-func (c *Client) CreatePR(repo RepoInfo, head, base, title, body string, draft bool) (*PR, error) {
+func (c *Client) CreatePR(ctx context.Context, repo RepoInfo, head, base, title, body string, draft bool) (*PR, error) {
 	if c.token == "" {
 		return nil, ErrNoToken
 	}
@@ -99,7 +100,7 @@ func (c *Client) CreatePR(repo RepoInfo, head, base, title, body string, draft b
 	}
 
 	var apiResp apiPR
-	if err := c.post(path, reqBody, &apiResp); err != nil {
+	if err := c.post(ctx, path, reqBody, &apiResp); err != nil {
 		return nil, fmt.Errorf("create PR: %w", err)
 	}
 
@@ -107,7 +108,7 @@ func (c *Client) CreatePR(repo RepoInfo, head, base, title, body string, draft b
 }
 
 // UpdatePR updates a pull request's title and/or body.
-func (c *Client) UpdatePR(repo RepoInfo, number int, title, body string) (*PR, error) {
+func (c *Client) UpdatePR(ctx context.Context, repo RepoInfo, number int, title, body string) (*PR, error) {
 	if c.token == "" {
 		return nil, ErrNoToken
 	}
@@ -119,7 +120,7 @@ func (c *Client) UpdatePR(repo RepoInfo, number int, title, body string) (*PR, e
 	}
 
 	var apiResp apiPR
-	if err := c.patch(path, reqBody, &apiResp); err != nil {
+	if err := c.patch(ctx, path, reqBody, &apiResp); err != nil {
 		if err == ErrRepoNotFound {
 			return nil, ErrPRNotFound
 		}
@@ -130,11 +131,11 @@ func (c *Client) UpdatePR(repo RepoInfo, number int, title, body string) (*PR, e
 }
 
 // GetPR retrieves a pull request by number, including CI and review status.
-func (c *Client) GetPR(repo RepoInfo, number int) (*PR, error) {
+func (c *Client) GetPR(ctx context.Context, repo RepoInfo, number int) (*PR, error) {
 	// Get the PR details
 	path := fmt.Sprintf("/repos/%s/%s/pulls/%d", repo.Owner, repo.Repo, number)
 	var apiResp apiPR
-	if err := c.get(path, &apiResp); err != nil {
+	if err := c.get(ctx, path, &apiResp); err != nil {
 		if err == ErrRepoNotFound {
 			return nil, ErrPRNotFound
 		}
@@ -144,13 +145,13 @@ func (c *Client) GetPR(repo RepoInfo, number int) (*PR, error) {
 	pr := convertAPIPR(&apiResp)
 
 	// Get CI status from combined status endpoint
-	ciStatus, err := c.getCIStatus(repo, apiResp.Head.SHA)
+	ciStatus, err := c.getCIStatus(ctx, repo, apiResp.Head.SHA)
 	if err == nil {
 		pr.CIStatus = ciStatus
 	}
 
 	// Get reviews
-	reviews, reviewStatus, err := c.getReviews(repo, number)
+	reviews, reviewStatus, err := c.getReviews(ctx, repo, number)
 	if err == nil {
 		pr.Reviews = reviews
 		pr.ReviewStatus = reviewStatus
@@ -160,14 +161,14 @@ func (c *Client) GetPR(repo RepoInfo, number int) (*PR, error) {
 }
 
 // GetPRByBranch finds a pull request by its head branch.
-func (c *Client) GetPRByBranch(repo RepoInfo, branch string) (*PR, error) {
+func (c *Client) GetPRByBranch(ctx context.Context, repo RepoInfo, branch string) (*PR, error) {
 	// Use the pulls endpoint with head filter
 	// The head parameter format is "owner:branch"
 	head := url.QueryEscape(repo.Owner + ":" + branch)
 	path := fmt.Sprintf("/repos/%s/%s/pulls?head=%s&state=all", repo.Owner, repo.Repo, head)
 
 	var prs []apiPR
-	if err := c.get(path, &prs); err != nil {
+	if err := c.get(ctx, path, &prs); err != nil {
 		return nil, fmt.Errorf("list PRs by branch: %w", err)
 	}
 
@@ -179,12 +180,12 @@ func (c *Client) GetPRByBranch(repo RepoInfo, branch string) (*PR, error) {
 	pr := convertAPIPR(&prs[0])
 
 	// Get additional status info
-	ciStatus, err := c.getCIStatus(repo, prs[0].Head.SHA)
+	ciStatus, err := c.getCIStatus(ctx, repo, prs[0].Head.SHA)
 	if err == nil {
 		pr.CIStatus = ciStatus
 	}
 
-	reviews, reviewStatus, err := c.getReviews(repo, prs[0].Number)
+	reviews, reviewStatus, err := c.getReviews(ctx, repo, prs[0].Number)
 	if err == nil {
 		pr.Reviews = reviews
 		pr.ReviewStatus = reviewStatus
@@ -194,10 +195,10 @@ func (c *Client) GetPRByBranch(repo RepoInfo, branch string) (*PR, error) {
 }
 
 // getCIStatus retrieves the combined CI status for a commit.
-func (c *Client) getCIStatus(repo RepoInfo, sha string) (string, error) {
+func (c *Client) getCIStatus(ctx context.Context, repo RepoInfo, sha string) (string, error) {
 	path := fmt.Sprintf("/repos/%s/%s/commits/%s/status", repo.Owner, repo.Repo, sha)
 	var status apiCombinedStatus
-	if err := c.get(path, &status); err != nil {
+	if err := c.get(ctx, path, &status); err != nil {
 		return "", err
 	}
 
@@ -215,10 +216,10 @@ func (c *Client) getCIStatus(repo RepoInfo, sha string) (string, error) {
 }
 
 // getReviews retrieves all reviews for a PR and determines the overall status.
-func (c *Client) getReviews(repo RepoInfo, number int) ([]Review, string, error) {
+func (c *Client) getReviews(ctx context.Context, repo RepoInfo, number int) ([]Review, string, error) {
 	path := fmt.Sprintf("/repos/%s/%s/pulls/%d/reviews", repo.Owner, repo.Repo, number)
 	var apiReviews []apiReview
-	if err := c.get(path, &apiReviews); err != nil {
+	if err := c.get(ctx, path, &apiReviews); err != nil {
 		return nil, "", err
 	}
 

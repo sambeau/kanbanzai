@@ -1,6 +1,7 @@
 package github
 
 import (
+	"context"
 	"fmt"
 	"strings"
 )
@@ -53,7 +54,7 @@ type setLabelsRequest struct {
 
 // EnsureLabel creates a label if it doesn't exist.
 // If the label already exists, this is a no-op.
-func (c *Client) EnsureLabel(repo RepoInfo, name, color, description string) error {
+func (c *Client) EnsureLabel(ctx context.Context, repo RepoInfo, name, color, description string) error {
 	if c.token == "" {
 		return ErrNoToken
 	}
@@ -68,7 +69,7 @@ func (c *Client) EnsureLabel(repo RepoInfo, name, color, description string) err
 		Description: description,
 	}
 
-	resp, err := c.doRequest("POST", path, reqBody)
+	resp, err := c.doRequest(ctx, "POST", path, reqBody)
 	if err != nil {
 		return fmt.Errorf("create label: %w", err)
 	}
@@ -83,7 +84,7 @@ func (c *Client) EnsureLabel(repo RepoInfo, name, color, description string) err
 }
 
 // EnsureStandardLabels ensures all standard Kanbanzai labels exist in the repository.
-func (c *Client) EnsureStandardLabels(repo RepoInfo) error {
+func (c *Client) EnsureStandardLabels(ctx context.Context, repo RepoInfo) error {
 	labels := []string{
 		LabelFeature,
 		LabelBug,
@@ -95,7 +96,7 @@ func (c *Client) EnsureStandardLabels(repo RepoInfo) error {
 	for _, label := range labels {
 		color := LabelColors[label]
 		desc := LabelDescriptions[label]
-		if err := c.EnsureLabel(repo, label, color, desc); err != nil {
+		if err := c.EnsureLabel(ctx, repo, label, color, desc); err != nil {
 			return fmt.Errorf("ensure label %s: %w", label, err)
 		}
 	}
@@ -105,7 +106,7 @@ func (c *Client) EnsureStandardLabels(repo RepoInfo) error {
 
 // SetPRLabels sets the labels on a PR.
 // This replaces all existing labels with the provided set.
-func (c *Client) SetPRLabels(repo RepoInfo, number int, labels []string) error {
+func (c *Client) SetPRLabels(ctx context.Context, repo RepoInfo, number int, labels []string) error {
 	if c.token == "" {
 		return ErrNoToken
 	}
@@ -116,7 +117,7 @@ func (c *Client) SetPRLabels(repo RepoInfo, number int, labels []string) error {
 		Labels: labels,
 	}
 
-	resp, err := c.doRequest("PUT", path, reqBody)
+	resp, err := c.doRequest(ctx, "PUT", path, reqBody)
 	if err != nil {
 		return fmt.Errorf("set PR labels: %w", err)
 	}
@@ -133,7 +134,7 @@ func (c *Client) SetPRLabels(repo RepoInfo, number int, labels []string) error {
 }
 
 // AddPRLabels adds labels to a PR without removing existing ones.
-func (c *Client) AddPRLabels(repo RepoInfo, number int, labels []string) error {
+func (c *Client) AddPRLabels(ctx context.Context, repo RepoInfo, number int, labels []string) error {
 	if c.token == "" {
 		return ErrNoToken
 	}
@@ -144,7 +145,7 @@ func (c *Client) AddPRLabels(repo RepoInfo, number int, labels []string) error {
 		Labels: labels,
 	}
 
-	resp, err := c.doRequest("POST", path, reqBody)
+	resp, err := c.doRequest(ctx, "POST", path, reqBody)
 	if err != nil {
 		return fmt.Errorf("add PR labels: %w", err)
 	}

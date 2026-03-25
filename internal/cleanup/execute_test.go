@@ -8,51 +8,6 @@ import (
 	"kanbanzai/internal/worktree"
 )
 
-// mockGit provides a test double for worktree.Git operations.
-type mockGit struct {
-	removeWorktreeCalls []string
-	removeWorktreeErr   error
-	pruneWorktreesCalls int
-	deleteBranchCalls   []deleteBranchCall
-	deleteBranchErr     error
-	deleteRemoteCalls   []deleteRemoteCall
-	deleteRemoteErr     error
-}
-
-type deleteBranchCall struct {
-	branch string
-	force  bool
-}
-
-type deleteRemoteCall struct {
-	remote string
-	branch string
-}
-
-func (m *mockGit) RemoveWorktree(path string, force bool) error {
-	m.removeWorktreeCalls = append(m.removeWorktreeCalls, path)
-	return m.removeWorktreeErr
-}
-
-func (m *mockGit) PruneWorktrees() error {
-	m.pruneWorktreesCalls++
-	return nil
-}
-
-func (m *mockGit) DeleteBranch(branch string, force bool) error {
-	m.deleteBranchCalls = append(m.deleteBranchCalls, deleteBranchCall{branch, force})
-	return m.deleteBranchErr
-}
-
-func (m *mockGit) DeleteRemoteBranch(remote, branch string) error {
-	m.deleteRemoteCalls = append(m.deleteRemoteCalls, deleteRemoteCall{remote, branch})
-	return m.deleteRemoteErr
-}
-
-// gitAdapter wraps mockGit to work with ExecuteCleanup.
-// Since ExecuteCleanup expects *worktree.Git, we'll need to use
-// a test approach that doesn't require actual git operations.
-
 func TestExecuteCleanup_DryRun(t *testing.T) {
 	// Dry run should not actually do anything
 	store := worktree.NewStore(t.TempDir())
@@ -284,7 +239,7 @@ func TestExecuteAllReady_EmptyStore(t *testing.T) {
 	store := worktree.NewStore(t.TempDir())
 	git := worktree.NewGit(t.TempDir())
 
-	results := ExecuteAllReady(store, git, 7, CleanupOptions{DryRun: true})
+	results := ExecuteAllReady(store, git, CleanupOptions{DryRun: true})
 
 	if len(results) != 0 {
 		t.Errorf("Expected 0 results for empty store, got %d", len(results))
@@ -315,7 +270,7 @@ func TestExecuteAllReady_FiltersNotReady(t *testing.T) {
 		t.Fatalf("Failed to create record: %v", err)
 	}
 
-	results := ExecuteAllReady(store, git, 7, CleanupOptions{DryRun: true})
+	results := ExecuteAllReady(store, git, CleanupOptions{DryRun: true})
 
 	if len(results) != 0 {
 		t.Errorf("Expected 0 results (record not ready), got %d", len(results))
@@ -346,7 +301,7 @@ func TestExecuteAllReady_ProcessesReadyItems(t *testing.T) {
 		t.Fatalf("Failed to create record: %v", err)
 	}
 
-	results := ExecuteAllReady(store, git, 7, CleanupOptions{DryRun: true})
+	results := ExecuteAllReady(store, git, CleanupOptions{DryRun: true})
 
 	if len(results) != 1 {
 		t.Fatalf("Expected 1 result, got %d", len(results))
@@ -385,7 +340,7 @@ func TestExecuteAllReady_ProcessesAbandonedWithForce(t *testing.T) {
 	}
 
 	// Run with DryRun to avoid actual git operations
-	results := ExecuteAllReady(store, git, 7, CleanupOptions{DryRun: true})
+	results := ExecuteAllReady(store, git, CleanupOptions{DryRun: true})
 
 	if len(results) != 1 {
 		t.Fatalf("Expected 1 result for abandoned worktree, got %d", len(results))
@@ -396,30 +351,5 @@ func TestExecuteAllReady_ProcessesAbandonedWithForce(t *testing.T) {
 	}
 	if !results[0].Success {
 		t.Errorf("Expected success for dry run, got error: %v", results[0].Error)
-	}
-}
-
-func TestContains_Helper(t *testing.T) {
-	tests := []struct {
-		s      string
-		substr string
-		want   bool
-	}{
-		{"hello world", "world", true},
-		{"hello world", "foo", false},
-		{"hello", "hello", true},
-		{"", "", true},
-		{"hello", "", true},
-		{"", "hello", false},
-		{"abc", "abcd", false},
-	}
-
-	for _, tc := range tests {
-		t.Run(tc.s+"_"+tc.substr, func(t *testing.T) {
-			got := contains(tc.s, tc.substr)
-			if got != tc.want {
-				t.Errorf("contains(%q, %q) = %v, want %v", tc.s, tc.substr, got, tc.want)
-			}
-		})
 	}
 }

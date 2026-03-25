@@ -26,8 +26,7 @@ type CleanupSchedule struct {
 func ScheduleCleanup(record *worktree.Record, mergedAt time.Time, gracePeriodDays int) {
 	record.MergedAt = &mergedAt
 
-	gracePeriod := time.Duration(gracePeriodDays) * 24 * time.Hour
-	cleanupAfter := mergedAt.Add(gracePeriod)
+	cleanupAfter := mergedAt.AddDate(0, 0, gracePeriodDays)
 	record.CleanupAfter = &cleanupAfter
 }
 

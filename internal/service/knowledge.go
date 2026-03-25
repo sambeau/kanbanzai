@@ -344,6 +344,27 @@ func (s *KnowledgeService) Retire(id, reason string) (storage.KnowledgeRecord, e
 	return record, nil
 }
 
+// UpdateFields updates arbitrary fields on a knowledge entry.
+// This is used by compaction and conflict resolution to persist merged data.
+// The updated timestamp is set automatically.
+func (s *KnowledgeService) UpdateFields(id string, updates map[string]any) (storage.KnowledgeRecord, error) {
+	record, err := s.store.Load(id)
+	if err != nil {
+		return storage.KnowledgeRecord{}, err
+	}
+
+	for k, v := range updates {
+		record.Fields[k] = v
+	}
+	record.Fields["updated"] = s.now().Format(time.RFC3339)
+
+	if _, err := s.store.Write(record); err != nil {
+		return storage.KnowledgeRecord{}, fmt.Errorf("write knowledge entry: %w", err)
+	}
+
+	return record, nil
+}
+
 // Promote promotes a tier-3 knowledge entry to tier 2 in place.
 // Updates tier, ttl_days, and records the promotion.
 func (s *KnowledgeService) Promote(id string) (storage.KnowledgeRecord, error) {

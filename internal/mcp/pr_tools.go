@@ -52,7 +52,7 @@ func prCreateTool(
 
 		draft := request.GetBool("draft", false)
 
-		result, err := createPR(worktreeStore, entitySvc, repoPath, localConfig, entityID, draft)
+		result, err := createPR(ctx, worktreeStore, entitySvc, repoPath, localConfig, entityID, draft)
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("create PR failed", err), nil
 		}
@@ -79,7 +79,7 @@ func prUpdateTool(
 			return mcp.NewToolResultError(err.Error()), nil
 		}
 
-		result, err := updatePR(worktreeStore, entitySvc, repoPath, thresholds, localConfig, entityID)
+		result, err := updatePR(ctx, worktreeStore, entitySvc, repoPath, thresholds, localConfig, entityID)
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("update PR failed", err), nil
 		}
@@ -104,7 +104,7 @@ func prStatusTool(
 			return mcp.NewToolResultError(err.Error()), nil
 		}
 
-		result, err := getPRStatusForEntity(worktreeStore, repoPath, localConfig, entityID)
+		result, err := getPRStatusForEntity(ctx, worktreeStore, repoPath, localConfig, entityID)
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("get PR status failed", err), nil
 		}
@@ -116,6 +116,7 @@ func prStatusTool(
 
 // createPR creates a new pull request for an entity.
 func createPR(
+	ctx context.Context,
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
 	repoPath string,
@@ -156,7 +157,7 @@ func createPR(
 	}
 
 	// Check if PR already exists
-	existingPR, err := client.GetPRByBranch(repoInfo, wt.Branch)
+	existingPR, err := client.GetPRByBranch(ctx, repoInfo, wt.Branch)
 	if err == nil && existingPR != nil {
 		return nil, fmt.Errorf("PR_EXISTS: PR already exists for branch %s: %s", wt.Branch, existingPR.URL)
 	}
@@ -203,28 +204,30 @@ func createPR(
 	prBody := github.GenerateDescription(descData)
 
 	// Ensure standard labels exist
-	if err := client.EnsureStandardLabels(repoInfo); err != nil {
-		// Log but don't fail
-		_ = err
+	var warnings []string
+	if err := client.EnsureStandardLabels(ctx, repoInfo); err != nil {
+		warnings = append(warnings, fmt.Sprintf("label setup: %v", err))
 	}
 
 	// Create the PR
-	pr, err := client.CreatePR(repoInfo, wt.Branch, "main", prTitle, prBody, draft)
+	baseBranch, baseErr := git.GetDefaultBranch(repoPath)
+	if baseErr != nil {
+		baseBranch = "main" // fallback for repos where git detection might not work
+	}
+	pr, err := client.CreatePR(ctx, repoInfo, wt.Branch, baseBranch, prTitle, prBody, draft)
 	if err != nil {
-		// Try with master as base
-		pr, err = client.CreatePR(repoInfo, wt.Branch, "master", prTitle, prBody, draft)
-		if err != nil {
-			return nil, fmt.Errorf("create PR: %w", err)
-		}
+		return nil, fmt.Errorf("create PR: %w", err)
 	}
 
 	// Set initial labels
 	labels := github.ComputeLabels(entityType, false, false, false)
 	if len(labels) > 0 {
-		_ = client.SetPRLabels(repoInfo, pr.Number, labels)
+		if err := client.SetPRLabels(ctx, repoInfo, pr.Number, labels); err != nil {
+			warnings = append(warnings, fmt.Sprintf("set labels: %v", err))
+		}
 	}
 
-	return map[string]any{
+	resp := map[string]any{
 		"pr": map[string]any{
 			"url":    pr.URL,
 			"number": pr.Number,
@@ -232,11 +235,16 @@ func createPR(
 			"state":  pr.State,
 			"draft":  pr.Draft,
 		},
-	}, nil
+	}
+	if len(warnings) > 0 {
+		resp["warnings"] = warnings
+	}
+	return resp, nil
 }
 
 // updatePR updates an existing pull request's description and labels.
 func updatePR(
+	ctx context.Context,
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
 	repoPath string,
@@ -277,7 +285,7 @@ func updatePR(
 	}
 
 	// Get existing PR
-	pr, err := client.GetPRByBranch(repoInfo, wt.Branch)
+	pr, err := client.GetPRByBranch(ctx, repoInfo, wt.Branch)
 	if err != nil {
 		if errors.Is(err, github.ErrPRNotFound) {
 			return nil, fmt.Errorf("NO_PR: no PR found for branch %s", wt.Branch)
@@ -335,7 +343,7 @@ func updatePR(
 	var changes []string
 
 	// Update PR
-	_, err = client.UpdatePR(repoInfo, pr.Number, prTitle, prBody)
+	_, err = client.UpdatePR(ctx, repoInfo, pr.Number, prTitle, prBody)
 	if err != nil {
 		return nil, fmt.Errorf("update PR: %w", err)
 	}
@@ -369,7 +377,7 @@ func updatePR(
 
 	// Update labels
 	labels := github.ComputeLabels(entityType, tasksComplete, verificationPassed, gatesPass)
-	if err := client.SetPRLabels(repoInfo, pr.Number, labels); err == nil {
+	if err := client.SetPRLabels(ctx, repoInfo, pr.Number, labels); err == nil {
 		for _, label := range labels {
 			changes = append(changes, fmt.Sprintf("Added label: %s", label))
 		}
@@ -386,6 +394,7 @@ func updatePR(
 
 // getPRStatusForEntity gets PR status for an entity.
 func getPRStatusForEntity(
+	ctx context.Context,
 	worktreeStore *worktree.Store,
 	repoPath string,
 	localConfig *config.LocalConfig,
@@ -414,7 +423,7 @@ func getPRStatusForEntity(
 	}
 
 	// Get PR by branch
-	pr, err := client.GetPRByBranch(repoInfo, wt.Branch)
+	pr, err := client.GetPRByBranch(ctx, repoInfo, wt.Branch)
 	if err != nil {
 		if errors.Is(err, github.ErrPRNotFound) {
 			return nil, fmt.Errorf("NO_PR: no PR found for branch %s", wt.Branch)

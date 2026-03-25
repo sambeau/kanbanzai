@@ -27,19 +27,19 @@ func TestGenerateBranchName(t *testing.T) {
 			name:     "bug with slug",
 			entityID: "BUG-01JX123456789",
 			slug:     "fix-crash",
-			want:     "bugfix/BUG-01JX123456789-fix-crash",
+			want:     "bug/BUG-01JX123456789-fix-crash",
 		},
 		{
 			name:     "bug without slug",
 			entityID: "BUG-01JX123456789",
 			slug:     "",
-			want:     "bugfix/BUG-01JX123456789",
+			want:     "bug/BUG-01JX123456789",
 		},
 		{
 			name:     "lowercase bug prefix",
 			entityID: "bug-01JX123456789",
 			slug:     "minor-fix",
-			want:     "bugfix/bug-01JX123456789-minor-fix",
+			want:     "bug/bug-01JX123456789-minor-fix",
 		},
 		{
 			name:     "slug with spaces becomes hyphens",
@@ -246,6 +246,16 @@ func TestNormalizeSlug(t *testing.T) {
 			input: "  Add User's OAuth2 Profile! (v2)  ",
 			want:  "add-user-s-oauth2-profile-v2",
 		},
+		{
+			name:  "long slug truncated at 40 characters",
+			input: "this-is-a-very-long-slug-that-exceeds-the-forty-character-limit",
+			want:  "this-is-a-very-long-slug-that-exceeds-th",
+		},
+		{
+			name:  "truncation removes trailing hyphen",
+			input: "this-is-a-very-long-slug-that-exceeds-t-e-forty-character-limit",
+			want:  "this-is-a-very-long-slug-that-exceeds-t",
+		},
 	}
 
 	for _, tt := range tests {
@@ -268,9 +278,9 @@ func TestBranchPrefix(t *testing.T) {
 		want     string
 	}{
 		{"feature entity", "FEAT-01JX987654321", "feature"},
-		{"bug entity", "BUG-01JX123456789", "bugfix"},
+		{"bug entity", "BUG-01JX123456789", "bug"},
 		{"lowercase feature", "feat-01JX987654321", "feature"},
-		{"lowercase bug", "bug-01JX123456789", "bugfix"},
+		{"lowercase bug", "bug-01JX123456789", "bug"},
 		{"task entity", "TASK-01JX987654321", "feature"},
 		{"unknown entity", "UNKNOWN-01JX987654321", "feature"},
 		{"empty entity", "", "feature"},

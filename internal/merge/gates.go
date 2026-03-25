@@ -46,6 +46,10 @@ type GateContext struct {
 	// BranchStatusChecker allows injection of branch status evaluation for testing.
 	// If nil, uses git.EvaluateBranchStatus.
 	BranchStatusChecker func(repoPath, branch string, thresholds git.BranchThresholds) (git.BranchStatus, error)
+
+	// DefaultBranchDetector allows injection of default branch detection for testing.
+	// If nil, uses git.GetDefaultBranch.
+	DefaultBranchDetector func(repoPath string) (string, error)
 }
 
 // TasksCompleteGate checks that all tasks are done or wont_do.
@@ -257,16 +261,23 @@ func (g NoConflictsGate) Check(ctx GateContext) GateResult {
 		checker = git.HasMergeConflicts
 	}
 
-	// Check against main (the default base branch)
-	hasConflicts, err := checker(ctx.RepoPath, ctx.Branch, "main")
+	// Use injected detector or default
+	detectDefault := ctx.DefaultBranchDetector
+	if detectDefault == nil {
+		detectDefault = git.GetDefaultBranch
+	}
+
+	baseBranch, err := detectDefault(ctx.RepoPath)
 	if err != nil {
-		// Try master if main doesn't exist
-		hasConflicts, err = checker(ctx.RepoPath, ctx.Branch, "master")
-		if err != nil {
-			result.Status = GateStatusFailed
-			result.Message = fmt.Sprintf("cannot check for conflicts: %v", err)
-			return result
-		}
+		result.Status = GateStatusFailed
+		result.Message = fmt.Sprintf("cannot determine default branch: %v", err)
+		return result
+	}
+	hasConflicts, err := checker(ctx.RepoPath, ctx.Branch, baseBranch)
+	if err != nil {
+		result.Status = GateStatusFailed
+		result.Message = fmt.Sprintf("cannot check for conflicts: %v", err)
+		return result
 	}
 
 	if hasConflicts {

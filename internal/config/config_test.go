@@ -516,16 +516,130 @@ prefixes:
 		t.Fatalf("LoadFrom() error = %v", err)
 	}
 
-	// When fields are missing, they should be zero values (not defaults)
-	// Defaults are only applied by DefaultConfig()
-	if loaded.BranchTracking.StaleAfterDays != 0 {
-		t.Errorf("BranchTracking.StaleAfterDays = %d, want 0 (zero value)", loaded.BranchTracking.StaleAfterDays)
+	// When fields are missing, defaults are now merged by LoadFrom
+	defaults := DefaultBranchTrackingConfig()
+	if loaded.BranchTracking.StaleAfterDays != defaults.StaleAfterDays {
+		t.Errorf("BranchTracking.StaleAfterDays = %d, want %d", loaded.BranchTracking.StaleAfterDays, defaults.StaleAfterDays)
 	}
-	if loaded.Cleanup.GracePeriodDays != 0 {
-		t.Errorf("Cleanup.GracePeriodDays = %d, want 0 (zero value)", loaded.Cleanup.GracePeriodDays)
+	if loaded.Cleanup.GracePeriodDays != DefaultCleanupConfig().GracePeriodDays {
+		t.Errorf("Cleanup.GracePeriodDays = %d, want %d", loaded.Cleanup.GracePeriodDays, DefaultCleanupConfig().GracePeriodDays)
 	}
-	if loaded.Knowledge.TTL.Tier3Days != 0 {
-		t.Errorf("Knowledge.TTL.Tier3Days = %d, want 0 (zero value)", loaded.Knowledge.TTL.Tier3Days)
+	if loaded.Knowledge.TTL.Tier3Days != DefaultKnowledgeConfig().TTL.Tier3Days {
+		t.Errorf("Knowledge.TTL.Tier3Days = %d, want %d", loaded.Knowledge.TTL.Tier3Days, DefaultKnowledgeConfig().TTL.Tier3Days)
+	}
+}
+
+func TestConfig_Phase3Validation(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name    string
+		modify  func(*Config)
+		wantErr string
+	}{
+		{
+			name:   "valid defaults",
+			modify: func(c *Config) {},
+		},
+		{
+			name:    "negative stale_after_days",
+			modify:  func(c *Config) { c.BranchTracking.StaleAfterDays = -1 },
+			wantErr: "stale_after_days must be non-negative",
+		},
+		{
+			name:    "negative drift_warning_commits",
+			modify:  func(c *Config) { c.BranchTracking.DriftWarningCommits = -1 },
+			wantErr: "drift_warning_commits must be non-negative",
+		},
+		{
+			name:    "negative drift_error_commits",
+			modify:  func(c *Config) { c.BranchTracking.DriftErrorCommits = -1 },
+			wantErr: "drift_error_commits must be non-negative",
+		},
+		{
+			name: "warning >= error commits",
+			modify: func(c *Config) {
+				c.BranchTracking.DriftWarningCommits = 100
+				c.BranchTracking.DriftErrorCommits = 50
+			},
+			wantErr: "drift_warning_commits must be less than drift_error_commits",
+		},
+		{
+			name:    "negative grace_period_days",
+			modify:  func(c *Config) { c.Cleanup.GracePeriodDays = -1 },
+			wantErr: "grace_period_days must be non-negative",
+		},
+		{
+			name:    "negative ttl tier_3_days",
+			modify:  func(c *Config) { c.Knowledge.TTL.Tier3Days = -1 },
+			wantErr: "tier_3_days must be non-negative",
+		},
+		{
+			name:    "confidence > 1",
+			modify:  func(c *Config) { c.Knowledge.Promotion.MinConfidence = 1.5 },
+			wantErr: "min_confidence must be between 0 and 1",
+		},
+		{
+			name:    "confidence < 0",
+			modify:  func(c *Config) { c.Knowledge.Promotion.MinConfidence = -0.1 },
+			wantErr: "min_confidence must be between 0 and 1",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			cfg := DefaultConfig()
+			tt.modify(&cfg)
+			err := cfg.Validate()
+			if tt.wantErr == "" {
+				if err != nil {
+					t.Errorf("Validate() unexpected error: %v", err)
+				}
+			} else {
+				if err == nil {
+					t.Errorf("Validate() expected error containing %q, got nil", tt.wantErr)
+				} else if !strings.Contains(err.Error(), tt.wantErr) {
+					t.Errorf("Validate() error = %v, want containing %q", err, tt.wantErr)
+				}
+			}
+		})
+	}
+}
+
+func TestConfig_Phase3DefaultsMerging(t *testing.T) {
+	t.Parallel()
+
+	// Simulate a pre-Phase 3 config file (only prefixes, no Phase 3 fields)
+	configYAML := `version: "2"
+prefixes:
+  - prefix: P
+    name: Plan
+`
+	dir := t.TempDir()
+	path := filepath.Join(dir, "config.yaml")
+	if err := os.WriteFile(path, []byte(configYAML), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	cfg, err := LoadFrom(path)
+	if err != nil {
+		t.Fatalf("LoadFrom() unexpected error: %v", err)
+	}
+
+	// Verify defaults were merged
+	defaults := DefaultBranchTrackingConfig()
+	if cfg.BranchTracking.StaleAfterDays != defaults.StaleAfterDays {
+		t.Errorf("StaleAfterDays = %d, want %d", cfg.BranchTracking.StaleAfterDays, defaults.StaleAfterDays)
+	}
+	if cfg.BranchTracking.DriftWarningCommits != defaults.DriftWarningCommits {
+		t.Errorf("DriftWarningCommits = %d, want %d", cfg.BranchTracking.DriftWarningCommits, defaults.DriftWarningCommits)
+	}
+	if cfg.Cleanup.GracePeriodDays != DefaultCleanupConfig().GracePeriodDays {
+		t.Errorf("GracePeriodDays = %d, want %d", cfg.Cleanup.GracePeriodDays, DefaultCleanupConfig().GracePeriodDays)
+	}
+	if cfg.Knowledge.Promotion.MinConfidence != DefaultKnowledgeConfig().Promotion.MinConfidence {
+		t.Errorf("MinConfidence = %f, want %f", cfg.Knowledge.Promotion.MinConfidence, DefaultKnowledgeConfig().Promotion.MinConfidence)
 	}
 }
 

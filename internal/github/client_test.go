@@ -1,6 +1,7 @@
 package github
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -132,7 +133,7 @@ func TestClient_CreatePR(t *testing.T) {
 			client.SetBaseURL(server.URL)
 
 			repo := RepoInfo{Owner: "owner", Repo: "repo"}
-			pr, err := client.CreatePR(repo, "feature-branch", "main", "Test PR", "Test body", false)
+			pr, err := client.CreatePR(context.Background(), repo, "feature-branch", "main", "Test PR", "Test body", false)
 
 			if tt.wantErr != nil {
 				if !errors.Is(err, tt.wantErr) {
@@ -199,7 +200,7 @@ func TestClient_GetPR(t *testing.T) {
 	client.SetBaseURL(server.URL)
 
 	repo := RepoInfo{Owner: "owner", Repo: "repo"}
-	pr, err := client.GetPR(repo, 42)
+	pr, err := client.GetPR(context.Background(), repo, 42)
 
 	if err != nil {
 		t.Fatalf("GetPR() error = %v", err)
@@ -230,7 +231,7 @@ func TestClient_GetPR_NotFound(t *testing.T) {
 	client.SetBaseURL(server.URL)
 
 	repo := RepoInfo{Owner: "owner", Repo: "repo"}
-	_, err := client.GetPR(repo, 9999)
+	_, err := client.GetPR(context.Background(), repo, 9999)
 
 	if err != ErrPRNotFound {
 		t.Errorf("GetPR() error = %v, want %v", err, ErrPRNotFound)
@@ -271,7 +272,7 @@ func TestClient_GetPRByBranch(t *testing.T) {
 	client.SetBaseURL(server.URL)
 
 	repo := RepoInfo{Owner: "owner", Repo: "repo"}
-	pr, err := client.GetPRByBranch(repo, "feature-branch")
+	pr, err := client.GetPRByBranch(context.Background(), repo, "feature-branch")
 
 	if err != nil {
 		t.Fatalf("GetPRByBranch() error = %v", err)
@@ -299,7 +300,7 @@ func TestClient_GetPRByBranch_NotFound(t *testing.T) {
 	client.SetBaseURL(server.URL)
 
 	repo := RepoInfo{Owner: "owner", Repo: "repo"}
-	_, err := client.GetPRByBranch(repo, "nonexistent-branch")
+	_, err := client.GetPRByBranch(context.Background(), repo, "nonexistent-branch")
 
 	if err != ErrPRNotFound {
 		t.Errorf("GetPRByBranch() error = %v, want %v", err, ErrPRNotFound)
@@ -336,7 +337,7 @@ func TestClient_UpdatePR(t *testing.T) {
 	client.SetBaseURL(server.URL)
 
 	repo := RepoInfo{Owner: "owner", Repo: "repo"}
-	pr, err := client.UpdatePR(repo, 42, "Updated Title", "Updated Body")
+	pr, err := client.UpdatePR(context.Background(), repo, 42, "Updated Title", "Updated Body")
 
 	if err != nil {
 		t.Fatalf("UpdatePR() error = %v", err)
@@ -361,7 +362,7 @@ func TestClient_RateLimitViaForbidden(t *testing.T) {
 	client.SetBaseURL(server.URL)
 
 	repo := RepoInfo{Owner: "owner", Repo: "repo"}
-	_, err := client.GetPR(repo, 1)
+	_, err := client.GetPR(context.Background(), repo, 1)
 
 	if !errors.Is(err, ErrRateLimited) {
 		t.Errorf("GetPR() error = %v, want %v", err, ErrRateLimited)
@@ -448,7 +449,7 @@ func TestCIStatusMapping(t *testing.T) {
 	client.SetBaseURL(server.URL)
 
 	repo := RepoInfo{Owner: "owner", Repo: "repo"}
-	pr, _ := client.GetPR(repo, 1)
+	pr, _ := client.GetPR(context.Background(), repo, 1)
 
 	if pr.CIStatus != "failed" {
 		t.Errorf("PR.CIStatus = %q, want %q", pr.CIStatus, "failed")
@@ -486,7 +487,7 @@ func TestReviewStatusPriority(t *testing.T) {
 	client.SetBaseURL(server.URL)
 
 	repo := RepoInfo{Owner: "owner", Repo: "repo"}
-	pr, _ := client.GetPR(repo, 1)
+	pr, _ := client.GetPR(context.Background(), repo, 1)
 
 	if pr.ReviewStatus != "changes_requested" {
 		t.Errorf("PR.ReviewStatus = %q, want %q", pr.ReviewStatus, "changes_requested")

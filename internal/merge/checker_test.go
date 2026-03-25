@@ -51,6 +51,9 @@ func TestCheckGates_AllPassing(t *testing.T) {
 		BranchStatusChecker: func(repoPath, branch string, thresholds git.BranchThresholds) (git.BranchStatus, error) {
 			return git.BranchStatus{}, nil
 		},
+		DefaultBranchDetector: func(repoPath string) (string, error) {
+			return "main", nil
+		},
 	}
 
 	result := CheckGates(ctx)
@@ -92,6 +95,9 @@ func TestCheckGates_BlockingFailure(t *testing.T) {
 		},
 		BranchStatusChecker: func(repoPath, branch string, thresholds git.BranchThresholds) (git.BranchStatus, error) {
 			return git.BranchStatus{}, nil
+		},
+		DefaultBranchDetector: func(repoPath string) (string, error) {
+			return "main", nil
 		},
 	}
 
@@ -135,6 +141,9 @@ func TestCheckGates_WarningsOnly(t *testing.T) {
 			return git.BranchStatus{
 				Warnings: []string{"branch is stale"},
 			}, nil
+		},
+		DefaultBranchDetector: func(repoPath string) (string, error) {
+			return "main", nil
 		},
 	}
 

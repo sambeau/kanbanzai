@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -534,28 +535,27 @@ func knowledgeCompactTool(svc *service.KnowledgeService) server.ServerTool {
 		}
 		result, updates := knowledge.CompactEntries(fieldMaps, opts)
 
-		// If not dry run, write the updated entries
+		var retireErrors []string
 		if !dryRun {
 			for _, fields := range updates {
 				id, _ := fields["id"].(string)
 				if id == "" {
 					continue
 				}
-				// Load to get the FileHash for optimistic locking
-				existing, lerr := svc.Get(id)
-				if lerr != nil {
-					continue
-				}
-				existing.Fields = fields
-				// Use direct store write (service doesn't expose raw write)
-				// We need to update through the service methods
 				status, _ := fields["status"].(string)
 				if status == "retired" {
 					reason, _ := fields["retired_reason"].(string)
 					if reason == "" {
 						reason, _ = fields["deprecated_reason"].(string)
 					}
-					_, _ = svc.Retire(id, reason)
+					if _, err := svc.Retire(id, reason); err != nil {
+						retireErrors = append(retireErrors, fmt.Sprintf("%s: %v", id, err))
+					}
+				} else {
+					// Persist kept/disputed entries with their updated fields
+					if _, err := svc.UpdateFields(id, fields); err != nil {
+						retireErrors = append(retireErrors, fmt.Sprintf("update %s: %v", id, err))
+					}
 				}
 			}
 		}
@@ -588,6 +588,9 @@ func knowledgeCompactTool(svc *service.KnowledgeService) server.ServerTool {
 				"conflicts_flagged":      result.ConflictsFlagged,
 				"details":                details,
 			},
+		}
+		if len(retireErrors) > 0 {
+			resp["warnings"] = retireErrors
 		}
 
 		return knowledgeMapJSON(resp)
@@ -625,21 +628,38 @@ func knowledgeResolveConflictTool(svc *service.KnowledgeService) server.ServerTo
 		}
 
 		if mergeContent {
-			// Merge usage counts and anchors using the knowledge package
-			kept, _ := knowledge.MergeEntries(keepRec.Fields, retireRec.Fields)
-			// The MergeEntries function decides which to keep based on confidence;
-			// we override to always keep the specified entry
-			keptID, _ := kept["id"].(string)
-			if keptID != keepID {
-				// Swap: user wants to keep a different one than MergeEntries chose
-				kept, _ = knowledge.MergeEntries(retireRec.Fields, keepRec.Fields)
-			}
-			// Update the kept entry with merged data
-			// We need to use service methods - update content doesn't work for this
-			// For now, just transfer use_count manually
+			// Transfer usage counts and anchors from retire to keep
 			keepUseCount := knowledgeFieldInt(keepRec.Fields, "use_count")
 			retireUseCount := knowledgeFieldInt(retireRec.Fields, "use_count")
-			_ = keepUseCount + retireUseCount // merged count, but we can't easily update via service
+
+			keepMissCount := knowledgeFieldInt(keepRec.Fields, "miss_count")
+			retireMissCount := knowledgeFieldInt(retireRec.Fields, "miss_count")
+
+			mergedFields := map[string]any{
+				"use_count":   keepUseCount + retireUseCount,
+				"miss_count":  keepMissCount + retireMissCount,
+				"merged_from": retireID,
+			}
+
+			// Merge git_anchors (union)
+			keepAnchors := knowledge.GetGitAnchors(keepRec.Fields)
+			retireAnchors := knowledge.GetGitAnchors(retireRec.Fields)
+			if len(retireAnchors) > 0 {
+				seen := make(map[string]struct{})
+				for _, a := range keepAnchors {
+					seen[a] = struct{}{}
+				}
+				for _, a := range retireAnchors {
+					if _, ok := seen[a]; !ok {
+						keepAnchors = append(keepAnchors, a)
+					}
+				}
+				mergedFields["git_anchors"] = keepAnchors
+			}
+
+			if _, err := svc.UpdateFields(keepID, mergedFields); err != nil {
+				return mcp.NewToolResultErrorFromErr("update kept entry with merged data failed", err), nil
+			}
 		}
 
 		// Retire the entry

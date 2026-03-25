@@ -50,7 +50,7 @@ func mergeReadinessCheckTool(
 			return mcp.NewToolResultError(err.Error()), nil
 		}
 
-		result, err := checkMergeReadiness(worktreeStore, entitySvc, repoPath, thresholds, localConfig, entityID)
+		result, err := checkMergeReadiness(ctx, worktreeStore, entitySvc, repoPath, thresholds, localConfig, entityID)
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("merge readiness check failed", err), nil
 		}
@@ -109,6 +109,7 @@ func mergeExecuteTool(
 
 // checkMergeReadiness performs a merge readiness check for an entity.
 func checkMergeReadiness(
+	ctx context.Context,
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
 	repoPath string,
@@ -186,7 +187,7 @@ func checkMergeReadiness(
 
 	// Check PR status if GitHub is configured
 	if localConfig != nil && localConfig.GetGitHubToken() != "" {
-		prStatus, err := getPRStatus(repoPath, wt.Branch, localConfig)
+		prStatus, err := getPRStatus(ctx, repoPath, wt.Branch, localConfig)
 		if err == nil && prStatus != nil {
 			resp["pr_status"] = prStatus
 		}
@@ -345,7 +346,7 @@ func executeMerge(
 }
 
 // getPRStatus fetches PR status from GitHub for the given branch.
-func getPRStatus(repoPath, branch string, localConfig *config.LocalConfig) (map[string]any, error) {
+func getPRStatus(ctx context.Context, repoPath, branch string, localConfig *config.LocalConfig) (map[string]any, error) {
 	token := localConfig.GetGitHubToken()
 	if token == "" {
 		return nil, fmt.Errorf("no GitHub token configured")
@@ -360,7 +361,7 @@ func getPRStatus(repoPath, branch string, localConfig *config.LocalConfig) (map[
 	}
 
 	// Get PR by branch
-	pr, err := client.GetPRByBranch(repoInfo, branch)
+	pr, err := client.GetPRByBranch(ctx, repoInfo, branch)
 	if err != nil {
 		if errors.Is(err, github.ErrPRNotFound) {
 			return nil, nil // No PR exists

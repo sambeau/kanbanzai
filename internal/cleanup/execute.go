@@ -2,8 +2,10 @@
 package cleanup
 
 import (
-	"kanbanzai/internal/worktree"
+	"strings"
 	"time"
+
+	"kanbanzai/internal/worktree"
 )
 
 // CleanupResult contains the result of cleaning up a worktree.
@@ -92,7 +94,7 @@ func ExecuteCleanup(store *worktree.Store, git *worktree.Git, record worktree.Re
 }
 
 // ExecuteAllReady cleans up all items ready for cleanup.
-func ExecuteAllReady(store *worktree.Store, git *worktree.Git, gracePeriodDays int, opts CleanupOptions) []CleanupResult {
+func ExecuteAllReady(store *worktree.Store, git *worktree.Git, opts CleanupOptions) []CleanupResult {
 	records, err := store.List()
 	if err != nil {
 		return []CleanupResult{{
@@ -105,7 +107,12 @@ func ExecuteAllReady(store *worktree.Store, git *worktree.Git, gracePeriodDays i
 	var results []CleanupResult
 
 	for _, record := range records {
-		if !IsReadyForCleanup(&record, now) {
+		ready := IsReadyForCleanup(&record, now)
+		if !ready && record.Status == worktree.StatusAbandoned {
+			// Abandoned worktrees without CleanupAfter are always ready
+			ready = true
+		}
+		if !ready {
 			continue
 		}
 
@@ -129,9 +136,9 @@ func isWorktreeNotFoundError(err error) bool {
 	}
 	errStr := err.Error()
 	// Git returns various messages for missing worktrees
-	return contains(errStr, "is not a working tree") ||
-		contains(errStr, "not a valid directory") ||
-		contains(errStr, "does not exist")
+	return strings.Contains(errStr, "is not a working tree") ||
+		strings.Contains(errStr, "not a valid directory") ||
+		strings.Contains(errStr, "does not exist")
 }
 
 // isBranchNotFoundError checks if the error indicates the branch doesn't exist.
@@ -140,8 +147,8 @@ func isBranchNotFoundError(err error) bool {
 		return false
 	}
 	errStr := err.Error()
-	return contains(errStr, "not found") ||
-		contains(errStr, "branch") && contains(errStr, "not found")
+	return strings.Contains(errStr, "not found") ||
+		strings.Contains(errStr, "branch") && strings.Contains(errStr, "not found")
 }
 
 // isRemoteBranchNotFoundError checks if the error indicates the remote branch doesn't exist.
@@ -150,21 +157,6 @@ func isRemoteBranchNotFoundError(err error) bool {
 		return false
 	}
 	errStr := err.Error()
-	return contains(errStr, "remote ref does not exist") ||
-		contains(errStr, "unable to delete") && contains(errStr, "remote ref")
-}
-
-// contains is a simple substring check helper.
-func contains(s, substr string) bool {
-	return len(s) >= len(substr) && (s == substr || len(substr) == 0 ||
-		(len(s) > 0 && containsSubstring(s, substr)))
-}
-
-func containsSubstring(s, substr string) bool {
-	for i := 0; i <= len(s)-len(substr); i++ {
-		if s[i:i+len(substr)] == substr {
-			return true
-		}
-	}
-	return false
+	return strings.Contains(errStr, "remote ref does not exist") ||
+		strings.Contains(errStr, "unable to delete") && strings.Contains(errStr, "remote ref")
 }

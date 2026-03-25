@@ -217,7 +217,7 @@ func worktreeRemoveTool(store *worktree.Store, gitOps *worktree.Git) server.Serv
 		// Remove the git worktree
 		if err := gitOps.RemoveWorktree(record.Path, force); err != nil {
 			errStr := err.Error()
-			if !force && (contains(errStr, "uncommitted") || contains(errStr, "untracked") || contains(errStr, "changes")) {
+			if !force && (containsIgnoreCase(errStr, "uncommitted") || containsIgnoreCase(errStr, "untracked") || containsIgnoreCase(errStr, "changes")) {
 				return mcp.NewToolResultError("UNCOMMITTED_CHANGES: worktree has uncommitted changes, use force=true to remove anyway"), nil
 			}
 			return mcp.NewToolResultError(fmt.Sprintf("GIT_ERROR: %v", err)), nil
@@ -331,29 +331,7 @@ func entityTypeFromID(id string) string {
 	}
 }
 
-// contains checks if a string contains a substring (case-insensitive).
-func contains(s, substr string) bool {
-	return len(s) >= len(substr) && (s == substr || len(substr) == 0 ||
-		(len(s) > 0 && containsLower(toLower(s), toLower(substr))))
-}
-
-func containsLower(s, substr string) bool {
-	for i := 0; i <= len(s)-len(substr); i++ {
-		if s[i:i+len(substr)] == substr {
-			return true
-		}
-	}
-	return false
-}
-
-func toLower(s string) string {
-	b := make([]byte, len(s))
-	for i := 0; i < len(s); i++ {
-		c := s[i]
-		if c >= 'A' && c <= 'Z' {
-			c += 'a' - 'A'
-		}
-		b[i] = c
-	}
-	return string(b)
+// containsIgnoreCase checks if s contains substr, case-insensitively.
+func containsIgnoreCase(s, substr string) bool {
+	return strings.Contains(strings.ToLower(s), strings.ToLower(substr))
 }

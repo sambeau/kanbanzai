@@ -3,6 +3,7 @@ package github
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -46,7 +47,7 @@ func (c *Client) SetBaseURL(url string) {
 }
 
 // doRequest performs an HTTP request with authentication and error handling.
-func (c *Client) doRequest(method, path string, body any) (*http.Response, error) {
+func (c *Client) doRequest(ctx context.Context, method, path string, body any) (*http.Response, error) {
 	var bodyReader io.Reader
 	if body != nil {
 		jsonData, err := json.Marshal(body)
@@ -57,7 +58,7 @@ func (c *Client) doRequest(method, path string, body any) (*http.Response, error
 	}
 
 	url := c.baseURL + path
-	req, err := http.NewRequest(method, url, bodyReader)
+	req, err := http.NewRequestWithContext(ctx, method, url, bodyReader)
 	if err != nil {
 		return nil, fmt.Errorf("create request: %w", err)
 	}
@@ -116,8 +117,8 @@ func (c *Client) decodeResponse(resp *http.Response, target any) error {
 }
 
 // get performs a GET request and decodes the response.
-func (c *Client) get(path string, target any) error {
-	resp, err := c.doRequest(http.MethodGet, path, nil)
+func (c *Client) get(ctx context.Context, path string, target any) error {
+	resp, err := c.doRequest(ctx, http.MethodGet, path, nil)
 	if err != nil {
 		return err
 	}
@@ -130,8 +131,8 @@ func (c *Client) get(path string, target any) error {
 }
 
 // post performs a POST request and decodes the response.
-func (c *Client) post(path string, body, target any) error {
-	resp, err := c.doRequest(http.MethodPost, path, body)
+func (c *Client) post(ctx context.Context, path string, body, target any) error {
+	resp, err := c.doRequest(ctx, http.MethodPost, path, body)
 	if err != nil {
 		return err
 	}
@@ -149,8 +150,8 @@ func (c *Client) post(path string, body, target any) error {
 }
 
 // patch performs a PATCH request and decodes the response.
-func (c *Client) patch(path string, body, target any) error {
-	resp, err := c.doRequest(http.MethodPatch, path, body)
+func (c *Client) patch(ctx context.Context, path string, body, target any) error {
+	resp, err := c.doRequest(ctx, http.MethodPatch, path, body)
 	if err != nil {
 		return err
 	}
