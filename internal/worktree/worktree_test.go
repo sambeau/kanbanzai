@@ -172,3 +172,126 @@ func TestFieldOrder_ContainsAllRecordFields(t *testing.T) {
 		}
 	}
 }
+
+func TestRecord_MarkMerged(t *testing.T) {
+	t.Parallel()
+
+	created := time.Date(2025, 1, 27, 10, 0, 0, 0, time.UTC)
+	mergedAt := time.Date(2025, 1, 28, 15, 30, 0, 0, time.UTC)
+
+	tests := []struct {
+		name            string
+		gracePeriodDays int
+		wantCleanupAt   time.Time
+	}{
+		{
+			name:            "7 day grace period",
+			gracePeriodDays: 7,
+			wantCleanupAt:   mergedAt.AddDate(0, 0, 7),
+		},
+		{
+			name:            "0 day grace period",
+			gracePeriodDays: 0,
+			wantCleanupAt:   mergedAt,
+		},
+		{
+			name:            "14 day grace period",
+			gracePeriodDays: 14,
+			wantCleanupAt:   mergedAt.AddDate(0, 0, 14),
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			record := Record{
+				ID:        "WT-01JX123456789",
+				EntityID:  "FEAT-01JX987654321",
+				Branch:    "feature/test",
+				Path:      ".worktrees/test",
+				Status:    StatusActive,
+				Created:   created,
+				CreatedBy: "test-user",
+			}
+
+			record.MarkMerged(mergedAt, tt.gracePeriodDays)
+
+			if record.Status != StatusMerged {
+				t.Errorf("Status = %v, want %v", record.Status, StatusMerged)
+			}
+			if record.MergedAt == nil {
+				t.Fatal("MergedAt should not be nil")
+			}
+			if !record.MergedAt.Equal(mergedAt) {
+				t.Errorf("MergedAt = %v, want %v", *record.MergedAt, mergedAt)
+			}
+			if record.CleanupAfter == nil {
+				t.Fatal("CleanupAfter should not be nil")
+			}
+			if !record.CleanupAfter.Equal(tt.wantCleanupAt) {
+				t.Errorf("CleanupAfter = %v, want %v", *record.CleanupAfter, tt.wantCleanupAt)
+			}
+		})
+	}
+}
+
+func TestRecord_MarkAbandoned(t *testing.T) {
+	t.Parallel()
+
+	created := time.Date(2025, 1, 27, 10, 0, 0, 0, time.UTC)
+
+	record := Record{
+		ID:        "WT-01JX123456789",
+		EntityID:  "FEAT-01JX987654321",
+		Branch:    "feature/test",
+		Path:      ".worktrees/test",
+		Status:    StatusActive,
+		Created:   created,
+		CreatedBy: "test-user",
+	}
+
+	record.MarkAbandoned()
+
+	if record.Status != StatusAbandoned {
+		t.Errorf("Status = %v, want %v", record.Status, StatusAbandoned)
+	}
+	if record.MergedAt != nil {
+		t.Errorf("MergedAt should be nil for abandoned worktree, got %v", *record.MergedAt)
+	}
+	if record.CleanupAfter != nil {
+		t.Errorf("CleanupAfter should be nil for abandoned worktree, got %v", *record.CleanupAfter)
+	}
+}
+
+func TestRecord_MarkAbandoned_ClearsPreviousMergeInfo(t *testing.T) {
+	t.Parallel()
+
+	created := time.Date(2025, 1, 27, 10, 0, 0, 0, time.UTC)
+	mergedAt := time.Date(2025, 1, 28, 15, 30, 0, 0, time.UTC)
+	cleanupAfter := time.Date(2025, 2, 4, 15, 30, 0, 0, time.UTC)
+
+	record := Record{
+		ID:           "WT-01JX123456789",
+		EntityID:     "FEAT-01JX987654321",
+		Branch:       "feature/test",
+		Path:         ".worktrees/test",
+		Status:       StatusMerged,
+		Created:      created,
+		CreatedBy:    "test-user",
+		MergedAt:     &mergedAt,
+		CleanupAfter: &cleanupAfter,
+	}
+
+	record.MarkAbandoned()
+
+	if record.Status != StatusAbandoned {
+		t.Errorf("Status = %v, want %v", record.Status, StatusAbandoned)
+	}
+	if record.MergedAt != nil {
+		t.Error("MergedAt should be cleared when marking as abandoned")
+	}
+	if record.CleanupAfter != nil {
+		t.Error("CleanupAfter should be cleared when marking as abandoned")
+	}
+}

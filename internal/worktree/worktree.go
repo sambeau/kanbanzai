@@ -76,3 +76,22 @@ func FieldOrder() []string {
 		"cleanup_after",
 	}
 }
+
+// MarkMerged transitions a worktree to merged status and schedules cleanup.
+// The gracePeriodDays parameter specifies how many days after merge to wait
+// before the worktree is eligible for cleanup.
+func (r *Record) MarkMerged(mergedAt time.Time, gracePeriodDays int) {
+	r.Status = StatusMerged
+	r.MergedAt = &mergedAt
+	cleanupAfter := mergedAt.AddDate(0, 0, gracePeriodDays)
+	r.CleanupAfter = &cleanupAfter
+}
+
+// MarkAbandoned transitions a worktree to abandoned status.
+// Abandoned worktrees have no grace period and can be cleaned up immediately.
+func (r *Record) MarkAbandoned() {
+	r.Status = StatusAbandoned
+	// No grace period for abandoned worktrees - eligible for immediate cleanup
+	r.MergedAt = nil
+	r.CleanupAfter = nil
+}

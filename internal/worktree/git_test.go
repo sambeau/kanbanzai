@@ -424,6 +424,82 @@ func TestGit_DeleteBranch_Force(t *testing.T) {
 	}
 }
 
+func TestGit_DeleteRemoteBranch(t *testing.T) {
+	skipIfNoGit(t)
+	t.Parallel()
+
+	// Create main repo
+	repoDir := setupGitRepo(t)
+	git := NewGit(repoDir)
+
+	// Create a bare repo to act as "origin"
+	bareDir := t.TempDir()
+	if err := runGit(bareDir, "init", "--bare"); err != nil {
+		t.Fatalf("git init --bare error = %v", err)
+	}
+
+	// Add the bare repo as origin
+	if err := runGit(repoDir, "remote", "add", "origin", bareDir); err != nil {
+		t.Fatalf("git remote add origin error = %v", err)
+	}
+
+	// Create a branch and push it
+	if err := git.CreateBranch("remote-test-branch", ""); err != nil {
+		t.Fatalf("CreateBranch() error = %v", err)
+	}
+	if err := runGit(repoDir, "push", "origin", "remote-test-branch"); err != nil {
+		t.Fatalf("git push error = %v", err)
+	}
+
+	// Verify branch exists on remote
+	output, err := exec.Command("git", "-C", bareDir, "branch").Output()
+	if err != nil {
+		t.Fatalf("git branch in bare repo error = %v", err)
+	}
+	if !strings.Contains(string(output), "remote-test-branch") {
+		t.Fatal("branch not pushed to remote")
+	}
+
+	// Delete the remote branch
+	if err := git.DeleteRemoteBranch("origin", "remote-test-branch"); err != nil {
+		t.Fatalf("DeleteRemoteBranch() error = %v", err)
+	}
+
+	// Verify branch is gone from remote
+	output, err = exec.Command("git", "-C", bareDir, "branch").Output()
+	if err != nil {
+		t.Fatalf("git branch in bare repo error = %v", err)
+	}
+	if strings.Contains(string(output), "remote-test-branch") {
+		t.Error("DeleteRemoteBranch() did not delete the branch from remote")
+	}
+}
+
+func TestGit_DeleteRemoteBranch_NonExistent(t *testing.T) {
+	skipIfNoGit(t)
+	t.Parallel()
+
+	repoDir := setupGitRepo(t)
+	git := NewGit(repoDir)
+
+	// Create a bare repo to act as "origin"
+	bareDir := t.TempDir()
+	if err := runGit(bareDir, "init", "--bare"); err != nil {
+		t.Fatalf("git init --bare error = %v", err)
+	}
+
+	// Add the bare repo as origin
+	if err := runGit(repoDir, "remote", "add", "origin", bareDir); err != nil {
+		t.Fatalf("git remote add origin error = %v", err)
+	}
+
+	// Try to delete non-existent remote branch - should fail
+	err := git.DeleteRemoteBranch("origin", "nonexistent-branch")
+	if err == nil {
+		t.Error("DeleteRemoteBranch() for non-existent branch should fail")
+	}
+}
+
 func TestGit_CurrentBranch(t *testing.T) {
 	skipIfNoGit(t)
 	t.Parallel()

@@ -106,6 +106,14 @@ func (g *Git) DeleteBranch(branch string, force bool) error {
 	return nil
 }
 
+// DeleteRemoteBranch deletes a branch from the specified remote.
+func (g *Git) DeleteRemoteBranch(remote, branch string) error {
+	if err := g.run("push", remote, "--delete", branch); err != nil {
+		return fmt.Errorf("git push %s --delete %s: %w", remote, branch, err)
+	}
+	return nil
+}
+
 // CurrentBranch returns the name of the currently checked out branch.
 func (g *Git) CurrentBranch() (string, error) {
 	output, err := g.output("rev-parse", "--abbrev-ref", "HEAD")
