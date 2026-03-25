@@ -466,8 +466,10 @@ func toString(v any) string {
 	if v == nil {
 		return ""
 	}
-	s, _ := v.(string)
-	return s
+	if s, ok := v.(string); ok {
+		return s
+	}
+	return fmt.Sprint(v)
 }
 
 // toStringSlice extracts a []string from an any value, returning nil if not convertible.
