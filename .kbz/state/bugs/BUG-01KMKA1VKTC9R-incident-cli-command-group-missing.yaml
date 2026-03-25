@@ -1,0 +1,12 @@
+id: BUG-01KMKA1VKTC9R
+slug: incident-cli-command-group-missing
+title: kbz incident CLI command group entirely absent
+status: reported
+severity: high
+priority: high
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-03-25T20:12:54Z"
+observed: "Running 'kbz incident ...' returns 'unknown command'; no incident create/list/show commands exist"
+expected: "kbz incident create, kbz incident list, kbz incident show commands as specified in §11.6 and §14"
+origin_feature: FEAT-01KMKA278DFNV

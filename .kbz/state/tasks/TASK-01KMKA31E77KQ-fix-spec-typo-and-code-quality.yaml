@@ -1,0 +1,5 @@
+id: TASK-01KMKA31E77KQ
+parent_feature: FEAT-01KMKA278DFNV
+slug: fix-spec-typo-and-code-quality
+summary: "Fix §8.2 spec typo (needs-rework → needs-review); refactor incidentUpdateTool/incidentLinkBugTool to use jsonResult(); replace direct Params.Arguments access in conflict_tools.go with GetArguments() (fixes R4B-9, R4B-10, R4B-11)"
+status: ready

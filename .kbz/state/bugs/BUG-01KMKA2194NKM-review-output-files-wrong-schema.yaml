@@ -1,0 +1,12 @@
+id: BUG-01KMKA2194NKM
+slug: review-output-files-wrong-schema
+title: review_task_output declares output_files as WithObject instead of WithArray
+status: reported
+severity: medium
+priority: medium
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-03-25T20:13:00Z"
+observed: MCP tool schema for output_files is object type; should be array of strings
+expected: mcp.WithArray for output_files parameter in review_task_output tool declaration
+origin_feature: FEAT-01KMKA278DFNV

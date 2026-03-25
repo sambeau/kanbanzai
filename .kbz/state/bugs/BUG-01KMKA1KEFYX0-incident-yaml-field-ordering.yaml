@@ -1,0 +1,12 @@
+id: BUG-01KMKA1KEFYX0
+slug: incident-yaml-field-ordering
+title: Incident YAML field ordering non-deterministic in storage
+status: reported
+severity: high
+priority: high
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-03-25T20:12:45Z"
+observed: Incident YAML files are written with fields in alphabetical order
+expected: "Fields written in canonical order per spec §11.2: id, slug, title, status, severity, reported_by, detected_at, triaged_at, mitigated_at, resolved_at, affected_features, linked_bugs, linked_rca, summary, created, created_by, updated"
+origin_feature: FEAT-01KMKA278DFNV
