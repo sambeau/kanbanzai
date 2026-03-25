@@ -580,6 +580,10 @@ Phase 4a is complete when:
 | # | Gap | Location | Fix |
 |---|-----|----------|-----|
 | PL-1 | `update status --type plan` fails — `parseRecordIdentity` has no `plan` case, so the generic `UpdateStatus` path cannot resolve Plan filenames (`{id}.yaml`, no slug suffix) | `internal/service/entities.go` `parseRecordIdentity` | Add a `plan` case that calls `model.ParsePlanID` to extract the slug, matching how `entityFileName` writes Plan files |
+| PL-2 | All Phase 4a CLI commands unimplemented — `kbz estimate set/show/reference`, `kbz queue`, `kbz task deps`, `kbz dispatch`, `kbz task complete`, `kbz checkpoint list/show/respond` (spec §13.1–13.4) | `cmd/kanbanzai/main.go` | Implement each command group following existing CLI patterns; MCP tools are complete and provide the underlying service calls |
+| PL-3 | No MCP-level integration tests for any Phase 4a tool — `dispatch_tools.go`, `estimation_tools.go`, and `queue_tools.go` have zero test functions; `TestServer_ListTools` in `server_test.go` does not include Phase 4a tool names in its expected list | `internal/mcp/` | Add integration tests for the happy path and key error paths of each Phase 4a tool; update `TestServer_ListTools` expected tool list to include all Phase 4a tool names |
+| PL-4 | No `phase-4a-progress.md` tracking document; all 44 spec §15 acceptance criteria remain unchecked | `work/plan/` | Create `phase-4a-progress.md` modelled on `phase-3-progress.md`; tick criteria against the existing implementation |
+| PL-5 | `AGENTS.md` not updated to reflect Phase 4a status — still reads "Phase 3 is complete" with no mention of Phase 4a | `AGENTS.md` | Update Phase Status section once PL-2–PL-4 are resolved and the §17.7 validation workload is complete |
 
 ### 10.3 Potential Phase 4a.1 scope (defer if needed)
 
