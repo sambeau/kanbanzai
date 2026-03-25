@@ -10,7 +10,6 @@ import (
 	"kanbanzai/internal/config"
 	kbzctx "kanbanzai/internal/context"
 	"kanbanzai/internal/core"
-	"kanbanzai/internal/document"
 	"kanbanzai/internal/git"
 	"kanbanzai/internal/service"
 	"kanbanzai/internal/validate"
@@ -22,13 +21,11 @@ const (
 	ServerVersion = "phase-3-dev"
 )
 
-// NewServer creates a new MCP server with all Phase 1, Phase 2a, and Phase 2b tools registered.
+// NewServer creates a new MCP server with all tools registered.
 // The entityRoot is the root path for entity storage (typically ".kbz/state").
-// The docsRoot is the root path for document storage (typically ".kbz/docs").
 // Pass empty strings to use the default paths.
-func NewServer(entityRoot, docsRoot string) *server.MCPServer {
+func NewServer(entityRoot string) *server.MCPServer {
 	entitySvc := service.NewEntityService(entityRoot)
-	docSvc := document.NewDocService(docsRoot)
 
 	// Create document record service for Phase 2a document management
 	stateRoot := entityRoot
@@ -91,9 +88,6 @@ func NewServer(entityRoot, docsRoot string) *server.MCPServer {
 		Phase3HealthChecker(worktreeStore, knowledgeSvc, cfg, repoRoot),
 		Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
 	)...)
-
-	// Phase 1 document tools (legacy)
-	mcpServer.AddTools(DocumentTools(docSvc)...)
 
 	// Phase 2a Plan tools
 	mcpServer.AddTools(PlanTools(entitySvc)...)
@@ -160,7 +154,7 @@ func NewServer(entityRoot, docsRoot string) *server.MCPServer {
 
 // Serve starts the MCP server on stdio transport.
 func Serve() error {
-	mcpServer := NewServer("", "")
+	mcpServer := NewServer("")
 	return server.ServeStdio(mcpServer)
 }
 

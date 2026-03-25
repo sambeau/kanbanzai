@@ -12,34 +12,30 @@ import (
 
 	chk "kanbanzai/internal/checkpoint"
 	kbzctx "kanbanzai/internal/context"
-	"kanbanzai/internal/document"
 	kbzmcp "kanbanzai/internal/mcp"
 	"kanbanzai/internal/service"
 )
 
 type testEnv struct {
 	server *mcptest.Server
-	docSvc *document.DocService
 }
 
 func setupTestServer(t *testing.T) *testEnv {
 	t.Helper()
 	entityRoot := t.TempDir()
-	docsRoot := t.TempDir()
 	stateRoot := t.TempDir()
 	profileRoot := t.TempDir()
 	checkpointRoot := t.TempDir()
 	indexRoot := t.TempDir()
 	repoRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
-	docSvc := document.NewDocService(docsRoot)
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 	checkpointStore := chk.NewStore(checkpointRoot)
 	profileStore := kbzctx.NewProfileStore(profileRoot)
 	intelligenceSvc := service.NewIntelligenceService(indexRoot, repoRoot)
 
-	tools := append(kbzmcp.EntityTools(entitySvc), kbzmcp.DocumentTools(docSvc)...)
+	tools := kbzmcp.EntityTools(entitySvc)
 	tools = append(tools, kbzmcp.EstimationTools(entitySvc, knowledgeSvc)...)
 	tools = append(tools, kbzmcp.QueueTools(entitySvc)...)
 	tools = append(tools, kbzmcp.DispatchTools(dispatchSvc, checkpointStore, profileStore, knowledgeSvc, entitySvc, intelligenceSvc)...)
@@ -47,7 +43,7 @@ func setupTestServer(t *testing.T) *testEnv {
 	if err != nil {
 		t.Fatalf("start test server: %v", err)
 	}
-	return &testEnv{server: ts, docSvc: docSvc}
+	return &testEnv{server: ts}
 }
 
 func callTool(t *testing.T, ts *testEnv, name string, args map[string]any) *mcp.CallToolResult {
@@ -99,14 +95,6 @@ func TestServer_ListTools(t *testing.T) {
 		"health_check",
 		"rebuild_cache",
 	}
-	expectedDocTools := []string{
-		"scaffold_document",
-		"submit_document",
-		"approve_document",
-		"list_documents",
-		"validate_document",
-	}
-
 	expectedPhase4aTools := []string{
 		"estimate_set",
 		"estimate_query",
@@ -122,8 +110,7 @@ func TestServer_ListTools(t *testing.T) {
 		"human_checkpoint_list",
 	}
 
-	expectedAll := append(expectedEntityTools, expectedDocTools...)
-	expectedAll = append(expectedAll, expectedPhase4aTools...)
+	expectedAll := append(expectedEntityTools, expectedPhase4aTools...)
 	sort.Strings(expectedAll)
 
 	var gotNames []string
@@ -350,126 +337,6 @@ func TestServer_HealthCheck(t *testing.T) {
 	}
 }
 
-func TestServer_DocumentLifecycle(t *testing.T) {
-	env := setupTestServer(t)
-	defer env.server.Close()
-
-	// Step 1: Scaffold
-	scaffoldResult := callTool(t, env, "scaffold_document", map[string]any{
-		"doc_type": "proposal",
-		"title":    "Lifecycle Test Proposal",
-	})
-
-	if scaffoldResult.IsError {
-		t.Fatalf("scaffold_document returned error: %s", resultText(t, scaffoldResult))
-	}
-
-	scaffoldText := resultText(t, scaffoldResult)
-	if !strings.Contains(scaffoldText, "# Lifecycle Test Proposal") {
-		t.Errorf("scaffold missing title heading, got:\n%s", scaffoldText)
-	}
-
-	// Step 2: Submit
-	body := "# Lifecycle Test Proposal\n\n## Summary\n\nTest summary.\n\n## Problem\n\nTest problem.\n\n## Proposal\n\nTest proposal.\n"
-	submitResult := callTool(t, env, "submit_document", map[string]any{
-		"doc_type":   "proposal",
-		"title":      "Lifecycle Test Proposal",
-		"body":       body,
-		"created_by": "tester",
-	})
-
-	if submitResult.IsError {
-		t.Fatalf("submit_document returned error: %s", resultText(t, submitResult))
-	}
-
-	var submitted map[string]any
-	if err := json.Unmarshal([]byte(resultText(t, submitResult)), &submitted); err != nil {
-		t.Fatalf("failed to parse submit result: %v", err)
-	}
-
-	docID := submitted["ID"].(string)
-
-	// Step 3: Normalise via DocService directly (update_document_body was removed)
-	normBody := "# Lifecycle Test Proposal\n\n## Summary\n\nNormalised summary.\n\n## Problem\n\nNormalised problem.\n\n## Proposal\n\nNormalised proposal.\n"
-	_, err := env.docSvc.UpdateBody(document.DocTypeProposal, docID, normBody)
-	if err != nil {
-		t.Fatalf("UpdateBody (normalise) error: %v", err)
-	}
-
-	// Step 4: Approve
-	approveResult := callTool(t, env, "approve_document", map[string]any{
-		"doc_type":    "proposal",
-		"id":          docID,
-		"approved_by": "reviewer",
-	})
-
-	if approveResult.IsError {
-		t.Fatalf("approve_document returned error: %s", resultText(t, approveResult))
-	}
-
-	var approved map[string]any
-	if err := json.Unmarshal([]byte(resultText(t, approveResult)), &approved); err != nil {
-		t.Fatalf("failed to parse approve result: %v", err)
-	}
-
-	if approved["Status"] != "approved" {
-		t.Errorf("approved status = %v, want %q", approved["Status"], "approved")
-	}
-}
-
-func TestServer_ListDocuments(t *testing.T) {
-	env := setupTestServer(t)
-	defer env.server.Close()
-
-	body := "# List Test\n\n## Summary\n\nTest.\n\n## Problem\n\nTest.\n\n## Proposal\n\nTest.\n"
-	submitResult := callTool(t, env, "submit_document", map[string]any{
-		"doc_type":   "proposal",
-		"title":      "List Test Proposal",
-		"body":       body,
-		"created_by": "tester",
-	})
-
-	if submitResult.IsError {
-		t.Fatalf("submit_document returned error: %s", resultText(t, submitResult))
-	}
-
-	var submitted map[string]any
-	if err := json.Unmarshal([]byte(resultText(t, submitResult)), &submitted); err != nil {
-		t.Fatalf("failed to parse submit result: %v", err)
-	}
-	docID := submitted["ID"].(string)
-
-	listResult := callTool(t, env, "list_documents", map[string]any{})
-
-	if listResult.IsError {
-		t.Fatalf("list_documents returned error: %s", resultText(t, listResult))
-	}
-
-	text := resultText(t, listResult)
-	var docs []map[string]any
-	if err := json.Unmarshal([]byte(text), &docs); err != nil {
-		t.Fatalf("failed to parse list result: %v\nraw: %s", err, text)
-	}
-
-	if len(docs) == 0 {
-		t.Fatal("list_documents returned no documents")
-	}
-
-	found := false
-	for _, doc := range docs {
-		if doc["ID"] == docID {
-			found = true
-			if doc["Title"] != "List Test Proposal" {
-				t.Errorf("document title = %v, want %q", doc["Title"], "List Test Proposal")
-			}
-			break
-		}
-	}
-	if !found {
-		t.Errorf("submitted document %s not found in list results", docID)
-	}
-}
-
 func TestServer_GetEntityWithoutSlug(t *testing.T) {
 	env := setupTestServer(t)
 	defer env.server.Close()
@@ -537,35 +404,5 @@ func TestServer_GetEntityWithoutSlug(t *testing.T) {
 	}
 	if _, ok := gotPrefix["DisplayID"].(string); !ok {
 		t.Errorf("prefix get result missing DisplayID field")
-	}
-}
-
-func TestServer_ScaffoldDocument(t *testing.T) {
-	env := setupTestServer(t)
-	defer env.server.Close()
-
-	result := callTool(t, env, "scaffold_document", map[string]any{
-		"doc_type": "proposal",
-		"title":    "My Test Proposal",
-	})
-
-	if result.IsError {
-		t.Fatalf("scaffold_document returned error: %s", resultText(t, result))
-	}
-
-	text := resultText(t, result)
-
-	// Proposal template requires: Summary, Problem, Proposal
-	requiredSections := []string{
-		"# My Test Proposal",
-		"## Summary",
-		"## Problem",
-		"## Proposal",
-	}
-
-	for _, section := range requiredSections {
-		if !strings.Contains(text, section) {
-			t.Errorf("scaffold missing required section %q\ngot:\n%s", section, text)
-		}
 	}
 }
