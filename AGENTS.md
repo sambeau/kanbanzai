@@ -31,9 +31,9 @@ Examples:
 
 ## Project Status
 
-**Phase 1 is complete. Phase 2a is complete. Phase 2b is complete. Phase 3 is complete. Phase 4a is complete.** The repository contains design documents, specifications, planning documents, research, and working implementation code. All Phase 2a acceptance criteria are met, all audit bugs (B1–B8) are fixed, and all tests pass with race detector enabled. All Phase 2b acceptance criteria are met. All Phase 3 acceptance criteria (§20.1–§20.12) are met, all audit remediation items (R1–R17) are resolved, automatic worktree creation on task/bug transition is implemented, and all tests pass with race detector enabled. All Phase 4a acceptance criteria are met: estimation tools, work queue, dispatch/complete task, human checkpoints, and orchestration health dashboard are implemented, and all tests pass with race detector enabled.
+**Phase 1 is complete. Phase 2a is complete. Phase 2b is complete. Phase 3 is complete. Phase 4a is complete. Phase 4b is complete.** The repository contains design documents, specifications, planning documents, research, and working implementation code. All Phase 2a acceptance criteria are met, all audit bugs (B1–B8) are fixed, and all tests pass with race detector enabled. All Phase 2b acceptance criteria are met. All Phase 3 acceptance criteria (§20.1–§20.12) are met, all audit remediation items (R1–R17) are resolved, automatic worktree creation on task/bug transition is implemented, and all tests pass with race detector enabled. All Phase 4a acceptance criteria are met: estimation tools, work queue, dispatch/complete task, human checkpoints, and orchestration health dashboard are implemented, and all tests pass with race detector enabled. All Phase 4b acceptance criteria (§16.1–§16.7) are met: feature decomposition and review, automatic dependency unblocking, worker review with rework lifecycle, conflict domain analysis with work queue integration, vertical slice guidance, incidents and RCA, and Phase 1 document store removal are implemented, and all tests pass with race detector enabled.
 
-The binding contracts for implementation are `work/spec/phase-1-specification.md` (Phase 1), `work/spec/phase-2-specification.md` (Phase 2), `work/spec/phase-2b-specification.md` (Phase 2b), `work/spec/phase-3-specification.md` (Phase 3), and `work/spec/phase-4a-specification.md` (Phase 4a). The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
+The binding contracts for implementation are `work/spec/phase-1-specification.md` (Phase 1), `work/spec/phase-2-specification.md` (Phase 2), `work/spec/phase-2b-specification.md` (Phase 2b), `work/spec/phase-3-specification.md` (Phase 3), `work/spec/phase-4a-specification.md` (Phase 4a), and `work/spec/phase-4b-specification.md` (Phase 4b). The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
 
 Current Phase 2a status is tracked in `work/plan/phase-2a-progress.md`. Phase 2b status is tracked in `work/plan/phase-2b-progress.md`. Phase 3 status is tracked in `work/plan/phase-3-progress.md`.
 
@@ -157,6 +157,8 @@ Then refer to these as needed:
 | Phase 2 decisions | `work/plan/phase-2-decision-log.md` | both |
 | Phase 3 spec and status | `work/spec/phase-3-specification.md`, `work/plan/phase-3-progress.md` | kbz |
 | Phase 4a specification | `work/spec/phase-4a-specification.md` | kbz |
+| Phase 4b specification | `work/spec/phase-4b-specification.md` | kbz |
+| Phase 4b implementation plan | `work/plan/phase-4b-implementation-plan.md` | kbz |
 | Phase 4 decisions | `work/plan/phase-4-decision-log.md` | both |
 
 ## Communicating With Humans
@@ -250,7 +252,7 @@ Do not let document changes accumulate uncommitted across long sessions.
 
 ## Scope Guard
 
-Phase 1 (workflow kernel), Phase 2a (entity model evolution, document intelligence, migration), Phase 2b (context profiles, knowledge management, user identity), Phase 3 (Git integration, knowledge lifecycle), and Phase 4a (estimation, work queue, dispatch, human checkpoints, orchestration health) are complete. Current work should focus on Phase 4b planning and implementation as directed by the human.
+Phase 1 (workflow kernel), Phase 2a (entity model evolution, document intelligence, migration), Phase 2b (context profiles, knowledge management, user identity), Phase 3 (Git integration, knowledge lifecycle), Phase 4a (estimation, work queue, dispatch, human checkpoints, orchestration health), and Phase 4b (feature decomposition, automatic unblocking, worker review, conflict analysis, vertical slice guidance, incidents/RCA, document store removal) are complete. Current work should focus on Phase 5 planning and implementation as directed by the human.
 
 Do not build beyond the current phase without explicit direction:
 
