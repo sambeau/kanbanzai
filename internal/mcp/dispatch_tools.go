@@ -217,6 +217,20 @@ func completeTaskTool(svc *service.DispatchService) server.ServerTool {
 			rejected[i] = rejectedEntry{Topic: r.Topic, Reason: r.Reason}
 		}
 
+		type unblockedEntry struct {
+			TaskID string `json:"task_id"`
+			Slug   string `json:"slug"`
+			Status string `json:"status"`
+		}
+		unblockedTasks := make([]unblockedEntry, 0, len(result.UnblockedTasks))
+		for _, u := range result.UnblockedTasks {
+			unblockedTasks = append(unblockedTasks, unblockedEntry{
+				TaskID: u.TaskID,
+				Slug:   u.Slug,
+				Status: u.Status,
+			})
+		}
+
 		resp := map[string]any{
 			"task": result.Task,
 			"knowledge_contributions": map[string]any{
@@ -225,6 +239,7 @@ func completeTaskTool(svc *service.DispatchService) server.ServerTool {
 				"total_attempted": result.KnowledgeContributions.TotalAttempted,
 				"total_accepted":  result.KnowledgeContributions.TotalAccepted,
 			},
+			"unblocked_tasks": unblockedTasks,
 		}
 		if blockersEncountered != "" {
 			resp["blockers_noted"] = blockersEncountered

@@ -10,6 +10,14 @@ import (
 	"kanbanzai/internal/worktree"
 )
 
+// UnblockedTask records a task that was automatically promoted to ready
+// because all of its dependencies reached a terminal state.
+type UnblockedTask struct {
+	TaskID string
+	Slug   string
+	Status string // always "ready"
+}
+
 // WorktreeResult holds the outcome of an automatic worktree creation attempt
 // triggered by a status transition. It is informational — worktree creation
 // failures never block the transition itself.
@@ -28,6 +36,9 @@ type WorktreeResult struct {
 	Warning string
 	// AlreadyExists is true when a worktree already existed for the entity.
 	AlreadyExists bool
+	// UnblockedTasks lists tasks that were promoted to ready because the
+	// completed task was their last unsatisfied dependency.
+	UnblockedTasks []UnblockedTask
 }
 
 // StatusTransitionHook is called by EntityService after a successful status
@@ -40,6 +51,52 @@ type StatusTransitionHook interface {
 	// previous status, the new status, and the full entity state.
 	// The returned WorktreeResult is informational and may be nil.
 	OnStatusTransition(entityType, entityID, slug, fromStatus, toStatus string, state map[string]any) *WorktreeResult
+}
+
+// CompositeTransitionHook chains multiple StatusTransitionHook implementations,
+// merging their results into a single WorktreeResult.
+type CompositeTransitionHook struct {
+	hooks []StatusTransitionHook
+}
+
+// NewCompositeTransitionHook creates a hook that delegates to all provided
+// hooks in order and merges their results.
+func NewCompositeTransitionHook(hooks ...StatusTransitionHook) *CompositeTransitionHook {
+	return &CompositeTransitionHook{hooks: hooks}
+}
+
+// OnStatusTransition delegates to each hook in order and merges results.
+func (c *CompositeTransitionHook) OnStatusTransition(entityType, entityID, slug, fromStatus, toStatus string, state map[string]any) *WorktreeResult {
+	var result *WorktreeResult
+	for _, h := range c.hooks {
+		r := h.OnStatusTransition(entityType, entityID, slug, fromStatus, toStatus, state)
+		if r == nil {
+			continue
+		}
+		if result == nil {
+			result = r
+			continue
+		}
+		// Merge: worktree fields from the first hook that sets them
+		if r.Created && !result.Created {
+			result.Created = true
+			result.WorktreeID = r.WorktreeID
+			result.EntityID = r.EntityID
+			result.Branch = r.Branch
+			result.Path = r.Path
+		}
+		if r.AlreadyExists && !result.AlreadyExists {
+			result.AlreadyExists = true
+			if result.WorktreeID == "" {
+				result.WorktreeID = r.WorktreeID
+			}
+		}
+		if r.Warning != "" && result.Warning == "" {
+			result.Warning = r.Warning
+		}
+		result.UnblockedTasks = append(result.UnblockedTasks, r.UnblockedTasks...)
+	}
+	return result
 }
 
 // WorktreeTransitionHook implements StatusTransitionHook to automatically

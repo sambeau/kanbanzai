@@ -70,8 +70,12 @@ func NewServer(entityRoot string) *server.MCPServer {
 	cfg := config.LoadOrDefault()
 
 	// Phase 3: automatic worktree creation on task→active / bug→in-progress
+	// Phase 4b: automatic dependency unblocking on task→done/not-planned/duplicate
 	entitySvc.SetStatusTransitionHook(
-		service.NewWorktreeTransitionHook(worktreeStore, gitOps, entitySvc),
+		service.NewCompositeTransitionHook(
+			service.NewWorktreeTransitionHook(worktreeStore, gitOps, entitySvc),
+			service.NewDependencyUnblockingHook(entitySvc),
+		),
 	)
 
 	// Phase 3: load local config for GitHub token (best-effort)

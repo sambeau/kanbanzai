@@ -59,6 +59,7 @@ type KnowledgeContributionResult struct {
 type CompleteResult struct {
 	Task                   map[string]any
 	KnowledgeContributions KnowledgeContributionResult
+	UnblockedTasks         []UnblockedTask
 }
 
 // DispatchService handles dispatch and completion operations.
@@ -209,7 +210,8 @@ func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, err
 	}
 
 	// Transition: active → done (directly) or active → needs-review.
-	_, err = s.entitySvc.UpdateStatus(UpdateStatusInput{
+	var unblockedTasks []UnblockedTask
+	updateResult, err := s.entitySvc.UpdateStatus(UpdateStatusInput{
 		Type:   "task",
 		ID:     task.ID,
 		Slug:   task.Slug,
@@ -217,6 +219,9 @@ func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, err
 	})
 	if err != nil {
 		return CompleteResult{}, fmt.Errorf("transition task to %s: %w", toStatus, err)
+	}
+	if updateResult.WorktreeHookResult != nil {
+		unblockedTasks = updateResult.WorktreeHookResult.UnblockedTasks
 	}
 
 	// Set completion metadata fields via store directly.
@@ -281,5 +286,6 @@ func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, err
 	return CompleteResult{
 		Task:                   finalTask.State,
 		KnowledgeContributions: kResult,
+		UnblockedTasks:         unblockedTasks,
 	}, nil
 }

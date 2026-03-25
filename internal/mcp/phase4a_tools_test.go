@@ -40,6 +40,8 @@ func setupPhase4aTestServer(t *testing.T) *phase4aEnv {
 	repoRoot := t.TempDir()
 
 	entitySvc := service.NewEntityService(entityRoot)
+	// Phase 4b: wire dependency unblocking hook so complete_task triggers auto-unblocking
+	entitySvc.SetStatusTransitionHook(service.NewDependencyUnblockingHook(entitySvc))
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 	checkpointStore := chk.NewStore(checkpointRoot)
@@ -716,5 +718,144 @@ func TestPhase4a_Checkpoint_Lifecycle(t *testing.T) {
 	pendingCount, _ := listParsed["pending_count"].(float64)
 	if pendingCount != 0 {
 		t.Errorf("pending_count = %v, want 0", pendingCount)
+	}
+}
+
+func TestPhase4a_CompleteTask_UnblockedTasks(t *testing.T) {
+	t.Parallel()
+	env := setupPhase4aTestServer(t)
+	defer env.server.Close()
+
+	writeTestProfile(t, env.profileRoot, "test-role")
+	writeTestPlanFile(t, env.entityRoot, "P1-unblock")
+	featureID := createFeatureViaP4(t, env, "P1-unblock", "unblock-feat", "Unblock feature")
+
+	// Create task A (no deps) and task B (depends on A)
+	taskAID, _ := createTaskViaP4(t, env, featureID, "task-a", "Task A")
+	taskBID, taskBSlug := createTaskViaP4(t, env, featureID, "task-b", "Task B")
+
+	// Set B depends on A
+	setDependsOn(t, env.entityRoot, taskBID, taskBSlug, []string{taskAID})
+
+	// Promote tasks via work_queue (only A should promote since B has unsatisfied dep)
+	queueResult := callP4Tool(t, env, "work_queue", map[string]any{})
+	if queueResult.IsError {
+		t.Fatalf("work_queue returned error: %s", resultP4Text(t, queueResult))
+	}
+
+	// Dispatch task A
+	dispatchResult := callP4Tool(t, env, "dispatch_task", map[string]any{
+		"task_id":       taskAID,
+		"role":          "test-role",
+		"dispatched_by": "test-agent",
+	})
+	if dispatchResult.IsError {
+		t.Fatalf("dispatch_task returned error: %s", resultP4Text(t, dispatchResult))
+	}
+
+	// Complete task A → should unblock B
+	completeResult := callP4Tool(t, env, "complete_task", map[string]any{
+		"task_id": taskAID,
+		"summary": "completed task A",
+	})
+	if completeResult.IsError {
+		t.Fatalf("complete_task returned error: %s", resultP4Text(t, completeResult))
+	}
+
+	completeText := resultP4Text(t, completeResult)
+	var completeParsed map[string]any
+	if err := json.Unmarshal([]byte(completeText), &completeParsed); err != nil {
+		t.Fatalf("parse complete_task result: %v\nraw: %s", err, completeText)
+	}
+
+	// Verify unblocked_tasks is present in response
+	unblockedRaw, ok := completeParsed["unblocked_tasks"]
+	if !ok {
+		t.Fatal("complete_task response missing 'unblocked_tasks' field")
+	}
+	unblocked, ok := unblockedRaw.([]any)
+	if !ok {
+		t.Fatalf("unblocked_tasks is not an array: %T", unblockedRaw)
+	}
+	if len(unblocked) != 1 {
+		t.Fatalf("expected 1 unblocked task, got %d", len(unblocked))
+	}
+
+	ut, ok := unblocked[0].(map[string]any)
+	if !ok {
+		t.Fatalf("unblocked task entry is not an object: %T", unblocked[0])
+	}
+	if ut["task_id"] != taskBID {
+		t.Errorf("unblocked task_id = %v, want %q", ut["task_id"], taskBID)
+	}
+	if ut["status"] != "ready" {
+		t.Errorf("unblocked status = %v, want %q", ut["status"], "ready")
+	}
+
+	// Verify task B is now ready via get_entity
+	getResult := callP4Tool(t, env, "get_entity", map[string]any{
+		"entity_type": "task",
+		"id":          taskBID,
+	})
+	if getResult.IsError {
+		t.Fatalf("get_entity for task B returned error: %s", resultP4Text(t, getResult))
+	}
+	var got map[string]any
+	if err := json.Unmarshal([]byte(resultP4Text(t, getResult)), &got); err != nil {
+		t.Fatalf("parse get_entity result: %v", err)
+	}
+	state, _ := got["State"].(map[string]any)
+	if state["status"] != "ready" {
+		t.Errorf("task B status = %v, want %q", state["status"], "ready")
+	}
+}
+
+func TestPhase4a_CompleteTask_UnblockedTasks_EmptyWhenNoDeps(t *testing.T) {
+	t.Parallel()
+	env := setupPhase4aTestServer(t)
+	defer env.server.Close()
+
+	writeTestProfile(t, env.profileRoot, "test-role")
+	writeTestPlanFile(t, env.entityRoot, "P1-nounblock")
+	featureID := createFeatureViaP4(t, env, "P1-nounblock", "nounblock-feat", "No unblock feature")
+
+	taskAID, _ := createTaskViaP4(t, env, featureID, "task-a", "Task A")
+
+	// Promote and dispatch A
+	callP4Tool(t, env, "work_queue", map[string]any{})
+	dispatchResult := callP4Tool(t, env, "dispatch_task", map[string]any{
+		"task_id":       taskAID,
+		"role":          "test-role",
+		"dispatched_by": "test-agent",
+	})
+	if dispatchResult.IsError {
+		t.Fatalf("dispatch_task returned error: %s", resultP4Text(t, dispatchResult))
+	}
+
+	// Complete A — nothing depends on it
+	completeResult := callP4Tool(t, env, "complete_task", map[string]any{
+		"task_id": taskAID,
+		"summary": "completed",
+	})
+	if completeResult.IsError {
+		t.Fatalf("complete_task returned error: %s", resultP4Text(t, completeResult))
+	}
+
+	var completeParsed map[string]any
+	if err := json.Unmarshal([]byte(resultP4Text(t, completeResult)), &completeParsed); err != nil {
+		t.Fatalf("parse complete_task result: %v", err)
+	}
+
+	// unblocked_tasks should be present as empty array, never omitted
+	unblockedRaw, ok := completeParsed["unblocked_tasks"]
+	if !ok {
+		t.Fatal("complete_task response missing 'unblocked_tasks' field — must always be present")
+	}
+	unblocked, ok := unblockedRaw.([]any)
+	if !ok {
+		t.Fatalf("unblocked_tasks is not an array: %T", unblockedRaw)
+	}
+	if len(unblocked) != 0 {
+		t.Errorf("expected empty unblocked_tasks, got %d items", len(unblocked))
 	}
 }
