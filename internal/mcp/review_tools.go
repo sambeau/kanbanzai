@@ -28,7 +28,7 @@ func reviewTaskOutputTool(svc *service.ReviewService) server.ServerTool {
 			mcp.Description("TASK ID of the completed or active task"),
 			mcp.Required(),
 		),
-		mcp.WithObject("output_files",
+		mcp.WithArray("output_files",
 			mcp.Description("Paths of files produced or modified by this task (array of strings)"),
 		),
 		mcp.WithString("output_summary",

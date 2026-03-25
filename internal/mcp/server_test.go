@@ -337,6 +337,66 @@ func TestServer_HealthCheck(t *testing.T) {
 	}
 }
 
+func TestServer_ListTools_Phase4b(t *testing.T) {
+	entityRoot := t.TempDir()
+	stateRoot := t.TempDir()
+	indexRoot := t.TempDir()
+	repoRoot := t.TempDir()
+
+	entitySvc := service.NewEntityService(entityRoot)
+	docSvc := service.NewDocumentService(stateRoot, repoRoot)
+	intelSvc := service.NewIntelligenceService(indexRoot, repoRoot)
+	decomposeSvc := service.NewDecomposeService(entitySvc, docSvc)
+	reviewSvc := service.NewReviewService(entitySvc, intelSvc, repoRoot)
+	conflictSvc := service.NewConflictService(entitySvc, nil, repoRoot)
+
+	tools := kbzmcp.IncidentTools(entitySvc)
+	tools = append(tools, kbzmcp.DecomposeTools(decomposeSvc)...)
+	tools = append(tools, kbzmcp.ReviewTools(reviewSvc)...)
+	tools = append(tools, kbzmcp.ConflictTools(conflictSvc)...)
+
+	ts, err := mcptest.NewServer(t, tools...)
+	if err != nil {
+		t.Fatalf("start test server: %v", err)
+	}
+	defer ts.Close()
+
+	ctx := context.Background()
+	listResult, err := ts.Client().ListTools(ctx, mcp.ListToolsRequest{})
+	if err != nil {
+		t.Fatalf("ListTools: %v", err)
+	}
+
+	expected := []string{
+		"decompose_feature",
+		"decompose_review",
+		"slice_analysis",
+		"review_task_output",
+		"conflict_domain_check",
+		"incident_create",
+		"incident_update",
+		"incident_list",
+		"incident_link_bug",
+	}
+	sort.Strings(expected)
+
+	var got []string
+	for _, tool := range listResult.Tools {
+		got = append(got, tool.Name)
+	}
+	sort.Strings(got)
+
+	if len(got) != len(expected) {
+		t.Fatalf("expected %d Phase 4b tools, got %d\nexpected: %v\ngot: %v",
+			len(expected), len(got), expected, got)
+	}
+	for i := range expected {
+		if got[i] != expected[i] {
+			t.Errorf("tool[%d]: expected %q, got %q", i, expected[i], got[i])
+		}
+	}
+}
+
 func TestServer_GetEntityWithoutSlug(t *testing.T) {
 	env := setupTestServer(t)
 	defer env.server.Close()

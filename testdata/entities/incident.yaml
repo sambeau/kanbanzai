@@ -1,0 +1,11 @@
+id: INC-01J3KZZZBB4KF
+slug: api-service-crash
+title: API Service Crash
+status: reported
+severity: high
+reported_by: sam
+detected_at: "2026-03-19T12:00:00Z"
+summary: The API service crashed due to an unhandled nil pointer dereference
+created: "2026-03-19T12:00:00Z"
+created_by: sam
+updated: "2026-03-19T12:00:00Z"

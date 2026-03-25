@@ -270,7 +270,7 @@ output_summary       string     optional   Agent's description of what was done
 
 **Behaviour:**
 
-1. Load the task. If status is not `active`, `done`, or `needs-rework`, return an error.
+1. Load the task. If status is not `active`, `done`, or `needs-review`, return an error.
 2. Load the parent feature and resolve its `spec` document reference. If no spec is registered, proceed with task-level checks only (no spec-level checks are performed; a warning is added to findings).
 3. **Task-level check:** Verify that the task's `verification` field criteria are addressed. If `output_files` is provided, check that each file exists on disk. If `output_summary` is provided, check that it addresses the task summary.
 4. **Spec-level check** (if spec available): Use the document intelligence section-tracing pipeline to find spec sections relevant to this task. Check that the `output_summary` and `output_files` plausibly satisfy those sections. This is heuristic — findings are "possible gap" rather than "definite gap".

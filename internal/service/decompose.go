@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+
+	"kanbanzai/internal/config"
 )
 
 // DecomposeInput is the input for DecomposeService.DecomposeFeature.
@@ -129,7 +131,8 @@ func (s *DecomposeService) DecomposeFeature(input DecomposeInput) (DecomposeResu
 	spec := parseSpecStructure(content)
 
 	// 5. Generate proposal by applying embedded guidance.
-	proposal, guidance := generateProposal(spec, featureSlug, input.Context)
+	cfg := config.LoadOrDefault()
+	proposal, guidance := generateProposal(spec, featureSlug, input.Context, cfg.Decomposition.MaxTasksPerFeature)
 
 	// 6. Enrich with detailed slice analysis.
 	proposal.SliceDetails = analyzeSlices(spec, content)
@@ -348,7 +351,7 @@ var guidanceRules = []string{
 
 // generateProposal builds a task proposal from the parsed spec structure,
 // applying the embedded decomposition guidance rules.
-func generateProposal(spec specStructure, featureSlug, context string) (Proposal, []string) {
+func generateProposal(spec specStructure, featureSlug, context string, maxTasksPerFeature int) (Proposal, []string) {
 	var tasks []ProposedTask
 	var warnings []string
 	var appliedGuidance []string
@@ -444,6 +447,13 @@ func generateProposal(spec specStructure, featureSlug, context string) (Proposal
 	}
 	if allEstimated && len(tasks) > 0 {
 		estimatedTotal = &sum
+	}
+
+	if maxTasksPerFeature > 0 && len(tasks) > maxTasksPerFeature {
+		warnings = append(warnings, fmt.Sprintf(
+			"proposal has %d tasks which exceeds decomposition.max_tasks_per_feature limit of %d; consider breaking into smaller features or increasing the limit",
+			len(tasks), maxTasksPerFeature,
+		))
 	}
 
 	return Proposal{

@@ -93,6 +93,13 @@ type KnowledgeConfig struct {
 	Pruning KnowledgePruningConfig `yaml:"pruning"`
 }
 
+// DecompositionConfig holds settings for feature decomposition operations.
+type DecompositionConfig struct {
+	// MaxTasksPerFeature is a soft limit on tasks in a decomposition proposal.
+	// Proposals exceeding this limit generate a warning. Set to 0 to disable.
+	MaxTasksPerFeature int `yaml:"max_tasks_per_feature"`
+}
+
 // IncidentsConfig holds settings for incident management.
 type IncidentsConfig struct {
 	// RCALinkWarnAfterDays is the number of days after resolution before warning
@@ -125,6 +132,8 @@ type Config struct {
 	Dispatch DispatchConfig `yaml:"dispatch,omitempty"`
 	// Incidents holds settings for incident management.
 	Incidents IncidentsConfig `yaml:"incidents,omitempty"`
+	// Decomposition holds settings for feature decomposition operations.
+	Decomposition DecompositionConfig `yaml:"decomposition,omitempty"`
 }
 
 // DefaultConfig returns a new Config with sensible defaults.
@@ -143,6 +152,14 @@ func DefaultConfig() Config {
 		Knowledge:      DefaultKnowledgeConfig(),
 		Dispatch:       DefaultDispatchConfig(),
 		Incidents:      DefaultIncidentsConfig(),
+		Decomposition:  DefaultDecompositionConfig(),
+	}
+}
+
+// DefaultDecompositionConfig returns default decomposition settings.
+func DefaultDecompositionConfig() DecompositionConfig {
+	return DecompositionConfig{
+		MaxTasksPerFeature: 20,
 	}
 }
 
@@ -345,6 +362,10 @@ func (c *Config) Validate() error {
 		return errors.New("incidents.rca_link_warn_after_days must be non-negative")
 	}
 
+	if c.Decomposition.MaxTasksPerFeature < 0 {
+		return errors.New("decomposition.max_tasks_per_feature must be non-negative")
+	}
+
 	return nil
 }
 
@@ -500,6 +521,10 @@ func (c *Config) mergePhase4bDefaults() {
 	incidentsDefaults := DefaultIncidentsConfig()
 	if c.Incidents.RCALinkWarnAfterDays == 0 {
 		c.Incidents.RCALinkWarnAfterDays = incidentsDefaults.RCALinkWarnAfterDays
+	}
+	decompDefaults := DefaultDecompositionConfig()
+	if c.Decomposition.MaxTasksPerFeature == 0 {
+		c.Decomposition.MaxTasksPerFeature = decompDefaults.MaxTasksPerFeature
 	}
 }
 

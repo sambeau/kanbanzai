@@ -274,6 +274,7 @@ func TestCanonicalYAML_FixturesRoundTrip(t *testing.T) {
 		{name: "task", path: filepath.Join("..", "..", "testdata", "entities", "task.yaml"), entityType: "task"},
 		{name: "bug", path: filepath.Join("..", "..", "testdata", "entities", "bug.yaml"), entityType: "bug"},
 		{name: "decision", path: filepath.Join("..", "..", "testdata", "entities", "decision.yaml"), entityType: "decision"},
+		{name: "incident", path: filepath.Join("..", "..", "testdata", "entities", "incident.yaml"), entityType: "incident"},
 	}
 
 	for _, tt := range tests {

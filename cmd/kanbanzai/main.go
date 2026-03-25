@@ -85,7 +85,7 @@ func run(args []string, deps dependencies) error {
 		printUsage(deps.stdout)
 		return nil
 	case "version", "--version":
-		fmt.Fprintln(deps.stdout, "kanbanzai phase-3-dev")
+		fmt.Fprintln(deps.stdout, "kanbanzai phase-4b")
 		return nil
 	case "serve":
 		return kbzmcp.Serve()
@@ -128,6 +128,8 @@ func run(args []string, deps dependencies) error {
 		return runTask(args[1:], deps)
 	case "queue":
 		return runQueue(args[1:], deps)
+	case "incident":
+		return runIncident(args[1:], deps)
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
 	}
@@ -604,7 +606,7 @@ func printUsage(w io.Writer) {
 
 const usageText = `kanbanzai
 
-Phase 3 workflow kernel CLI.
+Phase 4b workflow kernel CLI.
 
 Usage:
   kanbanzai <command>
@@ -631,9 +633,12 @@ Commands:
   pr         Manage GitHub pull requests
   cleanup    Manage post-merge cleanup of worktrees and branches
   queue      Show the current work queue with optional conflict checking
+  feature    Decompose features into tasks
+  task       Review completed task output
+  incident   Create, list, and show incidents
 
 Notes:
-  - Phase 3 is MCP-first; the CLI is a secondary, strict interface.
+  - Kanbanzai is MCP-first; the CLI is a secondary, strict interface.
 `
 
 const createUsageText = `kanbanzai create <entity> [flags]

@@ -18,7 +18,7 @@ import (
 
 const (
 	ServerName    = "kanbanzai"
-	ServerVersion = "phase-3-dev"
+	ServerVersion = "phase-4b"
 )
 
 // NewServer creates a new MCP server with all tools registered.

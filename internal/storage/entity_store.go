@@ -368,6 +368,26 @@ func fieldOrderForEntityType(entityType string) []string {
 			"created_by",
 			"updated",
 		}
+	case string(model.EntityKindIncident):
+		return []string{
+			"id",
+			"slug",
+			"title",
+			"status",
+			"severity",
+			"reported_by",
+			"detected_at",
+			"triaged_at",
+			"mitigated_at",
+			"resolved_at",
+			"affected_features",
+			"linked_bugs",
+			"linked_rca",
+			"summary",
+			"created",
+			"created_by",
+			"updated",
+		}
 	default:
 		return nil
 	}

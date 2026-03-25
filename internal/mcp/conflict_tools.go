@@ -51,10 +51,7 @@ func conflictDomainCheckTool(conflictSvc *service.ConflictService) server.Server
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		// Extract task_ids from the request
-		args, ok := request.Params.Arguments.(map[string]any)
-		if !ok {
-			return mcp.NewToolResultError("task_ids is required"), nil
-		}
+		args := request.GetArguments()
 		taskIDsRaw, ok := args["task_ids"]
 		if !ok {
 			return mcp.NewToolResultError("task_ids is required"), nil

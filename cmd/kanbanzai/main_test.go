@@ -21,7 +21,7 @@ func TestRun_NoArgs_PrintsUsage(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "Phase 3 workflow kernel CLI.") {
+	if !strings.Contains(stdout, "Phase 4b workflow kernel CLI.") {
 		t.Fatalf("stdout missing usage header:\n%s", stdout)
 	}
 	if !strings.Contains(stdout, "create     Create a Phase 1 entity") {
@@ -36,7 +36,7 @@ func TestRun_Version_PrintsVersion(t *testing.T) {
 		t.Fatalf("run(version) error = %v", err)
 	}
 
-	if got, want := strings.TrimSpace(output.String()), "kanbanzai phase-3-dev"; got != want {
+	if got, want := strings.TrimSpace(output.String()), "kanbanzai phase-4b"; got != want {
 		t.Fatalf("version output = %q, want %q", got, want)
 	}
 }
@@ -48,7 +48,7 @@ func TestRun_VersionFlag_PrintsVersion(t *testing.T) {
 		t.Fatalf("run(--version) error = %v", err)
 	}
 
-	if got, want := strings.TrimSpace(output.String()), "kanbanzai phase-3-dev"; got != want {
+	if got, want := strings.TrimSpace(output.String()), "kanbanzai phase-4b"; got != want {
 		t.Fatalf("version output = %q, want %q", got, want)
 	}
 }
@@ -515,6 +515,58 @@ func TestRunFeature_UnknownSubcommand_ReturnsUsageError(t *testing.T) {
 
 	if !strings.Contains(err.Error(), "unknown feature subcommand") {
 		t.Fatalf("error missing unknown subcommand message: %v", err)
+	}
+}
+
+func TestRunIncident_MissingSubcommand_ReturnsUsageError(t *testing.T) {
+	deps, _ := testDependencies()
+
+	err := run([]string{"incident"}, deps)
+	if err == nil {
+		t.Fatal("run(incident) error = nil, want non-nil")
+	}
+
+	if !strings.Contains(err.Error(), "missing incident subcommand") {
+		t.Fatalf("error missing subcommand message: %v", err)
+	}
+}
+
+func TestRunIncident_UnknownSubcommand_ReturnsUsageError(t *testing.T) {
+	deps, _ := testDependencies()
+
+	err := run([]string{"incident", "explode"}, deps)
+	if err == nil {
+		t.Fatal("run(incident explode) error = nil, want non-nil")
+	}
+
+	if !strings.Contains(err.Error(), "unknown incident subcommand") {
+		t.Fatalf("error missing unknown subcommand message: %v", err)
+	}
+}
+
+func TestRunIncidentCreate_MissingSlug_ReturnsUsageError(t *testing.T) {
+	deps, _ := testDependencies()
+
+	err := run([]string{"incident", "create", "--title", "Test"}, deps)
+	if err == nil {
+		t.Fatal("run(incident create missing slug) error = nil, want non-nil")
+	}
+
+	if !strings.Contains(err.Error(), "--slug is required") {
+		t.Fatalf("error missing slug message: %v", err)
+	}
+}
+
+func TestRunIncidentShow_MissingID_ReturnsUsageError(t *testing.T) {
+	deps, _ := testDependencies()
+
+	err := run([]string{"incident", "show"}, deps)
+	if err == nil {
+		t.Fatal("run(incident show) error = nil, want non-nil")
+	}
+
+	if !strings.Contains(err.Error(), "missing incident ID") {
+		t.Fatalf("error missing incident ID message: %v", err)
 	}
 }
 

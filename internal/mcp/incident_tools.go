@@ -121,11 +121,7 @@ func incidentUpdateTool(svc *service.EntityService) server.ServerTool {
 			return mcp.NewToolResultErrorFromErr("update incident failed", err), nil
 		}
 
-		data, err := json.Marshal(result)
-		if err != nil {
-			return mcp.NewToolResultErrorFromErr("failed to marshal result", err), nil
-		}
-		return mcp.NewToolResultText(string(data)), nil
+		return jsonResult(result)
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
@@ -178,11 +174,7 @@ func incidentLinkBugTool(svc *service.EntityService) server.ServerTool {
 			return mcp.NewToolResultErrorFromErr("link bug failed", err), nil
 		}
 
-		data, err := json.Marshal(result)
-		if err != nil {
-			return mcp.NewToolResultErrorFromErr("failed to marshal result", err), nil
-		}
-		return mcp.NewToolResultText(string(data)), nil
+		return jsonResult(result)
 	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
