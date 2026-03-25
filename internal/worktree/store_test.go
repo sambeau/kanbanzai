@@ -406,7 +406,7 @@ func TestStore_List_EmptyDirectory(t *testing.T) {
 	if err != nil {
 		t.Fatalf("List() error = %v", err)
 	}
-	if records != nil && len(records) != 0 {
+	if len(records) != 0 {
 		t.Errorf("List() returned %v, want nil or empty", records)
 	}
 }

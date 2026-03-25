@@ -227,7 +227,7 @@ func TestListEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("List on empty store: %v", err)
 	}
-	if records != nil && len(records) != 0 {
+	if len(records) != 0 {
 		t.Errorf("expected empty list, got %d records", len(records))
 	}
 }
