@@ -1,0 +1,415 @@
+package merge
+
+import (
+	"testing"
+
+	"kanbanzai/internal/git"
+)
+
+func TestDefaultGates(t *testing.T) {
+	gates := DefaultGates()
+
+	if len(gates) != 6 {
+		t.Errorf("DefaultGates: got %d gates, want 6", len(gates))
+	}
+
+	// Verify order and names
+	expectedNames := []string{
+		"tasks_complete",
+		"verification_exists",
+		"verification_passed",
+		"no_conflicts",
+		"health_check_clean",
+		"branch_not_stale",
+	}
+
+	for i, name := range expectedNames {
+		if i >= len(gates) {
+			break
+		}
+		if gates[i].Name() != name {
+			t.Errorf("DefaultGates[%d]: got %q, want %q", i, gates[i].Name(), name)
+		}
+	}
+}
+
+func TestCheckGates_AllPassing(t *testing.T) {
+	ctx := GateContext{
+		EntityID: "FEAT-001",
+		Branch:   "feature/FEAT-001",
+		RepoPath: "/repo",
+		Entity: map[string]any{
+			"verification":        "All tests pass",
+			"verification_status": "passed",
+		},
+		Tasks: []map[string]any{
+			{"id": "TASK-001", "status": "done"},
+		},
+		ConflictChecker: func(repoPath, branch, base string) (bool, error) {
+			return false, nil
+		},
+		BranchStatusChecker: func(repoPath, branch string, thresholds git.BranchThresholds) (git.BranchStatus, error) {
+			return git.BranchStatus{}, nil
+		},
+	}
+
+	result := CheckGates(ctx)
+
+	if result.EntityID != "FEAT-001" {
+		t.Errorf("EntityID: got %q, want %q", result.EntityID, "FEAT-001")
+	}
+	if result.Branch != "feature/FEAT-001" {
+		t.Errorf("Branch: got %q, want %q", result.Branch, "feature/FEAT-001")
+	}
+	if result.OverallStatus != OverallStatusPassed {
+		t.Errorf("OverallStatus: got %q, want %q", result.OverallStatus, OverallStatusPassed)
+	}
+	if len(result.Gates) != 6 {
+		t.Errorf("Gates: got %d, want 6", len(result.Gates))
+	}
+
+	for _, g := range result.Gates {
+		if g.Status != GateStatusPassed {
+			t.Errorf("Gate %q: got status %q, want %q", g.Name, g.Status, GateStatusPassed)
+		}
+	}
+}
+
+func TestCheckGates_BlockingFailure(t *testing.T) {
+	ctx := GateContext{
+		EntityID: "FEAT-001",
+		Branch:   "feature/FEAT-001",
+		RepoPath: "/repo",
+		Entity: map[string]any{
+			"verification":        "", // Missing verification
+			"verification_status": "passed",
+		},
+		Tasks: []map[string]any{
+			{"id": "TASK-001", "status": "done"},
+		},
+		ConflictChecker: func(repoPath, branch, base string) (bool, error) {
+			return false, nil
+		},
+		BranchStatusChecker: func(repoPath, branch string, thresholds git.BranchThresholds) (git.BranchStatus, error) {
+			return git.BranchStatus{}, nil
+		},
+	}
+
+	result := CheckGates(ctx)
+
+	if result.OverallStatus != OverallStatusBlocked {
+		t.Errorf("OverallStatus: got %q, want %q", result.OverallStatus, OverallStatusBlocked)
+	}
+
+	// Find the verification_exists gate
+	var found bool
+	for _, g := range result.Gates {
+		if g.Name == "verification_exists" {
+			found = true
+			if g.Status != GateStatusFailed {
+				t.Errorf("verification_exists status: got %q, want %q", g.Status, GateStatusFailed)
+			}
+		}
+	}
+	if !found {
+		t.Error("verification_exists gate not found in results")
+	}
+}
+
+func TestCheckGates_WarningsOnly(t *testing.T) {
+	ctx := GateContext{
+		EntityID: "FEAT-001",
+		Branch:   "feature/FEAT-001",
+		RepoPath: "/repo",
+		Entity: map[string]any{
+			"verification":        "Tests pass",
+			"verification_status": "passed",
+		},
+		Tasks: []map[string]any{
+			{"id": "TASK-001", "status": "done"},
+		},
+		ConflictChecker: func(repoPath, branch, base string) (bool, error) {
+			return false, nil
+		},
+		BranchStatusChecker: func(repoPath, branch string, thresholds git.BranchThresholds) (git.BranchStatus, error) {
+			return git.BranchStatus{
+				Warnings: []string{"branch is stale"},
+			}, nil
+		},
+	}
+
+	result := CheckGates(ctx)
+
+	if result.OverallStatus != OverallStatusWarnings {
+		t.Errorf("OverallStatus: got %q, want %q", result.OverallStatus, OverallStatusWarnings)
+	}
+}
+
+func TestCheckGatesWithList_CustomGates(t *testing.T) {
+	ctx := GateContext{
+		EntityID: "FEAT-001",
+		Entity: map[string]any{
+			"verification": "Done",
+		},
+	}
+
+	// Only run verification_exists gate
+	gates := []Gate{VerificationExistsGate{}}
+	result := CheckGatesWithList(ctx, gates)
+
+	if len(result.Gates) != 1 {
+		t.Errorf("Gates: got %d, want 1", len(result.Gates))
+	}
+	if result.Gates[0].Name != "verification_exists" {
+		t.Errorf("Gate name: got %q, want %q", result.Gates[0].Name, "verification_exists")
+	}
+	if result.OverallStatus != OverallStatusPassed {
+		t.Errorf("OverallStatus: got %q, want %q", result.OverallStatus, OverallStatusPassed)
+	}
+}
+
+func TestCheckGatesWithList_EmptyGates(t *testing.T) {
+	ctx := GateContext{
+		EntityID: "FEAT-001",
+	}
+
+	result := CheckGatesWithList(ctx, []Gate{})
+
+	if len(result.Gates) != 0 {
+		t.Errorf("Gates: got %d, want 0", len(result.Gates))
+	}
+	if result.OverallStatus != OverallStatusPassed {
+		t.Errorf("OverallStatus: got %q, want %q", result.OverallStatus, OverallStatusPassed)
+	}
+}
+
+func TestDetermineOverallStatus(t *testing.T) {
+	tests := []struct {
+		name    string
+		results []GateResult
+		want    string
+	}{
+		{
+			name:    "empty results passes",
+			results: []GateResult{},
+			want:    OverallStatusPassed,
+		},
+		{
+			name: "all passed",
+			results: []GateResult{
+				{Name: "g1", Status: GateStatusPassed, Severity: GateSeverityBlocking},
+				{Name: "g2", Status: GateStatusPassed, Severity: GateSeverityWarning},
+			},
+			want: OverallStatusPassed,
+		},
+		{
+			name: "blocking failure blocks",
+			results: []GateResult{
+				{Name: "g1", Status: GateStatusPassed, Severity: GateSeverityBlocking},
+				{Name: "g2", Status: GateStatusFailed, Severity: GateSeverityBlocking},
+			},
+			want: OverallStatusBlocked,
+		},
+		{
+			name: "warning failure is warning",
+			results: []GateResult{
+				{Name: "g1", Status: GateStatusPassed, Severity: GateSeverityBlocking},
+				{Name: "g2", Status: GateStatusFailed, Severity: GateSeverityWarning},
+			},
+			want: OverallStatusWarnings,
+		},
+		{
+			name: "warning status is warning",
+			results: []GateResult{
+				{Name: "g1", Status: GateStatusPassed, Severity: GateSeverityBlocking},
+				{Name: "g2", Status: GateStatusWarning, Severity: GateSeverityWarning},
+			},
+			want: OverallStatusWarnings,
+		},
+		{
+			name: "blocking beats warning",
+			results: []GateResult{
+				{Name: "g1", Status: GateStatusWarning, Severity: GateSeverityWarning},
+				{Name: "g2", Status: GateStatusFailed, Severity: GateSeverityBlocking},
+			},
+			want: OverallStatusBlocked,
+		},
+		{
+			name: "multiple blocking failures still blocked",
+			results: []GateResult{
+				{Name: "g1", Status: GateStatusFailed, Severity: GateSeverityBlocking},
+				{Name: "g2", Status: GateStatusFailed, Severity: GateSeverityBlocking},
+			},
+			want: OverallStatusBlocked,
+		},
+		{
+			name: "multiple warnings",
+			results: []GateResult{
+				{Name: "g1", Status: GateStatusWarning, Severity: GateSeverityWarning},
+				{Name: "g2", Status: GateStatusWarning, Severity: GateSeverityWarning},
+			},
+			want: OverallStatusWarnings,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := DetermineOverallStatus(tt.results)
+			if got != tt.want {
+				t.Errorf("DetermineOverallStatus: got %q, want %q", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestCountByStatus(t *testing.T) {
+	tests := []struct {
+		name        string
+		results     []GateResult
+		wantPassed  int
+		wantFailed  int
+		wantWarning int
+	}{
+		{
+			name:        "empty",
+			results:     []GateResult{},
+			wantPassed:  0,
+			wantFailed:  0,
+			wantWarning: 0,
+		},
+		{
+			name: "all passed",
+			results: []GateResult{
+				{Status: GateStatusPassed},
+				{Status: GateStatusPassed},
+			},
+			wantPassed:  2,
+			wantFailed:  0,
+			wantWarning: 0,
+		},
+		{
+			name: "mixed",
+			results: []GateResult{
+				{Status: GateStatusPassed},
+				{Status: GateStatusFailed},
+				{Status: GateStatusWarning},
+				{Status: GateStatusPassed},
+			},
+			wantPassed:  2,
+			wantFailed:  1,
+			wantWarning: 1,
+		},
+		{
+			name: "all failed",
+			results: []GateResult{
+				{Status: GateStatusFailed},
+				{Status: GateStatusFailed},
+			},
+			wantPassed:  0,
+			wantFailed:  2,
+			wantWarning: 0,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			passed, failed, warning := CountByStatus(tt.results)
+			if passed != tt.wantPassed {
+				t.Errorf("passed: got %d, want %d", passed, tt.wantPassed)
+			}
+			if failed != tt.wantFailed {
+				t.Errorf("failed: got %d, want %d", failed, tt.wantFailed)
+			}
+			if warning != tt.wantWarning {
+				t.Errorf("warning: got %d, want %d", warning, tt.wantWarning)
+			}
+		})
+	}
+}
+
+func TestBlockingFailures(t *testing.T) {
+	tests := []struct {
+		name    string
+		results []GateResult
+		want    int
+	}{
+		{
+			name:    "empty",
+			results: []GateResult{},
+			want:    0,
+		},
+		{
+			name: "no failures",
+			results: []GateResult{
+				{Name: "g1", Status: GateStatusPassed, Severity: GateSeverityBlocking},
+				{Name: "g2", Status: GateStatusWarning, Severity: GateSeverityWarning},
+			},
+			want: 0,
+		},
+		{
+			name: "warning failure not blocking",
+			results: []GateResult{
+				{Name: "g1", Status: GateStatusFailed, Severity: GateSeverityWarning},
+			},
+			want: 0,
+		},
+		{
+			name: "blocking failure",
+			results: []GateResult{
+				{Name: "g1", Status: GateStatusFailed, Severity: GateSeverityBlocking},
+			},
+			want: 1,
+		},
+		{
+			name: "multiple blocking failures",
+			results: []GateResult{
+				{Name: "g1", Status: GateStatusFailed, Severity: GateSeverityBlocking},
+				{Name: "g2", Status: GateStatusPassed, Severity: GateSeverityBlocking},
+				{Name: "g3", Status: GateStatusFailed, Severity: GateSeverityBlocking},
+			},
+			want: 2,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := BlockingFailures(tt.results)
+			if len(got) != tt.want {
+				t.Errorf("BlockingFailures: got %d, want %d", len(got), tt.want)
+			}
+
+			// Verify all returned are blocking failures
+			for _, r := range got {
+				if r.Severity != GateSeverityBlocking {
+					t.Errorf("returned non-blocking result: %s", r.Name)
+				}
+				if r.Status != GateStatusFailed {
+					t.Errorf("returned non-failed result: %s", r.Name)
+				}
+			}
+		})
+	}
+}
+
+func TestBlockingFailures_PreservesOrder(t *testing.T) {
+	results := []GateResult{
+		{Name: "g1", Status: GateStatusFailed, Severity: GateSeverityBlocking},
+		{Name: "g2", Status: GateStatusPassed, Severity: GateSeverityBlocking},
+		{Name: "g3", Status: GateStatusFailed, Severity: GateSeverityBlocking},
+		{Name: "g4", Status: GateStatusFailed, Severity: GateSeverityWarning},
+		{Name: "g5", Status: GateStatusFailed, Severity: GateSeverityBlocking},
+	}
+
+	got := BlockingFailures(results)
+
+	if len(got) != 3 {
+		t.Fatalf("expected 3 failures, got %d", len(got))
+	}
+
+	expected := []string{"g1", "g3", "g5"}
+	for i, name := range expected {
+		if got[i].Name != name {
+			t.Errorf("failure[%d]: got %q, want %q", i, got[i].Name, name)
+		}
+	}
+}
