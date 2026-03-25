@@ -140,6 +140,60 @@ The document types defined in `work/design/document-centric-interface.md` apply 
 - Research reports go in `work/research/`.
 - Bootstrap-specific process documents go in `work/bootstrap/`.
 
+### Document registration
+
+When you create a new document in `work/`, you must register it with the kanbanzai system. Documents are the human interface, but the system needs metadata records to track status, ownership, and lifecycle.
+
+**Standard workflow:**
+
+1. **Create the markdown file** in the appropriate `work/` subdirectory
+2. **Immediately register it** using the MCP tool:
+   ```
+   doc_record_submit(
+     path="work/design/my-document.md",
+     type="design",
+     title="Human-Readable Title",
+     created_by="agent-name"
+   )
+   ```
+3. **Commit both together** — the markdown file and the generated document record in `.kbz/state/documents/`
+
+**For multiple documents (batch import):**
+
+After creating several documents, use the batch import tool:
+
+```
+batch_import_documents(
+  path="work/plan",
+  default_type="dev-plan",
+  created_by="agent-name"
+)
+```
+
+The batch import tool is **idempotent** — it skips already-registered documents and only imports new ones. This makes it safe to run repeatedly as a safety check.
+
+**Type mapping:**
+
+| Location | Type | Notes |
+|----------|------|-------|
+| `work/design/` | `design` | Design documents, architecture, policies |
+| `work/spec/` | `specification` | Formal specifications with acceptance criteria |
+| `work/plan/` | `dev-plan` | Implementation plans, decision logs, progress tracking |
+| `work/research/` | `research` | Research reports, analysis, exploration |
+| `work/reports/` | `report` | Review reports, audit reports, post-implementation reviews |
+
+**Why this matters:**
+
+Unregistered documents are invisible to document intelligence, entity extraction, approval workflow, and health checks. Forgetting to register a document breaks the document-centric interface model.
+
+**Safety check before major commits:**
+
+```
+batch_import_documents(path="work")
+```
+
+This will catch any documents you forgot to register individually.
+
 ### Commits during bootstrap
 
 When no formal entity ID exists, use a descriptive scope:

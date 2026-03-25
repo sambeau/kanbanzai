@@ -175,7 +175,86 @@ Decision IDs don't carry enough context for a human to act on without querying t
 
 This rule is also codified in the agent interaction protocol (`work/design/agent-interaction-protocol.md` §6.11).
 
+## Document Creation Workflow
+
+When you create a new document in the `work/` directory, you must register it with the kanbanzai system. Documents are the human interface, but the system needs metadata records to track status, ownership, and lifecycle.
+
+### Standard Workflow
+
+**For single documents:**
+
+1. **Create the markdown file** in the appropriate `work/` subdirectory:
+   - `work/design/` — design documents
+   - `work/spec/` — specifications
+   - `work/plan/` — planning documents, implementation plans, decision logs
+   - `work/research/` — research reports and analysis
+   - `work/reports/` — review reports, audit reports
+
+2. **Immediately register it** using the MCP tool:
+   ```
+   doc_record_submit(
+     path="work/design/my-document.md",
+     type="design",
+     title="Human-Readable Title",
+     created_by="agent-name"
+   )
+   ```
+
+3. **Commit both together** in a single commit:
+   ```
+   docs(my-document): create design document for feature X
+   
+   - Add work/design/my-document.md
+   - Register document record in .kbz/state/documents/
+   ```
+
+**For multiple documents (batch import):**
+
+After creating several documents, use the batch import tool:
+
+```
+batch_import_documents(
+  path="work/plan",
+  default_type="dev-plan",
+  created_by="agent-name"
+)
+```
+
+The batch import tool is **idempotent** — it skips already-registered documents and only imports new ones. This makes it safe to run repeatedly as a safety check.
+
+### Document Type Mapping
+
+| Location | Default Type | Notes |
+|----------|--------------|-------|
+| `work/design/` | `design` | Design documents, architecture, policies |
+| `work/spec/` | `specification` | Formal specifications with acceptance criteria |
+| `work/plan/` | `dev-plan` | Implementation plans, decision logs, progress tracking |
+| `work/research/` | `research` | Research reports, analysis, exploration |
+| `work/reports/` | `report` | Review reports, audit reports, post-implementation reviews |
+
+### Why This Matters
+
+Unregistered documents are invisible to:
+- Document intelligence (structural analysis, section tracing)
+- Entity extraction and linking
+- Approval workflow and lifecycle transitions
+- Health checks and validation
+
+Forgetting to register a document breaks the document-centric interface model.
+
+### Safety Check
+
+Before major commits or phase transitions, run:
+
+```
+batch_import_documents(path="work")
+```
+
+This will catch any documents you forgot to register individually.
+
 ## Decision-Making Rules
+</text>
+
 
 When making a non-trivial change to any document or code:
 
