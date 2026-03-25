@@ -200,7 +200,108 @@ doc_record_submit(path="work/design/my-doc.md", type="design", title="...")
 batch_import_documents(path="work")
 ```
 
+## Workflow Stage Gates
+
+The proper workflow progression is:
+
+**planning → design → features → spec → dev-plan → tasks**
+
+You must not skip stages. Each stage has a human approval gate.
+
+### Stage 1: Planning (Human-Led)
+
+**What happens:** Human identifies a need or opportunity. Discussion about *whether* to do something and *what* the high-level goal is.
+
+**Output:** Rough consensus that work should proceed to design.
+
+**Agent role:** Answer questions, surface related context, but do not make architectural decisions.
+
+### Stage 2: Design (Human-Led, Agent-Assisted)
+
+**What happens:** Human writes or approves a design document in `work/design/` that describes:
+- What the feature/system is
+- Why it exists
+- How it fits the vision
+- Key architectural decisions and tradeoffs
+
+**Output:** An approved design document in `work/design/`.
+
+**Gate:** Design document must exist and be approved before proceeding.
+
+**Agent role:**
+- Draft design documents when asked
+- Surface design alternatives and tradeoffs
+- **DO NOT make technical architecture decisions without human approval**
+- **DO NOT create planning documents with embedded design decisions**
+
+**Rules for agents:**
+- Before making technology choices (frameworks, libraries, protocols) → stop and ask for design document approval
+- Before defining API structures or data models → stop and ask for design document approval
+- Before deciding on system boundaries or deployment models → stop and ask for design document approval
+- If you find yourself using "P5-DES-xxx" or similar invented ID patterns → stop, you are making design decisions without approval
+
+### Stage 3: Features (Agent-Assisted)
+
+**What happens:** With an approved design in hand, create a Plan entity (if needed) and extract Feature entities from the design document.
+
+**Output:** Plan entity and Feature entities in `.kbz/state/`.
+
+**Gate:** Design document must be approved before creating Plan or Feature entities.
+
+**Agent role:**
+- Create Plan entity using `create_plan` (ensure prefix is registered)
+- Extract features from approved design using document intelligence
+- Create Feature entities with `create_feature`
+
+### Stage 4: Specification (Human-Led, Agent-Assisted)
+
+**What happens:** Write detailed acceptance criteria for each feature. Specifications are binding contracts.
+
+**Output:** Specification document in `work/spec/`.
+
+**Gate:** Features must exist before writing specification.
+
+**Agent role:**
+- Draft specification documents when asked
+- Ensure acceptance criteria map to features
+- Ensure specification is testable and complete
+
+### Stage 5: Dev Plan & Tasks (Agent-Assisted)
+
+**What happens:** Decompose features into tasks, define dependencies, estimate.
+
+**Output:** Dev plan document and Task entities.
+
+**Gate:** Specification must exist and be approved before decomposition.
+
+**Agent role:**
+- Use `decompose_feature` to propose task breakdown
+- Create Task entities after human reviews proposal
+- Record decisions in decision log
+
+### Stage 6: Implementation (Agent-Driven)
+
+**What happens:** Execute tasks, verify, review, merge.
+
+**Gate:** Tasks must exist before implementation begins.
+
+**Agent role:** Execute as designed, within the constraints defined in earlier stages.
+
+### Emergency Brake
+
+**If you are about to:**
+- Write a document in `work/plan/` that contains "Decision:", "Architecture:", "Technology Choice:", or similar design content
+- Create entities (Plan, Feature, Task) without an approved design document
+- Use decision ID formats that don't exist in the system
+- Make technology or architecture choices without human approval
+
+**Then STOP and ask the human:**
+- "Should we write a design document for this first?"
+- "Is there an approved design that covers this decision?"
+- "Which design document should I reference for this work?"
+
 ## Decision-Making Rules
+</thinking>
 </text>
 
 
