@@ -29,6 +29,55 @@ func TestDefaultConfig(t *testing.T) {
 	}
 }
 
+func TestDefaultConfig_Phase3Fields(t *testing.T) {
+	t.Parallel()
+
+	cfg := DefaultConfig()
+
+	// BranchTracking defaults
+	if cfg.BranchTracking.StaleAfterDays != 14 {
+		t.Errorf("BranchTracking.StaleAfterDays = %d, want 14", cfg.BranchTracking.StaleAfterDays)
+	}
+	if cfg.BranchTracking.DriftWarningCommits != 50 {
+		t.Errorf("BranchTracking.DriftWarningCommits = %d, want 50", cfg.BranchTracking.DriftWarningCommits)
+	}
+	if cfg.BranchTracking.DriftErrorCommits != 100 {
+		t.Errorf("BranchTracking.DriftErrorCommits = %d, want 100", cfg.BranchTracking.DriftErrorCommits)
+	}
+
+	// Cleanup defaults
+	if cfg.Cleanup.GracePeriodDays != 7 {
+		t.Errorf("Cleanup.GracePeriodDays = %d, want 7", cfg.Cleanup.GracePeriodDays)
+	}
+	if !cfg.Cleanup.AutoDeleteRemoteBranch {
+		t.Error("Cleanup.AutoDeleteRemoteBranch = false, want true")
+	}
+
+	// Knowledge TTL defaults
+	if cfg.Knowledge.TTL.Tier3Days != 30 {
+		t.Errorf("Knowledge.TTL.Tier3Days = %d, want 30", cfg.Knowledge.TTL.Tier3Days)
+	}
+	if cfg.Knowledge.TTL.Tier2Days != 90 {
+		t.Errorf("Knowledge.TTL.Tier2Days = %d, want 90", cfg.Knowledge.TTL.Tier2Days)
+	}
+
+	// Knowledge Promotion defaults
+	if cfg.Knowledge.Promotion.MinUseCount != 5 {
+		t.Errorf("Knowledge.Promotion.MinUseCount = %d, want 5", cfg.Knowledge.Promotion.MinUseCount)
+	}
+	if cfg.Knowledge.Promotion.MaxMissCount != 0 {
+		t.Errorf("Knowledge.Promotion.MaxMissCount = %d, want 0", cfg.Knowledge.Promotion.MaxMissCount)
+	}
+	if cfg.Knowledge.Promotion.MinConfidence != 0.7 {
+		t.Errorf("Knowledge.Promotion.MinConfidence = %f, want 0.7", cfg.Knowledge.Promotion.MinConfidence)
+	}
+
+	// Knowledge Pruning defaults
+	if cfg.Knowledge.Pruning.GracePeriodDays != 7 {
+		t.Errorf("Knowledge.Pruning.GracePeriodDays = %d, want 7", cfg.Knowledge.Pruning.GracePeriodDays)
+	}
+}
+
 func TestValidatePrefix(t *testing.T) {
 	t.Parallel()
 
@@ -362,6 +411,121 @@ func TestConfig_SaveAndLoad(t *testing.T) {
 		if p.Prefix != cfg.Prefixes[i].Prefix {
 			t.Errorf("Prefixes[%d].Prefix = %q, want %q", i, p.Prefix, cfg.Prefixes[i].Prefix)
 		}
+	}
+}
+
+func TestConfig_Phase3FieldsParseCorrectly(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	cfgPath := filepath.Join(tmpDir, "config.yaml")
+
+	yamlContent := `version: "2"
+prefixes:
+  - prefix: P
+    name: Plan
+branch_tracking:
+  stale_after_days: 21
+  drift_warning_commits: 75
+  drift_error_commits: 150
+cleanup:
+  grace_period_days: 14
+  auto_delete_remote_branch: false
+knowledge:
+  ttl:
+    tier_3_days: 45
+    tier_2_days: 120
+  promotion:
+    min_use_count: 10
+    max_miss_count: 2
+    min_confidence: 0.8
+  pruning:
+    grace_period_days: 14
+`
+	if err := os.WriteFile(cfgPath, []byte(yamlContent), 0o644); err != nil {
+		t.Fatalf("failed to write config file: %v", err)
+	}
+
+	loaded, err := LoadFrom(cfgPath)
+	if err != nil {
+		t.Fatalf("LoadFrom() error = %v", err)
+	}
+
+	// Verify BranchTracking
+	if loaded.BranchTracking.StaleAfterDays != 21 {
+		t.Errorf("BranchTracking.StaleAfterDays = %d, want 21", loaded.BranchTracking.StaleAfterDays)
+	}
+	if loaded.BranchTracking.DriftWarningCommits != 75 {
+		t.Errorf("BranchTracking.DriftWarningCommits = %d, want 75", loaded.BranchTracking.DriftWarningCommits)
+	}
+	if loaded.BranchTracking.DriftErrorCommits != 150 {
+		t.Errorf("BranchTracking.DriftErrorCommits = %d, want 150", loaded.BranchTracking.DriftErrorCommits)
+	}
+
+	// Verify Cleanup
+	if loaded.Cleanup.GracePeriodDays != 14 {
+		t.Errorf("Cleanup.GracePeriodDays = %d, want 14", loaded.Cleanup.GracePeriodDays)
+	}
+	if loaded.Cleanup.AutoDeleteRemoteBranch {
+		t.Error("Cleanup.AutoDeleteRemoteBranch = true, want false")
+	}
+
+	// Verify Knowledge TTL
+	if loaded.Knowledge.TTL.Tier3Days != 45 {
+		t.Errorf("Knowledge.TTL.Tier3Days = %d, want 45", loaded.Knowledge.TTL.Tier3Days)
+	}
+	if loaded.Knowledge.TTL.Tier2Days != 120 {
+		t.Errorf("Knowledge.TTL.Tier2Days = %d, want 120", loaded.Knowledge.TTL.Tier2Days)
+	}
+
+	// Verify Knowledge Promotion
+	if loaded.Knowledge.Promotion.MinUseCount != 10 {
+		t.Errorf("Knowledge.Promotion.MinUseCount = %d, want 10", loaded.Knowledge.Promotion.MinUseCount)
+	}
+	if loaded.Knowledge.Promotion.MaxMissCount != 2 {
+		t.Errorf("Knowledge.Promotion.MaxMissCount = %d, want 2", loaded.Knowledge.Promotion.MaxMissCount)
+	}
+	if loaded.Knowledge.Promotion.MinConfidence != 0.8 {
+		t.Errorf("Knowledge.Promotion.MinConfidence = %f, want 0.8", loaded.Knowledge.Promotion.MinConfidence)
+	}
+
+	// Verify Knowledge Pruning
+	if loaded.Knowledge.Pruning.GracePeriodDays != 14 {
+		t.Errorf("Knowledge.Pruning.GracePeriodDays = %d, want 14", loaded.Knowledge.Pruning.GracePeriodDays)
+	}
+}
+
+func TestConfig_Phase3FieldsDefaultWhenMissing(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	cfgPath := filepath.Join(tmpDir, "config.yaml")
+
+	// Minimal config without Phase 3 fields
+	yamlContent := `version: "2"
+prefixes:
+  - prefix: P
+    name: Plan
+`
+	if err := os.WriteFile(cfgPath, []byte(yamlContent), 0o644); err != nil {
+		t.Fatalf("failed to write config file: %v", err)
+	}
+
+	loaded, err := LoadFrom(cfgPath)
+	if err != nil {
+		t.Fatalf("LoadFrom() error = %v", err)
+	}
+
+	// When fields are missing, they should be zero values (not defaults)
+	// Defaults are only applied by DefaultConfig()
+	if loaded.BranchTracking.StaleAfterDays != 0 {
+		t.Errorf("BranchTracking.StaleAfterDays = %d, want 0 (zero value)", loaded.BranchTracking.StaleAfterDays)
+	}
+	if loaded.Cleanup.GracePeriodDays != 0 {
+		t.Errorf("Cleanup.GracePeriodDays = %d, want 0 (zero value)", loaded.Cleanup.GracePeriodDays)
+	}
+	if loaded.Knowledge.TTL.Tier3Days != 0 {
+		t.Errorf("Knowledge.TTL.Tier3Days = %d, want 0 (zero value)", loaded.Knowledge.TTL.Tier3Days)
 	}
 }
 

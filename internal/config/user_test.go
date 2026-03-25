@@ -130,3 +130,164 @@ func TestResolveIdentity_ErrorMessageIsHelpful(t *testing.T) {
 		}
 	}
 }
+
+func TestLoadLocalConfigFrom_GitHubConfig(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	localPath := filepath.Join(tmpDir, "local.yaml")
+
+	content := `user:
+  name: testuser
+github:
+  token: ghp_xxxxxxxxxxxxxxxxxxxx
+  owner: example-org
+  repo: example-repo
+`
+	if err := os.WriteFile(localPath, []byte(content), 0o644); err != nil {
+		t.Fatalf("failed to write local.yaml: %v", err)
+	}
+
+	lc, err := LoadLocalConfigFrom(localPath)
+	if err != nil {
+		t.Fatalf("LoadLocalConfigFrom() error = %v", err)
+	}
+
+	if lc.GitHub.Token != "ghp_xxxxxxxxxxxxxxxxxxxx" {
+		t.Errorf("GitHub.Token = %q, want %q", lc.GitHub.Token, "ghp_xxxxxxxxxxxxxxxxxxxx")
+	}
+	if lc.GitHub.Owner != "example-org" {
+		t.Errorf("GitHub.Owner = %q, want %q", lc.GitHub.Owner, "example-org")
+	}
+	if lc.GitHub.Repo != "example-repo" {
+		t.Errorf("GitHub.Repo = %q, want %q", lc.GitHub.Repo, "example-repo")
+	}
+}
+
+func TestLocalConfig_GetGitHubToken(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	localPath := filepath.Join(tmpDir, "local.yaml")
+
+	content := `github:
+  token: ghp_secret_token_12345
+`
+	if err := os.WriteFile(localPath, []byte(content), 0o644); err != nil {
+		t.Fatalf("failed to write local.yaml: %v", err)
+	}
+
+	lc, err := LoadLocalConfigFrom(localPath)
+	if err != nil {
+		t.Fatalf("LoadLocalConfigFrom() error = %v", err)
+	}
+
+	token := lc.GetGitHubToken()
+	if token != "ghp_secret_token_12345" {
+		t.Errorf("GetGitHubToken() = %q, want %q", token, "ghp_secret_token_12345")
+	}
+}
+
+func TestLocalConfig_GetGitHubOwner(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	localPath := filepath.Join(tmpDir, "local.yaml")
+
+	content := `github:
+  owner: my-org
+`
+	if err := os.WriteFile(localPath, []byte(content), 0o644); err != nil {
+		t.Fatalf("failed to write local.yaml: %v", err)
+	}
+
+	lc, err := LoadLocalConfigFrom(localPath)
+	if err != nil {
+		t.Fatalf("LoadLocalConfigFrom() error = %v", err)
+	}
+
+	owner := lc.GetGitHubOwner()
+	if owner != "my-org" {
+		t.Errorf("GetGitHubOwner() = %q, want %q", owner, "my-org")
+	}
+}
+
+func TestLocalConfig_GetGitHubRepo(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	localPath := filepath.Join(tmpDir, "local.yaml")
+
+	content := `github:
+  repo: my-repo
+`
+	if err := os.WriteFile(localPath, []byte(content), 0o644); err != nil {
+		t.Fatalf("failed to write local.yaml: %v", err)
+	}
+
+	lc, err := LoadLocalConfigFrom(localPath)
+	if err != nil {
+		t.Fatalf("LoadLocalConfigFrom() error = %v", err)
+	}
+
+	repo := lc.GetGitHubRepo()
+	if repo != "my-repo" {
+		t.Errorf("GetGitHubRepo() = %q, want %q", repo, "my-repo")
+	}
+}
+
+func TestLocalConfig_GitHubFieldsEmptyWhenNotSet(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	localPath := filepath.Join(tmpDir, "local.yaml")
+
+	// Config without github section
+	content := `user:
+  name: testuser
+`
+	if err := os.WriteFile(localPath, []byte(content), 0o644); err != nil {
+		t.Fatalf("failed to write local.yaml: %v", err)
+	}
+
+	lc, err := LoadLocalConfigFrom(localPath)
+	if err != nil {
+		t.Fatalf("LoadLocalConfigFrom() error = %v", err)
+	}
+
+	if lc.GetGitHubToken() != "" {
+		t.Errorf("GetGitHubToken() = %q, want empty string", lc.GetGitHubToken())
+	}
+	if lc.GetGitHubOwner() != "" {
+		t.Errorf("GetGitHubOwner() = %q, want empty string", lc.GetGitHubOwner())
+	}
+	if lc.GetGitHubRepo() != "" {
+		t.Errorf("GetGitHubRepo() = %q, want empty string", lc.GetGitHubRepo())
+	}
+}
+
+func TestLoadLocalConfigFrom_FileNotFound(t *testing.T) {
+	t.Parallel()
+
+	_, err := LoadLocalConfigFrom("/nonexistent/path/local.yaml")
+	if err == nil {
+		t.Error("LoadLocalConfigFrom() should fail for non-existent file")
+	}
+}
+
+func TestLoadLocalConfigFrom_InvalidYAML(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	localPath := filepath.Join(tmpDir, "local.yaml")
+
+	// Write invalid YAML
+	if err := os.WriteFile(localPath, []byte("this is not: valid: yaml: content"), 0o644); err != nil {
+		t.Fatalf("failed to write local.yaml: %v", err)
+	}
+
+	_, err := LoadLocalConfigFrom(localPath)
+	if err == nil {
+		t.Error("LoadLocalConfigFrom() should fail for invalid YAML")
+	}
+}

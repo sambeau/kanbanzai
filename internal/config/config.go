@@ -41,6 +41,58 @@ type ImportConfig struct {
 	TypeMappings []ImportTypeMapping `yaml:"type_mappings,omitempty"`
 }
 
+// BranchTrackingConfig holds settings for branch staleness and drift detection.
+type BranchTrackingConfig struct {
+	// StaleAfterDays is the number of days after which a branch is considered stale.
+	StaleAfterDays int `yaml:"stale_after_days"`
+	// DriftWarningCommits is the number of commits behind main that triggers a warning.
+	DriftWarningCommits int `yaml:"drift_warning_commits"`
+	// DriftErrorCommits is the number of commits behind main that triggers an error.
+	DriftErrorCommits int `yaml:"drift_error_commits"`
+}
+
+// CleanupConfig holds settings for cleanup operations.
+type CleanupConfig struct {
+	// GracePeriodDays is the number of days to wait before cleanup actions.
+	GracePeriodDays int `yaml:"grace_period_days"`
+	// AutoDeleteRemoteBranch controls whether to automatically delete remote branches after merge.
+	AutoDeleteRemoteBranch bool `yaml:"auto_delete_remote_branch"`
+}
+
+// KnowledgeTTLConfig holds time-to-live settings for knowledge entries by tier.
+type KnowledgeTTLConfig struct {
+	// Tier3Days is the TTL in days for tier 3 (lowest priority) knowledge entries.
+	Tier3Days int `yaml:"tier_3_days"`
+	// Tier2Days is the TTL in days for tier 2 knowledge entries.
+	Tier2Days int `yaml:"tier_2_days"`
+}
+
+// KnowledgePromotionConfig holds settings for knowledge entry promotion.
+type KnowledgePromotionConfig struct {
+	// MinUseCount is the minimum number of uses required for promotion.
+	MinUseCount int `yaml:"min_use_count"`
+	// MaxMissCount is the maximum number of misses allowed before demotion.
+	MaxMissCount int `yaml:"max_miss_count"`
+	// MinConfidence is the minimum confidence score required for promotion.
+	MinConfidence float64 `yaml:"min_confidence"`
+}
+
+// KnowledgePruningConfig holds settings for knowledge entry pruning.
+type KnowledgePruningConfig struct {
+	// GracePeriodDays is the number of days to wait before pruning expired entries.
+	GracePeriodDays int `yaml:"grace_period_days"`
+}
+
+// KnowledgeConfig holds lifecycle settings for knowledge entries.
+type KnowledgeConfig struct {
+	// TTL holds time-to-live settings by tier.
+	TTL KnowledgeTTLConfig `yaml:"ttl"`
+	// Promotion holds settings for knowledge entry promotion.
+	Promotion KnowledgePromotionConfig `yaml:"promotion"`
+	// Pruning holds settings for knowledge entry pruning.
+	Pruning KnowledgePruningConfig `yaml:"pruning"`
+}
+
 // Config is the project configuration structure stored in .kbz/config.yaml.
 type Config struct {
 	// Version is the configuration schema version.
@@ -49,6 +101,12 @@ type Config struct {
 	Prefixes []PrefixEntry `yaml:"prefixes"`
 	// Import holds configuration for batch document import.
 	Import ImportConfig `yaml:"import,omitempty"`
+	// BranchTracking holds settings for branch staleness and drift detection.
+	BranchTracking BranchTrackingConfig `yaml:"branch_tracking,omitempty"`
+	// Cleanup holds settings for cleanup operations.
+	Cleanup CleanupConfig `yaml:"cleanup,omitempty"`
+	// Knowledge holds lifecycle settings for knowledge entries.
+	Knowledge KnowledgeConfig `yaml:"knowledge,omitempty"`
 }
 
 // DefaultConfig returns a new Config with sensible defaults.
@@ -61,6 +119,44 @@ func DefaultConfig() Config {
 		},
 		Import: ImportConfig{
 			TypeMappings: defaultImportTypeMappings(),
+		},
+		BranchTracking: DefaultBranchTrackingConfig(),
+		Cleanup:        DefaultCleanupConfig(),
+		Knowledge:      DefaultKnowledgeConfig(),
+	}
+}
+
+// DefaultBranchTrackingConfig returns default branch tracking settings.
+func DefaultBranchTrackingConfig() BranchTrackingConfig {
+	return BranchTrackingConfig{
+		StaleAfterDays:      14,
+		DriftWarningCommits: 50,
+		DriftErrorCommits:   100,
+	}
+}
+
+// DefaultCleanupConfig returns default cleanup settings.
+func DefaultCleanupConfig() CleanupConfig {
+	return CleanupConfig{
+		GracePeriodDays:        7,
+		AutoDeleteRemoteBranch: true,
+	}
+}
+
+// DefaultKnowledgeConfig returns default knowledge lifecycle settings.
+func DefaultKnowledgeConfig() KnowledgeConfig {
+	return KnowledgeConfig{
+		TTL: KnowledgeTTLConfig{
+			Tier3Days: 30,
+			Tier2Days: 90,
+		},
+		Promotion: KnowledgePromotionConfig{
+			MinUseCount:   5,
+			MaxMissCount:  0,
+			MinConfidence: 0.7,
+		},
+		Pruning: KnowledgePruningConfig{
+			GracePeriodDays: 7,
 		},
 	}
 }
