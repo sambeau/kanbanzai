@@ -24,11 +24,12 @@ type ProposedTask struct {
 
 // Proposal is the complete decomposition proposal for a feature.
 type Proposal struct {
-	Tasks          []ProposedTask `json:"tasks"`
-	TotalTasks     int            `json:"total_tasks"`
-	EstimatedTotal *float64       `json:"estimated_total,omitempty"`
-	Slices         []string       `json:"slices"`
-	Warnings       []string       `json:"warnings"`
+	Tasks          []ProposedTask  `json:"tasks"`
+	TotalTasks     int             `json:"total_tasks"`
+	EstimatedTotal *float64        `json:"estimated_total,omitempty"`
+	Slices         []string        `json:"slices"`
+	SliceDetails   []AnalysisSlice `json:"slice_details,omitempty"`
+	Warnings       []string        `json:"warnings"`
 }
 
 // DecomposeResult is the output of DecomposeService.DecomposeFeature.
@@ -60,6 +61,30 @@ type DecomposeReviewResult struct {
 	Findings      []Finding `json:"findings"`
 	TotalFindings int       `json:"total_findings"`
 	BlockingCount int       `json:"blocking_count"`
+}
+
+// SliceAnalysisInput is the input for DecomposeService.SliceAnalysis.
+type SliceAnalysisInput struct {
+	FeatureID string
+}
+
+// AnalysisSlice is a candidate vertical slice in a feature.
+type AnalysisSlice struct {
+	Name      string   `json:"name"`
+	Outcomes  []string `json:"outcomes"`
+	Layers    []string `json:"layers"`
+	Estimate  string   `json:"estimate"`
+	DependsOn []string `json:"depends_on,omitempty"`
+	Rationale string   `json:"rationale"`
+}
+
+// SliceAnalysisResult is the output of DecomposeService.SliceAnalysis.
+type SliceAnalysisResult struct {
+	FeatureID     string          `json:"feature_id"`
+	FeatureSlug   string          `json:"feature_slug"`
+	Slices        []AnalysisSlice `json:"slices"`
+	TotalSlices   int             `json:"total_slices"`
+	AnalysisNotes string          `json:"analysis_notes"`
 }
 
 // DecomposeService provides feature decomposition and proposal review.
@@ -106,12 +131,59 @@ func (s *DecomposeService) DecomposeFeature(input DecomposeInput) (DecomposeResu
 	// 5. Generate proposal by applying embedded guidance.
 	proposal, guidance := generateProposal(spec, featureSlug, input.Context)
 
+	// 6. Enrich with detailed slice analysis.
+	proposal.SliceDetails = analyzeSlices(spec, content)
+
 	return DecomposeResult{
 		FeatureID:       feat.ID,
 		FeatureSlug:     featureSlug,
 		SpecDocumentID:  docResult.ID,
 		Proposal:        proposal,
 		GuidanceApplied: guidance,
+	}, nil
+}
+
+// SliceAnalysis performs a standalone vertical slice analysis of a feature
+// without committing to a decomposition. Returns candidate slices with
+// outcomes, stack layers, size estimates, and inter-slice dependencies.
+func (s *DecomposeService) SliceAnalysis(input SliceAnalysisInput) (SliceAnalysisResult, error) {
+	if strings.TrimSpace(input.FeatureID) == "" {
+		return SliceAnalysisResult{}, fmt.Errorf("feature_id is required")
+	}
+
+	feat, err := s.entitySvc.Get("feature", input.FeatureID, "")
+	if err != nil {
+		return SliceAnalysisResult{}, fmt.Errorf("load feature %s: %w", input.FeatureID, err)
+	}
+
+	featureSlug, _ := feat.State["slug"].(string)
+	specDocID, _ := feat.State["spec"].(string)
+
+	if specDocID == "" {
+		return SliceAnalysisResult{}, fmt.Errorf("feature %s has no linked specification document", feat.ID)
+	}
+
+	content, _, err := s.docSvc.GetDocumentContent(specDocID)
+	if err != nil {
+		return SliceAnalysisResult{}, fmt.Errorf("load spec document %s: %w", specDocID, err)
+	}
+
+	spec := parseSpecStructure(content)
+	slices := analyzeSlices(spec, content)
+
+	var notes string
+	if len(slices) == 0 {
+		notes = "No candidate slices identified. The spec may lack level-2 section structure."
+	} else if len(spec.acceptanceCriteria) == 0 {
+		notes = "No acceptance criteria found; slices derived from section structure only."
+	}
+
+	return SliceAnalysisResult{
+		FeatureID:     feat.ID,
+		FeatureSlug:   featureSlug,
+		Slices:        slices,
+		TotalSlices:   len(slices),
+		AnalysisNotes: notes,
 	}, nil
 }
 
@@ -189,8 +261,9 @@ type specSection struct {
 }
 
 type acceptanceCriterion struct {
-	text    string
-	section string // enclosing section title
+	text     string
+	section  string // enclosing section title (nearest header)
+	parentL2 string // enclosing level-2 section title
 }
 
 var (
@@ -210,34 +283,37 @@ func parseSpecStructure(content string) specStructure {
 	lines := strings.Split(content, "\n")
 
 	currentSection := ""
+	currentL2 := ""
 	inACSection := false
 
 	for _, line := range lines {
-		// Check for headers.
 		if m := reHeader.FindStringSubmatch(line); m != nil {
 			level := len(m[1])
 			title := strings.TrimSpace(m[2])
 			spec.sections = append(spec.sections, specSection{title: title, level: level})
 			currentSection = title
+			if level == 2 {
+				currentL2 = title
+			}
 			inACSection = isAcceptanceCriteriaSection(title)
 			continue
 		}
 
-		// Check for checkbox-style acceptance criteria (anywhere in doc).
 		if m := reCheckbox.FindStringSubmatch(line); m != nil {
 			spec.acceptanceCriteria = append(spec.acceptanceCriteria, acceptanceCriterion{
-				text:    strings.TrimSpace(m[1]),
-				section: currentSection,
+				text:     strings.TrimSpace(m[1]),
+				section:  currentSection,
+				parentL2: currentL2,
 			})
 			continue
 		}
 
-		// Check for numbered items inside acceptance criteria sections.
 		if inACSection {
 			if m := reNumbered.FindStringSubmatch(line); m != nil {
 				spec.acceptanceCriteria = append(spec.acceptanceCriteria, acceptanceCriterion{
-					text:    strings.TrimSpace(m[1]),
-					section: currentSection,
+					text:     strings.TrimSpace(m[1]),
+					section:  currentSection,
+					parentL2: currentL2,
 				})
 			}
 		}
@@ -397,6 +473,137 @@ func identifySlices(spec specStructure) []string {
 		}
 	}
 	return slices
+}
+
+// analyzeSlices performs rich slice analysis: outcomes, layers, estimates, dependencies.
+func analyzeSlices(spec specStructure, content string) []AnalysisSlice {
+	sliceNames := identifySlices(spec)
+	if len(sliceNames) == 0 {
+		return nil
+	}
+
+	sectionText := extractSectionContent(content)
+
+	var slices []AnalysisSlice
+	for _, name := range sliceNames {
+		slice := AnalysisSlice{Name: name}
+
+		for _, ac := range spec.acceptanceCriteria {
+			if ac.parentL2 == name || ac.section == name {
+				slice.Outcomes = append(slice.Outcomes, ac.text)
+			}
+		}
+
+		text := sectionText[name]
+		for _, o := range slice.Outcomes {
+			text += " " + o
+		}
+		slice.Layers = detectLayers(text)
+		slice.Estimate = estimateSliceSize(len(slice.Outcomes), len(slice.Layers))
+		slice.Rationale = buildSliceRationale(slice)
+
+		slices = append(slices, slice)
+	}
+
+	detectSliceDependencies(slices, sectionText)
+	return slices
+}
+
+// extractSectionContent splits raw markdown by level-2 headers and returns
+// the body text under each section, keyed by section title.
+func extractSectionContent(content string) map[string]string {
+	result := make(map[string]string)
+	lines := strings.Split(content, "\n")
+
+	var current string
+	var body strings.Builder
+
+	for _, line := range lines {
+		if m := reHeader.FindStringSubmatch(line); m != nil && len(m[1]) == 2 {
+			if current != "" {
+				result[current] = body.String()
+			}
+			current = strings.TrimSpace(m[2])
+			body.Reset()
+		} else if current != "" {
+			body.WriteString(line)
+			body.WriteByte(' ')
+		}
+	}
+	if current != "" {
+		result[current] = body.String()
+	}
+	return result
+}
+
+var layerKeywords = map[string][]string{
+	"storage": {"database", "db", "store", "persist", "table", "schema", "migration", "sql", "repository", "model", "record", "query"},
+	"service": {"service", "logic", "process", "validate", "business", "rule", "domain", "compute", "calculate", "transform"},
+	"api":     {"api", "endpoint", "route", "mcp", "tool", "handler", "request", "response", "http", "rest"},
+	"cli":     {"cli", "command", "flag", "interface", "display", "output", "terminal", "prompt"},
+}
+
+func detectLayers(text string) []string {
+	lower := strings.ToLower(text)
+	var layers []string
+	for layer, keywords := range layerKeywords {
+		for _, kw := range keywords {
+			if strings.Contains(lower, kw) {
+				layers = append(layers, layer)
+				break
+			}
+		}
+	}
+	order := map[string]int{"storage": 0, "service": 1, "api": 2, "cli": 3}
+	for i := 0; i < len(layers)-1; i++ {
+		for j := i + 1; j < len(layers); j++ {
+			if order[layers[i]] > order[layers[j]] {
+				layers[i], layers[j] = layers[j], layers[i]
+			}
+		}
+	}
+	return layers
+}
+
+func estimateSliceSize(outcomes, layers int) string {
+	if outcomes >= 4 || layers >= 3 {
+		return "large"
+	}
+	if outcomes >= 2 || layers >= 2 {
+		return "medium"
+	}
+	return "small"
+}
+
+func buildSliceRationale(s AnalysisSlice) string {
+	var parts []string
+	if len(s.Outcomes) > 0 {
+		parts = append(parts, fmt.Sprintf("%d acceptance criteria", len(s.Outcomes)))
+	} else {
+		parts = append(parts, "no explicit acceptance criteria; derived from section structure")
+	}
+	if len(s.Layers) > 0 {
+		parts = append(parts, fmt.Sprintf("touches %s", strings.Join(s.Layers, ", ")))
+	}
+	return strings.Join(parts, "; ")
+}
+
+func detectSliceDependencies(slices []AnalysisSlice, sectionText map[string]string) {
+	for i := range slices {
+		text := strings.ToLower(sectionText[slices[i].Name])
+		for _, o := range slices[i].Outcomes {
+			text += " " + strings.ToLower(o)
+		}
+		for j := range slices {
+			if i == j {
+				continue
+			}
+			nameLower := strings.ToLower(slices[j].Name)
+			if strings.Contains(text, nameLower) {
+				slices[i].DependsOn = append(slices[i].DependsOn, slices[j].Name)
+			}
+		}
+	}
 }
 
 // buildTaskSlug creates a slug for a proposed task from the feature slug

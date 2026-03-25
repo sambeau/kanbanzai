@@ -820,6 +820,216 @@ func TestEstimatedTotal(t *testing.T) {
 	}
 }
 
+// ---------------------------------------------------------------------------
+// Track F: Vertical slice analysis tests (§16.5)
+// ---------------------------------------------------------------------------
+
+func TestSliceAnalysis_NoSpecReturnsError(t *testing.T) {
+	t.Parallel()
+	svc, featureID, _ := setupDecomposeTest(t, "")
+
+	_, err := svc.SliceAnalysis(SliceAnalysisInput{FeatureID: featureID})
+	if err == nil {
+		t.Fatal("expected error when feature has no linked spec, got nil")
+	}
+	want := "has no linked specification document"
+	if got := err.Error(); !contains(got, want) {
+		t.Errorf("error = %q, want it to contain %q", got, want)
+	}
+}
+
+func TestSliceAnalysis_MultiCriterionSpec(t *testing.T) {
+	t.Parallel()
+
+	specContent := `# User Management
+
+## Authentication
+
+### Acceptance Criteria
+
+- [ ] Users can log in with email and password
+- [ ] Users can reset their password via email link
+- [ ] Sessions expire after 24 hours of inactivity
+
+## Profile Management
+
+### Acceptance Criteria
+
+- [ ] Users can update their display name
+- [ ] Users can upload an avatar image to the storage service
+
+## Admin Dashboard
+
+### Acceptance Criteria
+
+- [ ] Admin users can list all users via the API endpoint
+- [ ] Admin users can disable accounts through the CLI command
+- [ ] Admin users can view login history from the database
+`
+
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+
+	result, err := svc.SliceAnalysis(SliceAnalysisInput{FeatureID: featureID})
+	if err != nil {
+		t.Fatalf("SliceAnalysis() error = %v", err)
+	}
+
+	if result.FeatureID != featureID {
+		t.Errorf("FeatureID = %q, want %q", result.FeatureID, featureID)
+	}
+
+	// §16.5: identifies at least one slice for a multi-criterion spec
+	if result.TotalSlices < 1 {
+		t.Fatalf("TotalSlices = %d, want at least 1", result.TotalSlices)
+	}
+
+	// §16.5: each slice includes name, outcomes, layers, estimate, rationale
+	for i, s := range result.Slices {
+		if s.Name == "" {
+			t.Errorf("slice[%d].Name is empty", i)
+		}
+		if s.Estimate == "" {
+			t.Errorf("slice[%d] %q: Estimate is empty", i, s.Name)
+		}
+		if s.Estimate != "small" && s.Estimate != "medium" && s.Estimate != "large" {
+			t.Errorf("slice[%d] %q: Estimate = %q, want small|medium|large", i, s.Name, s.Estimate)
+		}
+		if s.Rationale == "" {
+			t.Errorf("slice[%d] %q: Rationale is empty", i, s.Name)
+		}
+	}
+
+	// Check that we got the expected slices
+	sliceByName := make(map[string]AnalysisSlice)
+	for _, s := range result.Slices {
+		sliceByName[s.Name] = s
+	}
+
+	auth, ok := sliceByName["Authentication"]
+	if !ok {
+		t.Fatal("expected slice named 'Authentication'")
+	}
+	if len(auth.Outcomes) < 2 {
+		t.Errorf("Authentication outcomes = %d, want at least 2", len(auth.Outcomes))
+	}
+
+	admin, ok := sliceByName["Admin Dashboard"]
+	if !ok {
+		t.Fatal("expected slice named 'Admin Dashboard'")
+	}
+	// Admin Dashboard mentions database, API, CLI → multiple layers
+	if len(admin.Layers) < 2 {
+		t.Errorf("Admin Dashboard layers = %v, want at least 2", admin.Layers)
+	}
+}
+
+func TestSliceAnalysis_InterSliceDependency(t *testing.T) {
+	t.Parallel()
+
+	// The "Notifications" section references "Authentication" by name,
+	// so slice analysis should detect a dependency.
+	specContent := `# Messaging Feature
+
+## Authentication
+
+### Acceptance Criteria
+
+- [ ] Users can authenticate with the API using JWT tokens
+- [ ] Tokens are validated on every request handler
+
+## Notifications
+
+### Acceptance Criteria
+
+- [ ] The system sends email notifications after Authentication is complete
+- [ ] Notification preferences are stored in the database
+`
+
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+
+	result, err := svc.SliceAnalysis(SliceAnalysisInput{FeatureID: featureID})
+	if err != nil {
+		t.Fatalf("SliceAnalysis() error = %v", err)
+	}
+
+	// §16.5: inter-slice dependencies are identified
+	sliceByName := make(map[string]AnalysisSlice)
+	for _, s := range result.Slices {
+		sliceByName[s.Name] = s
+	}
+
+	notif, ok := sliceByName["Notifications"]
+	if !ok {
+		t.Fatal("expected slice named 'Notifications'")
+	}
+
+	foundDep := false
+	for _, dep := range notif.DependsOn {
+		if dep == "Authentication" {
+			foundDep = true
+			break
+		}
+	}
+	if !foundDep {
+		t.Errorf("Notifications.DependsOn = %v, want it to contain 'Authentication'", notif.DependsOn)
+	}
+}
+
+func TestSliceAnalysis_EmptyFeatureID(t *testing.T) {
+	t.Parallel()
+	svc, _, _ := setupDecomposeTest(t, "")
+
+	_, err := svc.SliceAnalysis(SliceAnalysisInput{FeatureID: ""})
+	if err == nil {
+		t.Fatal("expected error for empty feature_id, got nil")
+	}
+}
+
+func TestDecomposeFeature_SliceDetailsPopulated(t *testing.T) {
+	t.Parallel()
+
+	specContent := `# Feature Spec
+
+## Storage Layer
+
+### Acceptance Criteria
+
+- [ ] Data is persisted in a database table
+- [ ] Records can be queried by ID
+
+## API Layer
+
+### Acceptance Criteria
+
+- [ ] Endpoint accepts POST requests to create records
+- [ ] Endpoint returns JSON responses from the handler
+`
+
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+
+	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err != nil {
+		t.Fatalf("DecomposeFeature() error = %v", err)
+	}
+
+	// §F.5/F.8: decompose_feature includes slice details in the proposal
+	if len(result.Proposal.SliceDetails) == 0 {
+		t.Error("expected non-empty SliceDetails in proposal")
+	}
+
+	for i, s := range result.Proposal.SliceDetails {
+		if s.Name == "" {
+			t.Errorf("SliceDetails[%d].Name is empty", i)
+		}
+		if s.Estimate == "" {
+			t.Errorf("SliceDetails[%d].Estimate is empty", i)
+		}
+		if s.Rationale == "" {
+			t.Errorf("SliceDetails[%d].Rationale is empty", i)
+		}
+	}
+}
+
 // contains reports whether s contains substr (case-insensitive-ish helper).
 func contains(s, substr string) bool {
 	return len(s) >= len(substr) && searchString(s, substr)
