@@ -1,14 +1,8 @@
 id: FEAT-01KMKRQWF0FCH
 slug: hardening
 parent: P3-kanbanzai-1.0
-status: proposed
-summary:
-  "1.0 robustness: human-readable error messages throughout, clean-machine
-  testing, edge case handling in init (non-git dir, existing .kbz, conflicting .skills,
-  no write permission), CLI help text, and partial state recovery. Also: doc_record_refresh
-  tool to update a registered document's hash after editing (without re-registering);
-  MCP tool safety annotations (readOnlyHint, destructiveHint, idempotentHint) on all
-  kanbanzai tools so MCP clients can make informed auto-approval decisions — tools
-  that only write to .kbz/ should be auto-approvable without user confirmation."
+status: specifying
+summary: "1.0 robustness: human-readable error messages throughout, clean-machine testing, edge case handling in init (non-git dir, existing .kbz, conflicting .skills, no write permission), CLI help text, and partial state recovery. Also: doc_record_refresh tool to update a registered document's hash after editing (without re-registering); MCP tool safety annotations (readOnlyHint, destructiveHint, idempotentHint) on all kanbanzai tools so MCP clients can make informed auto-approval decisions — tools that only write to .kbz/ should be auto-approvable without user confirmation."
+spec: FEAT-01KMKRQWF0FCH/specification-hardening
 created: "2026-03-26T00:29:36Z"
 created_by: sambeau
