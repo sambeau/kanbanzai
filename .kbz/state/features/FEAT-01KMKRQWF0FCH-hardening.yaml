@@ -1,0 +1,7 @@
+id: FEAT-01KMKRQWF0FCH
+slug: hardening
+parent: P3-kanbanzai-1.0
+status: proposed
+summary: "1.0 robustness: human-readable error messages throughout, clean-machine testing, edge case handling in init (non-git dir, existing .kbz, conflicting .skills, no write permission), CLI help text, and partial state recovery."
+created: "2026-03-26T00:29:36Z"
+created_by: sambeau

@@ -1,0 +1,9 @@
+id: P3-kanbanzai-1.0
+slug: kanbanzai-1.0
+title: Kanbanzai 1.0
+status: designing
+summary: "Make Kanbanzai installable and usable by projects other than itself: pre-compiled binary distribution, skills-based agent onboarding, public schema interface, kanbanzai init command, and user documentation."
+design: PROJECT/design-kanbanzai-10
+created: "2026-03-26T00:28:22Z"
+created_by: sambeau
+updated: "2026-03-26T00:28:59Z"

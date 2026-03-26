@@ -1,0 +1,7 @@
+id: FEAT-01KMKRQV025FA
+slug: public-schema-interface
+parent: P3-kanbanzai-1.0
+status: proposed
+summary: "Make the .kbz schema a stable public interface: exportable Go types and parsing for external consumers, generated JSON Schema for non-Go consumers, schema versioning and compatibility policy. Needs its own design document."
+created: "2026-03-26T00:29:34Z"
+created_by: sambeau
