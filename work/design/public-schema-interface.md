@@ -2,7 +2,7 @@
 
 - Status: draft design
 - Purpose: define the .kbz schema as a stable public interface for external consumers, including the viewer and any other tools that read Kanbanzai workflow state
-- Date: 2026-05-31
+- Date: 2026-03-26T11:00:35Z
 - Related:
   - `work/design/kanbanzai-1.0.md` §7
   - `work/design/init-command.md` §6

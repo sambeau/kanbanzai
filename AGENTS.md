@@ -190,6 +190,8 @@ The SKILL provides step-by-step procedures for:
 
 **Key principle:** Always register documents immediately after creating them. Unregistered documents are invisible to document intelligence, entity extraction, approval workflow, and health checks.
 
+**Dates and timestamps:** Always call `now(timezone="utc")` before writing any date field in document content. Never invent or guess a date. Use full UTC ISO 8601 format (`YYYY-MM-DDTHH:MM:SSZ`) in document metadata headers — the same format used by entity records in `.kbz/state/`. This lets any viewer convert to local time and keeps the project timeline consistent.
+
 **Quick reference:**
 
 ```
