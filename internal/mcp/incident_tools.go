@@ -30,6 +30,9 @@ func incidentCreateTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("summary", mcp.Description("Brief summary of the incident"), mcp.Required()),
 		mcp.WithString("reported_by", mcp.Description("Who reported the incident. Auto-resolved from .kbz/local.yaml or git config if not provided."), mcp.Required()),
 		mcp.WithString("detected_at", mcp.Description("When the incident was detected (ISO 8601). Defaults to now if not provided.")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		slug, err := request.RequireString("slug")
@@ -85,6 +88,9 @@ func incidentUpdateTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("mitigated_at", mcp.Description("When the incident was mitigated (ISO 8601)")),
 		mcp.WithString("resolved_at", mcp.Description("When the incident was resolved (ISO 8601)")),
 		mcp.WithArray("affected_features", mcp.Description("List of affected feature IDs (replaces existing list)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		incidentID, err := request.RequireString("incident_id")
@@ -131,6 +137,9 @@ func incidentListTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithDescription("List incidents with optional status and severity filters"),
 		mcp.WithString("status", mcp.Description("Filter by status (e.g. reported, triaged, investigating, resolved, closed)")),
 		mcp.WithString("severity", mcp.Description("Filter by severity (critical, high, medium, low)")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		statusFilter := request.GetString("status", "")
@@ -155,6 +164,9 @@ func incidentLinkBugTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithDescription("Link a bug to an incident. Adds the bug to the incident's linked_bugs list. Idempotent — linking the same bug twice has no effect."),
 		mcp.WithString("incident_id", mcp.Description("Incident ID (full or prefix)"), mcp.Required()),
 		mcp.WithString("bug_id", mcp.Description("Bug ID to link"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		incidentID, err := request.RequireString("incident_id")

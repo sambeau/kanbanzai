@@ -31,6 +31,9 @@ func createPlanTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("summary", mcp.Description("Brief description of the Plan's purpose and scope"), mcp.Required()),
 		mcp.WithString("created_by", mcp.Description("Who created the Plan. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 		mcp.WithArray("tags", mcp.Description("Optional freeform tags for organisation (e.g., phase:2, priority:high)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		prefix, err := request.RequireString("prefix")
@@ -77,6 +80,9 @@ func getPlanTool(svc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("get_plan",
 		mcp.WithDescription("Get a Plan by its ID. Plan IDs have the format {prefix}{number}-{slug}, e.g., P1-basic-ui."),
 		mcp.WithString("id", mcp.Description("Plan ID (e.g., P1-basic-ui)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -99,6 +105,9 @@ func listPlansTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("status", mcp.Description("Filter by status (proposed, designing, active, done, superseded, cancelled)")),
 		mcp.WithString("prefix", mcp.Description("Filter by Plan prefix (single character)")),
 		mcp.WithArray("tags", mcp.Description("Filter by tags (Plans must have all specified tags)")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		var filters service.PlanFilters
@@ -122,6 +131,9 @@ func updatePlanStatusTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("id", mcp.Description("Plan ID"), mcp.Required()),
 		mcp.WithString("slug", mcp.Description("Plan slug"), mcp.Required()),
 		mcp.WithString("status", mcp.Description("New status (proposed, designing, active, done, superseded, cancelled)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -155,6 +167,9 @@ func updatePlanTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("summary", mcp.Description("New summary (optional)")),
 		mcp.WithString("design", mcp.Description("Reference to design document record (optional, empty string to clear)")),
 		mcp.WithArray("tags", mcp.Description("New tags (replaces existing tags)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")

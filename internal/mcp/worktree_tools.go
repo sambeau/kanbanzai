@@ -41,6 +41,9 @@ func worktreeCreateTool(store *worktree.Store, entitySvc *service.EntityService,
 		mcp.WithString("branch_name", mcp.Description("Custom branch name (auto-generated if omitted)")),
 		mcp.WithString("created_by", mcp.Description("Who created the worktree. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 		mcp.WithString("slug", mcp.Description("Human-readable slug for branch naming (extracted from entity if omitted)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")
@@ -128,6 +131,9 @@ func worktreeListTool(store *worktree.Store) server.ServerTool {
 		mcp.WithDescription("List all worktrees with optional filtering by status or entity."),
 		mcp.WithString("status", mcp.Description("Filter by status: active, merged, abandoned, or all (default: all)")),
 		mcp.WithString("entity_id", mcp.Description("Filter by entity ID")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		statusFilter := request.GetString("status", "all")
@@ -169,6 +175,9 @@ func worktreeGetTool(store *worktree.Store) server.ServerTool {
 	tool := mcp.NewTool("worktree_get",
 		mcp.WithDescription("Get the worktree record for a specific entity."),
 		mcp.WithString("entity_id", mcp.Description("Entity ID (FEAT-... or BUG-...)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")
@@ -198,6 +207,9 @@ func worktreeRemoveTool(store *worktree.Store, gitOps *worktree.Git) server.Serv
 		mcp.WithDescription("Remove a worktree for an entity. By default, fails if there are uncommitted changes."),
 		mcp.WithString("entity_id", mcp.Description("Entity ID (FEAT-... or BUG-...)"), mcp.Required()),
 		mcp.WithBoolean("force", mcp.Description("If true, remove even with uncommitted changes (default: false)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")
@@ -244,6 +256,9 @@ func branchStatusTool(store *worktree.Store, repoPath string, thresholds git.Bra
 	tool := mcp.NewTool("branch_status",
 		mcp.WithDescription("Get branch health metrics for an entity's worktree branch. Reports staleness, drift from main, and merge conflicts."),
 		mcp.WithString("entity_id", mcp.Description("Entity ID (FEAT-... or BUG-...)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")

@@ -18,6 +18,7 @@ func DocRecordTools(docSvc *service.DocumentService) []server.ServerTool {
 		docRecordSubmitTool(docSvc),
 		docRecordApproveTool(docSvc),
 		docRecordSupersedeTool(docSvc),
+		docRecordRefreshTool(docSvc),
 		docRecordGetTool(docSvc),
 		docRecordGetContentTool(docSvc),
 		docRecordListTool(docSvc),
@@ -34,6 +35,9 @@ func docRecordSubmitTool(docSvc *service.DocumentService) server.ServerTool {
 		mcp.WithString("title", mcp.Description("Human-readable title for the document"), mcp.Required()),
 		mcp.WithString("owner", mcp.Description("Optional parent Plan or Feature ID that owns this document")),
 		mcp.WithString("created_by", mcp.Description("Who is submitting the document. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		path, err := request.RequireString("path")
@@ -76,6 +80,9 @@ func docRecordApproveTool(docSvc *service.DocumentService) server.ServerTool {
 		mcp.WithDescription("Transition a document from draft to approved status. The content hash must match the current file content. Approval triggers lifecycle transitions on the owning entity."),
 		mcp.WithString("id", mcp.Description("Document record ID"), mcp.Required()),
 		mcp.WithString("approved_by", mcp.Description("Who is approving the document. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -100,11 +107,56 @@ func docRecordApproveTool(docSvc *service.DocumentService) server.ServerTool {
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
 
+func docRecordRefreshTool(docSvc *service.DocumentService) server.ServerTool {
+	tool := mcp.NewTool("doc_record_refresh",
+		mcp.WithDescription("Update a document record's stored content hash to match the current file on disk. If the document was approved and the file has changed, the status is reset to draft for re-review. Use this after editing a registered document file to clear drift warnings without re-registering."),
+		mcp.WithString("id", mcp.Description("Document record ID (e.g. DOC-01KMKRQWF0FCH)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+	)
+	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+		id, err := request.RequireString("id")
+		if err != nil {
+			return mcp.NewToolResultError(err.Error()), nil
+		}
+
+		result, err := docSvc.RefreshDocument(service.RefreshDocumentInput{ID: id})
+		if err != nil {
+			return mcp.NewToolResultError(err.Error()), nil
+		}
+
+		response := map[string]any{
+			"success":  true,
+			"id":       result.ID,
+			"changed":  result.Changed,
+			"old_hash": result.OldHash,
+			"new_hash": result.NewHash,
+			"status":   result.Status,
+		}
+		if result.StatusTransition != "" {
+			response["status_transition"] = result.StatusTransition
+		}
+		if result.Message != "" {
+			response["message"] = result.Message
+		}
+		if !result.Changed {
+			response["message"] = "File content has not changed; no update was needed."
+		}
+
+		return docRecordMapJSON(response)
+	}
+	return server.ServerTool{Tool: tool, Handler: handler}
+}
+
 func docRecordSupersedeTool(docSvc *service.DocumentService) server.ServerTool {
 	tool := mcp.NewTool("doc_record_supersede",
 		mcp.WithDescription("Transition a document from approved to superseded status, linking to the newer document that replaces it. Supersession may trigger backward lifecycle transitions on the owning entity."),
 		mcp.WithString("id", mcp.Description("Document record ID being superseded"), mcp.Required()),
 		mcp.WithString("superseded_by", mcp.Description("Document record ID of the document that supersedes this one"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -133,6 +185,9 @@ func docRecordGetTool(docSvc *service.DocumentService) server.ServerTool {
 		mcp.WithDescription("Get a document record by ID. Returns metadata including status, owner, content hash, and drift detection."),
 		mcp.WithString("id", mcp.Description("Document record ID"), mcp.Required()),
 		mcp.WithBoolean("check_drift", mcp.Description("Whether to check if content has changed since recorded (default: true)")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -160,6 +215,9 @@ func docRecordGetContentTool(docSvc *service.DocumentService) server.ServerTool 
 	tool := mcp.NewTool("doc_record_get_content",
 		mcp.WithDescription("Get the content of a document file. For approved documents, this should be verbatim as approved. Includes drift detection warning if content has changed."),
 		mcp.WithString("id", mcp.Description("Document record ID"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -202,6 +260,9 @@ func docRecordListTool(docSvc *service.DocumentService) server.ServerTool {
 		mcp.WithString("type", mcp.Description("Filter by document type: design, specification, dev-plan, research, report, policy")),
 		mcp.WithString("status", mcp.Description("Filter by status: draft, approved, superseded")),
 		mcp.WithString("owner", mcp.Description("Filter by owner entity ID")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		var filters service.DocumentFilters
@@ -223,6 +284,9 @@ func docRecordListTool(docSvc *service.DocumentService) server.ServerTool {
 func docRecordListPendingTool(docSvc *service.DocumentService) server.ServerTool {
 	tool := mcp.NewTool("doc_record_list_pending",
 		mcp.WithDescription("List all documents in draft status that are awaiting approval or classification."),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		results, err := docSvc.ListPendingDocuments()
@@ -239,6 +303,9 @@ func docRecordValidateTool(docSvc *service.DocumentService) server.ServerTool {
 	tool := mcp.NewTool("doc_record_validate",
 		mcp.WithDescription("Validate a document record and check content integrity. Returns a list of any issues found."),
 		mcp.WithString("id", mcp.Description("Document record ID"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")

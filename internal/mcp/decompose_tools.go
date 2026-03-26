@@ -34,6 +34,9 @@ func decomposeFeatureTool(svc *service.DecomposeService) server.ServerTool {
 		mcp.WithString("context",
 			mcp.Description("Additional guidance for the decomposition (passed as orchestration context)"),
 		),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -73,6 +76,9 @@ func decomposeReviewTool(svc *service.DecomposeService) server.ServerTool {
 			mcp.Description("The proposal object from decompose_feature output"),
 			mcp.Required(),
 		),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -125,6 +131,9 @@ func sliceAnalysisTool(svc *service.DecomposeService) server.ServerTool {
 			mcp.Description("FEAT ID of the feature to analyse"),
 			mcp.Required(),
 		),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {

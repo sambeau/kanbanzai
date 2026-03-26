@@ -34,6 +34,9 @@ func reviewTaskOutputTool(svc *service.ReviewService) server.ServerTool {
 		mcp.WithString("output_summary",
 			mcp.Description("Agent's description of what was done"),
 		),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {

@@ -43,6 +43,9 @@ func prCreateTool(
 		mcp.WithDescription("Create a new pull request for an entity's branch on GitHub."),
 		mcp.WithString("entity_id", mcp.Description("Entity ID (FEAT-... or BUG-...)"), mcp.Required()),
 		mcp.WithBoolean("draft", mcp.Description("Create as draft PR (default: false)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")
@@ -72,6 +75,9 @@ func prUpdateTool(
 	tool := mcp.NewTool("pr_update",
 		mcp.WithDescription("Update an existing pull request's description and labels based on current entity state."),
 		mcp.WithString("entity_id", mcp.Description("Entity ID (FEAT-... or BUG-...)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")
@@ -97,6 +103,9 @@ func prStatusTool(
 	tool := mcp.NewTool("pr_status",
 		mcp.WithDescription("Get the status of a pull request for an entity, including CI status, reviews, and merge conflicts."),
 		mcp.WithString("entity_id", mcp.Description("Entity ID (FEAT-... or BUG-...)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")

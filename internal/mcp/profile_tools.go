@@ -24,6 +24,9 @@ func profileGetTool(store *kbzctx.ProfileStore) server.ServerTool {
 		mcp.WithDescription("Get a context profile by ID. By default returns the fully resolved profile with inheritance applied. Set resolved=false to return the raw profile as defined in its file."),
 		mcp.WithString("id", mcp.Description("Profile ID (filename without .yaml extension)"), mcp.Required()),
 		mcp.WithBoolean("resolved", mcp.Description("Whether to apply inheritance resolution (default: true)")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -101,6 +104,9 @@ func profileGetTool(store *kbzctx.ProfileStore) server.ServerTool {
 func profileListTool(store *kbzctx.ProfileStore) server.ServerTool {
 	tool := mcp.NewTool("profile_list",
 		mcp.WithDescription("List all context profiles with their ID, parent (inherits), and description."),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		profiles, err := store.LoadAll()

@@ -19,6 +19,9 @@ func MigrationTools(svc *service.EntityService) []server.ServerTool {
 func migratePhase2Tool(svc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("migrate_phase2",
 		mcp.WithDescription("Migrate Phase 1 epic entities to Phase 2 plan entities. Converts epics to plans, updates feature references, and creates required directories. The migration is idempotent: re-running it skips already-migrated entities. Requires a configured prefix registry in .kbz/config.yaml."),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		result, err := svc.MigratePhase2()

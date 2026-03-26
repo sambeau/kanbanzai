@@ -46,6 +46,9 @@ func knowledgeContributeTool(svc *service.KnowledgeService) server.ServerTool {
 		mcp.WithString("learned_from", mcp.Description("Optional provenance: Task ID or other reference")),
 		mcp.WithString("created_by", mcp.Description("Identity of the contributor")),
 		mcp.WithArray("tags", mcp.WithStringItems(), mcp.Description("Optional classification tags")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		topic, err := request.RequireString("topic")
@@ -108,6 +111,9 @@ func knowledgeGetTool(svc *service.KnowledgeService) server.ServerTool {
 	tool := mcp.NewTool("knowledge_get",
 		mcp.WithDescription("Get a knowledge entry by ID. Includes staleness information for entries with git_anchors."),
 		mcp.WithString("id", mcp.Description("Knowledge entry ID (KE-...)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -145,6 +151,9 @@ func knowledgeListTool(svc *service.KnowledgeService) server.ServerTool {
 		mcp.WithNumber("min_confidence", mcp.Description("Minimum confidence score (0.0–1.0)")),
 		mcp.WithArray("tags", mcp.WithStringItems(), mcp.Description("Filter: entries must have all of these tags")),
 		mcp.WithBoolean("include_retired", mcp.Description("Include retired entries (default: false)")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		filters := service.KnowledgeFilters{
@@ -182,6 +191,9 @@ func knowledgeUpdateTool(svc *service.KnowledgeService) server.ServerTool {
 		mcp.WithDescription("Update the content of a knowledge entry. Resets use_count, miss_count, and confidence to defaults."),
 		mcp.WithString("id", mcp.Description("Knowledge entry ID (KE-...)"), mcp.Required()),
 		mcp.WithString("content", mcp.Description("New content for the entry"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -212,6 +224,9 @@ func knowledgeConfirmTool(svc *service.KnowledgeService) server.ServerTool {
 	tool := mcp.NewTool("knowledge_confirm",
 		mcp.WithDescription("Manually confirm a knowledge entry, transitioning it from contributed or disputed to confirmed status."),
 		mcp.WithString("id", mcp.Description("Knowledge entry ID (KE-...)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -239,6 +254,9 @@ func knowledgeFlagTool(svc *service.KnowledgeService) server.ServerTool {
 		mcp.WithDescription("Flag a knowledge entry as incorrect or disputed. Increments miss_count and recomputes confidence. If miss_count reaches 2, the entry is automatically retired."),
 		mcp.WithString("id", mcp.Description("Knowledge entry ID (KE-...)"), mcp.Required()),
 		mcp.WithString("reason", mcp.Description("Reason for flagging the entry"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -270,6 +288,9 @@ func knowledgeRetireTool(svc *service.KnowledgeService) server.ServerTool {
 		mcp.WithDescription("Manually retire a knowledge entry, marking it as no longer valid. Retired entries are excluded from listing by default."),
 		mcp.WithString("id", mcp.Description("Knowledge entry ID (KE-...)"), mcp.Required()),
 		mcp.WithString("reason", mcp.Description("Reason for retiring the entry"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -300,6 +321,9 @@ func knowledgePromoteTool(svc *service.KnowledgeService) server.ServerTool {
 	tool := mcp.NewTool("knowledge_promote",
 		mcp.WithDescription("Promote a tier-3 knowledge entry to tier 2 in place, extending its TTL from 30 to 90 days."),
 		mcp.WithString("id", mcp.Description("Knowledge entry ID (KE-...)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -328,6 +352,9 @@ func knowledgeContextReportTool(svc *service.KnowledgeService) server.ServerTool
 		mcp.WithString("task_id", mcp.Description("ID of the task that consumed the knowledge entries"), mcp.Required()),
 		mcp.WithArray("used", mcp.WithStringItems(), mcp.Description("List of knowledge entry IDs that were used and found helpful"), mcp.Required()),
 		mcp.WithString("flagged", mcp.Description("JSON array of flagged entries: [{\"entry_id\": \"KE-...\", \"reason\": \"...\"}]")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		taskID, err := request.RequireString("task_id")
@@ -377,6 +404,9 @@ func knowledgeCheckStalenessTool(svc *service.KnowledgeService) server.ServerToo
 		mcp.WithDescription("Check staleness of knowledge entries that have git_anchors. An entry is stale if any anchored file was modified after the entry was last confirmed."),
 		mcp.WithString("entry_id", mcp.Description("Optional: check a specific knowledge entry ID (KE-...). If omitted, checks all anchored entries.")),
 		mcp.WithString("scope", mcp.Description("Optional: filter entries by scope")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entryID := request.GetString("entry_id", "")
@@ -446,6 +476,9 @@ func knowledgePruneTool(svc *service.KnowledgeService) server.ServerTool {
 		mcp.WithDescription("Prune expired knowledge entries based on TTL rules. Tier-3 entries expire after 30 days without use, tier-2 after 90 days."),
 		mcp.WithBoolean("dry_run", mcp.Description("If true, report what would be pruned without actually pruning (default: false)")),
 		mcp.WithNumber("tier", mcp.Description("Optional: only prune entries of this tier (2 or 3)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		dryRun := request.GetBool("dry_run", false)
@@ -511,6 +544,9 @@ func knowledgeCompactTool(svc *service.KnowledgeService) server.ServerTool {
 		mcp.WithDescription("Compact knowledge entries by merging duplicates and near-duplicates, and flagging contradictions. Tier-3 entries are auto-merged; tier-2 entries are flagged for review."),
 		mcp.WithBoolean("dry_run", mcp.Description("If true, report what would be compacted without actually compacting (default: false)")),
 		mcp.WithString("scope", mcp.Description("Optional: only compact entries in this scope")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		dryRun := request.GetBool("dry_run", false)
@@ -605,6 +641,9 @@ func knowledgeResolveConflictTool(svc *service.KnowledgeService) server.ServerTo
 		mcp.WithString("keep", mcp.Description("ID of the knowledge entry to keep (KE-...)"), mcp.Required()),
 		mcp.WithString("retire", mcp.Description("ID of the knowledge entry to retire (KE-...)"), mcp.Required()),
 		mcp.WithBoolean("merge_content", mcp.Description("If true, merge usage counts and git_anchors from the retired entry into the kept entry (default: false)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		keepID, err := request.RequireString("keep")

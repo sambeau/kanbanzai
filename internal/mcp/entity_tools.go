@@ -44,6 +44,9 @@ func createEpicTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("title", mcp.Description("Title of the epic"), mcp.Required()),
 		mcp.WithString("summary", mcp.Description("Brief summary of the epic"), mcp.Required()),
 		mcp.WithString("created_by", mcp.Description("Who created the epic. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		slug, err := request.RequireString("slug")
@@ -86,6 +89,9 @@ func createFeatureTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("created_by", mcp.Description("Who created the feature. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 		mcp.WithString("design", mcp.Description("Optional design document reference")),
 		mcp.WithArray("tags", mcp.Description("Optional tags for cross-cutting organization")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		slug, err := request.RequireString("slug")
@@ -147,6 +153,9 @@ func createTaskTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("parent_feature", mcp.Description("Parent feature ID"), mcp.Required()),
 		mcp.WithString("slug", mcp.Description("URL-friendly identifier for the task"), mcp.Required()),
 		mcp.WithString("summary", mcp.Description("Brief summary of the task"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		parentFeature, err := request.RequireString("parent_feature")
@@ -197,6 +206,9 @@ func createBugTool(svc *service.EntityService) server.ServerTool {
 			mcp.Required(),
 			mcp.Enum("implementation-defect", "specification-defect", "design-problem"),
 		),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		slug, err := request.RequireString("slug")
@@ -256,6 +268,9 @@ func recordDecisionTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("summary", mcp.Description("Brief summary of the decision"), mcp.Required()),
 		mcp.WithString("rationale", mcp.Description("Rationale behind the decision"), mcp.Required()),
 		mcp.WithString("decided_by", mcp.Description("Who made the decision. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		slug, err := request.RequireString("slug")
@@ -299,6 +314,9 @@ func getEntityTool(svc *service.EntityService) server.ServerTool {
 		),
 		mcp.WithString("id", mcp.Description("Entity ID or unambiguous prefix"), mcp.Required()),
 		mcp.WithString("slug", mcp.Description("Entity slug (optional, resolved from ID prefix if omitted)")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityType, err := request.RequireString("entity_type")
@@ -327,6 +345,9 @@ func listEntitiesTool(svc *service.EntityService) server.ServerTool {
 			mcp.Required(),
 			mcp.Enum("epic", "feature", "task", "bug", "decision"),
 		),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityType, err := request.RequireString("entity_type")
@@ -353,6 +374,9 @@ func updateStatusTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("id", mcp.Description("Entity ID or unambiguous prefix"), mcp.Required()),
 		mcp.WithString("slug", mcp.Description("Entity slug (optional, resolved from ID prefix if omitted)")),
 		mcp.WithString("status", mcp.Description("New lifecycle status"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityType, err := request.RequireString("entity_type")
@@ -417,6 +441,9 @@ func updateEntityTool(svc *service.EntityService) server.ServerTool {
 		),
 		mcp.WithString("id", mcp.Description("Entity ID or unambiguous prefix"), mcp.Required()),
 		mcp.WithString("slug", mcp.Description("Entity slug (optional, resolved from ID prefix if omitted)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityType, err := request.RequireString("entity_type")
@@ -460,6 +487,9 @@ func validateCandidateTool(svc *service.EntityService) server.ServerTool {
 			mcp.Required(),
 			mcp.Enum("epic", "feature", "task", "bug", "decision"),
 		),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityType, err := request.RequireString("entity_type")
@@ -483,6 +513,9 @@ func validateCandidateTool(svc *service.EntityService) server.ServerTool {
 func healthCheckTool(svc *service.EntityService, additionalCheckers ...AdditionalHealthChecker) server.ServerTool {
 	tool := mcp.NewTool("health_check",
 		mcp.WithDescription("Run a comprehensive health check across all entities, knowledge entries, and context profiles"),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		report, err := svc.HealthCheck()
@@ -504,6 +537,9 @@ func healthCheckTool(svc *service.EntityService, additionalCheckers ...Additiona
 func rebuildCacheTool(svc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("rebuild_cache",
 		mcp.WithDescription("Rebuild the local derived cache from canonical entity files. The cache accelerates queries but is not required for correctness."),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		count, err := svc.RebuildCache()

@@ -33,6 +33,9 @@ func suggestLinksTool(entitySvc *service.EntityService, knowledgeSvc *service.Kn
 		mcp.WithDescription("Scan free text for entity ID patterns (FEAT-, TASK-, BUG-, DEC-, KE-, Plan IDs) and look up each found ID in the entity and knowledge stores. Returns a list of confirmed references with their entity type and title."),
 		mcp.WithString("text", mcp.Description("Free text to scan for entity references"), mcp.Required()),
 		mcp.WithString("scope", mcp.Description("Optional entity type filter (e.g. feature, task, bug, decision, plan, knowledge_entry)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		text, err := request.RequireString("text")
@@ -110,6 +113,9 @@ func checkDuplicatesTool(entitySvc *service.EntityService, knowledgeSvc *service
 		mcp.WithString("entity_type", mcp.Description("Entity type to check: feature, task, bug, decision, plan, knowledge_entry"), mcp.Required()),
 		mcp.WithString("title", mcp.Description("Title or topic of the candidate entity"), mcp.Required()),
 		mcp.WithString("summary", mcp.Description("Optional summary of the candidate entity")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityType, err := request.RequireString("entity_type")
@@ -192,6 +198,9 @@ func docExtractionGuideTool(intelligenceSvc *service.IntelligenceService) server
 	tool := mcp.NewTool("doc_extraction_guide",
 		mcp.WithDescription("Return an extraction guide for a document: its structural outline with section roles, entity references already found, and classification hints (if Layer 3 analysis has been run). Use this before extracting entities or decisions from a document."),
 		mcp.WithString("document_id", mcp.Description("Document record ID"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		documentID, err := request.RequireString("document_id")

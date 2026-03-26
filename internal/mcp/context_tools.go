@@ -39,6 +39,9 @@ func contextAssembleTool(
 		mcp.WithString("task_id", mcp.Description("Optional task entity ID to include task instructions and design context")),
 		mcp.WithNumber("max_bytes", mcp.Description("Maximum byte budget for the assembled packet (default: 30720)")),
 		mcp.WithString("orchestration_context", mcp.Description("Optional handoff note from the orchestrating agent, injected as an ephemeral Tier 3 entry into the context packet. Not persisted to the knowledge store.")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		role, err := request.RequireString("role")

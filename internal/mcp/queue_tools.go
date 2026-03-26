@@ -24,6 +24,9 @@ func workQueueTool(entitySvc *service.EntityService) server.ServerTool {
 		mcp.WithDescription("Return the current ready task queue, promoting eligible queued tasks first. This is a write-through query: it promotes queued tasks whose dependencies are all in terminal states (done, not-planned, or duplicate) to ready status as a side effect. Returns all ready tasks sorted by estimate (ascending, null last), then age (descending), then task ID."),
 		mcp.WithString("role", mcp.Description("Optional: filter results to tasks whose parent feature matches this role profile")),
 		mcp.WithBoolean("conflict_check", mcp.Description("When true, annotate each ready task with conflict risk against currently active tasks")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		role := request.GetString("role", "")
@@ -82,6 +85,9 @@ func dependencyStatusTool(entitySvc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("dependency_status",
 		mcp.WithDescription("Show the dependency picture for a given task: each dependency, its current status, and whether it is blocking (not yet terminal) or resolved."),
 		mcp.WithString("task_id", mcp.Description("Task ID to check dependencies for"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		taskID, err := request.RequireString("task_id")

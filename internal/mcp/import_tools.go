@@ -26,6 +26,9 @@ func batchImportDocumentsTool(docSvc *service.DocumentService) server.ServerTool
 		mcp.WithString("owner", mcp.Description("Optional parent Plan or Feature ID to assign as owner of imported documents")),
 		mcp.WithString("created_by", mcp.Description("Who is importing the documents. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 		mcp.WithString("glob", mcp.Description("Optional glob pattern to filter files. If the pattern contains a path separator (e.g., 'design/*.md'), it matches against the relative path from the import directory. If the pattern has no separator (e.g., 'api-*.md'), it matches filenames only. Note: '**' recursive matching is not supported; use 'design/*.md' or '*.md' instead. If empty, all .md files are imported.")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {

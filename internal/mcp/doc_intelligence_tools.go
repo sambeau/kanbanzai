@@ -37,6 +37,9 @@ func docClassifyTool(svc *service.IntelligenceService) server.ServerTool {
 		mcp.WithString("model_name", mcp.Description("Name of the LLM that produced the classifications"), mcp.Required()),
 		mcp.WithString("model_version", mcp.Description("Version of the LLM that produced the classifications"), mcp.Required()),
 		mcp.WithString("classifications", mcp.Description("JSON array of classification objects, each with: section_path, role, confidence, summary (optional), concepts_intro (optional), concepts_used (optional)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -92,6 +95,9 @@ func docOutlineTool(svc *service.IntelligenceService) server.ServerTool {
 	tool := mcp.NewTool("doc_outline",
 		mcp.WithDescription("Get the structural outline (Layer 1) of an indexed document. Returns the section tree with paths, titles, levels, word counts, and content hashes."),
 		mcp.WithString("id", mcp.Description("Document ID"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -118,6 +124,9 @@ func docSectionTool(svc *service.IntelligenceService) server.ServerTool {
 		mcp.WithDescription("Get a specific section's metadata and raw content from an indexed document. Use the section_path from doc_outline to identify sections."),
 		mcp.WithString("id", mcp.Description("Document ID"), mcp.Required()),
 		mcp.WithString("section_path", mcp.Description("Section path (e.g. '1', '1.2', '2.3.1')"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")
@@ -156,6 +165,9 @@ func docFindByEntityTool(svc *service.IntelligenceService) server.ServerTool {
 	tool := mcp.NewTool("doc_find_by_entity",
 		mcp.WithDescription("Find all document sections across the corpus that reference a specific entity (FEAT-xxx, TASK-xxx, BUG-xxx, DEC-xxx, EPIC-xxx, or Plan IDs)."),
 		mcp.WithString("entity_id", mcp.Description("Entity ID to search for (e.g. FEAT-001, TASK-042, P1-basic-ui)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")
@@ -182,6 +194,9 @@ func docFindByConceptTool(svc *service.IntelligenceService) server.ServerTool {
 	tool := mcp.NewTool("doc_find_by_concept",
 		mcp.WithDescription("Find all document sections that introduce or use a specific concept. Concepts are identified during Layer 3 classification."),
 		mcp.WithString("concept", mcp.Description("Concept name to search for (case-insensitive, will be normalized)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		concept, err := request.RequireString("concept")
@@ -209,6 +224,9 @@ func docFindByRoleTool(svc *service.IntelligenceService) server.ServerTool {
 		mcp.WithDescription("Find all document fragments with a given semantic role across the corpus. Valid roles: requirement, decision, rationale, constraint, assumption, risk, question, definition, example, alternative, narrative."),
 		mcp.WithString("role", mcp.Description("Fragment role to search for"), mcp.Required()),
 		mcp.WithString("scope", mcp.Description("Optional: limit search to a specific document ID")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		role, err := request.RequireString("role")
@@ -241,6 +259,9 @@ func docTraceTool(svc *service.IntelligenceService) server.ServerTool {
 	tool := mcp.NewTool("doc_trace",
 		mcp.WithDescription("Trace an entity through the document refinement chain. Returns all document sections that reference the entity, ordered by document type (design → specification → dev-plan)."),
 		mcp.WithString("entity_id", mcp.Description("Entity ID to trace through the refinement chain"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")
@@ -267,6 +288,9 @@ func docGapsTool(svc *service.IntelligenceService, docSvc *service.DocumentServi
 	tool := mcp.NewTool("doc_gaps",
 		mcp.WithDescription("Analyze what document types are missing for a feature. Checks whether design, specification, and dev-plan documents exist for the given feature."),
 		mcp.WithString("feature_id", mcp.Description("Feature ID to analyze for document gaps"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		featureID, err := request.RequireString("feature_id")
@@ -298,6 +322,9 @@ func docGapsTool(svc *service.IntelligenceService, docSvc *service.DocumentServi
 func docPendingTool(svc *service.IntelligenceService) server.ServerTool {
 	tool := mcp.NewTool("doc_pending",
 		mcp.WithDescription("List document IDs that have been indexed (Layers 1-2) but not yet classified (Layer 3). These documents are ready for agent classification."),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		pending, err := svc.GetPendingClassification()
@@ -318,6 +345,9 @@ func docImpactTool(svc *service.IntelligenceService) server.ServerTool {
 	tool := mcp.NewTool("doc_impact",
 		mcp.WithDescription("Find what references or depends on a given section. Returns all graph edges where the target matches the section ID. Section IDs have the format 'docID#sectionPath'."),
 		mcp.WithString("section_id", mcp.Description("Section ID in the format 'docID#sectionPath' (e.g. 'PROJECT/design-workflow#1.2')"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		sectionID, err := request.RequireString("section_id")

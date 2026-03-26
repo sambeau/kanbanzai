@@ -427,10 +427,10 @@ func TestWorktreeTransitionHook_TaskToActive_NoParentFeature(t *testing.T) {
 		t.Error("should not have created a worktree")
 	}
 	if result.Warning == "" {
-		t.Error("expected a warning about missing parent_feature")
+		t.Error("expected a warning about missing feature association")
 	}
-	if !strings.Contains(result.Warning, "no parent_feature") {
-		t.Errorf("warning should mention 'no parent_feature', got %q", result.Warning)
+	if !strings.Contains(result.Warning, "not associated with a feature") {
+		t.Errorf("warning should mention missing feature association, got %q", result.Warning)
 	}
 }
 

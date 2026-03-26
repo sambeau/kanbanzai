@@ -24,6 +24,9 @@ func QueryTools(entitySvc *service.EntityService, docSvc *service.DocumentServic
 func listTagsTool(svc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("list_tags",
 		mcp.WithDescription("List all unique tags across all entity types, sorted alphabetically."),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		tags, err := svc.ListAllTags()
@@ -43,6 +46,9 @@ func listByTagTool(svc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("list_by_tag",
 		mcp.WithDescription("List all entities across all types that have the given tag."),
 		mcp.WithString("tag", mcp.Description("Tag to search for"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		tag, err := request.RequireString("tag")
@@ -78,6 +84,9 @@ func listEntitiesFilteredTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("created_before", mcp.Description("Filter by created timestamp (RFC3339 format)")),
 		mcp.WithString("updated_after", mcp.Description("Filter by updated timestamp (RFC3339 format)")),
 		mcp.WithString("updated_before", mcp.Description("Filter by updated timestamp (RFC3339 format)")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityType, err := request.RequireString("entity_type")
@@ -152,6 +161,9 @@ func queryPlanTasksTool(svc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("query_plan_tasks",
 		mcp.WithDescription("Find all tasks belonging to features under a given Plan. Useful for getting a complete task breakdown for a Plan."),
 		mcp.WithString("plan_id", mcp.Description("Plan ID (e.g., P1-basic-ui)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		planID, err := request.RequireString("plan_id")
@@ -176,6 +188,9 @@ func docSupersessionChainTool(docSvc *service.DocumentService) server.ServerTool
 	tool := mcp.NewTool("doc_supersession_chain",
 		mcp.WithDescription("Follow supersedes/superseded_by links to build the full version chain for a document. Returns documents ordered from oldest to newest."),
 		mcp.WithString("id", mcp.Description("Document record ID to start from"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		id, err := request.RequireString("id")

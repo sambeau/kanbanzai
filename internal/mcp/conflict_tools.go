@@ -48,6 +48,9 @@ func conflictDomainCheckTool(conflictSvc *service.ConflictService) server.Server
 			mcp.Description("Two or more task IDs to check for conflict risk"),
 			mcp.Required(),
 		),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		// Extract task_ids from the request

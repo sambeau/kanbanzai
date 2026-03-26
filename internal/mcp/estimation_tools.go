@@ -37,6 +37,9 @@ func estimateSetTool(entitySvc *service.EntityService, knowledgeSvc *service.Kno
 		mcp.WithDescription("Set a story point estimate on a task, feature, epic, bug, or plan. Uses the Modified Fibonacci scale: 0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100. Entity type is auto-detected from the ID."),
 		mcp.WithString("entity_id", mcp.Description("Entity ID (e.g. T-01ABCDEFGHIJK, FEAT-01ABCDEFGHIJK, BUG-01ABCDEFGHIJK)"), mcp.Required()),
 		mcp.WithNumber("estimate", mcp.Description("Story point estimate from the Modified Fibonacci scale: 0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")
@@ -98,6 +101,9 @@ func estimateQueryTool(entitySvc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("estimate_query",
 		mcp.WithDescription("Query the current estimate and rollup statistics for an entity. For features, includes a task-level rollup. For epics/plans, includes a feature-level rollup."),
 		mcp.WithString("entity_id", mcp.Description("Entity ID to query"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")
@@ -191,6 +197,9 @@ func estimateReferenceAddTool(knowledgeSvc *service.KnowledgeService) server.Ser
 		mcp.WithString("entity_id", mcp.Description("Entity ID this reference anchors to (e.g. T-01ABCDEFGHIJK)"), mcp.Required()),
 		mcp.WithString("content", mcp.Description("Description of the work and its actual complexity, to serve as an estimation calibration example"), mcp.Required()),
 		mcp.WithString("created_by", mcp.Description("Identity of the contributor")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")
@@ -225,6 +234,9 @@ func estimateReferenceRemoveTool(knowledgeSvc *service.KnowledgeService) server.
 	tool := mcp.NewTool("estimate_reference_remove",
 		mcp.WithDescription("Remove (retire) the estimation calibration reference for an entity."),
 		mcp.WithString("entity_id", mcp.Description("Entity ID whose estimation reference should be removed"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")

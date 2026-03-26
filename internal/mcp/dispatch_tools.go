@@ -47,6 +47,9 @@ func dispatchTaskTool(
 		mcp.WithString("dispatched_by", mcp.Required(), mcp.Description("Identity string of the orchestrating agent")),
 		mcp.WithString("orchestration_context", mcp.Description("Optional handoff note injected into the context packet (ephemeral, not persisted)")),
 		mcp.WithNumber("max_bytes", mcp.Description("Byte budget for context assembly (default: 30720)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		taskID, err := request.RequireString("task_id")
@@ -137,6 +140,9 @@ func completeTaskTool(svc *service.DispatchService) server.ServerTool {
 		mcp.WithString("verification_performed", mcp.Description("Testing or verification carried out")),
 		mcp.WithString("blockers_encountered", mcp.Description("Obstacles noted for future work")),
 		mcp.WithArray("knowledge_entries", mcp.Description("Knowledge entries to contribute (array of objects with topic, content, scope, tier, tags)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		taskID, err := request.RequireString("task_id")
@@ -261,6 +267,9 @@ func humanCheckpointTool(store *chk.Store) server.ServerTool {
 		mcp.WithString("context", mcp.Required(), mcp.Description("Background information to help the human answer")),
 		mcp.WithString("orchestration_summary", mcp.Required(), mcp.Description("Brief state of the orchestration session at checkpoint time")),
 		mcp.WithString("created_by", mcp.Required(), mcp.Description("Identity of the orchestrating agent")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		question, err := request.RequireString("question")
@@ -311,6 +320,9 @@ func humanCheckpointRespondTool(store *chk.Store) server.ServerTool {
 		mcp.WithDescription("Record a human response to a pending checkpoint."),
 		mcp.WithString("checkpoint_id", mcp.Required(), mcp.Description("CHK ID of the checkpoint to respond to")),
 		mcp.WithString("response", mcp.Required(), mcp.Description("The human's answer or decision")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		checkpointID, err := request.RequireString("checkpoint_id")
@@ -356,6 +368,9 @@ func humanCheckpointGetTool(store *chk.Store) server.ServerTool {
 	tool := mcp.NewTool("human_checkpoint_get",
 		mcp.WithDescription("Get the current state of a checkpoint. Poll this after calling human_checkpoint until status is 'responded'."),
 		mcp.WithString("checkpoint_id", mcp.Required(), mcp.Description("CHK ID of the checkpoint to retrieve")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		checkpointID, err := request.RequireString("checkpoint_id")
@@ -382,6 +397,9 @@ func humanCheckpointListTool(store *chk.Store) server.ServerTool {
 	tool := mcp.NewTool("human_checkpoint_list",
 		mcp.WithDescription("List checkpoint records. Optionally filter by status. Returns total count and pending count."),
 		mcp.WithString("status", mcp.Description("Optional status filter: pending or responded")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		statusFilter := request.GetString("status", "")

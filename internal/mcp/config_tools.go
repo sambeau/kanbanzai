@@ -23,6 +23,9 @@ func ConfigTools() []server.ServerTool {
 func getProjectConfigTool() server.ServerTool {
 	tool := mcp.NewTool("get_project_config",
 		mcp.WithDescription("Get the project configuration including the prefix registry, version, and other settings. Returns the contents of .kbz/config.yaml."),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		cfg, err := config.Load()
@@ -57,6 +60,9 @@ func getProjectConfigTool() server.ServerTool {
 func getPrefixRegistryTool() server.ServerTool {
 	tool := mcp.NewTool("get_prefix_registry",
 		mcp.WithDescription("Get the Plan ID prefix registry. Lists all declared prefixes with their labels and retired status. Use this to find valid prefixes for creating new Plans."),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		cfg := config.LoadOrDefault()
@@ -88,6 +94,9 @@ func addPrefixTool() server.ServerTool {
 		mcp.WithString("prefix", mcp.Description("Single non-digit character for the prefix"), mcp.Required()),
 		mcp.WithString("name", mcp.Description("Human-readable name for the prefix"), mcp.Required()),
 		mcp.WithString("description", mcp.Description("Optional longer description of the prefix purpose")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		prefix, err := request.RequireString("prefix")
@@ -152,6 +161,9 @@ func retirePrefixTool() server.ServerTool {
 	tool := mcp.NewTool("retire_prefix",
 		mcp.WithDescription("Mark a prefix as retired. Retired prefixes cannot be used for new Plans but remain valid for existing Plans. At least one active prefix must remain."),
 		mcp.WithString("prefix", mcp.Description("The prefix to retire"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		prefix, err := request.RequireString("prefix")

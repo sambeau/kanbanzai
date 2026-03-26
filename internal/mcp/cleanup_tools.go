@@ -26,6 +26,9 @@ func cleanupListTool(store *worktree.Store) server.ServerTool {
 		mcp.WithDescription("List worktrees pending cleanup. Shows merged and abandoned worktrees that are either ready for cleanup (past grace period) or scheduled (within grace period)."),
 		mcp.WithBoolean("include_pending", mcp.Description("Include items past grace period that are ready for cleanup (default: true)")),
 		mcp.WithBoolean("include_scheduled", mcp.Description("Include items within grace period that are scheduled for future cleanup (default: true)")),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		includePending := request.GetBool("include_pending", true)
@@ -87,6 +90,9 @@ func cleanupExecuteTool(store *worktree.Store, git *worktree.Git, cfg *config.Cl
 		mcp.WithDescription("Execute cleanup on worktrees. Removes worktree directories, deletes local branches, optionally deletes remote branches, and removes tracking records."),
 		mcp.WithString("worktree_id", mcp.Description("Specific worktree ID to clean up (e.g., WT-01JX...). If omitted, cleans all ready items.")),
 		mcp.WithBoolean("dry_run", mcp.Description("If true, simulates cleanup without making changes (default: false)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		worktreeID := request.GetString("worktree_id", "")

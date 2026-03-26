@@ -43,6 +43,9 @@ func mergeReadinessCheckTool(
 	tool := mcp.NewTool("merge_readiness_check",
 		mcp.WithDescription("Check if an entity (feature or bug) is ready to merge. Evaluates all merge gates and optionally checks PR status if GitHub is configured."),
 		mcp.WithString("entity_id", mcp.Description("Entity ID (FEAT-... or BUG-...)"), mcp.Required()),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")
@@ -74,6 +77,9 @@ func mergeExecuteTool(
 		mcp.WithString("override_reason", mcp.Description("Required explanation when override is true")),
 		mcp.WithString("merge_strategy", mcp.Description("Merge strategy: squash, merge, or rebase (default: squash)")),
 		mcp.WithBoolean("delete_branch", mcp.Description("Delete branch after merge (default: true)")),
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
 	)
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		entityID, err := request.RequireString("entity_id")
