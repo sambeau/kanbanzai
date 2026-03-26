@@ -99,6 +99,29 @@ failures are caused by drift, missing records, or invalid state — not transien
 
 ---
 
+## Dates and Timestamps
+
+Always call `now()` to get the current UTC datetime before writing any date field in
+document content. Never guess or invent a date.
+
+    now(timezone="utc")
+    # returns e.g. "2026-03-26T15:44:49Z"
+
+Use full UTC ISO 8601 format (`YYYY-MM-DDTHH:MM:SSZ`) in document metadata headers:
+
+    | Created | 2026-03-26T15:44:49Z |
+    | Updated | 2026-03-26T15:44:49Z |
+
+Or for design-doc frontmatter style:
+
+    - Date: 2026-03-26T15:44:49Z
+
+This format is unambiguous and lets any viewer convert to local time. The same UTC ISO
+8601 format is used by entity records in `.kbz/state/` — keeping document content
+consistent with entity metadata makes the project's timeline easy to reason about.
+
+---
+
 ## Related
 
 - `kanbanzai-workflow` — how document approval gates interact with stage progression
