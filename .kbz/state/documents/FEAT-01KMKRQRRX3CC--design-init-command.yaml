@@ -2,9 +2,11 @@ id: FEAT-01KMKRQRRX3CC/design-init-command
 path: work/design/init-command.md
 type: design
 title: kanbanzai init Command Design
-status: draft
+status: approved
 owner: FEAT-01KMKRQRRX3CC
+approved_by: sambeau
+approved_at: "2026-03-26T10:18:04Z"
 content_hash: 15e486b2966498eefcf00170e34b900f14e18a02c6be0a2b00dec731beab84fc
 created: "2026-03-26T10:13:05Z"
 created_by: sambeau
-updated: "2026-03-26T10:13:05Z"
+updated: "2026-03-26T10:18:04Z"
