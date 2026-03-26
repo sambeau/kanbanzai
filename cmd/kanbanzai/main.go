@@ -89,6 +89,8 @@ func run(args []string, deps dependencies) error {
 		return nil
 	case "serve":
 		return kbzmcp.Serve()
+	case "init":
+		return runInit(args[1:], deps)
 	case "create":
 		return runCreate(args[1:], deps)
 	case "get":
@@ -615,6 +617,7 @@ Commands:
   help       Show this help text
   version    Show the current development version
   serve      Start the MCP server (stdio transport)
+  init       Initialise a Git repository for use with Kanbanzai
   create     Create a Phase 1 entity
   get        Get a Phase 1 entity
   list       List Phase 1 entities
