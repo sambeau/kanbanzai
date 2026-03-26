@@ -20,7 +20,8 @@ import (
 	"kanbanzai/internal/validate"
 )
 
-// version is injected at link time via: go build -ldflags "-X main.version=1.0.0"
+// version is set at link time via -ldflags "-X main.version=<semver>".
+// It defaults to "dev" for local builds.
 var version = "dev"
 
 type entityService interface {
@@ -45,13 +46,15 @@ type entityService interface {
 type dependencies struct {
 	stdout           io.Writer
 	stdin            io.Reader
+	version          string
 	newEntityService func(root string) entityService
 }
 
 func defaultDependencies() dependencies {
 	return dependencies{
-		stdout: os.Stdout,
-		stdin:  os.Stdin,
+		stdout:  os.Stdout,
+		stdin:   os.Stdin,
+		version: version,
 		newEntityService: func(root string) entityService {
 			return service.NewEntityService(root)
 		},
@@ -92,6 +95,8 @@ func run(args []string, deps dependencies) error {
 		return nil
 	case "serve":
 		return kbzmcp.Serve()
+	case "init":
+		return runInit(args[1:], deps)
 	case "create":
 		return runCreate(args[1:], deps)
 	case "get":
@@ -618,6 +623,7 @@ Commands:
   help       Show this help text
   version    Show the current development version
   serve      Start the MCP server (stdio transport)
+  init       Initialise a Git repository for use with Kanbanzai
   create     Create a Phase 1 entity
   get        Get a Phase 1 entity
   list       List Phase 1 entities
