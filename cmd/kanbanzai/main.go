@@ -20,6 +20,10 @@ import (
 	"kanbanzai/internal/validate"
 )
 
+// version is set at link time via -ldflags "-X main.version=<semver>".
+// It defaults to "dev" for local builds.
+var version = "dev"
+
 type entityService interface {
 	CreatePlan(service.CreatePlanInput) (service.CreateResult, error)
 	CreateEpic(service.CreateEpicInput) (service.CreateResult, error)
@@ -42,13 +46,15 @@ type entityService interface {
 type dependencies struct {
 	stdout           io.Writer
 	stdin            io.Reader
+	version          string
 	newEntityService func(root string) entityService
 }
 
 func defaultDependencies() dependencies {
 	return dependencies{
-		stdout: os.Stdout,
-		stdin:  os.Stdin,
+		stdout:  os.Stdout,
+		stdin:   os.Stdin,
+		version: version,
 		newEntityService: func(root string) entityService {
 			return service.NewEntityService(root)
 		},

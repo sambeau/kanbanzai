@@ -74,6 +74,6 @@ func runInit(args []string, deps dependencies) error {
 		}
 	}
 
-	initializer := kbzinit.New(".", deps.stdin, deps.stdout)
+	initializer := kbzinit.New(".", deps.stdin, deps.stdout).WithVersion(deps.version)
 	return initializer.Run(opts)
 }

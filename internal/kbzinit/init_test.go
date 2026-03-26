@@ -647,3 +647,260 @@ func TestRun_NonKanbanzaiSkillFiles_Untouched(t *testing.T) {
 		t.Errorf("other skill file was modified\ngot:  %q\nwant: %q", string(data), originalContent)
 	}
 }
+
+// ---- helpers for version-aware tests ----
+
+// newTestInitWithVersion creates an Initializer with a specific binary version string.
+func newTestInitWithVersion(workDir, stdinContent, version string) (*Initializer, *bytes.Buffer) {
+	var stdout bytes.Buffer
+	return New(workDir, strings.NewReader(stdinContent), &stdout).WithVersion(version), &stdout
+}
+
+// ---- Run: skill files created on new project (AC-01, AC-03) ----
+
+// AC-01: six kanbanzai skill files are created on a new project.
+func TestRun_NewProject_CreatesSkills(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	wantNames := []string{"agents", "design", "documents", "getting-started", "planning", "workflow"}
+	for _, name := range wantNames {
+		skillPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-"+name, "SKILL.md")
+		if _, err := os.Stat(skillPath); err != nil {
+			t.Errorf("expected skill file %s to exist: %v", skillPath, err)
+		}
+	}
+}
+
+// AC-03: each SKILL.md contains the managed marker and version comment in frontmatter.
+func TestRun_NewProject_SkillFrontmatter(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+	in, _ := newTestInitWithVersion(dir, "", "1.2.3")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	wantNames := []string{"agents", "design", "documents", "getting-started", "planning", "workflow"}
+	for _, name := range wantNames {
+		skillPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-"+name, "SKILL.md")
+		data, err := os.ReadFile(skillPath)
+		if err != nil {
+			t.Fatalf("read skill %s: %v", name, err)
+		}
+		content := string(data)
+		if !strings.Contains(content, "# kanbanzai-managed:") {
+			t.Errorf("skill %s: missing '# kanbanzai-managed:' line", name)
+		}
+		if !strings.Contains(content, "# kanbanzai-version: 1.2.3") {
+			t.Errorf("skill %s: missing '# kanbanzai-version: 1.2.3' line", name)
+		}
+		if strings.Contains(content, "# kanbanzai-managed: true") {
+			t.Errorf("skill %s: managed marker was not rewritten (still contains 'true')", name)
+		}
+		if !strings.Contains(content, "# kanbanzai-managed: do not edit") {
+			t.Errorf("skill %s: managed marker missing 'do not edit' text", name)
+		}
+	}
+}
+
+// AC-04 (skills): second run with the same version is a no-op — mtime unchanged.
+func TestRun_Idempotency_Skills(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+	in1, _ := newTestInitWithVersion(dir, "", "1.0.0")
+	if err := in1.Run(Options{}); err != nil {
+		t.Fatalf("first Run: %v", err)
+	}
+
+	skillPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-agents", "SKILL.md")
+	info1, err := os.Stat(skillPath)
+	if err != nil {
+		t.Fatalf("stat after first run: %v", err)
+	}
+
+	in2, _ := newTestInitWithVersion(dir, "", "1.0.0")
+	if err := in2.Run(Options{}); err != nil {
+		t.Fatalf("second Run: %v", err)
+	}
+
+	info2, err := os.Stat(skillPath)
+	if err != nil {
+		t.Fatalf("stat after second run: %v", err)
+	}
+
+	if !info1.ModTime().Equal(info2.ModTime()) {
+		t.Errorf("skill file mtime changed on second run (expected no-op): first=%v second=%v",
+			info1.ModTime(), info2.ModTime())
+	}
+}
+
+// ---- Run: skill version-aware update logic (AC-08, AC-09, AC-10) ----
+
+// AC-08: skill files at the current version are not touched (mtime unchanged).
+func TestRun_Skills_CurrentVersion_NoOp(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+	in1, _ := newTestInitWithVersion(dir, "", "2.0.0")
+	if err := in1.Run(Options{}); err != nil {
+		t.Fatalf("first Run: %v", err)
+	}
+
+	agentsPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-agents", "SKILL.md")
+	info1, _ := os.Stat(agentsPath)
+
+	in2, _ := newTestInitWithVersion(dir, "", "2.0.0")
+	if err := in2.Run(Options{}); err != nil {
+		t.Fatalf("second Run: %v", err)
+	}
+
+	info2, _ := os.Stat(agentsPath)
+	if !info1.ModTime().Equal(info2.ModTime()) {
+		t.Errorf("skill file was touched when version matched: mtime changed from %v to %v",
+			info1.ModTime(), info2.ModTime())
+	}
+}
+
+// AC-09: skill file with older version is overwritten; files at current version are not touched.
+func TestRun_Skills_OlderVersion_Overwritten(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+
+	in1, _ := newTestInitWithVersion(dir, "", "1.0.0")
+	if err := in1.Run(Options{}); err != nil {
+		t.Fatalf("first Run: %v", err)
+	}
+
+	agentsPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-agents", "SKILL.md")
+	designPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-design", "SKILL.md")
+
+	// Manually set the design skill to 2.0.0 so we can verify it stays untouched.
+	designData, _ := os.ReadFile(designPath)
+	updatedDesign := strings.ReplaceAll(string(designData), "# kanbanzai-version: 1.0.0", "# kanbanzai-version: 2.0.0")
+	if err := os.WriteFile(designPath, []byte(updatedDesign), 0o644); err != nil {
+		t.Fatalf("write design skill: %v", err)
+	}
+	designInfo1, _ := os.Stat(designPath)
+
+	// Second run at version 2.0.0 — agents overwritten, design unchanged.
+	in2, _ := newTestInitWithVersion(dir, "", "2.0.0")
+	if err := in2.Run(Options{}); err != nil {
+		t.Fatalf("second Run: %v", err)
+	}
+
+	agentsData, _ := os.ReadFile(agentsPath)
+	if !strings.Contains(string(agentsData), "# kanbanzai-version: 2.0.0") {
+		t.Errorf("agents skill not updated to 2.0.0\ncontent: %s", string(agentsData))
+	}
+
+	designInfo2, _ := os.Stat(designPath)
+	if !designInfo1.ModTime().Equal(designInfo2.ModTime()) {
+		t.Errorf("design skill was touched even though version already matched: mtime changed from %v to %v",
+			designInfo1.ModTime(), designInfo2.ModTime())
+	}
+}
+
+// AC-10: skill file without managed marker causes non-zero exit.
+func TestRun_Skills_NoManagedMarker_Error(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+
+	skillDir := filepath.Join(dir, ".agents", "skills", "kanbanzai-agents")
+	if err := os.MkdirAll(skillDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	skillPath := filepath.Join(skillDir, "SKILL.md")
+	if err := os.WriteFile(skillPath, []byte("# kanbanzai-agents\nCustom content without managed marker.\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, _ := newTestInit(dir, "")
+	err := in.Run(Options{})
+	if err == nil {
+		t.Fatal("expected error for skill file without managed marker, got nil")
+	}
+	if !strings.Contains(err.Error(), skillPath) {
+		t.Errorf("error should contain skill file path %q; got: %v", skillPath, err)
+	}
+	if !strings.Contains(err.Error(), "--skip-skills") {
+		t.Errorf("error should mention --skip-skills; got: %v", err)
+	}
+
+	data, _ := os.ReadFile(skillPath)
+	if !strings.Contains(string(data), "Custom content without managed marker.") {
+		t.Errorf("skill file was modified despite error condition")
+	}
+}
+
+// ---- Run: --update-skills flag (AC-12) ----
+
+// AC-12: --update-skills updates only skill files, leaves config and work/ unchanged.
+func TestRun_UpdateSkills_OnlySkills(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+
+	in1, _ := newTestInitWithVersion(dir, "", "1.0.0")
+	if err := in1.Run(Options{}); err != nil {
+		t.Fatalf("first Run: %v", err)
+	}
+
+	configPath := filepath.Join(dir, ".kbz", "config.yaml")
+	configInfo1, _ := os.Stat(configPath)
+
+	workDesign := filepath.Join(dir, "work", "design", ".gitkeep")
+	workInfo1, _ := os.Stat(workDesign)
+
+	in2, _ := newTestInitWithVersion(dir, "", "2.0.0")
+	if err := in2.Run(Options{UpdateSkills: true}); err != nil {
+		t.Fatalf("--update-skills Run: %v", err)
+	}
+
+	configInfo2, _ := os.Stat(configPath)
+	if !configInfo1.ModTime().Equal(configInfo2.ModTime()) {
+		t.Errorf("config.yaml was modified by --update-skills")
+	}
+
+	workInfo2, _ := os.Stat(workDesign)
+	if !workInfo1.ModTime().Equal(workInfo2.ModTime()) {
+		t.Errorf("work/ .gitkeep was modified by --update-skills")
+	}
+
+	agentsPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-agents", "SKILL.md")
+	agentsData, _ := os.ReadFile(agentsPath)
+	if !strings.Contains(string(agentsData), "# kanbanzai-version: 2.0.0") {
+		t.Errorf("skill not updated to 2.0.0 after --update-skills\ncontent: %s", string(agentsData))
+	}
+}
+
+// ---- Run: sentinel file (atomicity / partial init detection) ----
+
+// TestRun_SentinelFileWritten verifies that .kbz/.init-complete is created.
+func TestRun_SentinelFileWritten(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	sentinel := filepath.Join(dir, ".kbz", ".init-complete")
+	if _, err := os.Stat(sentinel); err != nil {
+		t.Errorf(".kbz/.init-complete not created: %v", err)
+	}
+}
+
+// TestRun_PartialInit_Detected verifies that a missing sentinel triggers a warning.
+func TestRun_PartialInit_Detected(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+
+	// Create .kbz/ with a config but no sentinel — simulates a partial init.
+	kbzDir := filepath.Join(dir, ".kbz")
+	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+		t.Fatalf("pre-create config: %v", err)
+	}
+
+	in, out := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	if !strings.Contains(out.String(), "incomplete") {
+		t.Errorf("expected partial-init warning mentioning 'incomplete'; got: %q", out.String())
+	}
+}

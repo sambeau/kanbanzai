@@ -12,6 +12,10 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+// initCompleteFile is the sentinel file written as the final step of a
+// successful init. Its presence indicates a complete, non-partial init.
+const initCompleteFile = ".init-complete"
+
 // SupportedSchemaVersion is the config schema version this binary understands.
 const SupportedSchemaVersion = "2"
 
@@ -37,11 +41,21 @@ type Initializer struct {
 	workDir string
 	stdin   io.Reader
 	stdout  io.Writer
+	version string
 }
 
 // New creates a new Initializer for the given working directory.
 func New(workDir string, stdin io.Reader, stdout io.Writer) *Initializer {
-	return &Initializer{workDir: workDir, stdin: stdin, stdout: stdout}
+	return &Initializer{workDir: workDir, stdin: stdin, stdout: stdout, version: "dev"}
+}
+
+// WithVersion sets the binary version string used when writing skill file
+// frontmatter. Call this after New if a non-"dev" version is known.
+func (i *Initializer) WithVersion(v string) *Initializer {
+	if v != "" {
+		i.version = v
+	}
+	return i
 }
 
 // Run executes the init command with the given options.
@@ -64,7 +78,9 @@ func (i *Initializer) Run(opts Options) error {
 	// --update-skills: only update skill files, skip everything else.
 	if opts.UpdateSkills {
 		fmt.Fprintln(i.stdout, "Updating skill files...")
-		// TODO(FEAT-01KMKRQSD1TKK): embed and install skill files here
+		if err := i.installSkills(gitRoot); err != nil {
+			return err
+		}
 		fmt.Fprintln(i.stdout, "Skill update complete.")
 		return nil
 	}
@@ -128,32 +144,72 @@ func (i *Initializer) isNewProject(gitRoot string, kbzExists bool) (bool, error)
 }
 
 // runNewProject handles the new project path: write config, create work/ dirs,
-// and stub in skill installation.
+// and install skill files. Uses a temp-dir-then-rename approach for atomicity:
+// if any step fails, the partial .kbz/ directory is removed.
 func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) error {
 	roots := DefaultDocumentRoots()
+	baseDir := filepath.Dir(kbzDir)
 
-	if err := WriteInitConfig(kbzDir, roots); err != nil {
+	// Write config to a temporary directory first.
+	tmpDir, err := os.MkdirTemp(baseDir, ".kbz-tmp-*")
+	if err != nil {
+		return fmt.Errorf("cannot create temporary directory: check that the current user has write access to this directory")
+	}
+
+	// Clean up the temp dir on any failure.
+	success := false
+	defer func() {
+		if !success {
+			os.RemoveAll(tmpDir)
+			// Also remove the final kbzDir if it was partially created.
+			os.RemoveAll(kbzDir)
+		}
+	}()
+
+	if err := WriteInitConfig(tmpDir, roots); err != nil {
 		return err
+	}
+
+	// Atomically rename temp dir to final .kbz/.
+	if err := os.Rename(tmpDir, kbzDir); err != nil {
+		return fmt.Errorf("cannot create '.kbz/' directory: %w", err)
 	}
 	fmt.Fprintf(i.stdout, "Created %s\n", configPath)
 
 	if !opts.SkipWorkDirs {
-		if err := i.createWorkDirs(filepath.Dir(kbzDir), roots); err != nil {
+		if err := i.createWorkDirs(baseDir, roots); err != nil {
 			return err
 		}
 	}
 
 	if !opts.SkipSkills {
-		// TODO(FEAT-01KMKRQSD1TKK): embed and install skill files here
+		if err := i.installSkills(baseDir); err != nil {
+			return err
+		}
 	}
 
+	// Write the sentinel file as the very last step.
+	sentinelPath := filepath.Join(kbzDir, initCompleteFile)
+	if err := os.WriteFile(sentinelPath, []byte{}, 0o644); err != nil {
+		return fmt.Errorf("cannot write sentinel '%s': %w", sentinelPath, err)
+	}
+
+	success = true
 	fmt.Fprintln(i.stdout, "Initialisation complete.")
 	return nil
 }
 
 // runExistingProject handles the existing project path: validate/write config
-// (if absent), and stub in skill updates.
+// (if absent), and install/update skill files.
 func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string) error {
+	baseDir := filepath.Dir(kbzDir)
+
+	// Detect partial init: .kbz/ exists but sentinel is absent.
+	sentinelPath := filepath.Join(kbzDir, initCompleteFile)
+	if _, err := os.Stat(sentinelPath); os.IsNotExist(err) {
+		fmt.Fprintf(i.stdout, "Warning: previous init appears incomplete (no '%s' sentinel). Re-running init to complete setup.\n", initCompleteFile)
+	}
+
 	fmt.Fprintln(i.stdout, "Existing project detected.")
 
 	// Check whether config.yaml already exists.
@@ -181,7 +237,14 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 	}
 
 	if !opts.SkipSkills {
-		// TODO(FEAT-01KMKRQSD1TKK): embed and install skill files here
+		if err := i.installSkills(baseDir); err != nil {
+			return err
+		}
+	}
+
+	// Write/refresh the sentinel file.
+	if err := os.WriteFile(sentinelPath, []byte{}, 0o644); err != nil {
+		return fmt.Errorf("cannot write sentinel '%s': %w", sentinelPath, err)
 	}
 
 	fmt.Fprintln(i.stdout, "Done.")
