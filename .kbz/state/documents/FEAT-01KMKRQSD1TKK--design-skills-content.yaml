@@ -2,9 +2,11 @@ id: FEAT-01KMKRQSD1TKK/design-skills-content
 path: work/design/skills-content.md
 type: design
 title: Skills Content Design
-status: draft
+status: approved
 owner: FEAT-01KMKRQSD1TKK
-content_hash: c3e2811f1cc3f1bd79feff8476a9e15cb422eef40a0a83a98377c550a3d1bce0
+approved_by: sambeau
+approved_at: "2026-03-26T14:05:00Z"
+content_hash: 0f7fc8b2ccdf9f08ab43b307de84bb3f560468fc33d96526f3c349fba8c17cbb
 created: "2026-03-26T11:08:58Z"
 created_by: sambeau
-updated: "2026-03-26T11:08:58Z"
+updated: "2026-03-26T14:05:00Z"
