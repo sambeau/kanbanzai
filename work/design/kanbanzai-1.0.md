@@ -161,15 +161,93 @@ If `.kbz/` already exists, `init` reports the existing version and offers `--upd
 
 ---
 
-## 6. The `.kbz` Schema as a Public Interface
+## 6. Onboarding an Existing Project
 
-### 6.1 Current Status
+### 6.1 The Problem
+
+`kanbanzai init` will often be run on a project that already exists. That project may have years of design documents, specifications, meeting notes, and decisions scattered across one or more directories. It may have an established `docs/`, `wiki/`, `design/`, or `rfcs/` directory. It may not use `work/` at all.
+
+Kanbanzai must not assume a particular document directory structure. It must not clobber existing files. And it must not silently import hundreds of documents that were never intended to be workflow documents — README files, API documentation, changelogs, and code comments are not design documents.
+
+### 6.2 Document Location Is Not Mandated
+
+Kanbanzai does not require documents to live in any particular directory. The document path recorded in `.kbz/state/documents/` is a relative path from the repository root and can be anything. The `work/design/`, `work/spec/`, `work/plan/` conventions used in the Kanbanzai project itself are a convention, not a requirement.
+
+What matters is the document type recorded at registration time, not the path. A design document at `rfcs/2024/authentication.md` and one at `work/design/authentication.md` are equally valid.
+
+### 6.3 Document Roots in Configuration
+
+To help agents and tools know where to find documents without scanning the entire repository, `config.yaml` records the project's document directories:
+
+```yaml
+version: "2"
+prefixes:
+  - prefix: P
+    name: Plan
+documents:
+  roots:
+    - path: docs/design
+      default_type: design
+    - path: docs/specs
+      default_type: specification
+    - path: docs/plans
+      default_type: dev-plan
+```
+
+This configuration:
+
+- Tells agents where to look when asked to find or import documents
+- Provides a default type for `batch_import_documents` when no explicit type is given
+- Tells the viewer where documents live in the repository
+- Is used by `context_assemble` to surface relevant document context
+
+For new projects, `init` writes sensible defaults. For existing projects, `init` asks where the project's documents live and records the answer. If the project has no document structure yet, `init` suggests a layout and creates the directories.
+
+### 6.4 What `init` Does and Does Not Do
+
+`init` sets up infrastructure. It does not make knowledge decisions.
+
+**`init` does:**
+- Create `.kbz/config.yaml` with schema version, default prefix, and recorded document roots
+- Install `.skills/kanbanzai-*.md`
+- Ask where documents currently live (interactively, or via flags)
+- Record those paths in `config.yaml`
+
+**`init` does not:**
+- Automatically scan and import existing documents
+- Decide which documents are workflow documents
+- Modify existing files
+- Create document records in `.kbz/state/documents/`
+
+Automatic import is the wrong tool for this job. A project with 200 markdown files may have 20 that are relevant workflow documents. An agent, working with the human, can make that distinction. A batch import script cannot.
+
+### 6.5 The Onboarding Path for Existing Projects
+
+After running `init`, the getting-started skill guides the user through document import:
+
+1. Run `kanbanzai init` — infrastructure is ready
+2. Open your AI editor and start a session
+3. The agent reads the skills and knows the document roots from `config.yaml`
+4. Ask the agent: *"I have existing documents in `docs/`. Help me import the relevant ones."*
+5. The agent browses the directory, reads document contents, and proposes what to import and with what type
+6. The human confirms, adjusts, or skips
+7. The agent calls `doc_record_submit` for each confirmed document
+
+This is consistent with the document-centric model: the human owns the decision about what is a workflow document. The agent does the mechanical work of reading, classifying, and registering.
+
+For projects where the answer is simply "import everything in this directory", `batch_import_documents` remains available as a shortcut, with the human specifying the path and default type.
+
+---
+
+## 7. The `.kbz` Schema as a Public Interface
+
+### 7.1 Current Status
 
 The `.kbz` directory structure and YAML file formats are currently an implementation detail. They are tested (round-trip serialisation), versioned (via `config.yaml`), and stable, but they are not documented as a contract for external consumers.
 
 For 1.0, they become a contract.
 
-### 6.2 What the Schema Covers
+### 7.2 What the Schema Covers
 
 The public schema includes:
 
@@ -183,7 +261,7 @@ The public schema includes:
 - Knowledge entry format
 - Config file format
 
-### 6.3 The Schema Library
+### 7.3 The Schema Library
 
 For consumers written in Go — including the viewer — Kanbanzai makes its canonical type definitions, field validation, and YAML parsing available for import. External Go projects can depend on these directly rather than reimplementing `.kbz` parsing independently.
 
@@ -193,7 +271,7 @@ For consumers not written in Go, a JSON Schema document is generated from the Go
 
 The exact packaging (whether types live in a separate module or in exported packages of the main module) is an implementation decision.
 
-### 6.4 Versioning and Compatibility
+### 7.4 Versioning and Compatibility
 
 The schema version is recorded in `.kbz/config.yaml`. The schema module is versioned with semantic versioning. The compatibility policy:
 
@@ -205,7 +283,7 @@ A Kanbanzai binary will refuse to operate on a `.kbz` directory whose schema ver
 
 ---
 
-## 7. Editor Independence
+## 8. Editor Independence
 
 Kanbanzai's MCP server communicates over stdio using the MCP protocol. This is editor-agnostic by design. Any MCP-capable client can use it.
 
@@ -222,7 +300,7 @@ Agent behaviour instructions are delivered through skills (see §4), not through
 
 ---
 
-## 8. Documentation
+## 9. Documentation
 
 The `docs/` directory, reserved through all previous phases, is populated for 1.0.
 
@@ -242,7 +320,7 @@ Documentation is written for humans, not agents. It lives in `docs/` and is publ
 
 ---
 
-## 9. Hardening
+## 10. Hardening
 
 1.0 must be robust enough that a first-time user does not hit a wall.
 
@@ -258,7 +336,7 @@ Documentation is written for humans, not agents. It lives in `docs/` and is publ
 
 ---
 
-## 10. What 1.0 Does Not Include
+## 11. What 1.0 Does Not Include
 
 The following are explicitly deferred:
 
@@ -273,7 +351,7 @@ The following are explicitly deferred:
 
 ---
 
-## 11. The Viewer Project as Validation
+## 12. The Viewer Project as Validation
 
 The viewer is not part of Kanbanzai 1.0, but it is the first proof that 1.0 works.
 
