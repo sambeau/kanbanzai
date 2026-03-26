@@ -1,0 +1,5 @@
+id: TASK-01KMNA2RZCENW
+parent_feature: FEAT-01KMKRQSD1TKK
+slug: author-getting-started-skill
+summary: "Author the kanbanzai-getting-started skill file with content covering: what Kanbanzai is, how the MCP server works, how to verify the MCP connection, the kbz status health check, and a signpost to the workflow skill."
+status: queued

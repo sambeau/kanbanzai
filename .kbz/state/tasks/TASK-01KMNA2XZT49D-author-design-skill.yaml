@@ -1,0 +1,5 @@
+id: TASK-01KMNA2XZT49D
+parent_feature: FEAT-01KMKRQSD1TKK
+slug: author-design-skill
+summary: "Author the kanbanzai-design skill file (opinionated) covering: how to create and register a design document, the design→spec→dev-plan progression, when to use decompose_feature, how to approve a document with doc_record_approve, and the emergency brake rule (stop and ask before architecture decisions)."
+status: queued

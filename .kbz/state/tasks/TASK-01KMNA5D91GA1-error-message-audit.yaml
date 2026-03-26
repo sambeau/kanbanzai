@@ -1,0 +1,5 @@
+id: TASK-01KMNA5D91GA1
+parent_feature: FEAT-01KMKRQWF0FCH
+slug: error-message-audit
+summary: "Audit all CLI and MCP error messages against quality standards in hardening spec §5: every message must include (a) plain-language description of what went wrong and (b) concrete action to take. Fix messages containing Go type names, raw YAML field names, or missing action guidance. Pay attention to storage-layer errors bubbling up to CLI output. Verify MCP error response structure."
+status: queued

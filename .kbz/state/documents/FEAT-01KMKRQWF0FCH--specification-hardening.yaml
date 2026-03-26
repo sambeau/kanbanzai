@@ -2,9 +2,11 @@ id: FEAT-01KMKRQWF0FCH/specification-hardening
 path: work/spec/hardening.md
 type: specification
 title: "Hardening: Kanbanzai 1.0 Robustness Specification"
-status: draft
+status: approved
 owner: FEAT-01KMKRQWF0FCH
+approved_by: sambeau
+approved_at: "2026-03-26T14:47:37Z"
 content_hash: e2a114b299fcb59b027f697f2e35dc43acf4facdd406055f5f4a11d7d2f13d79
 created: "2026-03-26T14:28:38Z"
 created_by: sambeau
-updated: "2026-03-26T14:28:38Z"
+updated: "2026-03-26T14:47:37Z"

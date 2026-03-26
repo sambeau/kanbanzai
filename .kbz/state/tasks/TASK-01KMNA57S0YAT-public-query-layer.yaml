@@ -1,0 +1,5 @@
+id: TASK-01KMNA57S0YAT
+parent_feature: FEAT-01KMKRQV025FA
+slug: public-query-layer
+summary: "Implement a read-only Go query layer (Reader type) providing get/list methods for Plan, Feature (ListFeaturesByPlan), Task (ListTasksByFeature), Bug, DocumentRecord, and GetDocumentContent. Unknown enum values returned as raw strings without dropping records. Drift between file content and stored hash is a structured warning, not an error. No write methods exposed."
+status: queued

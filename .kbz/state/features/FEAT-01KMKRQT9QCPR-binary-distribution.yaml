@@ -1,8 +1,9 @@
 id: FEAT-01KMKRQT9QCPR
 slug: binary-distribution
 parent: P3-kanbanzai-1.0
-status: specifying
+status: dev-planning
 summary: "Pre-compiled binary distribution via GitHub Releases. GoReleaser and GitHub Actions pipeline triggered on version tags. macOS ARM64 for alpha; macOS AMD64, Linux AMD64/ARM64, Windows AMD64 for 1.0."
 spec: FEAT-01KMKRQT9QCPR/specification-binary-distribution
+dev_plan: FEAT-01KMKRQT9QCPR/dev-plan-binary-distribution
 created: "2026-03-26T00:29:33Z"
 created_by: sambeau

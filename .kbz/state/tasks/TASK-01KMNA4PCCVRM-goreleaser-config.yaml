@@ -1,0 +1,5 @@
+id: TASK-01KMNA4PCCVRM
+parent_feature: FEAT-01KMKRQT9QCPR
+slug: goreleaser-config
+summary: "Create .goreleaser.yml at the repository root with: builds matrix (macOS ARM64 for alpha, expanding per rollout schedule), .tar.gz for macOS/Linux and .zip for Windows, archive naming kanbanzai_VERSION_OS_ARCH.EXT, archive contents (binary + README.md + LICENSE), SHA-256 checksums.txt, and GitHub Releases integration. Validate with goreleaser check."
+status: queued

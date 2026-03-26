@@ -1,0 +1,5 @@
+id: TASK-01KMNA4F90G34
+parent_feature: FEAT-01KMKRQRRX3CC
+slug: init-new-project-config
+summary: "Implement git repository detection (walk up tree for .git; error if absent) and new-project config generation: write .kbz/config.yaml matching the canonical schema (version:\"2\", P/Plan prefix, five document roots), and create work/ placeholder directories with .gitkeep. New project = no existing .kbz/config.yaml."
+status: queued

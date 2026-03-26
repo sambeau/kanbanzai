@@ -2,9 +2,11 @@ id: FEAT-01KMKRQT9QCPR/specification-binary-distribution
 path: work/spec/binary-distribution.md
 type: specification
 title: Binary Distribution Specification
-status: draft
+status: approved
 owner: FEAT-01KMKRQT9QCPR
+approved_by: sambeau
+approved_at: "2026-03-26T14:47:36Z"
 content_hash: c101b972c7bd469eef16ff505cbbbfe194c82512894b97809d48ea87b94b17e6
 created: "2026-03-26T14:24:23Z"
 created_by: sambeau
-updated: "2026-03-26T14:24:23Z"
+updated: "2026-03-26T14:47:36Z"

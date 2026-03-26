@@ -1,0 +1,5 @@
+id: TASK-01KMNA2T6ZTFR
+parent_feature: FEAT-01KMKRQSD1TKK
+slug: author-workflow-skill
+summary: "Author the kanbanzai-workflow skill file covering: the six stage-gate model (planning→design→features→spec→dev-plan→tasks), the human-AI responsibility split, when to stop and ask vs proceed autonomously, and links to planning and design skills."
+status: queued

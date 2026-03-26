@@ -2,9 +2,11 @@ id: FEAT-01KMKRQVKBPRX/specification-user-documentation
 path: work/spec/user-documentation.md
 type: specification
 title: User Documentation Specification
-status: draft
+status: approved
 owner: FEAT-01KMKRQVKBPRX
+approved_by: sambeau
+approved_at: "2026-03-26T14:47:37Z"
 content_hash: 87a690d3774ad246415a02379a97332822bee8a693d344e1dcd8c21317f1058e
 created: "2026-03-26T14:29:20Z"
 created_by: sambeau
-updated: "2026-03-26T14:29:20Z"
+updated: "2026-03-26T14:47:37Z"

@@ -1,8 +1,9 @@
 id: FEAT-01KMKRQVKBPRX
 slug: user-documentation
 parent: P3-kanbanzai-1.0
-status: specifying
+status: dev-planning
 summary: "Populate docs/ for 1.0: Getting Started guide (installation, editor setup, init, first plan), Workflow Overview, Schema Reference, MCP Tool Reference, and Configuration Reference."
 spec: FEAT-01KMKRQVKBPRX/specification-user-documentation
+dev_plan: FEAT-01KMKRQVKBPRX/dev-plan-user-documentation
 created: "2026-03-26T00:29:35Z"
 created_by: sambeau

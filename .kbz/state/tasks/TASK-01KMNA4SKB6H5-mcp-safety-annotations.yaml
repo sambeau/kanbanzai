@@ -1,0 +1,5 @@
+id: TASK-01KMNA4SKB6H5
+parent_feature: FEAT-01KMKRQWF0FCH
+slug: mcp-safety-annotations
+summary: "Add readOnlyHint, destructiveHint, and idempotentHint annotations to every MCP tool registration in the Kanbanzai server, following the classification table in hardening spec §10.4. Add a test asserting no tool is missing any of the three annotations. Verify annotation accuracy: readOnly tools must not write files or call Git; non-destructive tools must not delete data."
+status: queued
