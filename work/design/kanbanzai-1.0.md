@@ -185,13 +185,13 @@ The public schema includes:
 
 ### 6.3 The Schema Library
 
-For consumers written in Go — including the viewer — Kanbanzai will provide a shared Go module containing the canonical type definitions, field validation, and YAML parsing for all `.kbz` entity types.
+For consumers written in Go — including the viewer — Kanbanzai makes its canonical type definitions, field validation, and YAML parsing available for import. External Go projects can depend on these directly rather than reimplementing `.kbz` parsing independently.
 
-This module is separate from the main `kanbanzai` module. Both `kanbanzai` and external consumers import it. Changes to the schema are reflected immediately in both, and incompatibilities are caught at compile time.
+The exposed interface covers read-oriented access: parsing a `.kbz` directory, enumerating entities, resolving references, reading document records. Write operations — lifecycle enforcement, referential integrity checks, ID allocation — are not part of the public interface and remain internal to the Kanbanzai binary.
 
-The schema module exposes read-only access patterns appropriate for viewers: parse a `.kbz` directory, enumerate entities, resolve references, read document records. It does not expose write operations; those remain in the main `kanbanzai` module where lifecycle enforcement and referential integrity checks live.
+For consumers not written in Go, a JSON Schema document is generated from the Go types as a build artifact and published alongside each release. This provides a machine-readable schema definition that any language can validate against, without making Go a requirement.
 
-For consumers not written in Go, a JSON Schema document is generated from the Go types as a build artifact and published alongside each release. This provides a machine-readable schema definition that any language can validate against, without making Go a requirement for non-Go consumers.
+The exact packaging (whether types live in a separate module or in exported packages of the main module) is an implementation decision.
 
 ### 6.4 Versioning and Compatibility
 
@@ -230,13 +230,13 @@ Required documentation:
 
 | Document | Audience | Purpose |
 |---|---|---|
-| Installation guide | New users | Download, install, add to PATH |
-| Getting started | New users | Init a project, configure an editor, create first plan |
-| Workflow overview | Human collaborators | The stage gate model, what each stage produces |
+| Getting started | New users | Installation, editor configuration, `kanbanzai init`, first plan — end to end in one place |
+| Workflow overview | Human collaborators | The stage gate model, what each stage produces, how humans and agents collaborate |
 | Schema reference | Tool builders, advanced users | Complete `.kbz` format reference |
 | MCP tool reference | Agent developers | All MCP tools, parameters, return values |
 | Configuration reference | All users | `config.yaml` fields, prefix registry, local settings |
-| Editor setup guides | New users | Per-editor MCP configuration instructions |
+
+Installation, basic configuration, editor setup guides, and the getting-started tutorial are combined into the single Getting Started document. A new user should not need to read multiple documents before they can do anything useful.
 
 Documentation is written for humans, not agents. It lives in `docs/` and is published alongside the binary.
 
