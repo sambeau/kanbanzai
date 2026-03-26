@@ -20,6 +20,9 @@ import (
 	"kanbanzai/internal/validate"
 )
 
+// version is injected at link time via: go build -ldflags "-X main.version=1.0.0"
+var version = "dev"
+
 type entityService interface {
 	CreatePlan(service.CreatePlanInput) (service.CreateResult, error)
 	CreateEpic(service.CreateEpicInput) (service.CreateResult, error)
@@ -84,8 +87,8 @@ func run(args []string, deps dependencies) error {
 	case "help", "-h", "--help":
 		printUsage(deps.stdout)
 		return nil
-	case "version", "--version":
-		fmt.Fprintln(deps.stdout, "kanbanzai phase-4b")
+	case "version", "--version", "-v":
+		fmt.Fprintln(deps.stdout, "kanbanzai "+version)
 		return nil
 	case "serve":
 		return kbzmcp.Serve()
