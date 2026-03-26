@@ -2,9 +2,11 @@ id: FEAT-01KMKRQV025FA/design-public-schema-interface
 path: work/design/public-schema-interface.md
 type: design
 title: Public Schema Interface Design
-status: draft
+status: approved
 owner: FEAT-01KMKRQV025FA
+approved_by: sambeau
+approved_at: "2026-03-26T11:02:13Z"
 content_hash: 8d2c365b7becc8f6e90342399b2d29a3ab89b9aef07af5abfca5c6eb947fd21f
 created: "2026-03-26T10:53:32Z"
 created_by: sambeau
-updated: "2026-03-26T10:53:32Z"
+updated: "2026-03-26T11:02:13Z"
