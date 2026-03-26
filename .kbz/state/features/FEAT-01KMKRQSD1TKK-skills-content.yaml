@@ -2,6 +2,12 @@ id: FEAT-01KMKRQSD1TKK
 slug: skills-content
 parent: P3-kanbanzai-1.0
 status: proposed
-summary: "Author the six kanbanzai skill files installed by init: getting-started, workflow, planning, design, documents, and agents. These are the primary instruction mechanism for AI agents in any kanbanzai-managed project."
+summary:
+  "Author the six kanbanzai skill files installed by init: getting-started,
+  workflow, planning, design, documents, and agents. Four procedural skills
+  (getting-started, workflow, documents, agents) can proceed to spec directly.
+  Two opinionated skills (planning, design) require a design document first —
+  these encode collaborative best practices that must transfer to projects beyond
+  kanbanzai itself and need design discussion before speccing."
 created: "2026-03-26T00:29:32Z"
 created_by: sambeau
