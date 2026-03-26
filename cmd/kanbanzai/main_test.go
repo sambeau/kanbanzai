@@ -21,10 +21,10 @@ func TestRun_NoArgs_PrintsUsage(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "Phase 4b workflow kernel CLI.") {
+	if !strings.Contains(stdout, "Git-native workflow") {
 		t.Fatalf("stdout missing usage header:\n%s", stdout)
 	}
-	if !strings.Contains(stdout, "create     Create a Phase 1 entity") {
+	if !strings.Contains(stdout, "create") {
 		t.Fatalf("stdout missing create command:\n%s", stdout)
 	}
 }
@@ -36,7 +36,7 @@ func TestRun_Version_PrintsVersion(t *testing.T) {
 		t.Fatalf("run(version) error = %v", err)
 	}
 
-	if got, want := strings.TrimSpace(output.String()), "kanbanzai phase-4b"; got != want {
+	if got, want := strings.TrimSpace(output.String()), "kanbanzai dev"; got != want {
 		t.Fatalf("version output = %q, want %q", got, want)
 	}
 }
@@ -48,24 +48,22 @@ func TestRun_VersionFlag_PrintsVersion(t *testing.T) {
 		t.Fatalf("run(--version) error = %v", err)
 	}
 
-	if got, want := strings.TrimSpace(output.String()), "kanbanzai phase-4b"; got != want {
+	if got, want := strings.TrimSpace(output.String()), "kanbanzai dev"; got != want {
 		t.Fatalf("version output = %q, want %q", got, want)
 	}
 }
 
-func TestRunCreate_MissingTarget_ReturnsUsageError(t *testing.T) {
-	deps, _ := testDependencies()
+func TestRunCreate_NoArgs_PrintsHelp(t *testing.T) {
+	deps, output := testDependencies()
 
 	err := run([]string{"create"}, deps)
-	if err == nil {
-		t.Fatal("run(create) error = nil, want non-nil")
+	if err != nil {
+		t.Fatalf("run(create) error = %v, want nil", err)
 	}
 
-	if !strings.Contains(err.Error(), "missing create target") {
-		t.Fatalf("error missing target message: %v", err)
-	}
-	if !strings.Contains(err.Error(), "kanbanzai create <entity>") {
-		t.Fatalf("error missing create usage: %v", err)
+	stdout := output.String()
+	if !strings.Contains(stdout, "kanbanzai create <entity>") {
+		t.Fatalf("stdout missing create usage:\n%s", stdout)
 	}
 }
 
@@ -230,16 +228,17 @@ func TestRunCreate_CreatesEntities(t *testing.T) {
 	}
 }
 
-func TestRunGet_MissingTarget_ReturnsUsageError(t *testing.T) {
-	deps, _ := testDependencies()
+func TestRunGet_NoArgs_PrintsHelp(t *testing.T) {
+	deps, output := testDependencies()
 
 	err := run([]string{"get"}, deps)
-	if err == nil {
-		t.Fatal("run(get) error = nil, want non-nil")
+	if err != nil {
+		t.Fatalf("run(get) error = %v, want nil", err)
 	}
 
-	if !strings.Contains(err.Error(), "missing get target") {
-		t.Fatalf("error missing target message: %v", err)
+	stdout := output.String()
+	if !strings.Contains(stdout, "kanbanzai get <entity>") {
+		t.Fatalf("stdout missing get usage:\n%s", stdout)
 	}
 }
 
@@ -313,16 +312,17 @@ func TestRunGet_PrefixResolution(t *testing.T) {
 	}
 }
 
-func TestRunList_MissingTarget_ReturnsUsageError(t *testing.T) {
-	deps, _ := testDependencies()
+func TestRunList_NoArgs_PrintsHelp(t *testing.T) {
+	deps, output := testDependencies()
 
 	err := run([]string{"list"}, deps)
-	if err == nil {
-		t.Fatal("run(list) error = nil, want non-nil")
+	if err != nil {
+		t.Fatalf("run(list) error = %v, want nil", err)
 	}
 
-	if !strings.Contains(err.Error(), "missing list target") {
-		t.Fatalf("error missing target message: %v", err)
+	stdout := output.String()
+	if !strings.Contains(stdout, "kanbanzai list <collection>") {
+		t.Fatalf("stdout missing list usage:\n%s", stdout)
 	}
 }
 
@@ -492,16 +492,17 @@ func TestRunUpdateStatus_RejectsIllegalTransition(t *testing.T) {
 	}
 }
 
-func TestRunFeature_MissingSubcommand_ReturnsUsageError(t *testing.T) {
-	deps, _ := testDependencies()
+func TestRunFeature_NoArgs_PrintsHelp(t *testing.T) {
+	deps, output := testDependencies()
 
 	err := run([]string{"feature"}, deps)
-	if err == nil {
-		t.Fatal("run(feature) error = nil, want non-nil")
+	if err != nil {
+		t.Fatalf("run(feature) error = %v, want nil", err)
 	}
 
-	if !strings.Contains(err.Error(), "missing feature subcommand") {
-		t.Fatalf("error missing subcommand message: %v", err)
+	stdout := output.String()
+	if !strings.Contains(stdout, "feature") && !strings.Contains(stdout, "decompose") {
+		t.Fatalf("stdout missing feature usage:\n%s", stdout)
 	}
 }
 
@@ -518,16 +519,17 @@ func TestRunFeature_UnknownSubcommand_ReturnsUsageError(t *testing.T) {
 	}
 }
 
-func TestRunIncident_MissingSubcommand_ReturnsUsageError(t *testing.T) {
-	deps, _ := testDependencies()
+func TestRunIncident_NoArgs_PrintsHelp(t *testing.T) {
+	deps, output := testDependencies()
 
 	err := run([]string{"incident"}, deps)
-	if err == nil {
-		t.Fatal("run(incident) error = nil, want non-nil")
+	if err != nil {
+		t.Fatalf("run(incident) error = %v, want nil", err)
 	}
 
-	if !strings.Contains(err.Error(), "missing incident subcommand") {
-		t.Fatalf("error missing subcommand message: %v", err)
+	stdout := output.String()
+	if !strings.Contains(stdout, "incident") && !strings.Contains(stdout, "create") {
+		t.Fatalf("stdout missing incident usage:\n%s", stdout)
 	}
 }
 
@@ -655,8 +657,9 @@ func testDependenciesWithService(svc entityService) (dependencies, *bytes.Buffer
 	currentTestStdout = buf
 
 	return dependencies{
-		stdout: buf,
-		stdin:  strings.NewReader(""),
+		stdout:  buf,
+		stdin:   strings.NewReader(""),
+		version: "dev",
 		newEntityService: func(root string) entityService {
 			return svc
 		},

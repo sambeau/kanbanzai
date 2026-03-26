@@ -13,7 +13,6 @@ import (
 	"kanbanzai/internal/config"
 	kbzctx "kanbanzai/internal/context"
 	"kanbanzai/internal/core"
-
 	"kanbanzai/internal/id"
 	kbzmcp "kanbanzai/internal/mcp"
 	"kanbanzai/internal/service"
@@ -90,13 +89,24 @@ func run(args []string, deps dependencies) error {
 	case "help", "-h", "--help":
 		printUsage(deps.stdout)
 		return nil
-	case "version", "--version":
-		fmt.Fprintln(deps.stdout, "kanbanzai phase-4b")
+	case "version", "--version", "-v":
+		fmt.Fprintln(deps.stdout, "kanbanzai "+deps.version)
 		return nil
 	case "serve":
+		if err := core.CheckInitComplete(); err != nil {
+			return err
+		}
 		return kbzmcp.Serve()
 	case "init":
 		return runInit(args[1:], deps)
+	default:
+		// All other commands require a fully initialised instance.
+		if err := core.CheckInitComplete(); err != nil {
+			return err
+		}
+	}
+
+	switch args[0] {
 	case "create":
 		return runCreate(args[1:], deps)
 	case "get":
@@ -107,6 +117,10 @@ func run(args []string, deps dependencies) error {
 		return runUpdate(args[1:], deps)
 
 	case "health":
+		if len(args) > 1 && wantsHelp(args[1:]) {
+			fmt.Fprint(deps.stdout, healthUsageText)
+			return nil
+		}
 		return runHealth(deps)
 	case "validate":
 		return runValidate(args[1:], deps)
@@ -144,8 +158,9 @@ func run(args []string, deps dependencies) error {
 }
 
 func runCreate(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing create target\n\n%s", createUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, createUsageText)
+		return nil
 	}
 
 	svc := deps.newEntityService("")
@@ -238,8 +253,9 @@ func runCreate(args []string, deps dependencies) error {
 }
 
 func runGet(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing get target\n\n%s", getUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, getUsageText)
+		return nil
 	}
 
 	svc := deps.newEntityService("")
@@ -277,8 +293,9 @@ func runGet(args []string, deps dependencies) error {
 }
 
 func runList(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing list target\n\n%s", listUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, listUsageText)
+		return nil
 	}
 
 	svc := deps.newEntityService("")
@@ -311,8 +328,9 @@ func runList(args []string, deps dependencies) error {
 }
 
 func runUpdate(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing update target\n\n%s", updateUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, updateUsageText)
+		return nil
 	}
 
 	switch args[0] {
@@ -480,7 +498,19 @@ func printStatusUpdateResult(w io.Writer, result service.GetResult) error {
 	return err
 }
 
+const healthUsageText = `kanbanzai health
+
+Run health checks across all entities, knowledge entries, and context profiles.
+Reports warnings and errors for invalid state, broken references, and
+lifecycle inconsistencies.
+
+Example:
+  kanbanzai health
+`
+
 func runHealth(deps dependencies) error {
+	// health takes no args, but check if it was called via "health --help"
+	// (handled at the dispatch level in run())
 	svc := deps.newEntityService("")
 	report, err := svc.HealthCheck()
 	if err != nil {
@@ -569,6 +599,10 @@ func runProfileHealthCheck(profileStore *kbzctx.ProfileStore) (*validate.HealthR
 }
 
 func runValidate(args []string, deps dependencies) error {
+	if wantsHelp(args) {
+		fmt.Fprint(deps.stdout, validateUsageText)
+		return nil
+	}
 	values, err := parseFlags(args)
 	if err != nil {
 		return err
@@ -608,46 +642,73 @@ func printValidationResults(w io.Writer, errs []validate.ValidationError) error 
 	return nil
 }
 
+// wantsHelp returns true if the first argument is a help flag.
+func wantsHelp(args []string) bool {
+	return len(args) > 0 && (args[0] == "-h" || args[0] == "--help")
+}
+
 func printUsage(w io.Writer) {
 	_, _ = fmt.Fprint(w, usageText)
 }
 
-const usageText = `kanbanzai
+const usageText = `kanbanzai — Git-native workflow for human-AI collaborative development
 
-Phase 4b workflow kernel CLI.
+Kanbanzai coordinates AI agent teams to turn designs into working software.
+It maintains structured workflow state as YAML files in Git, enforces lifecycle
+rules, and assembles targeted context for each agent at each step.
 
 Usage:
-  kanbanzai <command>
+  kanbanzai <command> [flags]
 
-Commands:
-  help       Show this help text
-  version    Show the current development version
-  serve      Start the MCP server (stdio transport)
-  init       Initialise a Git repository for use with Kanbanzai
-  create     Create a Phase 1 entity
-  get        Get a Phase 1 entity
-  list       List Phase 1 entities
-  update     Update Phase 1 entity state
+Getting Started:
+  init         Initialise a Git repository for use with Kanbanzai
+  serve        Start the MCP server (stdio transport)
 
-  health     Run a health check against canonical state
-  validate   Validate a candidate entity without persisting it
-  cache      Manage the local derived cache
-  import     Batch import document records from a directory
-  knowledge  Manage knowledge entries
-  profile    Manage context profiles
-  context    Assemble agent context packets
-  worktree   Manage Git worktrees for feature/bug development
-  branch     Check branch health for worktree branches
-  merge      Check merge readiness and execute merges
-  pr         Manage GitHub pull requests
-  cleanup    Manage post-merge cleanup of worktrees and branches
-  queue      Show the current work queue with optional conflict checking
-  feature    Decompose features into tasks
-  task       Review completed task output
-  incident   Create, list, and show incidents
+Entities:
+  create       Create a plan, feature, task, bug, or decision
+  get          Retrieve an entity by type and ID
+  list         List entities by type
+  update       Update entity status or fields
 
-Notes:
-  - Kanbanzai is MCP-first; the CLI is a secondary, strict interface.
+Orchestration:
+  queue        Show the ready task queue with optional conflict checking
+  feature      Decompose features into tasks via vertical slice analysis
+  task         Review completed task output against acceptance criteria
+  incident     Create, list, and manage incidents
+
+Development:
+  worktree     Create and manage Git worktrees for feature/bug branches
+  branch       Check branch health (staleness, drift, conflicts)
+  merge        Check merge readiness and execute merges
+  pr           Create and manage GitHub pull requests
+  cleanup      Remove merged or abandoned worktrees and branches
+
+Knowledge & Context:
+  knowledge    Contribute, list, confirm, prune, and compact knowledge entries
+  profile      View and manage agent context profiles
+  context      Assemble context packets for agent roles
+
+Documents:
+  import       Batch-import document records from a directory
+
+Diagnostics:
+  health       Run health checks across entities, knowledge, and profiles
+  validate     Validate a candidate entity without persisting it
+  cache        Rebuild the local derived cache
+
+Help:
+  help         Show this help text
+  version      Show the installed version
+
+Examples:
+  kanbanzai init                      Set up a new project
+  kanbanzai serve                     Start the MCP server for your editor
+  kanbanzai create plan --prefix P --slug my-plan --title "My Plan" --summary "..."
+  kanbanzai list plans                List all plans
+  kanbanzai queue                     See what tasks are ready to work on
+  kanbanzai health                    Check project health
+
+Run 'kanbanzai <command> --help' for details on any command.
 `
 
 const createUsageText = `kanbanzai create <entity> [flags]
@@ -722,8 +783,9 @@ All flags other than --type are treated as candidate entity fields.
 `
 
 func runCache(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing cache subcommand\n\n%s", cacheUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, cacheUsageText)
+		return nil
 	}
 
 	if args[0] != "rebuild" {
@@ -777,8 +839,9 @@ Subcommands:
 
 // runKnowledge handles the `kbz knowledge` subcommands.
 func runKnowledge(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing knowledge subcommand\n\n%s", knowledgeUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, knowledgeUsageText)
+		return nil
 	}
 
 	switch args[0] {
@@ -859,8 +922,9 @@ func runKnowledgeGet(args []string, deps dependencies) error {
 
 // runProfile handles the `kbz profile` subcommands.
 func runProfile(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing profile subcommand\n\n%s", profileUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, profileUsageText)
+		return nil
 	}
 
 	switch args[0] {
@@ -966,6 +1030,10 @@ func runProfileGet(args []string, deps dependencies) error {
 
 // runContext handles the `kbz context` subcommands.
 func runContext(args []string, deps dependencies) error {
+	if wantsHelp(args) {
+		fmt.Fprint(deps.stdout, contextUsageText)
+		return nil
+	}
 	if len(args) == 0 {
 		return fmt.Errorf("missing context subcommand\n\n%s", contextUsageText)
 	}
@@ -1086,7 +1154,27 @@ Subcommands:
     [--max-bytes <n>]    Byte ceiling (default: 30720)
 `
 
+const importUsageText = `kanbanzai import <path> [flags]
+
+Batch-import document records from a directory. Scans for Markdown files and
+creates document records idempotently. Already-imported files are skipped.
+
+Flags:
+  --glob <pattern>        Glob pattern to filter files (default: all .md files)
+  --default-type <type>   Fallback document type (design, specification, dev-plan,
+                          research, report, policy)
+  --owner <entity-id>     Parent Plan or Feature ID for imported documents
+
+Example:
+  kanbanzai import work/
+  kanbanzai import work/design --default-type design
+`
+
 func runImport(args []string, deps dependencies) error {
+	if wantsHelp(args) {
+		fmt.Fprint(deps.stdout, importUsageText)
+		return nil
+	}
 	if len(args) == 0 {
 		return fmt.Errorf("path is required\n\n%s", importUsageText)
 	}
@@ -1141,18 +1229,3 @@ func runImport(args []string, deps dependencies) error {
 	}
 	return nil
 }
-
-const importUsageText = `kanbanzai import <path> [flags]
-
-Import document records from a directory. Scans recursively for Markdown files
-and creates document records. Already-imported files are skipped (idempotent).
-
-Arguments:
-  <path>    Directory to scan for documents
-
-Flags:
-  --type    <type>      Default document type when no path pattern matches
-                        (design, specification, dev-plan, research, report, policy)
-  --owner   <id>        Optional parent Plan or Feature ID for imported documents
-  --glob    <pattern>   Only import files matching this glob pattern (e.g. "*.md", "design-*.md")
-`

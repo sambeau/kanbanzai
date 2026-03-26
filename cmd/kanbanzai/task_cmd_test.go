@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestRunTask_NoSubcommand(t *testing.T) {
+func TestRunTask_NoSubcommand_PrintsHelp(t *testing.T) {
 	t.Parallel()
 
 	var buf bytes.Buffer
@@ -16,11 +16,12 @@ func TestRunTask_NoSubcommand(t *testing.T) {
 	}
 
 	err := runTask(nil, deps)
-	if err == nil {
-		t.Fatal("expected error for missing subcommand, got nil")
+	if err != nil {
+		t.Fatalf("runTask(nil) error = %v, want nil", err)
 	}
-	if !strings.Contains(err.Error(), "missing task subcommand") {
-		t.Errorf("error = %q, want to contain %q", err.Error(), "missing task subcommand")
+	stdout := buf.String()
+	if !strings.Contains(stdout, "task") || !strings.Contains(stdout, "review") {
+		t.Fatalf("stdout missing task usage:\n%s", stdout)
 	}
 }
 

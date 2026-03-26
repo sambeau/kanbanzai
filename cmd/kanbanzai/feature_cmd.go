@@ -19,8 +19,9 @@ Subcommands:
 `
 
 func runFeature(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing feature subcommand\n\n%s", featureUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, featureUsageText)
+		return nil
 	}
 
 	switch args[0] {
