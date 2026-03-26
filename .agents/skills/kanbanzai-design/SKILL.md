@@ -223,8 +223,10 @@ understand, easy to trust, and easy to extend.
 
 Two further properties are worth holding across all designs:
 
-- **Honest** — the design does not promise more than it delivers or hide
-  complexity from the user.
+- **Honest** — the design does not overclaim. It is truthful about what it
+  does and does not do, and does not bury limitations or pretend trade-offs
+  away. (Hiding complexity *for* the user — clean interfaces over exposed
+  internals — is a design virtue, not a violation of this principle.)
 - **Durable** — prefer designs that will not need revisiting in six months.
 
 If a design feels wrong but the reason is hard to articulate, check it against
