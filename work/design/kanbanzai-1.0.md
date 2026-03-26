@@ -169,15 +169,31 @@ If `.kbz/` already exists, `init` reports the existing version and offers `--upd
 
 Kanbanzai must not assume a particular document directory structure. It must not clobber existing files. And it must not silently import hundreds of documents that were never intended to be workflow documents — README files, API documentation, changelogs, and code comments are not design documents.
 
-### 6.2 Document Location Is Not Mandated
+### 6.2 Document Location: `work/` as the Default
 
-Kanbanzai does not require documents to live in any particular directory. The document path recorded in `.kbz/state/documents/` is a relative path from the repository root and can be anything. The `work/design/`, `work/spec/`, `work/plan/` conventions used in the Kanbanzai project itself are a convention, not a requirement.
+Kanbanzai uses `work/` as the default root for workflow documents. This is a deliberate nudge, not an arbitrary choice.
 
-What matters is the document type recorded at registration time, not the path. A design document at `rfcs/2024/authentication.md` and one at `work/design/authentication.md` are equally valid.
+Workflow documentation is voluminous and in-progress by nature: hundreds of design drafts, specification iterations, planning documents, research notes, and decision logs accumulate over the life of a project. This material is essential to the workflow but is not the same as the project's user-facing documentation — the clean, polished, publicly visible `docs/` that describes the software to its users.
+
+Keeping these two concerns separate gives teams a clean `docs/` folder they can be proud of, while workflow noise is contained in `work/` where it belongs. Agents, tools, and context assembly all look in `work/` by default, so nothing is lost by the separation.
+
+The recommended layout within `work/`:
+
+| Directory | Document type | Contents |
+|---|---|---|
+| `work/design/` | design | Design documents, architecture proposals, policy documents |
+| `work/spec/` | specification | Formal specifications with acceptance criteria |
+| `work/plan/` | dev-plan | Implementation plans, decision logs, progress tracking |
+| `work/research/` | research | Background research, analysis, exploration |
+| `work/reports/` | report | Review reports, audit reports, post-implementation reviews |
+
+This layout is a recommendation. Kanbanzai does not enforce it. The document path recorded in `.kbz/state/documents/` is a relative path from the repository root and can be anything. What matters is the document type recorded at registration time, not the path.
+
+Projects that prefer a different structure — `rfcs/`, `docs/design/`, or a flat layout — can configure their document roots explicitly (see §6.3) and the tool will work equally well.
 
 ### 6.3 Document Roots in Configuration
 
-To help agents and tools know where to find documents without scanning the entire repository, `config.yaml` records the project's document directories:
+To help agents and tools know where to find documents without scanning the entire repository, `config.yaml` records the project's document directories. The default, written by `kanbanzai init`, reflects the `work/` layout:
 
 ```yaml
 version: "2"
@@ -186,12 +202,27 @@ prefixes:
     name: Plan
 documents:
   roots:
+    - path: work/design
+      default_type: design
+    - path: work/spec
+      default_type: specification
+    - path: work/plan
+      default_type: dev-plan
+    - path: work/research
+      default_type: research
+    - path: work/reports
+      default_type: report
+```
+
+Projects that use a different layout override this in `config.yaml`. For example, a project that keeps workflow documents in `docs/`:
+
+```yaml
+documents:
+  roots:
     - path: docs/design
       default_type: design
     - path: docs/specs
       default_type: specification
-    - path: docs/plans
-      default_type: dev-plan
 ```
 
 This configuration:
@@ -201,7 +232,7 @@ This configuration:
 - Tells the viewer where documents live in the repository
 - Is used by `context_assemble` to surface relevant document context
 
-For new projects, `init` writes sensible defaults. For existing projects, `init` asks where the project's documents live and records the answer. If the project has no document structure yet, `init` suggests a layout and creates the directories.
+For new projects, `init` writes the default `work/`-based roots and creates the directories. For existing projects, `init` asks where the project's documents live and records the answer instead.
 
 ### 6.4 What `init` Does and Does Not Do
 
