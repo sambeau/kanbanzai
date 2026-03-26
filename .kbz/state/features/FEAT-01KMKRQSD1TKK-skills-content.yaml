@@ -1,13 +1,8 @@
 id: FEAT-01KMKRQSD1TKK
 slug: skills-content
 parent: P3-kanbanzai-1.0
-status: proposed
-summary:
-  "Author the six kanbanzai skill files installed by init: getting-started,
-  workflow, planning, design, documents, and agents. Four procedural skills
-  (getting-started, workflow, documents, agents) can proceed to spec directly.
-  Two opinionated skills (planning, design) require a design document first —
-  these encode collaborative best practices that must transfer to projects beyond
-  kanbanzai itself and need design discussion before speccing."
+status: designing
+summary: "Author the six kanbanzai skill files installed by kanbanzai init: getting-started, workflow, planning, design, documents, and agents. All six skills are written and reviewed. Design approved. Awaiting specification."
+design: FEAT-01KMKRQSD1TKK/design-skills-content
 created: "2026-03-26T00:29:32Z"
 created_by: sambeau
