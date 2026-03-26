@@ -131,11 +131,29 @@ The query layer is read-oriented. It does not include write operations, lifecycl
 
 The exact API shape — method names, return types, error handling conventions — is an implementation decision deferred to the specification.
 
-### 4.2 Packaging
+### 4.2 Document Records and Document Content
+
+Documents have two distinct representations, both accessible through the query layer:
+
+**Document record**: the metadata stored in `.kbz/state/documents/` — path, type, title, status (draft/approved/superseded), content hash, owner, timestamps. This is what the query layer returns for listing and lookup operations.
+
+**Document content**: the markdown file itself, committed to `work/` or the project's configured document roots. The path in the document record points to it. Reading content is a separate operation from reading the record.
+
+The query layer provides both:
+
+- `GetDocumentRecord(id)` → metadata including path, status, hash
+- `GetDocumentContent(id)` → the markdown content, read from the path in the record
+- `ListDocumentRecords(...)` → filtered list of metadata records
+
+The query layer requires the repository root path to resolve document paths (which are relative to the repo root) to absolute filesystem paths. A consumer pointing the query layer at a git clone must provide the clone's root directory.
+
+The content hash stored in the document record allows the query layer to detect drift — a document file that has changed since it was registered. When drift is detected, the query layer surfaces a warning rather than failing silently. This is the same behaviour the MCP server provides via `doc_record_get`.
+
+### 4.3 Packaging
 
 Whether the public types and query layer live in a separate Go module (e.g., `github.com/owner/kanbanzai-schema`) or in exported packages of the main module (e.g., `github.com/owner/kanbanzai/schema`) is an implementation decision. The design requirement is that external Go projects can import the types and query layer without depending on the entire Kanbanzai binary or its internal packages.
 
-### 4.3 Stability Guarantee
+### 4.4 Stability Guarantee
 
 The public Go interface follows the schema version. Breaking changes to the Go API are only made on major schema version bumps. New methods and types may be added in minor versions.
 
