@@ -183,7 +183,7 @@ The recommended layout within `work/`:
 |---|---|---|
 | `work/design/` | design | Design documents, architecture proposals, policy documents |
 | `work/spec/` | specification | Formal specifications with acceptance criteria |
-| `work/plan/` | dev-plan | Implementation plans, decision logs, progress tracking |
+| `work/dev/` | dev-plan | Implementation plans, decision logs, progress tracking |
 | `work/research/` | research | Background research, analysis, exploration |
 | `work/reports/` | report | Review reports, audit reports, post-implementation reviews |
 
@@ -206,7 +206,7 @@ documents:
       default_type: design
     - path: work/spec
       default_type: specification
-    - path: work/plan
+    - path: work/dev
       default_type: dev-plan
     - path: work/research
       default_type: research
