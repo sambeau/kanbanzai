@@ -1,26 +1,29 @@
 ---
 name: kanbanzai-workflow
 description: >
-  Use when deciding what workflow stage the current work belongs to, whether
-  to proceed to the next stage, whether a state transition is valid, or when
-  to stop and ask the human. Also activates for questions about lifecycle,
-  stage gates, entity status, approval requirements, "can I create a feature
-  now?", "is this ready for spec?", or "who needs to approve this?".
+  Use when deciding what workflow stage work belongs to, whether to proceed
+  to the next stage, whether a state transition is valid, or when to stop
+  and ask the human. Activates for any question about lifecycle, stage gates,
+  entity status, approval requirements, or uncertainty about whether to
+  proceed — including "can I create a feature now?", "is this ready for
+  spec?", "who needs to approve this?", or "should I stop and ask?". Use
+  even when the agent is confident about the next step — workflow errors are
+  expensive to undo.
 metadata:
   kanbanzai-managed: "true"
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # SKILL: Kanbanzai Workflow
 
 ## Purpose
 
-Describe the workflow stage gates, entity lifecycle, and the rules for when
-to stop and ask the human.
+The workflow stage gates, entity lifecycle, and the rules for when to stop
+and ask the human.
 
 ## When to Use
 
-- When deciding what workflow stage the current work belongs to
+- When deciding what workflow stage work belongs to
 - When deciding whether to proceed to the next stage
 - When checking whether a state transition is valid
 - When creating or transitioning entities (plans, features, tasks, bugs)
@@ -31,7 +34,7 @@ to stop and ask the human.
 ## Workflow Stage Gates
 
 Work progresses through six stages. Each stage has a gate that must be passed
-before proceeding. Do not skip stages.
+before proceeding.
 
 | Stage | Who leads | What it produces | Gate to pass |
 |---|---|---|---|
@@ -42,9 +45,12 @@ before proceeding. Do not skip stages.
 | **Dev plan & tasks** | Agent | Task entities + dev plan | Spec must be approved |
 | **Implementation** | Agent | Working code, tests, merged | Tasks must exist |
 
-The stages are sequential but not rigid. Work can move backwards: a design
-can be revisited after specification if a flaw is discovered. Moving backwards
-is normal. Skipping forward is not.
+The full stage progression applies to features and plans. Bug fixes and small
+improvements follow a lighter path — they do not need design documents or
+specifications unless the fix involves a significant architectural change.
+
+Work can move backwards — a design can be revisited after specification if a
+flaw is discovered. Moving backwards is normal. Skipping forward is not.
 
 ---
 
@@ -87,43 +93,11 @@ The cost of asking is low. The cost of building the wrong thing is high.
 
 ## Entity Lifecycle Transitions
 
-### Feature
+For the legal state transitions for each entity type (feature, task, bug,
+plan), see [references/lifecycle.md](references/lifecycle.md).
 
-```
-proposed → designing → spec-ready → dev-ready → active → done
-                                                       → needs-rework → active
-Any non-terminal → not-planned
-```
-
-### Task
-
-```
-queued → ready → active → done
-                       → needs-review → done
-                       → needs-rework → active
-Any non-terminal → not-planned
-```
-
-### Bug
-
-```
-reported → triaged → active → done
-                            → needs-review → done
-                            → needs-rework → active
-Any non-terminal → not-planned
-Any non-terminal → duplicate
-```
-
-### Plan
-
-```
-proposed → designing → active → done
-Any non-terminal → superseded
-Any non-terminal → cancelled
-```
-
-Agents must not perform transitions that are not listed above. If a
-transition is needed that does not appear here, ask the human.
+Agents must not perform transitions that are not listed there. If a
+transition is needed that does not appear, ask the human.
 
 ---
 
@@ -131,14 +105,11 @@ transition is needed that does not appear here, ask the human.
 
 ### During planning
 - Do not create entities yet — planning produces scope, not structure.
-- If the conversation drifts into design, redirect it. See the
-  `kanbanzai-planning` skill.
+- See `kanbanzai-planning` for how to conduct a planning conversation.
 
 ### During design
-- The agent is the Senior Designer; the human is the Design Manager.
-- Draft documents may contain alternatives and open questions.
-- Approved documents must contain one chosen direction with no unresolved
-  design questions. See the `kanbanzai-design` skill.
+- See `kanbanzai-design` for the design process, roles, and approval
+  criteria.
 
 ### During specification
 - Specifications are binding contracts. Be precise and testable.
@@ -146,10 +117,22 @@ transition is needed that does not appear here, ask the human.
 - Do not add scope that was not in the approved design.
 
 ### During implementation
-- Assemble context before starting any task (`context_assemble`).
-- Commit at logical checkpoints. A change is not done until it is committed.
-- Do not commit directly to `main`. Work on feature or bug branches.
-- Complete tasks with a summary, files modified, and verification performed.
+- See `kanbanzai-agents` for the dispatch-and-complete protocol and commit
+  format.
+
+---
+
+## Gotchas
+
+- If a Kanbanzai tool call fails (e.g., `update_status` rejects a
+  transition), read the error message — it usually names the valid
+  transitions or states. Do not retry with the same arguments.
+- The stage gates apply to the *entity type*, not the size of the work. A
+  quick fix to a document doesn't need a full pipeline, but creating a new
+  Feature entity always requires an approved design.
+- Verbal approval ("LGTM", "Approved", "Let's move on") is sufficient to
+  pass a gate. Record it with the appropriate tool call
+  (`doc_record_approve`) immediately so the system state matches reality.
 
 ---
 

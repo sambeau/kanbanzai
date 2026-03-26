@@ -3,19 +3,20 @@ name: kanbanzai-agents
 description: >
   Use when implementing tasks, dispatching work, completing tasks, writing
   commits, contributing knowledge entries, assembling context, or spawning
-  sub-agents. Also activates for questions about the agent interaction
-  protocol, commit message format, knowledge management, context packets,
-  or how to hand off work between agents.
+  sub-agents. Activates for questions about the agent interaction protocol,
+  commit message format, knowledge management, context packets, or how to
+  hand off work between agents. Use even when the task seems simple — the
+  dispatch-and-complete protocol applies to all implementation work.
 metadata:
   kanbanzai-managed: "true"
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # SKILL: Kanbanzai Agents
 
 ## Purpose
 
-Define how agents interact with the Kanbanzai system: assembling context,
+How agents interact with the Kanbanzai system: assembling context,
 dispatching and completing tasks, writing commits, contributing knowledge,
 and spawning sub-agents.
 
@@ -36,8 +37,7 @@ Before beginning any task, assemble context:
 1. Call `context_assemble(role="<role>", task_id="<task_id>")` to get a
    context packet containing role instructions, relevant knowledge entries,
    design context, and task details.
-2. Read the full context packet before starting. Do not skip it.
-3. The packet is byte-budgeted and prioritised — it contains what matters
+2. The packet is byte-budgeted and prioritised — it contains what matters
    most for this task and role.
 
 After completing the task, call `context_report` to record which knowledge
@@ -70,9 +70,6 @@ Call `complete_task` with:
 - `files_modified` — files created or changed
 - `verification_performed` — what testing or verification was done
 - `knowledge_entries` — any reusable knowledge learned during the task
-
-Do not mark a task complete without providing a verification summary. The
-summary does not need to be long, but it must exist.
 
 ---
 
@@ -111,7 +108,6 @@ Add `!` after the type for breaking changes: `feat(FEAT-001)!: description`
 
 - Commit at logical checkpoints — after completing a coherent change, before
   starting a risky edit.
-- A change is not done until it is committed.
 - Do not commit directly to `main`. Work on feature or bug branches.
 - Document changes follow the same commit discipline as code changes.
 
@@ -159,14 +155,18 @@ When delegating work to a sub-agent:
 
 ---
 
-## What Agents Must Not Do
+## Gotchas
 
-- Commit directly to `main`
-- Skip `context_assemble` before implementation work
-- Complete tasks without providing a verification summary
-- Ignore errors — never use `_` to discard an error return
-- Make product decisions — priority, scope, and direction belong to the human
-- Approve their own work
+- If `dispatch_task` fails, another agent likely claimed the task. Call
+  `work_queue` again to pick a different one. Do not retry the same task.
+- If a Kanbanzai tool call returns an error, read the message — it usually
+  tells you exactly what went wrong and what the valid options are. Do not
+  retry with the same arguments.
+- Completing a task without `verification_performed` will succeed but
+  degrades review quality. Always include what you tested, even if brief.
+- If you are unsure about the workflow rules (stage gates, human vs. agent
+  ownership, when to stop and ask), see `kanbanzai-workflow` — it is the
+  canonical reference.
 
 ---
 

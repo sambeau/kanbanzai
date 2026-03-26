@@ -5,18 +5,19 @@ description: >
   Kanbanzai-managed project. Activates for document types, placement,
   registration with doc_record_submit, approval workflow, content drift,
   doc_record_refresh, or any question about document status, ownership,
-  or lifecycle.
+  or lifecycle. Use whenever any markdown file is created or modified in a
+  configured document root, even if the user does not mention registration.
 metadata:
   kanbanzai-managed: "true"
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # SKILL: Kanbanzai Documents
 
 ## Purpose
 
-Describe document types, where to place them, how to register them with the
-system, and the approval workflow that makes them authoritative.
+Document types, where to place them, how to register them with the system,
+and the approval workflow that makes them authoritative.
 
 ## When to Use
 
@@ -40,6 +41,7 @@ Documents live in configured roots under the project's document directory
 | `dev-plan` | `work/dev/` or `work/plan/` | Implementation plans, task breakdowns |
 | `research` | `work/research/` | Analysis, exploration, background |
 | `report` | `work/reports/` | Review reports, audits, post-mortems |
+| `policy` | `work/design/` | Standing rules, process definitions |
 
 The actual roots and default types are defined in `.kbz/config.yaml` under
 `documents.roots`. Check the project configuration if the defaults above do
@@ -142,16 +144,24 @@ no longer authoritative.
 
 ---
 
-## What Agents Must Not Do
+## Gotchas
 
-- Do not create Plan or Feature entities referencing a document that is still
-  in `draft` status. Design documents must be approved first.
-- Do not edit an approved document without notifying the human. The approval
-  becomes void when content drifts.
-- Do not forget to register. Creating a file and forgetting `doc_record_submit`
-  is the single most common mistake.
-- Do not place design content in planning documents. Design decisions belong
-  in `work/design/`, not `work/plan/`.
+- **Forgot to register.** If you create a file in `work/` and forget to call
+  `doc_record_submit`, the document is invisible to the system — no approval
+  workflow, no document intelligence, no health check coverage. This is the
+  single most common mistake. Run `batch_import_documents(path="work")` as a
+  safety net if unsure.
+- **Editing after approval.** If you edit an approved document, the approval
+  is silently void — the content hash no longer matches. You must notify the
+  human and re-approve. Do not assume the approval still holds.
+- **Design in the wrong place.** Design decisions belong in `work/design/`,
+  not `work/plan/`. If a planning document starts containing architecture
+  decisions, move that content to a design document. See `kanbanzai-workflow`
+  for the emergency brake rules.
+- **Tool call fails.** If `doc_record_submit` or `doc_record_approve` returns
+  an error, read the message — it usually explains the problem (wrong type,
+  drifted hash, document already exists). Do not retry with the same
+  arguments. Fix the underlying issue first.
 
 ---
 
@@ -176,7 +186,6 @@ git commit -m "workflow(PROJECT): register new documents with system"
 
 ## Related
 
-- `kanbanzai-getting-started` — session orientation (includes document
-  awareness)
+- `kanbanzai-getting-started` — session orientation
 - `kanbanzai-workflow` — stage gates that depend on document approval
 - `kanbanzai-design` — the design process that produces design documents

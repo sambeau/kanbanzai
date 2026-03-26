@@ -6,10 +6,11 @@ description: >
   Also activates for planning, scoping, and ambition questions: "is this too
   big?", "should we split this?", "how ambitious should we be?", "what would
   a great team do here?", or any question about prioritisation, roadmap, or
-  scope.
+  scope. Use even when the user doesn't explicitly say "planning" — any
+  discussion about what to build next is a planning conversation.
 metadata:
   kanbanzai-managed: "true"
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # SKILL: Kanbanzai Planning
@@ -37,13 +38,14 @@ Planning is human-led. The agent's job is to:
 - **Ask clarifying questions** to help the human articulate scope
 - **Reflect back** what the agent understands the scope to be, so the human
   can correct it
+- **Suggest and recommend** — the agent can propose options, flag
+  opportunities, and recommend directions, but the human makes the final
+  scoping decisions
 - **Flag scope issues** — things that seem too large, too small, or
   overlapping with existing work
-- **Not make product decisions** — priority, scope, and direction belong to
-  the human
 
-The agent does not recommend what to build. The agent helps the human
-articulate what they have already decided they want to build.
+For the general rules on what humans own vs. what agents own, see
+`kanbanzai-workflow`.
 
 ---
 

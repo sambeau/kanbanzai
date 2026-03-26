@@ -6,10 +6,12 @@ description: >
   determining whether a design is ready for specification. Also activates
   for design questions including trade-offs, alternatives, quality bar,
   approval status, risk assessment, splitting a design, or evaluating
-  whether an approach is good enough.
+  whether an approach is good enough. Use even when the agent feels
+  confident about the design — design review catches problems that
+  confidence does not.
 metadata:
   kanbanzai-managed: "true"
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # SKILL: Kanbanzai Design
@@ -31,33 +33,27 @@ ready for specification.
 ## Roles
 
 **The human is the Design Manager.** They own the design decisions. They make
-the final call. They approve. They can override the agent's recommendations at
-any time.
+the final call. They approve.
 
-**The agent is the Senior Designer.** The agent can propose designs, draft
-documents, conduct research, present alternatives, and make recommendations.
-The agent cannot make final design decisions or approve its own work.
+**The agent is the Senior Designer.** The agent proposes designs, drafts
+documents, conducts research, presents alternatives, and makes
+recommendations. The agent cannot make final design decisions or approve its
+own work.
 
-This mirrors how a design team works. The senior designer does the work and
-drives the process forward. The manager owns the outcomes.
+For the general rules on what humans own vs. what agents own, see
+`kanbanzai-workflow`.
 
 ---
 
 ## Design with Ambition
 
-Before settling on an approach, ask: what would a world-class team build here
-if resources were not the constraint?
+The same ambition principle from `kanbanzai-planning` applies here: always
+present the ambitious version first — the version a veteran team with full
+resources would choose for long-term success.
 
-An AI agent team is not limited like a human team. Sub-agents can be spawned
-for any domain in any number — the capacity of the team is not the constraint.
-The quality of the design is.
-
-Always present the ambitious version first — the version a veteran team with
-full resources would choose for long-term success. If there are genuine reasons
-to reduce scope or simplify the approach, enumerate them explicitly and let the
-human decide. Difficulty is not a reason to choose the weaker option.
-
-A design that is simpler because it ignores real complexity is not simple — it
+If there are genuine reasons to simplify, enumerate them explicitly and let
+the human decide. Difficulty is not a reason to choose the weaker option. A
+design that is simpler because it ignores real complexity is not simple — it
 is incomplete.
 
 ---
@@ -116,8 +112,7 @@ with:
 - The trade-offs (pros and cons)
 - An explicit recommendation from the agent, with reasoning
 
-Do not make the choice on behalf of the human. The recommendation is advice.
-The decision belongs to the human.
+The recommendation is advice. The decision belongs to the human.
 
 A design document in draft status may contain multiple alternatives. An
 **approved** document must not — it must reflect a single chosen direction.
@@ -149,8 +144,8 @@ A design document is ready for approval when it contains:
 4. **No unresolved design questions**
 
 Approval can be signalled verbally: "Approved", "LGTM", "Let's move to spec".
-An explicit call to `doc_record_approve` follows to record the approval in the
-system.
+Record it with `doc_record_approve` immediately so system state matches
+reality.
 
 ---
 
@@ -196,50 +191,34 @@ superseded, not revised.
 
 ## Design Quality
 
-When proposing or reviewing a design, hold it against these qualities. They
-are not a checklist — they are a lens.
+When proposing or reviewing a design, hold it against six qualities:
+simplicity, minimalism, completeness, composability, honesty, and durability.
+See [references/design-quality.md](references/design-quality.md) for full
+definitions.
 
-- **Simplicity.** As simple as the problem allows — but no simpler. Simplicity
-  is achieved by finding the right abstractions, not by removing necessary
-  ones. A design that is simple because it ignores real complexity is not
-  simple — it is incomplete.
-- **Minimalism.** Every element earns its place. No redundant layers, no
-  speculative features, no ceremony without concrete purpose. Minimalism is
-  the discipline of including only what matters and ensuring everything
-  included matters fully.
-- **Completeness.** The design covers its scope without gaps. Every edge case
-  has a defined behaviour. Every interface has a defined contract.
-  Completeness is what separates a design from a sketch — the 20% that makes
-  the other 80% trustworthy.
-- **Composability.** Components connect through clear interfaces, not hidden
-  coupling or shared assumptions. Each piece can be understood, tested, and
-  extended independently. Composable systems survive change; monolithic
-  systems resist it.
-
-The relationship between these matters: simplicity without completeness is a
-prototype; completeness without minimalism is bloat; minimalism without
-composability is fragile. All four together produce systems that are easy to
-understand, easy to trust, and easy to extend.
-
-Two further properties are worth holding across all designs:
-
-- **Honest** — the design does not overclaim. It is truthful about what it
-  does and does not do, and does not bury limitations or pretend trade-offs
-  away. (Hiding complexity *for* the user — clean interfaces over exposed
-  internals — is a design virtue, not a violation of this principle.)
-- **Durable** — prefer designs that will not need revisiting in six months.
-
-If a design feels wrong but the reason is hard to articulate, check it against
-these six. Usually one is missing.
+The relationship between the core four matters: simplicity without
+completeness is a prototype; completeness without minimalism is bloat;
+minimalism without composability is fragile. All four together produce
+systems that are easy to understand, easy to trust, and easy to extend.
 
 ---
 
-## What the Agent Does Not Do
+## Gotchas
 
-- Approve its own design work
-- Make final design decisions (present alternatives; the human chooses)
-- Proceed to specification from a draft that has unresolved design questions
-- Amend an approved design document without flagging it to the human
+- **Forgetting to register the document.** After creating or renaming a
+  design document, call `doc_record_submit` immediately. Unregistered
+  documents are invisible to the system. See `kanbanzai-documents`.
+- **Approving with open questions.** If the human says "approved" but the
+  document still contains unresolved design questions, flag them before
+  calling `doc_record_approve`. An incomplete approval creates problems
+  downstream when the spec tries to reference undecided points.
+- **Editing an approved document.** If the approved design needs changes,
+  create a new document and supersede the old one. Do not silently edit an
+  approved document — the approval is tied to the content hash and will
+  become void.
+- **Tool call failures.** If `doc_record_approve` fails, it usually means
+  the content hash has drifted (the file was edited since registration).
+  Call `doc_record_refresh` first, then re-approve.
 
 ---
 

@@ -1,13 +1,14 @@
 ---
 name: kanbanzai-getting-started
 description: >
-  Use at the start of any agent session in a Kanbanzai-managed project. Activates
-  when the agent has just opened a repository, does not yet know what work to do,
-  or needs to orient itself. Also activates for "where do I start?", "what should
-  I work on?", or any request to begin a new session.
+  Use at the start of any agent session in a Kanbanzai-managed project, even
+  if the task seems straightforward. Activates when the agent has just opened
+  a repository, does not yet know what work to do, needs to orient itself,
+  or is beginning any new session. Also activates for "where do I start?",
+  "what should I work on?", or "what's the current state of this project?".
 metadata:
   kanbanzai-managed: "true"
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # SKILL: Kanbanzai Getting Started
@@ -29,7 +30,8 @@ Orient an agent at the start of a session in a Kanbanzai-managed project.
 ### 1. Clean slate
 
 Run `git status`. If there are uncommitted changes from previous work, commit
-or stash them before starting anything new.
+or stash them before starting anything new. Never start new work on top of
+uncommitted changes from a different task.
 
 ### 2. Read the project context
 
@@ -39,31 +41,21 @@ does not, these Kanbanzai skills are your primary orientation.
 
 ### 3. Check the work queue
 
-Call `work_queue` to see what tasks are ready for work. If the queue is empty,
-call `list_entities_filtered` to understand the current project state — active
+Call `work_queue` to see what tasks are ready. If the queue is empty, call
+`list_entities_filtered` to understand the current project state — active
 features, open bugs, what stage things are in.
 
-### 4. Assemble context before starting a task
+### 4. Before starting a task
 
-Before beginning work on any task, call `context_assemble` with the appropriate
-role and task ID. Read the full context packet before writing any code. Do not
-skip this step — it contains role instructions, relevant knowledge, and task
-details that you need.
+Call `context_assemble` with the role and task ID to get your instructions
+and context. See `kanbanzai-agents` for the full dispatch-and-complete
+protocol.
 
-### 5. Know your role
+### 5. Understand the workflow
 
-Kanbanzai separates human concerns from agent concerns:
-
-- **Humans own:** intent, priorities, approvals, product direction
-- **Agents own:** execution, decomposition, implementation, tracking
-
-Do not make product decisions, skip workflow stage gates, or approve your own
-work.
-
-### 6. If you are unsure — ask
-
-It is always better to ask than to make a wrong assumption about project
-structure, scope, or intent.
+Kanbanzai has stage gates that require human approval at specific points.
+See `kanbanzai-workflow` for the rules, the human/agent ownership boundary,
+and when to stop and ask.
 
 ---
 
