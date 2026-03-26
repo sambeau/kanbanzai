@@ -1,0 +1,10 @@
+id: FEAT-01KMKRQRRX3CC/specification-init-command
+path: work/spec/init-command.md
+type: specification
+title: kanbanzai init Command Specification
+status: draft
+owner: FEAT-01KMKRQRRX3CC
+content_hash: 195e7228e8205f8d7c6decf8a2cea23ad3508ae3b2ba63744fdbcf87f2026f39
+created: "2026-03-26T14:34:53Z"
+created_by: sambeau
+updated: "2026-03-26T14:34:53Z"
