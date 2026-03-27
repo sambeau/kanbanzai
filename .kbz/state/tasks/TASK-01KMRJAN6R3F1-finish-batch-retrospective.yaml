@@ -2,6 +2,6 @@ id: TASK-01KMRJAN6R3F1
 parent_feature: FEAT-01KMRJ7Z2PVR9
 slug: finish-batch-retrospective
 summary: "Extend batch `finish` (tasks array mode) to support a `retrospective` key per task entry with the same semantics as single mode. Validation failures for signals in one task entry must not affect signal processing in other task entries. Acceptance criteria: P5-1.16, P5-1.17."
+status: done
 depends_on:
   - TASK-01KMRJAFJHNN5
-status: queued

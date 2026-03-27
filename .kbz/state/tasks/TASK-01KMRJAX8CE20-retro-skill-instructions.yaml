@@ -2,4 +2,4 @@ id: TASK-01KMRJAX8CE20
 parent_feature: FEAT-01KMRJ7Z2PVR9
 slug: retro-skill-instructions
 summary: "Update the kanbanzai-agents skill file with retrospective guidance (§6.4). The addition must cover: when to include signals (spec ambiguity, context gaps, tool friction/gap, decomposition problems, worked-well moments); what makes a signal specific and useful (name the section, tool, or step — not just \"things were confusing\"); the finish `retrospective` parameter as primary mechanism; standalone knowledge_contribute path for out-of-task observations; the instruction not to force observations when there is nothing meaningful to note. Acceptance criteria: P5-1.18."
-status: queued
+status: done
