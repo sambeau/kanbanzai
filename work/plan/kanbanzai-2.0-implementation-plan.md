@@ -384,7 +384,7 @@ These are pragmatic simplifications. Revisit if agents need the richer structure
 
 ---
 
-## 9. Track F: `next` — Claim & Context Assembly
+## 9. Track F: `next` — Claim & Context Assembly ✓ COMPLETE
 
 **Goal:** Build the `next` tool that combines work queue inspection, task claiming, and context assembly with invisible document intelligence and knowledge integration. This is the most complex track.
 
@@ -431,6 +431,15 @@ These are pragmatic simplifications. Revisit if agents need the richer structure
 - The queue inspection mode (F.1–F.4) is largely a re-packaging of the existing `work_queue` logic from Phase 4a. The claiming mode (F.5–F.8) re-packages the existing `dispatch_task` logic. The context assembly (F.9–F.16) is the genuinely new work.
 
 **Verification (spec §30.5):** All 16 acceptance criteria must have passing tests.
+
+**Completion notes:**
+
+- All 16 acceptance criteria from §30.5 are implemented and tested.
+- The shared context assembly pipeline (F.9) was implemented in `internal/mcp/assembly.go` rather than a separate `internal/assembly/` package, since both consumers (`next_tool.go` and `handoff_tool.go`) are in the same package. Track G (`handoff`) was updated to use this shared pipeline, eliminating ~200 lines of duplicated assembly, trimming, knowledge loading, and byte counting logic.
+- Graceful degradation (§24.3): when document intelligence returns no sections, the tool falls back to the raw spec document path via `DocumentService` lookup, so the agent receives "read this document" guidance.
+- Automatic Layer 1–2 parse (§24.4, F.16): when `next` encounters an unindexed spec document (registered via `DocumentService` but not yet parsed), it triggers synchronous `IntelligenceService.IngestDocument` before assembly.
+- `conflict_check` parameter (§26.5, F.4): implemented and wired through to `WorkQueueInput.ConflictCheck`. Queue items include `conflict_risk` and `conflict_with` annotations when the flag is set.
+- Role filtering in queue mode (F.3) delegates to `WorkQueue` at the service layer. Note: the service layer's role filter is currently a stub (`_ = input.Role`) — features do not yet carry explicit role fields. The `next` tool correctly threads the parameter through; filtering will activate when the service layer implements role matching.
 
 ---
 

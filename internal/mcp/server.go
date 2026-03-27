@@ -108,9 +108,9 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		// Track E: finish — completion + inline knowledge + lenient lifecycle
 		mcpServer.AddTools(FinishTools(entitySvc, dispatchSvc)...)
 		// Track F: next — work queue inspection and task claiming
-		mcpServer.AddTools(NextTools(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc)...)
+		mcpServer.AddTools(NextTools(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc)...)
 		// Track G: handoff — sub-agent prompt generation
-		mcpServer.AddTools(HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc)...)
+		mcpServer.AddTools(HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc)...)
 		// Track H: entity — consolidated entity CRUD
 		mcpServer.AddTools(EntityTool(entitySvc)...)
 		// Track I: doc — consolidated document operations

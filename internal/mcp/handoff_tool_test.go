@@ -150,7 +150,7 @@ func callHandoff(
 	args map[string]any,
 ) string {
 	t.Helper()
-	tool := handoffTool(entitySvc, profileStore, knowledgeSvc, nil)
+	tool := handoffTool(entitySvc, profileStore, knowledgeSvc, nil, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -399,8 +399,8 @@ func TestHandoff_ContextMetadataFields(t *testing.T) {
 	checkMetaFloat("spec_sections_included", false) // may be 0 — no doc intel in tests
 	checkMetaFloat("knowledge_entries_included", true)
 
-	if int(meta["byte_budget"].(float64)) != handoffDefaultBudget {
-		t.Errorf("byte_budget = %v, want %d", meta["byte_budget"], handoffDefaultBudget)
+	if int(meta["byte_budget"].(float64)) != assemblyDefaultBudget {
+		t.Errorf("byte_budget = %v, want %d", meta["byte_budget"], assemblyDefaultBudget)
 	}
 
 	if _, ok := meta["trimmed"]; !ok {
@@ -780,6 +780,9 @@ func TestHandoff_ByteUsageIsPositive(t *testing.T) {
 	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "bytes")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
+
+	// Add knowledge so there is actual content to measure.
+	addHandoffKnowledge(t, knowledgeSvc, "byte-test", "Some constraint for byte measurement", "project", 2)
 
 	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
 		"task_id": taskID,
