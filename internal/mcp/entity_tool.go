@@ -356,33 +356,6 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 			return entityListResponse(entityType, entitySummaries(plans)), nil
 		}
 
-		// For tasks with a parent filter: ListEntitiesFiltered checks r.State["parent"]
-		// but tasks store their parent in r.State["parent_feature"]. Filter manually.
-		if entityType == "task" && parentFilter != "" {
-			allTasks, err := entitySvc.List("task")
-			if err != nil {
-				return nil, fmt.Errorf("list tasks: %w", err)
-			}
-			var filtered []service.ListResult
-			for _, t := range allTasks {
-				pf, _ := t.State["parent_feature"].(string)
-				if pf != parentFilter {
-					continue
-				}
-				if statusFilter != "" {
-					st, _ := t.State["status"].(string)
-					if st != statusFilter {
-						continue
-					}
-				}
-				if len(tagsFilter) > 0 && !entityHasAnyTag(t.State, tagsFilter) {
-					continue
-				}
-				filtered = append(filtered, t)
-			}
-			return entityListResponse(entityType, entitySummaries(filtered)), nil
-		}
-
 		// Generic path via ListEntitiesFiltered.
 		results, err := entitySvc.ListEntitiesFiltered(service.ListFilteredInput{
 			Type:          entityType,

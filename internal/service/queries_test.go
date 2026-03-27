@@ -313,6 +313,69 @@ func TestListEntitiesFiltered_ByDateRange(t *testing.T) {
 	}
 }
 
+func TestListEntitiesFiltered_ByParent_Task(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := NewEntityService(root)
+
+	writeTestEntity(t, root, "task", "TASK-01AAAAAAAAA20", "task-a",
+		makeTaskFields("TASK-01AAAAAAAAA20", "task-a", "FEAT-01AAAAAAAAA09", "queued", nil))
+
+	writeTestEntity(t, root, "task", "TASK-01AAAAAAAAA21", "task-b",
+		makeTaskFields("TASK-01AAAAAAAAA21", "task-b", "FEAT-01AAAAAAAAA09", "queued", nil))
+
+	writeTestEntity(t, root, "task", "TASK-01AAAAAAAAA22", "task-c",
+		makeTaskFields("TASK-01AAAAAAAAA22", "task-c", "FEAT-01AAAAAAAAA10", "queued", nil))
+
+	results, err := svc.ListEntitiesFiltered(ListFilteredInput{
+		Type:   "task",
+		Parent: "FEAT-01AAAAAAAAA09",
+	})
+	if err != nil {
+		t.Fatalf("ListEntitiesFiltered() error = %v", err)
+	}
+
+	if len(results) != 2 {
+		t.Fatalf("expected 2 tasks for FEAT-01AAAAAAAAA09, got %d", len(results))
+	}
+
+	ids := map[string]bool{}
+	for _, r := range results {
+		ids[r.ID] = true
+	}
+	if !ids["TASK-01AAAAAAAAA20"] || !ids["TASK-01AAAAAAAAA21"] {
+		t.Errorf("unexpected task IDs: %v", ids)
+	}
+}
+
+func TestListEntitiesFiltered_ByParent_TaskWithStatus(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := NewEntityService(root)
+
+	writeTestEntity(t, root, "task", "TASK-01AAAAAAAAA23", "task-d",
+		makeTaskFields("TASK-01AAAAAAAAA23", "task-d", "FEAT-01AAAAAAAAA09", "queued", nil))
+
+	writeTestEntity(t, root, "task", "TASK-01AAAAAAAAA24", "task-e",
+		makeTaskFields("TASK-01AAAAAAAAA24", "task-e", "FEAT-01AAAAAAAAA09", "done", nil))
+
+	results, err := svc.ListEntitiesFiltered(ListFilteredInput{
+		Type:   "task",
+		Parent: "FEAT-01AAAAAAAAA09",
+		Status: "queued",
+	})
+	if err != nil {
+		t.Fatalf("ListEntitiesFiltered() error = %v", err)
+	}
+
+	if len(results) != 1 {
+		t.Fatalf("expected 1 queued task, got %d", len(results))
+	}
+	if results[0].ID != "TASK-01AAAAAAAAA23" {
+		t.Errorf("unexpected ID: %s", results[0].ID)
+	}
+}
+
 func TestListEntitiesFiltered_MissingType(t *testing.T) {
 	t.Parallel()
 	root := t.TempDir()

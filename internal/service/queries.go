@@ -159,6 +159,9 @@ func matchesFilteredInput(r ListResult, input ListFilteredInput) bool {
 	if input.Parent != "" {
 		parent := stringFromState(r.State, "parent")
 		if parent == "" {
+			parent = stringFromState(r.State, "parent_feature")
+		}
+		if parent == "" {
 			parent = stringFromState(r.State, "epic")
 		}
 		if parent != input.Parent {
