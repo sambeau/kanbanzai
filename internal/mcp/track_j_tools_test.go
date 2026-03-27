@@ -37,7 +37,7 @@ func TestTrackJ_Planning_ToolsRegistered(t *testing.T) {
 
 	registered := toolNamesFromServer(t, entityRoot, &cfg)
 
-	want := []string{"decompose", "estimate", "conflict"}
+	want := []string{"decompose", "estimate", "conflict", "retro"}
 	if missing := containsAll(registered, want); len(missing) != 0 {
 		t.Errorf("planning group tools missing: %v", missing)
 	}
@@ -54,7 +54,7 @@ func TestTrackJ_Planning_ToolsNotRegisteredWhenDisabled(t *testing.T) {
 
 	registered := toolNamesFromServer(t, entityRoot, &cfg)
 
-	notWant := []string{"decompose", "estimate", "conflict"}
+	notWant := []string{"decompose", "estimate", "conflict", "retro"}
 	if found := containsNone(registered, notWant); len(found) != 0 {
 		t.Errorf("planning tools should not be registered with minimal preset, but found: %v", found)
 	}
@@ -1007,7 +1007,7 @@ func TestTrackJ_ToolCount_PerGroup(t *testing.T) {
 
 	expected := map[string]int{
 		config.GroupCore:        7,
-		config.GroupPlanning:    3,
+		config.GroupPlanning:    4,
 		config.GroupKnowledge:   2,
 		config.GroupGit:         5,
 		config.GroupDocuments:   1,

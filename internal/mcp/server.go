@@ -125,11 +125,13 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		)...)
 	}
 
-	// GroupPlanning: decompose, estimate, conflict.
+	// GroupPlanning: decompose, estimate, conflict, retro.
 	if groups[config.GroupPlanning] {
 		mcpServer.AddTools(DecomposeTool(decomposeSvc, entitySvc)...)
 		mcpServer.AddTools(EstimateTool(entitySvc, knowledgeSvc)...)
 		mcpServer.AddTools(ConflictTool(conflictSvc)...)
+		retroSvc := service.NewRetroService(knowledgeSvc, entitySvc, docRecordSvc, repoRoot)
+		mcpServer.AddTools(RetroTool(retroSvc)...)
 	}
 
 	// GroupKnowledge: knowledge, profile.

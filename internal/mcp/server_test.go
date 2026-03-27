@@ -49,7 +49,7 @@ func TestServer_ListTools_MinimalPreset(t *testing.T) {
 }
 
 // TestServer_ListTools_OrchestrationPreset verifies that preset: orchestration
-// registers exactly 15 tools: core + planning + git (spec §30.11).
+// registers exactly 16 tools: core + planning + git (spec §30.11).
 func TestServer_ListTools_OrchestrationPreset(t *testing.T) {
 	t.Parallel()
 
@@ -60,8 +60,8 @@ func TestServer_ListTools_OrchestrationPreset(t *testing.T) {
 	wantTools := []string{
 		// core (7)
 		"status", "next", "finish", "handoff", "entity", "doc", "health",
-		// planning (3)
-		"decompose", "estimate", "conflict",
+		// planning (4)
+		"decompose", "estimate", "conflict", "retro",
 		// git (5)
 		"worktree", "merge", "pr", "branch", "cleanup",
 	}
@@ -80,7 +80,7 @@ func TestServer_ListTools_OrchestrationPreset(t *testing.T) {
 }
 
 // TestServer_ListTools_FullPreset verifies that preset: full registers
-// exactly 20 tools — all groups (spec §30.11).
+// exactly 21 tools — all groups (spec §30.11).
 func TestServer_ListTools_FullPreset(t *testing.T) {
 	t.Parallel()
 
@@ -91,8 +91,8 @@ func TestServer_ListTools_FullPreset(t *testing.T) {
 	wantTools := []string{
 		// core (7)
 		"status", "next", "finish", "handoff", "entity", "doc", "health",
-		// planning (3)
-		"decompose", "estimate", "conflict",
+		// planning (4)
+		"decompose", "estimate", "conflict", "retro",
 		// knowledge (2)
 		"knowledge", "profile",
 		// git (5)
@@ -105,9 +105,9 @@ func TestServer_ListTools_FullPreset(t *testing.T) {
 		"checkpoint",
 	}
 
-	if len(tools) != 20 {
+	if len(tools) != 21 {
 		got := testSortedKeys(tools)
-		t.Fatalf("full preset: got %d tools %v, want 20", len(tools), got)
+		t.Fatalf("full preset: got %d tools %v, want 21", len(tools), got)
 	}
 
 	for _, name := range wantTools {
@@ -125,9 +125,9 @@ func TestServer_ListTools_DefaultConfigIsFull(t *testing.T) {
 	cfg := config.DefaultConfig()
 	tools := testServerToolNames(t, &cfg)
 
-	if len(tools) != 20 {
+	if len(tools) != 21 {
 		got := testSortedKeys(tools)
-		t.Fatalf("default config: got %d tools %v, want 20", len(tools), got)
+		t.Fatalf("default config: got %d tools %v, want 21", len(tools), got)
 	}
 }
 

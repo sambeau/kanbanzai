@@ -28,6 +28,7 @@ var GroupToolNames = map[string][]string{
 		"decompose",
 		"estimate",
 		"conflict",
+		"retro",
 	},
 	config.GroupKnowledge: {
 		"knowledge",

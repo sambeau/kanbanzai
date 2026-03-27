@@ -65,7 +65,7 @@ func TestGroupToolNames_TotalToolCount(t *testing.T) {
 	for _, tools := range GroupToolNames {
 		total += len(tools)
 	}
-	const want = 20
+	const want = 21
 	if total != want {
 		t.Errorf("total 2.0 tool count = %d, want %d", total, want)
 	}
