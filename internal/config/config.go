@@ -114,6 +114,18 @@ type DispatchConfig struct {
 	StallThresholdDays int `yaml:"stall_threshold_days"`
 }
 
+// MCPConfig holds settings for the MCP tool surface (Kanbanzai 2.0).
+type MCPConfig struct {
+	// Preset is a shorthand for a common group configuration.
+	// Valid values: "minimal", "orchestration", "full".
+	// Defaults to "full" when neither preset nor groups are specified.
+	Preset string `yaml:"preset,omitempty"`
+	// Groups controls which feature groups are enabled.
+	// Explicit group settings override the preset.
+	// The "core" group is always enabled and cannot be disabled.
+	Groups map[string]bool `yaml:"groups,omitempty"`
+}
+
 // Config is the project configuration structure stored in .kbz/config.yaml.
 type Config struct {
 	// Version is the configuration schema version.
@@ -134,6 +146,8 @@ type Config struct {
 	Incidents IncidentsConfig `yaml:"incidents,omitempty"`
 	// Decomposition holds settings for feature decomposition operations.
 	Decomposition DecompositionConfig `yaml:"decomposition,omitempty"`
+	// MCP holds settings for the MCP tool surface (Kanbanzai 2.0 feature groups).
+	MCP MCPConfig `yaml:"mcp,omitempty"`
 }
 
 // DefaultConfig returns a new Config with sensible defaults.
@@ -563,6 +577,98 @@ func (c *Config) mergePhase3Defaults() {
 	if c.Knowledge.Pruning.GracePeriodDays == 0 {
 		c.Knowledge.Pruning.GracePeriodDays = knowledgeDefaults.Pruning.GracePeriodDays
 	}
+}
+
+// ToolGroup constants define the feature groups for MCP tool registration (Kanbanzai 2.0).
+const (
+	GroupCore        = "core"
+	GroupPlanning    = "planning"
+	GroupKnowledge   = "knowledge"
+	GroupGit         = "git"
+	GroupDocuments   = "documents"
+	GroupIncidents   = "incidents"
+	GroupCheckpoints = "checkpoints"
+)
+
+// ValidPresets is the set of recognised preset names.
+var ValidPresets = map[string]bool{
+	"minimal":       true,
+	"orchestration": true,
+	"full":          true,
+}
+
+// presetGroups maps preset names to the set of enabled groups.
+var presetGroups = map[string]map[string]bool{
+	"minimal": {
+		GroupCore: true,
+	},
+	"orchestration": {
+		GroupCore:     true,
+		GroupPlanning: true,
+		GroupGit:      true,
+	},
+	"full": {
+		GroupCore:        true,
+		GroupPlanning:    true,
+		GroupKnowledge:   true,
+		GroupGit:         true,
+		GroupDocuments:   true,
+		GroupIncidents:   true,
+		GroupCheckpoints: true,
+	},
+}
+
+// KnownGroups is the set of recognised group names.
+var KnownGroups = map[string]bool{
+	GroupCore:        true,
+	GroupPlanning:    true,
+	GroupKnowledge:   true,
+	GroupGit:         true,
+	GroupDocuments:   true,
+	GroupIncidents:   true,
+	GroupCheckpoints: true,
+}
+
+// EffectiveGroups resolves the effective group configuration from the MCP config.
+// It starts from the preset (defaulting to "full" when neither preset nor groups are set),
+// then applies explicit group overrides. The "core" group is always enabled.
+// Returns the resolved group map, advisory warnings, and any startup error.
+// An error is returned only for unrecognised preset names.
+func (c *Config) EffectiveGroups() (groups map[string]bool, warnings []string, err error) {
+	preset := c.MCP.Preset
+	if preset == "" {
+		preset = "full"
+	}
+
+	base, ok := presetGroups[preset]
+	if !ok {
+		return nil, nil, fmt.Errorf("unknown preset %q: valid presets are minimal, orchestration, full", preset)
+	}
+
+	// Start from a copy of the preset base.
+	groups = make(map[string]bool, len(base))
+	for k, v := range base {
+		groups[k] = v
+	}
+
+	// Apply explicit group overrides.
+	for name, enabled := range c.MCP.Groups {
+		if !KnownGroups[name] {
+			warnings = append(warnings, fmt.Sprintf("unknown group %q in mcp.groups (ignored)", name))
+			continue
+		}
+		if name == GroupCore && !enabled {
+			warnings = append(warnings, "mcp.groups.core cannot be disabled; overriding to true")
+			groups[GroupCore] = true
+			continue
+		}
+		groups[name] = enabled
+	}
+
+	// Always enforce core enabled regardless of configuration.
+	groups[GroupCore] = true
+
+	return groups, warnings, nil
 }
 
 // parsePlanIDParts extracts prefix, number, and slug from a Plan ID.

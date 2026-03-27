@@ -18,7 +18,7 @@ import (
 
 const (
 	ServerName    = "kanbanzai"
-	ServerVersion = "phase-4b"
+	ServerVersion = "2.0-dev"
 )
 
 // NewServer creates a new MCP server with all tools registered.
@@ -69,6 +69,9 @@ func NewServer(entityRoot string) *server.MCPServer {
 	gitOps := worktree.NewGit(repoRoot)
 	cfg := config.LoadOrDefault()
 
+	// Resolve effective group configuration (Kanbanzai 2.0 feature group framework).
+	groups := resolveServerGroups(cfg)
+
 	// Phase 3: automatic worktree creation on task→active / bug→in-progress
 	// Phase 4b: automatic dependency unblocking on task→done/not-planned/duplicate
 	entitySvc.SetStatusTransitionHook(
@@ -85,89 +88,96 @@ func NewServer(entityRoot string) *server.MCPServer {
 	checkpointStore := checkpoint.NewStore(stateRoot)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 
-	// Phase 1 entity tools (with Phase 2b, Phase 3, Phase 4a, and Phase 4b health checkers)
-	mcpServer.AddTools(EntityTools(entitySvc,
-		phase2bKnowledgeHealthChecker(knowledgeSvc, profileStore),
-		phase2bProfileHealthChecker(profileStore),
-		Phase3HealthChecker(worktreeStore, knowledgeSvc, cfg, repoRoot),
-		Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
-		Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
-	)...)
+	// _legacy group: all 1.0 tool registrations, enabled during the Kanbanzai 2.0
+	// dual-registration development period (Tracks A–J). Removed in Track K.
+	if groups[GroupLegacy] {
+		// Phase 1 entity tools (with Phase 2b, Phase 3, Phase 4a, and Phase 4b health checkers)
+		mcpServer.AddTools(EntityTools(entitySvc,
+			phase2bKnowledgeHealthChecker(knowledgeSvc, profileStore),
+			phase2bProfileHealthChecker(profileStore),
+			Phase3HealthChecker(worktreeStore, knowledgeSvc, cfg, repoRoot),
+			Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
+			Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
+		)...)
 
-	// Phase 2a Plan tools
-	mcpServer.AddTools(PlanTools(entitySvc)...)
+		// Phase 2a Plan tools
+		mcpServer.AddTools(PlanTools(entitySvc)...)
 
-	// Phase 2a Document record tools
-	mcpServer.AddTools(DocRecordTools(docRecordSvc)...)
+		// Phase 2a Document record tools
+		mcpServer.AddTools(DocRecordTools(docRecordSvc)...)
 
-	// Phase 2a Config tools
-	mcpServer.AddTools(ConfigTools()...)
+		// Phase 2a Config tools
+		mcpServer.AddTools(ConfigTools()...)
 
-	// Phase 2a Document intelligence tools
-	mcpServer.AddTools(DocIntelligenceTools(intelligenceSvc, docRecordSvc)...)
+		// Phase 2a Document intelligence tools
+		mcpServer.AddTools(DocIntelligenceTools(intelligenceSvc, docRecordSvc)...)
 
-	// Phase 2a Rich query tools
-	mcpServer.AddTools(QueryTools(entitySvc, docRecordSvc)...)
+		// Phase 2a Rich query tools
+		mcpServer.AddTools(QueryTools(entitySvc, docRecordSvc)...)
 
-	// Phase 2a Migration tools
-	mcpServer.AddTools(MigrationTools(entitySvc)...)
+		// Phase 2a Migration tools
+		mcpServer.AddTools(MigrationTools(entitySvc)...)
 
-	// Phase 2b Knowledge tools (contribute, get, list, update, confirm, flag, retire, promote, context_report)
-	mcpServer.AddTools(KnowledgeTools(knowledgeSvc)...)
+		// Phase 2b Knowledge tools
+		mcpServer.AddTools(KnowledgeTools(knowledgeSvc)...)
 
-	// Phase 2b Context profile tools (profile_get, profile_list)
-	mcpServer.AddTools(ProfileTools(profileStore)...)
+		// Phase 2b Context profile tools
+		mcpServer.AddTools(ProfileTools(profileStore)...)
 
-	// Phase 2b Context assembly tools (context_assemble)
-	mcpServer.AddTools(ContextTools(profileStore, knowledgeSvc, entitySvc, intelligenceSvc)...)
+		// Phase 2b Context assembly tools
+		mcpServer.AddTools(ContextTools(profileStore, knowledgeSvc, entitySvc, intelligenceSvc)...)
 
-	// Phase 2b Agent capability tools (suggest_links, check_duplicates, doc_extraction_guide)
-	mcpServer.AddTools(AgentCapabilityTools(entitySvc, knowledgeSvc, intelligenceSvc)...)
+		// Phase 2b Agent capability tools
+		mcpServer.AddTools(AgentCapabilityTools(entitySvc, knowledgeSvc, intelligenceSvc)...)
 
-	// Phase 2b Batch import tools (batch_import_documents)
-	mcpServer.AddTools(BatchImportTools(docRecordSvc)...)
+		// Phase 2b Batch import tools
+		mcpServer.AddTools(BatchImportTools(docRecordSvc)...)
 
-	// Phase 3 worktree and branch tools
-	branchThresholds := git.BranchThresholds{
-		StaleAfterDays:      cfg.BranchTracking.StaleAfterDays,
-		DriftWarningCommits: cfg.BranchTracking.DriftWarningCommits,
-		DriftErrorCommits:   cfg.BranchTracking.DriftErrorCommits,
+		// Phase 3 worktree and branch tools
+		branchThresholds := git.BranchThresholds{
+			StaleAfterDays:      cfg.BranchTracking.StaleAfterDays,
+			DriftWarningCommits: cfg.BranchTracking.DriftWarningCommits,
+			DriftErrorCommits:   cfg.BranchTracking.DriftErrorCommits,
+		}
+		mcpServer.AddTools(WorktreeTools(worktreeStore, entitySvc, gitOps)...)
+		mcpServer.AddTools(BranchTools(worktreeStore, repoRoot, branchThresholds)...)
+
+		// Phase 3 cleanup tools
+		mcpServer.AddTools(CleanupTools(worktreeStore, gitOps, &cfg.Cleanup)...)
+
+		// Phase 3 merge tools
+		mcpServer.AddTools(MergeTools(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
+
+		// Phase 3 PR tools
+		mcpServer.AddTools(PRTools(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
+
+		// Phase 4a Queue tools
+		mcpServer.AddTools(QueueTools(entitySvc)...)
+
+		// Phase 4a Estimation tools
+		mcpServer.AddTools(EstimationTools(entitySvc, knowledgeSvc)...)
+
+		// Phase 4a Dispatch tools
+		mcpServer.AddTools(DispatchTools(dispatchSvc, checkpointStore, profileStore, knowledgeSvc, entitySvc, intelligenceSvc)...)
+
+		// Phase 4b Incident tools
+		mcpServer.AddTools(IncidentTools(entitySvc)...)
+
+		// Phase 4b Decompose tools
+		decomposeSvc := service.NewDecomposeService(entitySvc, docRecordSvc)
+		mcpServer.AddTools(DecomposeTools(decomposeSvc)...)
+
+		// Phase 4b Review tools
+		reviewSvc := service.NewReviewService(entitySvc, intelligenceSvc, repoRoot)
+		mcpServer.AddTools(ReviewTools(reviewSvc)...)
+
+		// Phase 4b Conflict tools
+		conflictSvc := service.NewConflictService(entitySvc, newWorktreeBranchLookup(worktreeStore, repoRoot), repoRoot)
+		mcpServer.AddTools(ConflictTools(conflictSvc)...)
 	}
-	mcpServer.AddTools(WorktreeTools(worktreeStore, entitySvc, gitOps)...)
-	mcpServer.AddTools(BranchTools(worktreeStore, repoRoot, branchThresholds)...)
 
-	// Phase 3 cleanup tools
-	mcpServer.AddTools(CleanupTools(worktreeStore, gitOps, &cfg.Cleanup)...)
-
-	// Phase 3 merge tools (merge_readiness_check, merge_execute)
-	mcpServer.AddTools(MergeTools(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
-
-	// Phase 3 PR tools (pr_create, pr_update, pr_status)
-	mcpServer.AddTools(PRTools(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
-
-	// Phase 4a Queue tools (work_queue, dependency_status)
-	mcpServer.AddTools(QueueTools(entitySvc)...)
-
-	// Phase 4a Estimation tools (estimate_set, estimate_query, estimate_reference_add, estimate_reference_remove)
-	mcpServer.AddTools(EstimationTools(entitySvc, knowledgeSvc)...)
-
-	// Phase 4a Dispatch tools (dispatch_task, complete_task, human_checkpoint*)
-	mcpServer.AddTools(DispatchTools(dispatchSvc, checkpointStore, profileStore, knowledgeSvc, entitySvc, intelligenceSvc)...)
-
-	// Phase 4b Incident tools (incident_create, incident_update, incident_list, incident_link_bug)
-	mcpServer.AddTools(IncidentTools(entitySvc)...)
-
-	// Phase 4b Decompose tools (decompose_feature, decompose_review)
-	decomposeSvc := service.NewDecomposeService(entitySvc, docRecordSvc)
-	mcpServer.AddTools(DecomposeTools(decomposeSvc)...)
-
-	// Phase 4b Review tools (review_task_output)
-	reviewSvc := service.NewReviewService(entitySvc, intelligenceSvc, repoRoot)
-	mcpServer.AddTools(ReviewTools(reviewSvc)...)
-
-	// Phase 4b Conflict tools (conflict_domain_check)
-	conflictSvc := service.NewConflictService(entitySvc, newWorktreeBranchLookup(worktreeStore, repoRoot), repoRoot)
-	mcpServer.AddTools(ConflictTools(conflictSvc)...)
+	// 2.0 core group tools are registered as they are implemented (Tracks B–K).
+	// Placeholder: when groups[config.GroupCore] is true, register 2.0 core tools here.
 
 	return mcpServer
 }
