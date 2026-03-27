@@ -1,6 +1,7 @@
 package validate
 
 import (
+	"strings"
 	"testing"
 
 	"kanbanzai/internal/model"
@@ -818,4 +819,202 @@ func TestEntryStateOrPanic_PanicsOnUnknownKind(t *testing.T) {
 	}()
 
 	EntryStateOrPanic(EntityKind("unknown"))
+}
+
+func TestValidNextStates(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name       string
+		kind       EntityKind
+		from       string
+		wantStates []string
+	}{
+		{
+			name:       "plan proposed has designing, cancelled, superseded",
+			kind:       EntityPlan,
+			from:       "proposed",
+			wantStates: []string{"cancelled", "designing", "superseded"},
+		},
+		{
+			name:       "plan active has done, cancelled, superseded",
+			kind:       EntityPlan,
+			from:       "active",
+			wantStates: []string{"cancelled", "done", "superseded"},
+		},
+		{
+			name:       "task queued has duplicate, not-planned, ready",
+			kind:       EntityTask,
+			from:       string(model.TaskStatusQueued),
+			wantStates: []string{"duplicate", "not-planned", "ready"},
+		},
+		{
+			name:       "task active has many transitions",
+			kind:       EntityTask,
+			from:       string(model.TaskStatusActive),
+			wantStates: []string{"blocked", "done", "duplicate", "needs-review", "needs-rework", "not-planned"},
+		},
+		{
+			name:       "task blocked only goes to active",
+			kind:       EntityTask,
+			from:       string(model.TaskStatusBlocked),
+			wantStates: []string{"active"},
+		},
+		{
+			name:       "bug reported has duplicate, triaged",
+			kind:       EntityBug,
+			from:       string(model.BugStatusReported),
+			wantStates: []string{"duplicate", "triaged"},
+		},
+		{
+			name:       "feature proposed phase2",
+			kind:       EntityFeature,
+			from:       string(model.FeatureStatusProposed),
+			wantStates: []string{"cancelled", "designing", "specifying", "superseded"},
+		},
+		{
+			name:       "terminal task done returns nil",
+			kind:       EntityTask,
+			from:       string(model.TaskStatusDone),
+			wantStates: nil,
+		},
+		{
+			name:       "terminal task not-planned returns nil",
+			kind:       EntityTask,
+			from:       string(model.TaskStatusNotPlanned),
+			wantStates: nil,
+		},
+		{
+			name:       "terminal bug duplicate returns nil",
+			kind:       EntityBug,
+			from:       string(model.BugStatusDuplicate),
+			wantStates: nil,
+		},
+		{
+			name:       "unknown kind returns nil",
+			kind:       EntityKind("unknown"),
+			from:       "proposed",
+			wantStates: nil,
+		},
+		{
+			name:       "unknown state returns nil",
+			kind:       EntityTask,
+			from:       "nonexistent",
+			wantStates: nil,
+		},
+		{
+			name:       "decision proposed has accepted, rejected",
+			kind:       EntityDecision,
+			from:       string(model.DecisionStatusProposed),
+			wantStates: []string{"accepted", "rejected"},
+		},
+		{
+			name:       "decision terminal superseded returns nil",
+			kind:       EntityDecision,
+			from:       string(model.DecisionStatusSuperseded),
+			wantStates: nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			got := ValidNextStates(tt.kind, tt.from)
+
+			if tt.wantStates == nil {
+				if got != nil {
+					t.Errorf("ValidNextStates(%s, %q) = %v, want nil", tt.kind, tt.from, got)
+				}
+				return
+			}
+
+			if len(got) != len(tt.wantStates) {
+				t.Fatalf("ValidNextStates(%s, %q) returned %d states %v, want %d states %v",
+					tt.kind, tt.from, len(got), got, len(tt.wantStates), tt.wantStates)
+			}
+
+			for i, want := range tt.wantStates {
+				if got[i] != want {
+					t.Errorf("ValidNextStates(%s, %q)[%d] = %q, want %q", tt.kind, tt.from, i, got[i], want)
+				}
+			}
+		})
+	}
+}
+
+func TestValidateTransition_ErrorContainsValidStates(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name           string
+		kind           EntityKind
+		from           string
+		to             string
+		wantSubstrings []string
+	}{
+		{
+			name: "plan proposed to done shows valid transitions",
+			kind: EntityPlan,
+			from: "proposed",
+			to:   "done",
+			wantSubstrings: []string{
+				`valid transitions from "proposed"`,
+				"designing",
+				"cancelled",
+				"superseded",
+			},
+		},
+		{
+			name: "task queued to done shows valid transitions",
+			kind: EntityTask,
+			from: string(model.TaskStatusQueued),
+			to:   string(model.TaskStatusDone),
+			wantSubstrings: []string{
+				`valid transitions from "queued"`,
+				"ready",
+				"not-planned",
+				"duplicate",
+			},
+		},
+		{
+			name: "feature proposed to done shows valid transitions",
+			kind: EntityFeature,
+			from: string(model.FeatureStatusProposed),
+			to:   string(model.FeatureStatusDone),
+			wantSubstrings: []string{
+				`valid transitions from "proposed"`,
+				"designing",
+				"specifying",
+			},
+		},
+		{
+			name: "bug reported to closed shows valid transitions",
+			kind: EntityBug,
+			from: string(model.BugStatusReported),
+			to:   string(model.BugStatusClosed),
+			wantSubstrings: []string{
+				`valid transitions from "reported"`,
+				"triaged",
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			err := ValidateTransition(tt.kind, tt.from, tt.to)
+			if err == nil {
+				t.Fatal("expected error, got nil")
+			}
+
+			msg := err.Error()
+			for _, substr := range tt.wantSubstrings {
+				if !strings.Contains(msg, substr) {
+					t.Errorf("error message %q does not contain %q", msg, substr)
+				}
+			}
+		})
+	}
 }

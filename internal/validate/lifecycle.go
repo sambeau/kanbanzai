@@ -2,6 +2,8 @@ package validate
 
 import (
 	"fmt"
+	"sort"
+	"strings"
 
 	"kanbanzai/internal/model"
 )
@@ -384,10 +386,31 @@ func ValidateTransition(kind EntityKind, from, to string) error {
 	}
 
 	if !CanTransition(kind, from, to) {
+		valid := ValidNextStates(kind, from)
+		if len(valid) > 0 {
+			return fmt.Errorf("invalid %s transition %q -> %q; valid transitions from %q: %s", kind, from, to, from, strings.Join(valid, ", "))
+		}
 		return fmt.Errorf("invalid %s transition %q -> %q", kind, from, to)
 	}
 
 	return nil
+}
+
+// ValidNextStates returns the sorted list of states reachable from the given
+// state via a single valid transition. Returns nil if the state is terminal,
+// unknown, or has no outgoing transitions.
+func ValidNextStates(kind EntityKind, from string) []string {
+	nextStates, ok := allowedTransitions[kind][from]
+	if !ok {
+		return nil
+	}
+
+	states := make([]string, 0, len(nextStates))
+	for s := range nextStates {
+		states = append(states, s)
+	}
+	sort.Strings(states)
+	return states
 }
 
 // AllStates returns all known states for the given entity kind.
