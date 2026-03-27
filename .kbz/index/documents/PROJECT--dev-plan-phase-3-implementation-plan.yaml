@@ -1,0 +1,342 @@
+document_id: PROJECT/dev-plan-phase-3-implementation-plan
+document_path: work/plan/phase-3-implementation-plan.md
+content_hash: 7fda4493f5edaa4d4d0a316acf9665969eb39982b5f527293e75ad3b41c7af6f
+indexed_at: 2026-03-25T21:38:28.709225Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 3 Implementation Plan
+      byte_offset: 0
+      byte_count: 25363
+      word_count: 3676
+      content_hash: 7fda4493f5edaa4d4d0a316acf9665969eb39982b5f527293e75ad3b41c7af6f
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 335
+          byte_count: 545
+          word_count: 72
+          content_hash: ec41fcb84deef71e4f79e2caa8f8ca8b99f2d341e2d3192ae65ca7104ee1ff61
+        - path: "1.2"
+          level: 2
+          title: 2. Implementation Strategy
+          byte_offset: 880
+          byte_count: 1635
+          word_count: 272
+          content_hash: 722f2d8cf038d021a29a37590f2845fdd1b707a9ccecc7b6ec6737d904929076
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Two parallel streams
+              byte_offset: 911
+              byte_count: 498
+              word_count: 79
+              content_hash: c0e640ac3d25abde43fa453aac41525a4340cf1a028b027a7ceb964cd1f8f3f7
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Build order within streams
+              byte_offset: 1409
+              byte_count: 612
+              word_count: 93
+              content_hash: 0154990a114bfefeb0a0cb0e3d47effb6f0926306f0612ded2c9cf47a0ba68f7
+            - path: 1.2.3
+              level: 3
+              title: 2.3 Parallelism opportunities
+              byte_offset: 2021
+              byte_count: 494
+              word_count: 96
+              content_hash: fbb64e39c3c416bba9725e4bc0c5106aa890dff84a9ad3da621acdf545c0c00c
+        - path: "1.3"
+          level: 2
+          title: 3. Track Breakdown
+          byte_offset: 2515
+          byte_count: 10451
+          word_count: 1753
+          content_hash: af7923a0afca1fd16ab2210f156486cb203a507a1f2a24b6b6b3c9f69370388e
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Track A: Worktree Management'
+              byte_offset: 2538
+              byte_count: 1190
+              word_count: 186
+              content_hash: 133df2dbf1b72dcd91bee464a8e512e183a6c845424ecc029e3695c4e6a70f4f
+            - path: 1.3.2
+              level: 3
+              title: 'Track B: Branch Tracking'
+              byte_offset: 3728
+              byte_count: 850
+              word_count: 138
+              content_hash: ce5fd65dc329942d71a1b39890003aa58d4fe5aa2b6258239f318b14ff4300aa
+            - path: 1.3.3
+              level: 3
+              title: 'Track C: Merge Gates'
+              byte_offset: 4578
+              byte_count: 1190
+              word_count: 206
+              content_hash: ace672e3eaa157814b050ac19cb8f66e58639b617fbfe562444ef657dc98250c
+            - path: 1.3.4
+              level: 3
+              title: 'Track D: GitHub PR Integration'
+              byte_offset: 5768
+              byte_count: 1077
+              word_count: 188
+              content_hash: 1468d735e74d3e3832d742ad515b5c318aee0496a8ff2777366c4c771dd884f5
+            - path: 1.3.5
+              level: 3
+              title: 'Track E: Post-Merge Cleanup'
+              byte_offset: 6845
+              byte_count: 994
+              word_count: 164
+              content_hash: 7d603f4cb6879910e8c1dcd791e04ac4e4f4a490ea04ecda4a1dbf3b3fa40f5b
+            - path: 1.3.6
+              level: 3
+              title: 'Track F: Git Anchoring and Staleness'
+              byte_offset: 7839
+              byte_count: 975
+              word_count: 166
+              content_hash: 47166701adfe51860d0cde8ddc37d659facf9935d0f89533b29dd96fff419500
+            - path: 1.3.7
+              level: 3
+              title: 'Track G: TTL-Based Pruning'
+              byte_offset: 8814
+              byte_count: 837
+              word_count: 146
+              content_hash: 772f4a4bf2f9a0e1e893501d2618870515ef89c0f3ef0466bb2bd186fbe62100
+            - path: 1.3.8
+              level: 3
+              title: 'Track H: Automatic Promotion'
+              byte_offset: 9651
+              byte_count: 794
+              word_count: 133
+              content_hash: 1ee631f5d8d9d9b7671f0dcd84b9c8f2292cfa112c6d207c93bc44cf21356d56
+            - path: 1.3.9
+              level: 3
+              title: 'Track I: Post-Merge Compaction'
+              byte_offset: 10445
+              byte_count: 1049
+              word_count: 173
+              content_hash: d932fbb1e617a1f035ac05c5f83b214e77575b1a4d57e30f439180cd050a21a1
+            - path: 1.3.10
+              level: 3
+              title: 'Track J: Health Check Extensions'
+              byte_offset: 11494
+              byte_count: 785
+              word_count: 130
+              content_hash: 1aab0bd019f57f88ec264728c479d72edad9f884b9849d85de920c82fc855a20
+            - path: 1.3.11
+              level: 3
+              title: 'Track K: Configuration'
+              byte_offset: 12279
+              byte_count: 687
+              word_count: 119
+              content_hash: 4d6ff7b37a30ecf12eeeb7a5a4dbdb792263ba6c2561ad49f85f9b4a4c774c7d
+        - path: "1.4"
+          level: 2
+          title: 4. Dependency Graph
+          byte_offset: 12966
+          byte_count: 4503
+          word_count: 186
+          content_hash: 89fe22f50785f010f6bedb93689afa456762d8470247fa632bcf312f91991299
+        - path: "1.5"
+          level: 2
+          title: 5. Effort Estimates
+          byte_offset: 17469
+          byte_count: 1280
+          word_count: 299
+          content_hash: e70fcc9f987bd4cb7040e036b2f6622264316d5201a16c82f8aebbf7ad4fa511
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Size definitions
+              byte_offset: 17493
+              byte_count: 238
+              word_count: 44
+              content_hash: 75ed78649b17625aabae9014eca2b473a0bc406c508a2a57ac3c2ec279ba116c
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Track estimates
+              byte_offset: 17731
+              byte_count: 764
+              word_count: 210
+              content_hash: 7416707ecb935fb752d305afa210879b6df4354c526d6a3d7d139b2299eb0b04
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Phase estimate
+              byte_offset: 18495
+              byte_count: 254
+              word_count: 41
+              content_hash: 9823bb600435d2a4264e37781d5bc1cb1b4bbd29dda1909f7e4d920e1a2e5599
+        - path: "1.6"
+          level: 2
+          title: 6. Implementation Order
+          byte_offset: 18749
+          byte_count: 920
+          word_count: 184
+          content_hash: a54ab707516ca9dcfbcb799852789eb3aeb8298783f8eb8a442e2e7c2dc76c78
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Recommended sequence (single agent)
+              byte_offset: 18777
+              byte_count: 379
+              word_count: 73
+              content_hash: 12c876a20fb1f43187d2a7b0a90222a1ae87857d831d2b75ae65c3f0f1a738cd
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Parallel execution (two agents)
+              byte_offset: 19156
+              byte_count: 513
+              word_count: 107
+              content_hash: b40bc48ac374d28664797c5cad8af8a6143b06209c22629f40270e7ba06be1d2
+        - path: "1.7"
+          level: 2
+          title: 7. Verification Strategy
+          byte_offset: 19669
+          byte_count: 1540
+          word_count: 253
+          content_hash: 85a773e7cf84848dc88ddec7d830b5f014f680bad5943c8d3d68e121b6455995
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Test coverage requirements
+              byte_offset: 19698
+              byte_count: 342
+              word_count: 54
+              content_hash: 068661ec0e89cd4a4f7cbcfcd47624064b55d13a0ee360fcb024320bea36a431
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Verification checkpoints
+              byte_offset: 20040
+              byte_count: 875
+              word_count: 152
+              content_hash: 8ee67a4ae0a30083bfe8ce8973521deea99c20e9881c6735f037828a20ae5e32
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Acceptance criteria verification
+              byte_offset: 20915
+              byte_count: 294
+              word_count: 43
+              content_hash: bf73b3c0a794a8eeea97c94deaf30206b4169250d1239e523531e4a6157175cb
+        - path: "1.8"
+          level: 2
+          title: 8. Risk Mitigations
+          byte_offset: 21209
+          byte_count: 1876
+          word_count: 268
+          content_hash: dde2f63517787cc85463f8ab5053d97a2c5d2437e4e3583bef34f3986d07eb40
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Git operation reliability
+              byte_offset: 21233
+              byte_count: 386
+              word_count: 54
+              content_hash: 9896f1d40f3cc1fddb66ffe6f9f6219fb97d98ceda2208b4b36ba29ee5b5a720
+            - path: 1.8.2
+              level: 3
+              title: 8.2 GitHub API complexity
+              byte_offset: 21619
+              byte_count: 391
+              word_count: 57
+              content_hash: 00253dd1b00d8b506a9ae9fb2730ca2aa07b9c1f8977b475acd77a062b17be69
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Compaction correctness
+              byte_offset: 22010
+              byte_count: 393
+              word_count: 55
+              content_hash: 6d7f81b87164b5cb6a9c91762bc0a252d1161b08f862afea28f5fd5aeb4b9fc6
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Scope creep
+              byte_offset: 22403
+              byte_count: 340
+              word_count: 50
+              content_hash: 13809fee29c5ac5cfc996dd633c77ef7625e89954b4eb141b8ce6ec7d146e0df
+            - path: 1.8.5
+              level: 3
+              title: 8.5 Performance with large repos
+              byte_offset: 22743
+              byte_count: 342
+              word_count: 48
+              content_hash: fe0cc17c6d265bcbde4febdca3783e9aee449339aad9dcab72aaf7ef9dd6c1b0
+        - path: "1.9"
+          level: 2
+          title: 9. Definition of Done
+          byte_offset: 23085
+          byte_count: 706
+          word_count: 114
+          content_hash: 33ee9a3075293b564a982a45a1aae86e489257ecf4a253db2ced82336113947a
+        - path: "1.10"
+          level: 2
+          title: 10. Open Items
+          byte_offset: 23791
+          byte_count: 734
+          word_count: 120
+          content_hash: 6b7c9a7d70ee3969b5d30782c3a8393e3496fd05b4e80c1f271e94040bb07096
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Questions to resolve during implementation
+              byte_offset: 23810
+              byte_count: 469
+              word_count: 77
+              content_hash: 869c122cb9989006c372d390bfa8269987ad92c134ebf40bdf6a5f0ccfa8c2fa
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Potential Phase 3.1 scope
+              byte_offset: 24279
+              byte_count: 246
+              word_count: 39
+              content_hash: 2315f62164e088520f757950290fe44b90fc7e712c30dc08cc94cc49af535bc8
+        - path: "1.11"
+          level: 2
+          title: 11. Summary
+          byte_offset: 24525
+          byte_count: 838
+          word_count: 112
+          content_hash: dc650280766632f134b2cd50457da13be47511982a37a4a701ec9f52b497f9a7
+cross_doc_links:
+    - target_path: work/spec/phase-3-specification.md
+      link_text: work/spec/phase-3-specification.md
+      section_path: "1"
+    - target_path: work/plan/phase-3-scope.md
+      link_text: work/plan/phase-3-scope.md
+      section_path: "1"
+    - target_path: work/plan/phase-3-decision-log.md
+      link_text: work/plan/phase-3-decision-log.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.5.1
+      role: definition
+      confidence: high
+    - section_path: 1.7.1
+      role: requirement
+      confidence: high
+    - section_path: 1.7.3
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: risk
+      confidence: high
+    - section_path: 1.8.4
+      role: constraint
+      confidence: high
+    - section_path: "1.9"
+      role: definition
+      confidence: high
+    - section_path: 1.10.1
+      role: question
+      confidence: high
+    - section_path: 1.10.2
+      role: constraint
+      confidence: high
+    - section_path: "1.11"
+      role: narrative
+      confidence: high
+classified: false

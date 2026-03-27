@@ -98,8 +98,9 @@ type SideEffect struct {
 // SideEffectCollector accumulates side effects produced during a single MCP
 // request. It is goroutine-safe.
 type SideEffectCollector struct {
-	mu      sync.Mutex
-	effects []SideEffect
+	mu         sync.Mutex
+	effects    []SideEffect
+	isMutation bool // set via SignalMutation; controls side_effects:[] in responses
 }
 
 // Push appends a side effect to the collector.
@@ -117,6 +118,22 @@ func (c *SideEffectCollector) Drain() []SideEffect {
 	out := c.effects
 	c.effects = nil
 	return out
+}
+
+// SetMutation marks this request as a mutation so that WithSideEffects
+// always includes side_effects: [] in the response, even when no cascades
+// occurred (spec §8.4: "The field is never omitted").
+func (c *SideEffectCollector) SetMutation() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.isMutation = true
+}
+
+// IsMutation reports whether this request was signalled as a mutation.
+func (c *SideEffectCollector) IsMutation() bool {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	return c.isMutation
 }
 
 // Len returns the number of side effects currently in the collector.
@@ -151,6 +168,17 @@ func PushSideEffect(ctx context.Context, e SideEffect) {
 	}
 }
 
+// SignalMutation marks the current request as a mutation so that the
+// response always includes side_effects: [] even when no cascades occur.
+// Mutation tool actions (create, update, transition) call this at the start
+// of their handler body (spec §8.4: "The field is never omitted").
+// It is a no-op if the context carries no collector.
+func SignalMutation(ctx context.Context) {
+	if c := CollectorFromContext(ctx); c != nil {
+		c.SetMutation()
+	}
+}
+
 // ─── Middleware ──────────────────────────────────────────────────────────────
 
 // sideEffectHandler is the type of the inner handler function that returns
@@ -182,6 +210,7 @@ func WithSideEffects(inner sideEffectHandler) func(ctx context.Context, req mcp.
 		result, err := inner(ctx, req)
 
 		effects := collector.Drain()
+		isMutation := collector.IsMutation()
 
 		if err != nil {
 			// Convert Go error to structured error response, including any
@@ -189,25 +218,37 @@ func WithSideEffects(inner sideEffectHandler) func(ctx context.Context, req mcp.
 			return buildErrorResult("internal_error", err.Error(), nil, effects), nil
 		}
 
-		return buildResult(result, effects), nil
+		return buildResult(result, effects, isMutation), nil
 	}
 }
 
 // buildResult serialises result to JSON, optionally merging in side_effects.
 // If result is already a map, side_effects is added as a field. Otherwise the
 // result is wrapped in an envelope with both "data" and "side_effects" fields.
-func buildResult(result any, effects []SideEffect) *mcp.CallToolResult {
-	if result == nil && len(effects) == 0 {
+//
+// When isMutation is true (signalled via SignalMutation), side_effects: [] is
+// always present even when no cascades occurred (spec §8.4: "The field is
+// never omitted"). Read-only handlers that do not call SignalMutation omit
+// the field entirely (spec §8.5).
+func buildResult(result any, effects []SideEffect, isMutation bool) *mcp.CallToolResult {
+	if result == nil && len(effects) == 0 && !isMutation {
 		return mcp.NewToolResultText("{}")
 	}
 
-	// Fast path: if no side effects, serialise result directly.
-	if len(effects) == 0 {
+	// Fast path: no side effects and not a mutation — serialise directly.
+	// Read-only operations do not include a side_effects field (spec §8.5).
+	if len(effects) == 0 && !isMutation {
 		b, err := json.Marshal(result)
 		if err != nil {
 			return mcp.NewToolResultText(fmt.Sprintf(`{"error":{"code":"serialisation_error","message":%q}}`, err.Error()))
 		}
 		return mcp.NewToolResultText(string(b))
+	}
+
+	// Mutation with no cascades: use a non-nil empty slice so json.Marshal
+	// produces [] not null (spec §8.4: "The field is never omitted").
+	if len(effects) == 0 {
+		effects = []SideEffect{}
 	}
 
 	// Merge side_effects into the result object when possible.

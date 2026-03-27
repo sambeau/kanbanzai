@@ -1,0 +1,156 @@
+document_id: PROJECT/dev-plan-phase-4b-review
+document_path: work/plan/phase-4b-review.md
+content_hash: 3ed265af6e841d36b3e3f4118e76f35f4d9fa4c42309f70414fa8f2f8748f5fa
+indexed_at: 2026-03-25T21:38:28.972917Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 4b Post-Implementation Review
+      byte_offset: 0
+      byte_count: 14979
+      word_count: 1903
+      content_hash: 3ed265af6e841d36b3e3f4118e76f35f4d9fa4c42309f70414fa8f2f8748f5fa
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 470
+          byte_count: 630
+          word_count: 91
+          content_hash: dee7b304db13b01939d78dcaa36eb88b828e38dfa41938fc5c1c21d8ffadf372
+        - path: "1.2"
+          level: 2
+          title: 2. Findings Summary
+          byte_offset: 1100
+          byte_count: 1778
+          word_count: 210
+          content_hash: 204ef4785196875ff77bd6af52a0ddde1b2b1479139d163c103e79ec776e1e66
+        - path: "1.3"
+          level: 2
+          title: 3. Detailed Findings
+          byte_offset: 2878
+          byte_count: 9185
+          word_count: 1154
+          content_hash: 7b867ce0377f7a849e60d5cb536af6e2e803b6d9b6e40aa5fdf40351d3e8a703
+          children:
+            - path: 1.3.1
+              level: 3
+              title: R4B-1 — Incident YAML field ordering non-deterministic (Critical)
+              byte_offset: 2903
+              byte_count: 1389
+              word_count: 158
+              content_hash: d317a1fb8727dd764745077abdde797002e66dd8fd83cda05674f16266356af1
+            - path: 1.3.2
+              level: 3
+              title: R4B-2 — `kbz incident` CLI command group entirely absent (Critical)
+              byte_offset: 4292
+              byte_count: 838
+              word_count: 110
+              content_hash: 393eba6d46b84bb626640d9259dc4bc7bd04242419660b811cf6f1cd7775f0b7
+            - path: 1.3.3
+              level: 3
+              title: R4B-3 — `output_files` MCP parameter declared as `WithObject` (Medium)
+              byte_offset: 5130
+              byte_count: 806
+              word_count: 102
+              content_hash: 9c67933c81adce06569dbcbd2a3d40ad4c6c06b83d115b37647be9728b3aeb73
+            - path: 1.3.4
+              level: 3
+              title: R4B-4 — `decomposition.max_tasks_per_feature` config key missing (Medium)
+              byte_offset: 5936
+              byte_count: 841
+              word_count: 115
+              content_hash: 8064f294de6d7aa3a531edfe406ecf3bb6829fbb69f5783ea5c729f4274c9832
+            - path: 1.3.5
+              level: 3
+              title: R4B-5 — No canonical Incident YAML fixture or storage round-trip test (Medium)
+              byte_offset: 6777
+              byte_count: 1039
+              word_count: 126
+              content_hash: 4b516d68032df4acb146a41763199c7ab6679e28843e4fc4eda23ac636f4b2d9
+            - path: 1.3.6
+              level: 3
+              title: R4B-6 — `TestServer_ListTools` does not cover Phase 4b tools (Medium)
+              byte_offset: 7816
+              byte_count: 958
+              word_count: 126
+              content_hash: 934a9a7e18a4b603083f8cb9d763a90b7ea602aa9c612749e447ffae8ad95f43
+            - path: 1.3.7
+              level: 3
+              title: R4B-7 — `ServerVersion` and CLI `usageText` still say "Phase 3" (Minor)
+              byte_offset: 8774
+              byte_count: 580
+              word_count: 78
+              content_hash: 8bffb80d859241446eb52c5ea623fe82ee940d822ce1789fedbbb38be6896745
+            - path: 1.3.8
+              level: 3
+              title: R4B-8 — `feature` and `task` commands absent from top-level CLI help (Minor)
+              byte_offset: 9354
+              byte_count: 540
+              word_count: 76
+              content_hash: ed7a5c58bd69066fafe8a7be9094a639579c4457fcebccdce2b3a973185df039
+            - path: 1.3.9
+              level: 3
+              title: 'R4B-9 — Spec §8.2 step 1 has a typo: `needs-rework` should be `needs-review` (Minor)'
+              byte_offset: 9894
+              byte_count: 813
+              word_count: 113
+              content_hash: ecff498c8e8fc4987311c704d99dab122e991810d692c8c4025495a0d8b36bf6
+            - path: 1.3.10
+              level: 3
+              title: R4B-10 — `incidentUpdateTool` and `incidentLinkBugTool` bypass `jsonResult()` (Minor)
+              byte_offset: 10707
+              byte_count: 905
+              word_count: 99
+              content_hash: ab72c93b705df2444e446b16b066fc8230dd6d00a58fa1b3c2377baea92b83ef
+            - path: 1.3.11
+              level: 3
+              title: R4B-11 — `conflict_tools.go` accesses `request.Params.Arguments` directly (Minor)
+              byte_offset: 11612
+              byte_count: 451
+              word_count: 47
+              content_hash: b8c64ace00690e7aafa9137f899d9c8f2f6ab6f3d0b89d0da10cc3cb887fa885
+        - path: "1.4"
+          level: 2
+          title: 4. Items Not Found (Positive Findings)
+          byte_offset: 12063
+          byte_count: 1951
+          word_count: 255
+          content_hash: 68e49d2b92a1c8bbffb72a21ca47935a1502ad55b7cb7218e09c3848fc818b48
+        - path: "1.5"
+          level: 2
+          title: 5. Remediation Priority Order
+          byte_offset: 14014
+          byte_count: 641
+          word_count: 98
+          content_hash: b6f19e3eb2caaaa0c3452a9f5c4b5c9c4b1c1965dd8f2f81594311e1f3a3cc87
+        - path: "1.6"
+          level: 2
+          title: 6. Gate Assessment
+          byte_offset: 14655
+          byte_count: 324
+          word_count: 54
+          content_hash: 106084b187801d6fa6eafb8aeb7a95cde0ecda34c3a8cbcef16975dcc599fd0a
+entity_refs:
+    - entity_id: DEC-008
+      entity_type: decision
+      section_path: 1.3.1
+      byte_offset: 3773
+cross_doc_links:
+    - target_path: work/spec/phase-4b-specification.md
+      link_text: work/spec/phase-4b-specification.md
+      section_path: "1"
+    - target_path: work/plan/phase-4b-implementation-plan.md
+      link_text: work/plan/phase-4b-implementation-plan.md
+      section_path: "1"
+    - target_path: work/spec/phase-4b-specification.md
+      link_text: work/spec/phase-4b-specification.md
+      section_path: 1.3.9
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+classified: false

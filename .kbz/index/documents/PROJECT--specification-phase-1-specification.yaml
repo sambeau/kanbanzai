@@ -1,0 +1,836 @@
+document_id: PROJECT/specification-phase-1-specification
+document_path: work/spec/phase-1-specification.md
+content_hash: 28b7f69b821894404f0506e69268fb96ff15e6d26a17c92bae9906bf5d17c34c
+indexed_at: 2026-03-25T21:38:27.733664Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Phase 1 Specification: Workflow Kernel'
+      byte_offset: 0
+      byte_count: 26542
+      word_count: 4025
+      content_hash: 28b7f69b821894404f0506e69268fb96ff15e6d26a17c92bae9906bf5d17c34c
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 328
+          byte_count: 688
+          word_count: 110
+          content_hash: 6fdbac255753857937cf20e8506ebae2f490afeab2215f28f51bb42b5157f582
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1016
+          byte_count: 614
+          word_count: 96
+          content_hash: fb005e543382e73c2a94f7896fa9be3fe4935b4337e17c62d23dd1e7f229f8d4
+        - path: "1.3"
+          level: 2
+          title: 3. Non-Goals
+          byte_offset: 1630
+          byte_count: 693
+          word_count: 97
+          content_hash: 802787c0a174dfa44526c8b18dd5611d13e4e0ada975c70c03b8b842393d8060
+        - path: "1.4"
+          level: 2
+          title: 4. Design Principles for Phase 1
+          byte_offset: 2323
+          byte_count: 1225
+          word_count: 189
+          content_hash: 3b34a90753602867d71520ddccd2f912c187b0b40ef20c67ee6bac14d188a8ab
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Workflow state is authoritative
+              byte_offset: 2411
+              byte_count: 107
+              word_count: 15
+              content_hash: a5d1c03e089071d20d6e39455d63fb220e050a1f0b2661cc6997914a37e73077
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Conversation is the human interface
+              byte_offset: 2518
+              byte_count: 186
+              word_count: 25
+              content_hash: 818376fd1a7ae7a5694336fc3c471b5cc0a28bbcc7986b5685ad6add23316ad8
+            - path: 1.4.3
+              level: 3
+              title: 4.3 MCP is the primary machine interface
+              byte_offset: 2704
+              byte_count: 169
+              word_count: 30
+              content_hash: 5f32df2ccd5990fc8d28b9899a35adc1f587bdcf618e9d2c0f743399a74d9b58
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Strict core, forgiving interface
+              byte_offset: 2873
+              byte_count: 153
+              word_count: 24
+              content_hash: 0c927394f618e390906959b77048db2f256cd01083c8924732b719f9c1c8ca60
+            - path: 1.4.5
+              level: 3
+              title: 4.5 One canonical fact in one place
+              byte_offset: 3026
+              byte_count: 155
+              word_count: 24
+              content_hash: da7b7c37cee2f3d88ca71d12c89c086af0f92955df634301e8c71d29a1e83059
+            - path: 1.4.6
+              level: 3
+              title: 4.6 One file per entity
+              byte_offset: 3181
+              byte_count: 103
+              word_count: 19
+              content_hash: ae3257fd9cfa551cca67734658c9871db2d26e77830ad94ffb1b8193c42c7d5d
+            - path: 1.4.7
+              level: 3
+              title: 4.7 Deterministic output
+              byte_offset: 3284
+              byte_count: 117
+              word_count: 17
+              content_hash: 6c69152bdf6ade945416255084fa55b28eebe7465c7098a774ac9f1de92f5ca9
+            - path: 1.4.8
+              level: 3
+              title: 4.8 Validation before trust
+              byte_offset: 3401
+              byte_count: 147
+              word_count: 20
+              content_hash: a8b6637dfa192dbfc7dfa1251c33cdc49495d3b7a70dc13747bf27f3a56e69f3
+        - path: "1.5"
+          level: 2
+          title: 5. Scope
+          byte_offset: 3548
+          byte_count: 831
+          word_count: 124
+          content_hash: df4d338551c901f8b6ed475bc2f287c0dca22ac32d21e80578d96cd5628e516d
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Included in Phase 1
+              byte_offset: 3561
+              byte_count: 374
+              word_count: 60
+              content_hash: 0c140c2a1df93b692b35d2230048d61abbf7788eb31f58172831a3b5107e8c3e
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Excluded from Phase 1
+              byte_offset: 3935
+              byte_count: 444
+              word_count: 61
+              content_hash: d7f077591adb9b8cf79d138b5a60c929437ead4d3e0b76855c9de3e7f13ea76e
+        - path: "1.6"
+          level: 2
+          title: 6. Material Taxonomy
+          byte_offset: 4379
+          byte_count: 1976
+          word_count: 283
+          content_hash: 3eba732f142eb08c0843b3e05493f58ff0d817d9e91b6bbc605d24fcfecfea0e
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Intake artifacts
+              byte_offset: 4467
+              byte_count: 420
+              word_count: 64
+              content_hash: d8a90eadcb75559ac445484b80792da26d0058b48f633a06e22fe854383096ca
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Documents
+              byte_offset: 4887
+              byte_count: 879
+              word_count: 120
+              content_hash: f5c1175e12e97402a713bd36d2b14615ca30ac669524c83d79bb87e10c806f96
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Canonical entity records
+              byte_offset: 5766
+              byte_count: 408
+              word_count: 57
+              content_hash: 9c5c218a0d7e6b8b5d5de7b808a15da875ca1d60b047626e732c5b8ab3ee1c1c
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Projections
+              byte_offset: 6174
+              byte_count: 181
+              word_count: 29
+              content_hash: 821b0a46fa350710679cc4bc5d3aa70a87a8123d3e154ad7d3fc16fb91f14797
+        - path: "1.7"
+          level: 2
+          title: 7. Phase 1 Entity Model
+          byte_offset: 6355
+          byte_count: 206
+          word_count: 35
+          content_hash: 5a6b3e1e74d6a7065087f6c9fc96d4f6969255094ec26e6097c6af4e133b28c0
+        - path: "1.8"
+          level: 2
+          title: 7.1 Deferred entity types
+          byte_offset: 6561
+          byte_count: 436
+          word_count: 65
+          content_hash: da23e72c5e486b766f2aef06e965a5cc62c025d60562e0f2b95f1396f4ec9aba
+        - path: "1.9"
+          level: 2
+          title: 8. Entity Semantics
+          byte_offset: 6997
+          byte_count: 1008
+          word_count: 163
+          content_hash: 1b1d0679992f6896b0f66af3a086e8f856dfc50bb775b3f76e29e02f249a2632
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 8.1 Epic
+              byte_offset: 7021
+              byte_count: 156
+              word_count: 26
+              content_hash: 02b8e097bce879a145b25d0ddabde2dfe6bd2ccf77269904beb3f4a7e4210662
+            - path: 1.9.2
+              level: 3
+              title: 8.2 Feature
+              byte_offset: 7177
+              byte_count: 352
+              word_count: 51
+              content_hash: 24e3312a644743a8a6b2a0ef5d383bab203df39a56f1c7861d0d2e72b789f788
+            - path: 1.9.3
+              level: 3
+              title: 8.3 Task
+              byte_offset: 7529
+              byte_count: 186
+              word_count: 35
+              content_hash: b4890de162cb12b679e0b42fc0ccc36b326775ec01836d567471f777e3e6df16
+            - path: 1.9.4
+              level: 3
+              title: 8.4 Bug
+              byte_offset: 7715
+              byte_count: 153
+              word_count: 27
+              content_hash: ec9219ec28711edf6fdd94a5c6cf339e500366caec1541e5ca4620885b7b259d
+            - path: 1.9.5
+              level: 3
+              title: 8.5 Decision
+              byte_offset: 7868
+              byte_count: 137
+              word_count: 20
+              content_hash: 9b64278789cc7e23dfa1ded8a1ad1ea47de3743549bf758df42b4d4fba382f9c
+        - path: "1.10"
+          level: 2
+          title: 9. Required Entity Fields
+          byte_offset: 8005
+          byte_count: 148
+          word_count: 23
+          content_hash: 8252326fe83aca7564ecec3f8f9c1ed5b8d4f8272a8b2a2f0f13f56467cdb1c3
+        - path: "1.11"
+          level: 2
+          title: 9.1 Epic minimum fields
+          byte_offset: 8153
+          byte_count: 156
+          word_count: 27
+          content_hash: 74003c15d103c2d688f95688bac02eec2686e1feac6c00eac73f38fe9fbcd6e0
+        - path: "1.12"
+          level: 2
+          title: 9.2 Feature minimum fields
+          byte_offset: 8309
+          byte_count: 231
+          word_count: 39
+          content_hash: a742d3a732288cf66da6613a7be2a4c600d6543767e457aa951ed439e9df9d7e
+        - path: "1.13"
+          level: 2
+          title: 9.3 Task minimum fields
+          byte_offset: 8540
+          byte_count: 214
+          word_count: 33
+          content_hash: 0c793686ed7cea4b39e9284c2dad5ee85ad5b36491d4d560447c65ae8a5930ca
+        - path: "1.14"
+          level: 2
+          title: 9.4 Bug minimum fields
+          byte_offset: 8754
+          byte_count: 338
+          word_count: 51
+          content_hash: ca7777cefb047b30fc274e85633e1d6063e862454ac4b65129a255e08b5c0cf6
+        - path: "1.15"
+          level: 2
+          title: 9.5 Decision minimum fields
+          byte_offset: 9092
+          byte_count: 875
+          word_count: 132
+          content_hash: 23019b2270b424a8e28bd14fe1194a7f0a1a719e816db6e440c16a58e32554c8
+        - path: "1.16"
+          level: 2
+          title: 10. Lifecycle Requirements
+          byte_offset: 9967
+          byte_count: 108
+          word_count: 14
+          content_hash: 9237e7219dbcb3c6fcc619b892e9a607c91c8b428d71efb793029bc9793a1735
+        - path: "1.17"
+          level: 2
+          title: 10.1 Epic lifecycle
+          byte_offset: 10075
+          byte_count: 127
+          word_count: 22
+          content_hash: 3f2e4bd69a819cead506adab8c2141b05d34d43f67bf3e786f51edd6ce7292ff
+        - path: "1.18"
+          level: 2
+          title: 10.2 Feature lifecycle
+          byte_offset: 10202
+          byte_count: 290
+          word_count: 43
+          content_hash: 3a757d9b57b57ba8520810e0eacbf5d5b40d8c9ee4e7571b8fa2bfb5c5132532
+        - path: "1.19"
+          level: 2
+          title: 10.3 Task lifecycle
+          byte_offset: 10492
+          byte_count: 156
+          word_count: 26
+          content_hash: 62d6ebe98de3f5c923ecec26e0f7395c40a91cada72b0e8d77beb27ee8c39fd5
+        - path: "1.20"
+          level: 2
+          title: 10.4 Bug lifecycle
+          byte_offset: 10648
+          byte_count: 227
+          word_count: 34
+          content_hash: 20a98035813e7524a2e31ce703e995bb1d9f52807beb1052e7c9ddf7035b991f
+        - path: "1.21"
+          level: 2
+          title: 10.5 Decision lifecycle
+          byte_offset: 10875
+          byte_count: 131
+          word_count: 20
+          content_hash: 970ac494a0915858b86a1daad0006ac0041faaaf8f60c3b9d1af0bf62377d87c
+        - path: "1.22"
+          level: 2
+          title: 10.6 Transition enforcement
+          byte_offset: 11006
+          byte_count: 262
+          word_count: 39
+          content_hash: 6ea66c5940d3f94754f4a1c95d3f38f64d25eee7911a89752cabc2884e0cc9ea
+        - path: "1.23"
+          level: 2
+          title: 11. Supersession Requirements
+          byte_offset: 11268
+          byte_count: 476
+          word_count: 69
+          content_hash: e9b06c7219be03cf6a996c6b77652ec906c3e14e2bb2c372d1966836cdeb1884
+        - path: "1.24"
+          level: 2
+          title: 12. Bug Workflow Requirements
+          byte_offset: 11744
+          byte_count: 113
+          word_count: 17
+          content_hash: a2647d86c6b23329bf2d1d150d6fb36ade3bd59d9a1574afd511bb3405f2c843
+        - path: "1.25"
+          level: 2
+          title: 12.1 Bug classification
+          byte_offset: 11857
+          byte_count: 239
+          word_count: 33
+          content_hash: 54903baadc8a9984f17e57632be82d974254aa30d5d10f236ad255f7466da496
+        - path: "1.26"
+          level: 2
+          title: 12.2 Standard bugfix path
+          byte_offset: 12096
+          byte_count: 261
+          word_count: 48
+          content_hash: b79df7a31623afc7ccfb37d7beb6308ee987447d4438ba6bf892f07f2d51c0f0
+        - path: "1.27"
+          level: 2
+          title: 12.3 Conversational bug intake
+          byte_offset: 12357
+          byte_count: 247
+          word_count: 34
+          content_hash: 9b1daa34dd30f432287f99443d63349e11a812008bd0bd96dbc2b5666cccad8f
+        - path: "1.28"
+          level: 2
+          title: 13. Identity Requirements
+          byte_offset: 12604
+          byte_count: 107
+          word_count: 17
+          content_hash: 3ccb523e74acfcee6f00d11fe8f732cba11c879eb11e1cf7cb4aa42835d6eeb5
+        - path: "1.29"
+          level: 2
+          title: 13.1 Required properties
+          byte_offset: 12711
+          byte_count: 127
+          word_count: 22
+          content_hash: 41dc502e73ccec222e03e8a0b07931d3151ac950b6c706577b85a5f61a3d5218
+        - path: "1.30"
+          level: 2
+          title: 13.2 ID + slug convention
+          byte_offset: 12838
+          byte_count: 134
+          word_count: 21
+          content_hash: de837507260485bc6e4e4ad1799b6577362f7b6f002b834d0d80690fb279d546
+        - path: "1.31"
+          level: 2
+          title: 13.3 Allocation strategy
+          byte_offset: 12972
+          byte_count: 484
+          word_count: 76
+          content_hash: 210bfcc2b0fd34617b98c1b35945add80e353dce0843dd9182b473d3f84fea0a
+        - path: "1.32"
+          level: 2
+          title: 13.4 ID edge cases
+          byte_offset: 13456
+          byte_count: 200
+          word_count: 31
+          content_hash: 5109c6b3774696685e4764787dfe8468211dace581d90288a5aaf14a30f6a11f
+        - path: "1.33"
+          level: 2
+          title: 14. Storage and File Requirements
+          byte_offset: 13656
+          byte_count: 112
+          word_count: 17
+          content_hash: 010c776f27303be7159d37b93a680dc34dcd1826d8396ef861fcd271141379d9
+        - path: "1.34"
+          level: 2
+          title: 14.1 One file per entity
+          byte_offset: 13768
+          byte_count: 84
+          word_count: 16
+          content_hash: 53e736270d7b930bf6177d49729d418113cf203f58b595774270f15f347f9de5
+        - path: "1.35"
+          level: 2
+          title: 14.2 Deterministic formatting
+          byte_offset: 13852
+          byte_count: 160
+          word_count: 22
+          content_hash: 53154567e54ec25951e87221a3f904679db9b398a074099d8c9aad07d4b74de1
+        - path: "1.36"
+          level: 2
+          title: 14.3 YAML discipline
+          byte_offset: 14012
+          byte_count: 271
+          word_count: 44
+          content_hash: 36642f88cbcdcb00222179859ed53529fbc854c11408fe730c49103c604f4e42
+        - path: "1.37"
+          level: 2
+          title: 14.4 Local cache
+          byte_offset: 14283
+          byte_count: 335
+          word_count: 56
+          content_hash: 9911eaf6c0af63698a4dcc4672d8f2df05fbc3f8ddc71c5c6504b31e96e73648
+        - path: "1.38"
+          level: 2
+          title: 15. Document Requirements
+          byte_offset: 14618
+          byte_count: 133
+          word_count: 15
+          content_hash: c2e6ed7e4b86697614888f1144dedc70aa5e3d80421148658176125166cc091b
+        - path: "1.39"
+          level: 2
+          title: 15.1 Required document types
+          byte_offset: 14751
+          byte_count: 284
+          word_count: 42
+          content_hash: f192f542ba0343e026237d68342ffe13cd4a91230fd579599886eda135b1a467
+        - path: "1.40"
+          level: 2
+          title: 15.2 Document submission and normalisation
+          byte_offset: 15035
+          byte_count: 324
+          word_count: 44
+          content_hash: 0d7c452bdcd3c6382c4ea67e61026140e9154175efe5f973ac76945a14888d95
+        - path: "1.41"
+          level: 2
+          title: 15.3 Approve-before-canon
+          byte_offset: 15359
+          byte_count: 313
+          word_count: 49
+          content_hash: b67759a14045269901a67bd47d9dc138e59ebad661fef67924c6db32e2ac9cdf
+        - path: "1.42"
+          level: 2
+          title: 15.4 Verbatim retrieval
+          byte_offset: 15672
+          byte_count: 344
+          word_count: 50
+          content_hash: 00ee9238578ad5c6ee9d9666f9957560d8b8031954b6ec784cf3822472cdf151
+        - path: "1.43"
+          level: 2
+          title: 15.5 Document-to-entity extraction
+          byte_offset: 16016
+          byte_count: 432
+          word_count: 67
+          content_hash: fa44d1765ac9f69c328c8f1bd4a101d2a60d90c864d0c40a3c8a55f48922bb74
+        - path: "1.44"
+          level: 2
+          title: 15.6 Scaffolding
+          byte_offset: 16448
+          byte_count: 123
+          word_count: 19
+          content_hash: 9f3334889adafc202871fa01676430b34218435cad9bb068e06b07fe987c62a8
+        - path: "1.45"
+          level: 2
+          title: 15.7 Validation
+          byte_offset: 16571
+          byte_count: 258
+          word_count: 36
+          content_hash: b1db74b40bb66bed8c0728ab0bca641e987fbacae2c2a3bc6e8d088d55cfbbca
+        - path: "1.46"
+          level: 2
+          title: 15.8 Human-authored content
+          byte_offset: 16829
+          byte_count: 303
+          word_count: 43
+          content_hash: 1e448f3627f8381ac5b2cd819f1d72ba01ba322ad025c813b02b94584e5ad7b2
+        - path: "1.47"
+          level: 2
+          title: 16. MCP Interface Requirements
+          byte_offset: 17132
+          byte_count: 106
+          word_count: 16
+          content_hash: 2d290ba7c1f23f5a7761ef8fc138da4082c4a67db2c47f377db9e181401165b9
+        - path: "1.48"
+          level: 2
+          title: 16.1 Required categories of MCP operations
+          byte_offset: 17238
+          byte_count: 275
+          word_count: 39
+          content_hash: 754f208043bf1b5dcbadbb3ef6604ec0033a31b6f7065bf210ffcc57185553cd
+        - path: "1.49"
+          level: 2
+          title: 16.2 Required Phase 1 operations
+          byte_offset: 17513
+          byte_count: 562
+          word_count: 89
+          content_hash: a1e03446b17c74c36d5c6bdf68ba07cf348a6f288127e5a2667151d1a8368aea
+        - path: "1.50"
+          level: 2
+          title: 16.3 MCP output requirements
+          byte_offset: 18075
+          byte_count: 233
+          word_count: 35
+          content_hash: 0be4087e631c5b144aa276e8f53d267583512936beb7f232bd4f3da5b131c572
+        - path: "1.51"
+          level: 2
+          title: 16.4 Strict validation
+          byte_offset: 18308
+          byte_count: 136
+          word_count: 21
+          content_hash: f75e870a62a15ec67ccdfd1b5329aa0bfbab882668e9d2601beeb189775fa266
+        - path: "1.52"
+          level: 2
+          title: 17. Normalization Support Requirements
+          byte_offset: 18444
+          byte_count: 146
+          word_count: 18
+          content_hash: c4bdcc7d167566ca83e537db7aa9ebff2a06f970a5f7d150d07e2cebdfc01459
+        - path: "1.53"
+          level: 2
+          title: 17.1 Candidate validation
+          byte_offset: 18590
+          byte_count: 107
+          word_count: 15
+          content_hash: ba3a9794e7118b6fb7a5ef57358e26d20b6f174cd3b0d4de540fa825621b2129
+        - path: "1.54"
+          level: 2
+          title: 17.2 Link resolution support
+          byte_offset: 18697
+          byte_count: 194
+          word_count: 30
+          content_hash: 898f5e8eb535629becdf741ef6a5022f492a36b4f282b452bcb8c04fc6e17a0a
+        - path: "1.55"
+          level: 2
+          title: 17.3 Duplicate detection support
+          byte_offset: 18891
+          byte_count: 198
+          word_count: 29
+          content_hash: e588f88a12dbffc37601973dd01b50ebd4d0fe625ed567cdeba5d73b84f99d96
+        - path: "1.56"
+          level: 2
+          title: 17.4 Preview before commit
+          byte_offset: 19089
+          byte_count: 274
+          word_count: 38
+          content_hash: 0fa6ac6b9b6de32d297615d4eadf2980033e16f87b0553493537d15f797da436
+        - path: "1.57"
+          level: 2
+          title: 18. Validation and Health Requirements
+          byte_offset: 19363
+          byte_count: 88
+          word_count: 13
+          content_hash: 56080d084edc268aa9cca4d5159982eb9dad4a623ad7c18f2070b4d822559cf3
+        - path: "1.58"
+          level: 2
+          title: 18.1 Health check coverage
+          byte_offset: 19451
+          byte_count: 253
+          word_count: 40
+          content_hash: 1cbd86161342e67a1ab3eee1b82a17b50498f1728ca3b85290a8243e875d0eea
+        - path: "1.59"
+          level: 2
+          title: 18.2 Validation timing
+          byte_offset: 19704
+          byte_count: 292
+          word_count: 45
+          content_hash: f015225d471eb6b6a2e4e91aa238779d75db8ad9948851c1b11bf545b654ed31
+        - path: "1.60"
+          level: 2
+          title: 19. Concurrency and Source Control Requirements
+          byte_offset: 19996
+          byte_count: 164
+          word_count: 21
+          content_hash: 524b15b937335b2eae4f0a8c0d9d16dc59fc8308c347960138760943d6d03a02
+        - path: "1.61"
+          level: 2
+          title: 19.1 Required Phase 1 support
+          byte_offset: 20160
+          byte_count: 312
+          word_count: 48
+          content_hash: 080930c348477e7167651d521737d93abd8ce4ec5fe4f1ea7c6af35de62733fa
+        - path: "1.62"
+          level: 2
+          title: 19.2 Worktree support
+          byte_offset: 20472
+          byte_count: 190
+          word_count: 29
+          content_hash: 1ee155e52af19b681dbe764c0aa2c06a2580cfe432975de34e723b0720ea3cac
+        - path: "1.63"
+          level: 2
+          title: 19.3 Conflict-domain awareness
+          byte_offset: 20662
+          byte_count: 333
+          word_count: 44
+          content_hash: 5f76250a229e0c2c5661ab83ad5d5099caff73c9d2d179ae7ac0ecd7966b66a3
+        - path: "1.64"
+          level: 2
+          title: 20. Relationship to Agent Instruction Systems
+          byte_offset: 20995
+          byte_count: 471
+          word_count: 67
+          content_hash: 69f892c5fd63884b273b17d1370d0cf039bedaf8a5516dc5f32fd42f74fdef9d
+        - path: "1.65"
+          level: 2
+          title: 21. Migration and Error Correction Requirements
+          byte_offset: 21466
+          byte_count: 146
+          word_count: 22
+          content_hash: f684017e21a7c7da8dff44311f929371ad23fd0787193a35ea8218c0cc097fa5
+        - path: "1.66"
+          level: 2
+          title: 21.1 Migration
+          byte_offset: 21612
+          byte_count: 361
+          word_count: 55
+          content_hash: bd422d5ae869edd3800239944e35162cbf5a0f60799c553c725fd052e722ddc8
+        - path: "1.67"
+          level: 2
+          title: 21.2 Error correction
+          byte_offset: 21973
+          byte_count: 175
+          word_count: 28
+          content_hash: ee07fdb5e809c7685e50aaef7690454f22e0a4f15eecf14bc87067b4b9716d6a
+        - path: "1.68"
+          level: 2
+          title: 21.3 No destructive undo requirement
+          byte_offset: 22148
+          byte_count: 211
+          word_count: 35
+          content_hash: 3cd8619ecd48aadb2e33adfd478c919bab3b3fc1a06272cc2033ba429e109299
+        - path: "1.69"
+          level: 2
+          title: 22. Phase 1 Bootstrap Requirement
+          byte_offset: 22359
+          byte_count: 578
+          word_count: 99
+          content_hash: f75fbd565a546d336c6d489a74301a8a32c04fcf2c1cd26572b68b2a03e43555
+        - path: "1.70"
+          level: 2
+          title: 23. Out-of-Scope Clarifications
+          byte_offset: 22937
+          byte_count: 530
+          word_count: 77
+          content_hash: 4f93ce157205f1c1b3e857e588a8e694d2a7d43e726178d5af5a6700e1508eb8
+        - path: "1.71"
+          level: 2
+          title: 24. Acceptance Criteria
+          byte_offset: 23467
+          byte_count: 105
+          word_count: 17
+          content_hash: 872d74bc744d684828d5c540191056ea20584b912db35eee312940ac1b29cc33
+        - path: "1.72"
+          level: 2
+          title: 24.1 Entity creation
+          byte_offset: 23572
+          byte_count: 182
+          word_count: 36
+          content_hash: 603e6bb818fd9cb8d0e59b199d59f61d4ce94e0e8a313caa12e9bb40bfe7853a
+        - path: "1.73"
+          level: 2
+          title: 24.2 Entity retrieval
+          byte_offset: 23754
+          byte_count: 128
+          word_count: 22
+          content_hash: f89e329075f1d0150168110444b839ad8f257acd26f465307d228fce169da89e
+        - path: "1.74"
+          level: 2
+          title: 24.3 State transition enforcement
+          byte_offset: 23882
+          byte_count: 87
+          word_count: 11
+          content_hash: 8adb97572f5491e2b09db75151847a3bf40a0840025bca14d5a9ec914e948da2
+        - path: "1.75"
+          level: 2
+          title: 24.4 Deterministic storage
+          byte_offset: 23969
+          byte_count: 138
+          word_count: 19
+          content_hash: 395c35ba3f789b9308a61bf92b364923293b55886d3dc3f2c79e66ee4e61e4d6
+        - path: "1.76"
+          level: 2
+          title: 24.5 Referential integrity
+          byte_offset: 24107
+          byte_count: 101
+          word_count: 14
+          content_hash: 509c3e0d2c988c26c63d783ec94541ce4fb0f61d524cfd65c738802b7f0a962b
+        - path: "1.77"
+          level: 2
+          title: 24.6 Document support
+          byte_offset: 24208
+          byte_count: 438
+          word_count: 66
+          content_hash: 5bd9a3baccb3edeab6425958646becc25fc596aeb7beedae292b329f03bf032a
+        - path: "1.78"
+          level: 2
+          title: 24.7 Health checks
+          byte_offset: 24646
+          byte_count: 95
+          word_count: 15
+          content_hash: 1293d5eda72a73c45f30ac556520c27200a5bf6058d75334222378b18bcb396e
+        - path: "1.79"
+          level: 2
+          title: 24.8 Conversational workflow support
+          byte_offset: 24741
+          byte_count: 275
+          word_count: 46
+          content_hash: bee2a18b385f28fcf8b47bd9a3bff0e6ed299b092a120b5250e963fa97a40bf7
+        - path: "1.80"
+          level: 2
+          title: 24.9 Document round-trip integrity
+          byte_offset: 25016
+          byte_count: 221
+          word_count: 30
+          content_hash: 63c675adeb4895be876ed63421962d7525daa4b93a75be60aa7d53157194c412
+        - path: "1.81"
+          level: 2
+          title: 24.10 Bootstrap usability
+          byte_offset: 25237
+          byte_count: 174
+          word_count: 29
+          content_hash: ccfb7ec3f9a1f3a657618c83edeb2502412776a16cd5541f1e4b4d6b38659b4b
+        - path: "1.82"
+          level: 2
+          title: 25. Open Questions for Planning
+          byte_offset: 25411
+          byte_count: 558
+          word_count: 82
+          content_hash: c4c5dee850c8096369807d0d513e7aa1de9d8c265eeafc77a3f899c2cb5e444a
+        - path: "1.83"
+          level: 2
+          title: 26. Summary
+          byte_offset: 25969
+          byte_count: 573
+          word_count: 91
+          content_hash: afa873054231f79ac3094afd6546d90fbf1c581d40e848846f6e1fe57478e8a5
+front_matter:
+    status: specification draft
+    date: "2026-03-18"
+    extra:
+        Based on: workflow-design-basis.md; workflow-system-design.md; document-centric-interface.md
+        Purpose: define the required behavior, scope, constraints, and acceptance criteria for Phase 1 of the workflow system
+entity_refs:
+    - entity_id: DEC-010
+      entity_type: decision
+      section_path: "1.15"
+      byte_offset: 9483
+    - entity_id: DEC-009
+      entity_type: decision
+      section_path: "1.15"
+      byte_offset: 9902
+cross_doc_links:
+    - target_path: workflow-design-basis.md
+      link_text: workflow-design-basis.md
+      section_path: "1"
+    - target_path: workflow-system-design.md
+      link_text: workflow-system-design.md
+      section_path: "1"
+    - target_path: document-centric-interface.md
+      link_text: document-centric-interface.md
+      section_path: "1"
+    - target_path: document-centric-interface.md
+      link_text: document-centric-interface.md
+      section_path: 1.6.2
+    - target_path: document-centric-interface.md
+      link_text: document-centric-interface.md
+      section_path: "1.38"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: 1.9.5
+      role: decision
+      confidence: high
+    - section_path: "1.15"
+      role: decision
+      confidence: high
+    - section_path: "1.16"
+      role: requirement
+      confidence: high
+    - section_path: "1.21"
+      role: decision
+      confidence: high
+    - section_path: "1.23"
+      role: requirement
+      confidence: high
+    - section_path: "1.24"
+      role: requirement
+      confidence: high
+    - section_path: "1.28"
+      role: requirement
+      confidence: high
+    - section_path: "1.33"
+      role: requirement
+      confidence: high
+    - section_path: "1.38"
+      role: requirement
+      confidence: high
+    - section_path: "1.47"
+      role: requirement
+      confidence: high
+    - section_path: "1.50"
+      role: requirement
+      confidence: high
+    - section_path: "1.52"
+      role: requirement
+      confidence: high
+    - section_path: "1.57"
+      role: requirement
+      confidence: high
+    - section_path: "1.60"
+      role: requirement
+      confidence: high
+    - section_path: "1.65"
+      role: requirement
+      confidence: high
+    - section_path: "1.68"
+      role: requirement
+      confidence: high
+    - section_path: "1.69"
+      role: requirement
+      confidence: high
+    - section_path: "1.70"
+      role: constraint
+      confidence: high
+    - section_path: "1.71"
+      role: requirement
+      confidence: high
+    - section_path: "1.82"
+      role: question
+      confidence: high
+    - section_path: "1.83"
+      role: narrative
+      confidence: high
+classified: false

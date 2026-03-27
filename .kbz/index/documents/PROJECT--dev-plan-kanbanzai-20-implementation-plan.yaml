@@ -1,0 +1,480 @@
+document_id: PROJECT/dev-plan-kanbanzai-20-implementation-plan
+document_path: work/plan/kanbanzai-2.0-implementation-plan.md
+content_hash: 73d0120be4ec591a4e2628b2bce4134bc329e1f40afa228a7c9508a633e6065f
+indexed_at: 2026-03-27T02:00:42.329793Z
+sections:
+    - path: "1"
+      level: 1
+      title: Kanbanzai 2.0 Implementation Plan
+      byte_offset: 0
+      byte_count: 58019
+      word_count: 8819
+      content_hash: 73d0120be4ec591a4e2628b2bce4134bc329e1f40afa228a7c9508a633e6065f
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 679
+          byte_count: 1565
+          word_count: 248
+          content_hash: 70b8f5250befeb19a2e46b2fe8dac04f922d41f40a295e897857746945e94fcc
+        - path: "1.2"
+          level: 2
+          title: 2. Pre-Implementation
+          byte_offset: 2244
+          byte_count: 874
+          word_count: 135
+          content_hash: f6cccd223b2eb06d1d9169a1bd5a6f1a644a7e99c47cef04d63ab7217be931c0
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Codebase health
+              byte_offset: 2336
+              byte_count: 255
+              word_count: 51
+              content_hash: a6fa7a53df28ce249ddfb89123622e3861ac654c92990f10e179f6b918567402
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Phase 4b completion
+              byte_offset: 2591
+              byte_count: 199
+              word_count: 33
+              content_hash: a7e1383bf02989568cb86213e6151b270f975549bb3cc8454ac89d4870c1065a
+            - path: 1.2.3
+              level: 3
+              title: 2.3 Design vision approved
+              byte_offset: 2790
+              byte_count: 161
+              word_count: 19
+              content_hash: c28e32516a348922671273ef187393855ebbc3b73195ef915a36f46f6115e4d9
+            - path: 1.2.4
+              level: 3
+              title: 2.4 Specification approved
+              byte_offset: 2951
+              byte_count: 167
+              word_count: 20
+              content_hash: 0cbfe6be50d130f4df9931edb851409c77c4c2a6a1825777c05b734c45f7160d
+        - path: "1.3"
+          level: 2
+          title: 3. Implementation Strategy
+          byte_offset: 3118
+          byte_count: 4013
+          word_count: 512
+          content_hash: 8a72ea4dd9ff6c7c480926016ec04d5129439b0beaab860b7395570f0bfb2e55
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Dependency structure
+              byte_offset: 3149
+              byte_count: 2111
+              word_count: 235
+              content_hash: b18e3892c5b45c5d89760012a613978a5847c91b25bd7675d7a0c054ae453c21
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Dual registration during development
+              byte_offset: 5260
+              byte_count: 520
+              word_count: 84
+              content_hash: a050a2314246cc088972cdb8c5bc59d115e83b9842cb6926f2de4569eb2f670c
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Side-effect collector pattern
+              byte_offset: 5780
+              byte_count: 766
+              word_count: 106
+              content_hash: 37d4ea261945ebfe5d8cb44cce8966132ea762e955a895dd9759b7ef8d1c7da3
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Context assembly shared pipeline
+              byte_offset: 6546
+              byte_count: 585
+              word_count: 83
+              content_hash: 1819f22d2b046caf0ff72796a0e1c86898b0d62c0bbedf297dc5257ad8629a4f
+        - path: "1.4"
+          level: 2
+          title: '4. Track A: Feature Group Framework'
+          byte_offset: 7131
+          byte_count: 2697
+          word_count: 407
+          content_hash: 27b213aa638d1d7bd48cddcceb374d90621ec363faa826ba545e2f2fb96a4455
+        - path: "1.5"
+          level: 2
+          title: '5. Track B: Resource-Oriented Pattern & Side-Effect Reporting'
+          byte_offset: 9828
+          byte_count: 3613
+          word_count: 537
+          content_hash: 9e0fc162c5bed3aedd21855ebc54840176c62b1a6a2e28c3b8aff8e11d970059
+        - path: "1.6"
+          level: 2
+          title: '6. Track C: Batch Operations'
+          byte_offset: 13441
+          byte_count: 2458
+          word_count: 373
+          content_hash: 021e9a449a356710002e1dcce6046b88b90bf553243704dc78f2cfd4e4ab3435
+        - path: "1.7"
+          level: 2
+          title: '7. Track D: `status` — Synthesis Dashboard'
+          byte_offset: 15899
+          byte_count: 2548
+          word_count: 403
+          content_hash: 7f83ad06655e6b1e3804b7a6e94376f5883ab90b0fae441bb13217493879ea72
+        - path: "1.8"
+          level: 2
+          title: '8. Track E: `finish` — Completion & Inline Knowledge'
+          byte_offset: 18447
+          byte_count: 3097
+          word_count: 461
+          content_hash: 4e2165108893e4e208b812b454b647a0f37f0fae39321feeb2d6d646d629b9da
+        - path: "1.9"
+          level: 2
+          title: '9. Track F: `next` — Claim & Context Assembly'
+          byte_offset: 21544
+          byte_count: 4848
+          word_count: 776
+          content_hash: d906b0c4e8729d03b57fd32787af68607fcc1c6d2e2a453fe60478d5107dace9
+        - path: "1.10"
+          level: 2
+          title: '10. Track G: `handoff` — Sub-Agent Prompt Generation'
+          byte_offset: 26392
+          byte_count: 2302
+          word_count: 362
+          content_hash: 5a8e50d3b0734395d4ba1f2e227a42cd27390418cb9d0780575be5c8fc2282d6
+        - path: "1.11"
+          level: 2
+          title: '11. Track H: `entity` — Consolidated Entity CRUD'
+          byte_offset: 28694
+          byte_count: 2569
+          word_count: 428
+          content_hash: 3f1c5aee06e539396c0f840ff48ae1adccf436d99dc4a5a2842091911099421a
+        - path: "1.12"
+          level: 2
+          title: '12. Track I: `doc` — Consolidated Document Operations'
+          byte_offset: 31263
+          byte_count: 2314
+          word_count: 382
+          content_hash: 3247acfe6c730b3c46372fdda5703588ef6c3ffaf6daa6071e097741a31b2f2f
+        - path: "1.13"
+          level: 2
+          title: '13. Track J: Feature Group Tools'
+          byte_offset: 33577
+          byte_count: 3414
+          word_count: 537
+          content_hash: 7879405b06829d34a1e27c4cbd5357e668c221534bcd8c844882fc129220807c
+          children:
+            - path: 1.13.1
+              level: 3
+              title: 13.1 Planning group
+              byte_offset: 33949
+              byte_count: 685
+              word_count: 107
+              content_hash: d217dad53b0d4aefd443c24115d9ab2facae8d69312be34f37654cba6f760f58
+            - path: 1.13.2
+              level: 3
+              title: 13.2 Knowledge group
+              byte_offset: 34634
+              byte_count: 332
+              word_count: 54
+              content_hash: 001978315e018c03ed1f9fcd822c4854ae55bd556719005c4af05ab2c13bae0a
+            - path: 1.13.3
+              level: 3
+              title: 13.3 Git group
+              byte_offset: 34966
+              byte_count: 474
+              word_count: 86
+              content_hash: ccce36e0f4853e983cfc069587f30de2834f6aacc5075bdce7ac5709edf9f52b
+            - path: 1.13.4
+              level: 3
+              title: 13.4 Documents group
+              byte_offset: 35440
+              byte_count: 393
+              word_count: 59
+              content_hash: 3def8cccf00f9f3fbd98a2cc68346115da66bea81b82d0a229d9cb598d00b20d
+            - path: 1.13.5
+              level: 3
+              title: 13.5 Incidents group
+              byte_offset: 35833
+              byte_count: 221
+              word_count: 37
+              content_hash: fe0850adb8ad3bd5bb5f2204202eba454c3d0134fabb0a0d170b5cffb62435c7
+            - path: 1.13.6
+              level: 3
+              title: 13.6 Checkpoints group
+              byte_offset: 36054
+              byte_count: 937
+              word_count: 143
+              content_hash: 598f61c5659c230f0de92f9eabfb5a079c5cd83f909ffd340cb37c5ce5794758
+        - path: "1.14"
+          level: 2
+          title: '14. Track K: 1.0 Tool Removal'
+          byte_offset: 36991
+          byte_count: 2589
+          word_count: 419
+          content_hash: dd70a0c6d83fb0fa11b860d6ea01746359171b5d54fb40f1e9e371a7f98497d9
+        - path: "1.15"
+          level: 2
+          title: 15. Dependency Graph
+          byte_offset: 39580
+          byte_count: 2717
+          word_count: 153
+          content_hash: 9a38e07827861542fdd21646fda0e261bbbc18bb412ad33f3d9200b3310552af
+        - path: "1.16"
+          level: 2
+          title: 16. Effort Estimates
+          byte_offset: 42297
+          byte_count: 2298
+          word_count: 468
+          content_hash: 117abf2ede4a0afd1e80bd0c61dcc1fffe3fa26de6a5ef03dcccb487503b2c14
+          children:
+            - path: 1.16.1
+              level: 3
+              title: 16.1 Size definitions
+              byte_offset: 42322
+              byte_count: 341
+              word_count: 58
+              content_hash: 4e85f7343cb546927ad634c8b7fbf2fde81127102659bc0bd45979308c61a8ed
+            - path: 1.16.2
+              level: 3
+              title: 16.2 Track estimates
+              byte_offset: 42663
+              byte_count: 761
+              word_count: 206
+              content_hash: 0958876879c0b9b252c7dd8ba2c377f602e3f9e6323c340281dcbb5cc1fabb63
+            - path: 1.16.3
+              level: 3
+              title: 16.3 Phase estimate
+              byte_offset: 43424
+              byte_count: 459
+              word_count: 85
+              content_hash: c8e6dabc3d833c90fdf3e505f4abe844cc16c8a369a30ee8015627a25b384706
+            - path: 1.16.4
+              level: 3
+              title: 16.4 Comparison to prior phases
+              byte_offset: 43883
+              byte_count: 712
+              word_count: 115
+              content_hash: 718caf1615f854799a756653374413aba1e69c658621edc9ec598f362881f00b
+        - path: "1.17"
+          level: 2
+          title: 17. Implementation Order
+          byte_offset: 44595
+          byte_count: 2508
+          word_count: 477
+          content_hash: b757bd74bf5541e83efa90dd584760547ae00dd3b34bb60acbc42bf249119661
+          children:
+            - path: 1.17.1
+              level: 3
+              title: 17.1 Recommended sequence (single agent)
+              byte_offset: 44624
+              byte_count: 1068
+              word_count: 193
+              content_hash: 3c64d9ef492e6c11f169e1a6ed09899803fee15c497ced109e74d0d4fd44398e
+            - path: 1.17.2
+              level: 3
+              title: 17.2 Parallel execution (two agents)
+              byte_offset: 45692
+              byte_count: 933
+              word_count: 191
+              content_hash: fd5e997399fe11f8554bd370a82d5203764972efe6f4209f790e720638c3a8a9
+            - path: 1.17.3
+              level: 3
+              title: 17.3 Parallel execution (three agents)
+              byte_offset: 46625
+              byte_count: 478
+              word_count: 89
+              content_hash: ee6954092f349d98b6180d11c985dca334c0d2f4fe64b3032977442f43fbfd46
+        - path: "1.18"
+          level: 2
+          title: 18. Verification Strategy
+          byte_offset: 47103
+          byte_count: 2374
+          word_count: 372
+          content_hash: 42d8efef48b9fa53af54004381a8d252324c679674f2a942d7f1255bc145f976
+          children:
+            - path: 1.18.1
+              level: 3
+              title: 18.1 Test coverage requirements
+              byte_offset: 47133
+              byte_count: 736
+              word_count: 115
+              content_hash: aed54ef25394662038149d844b99c80eaf978cc24464c57edd4f19306a3b841e
+            - path: 1.18.2
+              level: 3
+              title: 18.2 Verification checkpoints
+              byte_offset: 47869
+              byte_count: 1358
+              word_count: 216
+              content_hash: 6b9f4530082ee93e71fd78c32a56a4059ca9236dbec375074da6053055aa2d91
+            - path: 1.18.3
+              level: 3
+              title: 18.3 Acceptance criteria coverage
+              byte_offset: 49227
+              byte_count: 250
+              word_count: 37
+              content_hash: 42d9464db9d6eb9e6050f228a4a858ae45e3b85e8788fe9e2306b60a51f41cd2
+        - path: "1.19"
+          level: 2
+          title: 19. Risk Mitigations
+          byte_offset: 49477
+          byte_count: 4051
+          word_count: 595
+          content_hash: 00de6cfba91eeeca2e5ac5251e41857e2f8c6f9f41d7aa1f9b8eec57c8a415c9
+          children:
+            - path: 1.19.1
+              level: 3
+              title: 19.1 Side-effect collector integration complexity
+              byte_offset: 49502
+              byte_count: 557
+              word_count: 80
+              content_hash: 3e0532f3366487f9142e8c0ff697610341aa836264cda5b3eaa6896b127b20b1
+            - path: 1.19.2
+              level: 3
+              title: 19.2 Context assembly pipeline complexity
+              byte_offset: 50059
+              byte_count: 692
+              word_count: 101
+              content_hash: 9d4d3a662976e6fd282c42d097184b2bffcffcf8931aadb9590f6c14fe1f3c26
+            - path: 1.19.3
+              level: 3
+              title: 19.3 Dual registration period
+              byte_offset: 50751
+              byte_count: 627
+              word_count: 81
+              content_hash: 5a572929c7c359f938e00eff05340f17826f8d21f38821221bfc4e2a58bfa722
+            - path: 1.19.4
+              level: 3
+              title: 19.4 `status` synthesis performance
+              byte_offset: 51378
+              byte_count: 589
+              word_count: 85
+              content_hash: 24817c2b85f97a263ebc2e39dff9b44a10a96c3f331ae1aeeb8a0cfdbbba1927
+            - path: 1.19.5
+              level: 3
+              title: 19.5 Batch partial failure semantics
+              byte_offset: 51967
+              byte_count: 539
+              word_count: 81
+              content_hash: 0596c66ca0af1140ddd73557d4d90dadde360a0f2aabd495b66ca7a924c2a6d4
+            - path: 1.19.6
+              level: 3
+              title: 19.6 1.0 removal breaking CLI
+              byte_offset: 52506
+              byte_count: 502
+              word_count: 84
+              content_hash: b15e99275c513c533c7dad1e3da56a519c7843255af1dec7687337d1901399d7
+            - path: 1.19.7
+              level: 3
+              title: 19.7 Scope creep
+              byte_offset: 53008
+              byte_count: 520
+              word_count: 79
+              content_hash: ed0c931586d8f921fce1c42839f37f6fd2307cc69f0ad5ed5e0ac50668816e15
+        - path: "1.20"
+          level: 2
+          title: 20. Definition of Done
+          byte_offset: 53528
+          byte_count: 923
+          word_count: 153
+          content_hash: c3f4f2c2514ff695ddf0580b22b00c04997f83abd33293769de54eaa8cbb1ecc
+        - path: "1.21"
+          level: 2
+          title: 21. Open Items
+          byte_offset: 54451
+          byte_count: 2035
+          word_count: 306
+          content_hash: a9189cc884788658097924779277da9bb948a64b65070d4fba51f3a3d095c170
+          children:
+            - path: 1.21.1
+              level: 3
+              title: 21.1 Questions to resolve during implementation
+              byte_offset: 54470
+              byte_count: 1218
+              word_count: 188
+              content_hash: 2eaee6d868dbe449dbb50cffce5aa8fe458f02cdfafdcc0edfdafff910def919
+            - path: 1.21.2
+              level: 3
+              title: 21.2 Potential 2.0.1 scope (defer if needed)
+              byte_offset: 55688
+              byte_count: 798
+              word_count: 114
+              content_hash: 4b80b0a351dde58de8778471148abadda88cdda2e9aef98ef3fd15e7015e43ae
+        - path: "1.22"
+          level: 2
+          title: 22. Summary
+          byte_offset: 56486
+          byte_count: 1533
+          word_count: 268
+          content_hash: 1766db45f00d626818fe40807ca9df850c800ffd61579a6447db37e3f99e5462
+entity_refs:
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: "1.12"
+      byte_offset: 33393
+cross_doc_links:
+    - target_path: work/spec/kanbanzai-2.0-specification.md
+      link_text: work/spec/kanbanzai-2.0-specification.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-2.0-design-vision.md
+      link_text: work/design/kanbanzai-2.0-design-vision.md
+      section_path: "1"
+    - target_path: work/reports/mcp-server-design-issues.md
+      link_text: work/reports/mcp-server-design-issues.md
+      section_path: "1"
+    - target_path: work/plan/phase-4b-implementation-plan.md
+      link_text: work/plan/phase-4b-implementation-plan.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-2.0-design-vision.md
+      link_text: work/design/kanbanzai-2.0-design-vision.md
+      section_path: 1.2.3
+    - target_path: work/spec/kanbanzai-2.0-specification.md
+      link_text: work/spec/kanbanzai-2.0-specification.md
+      section_path: 1.2.4
+    - target_path: work/spec/foo.md
+      link_text: work/spec/foo.md
+      section_path: "1.12"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.14"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.20"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.4
+      role: narrative
+      confidence: high
+    - section_path: "1.9"
+      role: narrative
+      confidence: high
+    - section_path: 1.16.1
+      role: definition
+      confidence: high
+    - section_path: 1.18.1
+      role: requirement
+      confidence: high
+    - section_path: 1.18.3
+      role: requirement
+      confidence: high
+    - section_path: "1.19"
+      role: risk
+      confidence: high
+    - section_path: 1.19.2
+      role: narrative
+      confidence: high
+    - section_path: 1.19.7
+      role: constraint
+      confidence: high
+    - section_path: "1.20"
+      role: definition
+      confidence: high
+    - section_path: 1.21.1
+      role: question
+      confidence: high
+    - section_path: 1.21.2
+      role: constraint
+      confidence: high
+    - section_path: "1.22"
+      role: narrative
+      confidence: high
+classified: false

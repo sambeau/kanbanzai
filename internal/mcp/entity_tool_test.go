@@ -7,6 +7,7 @@ import (
 	"testing"
 	"time"
 
+	"kanbanzai/internal/config"
 	"kanbanzai/internal/service"
 	"kanbanzai/internal/storage"
 )
@@ -294,6 +295,36 @@ func TestEntity_Create_BatchTasks(t *testing.T) {
 	}
 	if summary["succeeded"].(float64) != 2 {
 		t.Errorf("summary.succeeded = %v, want 2", summary["succeeded"])
+	}
+}
+
+// ─── mutation always includes side_effects: [] ────────────────────────────────
+
+func TestEntity_Create_MutationHasSideEffectsField(t *testing.T) {
+	// Verifies §8.4 + §30.2: create (mutation) always includes side_effects: []
+	// in the response, even when no cascades occurred.
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "ent-mse1")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-mse1")
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":         "create",
+		"type":           "task",
+		"parent_feature": featID,
+		"slug":           "mse-task",
+		"summary":        "Mutation side effects test task",
+	})
+
+	// side_effects: [] must be present for all mutations (spec §8.4).
+	sideEffects, ok := result["side_effects"]
+	if !ok {
+		t.Fatal("side_effects missing from create (mutation) response — spec §8.4 requires it")
+	}
+	arr, _ := sideEffects.([]any)
+	if len(arr) != 0 {
+		t.Errorf("expected side_effects: [], got %v", sideEffects)
 	}
 }
 
@@ -609,6 +640,40 @@ func TestEntity_Update_MissingID(t *testing.T) {
 	}
 }
 
+func TestEntity_Update_IgnoresStatusAndIDChanges(t *testing.T) {
+	// Verifies §14.6 + §30.8: update cannot change id or status.
+	// The implementation silently ignores these fields — status stays unchanged.
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "ent-uig1")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-uig1")
+	taskID, _ := createEntityTestTask(t, entitySvc, featID, "task-uig1")
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":  "update",
+		"id":      taskID,
+		"status":  "done", // must be silently ignored
+		"summary": "Updated summary",
+	})
+
+	entity, ok := result["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected 'entity' in response, got: %v", result)
+	}
+	// Status must not have changed — update cannot change lifecycle status.
+	if entity["status"] == "done" {
+		t.Error("update changed entity status to 'done' — must not happen; use transition instead")
+	}
+	if entity["status"] != "queued" {
+		t.Errorf("entity.status = %v, want queued (unchanged)", entity["status"])
+	}
+	// Summary should have updated.
+	if entity["summary"] != "Updated summary" {
+		t.Errorf("entity.summary = %v, want 'Updated summary'", entity["summary"])
+	}
+}
+
 // ─── transition action ────────────────────────────────────────────────────────
 
 func TestEntity_Transition_TaskQueuedToReady(t *testing.T) {
@@ -657,6 +722,8 @@ func TestEntity_Transition_FeatureToDesigning(t *testing.T) {
 }
 
 func TestEntity_Transition_InvalidTransition(t *testing.T) {
+	// Verifies §14.7 + §30.8 + H.17: invalid transitions return an error naming
+	// the current status, the requested status, and the valid transitions.
 	t.Parallel()
 	entitySvc := setupEntityToolTest(t)
 
@@ -671,8 +738,31 @@ func TestEntity_Transition_InvalidTransition(t *testing.T) {
 		"status": "done",
 	})
 
-	if _, hasErr := result["error"]; !hasErr {
+	errField, hasErr := result["error"].(map[string]any)
+	if !hasErr {
 		t.Fatalf("expected error for invalid transition, got: %v", result)
+	}
+
+	// Error must use the structured invalid_transition code.
+	if errField["code"] != "invalid_transition" {
+		t.Errorf("error.code = %v, want invalid_transition", errField["code"])
+	}
+
+	// Details must include current_status, requested_status, and valid_transitions
+	// so agents can correct the call without guessing (spec §14.7).
+	details, _ := errField["details"].(map[string]any)
+	if details == nil {
+		t.Fatal("error.details missing from invalid_transition error")
+	}
+	if details["current_status"] != "queued" {
+		t.Errorf("details.current_status = %v, want queued", details["current_status"])
+	}
+	if details["requested_status"] != "done" {
+		t.Errorf("details.requested_status = %v, want done", details["requested_status"])
+	}
+	validTransitions, _ := details["valid_transitions"].([]any)
+	if len(validTransitions) == 0 {
+		t.Error("details.valid_transitions missing or empty — agents need this to correct the request")
 	}
 }
 
@@ -892,5 +982,52 @@ func TestEntityArgStringSlice_Missing(t *testing.T) {
 	got := entityArgStringSlice(map[string]any{}, "tags")
 	if got != nil {
 		t.Errorf("expected nil for missing key, got %v", got)
+	}
+}
+
+// ─── plan creation ────────────────────────────────────────────────────────────
+
+func TestEntity_Create_Plan(t *testing.T) {
+	// Plan creation requires a valid prefix registered in .kbz/config.yaml.
+	// This test is skipped in CI / fresh checkouts that lack a config file.
+	// Verifies §30.8: entity(action: "create", type: "plan", ...) creates a plan.
+	cfg, err := config.Load()
+	if err != nil {
+		t.Skipf("skipping plan creation test: config not available: %v", err)
+	}
+	testPrefix := "P"
+	if !cfg.IsActivePrefix(testPrefix) {
+		t.Skipf("skipping plan creation test: prefix %q not active in config", testPrefix)
+	}
+
+	entitySvc := setupEntityToolTest(t)
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":  "create",
+		"type":    "plan",
+		"prefix":  testPrefix,
+		"slug":    "entity-tool-test-plan",
+		"title":   "Entity Tool Test Plan",
+		"summary": "A plan created via the entity tool to verify routing",
+	})
+
+	entity, ok := result["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected 'entity' in response, got: %v", result)
+	}
+	if entity["type"] != "plan" {
+		t.Errorf("entity.type = %v, want plan", entity["type"])
+	}
+	if entity["status"] != "proposed" {
+		t.Errorf("entity.status = %v, want proposed", entity["status"])
+	}
+	// side_effects: [] must be present in mutation responses (spec §8.4).
+	sideEffects, ok := result["side_effects"]
+	if !ok {
+		t.Fatal("side_effects missing from plan create (mutation) response")
+	}
+	arr, _ := sideEffects.([]any)
+	if len(arr) != 0 {
+		t.Errorf("expected empty side_effects, got %v", arr)
 	}
 }

@@ -1,0 +1,309 @@
+document_id: FEAT-01KMKRQV025FA/specification-public-schema-interface
+document_path: work/spec/public-schema-interface.md
+content_hash: dc11cfe30c6a5c5e938ad55f455d8ebdb724327a11f931d223b47e3669f6f583
+indexed_at: 2026-03-26T14:35:29.710891Z
+sections:
+    - path: "1"
+      level: 1
+      title: Public Schema Interface Specification
+      byte_offset: 0
+      byte_count: 24227
+      word_count: 3500
+      content_hash: dc11cfe30c6a5c5e938ad55f455d8ebdb724327a11f931d223b47e3669f6f583
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 468
+          byte_count: 546
+          word_count: 83
+          content_hash: e9bf88f794bbb3f266a3d64b3da702d5dd135c9f731c62eec0a099432b8ebfed
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1014
+          byte_count: 1157
+          word_count: 173
+          content_hash: fcb548816cef2310826b35ec1db437f98a6ef967de8f0052845aa0e07254671e
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2171
+          byte_count: 1929
+          word_count: 290
+          content_hash: 0022aaea9d4053fee5e3fd1eb9919fd71d870dfb46247053f41cbfed9e260e91
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In Scope
+              byte_offset: 2184
+              byte_count: 942
+              word_count: 143
+              content_hash: 9ce55adbb32599b2c4207db449481f63c652cb0be44527275dd71b10f74b45cd
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred
+              byte_offset: 3126
+              byte_count: 370
+              word_count: 58
+              content_hash: cd8e75f0befc99cb262fee0bbdd7f2a7636ee5b15e03468fc39b2bbbb5825025
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly Excluded
+              byte_offset: 3496
+              byte_count: 604
+              word_count: 86
+              content_hash: 0e472d8e4ba04a2eec7e861aa3b608e1fb26fa9956f8de19279f0b1c66375949
+        - path: "1.4"
+          level: 2
+          title: 4. Design Principles
+          byte_offset: 4100
+          byte_count: 1255
+          word_count: 189
+          content_hash: 9bf67c4280846febd100133808d36f4c56bcadc7c8b2a8500bd11554969bb0e2
+        - path: "1.5"
+          level: 2
+          title: 5. The Public Schema Boundary
+          byte_offset: 5355
+          byte_count: 1786
+          word_count: 272
+          content_hash: 5a8a45699598bea619cfd3de0526656c5d4f218f6d4201fae77774071e1b69c1
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Committed State (Part of the Public Schema)
+              byte_offset: 5389
+              byte_count: 1131
+              word_count: 171
+              content_hash: d4d4a90781f24e4d39d5b803167bf81f4de04253f34ee212ceb460707ef7be1d
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Non-Committed State (Not Part of the Public Schema)
+              byte_offset: 6520
+              byte_count: 621
+              word_count: 95
+              content_hash: e8dc79c44618732185e1e876d172de2f098d1b270edbff56ded3c006e76db45a
+        - path: "1.6"
+          level: 2
+          title: 6. Schema Versioning
+          byte_offset: 7141
+          byte_count: 2905
+          word_count: 431
+          content_hash: 249cc044d9e88fbc881b8ee04170ef6aec3155e5d7fbb335e45b395243e49815
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 The `schema_version` Field
+              byte_offset: 7166
+              byte_count: 475
+              word_count: 61
+              content_hash: eacb1ed6be2097a1a092d76e44137a7a66f9f0104960b817769ffdde761a1b79
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Binary Version Independence
+              byte_offset: 7641
+              byte_count: 563
+              word_count: 85
+              content_hash: dbcaa440570deaa0b0ccb90017bf27b868a4e196d9640570208df528ad40f2ce
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Compatibility Policy
+              byte_offset: 8204
+              byte_count: 567
+              word_count: 87
+              content_hash: a8f8bb6dd74cbd0b3071457d362f1ea87a72ca040e7bca297777e439755e4ef2
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Unknown Value Handling
+              byte_offset: 8771
+              byte_count: 510
+              word_count: 80
+              content_hash: 8628f7bfbe43be0b8d07908ac48f3cc16eda07590d49b2360e1d35791abb7401
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Binary Behaviour at Version Boundaries
+              byte_offset: 9281
+              byte_count: 765
+              word_count: 114
+              content_hash: 8170c1f7cfb54c6ec00d6221a285fbfaa780b074e826b6ea65a8ea182b384373
+        - path: "1.7"
+          level: 2
+          title: 7. Go Type Layer
+          byte_offset: 10046
+          byte_count: 2624
+          word_count: 355
+          content_hash: 9144ac17471a37228b68c68c64c1bc5f8d51c0f54499e35fb81d3219633cccf3
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Overview
+              byte_offset: 10067
+              byte_count: 446
+              word_count: 71
+              content_hash: d21c0f9998c60f582b56b6b5af3087f7137bbdb615c83ff06ae8200ef6ef655f
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Coverage
+              byte_offset: 10513
+              byte_count: 964
+              word_count: 134
+              content_hash: e5f5ee2957d0c83f7558e369b5aa62cbbdbd857789eba42f32b0218c0b14ba64
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Valid Value Constants
+              byte_offset: 11477
+              byte_count: 694
+              word_count: 72
+              content_hash: d2ccfd92d2c6d352fbf03e8ca09875b909767b3e0fce10fe1c42e0aa9d8a79fe
+            - path: 1.7.4
+              level: 3
+              title: 7.4 YAML Tags and Serialisation
+              byte_offset: 12171
+              byte_count: 499
+              word_count: 73
+              content_hash: 11e5ada06975c63a369500cd827caeb7a646e573c97cca1f3a51f0b446ba0159
+        - path: "1.8"
+          level: 2
+          title: 8. Go Query Layer
+          byte_offset: 12670
+          byte_count: 3075
+          word_count: 401
+          content_hash: 2897c6b86afeb8563497ebe442ff08a96412841f280a02cab68c663bf1096b8e
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Overview
+              byte_offset: 12692
+              byte_count: 460
+              word_count: 69
+              content_hash: df6e44b32117f60b97ca9754aa0bcb10c175c61edeaf201838255cb315ea0f5e
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Method Signatures
+              byte_offset: 13152
+              byte_count: 1039
+              word_count: 91
+              content_hash: dee38d7fa8a4da1c9d9f13f00639ef8401397e033ac809532bb5b8c7eeb8b134
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Cross-Reference Resolution
+              byte_offset: 14191
+              byte_count: 389
+              word_count: 55
+              content_hash: 144057cea08eb7bda2af53bfe36c805ff796a010371e6fd51651c2f045cde406
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Drift Detection
+              byte_offset: 14580
+              byte_count: 490
+              word_count: 83
+              content_hash: 5d625050b8c2a3826ce3463e3513aff59a2b217101e75aa625695ac2b367c7ec
+            - path: 1.8.5
+              level: 3
+              title: 8.5 What Is NOT Included
+              byte_offset: 15070
+              byte_count: 675
+              word_count: 98
+              content_hash: a46be6fabd315e34fe9ab6e55789b9afc43480f09c40c063d87ff6da228825be
+        - path: "1.9"
+          level: 2
+          title: 9. Packaging and Stability
+          byte_offset: 15745
+          byte_count: 1549
+          word_count: 234
+          content_hash: 167991e8827af683fe22fa438f87d0e42fcb60368b6096692bc7b0d352b25a40
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Packaging Requirements
+              byte_offset: 15776
+              byte_count: 692
+              word_count: 106
+              content_hash: 1c183b14c71c06ab7edb95f7fa36377f80984e805251b08691a520f7d8ee5efd
+            - path: 1.9.2
+              level: 3
+              title: 9.2 API Stability
+              byte_offset: 16468
+              byte_count: 588
+              word_count: 86
+              content_hash: a834e60ac320739a4d8da7c087f860e220c78931a42fb73c659732d026a97857
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Documentation
+              byte_offset: 17056
+              byte_count: 238
+              word_count: 37
+              content_hash: d7c06d81ae144dbc69b174822d094a2e81749f47f286195f8529f107ad9f56d7
+        - path: "1.10"
+          level: 2
+          title: 10. JSON Schema
+          byte_offset: 17294
+          byte_count: 1625
+          word_count: 261
+          content_hash: 31a13d841b2bffbb1d38fe54d374ee697e305abfa2b2758425f392a66a96ad06
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Generation
+              byte_offset: 17314
+              byte_count: 400
+              word_count: 70
+              content_hash: 3ef5138d9ee24f9c5f1007d1c762dfc0af68640b5bd4336164c3386fab13cb07
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Coverage
+              byte_offset: 17714
+              byte_count: 547
+              word_count: 81
+              content_hash: b1d6cb90dde5b1943a615d6397c182fb489144b8c378304bd98d0d86b4ccceff
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Enum Exhaustiveness
+              byte_offset: 18261
+              byte_count: 441
+              word_count: 72
+              content_hash: 31854145e03119cbfc6377afb21e36644aa414673e744d2325171c48d9b610b5
+            - path: 1.10.4
+              level: 3
+              title: 10.4 Publication
+              byte_offset: 18702
+              byte_count: 217
+              word_count: 34
+              content_hash: 5e1d36bc31cc0b84d8d4eeda57af57103c5049a1035e29bee10ed10ac3646676
+        - path: "1.11"
+          level: 2
+          title: 11. Acceptance Criteria
+          byte_offset: 18919
+          byte_count: 5308
+          word_count: 771
+          content_hash: c0a8120d6ee029b17f93c862932222390e95c3afd018e8bd8a11242dd91710a6
+cross_doc_links:
+    - target_path: work/design/public-schema-interface.md
+      link_text: work/design/public-schema-interface.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.7.1
+      role: narrative
+      confidence: high
+    - section_path: 1.8.1
+      role: narrative
+      confidence: high
+    - section_path: 1.9.1
+      role: requirement
+      confidence: high
+    - section_path: "1.11"
+      role: requirement
+      confidence: high
+classified: false

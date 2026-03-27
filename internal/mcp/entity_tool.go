@@ -16,6 +16,7 @@ package mcp
 import (
 	"context"
 	"fmt"
+	"sort"
 	"strings"
 	"time"
 
@@ -27,6 +28,7 @@ import (
 	"kanbanzai/internal/knowledge"
 	"kanbanzai/internal/model"
 	"kanbanzai/internal/service"
+	"kanbanzai/internal/validate"
 )
 
 // EntityTool returns the consolidated `entity` MCP tool registered in the core group.
@@ -97,6 +99,10 @@ func entityCreateAction(entitySvc *service.EntityService) ActionHandler {
 		if entityType == "" {
 			return nil, fmt.Errorf("type is required for create")
 		}
+
+		// Signal mutation so side_effects: [] is always present in both
+		// single and batch responses (spec §8.4: "The field is never omitted").
+		SignalMutation(ctx)
 
 		// Batch mode: entities array provided.
 		if IsBatchInput(args, "entities") {
@@ -452,6 +458,9 @@ func entityHasAnyTag(state map[string]any, filterTags []string) bool {
 
 func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		// Signal mutation so side_effects: [] is always present in the response (spec §8.4).
+		SignalMutation(ctx)
+
 		args, _ := req.Params.Arguments.(map[string]any)
 		entityID := entityArgStr(args, "id")
 		if entityID == "" {
@@ -522,6 +531,9 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 
 func entityTransitionAction(entitySvc *service.EntityService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		// Signal mutation so side_effects: [] is always present in the response (spec §8.4).
+		SignalMutation(ctx)
+
 		args, _ := req.Params.Arguments.(map[string]any)
 		entityID := entityArgStr(args, "id")
 		if entityID == "" {
@@ -542,7 +554,7 @@ func entityTransitionAction(entitySvc *service.EntityService) ActionHandler {
 			_, _, slug := model.ParsePlanID(entityID)
 			result, err := entitySvc.UpdatePlanStatus(entityID, slug, newStatus)
 			if err != nil {
-				return nil, fmt.Errorf("transition plan %s to %q: %w", entityID, newStatus, err)
+				return entityTransitionError(entitySvc, "plan", entityID, newStatus, err), nil
 			}
 			return map[string]any{
 				"entity": entityFullRecord(result.ID, result.Type, result.Slug, result.State),
@@ -555,7 +567,7 @@ func entityTransitionAction(entitySvc *service.EntityService) ActionHandler {
 			Status: newStatus,
 		})
 		if err != nil {
-			return nil, fmt.Errorf("transition %s %s to %q: %w", entityType, entityID, newStatus, err)
+			return entityTransitionError(entitySvc, entityType, entityID, newStatus, err), nil
 		}
 
 		// Report side effects from the status transition hook.
@@ -586,6 +598,83 @@ func entityTransitionAction(entitySvc *service.EntityService) ActionHandler {
 		return map[string]any{
 			"entity": entityFullRecord(result.ID, result.Type, result.Slug, result.State),
 		}, nil
+	}
+}
+
+// ─── Transition error enrichment ─────────────────────────────────────────────
+
+// entityTransitionError builds a structured error response for a failed lifecycle
+// transition. It enriches the error with the entity's current status and the valid
+// next states, giving agents the context they need to correct the request
+// (spec §14.7: "Invalid transitions return an error naming the current status,
+// the requested status, and the valid transitions from the current state").
+//
+// Returns (errorMap, nil) so that WithSideEffects merges side_effects into the
+// response — mutation responses always include side_effects (spec §8.4).
+func entityTransitionError(entitySvc *service.EntityService, entityType, entityID, requested string, cause error) map[string]any {
+	details := map[string]any{
+		"requested_status": requested,
+	}
+
+	// Best-effort enrichment: fetch current status and compute valid next states.
+	// The extra read only happens on the error path, not the hot path.
+	if currentStatus, err := entityCurrentStatus(entitySvc, entityType, entityID); err == nil {
+		details["current_status"] = currentStatus
+		if kind, ok := entityKindFromType(entityType); ok {
+			if next := validate.NextStates(kind, currentStatus); len(next) > 0 {
+				sort.Strings(next)
+				details["valid_transitions"] = next
+			}
+		}
+	}
+
+	return map[string]any{
+		"error": map[string]any{
+			"code":    "invalid_transition",
+			"message": cause.Error(),
+			"details": details,
+		},
+	}
+}
+
+// entityCurrentStatus fetches only the current lifecycle status of an entity.
+func entityCurrentStatus(entitySvc *service.EntityService, entityType, entityID string) (string, error) {
+	if entityType == "plan" {
+		r, err := entitySvc.GetPlan(entityID)
+		if err != nil {
+			return "", err
+		}
+		status, _ := r.State["status"].(string)
+		return status, nil
+	}
+	r, err := entitySvc.Get(entityType, entityID, "")
+	if err != nil {
+		return "", err
+	}
+	status, _ := r.State["status"].(string)
+	return status, nil
+}
+
+// entityKindFromType maps an entity type string to its validate.EntityKind.
+// Returns (kind, true) for known types, ("", false) for unknown types.
+func entityKindFromType(entityType string) (validate.EntityKind, bool) {
+	switch entityType {
+	case "plan":
+		return validate.EntityPlan, true
+	case "feature":
+		return validate.EntityFeature, true
+	case "task":
+		return validate.EntityTask, true
+	case "bug":
+		return validate.EntityBug, true
+	case "epic":
+		return validate.EntityEpic, true
+	case "decision":
+		return validate.EntityDecision, true
+	case "incident":
+		return validate.EntityIncident, true
+	default:
+		return validate.EntityKind(""), false
 	}
 }
 

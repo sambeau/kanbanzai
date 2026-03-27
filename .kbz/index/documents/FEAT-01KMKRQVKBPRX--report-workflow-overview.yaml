@@ -1,0 +1,208 @@
+document_id: FEAT-01KMKRQVKBPRX/report-workflow-overview
+document_path: docs/workflow-overview.md
+content_hash: 1f06dc944ec8b6d56612c088b71737cdf4a9460809ef7b36bca1f5d86a17fd27
+indexed_at: 2026-03-26T16:49:13.365427Z
+sections:
+    - path: "1"
+      level: 1
+      title: Workflow Overview
+      byte_offset: 0
+      byte_count: 20977
+      word_count: 3191
+      content_hash: 1f06dc944ec8b6d56612c088b71737cdf4a9460809ef7b36bca1f5d86a17fd27
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. The Collaboration Model
+          byte_offset: 408
+          byte_count: 1736
+          word_count: 268
+          content_hash: b671cc60d68b8b82dccae29715f3e89d3588f1c280c6925aa8d90acb4e2e866e
+        - path: "1.2"
+          level: 2
+          title: 2. Stage Overview
+          byte_offset: 2144
+          byte_count: 1143
+          word_count: 197
+          content_hash: eafd37726e73a5632af55638b01ccca0f6ed0af666cb4135e3521561c9c453e1
+        - path: "1.3"
+          level: 2
+          title: 3. Stage Detail
+          byte_offset: 3287
+          byte_count: 10471
+          word_count: 1584
+          content_hash: 4df27012a27116d625030f4ac427a5ed186ba1dd0f521d2a9ae8e6ec721ea1c9
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Planning
+              byte_offset: 3307
+              byte_count: 1402
+              word_count: 237
+              content_hash: 6bb88e27b206109a66a6fefa41e2b1549ccbe42a2991c1d8439b228588dd6bac
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Design
+              byte_offset: 4709
+              byte_count: 1744
+              word_count: 271
+              content_hash: 60cf0f7ba6d3345adde52057458d0cdc826021acc215f578038a6d93760f4f88
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Specification
+              byte_offset: 6453
+              byte_count: 1812
+              word_count: 257
+              content_hash: 26d587b45a23266d01150c302bd99795b30d305cf5a5b7dd1dbeb06861c4b1a8
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Dev Planning
+              byte_offset: 8265
+              byte_count: 1935
+              word_count: 284
+              content_hash: 6948798fdbba33526340d76c7f054d303b0abaf2d4db96f42b8a5fc68356cc99
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Task Execution
+              byte_offset: 10200
+              byte_count: 2274
+              word_count: 328
+              content_hash: dd88896b618b35b25a679a33b8821921319b6d0d51d70d74f4e4fae26a828b2f
+            - path: 1.3.6
+              level: 3
+              title: 3.6 Integration
+              byte_offset: 12474
+              byte_count: 1284
+              word_count: 203
+              content_hash: 162b1ea3ff1f8e40137e2d21a958a6b2be90fecb8ee6ccb6639ccab07bf3e4c5
+        - path: "1.4"
+          level: 2
+          title: 4. The Document-Centric Interface
+          byte_offset: 13758
+          byte_count: 2397
+          word_count: 347
+          content_hash: 0e69e4c81c3d7bbac9bdc75805707071d1d0a2ba2b1eddaeb55aa696d35c0900
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Documents drive the workflow
+              byte_offset: 13925
+              byte_count: 498
+              word_count: 76
+              content_hash: 8ad2ab5523b6161beec08f94448b2de32ed2cf1e1522c08c13a5d7836223a032
+            - path: 1.4.2
+              level: 3
+              title: Document lifecycle drives entity lifecycle
+              byte_offset: 14423
+              byte_count: 618
+              word_count: 91
+              content_hash: 58180af27bd0b5651fa5d7c45dd9ecbeb0504a0e27c27479319f0929b4fedb85
+            - path: 1.4.3
+              level: 3
+              title: The document record tools
+              byte_offset: 15041
+              byte_count: 692
+              word_count: 96
+              content_hash: eff736fa66806cd75d1a0378e7e3d5d319a8fd97aa12c72a92f7612e25916b4c
+            - path: 1.4.4
+              level: 3
+              title: Why documents, not entities
+              byte_offset: 15733
+              byte_count: 422
+              word_count: 61
+              content_hash: 0652adb3efbd870c0cf419c60abaaaa7415fbf0943857db5fd37f66091b14ada
+        - path: "1.5"
+          level: 2
+          title: 5. Common Failure Modes
+          byte_offset: 16155
+          byte_count: 2908
+          word_count: 450
+          content_hash: a144efa9f393bc17d753de53c02577d18a2d9615cf9409b9f15d042d66f66648
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Creating tasks without a specification
+              byte_offset: 16312
+              byte_count: 628
+              word_count: 97
+              content_hash: b0ad985b9d2939b2ca0e1b09d00b80ef7b9a19cb55395435374fffe2f2f9fc84
+            - path: 1.5.2
+              level: 3
+              title: Making architecture decisions without a design document
+              byte_offset: 16940
+              byte_count: 715
+              word_count: 116
+              content_hash: 96c22cb07023ba7266d511271f6faaee8fe7e45f52be5c654070ed067225af4b
+            - path: 1.5.3
+              level: 3
+              title: Skipping dev planning
+              byte_offset: 17655
+              byte_count: 667
+              word_count: 94
+              content_hash: 4707ba2ef626d4b2e38af06870f0b2c6ecde5d2fe7fa3a773583293de2e71928
+            - path: 1.5.4
+              level: 3
+              title: Conflating agent context with human workflow
+              byte_offset: 18322
+              byte_count: 741
+              word_count: 119
+              content_hash: b5fe37b57f97b9b1a60717bb944ae743cf3f4a0a091037ae4ac10fc1242699bc
+        - path: "1.6"
+          level: 2
+          title: 6. Feature Lifecycle Summary
+          byte_offset: 19063
+          byte_count: 978
+          word_count: 150
+          content_hash: 3de080838959bde3a641cf123fa73676e4a894bcd9e091ef5d163c2fca9c3794
+        - path: "1.7"
+          level: 2
+          title: 7. Plan Lifecycle Summary
+          byte_offset: 20041
+          byte_count: 512
+          word_count: 86
+          content_hash: ad2b3e29a29388a3325224a634d2eaf16ffdc48266b74e63c36d31475d01c72c
+        - path: "1.8"
+          level: 2
+          title: What to Read Next
+          byte_offset: 20553
+          byte_count: 424
+          word_count: 48
+          content_hash: e01c3f164a672151eb3b3e0c445e6166d995e321c48ea55947505a79c46bf5b0
+entity_refs:
+    - entity_id: P3-auth-overhaul
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 4049
+cross_doc_links:
+    - target_path: getting-started.md
+      link_text: Getting Started
+      section_path: "1"
+    - target_path: getting-started.md
+      link_text: Getting Started
+      section_path: "1.8"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.8"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1.8"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.5.2
+      role: decision
+      confidence: high
+    - section_path: 1.5.4
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+classified: false

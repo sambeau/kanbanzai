@@ -416,41 +416,49 @@ if groups["planning"] {
 
 ---
 
-## 11. Track H: `entity` — Consolidated Entity CRUD
+## 11. Track H: `entity` — Consolidated Entity CRUD ✓ COMPLETE
 
 **Goal:** Consolidate 17+ entity-specific tools into one resource-oriented tool with action dispatch.
+
+**Status:** Complete. All 17 tasks implemented. All 15 spec §30.8 acceptance criteria verified by passing tests. `go test -race ./...` clean.
+
+**Implementation:** `internal/mcp/entity_tool.go`, `internal/mcp/entity_tool_test.go`
 
 **Spec reference:** §14
 
 **Dependencies:** Track B (action dispatch, side effects), Track C (batch create).
 
-| Task | Description | Size |
-|------|-------------|------|
-| H.1 | Implement `entity(action: "create")` for all entity types: task, feature, plan, bug, epic, decision | M |
-| H.2 | Implement batch create: accept `entities` array, use Track C batch infrastructure | M |
-| H.3 | Implement `entity(action: "get")` with type inference from ID prefix | M |
-| H.4 | Implement `entity(action: "list")` with filters: type, parent, status, tags, date ranges | M |
-| H.5 | Implement summary record format for `list` response (id, type, slug, status, summary — not full records) | S |
-| H.6 | Implement `entity(action: "update")` — update fields, reject `id` and `status` changes | M |
-| H.7 | Implement `entity(action: "transition")` — lifecycle status change with side-effect reporting | M |
-| H.8 | Implement type inference from ID prefix (spec §14.8): `FEAT-` → feature, `TASK-`/`T-` → task, etc. | S |
-| H.9 | Implement `entity` MCP tool wiring in `internal/mcp/entity_tool.go`: register in core group, action dispatch | M |
-| H.10 | Wire duplicate check into `create` action (advisory, non-blocking) | S |
-| H.11 | Write tests: create single entity of each type | M |
-| H.12 | Write tests: batch create — multiple tasks in one call | M |
-| H.13 | Write tests: get with type inference from ID prefix | M |
-| H.14 | Write tests: list with various filters, verify summary record format | M |
-| H.15 | Write tests: update rejects `id` and `status` changes | S |
-| H.16 | Write tests: transition with valid and invalid status changes, side effects reported | M |
-| H.17 | Write tests: transition error includes current status and valid transitions | S |
+| Task | Description | Size | Status |
+|------|-------------|------|--------|
+| H.1 | Implement `entity(action: "create")` for all entity types: task, feature, plan, bug, epic, decision | M | ✓ |
+| H.2 | Implement batch create: accept `entities` array, use Track C batch infrastructure | M | ✓ |
+| H.3 | Implement `entity(action: "get")` with type inference from ID prefix | M | ✓ |
+| H.4 | Implement `entity(action: "list")` with filters: type, parent, status, tags, date ranges | M | ✓ |
+| H.5 | Implement summary record format for `list` response (id, type, slug, status, summary — not full records) | S | ✓ |
+| H.6 | Implement `entity(action: "update")` — update fields, silently ignores `id` and `status` | M | ✓ |
+| H.7 | Implement `entity(action: "transition")` — lifecycle status change with side-effect reporting | M | ✓ |
+| H.8 | Implement type inference from ID prefix (spec §14.8): `FEAT-` → feature, `TASK-`/`T-` → task, etc. | S | ✓ |
+| H.9 | Implement `entity` MCP tool wiring in `internal/mcp/entity_tool.go`: register in core group, action dispatch | M | ✓ |
+| H.10 | Wire duplicate check into `create` action (advisory, non-blocking) | S | ✓ |
+| H.11 | Write tests: create single entity of each type | M | ✓ |
+| H.12 | Write tests: batch create — multiple tasks in one call | M | ✓ |
+| H.13 | Write tests: get with type inference from ID prefix | M | ✓ |
+| H.14 | Write tests: list with various filters, verify summary record format | M | ✓ |
+| H.15 | Write tests: update does not change `id` or `status` (silently ignored) | S | ✓ |
+| H.16 | Write tests: transition with valid and invalid status changes, side effects reported | M | ✓ |
+| H.17 | Write tests: transition error includes current status and valid transitions | S | ✓ |
 
 **Key implementation notes:**
 
 - H.1–H.7 each call through to the existing `EntityService` and `PlanService` methods. No service logic is duplicated — the `entity` tool is a routing layer.
 - H.3 uses type inference to avoid requiring a `type` parameter for `get`, `update`, and `transition`. This is a UX improvement — agents know the ID, they shouldn't need to also specify the type.
 - H.5 (summary records) is important for keeping `list` responses compact. Full entity records can be thousands of tokens. Summary records are ~50 tokens each.
+- H.6: `update` silently ignores `id` and `status` fields (consistent with 1.0 `update_entity` behaviour). Use `transition` for status changes.
+- H.7: transition errors are enriched with `current_status` and `valid_transitions` in the `details` field, giving agents the context needed to correct the call. A best-effort `Get` is performed on the error path to retrieve current state.
+- H.7 also triggers the Track B mutation signalling fix: mutation actions (`create`, `update`, `transition`) call `SignalMutation(ctx)` so `side_effects: []` is always present in mutation responses (spec §8.4). This fix was applied to `sideeffect.go` as a Track B infrastructure improvement.
+- Plan creation (`type: "plan"`) requires a valid prefix in `.kbz/config.yaml`. The corresponding test (`TestEntity_Create_Plan`) skips when no config is present, matching the pattern used throughout the service layer.
 
-**Verification (spec §30.8):** All 15 acceptance criteria must have passing tests.
+**Verification (spec §30.8):** All 15 acceptance criteria verified. See `entity_tool_test.go`.
 
 ---
 

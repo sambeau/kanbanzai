@@ -2050,21 +2050,21 @@ Each tool's internal logic is unchanged — this is a re-packaging of existing t
 
 ### 30.8 `entity` tool
 
-- [ ] `entity(action: "create", type: "task", ...)` creates a task
-- [ ] `entity(action: "create", type: "feature", ...)` creates a feature
-- [ ] `entity(action: "create", type: "plan", ...)` creates a plan
-- [ ] `entity(action: "create", type: "bug", ...)` creates a bug
-- [ ] `entity(action: "create", type: "decision", ...)` creates a decision
-- [ ] Batch create with `entities` array creates multiple entities in one call
-- [ ] `entity(action: "get", id: "FEAT-...")` returns the full entity record
-- [ ] `entity(action: "get")` infers entity type from ID prefix
-- [ ] `entity(action: "list", type: "task", parent: "FEAT-...")` returns filtered summary records
-- [ ] `entity(action: "list")` returns summary records (id, type, slug, status, summary)
-- [ ] `entity(action: "update", id: "FEAT-...", ...)` updates entity fields
-- [ ] `entity(action: "update")` cannot change `id` or `status`
-- [ ] `entity(action: "transition", id: "FEAT-...", status: "developing")` transitions status
-- [ ] Invalid transitions return an error with current status and valid transitions
-- [ ] Side effects from transitions (worktree creation, etc.) are reported
+- [x] `entity(action: "create", type: "task", ...)` creates a task
+- [x] `entity(action: "create", type: "feature", ...)` creates a feature
+- [x] `entity(action: "create", type: "plan", ...)` creates a plan
+- [x] `entity(action: "create", type: "bug", ...)` creates a bug
+- [x] `entity(action: "create", type: "decision", ...)` creates a decision
+- [x] Batch create with `entities` array creates multiple entities in one call
+- [x] `entity(action: "get", id: "FEAT-...")` returns the full entity record
+- [x] `entity(action: "get")` infers entity type from ID prefix
+- [x] `entity(action: "list", type: "task", parent: "FEAT-...")` returns filtered summary records
+- [x] `entity(action: "list")` returns summary records (id, type, slug, status, summary)
+- [x] `entity(action: "update", id: "FEAT-...", ...)` updates entity fields
+- [x] `entity(action: "update")` cannot change `id` or `status`
+- [x] `entity(action: "transition", id: "FEAT-...", status: "developing")` transitions status
+- [x] Invalid transitions return an error with current status and valid transitions
+- [x] Side effects from transitions (worktree creation, etc.) are reported
 
 ### 30.9 `doc` tool
 

@@ -1,0 +1,161 @@
+document_id: PROJECT/dev-plan-phase-4a-progress
+document_path: work/plan/phase-4a-progress.md
+content_hash: 3477ddab04714d3d537615a27dcfd2c53693f36898b93a0324821df53f8f2215
+indexed_at: 2026-03-25T21:38:28.931192Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 4a Progress
+      byte_offset: 0
+      byte_count: 11528
+      word_count: 1694
+      content_hash: 3477ddab04714d3d537615a27dcfd2c53693f36898b93a0324821df53f8f2215
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Implementation Status Summary
+          byte_offset: 821
+          byte_count: 891
+          word_count: 123
+          content_hash: e4e32472f854214e18819945bb93c4add829d5a51a3965ace48e4a6da428d35f
+        - path: "1.2"
+          level: 2
+          title: 2. Acceptance Criteria Status
+          byte_offset: 1712
+          byte_count: 6495
+          word_count: 941
+          content_hash: c4c8f6716479f8eea9a9dd822a677070c33701e34df22034c2d1d4ccb78c8aa1
+          children:
+            - path: 1.2.1
+              level: 3
+              title: §15.1 Estimation — ✅ Met
+              byte_offset: 1795
+              byte_count: 1444
+              word_count: 224
+              content_hash: 335dbfe24e7131dc73b006b08a166227310d2c9f0ed9033bcdcc852025806474
+            - path: 1.2.2
+              level: 3
+              title: §15.2 Dependency enforcement — ✅ Met
+              byte_offset: 3239
+              byte_count: 881
+              word_count: 131
+              content_hash: 6fb6195f69628d80d4a2f54933a6fd37ec975c81eca3f9ce0658d690ece5cfb1
+            - path: 1.2.3
+              level: 3
+              title: §15.3 Dispatch and completion — ✅ Met
+              byte_offset: 4120
+              byte_count: 1897
+              word_count: 256
+              content_hash: 457b325c1514b2f1171b9b5462c43ec4d9b42653cea5beca80cf3b0b4a6801a9
+            - path: 1.2.4
+              level: 3
+              title: §15.4 Context assembly enhancements — ✅ Met
+              byte_offset: 6017
+              byte_count: 798
+              word_count: 111
+              content_hash: 40fc276896a70c6cd68d4e8707dfff4a81f601708469fb934d354b3a3669d616
+            - path: 1.2.5
+              level: 3
+              title: §15.5 Health checks — ✅ Met
+              byte_offset: 6815
+              byte_count: 824
+              word_count: 119
+              content_hash: 7b14f63c049d438342a69e7bca0057a22fb852998d7839e2a0cfcf54e12563a1
+            - path: 1.2.6
+              level: 3
+              title: §15.6 Deterministic storage — ✅ Met
+              byte_offset: 7639
+              byte_count: 568
+              word_count: 89
+              content_hash: 665a4cbcb46c1604d09df7ae57b3711c26f0596e8eb62dcf2fb9a87cd54ae50c
+        - path: "1.3"
+          level: 2
+          title: 3. MCP Tools and CLI
+          byte_offset: 8207
+          byte_count: 1093
+          word_count: 159
+          content_hash: ff0b05a851ae944aaccf3626c7702966688d1f054dc1acfcecf2784271cea5c7
+          children:
+            - path: 1.3.1
+              level: 3
+              title: MCP Tools — ✅ All Phase 4a tools registered
+              byte_offset: 8232
+              byte_count: 671
+              word_count: 80
+              content_hash: e7ed1082d2e732aa23d0740086d4805d856f5dad7830ae0d6c3f3cc8814cd04e
+            - path: 1.3.2
+              level: 3
+              title: CLI Commands — ❌ Not implemented (PL-2)
+              byte_offset: 8903
+              byte_count: 397
+              word_count: 73
+              content_hash: a01018e82eebe2756934a34b1828eb91ac4002ec2440c89f07b966deacff2fc8
+        - path: "1.4"
+          level: 2
+          title: 4. Test Status
+          byte_offset: 9300
+          byte_count: 976
+          word_count: 161
+          content_hash: 62d2984c4289b047404bd3eb33295d24d104891526cee76afe9637039d97f6f1
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Test coverage by package
+              byte_offset: 9386
+              byte_count: 562
+              word_count: 100
+              content_hash: eef4665e1c7e2c3cff61ddcc3557e0c5d07b4916248be657956c2930bf538402
+            - path: 1.4.2
+              level: 3
+              title: Key test gaps (remaining)
+              byte_offset: 9948
+              byte_count: 328
+              word_count: 44
+              content_hash: 8d3a7e1e585fd6fc89b5d0b00e9019cd860e133eb25962d7d1f29e37338f9752
+        - path: "1.5"
+          level: 2
+          title: 5. Punch List
+          byte_offset: 10276
+          byte_count: 831
+          word_count: 139
+          content_hash: b4a5dc1aa49e63d4f5c8fe347f786bd8de7c975b6e2a2e2eedc9b7b1e70c081c
+        - path: "1.6"
+          level: 2
+          title: 6. Deferred to Phase 4b
+          byte_offset: 11107
+          byte_count: 421
+          word_count: 73
+          content_hash: 9e2689ee8d8f7267c2a6c84552d629c36044e3545284d9eb83124ca7bbcd9f52
+cross_doc_links:
+    - target_path: work/spec/phase-4a-specification.md
+      link_text: work/spec/phase-4a-specification.md
+      section_path: "1"
+    - target_path: work/plan/phase-4a-implementation-plan.md
+      link_text: work/plan/phase-4a-implementation-plan.md
+      section_path: "1"
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1"
+    - target_path: work/plan/phase-4-decision-log.md
+      link_text: work/plan/phase-4-decision-log.md
+      section_path: "1"
+    - target_path: work/plan/phase-3-progress.md
+      link_text: work/plan/phase-3-progress.md
+      section_path: "1"
+    - target_path: phase-4a-progress.md
+      link_text: phase-4a-progress.md
+      section_path: "1.5"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.4
+      role: narrative
+      confidence: high
+classified: false

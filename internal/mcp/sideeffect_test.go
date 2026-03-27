@@ -456,7 +456,7 @@ func TestBuildResult_SideEffectsInjectedIntoObject(t *testing.T) {
 		{Type: SideEffectTaskUnblocked, EntityID: "TASK-002", EntityType: "task", ToStatus: "ready"},
 	}
 
-	result := buildResult(map[string]string{"task": "TASK-001", "status": "done"}, effects)
+	result := buildResult(map[string]string{"task": "TASK-001", "status": "done"}, effects, false)
 	text := extractText(t, result)
 
 	var parsed map[string]any
@@ -479,7 +479,7 @@ func TestBuildResult_SideEffectsInjectedIntoObject(t *testing.T) {
 func TestBuildResult_NilResultNilEffects(t *testing.T) {
 	t.Parallel()
 
-	result := buildResult(nil, nil)
+	result := buildResult(nil, nil, false)
 	text := extractText(t, result)
 	if text != "{}" {
 		t.Errorf("buildResult(nil, nil) = %q, want {}", text)
@@ -491,7 +491,7 @@ func TestBuildResult_NonObjectWrappedInEnvelope(t *testing.T) {
 
 	// An array result should be wrapped in an envelope when side effects are present.
 	effects := []SideEffect{{Type: SideEffectTaskUnblocked, EntityID: "TASK-001"}}
-	result := buildResult([]string{"item1", "item2"}, effects)
+	result := buildResult([]string{"item1", "item2"}, effects, false)
 	text := extractText(t, result)
 
 	var parsed map[string]any
@@ -504,6 +504,69 @@ func TestBuildResult_NonObjectWrappedInEnvelope(t *testing.T) {
 	}
 	if _, ok := parsed["side_effects"]; !ok {
 		t.Error("side_effects field missing from envelope")
+	}
+}
+
+// ─── Mutation with no side effects — side_effects: [] always present ─────────
+
+func TestBuildResult_MutationNoSideEffects(t *testing.T) {
+	// Verifies §8.4: mutations always include side_effects: [] even with no cascades.
+	t.Parallel()
+
+	result := buildResult(map[string]string{"entity": "TASK-001"}, nil, true)
+	text := extractText(t, result)
+
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	sideEffects, ok := parsed["side_effects"]
+	if !ok {
+		t.Fatal("side_effects missing from mutation response, want []")
+	}
+	arr, ok := sideEffects.([]any)
+	if !ok {
+		t.Fatalf("side_effects = %T, want []any", sideEffects)
+	}
+	if len(arr) != 0 {
+		t.Errorf("len(side_effects) = %d, want 0", len(arr))
+	}
+}
+
+func TestWithSideEffects_MutationNoSideEffectsField(t *testing.T) {
+	// Verifies §8.4 + §30.2: mutation responses include side_effects: [] even
+	// when no cascades occurred. The handler calls SignalMutation to mark itself.
+	t.Parallel()
+
+	inner := func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx) // marks this as a mutation
+		// No PushSideEffect calls — no cascades occurred.
+		return map[string]string{"entity": "TASK-001", "status": "done"}, nil
+	}
+	handler := WithSideEffects(inner)
+
+	result, err := handler(context.Background(), mcp.CallToolRequest{})
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	sideEffects, ok := parsed["side_effects"]
+	if !ok {
+		t.Fatal("side_effects missing from mutation response, want []")
+	}
+	arr, ok := sideEffects.([]any)
+	if !ok {
+		t.Fatalf("side_effects = %T (%v), want []any", sideEffects, sideEffects)
+	}
+	if len(arr) != 0 {
+		t.Errorf("len(side_effects) = %d, want 0", len(arr))
 	}
 }
 

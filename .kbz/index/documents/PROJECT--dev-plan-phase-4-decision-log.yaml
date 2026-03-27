@@ -1,0 +1,466 @@
+document_id: PROJECT/dev-plan-phase-4-decision-log
+document_path: work/plan/phase-4-decision-log.md
+content_hash: 0be8009c529a9a2aa8ba8ae9234b906cf270a3282206d091f80387e287af2aed
+indexed_at: 2026-03-25T21:38:28.816237Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 4 Decision Log
+      byte_offset: 0
+      byte_count: 23200
+      word_count: 3252
+      content_hash: 0be8009c529a9a2aa8ba8ae9234b906cf270a3282206d091f80387e287af2aed
+      children:
+        - path: "1.1"
+          level: 2
+          title: Decision Register
+          byte_offset: 515
+          byte_count: 702
+          word_count: 93
+          content_hash: 1cc4344e153558c38f591cc965d20362f42b90bbcc3f94f8ec617452f3194f1e
+        - path: "1.2"
+          level: 2
+          title: '`P4-DES-001: Phase split`'
+          byte_offset: 1217
+          byte_count: 2038
+          word_count: 302
+          content_hash: cf8a3521815fbab9c233c0fa02ebc1057faded4e567d05943f19975a8d5e367e
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Decision
+              byte_offset: 1415
+              byte_count: 657
+              word_count: 91
+              content_hash: 6b1b677487428a7d6ea7d3bae85454c2d5d55ae75b2afc7f9b0f4624edc8f6de
+            - path: 1.2.2
+              level: 3
+              title: Rationale
+              byte_offset: 2072
+              byte_count: 328
+              word_count: 56
+              content_hash: fe493aed7efb702ec53eb1d112d5fbd32f08237db1a18c5f702b8e9267839e51
+            - path: 1.2.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 2400
+              byte_count: 415
+              word_count: 58
+              content_hash: 83e00e418b7bfbcd670c56fd01a5d09fe73d9be1c1252aabd3b92f3f977aaf05
+            - path: 1.2.4
+              level: 3
+              title: Consequences
+              byte_offset: 2815
+              byte_count: 290
+              word_count: 47
+              content_hash: 0c918f159be7c2e972820e2042f8c6dca789e941d578ed26f782c301c3ec2f2b
+            - path: 1.2.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 3105
+              byte_count: 150
+              word_count: 24
+              content_hash: 6e92633ffd78178528ec54ae101977a8aabafd3e5bfb5ca6d928f7dbb951b353
+        - path: "1.3"
+          level: 2
+          title: '`P4-DES-002: Estimation assignment`'
+          byte_offset: 3255
+          byte_count: 1973
+          word_count: 276
+          content_hash: e16d6fc5ca1ff8331e5badedc5016702e0577fa54669994b41eeb54418d48921
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Decision
+              byte_offset: 3480
+              byte_count: 404
+              word_count: 56
+              content_hash: 35b16d08bd71ee5a34ec88c1ef775d710424160a980dc6ffb613f37929941359
+            - path: 1.3.2
+              level: 3
+              title: Rationale
+              byte_offset: 3884
+              byte_count: 302
+              word_count: 51
+              content_hash: a4babd07c2ba3213ccb5c381a56bd423ea24ca35e952f18aa6fae6c6f2fffeec
+            - path: 1.3.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 4186
+              byte_count: 323
+              word_count: 50
+              content_hash: 34ef05d94bfd155e47f0bfd066203cff588d88b1f65395af5df9703ad2bb15ca
+            - path: 1.3.4
+              level: 3
+              title: Consequences
+              byte_offset: 4509
+              byte_count: 414
+              word_count: 59
+              content_hash: f1978c9baa5f6c28d031433edd8b79b7908406b760aca494c674e7b36708773c
+            - path: 1.3.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 4923
+              byte_count: 305
+              word_count: 38
+              content_hash: c1ceac68febac6ac45941a77c883aac12d3afb1f0d27af670f9726aaea14a70d
+        - path: "1.4"
+          level: 2
+          title: '`P4-DES-003: Self-management threshold`'
+          byte_offset: 5228
+          byte_count: 2988
+          word_count: 427
+          content_hash: 2ef9ab835a335196cd14d68b0c4382823ebc514a8f11af14efb7c383f7a8378f
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Decision
+              byte_offset: 5450
+              byte_count: 1061
+              word_count: 155
+              content_hash: a13dea571f5de13ee1acf64b3c4927c956ebb982379fb1e3c6df69f1d23042d2
+            - path: 1.4.2
+              level: 3
+              title: Rationale
+              byte_offset: 6511
+              byte_count: 559
+              word_count: 82
+              content_hash: 0bcbd57d6982fbbd1be7a81ef778db196b1aed6456407ce52293fefd488a1144
+            - path: 1.4.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 7070
+              byte_count: 594
+              word_count: 82
+              content_hash: 281ed16cbd3277f721efe20efdfaa49d2597012d004862cef6b9118d8e8008b3
+            - path: 1.4.4
+              level: 3
+              title: Consequences
+              byte_offset: 7664
+              byte_count: 321
+              word_count: 49
+              content_hash: 3564b9adfd5a4679eed61a03b3390de51713c4eab9c309bfbfd182260d60f017
+            - path: 1.4.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 7985
+              byte_count: 231
+              word_count: 33
+              content_hash: ee08b0664f0ed225389ea0a01f53df3a6bf20fd9a28ef96d17a67d66396e3f00
+        - path: "1.5"
+          level: 2
+          title: '`P4-DES-004: Dependency modelling`'
+          byte_offset: 8216
+          byte_count: 3005
+          word_count: 414
+          content_hash: ba9a9763fe21c55f1a255299cba43346b81e784052cd0770f86ab4cbfa5fe4a4
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Decision
+              byte_offset: 8455
+              byte_count: 1069
+              word_count: 148
+              content_hash: 84651e88eda13a526abe268474e8d91175b7442dc7e65389f87d61d02592b445
+            - path: 1.5.2
+              level: 3
+              title: Rationale
+              byte_offset: 9524
+              byte_count: 478
+              word_count: 66
+              content_hash: bb8cbb2eef00858f3d19e001c4d66cec57f36533363235dce202157021b64749
+            - path: 1.5.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 10002
+              byte_count: 576
+              word_count: 81
+              content_hash: 022edcd4d68c94b74230fde7e2d49dfa3166b4b502e07559901d6f3ed6b0e71f
+            - path: 1.5.4
+              level: 3
+              title: Consequences
+              byte_offset: 10578
+              byte_count: 372
+              word_count: 52
+              content_hash: a5ee78cba2c97b6dbab5875b4b5dee15ab1d4b5950571b0c46fbfd071f9085d0
+            - path: 1.5.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 10950
+              byte_count: 271
+              word_count: 43
+              content_hash: 320a4d5191d085ecaf679bd08495360a4765997dca9e48e18f982c2b1c12c2d6
+        - path: "1.6"
+          level: 2
+          title: '`P4-DES-005: Agent delegation model`'
+          byte_offset: 11221
+          byte_count: 3185
+          word_count: 440
+          content_hash: 15d64160d1529fe22318d8a90000d5a2213c5378202513236c219a713b349f73
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Decision
+              byte_offset: 11497
+              byte_count: 1165
+              word_count: 172
+              content_hash: cfd73b50324895ab2f3b8a5c6cbd05be474acd2d7bbb7decc74bff3d8cdaf787
+            - path: 1.6.2
+              level: 3
+              title: Rationale
+              byte_offset: 12662
+              byte_count: 705
+              word_count: 101
+              content_hash: 9544e9a8412e4ee514d9481a781bc861f6a514f664b958847ff0d09133f17359
+            - path: 1.6.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 13367
+              byte_count: 407
+              word_count: 58
+              content_hash: 7afd6259aec9b3848e4a10dbd7868180c0b3b86af7dd033bede2f05fca243ea4
+            - path: 1.6.4
+              level: 3
+              title: Consequences
+              byte_offset: 13774
+              byte_count: 372
+              word_count: 51
+              content_hash: 478c0a3fd452f9a8225a8ca96f1f613e26d179ad98a97fd9eece2f8dc6d94b04
+            - path: 1.6.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 14146
+              byte_count: 260
+              word_count: 31
+              content_hash: 076e03768399783dfa6f9956d6d1171f578fffd579eecf27ec51b859a213d1e3
+        - path: "1.7"
+          level: 2
+          title: '`P4-DES-006: Incidents and root cause analysis`'
+          byte_offset: 14406
+          byte_count: 3312
+          word_count: 460
+          content_hash: 17a6996dec6bff22b41282b9d927c2856f509e5153871a42bcc30f134b4a3c82
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Decision
+              byte_offset: 14633
+              byte_count: 713
+              word_count: 93
+              content_hash: 1defba95cdd35ef6cb28701dfa6f2bd99a6c7ba4e6f8f411f23934f01fac10e0
+            - path: 1.7.2
+              level: 3
+              title: Rationale
+              byte_offset: 15346
+              byte_count: 974
+              word_count: 143
+              content_hash: 50f5be6f5f7195292f653393b42c59825aac4253a6c8c7a6a68c6da046251c8e
+            - path: 1.7.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 16320
+              byte_count: 591
+              word_count: 84
+              content_hash: 8d374a6dc28a09dbc5ad7b09235a5e1ec5b1c93984d926b534c92e750a47913d
+            - path: 1.7.4
+              level: 3
+              title: Consequences
+              byte_offset: 16911
+              byte_count: 532
+              word_count: 73
+              content_hash: 266daa1888ed200285c79f39643ea54f4f15738a7440c7015ddf18f1bf284f67
+            - path: 1.7.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 17443
+              byte_count: 275
+              word_count: 42
+              content_hash: 3125a82def344d217ef87d9b49a39c6c3355d353988a9f42c6a3ba38786f3b97
+        - path: "1.8"
+          level: 2
+          title: '`P4-DES-007: Phase 1 document store deprecation and removal`'
+          byte_offset: 17718
+          byte_count: 4277
+          word_count: 628
+          content_hash: c3cd54ecd002aab0434c501c0f555ba854058a8385658528dff5c6cc8920d65e
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Decision
+              byte_offset: 18165
+              byte_count: 868
+              word_count: 125
+              content_hash: f5be9c7aa981e10db5f9a225823fbd146002a1f2193433973d4edd35251b9a54
+            - path: 1.8.2
+              level: 3
+              title: Rationale
+              byte_offset: 19033
+              byte_count: 867
+              word_count: 134
+              content_hash: 717eb545cd66618481f5a80810835b925cf398291153fa8d1ac6965cf347213f
+            - path: 1.8.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 19900
+              byte_count: 630
+              word_count: 106
+              content_hash: 3c20e08e4463a8db51a5ff88bc6a3696fcf737f2d27989e129d1db21cc6ac3f6
+            - path: 1.8.4
+              level: 3
+              title: Consequences
+              byte_offset: 20530
+              byte_count: 1034
+              word_count: 146
+              content_hash: 316c9c982c1313f9c0d556bc4197faded35fccb63100c0c6f49315493dd6d2e6
+            - path: 1.8.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 21564
+              byte_count: 431
+              word_count: 66
+              content_hash: 80312818715d3478d8cf4c8a0056e0d9fdab19e6222189676755e03ee6967e64
+        - path: "1.9"
+          level: 2
+          title: Summary
+          byte_offset: 21995
+          byte_count: 1205
+          word_count: 156
+          content_hash: be1b14c75faefc779415674295183acb6065e3c3a7b4950b3234b05dd2eaf7ab
+cross_doc_links:
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/research/orchestration-landscape-2025.md
+      link_text: work/research/orchestration-landscape-2025.md
+      section_path: "1"
+    - target_path: work/design/estimation-and-progress-design.md
+      link_text: work/design/estimation-and-progress-design.md
+      section_path: "1"
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1.2"
+    - target_path: work/design/estimation-and-progress-design.md
+      link_text: work/design/estimation-and-progress-design.md
+      section_path: "1.3"
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1.3"
+    - target_path: estimation-and-progress-design.md
+      link_text: estimation-and-progress-design.md
+      section_path: 1.3.1
+    - target_path: estimation-and-progress-design.md
+      link_text: estimation-and-progress-design.md
+      section_path: 1.3.5
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1.4"
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1.5"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.5"
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1.6"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.6"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1.6"
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1.7"
+    - target_path: work/research/orchestration-landscape-2025.md
+      link_text: work/research/orchestration-landscape-2025.md
+      section_path: "1.7"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1.8"
+    - target_path: work/spec/phase-2-specification.md
+      link_text: work/spec/phase-2-specification.md
+      section_path: "1.8"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.8.5
+conventional_roles:
+    - section_path: "1"
+      role: decision
+      confidence: high
+    - section_path: "1.1"
+      role: decision
+      confidence: high
+    - section_path: 1.2.1
+      role: decision
+      confidence: high
+    - section_path: 1.2.2
+      role: rationale
+      confidence: high
+    - section_path: 1.2.3
+      role: alternative
+      confidence: high
+    - section_path: 1.3.1
+      role: decision
+      confidence: high
+    - section_path: 1.3.2
+      role: rationale
+      confidence: high
+    - section_path: 1.3.3
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: decision
+      confidence: high
+    - section_path: 1.4.2
+      role: rationale
+      confidence: high
+    - section_path: 1.4.3
+      role: alternative
+      confidence: high
+    - section_path: 1.5.1
+      role: decision
+      confidence: high
+    - section_path: 1.5.2
+      role: rationale
+      confidence: high
+    - section_path: 1.5.3
+      role: alternative
+      confidence: high
+    - section_path: 1.6.1
+      role: decision
+      confidence: high
+    - section_path: 1.6.2
+      role: rationale
+      confidence: high
+    - section_path: 1.6.3
+      role: alternative
+      confidence: high
+    - section_path: 1.7.1
+      role: decision
+      confidence: high
+    - section_path: 1.7.2
+      role: rationale
+      confidence: high
+    - section_path: 1.7.3
+      role: alternative
+      confidence: high
+    - section_path: 1.8.1
+      role: decision
+      confidence: high
+    - section_path: 1.8.2
+      role: rationale
+      confidence: high
+    - section_path: 1.8.3
+      role: alternative
+      confidence: high
+    - section_path: "1.9"
+      role: narrative
+      confidence: high
+classified: false

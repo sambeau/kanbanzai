@@ -1,0 +1,282 @@
+document_id: PROJECT/dev-plan-phase-1-remaining-work
+document_path: work/plan/phase-1-remaining-work.md
+content_hash: c6ea9f6bdc0d78f8214c9668f91367acee2e6cda287fda34deac0df9cad3b806
+indexed_at: 2026-03-25T21:38:28.415647Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 1 Remaining Work
+      byte_offset: 0
+      byte_count: 20582
+      word_count: 2914
+      content_hash: c6ea9f6bdc0d78f8214c9668f91367acee2e6cda287fda34deac0df9cad3b806
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Current State
+          byte_offset: 432
+          byte_count: 739
+          word_count: 101
+          content_hash: e72eeb49a8a537e28ec9284eb7b0b160e08b4b01fdd399b43e03b2858d4f043f
+        - path: "1.2"
+          level: 2
+          title: 2. Work Packages
+          byte_offset: 1171
+          byte_count: 13064
+          word_count: 1816
+          content_hash: dead8ee0696f5ace2f4362716bac20d848b5614fe5200a93399400faab2ec7b1
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'WP1: TSID13 Core (`internal/id`)'
+              byte_offset: 1192
+              byte_count: 2223
+              word_count: 304
+              content_hash: 575a9399d716489a09a8804beb3f659f29da10967ce7fc90917f5628fbbf0a15
+            - path: 1.2.2
+              level: 3
+              title: 'WP2: Entity Model Update (`internal/model`)'
+              byte_offset: 3415
+              byte_count: 1182
+              word_count: 171
+              content_hash: c78b32814d4f1e852dcc0d413840da0685a27fb249f75a9959c8fc5016403698
+            - path: 1.2.3
+              level: 3
+              title: 'WP3: Storage and Service Migration'
+              byte_offset: 4597
+              byte_count: 4081
+              word_count: 541
+              content_hash: 5da7bc7f47a999fc5a23600c007786a023b9c13bda9d421dbb3f0311d5a2433c
+            - path: 1.2.4
+              level: 3
+              title: 'WP4: Display Layer'
+              byte_offset: 8678
+              byte_count: 1164
+              word_count: 167
+              content_hash: 1a2e5aeafcdff6bf903f4ac0f0ed713e0741453ff4c5aaf6ca8804a7e2fd41dd
+            - path: 1.2.5
+              level: 3
+              title: 'WP5: Test Fixture Migration'
+              byte_offset: 9842
+              byte_count: 1244
+              word_count: 173
+              content_hash: aad249ed24a92998f48cddbb53765be2550938e4f2a349f8f1fea202ac4891c4
+            - path: 1.2.6
+              level: 3
+              title: 'WP6: Specification and Decision Log Updates'
+              byte_offset: 11086
+              byte_count: 1353
+              word_count: 182
+              content_hash: 991bd79d4881ef51981d58aaee30f413eac3bffd3234ab74240d6704cf255c79
+            - path: 1.2.7
+              level: 3
+              title: 'WP7: Bootstrap Activation'
+              byte_offset: 12439
+              byte_count: 1796
+              word_count: 274
+              content_hash: e585227f1abf17ef18be193698399cfd1995f9763f6d2e0212c1e048197a0ea0
+        - path: "1.3"
+          level: 2
+          title: 3. Dependency Graph
+          byte_offset: 14235
+          byte_count: 769
+          word_count: 82
+          content_hash: c9f629b1cac3922b29085560af58be032351d927e1662c23d7406f011182acdf
+        - path: "1.4"
+          level: 2
+          title: 4. Recommended Execution Order
+          byte_offset: 15004
+          byte_count: 3076
+          word_count: 459
+          content_hash: 9c6086b948d3a95eae22f11baaa24fe6ebb71df252bd88f081522cda81dd6232
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Phase A: Foundation (WP1 + WP2)'
+              byte_offset: 15039
+              byte_count: 655
+              word_count: 98
+              content_hash: 39d2f44557d3f00912dbea4f4cdbb4985b6d1a22206670a2703352e4ce4ed150
+            - path: 1.4.2
+              level: 3
+              title: 'Phase B: Display (WP4)'
+              byte_offset: 15694
+              byte_count: 280
+              word_count: 40
+              content_hash: 05fba37d54c670c14c8cb4f8f1e6fd304e742989fff53156feae82a3c65f7b23
+            - path: 1.4.3
+              level: 3
+              title: 'Phase C: Integration (WP3)'
+              byte_offset: 15974
+              byte_count: 924
+              word_count: 133
+              content_hash: 64b34f891693462fc26da12ae983150f3fb5d16589a0c5f77b5f3f1f2d0cd50d
+            - path: 1.4.4
+              level: 3
+              title: 'Phase D: Test Migration (WP5)'
+              byte_offset: 16898
+              byte_count: 422
+              word_count: 71
+              content_hash: 677be01057700971cab0809ee6957141443c66965c993f7c38f372f0fbdbfd3a
+            - path: 1.4.5
+              level: 3
+              title: 'Phase E: Documentation (WP6)'
+              byte_offset: 17320
+              byte_count: 373
+              word_count: 54
+              content_hash: ec8cf40b7305454f1e02b0099226ae1bf0fe441270532798babcaad4447b453b
+            - path: 1.4.6
+              level: 3
+              title: 'Phase F: Bootstrap (WP7)'
+              byte_offset: 17693
+              byte_count: 387
+              word_count: 58
+              content_hash: 3f120645b6dca179c7557680904aa0381ac21bc9ec980ca30fdbf24a94938c5e
+        - path: "1.5"
+          level: 2
+          title: 5. Items Explicitly Not in Scope
+          byte_offset: 18080
+          byte_count: 990
+          word_count: 153
+          content_hash: 4cee714fcdf17c2f9204591dce5c120c20986383fe3afaebb0a0b00ecbe6e823
+        - path: "1.6"
+          level: 2
+          title: 6. Risk Notes
+          byte_offset: 19070
+          byte_count: 883
+          word_count: 135
+          content_hash: f766e789c18461544761e10178591cbc349d43ee67767cc7f7a47205ee08dad0
+        - path: "1.7"
+          level: 2
+          title: 7. Summary
+          byte_offset: 19953
+          byte_count: 629
+          word_count: 123
+          content_hash: d2fab46d5b4cf24e24531fd8418dd70d6f771aafe594a462f38a3649b0ac2dca
+front_matter:
+    status: implementation plan
+    date: "2026-07-25"
+    extra:
+        Based on: work/spec/phase-1-specification.md; work/spec/id-system-specification.md; work/spec/bootstrap-specification.md; work/plan/phase-1-implementation-plan.md; work/plan/phase-1-decision-log.md
+        Purpose: define the remaining work to complete Phase 1, organized into work packages with dependencies and execution order
+entity_refs:
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 803
+    - entity_id: FEAT-01J3K7MXP3RT5
+      entity_type: feature
+      section_path: 1.2.5
+      byte_offset: 10073
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.2.5
+      byte_offset: 10447
+    - entity_id: TASK-01J3KZZZBB4KF
+      entity_type: task
+      section_path: 1.2.5
+      byte_offset: 10110
+    - entity_id: DEC-009
+      entity_type: decision
+      section_path: 1.2.6
+      byte_offset: 11538
+    - entity_id: DEC-006
+      entity_type: decision
+      section_path: 1.2.6
+      byte_offset: 11720
+    - entity_id: DEC-007
+      entity_type: decision
+      section_path: 1.2.6
+      byte_offset: 11854
+    - entity_id: DEC-021
+      entity_type: decision
+      section_path: 1.2.6
+      byte_offset: 11904
+    - entity_id: DEC-015
+      entity_type: decision
+      section_path: 1.2.6
+      byte_offset: 12128
+    - entity_id: DEC-016
+      entity_type: decision
+      section_path: 1.2.6
+      byte_offset: 12162
+    - entity_id: DEC-009
+      entity_type: decision
+      section_path: 1.4.5
+      byte_offset: 17457
+    - entity_id: DEC-006
+      entity_type: decision
+      section_path: 1.4.5
+      byte_offset: 17490
+    - entity_id: DEC-007
+      entity_type: decision
+      section_path: 1.4.5
+      byte_offset: 17528
+    - entity_id: DEC-021
+      entity_type: decision
+      section_path: "1.5"
+      byte_offset: 18328
+    - entity_id: DEC-020
+      entity_type: decision
+      section_path: "1.5"
+      byte_offset: 18575
+    - entity_id: DEC-019
+      entity_type: decision
+      section_path: "1.5"
+      byte_offset: 18711
+    - entity_id: DEC-017
+      entity_type: decision
+      section_path: "1.5"
+      byte_offset: 18832
+    - entity_id: DEC-018
+      entity_type: decision
+      section_path: "1.5"
+      byte_offset: 18891
+    - entity_id: DEC-013
+      entity_type: decision
+      section_path: "1.5"
+      byte_offset: 18967
+    - entity_id: EPIC-TESTPROJECT
+      entity_type: epic
+      section_path: 1.2.5
+      byte_offset: 10035
+    - entity_id: EPIC-PHASE1
+      entity_type: epic
+      section_path: 1.2.7
+      byte_offset: 12801
+cross_doc_links:
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/spec/id-system-specification.md
+      link_text: work/spec/id-system-specification.md
+      section_path: "1"
+    - target_path: work/spec/bootstrap-specification.md
+      link_text: work/spec/bootstrap-specification.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-implementation-plan.md
+      link_text: work/plan/phase-1-implementation-plan.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: "1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: 1.2.6
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: 1.2.6
+conventional_roles:
+    - section_path: 1.2.6
+      role: decision
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: risk
+      confidence: high
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+classified: false

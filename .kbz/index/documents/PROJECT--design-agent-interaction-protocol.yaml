@@ -1,0 +1,594 @@
+document_id: PROJECT/design-agent-interaction-protocol
+document_path: work/design/agent-interaction-protocol.md
+content_hash: f2bf85902c80218ffa1376a3f77298cfbd41639ecac3a777298d82e16acabc36
+indexed_at: 2026-03-25T21:38:22.179078Z
+sections:
+    - path: "1"
+      level: 1
+      title: Agent Interaction Protocol
+      byte_offset: 0
+      byte_count: 21587
+      word_count: 3305
+      content_hash: f2bf85902c80218ffa1376a3f77298cfbd41639ecac3a777298d82e16acabc36
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 242
+          byte_count: 662
+          word_count: 101
+          content_hash: e40bc2b6cbfa2a24413106a70aa031162eed0aad1b35d4f7789c586ace528f7a
+        - path: "1.2"
+          level: 2
+          title: 2. Core Principle
+          byte_offset: 904
+          byte_count: 438
+          word_count: 64
+          content_hash: c60353c0e51574cb59b8345327ea033123541f36b71e8b5a817b64e5d9f15c7d
+        - path: "1.3"
+          level: 2
+          title: 3. Goals of the Protocol
+          byte_offset: 1342
+          byte_count: 610
+          word_count: 91
+          content_hash: bd9c26919ac926675bd21bef9c5f0745ee6c3d729ad01bd6c2c2ed2941051f6b
+        - path: "1.4"
+          level: 2
+          title: 4. Scope
+          byte_offset: 1952
+          byte_count: 566
+          word_count: 86
+          content_hash: fd76ced0817a96304ffc80f2e8d319554e0ee1c226782b6bfe2b86e52573166c
+        - path: "1.5"
+          level: 2
+          title: 5. Key Definitions
+          byte_offset: 2518
+          byte_count: 1140
+          word_count: 168
+          content_hash: 5e66a4b443598586ad1b5017e9e85849c1f24cfc840752e5d13eb8e096c37f35
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Intake artifact
+              byte_offset: 2541
+              byte_count: 251
+              word_count: 38
+              content_hash: 1395cc008079a27d02a1466e1357f8c38cc38c74d417f1418e2aa14489144e56
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Canonical record
+              byte_offset: 2792
+              byte_count: 168
+              word_count: 26
+              content_hash: 96fb4a54e35f334be49ced626e8d49a52f6450508c1cab0630a46f2ff13f0250
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Projection
+              byte_offset: 2960
+              byte_count: 203
+              word_count: 30
+              content_hash: 6c596cea9d31d6fcedc7f0d2f304f1321a50ba8787ce8e2e2306b8e3abd7f571
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Normalization
+              byte_offset: 3163
+              byte_count: 189
+              word_count: 26
+              content_hash: f3332764a50974adb4b97d7f302f9458e560d6763a05ede2f3e3431f991eb955
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Commit
+              byte_offset: 3352
+              byte_count: 112
+              word_count: 17
+              content_hash: a22fea3ef0e8abaec6b367d38f4ef804f7d87206f499e7be7453daff8dac3095
+            - path: 1.5.6
+              level: 3
+              title: 5.6 Meaning-changing normalization
+              byte_offset: 3464
+              byte_count: 194
+              word_count: 27
+              content_hash: 40a6eeb11acb1b222e0b539cd1946d30f7794df9c69b7e5799d4935a33b798ec
+        - path: "1.6"
+          level: 2
+          title: 6. Fundamental Behavioral Rules
+          byte_offset: 3658
+          byte_count: 3140
+          word_count: 478
+          content_hash: 925bc58ed60f54be49ae7702788716585de8ee632d4a1f3f3002ea4f5150c438
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Treat human input as intake, not truth
+              byte_offset: 3757
+              byte_count: 254
+              word_count: 41
+              content_hash: ff89e5e7cc031b4c17b49d99e32337ee21da6df740c46d335ef6750179320dd2
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Normalize before commit
+              byte_offset: 4011
+              byte_count: 137
+              word_count: 19
+              content_hash: 3de20ad29a3cb3e00cb7f2f7da5a38dfc8e032de33159a3c8df5b93b948e2825
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Do not silently invent important facts
+              byte_offset: 4148
+              byte_count: 435
+              word_count: 72
+              content_hash: e7b93069a19a1ef5f869b3982d54b697bdaf8d3d50202949c71bf8587f97f714
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Prefer clarification over guesswork
+              byte_offset: 4583
+              byte_count: 147
+              word_count: 22
+              content_hash: c5250be8e2188e0f8a888da57ca8d4417f6f9efe21524df412ee85b654bd7e59
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Show normalized results before important commits
+              byte_offset: 4730
+              byte_count: 255
+              word_count: 38
+              content_hash: 5f1bb856bd8067df948933112a0e91170b473518fb21b1a3d18b74b53d04389d
+            - path: 1.6.6
+              level: 3
+              title: 6.6 Use the workflow system for canonical changes
+              byte_offset: 4985
+              byte_count: 209
+              word_count: 32
+              content_hash: d659bb7ac80c3d69d928fb079b68ca3df21227087a8828781c00adfaea96d147
+            - path: 1.6.7
+              level: 3
+              title: 6.7 Prefer validation before mutation
+              byte_offset: 5194
+              byte_count: 148
+              word_count: 20
+              content_hash: 52147c507d729b25ad7c4beb1e2d7919c89d0a32a0130f422edb306361ebbdec
+            - path: 1.6.8
+              level: 3
+              title: 6.8 Preserve traceability
+              byte_offset: 5342
+              byte_count: 146
+              word_count: 21
+              content_hash: ca693e17457a5ba0552c6ab27c741565dce01381cad0b7517fb28ef07736ad89
+            - path: 1.6.9
+              level: 3
+              title: 6.9 Respect phase scope
+              byte_offset: 5488
+              byte_count: 160
+              word_count: 20
+              content_hash: 6d0c0ef8a67402701542a5382204520e142f563df9491b385cb04c9169b32843
+            - path: 1.6.10
+              level: 3
+              title: 6.10 Be explicit about uncertainty
+              byte_offset: 5648
+              byte_count: 169
+              word_count: 29
+              content_hash: 8e16ac8c1c1af618d08bfd35c87c2ca783aa6dde26874acf3c17b9995b5f62fb
+            - path: 1.6.11
+              level: 3
+              title: 6.11 Use documents, not decision IDs, as the human interface
+              byte_offset: 5817
+              byte_count: 981
+              word_count: 150
+              content_hash: af71f56747ea376d4f6b6c2d50e053b910dcae80ab265462691f1d34c8b44665
+        - path: "1.7"
+          level: 2
+          title: 7. Interaction Model
+          byte_offset: 6798
+          byte_count: 1794
+          word_count: 289
+          content_hash: 035fa2633ac73fe7a81ccc215bbc308e237393820e009ba288b56849f7182495
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Intake
+              byte_offset: 7082
+              byte_count: 170
+              word_count: 31
+              content_hash: 4202e3d278e33b65b05594f76359d0154a0793f6c1beb82afcbb4c4711fe229a
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Interpretation
+              byte_offset: 7252
+              byte_count: 211
+              word_count: 36
+              content_hash: 02662d402f2589a4eefd69256066decee4e8c24cd5ddfcf84b53ace1d8dad993
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Clarification
+              byte_offset: 7463
+              byte_count: 204
+              word_count: 32
+              content_hash: 3ed8a60fb04917d134d003015b67c82c46fd6f7610c12237304f542966b50255
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Normalization
+              byte_offset: 7667
+              byte_count: 249
+              word_count: 35
+              content_hash: fd096ab670f7c54b502ed305c8c66b7e35cfbd07ebb89c26aaeaeab1fb0cb199
+            - path: 1.7.5
+              level: 3
+              title: 7.5 Validation
+              byte_offset: 7916
+              byte_count: 135
+              word_count: 18
+              content_hash: 6c5c2a54854f7b46ee41a3462ea7e11c25ea913294950d596a242e5920122736
+            - path: 1.7.6
+              level: 3
+              title: 7.6 Review
+              byte_offset: 8051
+              byte_count: 248
+              word_count: 45
+              content_hash: e8ba269dfaddc9d52700aaa5d6fc1b8bb58370ca2a1614351eb28c8bf1e2d833
+            - path: 1.7.7
+              level: 3
+              title: 7.7 Commit
+              byte_offset: 8299
+              byte_count: 131
+              word_count: 19
+              content_hash: 2f26fe5137e1448ebba49aede34e1ac90f3d53074b96187bc6f52d36f5539259
+            - path: 1.7.8
+              level: 3
+              title: 7.8 Report
+              byte_offset: 8430
+              byte_count: 162
+              word_count: 31
+              content_hash: fdf6d046e7346fec5aae0069f0159801752632371f3bd06b614b2ae7320413f1
+        - path: "1.8"
+          level: 2
+          title: 8. Required Interaction Patterns
+          byte_offset: 8592
+          byte_count: 1667
+          word_count: 262
+          content_hash: 4e815901479ff71781eb0d7e5aedcf4ab6ccbfb17d1931576032697f6e451ce7
+          children:
+            - path: 1.8.1
+              level: 3
+              title: '8.1 Pattern: create a new workflow object from rough input'
+              byte_offset: 8629
+              byte_count: 377
+              word_count: 58
+              content_hash: 8aa60d4489b7057888b4258c592c65195036375403dd09c04fcfcf1ca2c11b70
+            - path: 1.8.2
+              level: 3
+              title: '8.2 Pattern: update existing workflow state'
+              byte_offset: 9006
+              byte_count: 418
+              word_count: 72
+              content_hash: f3075007b6d636bd3bad5b60cc4b91f943fd7eaeb6c5ee21b4c9ec8bfaec9036
+            - path: 1.8.3
+              level: 3
+              title: '8.3 Pattern: normalize document content'
+              byte_offset: 9424
+              byte_count: 498
+              word_count: 76
+              content_hash: 76df97b18886c3cd5d17ed80bfd2e966caced50598dc0ed3959aea98261a5b68
+            - path: 1.8.4
+              level: 3
+              title: '8.4 Pattern: status or progress query'
+              byte_offset: 9922
+              byte_count: 337
+              word_count: 51
+              content_hash: 6543e4605ec99f0cf4aa75ba57ad0a2b7c1676e51140dcb2c1afdb9bcb1f00e8
+        - path: "1.9"
+          level: 2
+          title: 9. Clarification Rules
+          byte_offset: 10259
+          byte_count: 1204
+          word_count: 190
+          content_hash: fc2c899edfc837968963ffc523da626ff0b0eb39fb5dc67fb5d945512e3e365b
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Clarification is required when
+              byte_offset: 10424
+              byte_count: 401
+              word_count: 67
+              content_hash: e85cd3a62073515d7e7e589c6d0aa924781a24f7cdae07639035edc6e998200c
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Clarification is not required when
+              byte_offset: 10825
+              byte_count: 352
+              word_count: 56
+              content_hash: 7782a230b57364f98bf07e5ea72049f25cc229664432c86b13fff80e323bdd66
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Clarification style
+              byte_offset: 11177
+              byte_count: 286
+              word_count: 45
+              content_hash: d76c26670d86ec3d139534e764799426d7d3b7c1965788971ffc66900abcfedb
+        - path: "1.10"
+          level: 2
+          title: 10. Normalization Rules
+          byte_offset: 11463
+          byte_count: 1037
+          word_count: 147
+          content_hash: 89ee80f28a78ffd7934373e57236bb1c3027771b980170de36f3338a032bd9e5
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Allowed normalization
+              byte_offset: 11491
+              byte_count: 309
+              word_count: 44
+              content_hash: 36079e7d15d717b623ad2702b06fbaec890dc622ce61069b0a39ac0b8a6d046b
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Restricted normalization
+              byte_offset: 11800
+              byte_count: 298
+              word_count: 44
+              content_hash: 112543c4454ad1db7daa770a30908fdd155be70c11f68e2249e6cb7b63ede556
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Prohibited normalization
+              byte_offset: 12098
+              byte_count: 402
+              word_count: 55
+              content_hash: 8a03fc38275480a3820ad412c4755541e24c83a3232d563928ab02be6dbcc4d6
+        - path: "1.11"
+          level: 2
+          title: 11. Review Rules Before Commit
+          byte_offset: 12500
+          byte_count: 993
+          word_count: 154
+          content_hash: 01f46b644f59308b6550906e6a97458be7380db0c29574f14b09c1069e973399
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Review is required for important commits
+              byte_offset: 12535
+              byte_count: 356
+              word_count: 57
+              content_hash: 2799121a396f55b345c05da3c87339ee0c1cfbb4f4a79fccff7ddd9def7063dd
+            - path: 1.11.2
+              level: 3
+              title: 11.2 Review format
+              byte_offset: 12891
+              byte_count: 317
+              word_count: 50
+              content_hash: c77e4d862323661b01975625168822d3c761ca74efe93cb81bbbcf738aa753de
+            - path: 1.11.3
+              level: 3
+              title: 11.3 Confirmation threshold
+              byte_offset: 13208
+              byte_count: 285
+              word_count: 41
+              content_hash: 905f5db235c9d3e27a384ed05de89b7aad358e096b0856088f65c252669b7d10
+        - path: "1.12"
+          level: 2
+          title: 12. Behavioral Protocol for Common Actions
+          byte_offset: 13493
+          byte_count: 47
+          word_count: 7
+          content_hash: 59c8b711f987ded2255a971c559158776c6101a3198954cd0b2f482f91acb309
+        - path: "1.13"
+          level: 2
+          title: 12.1 Feature creation
+          byte_offset: 13540
+          byte_count: 456
+          word_count: 72
+          content_hash: 0014c85fe12173de31314e6dd9bbe0d99528469b5683eef886a2b9fc899608d4
+        - path: "1.14"
+          level: 2
+          title: 12.2 Bug reporting
+          byte_offset: 13996
+          byte_count: 536
+          word_count: 82
+          content_hash: 2ddff296e32d320f4a9d706c642ab406f547d8eb103005c15051189f81f61983
+        - path: "1.15"
+          level: 2
+          title: 12.3 Decision recording
+          byte_offset: 14532
+          byte_count: 397
+          word_count: 65
+          content_hash: 47659a1f03a6b6817d4d5413da2ddcfb249c610d1c88e3f5f82d693f3fc453ac
+        - path: "1.16"
+          level: 2
+          title: 12.4 Approval
+          byte_offset: 14929
+          byte_count: 387
+          word_count: 63
+          content_hash: cf5a7d682d667d0d271c0d0c701a0e19bbb88b7623def9b0e9f73db81fe3619c
+        - path: "1.17"
+          level: 2
+          title: 12.5 Status update
+          byte_offset: 15316
+          byte_count: 330
+          word_count: 56
+          content_hash: 02b3bf04f8c998331c4238b9952d6e7c22d8288592d81de285881f96424984e3
+        - path: "1.18"
+          level: 2
+          title: 13. Protocol for Working With Markdown
+          byte_offset: 15646
+          byte_count: 818
+          word_count: 132
+          content_hash: 152c93a4d07bbd4699db5f59e80724aa8f5b71ec0e21983c4f4a721aaddc2b0b
+          children:
+            - path: 1.18.1
+              level: 3
+              title: 13.1 Markdown must not be assumed canonical by default
+              byte_offset: 15689
+              byte_count: 201
+              word_count: 32
+              content_hash: 9f868f903312267016d9b9d9eaaad9ef9872be4f146caab6cfe0cb8965c7dadd
+            - path: 1.18.2
+              level: 3
+              title: 13.2 If markdown is intake
+              byte_offset: 15890
+              byte_count: 160
+              word_count: 28
+              content_hash: 84fa6bd0082e2a625a047f5679ebede007aaececd4b5c9167adbd3f7221d42a5
+            - path: 1.18.3
+              level: 3
+              title: 13.3 If markdown is a canonical human-authored document
+              byte_offset: 16050
+              byte_count: 208
+              word_count: 32
+              content_hash: a1749157832fbe8bb6000c3e9f071a0e86d8cb5a1a4be9d547e98fa337ac2183
+            - path: 1.18.4
+              level: 3
+              title: 13.4 If markdown is a projection
+              byte_offset: 16258
+              byte_count: 206
+              word_count: 33
+              content_hash: 2c0894c2e0c677cbf0b63d7a7f2e3c9a467916b9854ba92de5832814648dd4e3
+        - path: "1.19"
+          level: 2
+          title: 14. Use of Workflow Policy
+          byte_offset: 16464
+          byte_count: 471
+          word_count: 69
+          content_hash: 629de02905160a026a0c07af61e7848cc79635c328cedaedc96ec365ee95d5bf
+        - path: "1.20"
+          level: 2
+          title: 15. Relationship to Agent Instructions and Skills
+          byte_offset: 16935
+          byte_count: 939
+          word_count: 128
+          content_hash: b3092d1e1a526a02ea4a87477fd2e756ff2cbcd151e167e2d318db35859f3255
+          children:
+            - path: 1.20.1
+              level: 3
+              title: 15.1 Static runtime instructions
+              byte_offset: 17067
+              byte_count: 189
+              word_count: 24
+              content_hash: 0c9283905218d9f758d2c12e0e5ad6cd23babae6ccd004c5df6c7eabf8b2301f
+            - path: 1.20.2
+              level: 3
+              title: 15.2 Workflow policy
+              byte_offset: 17256
+              byte_count: 208
+              word_count: 27
+              content_hash: 272aab93953f63fbe12c88cc1d07bc6c1161d9223a6151867eca426e2dca8ea9
+            - path: 1.20.3
+              level: 3
+              title: 15.3 Tool design
+              byte_offset: 17464
+              byte_count: 218
+              word_count: 31
+              content_hash: 2264ed5f0d697445f4c66fc5efebc3075476712106dc8430efbda9ff872eed7d
+            - path: 1.20.4
+              level: 3
+              title: 15.4 Combined enforcement model
+              byte_offset: 17682
+              byte_count: 192
+              word_count: 29
+              content_hash: c887cc2209e8269f846a69b649f4f2dec198a121cd99e2af978308d2d6198d2e
+        - path: "1.21"
+          level: 2
+          title: 16. Error Handling Behavior
+          byte_offset: 17874
+          byte_count: 533
+          word_count: 83
+          content_hash: 1f8934ee3adbaffb868aaf38ad52de7dac6b3a3fd41fd00c569711bba65c6eee
+        - path: "1.22"
+          level: 2
+          title: 17. Bootstrap Protocol
+          byte_offset: 18407
+          byte_count: 1297
+          word_count: 201
+          content_hash: f960a056e81f6fa8f472a9b38d6bbeed6ae8aab0b42896ec6104df686a47d424
+          children:
+            - path: 1.22.1
+              level: 3
+              title: 17.1 Early-phase expectation
+              byte_offset: 18581
+              byte_count: 308
+              word_count: 50
+              content_hash: ca7d08419610e2636c9a5bee6ec19e836ce9fe878fc2ab11eb07313b8eb98e67
+            - path: 1.22.2
+              level: 3
+              title: 17.2 Bootstrap-safe behavior
+              byte_offset: 18889
+              byte_count: 394
+              word_count: 62
+              content_hash: a2ec66b99dfdc95c3167abce422f06ece2f8394699181462268b491bcaefb498
+            - path: 1.22.3
+              level: 3
+              title: 17.3 Eventual self-management
+              byte_offset: 19283
+              byte_count: 421
+              word_count: 63
+              content_hash: 7148c0fa7deca31b5deb5f96110620d94c785ca1e8c497bdb96d9d0966544833
+        - path: "1.23"
+          level: 2
+          title: 18. Protocol Compliance Requirements
+          byte_offset: 19704
+          byte_count: 486
+          word_count: 74
+          content_hash: f224ac721fc7a09b56e129815997066df465c832384e6ee4dd79f4e31c6def2a
+        - path: "1.24"
+          level: 2
+          title: 19. Acceptance Criteria for the Protocol
+          byte_offset: 20190
+          byte_count: 749
+          word_count: 115
+          content_hash: 6a81951bdc6bc4ab38130e1c902ea38145ca85d497a294e827f9f4e379de1ad1
+        - path: "1.25"
+          level: 2
+          title: 20. Summary
+          byte_offset: 20939
+          byte_count: 648
+          word_count: 95
+          content_hash: 0725c7928b483f043fbc852dfaf6c637a24715723678b6f0bd1d0d3c7fdd88da
+front_matter:
+    status: protocol draft
+    date: "2026-03-18"
+    related:
+        - workflow-design-basis.md
+        - phase-1-specification.md
+    extra:
+        Purpose: define how AI agents should interact with humans and with the workflow system
+entity_refs:
+    - entity_id: DEC-021
+      entity_type: decision
+      section_path: 1.6.11
+      byte_offset: 6363
+    - entity_id: DEC-01J3KABCDE7MX
+      entity_type: decision
+      section_path: 1.6.11
+      byte_offset: 6405
+cross_doc_links:
+    - target_path: workflow-design-basis.md
+      link_text: workflow-design-basis.md
+      section_path: "1"
+    - target_path: phase-1-specification.md
+      link_text: phase-1-specification.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: definition
+      confidence: high
+    - section_path: 1.6.9
+      role: constraint
+      confidence: high
+    - section_path: 1.6.11
+      role: decision
+      confidence: high
+    - section_path: "1.15"
+      role: decision
+      confidence: high
+    - section_path: "1.23"
+      role: requirement
+      confidence: high
+    - section_path: "1.24"
+      role: requirement
+      confidence: high
+    - section_path: "1.25"
+      role: narrative
+      confidence: high
+classified: false

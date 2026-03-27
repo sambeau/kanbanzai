@@ -1,0 +1,376 @@
+document_id: PROJECT/dev-plan-phase-3-scope
+document_path: work/plan/phase-3-scope.md
+content_hash: 5da18981bf4e104765153738926bd2e8f3b35417b2b92c8fe5e8b4687328c168
+indexed_at: 2026-03-25T21:38:28.779724Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 3 Scope and Planning
+      byte_offset: 0
+      byte_count: 16664
+      word_count: 2404
+      content_hash: 5da18981bf4e104765153738926bd2e8f3b35417b2b92c8fe5e8b4687328c168
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 453
+          byte_count: 430
+          word_count: 60
+          content_hash: 4b877285dbb5b4a5b534741d92e62e43bb240cdefec8517ed3633bba9067904a
+        - path: "1.2"
+          level: 2
+          title: 2. Phase 3 Goals
+          byte_offset: 883
+          byte_count: 791
+          word_count: 112
+          content_hash: 13af54477e5728948d8cdbc21fd95d2a9d21080dc1778c25484fc37eb1f8612d
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1674
+          byte_count: 1233
+          word_count: 172
+          content_hash: 9bcf1abc975441a77686dc9933c12a3835c67d315cbab4c98840a2d36a089f4e
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope for Phase 3
+              byte_offset: 1687
+              byte_count: 609
+              word_count: 82
+              content_hash: 0ee4dcf9cd157504ad1156934714a96f9a6eee15fcbc9712dcb78718ef34604a
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred beyond Phase 3
+              byte_offset: 2296
+              byte_count: 333
+              word_count: 45
+              content_hash: 7022261ed656b15d346e6afa88f0aa894482c21c92b01e2888aa51116cbed0e9
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly excluded
+              byte_offset: 2629
+              byte_count: 278
+              word_count: 42
+              content_hash: 73016de4422addb7fb91f1fd875d346841cc3ee64ea1907fc9cada7559787fd4
+        - path: "1.4"
+          level: 2
+          title: 4. Approved Design Decisions
+          byte_offset: 2907
+          byte_count: 3401
+          word_count: 444
+          content_hash: 0ae6891bbc9ba46ed5a96b35660bd91b1213c7b8266a7c755db320e7b04bd493
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'P3-DES-001: Branch Naming Convention'
+              byte_offset: 3068
+              byte_count: 444
+              word_count: 54
+              content_hash: 67abe23e06ecd312fab7637d731925146d975ae40156e9787c59428f3da2388c
+            - path: 1.4.2
+              level: 3
+              title: 'P3-DES-002: Worktree Lifecycle Ownership'
+              byte_offset: 3512
+              byte_count: 493
+              word_count: 64
+              content_hash: 23c9ff392ca97a6f658cb3156be385de3d480dba7bfda21b58e14f02e0981e9a
+            - path: 1.4.3
+              level: 3
+              title: 'P3-DES-003: Multiple Worktrees Per Feature'
+              byte_offset: 4005
+              byte_count: 448
+              word_count: 59
+              content_hash: 29029bcb3d26565fc9b8d6779b34f8a83adc67ee8250324b41109d452e117c11
+            - path: 1.4.4
+              level: 3
+              title: 'P3-DES-004: Platform Scope'
+              byte_offset: 4453
+              byte_count: 363
+              word_count: 48
+              content_hash: e13e1adab972191993b32e9dcd6697aa44ae10a1114965cd6a11771e04cb236a
+            - path: 1.4.5
+              level: 3
+              title: 'P3-DES-005: PR Operation Scope'
+              byte_offset: 4816
+              byte_count: 407
+              word_count: 52
+              content_hash: 36a734350b7d855814854b52ba656e57ca8bd4f0cd1f2c25c8c9cdfdb1873c75
+            - path: 1.4.6
+              level: 3
+              title: 'P3-DES-006: Merge Gate Workflow Model'
+              byte_offset: 5223
+              byte_count: 362
+              word_count: 47
+              content_hash: 0d3ba24545469d489d8dea52a4cbce8f10727a81840eeae03a953b9a4cf3c370
+            - path: 1.4.7
+              level: 3
+              title: 'P3-DES-007: Merge Gate Failure Behavior'
+              byte_offset: 5585
+              byte_count: 342
+              word_count: 47
+              content_hash: d3b10c2cfd37f3702a43c59660fa61b71611850a61f38b7c49a6661dfea9cb7f
+            - path: 1.4.8
+              level: 3
+              title: 'P3-DES-008: Cleanup Scope and Triggering'
+              byte_offset: 5927
+              byte_count: 381
+              word_count: 49
+              content_hash: ba30148b96750629d7209e5a40c6e6d163844f1fa77fcf8e101ecbda75c924fb
+        - path: "1.5"
+          level: 2
+          title: 5. Decisions Deferred to Development
+          byte_offset: 6308
+          byte_count: 1550
+          word_count: 240
+          content_hash: 24be52ad0860eae1c96d66dde705e0afb61f686ef39d61370dc7603ac3a47901
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Implementation details
+              byte_offset: 6349
+              byte_count: 727
+              word_count: 111
+              content_hash: 635589ae5b87cc981630be6a90c024a4554aa3a65d794fd9a035319332777d5c
+            - path: 1.5.2
+              level: 3
+              title: 5.2 AI Agent UX decisions
+              byte_offset: 7076
+              byte_count: 782
+              word_count: 123
+              content_hash: 369884fe2c8bb0edc66327636cfb89e4442608314c75a54aeb7c6e9c33f1a9cd
+        - path: "1.6"
+          level: 2
+          title: 6. Phase 3 Split Consideration
+          byte_offset: 7858
+          byte_count: 1240
+          word_count: 182
+          content_hash: 6c112fba037126bf66ab9170c69f94675bf2c86d16c7dc395278fba08fd22144
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Option A: Single Phase 3'
+              byte_offset: 7893
+              byte_count: 143
+              word_count: 19
+              content_hash: 5550b03c096ed465cca448d38497eb069241faf1283e8ba6c7ce023054541a3a
+            - path: 1.6.2
+              level: 3
+              title: 'Option B: Phase 3a / 3b Split'
+              byte_offset: 8036
+              byte_count: 536
+              word_count: 78
+              content_hash: beb62ac3d30a01bc576f55b100fcdccb55b5b5074e17ef0004731dca66fc3d2b
+            - path: 1.6.3
+              level: 3
+              title: Recommendation
+              byte_offset: 8572
+              byte_count: 526
+              word_count: 79
+              content_hash: def99c7eeb784eba1af953931f33d179f960ef15404abd3e43561d4bf29e2c4d
+        - path: "1.7"
+          level: 2
+          title: 7. Feature Breakdown
+          byte_offset: 9098
+          byte_count: 4979
+          word_count: 771
+          content_hash: 371b2f457d4546691d9955b5f5cb7af5548cb92821f0ec33692501bfdb35741e
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Worktree Management
+              byte_offset: 9123
+              byte_count: 717
+              word_count: 105
+              content_hash: 373f1faf697509619c17e63fecd6c49b997bda496a639e9a5c51bb5e7a50ce99
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Branch Tracking
+              byte_offset: 9840
+              byte_count: 496
+              word_count: 80
+              content_hash: 9d26a9ac4e88522e6fa3b1d9b1c19f3ae52cfc9a5fc8d2e0359842c8cc0812f0
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Merge Gates
+              byte_offset: 10336
+              byte_count: 660
+              word_count: 102
+              content_hash: bac9de0d75326ea3e1d7c8518d5bd5006f59f61e12802ca8718338ce3bde4af1
+            - path: 1.7.4
+              level: 3
+              title: 7.4 GitHub PR Integration
+              byte_offset: 10996
+              byte_count: 577
+              word_count: 93
+              content_hash: d93ee865e8515c4eb3a3d3037e362b3051db5435c8d7ea25fdf2a0c5aba460bb
+            - path: 1.7.5
+              level: 3
+              title: 7.5 Post-Merge Cleanup
+              byte_offset: 11573
+              byte_count: 539
+              word_count: 89
+              content_hash: c7452a2dfcc6c3e38e5d5aba4beb55a447d93473ccbf61453822496337c1bb9c
+            - path: 1.7.6
+              level: 3
+              title: 7.6 Git Anchoring
+              byte_offset: 12112
+              byte_count: 579
+              word_count: 80
+              content_hash: d348b90d146eccc0b6f70d90b437584fecaf26a95f51bf0d15f3df37d3f5e2c3
+            - path: 1.7.7
+              level: 3
+              title: 7.7 TTL-Based Pruning
+              byte_offset: 12691
+              byte_count: 541
+              word_count: 96
+              content_hash: d744ed4478d5ae4c6a4e13a37c3416ac52deb9e472386ed7cb51401d092aec75
+            - path: 1.7.8
+              level: 3
+              title: 7.8 Automatic Promotion
+              byte_offset: 13232
+              byte_count: 340
+              word_count: 52
+              content_hash: 6676a6a0d5e212aa3c3f57fa0732f51d57347308ceaa4e25ff2b6eec521b2e40
+            - path: 1.7.9
+              level: 3
+              title: 7.9 Post-Merge Compaction
+              byte_offset: 13572
+              byte_count: 505
+              word_count: 70
+              content_hash: d297026c1e5634d57c06729ab5ec09bffb0ccc4a0bdc7b8f7c8e0881478440eb
+        - path: "1.8"
+          level: 2
+          title: 8. Dependencies
+          byte_offset: 14077
+          byte_count: 484
+          word_count: 86
+          content_hash: e0820700a60e0377901370860a2db09ce845906a9c69062b9a1414cc4b6549c4
+        - path: "1.9"
+          level: 2
+          title: 9. Risks
+          byte_offset: 14561
+          byte_count: 1157
+          word_count: 153
+          content_hash: 4b9674bec9387df3d1c76c487a99ec2c1e9df26ffa7a1255b7ef328fed29a420
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Scope size
+              byte_offset: 14574
+              byte_count: 262
+              word_count: 39
+              content_hash: 8c9a5a40b739423d5741a00e888869a2ca877ad9670ba50faa34a4a2eb844f37
+            - path: 1.9.2
+              level: 3
+              title: 9.2 GitHub API complexity
+              byte_offset: 14836
+              byte_count: 285
+              word_count: 36
+              content_hash: ab35d34a1c0d0207a40ce1e6c306a489f7c18d3e7641a3ad13d6219b957b4986
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Worktree edge cases
+              byte_offset: 15121
+              byte_count: 245
+              word_count: 33
+              content_hash: 2c2c09d62ad6a4b46a03a9c195c421bece40b9ef93c730cc1c44431fbd7a499f
+            - path: 1.9.4
+              level: 3
+              title: 9.4 Compaction correctness
+              byte_offset: 15366
+              byte_count: 352
+              word_count: 42
+              content_hash: 13cedc8a18d79c9777c4192905ce9fa13c4e3a13d1ea9e0d98b196686b284a3d
+        - path: "1.10"
+          level: 2
+          title: 10. Next Steps
+          byte_offset: 15718
+          byte_count: 339
+          word_count: 41
+          content_hash: acab491b9e82fbfa90569890a34b19769cc9709a5aaa857275758a323c020cc1
+        - path: "1.11"
+          level: 2
+          title: 11. Summary
+          byte_offset: 16057
+          byte_count: 607
+          word_count: 86
+          content_hash: 79882ea6cda4906cc8c7de122e2391e71c9a39e5878407899b2fe13531782887
+entity_refs:
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 3341
+    - entity_id: BUG-01JX
+      entity_type: bug
+      section_path: 1.4.1
+      byte_offset: 3371
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 437
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.3.1
+      byte_offset: 2117
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/spec/phase-2b-specification.md
+      link_text: work/spec/phase-2b-specification.md
+      section_path: "1"
+    - target_path: work/plan/phase-2-decision-log.md
+      link_text: work/plan/phase-2-decision-log.md
+      section_path: "1"
+    - target_path: work/spec/phase-3-specification.md
+      link_text: work/spec/phase-3-specification.md
+      section_path: "1.10"
+    - target_path: work/plan/phase-3-implementation-plan.md
+      link_text: work/plan/phase-3-implementation-plan.md
+      section_path: "1.10"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: decision
+      confidence: high
+    - section_path: 1.4.4
+      role: constraint
+      confidence: high
+    - section_path: 1.4.5
+      role: constraint
+      confidence: high
+    - section_path: 1.4.8
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: decision
+      confidence: high
+    - section_path: 1.5.2
+      role: decision
+      confidence: high
+    - section_path: "1.9"
+      role: risk
+      confidence: high
+    - section_path: 1.9.1
+      role: constraint
+      confidence: high
+    - section_path: "1.11"
+      role: narrative
+      confidence: high
+classified: false

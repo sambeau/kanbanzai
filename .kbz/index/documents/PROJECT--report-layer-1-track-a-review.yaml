@@ -1,0 +1,584 @@
+document_id: PROJECT/report-layer-1-track-a-review
+document_path: work/reports/layer-1-track-a-review.md
+content_hash: e4817461a97bc5158f263b106abc62f7bfd6959d1cf10ebeeef6fa27c203adfb
+indexed_at: 2026-03-25T21:38:29.293113Z
+sections:
+    - path: "1"
+      level: 1
+      title: Layer 1 / Track A Implementation Review
+      byte_offset: 0
+      byte_count: 38854
+      word_count: 5515
+      content_hash: e4817461a97bc5158f263b106abc62f7bfd6959d1cf10ebeeef6fa27c203adfb
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 200
+          byte_count: 650
+          word_count: 85
+          content_hash: 5a00c4dca03732dfd6f2f4c4cd1123ff359e8862050157a50629edef7e16cccd
+        - path: "1.2"
+          level: 2
+          title: 2. Implementation Inventory
+          byte_offset: 850
+          byte_count: 831
+          word_count: 120
+          content_hash: 0099b5e4b2126311bac57559d20a58c954a50c99dc447ba3df5a441f3fa88101
+        - path: "1.3"
+          level: 2
+          title: 3. Track A Task Checklist
+          byte_offset: 1681
+          byte_count: 1106
+          word_count: 178
+          content_hash: f4c0eab813ce54888cc6a42d146b20a64fb8898c5258c88a701aa8445e571c4e
+        - path: "1.4"
+          level: 2
+          title: 4. Specification Compliance — What Is Correct
+          byte_offset: 2787
+          byte_count: 2401
+          word_count: 326
+          content_hash: 5967e8dd52ecfa659bd54e4fe6049ae93d18251cc8ea8df013576e1c6d2ac20e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Entity types (spec §7)
+              byte_offset: 2917
+              byte_count: 207
+              word_count: 32
+              content_hash: 091e6be0dc17be248d894ae3d270d5268180f90f2481c7d500f1c352055ceee9
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Required fields (spec §9 / P1-DEC-009)
+              byte_offset: 3124
+              byte_count: 496
+              word_count: 60
+              content_hash: 68be11974eba996ffa69e576646b685c2584ac9081983cec588259f00796c02f
+            - path: 1.4.3
+              level: 3
+              title: 4.3 ID allocation (P1-DEC-007)
+              byte_offset: 3620
+              byte_count: 390
+              word_count: 53
+              content_hash: 23eb368cf81956c1dab66993b8125a0ac6e9e0346c9a20a7f20cb49f3eebe388
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Lifecycle transitions (P1-DEC-010)
+              byte_offset: 4010
+              byte_count: 514
+              word_count: 67
+              content_hash: 8d0a5c22e3617bb9124bc300bb1e6bb3505eb17d1f9f875b004e13a3f4df1cb0
+            - path: 1.4.5
+              level: 3
+              title: 4.5 File layout (P1-DEC-006)
+              byte_offset: 4524
+              byte_count: 213
+              word_count: 24
+              content_hash: 1587857994d0d7746bd716373961f6cec409f85ef081a4301deb629ee9bf3930
+            - path: 1.4.6
+              level: 3
+              title: 4.6 YAML serialization (P1-DEC-008)
+              byte_offset: 4737
+              byte_count: 340
+              word_count: 52
+              content_hash: d4c2c6e85393776b6e13d9c17becdacc54720674a9573df49c62e17bbb4103dc
+            - path: 1.4.7
+              level: 3
+              title: 4.7 One file per entity (spec §14.1)
+              byte_offset: 5077
+              byte_count: 111
+              word_count: 19
+              content_hash: 49320198d43d86eb8ed6f0e72057dfd5f361101d7dfe91ccf312851bb01a8276
+        - path: "1.5"
+          level: 2
+          title: 5. Issues Found
+          byte_offset: 5188
+          byte_count: 7756
+          word_count: 1098
+          content_hash: 3b3e1570e71437fa8501c8f4d014da975b06481282faecfbf6d38ec0d027ba90
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 `model` package is dead code
+              byte_offset: 5208
+              byte_count: 848
+              word_count: 121
+              content_hash: b8e31e0fe6d91c28cb401f813319c7136cf8a6fce73ba85b40cf24833a4810c8
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Duplicate entity-kind constants
+              byte_offset: 6056
+              byte_count: 668
+              word_count: 84
+              content_hash: b0b50906c6336472ebbc96b054f731c37b281da944c37139a7175923cc8ed944
+            - path: 1.5.3
+              level: 3
+              title: 5.3 YAML field order is alphabetical, not schema-defined
+              byte_offset: 6724
+              byte_count: 1003
+              word_count: 149
+              content_hash: 907e8563b520a48d8828182a29cf44b9a44bb34386e109ca40e2efbe0beb2933
+            - path: 1.5.4
+              level: 3
+              title: 5.4 `time.Now().UTC` initialization bug
+              byte_offset: 7727
+              byte_count: 856
+              word_count: 126
+              content_hash: d23779078c8ea50fc4f8a70baaf200cdbd1a661c1e1697e4b17760acaaf5d799
+            - path: 1.5.5
+              level: 3
+              title: 5.5 CLI tests write to the real filesystem
+              byte_offset: 8583
+              byte_count: 907
+              word_count: 113
+              content_hash: 2bf4b5562ad8c4e0b4f0500ea3edb6e88e6a81cbea884b4dc8631c91addac843
+            - path: 1.5.6
+              level: 3
+              title: 5.6 Custom YAML implementation is under-tested
+              byte_offset: 9490
+              byte_count: 1193
+              word_count: 183
+              content_hash: b050a3bad74f80e3fb0fb90c4f621af087ce5a4c777b5b959083cc0fcf7e7060
+            - path: 1.5.7
+              level: 3
+              title: 5.7 `go.sum` is missing
+              byte_offset: 10683
+              byte_count: 301
+              word_count: 45
+              content_hash: 685955763b45a8c6c016f2f6109b2a1b42bbf6483078b75f8a225a49481d3fde
+            - path: 1.5.8
+              level: 3
+              title: 5.8 No tests for `internal/core`
+              byte_offset: 10984
+              byte_count: 331
+              word_count: 50
+              content_hash: 1a2dbbaee2770f45c2bc157d2defb5c8a327d84357d85626a0d4a13f7489f5ca
+            - path: 1.5.9
+              level: 3
+              title: 5.9 `cannot-reproduce → triaged` transition lacks a dedicated test
+              byte_offset: 11315
+              byte_count: 649
+              word_count: 81
+              content_hash: 4e4357fc281c33ed172f7c8adde22ab337de7b3e3fac74e02caf4c90f39a362f
+            - path: 1.5.10
+              level: 3
+              title: 5.10 Decision `status` field is not in spec §9.5 minimum fields
+              byte_offset: 11964
+              byte_count: 662
+              word_count: 93
+              content_hash: 7c496bbc8bc284e624fd3732bf3d93cfc273e184f6141017adf77c131b797251
+            - path: 1.5.11
+              level: 3
+              title: 5.11 Example files not produced
+              byte_offset: 12626
+              byte_count: 318
+              word_count: 49
+              content_hash: 7830266ac06f2bb1f26a25ffd59681291696834f3d565b787c6d27969db2763c
+        - path: "1.6"
+          level: 2
+          title: 6. Test Coverage Summary
+          byte_offset: 12944
+          byte_count: 1705
+          word_count: 264
+          content_hash: 09fd2217e75aa4798fb9b4b1103b344b8e90cab3b651e68a5e48bb96efc87bb7
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Testing strengths
+              byte_offset: 13652
+              byte_count: 352
+              word_count: 47
+              content_hash: 4ca10a59b9a8e044bc8da6dd005cbe163ab4d8b4d2d32d3398457c1fa1c52e34
+            - path: 1.6.2
+              level: 3
+              title: Testing gaps
+              byte_offset: 14004
+              byte_count: 645
+              word_count: 98
+              content_hash: 3dce135d62a8ba126aeb637abeedf5af27c5e39b51d6b225b6cc640a1d474257
+        - path: "1.7"
+          level: 2
+          title: 7. Code Quality Assessment
+          byte_offset: 14649
+          byte_count: 1219
+          word_count: 171
+          content_hash: 057f3df864f4588eb1aac972baf4c5738702ae7e905c75025f94d99548e79bea
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Positive aspects
+              byte_offset: 14680
+              byte_count: 730
+              word_count: 93
+              content_hash: 094e1cb12be85277499469d39b6a550c4730eddb9479e92ac672c206a01273c1
+            - path: 1.7.2
+              level: 3
+              title: Areas for improvement
+              byte_offset: 15410
+              byte_count: 458
+              word_count: 73
+              content_hash: 91b944bd20fe49703dfcfdf000620c0f4ba02232b7901a601c63c0a683263691
+        - path: "1.8"
+          level: 2
+          title: 8. Recommended Actions
+          byte_offset: 15868
+          byte_count: 1423
+          word_count: 203
+          content_hash: e006c6a8513308a340c0233de66d57390a6e12c32f5775dd742b2e1e2f76a6a7
+        - path: "1.9"
+          level: 2
+          title: 9. Conclusion
+          byte_offset: 17291
+          byte_count: 940
+          word_count: 137
+          content_hash: fa0b69670b2e2dca71fefe7f6a34de311f3e9e10baa1ee3f82bc8490ed40f347
+        - path: "1.10"
+          level: 2
+          title: 10. Supplemental Follow-Up Notes
+          byte_offset: 18231
+          byte_count: 4486
+          word_count: 651
+          content_hash: 21fb1bcbf14a3551ecc10a358168ec0d0b02ee55855885d27460788fbb2f0d8c
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Implemented follow-up items
+              byte_offset: 18473
+              byte_count: 1124
+              word_count: 156
+              content_hash: f070789fac43964d4cf49755de1469132b44549bb5527b8d3346db850c239635
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Partially implemented items
+              byte_offset: 19597
+              byte_count: 1835
+              word_count: 272
+              content_hash: abae27dacf439dcbebad17fa0d5208ccf0e95b0114e9c7718485beb2271738a8
+              children:
+                - path: 1.10.2.1
+                  level: 4
+                  title: 5.6 / Recommendation 5 — YAML serializer coverage
+                  byte_offset: 19635
+                  byte_count: 1293
+                  word_count: 186
+                  content_hash: 404d50857f705d4c95c952cbbff110976e6d40492b21d362f4cd0805b6f9e638
+                - path: 1.10.2.2
+                  level: 4
+                  title: 5.7 / Recommendation 7 — `go mod tidy` and `go.sum`
+                  byte_offset: 20928
+                  byte_count: 504
+                  word_count: 81
+                  content_hash: bd965351555b0700ed1d5834166a621b8bf4a39083512d804f8add6a06826e04
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Decision `status` inconsistency
+              byte_offset: 21432
+              byte_count: 461
+              word_count: 66
+              content_hash: 400cd0c7414bccfa5f4bd9559286663c70884094f61fedb4e83f6c19f184e9a8
+              children:
+                - path: 1.10.3.1
+                  level: 4
+                  title: 5.10 — Spec inconsistency
+                  byte_offset: 21474
+                  byte_count: 419
+                  word_count: 61
+                  content_hash: ed7b6baa48e70b9047390a8f3724773760a963e7bec2e54148b97b221c48e0cb
+            - path: 1.10.4
+              level: 3
+              title: 10.4 Supplemental note on example files
+              byte_offset: 21893
+              byte_count: 422
+              word_count: 64
+              content_hash: 2460bc145bdedbbfc9c4f0ac880491f5a08d26ded3852aa462763a0802344f23
+            - path: 1.10.5
+              level: 3
+              title: 10.5 Remaining follow-up work
+              byte_offset: 22315
+              byte_count: 402
+              word_count: 56
+              content_hash: 55474ae43fd54aaf6c370a41aa7320b9521996d1166f4468a0cf17ecfe26fea5
+        - path: "1.11"
+          level: 2
+          title: 11. Verification of Follow-Up Implementation
+          byte_offset: 22717
+          byte_count: 9898
+          word_count: 1374
+          content_hash: 65120c13458e9fae416accc9336f3250e9d0771b39c97fab83b2483a1ca2cd81
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Recommendation 1 — `time.Now().UTC` bug fix
+              byte_offset: 23004
+              byte_count: 399
+              word_count: 57
+              content_hash: b2e8eea45f1be7d16173d3cb602d66dd5ec7a2eab3bf0e7507d2ecf88a03d740
+            - path: 1.11.2
+              level: 3
+              title: 11.2 Recommendation 2 — CLI test isolation
+              byte_offset: 23403
+              byte_count: 1402
+              word_count: 202
+              content_hash: 8739802e5247666429712027265b232bd3f022ccdbb9328855250af01ab8ca8b
+            - path: 1.11.3
+              level: 3
+              title: 11.3 Recommendation 3 — Schema-defined field ordering
+              byte_offset: 24805
+              byte_count: 1474
+              word_count: 189
+              content_hash: bcbc982a8fb74ef2af25986e78c5eb921a8e1dc1bfcaa2007b6463fba3074233
+            - path: 1.11.4
+              level: 3
+              title: 11.4 Recommendation 4 — Model package integration
+              byte_offset: 26279
+              byte_count: 1853
+              word_count: 251
+              content_hash: 0a6816600142f2e8593620dc140f3ca5c9d3184ae5068ed0f3147888e8c06107
+            - path: 1.11.5
+              level: 3
+              title: 11.5 Recommendation 5 — YAML serializer test coverage
+              byte_offset: 28132
+              byte_count: 1085
+              word_count: 139
+              content_hash: 1a413b251d1803243e13cbec654f27c2210d64797f753ca1d43459994eaaa190
+            - path: 1.11.6
+              level: 3
+              title: 11.6 Recommendation 6 — Example entity files
+              byte_offset: 29217
+              byte_count: 445
+              word_count: 55
+              content_hash: 31d45e27d4b34c1f76e632451e109ce91d3c5f0e3e78e6edd40433f990b9b45a
+            - path: 1.11.7
+              level: 3
+              title: 11.7 Recommendation 7 — `go mod tidy` and `go.sum`
+              byte_offset: 29662
+              byte_count: 329
+              word_count: 53
+              content_hash: 5c33c5536fa91586a5e3f8c91e6c02e51ea61ce2a98920e341e61ded22af8c84
+            - path: 1.11.8
+              level: 3
+              title: 11.8 Recommendation 8 — `internal/core` tests
+              byte_offset: 29991
+              byte_count: 139
+              word_count: 15
+              content_hash: 753a0294f38eac6ba44566ff4ac97953a33f30034010ad3c984fa9d30b95c506
+            - path: 1.11.9
+              level: 3
+              title: 11.9 §5.9 — Cannot-reproduce reopening test
+              byte_offset: 30130
+              byte_count: 452
+              word_count: 53
+              content_hash: 07ff03dc92de25bd3b30e448b7fbc4ace6a9fa3fe9faf640d09cd2e2710ee20c
+            - path: 1.11.10
+              level: 3
+              title: 11.10 Updated coverage summary
+              byte_offset: 30582
+              byte_count: 936
+              word_count: 166
+              content_hash: dea66ef942e29983bfb415a2027394b29a334f7adc48825264fd7ed9351266eb
+            - path: 1.11.11
+              level: 3
+              title: 11.11 Remaining items
+              byte_offset: 31518
+              byte_count: 1097
+              word_count: 153
+              content_hash: e0251b1f257602eda298aa88908ee658f69890bbdd4f47a243ff0af4c7382c0e
+        - path: "1.12"
+          level: 2
+          title: 12. Fixes Applied
+          byte_offset: 32615
+          byte_count: 6239
+          word_count: 873
+          content_hash: 0a971f5e271b75a15572463b3bdb466783e6e535338fbc78a5c9ff3708db3005
+          children:
+            - path: 1.12.1
+              level: 3
+              title: 12.1 Items resolved
+              byte_offset: 32706
+              byte_count: 1259
+              word_count: 130
+              content_hash: 030ae5418dd010c61a438fd6dd324ad65da122a794cc0e734064f0ceafb60a8a
+            - path: 1.12.2
+              level: 3
+              title: 12.2 Updated coverage summary
+              byte_offset: 33965
+              byte_count: 644
+              word_count: 113
+              content_hash: c97f0bd25d10ec0dff39dc7acbb782362ea2940d22f92258a8fd7f7d34c55559
+            - path: 1.12.3
+              level: 3
+              title: 12.3 Items not addressed in this pass
+              byte_offset: 34609
+              byte_count: 158
+              word_count: 28
+              content_hash: 6cb9834c9507e78e01d455df4dcb5f91bf1740bd7e006da135e9e0591373290e
+            - path: 1.12.4
+              level: 3
+              title: 12.4 Deferred-item decisions
+              byte_offset: 34767
+              byte_count: 4087
+              word_count: 588
+              content_hash: 0d8f0cc1793f7d177ae59bbf472c6dd7c8048dda41cd264c884ddfb6e4b19f52
+              children:
+                - path: 1.12.4.1
+                  level: 4
+                  title: 'Item 6 — Decision `status` spec inconsistency: RESOLVED'
+                  byte_offset: 34917
+                  byte_count: 1063
+                  word_count: 145
+                  content_hash: 8afa6461896744aafdbaf3bea84d0a5f4b01129d1a09dc79aa760e38ced0cecd
+                - path: 1.12.4.2
+                  level: 4
+                  title: 'Item 2 — Complete model integration on the read path: DEFERRED'
+                  byte_offset: 35980
+                  byte_count: 1394
+                  word_count: 209
+                  content_hash: bc017168d484b2d1fc6b85d2d0b18ca678f487b6e25c21a46e1e719fdbbd182a
+                - path: 1.12.4.3
+                  level: 4
+                  title: 'Item 7 — YAML escaping semantics: DEFERRED'
+                  byte_offset: 37374
+                  byte_count: 1480
+                  word_count: 213
+                  content_hash: 6be8bfe21b09213ee27c19b12690889b1337ca530e8dcd6422c7be53bd123b40
+front_matter:
+    status: Review complete — issues found
+    date: "2026-03-19"
+    extra:
+        Reviewer: AI agent
+        Scope: Core data model and file representation (Layer 1, Track A)
+entity_refs:
+    - entity_id: FEAT-NNN
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 3728
+    - entity_id: BUG-NNN
+      entity_type: bug
+      section_path: 1.4.3
+      byte_offset: 3754
+    - entity_id: DEC-006
+      entity_type: decision
+      section_path: "1.1"
+      byte_offset: 547
+    - entity_id: DEC-010
+      entity_type: decision
+      section_path: "1.1"
+      byte_offset: 566
+    - entity_id: DEC-009
+      entity_type: decision
+      section_path: 1.4.2
+      byte_offset: 3163
+    - entity_id: DEC-007
+      entity_type: decision
+      section_path: 1.4.3
+      byte_offset: 3646
+    - entity_id: DEC-NNN
+      entity_type: decision
+      section_path: 1.4.3
+      byte_offset: 3775
+    - entity_id: DEC-010
+      entity_type: decision
+      section_path: 1.4.4
+      byte_offset: 4044
+    - entity_id: DEC-006
+      entity_type: decision
+      section_path: 1.4.5
+      byte_offset: 4548
+    - entity_id: DEC-008
+      entity_type: decision
+      section_path: 1.4.6
+      byte_offset: 4768
+    - entity_id: DEC-008
+      entity_type: decision
+      section_path: 1.5.3
+      byte_offset: 6847
+    - entity_id: DEC-008
+      entity_type: decision
+      section_path: 1.5.6
+      byte_offset: 9584
+    - entity_id: DEC-010
+      entity_type: decision
+      section_path: 1.5.9
+      byte_offset: 11432
+    - entity_id: DEC-010
+      entity_type: decision
+      section_path: 1.5.10
+      byte_offset: 12335
+    - entity_id: DEC-008
+      entity_type: decision
+      section_path: 1.7.2
+      byte_offset: 15854
+    - entity_id: DEC-008
+      entity_type: decision
+      section_path: 1.11.3
+      byte_offset: 26227
+    - entity_id: DEC-010
+      entity_type: decision
+      section_path: 1.11.9
+      byte_offset: 30510
+    - entity_id: DEC-009
+      entity_type: decision
+      section_path: 1.12.4.1
+      byte_offset: 35077
+    - entity_id: DEC-010
+      entity_type: decision
+      section_path: 1.12.4.1
+      byte_offset: 35361
+    - entity_id: DEC-008
+      entity_type: decision
+      section_path: 1.12.4.3
+      byte_offset: 38080
+cross_doc_links:
+    - target_path: work/plan/phase-1-implementation-plan.md
+      link_text: work/plan/phase-1-implementation-plan.md
+      section_path: "1.1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1.1"
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: "1.1"
+    - target_path: phase-1-implementation-plan.md
+      link_text: phase-1-implementation-plan.md
+      section_path: "1.3"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: 1.12.4.1
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: 1.12.4.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.5.10
+      role: decision
+      confidence: high
+    - section_path: 1.5.11
+      role: example
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+    - section_path: 1.10.3
+      role: decision
+      confidence: high
+    - section_path: 1.10.4
+      role: example
+      confidence: high
+    - section_path: 1.11.6
+      role: example
+      confidence: high
+    - section_path: 1.11.10
+      role: narrative
+      confidence: high
+    - section_path: 1.12.2
+      role: narrative
+      confidence: high
+    - section_path: 1.12.4
+      role: decision
+      confidence: high
+    - section_path: 1.12.4.1
+      role: decision
+      confidence: high
+classified: false
