@@ -143,7 +143,7 @@ This shared pipeline is built once in Track F and reused in Track G.
 
 ---
 
-## 4. Track A: Feature Group Framework
+## 4. Track A: Feature Group Framework ✓ COMPLETE
 
 **Goal:** Build the configuration model and conditional tool registration mechanism that controls which tools the MCP server exposes to the client.
 
@@ -151,41 +151,37 @@ This shared pipeline is built once in Track F and reused in Track G.
 
 **Dependencies:** None (foundational).
 
-| Task | Description | Size |
-|------|-------------|------|
-| A.1 | Define `MCPConfig` struct in `internal/config/` with `Groups` map and `Preset` string fields | S |
-| A.2 | Add `mcp` section parsing to `config.LoadOrDefault()`; parse both `groups` and `preset` | S |
-| A.3 | Implement preset resolution: `minimal`, `orchestration`, `full` → effective group map | S |
-| A.4 | Implement preset + explicit group override merging (explicit groups override preset values) | S |
-| A.5 | Implement validation: unknown preset → startup error; unknown group → startup warning; `core: false` → warning + override to `true` | M |
-| A.6 | Implement default behaviour: no `mcp` section → `preset: full` (all groups enabled) | S |
-| A.7 | Define `ToolGroup` constants and group membership map (spec §6.4) | S |
-| A.8 | Refactor `NewServer` in `internal/mcp/server.go` to accept effective group config and conditionally call `AddTools` based on group membership | M |
-| A.9 | Implement `_legacy` group containing all 1.0 tool registrations, enabled by default during development | M |
-| A.10 | Write tests: preset resolution, override merging, default behaviour, validation warnings/errors | M |
-| A.11 | Write test: `TestServer_ListTools_GroupConfig` — verify tool count varies with group configuration | M |
-| A.12 | Verify existing `TestServer_ListTools` still passes (all 1.0 tools registered when `_legacy` enabled) | S |
+**Status:** Complete. All 12 tasks implemented. All 13 spec §30.1 acceptance criteria verified by passing tests. `go test -race ./...` clean.
+
+| Task | Description | Size | Status |
+|------|-------------|------|--------|
+| A.1 | Define `MCPConfig` struct in `internal/config/` with `Groups` map and `Preset` string fields | S | ✓ |
+| A.2 | Add `mcp` section parsing to `config.LoadOrDefault()`; parse both `groups` and `preset` | S | ✓ |
+| A.3 | Implement preset resolution: `minimal`, `orchestration`, `full` → effective group map | S | ✓ |
+| A.4 | Implement preset + explicit group override merging (explicit groups override preset values) | S | ✓ |
+| A.5 | Implement validation: unknown preset → startup error; unknown group → startup warning; `core: false` → warning + override to `true` | M | ✓ |
+| A.6 | Implement default behaviour: no `mcp` section → `preset: full` (all groups enabled) | S | ✓ |
+| A.7 | Define `ToolGroup` constants and group membership map (spec §6.4) | S | ✓ |
+| A.8 | Refactor `NewServer` in `internal/mcp/server.go` to accept effective group config and conditionally call `AddTools` based on group membership | M | ✓ |
+| A.9 | Implement `_legacy` group containing all 1.0 tool registrations, enabled by default during development | M | ✓ |
+| A.10 | Write tests: preset resolution, override merging, default behaviour, validation warnings/errors | M | ✓ |
+| A.11 | Write test: `TestServer_ListTools_GroupConfig` — verify tool count varies with group configuration | M | ✓ |
+| A.12 | Verify existing `TestServer_ListTools` still passes (all 1.0 tools registered when `_legacy` enabled) | S | ✓ |
+
+**Test inventory:**
+
+- `internal/config/groups_test.go` — unit tests for `EffectiveGroups`: default-full, all presets, unknown preset error, explicit overrides (enable/disable), core-false warning, unknown group warning, empty preset, multiple overrides
+- `internal/mcp/groups_test.go` — unit tests for `resolveServerGroups` and `GroupToolNames`: membership map completeness, non-overlapping groups, total tool count, all presets, legacy always enabled, explicit override, core cannot be disabled
+- `internal/mcp/server_groups_test.go` — integration tests via `newServerWithConfig` + `MCPServer.ListTools()`: group-config table test (5 cases), core-group conditional, legacy always enabled across all presets
+- `internal/config/config_test.go` — YAML parse and round-trip tests for `mcp` section (`TestConfig_MCPConfigParseFromYAML`, `TestConfig_MCPConfigRoundTrip`)
 
 **Key implementation notes:**
 
-- The group membership map (A.7) defines which tool names belong to which group. During Track A, the map is populated with 2.0 tool names that don't exist yet — the tools are registered only as they are built in subsequent tracks. The infrastructure is ready before the tools are.
-- A.8 is the critical refactor. Currently `NewServer` calls `AddTools` unconditionally for every tool group. After A.8, each `AddTools` call is wrapped in a group-enabled check. The structure becomes:
-
-```go
-if groups["core"] {
-    mcpServer.AddTools(StatusTool(...)...)
-    mcpServer.AddTools(NextTool(...)...)
-    // ...
-}
-if groups["planning"] {
-    mcpServer.AddTools(DecomposeTool(...)...)
-    // ...
-}
-```
-
+- The group membership map (A.7) defines which tool names belong to which group. During Track A, the map is populated with 2.0 tool names even though the tool implementations do not yet exist. The infrastructure is ready before the tools are.
+- A.8 refactored `NewServer` into a public wrapper and an internal `newServerWithConfig(entityRoot string, cfg *config.Config)`. The internal function is used by integration tests (package `mcp`) to inject test configurations without touching the filesystem.
 - The `_legacy` group (A.9) wraps all existing 1.0 tool registrations. This is a development convenience — it keeps the test suite passing while 2.0 tools are being built. It is not user-facing.
 
-**Verification (spec §30.1):** All 13 acceptance criteria must have passing tests.
+**Verification (spec §30.1):** All 13 acceptance criteria have passing tests.
 
 ---
 

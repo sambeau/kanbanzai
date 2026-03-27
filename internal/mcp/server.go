@@ -22,9 +22,17 @@ const (
 )
 
 // NewServer creates a new MCP server with all tools registered.
-// The entityRoot is the root path for entity storage (typically ".kbz/state").
-// Pass empty strings to use the default paths.
+// Group registration is controlled by the mcp.groups / mcp.preset section in
+// .kbz/config.yaml. If no mcp section is present, all groups are enabled
+// (preset: full). The entityRoot is the path for entity storage (typically
+// ".kbz/state"); pass an empty string to use the default.
 func NewServer(entityRoot string) *server.MCPServer {
+	return newServerWithConfig(entityRoot, config.LoadOrDefault())
+}
+
+// newServerWithConfig creates an MCP server using the provided configuration.
+// Separated from NewServer to allow config injection in tests.
+func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServer {
 	entitySvc := service.NewEntityService(entityRoot)
 
 	// Create document record service for Phase 2a document management
@@ -67,8 +75,6 @@ func NewServer(entityRoot string) *server.MCPServer {
 	// Phase 3 worktree store and git ops (needed for health checker and cleanup tools)
 	worktreeStore := worktree.NewStore(stateRoot)
 	gitOps := worktree.NewGit(repoRoot)
-	cfg := config.LoadOrDefault()
-
 	// Resolve effective group configuration (Kanbanzai 2.0 feature group framework).
 	groups := resolveServerGroups(cfg)
 

@@ -68,7 +68,7 @@ var GroupToolNames = map[string][]string{
 // If the config cannot resolve groups (e.g. unknown preset), a warning is printed and
 // the full preset is used as a safe fallback.
 func resolveServerGroups(cfg *config.Config) map[string]bool {
-	groups, warnings, err := cfg.EffectiveGroups()
+	groups, _, err := cfg.EffectiveGroups()
 	if err != nil {
 		// Unknown preset: fall back to full and log a warning.
 		// This is a startup issue, not fatal — we degrade gracefully.
@@ -85,10 +85,9 @@ func resolveServerGroups(cfg *config.Config) map[string]bool {
 		}
 		return full
 	}
-	for range warnings {
-		// Warnings are advisory; we proceed with the resolved groups.
-		// A future Track D status tool will surface these in the health report.
-	}
+	// Warnings from EffectiveGroups (unknown group names, core-disabled override) are
+	// advisory. They are discarded here; Track D's status tool will surface them
+	// in the project health report once implemented.
 
 	// Enable the _legacy group for the dual-registration development period.
 	// Removed in Track K.
