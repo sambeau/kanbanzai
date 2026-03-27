@@ -2,4 +2,13 @@ id: TASK-01KMNA3BK78CM
 parent_feature: FEAT-01KMKRQV025FA
 slug: public-go-types
 summary: "Create a public/ package exporting Go struct types for all committed entity types (Plan, Feature, Task, Bug, Decision, KnowledgeEntry, DocumentRecord, HumanCheckpoint) with YAML tags matching on-disk field names and exported constants for all enumerated values. The package must not import any internal/ package."
-status: queued
+status: done
+files_planned:
+  - kbzschema/types.go
+completed: "2026-03-26T15:37:30Z"
+claimed_at: "2026-03-26T15:02:57Z"
+dispatched_to: backend
+dispatched_at: "2026-03-26T15:02:57Z"
+dispatched_by: agent/public-schema-interface
+completion_summary: "Created kbzschema/ public package with exported Go struct types for Plan, Feature, Task, Bug, Decision, DocumentRecord, KnowledgeEntry, HumanCheckpoint, ProjectConfig, and PrefixEntry. All fields carry yaml and json struct tags matching on-disk field names. All enumerated field values have exported string constants. Time fields use string type for robustness."
+verification: "go build ./kbzschema, go test ./kbzschema, go test -race ./kbzschema, go vet ./..."

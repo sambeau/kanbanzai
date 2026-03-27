@@ -2,4 +2,4 @@ id: TASK-01KMNA5SED7F3
 parent_feature: FEAT-01KMKRQRRX3CC
 slug: init-skill-embedding
 summary: "Embed all six skill files into the binary using go:embed. Write each skill file to .agents/skills/kanbanzai-{name}/SKILL.md with YAML frontmatter including kanbanzai-managed: marker and kanbanzai-version: set to binary version. Do not touch .agents/skills/ directories whose names do not start with kanbanzai-. --skip-skills bypasses all skill file writes. Depends on FEAT-01KMKRQSD1TKK (skills-content) being complete."
-status: queued
+status: ready

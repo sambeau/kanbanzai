@@ -2,4 +2,4 @@ id: TASK-01KMNA62ZFM9Q
 parent_feature: FEAT-01KMKRQWF0FCH
 slug: cli-help-text
 summary: "Implement top-level and per-command --help output meeting hardening spec §7. kanbanzai --help must list every subcommand with a one-line description grouped by category. kanbanzai <command> --help must list all flags with types, descriptions, defaults, and at least one usage example, and exit 0. Verify every command produces non-empty help output. Ensure kanbanzai init --help is complete."
-status: queued
+status: ready

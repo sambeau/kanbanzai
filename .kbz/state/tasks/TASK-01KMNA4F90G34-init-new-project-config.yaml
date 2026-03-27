@@ -2,4 +2,16 @@ id: TASK-01KMNA4F90G34
 parent_feature: FEAT-01KMKRQRRX3CC
 slug: init-new-project-config
 summary: "Implement git repository detection (walk up tree for .git; error if absent) and new-project config generation: write .kbz/config.yaml matching the canonical schema (version:\"2\", P/Plan prefix, five document roots), and create work/ placeholder directories with .gitkeep. New project = no existing .kbz/config.yaml."
-status: queued
+status: done
+files_planned:
+  - internal/kbzinit/config_writer.go
+  - internal/kbzinit/git.go
+  - internal/kbzinit/init.go
+  - internal/kbzinit/init_test.go
+completed: "2026-03-26T15:13:35Z"
+claimed_at: "2026-03-26T15:03:56Z"
+dispatched_to: backend
+dispatched_at: "2026-03-26T15:03:56Z"
+dispatched_by: agent/init-command
+completion_summary: "Implemented the new-project path in internal/kbzinit/. Git repository detection via FindGitRoot() walks up the directory tree looking for .git; errors with a clear message directing the user to run git init. New project = .kbz/ absent AND no git commits. Writes .kbz/config.yaml using WriteInitConfig() which produces the exact canonical YAML from spec §5.2 (version: \"2\", prefix P, five document roots) using yaml.NewEncoder with SetIndent(2). Creates work/design/, work/spec/, work/dev/, work/research/, work/reports/ with .gitkeep files. TestWriteInitConfig_CanonicalContent passes — output matches spec §5.2 exactly."
+verification: "go test -race ./internal/kbzinit/... — all tests pass including TestWriteInitConfig_CanonicalContent, TestRun_NewProject_CreatesConfig, TestRun_NewProject_CreatesWorkDirs, TestRun_Idempotency"
