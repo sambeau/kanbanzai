@@ -2,4 +2,13 @@ id: TASK-01KMRSNTZM84N
 parent_feature: FEAT-01KMRSMVP15PD
 slug: document-prerequisite-checker
 summary: "Implement document prerequisite checking for feature stage gates. For each document-driven stage (designing, specifying, dev-planning), check whether an approved document of the corresponding type exists on the feature's document fields, owned by the feature, or owned by the parent plan. For the developing gate, check for ≥1 child task. Returns a per-gate satisfied/unsatisfied result with reason. Design ref: smart-lifecycle-transitions.md §3."
-status: queued
+status: done
+files_planned:
+  - internal/service/prereq.go
+  - internal/service/prereq_test.go
+completed: "2026-03-27T23:38:05Z"
+claimed_at: "2026-03-27T23:25:32Z"
+dispatched_to: backend
+dispatched_at: "2026-03-27T23:25:32Z"
+dispatched_by: orchestrator
+completion_summary: "Implemented document prerequisite checker in internal/service/prereq.go. CheckFeatureGate and CheckFeatureGates check document-based prerequisites for each stage gate with 3-level lookup (feature field, feature-owned doc, parent plan doc). 19 test cases."
