@@ -534,36 +534,39 @@ This design proposes the following concrete deliverables:
 
 ---
 
-## 16. Open Questions
+## 16. Design Decisions
 
-### 16.1 Should the `developing → done` path be preserved for exceptional cases?
+### 16.1 The `developing → done` path is removed
 
-The design removes it. This means every feature, no matter how trivial, must pass through `reviewing`. The lightweight review profile exists for trivial features, but the lifecycle transition is still required.
+The direct `developing → done` transition is removed. Every feature must pass through `reviewing`, no exceptions. The lightweight review profile (quality gates policy §5.4) handles trivial features — the lifecycle transition is still required, but the review itself can be brief.
 
-Alternative: keep `developing → done` but add a `skip_review_reason` field. This is more flexible but weakens the guarantee.
+This guarantees that "done" means "reviewed," not merely "implemented." If this proves too rigid in practice, an escape hatch can be added later — but weakening the guarantee should require explicit justification.
 
-**Recommendation:** remove the direct path. The ceremony of transitioning through `reviewing` is minimal, and the guarantee that every feature was reviewed is valuable. If this proves too rigid in practice, we can add the exception path later.
+### 16.2 Review findings live in `work/` documents, with flexible placement
 
-### 16.2 Where do review findings live?
+Review findings are written as documents in `work/`, consistent with the document-centric interface model. The specific document depends on the nature of the findings:
 
-Options:
-- As a document in `work/` (human-readable, version-controlled)
-- As structured data in `.kbz/state/` (machine-readable, queryable)
-- Both (document for humans, structured data for machines)
+- **Implementation issues** — recorded in the existing dev-plan document for the feature. The dev-plan already tracks implementation work; review findings that lead to remediation tasks are a natural extension.
+- **Design issues** — escalated to the relevant design document. If review reveals that the design itself needs revision, the review workflow pauses and the design is updated through the normal design iteration process.
+- **Large or cross-cutting reviews** — written as a standalone report document in `work/`. When reviewing many features at once, a dedicated report provides a clearer overview than scattering findings across multiple dev-plans.
 
-**Recommendation:** start with a document in `work/`. This aligns with the document-centric interface model. Structured review records can be added later if the query need emerges.
+The orchestrator chooses the appropriate placement based on review scope and finding severity. This is flexible rather than rigid — the right home depends on the situation.
 
-### 16.3 Should the orchestrator pattern be documented as a SKILL?
+Structured review records in `.kbz/state/` are deferred. If a query need emerges (e.g., "show me all features that failed their first review"), structured data can be added later.
 
-The review SKILL covers sub-agent behavior. Should there be a separate orchestrator SKILL that covers the decomposition and coordination pattern?
+### 16.3 Orchestrator SKILL deferred until the pattern stabilises
 
-**Recommendation:** yes, eventually. But let the pattern stabilise through use first. Document it as a SKILL once we've run it a few times and understand what works.
+The review SKILL covers sub-agent behavior (how to review a single unit). A separate orchestrator SKILL covering decomposition and coordination will be written after the pattern has been exercised a few times and we understand what works.
 
-### 16.4 How does this interact with the PR workflow?
+The intent is to create the orchestrator SKILL — this is a deferral of timing, not a rejection.
 
-Currently, features can have associated PRs. Should review happen before or after PR creation?
+### 16.4 Review happens before PR creation
 
-**Recommendation:** review happens before PR creation. The PR is a merge artifact, not a review artifact. The review workflow examines code in the worktree; the PR is created when the feature is ready to merge (after review passes). This keeps review independent of GitHub.
+Review examines code in the worktree, not in a pull request. The PR is a merge artifact created after review passes, not a review artifact.
+
+This keeps review independent of GitHub and means PRs arrive clean — no review comments, no back-and-forth, just a merge-ready branch.
+
+More broadly, PRs may be less central in an agentic workflow than in a human-centric one. The value of a PR is as a coordination point for asynchronous human reviewers. When review is orchestrated by agents working in parallel on the same codebase, the worktree is the natural review surface. PRs remain useful as a merge gate and audit trail, but the review itself happens earlier and more directly.
 
 ---
 
@@ -571,12 +574,16 @@ Currently, features can have associated PRs. Should review happen before or afte
 
 This design adds a feature-level code review gate to Kanbanzai by:
 
-1. **Adding lifecycle states** — `reviewing` and `needs-rework` to the feature lifecycle, removing the direct `developing → done` path.
+1. **Adding lifecycle states** — `reviewing` and `needs-rework` to the feature lifecycle, removing the direct `developing → done` path. Every feature must be reviewed before completion.
 
 2. **Defining a two-phase workflow** — read-only parallel analysis followed by write-phase remediation, orchestrated by an agent working at the metadata level.
 
 3. **Operationalising the quality gates policy** — through a reviewer context profile and a code review SKILL that give sub-agents the criteria, procedure, and output format they need.
 
 4. **Composing existing tools** — the orchestrator uses `list_entities_filtered`, `doc_outline`, `context_assemble`, `spawn_agent`, `create_task`, and `update_status` rather than requiring a new dedicated review tool.
+
+5. **Flexible findings placement** — review findings go into the dev-plan (for implementation issues), design documents (for design issues), or standalone reports (for large reviews), depending on scope and severity.
+
+6. **Review before PR** — review examines code in the worktree. PRs are merge artifacts created after review passes, arriving clean without review commentary.
 
 The design ensures that review scales independently of codebase size (the orchestrator holds metadata, not code), that large reviews are parallelisable (analysis phase is read-only), and that the human role is judgment and approval rather than mechanical coordination.
