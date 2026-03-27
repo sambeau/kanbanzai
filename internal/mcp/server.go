@@ -194,6 +194,8 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		mcpServer.AddTools(HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc)...)
 		// Track H: entity — consolidated entity CRUD
 		mcpServer.AddTools(EntityTool(entitySvc)...)
+		// Track I: doc — consolidated document operations
+		mcpServer.AddTools(DocTool(docRecordSvc, intelligenceSvc)...)
 	}
 
 	return mcpServer
