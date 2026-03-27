@@ -170,6 +170,76 @@ When delegating work to a sub-agent:
 
 ---
 
+## Retrospective Observations
+
+When completing a task, reflect briefly on the process — not just the output.
+If you noticed any of the following, include a `retrospective` signal in your
+`finish` call:
+
+- The spec was ambiguous or contradictory on a point that mattered
+- Information you needed was not in the context packet
+- A tool was missing, or an existing tool was awkward or returned unhelpful output
+- The task was too large, too small, or had undeclared dependencies
+- A workflow step felt unnecessary or was confusing
+- Something worked particularly well and should be preserved
+
+**Not every task will have observations. That's fine — don't force it.**
+When you do have something to note, be specific: name the section, the tool,
+or the step that caused friction. "Things were confusing" is not useful.
+"Spec §3.2 didn't define the error format for async callbacks" is.
+
+### At task completion (primary mechanism)
+
+Pass a `retrospective` array to `finish`:
+
+```
+finish(
+  task_id: "TASK-...",
+  summary: "Implemented the billing webhook handler",
+  retrospective: [
+    {
+      category: "spec-ambiguity",
+      observation: "Spec did not define retry behaviour for failed webhook deliveries",
+      suggestion: "Add retry policy section to webhook specs",
+      severity: "moderate"
+    },
+    {
+      category: "worked-well",
+      observation: "Context packet included the billing API idempotency entry, which saved a round of debugging",
+      severity: "minor"
+    }
+  ]
+)
+```
+
+**Valid categories:** `workflow-friction`, `tool-gap`, `tool-friction`,
+`spec-ambiguity`, `context-gap`, `decomposition-issue`, `design-gap`,
+`worked-well`
+
+**Valid severities:** `minor` (slight friction), `moderate` (required
+workaround), `significant` (materially slowed the work)
+
+The `suggestion` field is optional. The `category`, `observation`, and
+`severity` fields are required per signal. Invalid signals are rejected
+individually — they do not block task completion or other signals.
+
+### Outside a task context (secondary mechanism)
+
+Observations that arise during planning, design review, or general usage
+can be contributed directly:
+
+```
+knowledge_contribute(
+  topic: "retro-planning-session-2026-03-27",
+  content: "[moderate] workflow-friction: Observation here. Suggestion: ...",
+  scope: "project",
+  tier: 3,
+  tags: ["retrospective", "workflow-friction"]
+)
+```
+
+---
+
 ## Related
 
 - `kanbanzai-getting-started` — session orientation (what to do first)

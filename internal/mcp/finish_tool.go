@@ -47,6 +47,14 @@ func finishTool(entitySvc *service.EntityService, dispatchSvc *service.DispatchS
 				"{topic, content, scope} required; {tags, tier} optional. "+
 				"Duplicates are rejected per-entry without blocking completion.",
 		)),
+		mcp.WithArray("retrospective", mcp.Description(
+			"Retrospective signals to record at task completion. Each entry: "+
+				"{category, observation, severity} required; {suggestion, related_decision} optional. "+
+				"Valid categories: workflow-friction, tool-gap, tool-friction, spec-ambiguity, "+
+				"context-gap, decomposition-issue, design-gap, worked-well. "+
+				"Valid severities: minor, moderate, significant. "+
+				"Invalid signals are rejected per-entry without blocking completion.",
+		)),
 		mcp.WithArray("tasks", mcp.Description(
 			"Batch mode: array of task completion objects. "+
 				"Each item contains task_id, summary, and optional fields. "+
@@ -89,6 +97,7 @@ type finishInput struct {
 	FilesModified []string
 	Verification  string
 	Knowledge     []service.KnowledgeEntryInput
+	RetroSignals  []service.RetroSignalInput
 }
 
 // parseFinishArgs parses finishInput from the top-level MCP arguments map.
@@ -103,6 +112,7 @@ func parseFinishArgs(args map[string]any) finishInput {
 		FilesModified: finishStringSliceArg(args, "files_modified"),
 		Verification:  finishStringArg(args, "verification"),
 		Knowledge:     parseFinishKnowledge(args),
+		RetroSignals:  parseFinishRetro(args),
 	}
 }
 
@@ -120,6 +130,7 @@ func parseFinishItem(item any) finishInput {
 		FilesModified: finishStringSliceArg(m, "files_modified"),
 		Verification:  finishStringArg(m, "verification"),
 		Knowledge:     parseFinishKnowledge(m),
+		RetroSignals:  parseFinishRetro(m),
 	}
 }
 
@@ -200,6 +211,7 @@ func finishOne(
 		FilesModified:         input.FilesModified,
 		VerificationPerformed: input.Verification,
 		KnowledgeEntries:      input.Knowledge,
+		RetroSignals:          input.RetroSignals,
 	})
 	if err != nil {
 		return nil, err
@@ -232,7 +244,16 @@ func finishOne(
 		})
 	}
 
-	// Build the response matching spec §12.6.
+	// Push retrospective signal side effects.
+	for _, a := range result.RetroContributions.Accepted {
+		PushSideEffect(ctx, SideEffect{
+			Type:     SideEffectRetroSignalContributed,
+			EntityID: a.EntryID,
+			Extra:    map[string]string{"topic": a.Topic, "category": a.Category},
+		})
+	}
+
+	// Build the response matching spec §12.6 and P5 §6.2.
 	type acceptedKE struct {
 		EntryID string `json:"entry_id"`
 		Topic   string `json:"topic"`
@@ -251,7 +272,7 @@ func finishOne(
 		rejected[i] = rejectedKE{Topic: r.Topic, Reason: r.Reason}
 	}
 
-	return map[string]any{
+	resp := map[string]any{
 		"task": result.Task,
 		"knowledge": map[string]any{
 			"accepted":        accepted,
@@ -259,7 +280,38 @@ func finishOne(
 			"total_attempted": result.KnowledgeContributions.TotalAttempted,
 			"total_accepted":  result.KnowledgeContributions.TotalAccepted,
 		},
-	}, nil
+	}
+
+	// Include the retrospective section only when signals were submitted,
+	// preserving the pre-P5 response shape when the parameter is absent (P5-1.1).
+	if result.RetroContributions.TotalAttempted > 0 {
+		type acceptedRetro struct {
+			EntryID  string `json:"entry_id"`
+			Topic    string `json:"topic"`
+			Category string `json:"category"`
+		}
+		type rejectedRetro struct {
+			Category    string `json:"category"`
+			Observation string `json:"observation"`
+			Reason      string `json:"reason"`
+		}
+		retroAccepted := make([]acceptedRetro, len(result.RetroContributions.Accepted))
+		for i, a := range result.RetroContributions.Accepted {
+			retroAccepted[i] = acceptedRetro{EntryID: a.EntryID, Topic: a.Topic, Category: a.Category}
+		}
+		retroRejected := make([]rejectedRetro, len(result.RetroContributions.Rejected))
+		for i, r := range result.RetroContributions.Rejected {
+			retroRejected[i] = rejectedRetro{Category: r.Category, Observation: r.Observation, Reason: r.Reason}
+		}
+		resp["retrospective"] = map[string]any{
+			"accepted":        retroAccepted,
+			"rejected":        retroRejected,
+			"total_attempted": result.RetroContributions.TotalAttempted,
+			"total_accepted":  result.RetroContributions.TotalAccepted,
+		}
+	}
+
+	return resp, nil
 }
 
 // ─── Argument parsing helpers ────────────────────────────────────────────────
@@ -287,6 +339,34 @@ func finishStringSliceArg(args map[string]any, key string) []string {
 		}
 	}
 	return out
+}
+
+// parseFinishRetro extracts retrospective signals from an args map.
+// Returns nil when the "retrospective" key is absent or empty.
+func parseFinishRetro(args map[string]any) []service.RetroSignalInput {
+	raw, ok := args["retrospective"]
+	if !ok {
+		return nil
+	}
+	arr, ok := raw.([]any)
+	if !ok || len(arr) == 0 {
+		return nil
+	}
+	signals := make([]service.RetroSignalInput, 0, len(arr))
+	for _, item := range arr {
+		m, ok := item.(map[string]any)
+		if !ok {
+			continue
+		}
+		signals = append(signals, service.RetroSignalInput{
+			Category:        finishStringArg(m, "category"),
+			Observation:     finishStringArg(m, "observation"),
+			Severity:        finishStringArg(m, "severity"),
+			Suggestion:      finishStringArg(m, "suggestion"),
+			RelatedDecision: finishStringArg(m, "related_decision"),
+		})
+	}
+	return signals
 }
 
 // parseFinishKnowledge extracts inline knowledge entries from an args map.

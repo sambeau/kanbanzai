@@ -30,6 +30,22 @@ type KnowledgeEntryInput struct {
 	Tags    []string
 }
 
+// RetroContributionResult is the result of retrospective signal contributions.
+type RetroContributionResult struct {
+	Accepted []struct {
+		EntryID  string
+		Topic    string
+		Category string
+	}
+	Rejected []struct {
+		Category    string
+		Observation string
+		Reason      string
+	}
+	TotalAttempted int
+	TotalAccepted  int
+}
+
 // CompleteInput holds parameters for complete_task.
 type CompleteInput struct {
 	TaskID                string
@@ -39,6 +55,7 @@ type CompleteInput struct {
 	VerificationPerformed string
 	BlockersEncountered   string
 	KnowledgeEntries      []KnowledgeEntryInput
+	RetroSignals          []RetroSignalInput
 }
 
 // KnowledgeContributionResult is the result of knowledge entry contributions.
@@ -59,6 +76,7 @@ type KnowledgeContributionResult struct {
 type CompleteResult struct {
 	Task                   map[string]any
 	KnowledgeContributions KnowledgeContributionResult
+	RetroContributions     RetroContributionResult
 	UnblockedTasks         []UnblockedTask
 }
 
@@ -277,6 +295,50 @@ func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, err
 		}
 	}
 
+	// Process retrospective signals (best-effort, per-signal).
+	// Only reached after a successful status transition, satisfying P5-1.7.
+	var rResult RetroContributionResult
+	topicSeq := 0 // increments for each signal that passes validation
+	for _, signal := range input.RetroSignals {
+		rResult.TotalAttempted++
+
+		if err := ValidateRetroSignal(signal); err != nil {
+			rResult.Rejected = append(rResult.Rejected, struct {
+				Category    string
+				Observation string
+				Reason      string
+			}{Category: signal.Category, Observation: signal.Observation, Reason: err.Error()})
+			continue
+		}
+
+		topicSeq++
+		topic := RetroSignalTopic(task.ID, topicSeq)
+		content := EncodeRetroContent(signal)
+
+		rec, _, err := s.knowledgeSvc.Contribute(ContributeInput{
+			Topic:       topic,
+			Content:     content,
+			Scope:       "project",
+			Tier:        3,
+			LearnedFrom: task.ID,
+			Tags:        []string{"retrospective", signal.Category},
+		})
+		if err != nil {
+			rResult.Rejected = append(rResult.Rejected, struct {
+				Category    string
+				Observation string
+				Reason      string
+			}{Category: signal.Category, Observation: signal.Observation, Reason: err.Error()})
+		} else {
+			rResult.Accepted = append(rResult.Accepted, struct {
+				EntryID  string
+				Topic    string
+				Category string
+			}{EntryID: rec.ID, Topic: topic, Category: signal.Category})
+			rResult.TotalAccepted++
+		}
+	}
+
 	// Reload final task state.
 	finalTask, err := s.entitySvc.Get("task", task.ID, "")
 	if err != nil {
@@ -286,6 +348,7 @@ func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, err
 	return CompleteResult{
 		Task:                   finalTask.State,
 		KnowledgeContributions: kResult,
+		RetroContributions:     rResult,
 		UnblockedTasks:         unblockedTasks,
 	}, nil
 }

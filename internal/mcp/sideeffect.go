@@ -65,6 +65,11 @@ const (
 	// SideEffectKnowledgeRejected reports that a knowledge entry was rejected
 	// (duplicate or validation failure) during an inline contribution attempt.
 	SideEffectKnowledgeRejected SideEffectType = "knowledge_rejected"
+
+	// SideEffectRetroSignalContributed reports that a retrospective signal was
+	// accepted and stored as a knowledge entry (e.g. from the retrospective
+	// parameter in finish). See work/spec/workflow-retrospective.md §6.2.
+	SideEffectRetroSignalContributed SideEffectType = "retrospective_signal_contributed"
 )
 
 // SideEffect describes a single cascade event that occurred as a result of
