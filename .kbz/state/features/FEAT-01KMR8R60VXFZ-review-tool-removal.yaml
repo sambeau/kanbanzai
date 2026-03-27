@@ -1,0 +1,10 @@
+id: FEAT-01KMR8R60VXFZ
+slug: review-tool-removal
+parent: P4-kanbanzai-2.0
+status: proposed
+summary: "Review Track K (1.0 tool removal) implementation against spec §25, §30.11. Verify legacy tool removal, CLI updates to kbz resource action pattern, dead code cleanup, and end-to-end next → handoff → finish integration test."
+tags:
+  - review
+  - track-k
+created: "2026-03-27T18:26:20Z"
+created_by: sambeau

@@ -1,0 +1,10 @@
+id: FEAT-01KMR8R4KCY5J
+slug: review-feature-group-tools
+parent: P4-kanbanzai-2.0
+status: proposed
+summary: "Review Track J (feature group tools) implementation against spec §17–§22, §30.10. Verify all consolidated feature group tools: planning (decompose, estimate, conflict), knowledge, git (worktree, merge, pr, branch, cleanup), documents (doc_intel), incidents, and checkpoints."
+tags:
+  - review
+  - track-j
+created: "2026-03-27T18:26:19Z"
+created_by: sambeau

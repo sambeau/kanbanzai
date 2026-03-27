@@ -1,0 +1,611 @@
+document_id: PROJECT/design-code-review-workflow
+document_path: work/design/code-review-workflow.md
+content_hash: 5260a41283868e7491c0d0a9b3143f4fa40e57fe2e98be59d6a364548eadcb06
+indexed_at: 2026-03-27T13:29:28.643432Z
+sections:
+    - path: "1"
+      level: 1
+      title: Code Review Workflow Design
+      byte_offset: 0
+      byte_count: 27213
+      word_count: 3734
+      content_hash: 5260a41283868e7491c0d0a9b3143f4fa40e57fe2e98be59d6a364548eadcb06
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 661
+          byte_count: 468
+          word_count: 70
+          content_hash: e9c0cb22ea30e8bfd0cbd1aae7beb679d9679f94d1a7f9c3a18769b1b106479e
+        - path: "1.2"
+          level: 2
+          title: 2. Problem Statement
+          byte_offset: 1129
+          byte_count: 2163
+          word_count: 315
+          content_hash: ad51069b670945042f7db67adfd2a1d5c9d41206341aea1d4972a6bfaabbc7cb
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 The feature lifecycle has no review gate
+              byte_offset: 1154
+              byte_count: 544
+              word_count: 80
+              content_hash: ba4d55df1c91711b506ba2e2d758cf634f827450c122d6b9b1013b4ef44512eb
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Task-level review exists but is insufficient
+              byte_offset: 1698
+              byte_count: 463
+              word_count: 66
+              content_hash: 224bf0451d703b7dfe62361f0ed6b21d656e39367eca16fe63a6d08a8b6973ca
+            - path: 1.2.3
+              level: 3
+              title: 2.3 The review tool was removed without replacement
+              byte_offset: 2161
+              byte_count: 293
+              word_count: 43
+              content_hash: 9307f60b6f7f06bac0a90e90dba826f5a8154d100f503f1e1c9d55968d6c3394
+            - path: 1.2.4
+              level: 3
+              title: 2.4 Review is currently a manual prompt
+              byte_offset: 2454
+              byte_count: 496
+              word_count: 66
+              content_hash: 48dc6e2ea143e948f246c18223b4a0bb4aa2c94923c6e07a997cb4d417e1c9ef
+            - path: 1.2.5
+              level: 3
+              title: 2.5 Large reviews exceed single-agent context
+              byte_offset: 2950
+              byte_count: 342
+              word_count: 56
+              content_hash: cde54e7524ad3b54dbfd9ccd221d83b0c9fe20e621074d9f1baffe8b7c752da0
+        - path: "1.3"
+          level: 2
+          title: 3. Design Principles
+          byte_offset: 3292
+          byte_count: 1626
+          word_count: 224
+          content_hash: 00c1268ef02b5075e8cb3319ac180c98e06832a7c41cfd7c8a3b6624f9afb9c4
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Review is a first-class workflow state
+              byte_offset: 3317
+              byte_count: 234
+              word_count: 36
+              content_hash: d20898c7befa5e26564805737da27b6847fc31bdb11630621b5eba1593bc4e39
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Analysis and remediation are separate phases
+              byte_offset: 3551
+              byte_count: 490
+              word_count: 61
+              content_hash: 99219479b48ef15b6cce18abe56148caf3f5f2bd0e5d0b447da131bce553e361
+            - path: 1.3.3
+              level: 3
+              title: 3.3 The orchestrator works at the metadata level
+              byte_offset: 4041
+              byte_count: 318
+              word_count: 49
+              content_hash: 5bc6597963663913cf6a59d605572a86964a4804442656a0ec18cb50bae4233f
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Structured findings, not prose judgments
+              byte_offset: 4359
+              byte_count: 330
+              word_count: 42
+              content_hash: 4166345576dc4cb50f559ad9b7622078a72487b94a3170d279743955f8db6177
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Build on what exists
+              byte_offset: 4689
+              byte_count: 229
+              word_count: 32
+              content_hash: 872a5ceffd3aec4c82f1859832d5d7f7d890207eca5cc78546f8bdc697452f98
+        - path: "1.4"
+          level: 2
+          title: 4. Feature Lifecycle Change
+          byte_offset: 4918
+          byte_count: 2164
+          word_count: 299
+          content_hash: eea476c9992c91e5371a0019b0ca160103585c2753f7f342d8eadff6d36d00e8
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 New states
+              byte_offset: 4950
+              byte_count: 245
+              word_count: 36
+              content_hash: 3b80154d3d86c0eabef6215a2c2c830f8ad1ff8cad765dfd514284d719c3b7fb
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Updated transition map
+              byte_offset: 5195
+              byte_count: 921
+              word_count: 118
+              content_hash: b85f0068d88b05b36f351ca8822ccc48626fe3c9c2fa0ae07e7685b4f14a4619
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Relationship to task states
+              byte_offset: 6116
+              byte_count: 520
+              word_count: 74
+              content_hash: 695bb96b38ac47dee7e6131a1c8b8599917eedbe3b840c63650622e3b41780be
+            - path: 1.4.4
+              level: 3
+              title: 4.4 The direct path is removed
+              byte_offset: 6636
+              byte_count: 446
+              word_count: 66
+              content_hash: 39b43e0943ad6bd680741c69fc1c563eced14f5dd0bcc1e6fa86aac30fa8d23f
+        - path: "1.5"
+          level: 2
+          title: 5. The Review Workflow
+          byte_offset: 7082
+          byte_count: 5517
+          word_count: 638
+          content_hash: c2054da4db7cb3a785eb5b7a38710016295f693e1534c8fef5b56df72722f338
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Overview
+              byte_offset: 7109
+              byte_count: 2189
+              word_count: 135
+              content_hash: b891b226e9676346b20237b36d4ee07b4b946852aef6b1fd7bb3b0c3d10aa701
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Analysis phase in detail
+              byte_offset: 9298
+              byte_count: 2323
+              word_count: 355
+              content_hash: 9fcee479a9bfcd56d1ccf52cea95192b2e09bd4f5f1cd466c63cb66fa79e610c
+              children:
+                - path: 1.5.2.1
+                  level: 4
+                  title: 'Step 1: Trigger'
+                  byte_offset: 9332
+                  byte_count: 243
+                  word_count: 40
+                  content_hash: 1808be16fcde5900f0efe21c0daefa4f852b272842ae276a1558d3865d542bb0
+                - path: 1.5.2.2
+                  level: 4
+                  title: 'Step 2: Orchestrator queries metadata'
+                  byte_offset: 9575
+                  byte_count: 402
+                  word_count: 63
+                  content_hash: 6ddf11cacb41fe3f758783417a7f697c6e2ca6e0edee62a1d65fcb7ad69ec94c
+                - path: 1.5.2.3
+                  level: 4
+                  title: 'Step 3: Decompose into review units'
+                  byte_offset: 9977
+                  byte_count: 804
+                  word_count: 124
+                  content_hash: 083d20625f8acf161b0f708a2078819325c727327b126a6df569575705332403
+                - path: 1.5.2.4
+                  level: 4
+                  title: 'Step 4: Sub-agents review in parallel'
+                  byte_offset: 10781
+                  byte_count: 344
+                  word_count: 51
+                  content_hash: 7d9fe7759c8598d5edff9ad920093eecc08508b2a7ba1b7a71f4ddd20255ebf6
+                - path: 1.5.2.5
+                  level: 4
+                  title: 'Step 5: Orchestrator collates findings'
+                  byte_offset: 11125
+                  byte_count: 250
+                  word_count: 33
+                  content_hash: 45666427e6535dcdb1ad9e5111fdffa98b95f9fb881b1c0972aab28a4263fcad
+                - path: 1.5.2.6
+                  level: 4
+                  title: 'Step 6: Review document created'
+                  byte_offset: 11375
+                  byte_count: 246
+                  word_count: 38
+                  content_hash: 2efdcf8cdc0b6154dc23c86d0a11a544646c9bcbe868503550fc778ae82956a6
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Remediation phase in detail
+              byte_offset: 11621
+              byte_count: 978
+              word_count: 143
+              content_hash: cbd1e768207be90884c4e47a48b5cabd065e3a6685bdb080778b983fd833926e
+              children:
+                - path: 1.5.3.1
+                  level: 4
+                  title: 'Step 7: Create remediation tasks'
+                  byte_offset: 11696
+                  byte_count: 224
+                  word_count: 34
+                  content_hash: 133d39bd3e49ffe48c9da0c5753fadaa9b1190478adcb9903bccf911f94b1b2a
+                - path: 1.5.3.2
+                  level: 4
+                  title: 'Step 8: Dispatch tasks'
+                  byte_offset: 11920
+                  byte_count: 179
+                  word_count: 25
+                  content_hash: dd538a82ba1c057f2662126e17d045495b1d499310f66b6d1ca31683ab20b8e5
+                - path: 1.5.3.3
+                  level: 4
+                  title: 'Step 9: Re-review affected sections'
+                  byte_offset: 12099
+                  byte_count: 225
+                  word_count: 32
+                  content_hash: 45c08a4889275cd2385412fc40d9039d2813ed5dec525e30366643e9a519b181
+                - path: 1.5.3.4
+                  level: 4
+                  title: 'Step 10: Transition'
+                  byte_offset: 12324
+                  byte_count: 275
+                  word_count: 40
+                  content_hash: f44257346f153184a9d90f7411a6c8baa08fb517355edb06fdadf78d719e8fd6
+        - path: "1.6"
+          level: 2
+          title: 6. The Orchestrator's Context Budget
+          byte_offset: 12599
+          byte_count: 1633
+          word_count: 263
+          content_hash: cec551a3a9470e2b4586eac4e8b6001aca071d10a4d6044ffd4c6c63ff9426fc
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 What the orchestrator holds in context
+              byte_offset: 12823
+              byte_count: 496
+              word_count: 83
+              content_hash: b1647d07dae42a96aa899d8b5b9c2967edfbffbb5774dd77f527002ef834fa9c
+            - path: 1.6.2
+              level: 3
+              title: 6.2 What sub-agents hold in context
+              byte_offset: 13319
+              byte_count: 465
+              word_count: 80
+              content_hash: 15977bda5655d7e98525273fe79cb197923d0935295e64c5435da581a906c4cb
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Scaling to phase-level reviews
+              byte_offset: 13784
+              byte_count: 448
+              word_count: 65
+              content_hash: dd8ce12380ba9e79123919860b3682c04956096ec825b38872c42d10f87db7a9
+        - path: "1.7"
+          level: 2
+          title: 7. Review Profiles and Dimensions
+          byte_offset: 14232
+          byte_count: 1038
+          word_count: 157
+          content_hash: e469ede3bd55a6755100fe729fb273438494c7bd0f6e1bfebfc75769303f44e9
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Mapping to existing policy
+              byte_offset: 14424
+              byte_count: 584
+              word_count: 95
+              content_hash: 12802868b8e484c8d4a133044656646cd397f43b6d49277c09ec47e095b337d0
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Review profile selection
+              byte_offset: 15008
+              byte_count: 262
+              word_count: 39
+              content_hash: 4bb697fc4b1c6b4b3539d29e1ab5785c1a12195c2c955cfbcc38c3212122c722
+        - path: "1.8"
+          level: 2
+          title: 8. Reviewer Context Profile
+          byte_offset: 15270
+          byte_count: 1571
+          word_count: 190
+          content_hash: bccca0f37a3f8248f7018c9f9c05571edae1a9cc8bdef6d1bf3685000b4e0f35
+        - path: "1.9"
+          level: 2
+          title: 9. Review SKILL
+          byte_offset: 16841
+          byte_count: 874
+          word_count: 139
+          content_hash: 3645185ed588f6b056ca44e56309bafd5013611d4c7a35bfa093dfa78a0e8dec
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 SKILL scope
+              byte_offset: 16963
+              byte_count: 249
+              word_count: 45
+              content_hash: 559c7108c85e3fe1548641ac4c9686488c920eacc182a72cb8803975c3370077
+            - path: 1.9.2
+              level: 3
+              title: 9.2 SKILL audience
+              byte_offset: 17212
+              byte_count: 228
+              word_count: 34
+              content_hash: 842429266898d1c5fe219c5cfd10f2b2b8c2a22da8bab12f8e12c60ad7f6954e
+            - path: 1.9.3
+              level: 3
+              title: 9.3 SKILL does not cover
+              byte_offset: 17440
+              byte_count: 275
+              word_count: 42
+              content_hash: a467338e6685d8b0a397cae410e2d9925359d91d9c4106090e8dd4007f020ee2
+        - path: "1.10"
+          level: 2
+          title: 10. Orchestrator Pattern
+          byte_offset: 17715
+          byte_count: 1800
+          word_count: 262
+          content_hash: 39e26949cf19a0115d11f89e79430fb0016fad8345fc6e32da0a6e39c16e6468
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 No dedicated review tool
+              byte_offset: 17744
+              byte_count: 788
+              word_count: 106
+              content_hash: c2072c31d9d836b5d615e3cd9e0ef16287076b98df4d058215ab9a84551252aa
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Why not a dedicated tool?
+              byte_offset: 18532
+              byte_count: 536
+              word_count: 84
+              content_hash: 81f48475d844f5d4e7d99566c753542a751af8a1ce9ac8715a411d48a9a60d22
+            - path: 1.10.3
+              level: 3
+              title: '10.3 Future: review as a feature group tool'
+              byte_offset: 19068
+              byte_count: 447
+              word_count: 68
+              content_hash: 3a750f5b5ecc4e75fa27cb320e229c0df6a831468d4c9ebafd6c53fd5ea5c6ac
+        - path: "1.11"
+          level: 2
+          title: 11. Review at Different Scales
+          byte_offset: 19515
+          byte_count: 1196
+          word_count: 180
+          content_hash: 6cea3d8487dbe09d53b195a37e06ddacc9ba0d14120d90c9f313fb3c3cc121ac
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Single task
+              byte_offset: 19550
+              byte_count: 230
+              word_count: 32
+              content_hash: d73afb0172bcfea8b7861518d450106359603cacf4ffc223f85f56f1280a5282
+            - path: 1.11.2
+              level: 3
+              title: 11.2 Single feature
+              byte_offset: 19780
+              byte_count: 181
+              word_count: 25
+              content_hash: f3b564ce8cd7af58445eb5e50d111820a4a44953486b7c872f6f7163ff64b502
+            - path: 1.11.3
+              level: 3
+              title: 11.3 Multiple features (phase review)
+              byte_offset: 19961
+              byte_count: 437
+              word_count: 66
+              content_hash: 245643d02dc7058a7546e24a91c402365f6da490dea4b168f6d6ebd8f48f937b
+            - path: 1.11.4
+              level: 3
+              title: 11.4 Full codebase audit
+              byte_offset: 20398
+              byte_count: 313
+              word_count: 51
+              content_hash: 288b5092de5cc376814b4c12c109c5c1f8fae66b283300c52d97a223ab4292a7
+        - path: "1.12"
+          level: 2
+          title: 12. Integration with the Merge Workflow
+          byte_offset: 20711
+          byte_count: 645
+          word_count: 96
+          content_hash: d35bd716574c8b4344d7c5058657599e0a4b7c8a124e85a961170c39377d5469
+        - path: "1.13"
+          level: 2
+          title: 13. Human Role
+          byte_offset: 21356
+          byte_count: 894
+          word_count: 133
+          content_hash: 9dfdbe15c1c0104449c1a5a132abfc82d346bab548b11c9b635ae31db826fdf7
+          children:
+            - path: 1.13.1
+              level: 3
+              title: 13.1 What humans do
+              byte_offset: 21375
+              byte_count: 294
+              word_count: 43
+              content_hash: 561256b6c6e13a468aeeca9b81704091756f160ecef5c54091aa8a46f9e49f66
+            - path: 1.13.2
+              level: 3
+              title: 13.2 What humans don't need to do
+              byte_offset: 21669
+              byte_count: 218
+              word_count: 36
+              content_hash: 2cbb8991cf39856ea9791e147480ad6ee2a119d75b1c180cedca8feb7eb2ad0a
+            - path: 1.13.3
+              level: 3
+              title: 13.3 Human checkpoints
+              byte_offset: 21887
+              byte_count: 363
+              word_count: 50
+              content_hash: b4814b503755bf6c3241bd78900ce3c95e5bd791eef141b5c7d645d46891383c
+        - path: "1.14"
+          level: 2
+          title: 14. Deliverables
+          byte_offset: 22250
+          byte_count: 1294
+          word_count: 169
+          content_hash: a40a34b398fb8600f30b0723837dd95a2962bf2ddf58107635cf99fe269d3749
+          children:
+            - path: 1.14.1
+              level: 3
+              title: 14.1 Lifecycle change (code)
+              byte_offset: 22330
+              byte_count: 325
+              word_count: 42
+              content_hash: 8e402e067a4ab830e24ec6ad69539d0f1cfd6aad874ee5d4e6e0bfbfcc37ad93
+            - path: 1.14.2
+              level: 3
+              title: 14.2 Reviewer context profile (configuration)
+              byte_offset: 22655
+              byte_count: 188
+              word_count: 22
+              content_hash: 0a10e385074ece7bef850e6485732af472377eb9c08f7a04e948b94d23749d14
+            - path: 1.14.3
+              level: 3
+              title: 14.3 Code review SKILL (document)
+              byte_offset: 22843
+              byte_count: 228
+              word_count: 27
+              content_hash: 95491d42913af182e790cadc5ff6a956d583bd6e41eb604975d16705abe67ce4
+            - path: 1.14.4
+              level: 3
+              title: 14.4 Quality gates policy update (document)
+              byte_offset: 23071
+              byte_count: 235
+              word_count: 32
+              content_hash: 0ee3fcf4da67f527afd8cfc622c264f36c884855d82baccc6825c70c56bfe7bf
+            - path: 1.14.5
+              level: 3
+              title: 14.5 AGENTS.md update (document)
+              byte_offset: 23306
+              byte_count: 238
+              word_count: 36
+              content_hash: e60c5704b04d3af0366fece1ea8a686476021cd1c13fe322da24f21d2bb7f726
+        - path: "1.15"
+          level: 2
+          title: 15. What This Design Does Not Cover
+          byte_offset: 23544
+          byte_count: 675
+          word_count: 103
+          content_hash: 33d05ebbe1f11128ab8b5fbaa0929943de4268a9067db1d1fbaa77c77c20b96a
+        - path: "1.16"
+          level: 2
+          title: 16. Open Questions
+          byte_offset: 24219
+          byte_count: 1929
+          word_count: 289
+          content_hash: a3967cc2b97979518bfc82b80aaf663de61158e82523498f60a981722f8462e8
+          children:
+            - path: 1.16.1
+              level: 3
+              title: 16.1 Should the `developing → done` path be preserved for exceptional cases?
+              byte_offset: 24242
+              byte_count: 669
+              word_count: 99
+              content_hash: 354d40f540dad305ed0308fa4d922f388a6930891537234265b0bd78e28ef78f
+            - path: 1.16.2
+              level: 3
+              title: 16.2 Where do review findings live?
+              byte_offset: 24911
+              byte_count: 424
+              word_count: 59
+              content_hash: 0149d777990352a9cd5e5c38f2de0ca8a9a1064cab7eb3be963bdaa4c8f4f820
+            - path: 1.16.3
+              level: 3
+              title: 16.3 Should the orchestrator pattern be documented as a SKILL?
+              byte_offset: 25335
+              byte_count: 382
+              word_count: 58
+              content_hash: 207982b8eafd3ac86934882155cf804a16ec811e3e1f63b9a2e49cfea06dd44a
+            - path: 1.16.4
+              level: 3
+              title: 16.4 How does this interact with the PR workflow?
+              byte_offset: 25717
+              byte_count: 431
+              word_count: 69
+              content_hash: 945ad5aa1d2be316e31a7ad3bec792f87c7c8a9e6bd5ea5cf1a6983060d953f2
+        - path: "1.17"
+          level: 2
+          title: 17. Summary
+          byte_offset: 26148
+          byte_count: 1065
+          word_count: 144
+          content_hash: 7287830393c2d00edd03e2c357e8ea032dcc4e261a2bb09b9075f05f7023ae90
+front_matter:
+    status: design proposal
+    date: "2026-03-27T13:26:39Z"
+    related:
+        - work/design/quality-gates-and-review-policy.md` (review dimensions, profiles, output format)
+        - work/design/document-centric-interface.md` (human interface model)
+        - work/design/workflow-design-basis.md` §4, §6 (lifecycle design)
+        - work/design/machine-context-design.md` (context assembly for agents)
+        - work/design/agent-interaction-protocol.md` (agent behavior)
+        - work/spec/phase-4b-specification.md` (task-level review, rework lifecycle)
+    extra:
+        Purpose: define a feature-level code review gate and orchestrated review workflow for Kanbanzai
+cross_doc_links:
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: "1"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "1"
+    - target_path: work/spec/phase-4b-specification.md
+      link_text: work/spec/phase-4b-specification.md
+      section_path: "1"
+    - target_path: quality-gates-and-review-policy.md
+      link_text: quality-gates-and-review-policy.md
+      section_path: 1.2.4
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.6.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.6.2
+    - target_path: quality-gates-and-review-policy.md
+      link_text: quality-gates-and-review-policy.md
+      section_path: "1.7"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.9"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.14.3
+    - target_path: quality-gates-and-review-policy.md
+      link_text: quality-gates-and-review-policy.md
+      section_path: 1.14.4
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.5
+      role: narrative
+      confidence: high
+    - section_path: 1.5.1
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+    - section_path: 1.6.1
+      role: narrative
+      confidence: high
+    - section_path: 1.6.2
+      role: narrative
+      confidence: high
+    - section_path: "1.8"
+      role: narrative
+      confidence: high
+    - section_path: 1.9.1
+      role: constraint
+      confidence: high
+    - section_path: 1.14.2
+      role: narrative
+      confidence: high
+    - section_path: "1.16"
+      role: question
+      confidence: high
+    - section_path: "1.17"
+      role: narrative
+      confidence: high
+classified: false

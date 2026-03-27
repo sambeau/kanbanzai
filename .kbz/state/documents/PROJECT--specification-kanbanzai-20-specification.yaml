@@ -2,8 +2,10 @@ id: PROJECT/specification-kanbanzai-20-specification
 path: work/spec/kanbanzai-2.0-specification.md
 type: specification
 title: "Kanbanzai 2.0 Specification: MCP Tool Surface Redesign"
-status: draft
-content_hash: 3e8d4abf096886b3dd5b43c5ae7e1d5c21435ac2081855db651612285d9efaaa
+status: approved
+approved_by: sambeau
+approved_at: "2026-03-27T18:31:38Z"
+content_hash: e254d0e7f720e287418117fd8b8e4d6035cbd146fe0146ad1cf1ea4dffbda7a7
 created: "2026-03-27T01:50:50Z"
 created_by: sambeau
-updated: "2026-03-27T01:50:50Z"
+updated: "2026-03-27T18:31:38Z"
