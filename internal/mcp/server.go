@@ -176,8 +176,11 @@ func NewServer(entityRoot string) *server.MCPServer {
 		mcpServer.AddTools(ConflictTools(conflictSvc)...)
 	}
 
-	// 2.0 core group tools are registered as they are implemented (Tracks B–K).
-	// Placeholder: when groups[config.GroupCore] is true, register 2.0 core tools here.
+	// 2.0 core group tools (Tracks B–K, added incrementally).
+	if groups[config.GroupCore] {
+		// Track D: status synthesis dashboard
+		mcpServer.AddTools(StatusTools(entitySvc, docRecordSvc)...)
+	}
 
 	return mcpServer
 }
