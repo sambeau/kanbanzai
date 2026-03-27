@@ -1,0 +1,7 @@
+depends_on:
+  - TASK-01KMRJ9YXHRPK
+id: TASK-01KMRJA8G9C9F
+parent_feature: FEAT-01KMRJ7Z2PVR9
+slug: finish-retrospective-param
+summary: "Add optional `retrospective` array parameter to the `finish` tool and `complete_task`. Validate each signal: reject if category is not in the valid set (workflow-friction, tool-gap, tool-friction, spec-ambiguity, context-gap, decomposition-issue, design-gap, worked-well); reject if severity is not minor/moderate/significant; reject if observation or category or severity is missing. Per-signal rejection must not block task completion or other valid signals. Store accepted signals as knowledge entries via the encoding helpers (depends on signal-encoding task). Set learned_from to the completing task ID. Signals are only stored after the task status transition succeeds. Acceptance criteria: P5-1.1, P5-1.2, P5-1.6, P5-1.7, P5-1.8–P5-1.13."
+status: queued

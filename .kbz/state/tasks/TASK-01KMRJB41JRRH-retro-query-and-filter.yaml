@@ -1,0 +1,7 @@
+id: TASK-01KMRJB41JRRH
+parent_feature: FEAT-01KMRJ81DZ3X2
+slug: retro-query-and-filter
+summary: 'Implement the query and filter layer for `retro` synthesis: fetch all knowledge entries tagged ["retrospective"], apply scope filter (project / Plan ID / Feature ID via learned_from ancestry), apply since/until date filters, apply min_severity filter. Return the filtered signal set grouped by category as the input to the clustering step. Compute period.from and period.to from the matching entries. Acceptance criteria: P5-2.3, P5-2.4, P5-2.5, P5-2.6, P5-2.7, P5-2.10, P5-2.11.'
+status: queued
+depends_on:
+  - TASK-01KMRJA8G9C9F

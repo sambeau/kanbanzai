@@ -1,0 +1,7 @@
+id: TASK-01KMRJBV8ATYD
+parent_feature: FEAT-01KMRJ81DZ3X2
+slug: retro-planning-group-registration
+summary: "Register `retro` in the planning feature group alongside decompose, estimate, and conflict (spec §7.5 and kanbanzai-2.0-specification.md §6.4). Update the group membership table, the tool registration logic, and any config/preset documentation that lists planning group tools. Verify that `retro` is absent when the planning group is not enabled and present when it is. Acceptance criteria: P5-2.1, P5-2.2."
+depends_on:
+  - TASK-01KMRJBC8KGHA
+status: queued

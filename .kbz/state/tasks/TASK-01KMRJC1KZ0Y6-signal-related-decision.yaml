@@ -1,0 +1,7 @@
+id: TASK-01KMRJC1KZ0Y6
+parent_feature: FEAT-01KMRJ83GYAQ9
+slug: signal-related-decision
+summary: 'Add optional `related_decision` field to the retrospective signal structure. When present, append "Related: {decision_id}" to the content string per spec §5.5. Accept the field in `finish`''s `retrospective` parameter. A related_decision referencing an unknown decision ID is accepted without error (no lookup at collection time). A signal without related_decision is stored with no Related: clause. Acceptance criteria: P5-3.1, P5-3.2, P5-3.3.'
+status: queued
+depends_on:
+  - TASK-01KMRJA8G9C9F
