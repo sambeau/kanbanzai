@@ -1,7 +1,7 @@
 id: FEAT-01KMR8QW7A3A8
 slug: review-batch-operations
 parent: P4-kanbanzai-2.0
-status: proposed
+status: developing
 summary: "Review Track C (batch operations) implementation against spec §9, §30.3. Verify batch execution, partial failure semantics, response shape switching, batch limit enforcement, and side-effect aggregation."
 tags:
   - review

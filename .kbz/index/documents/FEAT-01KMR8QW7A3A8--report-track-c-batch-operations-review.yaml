@@ -1,0 +1,184 @@
+document_id: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review
+document_path: work/reviews/track-c-batch-operations-review.md
+content_hash: 7f2c3f12dec85e1f056d1ec258e63ef07e61ffad1422079cb2953975f761757f
+indexed_at: 2026-03-27T18:51:17.488889Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Track C: Batch Operations — Review Findings'
+      byte_offset: 0
+      byte_count: 18500
+      word_count: 2439
+      content_hash: 7f2c3f12dec85e1f056d1ec258e63ef07e61ffad1422079cb2953975f761757f
+      children:
+        - path: "1.1"
+          level: 2
+          title: Review Scope
+          byte_offset: 748
+          byte_count: 521
+          word_count: 55
+          content_hash: 832dcde8cd871cd727b02c5cd326745cb0a5dee4bc2d062a9a5f698f8267a310
+        - path: "1.2"
+          level: 2
+          title: Spec Compliance Against §30.3 Acceptance Criteria
+          byte_offset: 1269
+          byte_count: 903
+          word_count: 131
+          content_hash: a6a29d6417b118fde8f3ff46873a0464ef0d9c6d12054a603ed7e96ad69fef1d
+        - path: "1.3"
+          level: 2
+          title: Findings
+          byte_offset: 2172
+          byte_count: 11391
+          word_count: 1500
+          content_hash: 62cdf248919eb01ebef0df544e2ce3fcd0b03d11d01e0fb146bcf3a8106fc0da
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'F1 — BLOCKING: `batch_limit_exceeded` error code not surfaced in JSON response'
+              byte_offset: 2185
+              byte_count: 1758
+              word_count: 227
+              content_hash: 60ebfb5d9e1e7c7f24fbb17650db9dfa2521c80f701110ea8cb262358a2b97c1
+            - path: 1.3.2
+              level: 3
+              title: 'F2 — BLOCKING: Duplicate `side_effects` key when `SignalMutation` + `ExecuteBatch` with active cascades'
+              byte_offset: 3943
+              byte_count: 2881
+              word_count: 351
+              content_hash: dd6681c5d1193114836930f27d0eb9f70f185515b8f28fe032d696cc52b94b71
+            - path: 1.3.3
+              level: 3
+              title: 'F3 — BLOCKING: `finish` tool missing `SignalMutation` — `side_effects: []` absent when no cascades occur'
+              byte_offset: 6824
+              byte_count: 1440
+              word_count: 197
+              content_hash: 078d479417e8b94a368d612d6dc9d9112e3997f1aa1abb8ad4e88b331a45700c
+            - path: 1.3.4
+              level: 3
+              title: 'F4 — BLOCKING: `estimate(set)` batch does not use the Track C shared infrastructure'
+              byte_offset: 8264
+              byte_count: 1649
+              word_count: 237
+              content_hash: 80cc8db638a4b32567a4a5022ee4b3a670af57b88954c354376064ade8a0d3ed
+            - path: 1.3.5
+              level: 3
+              title: 'F5 — Non-blocking: Per-item error code is always the generic `"item_error"`'
+              byte_offset: 9913
+              byte_count: 975
+              word_count: 121
+              content_hash: 9754bf1a0775d2ed076b6a7aa683051dbf65940b3f58f635cc41646f454ee595
+            - path: 1.3.6
+              level: 3
+              title: 'F6 — Non-blocking: Test coverage gap — batch approval with entity transition side effects'
+              byte_offset: 10888
+              byte_count: 836
+              word_count: 111
+              content_hash: d4a44fe85549e75b0ab18a895ff5dc2887bc8b4316734b1ea925b9b275cb75ce
+            - path: 1.3.7
+              level: 3
+              title: 'F7 — Non-blocking: `finish` batch not tested for `side_effects: []` when no cascades'
+              byte_offset: 11724
+              byte_count: 556
+              word_count: 75
+              content_hash: 50b20647461965018e63c39897be4d2cb690d22af9856915bbc67670b181e683
+            - path: 1.3.8
+              level: 3
+              title: 'F8 — Non-blocking: Agent-facing documentation not updated for 2.0 batch operations'
+              byte_offset: 12280
+              byte_count: 1283
+              word_count: 179
+              content_hash: 586a618f23889e7335d45de8c6a88b2fc6e88649ccea77fd8adab62545553684
+        - path: "1.4"
+          level: 2
+          title: Code Quality Assessment
+          byte_offset: 13563
+          byte_count: 2427
+          word_count: 333
+          content_hash: 69f2c6f3ed31a786e7da3edb0c8e565a19f5a7d486038cb400f2d024efbb316a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: '`internal/mcp/batch.go`'
+              byte_offset: 13591
+              byte_count: 880
+              word_count: 133
+              content_hash: e2392be9c91fef7e6469d4ee3ac8d4b9106f58e839a52ba0551ac95d653c40e7
+            - path: 1.4.2
+              level: 3
+              title: '`internal/mcp/batch_test.go`'
+              byte_offset: 14471
+              byte_count: 733
+              word_count: 99
+              content_hash: 6a576806c63613d505d99e3c85552289180934f887455ef7c1caa541e82d211d
+            - path: 1.4.3
+              level: 3
+              title: Integration in `finish_tool.go`, `entity_tool.go`, `doc_tool.go`
+              byte_offset: 15204
+              byte_count: 521
+              word_count: 60
+              content_hash: 6bd1f44620f9b27c2faa184d842c09f60863904bd68d70d5a36be9403204c571
+            - path: 1.4.4
+              level: 3
+              title: '`estimate_tool.go` (Track J, noted here for completeness)'
+              byte_offset: 15725
+              byte_count: 265
+              word_count: 37
+              content_hash: 5de38fcb0101d4fbc5ded042482465968762d1aec4c17cb86e48fc0b29bc1212
+        - path: "1.5"
+          level: 2
+          title: Workflow Document Accuracy
+          byte_offset: 15990
+          byte_count: 670
+          word_count: 97
+          content_hash: 01ec18607dbf91ea8f48d29a19da1dd2849d1e58683edd049e65ca48885ede15
+        - path: "1.6"
+          level: 2
+          title: Summary Table
+          byte_offset: 16660
+          byte_count: 1013
+          word_count: 143
+          content_hash: 8123205dd5a73d798bb58102cf8e943b7b2bf883b106195ca7cde81c0c918232
+        - path: "1.7"
+          level: 2
+          title: Remediation Tasks to Create
+          byte_offset: 17673
+          byte_count: 827
+          word_count: 110
+          content_hash: a2581fcc132b50929ce35ba324b2cf10e5ed2e23061ddf9047a4ad6a81c85df4
+entity_refs:
+    - entity_id: FEAT-01KMR8QW7A3A8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 413
+    - entity_id: TASK-01JY
+      entity_type: task
+      section_path: 1.3.5
+      byte_offset: 10357
+cross_doc_links:
+    - target_path: work/plan/kanbanzai-2.0-implementation-plan.md
+      link_text: work/plan/kanbanzai-2.0-implementation-plan.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.3.8
+    - target_path: docs/mcp-tool-reference.md
+      link_text: docs/mcp-tool-reference.md
+      section_path: 1.3.8
+    - target_path: work/plan/kanbanzai-2.0-implementation-plan.md
+      link_text: work/plan/kanbanzai-2.0-implementation-plan.md
+      section_path: "1.5"
+    - target_path: docs/mcp-tool-reference.md
+      link_text: docs/mcp-tool-reference.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+classified: false

@@ -1,4 +1,4 @@
-updated_at: 2026-03-27T02:00:42.329793Z
+updated_at: 2026-03-27T18:51:17.488889Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -23653,5 +23653,825 @@ edges:
     - from: PROJECT/dev-plan-kanbanzai-20-implementation-plan#1.20
       from_type: section
       to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-workflow-retrospective
+      from_type: document
+      to: PROJECT/design-workflow-retrospective#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.2
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.2
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.2
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.2
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.2
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.5
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.5
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.5
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.6
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.6
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.6
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.6
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.6
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.7
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.7
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.7
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.7
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.9
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.9
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.9
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.10
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.10.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.10
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.10.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.10
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.10.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.13
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/design-workflow-retrospective#1.14
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-workflow-retrospective#1.7.3
+      from_type: section
+      to: DEC-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-workflow-retrospective#1.6.3
+      from_type: section
+      to: P1-basic-ui
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-workflow-retrospective#1.6.4
+      from_type: section
+      to: P1-basic-ui
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-workflow-retrospective#1.7.2
+      from_type: section
+      to: P1-basic-ui
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-workflow-retrospective#1.14
+      from_type: section
+      to: P1-basic-ui
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: work/design/kanbanzai-2.0-design-vision.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: work/design/machine-context-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: work/design/workflow-design-basis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-workflow-retrospective#1
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow
+      from_type: document
+      to: PROJECT/design-code-review-workflow#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.2
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.2
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.2
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.2
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.2
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.3
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.3
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.3
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.3
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.3
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.4
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.4
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.4
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.4
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5.2
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5.2
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5.2
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5.2
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5.2
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5.2
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5.3
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5.3
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5.3
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.5.3
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.5.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.6
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.6
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.6
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.7
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.7
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.9
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.9
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.9
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.10
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.10.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.10
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.10.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.10
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.10.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.11
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.11.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.11
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.11.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.11
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.11.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.11
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.11.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.13
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.13
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.13.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.13
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.13.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.13
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.13.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.14
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.14
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.14.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.14
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.14.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.14
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.14.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.14
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.14.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.14
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.14.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.15
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.16
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.16
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.16.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.16
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.16.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.16
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.16.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1.16
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.16.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: PROJECT/design-code-review-workflow#1.17
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: work/design/document-centric-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: work/design/workflow-design-basis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: work/design/machine-context-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: work/design/agent-interaction-protocol.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow#1
+      from_type: section
+      to: work/spec/phase-4b-specification.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow#1.2.4
+      from_type: section
+      to: quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow#1.6.1
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow#1.6.2
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow#1.7
+      from_type: section
+      to: quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow#1.9
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow#1.14.3
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-code-review-workflow#1.14.4
+      from_type: section
+      to: quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review
+      from_type: document
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.4
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.4
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.4
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.4
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1
+      from_type: section
+      to: FEAT-01KMR8QW7A3A8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3.5
+      from_type: section
+      to: TASK-01JY
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1
+      from_type: section
+      to: work/plan/kanbanzai-2.0-implementation-plan.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3.8
+      from_type: section
+      to: .agents/skills/kanbanzai-agents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.3.8
+      from_type: section
+      to: docs/mcp-tool-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.5
+      from_type: section
+      to: work/plan/kanbanzai-2.0-implementation-plan.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.7
+      from_type: section
+      to: docs/mcp-tool-reference.md
       to_type: document
       edge_type: LINKS_TO
