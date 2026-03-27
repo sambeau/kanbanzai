@@ -60,7 +60,7 @@ func TestRunHealthCheck_IncludeOK(t *testing.T) {
 	result := RunHealthCheck(nil, nil, time.Now(), opts)
 
 	// With IncludeOK=true, all categories should be present
-	expectedCategories := []string{"worktree", "knowledge_ttl", "knowledge_conflicts", "cleanup"}
+	expectedCategories := []string{"worktree", "knowledge_ttl", "knowledge_conflicts", "cleanup", "feature_child_consistency", "worktree_branch_merged"}
 	for _, name := range expectedCategories {
 		if _, ok := result.Categories[name]; !ok {
 			t.Errorf("Categories[%q] missing with IncludeOK=true", name)
