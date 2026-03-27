@@ -180,6 +180,8 @@ func NewServer(entityRoot string) *server.MCPServer {
 	if groups[config.GroupCore] {
 		// Track D: status synthesis dashboard
 		mcpServer.AddTools(StatusTools(entitySvc, docRecordSvc)...)
+		// Track E: finish — completion + inline knowledge + lenient lifecycle
+		mcpServer.AddTools(FinishTools(entitySvc, dispatchSvc)...)
 	}
 
 	return mcpServer
