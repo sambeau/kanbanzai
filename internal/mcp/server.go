@@ -104,7 +104,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	// 2.0 core group tools.
 	if groups[config.GroupCore] {
 		// Track D: status synthesis dashboard
-		mcpServer.AddTools(StatusTools(entitySvc, docRecordSvc)...)
+		mcpServer.AddTools(StatusTools(entitySvc, docRecordSvc, worktreeStore)...)
 		// Track E: finish — completion + inline knowledge + lenient lifecycle
 		mcpServer.AddTools(FinishTools(entitySvc, dispatchSvc)...)
 		// Track F: next — work queue inspection and task claiming

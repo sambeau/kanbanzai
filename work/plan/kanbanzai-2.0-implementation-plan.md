@@ -289,7 +289,7 @@ The `EntityLifecycleHook` interface (used by `DocumentService`) does not carry a
 
 ---
 
-## 7. Track D: `status` — Synthesis Dashboard
+## 7. Track D: `status` — Synthesis Dashboard ✓ COMPLETE (post-review remediation applied)
 
 **Goal:** Build the `status` tool that synthesises project, plan, feature, and task state into concise dashboards.
 
@@ -320,6 +320,24 @@ The `EntityLifecycleHook` interface (used by `DocumentService`) does not carry a
 - `status` is the tool agents will call most often. Keep the response compact — return counts and summaries, not full entity records.
 
 **Verification (spec §30.4):** All 10 acceptance criteria must have passing tests.
+
+**Status:** Complete. All 13 tasks implemented. All 10 spec §30.4 acceptance criteria verified by passing tests. `go test -race ./...` clean.
+
+Post-review remediation (applied during Track D review):
+- **Bug fix:** `synthesiseTask` read `pf.State["owner"]` instead of `pf.State["parent"]` for the parent feature's plan ID, causing `parent_feature.plan_id` to always be empty. Fixed.
+- **Missing §30.4 criterion 8:** Health summary (`errors`, `warnings`) was not included in project overview or plan dashboard. Added `health` field populated by `entitySvc.HealthCheck()` to both.
+- **Missing §30.4 criterion 3:** Worktree info was not included in feature detail. Added `worktree` field; `StatusTools` now accepts a `*worktree.Store` parameter. Server wiring updated.
+- **Missing §10.6 dispatch info:** Task detail had no `dispatch` block. Added `dispatch` field populated from `dispatched_to`, `dispatched_at`, `dispatched_by` task state fields.
+- **Renamed `featureInfo.Owner` → `featureInfo.PlanID`** with JSON tag `plan_id` to match §10.6 spec naming.
+- **Added tests** for all four remediation items (health in project/plan, worktree in feature, dispatch in task, plan_id correctness).
+
+**Known response-shape divergences from spec examples** (not blocking; flagged for human decision):
+The §10.3–§10.6 YAML examples show nested structures (e.g., `plans.{total,by_status,active_plans}`, `features.{total,by_status,items[]}`, `dependencies.{total,blocking,items[]}`) that the implementation flattens for compactness. Specifically:
+- Project overview: `plans` is a flat array + `total` aggregate rather than `{total,by_status,active_plans}`; top-level `active_tasks`/`ready_tasks`/`blocked_tasks` are folded into `total.tasks`.
+- Plan dashboard: `features` is a flat array rather than `{total,by_status,items[]}`; `doc_gaps` is a string array rather than `[{feature_id,missing:[]}]`; per-feature `estimate` and `blockers` fields are omitted.
+- Feature detail: `estimate` is a scalar rather than `{total,progress,delta}`; `tasks` is a flat array rather than `{by_status,items[]}`.
+- Task detail: `dependencies` is a flat array rather than `{total,blocking,items[]}`; `parent_feature` is a separate top-level field rather than nested inside `task`.
+These are pragmatic simplifications. Revisit if agents need the richer structure.
 
 ---
 

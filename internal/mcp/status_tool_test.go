@@ -9,6 +9,7 @@ import (
 
 	"kanbanzai/internal/service"
 	"kanbanzai/internal/storage"
+	"kanbanzai/internal/worktree"
 )
 
 // setupStatusTest creates an entitySvc and docSvc backed by temp dirs,
@@ -81,10 +82,10 @@ func createStatusTestTask(t *testing.T, entitySvc *service.EntityService, parent
 }
 
 // callStatus invokes the status tool directly (not via MCP transport) and
-// returns the parsed JSON response.
+// returns the parsed JSON response. Passes nil for the worktree store.
 func callStatus(t *testing.T, entitySvc *service.EntityService, docSvc *service.DocumentService, id string) map[string]any {
 	t.Helper()
-	tool := statusTool(entitySvc, docSvc)
+	tool := statusTool(entitySvc, docSvc, nil)
 	req := makeRequest(map[string]any{"id": id})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -254,6 +255,28 @@ func TestSynthesiseProject_WithPlans(t *testing.T) {
 	}
 }
 
+func TestSynthesiseProject_HasHealthSummary(t *testing.T) {
+	t.Parallel()
+	// Verifies §30.4 criterion 8: health summary is included in project view.
+	entitySvc, docSvc := setupStatusTest(t)
+	createTestPlan(t, entitySvc, "health-plan", "Health Plan")
+
+	overview, err := synthesiseProject(entitySvc, docSvc)
+	if err != nil {
+		t.Fatalf("synthesiseProject error: %v", err)
+	}
+	if overview.Health == nil {
+		t.Fatal("Health is nil, want non-nil health summary")
+	}
+	// Errors and warnings should be non-negative (zero is fine for a clean project).
+	if overview.Health.Errors < 0 {
+		t.Errorf("Health.Errors = %d, want >= 0", overview.Health.Errors)
+	}
+	if overview.Health.Warnings < 0 {
+		t.Errorf("Health.Warnings = %d, want >= 0", overview.Health.Warnings)
+	}
+}
+
 // ─── synthesisePlan tests ─────────────────────────────────────────────────────
 
 func TestSynthesisePlan_NotFound(t *testing.T) {
@@ -323,12 +346,28 @@ func TestSynthesisePlan_DocGaps(t *testing.T) {
 	}
 }
 
+func TestSynthesisePlan_HasHealthSummary(t *testing.T) {
+	t.Parallel()
+	// Verifies §30.4 criterion 8: health summary is included in plan view.
+	entitySvc, docSvc := setupStatusTest(t)
+
+	planID := createTestPlan(t, entitySvc, "health-plan-dash", "Health Plan")
+
+	dashboard, err := synthesisePlan(planID, entitySvc, docSvc)
+	if err != nil {
+		t.Fatalf("synthesisePlan error: %v", err)
+	}
+	if dashboard.Health == nil {
+		t.Fatal("Health is nil, want non-nil health summary in plan dashboard")
+	}
+}
+
 // ─── synthesiseFeature tests ──────────────────────────────────────────────────
 
 func TestSynthesiseFeature_NotFound(t *testing.T) {
 	t.Parallel()
 	entitySvc, docSvc := setupStatusTest(t)
-	_, err := synthesiseFeature("FEAT-01NOTEXIST1", entitySvc, docSvc)
+	_, err := synthesiseFeature("FEAT-01NOTEXIST1", entitySvc, docSvc, nil)
 	if err == nil {
 		t.Fatal("synthesiseFeature: expected error for unknown feature, got nil")
 	}
@@ -345,7 +384,7 @@ func TestSynthesiseFeature_WithTasks(t *testing.T) {
 	_ = createStatusTestTask(t, entitySvc, featID, "task-two", "Task Two")
 	_ = createStatusTestTask(t, entitySvc, featID, "task-three", "Task Three")
 
-	detail, err := synthesiseFeature(featID, entitySvc, docSvc)
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil)
 	if err != nil {
 		t.Fatalf("synthesiseFeature error: %v", err)
 	}
@@ -367,6 +406,23 @@ func TestSynthesiseFeature_WithTasks(t *testing.T) {
 	}
 }
 
+func TestSynthesiseFeature_PlanIDPopulated(t *testing.T) {
+	t.Parallel()
+	// Verifies that feature.plan_id is populated from the feature's parent field.
+	entitySvc, docSvc := setupStatusTest(t)
+
+	planID := createTestPlan(t, entitySvc, "plan-id-check", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "plan-id-feat", "Feature")
+
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil)
+	if err != nil {
+		t.Fatalf("synthesiseFeature error: %v", err)
+	}
+	if detail.Feature.PlanID != planID {
+		t.Errorf("Feature.PlanID = %q, want %q", detail.Feature.PlanID, planID)
+	}
+}
+
 func TestSynthesiseFeature_AttentionIncludesMissingDocs(t *testing.T) {
 	t.Parallel()
 	entitySvc, docSvc := setupStatusTest(t)
@@ -374,7 +430,7 @@ func TestSynthesiseFeature_AttentionIncludesMissingDocs(t *testing.T) {
 	planID := createTestPlan(t, entitySvc, "att-plan", "Plan")
 	featID := createStatusTestFeature(t, entitySvc, planID, "att-feat", "Attention Feature")
 
-	detail, err := synthesiseFeature(featID, entitySvc, docSvc)
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil)
 	if err != nil {
 		t.Fatalf("synthesiseFeature error: %v", err)
 	}
@@ -395,6 +451,69 @@ func TestSynthesiseFeature_AttentionIncludesMissingDocs(t *testing.T) {
 	}
 	if !foundTasks {
 		t.Errorf("Attention %v should mention missing tasks", detail.Attention)
+	}
+}
+
+func TestSynthesiseFeature_WithWorktree(t *testing.T) {
+	t.Parallel()
+	// Verifies §30.4 criterion 3: feature detail includes worktree when present.
+	entitySvc, docSvc := setupStatusTest(t)
+
+	planID := createTestPlan(t, entitySvc, "wt-plan", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "wt-feat", "Worktree Feature")
+
+	// Create a worktree store and insert a tracking record for the feature.
+	stateRoot := t.TempDir()
+	wtStore := worktree.NewStore(stateRoot)
+	_, err := wtStore.Create(worktree.Record{
+		EntityID:  featID,
+		Branch:    "feat/wt-feat",
+		Path:      ".kbz/worktrees/feat-wt-feat",
+		Status:    worktree.StatusActive,
+		Created:   time.Now().UTC(),
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("worktree.Create: %v", err)
+	}
+
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore)
+	if err != nil {
+		t.Fatalf("synthesiseFeature error: %v", err)
+	}
+
+	if detail.Worktree == nil {
+		t.Fatal("Worktree is nil, want non-nil when a worktree record exists")
+	}
+	if detail.Worktree.Status != "active" {
+		t.Errorf("Worktree.Status = %q, want active", detail.Worktree.Status)
+	}
+	if detail.Worktree.Branch != "feat/wt-feat" {
+		t.Errorf("Worktree.Branch = %q, want feat/wt-feat", detail.Worktree.Branch)
+	}
+	if detail.Worktree.Path != ".kbz/worktrees/feat-wt-feat" {
+		t.Errorf("Worktree.Path = %q, want .kbz/worktrees/feat-wt-feat", detail.Worktree.Path)
+	}
+}
+
+func TestSynthesiseFeature_NoWorktree(t *testing.T) {
+	t.Parallel()
+	// Verifies that worktree field is omitted when no record exists.
+	entitySvc, docSvc := setupStatusTest(t)
+
+	planID := createTestPlan(t, entitySvc, "no-wt-plan", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "no-wt-feat", "Feature")
+
+	// Store exists but has no record for this feature.
+	stateRoot := t.TempDir()
+	wtStore := worktree.NewStore(stateRoot)
+
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore)
+	if err != nil {
+		t.Fatalf("synthesiseFeature error: %v", err)
+	}
+	if detail.Worktree != nil {
+		t.Errorf("Worktree = %v, want nil when no worktree record exists", detail.Worktree)
 	}
 }
 
@@ -442,6 +561,30 @@ func TestSynthesiseTask_Basic(t *testing.T) {
 	}
 }
 
+func TestSynthesiseTask_ParentFeaturePlanID(t *testing.T) {
+	t.Parallel()
+	// Verifies that parent_feature.plan_id is correctly populated from the feature's
+	// "parent" field (not "owner", which does not exist on feature records).
+	entitySvc, _ := setupStatusTest(t)
+
+	planID := createTestPlan(t, entitySvc, "plan-id-task-plan", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "plan-id-feat", "Feature")
+	taskID := createStatusTestTask(t, entitySvc, featID, "plan-id-task", "Task")
+
+	detail, err := synthesiseTask(taskID, entitySvc)
+	if err != nil {
+		t.Fatalf("synthesiseTask error: %v", err)
+	}
+
+	if detail.ParentFeature == nil {
+		t.Fatal("ParentFeature is nil")
+	}
+	if detail.ParentFeature.PlanID != planID {
+		t.Errorf("ParentFeature.PlanID = %q, want %q (check field reads 'parent' not 'owner')",
+			detail.ParentFeature.PlanID, planID)
+	}
+}
+
 func TestSynthesiseTask_AttentionReadyTask(t *testing.T) {
 	t.Parallel()
 	entitySvc, _ := setupStatusTest(t)
@@ -477,13 +620,76 @@ func TestSynthesiseTask_AttentionReadyTask(t *testing.T) {
 	}
 }
 
+func TestSynthesiseTask_DispatchInfo(t *testing.T) {
+	t.Parallel()
+	// Verifies §10.6: task detail includes dispatch info for active tasks.
+	entitySvc, _ := setupStatusTest(t)
+
+	planID := createTestPlan(t, entitySvc, "dispatch-plan", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "dispatch-feat", "Feature")
+	taskID := createStatusTestTask(t, entitySvc, featID, "dispatch-task", "Dispatch Task")
+
+	// Manually write dispatch fields onto the task record, simulating what
+	// dispatch_task does. Resolve the slug first since Store().Load requires it.
+	taskGet, err := entitySvc.Get("task", taskID, "")
+	if err != nil {
+		t.Fatalf("get task %s: %v", taskID, err)
+	}
+	taskRec, err := entitySvc.Store().Load("task", taskID, taskGet.Slug)
+	if err != nil {
+		t.Fatalf("read task record: %v", err)
+	}
+	taskRec.Fields["dispatched_to"] = "backend"
+	taskRec.Fields["dispatched_at"] = "2026-01-01T10:00:00Z"
+	taskRec.Fields["dispatched_by"] = "orchestrator-session-test"
+	if _, err := entitySvc.Store().Write(taskRec); err != nil {
+		t.Fatalf("write dispatch fields: %v", err)
+	}
+
+	detail, err := synthesiseTask(taskID, entitySvc)
+	if err != nil {
+		t.Fatalf("synthesiseTask error: %v", err)
+	}
+
+	if detail.Dispatch == nil {
+		t.Fatal("Dispatch is nil, want non-nil for task with dispatched_to set")
+	}
+	if detail.Dispatch.DispatchedTo != "backend" {
+		t.Errorf("Dispatch.DispatchedTo = %q, want backend", detail.Dispatch.DispatchedTo)
+	}
+	if detail.Dispatch.DispatchedAt != "2026-01-01T10:00:00Z" {
+		t.Errorf("Dispatch.DispatchedAt = %q, want 2026-01-01T10:00:00Z", detail.Dispatch.DispatchedAt)
+	}
+	if detail.Dispatch.DispatchedBy != "orchestrator-session-test" {
+		t.Errorf("Dispatch.DispatchedBy = %q, want orchestrator-session-test", detail.Dispatch.DispatchedBy)
+	}
+}
+
+func TestSynthesiseTask_NoDispatchInfo(t *testing.T) {
+	t.Parallel()
+	// Verifies that dispatch field is omitted when task has not been dispatched.
+	entitySvc, _ := setupStatusTest(t)
+
+	planID := createTestPlan(t, entitySvc, "no-dispatch-plan", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "no-dispatch-feat", "Feature")
+	taskID := createStatusTestTask(t, entitySvc, featID, "no-dispatch-task", "Task")
+
+	detail, err := synthesiseTask(taskID, entitySvc)
+	if err != nil {
+		t.Fatalf("synthesiseTask error: %v", err)
+	}
+	if detail.Dispatch != nil {
+		t.Errorf("Dispatch = %v, want nil for undispatched task", detail.Dispatch)
+	}
+}
+
 // ─── status tool handler tests ────────────────────────────────────────────────
 
 func TestStatusTool_UnknownIDFormat(t *testing.T) {
 	t.Parallel()
 	// Verifies §30.4: unknown ID format returns clear error.
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc)
+	tool := statusTool(entitySvc, docSvc, nil)
 
 	req := makeRequest(map[string]any{"id": "TOTALLY-INVALID-ID-FORMAT"})
 	result, err := tool.Handler(context.Background(), req)
@@ -508,7 +714,7 @@ func TestStatusTool_EntityNotFound(t *testing.T) {
 	t.Parallel()
 	// Verifies §30.4: entity not found returns clear error.
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc)
+	tool := statusTool(entitySvc, docSvc, nil)
 
 	req := makeRequest(map[string]any{"id": "FEAT-01NOTEXIST1"})
 	result, err := tool.Handler(context.Background(), req)
@@ -536,7 +742,7 @@ func TestStatusTool_ProjectOverview(t *testing.T) {
 	entitySvc, docSvc := setupStatusTest(t)
 	createTestPlan(t, entitySvc, "p-one", "Plan One")
 
-	tool := statusTool(entitySvc, docSvc)
+	tool := statusTool(entitySvc, docSvc, nil)
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -558,7 +764,7 @@ func TestStatusTool_PlanDashboard(t *testing.T) {
 	entitySvc, docSvc := setupStatusTest(t)
 	planID := createTestPlan(t, entitySvc, "dashboard-plan", "Dashboard Plan")
 
-	tool := statusTool(entitySvc, docSvc)
+	tool := statusTool(entitySvc, docSvc, nil)
 	req := makeRequest(map[string]any{"id": planID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -587,7 +793,7 @@ func TestStatusTool_FeatureDetail(t *testing.T) {
 	planID := createTestPlan(t, entitySvc, "feat-detail-p", "Plan")
 	featID := createStatusTestFeature(t, entitySvc, planID, "detail-f", "Detail Feature")
 
-	tool := statusTool(entitySvc, docSvc)
+	tool := statusTool(entitySvc, docSvc, nil)
 	req := makeRequest(map[string]any{"id": featID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -610,7 +816,7 @@ func TestStatusTool_TaskDetail(t *testing.T) {
 	featID := createStatusTestFeature(t, entitySvc, planID, "task-detail-f", "Feature")
 	taskID := createStatusTestTask(t, entitySvc, featID, "task-detail-t", "Task")
 
-	tool := statusTool(entitySvc, docSvc)
+	tool := statusTool(entitySvc, docSvc, nil)
 	req := makeRequest(map[string]any{"id": taskID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -644,7 +850,7 @@ func TestStatusTool_AttentionItemsGenerated(t *testing.T) {
 		})
 	}
 
-	tool := statusTool(entitySvc, docSvc)
+	tool := statusTool(entitySvc, docSvc, nil)
 	req := makeRequest(map[string]any{"id": planID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -665,7 +871,7 @@ func TestStatusTool_AttentionItemsGenerated(t *testing.T) {
 func TestStatusTool_ResponseHasGeneratedAt(t *testing.T) {
 	t.Parallel()
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc)
+	tool := statusTool(entitySvc, docSvc, nil)
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -685,7 +891,7 @@ func TestStatusTool_NoSideEffects(t *testing.T) {
 	t.Parallel()
 	// Verifies status is read-only (no side_effects field).
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc)
+	tool := statusTool(entitySvc, docSvc, nil)
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -694,5 +900,156 @@ func TestStatusTool_NoSideEffects(t *testing.T) {
 	text := extractText(t, result)
 	if strings.Contains(text, "side_effects") {
 		t.Error("status response contains side_effects, but status is read-only")
+	}
+}
+
+func TestStatusTool_ProjectOverview_HasHealth(t *testing.T) {
+	t.Parallel()
+	// Verifies §30.4 criterion 8: health field present in project overview response.
+	entitySvc, docSvc := setupStatusTest(t)
+	tool := statusTool(entitySvc, docSvc, nil)
+	req := makeRequest(map[string]any{})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+	health, ok := parsed["health"].(map[string]any)
+	if !ok {
+		t.Fatalf("health field missing or wrong type in project overview: %v", parsed)
+	}
+	if _, ok := health["errors"]; !ok {
+		t.Error("health.errors field missing")
+	}
+	if _, ok := health["warnings"]; !ok {
+		t.Error("health.warnings field missing")
+	}
+}
+
+func TestStatusTool_PlanDashboard_HasHealth(t *testing.T) {
+	t.Parallel()
+	// Verifies §30.4 criterion 8: health field present in plan dashboard response.
+	entitySvc, docSvc := setupStatusTest(t)
+	planID := createTestPlan(t, entitySvc, "health-dash-plan", "Health Plan")
+
+	tool := statusTool(entitySvc, docSvc, nil)
+	req := makeRequest(map[string]any{"id": planID})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+	health, ok := parsed["health"].(map[string]any)
+	if !ok {
+		t.Fatalf("health field missing or wrong type in plan dashboard: %v", parsed)
+	}
+	if _, ok := health["errors"]; !ok {
+		t.Error("health.errors field missing")
+	}
+	if _, ok := health["warnings"]; !ok {
+		t.Error("health.warnings field missing")
+	}
+}
+
+func TestStatusTool_FeatureDetail_HasWorktreeWhenPresent(t *testing.T) {
+	t.Parallel()
+	// Verifies §30.4 criterion 3: feature detail includes worktree field when a
+	// worktree record exists for the feature.
+	entitySvc, docSvc := setupStatusTest(t)
+	planID := createTestPlan(t, entitySvc, "wt-tool-plan", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "wt-tool-feat", "Feature")
+
+	stateRoot := t.TempDir()
+	wtStore := worktree.NewStore(stateRoot)
+	_, err := wtStore.Create(worktree.Record{
+		EntityID:  featID,
+		Branch:    "feat/wt-tool-feat",
+		Path:      ".kbz/worktrees/feat-wt-tool-feat",
+		Status:    worktree.StatusActive,
+		Created:   time.Now().UTC(),
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("worktree.Create: %v", err)
+	}
+
+	tool := statusTool(entitySvc, docSvc, wtStore)
+	req := makeRequest(map[string]any{"id": featID})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+	if parsed["scope"] != "feature" {
+		t.Fatalf("scope = %v, want feature", parsed["scope"])
+	}
+	wt, ok := parsed["worktree"].(map[string]any)
+	if !ok {
+		t.Fatalf("worktree field missing or wrong type: %v", parsed)
+	}
+	if wt["status"] != "active" {
+		t.Errorf("worktree.status = %v, want active", wt["status"])
+	}
+	if wt["branch"] != "feat/wt-tool-feat" {
+		t.Errorf("worktree.branch = %v, want feat/wt-tool-feat", wt["branch"])
+	}
+}
+
+func TestStatusTool_TaskDetail_HasDispatch(t *testing.T) {
+	t.Parallel()
+	// Verifies §10.6: task detail includes dispatch info for a dispatched task.
+	entitySvc, docSvc := setupStatusTest(t)
+	planID := createTestPlan(t, entitySvc, "dispatch-tool-plan", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "dispatch-tool-feat", "Feature")
+	taskID := createStatusTestTask(t, entitySvc, featID, "dispatch-tool-task", "Task")
+
+	// Manually write dispatch fields. Resolve the slug first since Store().Load requires it.
+	taskGet, err := entitySvc.Get("task", taskID, "")
+	if err != nil {
+		t.Fatalf("get task %s: %v", taskID, err)
+	}
+	taskRec, err := entitySvc.Store().Load("task", taskID, taskGet.Slug)
+	if err != nil {
+		t.Fatalf("read task record: %v", err)
+	}
+	taskRec.Fields["dispatched_to"] = "backend"
+	taskRec.Fields["dispatched_at"] = "2026-06-01T09:00:00Z"
+	taskRec.Fields["dispatched_by"] = "orch-test"
+	if _, err := entitySvc.Store().Write(taskRec); err != nil {
+		t.Fatalf("write task record: %v", err)
+	}
+
+	tool := statusTool(entitySvc, docSvc, nil)
+	req := makeRequest(map[string]any{"id": taskID})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+	if parsed["scope"] != "task" {
+		t.Fatalf("scope = %v, want task", parsed["scope"])
+	}
+	dispatch, ok := parsed["dispatch"].(map[string]any)
+	if !ok {
+		t.Fatalf("dispatch field missing or wrong type: %v", parsed)
+	}
+	if dispatch["dispatched_to"] != "backend" {
+		t.Errorf("dispatch.dispatched_to = %v, want backend", dispatch["dispatched_to"])
 	}
 }

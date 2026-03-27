@@ -6,6 +6,28 @@
 // status(task_id / bug_id) returns a task/bug detail with dependency state.
 //
 // The tool is read-only: it produces no side effects.
+//
+// # Response shapes
+//
+// Project overview (no id):
+//
+//	{"scope":"project","plans":[...],"total":{...},"health":{...},"attention":[...],"generated_at":"..."}
+//
+// Plan dashboard (plan ID):
+//
+//	{"scope":"plan","plan":{...},"features":[...],"doc_gaps":[...],"health":{...},"attention":[...],"generated_at":"..."}
+//
+// Feature detail (FEAT-...):
+//
+//	{"scope":"feature","feature":{...},"tasks":[...],"task_summary":{...},"documents":[...],"estimate":...,"worktree":{...},"attention":[...],"generated_at":"..."}
+//
+// Task detail (TASK-... or T-...):
+//
+//	{"scope":"task","task":{...},"parent_feature":{...},"dependencies":[...],"dispatch":{...},"attention":[...],"generated_at":"..."}
+//
+// Bug detail (BUG-...):
+//
+//	{"scope":"bug","bug":{...},"attention":[...],"generated_at":"..."}
 package mcp
 
 import (
@@ -20,14 +42,16 @@ import (
 
 	"kanbanzai/internal/model"
 	"kanbanzai/internal/service"
+	"kanbanzai/internal/worktree"
 )
 
 // StatusTools returns the status MCP tool registered in the core group.
-func StatusTools(entitySvc *service.EntityService, docSvc *service.DocumentService) []server.ServerTool {
-	return []server.ServerTool{statusTool(entitySvc, docSvc)}
+// worktreeStore may be nil; feature detail will omit the worktree field in that case.
+func StatusTools(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store) []server.ServerTool {
+	return []server.ServerTool{statusTool(entitySvc, docSvc, worktreeStore)}
 }
 
-func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentService) server.ServerTool {
+func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store) server.ServerTool {
 	tool := mcp.NewTool("status",
 		mcp.WithDescription(
 			"Synthesis dashboard. Aggregates project, plan, feature, or task state into a concise view. "+
@@ -58,7 +82,7 @@ func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		case idTypePlan:
 			result, err = synthesisePlan(id, entitySvc, docSvc)
 		case idTypeFeature:
-			result, err = synthesiseFeature(id, entitySvc, docSvc)
+			result, err = synthesiseFeature(id, entitySvc, docSvc, worktreeStore)
 		case idTypeTask:
 			result, err = synthesiseTask(id, entitySvc)
 		case idTypeBug:
@@ -125,14 +149,63 @@ func isNotFound(err error) bool {
 	return err != nil && strings.Contains(err.Error(), "not found")
 }
 
+// ─── Shared types ─────────────────────────────────────────────────────────────
+
+// statusHealthSummary is the compact health block included in project and plan views.
+// It summarises errors and warnings without full category detail, keeping the response
+// compact for agents that only need a quick signal.
+type statusHealthSummary struct {
+	Errors   int `json:"errors"`
+	Warnings int `json:"warnings"`
+}
+
+// buildHealthSummary runs the entity health check and returns a compact summary.
+// On error it returns an empty summary rather than failing the whole status call,
+// because health-check failure should not block the dashboard.
+func buildHealthSummary(entitySvc *service.EntityService) *statusHealthSummary {
+	report, err := entitySvc.HealthCheck()
+	if err != nil {
+		return &statusHealthSummary{}
+	}
+	return &statusHealthSummary{
+		Errors:   report.Summary.ErrorCount,
+		Warnings: report.Summary.WarningCount,
+	}
+}
+
+// worktreeInfo is the compact worktree block included in feature detail.
+type worktreeInfo struct {
+	Status string `json:"status"`
+	Branch string `json:"branch,omitempty"`
+	Path   string `json:"path,omitempty"`
+}
+
+// dispatchInfo is the dispatch block included in task detail for active tasks.
+type dispatchInfo struct {
+	DispatchedTo string `json:"dispatched_to,omitempty"`
+	DispatchedAt string `json:"dispatched_at,omitempty"`
+	DispatchedBy string `json:"dispatched_by,omitempty"`
+}
+
+// featureInfo is a compact feature record used in feature detail and task parent context.
+// plan_id holds the parent plan ID (e.g. "P1-my-plan").
+type featureInfo struct {
+	ID      string `json:"id"`
+	Slug    string `json:"slug"`
+	Summary string `json:"summary,omitempty"`
+	Status  string `json:"status"`
+	PlanID  string `json:"plan_id,omitempty"`
+}
+
 // ─── Project overview synthesis ───────────────────────────────────────────────
 
 type projectOverview struct {
-	Scope       string        `json:"scope"`
-	Plans       []planSummary `json:"plans"`
-	Total       planAggregate `json:"total"`
-	Attention   []string      `json:"attention,omitempty"`
-	GeneratedAt string        `json:"generated_at"`
+	Scope       string               `json:"scope"`
+	Plans       []planSummary        `json:"plans"`
+	Total       planAggregate        `json:"total"`
+	Health      *statusHealthSummary `json:"health,omitempty"`
+	Attention   []string             `json:"attention,omitempty"`
+	GeneratedAt string               `json:"generated_at"`
 }
 
 type planAggregate struct {
@@ -240,11 +313,13 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 	}
 
 	attention := generateProjectAttention(summaries, allTasks)
+	health := buildHealthSummary(entitySvc)
 
 	return &projectOverview{
 		Scope:       "project",
 		Plans:       summaries,
 		Total:       agg,
+		Health:      health,
 		Attention:   attention,
 		GeneratedAt: time.Now().UTC().Format(time.RFC3339),
 	}, nil
@@ -253,12 +328,13 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 // ─── Plan dashboard synthesis ─────────────────────────────────────────────────
 
 type planDashboard struct {
-	Scope       string           `json:"scope"`
-	Plan        planHeader       `json:"plan"`
-	Features    []featureSummary `json:"features"`
-	DocGaps     []string         `json:"doc_gaps,omitempty"`
-	Attention   []string         `json:"attention,omitempty"`
-	GeneratedAt string           `json:"generated_at"`
+	Scope       string               `json:"scope"`
+	Plan        planHeader           `json:"plan"`
+	Features    []featureSummary     `json:"features"`
+	DocGaps     []string             `json:"doc_gaps,omitempty"`
+	Health      *statusHealthSummary `json:"health,omitempty"`
+	Attention   []string             `json:"attention,omitempty"`
+	GeneratedAt string               `json:"generated_at"`
 }
 
 type planHeader struct {
@@ -376,6 +452,7 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 	planStatus, _ := plan.State["status"].(string)
 
 	attention := generatePlanAttention(featureSummaries, docGaps)
+	health := buildHealthSummary(entitySvc)
 
 	return &planDashboard{
 		Scope: "plan",
@@ -387,6 +464,7 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 		},
 		Features:    featureSummaries,
 		DocGaps:     docGaps,
+		Health:      health,
 		Attention:   attention,
 		GeneratedAt: time.Now().UTC().Format(time.RFC3339),
 	}, nil
@@ -405,18 +483,11 @@ type featureDetail struct {
 		Done   int `json:"done"`
 		Total  int `json:"total"`
 	} `json:"task_summary"`
-	Documents   []docInfo `json:"documents,omitempty"`
-	Estimate    *float64  `json:"estimate,omitempty"`
-	Attention   []string  `json:"attention,omitempty"`
-	GeneratedAt string    `json:"generated_at"`
-}
-
-type featureInfo struct {
-	ID      string `json:"id"`
-	Slug    string `json:"slug"`
-	Summary string `json:"summary,omitempty"`
-	Status  string `json:"status"`
-	Owner   string `json:"owner,omitempty"`
+	Documents   []docInfo     `json:"documents,omitempty"`
+	Estimate    *float64      `json:"estimate,omitempty"`
+	Worktree    *worktreeInfo `json:"worktree,omitempty"`
+	Attention   []string      `json:"attention,omitempty"`
+	GeneratedAt string        `json:"generated_at"`
 }
 
 type taskInfo struct {
@@ -435,7 +506,7 @@ type docInfo struct {
 	Path   string `json:"path,omitempty"`
 }
 
-func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *service.DocumentService) (*featureDetail, error) {
+func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store) (*featureDetail, error) {
 	feat, err := entitySvc.Get("feature", featID, "")
 	if err != nil {
 		return nil, err
@@ -497,9 +568,21 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 		}
 	}
 
+	// Look up worktree for this feature, if a store is provided.
+	var wt *worktreeInfo
+	if worktreeStore != nil {
+		if record, err := worktreeStore.GetByEntityID(featID); err == nil {
+			wt = &worktreeInfo{
+				Status: string(record.Status),
+				Branch: record.Branch,
+				Path:   record.Path,
+			}
+		}
+	}
+
 	fstatus, _ := feat.State["status"].(string)
 	fsummary, _ := feat.State["summary"].(string)
-	fowner, _ := feat.State["parent"].(string)
+	fplanID, _ := feat.State["parent"].(string) // "parent" is the plan ID field on feature records
 
 	var est *float64
 	if ev, ok := feat.State["estimate"]; ok && ev != nil {
@@ -517,11 +600,12 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 			Slug:    feat.Slug,
 			Summary: fsummary,
 			Status:  fstatus,
-			Owner:   fowner,
+			PlanID:  fplanID,
 		},
 		Tasks:       tasks,
 		Documents:   docs,
 		Estimate:    est,
+		Worktree:    wt,
 		Attention:   attention,
 		GeneratedAt: time.Now().UTC().Format(time.RFC3339),
 	}
@@ -537,12 +621,13 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 // ─── Task detail synthesis ────────────────────────────────────────────────────
 
 type taskDetail struct {
-	Scope         string       `json:"scope"`
-	Task          taskFullInfo `json:"task"`
-	ParentFeature *featureInfo `json:"parent_feature,omitempty"`
-	Dependencies  []depInfo    `json:"dependencies,omitempty"`
-	Attention     []string     `json:"attention,omitempty"`
-	GeneratedAt   string       `json:"generated_at"`
+	Scope         string        `json:"scope"`
+	Task          taskFullInfo  `json:"task"`
+	ParentFeature *featureInfo  `json:"parent_feature,omitempty"`
+	Dependencies  []depInfo     `json:"dependencies,omitempty"`
+	Dispatch      *dispatchInfo `json:"dispatch,omitempty"`
+	Attention     []string      `json:"attention,omitempty"`
+	GeneratedAt   string        `json:"generated_at"`
 }
 
 type taskFullInfo struct {
@@ -606,19 +691,31 @@ func synthesiseTask(taskID string, entitySvc *service.EntityService) (*taskDetai
 		if pf, err := entitySvc.Get("feature", tparent, ""); err == nil {
 			pfstatus, _ := pf.State["status"].(string)
 			pfsummary, _ := pf.State["summary"].(string)
-			pfowner, _ := pf.State["owner"].(string)
+			// Features store their parent plan in the "parent" field, not "owner".
+			pfplanID, _ := pf.State["parent"].(string)
 			parentFeat = &featureInfo{
 				ID:      pf.ID,
 				Slug:    pf.Slug,
 				Summary: pfsummary,
 				Status:  pfstatus,
-				Owner:   pfowner,
+				PlanID:  pfplanID,
 			}
 		}
 	}
 
 	// Resolve dependencies.
 	deps := resolveDependencies(task.State, entitySvc)
+
+	// Build dispatch info if the task has been dispatched.
+	var dispatch *dispatchInfo
+	if to, _ := task.State["dispatched_to"].(string); to != "" {
+		dispatch = &dispatchInfo{
+			DispatchedTo: to,
+			DispatchedAt: stringFromTaskState(task.State, "dispatched_at"),
+			DispatchedBy: stringFromTaskState(task.State, "dispatched_by"),
+		}
+	}
+
 	attention := generateTaskAttention(ti, deps)
 
 	return &taskDetail{
@@ -626,9 +723,16 @@ func synthesiseTask(taskID string, entitySvc *service.EntityService) (*taskDetai
 		Task:          ti,
 		ParentFeature: parentFeat,
 		Dependencies:  deps,
+		Dispatch:      dispatch,
 		Attention:     attention,
 		GeneratedAt:   time.Now().UTC().Format(time.RFC3339),
 	}, nil
+}
+
+// stringFromTaskState is a small helper to safely read a string field from task state.
+func stringFromTaskState(state map[string]any, key string) string {
+	v, _ := state[key].(string)
+	return v
 }
 
 // ─── Bug detail synthesis ─────────────────────────────────────────────────────
@@ -708,7 +812,7 @@ func generateProjectAttention(plans []planSummary, allTasks []service.ListResult
 		}
 	}
 
-	// Find stalled active tasks.
+	// Find stalled active tasks (no update in >3 days).
 	stalledCount := 0
 	threshold := time.Now().UTC().Add(-3 * 24 * time.Hour)
 	for _, t := range allTasks {
@@ -777,7 +881,7 @@ func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int) 
 		items = append(items, fmt.Sprintf("%d task(s) ready to claim", readyCount))
 	}
 
-	// Missing spec or dev-plan.
+	// Missing spec.
 	hasSpec := false
 	hasDevPlan := false
 	for _, d := range docs {
