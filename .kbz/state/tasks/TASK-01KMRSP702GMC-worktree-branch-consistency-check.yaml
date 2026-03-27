@@ -1,0 +1,5 @@
+id: TASK-01KMRSP702GMC
+parent_feature: FEAT-01KMRSMYB1ED7
+slug: worktree-branch-consistency-check
+summary: "Add health check rule: worktree is active but its branch is already merged into main (branch HEAD is an ancestor of main HEAD). Uses existing git integration to detect merge status. Integrate into health_check output. Include tests."
+status: queued

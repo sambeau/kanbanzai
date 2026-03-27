@@ -1,7 +1,7 @@
-depends_on:
-  - TASK-01KMRJBV8ATYD
 id: TASK-01KMRJCER90AR
 parent_feature: FEAT-01KMRJ83GYAQ9
 slug: retro-context-nudge
 summary: "Add a context nudge to `next` and `handoff` context assembly: when the project has one or more decision entities tagged workflow-experiment with status accepted, append a short section listing each by decision ID and summary. The nudge section is sourced from decision entities (not knowledge entries) and does not count against the knowledge entry budget. When no workflow-experiment decisions are in accepted status, the section is omitted entirely (no empty section, no change to existing output). Acceptance criteria: P5-3.8, P5-3.9, P5-3.10."
-status: queued
+status: ready
+depends_on:
+  - TASK-01KMRJBV8ATYD

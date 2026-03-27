@@ -1,0 +1,5 @@
+id: TASK-01KMRSPCS6M1G
+parent_feature: FEAT-01KMRSN1B2GJA
+slug: fix-list-entities-parent-filter
+summary: Diagnose and fix list_entities_filtered returning empty results when filtering tasks by parent feature ID. The parent filter is critical for the code review orchestrator pattern (code-review-workflow.md §10.1). Add test coverage for parent filtering across entity types.
+status: queued
