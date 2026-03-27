@@ -1,7 +1,7 @@
 id: TASK-01KMRJBKKG6EV
 parent_feature: FEAT-01KMRJ81DZ3X2
 slug: retro-report-mode
-summary: 'Implement report mode for `retro` (action: "report"). Accept output_path and optional title parameters. Run synthesis, render the result as a structured markdown document (themes section, worked-well section), write to output_path, register as a document record with type "report" in draft status. Extend the response with a report section (path, document_id). Calling report mode twice with the same output_path must either update the existing document record or return a clear error — not create a duplicate record. Acceptance criteria: P5-2.13, P5-2.14, P5-2.15, P5-2.16.'
-status: queued
+summary: "'Implement report mode for `retro` (action: \"report\"). Accept output_path and optional title parameters. Run synthesis, render the result as a structured markdown document (themes section, worked-well section), write to output_path, register as a document record with type \"report\" in draft status. Extend the response with a report section (path, document_id). Calling report mode twice with the same output_path must either update the existing document record or return a clear error — not create a duplicate record. Acceptance criteria: P5-2.13, P5-2.14, P5-2.15, P5-2.16.'"
+status: not-planned
 depends_on:
   - TASK-01KMRJBC8KGHA

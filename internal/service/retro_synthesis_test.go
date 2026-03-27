@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	"kanbanzai/internal/model"
 	"kanbanzai/internal/storage"
 )
 
@@ -1097,6 +1098,49 @@ func newRetroTestServiceWithEntities(t *testing.T, root string) *RetroService {
 	}
 }
 
+// newRetroTestServiceWithReport creates a RetroService with all dependencies wired up,
+// including DocService for Report mode tests (P5-2.13–P5-2.16).
+func newRetroTestServiceWithReport(t *testing.T, root string) *RetroService {
+	t.Helper()
+	knowledgeSvc := NewKnowledgeService(root)
+	entitySvc := NewEntityService(root)
+	docSvc := NewDocumentService(root, root)
+	return &RetroService{
+		knowledgeSvc: knowledgeSvc,
+		entitySvc:    entitySvc,
+		docSvc:       docSvc,
+		repoRoot:     root,
+		now:          func() time.Time { return time.Date(2026, 3, 28, 0, 0, 0, 0, time.UTC) },
+	}
+}
+
+// writeRetroTestPlan writes a plan entity record directly to the entity store.
+// Used in scope filtering tests to satisfy the parent-plan existence check in
+// CreateFeature without going through the plan service.
+func writeRetroTestPlan(t *testing.T, svc *EntityService, id string) {
+	t.Helper()
+	_, _, slug := model.ParsePlanID(id)
+	fields := map[string]any{
+		"id":         id,
+		"slug":       slug,
+		"title":      "Retro Scope Test Plan",
+		"status":     "active",
+		"summary":    "Test plan for retro scope filtering tests",
+		"created":    "2026-03-01T00:00:00Z",
+		"created_by": "test",
+		"updated":    "2026-03-01T00:00:00Z",
+	}
+	_, err := svc.store.Write(storage.EntityRecord{
+		Type:   string(model.EntityKindPlan),
+		ID:     id,
+		Slug:   slug,
+		Fields: fields,
+	})
+	if err != nil {
+		t.Fatalf("writeRetroTestPlan(%s): %v", id, err)
+	}
+}
+
 // P5-3.1: finish with related_decision stores Related: DEC-042 in content.
 // (Tested in retro_test.go via TestEncodeRetroContent_WithRelatedDecision and
 // TestEncodeRetroContent_WithSuggestionAndRelatedDecision.)
@@ -1467,6 +1511,327 @@ func TestSynthesise_MultipleExperiments(t *testing.T) {
 }
 
 // Experiment with rejected status is excluded from experiments section.
+// ─── Report mode (P5-2.13–P5-2.16) ──────────────────────────────────────────
+
+func TestReport_MissingOutputPath(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithReport(t, root)
+
+	_, err := svc.Report(RetroReportInput{})
+	if err == nil {
+		t.Fatal("expected error for empty output_path")
+	}
+	if !strings.Contains(err.Error(), "output_path") {
+		t.Errorf("error %q should mention output_path", err)
+	}
+}
+
+// P5-2.13: report action generates a document file and returns synthesis data.
+func TestReport_HappyPath(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithReport(t, root)
+
+	writeRetroKnowledgeRecord(t, root, "KE-R01", "spec-ambiguity", "moderate",
+		"[moderate] spec-ambiguity: Spec was unclear", "", "2026-03-01T10:00:00Z")
+
+	result, err := svc.Report(RetroReportInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		OutputPath:          "retro/2026-03-28.md",
+		Title:               "Sprint 1 Retro",
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("Report() error = %v", err)
+	}
+
+	if result.SignalCount != 1 {
+		t.Errorf("SignalCount = %d, want 1", result.SignalCount)
+	}
+	if len(result.Themes) == 0 {
+		t.Error("expected at least one theme")
+	}
+	// Markdown file must exist on disk.
+	fullPath := filepath.Join(root, "retro/2026-03-28.md")
+	if _, err := os.Stat(fullPath); err != nil {
+		t.Errorf("report file not found at %s: %v", fullPath, err)
+	}
+}
+
+// P5-2.14: the registered document record is in draft status.
+func TestReport_DocumentInDraftStatus(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithReport(t, root)
+
+	writeRetroKnowledgeRecord(t, root, "KE-R02", "tool-gap", "minor",
+		"[minor] tool-gap: No tool for X", "", "2026-03-01T10:00:00Z")
+
+	result, err := svc.Report(RetroReportInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		OutputPath:          "retro/draft-status-test.md",
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("Report() error = %v", err)
+	}
+
+	doc, err := svc.docSvc.GetDocument(result.Report.DocumentID, false)
+	if err != nil {
+		t.Fatalf("GetDocument(%s): %v", result.Report.DocumentID, err)
+	}
+	if doc.Status != "draft" {
+		t.Errorf("document status = %q, want %q", doc.Status, "draft")
+	}
+}
+
+// P5-2.15: response includes report.path and report.document_id.
+func TestReport_ReportPathAndDocumentID(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithReport(t, root)
+
+	const outputPath = "retro/path-id-test.md"
+	result, err := svc.Report(RetroReportInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		OutputPath:          outputPath,
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("Report() error = %v", err)
+	}
+
+	if result.Report.Path != outputPath {
+		t.Errorf("Report.Path = %q, want %q", result.Report.Path, outputPath)
+	}
+	if result.Report.DocumentID == "" {
+		t.Error("Report.DocumentID should not be empty")
+	}
+}
+
+// P5-2.16: calling Report twice with the same output_path returns an error on
+// the second call (document already registered).
+func TestReport_DuplicateOutputPath(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithReport(t, root)
+
+	input := RetroReportInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		OutputPath:          "retro/dup-test.md",
+		CreatedBy:           "test",
+	}
+	if _, err := svc.Report(input); err != nil {
+		t.Fatalf("first Report() error = %v", err)
+	}
+	if _, err := svc.Report(input); err == nil {
+		t.Fatal("expected error on second Report() with same output_path")
+	}
+}
+
+// TestReport_DefaultTitle verifies the default title "Retrospective: {scope} {date}" is
+// used when Title is empty.
+func TestReport_DefaultTitle(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithReport(t, root)
+
+	result, err := svc.Report(RetroReportInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		OutputPath:          "retro/default-title-test.md",
+		// No Title; defaults to "Retrospective: project {date}".
+		CreatedBy: "test",
+	})
+	if err != nil {
+		t.Fatalf("Report() error = %v", err)
+	}
+
+	doc, err := svc.docSvc.GetDocument(result.Report.DocumentID, false)
+	if err != nil {
+		t.Fatalf("GetDocument: %v", err)
+	}
+	const want = "Retrospective: project 2026-03-28"
+	if doc.Title != want {
+		t.Errorf("document title = %q, want %q", doc.Title, want)
+	}
+}
+
+// ─── Scope filtering (P5-2.7) ────────────────────────────────────────────────
+
+// P5-2.7: Feature scope includes only signals from tasks under the specified feature.
+func TestSynthesise_FeatureScope(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	writeRetroTestPlan(t, svc.entitySvc, "P1-scope-test")
+	featResult, err := svc.entitySvc.CreateFeature(CreateFeatureInput{
+		Slug: "scope-feat", Parent: "P1-scope-test", Summary: "Scope test feature", CreatedBy: "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature: %v", err)
+	}
+	taskResult, err := svc.entitySvc.CreateTask(CreateTaskInput{
+		ParentFeature: featResult.ID,
+		Slug:          "scope-task",
+		Summary:       "Scope test task",
+	})
+	if err != nil {
+		t.Fatalf("CreateTask: %v", err)
+	}
+
+	// Signal attributed to the scoped task.
+	writeRetroKnowledgeRecord(t, root, "KE-FS01", "spec-ambiguity", "moderate",
+		"[moderate] spec-ambiguity: Scoped spec issue",
+		taskResult.ID, "2026-03-01T10:00:00Z")
+
+	// Standalone signal (no learned_from) — excluded from feature scope.
+	writeRetroKnowledgeRecord(t, root, "KE-FS02", "tool-gap", "minor",
+		"[minor] tool-gap: Standalone signal",
+		"", "2026-03-01T11:00:00Z")
+
+	result, err := svc.Synthesise(RetroSynthesisInput{Scope: featResult.ID})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+
+	if result.SignalCount != 1 {
+		t.Errorf("SignalCount = %d, want 1 (only task-attributed signal)", result.SignalCount)
+	}
+	if result.Scope != featResult.ID {
+		t.Errorf("Scope = %q, want %q", result.Scope, featResult.ID)
+	}
+}
+
+// P5-2.7: Feature scope excludes signals from tasks under a different feature.
+func TestSynthesise_FeatureScopeExcludesOtherFeature(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	writeRetroTestPlan(t, svc.entitySvc, "P1-scope-excl-test")
+	featA, err := svc.entitySvc.CreateFeature(CreateFeatureInput{
+		Slug: "feature-a", Parent: "P1-scope-excl-test", Summary: "Feature A", CreatedBy: "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature A: %v", err)
+	}
+	featB, err := svc.entitySvc.CreateFeature(CreateFeatureInput{
+		Slug: "feature-b", Parent: "P1-scope-excl-test", Summary: "Feature B", CreatedBy: "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature B: %v", err)
+	}
+	taskB, err := svc.entitySvc.CreateTask(CreateTaskInput{
+		ParentFeature: featB.ID,
+		Slug:          "task-b",
+		Summary:       "Task under feature B",
+	})
+	if err != nil {
+		t.Fatalf("CreateTask B: %v", err)
+	}
+
+	// Signal belongs to feature B's task.
+	writeRetroKnowledgeRecord(t, root, "KE-FE01", "tool-gap", "minor",
+		"[minor] tool-gap: Signal from feature B",
+		taskB.ID, "2026-03-01T10:00:00Z")
+
+	// Synthesise scoped to feature A — should return zero signals.
+	result, err := svc.Synthesise(RetroSynthesisInput{Scope: featA.ID})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if result.SignalCount != 0 {
+		t.Errorf("SignalCount = %d, want 0 (signal belongs to feature B)", result.SignalCount)
+	}
+}
+
+// P5-2.7: Plan scope includes signals from tasks under any feature in the plan.
+func TestSynthesise_PlanScope(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	writeRetroTestPlan(t, svc.entitySvc, "P1-plan-scope")
+	featResult, err := svc.entitySvc.CreateFeature(CreateFeatureInput{
+		Slug: "plan-scope-feat", Parent: "P1-plan-scope", Summary: "Feature under plan", CreatedBy: "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature: %v", err)
+	}
+	taskResult, err := svc.entitySvc.CreateTask(CreateTaskInput{
+		ParentFeature: featResult.ID,
+		Slug:          "plan-scope-task",
+		Summary:       "Task under plan feature",
+	})
+	if err != nil {
+		t.Fatalf("CreateTask: %v", err)
+	}
+
+	writeRetroKnowledgeRecord(t, root, "KE-PS01", "context-gap", "significant",
+		"[significant] context-gap: Plan-scoped issue",
+		taskResult.ID, "2026-03-01T10:00:00Z")
+
+	result, err := svc.Synthesise(RetroSynthesisInput{Scope: "P1-plan-scope"})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if result.SignalCount != 1 {
+		t.Errorf("SignalCount = %d, want 1", result.SignalCount)
+	}
+	if result.Scope != "P1-plan-scope" {
+		t.Errorf("Scope = %q, want %q", result.Scope, "P1-plan-scope")
+	}
+}
+
+// P5-2.7: Plan scope excludes signals from tasks under a different plan.
+func TestSynthesise_PlanScopeExcludesOtherPlan(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	writeRetroTestPlan(t, svc.entitySvc, "P1-plan-excl-a")
+	writeRetroTestPlan(t, svc.entitySvc, "P2-plan-excl-b")
+
+	// Feature and task under plan A (no signals attributed to it).
+	_, err := svc.entitySvc.CreateFeature(CreateFeatureInput{
+		Slug: "feat-plan-a", Parent: "P1-plan-excl-a", Summary: "Feature under plan A", CreatedBy: "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature A: %v", err)
+	}
+
+	// Feature and task under plan B (signal attributed here).
+	featB, err := svc.entitySvc.CreateFeature(CreateFeatureInput{
+		Slug: "feat-plan-b", Parent: "P2-plan-excl-b", Summary: "Feature under plan B", CreatedBy: "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature B: %v", err)
+	}
+	taskB, err := svc.entitySvc.CreateTask(CreateTaskInput{
+		ParentFeature: featB.ID,
+		Slug:          "task-plan-b",
+		Summary:       "Task under plan B",
+	})
+	if err != nil {
+		t.Fatalf("CreateTask B: %v", err)
+	}
+
+	writeRetroKnowledgeRecord(t, root, "KE-PE01", "workflow-friction", "minor",
+		"[minor] workflow-friction: Signal from plan B",
+		taskB.ID, "2026-03-01T10:00:00Z")
+
+	// Synthesise scoped to plan A — should return zero signals.
+	result, err := svc.Synthesise(RetroSynthesisInput{Scope: "P1-plan-excl-a"})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if result.SignalCount != 0 {
+		t.Errorf("SignalCount = %d, want 0 (signal belongs to plan B)", result.SignalCount)
+	}
+}
+
 func TestSynthesise_ExperimentsExcludeNonAcceptedDecisions(t *testing.T) {
 	t.Parallel()
 	root := t.TempDir()

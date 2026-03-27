@@ -31,8 +31,9 @@ Complete reference for every MCP tool exposed by the Kanbanzai server. This docu
 21. [Batch Operations](#21-batch-operations)
 22. [Migration](#22-migration)
 23. [Rich Queries](#23-rich-queries)
-24. [Lifecycle Operation Constraints](#24-lifecycle-operation-constraints)
-25. [Idempotency Notes](#25-idempotency-notes)
+24. [Retrospective Synthesis](#24-retrospective-synthesis)
+25. [Lifecycle Operation Constraints](#25-lifecycle-operation-constraints)
+26. [Idempotency Notes](#26-idempotency-notes)
 
 ---
 
@@ -2736,7 +2737,68 @@ Find all tasks belonging to features under a given Plan. Useful for getting a co
 
 ---
 
-## 24. Lifecycle Operation Constraints
+## 24. Retrospective Synthesis
+
+### retro
+
+Synthesise accumulated retrospective signals from the knowledge base. Reads signal entries tagged `retrospective`, clusters them into themes by category and Jaccard similarity, and returns a ranked synthesis. Optionally generates and registers a markdown report document.
+
+**Action: synthesise (default)**
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| action | string | no | `synthesise` (default) or `report` |
+| scope | string | no | Plan ID, Feature ID, or `"project"` (default: `"project"`) |
+| since | string | no | ISO 8601 timestamp; only include signals created after this time |
+| until | string | no | ISO 8601 timestamp; only include signals created before this time |
+| min_severity | string | no | Minimum severity to include: `minor` (default), `moderate`, or `significant` |
+
+**Returns:** JSON object with `scope`, `signal_count`, `period` (`{from, to}`), `themes` array, optional `worked_well` array, and optional `experiments` array.
+
+Each theme has: `rank`, `category`, `title`, `signal_count`, `severity_score`, `signals` (KE IDs), `representative_observation`, and optional `top_suggestion`.
+
+Each `worked_well` entry has: `title`, `signal_count`, `representative_observation`.
+
+Each experiment has: `decision_id`, `title`, `positive_signals`, `negative_signals`, `net_assessment`, and `recommendation` (`keep`, `revise`, or `revert`).
+
+**Action: report**
+
+All synthesise parameters plus:
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| output_path | string | yes | Repository-relative path for the generated markdown report file |
+| title | string | no | Document title; defaults to `"Retrospective: {scope} {date}"` |
+
+**Returns:** Same as synthesise, plus a `report` object with `path` (the output_path) and `document_id` (the registered document record ID). The registered document is in `draft` status.
+
+**Error conditions:**
+- `output_path` is empty (report action)
+- `min_severity` is not one of `minor`, `moderate`, `significant`
+- `since` or `until` is not a valid ISO 8601 timestamp
+- Report action called twice with the same `output_path` (document already registered)
+
+**Example (synthesise):**
+
+```json
+// Call
+{"tool": "retro", "arguments": {}}
+// Response
+{"scope": "project", "signal_count": 12, "period": {"from": "2026-03-01T10:00:00Z", "to": "2026-03-27T18:00:00Z"}, "themes": [{"rank": 1, "category": "spec-ambiguity", "title": "Spec gaps slowed iteration", "signal_count": 5, "severity_score": 17, "signals": ["KE-001", "KE-003"], "representative_observation": "Error format undefined", "top_suggestion": "Add error format examples to spec template"}], "worked_well": [{"title": "Parallel worktrees", "signal_count": 3, "representative_observation": "Parallel worktrees reduced merge conflicts"}]}
+```
+
+**Example (report):**
+
+```json
+// Call
+{"tool": "retro", "arguments": {"action": "report", "scope": "project", "output_path": "docs/retro/sprint-12.md", "title": "Sprint 12 Retrospective"}}
+// Response
+{"scope": "project", "signal_count": 12, "period": {"from": "2026-03-01T10:00:00Z", "to": "2026-03-27T18:00:00Z"}, "themes": [...], "report": {"path": "docs/retro/sprint-12.md", "document_id": "PROJECT/report-docs-retro-sprint-12"}}
+```
+
+---
+
+## 25. Lifecycle Operation Constraints
 
 Several tools enforce lifecycle state machine rules. Understanding these constraints is essential for correct orchestration.
 
@@ -2763,7 +2825,7 @@ Several tools enforce lifecycle state machine rules. Understanding these constra
 
 ---
 
-## 25. Idempotency Notes
+## 26. Idempotency Notes
 
 The following tools are idempotent — calling them multiple times with the same arguments produces the same result without unintended side effects:
 

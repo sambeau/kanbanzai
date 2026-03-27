@@ -54,7 +54,7 @@ func parseRetroRecord(rec storage.KnowledgeRecord) (parsedRetroSignal, bool) {
 	tags := knowledgeFieldStrings(rec.Fields, "tags")
 	category := ""
 	for _, t := range tags {
-		if t != "retrospective" {
+		if ValidRetroCategories[t] {
 			category = t
 			break
 		}
@@ -203,13 +203,8 @@ type RetroReportInfo struct {
 
 // RetroReportResult extends RetroSynthesisResult with generated report metadata (spec §7.4).
 type RetroReportResult struct {
-	Scope       string            `json:"scope"`
-	SignalCount int               `json:"signal_count"`
-	Period      RetroPeriod       `json:"period"`
-	Themes      []RetroTheme      `json:"themes"`
-	WorkedWell  []RetroWorkedWell `json:"worked_well,omitempty"`
-	Experiments []RetroExperiment `json:"experiments,omitempty"`
-	Report      RetroReportInfo   `json:"report"`
+	RetroSynthesisResult
+	Report RetroReportInfo `json:"report"`
 }
 
 // ─── Input types ─────────────────────────────────────────────────────────────
@@ -442,12 +437,7 @@ func (s *RetroService) Report(input RetroReportInput) (RetroReportResult, error)
 	}
 
 	return RetroReportResult{
-		Scope:       synthesis.Scope,
-		SignalCount: synthesis.SignalCount,
-		Period:      synthesis.Period,
-		Themes:      synthesis.Themes,
-		WorkedWell:  synthesis.WorkedWell,
-		Experiments: synthesis.Experiments,
+		RetroSynthesisResult: synthesis,
 		Report: RetroReportInfo{
 			Path:       input.OutputPath,
 			DocumentID: docResult.ID,
