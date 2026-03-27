@@ -263,6 +263,7 @@ func nextClaimMode(
 		knowledgeSvc:    knowledgeSvc,
 		intelligenceSvc: intelligenceSvc,
 		docRecordSvc:    docRecordSvc,
+		entitySvc:       entitySvc,
 	})
 
 	return map[string]any{
@@ -326,6 +327,16 @@ func nextContextToMap(actx assembledContext) map[string]any {
 	}
 	if actx.specFallbackPath != "" {
 		out["spec_fallback_path"] = actx.specFallbackPath
+	}
+	if len(actx.experimentNudge) > 0 {
+		nudges := make([]map[string]any, len(actx.experimentNudge))
+		for i, n := range actx.experimentNudge {
+			nudges[i] = map[string]any{
+				"decision_id": n.decisionID,
+				"summary":     n.summary,
+			}
+		}
+		out["active_experiments"] = nudges
 	}
 	return out
 }

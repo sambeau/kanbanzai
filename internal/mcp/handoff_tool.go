@@ -106,6 +106,7 @@ func handoffTool(
 			knowledgeSvc:    knowledgeSvc,
 			intelligenceSvc: intelligenceSvc,
 			docRecordSvc:    docRecordSvc,
+			entitySvc:       entitySvc,
 		})
 
 		// Render the Markdown prompt.
@@ -211,6 +212,16 @@ func renderHandoffPrompt(taskState map[string]any, actx assembledContext, instru
 		fmt.Fprintf(&sb, "- Commit format: feat(%s): <description>\n", taskID)
 	}
 	sb.WriteString("\n")
+
+	// Active workflow experiments (Phase 3 context nudge, spec §8.4).
+	if len(actx.experimentNudge) > 0 {
+		sb.WriteString("### Active Workflow Experiments\n\n")
+		sb.WriteString("The following workflow experiments are active. If you encounter friction or success related to any of these, reference the decision ID in your retrospective signal's `related_decision` field.\n\n")
+		for _, exp := range actx.experimentNudge {
+			fmt.Fprintf(&sb, "- **%s**: %s\n", exp.decisionID, exp.summary)
+		}
+		sb.WriteString("\n")
+	}
 
 	// Additional orchestrator instructions.
 	if instructions != "" {

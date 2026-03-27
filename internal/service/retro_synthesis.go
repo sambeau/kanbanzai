@@ -37,14 +37,15 @@ func severityWeight(sev string) int {
 
 // parsedRetroSignal holds fields extracted from a retrospective knowledge entry.
 type parsedRetroSignal struct {
-	EntryID     string
-	Category    string
-	Severity    string
-	Content     string // full content string (used for Jaccard clustering)
-	Observation string
-	Suggestion  string
-	LearnedFrom string
-	Created     time.Time
+	EntryID         string
+	Category        string
+	Severity        string
+	Content         string // full content string (used for Jaccard clustering)
+	Observation     string
+	Suggestion      string
+	LearnedFrom     string
+	RelatedDecision string
+	Created         time.Time
 }
 
 // parseRetroRecord attempts to parse a knowledge record into a parsedRetroSignal.
@@ -74,18 +75,20 @@ func parseRetroRecord(rec storage.KnowledgeRecord) (parsedRetroSignal, bool) {
 
 	observation, suggestion := parseObservationAndSuggestion(content, category)
 	learnedFrom, _ := rec.Fields["learned_from"].(string)
+	related := parseRelatedDecision(content)
 	createdStr, _ := rec.Fields["created"].(string)
 	created, _ := time.Parse(time.RFC3339, createdStr)
 
 	return parsedRetroSignal{
-		EntryID:     rec.ID,
-		Category:    category,
-		Severity:    severity,
-		Content:     content,
-		Observation: observation,
-		Suggestion:  suggestion,
-		LearnedFrom: learnedFrom,
-		Created:     created,
+		EntryID:         rec.ID,
+		Category:        category,
+		Severity:        severity,
+		Content:         content,
+		Observation:     observation,
+		Suggestion:      suggestion,
+		LearnedFrom:     learnedFrom,
+		RelatedDecision: related,
+		Created:         created,
 	}, true
 }
 
@@ -104,6 +107,17 @@ func parseSeverityFromContent(content string) string {
 		return sev
 	}
 	return ""
+}
+
+// parseRelatedDecision extracts the decision ID from a retrospective signal
+// content string. The format is: "... Related: {decision_id}" at end of string.
+func parseRelatedDecision(content string) string {
+	const marker = " Related: "
+	i := strings.LastIndex(content, marker)
+	if i < 0 {
+		return ""
+	}
+	return strings.TrimSpace(content[i+len(marker):])
 }
 
 // parseObservationAndSuggestion extracts the observation and suggestion from
@@ -160,6 +174,17 @@ type RetroWorkedWell struct {
 	RepresentativeObservation string `json:"representative_observation"`
 }
 
+// RetroExperiment reports how a workflow-experiment decision is performing
+// based on signals that reference it. See spec §8.3.
+type RetroExperiment struct {
+	DecisionID      string `json:"decision_id"`
+	Title           string `json:"title"`
+	PositiveSignals int    `json:"positive_signals"`
+	NegativeSignals int    `json:"negative_signals"`
+	NetAssessment   string `json:"net_assessment"`
+	Recommendation  string `json:"recommendation"`
+}
+
 // RetroSynthesisResult is the structured response from retro synthesis (spec §7.3).
 type RetroSynthesisResult struct {
 	Scope       string            `json:"scope"`
@@ -167,6 +192,7 @@ type RetroSynthesisResult struct {
 	Period      RetroPeriod       `json:"period"`
 	Themes      []RetroTheme      `json:"themes"`
 	WorkedWell  []RetroWorkedWell `json:"worked_well,omitempty"`
+	Experiments []RetroExperiment `json:"experiments,omitempty"`
 }
 
 // RetroReportInfo contains metadata about a generated retrospective report document.
@@ -182,6 +208,7 @@ type RetroReportResult struct {
 	Period      RetroPeriod       `json:"period"`
 	Themes      []RetroTheme      `json:"themes"`
 	WorkedWell  []RetroWorkedWell `json:"worked_well,omitempty"`
+	Experiments []RetroExperiment `json:"experiments,omitempty"`
 	Report      RetroReportInfo   `json:"report"`
 }
 
@@ -351,6 +378,7 @@ func (s *RetroService) Synthesise(input RetroSynthesisInput) (RetroSynthesisResu
 
 	themes := buildRetroThemes(negative)
 	workedWell := buildRetroWorkedWell(workedWellSigs)
+	experiments := s.buildExperiments(signals)
 
 	return RetroSynthesisResult{
 		Scope:       scope,
@@ -359,8 +387,9 @@ func (s *RetroService) Synthesise(input RetroSynthesisInput) (RetroSynthesisResu
 			From: earliest.Format(time.RFC3339),
 			To:   latest.Format(time.RFC3339),
 		},
-		Themes:     themes,
-		WorkedWell: workedWell,
+		Themes:      themes,
+		WorkedWell:  workedWell,
+		Experiments: experiments,
 	}, nil
 }
 
@@ -418,6 +447,7 @@ func (s *RetroService) Report(input RetroReportInput) (RetroReportResult, error)
 		Period:      synthesis.Period,
 		Themes:      synthesis.Themes,
 		WorkedWell:  synthesis.WorkedWell,
+		Experiments: synthesis.Experiments,
 		Report: RetroReportInfo{
 			Path:       input.OutputPath,
 			DocumentID: docResult.ID,
@@ -523,6 +553,94 @@ func buildRetroThemes(signals []parsedRetroSignal) []RetroTheme {
 		themes[i] = retroClusterToTheme(i+1, c)
 	}
 	return themes
+}
+
+// buildExperiments cross-references signals with decision entities tagged
+// workflow-experiment and returns experiment tracking entries. Returns nil
+// when no signals reference any decision ID (P5-3.7).
+func (s *RetroService) buildExperiments(signals []parsedRetroSignal) []RetroExperiment {
+	// Group signals by their RelatedDecision.
+	byDecision := make(map[string][]parsedRetroSignal)
+	for _, sig := range signals {
+		if sig.RelatedDecision != "" {
+			byDecision[sig.RelatedDecision] = append(byDecision[sig.RelatedDecision], sig)
+		}
+	}
+	if len(byDecision) == 0 {
+		return nil
+	}
+
+	if s.entitySvc == nil {
+		return nil
+	}
+
+	// Build a lookup of decision entities tagged workflow-experiment.
+	decisions, err := s.entitySvc.List("decision")
+	if err != nil {
+		return nil
+	}
+	decisionTitles := make(map[string]string)
+	for _, d := range decisions {
+		tags, _ := d.State["tags"].([]any)
+		for _, t := range tags {
+			if s, ok := t.(string); ok && s == "workflow-experiment" {
+				summary, _ := d.State["summary"].(string)
+				decisionTitles[d.ID] = summary
+				break
+			}
+		}
+	}
+
+	// Sort decision IDs for deterministic output.
+	ids := make([]string, 0, len(byDecision))
+	for id := range byDecision {
+		ids = append(ids, id)
+	}
+	sort.Strings(ids)
+
+	var experiments []RetroExperiment
+	for _, id := range ids {
+		title, ok := decisionTitles[id]
+		if !ok {
+			// Not a workflow-experiment decision; skip.
+			continue
+		}
+
+		sigs := byDecision[id]
+		positive, negative := 0, 0
+		for _, sig := range sigs {
+			if sig.Category == "worked-well" {
+				positive++
+			} else {
+				negative++
+			}
+		}
+
+		var recommendation string
+		if positive > negative {
+			recommendation = "keep"
+		} else if positive == 0 && negative > 0 {
+			recommendation = "revert"
+		} else {
+			recommendation = "revise"
+		}
+
+		assessment := fmt.Sprintf("%d positive, %d negative", positive, negative)
+
+		experiments = append(experiments, RetroExperiment{
+			DecisionID:      id,
+			Title:           title,
+			PositiveSignals: positive,
+			NegativeSignals: negative,
+			NetAssessment:   assessment,
+			Recommendation:  recommendation,
+		})
+	}
+
+	if len(experiments) == 0 {
+		return nil
+	}
+	return experiments
 }
 
 // buildRetroWorkedWell clusters worked-well signals and returns summary entries.
@@ -670,7 +788,7 @@ func renderRetroMarkdown(title string, result RetroSynthesisResult) string {
 	}
 	b.WriteString("\n---\n\n")
 
-	if len(result.Themes) == 0 && len(result.WorkedWell) == 0 {
+	if len(result.Themes) == 0 && len(result.WorkedWell) == 0 && len(result.Experiments) == 0 {
 		b.WriteString("No signals found for the given filters.\n")
 		return b.String()
 	}
@@ -688,6 +806,17 @@ func renderRetroMarkdown(title string, result RetroSynthesisResult) string {
 			if len(t.Signals) > 0 {
 				fmt.Fprintf(&b, "Signals: %s\n\n", strings.Join(t.Signals, ", "))
 			}
+		}
+	}
+
+	if len(result.Experiments) > 0 {
+		b.WriteString("## Experiments\n\n")
+		for _, exp := range result.Experiments {
+			fmt.Fprintf(&b, "### %s (%s)\n\n", exp.Title, exp.DecisionID)
+			fmt.Fprintf(&b, "**Recommendation:** %s\n\n", exp.Recommendation)
+			fmt.Fprintf(&b, "- Positive signals: %d\n", exp.PositiveSignals)
+			fmt.Fprintf(&b, "- Negative signals: %d\n", exp.NegativeSignals)
+			fmt.Fprintf(&b, "- Assessment: %s\n\n", exp.NetAssessment)
 		}
 	}
 

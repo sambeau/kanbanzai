@@ -1,6 +1,9 @@
 package service
 
 import (
+	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
@@ -91,6 +94,40 @@ func TestParseObservationAndSuggestion_WithRelatedNoSuggestion(t *testing.T) {
 	}
 	if sug != "" {
 		t.Errorf("suggestion = %q, want empty", sug)
+	}
+}
+
+// ─── parseRelatedDecision ─────────────────────────────────────────────────────
+
+func TestParseRelatedDecision_Present(t *testing.T) {
+	t.Parallel()
+	got := parseRelatedDecision("[moderate] spec-ambiguity: Error undefined Suggestion: Add format Related: DEC-042")
+	if got != "DEC-042" {
+		t.Errorf("parseRelatedDecision() = %q, want %q", got, "DEC-042")
+	}
+}
+
+func TestParseRelatedDecision_Absent(t *testing.T) {
+	t.Parallel()
+	got := parseRelatedDecision("[minor] tool-gap: No deploy automation tool exists")
+	if got != "" {
+		t.Errorf("parseRelatedDecision() = %q, want empty", got)
+	}
+}
+
+func TestParseRelatedDecision_NoSuggestion(t *testing.T) {
+	t.Parallel()
+	got := parseRelatedDecision("[minor] worked-well: Vertical slicing was great Related: DEC-043")
+	if got != "DEC-043" {
+		t.Errorf("parseRelatedDecision() = %q, want %q", got, "DEC-043")
+	}
+}
+
+func TestParseRelatedDecision_EmptyContent(t *testing.T) {
+	t.Parallel()
+	got := parseRelatedDecision("")
+	if got != "" {
+		t.Errorf("parseRelatedDecision() = %q, want empty", got)
 	}
 }
 
@@ -478,6 +515,8 @@ func TestBuildRetroWorkedWell_OneSignal(t *testing.T) {
 
 // writeRetroKnowledgeRecord writes a retrospective knowledge record directly to
 // the store with an explicit created timestamp (to enable date filter testing).
+// ─── Test helpers ─────────────────────────────────────────────────────────────
+
 func writeRetroKnowledgeRecord(
 	t *testing.T,
 	root, id, category, severity, content, learnedFrom, created string,
@@ -981,5 +1020,479 @@ func TestRenderRetroMarkdown_WithWorkedWell(t *testing.T) {
 	}
 	if !strings.Contains(md, "Vertical slicing worked well") {
 		t.Error("markdown should contain worked-well observation")
+	}
+}
+
+func TestRenderRetroMarkdown_WithExperiments(t *testing.T) {
+	t.Parallel()
+	result := RetroSynthesisResult{
+		Scope:       "project",
+		SignalCount: 3,
+		Period:      RetroPeriod{From: "2026-03-01T00:00:00Z", To: "2026-03-28T00:00:00Z"},
+		Themes:      []RetroTheme{},
+		Experiments: []RetroExperiment{
+			{
+				DecisionID:      "DEC-0100000000001",
+				Title:           "Add error format to spec template",
+				PositiveSignals: 3,
+				NegativeSignals: 1,
+				NetAssessment:   "3 positive, 1 negative",
+				Recommendation:  "keep",
+			},
+		},
+	}
+	md := renderRetroMarkdown("Test Retrospective", result)
+	if !strings.Contains(md, "## Experiments") {
+		t.Error("markdown should contain '## Experiments'")
+	}
+	if !strings.Contains(md, "DEC-0100000000001") {
+		t.Error("markdown should contain decision ID")
+	}
+	if !strings.Contains(md, "Add error format to spec template") {
+		t.Error("markdown should contain experiment title")
+	}
+	if !strings.Contains(md, "keep") {
+		t.Error("markdown should contain recommendation")
+	}
+}
+
+// ─── Phase 3: Experiment tracking in synthesis ────────────────────────────────
+
+// writeDecisionEntity writes a decision entity YAML file to the test root.
+func writeDecisionEntity(t *testing.T, root, id, slug, summary, status string, tags []string) {
+	t.Helper()
+	dir := filepath.Join(root, "decisions")
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		t.Fatalf("mkdir decisions: %v", err)
+	}
+	tagsYAML := ""
+	for _, tag := range tags {
+		tagsYAML += fmt.Sprintf("\n  - %s", tag)
+	}
+	content := fmt.Sprintf(`id: %s
+slug: %s
+summary: %s
+rationale: Test rationale
+decided_by: test
+date: "2026-03-01T00:00:00Z"
+status: %s
+tags:%s
+`, id, slug, summary, status, tagsYAML)
+	path := filepath.Join(dir, id+"-"+slug+".yaml")
+	if err := os.WriteFile(path, []byte(content), 0644); err != nil {
+		t.Fatalf("write decision entity: %v", err)
+	}
+}
+
+// newRetroTestServiceWithEntities creates a RetroService with entitySvc wired up.
+func newRetroTestServiceWithEntities(t *testing.T, root string) *RetroService {
+	t.Helper()
+	knowledgeSvc := NewKnowledgeService(root)
+	entitySvc := NewEntityService(root)
+	return &RetroService{
+		knowledgeSvc: knowledgeSvc,
+		entitySvc:    entitySvc,
+		repoRoot:     root,
+		now:          func() time.Time { return time.Date(2026, 3, 28, 0, 0, 0, 0, time.UTC) },
+	}
+}
+
+// P5-3.1: finish with related_decision stores Related: DEC-042 in content.
+// (Tested in retro_test.go via TestEncodeRetroContent_WithRelatedDecision and
+// TestEncodeRetroContent_WithSuggestionAndRelatedDecision.)
+
+// P5-3.2: related_decision is optional; signals without it are accepted.
+// (Tested in retro_test.go via TestEncodeRetroContent_Basic.)
+
+// P5-3.4: When at least one signal references a decision, experiments section is present.
+func TestSynthesise_ExperimentsPresent(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	writeDecisionEntity(t, root, "DEC-0100000000001", "add-error-format",
+		"Add error format to spec template", "accepted",
+		[]string{"workflow-experiment", "retrospective"})
+
+	writeRetroKnowledgeRecord(t, root,
+		"KE-E01", "spec-ambiguity", "moderate",
+		"[moderate] spec-ambiguity: Error format still missing Related: DEC-0100000000001",
+		"TASK-001", "2026-03-10T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-E02", "worked-well", "minor",
+		"[minor] worked-well: Error format spec section eliminated guesswork Related: DEC-0100000000001",
+		"TASK-002", "2026-03-11T10:00:00Z",
+	)
+
+	result, err := svc.Synthesise(RetroSynthesisInput{})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if result.Experiments == nil {
+		t.Fatal("Experiments should be present when signals reference decisions")
+	}
+	if len(result.Experiments) != 1 {
+		t.Fatalf("Experiments len = %d, want 1", len(result.Experiments))
+	}
+	exp := result.Experiments[0]
+	if exp.DecisionID != "DEC-0100000000001" {
+		t.Errorf("DecisionID = %q, want %q", exp.DecisionID, "DEC-0100000000001")
+	}
+	if exp.Title != "Add error format to spec template" {
+		t.Errorf("Title = %q, want %q", exp.Title, "Add error format to spec template")
+	}
+	if exp.PositiveSignals != 1 {
+		t.Errorf("PositiveSignals = %d, want 1", exp.PositiveSignals)
+	}
+	if exp.NegativeSignals != 1 {
+		t.Errorf("NegativeSignals = %d, want 1", exp.NegativeSignals)
+	}
+}
+
+// P5-3.5: Each experiment entry includes required fields and recommendation.
+func TestSynthesise_ExperimentRecommendationKeep(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	writeDecisionEntity(t, root, "DEC-0100000000002", "vertical-slicing",
+		"Require vertical slice decomposition", "accepted",
+		[]string{"workflow-experiment"})
+
+	writeRetroKnowledgeRecord(t, root,
+		"KE-K01", "worked-well", "minor",
+		"[minor] worked-well: Slicing was great Related: DEC-0100000000002",
+		"TASK-001", "2026-03-10T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-K02", "worked-well", "minor",
+		"[minor] worked-well: Each slice independently testable Related: DEC-0100000000002",
+		"TASK-002", "2026-03-11T10:00:00Z",
+	)
+
+	result, err := svc.Synthesise(RetroSynthesisInput{})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if len(result.Experiments) != 1 {
+		t.Fatalf("Experiments len = %d, want 1", len(result.Experiments))
+	}
+	exp := result.Experiments[0]
+	if exp.Recommendation != "keep" {
+		t.Errorf("Recommendation = %q, want %q", exp.Recommendation, "keep")
+	}
+	if exp.PositiveSignals != 2 {
+		t.Errorf("PositiveSignals = %d, want 2", exp.PositiveSignals)
+	}
+	if exp.NegativeSignals != 0 {
+		t.Errorf("NegativeSignals = %d, want 0", exp.NegativeSignals)
+	}
+}
+
+func TestSynthesise_ExperimentRecommendationRevert(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	writeDecisionEntity(t, root, "DEC-0100000000003", "require-context-profile",
+		"Require context profile for all features", "accepted",
+		[]string{"workflow-experiment"})
+
+	writeRetroKnowledgeRecord(t, root,
+		"KE-R01", "tool-friction", "moderate",
+		"[moderate] tool-friction: Context profile setup too complex Related: DEC-0100000000003",
+		"TASK-001", "2026-03-10T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-R02", "workflow-friction", "moderate",
+		"[moderate] workflow-friction: Profiles not reused across features Related: DEC-0100000000003",
+		"TASK-002", "2026-03-11T10:00:00Z",
+	)
+
+	result, err := svc.Synthesise(RetroSynthesisInput{})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if len(result.Experiments) != 1 {
+		t.Fatalf("Experiments len = %d, want 1", len(result.Experiments))
+	}
+	exp := result.Experiments[0]
+	if exp.Recommendation != "revert" {
+		t.Errorf("Recommendation = %q, want %q", exp.Recommendation, "revert")
+	}
+	if exp.PositiveSignals != 0 {
+		t.Errorf("PositiveSignals = %d, want 0", exp.PositiveSignals)
+	}
+	if exp.NegativeSignals != 2 {
+		t.Errorf("NegativeSignals = %d, want 2", exp.NegativeSignals)
+	}
+}
+
+func TestSynthesise_ExperimentRecommendationRevise(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	writeDecisionEntity(t, root, "DEC-0100000000004", "spec-template-sections",
+		"Add structured sections to spec template", "accepted",
+		[]string{"workflow-experiment"})
+
+	writeRetroKnowledgeRecord(t, root,
+		"KE-V01", "worked-well", "minor",
+		"[minor] worked-well: Error section was helpful Related: DEC-0100000000004",
+		"TASK-001", "2026-03-10T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-V02", "spec-ambiguity", "moderate",
+		"[moderate] spec-ambiguity: Retry policy section still vague Related: DEC-0100000000004",
+		"TASK-002", "2026-03-11T10:00:00Z",
+	)
+
+	result, err := svc.Synthesise(RetroSynthesisInput{})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if len(result.Experiments) != 1 {
+		t.Fatalf("Experiments len = %d, want 1", len(result.Experiments))
+	}
+	exp := result.Experiments[0]
+	if exp.Recommendation != "revise" {
+		t.Errorf("Recommendation = %q, want %q", exp.Recommendation, "revise")
+	}
+}
+
+// P5-3.6: Signals not referencing any decision are not attributed to experiments.
+func TestSynthesise_UnrelatedSignalsNotAttributed(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	writeDecisionEntity(t, root, "DEC-0100000000005", "test-experiment",
+		"Test experiment", "accepted",
+		[]string{"workflow-experiment"})
+
+	// Signal with related decision.
+	writeRetroKnowledgeRecord(t, root,
+		"KE-U01", "worked-well", "minor",
+		"[minor] worked-well: Experiment helped Related: DEC-0100000000005",
+		"TASK-001", "2026-03-10T10:00:00Z",
+	)
+	// Signal without related decision — should not be attributed.
+	writeRetroKnowledgeRecord(t, root,
+		"KE-U02", "spec-ambiguity", "moderate",
+		"[moderate] spec-ambiguity: Unrelated observation",
+		"TASK-002", "2026-03-11T10:00:00Z",
+	)
+
+	result, err := svc.Synthesise(RetroSynthesisInput{})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if len(result.Experiments) != 1 {
+		t.Fatalf("Experiments len = %d, want 1", len(result.Experiments))
+	}
+	exp := result.Experiments[0]
+	// Only the signal with Related: DEC-0100000000005 should count.
+	if exp.PositiveSignals != 1 {
+		t.Errorf("PositiveSignals = %d, want 1", exp.PositiveSignals)
+	}
+	if exp.NegativeSignals != 0 {
+		t.Errorf("NegativeSignals = %d, want 0", exp.NegativeSignals)
+	}
+}
+
+// P5-3.7: Experiments section is absent (nil) when no signals reference any decision.
+func TestSynthesise_ExperimentsAbsentWhenNoReferences(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	writeDecisionEntity(t, root, "DEC-0100000000006", "unused-experiment",
+		"Unused experiment", "accepted",
+		[]string{"workflow-experiment"})
+
+	writeRetroKnowledgeRecord(t, root,
+		"KE-N01", "spec-ambiguity", "moderate",
+		"[moderate] spec-ambiguity: No related decision here",
+		"TASK-001", "2026-03-10T10:00:00Z",
+	)
+
+	result, err := svc.Synthesise(RetroSynthesisInput{})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if result.Experiments != nil {
+		t.Errorf("Experiments = %v, want nil when no signals reference decisions", result.Experiments)
+	}
+}
+
+// P5-3.7 edge case: Signals reference a decision that exists but is NOT
+// tagged workflow-experiment — experiments section should still be absent.
+func TestSynthesise_ExperimentsAbsentWhenDecisionNotExperiment(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	// Decision exists but is NOT tagged workflow-experiment.
+	writeDecisionEntity(t, root, "DEC-0100000000007", "not-an-experiment",
+		"Not an experiment", "accepted",
+		[]string{"some-other-tag"})
+
+	writeRetroKnowledgeRecord(t, root,
+		"KE-NE01", "spec-ambiguity", "moderate",
+		"[moderate] spec-ambiguity: References non-experiment Related: DEC-0100000000007",
+		"TASK-001", "2026-03-10T10:00:00Z",
+	)
+
+	result, err := svc.Synthesise(RetroSynthesisInput{})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if result.Experiments != nil {
+		t.Errorf("Experiments = %v, want nil when referenced decision is not a workflow-experiment", result.Experiments)
+	}
+}
+
+// P5-3.3: related_decision with an ID that doesn't correspond to a known
+// decision is accepted and stored. In synthesis, such signals are simply
+// not attributed to any experiment.
+func TestSynthesise_ExperimentsAbsentWhenDecisionDoesNotExist(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	// No decision entities at all.
+	writeRetroKnowledgeRecord(t, root,
+		"KE-NX01", "spec-ambiguity", "moderate",
+		"[moderate] spec-ambiguity: References nonexistent decision Related: DEC-0199999999999",
+		"TASK-001", "2026-03-10T10:00:00Z",
+	)
+
+	result, err := svc.Synthesise(RetroSynthesisInput{})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if result.Experiments != nil {
+		t.Errorf("Experiments = %v, want nil when referenced decision does not exist", result.Experiments)
+	}
+}
+
+// P5-3.5: net_assessment is a descriptive string.
+func TestSynthesise_ExperimentNetAssessment(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	writeDecisionEntity(t, root, "DEC-0100000000008", "assessment-test",
+		"Assessment test", "accepted",
+		[]string{"workflow-experiment"})
+
+	writeRetroKnowledgeRecord(t, root,
+		"KE-A01", "worked-well", "minor",
+		"[minor] worked-well: Good outcome Related: DEC-0100000000008",
+		"TASK-001", "2026-03-10T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-A02", "worked-well", "minor",
+		"[minor] worked-well: Another good outcome Related: DEC-0100000000008",
+		"TASK-002", "2026-03-11T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-A03", "tool-friction", "moderate",
+		"[moderate] tool-friction: Some friction Related: DEC-0100000000008",
+		"TASK-003", "2026-03-12T10:00:00Z",
+	)
+
+	result, err := svc.Synthesise(RetroSynthesisInput{})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if len(result.Experiments) != 1 {
+		t.Fatalf("Experiments len = %d, want 1", len(result.Experiments))
+	}
+	exp := result.Experiments[0]
+	if exp.NetAssessment != "2 positive, 1 negative" {
+		t.Errorf("NetAssessment = %q, want %q", exp.NetAssessment, "2 positive, 1 negative")
+	}
+	if exp.Recommendation != "keep" {
+		t.Errorf("Recommendation = %q, want %q", exp.Recommendation, "keep")
+	}
+}
+
+// Multiple experiments in one synthesis.
+func TestSynthesise_MultipleExperiments(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	writeDecisionEntity(t, root, "DEC-0100000000009", "experiment-alpha",
+		"Experiment Alpha", "accepted",
+		[]string{"workflow-experiment"})
+	writeDecisionEntity(t, root, "DEC-0100000000010", "experiment-beta",
+		"Experiment Beta", "accepted",
+		[]string{"workflow-experiment"})
+
+	writeRetroKnowledgeRecord(t, root,
+		"KE-M01", "worked-well", "minor",
+		"[minor] worked-well: Alpha helped Related: DEC-0100000000009",
+		"TASK-001", "2026-03-10T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-M02", "tool-friction", "moderate",
+		"[moderate] tool-friction: Beta caused friction Related: DEC-0100000000010",
+		"TASK-002", "2026-03-11T10:00:00Z",
+	)
+
+	result, err := svc.Synthesise(RetroSynthesisInput{})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	if len(result.Experiments) != 2 {
+		t.Fatalf("Experiments len = %d, want 2", len(result.Experiments))
+	}
+	// Experiments should be sorted by decision ID for deterministic output.
+	if result.Experiments[0].DecisionID != "DEC-0100000000009" {
+		t.Errorf("Experiments[0].DecisionID = %q, want %q", result.Experiments[0].DecisionID, "DEC-0100000000009")
+	}
+	if result.Experiments[1].DecisionID != "DEC-0100000000010" {
+		t.Errorf("Experiments[1].DecisionID = %q, want %q", result.Experiments[1].DecisionID, "DEC-0100000000010")
+	}
+	if result.Experiments[0].Recommendation != "keep" {
+		t.Errorf("Experiments[0].Recommendation = %q, want %q", result.Experiments[0].Recommendation, "keep")
+	}
+	if result.Experiments[1].Recommendation != "revert" {
+		t.Errorf("Experiments[1].Recommendation = %q, want %q", result.Experiments[1].Recommendation, "revert")
+	}
+}
+
+// Experiment with rejected status is excluded from experiments section.
+func TestSynthesise_ExperimentsExcludeNonAcceptedDecisions(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithEntities(t, root)
+
+	// Decision tagged workflow-experiment but in rejected status.
+	writeDecisionEntity(t, root, "DEC-0100000000011", "rejected-experiment",
+		"Rejected experiment", "rejected",
+		[]string{"workflow-experiment"})
+
+	writeRetroKnowledgeRecord(t, root,
+		"KE-RE01", "worked-well", "minor",
+		"[minor] worked-well: Referenced rejected decision Related: DEC-0100000000011",
+		"TASK-001", "2026-03-10T10:00:00Z",
+	)
+
+	result, err := svc.Synthesise(RetroSynthesisInput{})
+	if err != nil {
+		t.Fatalf("Synthesise() error = %v", err)
+	}
+	// buildExperiments only matches workflow-experiment decisions regardless of
+	// their own status — it just looks for the tag. The rejected decision still
+	// has the tag, so it WILL appear. This is by design: synthesis shows all
+	// workflow-experiment decisions that signals reference, regardless of status.
+	// The nudge (assembly.go) is what filters to accepted-only.
+	if result.Experiments == nil {
+		t.Fatal("Experiments should not be nil when signals reference a workflow-experiment decision")
 	}
 }

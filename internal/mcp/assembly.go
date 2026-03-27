@@ -25,6 +25,13 @@ const assemblyDefaultBudget = 30720
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
+// asmExperimentNudge represents an active workflow experiment included in
+// context assembly per spec §8.4.
+type asmExperimentNudge struct {
+	decisionID string
+	summary    string
+}
+
 // asmSpecSection represents a document section included in assembled context.
 type asmSpecSection struct {
 	document string
@@ -67,6 +74,10 @@ type assembledContext struct {
 	byteUsage          int
 	byteBudget         int
 	trimmed            []asmTrimmedEntry
+	// experimentNudge lists active workflow-experiment decisions for agents to
+	// reference when they encounter friction or success related to an experiment.
+	// Not a knowledge entry; does not count against tier-3 budget (spec §8.4).
+	experimentNudge []asmExperimentNudge
 	// specFallbackPath is set when document intelligence returns no sections.
 	// Contains the raw spec document path for the agent to read manually
 	// (graceful degradation per spec §24.3).
@@ -84,6 +95,7 @@ type asmInput struct {
 	knowledgeSvc    *service.KnowledgeService
 	intelligenceSvc *service.IntelligenceService
 	docRecordSvc    *service.DocumentService
+	entitySvc       *service.EntityService
 }
 
 // assembleContext gathers spec sections, acceptance criteria, knowledge,
@@ -120,6 +132,11 @@ func assembleContext(input asmInput) assembledContext {
 
 	// File context from task's files_planned.
 	actx.filesContext = asmExtractFiles(input.taskState)
+
+	// Active workflow experiments (Phase 3 context nudge, spec §8.4).
+	if input.entitySvc != nil {
+		actx.experimentNudge = asmLoadExperimentNudge(input.entitySvc)
+	}
 
 	// Byte usage and trim if over budget.
 	actx.byteUsage = asmByteCount(actx)
@@ -411,6 +428,9 @@ func asmByteCount(actx assembledContext) int {
 	if actx.specFallbackPath != "" {
 		total += len(actx.specFallbackPath) + 30
 	}
+	for _, exp := range actx.experimentNudge {
+		total += len(exp.decisionID) + len(exp.summary) + 30
+	}
 	return total
 }
 
@@ -478,6 +498,52 @@ func asmTrimContext(actx assembledContext) assembledContext {
 	actx.knowledge = append(t2, t3...)
 	actx.byteUsage = current
 	return actx
+}
+
+// ─── Experiment nudge loading ─────────────────────────────────────────────────
+
+// asmLoadExperimentNudge loads active workflow-experiment decisions for the
+// context nudge (spec §8.4). Returns nil when no active experiments exist.
+func asmLoadExperimentNudge(entitySvc *service.EntityService) []asmExperimentNudge {
+	decisions, err := entitySvc.List("decision")
+	if err != nil {
+		return nil
+	}
+	var nudges []asmExperimentNudge
+	for _, dec := range decisions {
+		status, _ := dec.State["status"].(string)
+		if status != "accepted" {
+			continue
+		}
+		if !hasTag(dec.State, "workflow-experiment") {
+			continue
+		}
+		summary, _ := dec.State["summary"].(string)
+		nudges = append(nudges, asmExperimentNudge{
+			decisionID: dec.ID,
+			summary:    summary,
+		})
+	}
+	return nudges
+}
+
+// hasTag checks if an entity state map contains a specific tag.
+func hasTag(state map[string]any, tag string) bool {
+	switch tags := state["tags"].(type) {
+	case []any:
+		for _, t := range tags {
+			if s, ok := t.(string); ok && s == tag {
+				return true
+			}
+		}
+	case []string:
+		for _, t := range tags {
+			if t == tag {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
