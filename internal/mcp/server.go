@@ -182,6 +182,8 @@ func NewServer(entityRoot string) *server.MCPServer {
 		mcpServer.AddTools(StatusTools(entitySvc, docRecordSvc)...)
 		// Track E: finish — completion + inline knowledge + lenient lifecycle
 		mcpServer.AddTools(FinishTools(entitySvc, dispatchSvc)...)
+		// Track G: handoff — sub-agent prompt generation
+		mcpServer.AddTools(HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc)...)
 	}
 
 	return mcpServer
