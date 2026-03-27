@@ -32,11 +32,11 @@ import (
 )
 
 // EntityTool returns the consolidated `entity` MCP tool registered in the core group.
-func EntityTool(entitySvc *service.EntityService) []server.ServerTool {
-	return []server.ServerTool{entityTool(entitySvc)}
+func EntityTool(entitySvc *service.EntityService, docSvc *service.DocumentService) []server.ServerTool {
+	return []server.ServerTool{entityTool(entitySvc, docSvc)}
 }
 
-func entityTool(entitySvc *service.EntityService) server.ServerTool {
+func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentService) server.ServerTool {
 	tool := mcp.NewTool("entity",
 		mcp.WithDescription(
 			"Generic CRUD for all entity types (plan, feature, task, bug, epic, decision). "+
@@ -75,6 +75,10 @@ func entityTool(entitySvc *service.EntityService) server.ServerTool {
 		mcp.WithArray("depends_on", mcp.Description("Task IDs this task depends on (task update only). Each must be a valid TASK-... ID.")),
 		mcp.WithString("created_after", mcp.Description("Created-after filter, RFC3339 (list only)")),
 		mcp.WithString("created_before", mcp.Description("Created-before filter, RFC3339 (list only)")),
+		mcp.WithBoolean("advance", mcp.Description(
+			"When true, advance a feature through multiple lifecycle states toward the target, "+
+				"checking document prerequisites at each gate. Only supported for feature entities (transition only, default: false).",
+		)),
 	)
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
@@ -83,7 +87,7 @@ func entityTool(entitySvc *service.EntityService) server.ServerTool {
 			"get":        entityGetAction(entitySvc),
 			"list":       entityListAction(entitySvc),
 			"update":     entityUpdateAction(entitySvc),
-			"transition": entityTransitionAction(entitySvc),
+			"transition": entityTransitionAction(entitySvc, docSvc),
 		})
 	})
 
@@ -518,7 +522,7 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 
 // ─── transition ───────────────────────────────────────────────────────────────
 
-func entityTransitionAction(entitySvc *service.EntityService) ActionHandler {
+func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.DocumentService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		// Signal mutation so side_effects: [] is always present in the response (spec §8.4).
 		SignalMutation(ctx)
@@ -536,6 +540,16 @@ func entityTransitionAction(entitySvc *service.EntityService) ActionHandler {
 		entityType, ok := entityInferType(entityID)
 		if !ok {
 			return nil, fmt.Errorf("cannot infer entity type from ID %q", entityID)
+		}
+
+		advance, _ := args["advance"].(bool)
+
+		// Advance mode: walk a feature through multiple states toward the target.
+		if advance {
+			if entityType != "feature" {
+				return nil, fmt.Errorf("advance is only supported for feature entities")
+			}
+			return entityAdvanceFeature(ctx, entitySvc, docSvc, entityID, newStatus)
 		}
 
 		// Plans use their own status update path.
@@ -588,6 +602,60 @@ func entityTransitionAction(entitySvc *service.EntityService) ActionHandler {
 		return map[string]any{
 			"entity": entityFullRecord(result.ID, result.Type, result.Slug, result.State),
 		}, nil
+	}
+}
+
+// entityAdvanceFeature loads a feature and calls AdvanceFeatureStatus, returning
+// a structured response with the stages advanced through and any stop reason.
+func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService, docSvc *service.DocumentService, entityID, targetStatus string) (any, error) {
+	// Load the feature entity to get the model struct needed by AdvanceFeatureStatus.
+	getResult, err := entitySvc.Get("feature", entityID, "")
+	if err != nil {
+		return nil, fmt.Errorf("loading feature %s: %w", entityID, err)
+	}
+
+	feature := featureFromState(getResult.ID, getResult.Slug, getResult.State)
+	startStatus := string(feature.Status)
+
+	advResult, err := service.AdvanceFeatureStatus(feature, targetStatus, entitySvc, docSvc)
+	if err != nil {
+		return nil, fmt.Errorf("advance feature %s: %w", entityID, err)
+	}
+
+	stagesSkipped := len(advResult.AdvancedThrough)
+	resp := map[string]any{
+		"status":           advResult.FinalStatus,
+		"advanced_through": advResult.AdvancedThrough,
+	}
+
+	if advResult.StoppedReason != "" {
+		resp["stopped_reason"] = advResult.StoppedReason
+		resp["message"] = fmt.Sprintf(
+			"Advanced from %s to %s (%d stage). Stopped: %s",
+			startStatus, advResult.FinalStatus, stagesSkipped, advResult.StoppedReason,
+		)
+	} else if stagesSkipped == 0 {
+		resp["message"] = fmt.Sprintf("Already at %s", advResult.FinalStatus)
+	} else {
+		resp["message"] = fmt.Sprintf(
+			"Advanced from %s to %s (skipped %d stages with satisfied prerequisites)",
+			startStatus, advResult.FinalStatus, stagesSkipped,
+		)
+	}
+
+	return resp, nil
+}
+
+// featureFromState constructs a model.Feature from an entity state map.
+func featureFromState(entityID, slug string, state map[string]any) *model.Feature {
+	return &model.Feature{
+		ID:      entityID,
+		Slug:    slug,
+		Parent:  entityStateStr(state, "parent"),
+		Status:  model.FeatureStatus(entityStateStr(state, "status")),
+		Design:  entityStateStr(state, "design"),
+		Spec:    entityStateStr(state, "spec"),
+		DevPlan: entityStateStr(state, "dev_plan"),
 	}
 }
 

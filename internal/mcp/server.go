@@ -112,7 +112,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		// Track G: handoff — sub-agent prompt generation
 		mcpServer.AddTools(HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc)...)
 		// Track H: entity — consolidated entity CRUD
-		mcpServer.AddTools(EntityTool(entitySvc)...)
+		mcpServer.AddTools(EntityTool(entitySvc, docRecordSvc)...)
 		// Track I: doc — consolidated document operations
 		mcpServer.AddTools(DocTool(docRecordSvc, intelligenceSvc)...)
 		// Track K: health — consolidated health check

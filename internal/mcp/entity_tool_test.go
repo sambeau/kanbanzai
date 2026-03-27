@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -78,13 +79,36 @@ func createEntityTestTask(t *testing.T, entitySvc *service.EntityService, featID
 // callEntityTool invokes the entity tool and returns the raw text response.
 func callEntityTool(t *testing.T, entitySvc *service.EntityService, args map[string]any) string {
 	t.Helper()
-	tool := entityTool(entitySvc)
+	tool := entityTool(entitySvc, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
 		t.Fatalf("entity handler error: %v", err)
 	}
 	return extractText(t, result)
+}
+
+// callEntityToolWithDocSvc invokes the entity tool with a DocumentService and returns raw text.
+func callEntityToolWithDocSvc(t *testing.T, entitySvc *service.EntityService, docSvc *service.DocumentService, args map[string]any) string {
+	t.Helper()
+	tool := entityTool(entitySvc, docSvc)
+	req := makeRequest(args)
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("entity handler error: %v", err)
+	}
+	return extractText(t, result)
+}
+
+// callEntityToolWithDocSvcJSON invokes the entity tool with a DocumentService and parses the result as JSON.
+func callEntityToolWithDocSvcJSON(t *testing.T, entitySvc *service.EntityService, docSvc *service.DocumentService, args map[string]any) map[string]any {
+	t.Helper()
+	text := callEntityToolWithDocSvc(t, entitySvc, docSvc, args)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse entity result: %v\nraw: %s", err, text)
+	}
+	return parsed
 }
 
 // callEntityToolJSON invokes the entity tool and parses the result as JSON.
@@ -1055,6 +1079,200 @@ func TestEntityArgStringSlice_Missing(t *testing.T) {
 }
 
 // ─── plan creation ────────────────────────────────────────────────────────────
+
+// ─── Advance transition tests ─────────────────────────────────────────────────
+
+func TestEntity_Transition_AdvanceFeature_HappyPath(t *testing.T) {
+	t.Parallel()
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	entitySvc := service.NewEntityService(stateRoot)
+	docSvc := service.NewDocumentService(stateRoot, repoRoot)
+
+	planID := createEntityTestPlan(t, entitySvc, "adv-hp")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-adv-hp")
+
+	// Submit and approve a design document so the designing gate is satisfied.
+	setupApprovedDoc(t, docSvc, repoRoot, "work/design/adv-design.md", "design", featID)
+
+	result := callEntityToolWithDocSvcJSON(t, entitySvc, docSvc, map[string]any{
+		"action":  "transition",
+		"id":      featID,
+		"status":  "specifying",
+		"advance": true,
+	})
+
+	status, _ := result["status"].(string)
+	if status != "specifying" {
+		t.Errorf("status = %q, want specifying", status)
+	}
+
+	advThrough, _ := result["advanced_through"].([]any)
+	if len(advThrough) < 1 {
+		t.Fatalf("expected advanced_through to have at least 1 entry, got %v", advThrough)
+	}
+	if advThrough[0] != "designing" {
+		t.Errorf("advanced_through[0] = %v, want designing", advThrough[0])
+	}
+
+	msg, _ := result["message"].(string)
+	if msg == "" {
+		t.Error("expected non-empty message")
+	}
+}
+
+func TestEntity_Transition_AdvanceFeature_StopsAtGate(t *testing.T) {
+	t.Parallel()
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	entitySvc := service.NewEntityService(stateRoot)
+	docSvc := service.NewDocumentService(stateRoot, repoRoot)
+
+	planID := createEntityTestPlan(t, entitySvc, "adv-stop")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-adv-stop")
+
+	// No documents approved — advance should stop at the first gate (designing).
+	result := callEntityToolWithDocSvcJSON(t, entitySvc, docSvc, map[string]any{
+		"action":  "transition",
+		"id":      featID,
+		"status":  "developing",
+		"advance": true,
+	})
+
+	status, _ := result["status"].(string)
+	if status != "proposed" {
+		t.Errorf("status = %q, want proposed (should not advance without docs)", status)
+	}
+
+	stoppedReason, _ := result["stopped_reason"].(string)
+	if stoppedReason == "" {
+		t.Error("expected non-empty stopped_reason when gate blocks advance")
+	}
+
+	msg, _ := result["message"].(string)
+	if msg == "" {
+		t.Error("expected non-empty message")
+	}
+}
+
+func TestEntity_Transition_AdvanceNonFeature_Error(t *testing.T) {
+	t.Parallel()
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	entitySvc := service.NewEntityService(stateRoot)
+	docSvc := service.NewDocumentService(stateRoot, repoRoot)
+
+	planID := createEntityTestPlan(t, entitySvc, "adv-nf")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-adv-nf")
+	taskID, _ := createEntityTestTask(t, entitySvc, featID, "task-adv-nf")
+
+	// WithSideEffects wraps errors into a JSON error response (no Go error returned).
+	text := callEntityToolWithDocSvc(t, entitySvc, docSvc, map[string]any{
+		"action":  "transition",
+		"id":      taskID,
+		"status":  "ready",
+		"advance": true,
+	})
+	if !strings.Contains(text, "advance is only supported for feature entities") {
+		t.Errorf("expected error about advance not supported, got: %s", text)
+	}
+}
+
+func TestEntity_Transition_AdvanceFalse_NormalBehaviour(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "adv-false")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-adv-false")
+
+	// advance=false should behave exactly like a normal transition.
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":  "transition",
+		"id":      featID,
+		"status":  "designing",
+		"advance": false,
+	})
+
+	entity, ok := result["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected 'entity' object, got: %v", result)
+	}
+	if entity["status"] != "designing" {
+		t.Errorf("entity.status = %v, want designing", entity["status"])
+	}
+}
+
+func TestEntity_Transition_AdvanceNotProvided_NormalBehaviour(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "adv-omit")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-adv-omit")
+
+	// No advance parameter at all — normal single-step transition.
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action": "transition",
+		"id":     featID,
+		"status": "designing",
+	})
+
+	entity, ok := result["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected 'entity' object, got: %v", result)
+	}
+	if entity["status"] != "designing" {
+		t.Errorf("entity.status = %v, want designing", entity["status"])
+	}
+}
+
+// setupApprovedDoc creates a document file, submits it, and approves it.
+func setupApprovedDoc(t *testing.T, docSvc *service.DocumentService, repoRoot, path, docType, owner string) string {
+	t.Helper()
+	return submitAndApproveTestDoc(t, docSvc, repoRoot, path, docType, owner, true)
+}
+
+// submitAndApproveTestDoc creates a doc file, submits, and optionally approves it.
+func submitAndApproveTestDoc(t *testing.T, docSvc *service.DocumentService, repoRoot, relPath, docType, owner string, approve bool) string {
+	t.Helper()
+
+	// Create the document file on disk.
+	fullPath := repoRoot + "/" + relPath
+	dir := fullPath[:strings.LastIndex(fullPath, "/")]
+
+	if err := mkdirAll(dir); err != nil {
+		t.Fatalf("mkdir %s: %v", dir, err)
+	}
+	if err := writeFile(fullPath, "# Test Document\n\nContent for testing.\n"); err != nil {
+		t.Fatalf("write %s: %v", fullPath, err)
+	}
+
+	rec, err := docSvc.SubmitDocument(service.SubmitDocumentInput{
+		Path:      relPath,
+		Type:      docType,
+		Title:     "Test " + docType,
+		Owner:     owner,
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("submit doc: %v", err)
+	}
+
+	if approve {
+		if _, err := docSvc.ApproveDocument(service.ApproveDocumentInput{ID: rec.ID, ApprovedBy: "tester"}); err != nil {
+			t.Fatalf("approve doc: %v", err)
+		}
+	}
+
+	return rec.ID
+}
+
+func mkdirAll(path string) error {
+	return os.MkdirAll(path, 0o755)
+}
+
+func writeFile(path, content string) error {
+	return os.WriteFile(path, []byte(content), 0o644)
+}
 
 func TestEntity_Create_Plan(t *testing.T) {
 	// Plan creation requires a valid prefix registered in .kbz/config.yaml.
