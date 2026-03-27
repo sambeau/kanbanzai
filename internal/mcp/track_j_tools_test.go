@@ -17,6 +17,7 @@ import (
 	"kanbanzai/internal/config"
 	kbzctx "kanbanzai/internal/context"
 	"kanbanzai/internal/service"
+	"kanbanzai/internal/storage"
 	"kanbanzai/internal/worktree"
 )
 
@@ -1109,5 +1110,188 @@ func TestTrackJ_AllTrackJToolNames_Sorted(t *testing.T) {
 		if len(tools) == 0 {
 			t.Errorf("GroupToolNames[%q] is empty", group)
 		}
+	}
+}
+
+// TestTrackJ_Decompose_Apply_CreatesTasksWithDependencies is the happy-path test
+// for decompose(action: "apply"). It creates a feature, then applies a two-task
+// proposal where the second task depends on the first, and verifies:
+//   - both tasks are created in the entity store,
+//   - the response contains the correct task slugs,
+//   - depends_on in the response is resolved to a real task ID (not a slug).
+func TestTrackJ_Decompose_Apply_CreatesTasksWithDependencies(t *testing.T) {
+	t.Parallel()
+
+	// Build minimal services: we need a real entity store so that CreateTask
+	// actually persists records and we can verify the output.
+	entityRoot := t.TempDir()
+	stateRoot := t.TempDir()
+	profileRoot := t.TempDir()
+	indexRoot := t.TempDir()
+	repoRoot := t.TempDir()
+
+	entitySvc := service.NewEntityService(entityRoot)
+	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	profileStore := kbzctx.NewProfileStore(profileRoot)
+	checkpointStore := chk.NewStore(stateRoot)
+	intelligenceSvc := service.NewIntelligenceService(indexRoot, repoRoot)
+	docRecordSvc := service.NewDocumentService(stateRoot, repoRoot)
+	decomposeSvc := service.NewDecomposeService(entitySvc, docRecordSvc)
+	conflictSvc := service.NewConflictService(entitySvc, nil, repoRoot)
+
+	// Create a plan so the feature has a valid parent.
+	const planID = "P1-apply-test"
+	writePlanForTest(t, entitySvc, planID, "apply-test")
+
+	// Create the feature under the plan.
+	feat, err := entitySvc.CreateFeature(service.CreateFeatureInput{
+		Slug:      "widget-feature",
+		Parent:    planID,
+		Summary:   "Implement the widget",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature: %v", err)
+	}
+
+	// Assemble all Track J tools so we can call "decompose".
+	allTools := DecomposeTool(decomposeSvc, entitySvc)
+	allTools = append(allTools, EstimateTool(entitySvc, knowledgeSvc)...)
+	allTools = append(allTools, ConflictTool(conflictSvc)...)
+	allTools = append(allTools, KnowledgeTool(knowledgeSvc)...)
+	allTools = append(allTools, ProfileTool(profileStore)...)
+	allTools = append(allTools, DocIntelTool(intelligenceSvc, docRecordSvc)...)
+	allTools = append(allTools, IncidentTool(entitySvc)...)
+	allTools = append(allTools, CheckpointTool(checkpointStore)...)
+
+	ts, err := mcptest.NewServer(t, allTools...)
+	if err != nil {
+		t.Fatalf("new test server: %v", err)
+	}
+	t.Cleanup(func() { ts.Close() })
+	helper := &trackJTestServer{server: ts}
+
+	// Build a two-task proposal: task-b depends on task-a.
+	proposal := map[string]any{
+		"tasks": []any{
+			map[string]any{
+				"slug":       "task-a",
+				"summary":    "First task",
+				"rationale":  "Must come first",
+				"depends_on": []any{},
+			},
+			map[string]any{
+				"slug":       "task-b",
+				"summary":    "Second task",
+				"rationale":  "Depends on task-a",
+				"depends_on": []any{"task-a"},
+			},
+		},
+		"total_tasks": 2,
+		"slices":      []any{},
+		"warnings":    []any{},
+	}
+
+	resp := helper.call(t, "decompose", map[string]any{
+		"action":     "apply",
+		"feature_id": feat.ID,
+		"proposal":   proposal,
+	})
+
+	if _, hasErr := resp["error"]; hasErr {
+		t.Fatalf("decompose apply unexpected error: %v", resp["error"])
+	}
+
+	// Verify feature_id is echoed back.
+	if resp["feature_id"] != feat.ID {
+		t.Errorf("feature_id = %v, want %v", resp["feature_id"], feat.ID)
+	}
+
+	// Verify total_created.
+	totalCreated, ok := resp["total_created"].(float64)
+	if !ok {
+		t.Fatalf("expected total_created field, got: %v", resp)
+	}
+	if totalCreated != 2 {
+		t.Errorf("total_created = %v, want 2", totalCreated)
+	}
+
+	// Verify tasks_created contains both slugs.
+	tasksCreated, ok := resp["tasks_created"].([]any)
+	if !ok {
+		t.Fatalf("expected tasks_created array, got: %v", resp)
+	}
+	if len(tasksCreated) != 2 {
+		t.Fatalf("tasks_created length = %d, want 2", len(tasksCreated))
+	}
+
+	// Build a map of slug → task entry for easy lookup.
+	tasksBySlug := make(map[string]map[string]any, len(tasksCreated))
+	for _, raw := range tasksCreated {
+		entry, ok := raw.(map[string]any)
+		if !ok {
+			t.Fatalf("tasks_created entry is not a map: %T", raw)
+		}
+		slug, _ := entry["slug"].(string)
+		if slug == "" {
+			t.Fatalf("tasks_created entry missing slug: %v", entry)
+		}
+		tasksBySlug[slug] = entry
+	}
+
+	if _, ok := tasksBySlug["task-a"]; !ok {
+		t.Error("tasks_created missing task-a")
+	}
+	taskB, ok := tasksBySlug["task-b"]
+	if !ok {
+		t.Fatal("tasks_created missing task-b")
+	}
+
+	// Verify that task-b's depends_on is resolved to a real task ID (not "task-a").
+	depsRaw, ok := taskB["depends_on"].([]any)
+	if !ok || len(depsRaw) == 0 {
+		t.Fatalf("task-b depends_on should be a non-empty array, got: %v", taskB["depends_on"])
+	}
+	depID, _ := depsRaw[0].(string)
+	if depID == "task-a" {
+		t.Error("task-b depends_on still contains slug 'task-a' instead of resolved task ID")
+	}
+	if depID == "" || len(depID) < 5 {
+		t.Errorf("task-b depends_on[0] = %q — expected a resolved TASK- ID", depID)
+	}
+
+	// Verify that the resolved dep ID matches the ID of task-a in the response.
+	taskA := tasksBySlug["task-a"]
+	taskAID, _ := taskA["id"].(string)
+	if taskAID == "" {
+		t.Fatal("task-a missing id in response")
+	}
+	if depID != taskAID {
+		t.Errorf("task-b depends_on[0] = %q, want task-a's ID %q", depID, taskAID)
+	}
+}
+
+// writePlanForTest writes a minimal plan record directly into the entity store,
+// bypassing config-dependent CreatePlan so tests work without a .kbz/config.yaml.
+func writePlanForTest(t *testing.T, svc *service.EntityService, planID, slug string) {
+	t.Helper()
+	now := "2024-01-01T00:00:00Z"
+	record := storage.EntityRecord{
+		Type: "plan",
+		ID:   planID,
+		Slug: slug,
+		Fields: map[string]any{
+			"id":         planID,
+			"slug":       slug,
+			"title":      "Test Plan",
+			"status":     "active",
+			"summary":    "Plan for testing",
+			"created":    now,
+			"created_by": "tester",
+			"updated":    now,
+		},
+	}
+	if _, err := svc.Store().Write(record); err != nil {
+		t.Fatalf("writePlanForTest(%s): %v", planID, err)
 	}
 }

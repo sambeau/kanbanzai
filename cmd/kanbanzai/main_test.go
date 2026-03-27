@@ -564,6 +564,38 @@ func TestRunIncidentShow_MissingID_ReturnsUsageError(t *testing.T) {
 	}
 }
 
+func TestRunHandoff_MissingTaskID_ReturnsUsageError(t *testing.T) {
+	deps, _ := testDependencies()
+
+	err := run([]string{"handoff"}, deps)
+	if err == nil {
+		t.Fatal("run(handoff) error = nil, want non-nil")
+	}
+
+	if !strings.Contains(err.Error(), "missing task ID") {
+		t.Fatalf("error missing 'missing task ID' message: %v", err)
+	}
+}
+
+func TestRunHandoff_UsageTextMentionsTaskID(t *testing.T) {
+	// Verify the usage text includes the key parameter name so human users
+	// know what to pass.
+	if !strings.Contains(handoffUsageText, "task-id") {
+		t.Error("handoffUsageText does not mention 'task-id'")
+	}
+	if !strings.Contains(handoffUsageText, "kbz handoff") {
+		t.Error("handoffUsageText does not contain example invocation 'kbz handoff'")
+	}
+}
+
+func TestRunHandoff_AppearsInMainUsageText(t *testing.T) {
+	// Verify kbz handoff is documented in the top-level usage text so users
+	// can discover it.
+	if !strings.Contains(usageText, "handoff") {
+		t.Error("main usageText does not mention the handoff command")
+	}
+}
+
 func TestRunFeatureDecompose_MissingID_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 

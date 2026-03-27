@@ -346,6 +346,10 @@ func TestHandoff_PromptSuitableForSpawnAgent(t *testing.T) {
 	prompt := resp["prompt"].(string)
 
 	// All expected top-level sections must be present.
+	// Note: ### Acceptance Criteria is conditional on extracted criteria from
+	// spec sections; it is not tested here because the test environment has no
+	// document intelligence. See TestRenderHandoffPrompt_AcceptanceCriteria for
+	// the direct rendering test.
 	for _, section := range []string{
 		"## Task:",
 		"### Summary",
@@ -800,12 +804,125 @@ func TestHandoff_ByteUsageIsPositive(t *testing.T) {
 	}
 }
 
-// ─── helper ───────────────────────────────────────────────────────────────────
+// ─── renderHandoffPrompt unit tests ──────────────────────────────────────────
+//
+// These tests call renderHandoffPrompt directly so they can inject pre-built
+// assembledContext values (including spec-derived acceptance criteria) without
+// requiring a live document intelligence index.
 
-// min returns the smaller of a and b.
-func min(a, b int) int {
-	if a < b {
-		return a
+// TestRenderHandoffPrompt_AcceptanceCriteria verifies that when the assembled
+// context contains acceptance criteria they are rendered in the prompt under
+// ### Acceptance Criteria (spec §30.7 criterion 2; implementation plan G.2).
+func TestRenderHandoffPrompt_AcceptanceCriteria(t *testing.T) {
+	t.Parallel()
+
+	taskState := map[string]any{
+		"id":      "TASK-01RENDER0000000000001",
+		"summary": "Implement the authentication flow",
 	}
-	return b
+	actx := assembledContext{
+		acceptanceCriteria: []string{
+			"The system MUST authenticate users via JWT",
+			"Expired tokens SHALL return HTTP 401",
+			"Missing Authorization header SHALL return HTTP 401",
+		},
+		byteBudget: assemblyDefaultBudget,
+	}
+
+	prompt := renderHandoffPrompt(taskState, actx, "")
+
+	if !strings.Contains(prompt, "### Acceptance Criteria") {
+		t.Fatalf("prompt missing '### Acceptance Criteria' section:\n%s", prompt)
+	}
+	for _, criterion := range actx.acceptanceCriteria {
+		if !strings.Contains(prompt, criterion) {
+			t.Errorf("prompt missing acceptance criterion %q:\n%s", criterion, prompt)
+		}
+	}
+	// Section must appear between spec sections and known constraints.
+	crit := strings.Index(prompt, "### Acceptance Criteria")
+	conv := strings.Index(prompt, "### Conventions")
+	if crit >= conv {
+		t.Errorf("'### Acceptance Criteria' (pos %d) must appear before '### Conventions' (pos %d)", crit, conv)
+	}
+}
+
+// TestRenderHandoffPrompt_AcceptanceCriteriaOmittedWhenEmpty verifies that the
+// ### Acceptance Criteria section is absent when no criteria were extracted.
+func TestRenderHandoffPrompt_AcceptanceCriteriaOmittedWhenEmpty(t *testing.T) {
+	t.Parallel()
+
+	taskState := map[string]any{
+		"id":      "TASK-01RENDER0000000000002",
+		"summary": "Implement the widget",
+	}
+	actx := assembledContext{
+		acceptanceCriteria: nil,
+		byteBudget:         assemblyDefaultBudget,
+	}
+
+	prompt := renderHandoffPrompt(taskState, actx, "")
+
+	if strings.Contains(prompt, "### Acceptance Criteria") {
+		t.Errorf("prompt must not contain '### Acceptance Criteria' when criteria slice is nil:\n%s", prompt)
+	}
+}
+
+// TestRenderHandoffPrompt_SectionOrder verifies the canonical ordering:
+// Summary → Specification → Acceptance Criteria → Known Constraints → Files → Conventions.
+func TestRenderHandoffPrompt_SectionOrder(t *testing.T) {
+	t.Parallel()
+
+	taskState := map[string]any{
+		"id":      "TASK-01RENDER0000000000003",
+		"summary": "Implement full stack feature",
+	}
+	actx := assembledContext{
+		specSections: []asmSpecSection{
+			{document: "spec.md", section: "Overview", content: "The system overview."},
+		},
+		acceptanceCriteria: []string{"Feature MUST work end-to-end"},
+		knowledge: []asmKnowledgeEntry{
+			{topic: "pattern", content: "Use the established pattern", scope: "project", confidence: 0.9, tier: 2},
+		},
+		filesContext: []asmFileEntry{{path: "internal/feature/feature.go"}},
+		byteBudget:   assemblyDefaultBudget,
+	}
+	actx.byteUsage = asmByteCount(actx)
+
+	prompt := renderHandoffPrompt(taskState, actx, "Additional note.")
+
+	positions := map[string]int{}
+	for _, section := range []string{
+		"### Summary",
+		"### Specification",
+		"### Acceptance Criteria",
+		"### Known Constraints",
+		"### Files",
+		"### Conventions",
+		"### Additional Instructions",
+	} {
+		idx := strings.Index(prompt, section)
+		if idx < 0 {
+			t.Errorf("prompt missing section %q", section)
+		}
+		positions[section] = idx
+	}
+
+	ordered := []string{
+		"### Summary",
+		"### Specification",
+		"### Acceptance Criteria",
+		"### Known Constraints",
+		"### Files",
+		"### Conventions",
+		"### Additional Instructions",
+	}
+	for i := 1; i < len(ordered); i++ {
+		prev, curr := ordered[i-1], ordered[i]
+		if positions[prev] >= positions[curr] {
+			t.Errorf("section order violation: %q (pos %d) must come before %q (pos %d)",
+				prev, positions[prev], curr, positions[curr])
+		}
+	}
 }

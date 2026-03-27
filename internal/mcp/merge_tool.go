@@ -2,7 +2,6 @@ package mcp
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"time"
@@ -442,13 +441,4 @@ func mergeStringFromState(state map[string]any, key string) string {
 		return fmt.Sprint(v)
 	}
 	return s
-}
-
-// mergeMapJSON marshals a map to JSON and returns it as a tool result.
-func mergeMapJSON(v map[string]any) (*mcp.CallToolResult, error) {
-	data, err := json.MarshalIndent(v, "", "  ")
-	if err != nil {
-		return mcp.NewToolResultError("marshal result: " + err.Error()), nil
-	}
-	return mcp.NewToolResultText(string(data)), nil
 }

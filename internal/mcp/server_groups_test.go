@@ -56,14 +56,12 @@ func containsNone(got []string, disallowed []string) (found []string) {
 // TestServer_ListTools_GroupConfig verifies that NewServer registers different sets of
 // 2.0 tools depending on the effective group configuration (spec §30.1).
 //
-// During the dual-registration period the _legacy group is always enabled, so the
-// test focuses on the 2.0 tool surface: it asserts that tools from enabled groups ARE
+// This test focuses on the 2.0 tool surface: it asserts that tools from enabled groups ARE
 // registered and tools from disabled groups are NOT registered.
 func TestServer_ListTools_GroupConfig(t *testing.T) {
 	t.Parallel()
 
-	// coreTools are the 2.0 core-group tools that have been implemented so far
-	// (Tracks D–H). "doc" and "health" are not yet implemented in 2.0 (Tracks I, J).
+	// coreTools are the 7 core-group tools (Tracks D–I). All are implemented.
 	// This slice must be kept in sync with the tools registered in the GroupCore
 	// conditional block in newServerWithConfig.
 	implementedCoreTools := []string{"status", "next", "finish", "handoff", "entity", "doc", "health"}

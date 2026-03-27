@@ -169,6 +169,17 @@ func renderHandoffPrompt(taskState map[string]any, actx assembledContext, instru
 		fmt.Fprintf(&sb, "### Specification\n\nRefer to: %s\n\n", actx.specFallbackPath)
 	}
 
+	// Acceptance criteria extracted from spec sections (spec §13.5, G.2).
+	// Populated by asmExtractCriteria from sections whose title contains
+	// "acceptance"/"criteria"/"requirement", or whose items contain MUST/SHALL.
+	if len(actx.acceptanceCriteria) > 0 {
+		sb.WriteString("### Acceptance Criteria\n\n")
+		for _, ac := range actx.acceptanceCriteria {
+			fmt.Fprintf(&sb, "- %s\n", ac)
+		}
+		sb.WriteString("\n")
+	}
+
 	// Knowledge constraints.
 	if len(actx.knowledge) > 0 {
 		sb.WriteString("### Known Constraints (from knowledge base)\n\n")

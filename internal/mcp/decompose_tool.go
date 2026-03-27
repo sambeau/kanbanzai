@@ -185,13 +185,16 @@ func decomposeApply(entitySvc *service.EntityService) ActionHandler {
 			}
 
 			// Resolve slug→ID; skip any unresolvable slugs (best-effort).
+			// Two cases are mutually exclusive:
+			//   1. The dep is a slug from the current proposal → resolve to new task ID.
+			//   2. The dep is already a full task ID (cross-feature dep) → keep as-is.
+			// The else-if ensures the same value is never appended twice.
 			resolvedIDs := make([]string, 0, len(ct.DepsOn))
 			for _, depSlug := range ct.DepsOn {
 				if id, ok := slugToID[depSlug]; ok {
 					resolvedIDs = append(resolvedIDs, id)
-				}
-				// If the slug is already a full task ID (cross-feature dep), keep it.
-				if len(depSlug) > 5 && (depSlug[:5] == "TASK-" || depSlug[:2] == "T-") {
+				} else if len(depSlug) > 5 && (depSlug[:5] == "TASK-" || depSlug[:2] == "T-") {
+					// Cross-feature dep: depSlug is already a resolved task ID.
 					resolvedIDs = append(resolvedIDs, depSlug)
 				}
 			}

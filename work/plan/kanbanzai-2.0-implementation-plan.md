@@ -2,9 +2,9 @@
 
 | Document | Kanbanzai 2.0 Implementation Plan                      |
 |----------|---------------------------------------------------------|
-| Status   | Draft                                                   |
+| Status   | Complete                                                |
 | Created  | 2026-03-27T01:42:41Z                                   |
-| Updated  | 2026-03-27T01:42:41Z                                   |
+| Updated  | 2026-06-19T00:00:00Z                                   |
 | Related  | `work/spec/kanbanzai-2.0-specification.md`              |
 |          | `work/design/kanbanzai-2.0-design-vision.md`            |
 |          | `work/reports/mcp-server-design-issues.md`              |
@@ -31,8 +31,8 @@ The work is organised into 11 implementation tracks:
 | G | `handoff` | Sub-agent prompt generation |
 | H | `entity` | Consolidated entity CRUD (replaces 17+ tools) |
 | I | `doc` | Consolidated document operations (replaces 11+ tools) |
-| J | Feature Group Tools | Consolidated remaining tools (13 tools) |
-| K | 1.0 Tool Removal | Remove 97 tools, update tests, final cutover |
+| J | Feature Group Tools ✓ COMPLETE | Consolidated remaining tools (13 tools) |
+| K | 1.0 Tool Removal ✓ COMPLETE | Remove 97 tools, update tests, final cutover |
 
 The gate for completion: all spec §30 acceptance criteria verified, all 1.0 tools removed, `go test -race ./...` clean, a complete `next` → `handoff` → `finish` cycle demonstrated on a real task.
 
@@ -443,7 +443,7 @@ These are pragmatic simplifications. Revisit if agents need the richer structure
 
 ---
 
-## 10. Track G: `handoff` — Sub-Agent Prompt Generation
+## 10. Track G: `handoff` — Sub-Agent Prompt Generation ✓ COMPLETE (post-review remediation applied)
 
 **Goal:** Build the `handoff` tool that renders a complete sub-agent prompt from a task's assembled context.
 
@@ -451,28 +451,52 @@ These are pragmatic simplifications. Revisit if agents need the richer structure
 
 **Dependencies:** Track F (shares the context assembly pipeline).
 
-| Task | Description | Size |
-|------|-------------|------|
-| G.1 | Implement Markdown prompt renderer: takes `TaskContext` (from F.9) and renders a formatted prompt string | M |
-| G.2 | Define prompt template: task summary → spec sections → acceptance criteria → known constraints → files → conventions | M |
-| G.3 | Implement `instructions` parameter: insert orchestrator-provided additional instructions into the prompt | S |
-| G.4 | Implement `context_metadata` response: byte usage, sections included, trimmed entries | S |
-| G.5 | Implement lenient lifecycle: accept tasks in `active`, `ready`, or `needs-rework` status; reject terminal status | S |
-| G.6 | Implement `handoff` MCP tool wiring in `internal/mcp/handoff_tool.go`: register in core group | M |
-| G.7 | Write tests: prompt contains all expected sections (summary, spec, criteria, knowledge, files, conventions) | M |
-| G.8 | Write tests: `instructions` parameter included in prompt | S |
-| G.9 | Write tests: context metadata reports byte usage and trimmed entries | S |
-| G.10 | Write tests: handoff on terminal-status task returns error | S |
-| G.11 | Write tests: handoff does not modify task status (read-only) | S |
-| G.12 | Integration test: `next(task_id)` → `handoff(task_id)` — both use shared pipeline, context is consistent | M |
+**Status:** Complete. All 12 tasks implemented. All 9 spec §30.7 acceptance criteria verified by passing tests. `go test -race ./...` clean.
+
+**Implementation:** `internal/mcp/handoff_tool.go`, `internal/mcp/handoff_tool_test.go`, `internal/mcp/assembly.go` (shared with Track F)
+
+| Task | Description | Size | Status |
+|------|-------------|------|--------|
+| G.1 | Implement Markdown prompt renderer: takes `TaskContext` (from F.9) and renders a formatted prompt string | M | ✓ |
+| G.2 | Define prompt template: task summary → spec sections → acceptance criteria → known constraints → files → conventions | M | ✓ |
+| G.3 | Implement `instructions` parameter: insert orchestrator-provided additional instructions into the prompt | S | ✓ |
+| G.4 | Implement `context_metadata` response: byte usage, sections included, trimmed entries | S | ✓ |
+| G.5 | Implement lenient lifecycle: accept tasks in `active`, `ready`, or `needs-rework` status; reject terminal status | S | ✓ |
+| G.6 | Implement `handoff` MCP tool wiring in `internal/mcp/handoff_tool.go`: register in core group | M | ✓ |
+| G.7 | Write tests: prompt contains all expected sections (summary, spec, criteria, knowledge, files, conventions) | M | ✓ |
+| G.8 | Write tests: `instructions` parameter included in prompt | S | ✓ |
+| G.9 | Write tests: context metadata reports byte usage and trimmed entries | S | ✓ |
+| G.10 | Write tests: handoff on terminal-status task returns error | S | ✓ |
+| G.11 | Write tests: handoff does not modify task status (read-only) | S | ✓ |
+| G.12 | Integration test: `next(task_id)` → `handoff(task_id)` — both use shared pipeline, context is consistent | M | ✓ |
 
 **Key implementation notes:**
 
-- G.1–G.2 is pure rendering. The hard work of context assembly was done in Track F. `handoff` calls the same `AssembleTaskContext` pipeline and passes the result through a Markdown template.
-- The prompt format (G.2) should be designed for LLM consumption: clear section headers, bullet lists for criteria, code blocks for file paths. Test with real prompt lengths to verify it fits in context windows.
-- G.5 makes `handoff` useful for rework cycles: the orchestrator can re-generate a prompt for a task that was reviewed and needs rework, including updated knowledge from the first attempt.
+- G.1–G.2: `renderHandoffPrompt` in `handoff_tool.go` renders the canonical prompt sections. The hard work of context assembly was done in Track F. `handoff` calls the same `assembleContext` pipeline in `assembly.go` and passes the result through the Markdown renderer.
+- G.3: `instructions` is appended as a `### Additional Instructions` section at the end of the prompt, consistent with the spec §13.5 example. The section is omitted entirely when `instructions` is empty.
+- G.4: `context_metadata` is returned alongside the prompt. It includes `spec_sections_included`, `knowledge_entries_included`, `byte_usage`, `byte_budget`, and `trimmed`. It is not embedded in the prompt — it is for the orchestrator only.
+- G.5: `handoff` accepts `active`, `ready`, and `needs-rework`. Terminal statuses (`done`, `not-planned`, `duplicate`) return `terminal_status` error. Other statuses (e.g. `queued`) return `invalid_status` error. The tool is strictly read-only: task status is never modified.
+- G.6: `HandoffTools` is registered in `server.go` under the core group conditional, alongside `NextTools`, `FinishTools`, etc.
+- Shared pipeline: `handoff_tool.go` and `next_tool.go` both call `assembleContext(asmInput{...})` from `assembly.go`. The difference is output: `next` serialises to structured JSON via `nextContextToMap`; `handoff` renders to Markdown via `renderHandoffPrompt`.
 
-**Verification (spec §30.7):** All 9 acceptance criteria must have passing tests.
+**Test inventory:**
+
+- `internal/mcp/handoff_tool_test.go` — 24 tests covering all 9 acceptance criteria plus edge cases (role-scoped knowledge, project-scoped knowledge with no role, byte usage bounds)
+- `internal/mcp/next_tool_test.go` — `TestNext_ContextAssembly_AcceptanceCriteria` tests `asmExtractCriteria` (shared assembly pipeline)
+- `internal/mcp/integration_test.go` — `TestIntegration_NextHandoffFinish` validates the full `next → handoff → finish` cycle end-to-end
+- `cmd/kanbanzai/main_test.go` — `TestRunHandoff_MissingTaskID_ReturnsUsageError`, `TestRunHandoff_UsageTextMentionsTaskID`, `TestRunHandoff_AppearsInMainUsageText`
+- Direct renderer tests: `TestRenderHandoffPrompt_AcceptanceCriteria`, `TestRenderHandoffPrompt_AcceptanceCriteriaOmittedWhenEmpty`, `TestRenderHandoffPrompt_SectionOrder`
+
+**Review findings (post-implementation code review):**
+
+A post-implementation review identified 1 critical finding and 3 minor issues. All were remediated in the same session.
+
+- **F1 (CRITICAL) — Acceptance Criteria section missing from rendered prompt:** `renderHandoffPrompt` assembled `actx.acceptanceCriteria` (via `asmExtractCriteria`) but never rendered it into the output. Spec §30.7 criterion 2 and G.2 explicitly require `### Acceptance Criteria` in the prompt. The bug was masked by tests because the test environment has no doc intelligence, so criteria were always empty. **Fixed:** Added `### Acceptance Criteria` rendering block between spec sections and known constraints in `renderHandoffPrompt`. Added three direct renderer tests (`TestRenderHandoffPrompt_AcceptanceCriteria`, `TestRenderHandoffPrompt_AcceptanceCriteriaOmittedWhenEmpty`, `TestRenderHandoffPrompt_SectionOrder`) that inject pre-built `assembledContext` values without requiring live doc intelligence.
+- **F2 (MEDIUM) — No direct test for `renderHandoffPrompt`:** The integration-style tests could not catch F1 because they had no doc intelligence. Fixed by adding direct renderer unit tests (see above).
+- **F3 (MINOR) — No CLI test coverage for `kbz handoff`:** `main_test.go` had no tests for the `handoff` command. Fixed by adding `TestRunHandoff_MissingTaskID_ReturnsUsageError`, `TestRunHandoff_UsageTextMentionsTaskID`, and `TestRunHandoff_AppearsInMainUsageText`.
+- **F4 (TRIVIAL) — Redundant `min` helper in test file:** Go 1.21+ provides `min` as a builtin; the local definition was unnecessary. Removed.
+
+**Verification (spec §30.7):** All 9 acceptance criteria verified. See `handoff_tool_test.go`.
 
 ---
 
@@ -569,7 +593,7 @@ These are pragmatic simplifications. Revisit if agents need the richer structure
 
 ---
 
-## 13. Track J: Feature Group Tools
+## 13. Track J: Feature Group Tools ✓ COMPLETE
 
 **Goal:** Consolidate the remaining 13 feature group tools from their 1.0 multi-tool forms into 2.0 action-parameter tools.
 
@@ -641,7 +665,7 @@ This track is heavily parallelisable — each tool is independent.
 
 ---
 
-## 14. Track K: 1.0 Tool Removal
+## 14. Track K: 1.0 Tool Removal ✓ COMPLETE
 
 **Goal:** Remove all 1.0 tools from the MCP server, update tests, clean up dead code.
 
