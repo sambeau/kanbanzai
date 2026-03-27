@@ -19,92 +19,127 @@ import (
 	"kanbanzai/internal/worktree"
 )
 
-// MergeTools returns all merge-related MCP tool definitions with their handlers.
-func MergeTools(
+// MergeTool returns the 2.0 consolidated merge tool.
+// It consolidates merge_readiness_check and merge_execute (spec §19.2).
+func MergeTool(
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
 	repoPath string,
 	thresholds git.BranchThresholds,
 	localConfig *config.LocalConfig,
 ) []server.ServerTool {
-	return []server.ServerTool{
-		mergeReadinessCheckTool(worktreeStore, entitySvc, repoPath, thresholds, localConfig),
-		mergeExecuteTool(worktreeStore, entitySvc, repoPath, thresholds, localConfig),
-	}
+	return []server.ServerTool{mergeTool(worktreeStore, entitySvc, repoPath, thresholds, localConfig)}
 }
 
-func mergeReadinessCheckTool(
+func mergeTool(
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
 	repoPath string,
 	thresholds git.BranchThresholds,
 	localConfig *config.LocalConfig,
 ) server.ServerTool {
-	tool := mcp.NewTool("merge_readiness_check",
-		mcp.WithDescription("Check if an entity (feature or bug) is ready to merge. Evaluates all merge gates and optionally checks PR status if GitHub is configured."),
-		mcp.WithString("entity_id", mcp.Description("Entity ID (FEAT-... or BUG-...)"), mcp.Required()),
+	tool := mcp.NewTool("merge",
+		mcp.WithDescription(
+			"Check merge readiness and execute merges for feature/bug entities. "+
+				"Consolidates merge_readiness_check and merge_execute. "+
+				"Actions: check (evaluate merge gates), execute (merge after gate verification). "+
+				"execute supports override + override_reason to bypass blocking gates.",
+		),
+		mcp.WithString("action",
+			mcp.Required(),
+			mcp.Description("Action: check, execute"),
+		),
+		mcp.WithString("entity_id",
+			mcp.Required(),
+			mcp.Description("Entity ID (FEAT-... or BUG-...)"),
+		),
+		// execute-only parameters
+		mcp.WithBoolean("override",
+			mcp.Description("Override blocking gates (execute only, default: false)"),
+		),
+		mcp.WithString("override_reason",
+			mcp.Description("Required explanation when override is true (execute only)"),
+		),
+		mcp.WithString("merge_strategy",
+			mcp.Description("Merge strategy: squash, merge, or rebase (execute only, default: squash)"),
+		),
+		mcp.WithBoolean("delete_branch",
+			mcp.Description("Delete branch after merge (execute only, default: true)"),
+		),
 	)
-	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		entityID, err := request.RequireString("entity_id")
+
+	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		return DispatchAction(ctx, req, map[string]ActionHandler{
+			"check":   mergeCheckAction(worktreeStore, entitySvc, repoPath, thresholds, localConfig),
+			"execute": mergeExecuteAction(worktreeStore, entitySvc, repoPath, thresholds, localConfig),
+		})
+	})
+
+	return server.ServerTool{Tool: tool, Handler: handler}
+}
+
+// ─── check ───────────────────────────────────────────────────────────────────
+
+func mergeCheckAction(
+	worktreeStore *worktree.Store,
+	entitySvc *service.EntityService,
+	repoPath string,
+	thresholds git.BranchThresholds,
+	localConfig *config.LocalConfig,
+) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return mcp.NewToolResultError(err.Error()), nil
+			return nil, fmt.Errorf("entity_id is required for check action")
 		}
 
 		result, err := checkMergeReadiness(ctx, worktreeStore, entitySvc, repoPath, thresholds, localConfig, entityID)
 		if err != nil {
-			return mcp.NewToolResultErrorFromErr("merge readiness check failed", err), nil
+			return nil, err
 		}
 
-		return mergeMapJSON(result)
+		return result, nil
 	}
-	return server.ServerTool{Tool: tool, Handler: handler}
 }
 
-func mergeExecuteTool(
+// ─── execute ─────────────────────────────────────────────────────────────────
+
+func mergeExecuteAction(
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
 	repoPath string,
 	thresholds git.BranchThresholds,
 	localConfig *config.LocalConfig,
-) server.ServerTool {
-	tool := mcp.NewTool("merge_execute",
-		mcp.WithDescription("Execute a merge for an entity after verifying all gates pass. Use override with reason to bypass blocking gates."),
-		mcp.WithString("entity_id", mcp.Description("Entity ID (FEAT-... or BUG-...)"), mcp.Required()),
-		mcp.WithBoolean("override", mcp.Description("Override blocking gates (default: false)")),
-		mcp.WithString("override_reason", mcp.Description("Required explanation when override is true")),
-		mcp.WithString("merge_strategy", mcp.Description("Merge strategy: squash, merge, or rebase (default: squash)")),
-		mcp.WithBoolean("delete_branch", mcp.Description("Delete branch after merge (default: true)")),
-	)
-	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		entityID, err := request.RequireString("entity_id")
+) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+
+		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return mcp.NewToolResultError(err.Error()), nil
+			return nil, fmt.Errorf("entity_id is required for execute action")
 		}
 
-		override := request.GetBool("override", false)
-		overrideReason := request.GetString("override_reason", "")
-		strategyStr := request.GetString("merge_strategy", "squash")
-		deleteBranch := request.GetBool("delete_branch", true)
+		override := req.GetBool("override", false)
+		overrideReason := req.GetString("override_reason", "")
+		strategyStr := req.GetString("merge_strategy", "squash")
+		deleteBranch := req.GetBool("delete_branch", true)
 
-		// Validate override reason
 		if override && overrideReason == "" {
-			return mcp.NewToolResultError("OVERRIDE_REASON_REQUIRED: override_reason is required when override is true"), nil
+			return inlineErr("missing_parameter", "override_reason is required when override is true")
 		}
 
-		// Parse merge strategy
 		strategy, err := parseMergeStrategy(strategyStr)
 		if err != nil {
-			return mcp.NewToolResultError(err.Error()), nil
+			return inlineErr("invalid_parameter", err.Error())
 		}
 
 		result, err := executeMerge(worktreeStore, entitySvc, repoPath, thresholds, localConfig, entityID, override, overrideReason, strategy, deleteBranch)
 		if err != nil {
-			return mcp.NewToolResultErrorFromErr("merge execute failed", err), nil
+			return nil, err
 		}
 
-		return mergeMapJSON(result)
+		return result, nil
 	}
-	return server.ServerTool{Tool: tool, Handler: handler}
 }
 
 // checkMergeReadiness performs a merge readiness check for an entity.

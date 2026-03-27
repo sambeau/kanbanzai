@@ -9,7 +9,6 @@ import (
 	"testing"
 
 	"kanbanzai/internal/config"
-	"kanbanzai/internal/service"
 )
 
 // toolNames returns the sorted tool names registered on the server.
@@ -67,7 +66,7 @@ func TestServer_ListTools_GroupConfig(t *testing.T) {
 	// (Tracks D–H). "doc" and "health" are not yet implemented in 2.0 (Tracks I, J).
 	// This slice must be kept in sync with the tools registered in the GroupCore
 	// conditional block in newServerWithConfig.
-	implementedCoreTools := []string{"status", "next", "finish", "handoff", "entity"}
+	implementedCoreTools := []string{"status", "next", "finish", "handoff", "entity", "doc", "health"}
 
 	tests := []struct {
 		name        string
@@ -146,12 +145,12 @@ func TestServer_ListTools_CoreGroupConditional(t *testing.T) {
 
 	entityRoot := t.TempDir()
 	cfg := config.DefaultConfig()
-	cfg.MCP.Preset = "minimal" // only core in 2.0; _legacy always on
+	cfg.MCP.Preset = "minimal" // only core in 2.0
 
 	registered := toolNamesFromServer(t, entityRoot, &cfg)
 
 	// Verify each implemented core tool is registered
-	for _, tool := range []string{"status", "next", "finish", "handoff", "entity"} {
+	for _, tool := range []string{"status", "next", "finish", "handoff", "entity", "doc", "health"} {
 		found := false
 		for _, name := range registered {
 			if name == tool {
@@ -162,33 +161,5 @@ func TestServer_ListTools_CoreGroupConditional(t *testing.T) {
 		if !found {
 			t.Errorf("core tool %q not registered (preset: minimal, core must always be on)", tool)
 		}
-	}
-}
-
-// TestServer_ListTools_LegacyAlwaysEnabled verifies that the _legacy group is always
-// registered regardless of preset, keeping the full 1.0 surface available during the
-// dual-registration development period (Track A §_legacy group).
-func TestServer_ListTools_LegacyAlwaysEnabled(t *testing.T) {
-	t.Parallel()
-
-	// Check a few representative 1.0 tools across presets.
-	legacySentinel := []string{"create_feature", "create_task", "work_queue"}
-
-	for _, preset := range []string{"minimal", "orchestration", "full"} {
-		t.Run("preset_"+preset, func(t *testing.T) {
-			t.Parallel()
-
-			entityRoot := t.TempDir()
-			cfg := config.DefaultConfig()
-			cfg.MCP.Preset = preset
-
-			// Ensure required services exist so NewEntityService etc. don't panic
-			_ = service.NewEntityService(entityRoot)
-
-			registered := toolNamesFromServer(t, entityRoot, &cfg)
-			if missing := containsAll(registered, legacySentinel); len(missing) != 0 {
-				t.Errorf("preset %q: legacy tools %v missing — _legacy group not always enabled", preset, missing)
-			}
-		})
 	}
 }

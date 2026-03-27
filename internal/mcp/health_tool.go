@@ -1,7 +1,12 @@
 package mcp
 
 import (
+	"context"
+	"encoding/json"
 	"time"
+
+	"github.com/mark3labs/mcp-go/mcp"
+	"github.com/mark3labs/mcp-go/server"
 
 	"kanbanzai/internal/config"
 	"kanbanzai/internal/git"
@@ -10,6 +15,66 @@ import (
 	"kanbanzai/internal/validate"
 	"kanbanzai/internal/worktree"
 )
+
+// AdditionalHealthChecker is a function that performs additional health checks
+// and returns a report to be merged into the main health check result.
+type AdditionalHealthChecker func() (*validate.HealthReport, error)
+
+// HealthTool returns the 2.0 health tool.
+// It replaces the 1.0 health_check tool with the same behaviour but under the
+// 2.0 naming convention (tool name: "health", registered in GroupCore).
+func HealthTool(entitySvc *service.EntityService, additionalCheckers ...AdditionalHealthChecker) []server.ServerTool {
+	return []server.ServerTool{healthTool(entitySvc, additionalCheckers...)}
+}
+
+func healthTool(entitySvc *service.EntityService, additionalCheckers ...AdditionalHealthChecker) server.ServerTool {
+	tool := mcp.NewTool("health",
+		mcp.WithDescription(
+			"Run a comprehensive health check across all entities, knowledge entries, "+
+				"and context profiles. Returns a structured report of errors and warnings "+
+				"with category breakdowns. Replaces the 1.0 health_check tool.",
+		),
+	)
+
+	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+		report, err := entitySvc.HealthCheck()
+		if err != nil {
+			return mcp.NewToolResultErrorFromErr("health check failed", err), nil
+		}
+
+		for _, checker := range additionalCheckers {
+			additional, err := checker()
+			if err != nil {
+				return mcp.NewToolResultErrorFromErr("health check failed", err), nil
+			}
+			if additional != nil {
+				mergeHealthReports(report, additional)
+			}
+		}
+
+		return jsonResult(report)
+	}
+
+	return server.ServerTool{Tool: tool, Handler: handler}
+}
+
+// mergeHealthReports merges src into dst in-place.
+func mergeHealthReports(dst, src *validate.HealthReport) {
+	if dst == nil || src == nil {
+		return
+	}
+	dst.Errors = append(dst.Errors, src.Errors...)
+	dst.Warnings = append(dst.Warnings, src.Warnings...)
+
+	// Merge entity counts.
+	if dst.Summary.EntitiesByType == nil {
+		dst.Summary.EntitiesByType = make(map[string]int)
+	}
+	for k, v := range src.Summary.EntitiesByType {
+		dst.Summary.EntitiesByType[k] += v
+	}
+	dst.Summary.TotalEntities += src.Summary.TotalEntities
+}
 
 // Phase3HealthChecker returns an AdditionalHealthChecker that validates
 // worktrees, branches, knowledge entries, and cleanup status.
@@ -120,4 +185,12 @@ func coalesce(values ...string) string {
 		}
 	}
 	return ""
+}
+
+func jsonResult(v any) (*mcp.CallToolResult, error) {
+	data, err := json.Marshal(v)
+	if err != nil {
+		return mcp.NewToolResultErrorFromErr("failed to marshal result", err), nil
+	}
+	return mcp.NewToolResultText(string(data)), nil
 }

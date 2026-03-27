@@ -18,100 +18,130 @@ import (
 	"kanbanzai/internal/worktree"
 )
 
-// PRTools returns all PR-related MCP tool definitions with their handlers.
-func PRTools(
+// PRTool returns the 2.0 consolidated pr tool.
+// It consolidates pr_create, pr_status, and pr_update into a single tool (spec §19.3).
+func PRTool(
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
 	repoPath string,
 	thresholds git.BranchThresholds,
 	localConfig *config.LocalConfig,
 ) []server.ServerTool {
-	return []server.ServerTool{
-		prCreateTool(worktreeStore, entitySvc, repoPath, localConfig),
-		prUpdateTool(worktreeStore, entitySvc, repoPath, thresholds, localConfig),
-		prStatusTool(worktreeStore, repoPath, localConfig),
-	}
+	return []server.ServerTool{prTool(worktreeStore, entitySvc, repoPath, thresholds, localConfig)}
 }
 
-func prCreateTool(
-	worktreeStore *worktree.Store,
-	entitySvc *service.EntityService,
-	repoPath string,
-	localConfig *config.LocalConfig,
-) server.ServerTool {
-	tool := mcp.NewTool("pr_create",
-		mcp.WithDescription("Create a new pull request for an entity's branch on GitHub."),
-		mcp.WithString("entity_id", mcp.Description("Entity ID (FEAT-... or BUG-...)"), mcp.Required()),
-		mcp.WithBoolean("draft", mcp.Description("Create as draft PR (default: false)")),
-	)
-	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		entityID, err := request.RequireString("entity_id")
-		if err != nil {
-			return mcp.NewToolResultError(err.Error()), nil
-		}
-
-		draft := request.GetBool("draft", false)
-
-		result, err := createPR(ctx, worktreeStore, entitySvc, repoPath, localConfig, entityID, draft)
-		if err != nil {
-			return mcp.NewToolResultErrorFromErr("create PR failed", err), nil
-		}
-
-		return prMapJSON(result)
-	}
-	return server.ServerTool{Tool: tool, Handler: handler}
-}
-
-func prUpdateTool(
+func prTool(
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
 	repoPath string,
 	thresholds git.BranchThresholds,
 	localConfig *config.LocalConfig,
 ) server.ServerTool {
-	tool := mcp.NewTool("pr_update",
-		mcp.WithDescription("Update an existing pull request's description and labels based on current entity state."),
-		mcp.WithString("entity_id", mcp.Description("Entity ID (FEAT-... or BUG-...)"), mcp.Required()),
+	tool := mcp.NewTool("pr",
+		mcp.WithDescription(
+			"Create and manage GitHub pull requests for feature/bug entities. "+
+				"Consolidates pr_create, pr_status, and pr_update. "+
+				"Actions: create (open a new PR), status (get CI/review status), "+
+				"update (refresh description and labels). "+
+				"Requires GitHub token in .kbz/local.yaml.",
+		),
+		mcp.WithString("action",
+			mcp.Required(),
+			mcp.Description("Action: create, status, update"),
+		),
+		mcp.WithString("entity_id",
+			mcp.Required(),
+			mcp.Description("Entity ID (FEAT-... or BUG-...)"),
+		),
+		// create-only
+		mcp.WithBoolean("draft",
+			mcp.Description("Create as draft PR (create only, default: false)"),
+		),
 	)
-	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		entityID, err := request.RequireString("entity_id")
-		if err != nil {
-			return mcp.NewToolResultError(err.Error()), nil
-		}
 
-		result, err := updatePR(ctx, worktreeStore, entitySvc, repoPath, thresholds, localConfig, entityID)
-		if err != nil {
-			return mcp.NewToolResultErrorFromErr("update PR failed", err), nil
-		}
+	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		return DispatchAction(ctx, req, map[string]ActionHandler{
+			"create": prCreateAction(worktreeStore, entitySvc, repoPath, localConfig),
+			"status": prStatusAction(worktreeStore, repoPath, localConfig),
+			"update": prUpdateAction(worktreeStore, entitySvc, repoPath, thresholds, localConfig),
+		})
+	})
 
-		return prMapJSON(result)
-	}
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
 
-func prStatusTool(
+// ─── create ──────────────────────────────────────────────────────────────────
+
+func prCreateAction(
+	worktreeStore *worktree.Store,
+	entitySvc *service.EntityService,
+	repoPath string,
+	localConfig *config.LocalConfig,
+) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+
+		entityID, err := req.RequireString("entity_id")
+		if err != nil {
+			return nil, fmt.Errorf("entity_id is required for create action")
+		}
+		draft := req.GetBool("draft", false)
+
+		result, err := createPR(ctx, worktreeStore, entitySvc, repoPath, localConfig, entityID, draft)
+		if err != nil {
+			return nil, err
+		}
+
+		return result, nil
+	}
+}
+
+// ─── status ──────────────────────────────────────────────────────────────────
+
+func prStatusAction(
 	worktreeStore *worktree.Store,
 	repoPath string,
 	localConfig *config.LocalConfig,
-) server.ServerTool {
-	tool := mcp.NewTool("pr_status",
-		mcp.WithDescription("Get the status of a pull request for an entity, including CI status, reviews, and merge conflicts."),
-		mcp.WithString("entity_id", mcp.Description("Entity ID (FEAT-... or BUG-...)"), mcp.Required()),
-	)
-	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		entityID, err := request.RequireString("entity_id")
+) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return mcp.NewToolResultError(err.Error()), nil
+			return nil, fmt.Errorf("entity_id is required for status action")
 		}
 
 		result, err := getPRStatusForEntity(ctx, worktreeStore, repoPath, localConfig, entityID)
 		if err != nil {
-			return mcp.NewToolResultErrorFromErr("get PR status failed", err), nil
+			return nil, err
 		}
 
-		return prMapJSON(result)
+		return result, nil
 	}
-	return server.ServerTool{Tool: tool, Handler: handler}
+}
+
+// ─── update ──────────────────────────────────────────────────────────────────
+
+func prUpdateAction(
+	worktreeStore *worktree.Store,
+	entitySvc *service.EntityService,
+	repoPath string,
+	thresholds git.BranchThresholds,
+	localConfig *config.LocalConfig,
+) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+
+		entityID, err := req.RequireString("entity_id")
+		if err != nil {
+			return nil, fmt.Errorf("entity_id is required for update action")
+		}
+
+		result, err := updatePR(ctx, worktreeStore, entitySvc, repoPath, thresholds, localConfig, entityID)
+		if err != nil {
+			return nil, err
+		}
+
+		return result, nil
+	}
 }
 
 // createPR creates a new pull request for an entity.

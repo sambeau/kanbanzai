@@ -377,6 +377,26 @@ func buildErrorResult(code, message string, details map[string]any, effects []Si
 	return mcp.NewToolResultText(string(b))
 }
 
+// ─── Inline error helper ─────────────────────────────────────────────────────
+
+// inlineErr returns a structured error response as an (any, error) pair suitable
+// for use inside WithSideEffects action handlers. Unlike ActionError (which
+// returns *mcp.CallToolResult and must only be used as the outer handler result),
+// inlineErr returns a serialisable map that WithSideEffects will embed correctly
+// into the JSON response — including any collected side effects.
+//
+// Usage inside an ActionHandler:
+//
+//	return inlineErr("missing_parameter", "feature_id is required")
+func inlineErr(code, message string) (any, error) {
+	return map[string]any{
+		"error": map[string]any{
+			"code":    code,
+			"message": message,
+		},
+	}, nil
+}
+
 // ─── Utilities ───────────────────────────────────────────────────────────────
 
 // sortedKeys returns the keys of a map in sorted order.

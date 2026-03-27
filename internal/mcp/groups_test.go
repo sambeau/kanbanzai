@@ -71,20 +71,6 @@ func TestGroupToolNames_TotalToolCount(t *testing.T) {
 	}
 }
 
-// TestResolveServerGroups_DefaultEnablesLegacy verifies that resolveServerGroups always
-// enables the _legacy group regardless of config, maintaining backward compatibility
-// during the dual-registration development period.
-func TestResolveServerGroups_DefaultEnablesLegacy(t *testing.T) {
-	t.Parallel()
-
-	cfg := config.DefaultConfig()
-	groups := resolveServerGroups(&cfg)
-
-	if !groups[GroupLegacy] {
-		t.Error("resolveServerGroups: _legacy group not enabled, want enabled (dual-registration period)")
-	}
-}
-
 // TestResolveServerGroups_CoreAlwaysEnabled verifies the core group is always present.
 func TestResolveServerGroups_CoreAlwaysEnabled(t *testing.T) {
 	t.Parallel()
@@ -110,9 +96,6 @@ func TestResolveServerGroups_FullPreset(t *testing.T) {
 		if !groups[g] {
 			t.Errorf("resolveServerGroups: group %q not enabled for full preset", g)
 		}
-	}
-	if !groups[GroupLegacy] {
-		t.Error("resolveServerGroups: _legacy not enabled for full preset")
 	}
 }
 
@@ -169,9 +152,6 @@ func TestResolveServerGroups_UnknownPresetFallbackToFull(t *testing.T) {
 	// Must not panic; must return a usable group map with at least core.
 	if !groups[config.GroupCore] {
 		t.Error("resolveServerGroups: core not present after unknown-preset fallback")
-	}
-	if !groups[GroupLegacy] {
-		t.Error("resolveServerGroups: _legacy not present after unknown-preset fallback")
 	}
 }
 
