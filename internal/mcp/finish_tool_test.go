@@ -159,6 +159,29 @@ func setupFinishScenario(t *testing.T, entitySvc *service.EntityService, suffix 
 	return taskID, taskSlug
 }
 
+// mockWorktreeHook is a StatusTransitionHook that signals worktree creation
+// whenever an entity transitions to "active" status. Used in tests that verify
+// the worktree_created side effect flows through the finish tool's lenient
+// lifecycle path (ready → active → done).
+type mockWorktreeHook struct {
+	worktreeID string
+	branch     string
+	path       string
+}
+
+func (h *mockWorktreeHook) OnStatusTransition(_, entityID, _, _, toStatus string, _ map[string]any) *service.WorktreeResult {
+	if toStatus == "active" {
+		return &service.WorktreeResult{
+			Created:    true,
+			WorktreeID: h.worktreeID,
+			EntityID:   entityID,
+			Branch:     h.branch,
+			Path:       h.path,
+		}
+	}
+	return nil
+}
+
 // ─── Single-item completion tests ─────────────────────────────────────────────
 
 // TestFinish_ActiveTask completes a task that is already in active status.
@@ -309,6 +332,65 @@ func TestFinish_ReadyTask_ToNeedsReview(t *testing.T) {
 	taskData := resp["task"].(map[string]any)
 	if got := taskData["status"]; got != "needs-review" {
 		t.Errorf("status = %q, want \"needs-review\"", got)
+	}
+}
+
+// TestFinish_ReadyTask_WorktreeCreated verifies that the worktree_created side
+// effect is reported when a ready task auto-transitions through active and the
+// configured worktree hook fires during that transition (spec §30.2:
+// "Worktree auto-creation on entity transition is reported as a side effect").
+//
+// This tests the code path in finishOne case "ready": that checks
+// activeResult.WorktreeHookResult and pushes SideEffectWorktreeCreated.
+func TestFinish_ReadyTask_WorktreeCreated(t *testing.T) {
+	t.Parallel()
+	entitySvc, dispatchSvc := setupFinishTest(t)
+
+	// Wire a mock hook that signals worktree creation on any → active transition.
+	entitySvc.SetStatusTransitionHook(&mockWorktreeHook{
+		worktreeID: "WT-01TEST",
+		branch:     "feature/test-branch",
+		path:       "/tmp/test-worktree",
+	})
+
+	taskID, taskSlug := setupFinishScenario(t, entitySvc, "wt-created")
+	advanceToReady(t, entitySvc, taskID, taskSlug)
+
+	resp := callFinishJSON(t, entitySvc, dispatchSvc, map[string]any{
+		"task_id": taskID,
+		"summary": "Completed via lenient lifecycle with worktree hook",
+	})
+
+	// Task must complete successfully despite the hook.
+	taskData, ok := resp["task"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected task in response, got: %v", resp)
+	}
+	if got := taskData["status"]; got != "done" {
+		t.Errorf("task status = %q, want \"done\"", got)
+	}
+
+	// The worktree_created side effect must be present — the lenient lifecycle
+	// fires the ready → active transition, which triggers the hook.
+	sideEffects, _ := resp["side_effects"].([]any)
+	var foundWT bool
+	for _, se := range sideEffects {
+		effect, ok := se.(map[string]any)
+		if !ok {
+			continue
+		}
+		if effect["type"] == "worktree_created" {
+			foundWT = true
+			if effect["entity_id"] != taskID {
+				t.Errorf("worktree_created entity_id = %q, want %q", effect["entity_id"], taskID)
+			}
+			if effect["entity_type"] != "task" {
+				t.Errorf("worktree_created entity_type = %q, want \"task\"", effect["entity_type"])
+			}
+		}
+	}
+	if !foundWT {
+		t.Errorf("expected worktree_created side effect; got side_effects: %v", sideEffects)
 	}
 }
 

@@ -341,40 +341,46 @@ These are pragmatic simplifications. Revisit if agents need the richer structure
 
 ---
 
-## 8. Track E: `finish` — Completion & Inline Knowledge
+## 8. Track E: `finish` — Completion & Inline Knowledge ✓ COMPLETE
 
 **Goal:** Build the `finish` tool with inline knowledge contribution, lenient lifecycle, and side-effect reporting. This track validates the side-effect pipeline end-to-end before the more complex `next` tool.
+
+**Status:** Complete. All 16 tasks implemented. All 11 spec §30.6 acceptance criteria verified by passing tests. `go test -race ./...` clean.
+
+**Implementation:** `internal/mcp/finish_tool.go`, `internal/mcp/finish_tool_test.go`
 
 **Spec reference:** §12
 
 **Dependencies:** Track B (side effects), Track C (batch).
 
-| Task | Description | Size |
-|------|-------------|------|
-| E.1 | Define `FinishInput` struct: `TaskID`, `Summary`, `FilesModified`, `Verification`, `Knowledge`, `ToStatus` | S |
-| E.2 | Define `FinishResult` struct: `Task`, `Knowledge` (accepted/rejected), `SideEffects` | S |
-| E.3 | Implement single-task completion: transition task to `done` or `needs-review`, set `completed` timestamp and `completion_summary` | M |
-| E.4 | Implement lenient lifecycle: accept tasks in `ready` status, internally transition through `active` before completing | M |
-| E.5 | Implement inline knowledge contribution: process `knowledge` array through existing `KnowledgeService.Contribute`, collect accepted/rejected results | M |
-| E.6 | Implement `knowledge_contributed` and `knowledge_rejected` side effects for inline contributions | S |
-| E.7 | Wire dependency unblocking: after completion, the existing `DependencyUnblockingHook` fires and pushes `task_unblocked` side effects via the collector | S |
-| E.8 | Implement batch completion using the Track C batch infrastructure | M |
-| E.9 | Implement `finish` MCP tool wiring in `internal/mcp/finish_tool.go`: register in core group, handle single and batch modes | M |
-| E.10 | Write tests: single completion — task transitions to `done`, timestamp set, summary stored | M |
-| E.11 | Write tests: lenient lifecycle — `ready` task is accepted, transitions through to `done` | S |
-| E.12 | Write tests: `needs-review` target status | S |
-| E.13 | Write tests: inline knowledge — valid entry accepted, duplicate rejected, task still completes | M |
-| E.14 | Write tests: side effects — unblocked tasks appear in response | M |
-| E.15 | Write tests: batch completion — partial failure, per-item results, aggregate side effects | M |
-| E.16 | Write tests: error cases — task not found, task in terminal status, missing summary | S |
+| Task | Description | Size | Status |
+|------|-------------|------|--------|
+| E.1 | Define `FinishInput` struct: `TaskID`, `Summary`, `FilesModified`, `Verification`, `Knowledge`, `ToStatus` | S | ✓ |
+| E.2 | Define `FinishResult` struct: `Task`, `Knowledge` (accepted/rejected), `SideEffects` | S | ✓ |
+| E.3 | Implement single-task completion: transition task to `done` or `needs-review`, set `completed` timestamp and `completion_summary` | M | ✓ |
+| E.4 | Implement lenient lifecycle: accept tasks in `ready` status, internally transition through `active` before completing | M | ✓ |
+| E.5 | Implement inline knowledge contribution: process `knowledge` array through existing `KnowledgeService.Contribute`, collect accepted/rejected results | M | ✓ |
+| E.6 | Implement `knowledge_contributed` and `knowledge_rejected` side effects for inline contributions | S | ✓ |
+| E.7 | Wire dependency unblocking: after completion, the existing `DependencyUnblockingHook` fires and pushes `task_unblocked` side effects via the collector | S | ✓ |
+| E.8 | Implement batch completion using the Track C batch infrastructure | M | ✓ |
+| E.9 | Implement `finish` MCP tool wiring in `internal/mcp/finish_tool.go`: register in core group, handle single and batch modes | M | ✓ |
+| E.10 | Write tests: single completion — task transitions to `done`, timestamp set, summary stored | M | ✓ |
+| E.11 | Write tests: lenient lifecycle — `ready` task is accepted, transitions through to `done` | S | ✓ |
+| E.12 | Write tests: `needs-review` target status | S | ✓ |
+| E.13 | Write tests: inline knowledge — valid entry accepted, duplicate rejected, task still completes | M | ✓ |
+| E.14 | Write tests: side effects — unblocked tasks appear in response | M | ✓ |
+| E.15 | Write tests: batch completion — partial failure, per-item results, aggregate side effects | M | ✓ |
+| E.16 | Write tests: error cases — task not found, task in terminal status, missing summary | S | ✓ |
 
 **Key implementation notes:**
 
 - E.3 wraps the existing `DispatchService.CompleteTask` or calls `EntityService.UpdateStatus` directly. The existing service logic is reused — `finish` is a thin orchestration layer over it.
 - E.4 (lenient lifecycle) is the key UX improvement. In 1.0, completing a task that was never formally dispatched required two calls (`dispatch_task` + `complete_task`). In 2.0, `finish` handles it in one call. The internal transition sequence is: `ready` → `active` → `done`. Both transitions fire their hooks (worktree creation on `active`, dependency unblocking on `done`).
 - E.7 validates that the side-effect collector (Track B) correctly captures side effects from hooks. This is the first end-to-end test of the collector pattern.
+- `finishInput` is an unexported struct (not exported as `FinishInput`) because the only public surface is the MCP tool handler. The plan's struct name was illustrative.
+- `knowledge_contributed` and `knowledge_rejected` side effects place type-specific fields (`topic`, `reason`) in the `Extra` map, consistent with the `SideEffect` struct design established in Track B. The spec §12.6 example shows `topic` at the top level, but that is an illustrative simplification; `extra.topic` is the correct location given the shared SideEffect schema.
 
-**Verification (spec §30.6):** All 11 acceptance criteria must have passing tests.
+**Verification (spec §30.6):** All 11 acceptance criteria verified. See `finish_tool_test.go`.
 
 ---
 
