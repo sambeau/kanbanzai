@@ -674,6 +674,75 @@ func TestEntity_Update_IgnoresStatusAndIDChanges(t *testing.T) {
 	}
 }
 
+func TestEntity_Update_TaskDependsOn(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "ent-ud1")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-ud1")
+	taskID1, _ := createEntityTestTask(t, entitySvc, featID, "task-ud1a")
+	taskID2, _ := createEntityTestTask(t, entitySvc, featID, "task-ud1b")
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":     "update",
+		"id":         taskID2,
+		"depends_on": []any{taskID1},
+	})
+
+	entity, ok := result["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected 'entity' object, got: %v", result)
+	}
+
+	deps, ok := entity["depends_on"].([]any)
+	if !ok {
+		t.Fatalf("expected depends_on to be a list, got: %T (%v)", entity["depends_on"], entity["depends_on"])
+	}
+	if len(deps) != 1 {
+		t.Fatalf("expected 1 dependency, got %d: %v", len(deps), deps)
+	}
+	if deps[0] != taskID1 {
+		t.Errorf("depends_on[0] = %v, want %s", deps[0], taskID1)
+	}
+}
+
+func TestEntity_Update_DependsOnRejectsNonTask(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "ent-udn1")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-udn1")
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":     "update",
+		"id":         featID,
+		"depends_on": []any{"TASK-01ZZZZZZZZZZ1"},
+	})
+
+	if _, hasErr := result["error"]; !hasErr {
+		t.Fatalf("expected error for depends_on on feature, got: %v", result)
+	}
+}
+
+func TestEntity_Update_DependsOnRejectsInvalidID(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "ent-udi1")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-udi1")
+	taskID, _ := createEntityTestTask(t, entitySvc, featID, "task-udi1")
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":     "update",
+		"id":         taskID,
+		"depends_on": []any{"FEAT-01ZZZZZZZZZZ1"},
+	})
+
+	if _, hasErr := result["error"]; !hasErr {
+		t.Fatalf("expected error for non-TASK ID in depends_on, got: %v", result)
+	}
+}
+
 // ─── transition action ────────────────────────────────────────────────────────
 
 func TestEntity_Transition_TaskQueuedToReady(t *testing.T) {

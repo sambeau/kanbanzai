@@ -67,10 +67,11 @@ type UpdateStatusInput struct {
 }
 
 type UpdateEntityInput struct {
-	Type   string            // entity type: "epic", "feature", "task", "bug", "decision"
-	ID     string            // entity ID
-	Slug   string            // entity slug
-	Fields map[string]string // field name → new value (string values only)
+	Type       string              // entity type: "epic", "feature", "task", "bug", "decision"
+	ID         string              // entity ID
+	Slug       string              // entity slug
+	Fields     map[string]string   // field name → new value (string values only)
+	ListFields map[string][]string // field name → new value (list values, e.g. depends_on)
 }
 
 type CreateResult struct {
@@ -696,6 +697,14 @@ func (s *EntityService) UpdateEntity(input UpdateEntityInput) (GetResult, error)
 
 	for k, v := range input.Fields {
 		record.Fields[k] = v
+	}
+
+	for k, v := range input.ListFields {
+		if len(v) == 0 {
+			delete(record.Fields, k)
+		} else {
+			record.Fields[k] = append([]string(nil), v...)
+		}
 	}
 
 	if newSlug, ok := input.Fields["slug"]; ok {

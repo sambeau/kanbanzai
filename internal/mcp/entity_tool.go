@@ -72,6 +72,7 @@ func entityTool(entitySvc *service.EntityService) server.ServerTool {
 		mcp.WithString("bug_type", mcp.Description("Bug type: implementation-defect, specification-defect, design-problem")),
 		mcp.WithString("created_by", mcp.Description("Who created it. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 		mcp.WithString("design", mcp.Description("Design document reference (feature or plan)")),
+		mcp.WithArray("depends_on", mcp.Description("Task IDs this task depends on (task update only). Each must be a valid TASK-... ID.")),
 		mcp.WithString("created_after", mcp.Description("Created-after filter, RFC3339 (list only)")),
 		mcp.WithString("created_before", mcp.Description("Created-before filter, RFC3339 (list only)")),
 	)
@@ -486,10 +487,25 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 			}
 		}
 
+		// List-valued fields (e.g. depends_on for tasks).
+		var listFields map[string][]string
+		if deps := entityArgStringSlice(args, "depends_on"); len(deps) > 0 {
+			if entityType != "task" {
+				return nil, fmt.Errorf("depends_on is only valid for task entities, not %s", entityType)
+			}
+			for _, dep := range deps {
+				if !strings.HasPrefix(dep, "TASK-") {
+					return nil, fmt.Errorf("invalid depends_on entry %q: must be a TASK-... ID", dep)
+				}
+			}
+			listFields = map[string][]string{"depends_on": deps}
+		}
+
 		result, err := entitySvc.UpdateEntity(service.UpdateEntityInput{
-			Type:   entityType,
-			ID:     entityID,
-			Fields: fields,
+			Type:       entityType,
+			ID:         entityID,
+			Fields:     fields,
+			ListFields: listFields,
 		})
 		if err != nil {
 			return nil, fmt.Errorf("update %s %s: %w", entityType, entityID, err)
