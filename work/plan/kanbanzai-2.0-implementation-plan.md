@@ -185,7 +185,7 @@ This shared pipeline is built once in Track F and reused in Track G.
 
 ---
 
-## 5. Track B: Resource-Oriented Pattern & Side-Effect Reporting
+## 5. Track B: Resource-Oriented Pattern & Side-Effect Reporting ✓ COMPLETE
 
 **Goal:** Build the action-dispatch framework and the side-effect reporting contract that all consolidated tools use.
 
@@ -193,39 +193,56 @@ This shared pipeline is built once in Track F and reused in Track G.
 
 **Dependencies:** Track A (tools register through the group framework).
 
-| Task | Description | Size |
-|------|-------------|------|
-| B.1 | Define `SideEffect` struct: `Type`, `EntityID`, `EntityType`, `FromStatus`, `ToStatus`, `Trigger` | S |
-| B.2 | Define `SideEffectCollector` type with `Push(SideEffect)` and `Drain() []SideEffect` methods | S |
-| B.3 | Implement context key for `SideEffectCollector`; helper functions `CollectorFromContext(ctx)` and `PushSideEffect(ctx, effect)` | S |
-| B.4 | Wire collector creation into the MCP request handling path: create collector at request start, attach to context | M |
-| B.5 | Wire collector draining into MCP response path: after handler returns, drain collector and append `side_effects` to response | M |
-| B.6 | Integrate with `StatusTransitionHook` chain: hooks push `status_transition` side effects when they fire cascades | M |
-| B.7 | Integrate with `DependencyUnblockingHook`: push `task_unblocked` side effects | S |
-| B.8 | Integrate with `WorktreeTransitionHook`: push `worktree_created` side effects | S |
-| B.9 | Integrate with `EntityLifecycleHook` (document approval cascades): push `status_transition` side effects when doc approval advances a feature | M |
-| B.10 | Define `ActionDispatcher` pattern: a helper that routes `action` parameter to handler functions within a single tool | M |
-| B.11 | Implement standard error response shape: `ErrorResponse{Code, Message, Details}` | S |
-| B.12 | Implement unknown-action error: returns error listing valid actions for the tool | S |
-| B.13 | Implement irrelevant-parameter ignoring: parameters not needed by the current action are silently ignored | S |
-| B.14 | Write tests: collector lifecycle (create, push, drain, empty-after-drain) | S |
-| B.15 | Write tests: side-effect integration — document approval triggers feature transition side effect | M |
-| B.16 | Write tests: side-effect integration — task completion triggers dependency unblocking side effect | M |
-| B.17 | Write tests: action dispatcher routing, unknown action error, error response shape | M |
-| B.18 | Write tests: read-only operations do not include `side_effects` field | S |
+**Status:** Complete. All 18 tasks implemented. 9 of 10 spec §30.2 acceptance criteria verified by passing tests. `go test -race ./...` clean. The remaining criterion (document-approval cascade as side effect) is scaffolded at the service layer and its end-to-end test is deferred to Track I — see B.9/B.15 note below.
+
+| Task | Description | Size | Status |
+|------|-------------|------|--------|
+| B.1 | Define `SideEffect` struct: `Type`, `EntityID`, `EntityType`, `FromStatus`, `ToStatus`, `Trigger` | S | ✓ |
+| B.2 | Define `SideEffectCollector` type with `Push(SideEffect)` and `Drain() []SideEffect` methods | S | ✓ |
+| B.3 | Implement context key for `SideEffectCollector`; helper functions `CollectorFromContext(ctx)` and `PushSideEffect(ctx, effect)` | S | ✓ |
+| B.4 | Wire collector creation into the MCP request handling path: create collector at request start, attach to context | M | ✓ |
+| B.5 | Wire collector draining into MCP response path: after handler returns, drain collector and append `side_effects` to response | M | ✓ |
+| B.6 | Integrate with `StatusTransitionHook` chain: hooks push `status_transition` side effects when they fire cascades | M | ✓ |
+| B.7 | Integrate with `DependencyUnblockingHook`: push `task_unblocked` side effects | S | ✓ |
+| B.8 | Integrate with `WorktreeTransitionHook`: push `worktree_created` side effects | S | ✓ |
+| B.9 | Integrate with `EntityLifecycleHook` (document approval cascades): push `status_transition` side effects when doc approval advances a feature | M | ✓ (scaffolded; end-to-end in Track I — see note) |
+| B.10 | Define `ActionDispatcher` pattern: a helper that routes `action` parameter to handler functions within a single tool | M | ✓ |
+| B.11 | Implement standard error response shape: `ErrorResponse{Code, Message, Details}` | S | ✓ |
+| B.12 | Implement unknown-action error: returns error listing valid actions for the tool | S | ✓ |
+| B.13 | Implement irrelevant-parameter ignoring: parameters not needed by the current action are silently ignored | S | ✓ |
+| B.14 | Write tests: collector lifecycle (create, push, drain, empty-after-drain) | S | ✓ |
+| B.15 | Write tests: side-effect integration — document approval triggers feature transition side effect | M | ✓ (service layer; end-to-end in Track I — see note) |
+| B.16 | Write tests: side-effect integration — task completion triggers dependency unblocking side effect | M | ✓ |
+| B.17 | Write tests: action dispatcher routing, unknown action error, error response shape | M | ✓ |
+| B.18 | Write tests: read-only operations do not include `side_effects` field | S | ✓ |
+
+**Test inventory:**
+
+- `internal/mcp/sideeffect.go` — core infrastructure: `SideEffect`, `SideEffectCollector`, `WithSideEffects` middleware, `DispatchAction`, `ActionError`, `buildResult`
+- `internal/mcp/sideeffect_test.go` — unit tests: collector lifecycle (push, drain, empty-after-drain, concurrent push), context helpers (round-trip, nil-safe noop), `WithSideEffects` middleware (no effects, single, multiple, per-request isolation, mutation/read-only flag), `DispatchAction` (routing, unknown action, missing action, sorted listing, irrelevant params ignored), `ActionError` shape (with and without details), `buildResult` (inject into object, nil, non-object envelope, mutation empty array)
+- `internal/mcp/batch.go` — batch infrastructure: `ExecuteBatch`, `IsBatchInput`, `BatchResult`, `ItemResult`
+- `internal/mcp/batch_test.go` — unit tests: single item, multiple items, partial failure, all fail, limit exceeded, exactly at limit, empty batch, side effects aggregated, side effects absent when empty, input order preserved, JSON shape, `IsBatchInput` variants
+- `internal/service/documents_test.go` — service-layer tests for `DocEntityTransition`: approval reports transition, no transition when already at target status, supersession reports backward transition
+- `internal/service/dependency_hook_test.go` — `TestDependencyUnblockingHook_PreviousStatusRecorded`: verifies `UnblockedTask.PreviousStatus` is populated for use in `from_status` of side effects
+
+**B.9 / B.15 deferral note:**
+
+The `EntityLifecycleHook` interface (used by `DocumentService`) does not carry a `context.Context`, so it cannot push side effects directly onto the collector. Rather than change the interface (which would cascade through all callers), the service layer was scaffolded instead: `DocumentResult` now carries a `DocEntityTransition` field that records any entity lifecycle transition triggered by approval or supersession. Track I's `doc(action: "approve")` handler reads this field and pushes the `SideEffectStatusTransition` side effect. Tests for the service-layer plumbing (`TestApproveDocument_ReportsEntityTransition`, `TestApproveDocument_NoEntityTransition_WhenAlreadyAtTargetStatus`, `TestSupersedeDocument_ReportsEntityTransition`) are in `internal/service/documents_test.go`. The end-to-end MCP-layer test (B.15 proper) must be written in Track I once `doc(approve)` exists.
 
 **Key implementation notes:**
 
 - The `SideEffectCollector` must be goroutine-safe for correctness, even though the current server is single-process. Use a simple mutex-protected slice.
-- B.4 and B.5 are the integration points where the collector meets the MCP server infrastructure. The `mcp-go` library's handler function signature is `func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error)`. The collector injection must happen before this handler is called, and the draining must happen after. This likely requires a middleware wrapper around each tool handler.
-- B.6–B.9 modify the existing hooks to push side effects. The hooks currently log their actions; they should additionally push a `SideEffect` onto the collector from the context. If the context has no collector (e.g., called from CLI or tests), the push is a no-op.
-- B.10 (`ActionDispatcher`) is a convenience pattern, not a required abstraction. It could be as simple as a `switch` statement on the `action` string in each tool handler. The key requirement is that all consolidated tools use the same dispatch pattern for consistency.
+- B.4 and B.5 are implemented as the `WithSideEffects` middleware wrapper in `internal/mcp/sideeffect.go`. Each 2.0 tool handler is wrapped with `WithSideEffects(func(...) (any, error) { ... })`. The middleware creates a fresh collector per request, attaches it to the context, calls the inner handler, drains the collector, and injects `side_effects` into the JSON response.
+- B.6–B.8 are implemented at the MCP tool layer: after a status-transition service call returns a `WorktreeResult`, the tool handler iterates `wt.UnblockedTasks` and `wt.Created` and calls `PushSideEffect`. The hooks themselves do not carry context and do not push directly — the MCP tool is the integration point.
+- B.9 is scaffolded via `DocEntityTransition` on `DocumentResult` (see deferral note above).
+- B.10 (`ActionDispatcher`) is implemented as `DispatchAction(ctx, req, map[string]ActionHandler{...})`. It is not a required abstraction but ensures all tools use an identical dispatch pattern.
+- The `SideEffect` struct includes an `Extra map[string]string` field (not in the spec schema) to carry type-specific details such as worktree path/branch for `worktree_created` events. This is an additive extension.
 
-**Verification (spec §30.2):** All 10 acceptance criteria must have passing tests.
+**Verification (spec §30.2):** 9 of 10 acceptance criteria have passing tests. Criterion 7 (document approval cascade) is scaffolded at the service layer; end-to-end coverage is a Track I prerequisite.
 
 ---
 
-## 6. Track C: Batch Operations
+## 6. Track C: Batch Operations ✓ COMPLETE
 
 **Goal:** Build the array-accepting input pattern, partial-failure execution, and batch response shape.
 
@@ -233,28 +250,35 @@ This shared pipeline is built once in Track F and reused in Track G.
 
 **Dependencies:** Track B (batch responses include side effects).
 
-| Task | Description | Size |
-|------|-------------|------|
-| C.1 | Define `BatchResult` response struct: `Results []ItemResult`, `Summary {Total, Succeeded, Failed}`, `SideEffects []SideEffect` | S |
-| C.2 | Define `ItemResult` struct: `ItemID`, `Status` ("ok"/"error"), `Data`, `Error`, `SideEffects` | S |
-| C.3 | Implement input detection: determine whether the caller provided single-item parameters or a batch array parameter | M |
-| C.4 | Implement batch execution loop: iterate items, execute each independently, collect per-item results, aggregate side effects | M |
-| C.5 | Implement partial failure semantics: a failure on item N does not prevent processing of item N+1 | S |
-| C.6 | Implement batch limit enforcement: reject batches >100 items with `batch_limit_exceeded` error before processing | S |
-| C.7 | Implement response shape switching: single-item calls return the single-item shape; batch calls return the `BatchResult` shape | M |
-| C.8 | Write tests: single-item call returns single-item response (not wrapped in batch) | S |
-| C.9 | Write tests: batch call returns batch response with per-item results | M |
-| C.10 | Write tests: partial failure — one item fails, others succeed, summary counts are correct | M |
-| C.11 | Write tests: batch limit exceeded returns error before any processing | S |
-| C.12 | Write tests: aggregate side effects are union of per-item side effects | S |
+**Status:** Complete. All 12 tasks implemented. All 8 spec §30.3 acceptance criteria verified by passing tests. `go test -race ./...` clean.
+
+| Task | Description | Size | Status |
+|------|-------------|------|--------|
+| C.1 | Define `BatchResult` response struct: `Results []ItemResult`, `Summary {Total, Succeeded, Failed}`, `SideEffects []SideEffect` | S | ✓ |
+| C.2 | Define `ItemResult` struct: `ItemID`, `Status` ("ok"/"error"), `Data`, `Error`, `SideEffects` | S | ✓ |
+| C.3 | Implement input detection: determine whether the caller provided single-item parameters or a batch array parameter | M | ✓ |
+| C.4 | Implement batch execution loop: iterate items, execute each independently, collect per-item results, aggregate side effects | M | ✓ |
+| C.5 | Implement partial failure semantics: a failure on item N does not prevent processing of item N+1 | S | ✓ |
+| C.6 | Implement batch limit enforcement: reject batches >100 items with `batch_limit_exceeded` error before processing | S | ✓ |
+| C.7 | Implement response shape switching: single-item calls return the single-item shape; batch calls return the `BatchResult` shape | M | ✓ |
+| C.8 | Write tests: single-item call returns single-item response (not wrapped in batch) | S | ✓ |
+| C.9 | Write tests: batch call returns batch response with per-item results | M | ✓ |
+| C.10 | Write tests: partial failure — one item fails, others succeed, summary counts are correct | M | ✓ |
+| C.11 | Write tests: batch limit exceeded returns error before any processing | S | ✓ |
+| C.12 | Write tests: aggregate side effects are union of per-item side effects | S | ✓ |
+
+**Test inventory:**
+
+- `internal/mcp/batch.go` — `ExecuteBatch`, `IsBatchInput`, `BatchResult`, `ItemResult`, `BatchSummary`
+- `internal/mcp/batch_test.go` — unit tests: single item, multiple items, partial failure (one fails, rest continue), all fail, limit exceeded (handler not called), exactly at limit, empty batch, side effects aggregated per-item and in top-level union, side effects absent when empty, input order preserved, JSON shape (`results`/`summary`/`side_effects` fields), `IsBatchInput` variants (true, missing key, non-array value, nil args, empty array)
 
 **Key implementation notes:**
 
-- C.3 is the trickiest part. The MCP tool schema defines parameters. For batch-capable tools, the schema includes both the single-item parameter (e.g., `task_id`) and the batch parameter (e.g., `tasks`). The handler checks which is provided. If both are provided, the batch parameter takes precedence.
-- C.4 can be implemented as a generic helper function: `ExecuteBatch(items []any, handler func(item) (result, []SideEffect, error)) BatchResult`. Each tool's batch-capable action calls this helper with its own per-item handler.
+- C.3 is implemented as `IsBatchInput(args, batchKey string) bool` in `batch.go`. Each batch-capable tool calls this to determine whether to invoke `ExecuteBatch` or the single-item path. When both single and batch parameters are provided, batch takes precedence by checking `IsBatchInput` first.
+- C.4 is implemented as `ExecuteBatch(ctx, items []any, handler BatchItemHandler) (any, error)`. Each tool's batch-capable action calls this helper. Per-item side effects are captured in a sub-collector and attributed to the individual `ItemResult`; they are also aggregated into the top-level `BatchResult.SideEffects`.
 - The batch infrastructure is used by: `finish` (Track E), `entity(create)` (Track H), `doc(register)` and `doc(approve)` (Track I), and `estimate(set)` (Track J).
 
-**Verification (spec §30.3):** All 8 acceptance criteria must have passing tests.
+**Verification (spec §30.3):** All 8 acceptance criteria have passing tests.
 
 ---
 

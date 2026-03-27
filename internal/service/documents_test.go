@@ -1050,6 +1050,166 @@ func TestSubmitDocument_TransitionsFeatureOnDesignCreation(t *testing.T) {
 	}
 }
 
+// ─── DocEntityTransition tests (Track B B.9 / Track I prerequisite) ──────────
+
+func TestApproveDocument_ReportsEntityTransition(t *testing.T) {
+	// Verifies that ApproveDocument populates result.EntityTransition when the
+	// approval triggers a lifecycle transition on the owning entity. Track I
+	// uses this to push status_transition side effects (spec §30.2 criterion 7).
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	// Feature is in "specifying" status; approving the spec advances it to "dev-planning".
+	mock := &mockEntityHook{entityType: "feature", status: "specifying"}
+	svc.SetEntityHook(mock)
+
+	docPath := "spec.md"
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("spec content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+	submitResult, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Feature Spec",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	approveResult, err := svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitResult.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err != nil {
+		t.Fatalf("ApproveDocument() error = %v", err)
+	}
+
+	if approveResult.EntityTransition == nil {
+		t.Fatal("EntityTransition is nil; want non-nil (approval should report the triggered transition)")
+	}
+	et := approveResult.EntityTransition
+	if et.EntityID != "FEAT-123" {
+		t.Errorf("EntityTransition.EntityID = %q, want FEAT-123", et.EntityID)
+	}
+	if et.EntityType != "feature" {
+		t.Errorf("EntityTransition.EntityType = %q, want feature", et.EntityType)
+	}
+	if et.FromStatus != "specifying" {
+		t.Errorf("EntityTransition.FromStatus = %q, want specifying", et.FromStatus)
+	}
+	if et.ToStatus != "dev-planning" {
+		t.Errorf("EntityTransition.ToStatus = %q, want dev-planning", et.ToStatus)
+	}
+}
+
+func TestApproveDocument_NoEntityTransition_WhenAlreadyAtTargetStatus(t *testing.T) {
+	// Verifies that EntityTransition is nil when the entity is already at the
+	// target status (idempotent approval — no real transition occurred).
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	// Feature is already in "dev-planning" — approving the spec is a no-op.
+	mock := &mockEntityHook{entityType: "feature", status: "dev-planning"}
+	svc.SetEntityHook(mock)
+
+	docPath := "spec.md"
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("spec content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+	submitResult, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Feature Spec",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	approveResult, err := svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitResult.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err != nil {
+		t.Fatalf("ApproveDocument() error = %v", err)
+	}
+
+	if approveResult.EntityTransition != nil {
+		t.Errorf("EntityTransition = %+v, want nil (entity already at target status)", approveResult.EntityTransition)
+	}
+}
+
+func TestSupersedeDocument_ReportsEntityTransition(t *testing.T) {
+	// Verifies that SupersedeDocument populates result.EntityTransition when
+	// supersession triggers a backward lifecycle transition on the owning entity.
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	// Feature is in "dev-planning"; superseding the spec reverts it to "specifying".
+	mock := &mockEntityHook{entityType: "feature", status: "dev-planning"}
+	svc.SetEntityHook(mock)
+
+	for _, name := range []string{"spec-v1.md", "spec-v2.md"} {
+		if err := os.WriteFile(filepath.Join(repoRoot, name), []byte("content"), 0o644); err != nil {
+			t.Fatalf("write file: %v", err)
+		}
+	}
+
+	v1, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path: "spec-v1.md", Type: "specification", Title: "Spec V1",
+		Owner: "FEAT-123", CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument(v1) error = %v", err)
+	}
+	_, err = svc.ApproveDocument(ApproveDocumentInput{ID: v1.ID, ApprovedBy: "reviewer"})
+	if err != nil {
+		t.Fatalf("ApproveDocument(v1) error = %v", err)
+	}
+
+	v2, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path: "spec-v2.md", Type: "specification", Title: "Spec V2",
+		Owner: "FEAT-123", CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument(v2) error = %v", err)
+	}
+
+	supersedeResult, err := svc.SupersedeDocument(SupersedeDocumentInput{
+		ID:           v1.ID,
+		SupersededBy: v2.ID,
+	})
+	if err != nil {
+		t.Fatalf("SupersedeDocument() error = %v", err)
+	}
+
+	if supersedeResult.EntityTransition == nil {
+		t.Fatal("EntityTransition is nil; want non-nil (supersession should report the backward transition)")
+	}
+	et := supersedeResult.EntityTransition
+	if et.EntityID != "FEAT-123" {
+		t.Errorf("EntityTransition.EntityID = %q, want FEAT-123", et.EntityID)
+	}
+	if et.EntityType != "feature" {
+		t.Errorf("EntityTransition.EntityType = %q, want feature", et.EntityType)
+	}
+	if et.FromStatus != "dev-planning" {
+		t.Errorf("EntityTransition.FromStatus = %q, want dev-planning", et.FromStatus)
+	}
+	if et.ToStatus != "specifying" {
+		t.Errorf("EntityTransition.ToStatus = %q, want specifying", et.ToStatus)
+	}
+}
+
 func TestOperations_NoHook_StillWork(t *testing.T) {
 	t.Parallel()
 

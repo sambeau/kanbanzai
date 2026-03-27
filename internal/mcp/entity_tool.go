@@ -589,8 +589,9 @@ func entityTransitionAction(entitySvc *service.EntityService) ActionHandler {
 					Type:       SideEffectTaskUnblocked,
 					EntityID:   u.TaskID,
 					EntityType: "task",
+					FromStatus: u.PreviousStatus,
 					ToStatus:   u.Status,
-					Trigger:    fmt.Sprintf("Dependencies of %s now in terminal state", u.TaskID),
+					Trigger:    fmt.Sprintf("All dependencies of %s are now in terminal state", u.TaskID),
 				})
 			}
 		}

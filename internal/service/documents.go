@@ -41,6 +41,21 @@ type SupersedeDocumentInput struct {
 }
 
 // DocumentResult is the result of a document operation.
+// DocEntityTransition records an entity lifecycle transition triggered by a
+// document operation (approval, supersession). It is used by 2.0 tools to
+// report status_transition side effects without modifying the EntityLifecycleHook
+// interface (spec §8.3, Track B task B.9 / Track I prerequisite).
+type DocEntityTransition struct {
+	// EntityID is the owning entity that was transitioned (feature or plan ID).
+	EntityID string
+	// EntityType is the type of the owning entity ("feature" or "plan").
+	EntityType string
+	// FromStatus is the entity's status before the transition.
+	FromStatus string
+	// ToStatus is the entity's status after the transition.
+	ToStatus string
+}
+
 type DocumentResult struct {
 	ID           string
 	Path         string
@@ -58,6 +73,10 @@ type DocumentResult struct {
 	ApprovedAt   *time.Time
 	Supersedes   string
 	SupersededBy string
+	// EntityTransition is set when this operation triggered a lifecycle
+	// transition on the owning entity. Nil when no transition occurred.
+	// Read by 2.0 tools (Track I) to push status_transition side effects.
+	EntityTransition *DocEntityTransition
 }
 
 // DocumentFilters contains optional filters for listing documents.
@@ -301,22 +320,32 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 		ApprovedAt:  doc.ApprovedAt,
 	}
 
-	// Trigger entity lifecycle hooks on approval
+	// Trigger entity lifecycle hooks on approval and record any transition
+	// in result.EntityTransition for 2.0 side-effect reporting (Track I).
 	if s.entityHook != nil && doc.Owner != "" {
-		entityType, _, _ := s.entityHook.GetEntityStatus(doc.Owner)
-		var targetStatus string
-		switch {
-		case entityType == "plan" && doc.Type == model.DocumentTypeDesign:
-			targetStatus = "active"
-		case entityType == "feature" && doc.Type == model.DocumentTypeDesign:
-			targetStatus = "specifying"
-		case entityType == "feature" && doc.Type == model.DocumentTypeSpecification:
-			targetStatus = "dev-planning"
-		case entityType == "feature" && doc.Type == model.DocumentTypeDevPlan:
-			targetStatus = "developing"
-		}
-		if targetStatus != "" {
-			_ = s.entityHook.TransitionStatus(doc.Owner, targetStatus)
+		entityType, currentStatus, getErr := s.entityHook.GetEntityStatus(doc.Owner)
+		if getErr == nil {
+			var targetStatus string
+			switch {
+			case entityType == "plan" && doc.Type == model.DocumentTypeDesign:
+				targetStatus = "active"
+			case entityType == "feature" && doc.Type == model.DocumentTypeDesign:
+				targetStatus = "specifying"
+			case entityType == "feature" && doc.Type == model.DocumentTypeSpecification:
+				targetStatus = "dev-planning"
+			case entityType == "feature" && doc.Type == model.DocumentTypeDevPlan:
+				targetStatus = "developing"
+			}
+			if targetStatus != "" && currentStatus != targetStatus {
+				if err := s.entityHook.TransitionStatus(doc.Owner, targetStatus); err == nil {
+					result.EntityTransition = &DocEntityTransition{
+						EntityID:   doc.Owner,
+						EntityType: entityType,
+						FromStatus: currentStatus,
+						ToStatus:   targetStatus,
+					}
+				}
+			}
 		}
 	}
 
@@ -396,10 +425,11 @@ func (s *DocumentService) SupersedeDocument(input SupersedeDocumentInput) (Docum
 		SupersededBy: doc.SupersededBy,
 	}
 
-	// Trigger entity lifecycle hooks on supersession
+	// Trigger entity lifecycle hooks on supersession and record any backward
+	// transition in result.EntityTransition for 2.0 side-effect reporting (Track I).
 	if s.entityHook != nil && doc.Owner != "" {
-		entityType, _, _ := s.entityHook.GetEntityStatus(doc.Owner)
-		if entityType == "feature" {
+		entityType, currentStatus, getErr := s.entityHook.GetEntityStatus(doc.Owner)
+		if getErr == nil && entityType == "feature" {
 			var targetStatus string
 			switch doc.Type {
 			case model.DocumentTypeDesign:
@@ -409,8 +439,15 @@ func (s *DocumentService) SupersedeDocument(input SupersedeDocumentInput) (Docum
 			case model.DocumentTypeDevPlan:
 				targetStatus = "dev-planning"
 			}
-			if targetStatus != "" {
-				_ = s.entityHook.TransitionStatus(doc.Owner, targetStatus)
+			if targetStatus != "" && currentStatus != targetStatus {
+				if err := s.entityHook.TransitionStatus(doc.Owner, targetStatus); err == nil {
+					result.EntityTransition = &DocEntityTransition{
+						EntityID:   doc.Owner,
+						EntityType: entityType,
+						FromStatus: currentStatus,
+						ToStatus:   targetStatus,
+					}
+				}
 			}
 		}
 	}

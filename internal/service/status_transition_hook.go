@@ -13,9 +13,10 @@ import (
 // UnblockedTask records a task that was automatically promoted to ready
 // because all of its dependencies reached a terminal state.
 type UnblockedTask struct {
-	TaskID string
-	Slug   string
-	Status string // always "ready"
+	TaskID         string
+	Slug           string
+	PreviousStatus string // the status before promotion (e.g. "queued", "blocked")
+	Status         string // always "ready"
 }
 
 // WorktreeResult holds the outcome of an automatic worktree creation attempt

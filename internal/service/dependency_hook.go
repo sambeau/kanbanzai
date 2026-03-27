@@ -97,7 +97,7 @@ func (h *DependencyUnblockingHook) evaluateDependents(completedTaskID string) ([
 		}
 
 		// Promote to ready via direct store write (system-initiated transition).
-		promoted, err := h.promoteToReady(task.ID, task.Slug)
+		promoted, err := h.promoteToReady(task.ID, task.Slug, status)
 		if err != nil {
 			log.Printf("dependency hook: failed to promote task %s to ready: %v", task.ID, err)
 			continue
@@ -112,7 +112,7 @@ func (h *DependencyUnblockingHook) evaluateDependents(completedTaskID string) ([
 // "ready", and writes it back. This bypasses UpdateStatus intentionally —
 // it is a system-initiated transition that should not re-trigger hooks or
 // re-validate the dependency gate (we already confirmed deps are terminal).
-func (h *DependencyUnblockingHook) promoteToReady(taskID, taskSlug string) (UnblockedTask, error) {
+func (h *DependencyUnblockingHook) promoteToReady(taskID, taskSlug, previousStatus string) (UnblockedTask, error) {
 	store := h.entitySvc.Store()
 	rec, err := store.Load("task", taskID, taskSlug)
 	if err != nil {
@@ -128,9 +128,10 @@ func (h *DependencyUnblockingHook) promoteToReady(taskID, taskSlug string) (Unbl
 	log.Printf("dependency hook: promoted task %s (%s) to ready — all dependencies terminal", taskID, slug)
 
 	return UnblockedTask{
-		TaskID: taskID,
-		Slug:   slug,
-		Status: "ready",
+		TaskID:         taskID,
+		Slug:           slug,
+		PreviousStatus: previousStatus,
+		Status:         "ready",
 	}, nil
 }
 

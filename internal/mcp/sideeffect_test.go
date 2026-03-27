@@ -364,6 +364,43 @@ func TestDispatchAction_MissingAction_ReturnsError(t *testing.T) {
 	}
 }
 
+func TestDispatchAction_IrrelevantParametersIgnored(t *testing.T) {
+	// Verifies §7.3 + §30.2: parameters not needed by the current action
+	// are silently ignored, not rejected. This is the key UX guarantee that
+	// lets agents pass a superset of parameters without worrying about which
+	// are relevant to each action.
+	t.Parallel()
+
+	handlers := map[string]ActionHandler{
+		"get": func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+			args, _ := req.Params.Arguments.(map[string]any)
+			id, _ := args["id"].(string)
+			return map[string]string{"id": id}, nil
+		},
+	}
+
+	// "get" only reads "id"; all other parameters are irrelevant and must
+	// not cause an error.
+	result, err := DispatchAction(context.Background(), makeRequest(map[string]any{
+		"action":         "get",
+		"id":             "TASK-001",
+		"parent_feature": "FEAT-001",  // irrelevant to get
+		"summary":        "some task", // irrelevant to get
+		"type":           "task",      // irrelevant to get
+		"slug":           "my-task",   // irrelevant to get
+	}), handlers)
+	if err != nil {
+		t.Fatalf("unexpected error for irrelevant parameters: %v (spec §7.3: irrelevant params must be ignored)", err)
+	}
+	m, ok := result.(map[string]string)
+	if !ok {
+		t.Fatalf("result type = %T, want map[string]string", result)
+	}
+	if m["id"] != "TASK-001" {
+		t.Errorf("id = %q, want TASK-001", m["id"])
+	}
+}
+
 func TestDispatchAction_ValidActionsSorted(t *testing.T) {
 	t.Parallel()
 
