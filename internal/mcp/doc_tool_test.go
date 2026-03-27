@@ -46,7 +46,7 @@ func writeDocFile(t *testing.T, repoRoot, relPath, content string) {
 // callDoc invokes the doc tool with the given args and returns the parsed JSON map.
 func callDoc(t *testing.T, env *docToolEnv, args map[string]any) map[string]any {
 	t.Helper()
-	tool := docTool(env.docSvc, env.intelSvc)
+	tool := docTool(env.docSvc)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -541,7 +541,7 @@ func TestDocTool_Gaps_AllMissing(t *testing.T) {
 	}
 }
 
-func TestDocTool_Gaps_DraftCounstAsGap(t *testing.T) {
+func TestDocTool_Gaps_DraftCountsAsGap(t *testing.T) {
 	t.Parallel()
 	env := setupDocToolTest(t)
 
@@ -631,6 +631,33 @@ func TestDocTool_Gaps_MissingFeatureID(t *testing.T) {
 	}
 }
 
+func TestDocTool_List_FilterByStatus(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	id1 := registerDoc(t, env, "work/design/approved-doc.md", "design", "Approved Doc")
+	registerDoc(t, env, "work/spec/draft-doc.md", "specification", "Draft Doc")
+
+	// Approve one document.
+	callDoc(t, env, map[string]any{"action": "approve", "id": id1})
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "list",
+		"status": "approved",
+	})
+
+	docs, _ := resp["documents"].([]any)
+	if len(docs) == 0 {
+		t.Fatal("expected at least one approved document")
+	}
+	for i, d := range docs {
+		dm, _ := d.(map[string]any)
+		if dm["status"] != "approved" {
+			t.Errorf("documents[%d].status = %q, want approved", i, dm["status"])
+		}
+	}
+}
+
 // ─── validate ─────────────────────────────────────────────────────────────────
 
 func TestDocTool_Validate_Valid(t *testing.T) {
@@ -665,6 +692,34 @@ func TestDocTool_Validate_MissingID(t *testing.T) {
 
 // ─── supersede ────────────────────────────────────────────────────────────────
 
+func TestDocTool_Validate_WithIssues(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	// Register a document, then delete the file so validation will report drift/missing issues.
+	const relPath = "work/design/deleted.md"
+	id := registerDoc(t, env, relPath, "design", "Deleted Doc")
+
+	// Delete the underlying file to cause validation issues.
+	if err := os.Remove(filepath.Join(env.repoRoot, relPath)); err != nil {
+		t.Fatalf("remove file: %v", err)
+	}
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "validate",
+		"id":     id,
+	})
+
+	valid, _ := resp["valid"].(bool)
+	if valid {
+		t.Error("valid = true, want false for document with missing file")
+	}
+	issues, _ := resp["issues"].([]any)
+	if len(issues) == 0 {
+		t.Error("expected at least one validation issue for missing file")
+	}
+}
+
 func TestDocTool_Supersede(t *testing.T) {
 	t.Parallel()
 	env := setupDocToolTest(t)
@@ -690,6 +745,77 @@ func TestDocTool_Supersede(t *testing.T) {
 	}
 	if _, hasSE := resp["side_effects"]; !hasSE {
 		t.Error("expected side_effects field on mutation response")
+	}
+}
+
+func TestDocTool_Supersede_ReportsEntityTransition(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	const featID = "FEAT-SUPERSEDE"
+
+	// Wire a mock hook: feature is in "dev-planning"; superseding its spec
+	// document should cascade it back to "specifying" (backward lifecycle transition).
+	mock := &mockDocHook{entityType: "feature", status: "dev-planning"}
+	env.docSvc.SetEntityHook(mock)
+
+	// Register and approve the old spec, then register and approve a new spec.
+	writeDocFile(t, env.repoRoot, "work/spec/old-spec.md", "# Old Spec\n")
+	reg1 := callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/spec/old-spec.md",
+		"type":   "specification",
+		"title":  "Old Spec",
+		"owner":  featID,
+	})
+	oldDoc, _ := reg1["document"].(map[string]any)
+	oldID, _ := oldDoc["id"].(string)
+	if oldID == "" {
+		t.Fatal("register old spec: got empty document ID")
+	}
+	callDoc(t, env, map[string]any{"action": "approve", "id": oldID})
+
+	writeDocFile(t, env.repoRoot, "work/spec/new-spec.md", "# New Spec\n")
+	reg2 := callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/spec/new-spec.md",
+		"type":   "specification",
+		"title":  "New Spec",
+		"owner":  featID,
+	})
+	newDoc, _ := reg2["document"].(map[string]any)
+	newID, _ := newDoc["id"].(string)
+	if newID == "" {
+		t.Fatal("register new spec: got empty document ID")
+	}
+	callDoc(t, env, map[string]any{"action": "approve", "id": newID})
+
+	resp := callDoc(t, env, map[string]any{
+		"action":        "supersede",
+		"id":            oldID,
+		"superseded_by": newID,
+	})
+
+	// The side_effects must contain a status_transition for the owning feature.
+	sideEffects, _ := resp["side_effects"].([]any)
+	found := false
+	for _, se := range sideEffects {
+		seMap, _ := se.(map[string]any)
+		if seMap["type"] == "status_transition" && seMap["entity_id"] == featID {
+			found = true
+			if seMap["from_status"] == "" {
+				t.Error("side effect missing from_status")
+			}
+			if seMap["to_status"] == "" {
+				t.Error("side effect missing to_status")
+			}
+			if trigger, _ := seMap["trigger"].(string); !strings.Contains(trigger, oldID) {
+				t.Errorf("trigger %q does not mention superseded document ID %q", trigger, oldID)
+			}
+		}
+	}
+	if !found {
+		t.Errorf("expected status_transition side effect for feature %s; side_effects: %v", featID, sideEffects)
 	}
 }
 

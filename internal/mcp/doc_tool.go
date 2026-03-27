@@ -17,6 +17,10 @@
 // approve and supersede push SideEffectStatusTransition side effects when
 // the operation cascades a feature lifecycle transition (spec §30.2 criterion 7).
 // register supports batch via the documents array; approve supports batch via ids.
+//
+// intelligenceSvc is held by DocTool for future actions that need document
+// classification data (e.g., enriched gap analysis via Layer 3 concepts). All
+// current actions rely on docSvc directly and do not need it.
 package mcp
 
 import (
@@ -31,13 +35,17 @@ import (
 )
 
 // DocTool returns the consolidated `doc` MCP tool registered in the core group.
-// intelligenceSvc is accepted for forward compatibility; the gaps action
-// implements richer status-aware analysis using docSvc directly.
+//
+// intelligenceSvc is retained in the signature so callers (server.go) do not
+// need to change when a future action makes use of it. Currently all actions
+// call into docSvc directly.
 func DocTool(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService) []server.ServerTool {
-	return []server.ServerTool{docTool(docSvc, intelligenceSvc)}
+	// intelligenceSvc is intentionally not forwarded to docTool; no current action needs it.
+	_ = intelligenceSvc
+	return []server.ServerTool{docTool(docSvc)}
 }
 
-func docTool(docSvc *service.DocumentService, _ *service.IntelligenceService) server.ServerTool {
+func docTool(docSvc *service.DocumentService) server.ServerTool {
 	tool := mcp.NewTool("doc",
 		mcp.WithDescription(
 			"Consolidated document operations. Replaces doc_record_submit, doc_record_approve, "+
@@ -436,7 +444,7 @@ func docSupersedeAction(docSvc *service.DocumentService) ActionHandler {
 			return nil, err
 		}
 
-		// Report entity lifecycle cascade triggered by supersession.
+		// Report entity lifecycle cascade triggered by supersession (spec §30.2 criterion 7).
 		if t := result.EntityTransition; t != nil {
 			PushSideEffect(ctx, SideEffect{
 				Type:       SideEffectStatusTransition,

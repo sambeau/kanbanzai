@@ -482,7 +482,7 @@ The `EntityLifecycleHook` interface (used by `DocumentService`) does not carry a
 
 ---
 
-## 12. Track I: `doc` — Consolidated Document Operations
+## 12. Track I: `doc` — Consolidated Document Operations ✓ COMPLETE
 
 **Goal:** Consolidate 11+ document tools into one resource-oriented tool.
 
@@ -490,33 +490,42 @@ The `EntityLifecycleHook` interface (used by `DocumentService`) does not carry a
 
 **Dependencies:** Track B (action dispatch, side effects), Track C (batch register/approve).
 
-| Task | Description | Size |
-|------|-------------|------|
-| I.1 | Implement `doc(action: "register")` — single document registration | M |
-| I.2 | Implement batch register: accept `documents` array | M |
-| I.3 | Implement `doc(action: "approve")` — single and batch (with `ids` array) | M |
-| I.4 | Wire approval side-effect reporting: feature transitions from doc approval appear in `side_effects` | M |
-| I.5 | Implement `doc(action: "get")` — by ID or by path (resolve path to document record) | M |
-| I.6 | Implement `doc(action: "content")` — return file content with drift detection | S |
-| I.7 | Implement `doc(action: "list")` — with type, status, owner, and pending filters | M |
-| I.8 | Implement `doc(action: "gaps")` — missing document analysis for a feature | S |
-| I.9 | Implement `doc(action: "import")` — batch import from directory (reuses existing `batch_import_documents` logic) | S |
-| I.10 | Implement `doc(action: "validate")` — document record validation | S |
-| I.11 | Implement `doc(action: "supersede")` — mark document as superseded with side effects | S |
-| I.12 | Implement `doc` MCP tool wiring in `internal/mcp/doc_tool.go`: register in core group, action dispatch | M |
-| I.13 | Write tests: register single and batch | M |
-| I.14 | Write tests: approve with side effects (feature transition) | M |
-| I.15 | Write tests: get by ID and get by path | S |
-| I.16 | Write tests: list with filters | S |
-| I.17 | Write tests: gaps analysis | S |
-| I.18 | Write tests: import idempotency | S |
+| Task | Description | Size | Status |
+|------|-------------|------|--------|
+| I.1 | Implement `doc(action: "register")` — single document registration | M | ✓ |
+| I.2 | Implement batch register: accept `documents` array | M | ✓ |
+| I.3 | Implement `doc(action: "approve")` — single and batch (with `ids` array) | M | ✓ |
+| I.4 | Wire approval side-effect reporting: feature transitions from doc approval appear in `side_effects` | M | ✓ |
+| I.5 | Implement `doc(action: "get")` — by ID or by path (resolve path to document record) | M | ✓ |
+| I.6 | Implement `doc(action: "content")` — return file content with drift detection | S | ✓ |
+| I.7 | Implement `doc(action: "list")` — with type, status, owner, and pending filters | M | ✓ |
+| I.8 | Implement `doc(action: "gaps")` — missing document analysis for a feature | S | ✓ |
+| I.9 | Implement `doc(action: "import")` — batch import from directory (reuses existing `batch_import_documents` logic) | S | ✓ |
+| I.10 | Implement `doc(action: "validate")` — document record validation | S | ✓ |
+| I.11 | Implement `doc(action: "supersede")` — mark document as superseded with side effects | S | ✓ |
+| I.12 | Implement `doc` MCP tool wiring in `internal/mcp/doc_tool.go`: register in core group, action dispatch | M | ✓ |
+| I.13 | Write tests: register single and batch | M | ✓ |
+| I.14 | Write tests: approve with side effects (feature transition) | M | ✓ |
+| I.15 | Write tests: get by ID and get by path | S | ✓ |
+| I.16 | Write tests: list with filters | S | ✓ |
+| I.17 | Write tests: gaps analysis | S | ✓ |
+| I.18 | Write tests: import idempotency | S | ✓ |
 
 **Key implementation notes:**
 
 - I.4 is the canonical side-effect demonstration: approving a spec triggers a feature transition, and the response tells the agent what happened. Test this thoroughly.
 - I.5 path-based lookup is a UX improvement. Agents know file paths (`work/spec/foo.md`) but often don't know the document record ID (`DOC-01JX...`). The `get` action searches for a document record with a matching `path` field.
 
-**Verification (spec §30.9):** All 13 acceptance criteria must have passing tests.
+**Status:** Complete. All 18 tasks implemented. All 13 spec §30.9 acceptance criteria have passing tests. `go test -race ./...` clean.
+
+**Completion notes:**
+
+- `gaps` action implements richer status-aware analysis than the 1.0 `doc_gaps` tool: it distinguishes missing, draft, and approved document types, matching the spec §15.8 response shape exactly. The `IntelligenceService.AnalyzeGaps` helper (which only reports fully missing types) is bypassed in favour of a direct `ListDocumentsByOwner` call.
+- `approve` and `supersede` both push `SideEffectStatusTransition` side effects when `result.EntityTransition` is populated, completing Track B task B.9/B.15. End-to-end MCP tests are in `TestDocTool_Approve_ReportsEntityTransition` and `TestDocTool_Supersede_ReportsEntityTransition`.
+- `DocTool` accepts `intelligenceSvc` in its signature (so `server.go` need not change when a future action requires it), but does not forward it to the unexported `docTool` function. No current action needs it.
+- `doc_supersession_chain` is listed in spec §15.1 as a replaced tool but does not appear in the §15.2 action table and has no acceptance criterion in §30.9. It is not implemented; if needed it can be added as a `supersession_chain` action in a future track.
+
+**Verification (spec §30.9):** All 13 acceptance criteria have passing tests.
 
 ---
 
