@@ -543,8 +543,9 @@ func TestFinish_UnblockedTasksInSideEffects(t *testing.T) {
 	}
 }
 
-// TestFinish_NoSideEffectsWhenNoDependents verifies no task_unblocked effects when
-// the completed task has no dependents.
+// TestFinish_NoSideEffectsWhenNoDependents verifies that finish always returns
+// side_effects: [] (spec §8.4) even when no cascades occur (no downstream tasks,
+// no knowledge contributions).
 func TestFinish_NoSideEffectsWhenNoDependents(t *testing.T) {
 	t.Parallel()
 	entitySvc, dispatchSvc := setupFinishTest(t)
@@ -556,15 +557,17 @@ func TestFinish_NoSideEffectsWhenNoDependents(t *testing.T) {
 		"summary": "Done, no dependents",
 	})
 
-	// Response should have no side_effects at all (nil field omitted from JSON).
+	// finish is a mutation — side_effects must always be present, even when empty
+	// (spec §8.4: "The field is never omitted").
 	sideEffects, exists := resp["side_effects"]
-	if exists && sideEffects != nil {
-		arr, _ := sideEffects.([]any)
-		for _, se := range arr {
-			effect, _ := se.(map[string]any)
-			if effect["type"] == "task_unblocked" {
-				t.Errorf("unexpected task_unblocked side effect: %v", effect)
-			}
+	if !exists {
+		t.Fatal("side_effects absent from finish response — spec §8.4 requires it for mutations")
+	}
+	arr, _ := sideEffects.([]any)
+	for _, se := range arr {
+		effect, _ := se.(map[string]any)
+		if effect["type"] == "task_unblocked" {
+			t.Errorf("unexpected task_unblocked side effect: %v", effect)
 		}
 	}
 }

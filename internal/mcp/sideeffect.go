@@ -31,6 +31,7 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"strings"
 	"sync"
@@ -213,8 +214,12 @@ func WithSideEffects(inner sideEffectHandler) func(ctx context.Context, req mcp.
 		isMutation := collector.IsMutation()
 
 		if err != nil {
-			// Convert Go error to structured error response, including any
-			// side effects that were collected before the failure.
+			// Use the specific error code for batch limit violations (spec §9.5).
+			// All other errors fall back to the generic internal_error code.
+			var limitErr *BatchLimitError
+			if errors.As(err, &limitErr) {
+				return buildErrorResult("batch_limit_exceeded", err.Error(), nil, effects), nil
+			}
 			return buildErrorResult("internal_error", err.Error(), nil, effects), nil
 		}
 
@@ -230,7 +235,33 @@ func WithSideEffects(inner sideEffectHandler) func(ctx context.Context, req mcp.
 // always present even when no cascades occurred (spec §8.4: "The field is
 // never omitted"). Read-only handlers that do not call SignalMutation omit
 // the field entirely (spec §8.5).
+//
+// Special case: *BatchResult already carries its own top-level side_effects
+// field. Injecting a second side_effects key would produce duplicate JSON keys,
+// causing parsers to discard the real effects. Batch results are returned
+// directly after ensuring side_effects is non-nil for mutations (spec §8.4).
 func buildResult(result any, effects []SideEffect, isMutation bool) *mcp.CallToolResult {
+	// Batch results manage their own side_effects field via their struct tag.
+	// We must not inject a second side_effects key — that produces duplicate keys
+	// in JSON, causing parsers to discard the real effects (F2).
+	//
+	// Strategy: marshal the BatchResult as-is (omitempty omits nil SideEffects),
+	// then inject side_effects:[] only when the field was absent and this is a
+	// mutation (spec §8.4: "The field is never omitted" for mutations).
+	if br, ok := result.(*BatchResult); ok {
+		b, err := json.Marshal(br)
+		if err != nil {
+			return mcp.NewToolResultText(fmt.Sprintf(`{"error":{"code":"serialisation_error","message":%q}}`, err.Error()))
+		}
+		text := string(b)
+		// SideEffects == nil means omitempty removed it from the JSON.
+		// Inject [] for mutations so callers can read side_effects unconditionally.
+		if isMutation && br.SideEffects == nil {
+			text = strings.TrimSuffix(text, "}") + `,"side_effects":[]}`
+		}
+		return mcp.NewToolResultText(text)
+	}
+
 	if result == nil && len(effects) == 0 && !isMutation {
 		return mcp.NewToolResultText("{}")
 	}

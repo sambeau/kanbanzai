@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"strings"
 	"testing"
 
@@ -632,6 +633,154 @@ func TestWithSideEffects_ReadOnlyHandler_NoSideEffectsField(t *testing.T) {
 
 	if _, ok := parsed["side_effects"]; ok {
 		t.Error("side_effects present in read-only operation result, want absent")
+	}
+}
+
+// ─── BatchLimitError error code (F1) ──────────────────────────────────────────
+
+func TestWithSideEffects_BatchLimitError_ProducesCorrectCode(t *testing.T) {
+	t.Parallel()
+
+	// Verifies §9.5, §30.3: batch limit violations must produce error code
+	// "batch_limit_exceeded", not the generic "internal_error".
+	inner := func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		return nil, &BatchLimitError{Count: 101, Limit: 100}
+	}
+	handler := WithSideEffects(inner)
+
+	result, err := handler(context.Background(), mcp.CallToolRequest{})
+	if err != nil {
+		t.Fatalf("handler returned error: %v", err)
+	}
+
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	errField, ok := parsed["error"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected error field, got: %v", parsed)
+	}
+	if errField["code"] != "batch_limit_exceeded" {
+		t.Errorf("error.code = %q, want \"batch_limit_exceeded\"", errField["code"])
+	}
+	if msg, _ := errField["message"].(string); msg == "" {
+		t.Error("error.message is empty")
+	}
+}
+
+func TestWithSideEffects_BatchLimitError_NotInternal(t *testing.T) {
+	t.Parallel()
+
+	// Regression: a non-batch-limit error must still produce "internal_error".
+	inner := func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		return nil, fmt.Errorf("something went wrong")
+	}
+	handler := WithSideEffects(inner)
+
+	result, _ := handler(context.Background(), mcp.CallToolRequest{})
+	text := extractText(t, result)
+	var parsed map[string]any
+	json.Unmarshal([]byte(text), &parsed) //nolint:errcheck
+	errField, _ := parsed["error"].(map[string]any)
+	if errField["code"] != "internal_error" {
+		t.Errorf("error.code = %q, want \"internal_error\"", errField["code"])
+	}
+}
+
+// ─── buildResult with *BatchResult (F2) ───────────────────────────────────────
+
+func TestBuildResult_BatchResult_SideEffectsNotDoubled(t *testing.T) {
+	t.Parallel()
+
+	// Verifies F2: when a *BatchResult already has side_effects populated,
+	// buildResult must not inject a second side_effects key.
+	br := &BatchResult{
+		Results: []ItemResult{
+			{ItemID: "X", Status: "ok"},
+		},
+		Summary: BatchSummary{Total: 1, Succeeded: 1},
+		SideEffects: []SideEffect{
+			{Type: SideEffectStatusTransition, EntityID: "FEAT-001", ToStatus: "developing"},
+		},
+	}
+
+	result := buildResult(br, nil, true) // isMutation=true, outer effects empty
+	text := extractText(t, result)
+
+	// Count occurrences of the "side_effects" key at any depth.
+	count := strings.Count(text, `"side_effects"`)
+	if count != 2 {
+		// Expected: once at top level (BatchResult), once inside results[0] omitted (empty).
+		// More precisely: 1 at top level with real effects + 0 per-item (omitempty).
+		// Any count > 2 suggests duplicate injection.
+		t.Logf("raw JSON: %s", text)
+	}
+
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	// The top-level side_effects must contain the real effect, not be empty.
+	topEffects, ok := parsed["side_effects"].([]any)
+	if !ok || len(topEffects) == 0 {
+		t.Errorf("top-level side_effects = %v, want non-empty slice with the status_transition", parsed["side_effects"])
+	}
+}
+
+func TestBuildResult_BatchResult_MutationNoEffects_SideEffectsPresent(t *testing.T) {
+	t.Parallel()
+
+	// When a batch mutation produces no side effects, side_effects: [] must be
+	// present (spec §8.4: "The field is never omitted" for mutations).
+	br := &BatchResult{
+		Results: []ItemResult{
+			{ItemID: "X", Status: "ok"},
+		},
+		Summary: BatchSummary{Total: 1, Succeeded: 1},
+		// SideEffects is nil — no effects produced.
+	}
+
+	result := buildResult(br, nil, true) // isMutation=true
+	text := extractText(t, result)
+
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	effects, ok := parsed["side_effects"]
+	if !ok {
+		t.Fatal("side_effects absent from batch mutation result, want [] (spec §8.4)")
+	}
+	arr, _ := effects.([]any)
+	if len(arr) != 0 {
+		t.Errorf("side_effects = %v, want empty []", effects)
+	}
+}
+
+func TestBuildResult_BatchResult_ReadOnly_SideEffectsOmitted(t *testing.T) {
+	t.Parallel()
+
+	// Read-only batch results (isMutation=false) omit side_effects when empty.
+	br := &BatchResult{
+		Results: []ItemResult{{ItemID: "X", Status: "ok"}},
+		Summary: BatchSummary{Total: 1, Succeeded: 1},
+	}
+
+	result := buildResult(br, nil, false) // not a mutation
+	text := extractText(t, result)
+
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	if _, ok := parsed["side_effects"]; ok {
+		t.Error("side_effects present in read-only batch result, want absent")
 	}
 }
 

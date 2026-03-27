@@ -316,6 +316,83 @@ func TestDocTool_Approve_ReportsEntityTransition(t *testing.T) {
 	}
 }
 
+// TestDocTool_Approve_Batch_WithEntityTransition is a regression test for F2:
+// batch doc approval where each document triggers an entity lifecycle transition.
+// Before the fix, SignalMutation + ExecuteBatch produced duplicate "side_effects"
+// keys in the JSON, causing parsers to see side_effects: [] (empty) instead of
+// the real transitions.
+func TestDocTool_Approve_Batch_WithEntityTransition(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	const featID = "FEAT-CASCADE-BATCH"
+
+	// Wire a mock hook so both doc approvals trigger a feature status cascade.
+	mock := &mockDocHook{entityType: "feature", status: "specifying"}
+	env.docSvc.SetEntityHook(mock)
+
+	// Register two spec documents with the same owning feature.
+	writeDocFile(t, env.repoRoot, "work/spec/batch-spec-1.md", "# Batch Spec 1\n")
+	writeDocFile(t, env.repoRoot, "work/spec/batch-spec-2.md", "# Batch Spec 2\n")
+
+	reg1 := callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/spec/batch-spec-1.md",
+		"type":   "specification",
+		"title":  "Batch Spec 1",
+		"owner":  featID,
+	})
+	reg2 := callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/spec/batch-spec-2.md",
+		"type":   "specification",
+		"title":  "Batch Spec 2",
+		"owner":  featID,
+	})
+	id1, _ := reg1["document"].(map[string]any)["id"].(string)
+	id2, _ := reg2["document"].(map[string]any)["id"].(string)
+	if id1 == "" || id2 == "" {
+		t.Fatalf("register: got empty document IDs; id1=%q id2=%q", id1, id2)
+	}
+
+	// Approve both in a single batch call.
+	resp := callDoc(t, env, map[string]any{
+		"action": "approve",
+		"ids":    []any{id1, id2},
+	})
+
+	// The response must have the standard batch shape.
+	results, ok := resp["results"].([]any)
+	if !ok || len(results) != 2 {
+		t.Fatalf("expected results array with 2 items, got: %v", resp)
+	}
+	for i, r := range results {
+		item, _ := r.(map[string]any)
+		if item["status"] != "ok" {
+			t.Errorf("results[%d].status = %q, want ok", i, item["status"])
+		}
+	}
+
+	// The top-level side_effects must be non-empty (contains status_transitions).
+	// Before the F2 fix, duplicate JSON keys caused side_effects to appear as [].
+	topSideEffects, _ := resp["side_effects"].([]any)
+	if len(topSideEffects) == 0 {
+		t.Errorf("top-level side_effects is empty — possible duplicate key bug (F2); full response: %v", resp)
+	}
+
+	// At least one top-level effect must be a status_transition for the feature.
+	found := false
+	for _, se := range topSideEffects {
+		seMap, _ := se.(map[string]any)
+		if seMap["type"] == "status_transition" && seMap["entity_id"] == featID {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("expected status_transition for %s in top-level side_effects; got: %v", featID, topSideEffects)
+	}
+}
+
 // ─── get ──────────────────────────────────────────────────────────────────────
 
 func TestDocTool_Get_ByID(t *testing.T) {

@@ -710,14 +710,18 @@ func TestTrackJ_Estimate_Set_BatchEmptyEntities(t *testing.T) {
 		"entities": []any{},
 	})
 
-	// Empty batch should succeed with zero results.
+	// Empty batch should succeed with zero results in the standard BatchResult shape.
 	if _, hasErr := resp["error"]; hasErr {
 		t.Fatalf("unexpected error for empty batch: %v", resp["error"])
 	}
 
-	total, _ := resp["total"].(float64)
+	summary, _ := resp["summary"].(map[string]any)
+	if summary == nil {
+		t.Fatalf("expected summary field in batch response, got: %v", resp)
+	}
+	total, _ := summary["total"].(float64)
 	if total != 0 {
-		t.Errorf("expected total=0 for empty batch, got %v", total)
+		t.Errorf("expected summary.total=0 for empty batch, got %v", total)
 	}
 }
 

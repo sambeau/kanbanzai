@@ -242,7 +242,7 @@ The `EntityLifecycleHook` interface (used by `DocumentService`) does not carry a
 
 ---
 
-## 6. Track C: Batch Operations ✓ COMPLETE
+## 6. Track C: Batch Operations ✓ COMPLETE (post-review remediation applied)
 
 **Goal:** Build the array-accepting input pattern, partial-failure execution, and batch response shape.
 
@@ -251,6 +251,13 @@ The `EntityLifecycleHook` interface (used by `DocumentService`) does not carry a
 **Dependencies:** Track B (batch responses include side effects).
 
 **Status:** Complete. All 12 tasks implemented. All 8 spec §30.3 acceptance criteria verified by passing tests. `go test -race ./...` clean.
+
+**Review findings (2026-03-27):** A post-implementation review (`work/reviews/track-c-batch-operations-review.md`) identified 4 blocking findings. All 4 were remediated in the same session:
+
+- **F1** (`batch_limit_exceeded` error code): `ExecuteBatch` now returns a typed `*BatchLimitError`; `WithSideEffects` detects it and emits `code: "batch_limit_exceeded"` instead of `"internal_error"`.
+- **F2** (duplicate `side_effects` key): `buildResult` now type-checks for `*BatchResult` and returns it directly, injecting `side_effects: []` only when the field is absent (no longer injects into a response that already carries the field).
+- **F3** (`finish` missing `SignalMutation`): `finish_tool.go` now calls `SignalMutation(ctx)` so `side_effects: []` is always present in single-mode responses (spec §8.4).
+- **F4** (`estimate(set)` non-standard batch): `estimateSetBatch` was replaced with `ExecuteBatch`; response shape now matches §9.4 and the 100-item limit is enforced.
 
 | Task | Description | Size | Status |
 |------|-------------|------|--------|
@@ -276,9 +283,9 @@ The `EntityLifecycleHook` interface (used by `DocumentService`) does not carry a
 
 - C.3 is implemented as `IsBatchInput(args, batchKey string) bool` in `batch.go`. Each batch-capable tool calls this to determine whether to invoke `ExecuteBatch` or the single-item path. When both single and batch parameters are provided, batch takes precedence by checking `IsBatchInput` first.
 - C.4 is implemented as `ExecuteBatch(ctx, items []any, handler BatchItemHandler) (any, error)`. Each tool's batch-capable action calls this helper. Per-item side effects are captured in a sub-collector and attributed to the individual `ItemResult`; they are also aggregated into the top-level `BatchResult.SideEffects`.
-- The batch infrastructure is used by: `finish` (Track E), `entity(create)` (Track H), `doc(register)` and `doc(approve)` (Track I), and `estimate(set)` (Track J).
+- The batch infrastructure is used by: `finish` (Track E), `entity(create)` (Track H), `doc(register)` and `doc(approve)` (Track I), and `estimate(set)` (Track J). Note: `estimate(set)` originally had a custom batch loop; it was migrated to `ExecuteBatch` as part of review remediation F4.
 
-**Verification (spec §30.3):** All 8 acceptance criteria have passing tests.
+**Verification (spec §30.3):** All 8 acceptance criteria have passing tests. Additional tests added during review remediation: `TestWithSideEffects_BatchLimitError_ProducesCorrectCode`, `TestBuildResult_BatchResult_SideEffectsNotDoubled`, `TestBuildResult_BatchResult_MutationNoEffects_SideEffectsPresent`, `TestDocTool_Approve_Batch_WithEntityTransition`.
 
 ---
 

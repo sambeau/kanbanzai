@@ -86,9 +86,25 @@ func estimateSetAction(entitySvc *service.EntityService, knowledgeSvc *service.K
 
 		args := req.GetArguments()
 
-		// Check for batch mode: entities array takes precedence over single mode.
-		if entitiesRaw, ok := args["entities"]; ok && entitiesRaw != nil {
-			return estimateSetBatch(entitySvc, knowledgeSvc, entitiesRaw)
+		// Batch mode: entities array provided.
+		if IsBatchInput(args, "entities") {
+			items, _ := args["entities"].([]any)
+			return ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
+				m, ok := item.(map[string]any)
+				if !ok {
+					return "", nil, fmt.Errorf("each item must be an object with entity_id and points")
+				}
+				entityID, _ := m["entity_id"].(string)
+				if entityID == "" {
+					return "", nil, fmt.Errorf("entity_id is required")
+				}
+				points, err := estimateParsePoints(m["points"])
+				if err != nil {
+					return entityID, nil, err
+				}
+				result, err := estimateSetOne(entitySvc, knowledgeSvc, entityID, points)
+				return entityID, result, err
+			})
 		}
 
 		// Single mode: entity_id + points are required.
@@ -105,73 +121,19 @@ func estimateSetAction(entitySvc *service.EntityService, knowledgeSvc *service.K
 	}
 }
 
-func estimateSetBatch(
-	entitySvc *service.EntityService,
-	knowledgeSvc *service.KnowledgeService,
-	entitiesRaw any,
-) (any, error) {
-	entitiesSlice, ok := entitiesRaw.([]any)
-	if !ok {
-		return nil, fmt.Errorf("entities must be an array of {entity_id, points} objects")
+// estimateParsePoints extracts a float64 point value from a raw interface value.
+// Accepts float64, int, and int64 (as produced by JSON unmarshalling and MCP).
+func estimateParsePoints(v any) (float64, error) {
+	switch p := v.(type) {
+	case float64:
+		return p, nil
+	case int:
+		return float64(p), nil
+	case int64:
+		return float64(p), nil
+	default:
+		return 0, fmt.Errorf("points must be a number")
 	}
-
-	type batchResult struct {
-		EntityID string  `json:"entity_id"`
-		Points   float64 `json:"points,omitempty"`
-		Status   string  `json:"status"`
-		Error    string  `json:"error,omitempty"`
-	}
-
-	results := make([]batchResult, 0, len(entitiesSlice))
-	succeeded := 0
-	failed := 0
-
-	for _, rawItem := range entitiesSlice {
-		item, ok := rawItem.(map[string]any)
-		if !ok {
-			failed++
-			results = append(results, batchResult{Status: "error", Error: "item must be an object with entity_id and points"})
-			continue
-		}
-
-		entityID, _ := item["entity_id"].(string)
-		if entityID == "" {
-			failed++
-			results = append(results, batchResult{Status: "error", Error: "entity_id is required"})
-			continue
-		}
-
-		var points float64
-		switch v := item["points"].(type) {
-		case float64:
-			points = v
-		case int:
-			points = float64(v)
-		case int64:
-			points = float64(v)
-		default:
-			failed++
-			results = append(results, batchResult{EntityID: entityID, Status: "error", Error: "points must be a number"})
-			continue
-		}
-
-		_, err := estimateSetOne(entitySvc, knowledgeSvc, entityID, points)
-		if err != nil {
-			failed++
-			results = append(results, batchResult{EntityID: entityID, Status: "error", Error: err.Error()})
-			continue
-		}
-
-		succeeded++
-		results = append(results, batchResult{EntityID: entityID, Points: points, Status: "set"})
-	}
-
-	return map[string]any{
-		"results":   results,
-		"total":     len(entitiesSlice),
-		"succeeded": succeeded,
-		"failed":    failed,
-	}, nil
 }
 
 func estimateSetOne(

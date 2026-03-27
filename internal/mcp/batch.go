@@ -27,6 +27,20 @@ import (
 	"fmt"
 )
 
+// BatchLimitError is returned by ExecuteBatch when the number of items exceeds
+// MaxBatchSize. It carries a structured error code so that WithSideEffects can
+// produce the correct "batch_limit_exceeded" code in the JSON response (spec §9.5),
+// rather than the generic "internal_error" code used for unrecognised failures.
+type BatchLimitError struct {
+	Count int
+	Limit int
+}
+
+// Error implements the error interface.
+func (e *BatchLimitError) Error() string {
+	return fmt.Sprintf("batch_limit_exceeded: %d items exceeds the maximum of %d per batch call", e.Count, e.Limit)
+}
+
 // MaxBatchSize is the maximum number of items allowed in a single batch call.
 // Batches exceeding this limit are rejected before any processing occurs.
 const MaxBatchSize = 100
@@ -93,7 +107,7 @@ type BatchItemHandler func(ctx context.Context, item any) (itemID string, data a
 // return type expected by 2.0 tool handlers.
 func ExecuteBatch(ctx context.Context, items []any, handler BatchItemHandler) (any, error) {
 	if len(items) > MaxBatchSize {
-		return nil, fmt.Errorf("batch_limit_exceeded: %d items exceeds the maximum of %d per batch call", len(items), MaxBatchSize)
+		return nil, &BatchLimitError{Count: len(items), Limit: MaxBatchSize}
 	}
 
 	results := make([]ItemResult, 0, len(items))

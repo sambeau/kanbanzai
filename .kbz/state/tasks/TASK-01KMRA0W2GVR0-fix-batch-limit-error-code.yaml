@@ -2,4 +2,4 @@ id: TASK-01KMRA0W2GVR0
 parent_feature: FEAT-01KMR8QW7A3A8
 slug: fix-batch-limit-error-code
 summary: "F1: Fix batch_limit_exceeded error code. Define *BatchLimitError sentinel type in batch.go; detect it in WithSideEffects to use code \"batch_limit_exceeded\" instead of \"internal_error\". Add end-to-end test through MCP handler asserting error.code == \"batch_limit_exceeded\"."
-status: queued
+status: done
