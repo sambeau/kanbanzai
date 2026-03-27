@@ -1,7 +1,7 @@
 id: FEAT-01KMRJ81DZ3X2
 slug: retro-synthesis-tool
 parent: P5-workflow-retrospective
-status: proposed
+status: done
 summary: "Phase 2: Implement the `retro` tool in the planning feature group. Synthesise mode clusters retrospective signals by category and similarity, ranks themes by severity-weighted signal count, and returns a structured response. Report mode additionally generates and registers a markdown document. Requires Phase 1 to be complete."
 design: P5-workflow-retrospective/specification-workflow-retrospective
 tags:
