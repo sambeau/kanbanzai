@@ -3,8 +3,8 @@ name: kanbanzai-documents
 description: >
   Use when creating, editing, registering, or approving documents in a
   Kanbanzai-managed project. Activates for document types, placement,
-  registration with doc_record_submit, approval workflow, content drift,
-  doc_record_refresh, or any question about document status, ownership,
+  registration with doc action register, approval workflow, content drift,
+  doc action refresh, or any question about document status, ownership,
   or lifecycle. Use whenever any markdown file is created or modified in a
   configured document root, even if the user does not mention registration.
 metadata:
@@ -22,7 +22,7 @@ and the approval workflow that makes them authoritative.
 ## When to Use
 
 - When creating any new document in a configured document root
-- When registering a document with `doc_record_submit`
+- When registering a document with `doc` action: `register`
 - When approving a document or checking whether it is ready for approval
 - When editing a document that has already been registered
 - When unsure which document type or directory to use
@@ -63,7 +63,8 @@ intelligence, entity extraction, approval workflow, and health checks.
 ### Registering a single document
 
 ```
-doc_record_submit(
+doc(
+  action="register",
   path="work/design/my-document.md",
   type="design",
   title="Human-Readable Title"
@@ -78,7 +79,7 @@ from the path (e.g., `PROJECT/design-my-document`).
 To catch unregistered documents or register many at once:
 
 ```
-batch_import_documents(path="work")
+doc(action="import", path="work")
 ```
 
 This is idempotent — already-registered documents are skipped. Safe to run
@@ -87,11 +88,11 @@ at any time as a consistency check.
 ### Verify registration
 
 ```
-doc_record_get(id="PROJECT/design-my-document")
+doc(action="get", id="PROJECT/design-my-document")
 ```
 
 A document is properly registered when a YAML record exists in
-`.kbz/state/documents/` and `doc_record_get` returns its metadata.
+`.kbz/state/documents/` and `doc` action: `get` returns its metadata.
 
 ---
 
@@ -100,10 +101,10 @@ A document is properly registered when a YAML record exists in
 Documents follow a three-status lifecycle: **draft → approved → superseded**.
 
 1. Agent or human creates the document file.
-2. Agent registers it with `doc_record_submit` — status becomes `draft`.
+2. Agent registers it with `doc` action: `register` — status becomes `draft`.
 3. Human reviews the document and signals approval (verbally: "Approved",
    "LGTM", or equivalent).
-4. Agent calls `doc_record_approve` — status becomes `approved`.
+4. Agent calls `doc` action: `approve` — status becomes `approved`.
 5. Approved documents are the authoritative basis for downstream work:
    - Approved design → features can be created
    - Approved specification → tasks can be decomposed
@@ -120,7 +121,7 @@ file is edited after registration, the hash becomes stale — this is called
 
 - **Approving a drifted document will fail.** The system requires the
   content hash to match.
-- **After editing a registered document**, call `doc_record_refresh` to
+- **After editing a registered document**, call `doc` action: `refresh` to
   update the hash before requesting approval.
 - **If an approved document is edited**, the approval is effectively void.
   The content no longer matches what was approved. Notify the human and
@@ -136,7 +137,7 @@ approved. Do not bypass it.
 When a document is replaced by a newer version:
 
 1. Create and register the new document.
-2. Call `doc_record_supersede` on the old document, linking it to the new one.
+2. Call `doc` action: `supersede` on the old document, linking it to the new one.
 3. The old document's status becomes `superseded`.
 
 Superseded documents remain in the repository as historical records. They are
@@ -147,9 +148,9 @@ no longer authoritative.
 ## Gotchas
 
 - **Forgot to register.** If you create a file in `work/` and forget to call
-  `doc_record_submit`, the document is invisible to the system — no approval
+  `doc` action: `register`, the document is invisible to the system — no approval
   workflow, no document intelligence, no health check coverage. This is the
-  single most common mistake. Run `batch_import_documents(path="work")` as a
+  single most common mistake. Run `doc(action="import", path="work")` as a
   safety net if unsure.
 - **Editing after approval.** If you edit an approved document, the approval
   is silently void — the content hash no longer matches. You must notify the
@@ -158,9 +159,9 @@ no longer authoritative.
   not `work/plan/`. If a planning document starts containing architecture
   decisions, move that content to a design document. See `kanbanzai-workflow`
   for the emergency brake rules.
-- **Tool call fails.** If `doc_record_submit` or `doc_record_approve` returns
-  an error, read the message — it usually explains the problem (wrong type,
-  drifted hash, document already exists). Do not retry with the same
+- **Tool call fails.** If `doc` action: `register` or `doc` action: `approve`
+  returns an error, read the message — it usually explains the problem (wrong
+  type, drifted hash, document already exists). Do not retry with the same
   arguments. Fix the underlying issue first.
 
 ---

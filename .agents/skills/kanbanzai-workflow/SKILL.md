@@ -135,15 +135,15 @@ transition is needed that does not appear, ask the human.
 
 ## Gotchas
 
-- If a Kanbanzai tool call fails (e.g., `update_status` rejects a
-  transition), read the error message — it usually names the valid
+- If a Kanbanzai tool call fails (e.g., `entity` action: `transition`
+  rejects a transition), read the error message — it usually names the valid
   transitions or states. Do not retry with the same arguments.
 - The stage gates apply to the *entity type*, not the size of the work. A
   quick fix to a document doesn't need a full pipeline, but creating a new
   Feature entity always requires an approved design.
 - Verbal approval ("LGTM", "Approved", "Let's move on") is sufficient to
   pass a gate. Record it with the appropriate tool call
-  (`doc_record_approve`) immediately so the system state matches reality.
+  (`doc` action: `approve`) immediately so the system state matches reality.
 
 ---
 
