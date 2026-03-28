@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/git"
 )
 
 func TestTasksCompleteGate_Interface(t *testing.T) {

@@ -32,8 +32,8 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // DocTool returns the consolidated `doc` MCP tool registered in the core group.

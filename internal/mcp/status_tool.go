@@ -40,10 +40,10 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/id"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // StatusTools returns the status MCP tool registered in the core group.

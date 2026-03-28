@@ -13,12 +13,12 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/mcptest"
 
-	chk "kanbanzai/internal/checkpoint"
-	"kanbanzai/internal/config"
-	kbzctx "kanbanzai/internal/context"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/storage"
-	"kanbanzai/internal/worktree"
+	chk "github.com/sambeau/kanbanzai/internal/checkpoint"
+	"github.com/sambeau/kanbanzai/internal/config"
+	kbzctx "github.com/sambeau/kanbanzai/internal/context"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // ─── registration tests ───────────────────────────────────────────────────────

@@ -3,8 +3,8 @@ package health
 import (
 	"time"
 
-	"kanbanzai/internal/git"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // CheckOptions configures the health check.

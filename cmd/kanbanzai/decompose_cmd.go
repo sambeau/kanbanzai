@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/checkpoint"
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/checkpoint"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 const decomposeUsageText = `Usage: kbz decompose <feature-id> [options]

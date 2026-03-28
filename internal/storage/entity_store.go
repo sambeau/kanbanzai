@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"strings"
 
-	"kanbanzai/internal/fsutil"
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/fsutil"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 type EntityRecord struct {

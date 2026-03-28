@@ -17,8 +17,8 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // RetroTool returns the retro consolidated tool registered in the planning feature group.

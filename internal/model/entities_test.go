@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/testutil"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/testutil"
 
 	"gopkg.in/yaml.v3"
 )

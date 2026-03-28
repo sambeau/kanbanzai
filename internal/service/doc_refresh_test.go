@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 func TestRefreshContentHash_HashChanged_DraftDoc(t *testing.T) {

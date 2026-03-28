@@ -9,7 +9,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/core"
 )
 
 // LocalConfigFile is the name of the user-local configuration file.

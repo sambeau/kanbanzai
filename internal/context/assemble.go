@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	kbzsvc "kanbanzai/internal/service"
+	kbzsvc "github.com/sambeau/kanbanzai/internal/service"
 )
 
 // AssemblyInput contains the parameters for context assembly.

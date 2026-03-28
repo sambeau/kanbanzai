@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // DispatchInput holds parameters for dispatch_task.

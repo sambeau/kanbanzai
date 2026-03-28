@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/docint"
+	"github.com/sambeau/kanbanzai/internal/docint"
 )
 
 // EntityDocMatch represents a document section that references an entity.

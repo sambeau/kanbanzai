@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // writeDecisionEntityForAssembly writes a decision entity YAML file to the test root.

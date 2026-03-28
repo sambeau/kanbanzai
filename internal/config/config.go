@@ -14,7 +14,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/core"
 )
 
 // BinarySupportedSchemaVersion is the schema version this binary understands.

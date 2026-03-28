@@ -8,7 +8,7 @@ import (
 	"sort"
 	"testing"
 
-	"kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/config"
 )
 
 // toolNames returns the sorted tool names registered on the server.

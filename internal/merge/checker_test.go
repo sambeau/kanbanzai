@@ -3,7 +3,7 @@ package merge
 import (
 	"testing"
 
-	"kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/git"
 )
 
 func TestDefaultGates(t *testing.T) {

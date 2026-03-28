@@ -4,7 +4,7 @@ import (
 	"log"
 	"strings"
 
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // DependencyUnblockingHook implements StatusTransitionHook to automatically

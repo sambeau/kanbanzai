@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/install"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/install"
 )
 
 // postMergeInstall attempts to rebuild the kanbanzai binary and write an install
@@ -50,7 +50,7 @@ func postMergeInstall(ctx context.Context, repoPath string, cfg *config.Config) 
 	}
 
 	// Build ldflags matching the Makefile pattern.
-	pkg := "kanbanzai/internal/buildinfo"
+	pkg := "github.com/sambeau/kanbanzai/internal/buildinfo"
 	ldflags := fmt.Sprintf(
 		"-X '%s.Version=dev' -X '%s.GitSHA=%s' -X '%s.BuildTime=%s' -X '%s.Dirty=%s'",
 		pkg, pkg, gitSHA, pkg, buildTime, pkg, dirty,

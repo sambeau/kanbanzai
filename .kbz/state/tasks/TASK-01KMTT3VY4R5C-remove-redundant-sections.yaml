@@ -2,4 +2,4 @@ id: TASK-01KMTT3VY4R5C
 parent_feature: FEAT-01KMTSPAV34HR
 slug: remove-redundant-sections
 summary: "Remove product-facing sections from AGENTS.md that duplicate skill content: Workflow Stage Gates (all 6 sub-stages + Emergency Brake), Document Creation Workflow, and Git commit format table/examples. Trim Git Rules section to retain only branching rules and commit type list. Verify no stage heading phrases remain. Covers AC-1, AC-2, AC-3, AC-4, AC-11."
-status: queued
+status: ready

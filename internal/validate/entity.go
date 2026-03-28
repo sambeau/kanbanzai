@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 
-	"kanbanzai/internal/id"
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 // ValidationError describes a single field-level validation failure.

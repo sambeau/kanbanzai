@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/git"
 )
 
 // Gate defines the interface for a merge gate check.

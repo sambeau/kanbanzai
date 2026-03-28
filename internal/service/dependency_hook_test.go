@@ -3,7 +3,7 @@ package service
 import (
 	"testing"
 
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 const testPlanIDDep = "P1-dep-test"

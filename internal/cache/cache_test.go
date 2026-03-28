@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"kanbanzai/internal/testutil"
+	"github.com/sambeau/kanbanzai/internal/testutil"
 )
 
 func openTestCache(t *testing.T) *Cache {

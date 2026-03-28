@@ -17,8 +17,8 @@ import (
 	"sort"
 	"strings"
 
-	kbzctx "kanbanzai/internal/context"
-	"kanbanzai/internal/service"
+	kbzctx "github.com/sambeau/kanbanzai/internal/context"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 const assemblyDefaultBudget = 30720

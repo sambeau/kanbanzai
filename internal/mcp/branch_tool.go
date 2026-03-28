@@ -8,8 +8,8 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/git"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // BranchTool returns the 2.0 consolidated branch tool.

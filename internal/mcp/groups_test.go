@@ -4,7 +4,7 @@ import (
 	"sort"
 	"testing"
 
-	"kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/config"
 )
 
 // TestGroupToolNames_MembershipMap verifies that every group has a non-empty tool list

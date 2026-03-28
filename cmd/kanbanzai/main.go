@@ -9,15 +9,15 @@ import (
 	"path/filepath"
 	"strconv"
 
-	_ "kanbanzai/internal/buildinfo"
-	"kanbanzai/internal/cache"
-	"kanbanzai/internal/config"
-	kbzctx "kanbanzai/internal/context"
-	"kanbanzai/internal/core"
+	_ "github.com/sambeau/kanbanzai/internal/buildinfo"
+	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/config"
+	kbzctx "github.com/sambeau/kanbanzai/internal/context"
+	"github.com/sambeau/kanbanzai/internal/core"
 
-	kbzmcp "kanbanzai/internal/mcp"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/validate"
+	kbzmcp "github.com/sambeau/kanbanzai/internal/mcp"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 type entityService interface {

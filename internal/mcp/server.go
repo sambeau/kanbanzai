@@ -5,15 +5,15 @@ import (
 
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/cache"
-	"kanbanzai/internal/checkpoint"
-	"kanbanzai/internal/config"
-	kbzctx "kanbanzai/internal/context"
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/git"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/validate"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/checkpoint"
+	"github.com/sambeau/kanbanzai/internal/config"
+	kbzctx "github.com/sambeau/kanbanzai/internal/context"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 const (

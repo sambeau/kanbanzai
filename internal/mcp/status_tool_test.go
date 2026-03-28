@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/storage"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // setupStatusTest creates an entitySvc and docSvc backed by temp dirs,

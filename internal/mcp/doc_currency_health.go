@@ -7,8 +7,8 @@ import (
 	"regexp"
 	"strings"
 
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // excludedNames is the static set of identifiers that appear in backticks in

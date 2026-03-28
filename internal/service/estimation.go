@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 // EstimationScale is the Modified Fibonacci sequence used for story points.

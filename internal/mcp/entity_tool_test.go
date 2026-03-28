@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 // ─── Test setup helpers ───────────────────────────────────────────────────────

@@ -8,12 +8,12 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/git"
-	"kanbanzai/internal/health"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/validate"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/health"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // AdditionalHealthChecker is a function that performs additional health checks

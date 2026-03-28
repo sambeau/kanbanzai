@@ -8,9 +8,9 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/id"
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // IncidentTool returns the 2.0 consolidated incident tool.

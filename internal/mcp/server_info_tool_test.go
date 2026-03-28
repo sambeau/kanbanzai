@@ -7,7 +7,7 @@ import (
 
 	"github.com/mark3labs/mcp-go/mcp"
 
-	"kanbanzai/internal/install"
+	"github.com/sambeau/kanbanzai/internal/install"
 )
 
 func TestDeriveGitSHAShort(t *testing.T) {

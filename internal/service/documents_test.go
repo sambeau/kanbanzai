@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 func TestSubmitDocument_Success(t *testing.T) {

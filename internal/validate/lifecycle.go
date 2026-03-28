@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 type EntityKind = model.EntityKind

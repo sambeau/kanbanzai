@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 // splitIDPattern matches TSID-based entity IDs in split display form:

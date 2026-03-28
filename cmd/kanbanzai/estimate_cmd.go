@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 const estimateUsageText = `Usage: kbz estimate <entity-id> [<points>]

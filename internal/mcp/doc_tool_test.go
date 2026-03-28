@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // ─── Test setup ───────────────────────────────────────────────────────────────

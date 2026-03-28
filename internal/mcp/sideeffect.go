@@ -33,7 +33,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/id"
 	"strings"
 	"sync"
 

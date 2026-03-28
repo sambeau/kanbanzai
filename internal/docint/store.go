@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"kanbanzai/internal/fsutil"
+	"github.com/sambeau/kanbanzai/internal/fsutil"
 
 	"gopkg.in/yaml.v3"
 )

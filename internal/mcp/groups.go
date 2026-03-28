@@ -4,7 +4,7 @@
 // 2.0 tool names, group constants, and the server group resolver.
 package mcp
 
-import "kanbanzai/internal/config"
+import "github.com/sambeau/kanbanzai/internal/config"
 
 // GroupToolNames maps each feature group name to the 2.0 tool names registered in that group.
 // This is the authoritative membership map — it is used by tests to verify tool registration

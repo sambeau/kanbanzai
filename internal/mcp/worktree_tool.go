@@ -11,9 +11,9 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // WorktreeTool returns the 2.0 consolidated worktree tool.

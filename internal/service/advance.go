@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 // AdvanceResult describes the outcome of an advance operation.

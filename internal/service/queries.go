@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 // ListFilteredInput contains filters for generic entity listing.

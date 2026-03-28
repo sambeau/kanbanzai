@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // UnblockedTask records a task that was automatically promoted to ready

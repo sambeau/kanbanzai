@@ -4,7 +4,7 @@ import (
 	"sort"
 	"testing"
 
-	"kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/config"
 )
 
 // testServerToolNames creates a 2.0 MCP server with the given config and

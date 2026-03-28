@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 // Helper to create a document file, submit it, and optionally approve it.

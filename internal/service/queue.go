@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // WorkQueueInput holds parameters for the work_queue operation.

@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // assertIDFormat checks that an ID has the expected prefix and total length.

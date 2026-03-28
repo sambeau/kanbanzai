@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // ─── Nudge test helpers ───────────────────────────────────────────────────────

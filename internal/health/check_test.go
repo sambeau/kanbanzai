@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/git"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 func TestDefaultCheckOptions(t *testing.T) {

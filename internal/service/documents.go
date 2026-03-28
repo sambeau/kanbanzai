@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 // SubmitDocumentInput contains the fields needed to submit a new document.

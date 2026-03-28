@@ -3,7 +3,7 @@ package mcp
 import (
 	"testing"
 
-	"kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/config"
 )
 
 func TestAllToolsHaveAnnotations(t *testing.T) {

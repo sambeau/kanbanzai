@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // setupGitRepo creates a minimal git repo with a "main" branch and one commit.

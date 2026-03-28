@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"kanbanzai/internal/id"
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 // ValidationWarning is a non-blocking issue found during health checks.

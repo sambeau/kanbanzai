@@ -7,10 +7,10 @@ import (
 	"strings"
 	"testing"
 
-	"kanbanzai/internal/cache"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 func TestRun_NoArgs_PrintsUsage(t *testing.T) {

@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 // setupDecomposeTest creates entity and document services with a feature

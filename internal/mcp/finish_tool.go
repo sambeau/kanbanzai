@@ -20,8 +20,8 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/id"
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // nudgeNoRetroSignals is shown when a feature completes with no retro signals recorded for any task.

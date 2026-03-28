@@ -23,12 +23,12 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/id"
-	"kanbanzai/internal/knowledge"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/knowledge"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // EntityTool returns the consolidated `entity` MCP tool registered in the core group.

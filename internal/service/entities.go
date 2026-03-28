@@ -10,12 +10,12 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/cache"
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/id"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 type CreateEpicInput struct {

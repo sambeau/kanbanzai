@@ -3,8 +3,8 @@ package health
 import (
 	"fmt"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // featureTerminalOrDone contains feature statuses that imply work is finished.

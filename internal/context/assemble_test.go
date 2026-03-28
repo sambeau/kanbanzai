@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 func TestAssemble_RoleOnly_ProfileAndKnowledge(t *testing.T) {

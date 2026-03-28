@@ -9,8 +9,8 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/buildinfo"
-	"kanbanzai/internal/install"
+	"github.com/sambeau/kanbanzai/internal/buildinfo"
+	"github.com/sambeau/kanbanzai/internal/install"
 )
 
 // ServerInfoTool returns the server_info MCP tool registered in the core group.

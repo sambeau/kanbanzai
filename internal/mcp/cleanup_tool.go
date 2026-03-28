@@ -8,9 +8,9 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/cleanup"
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/cleanup"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // CleanupTool returns the 2.0 consolidated cleanup tool.

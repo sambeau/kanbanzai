@@ -5,7 +5,7 @@ package cleanup
 import (
 	"time"
 
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // CleanupSchedule represents an item scheduled for cleanup.

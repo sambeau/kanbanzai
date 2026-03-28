@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 const docUsageText = `Usage: kbz doc <subcommand> [options]

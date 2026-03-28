@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 // DecomposeInput is the input for DecomposeService.DecomposeFeature.

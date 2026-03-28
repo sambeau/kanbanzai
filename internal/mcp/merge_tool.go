@@ -9,13 +9,13 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/git"
-	"kanbanzai/internal/github"
-	"kanbanzai/internal/merge"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/github"
+	"github.com/sambeau/kanbanzai/internal/merge"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // MergeTool returns the 2.0 consolidated merge tool.

@@ -5,9 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/checkpoint"
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/checkpoint"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/id"
 )
 
 const checkpointUsageText = `Usage: kbz checkpoint <subcommand> [options]

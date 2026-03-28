@@ -9,7 +9,7 @@ package main
 import (
 	"fmt"
 
-	"kanbanzai/kbzschema"
+	"github.com/sambeau/kanbanzai/kbzschema"
 )
 
 func main() {

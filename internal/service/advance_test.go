@@ -3,7 +3,7 @@ package service
 import (
 	"testing"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 // makeFeatureForAdvance creates a Feature with the given ID, slug, status, and

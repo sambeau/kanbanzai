@@ -10,7 +10,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"kanbanzai/internal/fsutil"
+	"github.com/sambeau/kanbanzai/internal/fsutil"
 )
 
 // InstallRecord holds metadata about the most recent binary installation.

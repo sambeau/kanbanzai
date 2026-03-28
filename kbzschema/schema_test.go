@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"testing"
 
-	"kanbanzai/kbzschema"
+	"github.com/sambeau/kanbanzai/kbzschema"
 )
 
 // TestGeneratedSchemaMatchesCommitted verifies that the schema produced by

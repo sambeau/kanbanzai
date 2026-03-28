@@ -22,9 +22,9 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	kbzctx "kanbanzai/internal/context"
-	"kanbanzai/internal/id"
-	"kanbanzai/internal/service"
+	kbzctx "github.com/sambeau/kanbanzai/internal/context"
+	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // HandoffTools returns the `handoff` MCP tool registered in the core group.

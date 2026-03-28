@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 // ─── Test helpers ─────────────────────────────────────────────────────────────

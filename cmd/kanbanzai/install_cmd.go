@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/install"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/install"
 )
 
 func runInstallRecord(args []string, deps dependencies) error {

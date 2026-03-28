@@ -8,11 +8,11 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/git"
-	"kanbanzai/internal/knowledge"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/knowledge"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 // KnowledgeTool returns the 2.0 consolidated knowledge tool.

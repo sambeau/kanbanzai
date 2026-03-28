@@ -23,11 +23,11 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/config"
-	kbzctx "kanbanzai/internal/context"
-	idpkg "kanbanzai/internal/id"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/config"
+	kbzctx "github.com/sambeau/kanbanzai/internal/context"
+	idpkg "github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // NextTools returns the `next` MCP tool registered in the core group.

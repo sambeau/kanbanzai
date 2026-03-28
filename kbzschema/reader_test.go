@@ -11,7 +11,7 @@ import (
 	"strings"
 	"testing"
 
-	"kanbanzai/kbzschema"
+	"github.com/sambeau/kanbanzai/kbzschema"
 )
 
 // ────────────────────────────────────────────────────────────────────────────

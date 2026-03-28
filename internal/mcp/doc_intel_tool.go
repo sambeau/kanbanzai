@@ -9,8 +9,8 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/docint"
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/docint"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // DocIntelTool returns the 2.0 consolidated doc_intel tool.

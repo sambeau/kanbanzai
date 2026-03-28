@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 func writeTestEntity(t *testing.T, root, entityType, id, slug string, fields map[string]any) {

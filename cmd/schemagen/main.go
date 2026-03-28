@@ -13,7 +13,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"kanbanzai/kbzschema"
+	"github.com/sambeau/kanbanzai/kbzschema"
 )
 
 func main() {

@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 // GateResult describes whether a stage gate prerequisite is satisfied.

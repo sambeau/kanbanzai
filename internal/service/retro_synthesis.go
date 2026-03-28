@@ -18,8 +18,8 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/knowledge"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/knowledge"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 // severityWeight returns the numeric weight for a severity level per spec §5.3.

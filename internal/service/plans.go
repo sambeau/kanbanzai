@@ -6,10 +6,10 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // CreatePlanInput contains the fields needed to create a new Plan.

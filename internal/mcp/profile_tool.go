@@ -8,7 +8,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	kbzctx "kanbanzai/internal/context"
+	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 )
 
 // ProfileTool returns the 2.0 profile consolidated tool.
