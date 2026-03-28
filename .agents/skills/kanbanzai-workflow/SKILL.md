@@ -122,6 +122,17 @@ transition is needed that does not appear, ask the human.
 
 ---
 
+## Documentation Accuracy
+
+- **Code is truth** — if documentation conflicts with code, fix the
+  documentation.
+- **Spec is intent** — if code conflicts with the specification, surface
+  the conflict to the human.
+- Do not silently resolve spec-vs-code conflicts in either direction without
+  human input.
+
+---
+
 ## Gotchas
 
 - If a Kanbanzai tool call fails (e.g., `update_status` rejects a
