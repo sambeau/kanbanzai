@@ -87,7 +87,8 @@ kanbanzai/
 │   ├── design/            ← kbz-workflow: design documents and policy documents
 │   ├── spec/              ← kbz-workflow: formal specifications
 │   ├── plan/              ← implementation plans, decision log, and progress tracking
-│   └── research/          ← background analysis and review memos
+│   ├── research/          ← background analysis and review memos
+│   └── reviews/           ← feature and bug review reports from the reviewing lifecycle gate
 └── .kbz/                  ← instance root (project-local workflow state, not committed)
     ├── config.yaml        ← project configuration including prefix registry
     ├── local.yaml            ← per-machine settings, not committed (Phase 2b)

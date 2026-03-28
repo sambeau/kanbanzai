@@ -138,6 +138,8 @@ The document types defined in `work/design/document-centric-interface.md` apply 
 - Spec documents go in `work/spec/`.
 - Planning documents go in `work/plan/`.
 - Research reports go in `work/research/`.
+- Review reports go in `work/reviews/` — review reports produced by the formal `reviewing` lifecycle gate; one file per reviewed feature or bug.
+- General-purpose reports go in `work/reports/` — retrospectives, friction analyses, audit findings, research outputs, progress reports. Does **not** include review lifecycle artifacts (those go in `work/reviews/`).
 - Bootstrap-specific process documents go in `work/bootstrap/`.
 
 ### Document registration

@@ -528,7 +528,12 @@ When all sub-agents return, merge their outputs:
 
 #### Step 6: Write review document
 
-Write the collated findings to a review document associated with the feature using
+Write the collated findings to a review document in `work/reviews/` using the naming convention
+`review-{unsplit-id}-{slug}.md`, where `{unsplit-id}` is the full entity ID (e.g. `FEAT-01KMRX1SEQV49`)
+and `{slug}` is the feature's slug. For example:
+`work/reviews/review-FEAT-01KMRX1SEQV49-policy-and-documentation-updates.md`
+
+Register the document with
 `doc(action="register", owner=<feature-id>, path=<report-path>, type="report")`. The document
 must contain the following sections:
 - **Summary verdict** — aggregate outcome and brief explanation
