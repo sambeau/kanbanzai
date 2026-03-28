@@ -53,5 +53,6 @@ Desktop.ini
 .kbz/cache/
 .kbz/local.yaml
 .kbz-tmp-*
+.worktrees/
 # Nested .kbz directories created by tests running inside package directories
 **/.kbz/cache/
