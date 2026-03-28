@@ -2,9 +2,11 @@ id: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup
 path: work/spec/agents-md-cleanup.md
 type: specification
 title: AGENTS.md Cleanup Specification
-status: draft
+status: approved
 owner: FEAT-01KMTSPAV34HR
+approved_by: sambeau
+approved_at: "2026-03-28T18:07:29Z"
 content_hash: 7eee7bea897f39d0275037eb7f521ea3d9f89298b68a9129da59098b4592b615
 created: "2026-03-28T18:02:59Z"
 created_by: sambeau
-updated: "2026-03-28T18:02:59Z"
+updated: "2026-03-28T18:07:29Z"

@@ -1,0 +1,5 @@
+id: TASK-01KMTT47PA5P5
+parent_feature: FEAT-01KMTSPEE6BXS
+slug: module-path-change
+summary: "Change Go module path from kanbanzai to github.com/sambeau/kanbanzai. Update go.mod and every .go file import from kanbanzai/internal/... to github.com/sambeau/kanbanzai/internal/.... Run go mod tidy. Verify go build ./... and go test ./... pass. Verify go install ./cmd/kanbanzai succeeds. This must be an atomic single commit. Covers AC-1, AC-2, AC-3, AC-4, AC-5."
+status: queued
