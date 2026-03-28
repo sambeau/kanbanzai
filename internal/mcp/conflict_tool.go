@@ -18,6 +18,11 @@ func ConflictTool(conflictSvc *service.ConflictService) []server.ServerTool {
 
 func conflictTool(conflictSvc *service.ConflictService) server.ServerTool {
 	tool := mcp.NewTool("conflict",
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Conflict Risk Analysis"),
 		mcp.WithDescription(
 			"Analyse conflict risk between two or more tasks that might run in parallel. "+
 				"Checks file overlap (planned and git-history), dependency ordering, and "+

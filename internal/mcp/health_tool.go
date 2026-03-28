@@ -29,6 +29,11 @@ func HealthTool(entitySvc *service.EntityService, additionalCheckers ...Addition
 
 func healthTool(entitySvc *service.EntityService, additionalCheckers ...AdditionalHealthChecker) server.ServerTool {
 	tool := mcp.NewTool("health",
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("System Health Check"),
 		mcp.WithDescription(
 			"Run a comprehensive health check across all entities, knowledge entries, "+
 				"and context profiles. Returns a structured report of errors and warnings "+

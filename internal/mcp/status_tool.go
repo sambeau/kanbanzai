@@ -54,13 +54,18 @@ func StatusTools(entitySvc *service.EntityService, docSvc *service.DocumentServi
 
 func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store) server.ServerTool {
 	tool := mcp.NewTool("status",
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Workflow Status Dashboard"),
 		mcp.WithDescription(
-			"Synthesis dashboard. Aggregates project, plan, feature, or task state into a concise view. "+
-				"Call with no id for a project overview across all plans. "+
-				"Call with a plan ID (e.g. P1-my-plan) for a plan dashboard. "+
-				"Call with a FEAT-... ID for a feature detail view. "+
-				"Call with a TASK-..., T-..., or BUG-... ID for a task/bug detail view. "+
-				"Returns attention items highlighting the most actionable next steps.",
+			"Synthesis dashboard — the primary way to query project, plan, feature, or task state. "+
+				"Returns lifecycle status, attention items, progress metrics, and derived state "+
+				"(what's blocked, what's ready) that raw YAML files do not contain. "+
+				"Use this instead of reading .kbz/state/ files directly. "+
+				"Call with no id for project overview, plan ID for plan dashboard, "+
+				"FEAT-... for feature detail, TASK-... or BUG-... for task detail.",
 		),
 		mcp.WithString("id", mcp.Description(
 			"Optional entity ID to scope the dashboard. "+

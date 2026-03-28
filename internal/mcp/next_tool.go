@@ -51,16 +51,18 @@ func nextTool(
 	docRecordSvc *service.DocumentService,
 ) server.ServerTool {
 	tool := mcp.NewTool("next",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Work Queue & Dispatch"),
 		mcp.WithDescription(
-			"Claim work and get full context. "+
-				"Call without id to inspect the ready queue (promotes eligible queued tasks). "+
-				"Call with a task ID (TASK-...) to claim that specific task. "+
-				"Call with a feature ID (FEAT-...) to claim the top ready task in the feature. "+
-				"Call with a plan ID (e.g. P1-...) to claim the top ready task across the plan. "+
-				"Claiming transitions the task from ready to active and returns structured context: "+
-				"spec sections, acceptance criteria, knowledge entries, file context, and role conventions. "+
-				"Returns an error if the task is not in ready status (already active returns the existing dispatch metadata). "+
-				"Replaces the 1.0 pattern of work_queue → dispatch_task → context_assemble.",
+			"Inspect the work queue or claim a task with full context assembly. "+
+				"Call without id to see all ready tasks (sorted by priority, with optional conflict checking). "+
+				"Call with a task/feature/plan ID to claim the next ready task — returns spec sections, "+
+				"knowledge entries, file paths, and role conventions assembled for the task. "+
+				"This is the primary way to pick up work; prefer it over manually querying entities "+
+				"and assembling context yourself.",
 		),
 		mcp.WithString("id", mcp.Description(
 			"Task ID (TASK-... or T-...), Feature ID (FEAT-...), or Plan ID to claim. "+

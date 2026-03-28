@@ -38,6 +38,11 @@ func mergeTool(
 	localConfig *config.LocalConfig,
 ) server.ServerTool {
 	tool := mcp.NewTool("merge",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(true),
+		mcp.WithTitleAnnotation("Merge Gate & Execution"),
 		mcp.WithDescription(
 			"Check merge readiness and execute merges for feature/bug entities. "+
 				"Consolidates merge_readiness_check and merge_execute. "+

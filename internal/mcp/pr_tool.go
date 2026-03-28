@@ -37,6 +37,11 @@ func prTool(
 	localConfig *config.LocalConfig,
 ) server.ServerTool {
 	tool := mcp.NewTool("pr",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(true),
+		mcp.WithTitleAnnotation("Pull Request Manager"),
 		mcp.WithDescription(
 			"Create and manage GitHub pull requests for feature/bug entities. "+
 				"Consolidates pr_create, pr_status, and pr_update. "+

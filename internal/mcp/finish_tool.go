@@ -31,12 +31,19 @@ func FinishTools(entitySvc *service.EntityService, dispatchSvc *service.Dispatch
 
 func finishTool(entitySvc *service.EntityService, dispatchSvc *service.DispatchService) server.ServerTool {
 	tool := mcp.NewTool("finish",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Task Completion"),
 		mcp.WithDescription(
-			"Record task completion. Transitions the task to done (default) or needs-review, "+
-				"sets completion metadata, and optionally contributes inline knowledge entries. "+
-				"Accepts tasks in ready or active status — no prior next/dispatch call required. "+
-				"Unblocked tasks and knowledge outcomes are reported in side_effects. "+
-				"Supports batch completion via the tasks array parameter.",
+			"Record task completion with optional knowledge contribution and retrospective signals. "+
+				"Transitions the task to done (default) or needs-review. "+
+				"Include the retrospective parameter to record observations about workflow friction, "+
+				"tool gaps, spec ambiguity, or things that worked well — these feed the retro tool "+
+				"for future synthesis. "+
+				"Accepts tasks in ready or active status. "+
+				"Supports batch completion via the tasks array.",
 		),
 		mcp.WithString("task_id", mcp.Description("Task ID to complete (single-item mode)")),
 		mcp.WithString("summary", mcp.Description("Brief description of what was accomplished")),

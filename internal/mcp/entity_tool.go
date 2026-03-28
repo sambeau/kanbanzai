@@ -38,14 +38,18 @@ func EntityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 
 func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentService) server.ServerTool {
 	tool := mcp.NewTool("entity",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Entity Manager"),
 		mcp.WithDescription(
-			"Generic CRUD for all entity types (plan, feature, task, bug, epic, decision). "+
-				"Replaces create_task, create_feature, create_plan, get_entity, list_entities, "+
-				"update_entity, update_status, and related 1.0 tools. "+
+			"Create, read, update, and transition entities (plans, features, tasks, bugs, epics, decisions). "+
+				"Use action: get or action: list to query entities — these return structured data with lifecycle "+
+				"state and cross-references. Do not read .kbz/state/ YAML files directly. "+
 				"Actions: create, get, list, update, transition. "+
-				"For get/update/transition, entity type is inferred from the ID prefix "+
-				"(FEAT-=feature, TASK-/T-=task, BUG-=bug, EPIC-=epic, DEC-=decision, plan prefix=plan). "+
-				"create supports batch mode via the entities array parameter.",
+				"Entity type is inferred from ID prefix for get/update/transition. "+
+				"Supports batch creation via the entities array.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

@@ -21,6 +21,11 @@ func CleanupTool(store *worktree.Store, git *worktree.Git, cfg *config.CleanupCo
 
 func cleanupTool(store *worktree.Store, git *worktree.Git, cfg *config.CleanupConfig) server.ServerTool {
 	tool := mcp.NewTool("cleanup",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Worktree Cleanup"),
 		mcp.WithDescription(
 			"Manage worktree cleanup. Lists worktrees pending cleanup and executes cleanup operations. "+
 				"Consolidates cleanup_list and cleanup_execute. "+

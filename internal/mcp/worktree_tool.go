@@ -25,6 +25,11 @@ func WorktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 
 func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOps *worktree.Git) server.ServerTool {
 	tool := mcp.NewTool("worktree",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(true),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Git Worktree Manager"),
 		mcp.WithDescription(
 			"Manage Git worktrees for feature and bug entities. "+
 				"Consolidates worktree_create, worktree_get, worktree_list, and worktree_remove. "+

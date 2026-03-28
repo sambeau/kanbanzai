@@ -21,6 +21,11 @@ func ServerInfoTool() []server.ServerTool {
 
 func serverInfoTool() server.ServerTool {
 	tool := mcp.NewTool("server_info",
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Server Build Information"),
 		mcp.WithDescription(
 			"Get server build and installation metadata. "+
 				"Returns version, git SHA, build time, Go version, binary path, "+

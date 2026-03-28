@@ -20,6 +20,11 @@ func CheckpointTool(store *chk.Store) []server.ServerTool {
 
 func checkpointTool(store *chk.Store) server.ServerTool {
 	tool := mcp.NewTool("checkpoint",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Human Decision Checkpoints"),
 		mcp.WithDescription(
 			"Manage human decision checkpoints. "+
 				"Consolidates human_checkpoint, human_checkpoint_get, human_checkpoint_respond, "+

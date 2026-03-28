@@ -19,6 +19,11 @@ func ProfileTool(store *kbzctx.ProfileStore) []server.ServerTool {
 
 func profileTool(store *kbzctx.ProfileStore) server.ServerTool {
 	tool := mcp.NewTool("profile",
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Context Role Profiles"),
 		mcp.WithDescription(
 			"List and retrieve context role profiles. "+
 				"Consolidates profile_list and profile_get. "+

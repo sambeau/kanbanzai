@@ -19,6 +19,11 @@ func DecomposeTool(decomposeSvc *service.DecomposeService, entitySvc *service.En
 
 func decomposeTool(decomposeSvc *service.DecomposeService, entitySvc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("decompose",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Feature Decomposition"),
 		mcp.WithDescription(
 			"Feature decomposition and vertical slice analysis. "+
 				"Actions: propose (propose task breakdown from spec), review (review a proposal), "+

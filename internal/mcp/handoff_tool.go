@@ -46,6 +46,11 @@ func handoffTool(
 	docRecordSvc *service.DocumentService,
 ) server.ServerTool {
 	tool := mcp.NewTool("handoff",
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Sub-Agent Prompt Generator"),
 		mcp.WithDescription(
 			"Generate a complete sub-agent prompt from a task. "+
 				"The output is designed to go directly into spawn_agent's message parameter. "+

@@ -47,17 +47,20 @@ func DocTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 
 func docTool(docSvc *service.DocumentService) server.ServerTool {
 	tool := mcp.NewTool("doc",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Document Records"),
 		mcp.WithDescription(
-			"Consolidated document operations. Replaces doc_record_submit, doc_record_approve, "+
-				"doc_record_get, doc_record_get_content, doc_record_list, doc_record_list_pending, "+
-				"doc_record_validate, doc_record_supersede, doc_gaps, batch_import_documents, and related 1.0 tools. "+
-				"Actions: register, approve, get, content, list, gaps, validate, supersede, import. "+
-				"approve and supersede report entity lifecycle cascade side effects. "+
-				"register supports batch via the documents array; approve supports batch via the ids array.",
+			"Manage document records: register, approve, query, supersede, refresh, chain, validate, and import. "+
+				"Use action: get or action: list to query document status — do not read .kbz/state/documents/ files directly. "+
+				"Actions: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import. "+
+				"approve and supersede report entity lifecycle cascade side effects.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),
-			mcp.Description("Action: register, approve, get, content, list, gaps, validate, supersede, import"),
+			mcp.Description("Action: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import"),
 		),
 		// Common identifier fields.
 		mcp.WithString("id", mcp.Description("Document record ID (approve, get, content, validate, supersede)")),

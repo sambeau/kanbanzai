@@ -34,6 +34,11 @@ func EstimateTool(entitySvc *service.EntityService, knowledgeSvc *service.Knowle
 
 func estimateTool(entitySvc *service.EntityService, knowledgeSvc *service.KnowledgeService) server.ServerTool {
 	tool := mcp.NewTool("estimate",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Story Point Estimates"),
 		mcp.WithDescription(
 			"Set and query story point estimates on entities. "+
 				"Consolidates estimate_set, estimate_query, estimate_reference_add, and estimate_reference_remove. "+

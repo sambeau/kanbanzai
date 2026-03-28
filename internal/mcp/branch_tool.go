@@ -20,6 +20,11 @@ func BranchTool(store *worktree.Store, repoPath string, thresholds git.BranchThr
 
 func branchTool(store *worktree.Store, repoPath string, thresholds git.BranchThresholds) server.ServerTool {
 	tool := mcp.NewTool("branch",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Branch Health Monitor"),
 		mcp.WithDescription(
 			"Get branch health metrics for an entity's worktree branch. "+
 				"Reports staleness, drift from main, and merge conflicts. "+

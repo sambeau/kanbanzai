@@ -24,14 +24,19 @@ func KnowledgeTool(svc *service.KnowledgeService) []server.ServerTool {
 
 func knowledgeTool(svc *service.KnowledgeService) server.ServerTool {
 	tool := mcp.NewTool("knowledge",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Knowledge Base"),
 		mcp.WithDescription(
-			"Manage the shared knowledge base. "+
+			"Query and manage the project knowledge base. "+
+				"Use action: list to find knowledge entries by topic, tag, or status — "+
+				"this surfaces information that may not be in your context window. "+
+				"Routine contribution happens via finish; use this tool for direct management: "+
+				"confirming entries, resolving conflicts, checking staleness, pruning. "+
 				"Actions: list, get, contribute, confirm, flag, retire, update, promote, "+
-				"compact, prune, resolve, staleness. "+
-				"Note: routine knowledge contribution happens inline via finish; "+
-				"routine retrieval happens automatically via next and handoff. "+
-				"Use this tool for direct knowledge management: confirming entries, "+
-				"resolving conflicts, pruning stale entries.",
+				"compact, prune, resolve, staleness.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

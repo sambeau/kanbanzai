@@ -22,6 +22,11 @@ func IncidentTool(svc *service.EntityService) []server.ServerTool {
 
 func incidentTool(svc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("incident",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Incident Tracker"),
 		mcp.WithDescription(
 			"Manage incidents. Consolidates incident_create, incident_update, incident_list, "+
 				"and incident_link_bug. "+

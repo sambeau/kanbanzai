@@ -23,6 +23,11 @@ func DocIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *se
 
 func docIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *service.DocumentService) server.ServerTool {
 	tool := mcp.NewTool("doc_intel",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Document Intelligence"),
 		mcp.WithDescription(
 			"Document intelligence operations: explore, classify, and query the document graph. "+
 				"Consolidates doc_outline, doc_section, doc_classify, doc_find_by_concept, "+
