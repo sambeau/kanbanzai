@@ -131,3 +131,41 @@
 **Recommended follow-ups** (non-blocking, can be addressed during remediation):
 - F2: Add clarifying comment about Phase 1 legacy states in ValidNextStates test
 - F4: Approve the specification document before transitioning feature to `done`
+
+---
+
+## Re-Review Record
+
+**Re-review date:** 2026-03-28T01:00:00Z
+**Trigger:** Blocking finding F1 remediated (test added)
+**Scope:** Targeted — only files and spec sections affected by the F1 remediation
+
+### What was re-reviewed
+
+| File | Reason |
+|------|--------|
+| `internal/service/advance_test.go` | F1 remediation added `TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone` |
+
+Spec section re-evaluated: §4.5 AC-17 only.
+
+The full feature was **not** re-reviewed. All other AC coverage from the initial review was unchanged and unaffected by the remediation.
+
+### Re-review findings
+
+**Test Adequacy for AC-17: pass**
+
+`TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone` exists at `internal/service/advance_test.go` L389–413:
+- Sets up a feature entity at `reviewing` status
+- Calls `AdvanceFeatureStatus(feature, "done", …)`
+- Asserts `result.FinalStatus == "done"` with empty `StoppedReason`
+- Asserts `result.AdvancedThrough` contains `["done"]`
+
+The test directly exercises the advance-from-reviewing→done path identified in F1. All 22 packages pass with race detector enabled (`go test -race ./...`).
+
+### Re-review verdict
+
+**approved** — no blocking findings remain. Aggregate verdict: `approved`.
+
+### Resulting feature transition
+
+Feature FEAT-01KMRX1F47Z94 transitioned from `needs-rework` → `developing` → `reviewing` → `done`.

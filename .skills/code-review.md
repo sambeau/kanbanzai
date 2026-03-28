@@ -460,7 +460,7 @@ Transition the feature to `reviewing` status. This can happen:
 - When a human explicitly requests review
 - When the `finish` tool completes the last task (future enhancement)
 
-Use `update_status(entity_type="feature", id=<feature-id>, status="reviewing")`.
+Use `entity(action="transition", id=<feature-id>, status="reviewing")`.
 
 #### Step 2: Query metadata
 
@@ -469,8 +469,8 @@ sub-agents' job.
 
 Collect:
 - **Feature entity** — the feature record and its spec document reference
-- **Spec document structure** — via `doc_outline` to understand what the spec covers
-- **Task list and modified files** — via `list_entities_filtered(entity_type="task", parent=<feature-id>)` to know what was implemented and which files were touched
+- **Spec document structure** — via `doc_intel(action="outline", id=<doc-id>)` to understand what the spec covers
+- **Task list and modified files** — via `entity(action="list", type="task", parent=<feature-id>)` to know what was implemented and which files were touched
 - **Review profile** — which dimensions and thresholds to apply (default: Feature Implementation Review Profile from quality gates policy §5.1)
 
 #### Step 3: Decompose into review units
@@ -492,7 +492,7 @@ decomposition strategy based on the feature's size and structure:
 
 Each review unit is defined by:
 - A set of source files to examine
-- The relevant spec section(s) (retrieved via `doc_section`)
+- The relevant spec section(s) (retrieved via `doc_intel(action="section", ...)`)
 - The review dimensions to check
 - The review profile to apply
 
@@ -500,7 +500,7 @@ Each review unit is defined by:
 
 For each review unit, spawn a sub-agent with:
 
-1. **Context packet** — `context_assemble(role="reviewer")` provides the reviewer profile,
+1. **Context packet** — `profile(action="get", id="reviewer")` provides the reviewer profile,
    relevant knowledge entries, and project conventions.
 2. **This SKILL** — the sub-agent follows the Procedure section (steps 1–4 above in the
    sub-agent procedure) to produce structured findings.
@@ -528,7 +528,16 @@ When all sub-agents return, merge their outputs:
 
 #### Step 6: Write review document
 
-Write the collated findings to a review document associated with the feature. This provides:
+Write the collated findings to a review document associated with the feature using
+`doc(action="register", owner=<feature-id>, path=<report-path>, type="report")`. The document
+must contain the following sections:
+- **Summary verdict** — aggregate outcome and brief explanation
+- **Per-dimension verdicts** — outcome for each of the five review dimensions
+- **Blocking findings** — each with: location, dimension, description, and suggested remediation
+- **Non-blocking findings** — each with: dimension and description
+- **Reviewer unit breakdown** — which files and spec sections were assigned to each sub-agent
+
+This provides:
 - A human-readable record of what was reviewed and what was found
 - A machine-readable structure for remediation planning
 - An audit trail for the feature's review history
@@ -540,11 +549,20 @@ Write the collated findings to a review document associated with the feature. Th
 After the analysis phase, the orchestrator makes a routing decision based on the aggregate
 verdict:
 
-| Verdict | Action |
-|---------|--------|
-| No blocking findings | Transition feature to `done` |
-| Blocking findings | Transition feature to `needs-rework`, proceed to remediation phase |
-| Ambiguous findings requiring human judgment | Call `human_checkpoint` and wait for response |
+| Verdict | Action | Tool |
+|---------|--------|------|
+| No blocking findings | Transition feature to `done` | `entity(action="transition", id=<feature-id>, status="done")` |
+| Blocking findings | Transition feature to `needs-rework`, proceed to remediation phase | `entity(action="transition", id=<feature-id>, status="needs-rework")` |
+| Ambiguous findings requiring human judgment | Call `checkpoint(action="create", ...)` and wait for response | `checkpoint(action="create", ...)` |
+
+#### After checkpoint response
+
+When the human responds to the checkpoint, route as follows:
+
+| Human response | Action |
+|----------------|--------|
+| **Proceed / non-blocking** — the finding is not blocking | Treat as no blocking findings: transition feature to `done` using `entity(action="transition", id=<feature-id>, status="done")` |
+| **Blocking / create remediation task** — the finding should block completion | Treat as blocking: transition feature to `needs-rework` and enter the remediation phase (Step 7 onwards) |
 
 ---
 
@@ -557,16 +575,16 @@ Enter this phase only when blocking findings exist.
 Create tasks as children of the feature, one per blocking finding or logical group of related
 findings. Each task summary should reference the review finding it addresses.
 
-Use `create_task(parent_feature=<feature-id>, slug=<descriptive-slug>, summary=<summary>)`.
+Use `entity(action="create", type="task", parent_feature=<feature-id>, slug=<descriptive-slug>, summary=<summary>)`.
 
 #### Step 8: Dispatch tasks with conflict checking
 
 Before dispatching remediation tasks in parallel, check for file overlap:
 
-Use `conflict_domain_check(task_ids=[...])` to determine which tasks can safely run
+Use `conflict(action="check", task_ids=[...])` to determine which tasks can safely run
 concurrently. Tasks modifying the same files should be serialised or checkpointed.
 
-Dispatch tasks through the normal workflow (`dispatch_task`).
+Dispatch tasks through the normal workflow: `next(id=<task-id>)` to claim and activate.
 
 #### Step 9: Re-review affected sections only
 
@@ -581,7 +599,7 @@ feature. This is a targeted re-analysis:
 
 - If re-review passes (no blocking findings): transition feature to `done`.
 - If new blocking issues are found: repeat the remediation cycle (steps 7–10).
-- If the cycle has repeated and issues persist: use `human_checkpoint` to escalate.
+- If the cycle has repeated and issues persist: use `checkpoint(action="create", ...)` to escalate.
 
 ---
 
@@ -594,9 +612,9 @@ key scaling strategy that allows review to work on features of any size.
 
 | Data | Approximate size | Source |
 |------|-----------------|--------|
-| Feature entity state | ~200 bytes | `get_entity` |
-| Spec document outline | ~1–2 KB | `doc_outline` |
-| Task list with file paths | ~1–3 KB | `list_entities_filtered` |
+| Feature entity state | ~200 bytes | `entity(action="get", ...)` |
+| Spec document outline | ~1–2 KB | `doc_intel(action="outline", ...)` |
+| Task list with file paths | ~1–3 KB | `entity(action="list", type="task", ...)` |
 | Review SKILL (this document) | ~2–3 KB | `.skills/code-review.md` |
 | Collated findings | ~2–5 KB | Sub-agent outputs |
 | **Total** | **~6–14 KB** | |
@@ -607,9 +625,9 @@ The orchestrator **never reads source code**. It plans and coordinates.
 
 | Data | Approximate size | Source |
 |------|-----------------|--------|
-| Reviewer profile | ~2 KB | `context_assemble(role="reviewer")` |
+| Reviewer profile | ~2 KB | `profile(action="get", id="reviewer")` |
 | Review SKILL (this document) | ~2–3 KB | `.skills/code-review.md` |
-| Spec section(s) for their unit | ~2–5 KB | `doc_section` |
+| Spec section(s) for their unit | ~2–5 KB | `doc_intel(action="section", ...)` |
 | Source files for their unit | ~5–20 KB | File reads |
 | Structured output template | ~0.5 KB | From this SKILL |
 | **Total** | **~12–30 KB per sub-agent** | |
@@ -626,22 +644,22 @@ This means:
 
 | Step | Tools |
 |------|-------|
-| Find features to review | `list_entities_filtered(entity_type="feature", status="reviewing")` |
-| Get spec structure | `doc_outline`, `doc_section` |
-| Get task/file lists | `list_entities_filtered(entity_type="task", parent=<feature-id>)` |
-| Build sub-agent context | `context_assemble(role="reviewer")` |
+| Find features to review | `entity(action="list", type="feature", status="reviewing")` |
+| Get spec structure | `doc_intel(action="outline", ...)`, `doc_intel(action="section", ...)` |
+| Get task/file lists | `entity(action="list", type="task", parent=<feature-id>)` |
+| Build sub-agent context | `profile(action="get", id="reviewer")` |
 | Dispatch sub-agents | `spawn_agent` (each gets review SKILL + unit scope) |
-| Create remediation tasks | `create_task` |
-| Transition feature state | `update_status` |
-| Check conflict risk | `conflict_domain_check` |
-| Request human input | `human_checkpoint` |
-| Record decisions | `record_decision` |
+| Create remediation tasks | `entity(action="create", type="task", ...)` |
+| Transition feature state | `entity(action="transition", ...)` |
+| Check conflict risk | `conflict(action="check", ...)` |
+| Request human input | `checkpoint(action="create", ...)` |
+| Record decisions | `entity(action="create", type="decision", ...)` |
 
 ---
 
 ### Human Checkpoint Integration Points
 
-Use `human_checkpoint` when:
+Use `checkpoint(action="create", ...)` when:
 
 1. **Ambiguous findings** — findings that are not clearly blocking or non-blocking. The
    orchestrator cannot make a confident routing decision and needs human judgment on whether
@@ -656,7 +674,7 @@ Use `human_checkpoint` when:
    documentation is missing. The human decides whether the passing dimensions are sufficient
    or the failing dimensions are blocking.
 
-When creating a checkpoint, include:
+When creating a checkpoint with `checkpoint(action="create", ...)`, include:
 - The aggregate verdict and per-dimension verdicts
 - A summary of the contentious findings
 - The recommended action and why the orchestrator is uncertain
