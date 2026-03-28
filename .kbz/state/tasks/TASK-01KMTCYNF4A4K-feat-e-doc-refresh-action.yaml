@@ -2,4 +2,16 @@ id: TASK-01KMTCYNF4A4K
 parent_feature: FEAT-01KMTCWXAGX06
 slug: feat-e-doc-refresh-action
 summary: "Implement doc(action: refresh). (1) Add DocumentService.RefreshContentHash(RefreshInput) (RefreshResult, error) to internal/service/documents.go — see spec §7.2 for the full signature and behaviour: resolves by ID or path, computes current hash, compares, updates if changed, transitions approved→draft when hash changes. (2) Wire the new action in internal/mcp/doc_tool.go. (3) Add unit tests covering all cases in spec §7.5. Reference implementation exists on the unmerged hardening branch (commit 8ae3b7e) — adapt to 2.0 tool structure, do not merge the branch."
-status: ready
+status: done
+files_planned:
+  - internal/service/documents.go
+  - internal/mcp/doc_tool.go
+  - internal/service/doc_refresh_test.go
+  - internal/mcp/doc_tool_test.go
+completed: "2026-03-28T15:12:30Z"
+claimed_at: "2026-03-28T14:54:13Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T14:54:13Z"
+dispatched_by: sambeau
+completion_summary: "Implemented DocumentService.RefreshContentHash with RefreshInput/RefreshResult types. Resolves by ID or Path, computes hash, transitions approved→draft when hash changes. Wired as doc(action: refresh) in MCP layer. Added 8 service tests and 2 MCP tests."
+verification: go test -race ./internal/service/... ./internal/mcp/... passes

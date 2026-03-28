@@ -1,0 +1,361 @@
+document_id: P7-developer-experience/report-review-p7-developer-experience
+document_path: work/reviews/review-P7-developer-experience.md
+content_hash: e86bfb180ac571477871040455794de7af3b90656f03dc7554db48eec43d97cf
+indexed_at: 2026-03-28T14:09:51.050131Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: P7 — Developer Experience'
+      byte_offset: 0
+      byte_count: 22445
+      word_count: 3065
+      content_hash: e86bfb180ac571477871040455794de7af3b90656f03dc7554db48eec43d97cf
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Summary
+          byte_offset: 999
+          byte_count: 1022
+          word_count: 145
+          content_hash: afef24cf4687d35c0b7bc69ea5b9693acdd73c2815079098947b3ca1df5dc00a
+        - path: "1.2"
+          level: 2
+          title: 2. Spec Conformance
+          byte_offset: 2021
+          byte_count: 3177
+          word_count: 510
+          content_hash: 6f4ab25789bbc6a980dd76e41a29707826d4c975c6bb8f4875e582192af48d8c
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 FEAT-01KMT-40GZSMHB — `server_info` Tool
+              byte_offset: 2045
+              byte_count: 1346
+              word_count: 215
+              content_hash: 76466db48c1a7963db8540709a5a74fbec247a3c7dd35c4a2aac935c31252d52
+            - path: 1.2.2
+              level: 3
+              title: 2.2 FEAT-01KMT-40KKZZR5 — Human-Friendly ID Display
+              byte_offset: 3391
+              byte_count: 915
+              word_count: 155
+              content_hash: 3a71389b3b9c2a549457d8ae4f1bfdb8aa3b7f73224a182752ccb27ab2e62c49
+            - path: 1.2.3
+              level: 3
+              title: 2.3 FEAT-01KMT-40P0AGS7 — Review Naming and Folder Conventions
+              byte_offset: 4306
+              byte_count: 892
+              word_count: 136
+              content_hash: 5b0d34ac614238da5c1d9d3ae78d0ff3d39cde00a8f2318c22224bb3bb4c7379
+        - path: "1.3"
+          level: 2
+          title: 3. Findings
+          byte_offset: 5198
+          byte_count: 10729
+          word_count: 1423
+          content_hash: 9dcbf9e3f90b58f3ca31372b7261c08eb56063ac24e20c6fe903227aae4863ce
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Makefile `install` target does not write the install record [CRITICAL]
+              byte_offset: 5214
+              byte_count: 957
+              word_count: 125
+              content_hash: 547ed2de389c1487d8864725fa0dbe8ae191e0b8bef9d95e7baa12e47c94a15e
+            - path: 1.3.2
+              level: 3
+              title: 3.2 `.kbz/last-install.yaml` not excluded from git [CRITICAL]
+              byte_offset: 6171
+              byte_count: 990
+              word_count: 133
+              content_hash: 1b3d426745b23eae0483e969ffda36af593490ac4b8f28914f1f099b238494e2
+            - path: 1.3.3
+              level: 3
+              title: 3.3 `server_info` registered conditionally, not unconditionally [Minor spec deviation]
+              byte_offset: 7161
+              byte_count: 833
+              word_count: 99
+              content_hash: 1c78bef8290d3def2db0b38093f06fdc2ab3c33eceb4065bbf4e758fbff23ce0
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Spec tool count is wrong (spec artefact, not implementation bug)
+              byte_offset: 7994
+              byte_count: 598
+              word_count: 102
+              content_hash: 59c68d95932003f212c2fd54ff68c34e0a15549c940f4af1fe543254ea9fd815
+            - path: 1.3.5
+              level: 3
+              title: 3.5 `handleServerInfo` has no direct unit test [Minor]
+              byte_offset: 8592
+              byte_count: 788
+              word_count: 102
+              content_hash: 8f1a7963808ff66577098be59b9937eaf1cee693af8ca733297f086c59b6514d
+            - path: 1.3.6
+              level: 3
+              title: 3.6 `finish` and `handoff` do not include `entity_ref` or combined slug display [Minor]
+              byte_offset: 9380
+              byte_count: 988
+              word_count: 136
+              content_hash: 56bcaf08fb77e6dd07dd905845a5cb18fd679293aa0480fcdfb412666a43a23d
+            - path: 1.3.7
+              level: 3
+              title: 3.7 Display Convention Reference — verbose `entity get` format not implemented [Minor]
+              byte_offset: 10368
+              byte_count: 1260
+              word_count: 168
+              content_hash: 05108fda910d2430e1a1cef6ce88c4e950d20def63eadfd650f3dfe5145a74df
+            - path: 1.3.8
+              level: 3
+              title: '3.8 Missing test: `ListEntitiesFiltered` with label filter [Minor]'
+              byte_offset: 11628
+              byte_count: 535
+              word_count: 54
+              content_hash: 386bbb40539dc9fb68636bebe7588875338c7f46e072320124b7b8334f42dca1
+            - path: 1.3.9
+              level: 3
+              title: 3.9 `bootstrap-workflow.md` document placement table incomplete [Minor]
+              byte_offset: 12163
+              byte_count: 1266
+              word_count: 160
+              content_hash: 378a81beee5ac759b5b7d25f92b422491c4db93b34e840ced6ff6f9668773c8a
+            - path: 1.3.10
+              level: 3
+              title: 3.10 `p8-decompose-reliability-review.md` violates naming convention [Minor / Post-P7 regression]
+              byte_offset: 13429
+              byte_count: 680
+              word_count: 76
+              content_hash: 89b2762289d69a43c57aaa7fa3515b216c4088258cae7d53ca2bae4e26d0bca2
+            - path: 1.3.11
+              level: 3
+              title: 3.11 AGENTS.md Project Status is stale [Significant]
+              byte_offset: 14109
+              byte_count: 801
+              word_count: 127
+              content_hash: 66609047edcd66079d15dcd1c0dc89fe0a80a7d26e5e8cecbad3a0dcca942c59
+            - path: 1.3.12
+              level: 3
+              title: 3.12 Dead code in `handleServerInfo` [Trivial]
+              byte_offset: 14910
+              byte_count: 1017
+              word_count: 138
+              content_hash: eed9398b84023849dd73d75124e4ced25e2df4a595d5eb3a31182f87798fe437
+        - path: "1.4"
+          level: 2
+          title: 4. Code Quality Assessment
+          byte_offset: 15927
+          byte_count: 3221
+          word_count: 438
+          content_hash: 1f9dd9ea1edbaaca12c933310c2ef4b636d070392c4939197f593ac96461c78e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 `internal/buildinfo`
+              byte_offset: 15958
+              byte_count: 153
+              word_count: 21
+              content_hash: 2b64e57c2eb23a8b19a8d39d2b4bb6c87be0a0c5f2f7077a72ba05e5109dddee
+            - path: 1.4.2
+              level: 3
+              title: 4.2 `internal/install`
+              byte_offset: 16111
+              byte_count: 1148
+              word_count: 155
+              content_hash: b41aca1ddfe75c629ea024dc5086c04bd2c39e50d72dbafb8cd474c2d3375444
+            - path: 1.4.3
+              level: 3
+              title: 4.3 `internal/mcp/server_info_tool.go`
+              byte_offset: 17259
+              byte_count: 272
+              word_count: 35
+              content_hash: d991cbeca5e5e2487041d3fb7fc43af6d35ac16191c8510774abf65221f42071
+            - path: 1.4.4
+              level: 3
+              title: 4.4 `internal/mcp/post_merge_install.go`
+              byte_offset: 17531
+              byte_count: 789
+              word_count: 109
+              content_hash: 7590b395640ceef7c0d55cc8cbbd144e3d54afb6b89594a929605fffc422818a
+            - path: 1.4.5
+              level: 3
+              title: 4.5 `internal/id/display.go`
+              byte_offset: 18320
+              byte_count: 208
+              word_count: 20
+              content_hash: 7eb061eeb290eeafd94f2733135861b64721bb50f29a1709ebb846c7c3b0feee
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Storage label integration
+              byte_offset: 18528
+              byte_count: 620
+              word_count: 93
+              content_hash: 6b616e218809f72a2c26a2602459dcb073bbbd55bf7d999dd940cadbe7e698d4
+        - path: "1.5"
+          level: 2
+          title: 5. Test Coverage Summary
+          byte_offset: 19148
+          byte_count: 1200
+          word_count: 173
+          content_hash: 61f81bccdfb04dd8f262d92f28c4ea616113366267f2a73fc6eb54d88a853e94
+        - path: "1.6"
+          level: 2
+          title: 6. Documentation Review
+          byte_offset: 20348
+          byte_count: 869
+          word_count: 109
+          content_hash: 66c50d0fbd8bf86a02fb2dd1b547015624c98111336db42d7fe34a29a0150816
+          children:
+            - path: 1.6.1
+              level: 3
+              title: AGENTS.md
+              byte_offset: 20376
+              byte_count: 189
+              word_count: 31
+              content_hash: 5b1601d5dfd784c8abf41edc25c2b3e339e7f14acc1674a1cde05652b7e62604
+            - path: 1.6.2
+              level: 3
+              title: '`work/bootstrap/bootstrap-workflow.md`'
+              byte_offset: 20565
+              byte_count: 279
+              word_count: 32
+              content_hash: 84765f5640c58cdf20ee4a42632b9e02c94f25001cff9c51b81d273984fadf4e
+            - path: 1.6.3
+              level: 3
+              title: '`.skills/code-review.md`'
+              byte_offset: 20844
+              byte_count: 159
+              word_count: 18
+              content_hash: d22560236909ee70beb6af6c63f90cfd5068daabf5e92077663326c3061cd183
+            - path: 1.6.4
+              level: 3
+              title: '`work/spec/server-info-tool.md` and `work/spec/human-friendly-id-display.md`'
+              byte_offset: 21003
+              byte_count: 214
+              word_count: 24
+              content_hash: 8c7e300d434ca8a7932aa2c0bbe233f6552385a3f15569e104497b345e146bd9
+        - path: "1.7"
+          level: 2
+          title: 7. Verdict
+          byte_offset: 21217
+          byte_count: 1228
+          word_count: 197
+          content_hash: 06d2fa802966cc9fece2c4eb3077d78eaf8de78c9f21833dd6801484e31ca69a
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Must Fix Before Closing P7
+              byte_offset: 21232
+              byte_count: 431
+              word_count: 66
+              content_hash: dfb15f0adcfd48f9689b8c498a2529f59b1ecee3465ca86ad9f132a462c88816
+            - path: 1.7.2
+              level: 3
+              title: Should Fix (Follow-up Acceptable)
+              byte_offset: 21663
+              byte_count: 469
+              word_count: 72
+              content_hash: 819c43d6b8f5311767e4b17df3de0d5a59f7a91aa77ca8114ecfaccffc5057f6
+            - path: 1.7.3
+              level: 3
+              title: Low Priority / Informational
+              byte_offset: 22132
+              byte_count: 313
+              word_count: 56
+              content_hash: 839a14a7e48b4573cbbc5e176aea13acade5af1335763b1afe21aff65bd83bd6
+entity_refs:
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 296
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: 1.2.1
+      byte_offset: 2053
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 3399
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 4314
+    - entity_id: FEAT-01KMR
+      entity_type: feature
+      section_path: 1.3.7
+      byte_offset: 10548
+    - entity_id: P7-developer-experience
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 216
+    - entity_id: P8-decompose-reliability
+      entity_type: plan
+      section_path: 1.3.10
+      byte_offset: 13711
+cross_doc_links:
+    - target_path: work/spec/server-info-tool.md
+      link_text: work/spec/server-info-tool.md
+      section_path: "1"
+    - target_path: work/spec/human-friendly-id-display.md
+      link_text: work/spec/human-friendly-id-display.md
+      section_path: "1"
+    - target_path: work/spec/review-naming-and-folder-conventions.md
+      link_text: work/spec/review-naming-and-folder-conventions.md
+      section_path: "1"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.2.3
+    - target_path: bootstrap-workflow.md
+      link_text: bootstrap-workflow.md
+      section_path: 1.2.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.3
+    - target_path: track-c-batch-operations-review.md
+      link_text: track-c-batch-operations-review.md
+      section_path: 1.2.3
+    - target_path: bootstrap-workflow.md
+      link_text: bootstrap-workflow.md
+      section_path: 1.3.9
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: 1.3.9
+    - target_path: p8-decompose-reliability-review.md
+      link_text: p8-decompose-reliability-review.md
+      section_path: 1.3.10
+    - target_path: work/reviews/p8-decompose-reliability-review.md
+      link_text: work/reviews/p8-decompose-reliability-review.md
+      section_path: 1.3.10
+    - target_path: review-{id}-{slug}.md
+      link_text: review-{id}-{slug}.md
+      section_path: 1.3.10
+    - target_path: review-P8-decompose-reliability.md
+      link_text: review-P8-decompose-reliability.md
+      section_path: 1.3.10
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.11
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: 1.6.2
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.6.3
+    - target_path: review-{id}-{slug}.md
+      link_text: review-{id}-{slug}.md
+      section_path: 1.6.3
+    - target_path: work/spec/server-info-tool.md
+      link_text: work/spec/server-info-tool.md
+      section_path: 1.6.4
+    - target_path: work/spec/human-friendly-id-display.md
+      link_text: work/spec/human-friendly-id-display.md
+      section_path: 1.6.4
+    - target_path: p8-decompose-reliability-review.md
+      link_text: p8-decompose-reliability-review.md
+      section_path: 1.7.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+classified: false

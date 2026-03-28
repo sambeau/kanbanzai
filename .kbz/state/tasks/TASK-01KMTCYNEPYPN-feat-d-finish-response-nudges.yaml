@@ -2,4 +2,15 @@ id: TASK-01KMTCYNEPYPN
 parent_feature: FEAT-01KMTCWXAGX06
 slug: feat-d-finish-response-nudges
 summary: "Add two contextual nudges to the finish tool response in internal/mcp/finish_tool.go. Nudge 1: fires when the call completes the last task in a feature and no tasks in that feature have retro signals — include a nudge field in the response. Nudge 2: fires when summary is non-empty but both knowledge and retrospective are absent (single-item mode only). Nudge 1 takes priority when both conditions are met. Nudges must be absent (not null, not empty string) in batch mode and when knowledge/retrospective was provided. Nudge text is verbatim from spec §6.2 and §6.3. Add tests for each trigger and each suppression condition."
-status: ready
+status: done
+files_planned:
+  - internal/service/dispatch.go
+  - internal/mcp/finish_tool.go
+  - internal/mcp/finish_nudge_test.go
+completed: "2026-03-28T15:12:30Z"
+claimed_at: "2026-03-28T14:54:13Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T14:54:13Z"
+dispatched_by: sambeau
+completion_summary: "Added two finish response nudges: Nudge 1 fires when feature just completed with no retro signals across all sibling tasks; Nudge 2 fires when summary provided but no knowledge/retro in call. Nudge 1 takes priority. Added AnyTaskHasRetroSignals helper to DispatchService. Added isFinishTerminal helper and Batch field to finishInput."
+verification: go test -race ./internal/mcp/... ./internal/service/... passes. 9 new nudge tests all green.

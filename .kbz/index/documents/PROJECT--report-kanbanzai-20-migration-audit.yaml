@@ -1,0 +1,248 @@
+document_id: PROJECT/report-kanbanzai-20-migration-audit
+document_path: work/reports/kanbanzai-2.0-migration-audit.md
+content_hash: a5c4c39028ee73fe4d73ca8fa38a7e65ea8775e1c1f0d00a75ede3b1d049db22
+indexed_at: 2026-03-28T13:45:38.37278Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Kanbanzai 2.0 Migration Audit: Lost Features & Recommendations'
+      byte_offset: 0
+      byte_count: 17778
+      word_count: 2469
+      content_hash: a5c4c39028ee73fe4d73ca8fa38a7e65ea8775e1c1f0d00a75ede3b1d049db22
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Summary
+          byte_offset: 542
+          byte_count: 938
+          word_count: 133
+          content_hash: adf8454d73f8d03f00465d4b505e89ac569cf290d2111eae3038cb9804d0cd2b
+          children:
+            - path: 1.1.1
+              level: 3
+              title: How this was discovered
+              byte_offset: 1091
+              byte_count: 389
+              word_count: 56
+              content_hash: e668040eefeb467eb123eb5d77185b1b6ff2a5b09f2aa290b6dd3b4a55da36bd
+        - path: "1.2"
+          level: 2
+          title: '2. Root Cause: Unmerged Hardening Branch'
+          byte_offset: 1480
+          byte_count: 1311
+          word_count: 184
+          content_hash: 56f5bf1168ee1f5de2a21350ce8306421af1b33f939b687e875fde6f60019d21
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Evidence
+              byte_offset: 1525
+              byte_count: 560
+              word_count: 71
+              content_hash: cfbbdf82a6bc462d85a760460ff18a8264b7b945ec09f0de6f9d7c075844824b
+            - path: 1.2.2
+              level: 3
+              title: Timeline
+              byte_offset: 2085
+              byte_count: 706
+              word_count: 106
+              content_hash: 6b76c0999453b97ab68957203bd5a5226b88a2e08ca6bbdea936c7ff4b563aaf
+        - path: "1.3"
+          level: 2
+          title: 3. Lost Features
+          byte_offset: 2791
+          byte_count: 6745
+          word_count: 895
+          content_hash: ac2daf709a8ce3e307b5f4beee8dc3f2ed6c3bdd8c52bbb0f905a31a8f6dfbe6
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 MCP Safety Annotations
+              byte_offset: 2812
+              byte_count: 2094
+              word_count: 245
+              content_hash: a3266ee18c8efb2c66c580495faaa36564a7a9bdff8a1cd59826162fcaa4e7f3
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Annotations Canary Test
+              byte_offset: 4906
+              byte_count: 431
+              word_count: 65
+              content_hash: b72db41f9243ad215caf2ce7e53ea272f283f48b3d210ecbc777004c0c47eb81
+            - path: 1.3.3
+              level: 3
+              title: 3.3 `doc_record_refresh` Tool
+              byte_offset: 5337
+              byte_count: 1329
+              word_count: 166
+              content_hash: f69edc7d9f938c98e32897802ca0ece498310cc53514bb63ea6eb55e57973068
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Improved Error Messages
+              byte_offset: 6666
+              byte_count: 1438
+              word_count: 213
+              content_hash: 9ff060fac51597339d5430b946c9248f8b74c681cbabf27057d76987bb52e956
+            - path: 1.3.5
+              level: 3
+              title: 3.5 `doc_supersession_chain` — Unreachable Service Code
+              byte_offset: 8104
+              byte_count: 674
+              word_count: 102
+              content_hash: cf9f83d9d091b6f56a5e6806c82cb183de898001f259f3eff48ada604582a16a
+            - path: 1.3.6
+              level: 3
+              title: 3.6 `suggest_links` — Specified as Automatic, Never Built
+              byte_offset: 8778
+              byte_count: 758
+              word_count: 100
+              content_hash: a5305280c025bf629d03053622990a4ba5bfc2ed995fc6fc84b99e3c58675b93
+        - path: "1.4"
+          level: 2
+          title: 4. What Was Preserved
+          byte_offset: 9536
+          byte_count: 1262
+          word_count: 203
+          content_hash: d10128336ce5758d304e264997e474b5c9a714e270b5bb71024ad6b0fbde4f5c
+        - path: "1.5"
+          level: 2
+          title: 5. The Portability Problem
+          byte_offset: 10798
+          byte_count: 1835
+          word_count: 266
+          content_hash: 459c65f396cf3552af09c4c01eb43740f2907ab0e36f318487104d1abb39d1b3
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Instruction delivery hierarchy (most reliable → least)
+              byte_offset: 11079
+              byte_count: 692
+              word_count: 104
+              content_hash: c0ffb727165d70e89b63583b764ffc552f538697851891869b563dd632dafb1a
+            - path: 1.5.2
+              level: 3
+              title: What belongs where
+              byte_offset: 11771
+              byte_count: 862
+              word_count: 120
+              content_hash: 366e19efbacc0f1cccdb0729838b5403968cb5d93e6af06f530555f3c80279e0
+        - path: "1.6"
+          level: 2
+          title: 6. The Permissions Problem
+          byte_offset: 12633
+          byte_count: 2060
+          word_count: 309
+          content_hash: 5708245827c151bea8a42b0b3aadbe9a2905b859afcd52fecb916d883db2463f
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Status of MCP auto-approval support
+              byte_offset: 12664
+              byte_count: 383
+              word_count: 62
+              content_hash: 3a1e6c3bd0fad30f9b5d84522a9edb3c67715f34dcf3e713df93fdad8426c9e4
+            - path: 1.6.2
+              level: 3
+              title: Proposed 2.0 tool classification
+              byte_offset: 13047
+              byte_count: 1646
+              word_count: 242
+              content_hash: 1cb4cfbba51954dcd080eaf3f9703a1abb6c21089baebaf7f43745c566f1e1fa
+        - path: "1.7"
+          level: 2
+          title: 7. Recommended Sprint
+          byte_offset: 14693
+          byte_count: 2155
+          word_count: 291
+          content_hash: 8cdeebf4c37c61df161cbfe03c8f778aeb951a1b3d638d1f4f186dc0d476568f
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 'Priority 1: Restore MCP safety annotations (High impact, small effort)'
+              byte_offset: 14719
+              byte_count: 455
+              word_count: 65
+              content_hash: 0791c959f3f14427d7458f134a7a2a34550d30a106ec74c680ea48380dd76abc
+            - path: 1.7.2
+              level: 3
+              title: 'Priority 2: Add `refresh` action to `doc` tool (Medium impact, small-medium effort)'
+              byte_offset: 15174
+              byte_count: 354
+              word_count: 46
+              content_hash: 156a75afed5d99d0c572eb95ba45d72f6a47515ec197393b2ac39816ede0ef5d
+            - path: 1.7.3
+              level: 3
+              title: 'Priority 3: Tool-embedded nudges (Medium impact, small effort)'
+              byte_offset: 15528
+              byte_count: 419
+              word_count: 61
+              content_hash: 35dd99a6e10e83740ce7688a37c1900a8ba33326ddf820841bd61a9df1a59d76
+            - path: 1.7.4
+              level: 3
+              title: 'Priority 4: Update skills with portable agent guidance (Medium impact, small effort)'
+              byte_offset: 15947
+              byte_count: 375
+              word_count: 40
+              content_hash: cdbf99e835a43e60e55a974b795fc54bbb459738071124044a6978a9e7715623
+            - path: 1.7.5
+              level: 3
+              title: 'Priority 5: Wire remaining dead code (Low-medium impact, tiny effort)'
+              byte_offset: 16322
+              byte_count: 254
+              word_count: 36
+              content_hash: 6282d98e4c86cd04dfed8b3de93dcc53f50a2814e673756ca5a9c682850c88e2
+            - path: 1.7.6
+              level: 3
+              title: 'Stretch: Slim down AGENTS.md'
+              byte_offset: 16576
+              byte_count: 272
+              word_count: 39
+              content_hash: d09e37d3f3e002306f1810af407058aabe85d64ed01d3b6fcb40f9a9806423e0
+        - path: "1.8"
+          level: 2
+          title: 8. Disposition of the Hardening Branch
+          byte_offset: 16848
+          byte_count: 930
+          word_count: 135
+          content_hash: 67e8eb01d3bd8f2fa020067d79c4583d02764bfdb46e5021b5558b90093f3c99
+entity_refs:
+    - entity_id: FEAT-01KMKRQWF0FCH
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 739
+    - entity_id: FEAT-01KMKRQWF0FCH
+      entity_type: feature
+      section_path: 1.2.1
+      byte_offset: 1582
+    - entity_id: FEAT-01KMKRQWF0FCH
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 2121
+    - entity_id: FEAT-01KMKRQWF0FCH
+      entity_type: feature
+      section_path: "1.8"
+      byte_offset: 16922
+    - entity_id: TASK-01KMNA4SKB6H5
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 2212
+    - entity_id: TASK-01KMNA3GR1AET
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 2321
+cross_doc_links:
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.5.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.7.6
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

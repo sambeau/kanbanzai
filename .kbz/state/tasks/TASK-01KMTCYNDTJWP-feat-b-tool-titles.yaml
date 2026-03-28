@@ -2,4 +2,34 @@ id: TASK-01KMTCYNDTJWP
 parent_feature: FEAT-01KMTCWXAGX06
 slug: feat-b-tool-titles
 summary: Add human-readable Title annotations to all 22 tools using mcp.WithTitleAnnotation(). Title strings are specified in spec §4.2 and must be followed verbatim. May be combined with the annotation options from Feature A in a single mcp.WithToolAnnotation call or kept separate.
-status: ready
+status: done
+files_planned:
+  - internal/mcp/branch_tool.go
+  - internal/mcp/checkpoint_tool.go
+  - internal/mcp/cleanup_tool.go
+  - internal/mcp/conflict_tool.go
+  - internal/mcp/decompose_tool.go
+  - internal/mcp/doc_intel_tool.go
+  - internal/mcp/doc_tool.go
+  - internal/mcp/entity_tool.go
+  - internal/mcp/estimate_tool.go
+  - internal/mcp/finish_tool.go
+  - internal/mcp/handoff_tool.go
+  - internal/mcp/health_tool.go
+  - internal/mcp/incident_tool.go
+  - internal/mcp/knowledge_tool.go
+  - internal/mcp/merge_tool.go
+  - internal/mcp/next_tool.go
+  - internal/mcp/pr_tool.go
+  - internal/mcp/profile_tool.go
+  - internal/mcp/retro_tool.go
+  - internal/mcp/server_info_tool.go
+  - internal/mcp/status_tool.go
+  - internal/mcp/worktree_tool.go
+completed: "2026-03-28T15:12:30Z"
+claimed_at: "2026-03-28T14:54:12Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T14:54:12Z"
+dispatched_by: sambeau
+completion_summary: Added WithTitleAnnotation to all 22 MCP tools per spec §4.2 verbatim title strings. Applied alongside annotations in the same mcp.NewTool edit pass.
+verification: go test -race ./internal/mcp/... passes

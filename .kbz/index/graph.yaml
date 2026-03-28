@@ -1,4 +1,4 @@
-updated_at: 2026-03-28T12:32:34.84117Z
+updated_at: 2026-03-28T14:20:07.966423Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -27903,5 +27903,1730 @@ edges:
     - from: P8-decompose-reliability/report-p8-decompose-reliability-review#1.2.2
       from_type: section
       to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-p7-implementation-retrospective
+      from_type: document
+      to: P7-developer-experience/report-p7-implementation-retrospective#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1
+      from_type: section
+      to: P7-developer-experience/report-p7-implementation-retrospective#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1
+      from_type: section
+      to: P7-developer-experience/report-p7-implementation-retrospective#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1
+      from_type: section
+      to: P7-developer-experience/report-p7-implementation-retrospective#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1.3
+      from_type: section
+      to: P7-developer-experience/report-p7-implementation-retrospective#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1.3
+      from_type: section
+      to: P7-developer-experience/report-p7-implementation-retrospective#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1.3
+      from_type: section
+      to: P7-developer-experience/report-p7-implementation-retrospective#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1
+      from_type: section
+      to: P7-developer-experience/report-p7-implementation-retrospective#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1
+      from_type: section
+      to: P7-developer-experience/report-p7-implementation-retrospective#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1
+      from_type: section
+      to: P7-developer-experience/report-p7-implementation-retrospective#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1.1
+      from_type: section
+      to: FEAT-01KMT40GZSMHB
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1.1
+      from_type: section
+      to: FEAT-01KMT40KKZZR5
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1.1
+      from_type: section
+      to: FEAT-01KMT40P0AGS7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1.3.1
+      from_type: section
+      to: FEAT-01KMT40GZSMHB
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1.3.1
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1.3.1
+      from_type: section
+      to: FEAT-01KMRX1F47Z94
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-p7-implementation-retrospective#1
+      from_type: section
+      to: P7-developer-experience
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-retro-tool-generated-example
+      from_type: document
+      to: PROJECT/report-retro-tool-generated-example#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-tool-generated-example#1
+      from_type: section
+      to: PROJECT/report-retro-tool-generated-example#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-tool-generated-example#1.1
+      from_type: section
+      to: PROJECT/report-retro-tool-generated-example#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-tool-generated-example#1
+      from_type: section
+      to: PROJECT/report-retro-tool-generated-example#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-tool-generated-example#1.2
+      from_type: section
+      to: PROJECT/report-retro-tool-generated-example#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-tool-generated-example#1.2
+      from_type: section
+      to: PROJECT/report-retro-tool-generated-example#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit
+      from_type: document
+      to: PROJECT/report-kanbanzai-20-migration-audit#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.2
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.2
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.5
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.5
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.6
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.6
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.7
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.7
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.7
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.7
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.7
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.7.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.7
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.7.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-migration-audit#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.1
+      from_type: section
+      to: FEAT-01KMKRQWF0FCH
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.2.1
+      from_type: section
+      to: FEAT-01KMKRQWF0FCH
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.2.2
+      from_type: section
+      to: FEAT-01KMKRQWF0FCH
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.8
+      from_type: section
+      to: FEAT-01KMKRQWF0FCH
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.2.2
+      from_type: section
+      to: TASK-01KMNA4SKB6H5
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.2.2
+      from_type: section
+      to: TASK-01KMNA3GR1AET
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.5
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.5.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-kanbanzai-20-migration-audit#1.7.6
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-mcp-discoverability-and-reliability
+      from_type: document
+      to: PROJECT/design-mcp-discoverability-and-reliability#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.4.2
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.4.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.4.2
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.4.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.4.2
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.4.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.5
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.5
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.5
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.6.3
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.6.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.6.3
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.6.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.6.3
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.6.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.6.3
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.6.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.6.3
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.6.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.6.3
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.6.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.6.3
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.6.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.11
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.11.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.11
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.11.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.11
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.11.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.12
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.12.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.12
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.12.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.12
+      from_type: section
+      to: PROJECT/design-mcp-discoverability-and-reliability#1.12.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-mcp-discoverability-and-reliability#1.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience
+      from_type: document
+      to: P7-developer-experience/report-review-p7-developer-experience#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.2
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.2
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.2
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.3.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.4
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.4
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.4
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.4
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.4
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.4
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.6
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.6
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.6
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.6
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.7
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.7
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.7
+      from_type: section
+      to: P7-developer-experience/report-review-p7-developer-experience#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P7-developer-experience/report-review-p7-developer-experience#1
+      from_type: section
+      to: FEAT-01KMT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.2.1
+      from_type: section
+      to: FEAT-01KMT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.2.2
+      from_type: section
+      to: FEAT-01KMT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.2.3
+      from_type: section
+      to: FEAT-01KMT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3.7
+      from_type: section
+      to: FEAT-01KMR
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-review-p7-developer-experience#1
+      from_type: section
+      to: P7-developer-experience
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3.10
+      from_type: section
+      to: P8-decompose-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P7-developer-experience/report-review-p7-developer-experience#1
+      from_type: section
+      to: work/spec/server-info-tool.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1
+      from_type: section
+      to: work/spec/human-friendly-id-display.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1
+      from_type: section
+      to: work/spec/review-naming-and-folder-conventions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.2.3
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.2.3
+      from_type: section
+      to: bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.2.3
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.2.3
+      from_type: section
+      to: track-c-batch-operations-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3.9
+      from_type: section
+      to: bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3.9
+      from_type: section
+      to: work/bootstrap/bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3.10
+      from_type: section
+      to: p8-decompose-reliability-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3.10
+      from_type: section
+      to: work/reviews/p8-decompose-reliability-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3.10
+      from_type: section
+      to: review-{id}-{slug}.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3.10
+      from_type: section
+      to: review-P8-decompose-reliability.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.3.11
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.6.2
+      from_type: section
+      to: work/bootstrap/bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.6.3
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.6.3
+      from_type: section
+      to: review-{id}-{slug}.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.6.4
+      from_type: section
+      to: work/spec/server-info-tool.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.6.4
+      from_type: section
+      to: work/spec/human-friendly-id-display.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P7-developer-experience/report-review-p7-developer-experience#1.7.2
+      from_type: section
+      to: p8-decompose-reliability-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability
+      from_type: document
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.2.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.6.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.7.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.9.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.9.4
+      from_type: section
+      to: FEAT-01KMKRQWF0FCH
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.7.3
+      from_type: section
+      to: DOC-01JX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8.3
+      from_type: section
+      to: DOC-01JX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.8.3
+      from_type: section
+      to: DOC-02JX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability#1.1
+      from_type: section
+      to: work/design/mcp-discoverability-and-reliability.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability
+      from_type: document
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.2.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.6.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.7.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.9.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.9.4
+      from_type: section
+      to: FEAT-01KMKRQWF0FCH
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.7.3
+      from_type: section
+      to: DOC-01JX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8.3
+      from_type: section
+      to: DOC-01JX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.8.3
+      from_type: section
+      to: DOC-02JX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability#1.1
+      from_type: section
+      to: work/design/mcp-discoverability-and-reliability.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability
+      from_type: document
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.3
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.4
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.5
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.5
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.5
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.6
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.7
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.8
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.8.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.9
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: FEAT-01KMTCWXAGX06
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.1
+      from_type: section
+      to: FEAT-01KMKRQWF0FCH
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.8.5
+      from_type: section
+      to: FEAT-01KMKRQWF0FCH
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.2
+      from_type: section
+      to: TASK-01KMTCYNCX1HC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.2
+      from_type: section
+      to: TASK-01KMTCYNDC99R
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.2
+      from_type: section
+      to: TASK-01KMTCYNDTJWP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.2
+      from_type: section
+      to: TASK-01KMTCYNE8AY9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.2
+      from_type: section
+      to: TASK-01KMTCYNEPYPN
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.2
+      from_type: section
+      to: TASK-01KMTCYNF4A4K
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.2
+      from_type: section
+      to: TASK-01KMTCYNFHFEP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1
+      from_type: section
+      to: P9-mcp-discoverability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.11
+      from_type: section
+      to: work/spec/mcp-discoverability-and-reliability.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.11
+      from_type: section
+      to: work/design/mcp-discoverability-and-reliability.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability#1.11
+      from_type: section
+      to: work/reports/kanbanzai-2.0-migration-audit.md
       to_type: document
       edge_type: LINKS_TO
