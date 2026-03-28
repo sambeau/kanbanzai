@@ -2,7 +2,6 @@ package mcp
 
 import (
 	"context"
-	"errors"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -31,13 +30,13 @@ func serverInfoTool() server.ServerTool {
 	)
 
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		return handleServerInfo()
+		return handleServerInfo(".")
 	}
 
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
 
-func handleServerInfo() (*mcp.CallToolResult, error) {
+func handleServerInfo(root string) (*mcp.CallToolResult, error) {
 	gitSHA := buildinfo.GitSHA
 	gitSHAShort := deriveGitSHAShort(gitSHA)
 	dirty := buildinfo.Dirty == "true"
@@ -62,15 +61,10 @@ func handleServerInfo() (*mcp.CallToolResult, error) {
 	}
 
 	// Read install record fresh on each call (not cached).
-	rec, err := install.ReadRecord(".")
+	// ReadRecord returns nil, nil when the file does not exist.
+	rec, err := install.ReadRecord(root)
 	if err != nil {
-		// File-not-found returns nil, nil from ReadRecord.
-		// Any other filesystem error is a real problem.
-		if !errors.Is(err, os.ErrNotExist) {
-			return nil, err
-		}
-		// Shouldn't happen (ReadRecord handles ErrNotExist), but be safe.
-		rec = nil
+		return nil, err
 	}
 
 	if rec != nil {

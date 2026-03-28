@@ -20,7 +20,7 @@ build:
 
 install: build
 	go install -ldflags "$(LDFLAGS)" ./cmd/kanbanzai
-	# TODO: run install-record write --by makefile once CLI subcommand exists
+	kbz install-record write --by makefile
 
 clean:
 	rm -f $(BINARY)

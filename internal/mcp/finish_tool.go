@@ -273,9 +273,13 @@ func finishOne(
 		rejected[i] = rejectedKE{Topic: r.Topic, Reason: r.Reason}
 	}
 
-	// Enrich task output with display_id.
+	// Enrich task output with display_id and entity_ref.
 	if tid, ok := result.Task["id"].(string); ok {
-		result.Task["display_id"] = id.FormatFullDisplay(tid)
+		displayID := id.FormatFullDisplay(tid)
+		result.Task["display_id"] = displayID
+		slug, _ := result.Task["slug"].(string)
+		label, _ := result.Task["label"].(string)
+		result.Task["entity_ref"] = id.FormatEntityRef(displayID, slug, label)
 	}
 
 	resp := map[string]any{

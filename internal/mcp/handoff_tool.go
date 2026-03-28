@@ -122,9 +122,13 @@ func handoffTool(
 			}
 		}
 
+		displayID := id.FormatFullDisplay(task.ID)
+		slug, _ := task.State["slug"].(string)
+		label, _ := task.State["label"].(string)
 		resp := map[string]any{
 			"task_id":    task.ID,
-			"display_id": id.FormatFullDisplay(task.ID),
+			"display_id": displayID,
+			"entity_ref": id.FormatEntityRef(displayID, slug, label),
 			"prompt":     prompt,
 			"context_metadata": map[string]any{
 				"spec_sections_included":     len(actx.specSections),

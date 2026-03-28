@@ -52,6 +52,7 @@ Desktop.ini
 # Kanbanzai instance: commit state and docs, exclude derived cache and temp files
 .kbz/cache/
 .kbz/local.yaml
+.kbz/last-install.yaml
 .kbz-tmp-*
 .worktrees/
 # Nested .kbz directories created by tests running inside package directories

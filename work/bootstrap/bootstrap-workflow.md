@@ -182,7 +182,8 @@ The batch import tool is **idempotent** — it skips already-registered document
 | `work/spec/` | `specification` | Formal specifications with acceptance criteria |
 | `work/plan/` | `dev-plan` | Implementation plans, decision logs, progress tracking |
 | `work/research/` | `research` | Research reports, analysis, exploration |
-| `work/reports/` | `report` | Review reports, audit reports, post-implementation reviews |
+| `work/reviews/` | `report` | Review reports produced by the formal `reviewing` lifecycle gate; one file per reviewed feature or bug |
+| `work/reports/` | `report` | General-purpose reports: retrospectives, friction analyses, audit findings, research outputs, progress reports |
 
 **Why this matters:**
 

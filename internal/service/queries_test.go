@@ -256,6 +256,38 @@ func TestListEntitiesFiltered_ByTags(t *testing.T) {
 	}
 }
 
+func TestListEntitiesFiltered_ByLabel(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := NewEntityService(root)
+
+	fields1 := makeFeatureFields("FEAT-01AAAAAAAAA13", "feat-labeled-g", "", "draft", nil)
+	fields1["label"] = "G"
+	writeTestEntity(t, root, "feature", "FEAT-01AAAAAAAAA13", "feat-labeled-g", fields1)
+
+	fields2 := makeFeatureFields("FEAT-01AAAAAAAAA14", "feat-labeled-q", "", "draft", nil)
+	fields2["label"] = "Q"
+	writeTestEntity(t, root, "feature", "FEAT-01AAAAAAAAA14", "feat-labeled-q", fields2)
+
+	writeTestEntity(t, root, "feature", "FEAT-01AAAAAAAAA15", "feat-unlabeled",
+		makeFeatureFields("FEAT-01AAAAAAAAA15", "feat-unlabeled", "", "draft", nil))
+
+	results, err := svc.ListEntitiesFiltered(ListFilteredInput{
+		Type:  "feature",
+		Label: "G",
+	})
+	if err != nil {
+		t.Fatalf("ListEntitiesFiltered() error = %v", err)
+	}
+
+	if len(results) != 1 {
+		t.Fatalf("expected 1 result, got %d", len(results))
+	}
+	if results[0].ID != "FEAT-01AAAAAAAAA13" {
+		t.Errorf("unexpected ID: %s", results[0].ID)
+	}
+}
+
 func TestListEntitiesFiltered_ByParent(t *testing.T) {
 	t.Parallel()
 	root := t.TempDir()
