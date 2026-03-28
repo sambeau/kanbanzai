@@ -61,8 +61,9 @@ The three features are deliberately scoped to close known gaps, not to redesign 
 | **A** | Plan-level review SKILL | Small | None |
 | **B** | Review tasks as workflow entities | Medium | A (procedural definition) |
 | **C** | Documentation currency health check | Medium | None |
+| **D** | Plan document naming convention | Small | None |
 
-Features A and C are independent and can be developed in parallel. Feature B depends on A for its procedural definition (the SKILL tells you what the review task should assemble).
+Features A, C, and D are independent and can be developed in parallel. Feature B depends on A for its procedural definition (the SKILL tells you what the review task should assemble).
 
 ---
 
@@ -233,7 +234,60 @@ When a plan is in a terminal state (`done`), verify:
 
 ---
 
-## 8. Sequencing
+## 8. Feature D: Plan Document Naming Convention
+
+### 8.1 Summary
+
+Establish a naming convention that prefixes plan document filenames with their P-number, making them discoverable by plan identity rather than requiring knowledge of the slug or phase name.
+
+Example: `review-and-doc-currency-plan.md` → `P10-review-and-doc-currency-plan.md`
+
+### 8.2 Motivation
+
+Plan documents are currently named by slug or phase number, with no visible link to the plan entity ID. Finding "the P9 plan document" requires knowing that P9's slug is `mcp-discoverability` or searching file contents. A P-number prefix makes the mapping immediate and supports tab-completion in the shell.
+
+### 8.3 Convention
+
+Plan document filenames in `work/plan/` follow the pattern: `P{N}-{slug}-{type}.md`
+
+Where `{type}` is one of: `implementation-plan`, `decision-log`, `progress`, `scope`, or other plan-level document types.
+
+Examples:
+- `P10-review-and-doc-currency-plan.md`
+- `P2-phase-1-kernel-implementation-plan.md`
+- `P6-workflow-quality-and-review-plan.md`
+
+### 8.4 Scope
+
+| Item | Action |
+|------|--------|
+| New plan documents | Must use the `P{N}-` prefix convention going forward |
+| Existing plan documents (8 implementation plans + supporting docs) | Rename in a single commit, update all internal cross-references, update document records |
+| `AGENTS.md` references | Update any file paths that reference renamed documents |
+| `bootstrap-workflow.md` | Document the naming convention in the document placement table |
+
+### 8.5 Deliverables
+
+| Deliverable | Description |
+|-------------|-------------|
+| Renamed files | Existing plan docs renamed with `P{N}-` prefix |
+| Updated cross-references | All documents and AGENTS.md that reference renamed files |
+| Updated document records | `doc(action: refresh)` on any renamed documents |
+| Convention documented | Naming rule added to `bootstrap-workflow.md` |
+
+### 8.6 Acceptance criteria
+
+| # | Criterion |
+|---|-----------|
+| D.1 | All plan implementation plans in `work/plan/` have a `P{N}-` filename prefix |
+| D.2 | All internal cross-references to renamed files are updated |
+| D.3 | Document records for renamed files have correct paths |
+| D.4 | The naming convention is documented in `bootstrap-workflow.md` |
+| D.5 | No broken file references in AGENTS.md or other documents |
+
+---
+
+## 9. Sequencing
 
 ```
 Phase 1: Documentation (Feature A)
@@ -241,16 +295,21 @@ Phase 1: Documentation (Feature A)
 ├── Update AGENTS.md key documents table
 └── Gate: human approval of SKILL content
 
-Phase 2: Parallel implementation (Features B and C)
+Phase 2: Parallel implementation (Features B, C, and D)
 ├── Track B: Plan review lifecycle
 │   ├── Write specification
 │   ├── Gate: human approval of spec
 │   └── Implement (model, state machine, tests)
 │
-└── Track C: Health check
-    ├── Write specification
-    ├── Gate: human approval of spec
-    └── Implement
+├── Track C: Health check
+│   ├── Write specification
+│   ├── Gate: human approval of spec
+│   └── Implement
+│
+└── Track D: Naming convention
+    ├── Rename existing plan documents
+    ├── Update all cross-references
+    └── Document convention in bootstrap-workflow
 
 Phase 3: Integration and review
 ├── Verify all acceptance criteria
@@ -259,7 +318,7 @@ Phase 3: Integration and review
 └── Gate: plan review passes
 ```
 
-Feature A ships first because it's immediately useful and defines the procedure that Feature B will enforce as a lifecycle gate. Features B and C are independent and can be developed in parallel. Phase 3 is a natural validation — we use Feature A's SKILL to conduct the plan review, which now passes through Feature B's `reviewing` lifecycle state, and Feature C's health check validates that the documentation was updated.
+Feature A ships first because it's immediately useful and defines the procedure that Feature B will enforce as a lifecycle gate. Features B, C, and D are independent and can be developed in parallel. Feature D is small enough to ship early alongside A. Phase 3 is a natural validation — we use Feature A's SKILL to conduct the plan review, which now passes through Feature B's `reviewing` lifecycle state, and Feature C's health check validates that the documentation was updated.
 
 ---
 
@@ -271,6 +330,7 @@ Feature A ships first because it's immediately useful and defines the procedure 
 | Tool name extraction produces false positives | Noisy health output | Use conservative matching (backtick-wrapped names, known tool name patterns); tune in spec |
 | AGENTS.md format changes break Tier 2 checks | Health check produces false negatives | Match on plan slug (stable) not section formatting; document expected AGENTS.md structure |
 | Plan review SKILL becomes stale (ironic) | Same drift problem we're solving | Feature C Tier 1 will catch stale tool names in SKILL files; Tier 2 catches missing plan updates |
+| Renaming plan docs breaks external links or bookmarks | Stale URLs or file references | Single-commit rename with comprehensive cross-reference update; `git log --follow` preserves history |
 
 ---
 
