@@ -1006,7 +1006,7 @@ func TestTrackJ_ToolCount_PerGroup(t *testing.T) {
 	t.Parallel()
 
 	expected := map[string]int{
-		config.GroupCore:        7,
+		config.GroupCore:        8,
 		config.GroupPlanning:    4,
 		config.GroupKnowledge:   2,
 		config.GroupGit:         5,

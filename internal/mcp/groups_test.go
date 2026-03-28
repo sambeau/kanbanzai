@@ -41,7 +41,7 @@ func TestGroupToolNames_MembershipMap(t *testing.T) {
 func TestGroupToolNames_CoreGroup(t *testing.T) {
 	t.Parallel()
 
-	want := []string{"status", "next", "finish", "handoff", "entity", "doc", "health"}
+	want := []string{"status", "next", "finish", "handoff", "entity", "doc", "health", "server_info"}
 	got := append([]string(nil), GroupToolNames[config.GroupCore]...)
 
 	sort.Strings(want)
@@ -57,7 +57,7 @@ func TestGroupToolNames_CoreGroup(t *testing.T) {
 	}
 }
 
-// TestGroupToolNames_TotalToolCount verifies the total 2.0 tool count is 20 (spec §6.4).
+// TestGroupToolNames_TotalToolCount verifies the total 2.0 tool count is 22 (spec §6.4).
 func TestGroupToolNames_TotalToolCount(t *testing.T) {
 	t.Parallel()
 
@@ -65,7 +65,7 @@ func TestGroupToolNames_TotalToolCount(t *testing.T) {
 	for _, tools := range GroupToolNames {
 		total += len(tools)
 	}
-	const want = 21
+	const want = 22
 	if total != want {
 		t.Errorf("total 2.0 tool count = %d, want %d", total, want)
 	}

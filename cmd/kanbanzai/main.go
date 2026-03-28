@@ -141,6 +141,8 @@ func run(args []string, deps dependencies) error {
 		return runCache(args[1:], deps)
 	case "import":
 		return runImport(args[1:], deps)
+	case "install-record":
+		return runInstallRecord(args[1:], deps)
 
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
@@ -320,6 +322,7 @@ Utility commands:
   validate [flags]           Validate a candidate entity
   cache rebuild              Rebuild the local derived cache
   import <path> [flags]      Batch import document records
+  install-record write       Write binary install record
 
 Other:
   serve                      Start the MCP server (stdio transport)

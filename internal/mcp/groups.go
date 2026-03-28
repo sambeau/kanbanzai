@@ -23,6 +23,7 @@ var GroupToolNames = map[string][]string{
 		"entity",
 		"doc",
 		"health",
+		"server_info",
 	},
 	config.GroupPlanning: {
 		"decompose",

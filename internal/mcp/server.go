@@ -115,6 +115,8 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		mcpServer.AddTools(EntityTool(entitySvc, docRecordSvc)...)
 		// Track I: doc — consolidated document operations
 		mcpServer.AddTools(DocTool(docRecordSvc, intelligenceSvc)...)
+		// server_info — build metadata, install record, in-sync status
+		mcpServer.AddTools(ServerInfoTool()...)
 		// Track K: health — consolidated health check
 		mcpServer.AddTools(HealthTool(entitySvc,
 			knowledgeHealthChecker(knowledgeSvc, profileStore),

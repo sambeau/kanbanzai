@@ -61,10 +61,10 @@ func containsNone(got []string, disallowed []string) (found []string) {
 func TestServer_ListTools_GroupConfig(t *testing.T) {
 	t.Parallel()
 
-	// coreTools are the 7 core-group tools (Tracks D–I). All are implemented.
+	// coreTools are the 8 core-group tools (Tracks D–I + server_info). All are implemented.
 	// This slice must be kept in sync with the tools registered in the GroupCore
 	// conditional block in newServerWithConfig.
-	implementedCoreTools := []string{"status", "next", "finish", "handoff", "entity", "doc", "health"}
+	implementedCoreTools := []string{"status", "next", "finish", "handoff", "entity", "doc", "health", "server_info"}
 
 	tests := []struct {
 		name        string
@@ -148,7 +148,7 @@ func TestServer_ListTools_CoreGroupConditional(t *testing.T) {
 	registered := toolNamesFromServer(t, entityRoot, &cfg)
 
 	// Verify each implemented core tool is registered
-	for _, tool := range []string{"status", "next", "finish", "handoff", "entity", "doc", "health"} {
+	for _, tool := range []string{"status", "next", "finish", "handoff", "entity", "doc", "health", "server_info"} {
 		found := false
 		for _, name := range registered {
 			if name == tool {

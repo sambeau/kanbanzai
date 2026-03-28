@@ -115,6 +115,13 @@ type DispatchConfig struct {
 }
 
 // MCPConfig holds settings for the MCP tool surface (Kanbanzai 2.0).
+// MergeConfig holds settings for merge operations.
+type MergeConfig struct {
+	// PostMergeInstall controls whether to automatically rebuild and install
+	// the binary after a successful merge. Defaults to true (nil = true).
+	PostMergeInstall *bool `yaml:"post_merge_install,omitempty"`
+}
+
 type MCPConfig struct {
 	// Preset is a shorthand for a common group configuration.
 	// Valid values: "minimal", "orchestration", "full".
@@ -146,6 +153,8 @@ type Config struct {
 	Incidents IncidentsConfig `yaml:"incidents,omitempty"`
 	// Decomposition holds settings for feature decomposition operations.
 	Decomposition DecompositionConfig `yaml:"decomposition,omitempty"`
+	// Merge holds settings for merge operations.
+	Merge MergeConfig `yaml:"merge,omitempty"`
 	// MCP holds settings for the MCP tool surface (Kanbanzai 2.0 feature groups).
 	MCP MCPConfig `yaml:"mcp,omitempty"`
 }

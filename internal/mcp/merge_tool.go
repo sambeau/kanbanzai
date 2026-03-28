@@ -137,6 +137,12 @@ func mergeExecuteAction(
 			return nil, err
 		}
 
+		// Post-merge install: rebuild binary and write install record.
+		cfg := config.LoadOrDefault()
+		if effect := postMergeInstall(ctx, repoPath, cfg); effect != nil {
+			PushSideEffect(ctx, *effect)
+		}
+
 		return result, nil
 	}
 }
