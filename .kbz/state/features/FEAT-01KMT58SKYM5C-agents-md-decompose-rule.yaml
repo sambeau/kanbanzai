@@ -1,7 +1,7 @@
 id: FEAT-01KMT58SKYM5C
 slug: agents-md-decompose-rule
 parent: P8-decompose-reliability
-status: developing
+status: reviewing
 summary: "Add a precondition rule to AGENTS.md under the decomposition stage gate: confirm spec is approved and call index_repository if the spec was registered in the current session. Immediate documentation-level safeguard, ships independently of the code fixes."
 design: PROJECT/design-decompose-reliability
 spec: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule
