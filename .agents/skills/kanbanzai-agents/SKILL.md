@@ -32,21 +32,25 @@ and spawning sub-agents.
 
 ## Context Assembly
 
-Before beginning any task, assemble context:
+Before beginning any task, assemble context by claiming it:
 
-1. Call `context_assemble(role="<role>", task_id="<task_id>")` to get a
-   context packet containing role instructions, relevant knowledge entries,
-   design context, and task details.
+1. Call `next` with a task ID to claim the task and receive a context packet
+   containing role instructions, relevant knowledge entries, design context,
+   and task details.
 2. The packet is byte-budgeted and prioritised — it contains what matters
    most for this task and role.
+3. To generate a prompt for a sub-agent instead, call `handoff` with the
+   task ID — it produces a self-contained Markdown prompt ready for
+   delegation.
 
-After completing the task, call `context_report` to record which knowledge
-entries were used and which were incorrect:
+After completing the task, maintain the knowledge base:
 
-- **Used entries** — their use count increments; frequently-used entries are
-  auto-confirmed.
-- **Flagged entries** — their miss count increments; repeatedly-flagged
-  entries are auto-retired.
+- Call `knowledge` action: `confirm` on entries that were accurate and
+  useful — their use count increments; frequently-confirmed entries gain
+  confidence.
+- Call `knowledge` action: `flag` on entries that were incorrect or
+  misleading — their miss count increments; repeatedly-flagged entries are
+  auto-retired.
 
 This feedback loop keeps the knowledge base accurate over time.
 
@@ -56,20 +60,21 @@ This feedback loop keeps the knowledge base accurate over time.
 
 ### Picking up work
 
-1. Call `work_queue` to see ready tasks, sorted by priority.
-2. Call `dispatch_task(task_id, role, dispatched_by)` to atomically claim a
-   task. This moves it from `ready` to `active` and returns a context packet.
+1. Call `next` (without an ID) to see ready tasks, sorted by priority.
+2. Call `next` with a task ID to claim it. This moves it from `ready` to
+   `active` and returns a context packet with role instructions, knowledge
+   entries, and task details.
 3. Do the work.
 
 ### Finishing work
 
-Call `complete_task` with:
+Call `finish` with:
 
 - `task_id` — the task being completed
 - `summary` — brief description of what was accomplished
 - `files_modified` — files created or changed
-- `verification_performed` — what testing or verification was done
-- `knowledge_entries` — any reusable knowledge learned during the task
+- `verification` — what testing or verification was done
+- `knowledge` — any reusable knowledge learned during the task
 
 ---
 
@@ -119,7 +124,8 @@ When you learn something useful during a task that is not already in the
 knowledge base, contribute it:
 
 ```
-knowledge_contribute(
+knowledge(
+  action="contribute",
   topic="<topic>",
   content="<concise actionable statement>",
   scope="<role or 'project'>",
@@ -170,7 +176,7 @@ When delegating work to a sub-agent:
 2. **Scope boundaries** — tell each sub-agent which files or directories it
    owns. If spawning multiple agents in parallel, ensure they do not write to
    the same files.
-3. **MCP delivery** — `context_assemble` automatically includes relevant
+3. **MCP delivery** — `next` and `handoff` automatically include relevant
    skill content in the context packet for sub-agents running through MCP.
    This is the primary skill delivery mechanism for sub-agents.
 
@@ -178,8 +184,9 @@ When delegating work to a sub-agent:
 
 ## Gotchas
 
-- If `dispatch_task` fails, another agent likely claimed the task. Call
-  `work_queue` again to pick a different one. Do not retry the same task.
+- If `next` fails when claiming a task, another agent likely claimed it.
+  Call `next` again (without an ID) to pick a different one. Do not retry
+  the same task.
 - If a Kanbanzai tool call returns an error, read the message — it usually
   tells you exactly what went wrong and what the valid options are. Do not
   retry with the same arguments.
