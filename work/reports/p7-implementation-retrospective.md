@@ -22,7 +22,7 @@ in a single implementation session:
 
 All 22 test packages pass under `go test -race ./...`. No regressions.
 
-The implementation itself was successful, but the *process* exposed three
+The implementation itself was successful, but the *process* exposed five
 significant issues that warrant analysis and corrective action.
 
 ---
@@ -183,7 +183,82 @@ destroyed by git operations that agents are *instructed to perform*.
    is the standard Kanbanzai configuration and eliminates the issue entirely.
    Not appropriate for this project where state is intentionally tracked.
 
-### 3.3 Confabulated root-cause explanations
+### 3.3 Retrospective written without consulting MCP knowledge
+
+**Observation.** When asked to write this retrospective, the agent composed it
+entirely from its in-session memory. It did not call `retro synthesise`, did
+not call `knowledge list` with retrospective tags, and did not check for
+related knowledge entries contributed earlier in the session or in prior
+sessions.
+
+This is the same class of error as §3.1 (bypassing MCP tools) but arguably
+worse, because:
+
+- The agent had *just finished* contributing three knowledge entries about the
+  P7 issues via the `knowledge contribute` tool — and then immediately wrote
+  the retrospective without reading them back.
+- The `retro` tool exists specifically for this purpose. It synthesizes
+  retrospective signals into themed clusters with severity rankings.
+- A `knowledge list` with `tags: ["workflow-friction"]` would have surfaced a
+  fourth entry — `KE-01KMT5T79D9Q1` (doc approve doesn't patch file Status
+  header) — that is directly relevant to P7 but was omitted from the report.
+
+**What the MCP tools contained that was missed:**
+
+| Source | Finding | In original report? |
+|--------|---------|-------------------|
+| `retro synthesise scope=project` | P6 stale-binary friction signal (KE-01KMS0EE97M2P) — the signal that motivated the `server_info` feature | ❌ No |
+| `retro synthesise scope=project` | P6 "advance: true worked well" signal — directly relevant since P7 used the same pattern | ❌ No |
+| `knowledge list tags=workflow-friction` | KE-01KMT5T79D9Q1: doc approve doesn't patch Status in file header — happened during P7 (3 specs still say "Draft") | ❌ No |
+| `retro synthesise scope=P7` | Returned 0 signals — because no `finish` calls included `retrospective` parameter (see §3.5) | Not checked |
+
+**Root cause.** The agent treated the retrospective as a prose-writing task
+(draw on conversation memory, write it up) rather than a data-gathering task
+(query the system for signals, synthesize, then write). This reflects the same
+underlying habit as §3.1: the agent knows things from its context window and
+reaches for that first, skipping the structured tools that might surface things
+it has forgotten or never saw.
+
+**Suggested fix.** Add to AGENTS.md or to the code-review SKILL:
+
+> **Before writing any retrospective or review document**, call `retro
+> synthesise` for the relevant scope AND `knowledge list` with tags
+> `["retrospective", "workflow-friction"]`. Use these as inputs alongside
+> session observations. Do not rely solely on in-session memory.
+
+### 3.4 No retrospective signals recorded via `finish`
+
+**Observation.** All 12 `finish` calls during P7 were made without the
+`retrospective` parameter. This means the `retro` tool has zero P7-scoped
+signals to synthesize — `retro synthesise scope=P7-developer-experience`
+returns `signal_count: 0`.
+
+The three knowledge entries contributed later (via `knowledge contribute`) are
+tagged `retrospective` but are not retrospective *signals* in the system's
+sense. The `retro` tool looks for signals recorded through `finish`, not
+general knowledge entries. This is why `retro synthesise scope=project` only
+found the 3 older signals from the P6 cycle.
+
+**Impact.** The retrospective tooling was useless for P7 — not because it's
+broken, but because the agent never fed it data. This is a silent failure:
+nothing errors, nothing warns, the signals just don't exist.
+
+**Root cause.** The `finish` tool accepts an optional `retrospective` array
+parameter, but nothing prompts the agent to use it. The `handoff` context
+doesn't mention it. AGENTS.md doesn't mention it. An agent completing a task
+has no nudge to reflect on what went well or badly.
+
+**Suggested fixes:**
+
+1. Add a reminder to AGENTS.md: *"When completing tasks via `finish`, include
+   retrospective signals for any friction, tool gaps, or things that worked
+   well. These feed the `retro` tool for future synthesis."*
+
+2. Consider whether `finish` should emit a soft warning when completing the
+   last task in a feature without any retrospective signals recorded for that
+   feature.
+
+### 3.5 Confabulated root-cause explanations
 
 **Observation.** When the state corruption was discovered, the agent produced
 two confident-sounding but entirely wrong explanations:
@@ -214,7 +289,31 @@ than from evidence.
 
 ---
 
-## 4. Sub-Agent Effectiveness
+## 4. Missed Knowledge: P6→P7 Continuity
+
+The project-scoped `retro synthesise` output contains a signal from the P6
+review cycle that directly motivated the `server-info-tool` feature:
+
+> **KE-01KMS0EE97M2P** (tool-friction): "The stale MCP binary issue wasted
+> significant verification time — 3 of 9 ACs appeared to fail when the code
+> was correct. There's no built-in way to query the running server's build
+> timestamp or source version. Suggestion: Add a server_info or version MCP
+> tool that reports build timestamp, git commit SHA, and binary path."
+
+This is a direct P6→P7 continuity signal: a friction point surfaced by one
+plan's retrospective was implemented as a feature in the next plan. This is
+exactly the kind of cross-plan learning the retrospective system is designed
+to capture — and the retrospective document should have cited it as evidence
+that the system works.
+
+Additionally, the `doc approve` Status-header friction (KE-01KMT5T79D9Q1)
+manifested again during P7: all three approved specs still display
+"Status: Draft" in their file headers. This is a recurring irritant that
+affects human readers of the spec documents.
+
+---
+
+## 5. Sub-Agent Effectiveness
 
 Three waves of sub-agents were spawned during P7:
 
@@ -252,19 +351,23 @@ Three waves of sub-agents were spawned during P7:
 
 ---
 
-## 5. Corrective Actions
+## 6. Corrective Actions
 
-| # | Action | Priority | Scope |
-|---|--------|----------|-------|
-| 1 | Add "must use MCP tools for state queries" rule to AGENTS.md | High | AGENTS.md |
-| 2 | Add "commit .kbz/state/ before spawning sub-agents" rule to AGENTS.md | High | AGENTS.md |
-| 3 | Add "investigate before explaining" debugging discipline to AGENTS.md | Medium | AGENTS.md |
-| 4 | Drop orphaned `stash@{0}` (contains superseded state) | Low | Git cleanup |
-| 5 | Consider sub-agent scope guidelines (1-2 tasks max per agent) | Medium | AGENTS.md |
+| # | Action | Priority | Scope | Section |
+|---|--------|----------|-------|---------|
+| 1 | Add "must use MCP tools for state queries" rule to AGENTS.md | High | AGENTS.md | §3.1 |
+| 2 | Add "commit .kbz/state/ before spawning sub-agents" rule to AGENTS.md | High | AGENTS.md | §3.2 |
+| 3 | Add "consult retro + knowledge before writing retrospectives" rule | High | AGENTS.md | §3.3 |
+| 4 | Add "include retrospective signals in finish calls" reminder | High | AGENTS.md | §3.4 |
+| 5 | Add "investigate before explaining" debugging discipline to AGENTS.md | Medium | AGENTS.md | §3.5 |
+| 6 | Consider `finish` warning when last feature task has no retro signals | Medium | Tool change | §3.4 |
+| 7 | Drop orphaned `stash@{0}` (contains superseded state) | Low | Git cleanup | §3.2 |
+| 8 | Consider sub-agent scope guidelines (1-2 tasks max per agent) | Medium | AGENTS.md | §5 |
+| 9 | Patch 3 P7 spec files to say "Status: Approved" in their headers | Low | Doc fix | §4 |
 
 ---
 
-## 6. Metrics
+## 7. Metrics
 
 | Metric | Value |
 |--------|-------|
@@ -277,3 +380,31 @@ Three waves of sub-agents were spawned during P7:
 | Sub-agents ran out of context | 3 |
 | State corruption incidents | 1 (recovered) |
 | Incorrect root-cause explanations | 2 |
+| `finish` calls with retrospective signals | 0/12 |
+| Knowledge entries consulted for this report | 0 (initially); 6 (after review) |
+
+---
+
+## 8. Meta-Observation
+
+This retrospective itself became an exhibit of the problems it describes.
+
+The first draft was written without consulting the `retro` or `knowledge`
+tools — the same "bypass MCP tools" habit documented in §3.1. When the human
+pointed this out, investigation revealed two additional findings (§3.3 and
+§3.4) that were absent from the original report, plus a missed cross-plan
+continuity signal (§4) that would have strengthened the narrative.
+
+The pattern is consistent: the agent reaches for what it already knows
+(conversation context, file reads, shell commands) and skips the structured
+tools that might surface what it *doesn't* know. This is not a tooling
+problem — the tools work correctly when called. It is a habit problem: the
+agent's default mode is "act on what I have" rather than "query for what I
+might be missing."
+
+This suggests that AGENTS.md instructions alone may not be sufficient. The
+tools themselves may need to surface reminders at key moments — for example,
+`finish` could note "no retrospective signals recorded for this feature" and
+`handoff` could include a "remember to record retro signals on completion"
+line in its assembled context. Making the right behaviour the path of least
+resistance is more reliable than relying on agents to remember rules.
