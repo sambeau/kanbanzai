@@ -283,10 +283,45 @@ func TestCanTransition(t *testing.T) {
 			want: true,
 		},
 		{
-			name: "plan active to done",
+			name: "plan active to reviewing",
+			kind: EntityPlan,
+			from: "active",
+			to:   "reviewing",
+			want: true,
+		},
+		{
+			name: "plan active to done is illegal (must go through reviewing)",
 			kind: EntityPlan,
 			from: "active",
 			to:   "done",
+			want: false,
+		},
+		{
+			name: "plan reviewing to done",
+			kind: EntityPlan,
+			from: "reviewing",
+			to:   "done",
+			want: true,
+		},
+		{
+			name: "plan reviewing to active (rework)",
+			kind: EntityPlan,
+			from: "reviewing",
+			to:   "active",
+			want: true,
+		},
+		{
+			name: "plan reviewing to superseded",
+			kind: EntityPlan,
+			from: "reviewing",
+			to:   "superseded",
+			want: true,
+		},
+		{
+			name: "plan reviewing to cancelled",
+			kind: EntityPlan,
+			from: "reviewing",
+			to:   "cancelled",
 			want: true,
 		},
 		{
@@ -903,10 +938,16 @@ func TestValidNextStates(t *testing.T) {
 			wantStates: []string{"cancelled", "designing", "superseded"},
 		},
 		{
-			name:       "plan active has done, cancelled, superseded",
+			name:       "plan active has reviewing, cancelled, superseded",
 			kind:       EntityPlan,
 			from:       "active",
-			wantStates: []string{"cancelled", "done", "superseded"},
+			wantStates: []string{"cancelled", "reviewing", "superseded"},
+		},
+		{
+			name:       "plan reviewing has active, cancelled, done, superseded",
+			kind:       EntityPlan,
+			from:       "reviewing",
+			wantStates: []string{"active", "cancelled", "done", "superseded"},
 		},
 		{
 			name:       "task queued has duplicate, not-planned, ready",
@@ -1132,5 +1173,51 @@ func TestValidateTransition_ErrorContainsValidStates(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestPlanLifecycle_ReviewingTransitions(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name   string
+		from   string
+		to     string
+		wantOK bool
+	}{
+		{name: "active to reviewing succeeds", from: "active", to: "reviewing", wantOK: true},
+		{name: "reviewing to done succeeds", from: "reviewing", to: "done", wantOK: true},
+		{name: "reviewing to active succeeds (rework path)", from: "reviewing", to: "active", wantOK: true},
+		{name: "reviewing to superseded succeeds", from: "reviewing", to: "superseded", wantOK: true},
+		{name: "reviewing to cancelled succeeds", from: "reviewing", to: "cancelled", wantOK: true},
+		{name: "active to done fails (must go through reviewing)", from: "active", to: "done", wantOK: false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			err := ValidateTransition(EntityPlan, tt.from, tt.to)
+			if tt.wantOK && err != nil {
+				t.Fatalf("expected plan transition %s → %s to succeed, got error: %v", tt.from, tt.to, err)
+			}
+			if !tt.wantOK && err == nil {
+				t.Fatalf("expected plan transition %s → %s to fail, but it succeeded", tt.from, tt.to)
+			}
+		})
+	}
+}
+
+func TestPlanLifecycle_ActiveToDoneErrorMessage(t *testing.T) {
+	t.Parallel()
+
+	err := ValidateTransition(EntityPlan, "active", "done")
+	if err == nil {
+		t.Fatal("expected error for plan active → done, got nil")
+	}
+
+	msg := err.Error()
+	if !strings.Contains(msg, "reviewing") {
+		t.Errorf("error message %q does not contain \"reviewing\" in valid transitions list", msg)
 	}
 }

@@ -118,14 +118,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		mcpServer.AddTools(EntityTool(entitySvc, docRecordSvc)...)
 		// Track I: doc — consolidated document operations
 		mcpServer.AddTools(DocTool(docRecordSvc, intelligenceSvc)...)
-		// Track K: health — consolidated health check
-		mcpServer.AddTools(HealthTool(entitySvc,
-			knowledgeHealthChecker(knowledgeSvc, profileStore),
-			profileHealthChecker(profileStore),
-			Phase3HealthChecker(worktreeStore, knowledgeSvc, cfg, repoRoot),
-			Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
-			Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
-		)...)
+
 	}
 
 	// GroupPlanning: decompose, estimate, conflict, retro.
@@ -165,6 +158,22 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	// GroupCheckpoints: checkpoint.
 	if groups[config.GroupCheckpoints] {
 		mcpServer.AddTools(CheckpointTool(checkpointStore)...)
+	}
+
+	// Register health tool last so DocCurrencyHealthChecker can see all tool names.
+	if groups[config.GroupCore] {
+		toolNames := make(map[string]bool)
+		for name := range mcpServer.ListTools() {
+			toolNames[name] = true
+		}
+		mcpServer.AddTools(HealthTool(entitySvc,
+			knowledgeHealthChecker(knowledgeSvc, profileStore),
+			profileHealthChecker(profileStore),
+			Phase3HealthChecker(worktreeStore, knowledgeSvc, cfg, repoRoot),
+			Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
+			Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
+			DocCurrencyHealthChecker(toolNames, repoRoot, entitySvc, docRecordSvc),
+		)...)
 	}
 
 	return mcpServer

@@ -29,6 +29,7 @@ const (
 	PlanStatusProposed   PlanStatus = "proposed"
 	PlanStatusDesigning  PlanStatus = "designing"
 	PlanStatusActive     PlanStatus = "active"
+	PlanStatusReviewing  PlanStatus = "reviewing"
 	PlanStatusDone       PlanStatus = "done"
 	PlanStatusSuperseded PlanStatus = "superseded"
 	PlanStatusCancelled  PlanStatus = "cancelled"

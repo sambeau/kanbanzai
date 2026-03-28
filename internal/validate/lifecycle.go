@@ -65,7 +65,7 @@ var terminalStates = map[EntityKind]map[string]struct{}{
 }
 
 var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
-	// Plan lifecycle: proposed → designing → active → done
+	// Plan lifecycle: proposed → designing → active → reviewing → done
 	// Terminal: superseded, cancelled (from any non-terminal)
 	EntityPlan: {
 		string(model.PlanStatusProposed): {
@@ -79,7 +79,13 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 			string(model.PlanStatusCancelled):  {},
 		},
 		string(model.PlanStatusActive): {
+			string(model.PlanStatusReviewing):  {},
+			string(model.PlanStatusSuperseded): {},
+			string(model.PlanStatusCancelled):  {},
+		},
+		string(model.PlanStatusReviewing): {
 			string(model.PlanStatusDone):       {},
+			string(model.PlanStatusActive):     {},
 			string(model.PlanStatusSuperseded): {},
 			string(model.PlanStatusCancelled):  {},
 		},
