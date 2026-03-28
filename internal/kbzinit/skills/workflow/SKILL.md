@@ -78,7 +78,7 @@ both follow the same lifecycle for their entity type. The size of the work does 
 the rules.
 
 **Verbal approval must be recorded immediately:** When a human approves a document in
-conversation, call `doc_record_approve` immediately. Verbal approval that is not recorded
+conversation, call `doc` with action: `approve` immediately. Verbal approval that is not recorded
 does not satisfy the stage gate — the next operation will fail.
 
 ---

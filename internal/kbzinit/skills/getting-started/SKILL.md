@@ -30,19 +30,17 @@ generic guidance. If it does not exist, the Kanbanzai skills are your primary or
 
 ## Check the Work Queue
 
-Call `work_queue` to see what tasks are ready. The work queue promotes eligible tasks
+Call `next` (without an ID) to see what tasks are ready. The work queue promotes eligible tasks
 and returns them sorted by estimate and age.
 
-If the queue is empty, call `list_entities_filtered` to understand the current project
+If the queue is empty, call `status` or `entity` action: `list` to understand the current project
 state: active features, open bugs, and their statuses.
 
 ## Assemble Context Before Starting a Task
 
-Before beginning work on any task, call `context_assemble` with the appropriate role
-and task ID. This delivers a byte-budgeted context packet containing the task
-instructions, relevant knowledge entries, and design context.
-
-    context_assemble(role="<role>", task_id="<task_id>")
+Before beginning work on any task, call `next` with a task ID to claim it and receive
+a context packet containing the task instructions, relevant knowledge entries, and
+design context.
 
 See `kanbanzai-agents` for the full dispatch-and-complete protocol.
 
