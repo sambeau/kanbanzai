@@ -2,10 +2,16 @@ id: TASK-01KMTT47Q719Y
 parent_feature: FEAT-01KMTSPEE6BXS
 slug: update-readme-and-docs
 summary: "Update README.md: replace github.com/your-org/kanbanzai placeholder with github.com/sambeau/kanbanzai. Include instructions for both go install from remote and building from local clone. Update docs/getting-started.md if it references old paths. Verify Makefile works with new module path. Covers AC-8, AC-9, AC-10, AC-11, AC-12."
-status: active
+status: done
 depends_on:
   - TASK-01KMTT47PA5P5
+files_planned:
+  - README.md
+  - docs/getting-started.md
+completed: "2026-03-28T18:30:42Z"
 claimed_at: "2026-03-28T18:24:50Z"
 dispatched_to: unspecified
 dispatched_at: "2026-03-28T18:24:50Z"
 dispatched_by: sambeau
+completion_summary: "Updated README.md with real repository path (github.com/sambeau/kanbanzai), Go 1.25 requirement, remote install and local build instructions. Updated docs/getting-started.md with correct URLs."
+verification: "AC-8: grep 'your-org' README.md returns empty ✓ | AC-9: Remote and local install instructions present ✓ | AC-10: getting-started.md updated with correct paths ✓"
