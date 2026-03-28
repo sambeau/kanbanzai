@@ -112,7 +112,7 @@ func assembleContext(input asmInput) assembledContext {
 	if input.profileStore != nil && input.role != "" {
 		if profile, err := kbzctx.ResolveProfile(input.profileStore, input.role); err == nil {
 			actx.roleProfile = input.role
-			actx.constraints = append(actx.constraints, profile.Conventions...)
+			actx.constraints = append(actx.constraints, flattenConventions(profile.Conventions)...)
 		}
 	}
 
@@ -405,6 +405,39 @@ func asmExtractFiles(taskState map[string]any) []asmFileEntry {
 }
 
 // ─── Byte counting and trimming ───────────────────────────────────────────────
+
+// flattenConventions converts the any-typed Conventions field to a []string.
+// Handles both []interface{} (flat list) and map[string]interface{} (named sub-keys).
+func flattenConventions(v any) []string {
+	if v == nil {
+		return nil
+	}
+	switch c := v.(type) {
+	case []interface{}:
+		out := make([]string, 0, len(c))
+		for _, item := range c {
+			if s, ok := item.(string); ok {
+				out = append(out, s)
+			}
+		}
+		return out
+	case []string:
+		return c
+	case map[string]interface{}:
+		var out []string
+		for _, val := range c {
+			if items, ok := val.([]interface{}); ok {
+				for _, item := range items {
+					if s, ok := item.(string); ok {
+						out = append(out, s)
+					}
+				}
+			}
+		}
+		return out
+	}
+	return nil
+}
 
 // asmByteCount estimates the byte size of assembled context.
 // The overhead constants approximate JSON/YAML structural framing per entry.

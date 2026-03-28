@@ -108,7 +108,7 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 	// Feature lifecycle supports both Phase 1 and Phase 2 states for backward compatibility.
 	//
 	// Phase 1 (legacy): draft → in-review → approved → in-progress → review → done
-	// Phase 2 (document-driven): proposed → designing → specifying → dev-planning → developing → done
+	// Phase 2 (document-driven): proposed → designing → specifying → dev-planning → developing → reviewing → done
 	EntityFeature: {
 		// Phase 1 transitions (backward compatibility)
 		string(model.FeatureStatusDraft): {
@@ -133,6 +133,11 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 		string(model.FeatureStatusNeedsRework): {
 			string(model.FeatureStatusInReview):   {},
 			string(model.FeatureStatusInProgress): {},
+			// Phase 2 targets
+			string(model.FeatureStatusDeveloping): {},
+			string(model.FeatureStatusReviewing):  {},
+			string(model.FeatureStatusSuperseded): {},
+			string(model.FeatureStatusCancelled):  {},
 		},
 		// Phase 2 transitions (document-driven lifecycle)
 		string(model.FeatureStatusProposed): {
@@ -159,8 +164,14 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 			string(model.FeatureStatusCancelled):  {},
 		},
 		string(model.FeatureStatusDeveloping): {
-			string(model.FeatureStatusDone):        {},
+			string(model.FeatureStatusReviewing):   {},
 			string(model.FeatureStatusDevPlanning): {}, // Backward: dev plan superseded
+			string(model.FeatureStatusSuperseded):  {},
+			string(model.FeatureStatusCancelled):   {},
+		},
+		string(model.FeatureStatusReviewing): {
+			string(model.FeatureStatusDone):        {},
+			string(model.FeatureStatusNeedsRework): {},
 			string(model.FeatureStatusSuperseded):  {},
 			string(model.FeatureStatusCancelled):   {},
 		},

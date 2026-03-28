@@ -59,6 +59,7 @@ SKILLs are equally useful for humans performing manual workflow operations via C
 | SKILL | Purpose | When to use |
 |-------|---------|-------------|
 | `document-creation` | Register documents with the kanbanzai system | After creating any new `.md` file in `work/` |
+| `code-review` | Perform structured review of a single review unit | When acting as a review sub-agent evaluating files against a spec |
 
 ## SKILL format
 

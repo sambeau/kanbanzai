@@ -443,7 +443,8 @@ func TestEntityService_StatusUpdate_UsesLifecycleValidation(t *testing.T) {
 		{from: "designing", to: "specifying"},
 		{from: "specifying", to: "dev-planning"},
 		{from: "dev-planning", to: "developing"},
-		{from: "developing", to: "done"},
+		{from: "developing", to: "reviewing"},
+		{from: "reviewing", to: "done"},
 	}
 
 	current := created

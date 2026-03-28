@@ -189,8 +189,9 @@ packages:
 		t.Errorf("Packages: got %d items, want 2", len(rp.Packages))
 	}
 	// conventions inherited from parent (child didn't set them)
-	if len(rp.Conventions) != 2 {
-		t.Errorf("Conventions: got %d items, want 2 (inherited from base)", len(rp.Conventions))
+	convs, ok := rp.Conventions.([]interface{})
+	if !ok || len(convs) != 2 {
+		t.Errorf("Conventions: got %v (type %T), want []interface{} with 2 items (inherited from base)", rp.Conventions, rp.Conventions)
 	}
 }
 
@@ -218,11 +219,12 @@ conventions:
 	}
 
 	// Child's conventions replace parent's entirely — should be ["C"], not ["A","B","C"].
-	if len(rp.Conventions) != 1 {
-		t.Errorf("Conventions: got %d items, want 1 (leaf replaces, not concatenates)", len(rp.Conventions))
+	convs, ok := rp.Conventions.([]interface{})
+	if !ok || len(convs) != 1 {
+		t.Errorf("Conventions: got %v (type %T), want []interface{} with 1 item (leaf replaces, not concatenates)", rp.Conventions, rp.Conventions)
 	}
-	if len(rp.Conventions) > 0 && rp.Conventions[0] != "C" {
-		t.Errorf("Conventions[0]: got %q, want %q", rp.Conventions[0], "C")
+	if ok && len(convs) > 0 && convs[0].(string) != "C" {
+		t.Errorf("Conventions[0]: got %q, want %q", convs[0], "C")
 	}
 }
 
@@ -254,8 +256,9 @@ description: "Child profile with no packages or conventions"
 	if len(rp.Packages) != 2 {
 		t.Errorf("Packages: got %d items, want 2 (inherited from base)", len(rp.Packages))
 	}
-	if len(rp.Conventions) != 1 {
-		t.Errorf("Conventions: got %d items, want 1 (inherited from base)", len(rp.Conventions))
+	convs, ok := rp.Conventions.([]interface{})
+	if !ok || len(convs) != 1 {
+		t.Errorf("Conventions: got %v (type %T), want []interface{} with 1 item (inherited from base)", rp.Conventions, rp.Conventions)
 	}
 }
 
@@ -302,8 +305,12 @@ conventions:
 		t.Errorf("Packages: got %v, want [mid/]", rp.Packages)
 	}
 	// conventions: leaf overrode root's
-	if len(rp.Conventions) != 1 || rp.Conventions[0] != "Leaf convention" {
-		t.Errorf("Conventions: got %v, want [Leaf convention]", rp.Conventions)
+	convs, ok := rp.Conventions.([]interface{})
+	if !ok || len(convs) != 1 {
+		t.Errorf("Conventions: got %v (type %T), want []interface{} with 1 item", rp.Conventions, rp.Conventions)
+	}
+	if ok && len(convs) > 0 && convs[0].(string) != "Leaf convention" {
+		t.Errorf("Conventions[0]: got %q, want %q", convs[0], "Leaf convention")
 	}
 }
 

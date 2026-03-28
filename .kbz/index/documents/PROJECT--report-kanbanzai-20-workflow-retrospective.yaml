@@ -1,0 +1,376 @@
+document_id: PROJECT/report-kanbanzai-20-workflow-retrospective
+document_path: work/reports/kanbanzai-2.0-workflow-retrospective.md
+content_hash: ff7664d5db59e788f45ae12969c212955521e3974d7eca0a4f3695de1436315a
+indexed_at: 2026-03-27T23:01:22.067605Z
+sections:
+    - path: "1"
+      level: 1
+      title: Kanbanzai 2.0 Workflow Retrospective
+      byte_offset: 0
+      byte_count: 21321
+      word_count: 3106
+      content_hash: ff7664d5db59e788f45ae12969c212955521e3974d7eca0a4f3695de1436315a
+      children:
+        - path: "1.1"
+          level: 2
+          title: Table of Contents
+          byte_offset: 265
+          byte_count: 1485
+          word_count: 118
+          content_hash: f2195cd8a08bb7334908db9fe628b5d5b12baf7d390f55fe3cd0c1009a4aef39
+        - path: "1.2"
+          level: 2
+          title: 1. Executive Summary
+          byte_offset: 1750
+          byte_count: 1510
+          word_count: 211
+          content_hash: 8173561e33b08e5273694ef2ca1f12f46cc0b747c317b4037fa3200925c9a566
+        - path: "1.3"
+          level: 2
+          title: 2. What Worked Well
+          byte_offset: 3260
+          byte_count: 2679
+          word_count: 380
+          content_hash: 2e1d9ad946a1ac45de4cafcb9ac6631ddf0a29940426a335b03647a5a97adbe2
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 2.1 Spec-Linked Entity Traversal
+              byte_offset: 3376
+              byte_count: 596
+              word_count: 92
+              content_hash: bf793a0a6f063d2ffeca83c4fc9d9bd050af3049c67eb67444b5047ba0234d69
+            - path: 1.3.2
+              level: 3
+              title: 2.2 Document Intelligence
+              byte_offset: 3972
+              byte_count: 325
+              word_count: 42
+              content_hash: ead9682cb45e4865036224fb66268204469c97c91d69d72f14e9230e2a63df26
+            - path: 1.3.3
+              level: 3
+              title: 2.3 Phased Feature Structure and Dependency Engine
+              byte_offset: 4297
+              byte_count: 363
+              word_count: 55
+              content_hash: 7872849d8650f876a2dd765289b6e4f1e8ad96f9110f700e08a697a6e6228721
+            - path: 1.3.4
+              level: 3
+              title: 2.4 Acceptance Criteria Traceability
+              byte_offset: 4660
+              byte_count: 292
+              word_count: 38
+              content_hash: e9d93366cb4c6bb572b8173d3b22c4612ee72b5dcb8b4fd956f8f22c443edfc8
+            - path: 1.3.5
+              level: 3
+              title: 2.5 Codebase Pattern Consistency
+              byte_offset: 4952
+              byte_count: 347
+              word_count: 46
+              content_hash: ab92e77f0f0a2b5bdc3295dc0fa1793a8d521072afc1a422cee377aca1a65afb
+            - path: 1.3.6
+              level: 3
+              title: 2.6 Test Infrastructure
+              byte_offset: 5299
+              byte_count: 294
+              word_count: 41
+              content_hash: 6920ad1caa973e54124afda969a4c21d4e47d730133759bc3f4a0cfe86661140
+            - path: 1.3.7
+              level: 3
+              title: 2.7 Knowledge Store Design
+              byte_offset: 5593
+              byte_count: 346
+              word_count: 49
+              content_hash: 86a3363f50cc973b2bfba8334a4b218831ddd7dfcfd99f57befea419785a85f1
+        - path: "1.4"
+          level: 2
+          title: 3. Friction Points — Themed Analysis
+          byte_offset: 5939
+          byte_count: 8362
+          word_count: 1222
+          content_hash: e75339935c587d854d7c7d94f7ec315885cc8a0dd0a318b2e73fdbc7ef641574
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 3.1 Feature Lifecycle Transitions Are Too Verbose
+              byte_offset: 6135
+              byte_count: 1136
+              word_count: 162
+              content_hash: 0f24e32a34a54364901552eaf012c5396a7d731bc80d00d64ba7ec115c5483d5
+            - path: 1.4.2
+              level: 3
+              title: 3.2 No First-Class Review Workflow
+              byte_offset: 7271
+              byte_count: 1184
+              word_count: 171
+              content_hash: 53179064d695ad23cb8ea78f8e96e9f264299e03859b51b8969742c7a5bc1c4e
+            - path: 1.4.3
+              level: 3
+              title: 3.3 Entity State Inconsistencies Go Undetected
+              byte_offset: 8455
+              byte_count: 815
+              word_count: 117
+              content_hash: 5d3fc3ff1ff016f3ec3ceedae4e00f5fa89e3d7064ffa272491998698dae6a24
+            - path: 1.4.4
+              level: 3
+              title: 3.4 IDs Are Not Human-Friendly
+              byte_offset: 9270
+              byte_count: 404
+              word_count: 59
+              content_hash: 06d806c3423b7ac024d7d78d28e4d8951f02ff8b93dfa505ec43027d9eed41ba
+            - path: 1.4.5
+              level: 3
+              title: 3.5 No Guided Plan-to-Feature Decomposition Step
+              byte_offset: 9674
+              byte_count: 705
+              word_count: 108
+              content_hash: 552013da67d143fd163a91feff5561b551cd42bad2dc603c5cd1186ea78cadf6
+            - path: 1.4.6
+              level: 3
+              title: 3.6 Tool Gaps for Core Entity Operations
+              byte_offset: 10379
+              byte_count: 697
+              word_count: 101
+              content_hash: 3850b83fa7ff7b0a62b487965c9345afae0d2ca2625fccc02fff80b833b41ae4
+            - path: 1.4.7
+              level: 3
+              title: 3.7 Error Messages Don't Guide the User
+              byte_offset: 11076
+              byte_count: 574
+              word_count: 79
+              content_hash: 8c3ea9c08abf2b6e3cc3466bbb3ab73a672fed53418ba09fd9348bba078ffadb
+            - path: 1.4.8
+              level: 3
+              title: 3.8 Bulk Operations and Batch Workflows Are Missing
+              byte_offset: 11650
+              byte_count: 598
+              word_count: 93
+              content_hash: f22353623f9ceff6f1133459dcaaec66d2cdbc591a20286ade79026c90448e52
+            - path: 1.4.9
+              level: 3
+              title: 3.9 The `design` Field on Features Is Inert
+              byte_offset: 12248
+              byte_count: 472
+              word_count: 77
+              content_hash: a05eea8a841120d3bd4f4438b7fe421643766ee78f1550cd45128626ceda16d1
+            - path: 1.4.10
+              level: 3
+              title: 3.10 Retrospective Capture Has No Entry Point Outside Tasks
+              byte_offset: 12720
+              byte_count: 655
+              word_count: 90
+              content_hash: a4ba8344949d1bbb639e9033d320f14d8c4ada010af56b449f76bceb405c401a
+            - path: 1.4.11
+              level: 3
+              title: 3.11 Documentation Drift Goes Undetected
+              byte_offset: 13375
+              byte_count: 445
+              word_count: 63
+              content_hash: 6899b354f7d9010648ce17446b315813766fd361bb3a900a881c3fcac1a9bbe0
+            - path: 1.4.12
+              level: 3
+              title: 3.12 Knowledge Graph Staleness Is Silent
+              byte_offset: 13820
+              byte_count: 481
+              word_count: 73
+              content_hash: 5bf6e298d834c8141f95e578dce85a42afbdc20587374f656d33b8faf4d47215
+        - path: "1.5"
+          level: 2
+          title: 4. Recommendations — Prioritised
+          byte_offset: 14301
+          byte_count: 5330
+          word_count: 780
+          content_hash: c421c58a220e4b1cf414e7ca83fb6b26df2f2de6847bcf56ff7ac60875fa03e6
+          children:
+            - path: 1.5.1
+              level: 3
+              title: P0 — High Impact, Address First
+              byte_offset: 14460
+              byte_count: 1567
+              word_count: 219
+              content_hash: 83782297454f9cfb4bdd9d9222b202e11f3b05652961487a685edfbf60ffa292
+              children:
+                - path: 1.5.1.1
+                  level: 4
+                  title: 'R1: Smart Lifecycle Transitions'
+                  byte_offset: 14499
+                  byte_count: 646
+                  word_count: 82
+                  content_hash: 05d6521ca17191d79969a884d479932b62c9908eb23a1e96d087ef7621122202
+                - path: 1.5.1.2
+                  level: 4
+                  title: 'R2: Feature Review Workflow'
+                  byte_offset: 15145
+                  byte_count: 441
+                  word_count: 65
+                  content_hash: e6ee869a5d9f2fe107aa05443df3605c731d3629c088374ec7998b5b22965078
+                - path: 1.5.1.3
+                  level: 4
+                  title: 'R3: Parent-Child State Consistency'
+                  byte_offset: 15586
+                  byte_count: 441
+                  word_count: 65
+                  content_hash: 6dc2c4f2ac565421b1bb76de063fb495d39ea157419014d4427b1dbb1a60fca0
+            - path: 1.5.2
+              level: 3
+              title: P1 — Medium Impact, Address Next
+              byte_offset: 16027
+              byte_count: 1750
+              word_count: 263
+              content_hash: 5bc528f148783183b156b9d32a4ee249aad80467d040e250ec6ec90df73e48b8
+              children:
+                - path: 1.5.2.1
+                  level: 4
+                  title: 'R4: Human-Friendly ID Display'
+                  byte_offset: 16067
+                  byte_count: 269
+                  word_count: 39
+                  content_hash: 1ae8fb7e5767004d87a0899f5ec14d68d61c9babf06d70458f596abd71ae8fd7
+                - path: 1.5.2.2
+                  level: 4
+                  title: 'R5: Plan-to-Feature Guidance'
+                  byte_offset: 16336
+                  byte_count: 496
+                  word_count: 76
+                  content_hash: 8cf940f3ee9e3425788aa77ad2a8adac352fdd728d19fb0ec1580a9f9bff2ed3
+                - path: 1.5.2.3
+                  level: 4
+                  title: 'R6: `update_entity` Should Support `depends_on`'
+                  byte_offset: 16832
+                  byte_count: 207
+                  word_count: 28
+                  content_hash: 00ef11e633270a319245fc496a6775d239efb40c64a8430ebce24dc2d6c7b284
+                - path: 1.5.2.4
+                  level: 4
+                  title: 'R7: Fix `list_entities_filtered` Parent Filter'
+                  byte_offset: 17039
+                  byte_count: 261
+                  word_count: 39
+                  content_hash: 73e7c8f9ada1322b5e88b68e58338088a6bc6b5a4ca57623e469935a5654d261
+                - path: 1.5.2.5
+                  level: 4
+                  title: 'R8: Bulk Task Completion'
+                  byte_offset: 17300
+                  byte_count: 274
+                  word_count: 43
+                  content_hash: 9854cfcc69aee04514fe166b7820dfd80b7a0759f91b1c35efcf2d6a6d160f92
+                - path: 1.5.2.6
+                  level: 4
+                  title: 'R9: Valid Transitions in Error Messages'
+                  byte_offset: 17574
+                  byte_count: 203
+                  word_count: 31
+                  content_hash: 14393730427692472513c34d1013093a01cdf93326c2709ca78f4926604a2183
+            - path: 1.5.3
+              level: 3
+              title: P2 — Lower Impact, Address When Convenient
+              byte_offset: 17777
+              byte_count: 1038
+              word_count: 152
+              content_hash: b48e5bcd44a97a6a0e61b04d58c7c58c49727eadb0ed161227b8541a6a656092
+              children:
+                - path: 1.5.3.1
+                  level: 4
+                  title: 'R10: Make the `design` Field Functional'
+                  byte_offset: 17827
+                  byte_count: 262
+                  word_count: 42
+                  content_hash: dae842331d52c4cc33e090c2aa507ebe3e009b4609e9d81ac7ab8361f35cd938
+                - path: 1.5.3.2
+                  level: 4
+                  title: 'R11: Standalone Retrospective Capture'
+                  byte_offset: 18089
+                  byte_count: 263
+                  word_count: 34
+                  content_hash: 85e966a6db382c8828146cda4e729939c8eb8e035c153876947bf5107eda04a3
+                - path: 1.5.3.3
+                  level: 4
+                  title: 'R12: Auto-Generate or Validate Tool Reference Docs'
+                  byte_offset: 18352
+                  byte_count: 250
+                  word_count: 36
+                  content_hash: c64ac272105944403c398a50ec98449c9f925df3c5dfa7aa892b946cc2fd7406
+                - path: 1.5.3.4
+                  level: 4
+                  title: 'R13: Knowledge Graph Staleness Warning'
+                  byte_offset: 18602
+                  byte_count: 213
+                  word_count: 32
+                  content_hash: aa8321411a55d3c629b9705b15a151fce0a1418ba92b3fbd0eeb2f9e4997b700
+            - path: 1.5.4
+              level: 3
+              title: Deferred — Monitor, Don't Act Yet
+              byte_offset: 18815
+              byte_count: 816
+              word_count: 125
+              content_hash: 21851ed87829c2ed72cf872d0ccad73aca9920e2d5b5fca92c7991d8074f06aa
+              children:
+                - path: 1.5.4.1
+                  level: 4
+                  title: 'D1: Retrospective Clustering Quality at Scale'
+                  byte_offset: 18856
+                  byte_count: 247
+                  word_count: 35
+                  content_hash: 3089b9927e167f951242546f5d6288fc9232094ac710d57346f2e0aa2084c52c
+                - path: 1.5.4.2
+                  level: 4
+                  title: 'D2: Test Fixture Fragility with TSID IDs'
+                  byte_offset: 19103
+                  byte_count: 311
+                  word_count: 47
+                  content_hash: ca8d3ac5cc943e4b3838ccd348c0929e1e2fbd1d393f9faf516f25fc7bedf139
+                - path: 1.5.4.3
+                  level: 4
+                  title: 'D3: Tool Count Assertions in Tests'
+                  byte_offset: 19414
+                  byte_count: 217
+                  word_count: 36
+                  content_hash: e66fa935c19c388fa0e8ceeadec7cec6bf2eab221d1558f111bb3d1c9d508a80
+        - path: "1.6"
+          level: 2
+          title: '5. Appendix: Raw Signal Sources'
+          byte_offset: 19631
+          byte_count: 1690
+          word_count: 363
+          content_hash: c6356d5302eefbde8d0168444287a8e2ffdbf8ef3233f337fcb6ea19ef1ed7ae
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Signal Frequency Matrix
+              byte_offset: 20525
+              byte_count: 796
+              word_count: 209
+              content_hash: d98880bda78f65bf33f3df88cab8d4b0ae512ce42749235f5f966e62cbbda426
+entity_refs:
+    - entity_id: FEAT-01KMRJ81DZ3X2
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 9479
+    - entity_id: FEAT-01KMR
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 9502
+    - entity_id: FEAT-01KMRJ81DZ3X2
+      entity_type: feature
+      section_path: 1.4.6
+      byte_offset: 10868
+    - entity_id: FEAT-01KMR
+      entity_type: feature
+      section_path: 1.5.2.1
+      byte_offset: 16143
+    - entity_id: FEAT-01KMRJ81DZ3X2
+      entity_type: feature
+      section_path: 1.5.2.1
+      byte_offset: 16176
+cross_doc_links:
+    - target_path: docs/mcp-tool-reference.md
+      link_text: docs/mcp-tool-reference.md
+      section_path: 1.4.11
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.4
+      role: requirement
+      confidence: high
+classified: false

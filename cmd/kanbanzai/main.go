@@ -536,10 +536,25 @@ func runProfileGet(args []string, deps dependencies) error {
 		if len(p.Packages) > 0 {
 			fmt.Fprintf(deps.stdout, "packages:    %s\n", strings.Join(p.Packages, ", "))
 		}
-		if len(p.Conventions) > 0 {
-			fmt.Fprintf(deps.stdout, "conventions:\n")
-			for _, c := range p.Conventions {
-				fmt.Fprintf(deps.stdout, "  - %s\n", c)
+		switch c := p.Conventions.(type) {
+		case []interface{}:
+			if len(c) > 0 {
+				fmt.Fprintf(deps.stdout, "conventions:\n")
+				for _, item := range c {
+					fmt.Fprintf(deps.stdout, "  - %v\n", item)
+				}
+			}
+		case map[string]interface{}:
+			if len(c) > 0 {
+				fmt.Fprintf(deps.stdout, "conventions:\n")
+				for key, val := range c {
+					fmt.Fprintf(deps.stdout, "  %s:\n", key)
+					if items, ok := val.([]interface{}); ok {
+						for _, item := range items {
+							fmt.Fprintf(deps.stdout, "    - %v\n", item)
+						}
+					}
+				}
 			}
 		}
 		return nil
@@ -554,10 +569,25 @@ func runProfileGet(args []string, deps dependencies) error {
 	if len(resolved.Packages) > 0 {
 		fmt.Fprintf(deps.stdout, "packages:    %s\n", strings.Join(resolved.Packages, ", "))
 	}
-	if len(resolved.Conventions) > 0 {
-		fmt.Fprintf(deps.stdout, "conventions:\n")
-		for _, c := range resolved.Conventions {
-			fmt.Fprintf(deps.stdout, "  - %s\n", c)
+	switch c := resolved.Conventions.(type) {
+	case []interface{}:
+		if len(c) > 0 {
+			fmt.Fprintf(deps.stdout, "conventions:\n")
+			for _, item := range c {
+				fmt.Fprintf(deps.stdout, "  - %v\n", item)
+			}
+		}
+	case map[string]interface{}:
+		if len(c) > 0 {
+			fmt.Fprintf(deps.stdout, "conventions:\n")
+			for key, val := range c {
+				fmt.Fprintf(deps.stdout, "  %s:\n", key)
+				if items, ok := val.([]interface{}); ok {
+					for _, item := range items {
+						fmt.Fprintf(deps.stdout, "    - %v\n", item)
+					}
+				}
+			}
 		}
 	}
 	if resolved.Architecture != nil {

@@ -1,0 +1,21 @@
+id: reviewer
+inherits: base
+description: "Context profile for code review agents. Provides review dimensions, structured output format, and quality gate criteria."
+conventions:
+  review_approach:
+    - "Review is structured, not conversational. Produce findings, not commentary."
+    - "Every finding has a dimension, severity, location, and description."
+    - "Blocking findings must cite the specific requirement or convention violated."
+    - "Non-blocking findings are suggestions, not demands."
+    - "When uncertain whether something is a defect, classify as concern, not fail."
+  output_format:
+    - "Use the structured review output format from the review SKILL."
+    - "Report per-dimension outcomes: pass, pass_with_notes, concern, fail, not_applicable."
+    - "Report overall verdict: approved, approved_with_followups, changes_required, blocked."
+    - "List blocking findings separately from non-blocking notes."
+  dimensions:
+    - "Specification conformance: does the implementation match the approved spec?"
+    - "Implementation quality: is the code correct, idiomatic, and maintainable?"
+    - "Test adequacy: are tests appropriate, sufficient, and well-structured?"
+    - "Documentation currency: is documentation accurate and up to date?"
+    - "Workflow integrity: is the workflow state consistent with the work?"

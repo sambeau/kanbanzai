@@ -55,17 +55,18 @@ const (
 	FeatureStatusSpecifying  FeatureStatus = "specifying"
 	FeatureStatusDevPlanning FeatureStatus = "dev-planning"
 	FeatureStatusDeveloping  FeatureStatus = "developing"
+	FeatureStatusReviewing   FeatureStatus = "reviewing"
+	FeatureStatusNeedsRework FeatureStatus = "needs-rework"
 	FeatureStatusDone        FeatureStatus = "done"
 	FeatureStatusSuperseded  FeatureStatus = "superseded"
 	FeatureStatusCancelled   FeatureStatus = "cancelled"
 
 	// Phase 1 Feature statuses (deprecated, for migration compatibility)
-	FeatureStatusDraft       FeatureStatus = "draft"
-	FeatureStatusInReview    FeatureStatus = "in-review"
-	FeatureStatusApproved    FeatureStatus = "approved"
-	FeatureStatusInProgress  FeatureStatus = "in-progress"
-	FeatureStatusReview      FeatureStatus = "review"
-	FeatureStatusNeedsRework FeatureStatus = "needs-rework"
+	FeatureStatusDraft      FeatureStatus = "draft"
+	FeatureStatusInReview   FeatureStatus = "in-review"
+	FeatureStatusApproved   FeatureStatus = "approved"
+	FeatureStatusInProgress FeatureStatus = "in-progress"
+	FeatureStatusReview     FeatureStatus = "review"
 )
 
 // TaskStatus is the lifecycle state for a Task.

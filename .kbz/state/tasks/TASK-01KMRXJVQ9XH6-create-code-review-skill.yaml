@@ -2,4 +2,14 @@ id: TASK-01KMRXJVQ9XH6
 parent_feature: FEAT-01KMRX1HG8BAX
 slug: create-code-review-skill
 summary: "Create .skills/code-review.md covering: required inputs for a review unit, per-dimension evaluation guidance for all five dimensions, structured output format with all required fields (per-dimension outcome + overall verdict), blocking vs non-blocking classification rules, four edge cases (missing spec, partial implementation, ambiguous conformance, missing context), scope exclusion note, and a verification checklist. Add an entry to .skills/README.md. Covers spec AC-E-07 through AC-E-15."
-status: ready
+status: done
+files_planned:
+  - .skills/code-review.md
+  - .skills/README.md
+completed: "2026-03-28T00:39:00Z"
+claimed_at: "2026-03-28T00:35:41Z"
+dispatched_to: backend
+dispatched_at: "2026-03-28T00:35:41Z"
+dispatched_by: orchestrator
+completion_summary: "Created .skills/code-review.md — the procedural SKILL document for code review sub-agents. The document covers all required sections: preamble with audience table and scope exclusion (no orchestration), inputs (context packet, file list, spec sections, review profile, review unit descriptor), a 4-step procedure (orient → evaluate dimensions → classify findings → write output), per-dimension guidance for all 5 dimensions with pass/fail criteria and specific questions, the full structured output format with all required fields, blocking vs non-blocking classification rules, handling for all 4 edge cases (missing spec, partial implementation, ambiguous conformance, missing context), and a 10-item verification checklist. Cross-references quality-gates-and-review-policy.md as required by AC-E-14. Also added an entry to .skills/README.md (AC-E-15)."
+verification: "Checked all acceptance criteria AC-E-07 through AC-E-15: file exists at .skills/code-review.md (E-07), preamble has audience table and scope exclusion (E-08), all 5 dimensions with guidance (E-09), structured output format with all fields (E-10), explicit blocking/non-blocking rules (E-11), all 4 edge cases (E-12), verification checklist (E-13), cross-reference to quality-gates-and-review-policy.md (E-14), README entry (E-15)."

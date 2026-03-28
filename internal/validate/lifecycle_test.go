@@ -363,7 +363,7 @@ func TestCanTransition(t *testing.T) {
 			kind: EntityFeature,
 			from: "developing",
 			to:   "done",
-			want: true,
+			want: false,
 		},
 		{
 			name: "feature proposed to superseded shortcut",

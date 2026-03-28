@@ -1,0 +1,175 @@
+document_id: PROJECT/report-decompose-feature-workflow-friction
+document_path: work/reports/decompose-feature-workflow-friction.md
+content_hash: 7fe0e1176a9323d342013cdd4c0114091c97bec95d6ef9053e5f4fdea03f9bcf
+indexed_at: 2026-03-27T21:23:33.414052Z
+sections:
+    - path: "1"
+      level: 1
+      title: '`decompose_feature` Workflow Friction: Report for Kanbanzai 2.1 Design'
+      byte_offset: 0
+      byte_count: 10278
+      word_count: 1499
+      content_hash: 7fe0e1176a9323d342013cdd4c0114091c97bec95d6ef9053e5f4fdea03f9bcf
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Summary
+          byte_offset: 621
+          byte_count: 640
+          word_count: 89
+          content_hash: f19fd1ccb8b04bdef8903905254310d7eb2f98c4e5a250d1142d2f922e17922e
+        - path: "1.2"
+          level: 2
+          title: 2. What Happened, Step by Step
+          byte_offset: 1261
+          byte_count: 1454
+          word_count: 195
+          content_hash: f03b89f604ef6830be568d977762469f68b6f1b8416f682c2024c1b9310385c7
+        - path: "1.3"
+          level: 2
+          title: 3. Root Causes
+          byte_offset: 2715
+          byte_count: 2512
+          word_count: 396
+          content_hash: 6bfff368b59feb80aa32bf6d9b12931a6a20e4cde9ed9c7ae7aa5f142650f195
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 The tool assumes one spec per feature
+              byte_offset: 2734
+              byte_count: 349
+              word_count: 52
+              content_hash: 31ed079c6a0cc923de08c8674264fd759ac21a5c52a4db8a8aa1225f7a310973
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Plan-level specs are a legitimate and common pattern
+              byte_offset: 3083
+              byte_count: 872
+              word_count: 139
+              content_hash: fa9b282a5e639b6a725689cdbe8b9d39345579026f040e2912515796d680ea9e
+            - path: 1.3.3
+              level: 3
+              title: 3.3 The `design` field on features is inert
+              byte_offset: 3955
+              byte_count: 366
+              word_count: 63
+              content_hash: ce1c6f637e6b8cb9e2640c2d87928f7536502f6e205496b2db521cd77bd2e1e6
+            - path: 1.3.4
+              level: 3
+              title: 3.4 The stage gate documentation implies Pattern A only
+              byte_offset: 4321
+              byte_count: 512
+              word_count: 77
+              content_hash: 6a1171b069fb5b2d8a055ce3bb761a4baa05c699b4a26faac36cff6b706f5412
+            - path: 1.3.5
+              level: 3
+              title: 3.5 No pre-flight warning
+              byte_offset: 4833
+              byte_count: 394
+              word_count: 61
+              content_hash: 66ec4b773a260cc3b6ed91ac8e4c8bcb56c44d5c70e4c692fe62b830b7295158
+        - path: "1.4"
+          level: 2
+          title: 4. How It Was Handled
+          byte_offset: 5227
+          byte_count: 941
+          word_count: 152
+          content_hash: 03576d8ebc8639e540ade9ace36b0830c384203aaefe7ccbc8eef200bff996ac
+        - path: "1.5"
+          level: 2
+          title: 5. Recommendations for 2.1
+          byte_offset: 6168
+          byte_count: 2658
+          word_count: 394
+          content_hash: 25e8149a5bf928ae841c3a6afb8300d4da136a4c53e049389b1ebd948622a913
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'R1: Extend `decompose_feature` with a spec resolution chain'
+              byte_offset: 6199
+              byte_count: 659
+              word_count: 104
+              content_hash: f264b1c382d0fd7c78e742af87829be2444adecce5701abf9fbff98f20e8027f
+            - path: 1.5.2
+              level: 3
+              title: 'R2: Add an explicit `spec_id` parameter to `decompose_feature`'
+              byte_offset: 6858
+              byte_count: 642
+              word_count: 85
+              content_hash: 091d4e28538227794792c6ecfbc95b3f5c153bcca8347e4ec65ad72178fedc7c
+            - path: 1.5.3
+              level: 3
+              title: 'R3: Surface the spec gap earlier'
+              byte_offset: 7500
+              byte_count: 654
+              word_count: 93
+              content_hash: 0aa52fd0bbd7be48e367f6b44408c8e1dcb3c5df7bf8a3325d4f51c9eb0385ff
+            - path: 1.5.4
+              level: 3
+              title: 'R4: Update the stage gate documentation for Pattern B'
+              byte_offset: 8154
+              byte_count: 672
+              word_count: 107
+              content_hash: f8f630543677f5f61ff8d4a16a1d30c79a23cd421f40232b68226bcc351992b0
+        - path: "1.6"
+          level: 2
+          title: 6. Impact Assessment
+          byte_offset: 8826
+          byte_count: 599
+          word_count: 97
+          content_hash: 3a987324adb1c91b8f150ebf95fdcc4a54f0a2b5d538b288583c931bed0ed01a
+        - path: "1.7"
+          level: 2
+          title: 7. Conclusion
+          byte_offset: 9425
+          byte_count: 853
+          word_count: 132
+          content_hash: 10b8e9a6f5b7c6169360afcc611e588e0b0d89a1ec3c8c2b4710c87b102f498c
+entity_refs:
+    - entity_id: FEAT-01KMRJ7Z2PVR9
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 836
+    - entity_id: FEAT-01KMRJ7Z2PVR9
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 7057
+    - entity_id: P5-workflow-retrospective
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 1040
+    - entity_id: P5-workflow-retrospective
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 1424
+    - entity_id: P5-workflow-retrospective
+      entity_type: plan
+      section_path: 1.5.2
+      byte_offset: 7090
+cross_doc_links:
+    - target_path: work/design/workflow-retrospective.md
+      link_text: work/design/workflow-retrospective.md
+      section_path: "1"
+    - target_path: work/spec/workflow-retrospective.md
+      link_text: work/spec/workflow-retrospective.md
+      section_path: "1"
+    - target_path: work/spec/kanbanzai-2.0-specification.md
+      link_text: work/spec/kanbanzai-2.0-specification.md
+      section_path: "1"
+    - target_path: work/design/entity-structure-and-document-pipeline.md
+      link_text: work/design/entity-structure-and-document-pipeline.md
+      section_path: "1"
+    - target_path: work/spec/workflow-retrospective.md
+      link_text: work/spec/workflow-retrospective.md
+      section_path: "1.2"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.4
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.5.4
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

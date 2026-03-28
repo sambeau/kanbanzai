@@ -2,4 +2,13 @@ id: TASK-01KMRXJX2WBE1
 parent_feature: FEAT-01KMRX1HG8BAX
 slug: update-quality-gates-policy
 summary: Update work/design/quality-gates-and-review-policy.md to cross-reference the code review design (work/design/code-review-workflow.md) and note that review dimensions and profiles are now operationalised through reviewer.yaml and the review SKILL. No normative content changes — cross-references and operationalisation note only. Covers spec AC-E-16 through AC-E-17.
-status: ready
+status: done
+files_planned:
+  - work/design/quality-gates-and-review-policy.md
+completed: "2026-03-28T00:37:30Z"
+claimed_at: "2026-03-28T00:35:41Z"
+dispatched_to: backend
+dispatched_at: "2026-03-28T00:35:41Z"
+dispatched_by: orchestrator
+completion_summary: "Added cross-reference to code-review-workflow.md in the Related section at the top of the document, and added a new §16.1 Operationalisation subsection under Section 16 noting that review dimensions and profiles are now operationalised through reviewer.yaml and the code-review SKILL, with a pointer to code-review-workflow.md for orchestration details. No normative content was changed."
+verification: Confirmed AC-E-16 (document references code-review-workflow.md) and AC-E-17 (document contains operationalisation note pointing to reviewer.yaml and code-review.md) are both satisfied by reading the modified file. No policy content was altered.

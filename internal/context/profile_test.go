@@ -35,8 +35,9 @@ conventions:
 	if p.Description != "Project-wide conventions for all agents" {
 		t.Errorf("Description: got %q", p.Description)
 	}
-	if len(p.Conventions) != 2 {
-		t.Errorf("Conventions: got %d items, want 2", len(p.Conventions))
+	convs, ok := p.Conventions.([]interface{})
+	if !ok || len(convs) != 2 {
+		t.Errorf("Conventions: got %v (type %T), want []interface{} with 2 items", p.Conventions, p.Conventions)
 	}
 	if p.Packages != nil {
 		t.Errorf("Packages: expected nil, got %v", p.Packages)

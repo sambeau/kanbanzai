@@ -1,4 +1,4 @@
-updated_at: 2026-03-27T18:51:17.488889Z
+updated_at: 2026-03-28T00:28:19.747209Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -24473,5 +24473,1510 @@ edges:
     - from: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review#1.7
       from_type: section
       to: docs/mcp-tool-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P5-workflow-retrospective/specification-workflow-retrospective
+      from_type: document
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.3
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.3
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.3
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.5
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.5
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.5
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.5
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.5
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.6
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.6
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.6
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.6
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.7
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.7
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.7
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.7
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.7
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.7.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.8
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.8
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.8
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.8
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.10
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.10.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.10
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.10.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.10
+      from_type: section
+      to: P5-workflow-retrospective/specification-workflow-retrospective#1.10.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.6.2
+      from_type: section
+      to: TASK-01JX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.5.1
+      from_type: section
+      to: DEC-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.5.5
+      from_type: section
+      to: DEC-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.8.3
+      from_type: section
+      to: DEC-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.8.3
+      from_type: section
+      to: DEC-043
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.10.3
+      from_type: section
+      to: DEC-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: P5-workflow-retrospective
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.8.1
+      from_type: section
+      to: P1-basic-ui
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.10.2
+      from_type: section
+      to: P1-basic-ui
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: work/design/workflow-retrospective.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: work/spec/kanbanzai-2.0-specification.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: work/design/kanbanzai-2.0-design-vision.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1
+      from_type: section
+      to: work/design/machine-context-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.4
+      from_type: section
+      to: work/design/workflow-retrospective.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.6.2
+      from_type: section
+      to: work/spec/kanbanzai-2.0-specification.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.7.1
+      from_type: section
+      to: work/spec/kanbanzai-2.0-specification.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P5-workflow-retrospective/specification-workflow-retrospective#1.8.3
+      from_type: section
+      to: work/design/workflow-retrospective.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-decompose-feature-workflow-friction
+      from_type: document
+      to: PROJECT/report-decompose-feature-workflow-friction#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.3
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.3
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.3
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.3
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.3
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.5
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.5
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.5
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.5
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1
+      from_type: section
+      to: PROJECT/report-decompose-feature-workflow-friction#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.1
+      from_type: section
+      to: FEAT-01KMRJ7Z2PVR9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.5.2
+      from_type: section
+      to: FEAT-01KMRJ7Z2PVR9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.1
+      from_type: section
+      to: P5-workflow-retrospective
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.2
+      from_type: section
+      to: P5-workflow-retrospective
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.5.2
+      from_type: section
+      to: P5-workflow-retrospective
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-decompose-feature-workflow-friction#1
+      from_type: section
+      to: work/design/workflow-retrospective.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-decompose-feature-workflow-friction#1
+      from_type: section
+      to: work/spec/workflow-retrospective.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-decompose-feature-workflow-friction#1
+      from_type: section
+      to: work/spec/kanbanzai-2.0-specification.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-decompose-feature-workflow-friction#1
+      from_type: section
+      to: work/design/entity-structure-and-document-pipeline.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.2
+      from_type: section
+      to: work/spec/workflow-retrospective.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.3.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-decompose-feature-workflow-friction#1.5.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective
+      from_type: document
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.3
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.4
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.6
+      from_type: section
+      to: PROJECT/report-kanbanzai-20-workflow-retrospective#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.4
+      from_type: section
+      to: FEAT-01KMRJ81DZ3X2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.4
+      from_type: section
+      to: FEAT-01KMR
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.6
+      from_type: section
+      to: FEAT-01KMRJ81DZ3X2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2.1
+      from_type: section
+      to: FEAT-01KMR
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.5.2.1
+      from_type: section
+      to: FEAT-01KMRJ81DZ3X2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-kanbanzai-20-workflow-retrospective#1.4.11
+      from_type: section
+      to: docs/mcp-tool-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan
+      from_type: document
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.1
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.1
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.1
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.1
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.3
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.3
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.3
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.3
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.4
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1
+      from_type: section
+      to: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.3.1
+      from_type: section
+      to: FEAT-01KMR
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.3.1
+      from_type: section
+      to: FEAT-01KMRJ81DZ3X2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1
+      from_type: section
+      to: P6-workflow-quality-and-review
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1
+      from_type: section
+      to: work/reports/kanbanzai-2.0-workflow-retrospective.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.1
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2.1
+      from_type: section
+      to: code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2.2
+      from_type: section
+      to: code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2.3
+      from_type: section
+      to: code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.3.2.4
+      from_type: section
+      to: code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.5
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan#1.7
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions
+      from_type: document
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.3
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.3
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.3
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.4
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.4
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.4
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.5
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.5
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.5
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.7
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.7
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.8
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.8
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.8
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.8
+      from_type: section
+      to: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1.4.2
+      from_type: section
+      to: FEAT-01KMRJ81DZ3X2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1
+      from_type: section
+      to: P6-workflow-quality-and-review
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1
+      from_type: section
+      to: work/reports/kanbanzai-2.0-workflow-retrospective.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P6-workflow-quality-and-review/design-smart-lifecycle-transitions#1
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states
+      from_type: document
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.3
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.3
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.3
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.4.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1
+      from_type: section
+      to: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.1
+      from_type: section
+      to: P6-workflow-quality-and-review
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states#1.3.3
+      from_type: section
+      to: work/spec/phase-*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates
+      from_type: document
+      to: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.2
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.2
+      from_type: section
+      to: work/bootstrap/bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3.1
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3.1
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3.1
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3.1
+      from_type: section
+      to: work/bootstrap/bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3.1
+      from_type: section
+      to: work/plan/workflow-quality-and-review-plan.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.3.3
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.4
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.4
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.4
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.4
+      from_type: section
+      to: work/bootstrap/bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.4
+      from_type: section
+      to: work/plan/workflow-quality-and-review-plan.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.5
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.5
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.5
+      from_type: section
+      to: work/bootstrap/bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates#1.5
+      from_type: section
+      to: work/plan/workflow-quality-and-review-plan.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill
+      from_type: document
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.3
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.3
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.3
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.1
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.1
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.3.1
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.3.1
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4.1
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4.2
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4.2
+      from_type: section
+      to: .skills/README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4.2
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4.3
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4.3
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4.3
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.4.4
+      from_type: section
+      to: .skills/README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.5
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.5
+      from_type: section
+      to: .skills/README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill#1.5
+      from_type: section
+      to: quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern
+      from_type: document
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.3
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.3
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.3
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.5
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.5
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.5
+      from_type: section
+      to: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern#1
+      from_type: section
+      to: work/design/code-review-workflow.md
       to_type: document
       edge_type: LINKS_TO
