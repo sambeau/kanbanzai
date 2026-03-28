@@ -32,7 +32,7 @@ After Features D, E, and F of the P6 workflow quality plan are implemented, the 
 - `AGENTS.md` — add a reference to the review SKILL (`.skills/code-review.md`), state that code review is a mandatory feature lifecycle gate, and remove any inline review instructions that duplicate the SKILL content.
 - `work/design/quality-gates-and-review-policy.md` — add cross-references to `work/design/code-review-workflow.md` and to `.kbz/context/roles/reviewer.yaml`; add a note that review dimensions and profiles are operationalised through those files.
 - `work/bootstrap/bootstrap-workflow.md` — audit the feature completion path; if it does not mention the `reviewing` state, add it.
-- `work/plan/workflow-quality-and-review-plan.md` — update the status header from Phase 2 pending to Phase 2 active.
+- `work/plan/P6-workflow-quality-and-review-plan.md` — update the status header from Phase 2 pending to Phase 2 active.
 - Document record refresh — after each file is edited, confirm that the content hash in the document record store is current (re-submit or note drift if a record exists).
 
 ### 3.2 Deferred
@@ -77,7 +77,7 @@ Any inline review instructions in `AGENTS.md` that are substantively duplicated 
 `work/bootstrap/bootstrap-workflow.md` is audited. If its feature completion path (the sequence of steps from "implementation done" to "feature closed") does not mention the `reviewing` state, it is updated to include it as a required step before a feature transitions to done. If the `reviewing` state is already present and correctly positioned, no change is made (audit finding is documented in the verification record).
 
 **AC-G-09 — plan status updated**
-`work/plan/workflow-quality-and-review-plan.md` status header (or equivalent status field near the top of the document) reflects that P6 Phase 2 is now active (not pending or planned). The update must be consistent with the status language used elsewhere in the document.
+`work/plan/P6-workflow-quality-and-review-plan.md` status header (or equivalent status field near the top of the document) reflects that P6 Phase 2 is now active (not pending or planned). The update must be consistent with the status language used elsewhere in the document.
 
 **AC-G-10 — document records consistent**
 For each file modified under AC-G-01 through AC-G-09, the kanbanzai document record (if one exists) is refreshed so its stored content hash matches the file on disk. No document record for any of these files reports drift after the changes are complete.
@@ -96,5 +96,5 @@ For each file modified under AC-G-01 through AC-G-09, the kanbanzai document rec
 | AC-G-06 | `grep -n "code-review.md" work/design/quality-gates-and-review-policy.md` returns at least one match. |
 | AC-G-07 | Read the updated policy document; locate the operationalisation note; confirm it directs readers to the YAML and SKILL as canonical execution sources while retaining normative text. |
 | AC-G-08 | Read `work/bootstrap/bootstrap-workflow.md`; locate the feature completion path; confirm `reviewing` appears before the terminal state. If already present, note "no change required" in the commit message or PR description. |
-| AC-G-09 | Read `work/plan/workflow-quality-and-review-plan.md`; confirm the status field near the top reads "active" (or equivalent) for Phase 2. |
+| AC-G-09 | Read `work/plan/P6-workflow-quality-and-review-plan.md`; confirm the status field near the top reads "active" (or equivalent) for Phase 2. |
 | AC-G-10 | Run `doc_record_validate` (or equivalent drift check) for each modified document record; confirm no drift is reported. |

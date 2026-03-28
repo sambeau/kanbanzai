@@ -136,7 +136,7 @@ The document types defined in `work/design/document-centric-interface.md` apply 
 
 - Design documents go in `work/design/`.
 - Spec documents go in `work/spec/`.
-- Planning documents go in `work/plan/`.
+- Planning documents go in `work/plan/`. New plan documents use a `P{N}-` filename prefix matching their plan entity ID (e.g., `P10-review-and-doc-currency-plan.md`). Legacy phase-based documents (P1–P3) retain their original names to avoid confusion between plan entity IDs and phase numbers.
 - Research reports go in `work/research/`.
 - Review reports go in `work/reviews/` — review reports produced by the formal `reviewing` lifecycle gate; one file per reviewed feature or bug.
 - General-purpose reports go in `work/reports/` — retrospectives, friction analyses, audit findings, research outputs, progress reports. Does **not** include review lifecycle artifacts (those go in `work/reviews/`).

@@ -254,7 +254,7 @@ Where `{type}` is one of: `implementation-plan`, `decision-log`, `progress`, `sc
 
 Examples:
 - `P10-review-and-doc-currency-plan.md`
-- `P2-phase-1-kernel-implementation-plan.md`
+- `P4-kanbanzai-2.0-implementation-plan.md`
 - `P6-workflow-quality-and-review-plan.md`
 
 ### 8.4 Scope

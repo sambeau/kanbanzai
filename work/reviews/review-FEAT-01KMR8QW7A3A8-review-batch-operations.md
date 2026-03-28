@@ -6,7 +6,7 @@
 | Review date     | 2026-03-27T18:46:19Z                                            |
 | Feature         | FEAT-01KMR8QW7A3A8 `review-batch-operations`                   |
 | Spec sections   | §9 (Batch Operations), §30.3 (Batch operations acceptance criteria) |
-| Impl plan       | `work/plan/kanbanzai-2.0-implementation-plan.md` §6 (Track C)  |
+| Impl plan       | `work/plan/P4-kanbanzai-2.0-implementation-plan.md` §6 (Track C)  |
 | Status          | **4 blocking findings, 4 non-blocking findings**                |
 
 ---
@@ -372,7 +372,7 @@ correct in its own terms (partial failure, counting) but incompatible with the s
 
 ## Workflow Document Accuracy
 
-`work/plan/kanbanzai-2.0-implementation-plan.md` §6 marks Track C as `✓ COMPLETE` and
+`work/plan/P4-kanbanzai-2.0-implementation-plan.md` §6 marks Track C as `✓ COMPLETE` and
 states "All 8 spec §30.3 acceptance criteria verified by passing tests."
 
 This claim is **not fully accurate**:

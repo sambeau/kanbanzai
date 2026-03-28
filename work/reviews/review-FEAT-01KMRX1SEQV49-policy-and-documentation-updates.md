@@ -23,7 +23,7 @@ Feature G is the final feature of P6 Phase 2. It is a documentation-only feature
 |------|----------|----------|
 | `AGENTS.md` | AC-G-01, G-02, G-03 | Yes |
 | `work/bootstrap/bootstrap-workflow.md` | AC-G-08 | Yes |
-| `work/plan/workflow-quality-and-review-plan.md` | AC-G-09, G-10 | Yes |
+| `work/plan/P6-workflow-quality-and-review-plan.md` | AC-G-09, G-10 | Yes |
 | `work/design/quality-gates-and-review-policy.md` | AC-G-04, G-05, G-06, G-07, G-10 | No (pre-existing content satisfied ACs) |
 
 ---
@@ -88,7 +88,7 @@ None.
 
 ## 5. Summary
 
-Feature G implements all 10 acceptance criteria across three documentation targets. The work is minimal and precise: `AGENTS.md` received a focused Stage 6 expansion and a table entry; `bootstrap-workflow.md` received the same Stage 6 expansion pattern; `workflow-quality-and-review-plan.md` received a single-line status update; `quality-gates-and-review-policy.md` required no changes as §16.1 (added during Feature F) already satisfied AC-G-04 through AC-G-07.
+Feature G implements all 10 acceptance criteria across three documentation targets. The work is minimal and precise: `AGENTS.md` received a focused Stage 6 expansion and a table entry; `bootstrap-workflow.md` received the same Stage 6 expansion pattern; `P6-workflow-quality-and-review-plan.md` received a single-line status update; `quality-gates-and-review-policy.md` required no changes as §16.1 (added during Feature F) already satisfied AC-G-04 through AC-G-07.
 
 Document record drift was detected and corrected for both registered documents. Workflow lifecycle was followed correctly throughout.
 
