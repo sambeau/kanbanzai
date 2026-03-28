@@ -2,7 +2,7 @@
 
 | Document | MCP Discoverability and Reliability Specification |
 |----------|---------------------------------------------------|
-| Status   | Draft                                             |
+| Status   | Approved                                          |
 | Created  | 2026-03-28                                        |
 | Plan     | P9-mcp-discoverability                            |
 | Design   | work/design/mcp-discoverability-and-reliability.md |

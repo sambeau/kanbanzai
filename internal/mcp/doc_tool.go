@@ -12,6 +12,8 @@
 //	doc(action: "gaps", feature_id: "FEAT-01JA...")
 //	doc(action: "validate", id: "DOC-01JX...")
 //	doc(action: "supersede", id: "DOC-01JX...", superseded_by: "DOC-02JX...")
+//	doc(action: "refresh", id: "DOC-01JX...")
+//	doc(action: "chain", id: "DOC-01JX...")
 //	doc(action: "import", path: "work/")
 //
 // approve and supersede push SideEffectStatusTransition side effects when
@@ -63,7 +65,7 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 			mcp.Description("Action: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import"),
 		),
 		// Common identifier fields.
-		mcp.WithString("id", mcp.Description("Document record ID (approve, get, content, validate, supersede)")),
+		mcp.WithString("id", mcp.Description("Document record ID (approve, get, content, validate, supersede, refresh, chain)")),
 		mcp.WithArray("ids", mcp.Description("Batch approve: array of document record IDs")),
 		// register fields.
 		mcp.WithString("path", mcp.Description("Document file path (register: required; get: alternative to id; import: directory to scan)")),
