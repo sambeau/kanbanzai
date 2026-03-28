@@ -1,7 +1,7 @@
 id: FEAT-01KMRX1SEQV49
 slug: policy-and-documentation-updates
 parent: P6-workflow-quality-and-review
-status: specifying
+status: done
 summary: "Update AGENTS.md, quality gates policy, and any other documentation to reflect the new code review workflow. Document the new lifecycle states, reviewer profile, and orchestration pattern. Design ref: code-review-workflow.md §14.4, §14.5."
 design: PROJECT/design-code-review-workflow
 spec: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates

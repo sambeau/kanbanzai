@@ -1,4 +1,4 @@
-updated_at: 2026-03-28T02:01:38.554426Z
+updated_at: 2026-03-28T02:18:14.206037Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -26603,5 +26603,145 @@ edges:
     - from: FEAT-01KMRX1QPN3CB/report-review-feat-01kmrx1qpn3cb#1.6
       from_type: section
       to: work/reports/review-FEAT-01KMRX1F47Z94.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49
+      from_type: document
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.2
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.2
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.2
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.2
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.2
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.4
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.4
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1
+      from_type: section
+      to: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1
+      from_type: section
+      to: FEAT-01KMRX1SEQV49
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1
+      from_type: section
+      to: P6-workflow-quality-and-review
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.3
+      from_type: section
+      to: P6-workflow-quality-and-review
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1
+      from_type: section
+      to: work/spec/policy-and-documentation-updates.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.1
+      from_type: section
+      to: work/bootstrap/bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.1
+      from_type: section
+      to: work/plan/workflow-quality-and-review-plan.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.1
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.2.4
+      from_type: section
+      to: bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.3
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.3
+      from_type: section
+      to: code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.5
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.5
+      from_type: section
+      to: bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.5
+      from_type: section
+      to: workflow-quality-and-review-plan.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49#1.5
+      from_type: section
+      to: quality-gates-and-review-policy.md
       to_type: document
       edge_type: LINKS_TO

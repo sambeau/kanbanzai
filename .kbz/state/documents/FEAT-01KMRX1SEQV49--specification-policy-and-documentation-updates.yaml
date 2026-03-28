@@ -2,9 +2,11 @@ id: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates
 path: work/spec/policy-and-documentation-updates.md
 type: specification
 title: Policy and Documentation Updates Specification
-status: draft
+status: approved
 owner: FEAT-01KMRX1SEQV49
+approved_by: sambeau
+approved_at: "2026-03-28T02:16:25Z"
 content_hash: 5961187aa76b504f8eddf00c4009b04417aab6ae83a8d35cf529e9eb1c1efe8c
 created: "2026-03-28T00:28:15Z"
 created_by: sambeau
-updated: "2026-03-28T00:28:15Z"
+updated: "2026-03-28T02:16:25Z"

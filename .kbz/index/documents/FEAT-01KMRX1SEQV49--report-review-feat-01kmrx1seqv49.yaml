@@ -1,0 +1,160 @@
+document_id: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49
+document_path: work/reports/review-FEAT-01KMRX1SEQV49.md
+content_hash: ae3d33b84abd4568e3bc9ad63d232a78fa6eb32d571eb80e5e921451351b24a4
+indexed_at: 2026-03-28T02:18:14.206037Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: FEAT-01KMRX1SEQV49 (policy-and-documentation-updates)'
+      byte_offset: 0
+      byte_count: 6434
+      word_count: 881
+      content_hash: ae3d33b84abd4568e3bc9ad63d232a78fa6eb32d571eb80e5e921451351b24a4
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Scope and Context
+          byte_offset: 437
+          byte_count: 753
+          word_count: 109
+          content_hash: 40a7af4ed9a6bdd785a43ba424847e285305f7f4ea83a9e4dc235309f5be4534
+        - path: "1.2"
+          level: 2
+          title: 2. Dimension Assessments
+          byte_offset: 1190
+          byte_count: 983
+          word_count: 129
+          content_hash: c46bf7afef7698d8e1b50486bd0786fa3c263f63c1c52ab8fb3b11303a0fe272
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Dimension 1: Specification Conformance — PASS'
+              byte_offset: 1219
+              byte_count: 107
+              word_count: 14
+              content_hash: e611fad2565b19416b923215a996ebd2f8949f90d3df35bb610d139621b9e11f
+            - path: 1.2.2
+              level: 3
+              title: 'Dimension 2: Implementation Quality — N/A'
+              byte_offset: 1326
+              byte_count: 111
+              word_count: 14
+              content_hash: e67218029e3bfc4bb66556d5d121573c21b62893ebf3cffe852f5a9233ca277b
+            - path: 1.2.3
+              level: 3
+              title: 'Dimension 3: Test Adequacy — N/A'
+              byte_offset: 1437
+              byte_count: 102
+              word_count: 14
+              content_hash: 82fce607ab603363c669125a23ef1585aa2160d8fab99ff4781bb95e72601eb6
+            - path: 1.2.4
+              level: 3
+              title: 'Dimension 4: Documentation Currency — PASS (with one non-blocking note)'
+              byte_offset: 1539
+              byte_count: 321
+              word_count: 43
+              content_hash: c90a6f167d06546c1e70551af013cfbe1c6e190cbd92e907457df5fb69aa5a9d
+            - path: 1.2.5
+              level: 3
+              title: 'Dimension 5: Workflow Integrity — PASS'
+              byte_offset: 1860
+              byte_count: 313
+              word_count: 40
+              content_hash: 0ff2ab4c9866635d9ca86e431a971f2c30307f2949412a5920ca413ea5d92c42
+        - path: "1.3"
+          level: 2
+          title: 3. Acceptance Criteria Verification
+          byte_offset: 2173
+          byte_count: 2379
+          word_count: 332
+          content_hash: f636a1199420e84f7cc8c4cce24bef15b356ff47b071b20efd31dba7e6d02ff4
+        - path: "1.4"
+          level: 2
+          title: 4. Findings
+          byte_offset: 4552
+          byte_count: 1190
+          word_count: 167
+          content_hash: a7039aa9020c8acb01f3b3cc96d71eebc0766d32599882b119dca75aaa37cd33
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Blocking Findings
+              byte_offset: 4568
+              byte_count: 34
+              word_count: 5
+              content_hash: f9eca40e9ac581d0e14423b6fec4cc7d7ee0333a5fca76f600c95af384c195a4
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Non-Blocking Findings
+              byte_offset: 4602
+              byte_count: 1140
+              word_count: 159
+              content_hash: 11b83c8155b32ed814cef69163145f02976affbe8e6cb1ad6ad8777e26c00fcd
+        - path: "1.5"
+          level: 2
+          title: 5. Summary
+          byte_offset: 5742
+          byte_count: 692
+          word_count: 88
+          content_hash: 486a1f53756eb0af9f3bf601b34a5ce47a9e796e04de5a9bcf499723c398be42
+entity_refs:
+    - entity_id: FEAT-01KMRX1SEQV49
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 17
+    - entity_id: P6-workflow-quality-and-review
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 199
+    - entity_id: P6-workflow-quality-and-review
+      entity_type: plan
+      section_path: "1.3"
+      byte_offset: 4230
+cross_doc_links:
+    - target_path: work/spec/policy-and-documentation-updates.md
+      link_text: work/spec/policy-and-documentation-updates.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: "1.1"
+    - target_path: work/plan/workflow-quality-and-review-plan.md
+      link_text: work/plan/workflow-quality-and-review-plan.md
+      section_path: "1.1"
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: "1.1"
+    - target_path: bootstrap-workflow.md
+      link_text: bootstrap-workflow.md
+      section_path: 1.2.4
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.3"
+    - target_path: code-review.md
+      link_text: code-review.md
+      section_path: "1.3"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+    - target_path: bootstrap-workflow.md
+      link_text: bootstrap-workflow.md
+      section_path: "1.5"
+    - target_path: workflow-quality-and-review-plan.md
+      link_text: workflow-quality-and-review-plan.md
+      section_path: "1.5"
+    - target_path: quality-gates-and-review-policy.md
+      link_text: quality-gates-and-review-policy.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+classified: false
