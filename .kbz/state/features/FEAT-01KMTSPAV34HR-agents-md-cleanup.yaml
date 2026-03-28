@@ -1,0 +1,9 @@
+id: FEAT-01KMTSPAV34HR
+slug: agents-md-cleanup
+parent: P3-kanbanzai-1.0
+status: specifying
+summary: "Separate project-specific content from product-facing content in AGENTS.md. Remove ~140 lines of workflow instructions that duplicate the kanbanzai skills (stage gates, document creation, git commit format, emergency brake). Move two uncovered product principles (communicating with humans, documentation accuracy) into the appropriate skills. Replace the outdated Two Workflows terminology. Result: AGENTS.md contains only kanbanzai project development instructions; all product workflow guidance lives in skills and MCP tool descriptions."
+design: PROJECT/design-kanbanzai-10
+spec: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup
+created: "2026-03-28T18:00:54Z"
+created_by: sambeau

@@ -1,4 +1,4 @@
-updated_at: 2026-03-28T16:30:54.603221Z
+updated_at: 2026-03-28T18:02:59.288395Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -30498,5 +30498,470 @@ edges:
     - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.7
       from_type: section
       to: .skills/plan-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-release-readiness-assessment
+      from_type: document
+      to: PROJECT/research-release-readiness-assessment#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1.3
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1.3
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1.3
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1.3
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1.4
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1.5
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1.5
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1.8
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1.8
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1.8
+      from_type: section
+      to: PROJECT/research-release-readiness-assessment#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-release-readiness-assessment#1.4
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/research-release-readiness-assessment#1.4.1
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/research-release-readiness-assessment#1.7
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/research-release-readiness-assessment#1
+      from_type: section
+      to: work/spec/init-command.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-release-readiness-assessment#1
+      from_type: section
+      to: work/design/init-command.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-release-readiness-assessment#1
+      from_type: section
+      to: work/design/kanbanzai-1.0.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-release-readiness-assessment#1.4.1
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-release-readiness-assessment#1.8.2
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-release-readiness-assessment#1.8.2
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-release-readiness-assessment#1.8.2
+      from_type: section
+      to: references/lifecycle.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-release-readiness-assessment#1.8.2
+      from_type: section
+      to: .agents/skills/kanbanzai-planning/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-release-readiness-assessment#1.8.2
+      from_type: section
+      to: .agents/skills/kanbanzai-design/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-release-readiness-assessment#1.8.2
+      from_type: section
+      to: references/design-quality.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-release-readiness-assessment#1.8.2
+      from_type: section
+      to: .agents/skills/kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-release-readiness-assessment#1.8.2
+      from_type: section
+      to: .agents/skills/kanbanzai-agents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure
+      from_type: document
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.2
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.2
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.3
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.3
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.3
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.3
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1
+      from_type: section
+      to: FEAT-01KMTSPEE6BXS
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1
+      from_type: section
+      to: P3-kanbanzai-1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1
+      from_type: section
+      to: work/design/kanbanzai-1.0.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.2.1
+      from_type: section
+      to: README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.2.1
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.3.3
+      from_type: section
+      to: README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.3.3
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPEE6BXS/specification-release-infrastructure#1.4
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup
+      from_type: document
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.2
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.2
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1
+      from_type: section
+      to: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1
+      from_type: section
+      to: FEAT-01KMTSPAV34HR
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1
+      from_type: section
+      to: P3-kanbanzai-1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1
+      from_type: section
+      to: work/design/kanbanzai-1.0.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.1
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.1
+      from_type: section
+      to: work/design/kanbanzai-1.0.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.2.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.2.1
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.2.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.2.2
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.1
+      from_type: section
+      to: .skills/document-creation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.3
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.3
+      from_type: section
+      to: work/bootstrap/bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.5
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.5
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.6
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.3.6
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.5
+      from_type: section
+      to: work/design/kanbanzai-1.0.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup#1.5
+      from_type: section
+      to: AGENTS.md
       to_type: document
       edge_type: LINKS_TO
