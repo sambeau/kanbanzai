@@ -436,7 +436,7 @@ These concern how agents experience the tools — what's helpful vs. noisy, what
 
 These affect the overall system behaviour, the human experience of using Kanbanzai, or set precedents for how the server communicates with agents. They need a human designer's judgement.
 
-5. **How aggressive should nudges be?** The design proposes nudges as a `nudge` string field — informational, not blocking. An alternative is to make `finish` on the last task in a feature return `isError: true` if no retro signals exist, forcing the agent to acknowledge the gap. This is more reliable but more intrusive. *This sets a precedent for how the Kanbanzai server communicates dissatisfaction with agent behaviour — soft guidance vs. hard enforcement. That's a product design choice about the system's personality and the human's tolerance for false positives.*
+5. **How aggressive should nudges be?** ✅ **Decided: informational, not blocking.** Nudges are a `nudge` string field in the response JSON — they do not set `isError: true`, do not block the operation, and do not change the return schema. If soft nudges prove ineffective after a full implementation cycle, we can escalate to harder enforcement in a future design iteration. The rationale is: start with the least intrusive mechanism, measure whether it changes agent behaviour, and only add friction if the data shows it's needed.
 
 ---
 
