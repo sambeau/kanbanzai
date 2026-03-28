@@ -16,39 +16,38 @@ and completing tasks, writing commits, contributing knowledge, and spawning sub-
 
 ## Context Assembly
 
-Before starting work on any task, call `context_assemble`:
+Before starting work on any task, call `next` with the task ID to claim it and receive a
+context packet:
 
-    context_assemble(role="<role>", task_id="<task_id>")
+    next(id="TASK-...")
 
 The returned packet is byte-budgeted and prioritised — it contains the task instructions,
 relevant knowledge entries, and design context trimmed to fit the budget. Read it before
-doing anything else.
+doing anything else. Claiming the task transitions it from `ready` to `active`.
 
-After completing the task, call `context_report` to record which knowledge entries were
-used or found incorrect. This drives auto-confirmation and auto-retirement:
+After completing the task, use `knowledge` to record which entries were useful or
+incorrect. This drives auto-confirmation and auto-retirement:
 
-    context_report(
-      task_id="<task_id>",
-      used=["KE-..."],
-      flagged=[{"entry_id": "KE-...", "reason": "..."}]
-    )
+    knowledge(action="confirm", id="KE-...")
+    knowledge(action="flag", id="KE-...", reason="...")
 
 ## Task Dispatch and Completion
 
-1. Call `work_queue` to see ready tasks.
-2. Call `dispatch_task` to atomically claim a task (transitions it from `ready` to `active`):
+1. Call `next` (without an ID) to see ready tasks.
+2. Call `next` with a task ID to claim it — transitions it from `ready` to `active` and
+   returns the assembled context packet:
 
-       dispatch_task(task_id="TASK-...", role="<role>", dispatched_by="agent/<name>")
+       next(id="TASK-...")
 
 3. Do the work.
-4. Call `complete_task` when done:
+4. Call `finish` when done:
 
-       complete_task(
+       finish(
          task_id="TASK-...",
          summary="What was done",
          files_modified=["path/to/file.go"],
-         verification_performed="What was tested or verified",
-         knowledge_entries=[...]
+         verification="What was tested or verified",
+         knowledge=[...]
        )
 
 ## Commit Message Format
@@ -77,7 +76,8 @@ Examples:
 
 When you discover something reusable, contribute it:
 
-    knowledge_contribute(
+    knowledge(
+      action="contribute",
       topic="short-topic-slug",
       content="Concise, actionable statement",
       scope="<role or project>",
@@ -85,8 +85,7 @@ When you discover something reusable, contribute it:
     )
 
 Tier 3 is session-level (30-day TTL). The system auto-promotes entries to tier 2 based on
-usage across sessions. You can also contribute via the `knowledge_entries` argument in
-`complete_task`.
+usage across sessions. You can also contribute via the `knowledge` argument in `finish`.
 
 ## Sub-Agent Spawning
 
@@ -98,21 +97,22 @@ When spawning sub-agents, include in every delegation message:
 4. **Context propagation instruction** — if the sub-agent may itself spawn agents, tell
    it to include the same context in its delegations
 
-`context_assemble` is the primary skill delivery mechanism for MCP-connected sub-agents.
+`next` and `handoff` are the primary skill delivery mechanisms for MCP-connected
+sub-agents. Use `handoff` with a task ID to generate a structured sub-agent prompt.
 Prefer it over manually reciting conventions.
 
 ---
 
 ## Gotchas
 
-**`dispatch_task` fails:** Another agent already claimed the task. Call `work_queue` again
-to get an updated list of ready tasks.
+**`next` fails when claiming a task:** Another agent already claimed the task. Call `next`
+again (without an ID) to get an updated list of ready tasks.
 
 **Tool call failures:** Read the error message before retrying. Most failures are
 deterministic — retrying with the same arguments will produce the same error.
 
-**Missing verification summary:** `complete_task` will succeed without `verification_performed`,
-but it degrades review quality and reduces the value of the knowledge base. Always include it.
+**Missing verification summary:** `finish` will succeed without `verification`, but it
+degrades review quality and reduces the value of the knowledge base. Always include it.
 
 ---
 

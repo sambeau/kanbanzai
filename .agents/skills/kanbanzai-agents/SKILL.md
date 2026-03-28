@@ -257,12 +257,13 @@ Observations that arise during planning, design review, or general usage
 can be contributed directly:
 
 ```
-knowledge_contribute(
-  topic: "retro-planning-session-2026-03-27",
-  content: "[moderate] workflow-friction: Observation here. Suggestion: ...",
-  scope: "project",
-  tier: 3,
-  tags: ["retrospective", "workflow-friction"]
+knowledge(
+  action="contribute",
+  topic="retro-planning-session-2026-03-27",
+  content="[moderate] workflow-friction: Observation here. Suggestion: ...",
+  scope="project",
+  tier=3,
+  tags=["retrospective", "workflow-friction"]
 )
 ```
 
