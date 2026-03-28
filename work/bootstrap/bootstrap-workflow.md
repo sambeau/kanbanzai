@@ -214,7 +214,7 @@ When formal IDs exist (post-tool), switch to them.
 
 The proper workflow progression is:
 
-**planning → design → features → spec → dev-plan → tasks**
+**planning → design → features → spec → dev-plan → tasks → developing → reviewing → done**
 
 You must not skip stages. Each stage has a human approval gate.
 
@@ -289,13 +289,15 @@ You must not skip stages. Each stage has a human approval gate.
 - Create Task entities after human reviews proposal
 - Record decisions in decision log
 
-### Stage 6: Implementation (Agent-Driven)
+### Stage 6: Implementation and Review (Agent-Driven)
 
-**What happens:** Execute tasks, verify, review, merge.
+**What happens:** Execute tasks through the `developing` state. When implementation is complete, the feature transitions to `reviewing` for a mandatory code review pass before it can transition to `done`.
 
-**Gate:** Tasks must exist before implementation begins.
+**Gates:**
+- Tasks must exist before implementation begins.
+- **Code review is a mandatory feature lifecycle gate.** A feature must pass through the `reviewing` state before it can transition to `done`. There is no shortcut from `developing` directly to `done`.
 
-**Agent role:** Execute as designed, within the constraints defined in earlier stages.
+**Agent role:** Execute tasks as designed. When implementation is complete, follow the review orchestration procedure in `.skills/code-review.md` — the canonical source for review expectations, per-dimension guidance, finding classification rules, and the full orchestration procedure.
 
 ### Emergency Brake
 
