@@ -4,6 +4,7 @@ parent: P3-kanbanzai-1.0
 status: done
 summary: "Author the six kanbanzai skill files installed by kanbanzai init: getting-started, workflow, planning, design, documents, and agents. All six skills are written and reviewed. Design approved. Awaiting specification."
 design: FEAT-01KMKRQSD1TKK/design-skills-content
+spec: FEAT-01KMKRQSD1TKK/specification-skills-content
 dev_plan: FEAT-01KMKRQSD1TKK/dev-plan-skills-content
 created: "2026-03-26T00:29:32Z"
 created_by: sambeau
