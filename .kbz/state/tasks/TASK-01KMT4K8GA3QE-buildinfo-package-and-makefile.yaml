@@ -1,0 +1,5 @@
+id: TASK-01KMT4K8GA3QE
+parent_feature: FEAT-01KMT40GZSMHB
+slug: buildinfo-package-and-makefile
+summary: "Add internal/buildinfo package with Version, GitSHA, BuildTime, Dirty vars (defaults: dev/unknown/unknown/false). Add Makefile with build and install targets that inject all four vars via -ldflags. Wire buildinfo import into cmd/kanbanzai/main.go. Tests: confirm default var values. Covers AC-01 to AC-07, AC-32, AC-34."
+status: queued

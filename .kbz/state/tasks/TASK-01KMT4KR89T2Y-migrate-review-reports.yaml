@@ -1,0 +1,5 @@
+id: TASK-01KMT4KR89T2Y
+parent_feature: FEAT-01KMT40P0AGS7
+slug: migrate-review-reports
+summary: "Rename and move 6 review report files: 5 from work/reports/ to work/reviews/ with slug suffix added, plus rename work/reviews/track-c-batch-operations-review.md to review-FEAT-01KMR8QW7A3A8-review-batch-operations.md. For each migrated file: update path and content_hash in the corresponding .kbz/state/documents/ record. Verify old paths no longer exist. Covers AC-05 to AC-07."
+status: queued
