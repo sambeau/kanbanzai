@@ -2,8 +2,15 @@ id: TASK-01KMTT47PA5P5
 parent_feature: FEAT-01KMTSPEE6BXS
 slug: module-path-change
 summary: "Change Go module path from kanbanzai to github.com/sambeau/kanbanzai. Update go.mod and every .go file import from kanbanzai/internal/... to github.com/sambeau/kanbanzai/internal/.... Run go mod tidy. Verify go build ./... and go test ./... pass. Verify go install ./cmd/kanbanzai succeeds. This must be an atomic single commit. Covers AC-1, AC-2, AC-3, AC-4, AC-5."
-status: active
+status: done
+files_planned:
+  - go.mod
+  - _testexternal/go.mod
+  - 153 .go files with import path updates
+completed: "2026-03-28T18:21:32Z"
 claimed_at: "2026-03-28T18:20:35Z"
 dispatched_to: unspecified
 dispatched_at: "2026-03-28T18:20:35Z"
 dispatched_by: sambeau
+completion_summary: "Changed Go module path from bare 'kanbanzai' to 'github.com/sambeau/kanbanzai'. Updated go.mod, all .go file imports (825 occurrences across 153 files), and _testexternal/go.mod. All builds pass, all tests pass, go install succeeds."
+verification: "AC-1: go.mod declares 'module github.com/sambeau/kanbanzai' ✓ | AC-2: grep returns 0 old imports ✓ | AC-3: go build ./... passes ✓ | AC-4: go test ./... passes (26 suites) ✓ | AC-5: go install ./cmd/kanbanzai succeeds ✓"
