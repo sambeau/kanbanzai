@@ -1221,3 +1221,39 @@ func TestPlanLifecycle_ActiveToDoneErrorMessage(t *testing.T) {
 		t.Errorf("error message %q does not contain \"reviewing\" in valid transitions list", msg)
 	}
 }
+
+// TestPlanLifecycle_ActiveCannotSkipReviewing verifies that plans cannot skip
+// the reviewing state when transitioning from active to done.
+func TestPlanLifecycle_ActiveCannotSkipReviewing(t *testing.T) {
+	t.Parallel()
+
+	// active → done should fail
+	if CanTransition(EntityPlan, "active", "done") {
+		t.Error("CanTransition(plan, active, done) = true; want false")
+	}
+
+	err := ValidateTransition(EntityPlan, "active", "done")
+	if err == nil {
+		t.Error("ValidateTransition(plan, active, done) = nil; want error")
+	}
+
+	// active → reviewing should succeed
+	if !CanTransition(EntityPlan, "active", "reviewing") {
+		t.Error("CanTransition(plan, active, reviewing) = false; want true")
+	}
+}
+
+// TestPlanLifecycle_FullLifecyclePath verifies the happy path through the
+// complete plan lifecycle: proposed → designing → active → reviewing → done.
+func TestPlanLifecycle_FullLifecyclePath(t *testing.T) {
+	t.Parallel()
+
+	path := []string{"proposed", "designing", "active", "reviewing", "done"}
+
+	for i := 0; i < len(path)-1; i++ {
+		from, to := path[i], path[i+1]
+		if err := ValidateTransition(EntityPlan, from, to); err != nil {
+			t.Errorf("ValidateTransition(plan, %q, %q) = %v; want nil", from, to, err)
+		}
+	}
+}

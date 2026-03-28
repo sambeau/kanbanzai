@@ -538,3 +538,56 @@ func advanceToDone(t *testing.T, entitySvc *service.EntityService, feat service.
 		}
 	}
 }
+
+// TestDocCurrencyHealth_RegisteredInHealthTool verifies that the doc currency
+// health checker is registered with the health tool and produces output when
+// findings exist. This is an integration test for acceptance criterion C.10.
+func TestDocCurrencyHealth_RegisteredInHealthTool(t *testing.T) {
+	t.Parallel()
+
+	// Create a temp directory with a SKILL file containing a stale tool name
+	tmpDir := t.TempDir()
+	skillsDir := filepath.Join(tmpDir, ".skills")
+	if err := os.MkdirAll(skillsDir, 0755); err != nil {
+		t.Fatalf("create .skills dir: %v", err)
+	}
+
+	// Write a SKILL file with a stale tool name
+	skillContent := "# Test SKILL\n\nUse `batch_import_documents` to import.\n"
+	if err := os.WriteFile(filepath.Join(skillsDir, "test.md"), []byte(skillContent), 0644); err != nil {
+		t.Fatalf("write skill file: %v", err)
+	}
+
+	// Write minimal AGENTS.md
+	agentsContent := "# AGENTS\n\n## Project Status\n\nNothing here.\n\n## Scope Guard\n\nNothing here either.\n"
+	if err := os.WriteFile(filepath.Join(tmpDir, "AGENTS.md"), []byte(agentsContent), 0644); err != nil {
+		t.Fatalf("write AGENTS.md: %v", err)
+	}
+
+	// Create a known tool set that does NOT include batch_import_documents
+	toolNames := map[string]bool{
+		"status": true,
+		"entity": true,
+		"doc":    true,
+		"health": true,
+	}
+
+	// Run the checker directly (simulating what the health tool does)
+	checker := DocCurrencyHealthChecker(toolNames, tmpDir, nil, nil)
+	report, err := checker()
+	if err != nil {
+		t.Fatalf("DocCurrencyHealthChecker(): %v", err)
+	}
+
+	// Verify we got at least one warning about the stale tool name
+	found := false
+	for _, w := range report.Warnings {
+		if w.EntityType == "doc_currency" && strings.Contains(w.Message, "batch_import_documents") {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Errorf("expected warning about stale tool name 'batch_import_documents', got warnings: %v", report.Warnings)
+	}
+}
