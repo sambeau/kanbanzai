@@ -1,4 +1,4 @@
-updated_at: 2026-03-28T16:12:02.010254Z
+updated_at: 2026-03-28T16:30:54.603221Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -30388,5 +30388,115 @@ edges:
     - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.7.1
       from_type: section
       to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency
+      from_type: document
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1
+      from_type: section
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1
+      from_type: section
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1
+      from_type: section
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3
+      from_type: section
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3
+      from_type: section
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3
+      from_type: section
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3
+      from_type: section
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1
+      from_type: section
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1
+      from_type: section
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1
+      from_type: section
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1
+      from_type: section
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1
+      from_type: section
+      to: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.2
+      from_type: section
+      to: FEAT-01KMT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1
+      from_type: section
+      to: P10-review-and-doc-currency
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.7
+      from_type: section
+      to: P10-review-and-doc-currency
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3.1
+      from_type: section
+      to: .skills/plan-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3.3
+      from_type: section
+      to: .skills/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3.3
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.3.4
+      from_type: section
+      to: bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.4
+      from_type: section
+      to: .skills/plan-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency#1.7
+      from_type: section
+      to: .skills/plan-review.md
       to_type: document
       edge_type: LINKS_TO
