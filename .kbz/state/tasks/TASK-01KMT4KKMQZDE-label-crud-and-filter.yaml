@@ -2,6 +2,11 @@ id: TASK-01KMT4KKMQZDE
 parent_feature: FEAT-01KMT40KKZZR5
 slug: label-crud-and-filter
 summary: "Accept label parameter in entity create (feature, task) and entity update. entity update with empty string clears label (field omitted from YAML). entity get returns label when set, omits when absent. entity list accepts label filter returning only exact matches. Covers AC-22 to AC-27."
-status: queued
+status: done
 depends_on:
   - TASK-01KMT4KKKSA9V
+files_planned:
+  - internal/mcp/entity_tool.go
+  - internal/service/queries.go
+completed: "2026-03-28T13:07:36Z"
+completion_summary: "Added label parameter to entity create/update, label filter in entity list, label cleared with empty string"

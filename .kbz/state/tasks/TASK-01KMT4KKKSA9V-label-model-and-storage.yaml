@@ -2,4 +2,12 @@ id: TASK-01KMT4KKKSA9V
 parent_feature: FEAT-01KMT40KKZZR5
 slug: label-model-and-storage
 summary: "Add optional Label string field to Feature and Task model structs. Update storage serialisation: label placed after slug, before status in canonical field order; omit from YAML output when empty. Validate max 24 chars. Round-trip tests: with label, without label (no spurious label: key). Covers AC-01 to AC-08, AC-31."
-status: queued
+status: done
+files_planned:
+  - internal/model/entities.go
+  - internal/storage/entity_store.go
+  - internal/storage/entity_store_test.go
+  - internal/validate/entity.go
+  - internal/validate/entity_test.go
+completed: "2026-03-28T12:52:36Z"
+completion_summary: "Added optional Label field (max 24 chars) to Feature and Task model structs, updated canonical YAML field order (label after slug, before status), omit from YAML when empty, added validation and round-trip tests"
