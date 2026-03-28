@@ -3,6 +3,7 @@ package knowledge
 import (
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestDetectRelationship_ExactDuplicate(t *testing.T) {
@@ -234,7 +235,7 @@ func TestMergeEntries_KeepsHigherConfidence(t *testing.T) {
 		"use_count":  5,
 	}
 
-	kept, discarded := MergeEntries(a, b)
+	kept, discarded := MergeEntries(a, b, time.Now())
 
 	// Entry with higher confidence (a) should be kept
 	keptID := getEntryIDFromFields(kept)
@@ -266,7 +267,7 @@ func TestMergeEntries_EqualConfidence_KeepsHigherUseCount(t *testing.T) {
 		"use_count":  5,
 	}
 
-	kept, discarded := MergeEntries(a, b)
+	kept, discarded := MergeEntries(a, b, time.Now())
 
 	// Entry with higher use_count (b) should be kept
 	keptID := getEntryIDFromFields(kept)
@@ -298,7 +299,7 @@ func TestMergeEntries_TransfersUseCounts(t *testing.T) {
 		"miss_count": 2,
 	}
 
-	kept, _ := MergeEntries(a, b)
+	kept, _ := MergeEntries(a, b, time.Now())
 
 	expectedUseCount := 3 + 5
 	if GetUseCount(kept) != expectedUseCount {
@@ -325,7 +326,7 @@ func TestMergeEntries_MergesGitAnchors(t *testing.T) {
 		"git_anchors": []string{"internal/api/errors.go", "internal/api/types.go"},
 	}
 
-	kept, _ := MergeEntries(a, b)
+	kept, _ := MergeEntries(a, b, time.Now())
 
 	anchors := GetGitAnchors(kept)
 	expectedAnchors := []string{"internal/api/errors.go", "internal/api/handler.go", "internal/api/types.go"}
@@ -353,7 +354,7 @@ func TestMergeEntries_SetsMergedFrom(t *testing.T) {
 		"confidence": 0.7,
 	}
 
-	kept, _ := MergeEntries(a, b)
+	kept, _ := MergeEntries(a, b, time.Now())
 
 	mergedFrom, ok := kept["merged_from"].(string)
 	if !ok || mergedFrom != "KE-002" {
@@ -373,7 +374,7 @@ func TestMergeEntries_RetiresDiscarded(t *testing.T) {
 		"confidence": 0.7,
 	}
 
-	_, discarded := MergeEntries(a, b)
+	_, discarded := MergeEntries(a, b, time.Now())
 
 	status := GetStatus(discarded)
 	if status != "retired" {

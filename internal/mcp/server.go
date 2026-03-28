@@ -132,7 +132,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 
 	// GroupKnowledge: knowledge, profile.
 	if groups[config.GroupKnowledge] {
-		mcpServer.AddTools(KnowledgeTool(knowledgeSvc)...)
+		mcpServer.AddTools(KnowledgeTool(knowledgeSvc, repoRoot)...)
 		mcpServer.AddTools(ProfileTool(profileStore)...)
 	}
 

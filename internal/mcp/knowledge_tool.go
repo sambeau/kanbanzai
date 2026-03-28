@@ -18,11 +18,11 @@ import (
 // KnowledgeTool returns the 2.0 consolidated knowledge tool.
 // It consolidates all 12 knowledge management operations into a single tool
 // with an action parameter (spec §18.1).
-func KnowledgeTool(svc *service.KnowledgeService) []server.ServerTool {
-	return []server.ServerTool{knowledgeTool(svc)}
+func KnowledgeTool(svc *service.KnowledgeService, repoPath string) []server.ServerTool {
+	return []server.ServerTool{knowledgeTool(svc, repoPath)}
 }
 
-func knowledgeTool(svc *service.KnowledgeService) server.ServerTool {
+func knowledgeTool(svc *service.KnowledgeService, repoPath string) server.ServerTool {
 	tool := mcp.NewTool("knowledge",
 		mcp.WithReadOnlyHintAnnotation(false),
 		mcp.WithDestructiveHintAnnotation(false),
@@ -109,7 +109,7 @@ func knowledgeTool(svc *service.KnowledgeService) server.ServerTool {
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		return DispatchAction(ctx, req, map[string]ActionHandler{
 			"list":       knowledgeListAction(svc),
-			"get":        knowledgeGetAction(svc),
+			"get":        knowledgeGetAction(svc, repoPath),
 			"contribute": knowledgeContributeAction(svc),
 			"confirm":    knowledgeConfirmAction(svc),
 			"flag":       knowledgeFlagAction(svc),
@@ -119,7 +119,7 @@ func knowledgeTool(svc *service.KnowledgeService) server.ServerTool {
 			"compact":    knowledgeCompactAction(svc),
 			"prune":      knowledgePruneAction(svc),
 			"resolve":    knowledgeResolveAction(svc),
-			"staleness":  knowledgeStalenessAction(svc),
+			"staleness":  knowledgeStalenessAction(svc, repoPath),
 		})
 	})
 
@@ -159,7 +159,7 @@ func knowledgeListAction(svc *service.KnowledgeService) ActionHandler {
 
 // ─── get ──────────────────────────────────────────────────────────────────────
 
-func knowledgeGetAction(svc *service.KnowledgeService) ActionHandler {
+func knowledgeGetAction(svc *service.KnowledgeService, repoPath string) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		id, err := req.RequireString("id")
 		if err != nil {
@@ -176,7 +176,7 @@ func knowledgeGetAction(svc *service.KnowledgeService) ActionHandler {
 		}
 
 		// Check staleness for entries with git_anchors.
-		if staleness := checkEntryStaleness(record.Fields, "."); staleness != nil {
+		if staleness := checkEntryStaleness(record.Fields, repoPath); staleness != nil {
 			resp["staleness"] = staleness
 		}
 
@@ -592,11 +592,10 @@ func knowledgeResolveAction(svc *service.KnowledgeService) ActionHandler {
 
 // ─── staleness ────────────────────────────────────────────────────────────────
 
-func knowledgeStalenessAction(svc *service.KnowledgeService) ActionHandler {
+func knowledgeStalenessAction(svc *service.KnowledgeService, repoPath string) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		entryID := req.GetString("entry_id", "")
 		scope := req.GetString("scope", "")
-		repoPath := "."
 
 		var entries []storage.KnowledgeRecord
 		var err error
@@ -647,22 +646,13 @@ func knowledgeStalenessAction(svc *service.KnowledgeService) ActionHandler {
 
 // ─── helpers (moved from knowledge_tools.go) ──────────────────────────────────
 
+// checkEntryStaleness converts a git.CheckEntryStaleness result into a map
+// suitable for MCP responses. Returns nil if the entry has no git anchors.
 func checkEntryStaleness(fields map[string]any, repoPath string) map[string]any {
-	anchorPaths := knowledge.GetGitAnchors(fields)
-	if len(anchorPaths) == 0 {
+	if len(knowledge.GetGitAnchors(fields)) == 0 {
 		return nil
 	}
-	anchors := make([]git.GitAnchor, len(anchorPaths))
-	for i, path := range anchorPaths {
-		anchors[i] = git.GitAnchor{Path: path}
-	}
-	var lastConfirmed time.Time
-	if confirmedStr, ok := fields["last_confirmed"].(string); ok && confirmedStr != "" {
-		lastConfirmed, _ = time.Parse(time.RFC3339, confirmedStr)
-	} else if updatedStr, ok := fields["updated"].(string); ok && updatedStr != "" {
-		lastConfirmed, _ = time.Parse(time.RFC3339, updatedStr)
-	}
-	info, err := git.CheckStaleness(repoPath, anchors, lastConfirmed)
+	info, err := git.CheckEntryStaleness(repoPath, fields)
 	if err != nil {
 		return map[string]any{
 			"is_stale":     true,
@@ -671,7 +661,7 @@ func checkEntryStaleness(fields map[string]any, repoPath string) map[string]any 
 	}
 	result := map[string]any{
 		"is_stale":             info.IsStale,
-		"entry_last_confirmed": lastConfirmed.Format(time.RFC3339),
+		"entry_last_confirmed": info.LastConfirmed.Format(time.RFC3339),
 	}
 	if info.IsStale {
 		result["stale_reason"] = info.StaleReason

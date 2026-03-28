@@ -208,27 +208,9 @@ func checkMergeReadiness(
 	// Check all gates
 	gateResult := merge.CheckGates(gateCtx)
 
-	// Build response
-	resp := map[string]any{
-		"entity_id":      entityID,
-		"branch":         wt.Branch,
-		"overall_status": gateResult.OverallStatus,
-	}
-
-	// Convert gate results
-	gates := make([]map[string]any, 0, len(gateResult.Gates))
-	for _, g := range gateResult.Gates {
-		gate := map[string]any{
-			"name":     g.Name,
-			"status":   string(g.Status),
-			"severity": string(g.Severity),
-		}
-		if g.Message != "" {
-			gate["message"] = g.Message
-		}
-		gates = append(gates, gate)
-	}
-	resp["gates"] = gates
+	// Build response using FormatGateResults, which includes entity_id, branch,
+	// overall_status, per-gate results, and a summary with total/passed/failed/warning counts.
+	resp := merge.FormatGateResults(gateResult)
 
 	// Check PR status if GitHub is configured
 	if localConfig != nil && localConfig.GetGitHubToken() != "" {
@@ -310,25 +292,27 @@ func executeMerge(
 		return nil, fmt.Errorf("GATES_FAILED: %v", msgs)
 	}
 
-	// Check for merge conflicts explicitly
-	hasConflicts, err := git.HasMergeConflicts(repoPath, wt.Branch, "main")
+	// Determine default branch once and use it throughout.
+	defaultBranch, err := git.GetDefaultBranch(repoPath)
 	if err != nil {
-		// Try master
-		hasConflicts, err = git.HasMergeConflicts(repoPath, wt.Branch, "master")
+		return nil, fmt.Errorf("determine default branch: %w", err)
 	}
-	if err == nil && hasConflicts {
-		return nil, fmt.Errorf("MERGE_CONFLICT: branch %s has merge conflicts with main", wt.Branch)
+
+	// Check for merge conflicts explicitly before touching the working tree.
+	hasConflicts, err := git.HasMergeConflicts(repoPath, wt.Branch, defaultBranch)
+	if err != nil {
+		return nil, fmt.Errorf("check merge conflicts: %w", err)
+	}
+	if hasConflicts {
+		return nil, fmt.Errorf("MERGE_CONFLICT: branch %s has merge conflicts with %s", wt.Branch, defaultBranch)
 	}
 
 	// Perform the merge
 	gitOps := worktree.NewGit(repoPath)
 
-	// Checkout main/master
-	if err := gitOps.CheckoutBranch("main"); err != nil {
-		// Try master
-		if err := gitOps.CheckoutBranch("master"); err != nil {
-			return nil, fmt.Errorf("checkout base branch: %w", err)
-		}
+	// Checkout the default base branch.
+	if err := gitOps.CheckoutBranch(defaultBranch); err != nil {
+		return nil, fmt.Errorf("checkout base branch %s: %w", defaultBranch, err)
 	}
 
 	// Build merge message
@@ -356,10 +340,12 @@ func executeMerge(
 		gracePeriodDays = 7
 	}
 
+	var warnings []string
 	wt.MarkMerged(mergedAt, gracePeriodDays)
-	if _, err := worktreeStore.Update(wt); err != nil {
-		// Log but don't fail - merge succeeded
-		_ = err
+	if _, updateErr := worktreeStore.Update(wt); updateErr != nil {
+		// Don't fail — the merge already succeeded. Surface as a warning so the
+		// caller knows the worktree record is stale (it won't appear in cleanup lists).
+		warnings = append(warnings, fmt.Sprintf("failed to update worktree record after merge: %v", updateErr))
 	}
 
 	// Delete branch if requested
@@ -369,6 +355,23 @@ func executeMerge(
 		if cfg.Cleanup.AutoDeleteRemoteBranch {
 			_ = gitOps.DeleteRemoteBranch("origin", wt.Branch)
 		}
+	}
+
+	// Record override events when blocking gates were bypassed.
+	var overrideRecords []map[string]any
+	if override {
+		blockingFailures := merge.BlockingFailures(gateResult.Gates)
+		overriddenBy, _ := config.ResolveIdentity("")
+		if overriddenBy == "" {
+			overriddenBy = "unknown"
+		}
+		overrideReq := merge.OverrideRequest{
+			EntityID:     entityID,
+			Reason:       overrideReason,
+			OverriddenBy: overriddenBy,
+		}
+		ovrs := merge.CreateOverrides(overrideReq, blockingFailures, mergedAt)
+		overrideRecords = merge.FormatOverrides(ovrs)
 	}
 
 	// Build response
@@ -385,6 +388,14 @@ func executeMerge(
 		resp["cleanup_scheduled"] = map[string]any{
 			"cleanup_after": wt.CleanupAfter.Format(time.RFC3339),
 		}
+	}
+
+	if len(overrideRecords) > 0 {
+		resp["overrides"] = overrideRecords
+	}
+
+	if len(warnings) > 0 {
+		resp["warnings"] = warnings
 	}
 
 	return resp, nil

@@ -72,6 +72,16 @@ func GetLastConfirmed(fields map[string]any) time.Time {
 
 	raw, ok := fields[KnowledgeFieldLastConfirmed]
 	if !ok || raw == nil {
+		// Fall back to "updated" field for entries that pre-date the
+		// last_confirmed field, so all callers share the same behaviour.
+		if updatedRaw, ok2 := fields["updated"]; ok2 {
+			if updatedStr, ok3 := updatedRaw.(string); ok3 && updatedStr != "" {
+				t, err := time.Parse(time.RFC3339, updatedStr)
+				if err == nil {
+					return t
+				}
+			}
+		}
 		return time.Time{}
 	}
 

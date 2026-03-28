@@ -290,6 +290,9 @@ func (g NoConflictsGate) Check(ctx GateContext) GateResult {
 
 // HealthCheckCleanGate checks that there are no blocking health-check errors.
 // This is a placeholder implementation that always passes.
+// TODO: implement using entity-specific health check errors. Until then, this
+// gate provides no protection — merges proceed even when blocking health errors
+// exist. Consider removing from DefaultGates() until a real implementation lands.
 type HealthCheckCleanGate struct{}
 
 func (g HealthCheckCleanGate) Name() string {
@@ -301,8 +304,8 @@ func (g HealthCheckCleanGate) Severity() GateSeverity {
 }
 
 func (g HealthCheckCleanGate) Check(ctx GateContext) GateResult {
-	// Placeholder: always pass for now
-	// Full implementation would check entity-specific health errors
+	// TODO: wire up entity-scoped health check results here.
+	// Placeholder: always passes — see comment on HealthCheckCleanGate.
 	return GateResult{
 		Name:     g.Name(),
 		Severity: g.Severity(),
@@ -312,6 +315,9 @@ func (g HealthCheckCleanGate) Check(ctx GateContext) GateResult {
 
 // EntityDoneGate checks that the entity has reached its "done" lifecycle state.
 // Features must be "done"; bugs must be "closed". Other entity types pass unconditionally.
+// This gate exists in addition to tasks_complete because an entity can have all
+// tasks done while the entity itself is still in review or another intermediate
+// state. See spec §8.2.
 type EntityDoneGate struct{}
 
 func (g EntityDoneGate) Name() string {

@@ -275,6 +275,7 @@ Merge gates verify that work is complete and quality requirements are met before
 
 | Gate | Check | Severity |
 |------|-------|----------|
+| `entity_done` | Feature status is `done`; bug status is `closed` | blocking |
 | `tasks_complete` | All tasks in feature/bug are `done` or `wont_do` | blocking |
 | `verification_exists` | Feature/bug has non-empty `verification` field | blocking |
 | `verification_passed` | Feature/bug `verification_status` is `passed` | blocking |
@@ -295,7 +296,7 @@ When blocking gates fail, merge requires:
 2. Reason for override (`--reason "..."` in CLI, `override_reason: "..."` in MCP)
 3. Confirmation of failures (CLI prompts; MCP requires explicit acknowledgment)
 
-Override events are logged in the worktree record:
+Override events are recorded in the merge commit message and returned in the `execute` action response:
 
 ```yaml
 overrides:

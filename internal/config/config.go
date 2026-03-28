@@ -672,6 +672,9 @@ func (c *Config) mergePhase3Defaults() {
 	if c.Knowledge.Promotion.MinConfidence == 0 {
 		c.Knowledge.Promotion.MinConfidence = knowledgeDefaults.Promotion.MinConfidence
 	}
+	if c.Knowledge.Promotion.MaxMissCount == 0 {
+		c.Knowledge.Promotion.MaxMissCount = knowledgeDefaults.Promotion.MaxMissCount
+	}
 	if c.Knowledge.Pruning.GracePeriodDays == 0 {
 		c.Knowledge.Pruning.GracePeriodDays = knowledgeDefaults.Pruning.GracePeriodDays
 	}

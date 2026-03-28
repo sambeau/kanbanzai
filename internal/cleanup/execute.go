@@ -147,8 +147,7 @@ func isBranchNotFoundError(err error) bool {
 		return false
 	}
 	errStr := err.Error()
-	return strings.Contains(errStr, "not found") ||
-		strings.Contains(errStr, "branch") && strings.Contains(errStr, "not found")
+	return strings.Contains(errStr, "not found")
 }
 
 // isRemoteBranchNotFoundError checks if the error indicates the remote branch doesn't exist.

@@ -181,7 +181,7 @@ func CanAutoCompact(tier int) bool {
 // The entry with higher confidence is kept per spec §14.5.
 // If confidence is equal, the entry with more use_count is kept.
 // If still equal, entry 'a' is kept (arbitrary but deterministic).
-func MergeEntries(a, b map[string]any) (updatedKept, updatedDiscarded map[string]any) {
+func MergeEntries(a, b map[string]any, now time.Time) (updatedKept, updatedDiscarded map[string]any) {
 	confA := GetConfidence(a)
 	confB := GetConfidence(b)
 	useCountA := GetUseCount(a)
@@ -234,7 +234,7 @@ func MergeEntries(a, b map[string]any) (updatedKept, updatedDiscarded map[string
 	}
 	SetStatus(discarded, "retired")
 	discarded["retired_reason"] = fmt.Sprintf("merged into %s", keptID)
-	discarded["retired_at"] = time.Now().UTC().Format(time.RFC3339)
+	discarded["retired_at"] = now.Format(time.RFC3339)
 
 	return kept, discarded
 }
@@ -356,7 +356,7 @@ func compactActiveEntries(entries []map[string]any, opts CompactionOptions) (Com
 			case RelationshipExactDuplicate:
 				if detection.ShouldMerge && CanAutoCompact(tierA) && CanAutoCompact(tierB) {
 					if !opts.DryRun {
-						kept, discarded := MergeEntries(entryA, entryB)
+						kept, discarded := MergeEntries(entryA, entryB, time.Now().UTC())
 						keptID := getEntryIDFromFields(kept)
 						discardedID := getEntryIDFromFields(discarded)
 						updatedEntries[keptID] = kept
@@ -382,7 +382,7 @@ func compactActiveEntries(entries []map[string]any, opts CompactionOptions) (Com
 			case RelationshipNearDuplicate:
 				if detection.ShouldMerge && CanAutoCompact(tierA) && CanAutoCompact(tierB) {
 					if !opts.DryRun {
-						kept, discarded := MergeEntries(entryA, entryB)
+						kept, discarded := MergeEntries(entryA, entryB, time.Now().UTC())
 						keptID := getEntryIDFromFields(kept)
 						discardedID := getEntryIDFromFields(discarded)
 						updatedEntries[keptID] = kept

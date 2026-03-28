@@ -208,7 +208,7 @@ The audit reviewed all Phase 3 code against the specification and identified rem
 
 **R2: Override events** — ✅ Fixed
 
-`executeMerge` now calls `merge.CreateOverrides` when overriding blocked gates, and includes override records in the merge response.
+`executeMerge` now calls `merge.CreateOverrides` and `merge.FormatOverrides` when overriding blocked gates, resolves the user identity via `config.ResolveIdentity`, and includes structured override records in the merge response. Override details are also captured in the merge commit message. The spec §8.4 was updated to document that overrides are returned in the MCP response (not stored in the worktree record).
 
 **R3: AGENTS.md** — ✅ Fixed
 
@@ -246,7 +246,7 @@ Updated current status, CLI examples, storage tree, and contributor reading orde
 
 **R16: Worktree naming** — ✅ Fixed. Branch prefix changed from `bugfix/` to `bug/` per spec §6.5. Slug capped at 40 characters with trailing hyphen trim after truncation. Tests updated.
 
-**R17: FormatGateResults** — ✅ Fixed. `checkMergeReadiness` now uses `merge.FormatGateResults` instead of manual gate result construction.
+**R17: FormatGateResults** — ✅ Fixed. `checkMergeReadiness` now uses `merge.FormatGateResults` instead of manual gate result construction, including the `summary` sub-object with total/passed/failed/warning counts per spec §8.5.
 
 ---
 
