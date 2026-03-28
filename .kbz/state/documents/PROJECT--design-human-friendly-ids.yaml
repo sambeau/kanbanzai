@@ -2,8 +2,10 @@ id: PROJECT/design-human-friendly-ids
 path: work/design/human-friendly-ids.md
 type: design
 title: "Design Proposal: Human-Friendly ID Display"
-status: draft
-content_hash: 3537a55f7378dcd0f6794f64ab7ef379ae1200801759bf013c11f139486959a7
+status: approved
+approved_by: sambeau
+approved_at: "2026-03-28T11:40:40Z"
+content_hash: 84b3a67c5542b8141b0bdc53a599afbb6be0a9c5ce9587696107fa2af141dee9
 created: "2026-03-28T02:52:40Z"
 created_by: sambeau
-updated: "2026-03-28T02:52:40Z"
+updated: "2026-03-28T11:40:40Z"

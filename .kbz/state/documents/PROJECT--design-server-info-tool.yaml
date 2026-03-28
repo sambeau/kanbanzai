@@ -2,8 +2,10 @@ id: PROJECT/design-server-info-tool
 path: work/design/server-info-tool.md
 type: design
 title: "Design Proposal: server_info MCP Tool"
-status: draft
-content_hash: f3304e43e4a14e90606784021b8e52c8a9a7e1f03f5c95282f0fd9b67a434e62
+status: approved
+approved_by: sambeau
+approved_at: "2026-03-28T11:40:40Z"
+content_hash: 06e1d0dd34d470e97a2fb53ac0ae0d24945d023ad093861b6f62ed1d4a6ce095
 created: "2026-03-28T02:33:45Z"
 created_by: sambeau
-updated: "2026-03-28T02:33:45Z"
+updated: "2026-03-28T11:40:40Z"

@@ -1,0 +1,8 @@
+id: P7-developer-experience
+slug: developer-experience
+title: P7 — Developer Experience Improvements
+status: active
+summary: "Three improvements from the P6 retrospective: server_info MCP tool to eliminate the stale-binary problem, and human-friendly ID display with optional labels and review naming conventions."
+created: "2026-03-28T11:41:52Z"
+created_by: sambeau
+updated: "2026-03-28T11:44:18Z"
