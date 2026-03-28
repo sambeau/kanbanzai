@@ -24,6 +24,17 @@ import (
 	"kanbanzai/internal/service"
 )
 
+// nudgeNoRetroSignals is shown when a feature completes with no retro signals recorded for any task.
+const nudgeNoRetroSignals = "No retrospective signals were recorded for any task in this feature. " +
+	"If you observed workflow friction, tool gaps, spec ambiguity, or things that worked well, " +
+	"call finish again on any completed task with the retrospective parameter, " +
+	`or use knowledge(action: contribute) with tags: ["retrospective"].`
+
+// nudgeNoKnowledge is shown when a task completes with a summary but no knowledge or retro.
+const nudgeNoKnowledge = "Consider including knowledge entries (reusable facts learned during " +
+	"this task) or retrospective signals (process observations) in your finish call. " +
+	"These improve context assembly for future tasks."
+
 // FinishTools returns the `finish` MCP tool registered in the core group.
 func FinishTools(entitySvc *service.EntityService, dispatchSvc *service.DispatchService) []server.ServerTool {
 	return []server.ServerTool{finishTool(entitySvc, dispatchSvc)}
@@ -82,6 +93,7 @@ func finishTool(entitySvc *service.EntityService, dispatchSvc *service.DispatchS
 			items, _ := args["tasks"].([]any)
 			return ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
 				input := parseFinishItem(item)
+				input.Batch = true
 				result, err := finishOne(ctx, input, entitySvc, dispatchSvc)
 				return input.TaskID, result, err
 			})
@@ -106,6 +118,7 @@ type finishInput struct {
 	Verification  string
 	Knowledge     []service.KnowledgeEntryInput
 	RetroSignals  []service.RetroSignalInput
+	Batch         bool // true when called from the batch path
 }
 
 // parseFinishArgs parses finishInput from the top-level MCP arguments map.
@@ -328,7 +341,53 @@ func finishOne(
 		}
 	}
 
+	// Nudge logic — evaluates feature completion status and provides contextual hints.
+	// Nudge 1 takes priority over Nudge 2 when both conditions are met.
+	if !input.Batch {
+		nudge1Fired := false
+
+		// Nudge 1: feature just completed with no retro signals anywhere in the feature.
+		parentFeatureID, _ := result.Task["parent_feature"].(string)
+		if parentFeatureID != "" {
+			siblings, err := entitySvc.ListEntitiesFiltered(service.ListFilteredInput{
+				Type:   "task",
+				Parent: parentFeatureID,
+			})
+			if err == nil {
+				allTerminal := true
+				siblingIDs := make([]string, 0, len(siblings))
+				for _, s := range siblings {
+					siblingIDs = append(siblingIDs, s.ID)
+					st, _ := s.State["status"].(string)
+					if !isFinishTerminal(st) {
+						allTerminal = false
+						break
+					}
+				}
+				if allTerminal && !dispatchSvc.AnyTaskHasRetroSignals(siblingIDs) {
+					resp["nudge"] = nudgeNoRetroSignals
+					nudge1Fired = true
+				}
+			}
+		}
+
+		// Nudge 2: this call had no knowledge or retro, and summary was provided.
+		if !nudge1Fired && input.Summary != "" &&
+			len(input.Knowledge) == 0 && len(input.RetroSignals) == 0 {
+			resp["nudge"] = nudgeNoKnowledge
+		}
+	}
+
 	return resp, nil
+}
+
+// isFinishTerminal returns true for task statuses that count as complete.
+func isFinishTerminal(status string) bool {
+	switch status {
+	case "done", "needs-review", "not-planned", "duplicate", "cancelled":
+		return true
+	}
+	return false
 }
 
 // ─── Argument parsing helpers ────────────────────────────────────────────────

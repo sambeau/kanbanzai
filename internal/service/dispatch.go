@@ -193,6 +193,37 @@ func (s *DispatchService) DispatchTask(input DispatchInput) (DispatchResult, err
 	}, nil
 }
 
+// AnyTaskHasRetroSignals returns true if any of the given task IDs has at least
+// one retrospective knowledge entry (learned_from == taskID and tags includes "retrospective").
+// Returns false on error (best-effort).
+func (s *DispatchService) AnyTaskHasRetroSignals(taskIDs []string) bool {
+	if len(taskIDs) == 0 {
+		return false
+	}
+	taskSet := make(map[string]bool, len(taskIDs))
+	for _, id := range taskIDs {
+		taskSet[id] = true
+	}
+	entries, err := s.knowledgeSvc.LoadAllRaw()
+	if err != nil {
+		return false // best-effort
+	}
+	for _, rec := range entries {
+		learnedFrom, _ := rec.Fields["learned_from"].(string)
+		if !taskSet[learnedFrom] {
+			continue
+		}
+		// Check for "retrospective" tag
+		rawTags, _ := rec.Fields["tags"].([]any)
+		for _, t := range rawTags {
+			if s, ok := t.(string); ok && s == "retrospective" {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 // CompleteTask closes the dispatch loop for a completed task.
 func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, error) {
 	taskID := strings.TrimSpace(input.TaskID)
