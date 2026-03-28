@@ -1,0 +1,124 @@
+document_id: FEAT-01KMRX1F47Z94/report-review-feat-01kmrx1f47z94
+document_path: work/reports/review-FEAT-01KMRX1F47Z94.md
+content_hash: d2d7de10878a93f395b8d3485a3e7f895dd2047236fac23602e02dc79fd1910d
+indexed_at: 2026-03-28T01:27:53.039626Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: FEAT-01KMRX1F47Z94 (review-lifecycle-states)'
+      byte_offset: 0
+      byte_count: 10238
+      word_count: 1098
+      content_hash: d2d7de10878a93f395b8d3485a3e7f895dd2047236fac23602e02dc79fd1910d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary Verdict
+          byte_offset: 771
+          byte_count: 284
+          word_count: 41
+          content_hash: f325d3a42e8609b55f099f0bd1c0c5aa3b776d14b9c6b0bb8fe1bd978bdf964a
+        - path: "1.2"
+          level: 2
+          title: Per-Dimension Verdicts
+          byte_offset: 1055
+          byte_count: 831
+          word_count: 79
+          content_hash: 3ce306dc4179d0a0cf361015df3dce93adc2b265c81dfb0994c1bf58215bc70c
+        - path: "1.3"
+          level: 2
+          title: Review Units
+          byte_offset: 1886
+          byte_count: 613
+          word_count: 43
+          content_hash: e9de17028fe5a77a52d6e3c6be399e5ff1b5b71667a7b90497c60e87e0e64489
+        - path: "1.4"
+          level: 2
+          title: Blocking Findings
+          byte_offset: 2499
+          byte_count: 1423
+          word_count: 160
+          content_hash: f01938fc55ba668b1e855575b0f3307ab4c2392c67d0190f44011a7c188bb10a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'F1: AC-17 advance-from-reviewing test gap'
+              byte_offset: 2521
+              byte_count: 1401
+              word_count: 157
+              content_hash: 52081f7952cc2405738a664dabcd657acb75c8d127b033e3eb5194ed677f2e52
+        - path: "1.5"
+          level: 2
+          title: Non-Blocking Findings
+          byte_offset: 3922
+          byte_count: 2792
+          word_count: 347
+          content_hash: ec3f98f38c7231afae62a4efda49fe130af7324393c6d8204886defbf6dcae96
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'F2: Phase 1 legacy states in ValidNextStates assertion'
+              byte_offset: 3948
+              byte_count: 925
+              word_count: 114
+              content_hash: fc1d493b40031882b48790b022e342af74d21dd66d5f9adae5eccfeea607f451
+            - path: 1.5.2
+              level: 3
+              title: 'F3: Missing ValidNextStates test cases for intermediate states'
+              byte_offset: 4873
+              byte_count: 778
+              word_count: 93
+              content_hash: 5ad2a624fe8a03f8a8bac99867515c4a2f377ecd135a68d462682791e968680a
+            - path: 1.5.3
+              level: 3
+              title: 'F4: Specification document still in draft status'
+              byte_offset: 5651
+              byte_count: 575
+              word_count: 74
+              content_hash: b1c3115e1ea576ac0d0c5d05426fa53876157be9f6beddfa81ca7aa11b1c0399
+            - path: 1.5.4
+              level: 3
+              title: 'F5: Housekeeping task in not-planned status'
+              byte_offset: 6226
+              byte_count: 488
+              word_count: 63
+              content_hash: c821c2bbe29db74044977570196a21e4b444b3788e3723447c33142a8cb5b570
+        - path: "1.6"
+          level: 2
+          title: AC Coverage Matrix
+          byte_offset: 6714
+          byte_count: 3082
+          word_count: 318
+          content_hash: dcd747a6a61e19b8bac14b021b0bdb81648aa91d358bef8683e3868adaca8de4
+        - path: "1.7"
+          level: 2
+          title: Transition Decision
+          byte_offset: 9796
+          byte_count: 442
+          word_count: 53
+          content_hash: 909370319c4d34c5e942581895ea4af0dda930578559641c5249f1555ff14e75
+entity_refs:
+    - entity_id: FEAT-01KMRX1F47Z94
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 17
+    - entity_id: FEAT-01KMRX1F47Z94
+      entity_type: feature
+      section_path: 1.5.3
+      byte_offset: 5738
+    - entity_id: TASK-01KMRZQBKXCMB
+      entity_type: task
+      section_path: 1.5.4
+      byte_offset: 6314
+    - entity_id: TASK-01KMRXKXMFBF3
+      entity_type: task
+      section_path: "1.6"
+      byte_offset: 9420
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: decision
+      confidence: high
+classified: false

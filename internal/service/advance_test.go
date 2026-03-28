@@ -383,6 +383,46 @@ func TestAdvanceFeatureStatus_AdvanceToReviewing_IsTarget(t *testing.T) {
 	}
 }
 
+// TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone verifies AC-17:
+// when a feature is already in reviewing status and advance targets done,
+// the advance succeeds in a single step (reviewing → done) with no stop.
+func TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone(t *testing.T) {
+	t.Parallel()
+	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01AAAAAAAAA20"
+	slug := "rev-to-done"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "reviewing", nil)
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "reviewing")
+
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if result.FinalStatus != "done" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "done")
+	}
+	if result.StoppedReason != "" {
+		t.Errorf("StoppedReason = %q, want empty (target was reached)", result.StoppedReason)
+	}
+	if len(result.AdvancedThrough) != 1 || result.AdvancedThrough[0] != "done" {
+		t.Errorf("AdvancedThrough = %v, want [done]", result.AdvancedThrough)
+	}
+
+	// Verify it persisted at done.
+	got, err := entitySvc.Get("feature", featureID, slug)
+	if err != nil {
+		t.Fatalf("Get after advance: %v", err)
+	}
+	if s := stringFromState(got.State, "status"); s != "done" {
+		t.Errorf("persisted status = %q, want %q", s, "done")
+	}
+}
+
 // TestAdvanceFeatureStatus_NeverAutoTransitionsThroughReviewing verifies AC-18:
 // advance never auto-transitions through reviewing to reach done, even when
 // starting from an early state with all prerequisites satisfied.

@@ -1,0 +1,9 @@
+id: TASK-01KMS0W9NHRWJ
+parent_feature: FEAT-01KMRX1F47Z94
+slug: fix-ac17-advance-from-reviewing-test
+summary: "Add TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone test to advance_test.go: write a feature at reviewing status, call AdvanceFeatureStatus(feature, \\\"done\\\"), assert FinalStatus==\\\"done\\\" with empty StoppedReason and AdvancedThrough=[\\\"done\\\"]. This fixes the AC-17 test gap identified in review finding F1. Ref: review report work/reports/review-FEAT-01KMRX1F47Z94.md."
+status: active
+claimed_at: "2026-03-28T01:28:16Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T01:28:16Z"
+dispatched_by: sambeau
