@@ -1,7 +1,7 @@
 id: FEAT-01KMR8QYZHAVA
 slug: review-finish-tool
 parent: P4-kanbanzai-2.0
-status: proposed
+status: cancelled
 summary: "Review Track E (finish tool) implementation against spec §12, §30.6. Verify task completion workflow, inline knowledge contribution, side-effect reporting, and batch finish."
 tags:
   - review

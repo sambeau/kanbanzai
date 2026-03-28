@@ -1,7 +1,7 @@
 id: FEAT-01KMR8QXF0VMK
 slug: review-status-tool
 parent: P4-kanbanzai-2.0
-status: proposed
+status: cancelled
 summary: "Review Track D (status dashboard) implementation against spec §10, §30.4. Verify project overview, plan dashboard, feature detail, task detail synthesis, and attention item generation."
 tags:
   - review
