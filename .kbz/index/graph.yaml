@@ -1,4 +1,4 @@
-updated_at: 2026-03-28T15:42:13.662278Z
+updated_at: 2026-03-28T16:12:02.010254Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -30096,6 +30096,296 @@ edges:
       to_type: document
       edge_type: LINKS_TO
     - from: P10-review-and-doc-currency/dev-plan-review-and-doc-currency-plan#1.7.6
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle
+      from_type: document
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.3
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.3
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.4
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.4
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.4
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.4
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.4
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.6
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.6
+      from_type: section
+      to: P10-review-and-doc-currency/specification-plan-review-lifecycle#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1
+      from_type: section
+      to: FEAT-01KMTJH8YQ17P
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1
+      from_type: section
+      to: P10-review-and-doc-currency
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P10-review-and-doc-currency/specification-plan-review-lifecycle#1
+      from_type: section
+      to: P10-review-and-doc-currency-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check
+      from_type: document
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.4
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.4
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.4
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.4
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.4
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.5
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.5
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.5
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.7
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.7
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.7
+      from_type: section
+      to: P10-review-and-doc-currency/specification-doc-currency-health-check#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1
+      from_type: section
+      to: FEAT-01KMTJH8Z2AQ5
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1
+      from_type: section
+      to: P10-review-and-doc-currency
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1
+      from_type: section
+      to: P10-review-and-doc-currency-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.2
+      from_type: section
+      to: .skills/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3.1
+      from_type: section
+      to: code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3.1
+      from_type: section
+      to: document-creation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3.1
+      from_type: section
+      to: plan-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3.1
+      from_type: section
+      to: README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.3.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.5.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.6
+      from_type: section
+      to: .skills/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.6
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P10-review-and-doc-currency/specification-doc-currency-health-check#1.7.1
       from_type: section
       to: AGENTS.md
       to_type: document
