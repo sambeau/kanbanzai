@@ -1,0 +1,5 @@
+id: TASK-01KMT5J4BP79V
+parent_feature: FEAT-01KMT58SKYM5C
+slug: add-decompose-precondition-to-agents-md
+summary: "Add a precondition block to the Stage 5 (Dev Plan & Tasks) section of AGENTS.md. Block must state: (1) spec must be in approved status before calling decompose propose — corrective action: doc approve; (2) if spec was registered in the current session, call index_repository first — corrective action: run index_repository then retry. No other files modified. Covers AC-01 to AC-06."
+status: queued

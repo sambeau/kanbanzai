@@ -1,0 +1,5 @@
+id: TASK-01KMT5J878QVD
+parent_feature: FEAT-01KMT58TV8V9C
+slug: approval-and-index-gates-plus-fallback-removal
+summary: "In the decompose propose handler (internal/mcp/): (1) add spec approval status check — error with doc ID and 'approve the spec before decomposing' if status != approved; (2) add index content check after approval passes — error with doc ID and 'run index_repository, then retry' if index has no parsed content; (3) remove the section-header fallback path and its warning string entirely. Add unit tests for both error paths and the happy path. Covers AC-01 to AC-15."
+status: queued
