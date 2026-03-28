@@ -1,0 +1,176 @@
+document_id: P8-decompose-reliability/report-p8-decompose-reliability-review
+document_path: work/reviews/p8-decompose-reliability-review.md
+content_hash: 19559019c8c7f806ff1e2121665fe1d0ce33c672b450ad6fc1cc83f221147eaa
+indexed_at: 2026-03-28T12:32:34.84117Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: P8 — decompose propose Reliability Fixes'
+      byte_offset: 0
+      byte_count: 10318
+      word_count: 1467
+      content_hash: 19559019c8c7f806ff1e2121665fe1d0ce33c672b450ad6fc1cc83f221147eaa
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Scope
+          byte_offset: 477
+          byte_count: 580
+          word_count: 64
+          content_hash: 21c96e66ba068476fcea7628c79844b9d77785f4449159b58152afba80b07225
+        - path: "1.2"
+          level: 2
+          title: '2. Feature Review: AGENTS.md Decompose Precondition Rule'
+          byte_offset: 1057
+          byte_count: 1357
+          word_count: 209
+          content_hash: c0543e3dcfbd78e9d216205cad199d293da140eeb10fa47089d84d9b87b6fb9b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: What changed
+              byte_offset: 1211
+              byte_count: 613
+              word_count: 88
+              content_hash: 4d848c26003542795b06139d09024146efe4b9a279b2d03ca789675a374a720a
+            - path: 1.2.2
+              level: 3
+              title: Acceptance criteria
+              byte_offset: 1824
+              byte_count: 564
+              word_count: 101
+              content_hash: 5718c7a6d57ce85cd72b4fce852b6e9ece66a140be898caf4bd3883e26d3589b
+            - path: 1.2.3
+              level: 3
+              title: Findings
+              byte_offset: 2388
+              byte_count: 26
+              word_count: 4
+              content_hash: 618b7e2eb6b7dad6cc12a30003c1c264e699b5d7409d64320486fe6181c3f6e2
+        - path: "1.3"
+          level: 2
+          title: '3. Feature Review: Decompose Precondition Gates'
+          byte_offset: 2414
+          byte_count: 4928
+          word_count: 748
+          content_hash: 7d5aa53b68ad8976b7402ac0786360ff1d0262f6bd990bd64d29853264943eff
+          children:
+            - path: 1.3.1
+              level: 3
+              title: What changed
+              byte_offset: 2586
+              byte_count: 1135
+              word_count: 155
+              content_hash: a6659a919c7429f426b48341b4d68afa2c4c769ec64b109cc03257c478bd6400
+            - path: 1.3.2
+              level: 3
+              title: Gate ordering
+              byte_offset: 3721
+              byte_count: 421
+              word_count: 66
+              content_hash: 9831bd099135ba61c4d44e83acfb02c362fbacf52d452a555b2831dcfba406ca
+            - path: 1.3.3
+              level: 3
+              title: Acceptance criteria
+              byte_offset: 4142
+              byte_count: 1331
+              word_count: 242
+              content_hash: bf6e9283b3d80f78e85530f27fc10db5b9dceef2e18f63e87cbd26fa9e7a5bdf
+            - path: 1.3.4
+              level: 3
+              title: 'Deviation: AC-05/AC-06 mechanism and error message'
+              byte_offset: 5473
+              byte_count: 1869
+              word_count: 266
+              content_hash: 2a551236637d40568f6f6562bd3ad0a2866875c688fc5b01d48855959eeddc4e
+        - path: "1.4"
+          level: 2
+          title: 4. Test Coverage
+          byte_offset: 7342
+          byte_count: 1159
+          word_count: 147
+          content_hash: f92728fe710c4b53ee659b5bf5ac238f1eb8bc557d6b611d06a2746142b9a333
+        - path: "1.5"
+          level: 2
+          title: 5. Fallback Removal Verification
+          byte_offset: 8501
+          byte_count: 835
+          word_count: 117
+          content_hash: cc8841e418b857bddf8add87f05a6023363ef1b2f791c782aa613a5e64caeb56
+        - path: "1.6"
+          level: 2
+          title: 6. Findings Summary
+          byte_offset: 9336
+          byte_count: 300
+          word_count: 42
+          content_hash: 9100ac9d1b54b063c167cdc4d26f81600900292c1977be4c710f59278e603068
+        - path: "1.7"
+          level: 2
+          title: 7. Verdict
+          byte_offset: 9636
+          byte_count: 682
+          word_count: 95
+          content_hash: 3eede22c6509612f7b680e1ee3361b94806c414a1183921c46b4a806da536d41
+entity_refs:
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 736
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1131
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 2479
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: 1.3.4
+      byte_offset: 6711
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 9456
+    - entity_id: TASK-01KMT
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1161
+    - entity_id: TASK-01KMT
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 2509
+    - entity_id: P8-decompose-reliability
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 208
+cross_doc_links:
+    - target_path: work/design/decompose-reliability.md
+      link_text: work/design/decompose-reliability.md
+      section_path: "1.1"
+    - target_path: work/spec/agents-md-decompose-rule.md
+      link_text: work/spec/agents-md-decompose-rule.md
+      section_path: "1.1"
+    - target_path: work/spec/decompose-precondition-gates.md
+      link_text: work/spec/decompose-precondition-gates.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.2
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: 1.3.3
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+classified: false
