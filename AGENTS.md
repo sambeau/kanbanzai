@@ -266,9 +266,9 @@ You must not skip stages. Each stage has a human approval gate.
 **Gate:** Design document must be approved before creating Plan or Feature entities.
 
 **Agent role:**
-- Create Plan entity using `create_plan` (ensure prefix is registered)
+- Create Plan entity using `entity(action: "create", type: "plan")` (ensure prefix is registered)
 - Extract features from approved design using document intelligence
-- Create Feature entities with `create_feature`
+- Create Feature entities with `entity(action: "create", type: "feature")`
 
 ### Stage 4: Specification (Human-Led, Agent-Assisted)
 
@@ -298,7 +298,7 @@ You must not skip stages. Each stage has a human approval gate.
 Skipping either step will cause `decompose propose` to fail or produce wrong output.
 
 **Agent role:**
-- Use `decompose_feature` to propose task breakdown
+- Use `decompose` to propose task breakdown
 - Create Task entities after human reviews proposal
 - Record decisions in decision log
 

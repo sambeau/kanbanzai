@@ -30,14 +30,15 @@ This SKILL covers two perspectives:
 
 A review sub-agent receives the following inputs before starting:
 
-1. **Context packet** — assembled via `context_assemble(role="reviewer")`. Contains the reviewer
-   context profile, relevant knowledge entries, and project conventions.
+1. **Context packet** — assembled via `profile(action: "get", id: "reviewer")` or provided by
+   the orchestrator via `handoff`. Contains the reviewer context profile, relevant knowledge
+   entries, and project conventions.
 
 2. **File list** — the specific source files that form this review unit. Read these files to
    evaluate the implementation.
 
 3. **Spec section(s)** — one or more sections from the feature's specification document,
-   retrieved via `doc_section`. These are the binding requirements for this review unit.
+   retrieved via `doc_intel(action: "section")`. These are the binding requirements for this review unit.
 
 4. **Review profile** — the named profile to apply (e.g., Feature Implementation, Bugfix,
    Lightweight). If not explicitly specified, default to Feature Implementation Review Profile.
