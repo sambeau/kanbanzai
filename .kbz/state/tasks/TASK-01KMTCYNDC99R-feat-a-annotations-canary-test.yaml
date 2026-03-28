@@ -1,0 +1,7 @@
+id: TASK-01KMTCYNDC99R
+parent_feature: FEAT-01KMTCWXAGX06
+slug: feat-a-annotations-canary-test
+summary: "Create internal/mcp/annotations_test.go. The test must instantiate all tool groups registered in server.go, collect every server.ServerTool, and assert that ReadOnlyHint, DestructiveHint, IdempotentHint, and OpenWorldHint are all non-nil for every tool. It must also optionally assert Tier 1 tools have ReadOnlyHint==true and Tier 3 tools have DestructiveHint==true or OpenWorldHint==true. The test must be structured to auto-discover tools so adding an unannotated tool causes a failure."
+status: queued
+depends_on:
+  - TASK-01KMTCYNCX1HC

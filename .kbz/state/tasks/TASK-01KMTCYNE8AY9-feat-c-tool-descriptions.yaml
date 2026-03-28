@@ -1,0 +1,5 @@
+id: TASK-01KMTCYNE8AY9
+parent_feature: FEAT-01KMTCWXAGX06
+slug: feat-c-tool-descriptions
+summary: "Update the description strings for 7 tools: status, entity, next, finish, doc, knowledge, retro. Exact replacement text is in spec §5.2. The doc description must include refresh and chain in the actions list (coordinate with or apply after Feature E and F, or update the list incrementally). Do not modify any other tool descriptions."
+status: ready

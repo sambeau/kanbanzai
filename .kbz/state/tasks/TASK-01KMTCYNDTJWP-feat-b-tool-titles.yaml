@@ -1,0 +1,5 @@
+id: TASK-01KMTCYNDTJWP
+parent_feature: FEAT-01KMTCWXAGX06
+slug: feat-b-tool-titles
+summary: Add human-readable Title annotations to all 22 tools using mcp.WithTitleAnnotation(). Title strings are specified in spec §4.2 and must be followed verbatim. May be combined with the annotation options from Feature A in a single mcp.WithToolAnnotation call or kept separate.
+status: ready
