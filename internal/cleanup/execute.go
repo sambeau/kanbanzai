@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // CleanupResult contains the result of cleaning up a worktree.

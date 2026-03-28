@@ -1,0 +1,329 @@
+document_id: P10-review-and-doc-currency/dev-plan-review-and-doc-currency-plan
+document_path: work/plan/review-and-doc-currency-plan.md
+content_hash: 53037f7c79d5166656547182811547ed36b4099a1fa62ccede75110398c0ea25
+indexed_at: 2026-03-28T15:42:13.662278Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P10: Review Workflow and Documentation Currency — Implementation Plan'
+      byte_offset: 0
+      byte_count: 16208
+      word_count: 2372
+      content_hash: 53037f7c79d5166656547182811547ed36b4099a1fa62ccede75110398c0ea25
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 714
+          byte_count: 728
+          word_count: 106
+          content_hash: 7e8be98ffc1544c93609afa762fabcf368fbbb9a7b51fe3475c58efe9071c120
+        - path: "1.2"
+          level: 2
+          title: 2. Outcome
+          byte_offset: 1442
+          byte_count: 597
+          word_count: 87
+          content_hash: 1bc9b2ca1201b24e3e71d3853be4d9885e51eb458a3302b986b942f73a998dfc
+        - path: "1.3"
+          level: 2
+          title: 3. Planning Principles
+          byte_offset: 2039
+          byte_count: 1220
+          word_count: 185
+          content_hash: 9b02a311327f5e10cea20e130f4ebbc50d2a665f371354498e1e38d81d4d63c2
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Documentation first, implementation second
+              byte_offset: 2066
+              byte_count: 278
+              word_count: 44
+              content_hash: 3b9d19b1fa1a8ccffd91cc222907cf8de5569bfb43dab45aa427e993d79db7ae
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Extend existing patterns
+              byte_offset: 2344
+              byte_count: 242
+              word_count: 35
+              content_hash: 5446637f21fcaca8a4206ef2569e09b83c368d5113af3ffe033685f5333410d1
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Design before implementation for Feature B
+              byte_offset: 2586
+              byte_count: 441
+              word_count: 68
+              content_hash: 67efce65c7935d83fe873cafbf0066dfb870021899353e97403c48631ab802ad
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Keep it small
+              byte_offset: 3027
+              byte_count: 232
+              word_count: 34
+              content_hash: 8a5d14ead5f61a5d4a8b14eaa57f12583e1996cf3746eb5b22542874898cf7e3
+        - path: "1.4"
+          level: 2
+          title: 4. Features
+          byte_offset: 3259
+          byte_count: 487
+          word_count: 83
+          content_hash: 431e67af28ca809e5a73a55ba0d44028fc6d15381b2856de2b9fa64eb6d1ba11
+        - path: "1.5"
+          level: 2
+          title: '5. Feature A: Plan-Level Review SKILL'
+          byte_offset: 3746
+          byte_count: 2666
+          word_count: 386
+          content_hash: 4d92031addad60f37bef788f56360e75bd0003247f336e237af3f22802515fab
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Summary
+              byte_offset: 3788
+              byte_count: 248
+              word_count: 34
+              content_hash: 61c4a03eaa961c05e9d005fc5589bea1a6e7b4a36f2a76b80204305cf2ef0069
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Approach
+              byte_offset: 4036
+              byte_count: 275
+              word_count: 38
+              content_hash: b374ee32bf94c7cd865ec3a4c92b35b9e6c1ba7c5a040b9eb3e706660eb05b51
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Deliverables
+              byte_offset: 4311
+              byte_count: 198
+              word_count: 31
+              content_hash: dc7370343fb99a200720b7c04417c358d5e9733ef4b27dac8b08dd421a7173f0
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Procedure outline
+              byte_offset: 4509
+              byte_count: 1128
+              word_count: 150
+              content_hash: e38edc301a7fafb818c6122397b08e4f6a63593b0dad99a2e6b46b5d98e02a2f
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Scope exclusions
+              byte_offset: 5637
+              byte_count: 290
+              word_count: 45
+              content_hash: 2d922f3715beba958bbafe910f7268f78e2c515237d88bc92fe9d11966f9fe3e
+            - path: 1.5.6
+              level: 3
+              title: 5.6 Acceptance criteria
+              byte_offset: 5927
+              byte_count: 485
+              word_count: 81
+              content_hash: c6ccbcd80e79160c61c6ad5d62a3e43d4449b4908b58637e82e83347acc02fce
+        - path: "1.6"
+          level: 2
+          title: '6. Feature B: Review Tasks as Workflow Entities'
+          byte_offset: 6412
+          byte_count: 2934
+          word_count: 437
+          content_hash: b954d74597729ec1ef7e9601d6376d2decc7105626bc5bf0e45f9e960507bffa
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Summary
+              byte_offset: 6464
+              byte_count: 287
+              word_count: 42
+              content_hash: c7fab611663b5ffc0b16f46ee35a99959809935191891463f76c4802244b344d
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Design questions
+              byte_offset: 6751
+              byte_count: 1487
+              word_count: 219
+              content_hash: 9c03ddf2ce0aa4ee676145ffc79be3d34bd9559667ef656368296c91e8570aba
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Approach
+              byte_offset: 8238
+              byte_count: 202
+              word_count: 25
+              content_hash: c80508da536c6970b75f6ef1e7e8aa369cf425048150ba405071eb38b3ecee52
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Deliverables (provisional — subject to design)
+              byte_offset: 8440
+              byte_count: 421
+              word_count: 50
+              content_hash: df1535e567022a857219b052885e83b756a291eadd0e96cd0c3ee5f995fe9fd5
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Provisional acceptance criteria
+              byte_offset: 8861
+              byte_count: 485
+              word_count: 92
+              content_hash: dd38ab69fea887f8658e9bf9437341b05e4e9f6ec7a4bf8466cad8559cac601f
+        - path: "1.7"
+          level: 2
+          title: '7. Feature C: Documentation Currency Health Check'
+          byte_offset: 9346
+          byte_count: 3963
+          word_count: 597
+          content_hash: 58965fffd26e78f3ed900cd3680363f4996d3b30dbb0bc12408b23a27db7929f
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Summary
+              byte_offset: 9400
+              byte_count: 222
+              word_count: 28
+              content_hash: 67fe3b44f3c03211638e7a95099d7be5488c612446474f4054dc4198496893e9
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Approach
+              byte_offset: 9622
+              byte_count: 316
+              word_count: 37
+              content_hash: 040a96d8f13c3e368882d16807187cd3c2b4d3581f2db1dfac8ed0641236b86c
+            - path: 1.7.3
+              level: 3
+              title: '7.3 Tier 1: Tool Name Validation'
+              byte_offset: 9938
+              byte_count: 1107
+              word_count: 167
+              content_hash: 34af8ca34f6ccb02d5546566080e8584cf2d7d9e3b1990021e457adb0f978d5b
+            - path: 1.7.4
+              level: 3
+              title: '7.4 Tier 2: Plan Completion Documentation Checklist'
+              byte_offset: 11045
+              byte_count: 1081
+              word_count: 154
+              content_hash: d88eda193f8a6a7a6d9c0020f65fb482065609c9c7063169e62ed61f0038ec0f
+            - path: 1.7.5
+              level: 3
+              title: 7.5 Deliverables
+              byte_offset: 12126
+              byte_count: 339
+              word_count: 37
+              content_hash: b4ebe857f2faed48fd242ee8278c1d658d1d2549e71f8ee8963609e297baba50
+            - path: 1.7.6
+              level: 3
+              title: 7.6 Acceptance criteria
+              byte_offset: 12465
+              byte_count: 844
+              word_count: 166
+              content_hash: b201d797aadfc3224b4b3a468f3841194078debb8026b0b8e5ad093b6f735a44
+        - path: "1.8"
+          level: 2
+          title: 8. Sequencing
+          byte_offset: 13309
+          byte_count: 1134
+          word_count: 166
+          content_hash: e17145bf3c55edf19c60009469df2ff2eb679cff97417760c69e7e2c6b135201
+        - path: "1.9"
+          level: 2
+          title: 9. Risks and Mitigations
+          byte_offset: 14443
+          byte_count: 738
+          word_count: 125
+          content_hash: fa78b70d2d551a67f7331e242e5a8ec4142094bb8d74b4fcf769ffff260538ca
+        - path: "1.10"
+          level: 2
+          title: 10. Out of Scope
+          byte_offset: 15181
+          byte_count: 1027
+          word_count: 139
+          content_hash: 1282ea17b4e01bdcba655b1bfdd833959572cecccf60a7ef4f34d530751b3900
+entity_refs:
+    - entity_id: P10-review-and-doc-currency
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 360
+cross_doc_links:
+    - target_path: work/research/post-p9-feedback-analysis.md
+      link_text: work/research/post-p9-feedback-analysis.md
+      section_path: "1"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1"
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: "1.2"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.5.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.5.2
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.5.3
+    - target_path: work/reviews/review-<plan-slug>.md
+      link_text: work/reviews/review-<plan-slug>.md
+      section_path: 1.5.4
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.5.5
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.5.6
+    - target_path: work/design/plan-review-entities.md
+      link_text: work/design/plan-review-entities.md
+      section_path: 1.6.3
+    - target_path: work/design/plan-review-entities.md
+      link_text: work/design/plan-review-entities.md
+      section_path: 1.6.4
+    - target_path: work/spec/plan-review-entities.md
+      link_text: work/spec/plan-review-entities.md
+      section_path: 1.6.4
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: 1.7.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.7.3
+    - target_path: work/spec/doc-currency-health-check.md
+      link_text: work/spec/doc-currency-health-check.md
+      section_path: 1.7.5
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: 1.7.6
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.7.6
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.5.1
+      role: narrative
+      confidence: high
+    - section_path: 1.5.5
+      role: constraint
+      confidence: high
+    - section_path: 1.5.6
+      role: requirement
+      confidence: high
+    - section_path: 1.6.1
+      role: narrative
+      confidence: high
+    - section_path: 1.6.2
+      role: question
+      confidence: high
+    - section_path: 1.6.5
+      role: requirement
+      confidence: high
+    - section_path: 1.7.1
+      role: narrative
+      confidence: high
+    - section_path: 1.7.6
+      role: requirement
+      confidence: high
+    - section_path: "1.9"
+      role: risk
+      confidence: high
+    - section_path: "1.10"
+      role: constraint
+      confidence: high
+classified: false

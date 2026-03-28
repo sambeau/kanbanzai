@@ -1,0 +1,16 @@
+id: TASK-01KMRSP540DZ5
+parent_feature: FEAT-01KMRSMYB1ED7
+slug: feature-child-consistency-checks
+summary: "Add health check rules for feature-child state consistency: (1) feature is done/superseded/cancelled but has non-terminal child tasks — warning, (2) all child tasks are terminal but feature is in an early lifecycle state (proposed, designing, specifying, dev-planning) — warning. Integrate into existing health_check output. Include tests."
+status: done
+files_planned:
+  - internal/health/entity_consistency.go
+  - internal/health/entity_consistency_test.go
+  - internal/health/check.go
+  - internal/health/check_test.go
+completed: "2026-03-27T23:38:06Z"
+claimed_at: "2026-03-27T23:25:34Z"
+dispatched_to: backend
+dispatched_at: "2026-03-27T23:25:34Z"
+dispatched_by: orchestrator
+completion_summary: "Added feature-child state consistency health checks: detects terminal features with non-terminal children and early-state features with all-terminal children. 11 test cases."

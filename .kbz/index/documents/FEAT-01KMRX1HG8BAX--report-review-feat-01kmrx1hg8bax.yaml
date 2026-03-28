@@ -1,0 +1,155 @@
+document_id: FEAT-01KMRX1HG8BAX/report-review-feat-01kmrx1hg8bax
+document_path: work/reports/review-FEAT-01KMRX1HG8BAX.md
+content_hash: 581390906ab62ea3a312d0e831da2e169b98719b609b84242ea0c80fb517c535
+indexed_at: 2026-03-28T01:42:49.807388Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: FEAT-01KMRX1HG8BAX (reviewer-context-profile-and-skill)'
+      byte_offset: 0
+      byte_count: 8084
+      word_count: 1023
+      content_hash: 581390906ab62ea3a312d0e831da2e169b98719b609b84242ea0c80fb517c535
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Summary
+          byte_offset: 738
+          byte_count: 1078
+          word_count: 148
+          content_hash: ce7efe402e80b7e427c8f021d0129398fcc1c4cbe5efd2b181cc1d2ef93751ae
+        - path: "1.2"
+          level: 2
+          title: 2. Per-Dimension Verdicts
+          byte_offset: 1816
+          byte_count: 708
+          word_count: 91
+          content_hash: 5ae32be883b54de6dc828e2a60daf03d316e1d21f9d407628a26f9ba9164b629
+        - path: "1.3"
+          level: 2
+          title: 3. Blocking Findings
+          byte_offset: 2524
+          byte_count: 37
+          word_count: 6
+          content_hash: ccf754efd0f0e7e975a141f7f82e158095afcd7ffbe1bebdf9c4ea73ba7d7032
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Blocking Notes
+          byte_offset: 2561
+          byte_count: 4065
+          word_count: 517
+          content_hash: 0b0533cc1e61a7b5f90f67a6fbb17d64a991d6aa446fba71d02282f2ce789137
+          children:
+            - path: 1.4.1
+              level: 3
+              title: N1. SKILL uses "Audience" heading instead of "When to Use"
+              byte_offset: 2587
+              byte_count: 579
+              word_count: 80
+              content_hash: c1cc2ad682ba8d48330b4541d605956a7cfdf7a11baf23bea73a8454c586fe8d
+            - path: 1.4.2
+              level: 3
+              title: N2. Orchestration exclusion statement superseded by Feature F additions
+              byte_offset: 3166
+              byte_count: 723
+              word_count: 95
+              content_hash: 0b8c3e89626f6938637ebe1eb41a08141bf4b9af002eb95c8c865ae44ba6b95f
+            - path: 1.4.3
+              level: 3
+              title: N3. Non-deterministic map iteration in formatProfile
+              byte_offset: 3889
+              byte_count: 545
+              word_count: 59
+              content_hash: de4212ce8b5e33199cbd1a4cf0c14e731b9fa8d6bf61d4c968e7c980229a7712
+            - path: 1.4.4
+              level: 3
+              title: N4. Reviewer conventions replace base conventions by design
+              byte_offset: 4434
+              byte_count: 782
+              word_count: 98
+              content_hash: 61552127b3697c0e7e02de73abe1bac18c75de416a85661e5922c0ed19c9e22a
+            - path: 1.4.5
+              level: 3
+              title: N5. No tests for map-typed conventions in profiles ⚠️
+              byte_offset: 5216
+              byte_count: 822
+              word_count: 103
+              content_hash: 39d11366c1031b0428aed96a729ae08fd47f230d79a0a7d0a148cf9b8fd85f3a
+            - path: 1.4.6
+              level: 3
+              title: N6. No integration test for reviewer.yaml loading ⚠️
+              byte_offset: 6038
+              byte_count: 588
+              word_count: 78
+              content_hash: 5eeff9cf4bea9da2d67954adec69eb509dde6be424877eef65facd4ef287d7ad
+        - path: "1.5"
+          level: 2
+          title: 5. Reviewer Unit Breakdown
+          byte_offset: 6626
+          byte_count: 402
+          word_count: 40
+          content_hash: 7fcd087d782d71b4244f01d0bfed249a03626528116dfa79e43a51f05ea668af
+        - path: "1.6"
+          level: 2
+          title: 6. Human Checkpoint
+          byte_offset: 7028
+          byte_count: 703
+          word_count: 102
+          content_hash: e7519807fe06cc4a6c1aa881ad3b50bc22014595a210a86791ebf74bdea706d7
+        - path: "1.7"
+          level: 2
+          title: 7. Review Context
+          byte_offset: 7731
+          byte_count: 353
+          word_count: 45
+          content_hash: 0d6841aed77c5f7fa9b2dbf73360638c0150920bc3e8350b57060776c2822bde
+entity_refs:
+    - entity_id: FEAT-01KMRX1HG8BAX
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 17
+    - entity_id: FEAT-01KMKRQSD1TKK
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 7930
+    - entity_id: TASK-01KMRXK5ARR1S
+      entity_type: task
+      section_path: "1.7"
+      byte_offset: 7790
+    - entity_id: P6-workflow-quality-and-review
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 343
+cross_doc_links:
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.1"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.4.1
+    - target_path: .skills/README.md
+      link_text: .skills/README.md
+      section_path: 1.4.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.4.2
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.5"
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: "1.5"
+    - target_path: .skills/README.md
+      link_text: .skills/README.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+classified: false

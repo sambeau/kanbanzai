@@ -1,0 +1,94 @@
+document_id: FEAT-01KMKRQV025FA/dev-plan-public-schema-interface
+document_path: work/dev/public-schema-interface.md
+content_hash: eb8b63122c8b42d2a0615e585d4280e7b35dd4ec3843c59837db49a65bb1f598
+indexed_at: 2026-03-26T14:51:21.0471Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Public Schema Interface: Feature Dev-Plan'
+      byte_offset: 0
+      byte_count: 5308
+      word_count: 795
+      content_hash: eb8b63122c8b42d2a0615e585d4280e7b35dd4ec3843c59837db49a65bb1f598
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 381
+          byte_count: 465
+          word_count: 67
+          content_hash: 8ab7918f08969216d13d4cb2570424a86b82b4100523f70c4b0a02527d9d861e
+        - path: "1.2"
+          level: 2
+          title: Tasks
+          byte_offset: 846
+          byte_count: 3441
+          word_count: 482
+          content_hash: 7430d05ef96af205ce415add1c177c86a8d47fbdb1741c8adbf115d7d4fb86b8
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Export Go type layer (`public/` package)
+              byte_offset: 856
+              byte_count: 481
+              word_count: 68
+              content_hash: 47ceae7fed662e0664eef08b52c5a586bf5d0914b82577c6c198b6657dad772a
+            - path: 1.2.2
+              level: 3
+              title: T2 — Add `schema_version` to config
+              byte_offset: 1337
+              byte_count: 527
+              word_count: 73
+              content_hash: bb8649477705d4c2e5adef590da1a3b95ccafc1d46d817ce29e2303c97fe2388
+            - path: 1.2.3
+              level: 3
+              title: T3 — Implement Go query layer
+              byte_offset: 1864
+              byte_count: 867
+              word_count: 111
+              content_hash: 1f8db9bbf42551f86dd258179b8632c1a86d6d3c0d0369d788d9398f33898f9a
+            - path: 1.2.4
+              level: 3
+              title: T4 — JSON Schema generation
+              byte_offset: 2731
+              byte_count: 750
+              word_count: 110
+              content_hash: da0c4a8756c0e9a8136e6ffe0e30b2066e27c009e4f22320c6b80527be110f4e
+            - path: 1.2.5
+              level: 3
+              title: T5 — Tests and external-compilation verification
+              byte_offset: 3481
+              byte_count: 806
+              word_count: 118
+              content_hash: 17e0ff4cbc64c861ff95260c25b0d929c1104de76dbac3ebf93e9dc2151c973a
+        - path: "1.3"
+          level: 2
+          title: Implementation Notes
+          byte_offset: 4287
+          byte_count: 675
+          word_count: 113
+          content_hash: b2699cbea5a0c3a4df2345e6f48afe270be774615bdca57498ff7fbea7c79852
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria Coverage
+          byte_offset: 4962
+          byte_count: 346
+          word_count: 97
+          content_hash: 716448fc4dbc97af2603b16e95bca55e24a508285706a884e92f67292799b710
+entity_refs:
+    - entity_id: FEAT-01KMKRQV025FA
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 168
+cross_doc_links:
+    - target_path: work/spec/public-schema-interface.md
+      link_text: work/spec/public-schema-interface.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

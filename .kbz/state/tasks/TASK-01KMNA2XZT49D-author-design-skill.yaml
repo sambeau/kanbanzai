@@ -2,4 +2,12 @@ id: TASK-01KMNA2XZT49D
 parent_feature: FEAT-01KMKRQSD1TKK
 slug: author-design-skill
 summary: "Author the kanbanzai-design skill file (opinionated) covering: how to create and register a design document, the design→spec→dev-plan progression, when to use decompose_feature, how to approve a document with doc_record_approve, and the emergency brake rule (stop and ask before architecture decisions)."
-status: queued
+status: done
+files_planned:
+  - internal/init/skills/design/SKILL.md
+completed: "2026-03-26T15:07:24Z"
+claimed_at: "2026-03-26T15:06:42Z"
+dispatched_to: content
+dispatched_at: "2026-03-26T15:06:42Z"
+dispatched_by: agent/skills-content
+completion_summary: "Authored kanbanzai-design SKILL.md covering: Senior Designer / Design Manager roles, drafting complete documents (not outlines), presenting alternatives with explicit recommendation, open questions distinction (design vs. implementation), approved design invariant (4 criteria), risk surfacing escalation, when to split a design back to planning, scope growth after approval via supersession, design quality six-lens overview with pointer to references/design-quality.md, and three gotchas (alternatives in approved doc, unrecorded verbal approval, silent amendments)."

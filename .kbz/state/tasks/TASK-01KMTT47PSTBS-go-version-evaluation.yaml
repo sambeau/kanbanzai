@@ -1,0 +1,12 @@
+id: TASK-01KMTT47PSTBS
+parent_feature: FEAT-01KMTSPEE6BXS
+slug: go-version-evaluation
+summary: "Evaluate whether Go 1.25.0 features are actually used in the codebase. If not, lower the version in go.mod to the latest stable release (1.24.x or 1.23.x). Document which features, if any, require 1.25.0. Verify go build and go test pass at the chosen version. Covers AC-6, AC-7."
+status: done
+completed: "2026-03-28T18:23:42Z"
+claimed_at: "2026-03-28T18:21:41Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T18:21:41Z"
+dispatched_by: sambeau
+completion_summary: "Evaluated Go minimum version. The codebase itself uses no Go 1.25-specific features, but two dependencies (golang.org/x/sys v0.42.0, modernc.org/sqlite v1.47.0) require Go 1.25.0. Version retained at 1.25.0."
+verification: "AC-6: Evaluation documented in commit message (searched for range-over-func, iterator patterns, new stdlib APIs; found none; dependency analysis shows x/sys and sqlite require 1.25.0) ✓ | AC-7: Build and tests already pass at 1.25.0 (trivially satisfied as version unchanged) ✓"

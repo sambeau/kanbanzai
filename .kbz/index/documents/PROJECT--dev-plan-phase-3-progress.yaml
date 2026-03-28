@@ -1,0 +1,231 @@
+document_id: PROJECT/dev-plan-phase-3-progress
+document_path: work/plan/phase-3-progress.md
+content_hash: 4f36066c677c304a8fe91f3cdda4b9aaeafc4bafeb53f2d246412eedc51422a4
+indexed_at: 2026-03-25T21:38:28.743502Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 3 Progress
+      byte_offset: 0
+      byte_count: 15195
+      word_count: 2128
+      content_hash: 4f36066c677c304a8fe91f3cdda4b9aaeafc4bafeb53f2d246412eedc51422a4
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Implementation Status Summary
+          byte_offset: 880
+          byte_count: 1273
+          word_count: 191
+          content_hash: 0d3a53ef3d9dbc1bf472d0bd522b1b3576f18426721774a07ff2fa5bac5f2838
+        - path: "1.2"
+          level: 2
+          title: 2. Acceptance Criteria Status
+          byte_offset: 2153
+          byte_count: 4326
+          word_count: 675
+          content_hash: c145b148e0ac7ed98c94136f07fd2632078e0f79c403f3140de835cbde705656
+          children:
+            - path: 1.2.1
+              level: 3
+              title: §20.1 Worktree management — ✅ Met
+              byte_offset: 2236
+              byte_count: 609
+              word_count: 82
+              content_hash: 833fdac60cd4986caf15c32a409a63adf5d70d88e17d3b483077d904e42f4719
+            - path: 1.2.2
+              level: 3
+              title: §20.2 Branch tracking — ✅ Met
+              byte_offset: 2845
+              byte_count: 254
+              word_count: 38
+              content_hash: d8d3a35d0f20cd4fedadbad09e00b155e6983ad76e6096774266afc9f5790c9b
+            - path: 1.2.3
+              level: 3
+              title: §20.3 Merge gates — ✅ Met
+              byte_offset: 3099
+              byte_count: 357
+              word_count: 59
+              content_hash: e49cfffea479c48e454c85cd6f8eb469b56ecc894e43ef3f23656b35c6e088ad
+            - path: 1.2.4
+              level: 3
+              title: §20.4 GitHub PR integration — ✅ Met
+              byte_offset: 3456
+              byte_count: 341
+              word_count: 61
+              content_hash: f5d438baee493ff09113ca4b99ca8a57b4b264d746ba40f014bb5781a8446f84
+            - path: 1.2.5
+              level: 3
+              title: §20.5 Post-merge cleanup — ✅ Met
+              byte_offset: 3797
+              byte_count: 347
+              word_count: 54
+              content_hash: 2b2c816a74659dbeba4ee28b68136107d6e09a986159557e06d4fef41b24144c
+            - path: 1.2.6
+              level: 3
+              title: §20.6 Git anchoring — ✅ Met
+              byte_offset: 4144
+              byte_count: 366
+              word_count: 58
+              content_hash: 81ca9777aae7fd1680b7369b825d5137779a04950d5e19727ebc8e180b31e947
+            - path: 1.2.7
+              level: 3
+              title: §20.7 TTL-based pruning — ✅ Met
+              byte_offset: 4510
+              byte_count: 308
+              word_count: 51
+              content_hash: b4d2caddb7211ef51a7e821652bc2fcdd341a99c9b43d1b6cf2233243d1b2164
+            - path: 1.2.8
+              level: 3
+              title: §20.8 Automatic promotion — ✅ Met
+              byte_offset: 4818
+              byte_count: 319
+              word_count: 55
+              content_hash: fd8ba902793ddd172889d1c03767f43db5f670178262ed1d556768849df0dc10
+            - path: 1.2.9
+              level: 3
+              title: §20.9 Post-merge compaction — ✅ Met
+              byte_offset: 5137
+              byte_count: 667
+              word_count: 100
+              content_hash: abbcbb55726aed5047d4076b94f1ffb5585a52894be4e07df79ec9ad50ca760a
+            - path: 1.2.10
+              level: 3
+              title: §20.10 Health checks — ✅ Met
+              byte_offset: 5804
+              byte_count: 219
+              word_count: 37
+              content_hash: 82b2b901defcbabf7830283552513b5dfe70d60c91ca6dc39a0601989277bf1a
+            - path: 1.2.11
+              level: 3
+              title: §20.11 Configuration — ✅ Met
+              byte_offset: 6023
+              byte_count: 246
+              word_count: 40
+              content_hash: 0dd3a09d53dd37f3f4b9db6ab31e3099778bf202423096bb73a2e3f91db40f57
+            - path: 1.2.12
+              level: 3
+              title: §20.12 Deterministic storage — ✅ Met
+              byte_offset: 6269
+              byte_count: 210
+              word_count: 29
+              content_hash: 3aa4adda56b9ed838a5a3538f506227e398990b2c95b3387acc3d93e3d257f7d
+        - path: "1.3"
+          level: 2
+          title: 3. MCP Tools and CLI
+          byte_offset: 6479
+          byte_count: 1036
+          word_count: 156
+          content_hash: c7c2f7e3fdca805e4ba5e826e9b11a814e6b19344fbe1559d61e33895e6542ff
+          children:
+            - path: 1.3.1
+              level: 3
+              title: MCP Tools — ✅ All 18 tools registered
+              byte_offset: 6504
+              byte_count: 562
+              word_count: 71
+              content_hash: 7cf0d0272f24c30b0a58e9c5cea7dd7ab47c185ec8e63c40124d63cca01513ce
+            - path: 1.3.2
+              level: 3
+              title: CLI Commands — ✅ All implemented
+              byte_offset: 7066
+              byte_count: 449
+              word_count: 79
+              content_hash: 1790d2e13f7c0d01fef4c6d92ae2f79f23303e5631d814fc40c517811c070e4d
+        - path: "1.4"
+          level: 2
+          title: 4. Test Status
+          byte_offset: 7515
+          byte_count: 1242
+          word_count: 216
+          content_hash: 0e246ed151dbda61d91880d2dbfb40fe2b49a1fc029c89e442c816b028662ffa
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Test coverage by package
+              byte_offset: 7601
+              byte_count: 901
+              word_count: 165
+              content_hash: 5b97d7e283450a4f279b2879fc799bc92e3e1e5289dd254df014e72463a0b991
+            - path: 1.4.2
+              level: 3
+              title: Key test gaps (remaining)
+              byte_offset: 8502
+              byte_count: 255
+              word_count: 34
+              content_hash: 7aae4a94c7224a7b68bd9ff2570e54f00a95cda33278d7ef914eb84d662ed858
+        - path: "1.5"
+          level: 2
+          title: 5. Post-Implementation Audit
+          byte_offset: 8757
+          byte_count: 4147
+          word_count: 510
+          content_hash: 92ec2f37fc9118f0fad2a7106ff78af19bcf733586285529fae6af481a5435ea
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Must-fix (R1–R4) — ✅ All fixed
+              byte_offset: 8956
+              byte_count: 1028
+              word_count: 131
+              content_hash: 4c02d5d9191bc440c6d0f522a5e5dd6855274d994d2a384d2e61a19d86e81aaf
+            - path: 1.5.2
+              level: 3
+              title: Should-fix (R5–R11) — ✅ All fixed
+              byte_offset: 9984
+              byte_count: 1452
+              word_count: 193
+              content_hash: 5f67b8098b2a96fd370a9c631fc472d250be272d119108568dd594c3df76cae3
+            - path: 1.5.3
+              level: 3
+              title: Nice-to-have (R12–R17) — ✅ All fixed
+              byte_offset: 11436
+              byte_count: 1468
+              word_count: 158
+              content_hash: f2362b524d529abc3c2ed17de3933118e86911b2578654eb98e5462dd6f932e7
+        - path: "1.6"
+          level: 2
+          title: 6. Remediation Status
+          byte_offset: 12904
+          byte_count: 1935
+          word_count: 230
+          content_hash: 0483274e3f15070574f20fbb373e1a22abe57a63eb50689a5a7d767facd81bb8
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Automatic worktree creation (§20.1 criteria 1 and 6) — ✅ Implemented
+              byte_offset: 13060
+              byte_count: 1779
+              word_count: 208
+              content_hash: 51d6e2438056ddf5c0034e841919194774cffd9719f3bb512d4f53c6164affc5
+        - path: "1.7"
+          level: 2
+          title: 7. Deferred to Phase 4
+          byte_offset: 14839
+          byte_count: 356
+          word_count: 50
+          content_hash: 1ef64c5984bcc84393377704bd61287ee308a06ed5983eb6cc181dd3ae52db1a
+cross_doc_links:
+    - target_path: work/spec/phase-3-specification.md
+      link_text: work/spec/phase-3-specification.md
+      section_path: "1"
+    - target_path: work/plan/phase-3-scope.md
+      link_text: work/plan/phase-3-scope.md
+      section_path: "1"
+    - target_path: work/plan/phase-3-implementation-plan.md
+      link_text: work/plan/phase-3-implementation-plan.md
+      section_path: "1"
+    - target_path: work/plan/phase-3-decision-log.md
+      link_text: work/plan/phase-3-decision-log.md
+      section_path: "1"
+    - target_path: work/plan/phase-2b-progress.md
+      link_text: work/plan/phase-2b-progress.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+classified: false

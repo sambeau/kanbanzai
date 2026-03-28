@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"time"
 
-	"kanbanzai/internal/cleanup"
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/cleanup"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 func runCleanup(args []string, deps dependencies) error {

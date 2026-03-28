@@ -1,0 +1,7 @@
+id: TASK-01KMRJBC8KGHA
+parent_feature: FEAT-01KMRJ81DZ3X2
+slug: retro-cluster-and-rank
+summary: "Implement within-category clustering and ranking. Cluster signals by Jaccard similarity on content tokens (threshold ~0.5); singleton clusters for signals that fall below threshold. Rank clusters by signal_count × max_severity_weight (minor=1, moderate=3, significant=5); tiebreak by higher raw signal_count. Separate worked-well signals into a worked_well section. Produce the full response structure per spec §7.3: rank, category, title (generated summary), signal_count, severity_score, signals (KE IDs), representative_observation, top_suggestion (if any cluster member has a suggestion). Acceptance criteria: P5-2.8, P5-2.9, P5-2.12."
+status: not-planned
+depends_on:
+  - TASK-01KMRJB41JRRH

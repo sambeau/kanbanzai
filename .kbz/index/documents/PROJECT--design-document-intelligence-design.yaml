@@ -1,0 +1,714 @@
+document_id: PROJECT/design-document-intelligence-design
+document_path: work/design/document-intelligence-design.md
+content_hash: 00cc1a668e92c6740bab24f7df8578aa75270c2ef674ca533eff4fcd6548742c
+indexed_at: 2026-03-25T21:38:22.205198Z
+sections:
+    - path: "1"
+      level: 1
+      title: Document Intelligence Design
+      byte_offset: 0
+      byte_count: 50842
+      word_count: 7270
+      content_hash: 00cc1a668e92c6740bab24f7df8578aa75270c2ef674ca533eff4fcd6548742c
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 479
+          byte_count: 967
+          word_count: 117
+          content_hash: 755a68a1abd2dd10d523a59b0fb23db1a7ac9ad5d4802435acb2b28afbf51f19
+        - path: "1.2"
+          level: 2
+          title: 2. Problem Statement
+          byte_offset: 1446
+          byte_count: 2079
+          word_count: 322
+          content_hash: 1391148bfe336031042066aa765178a08e343d0c92fd7758324cfd95ddb1de11
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 The scale problem
+              byte_offset: 1471
+              byte_count: 611
+              word_count: 100
+              content_hash: 717733f7ba752550ced8e2f2510cbb685f0283c19f6d372983b8356ed9a5311b
+            - path: 1.2.2
+              level: 3
+              title: 2.2 The precision problem
+              byte_offset: 2082
+              byte_count: 354
+              word_count: 56
+              content_hash: 72cd88845e6c9b4c73d41295b259fa865a9ec77ad537e939fc86529c7b1576bf
+            - path: 1.2.3
+              level: 3
+              title: 2.3 The search problem
+              byte_offset: 2436
+              byte_count: 597
+              word_count: 96
+              content_hash: a209783c60c3d0cdb5aee58c2c860353b758a3f671a82dadac204b0539c6d247
+            - path: 1.2.4
+              level: 3
+              title: 2.4 The context assembly problem
+              byte_offset: 3033
+              byte_count: 492
+              word_count: 66
+              content_hash: 2396a48d69d8d5bb5eb3aa0b5404dc95f993bf448d483f3087631b2cc2f9d660
+        - path: "1.3"
+          level: 2
+          title: 3. The Code Intelligence Analogy
+          byte_offset: 3525
+          byte_count: 1187
+          word_count: 170
+          content_hash: 39bbda11324b4277e0276132802e9d186c6cf45067a25ed0c1516049543c39da
+        - path: "1.4"
+          level: 2
+          title: 4. Design Principles
+          byte_offset: 4712
+          byte_count: 1857
+          word_count: 262
+          content_hash: 4ea8ae2c04a0c3389fb5b93a8eccfbd4975a6f3b3891444f28613b3c24290b24
+        - path: "1.5"
+          level: 2
+          title: 5. The Four-Layer Analysis Model
+          byte_offset: 6569
+          byte_count: 4297
+          word_count: 644
+          content_hash: 4212ffbc6eab895be44f2f7b9cebb7c91b42e230970ca294b4f320f84182735b
+          children:
+            - path: 1.5.1
+              level: 3
+              title: '5.1 Layer 1: Structural skeleton'
+              byte_offset: 7201
+              byte_count: 892
+              word_count: 137
+              content_hash: 7151821f1462a22b345432b4b0d72c9fd4194e9233e42bff9e2403e591a90c0e
+            - path: 1.5.2
+              level: 3
+              title: '5.2 Layer 2: Pattern-based extraction'
+              byte_offset: 8093
+              byte_count: 1274
+              word_count: 173
+              content_hash: b04c85b4baa4e31e9f0fe5e03fd8804c12b3722af214ae785d2b469300b8dae2
+            - path: 1.5.3
+              level: 3
+              title: '5.3 Layer 3: AI-assisted classification'
+              byte_offset: 9367
+              byte_count: 1279
+              word_count: 186
+              content_hash: caa5eff9295f5fcd6700529d4435996c1fd13b4b26a3a80fb996e906d6333bfd
+            - path: 1.5.4
+              level: 3
+              title: '5.4 Layer 4: The document graph'
+              byte_offset: 10646
+              byte_count: 220
+              word_count: 38
+              content_hash: e3edd4fec4156d0d85c4c580a40404c4f823992d0d907a01950f32fc8349cf7d
+        - path: "1.6"
+          level: 2
+          title: 6. The AI-at-Ingest-Time Architecture
+          byte_offset: 10866
+          byte_count: 4368
+          word_count: 669
+          content_hash: 114eca7dca256ab9e5efcf9a6d301f82690b9de77f179d6dce5cf46c1cc15e6e
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Core mechanism
+              byte_offset: 10908
+              byte_count: 1486
+              word_count: 213
+              content_hash: ea3dc8472268cd26e7fd2d368060e07832d6df2e84f039f0d0d726a9a08df15a
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Why the tool does not call an LLM
+              byte_offset: 12394
+              byte_count: 919
+              word_count: 156
+              content_hash: 80f079012be0e401cadaa76c8e108752f6dbacaca7dd012cad6f4474313576dc
+            - path: 1.6.3
+              level: 3
+              title: 6.3 The classification protocol
+              byte_offset: 13313
+              byte_count: 1037
+              word_count: 158
+              content_hash: 12db3bb730cc076718cc8832b631e62e7a64b56e0c50af0a1030ab8ce77f6407
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Documents that arrive without an agent
+              byte_offset: 14350
+              byte_count: 884
+              word_count: 137
+              content_hash: 7ed164b29682fbe10477774277174b5a8cd6acbcd3eaac277472b9452bb3136a
+        - path: "1.7"
+          level: 2
+          title: 7. The Document Graph Schema
+          byte_offset: 15234
+          byte_count: 2510
+          word_count: 351
+          content_hash: b3ceaeb167da45a29a0b84409dcd82531138d66e3a4e4dabad3e0a2e19698fc8
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Node types
+              byte_offset: 15267
+              byte_count: 637
+              word_count: 118
+              content_hash: 50be487ab4ee823ccf981d4c9dc38d6ffede204cea8fbf70af00a9b60d1ad3ca
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Edge types
+              byte_offset: 15904
+              byte_count: 781
+              word_count: 124
+              content_hash: 1a0c2011cc41862f29be46fbc27abc77e4653ce9e006c2a40bc2ed04c94eeb53
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Example graph fragment
+              byte_offset: 16685
+              byte_count: 1059
+              word_count: 103
+              content_hash: c8e2a5773073f83240ddc61bd6cb51eb164f3cce707fc670452e7fd4bf4ee1df
+        - path: "1.8"
+          level: 2
+          title: 8. The Refinement Chain
+          byte_offset: 17744
+          byte_count: 4829
+          word_count: 723
+          content_hash: 279aa78bc1959dae7e6726c27595430abf94fe60f01af1eef36ce48483169d39
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 What the refinement chain enables
+              byte_offset: 18344
+              byte_count: 757
+              word_count: 122
+              content_hash: 9a73e9c4ccebf4042693b763330b169ca5126263555ad4accdbb63b7f14a4f7a
+            - path: 1.8.2
+              level: 3
+              title: 8.2 How refinement edges are established
+              byte_offset: 19101
+              byte_count: 605
+              word_count: 86
+              content_hash: b61e0a28a91b63f72e3af24d875946afb49a13bbfd60172224a1644aaab73d3f
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Cross-document consistency checking
+              byte_offset: 19706
+              byte_count: 2867
+              word_count: 430
+              content_hash: 679c51aa7be4eed6e1d60ff7c713cdfad8c3bd60065ba8045aad9ea4690f81ac
+        - path: "1.9"
+          level: 2
+          title: 9. Query Operations
+          byte_offset: 22573
+          byte_count: 3101
+          word_count: 452
+          content_hash: 60e22d32b8c2c170f30818b69a6d35a46c4ec4f0c60e06d98b7a1f9aaae20f26
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Document-level operations
+              byte_offset: 22697
+              byte_count: 377
+              word_count: 58
+              content_hash: 3081272fc145b9b934a68d4fa40bfe8a2e9487a11a9f6856d8875cc7560de964
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Section-level operations
+              byte_offset: 23074
+              byte_count: 311
+              word_count: 46
+              content_hash: bd5f26435bc0affc387a19f605ea22b3b6c4ebdad2a06e52bc30d51660443628
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Search operations
+              byte_offset: 23385
+              byte_count: 595
+              word_count: 93
+              content_hash: 96f0b7d417b2fe992de1be176a2f3d6fad25b44606d3cc2dbdc44dd9efa5d38f
+            - path: 1.9.4
+              level: 3
+              title: 9.4 Analysis operations
+              byte_offset: 23980
+              byte_count: 649
+              word_count: 97
+              content_hash: 126210b4f5e1a850ff867ef170397f500f124ded38bdc62835d2076499215fd3
+            - path: 1.9.5
+              level: 3
+              title: 9.5 Curation operations
+              byte_offset: 24629
+              byte_count: 456
+              word_count: 71
+              content_hash: c16b91f6441a41fc3b1cb09048418387081dfbee4486b2f23c565cba4931f23c
+            - path: 1.9.6
+              level: 3
+              title: 9.6 Layered availability
+              byte_offset: 25085
+              byte_count: 589
+              word_count: 67
+              content_hash: 37c681e6f7123adec187097094cccb2eb43d73891d8e10cd536030bb95c4de8f
+        - path: "1.10"
+          level: 2
+          title: 10. Vertical and Horizontal Slicing
+          byte_offset: 25674
+          byte_count: 1605
+          word_count: 241
+          content_hash: 859b4074bff66dfe659fef0bb6455479df7b23c1f238cdcb84c76dbaafa7447a
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Vertical slices
+              byte_offset: 25799
+              byte_count: 681
+              word_count: 105
+              content_hash: d93b50cc402f2c163644ba6dfcf05f16913929492cb026f0450c862813302a47
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Horizontal slices
+              byte_offset: 26480
+              byte_count: 558
+              word_count: 84
+              content_hash: 8a232d9e5a3a52943e68e9ea2e982ad57d6310ac0618fcd13028c71ff5a5e4c7
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Combined slicing
+              byte_offset: 27038
+              byte_count: 241
+              word_count: 34
+              content_hash: 522d66761ffd8b572968d1c8d32dc678b187c650b6f92b4e106e7f9a19c9668d
+        - path: "1.11"
+          level: 2
+          title: 11. The Fragment Role Taxonomy
+          byte_offset: 27279
+          byte_count: 2037
+          word_count: 328
+          content_hash: b03240ab543d6e464f71b2da293746f29de2a382024cc25e1dd1af2f85835c6b
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Roles
+              byte_offset: 27448
+              byte_count: 1293
+              word_count: 216
+              content_hash: 2a1966b3d1f8b4fc357d5aa8d3296f555416c81edfb98d7a1d8026823cfdc408
+            - path: 1.11.2
+              level: 3
+              title: 11.2 Taxonomy evolution
+              byte_offset: 28741
+              byte_count: 253
+              word_count: 38
+              content_hash: 94102fe7b961a5e076a7728a959c72744babe8a2a59070654f4802fc8737bc6b
+            - path: 1.11.3
+              level: 3
+              title: 11.3 Confidence
+              byte_offset: 28994
+              byte_count: 322
+              word_count: 46
+              content_hash: 0730f25d028301cbe4fc82f29cd9a070dac9b0e31edbc2498c573b81bbdfaf0e
+        - path: "1.12"
+          level: 2
+          title: 12. The Concept Model
+          byte_offset: 29316
+          byte_count: 5085
+          word_count: 746
+          content_hash: 7c123614dc71965b213d78878c2f50a78bba5ec86e0e74becd3bf04750377218
+          children:
+            - path: 1.12.1
+              level: 3
+              title: 12.1 What a concept is
+              byte_offset: 29447
+              byte_count: 375
+              word_count: 59
+              content_hash: a6a77e91d5dab4054fef80d72f6b3849f6f713e28cb5381af46b2f19975b9595
+            - path: 1.12.2
+              level: 3
+              title: 12.2 How concepts are created
+              byte_offset: 29822
+              byte_count: 549
+              word_count: 83
+              content_hash: 65048f30c58a2d74740dfb4eb479eaff0a57dd68b99e3ffcc9b9e0cba3c8a275
+            - path: 1.12.3
+              level: 3
+              title: 12.3 Concept scope
+              byte_offset: 30371
+              byte_count: 284
+              word_count: 45
+              content_hash: 782b064e0bb108b43329e4c26bf0133658a8b0b0747b979cf5e07ed507ba5aef
+            - path: 1.12.4
+              level: 3
+              title: 12.4 Extraction scope
+              byte_offset: 30655
+              byte_count: 2072
+              word_count: 297
+              content_hash: 215239461f9c24ac3fcfecc0c5887fc266c4d21afdb06c73b90a3be8f3d0e318
+            - path: 1.12.5
+              level: 3
+              title: 12.5 Concept lifecycle
+              byte_offset: 32727
+              byte_count: 1143
+              word_count: 170
+              content_hash: 34bbb3f3038df4992fad7348369704201a2262ec5cd1cdf97c2879fdd11bc25f
+            - path: 1.12.6
+              level: 3
+              title: 12.6 Relationship to knowledge entries
+              byte_offset: 33870
+              byte_count: 531
+              word_count: 71
+              content_hash: b9d3ae6e1d466abf435cdb73c8540ffd64c05e299fc53f33c8371203c054af80
+        - path: "1.13"
+          level: 2
+          title: 13. Storage Model
+          byte_offset: 34401
+          byte_count: 3233
+          word_count: 327
+          content_hash: a03e786504587eeeb238ec6dd0afb3efa9f0e6f05a75bb08714816a148de6840
+          children:
+            - path: 1.13.1
+              level: 3
+              title: 13.1 Index storage
+              byte_offset: 34423
+              byte_count: 763
+              word_count: 84
+              content_hash: ea00f038e01c9d22d03e25e6fb453b8200fa11b10cb5bcf34391c85e38b06164
+            - path: 1.13.2
+              level: 3
+              title: 13.2 Per-document index file
+              byte_offset: 35186
+              byte_count: 1532
+              word_count: 140
+              content_hash: 30f132a892da98d15ad022f38f9cf1ddfe4f716c044bed6aa8b15ce35086f6dc
+            - path: 1.13.3
+              level: 3
+              title: 13.3 Concept registry
+              byte_offset: 36718
+              byte_count: 567
+              word_count: 48
+              content_hash: 820b162d3089fb96a87a736b04367f296d0da2b5305a52e00a62c714d4b452b2
+            - path: 1.13.4
+              level: 3
+              title: 13.4 Serialisation rules
+              byte_offset: 37285
+              byte_count: 349
+              word_count: 51
+              content_hash: 7f3ada71a116a13b454e7880c38c79dd782f5669bb8135d7c6c4e5625c2f8fd1
+        - path: "1.14"
+          level: 2
+          title: 14. Relationship to Existing Designs
+          byte_offset: 37634
+          byte_count: 5616
+          word_count: 754
+          content_hash: a78a4a603c3a1f53f03e13a7fab40caa0157f53f377a24c1910e094188334d7d
+          children:
+            - path: 1.14.1
+              level: 3
+              title: 14.1 Document-centric interface
+              byte_offset: 37675
+              byte_count: 650
+              word_count: 84
+              content_hash: 38c2b6731ffc3a2d4ac30aa0d7439548e4d659b78b8b541f4c05d85cac001837
+            - path: 1.14.2
+              level: 3
+              title: 14.2 Machine-context design
+              byte_offset: 38325
+              byte_count: 752
+              word_count: 103
+              content_hash: d6ffbd68d37dda2ec2b5f9e1aaa4b8f9edcd21026a030d2c73eabb1bb93246b5
+            - path: 1.14.3
+              level: 3
+              title: 14.3 Normalization pipeline
+              byte_offset: 39077
+              byte_count: 578
+              word_count: 76
+              content_hash: 20608a43e5ade653189d4ea31b68e7354290456b1cf94eb5dde13a357bd10e59
+            - path: 1.14.4
+              level: 3
+              title: 14.4 Formality gradient
+              byte_offset: 39655
+              byte_count: 696
+              word_count: 85
+              content_hash: 3ca817a8dac37e9d516c6a7a934734152d7e73c0a4c99f067ce6294764e07bab
+            - path: 1.14.5
+              level: 3
+              title: 14.5 Document type extensibility
+              byte_offset: 40351
+              byte_count: 2899
+              word_count: 400
+              content_hash: e4c748d054ec796bf7d48d95dff3e051a09c0bf5fcc7d4c7973cc5c3ff50d609
+        - path: "1.15"
+          level: 2
+          title: 15. Cost Model
+          byte_offset: 43250
+          byte_count: 1118
+          word_count: 178
+          content_hash: a6fdb554140dd88d1a56acaa62cf505c135bcb61005a48f02eefe00cd6ca4a0c
+          children:
+            - path: 1.15.1
+              level: 3
+              title: 15.1 Ingest cost (Layers 1–2)
+              byte_offset: 43269
+              byte_count: 92
+              word_count: 11
+              content_hash: d2a0acc2238d64d69a9efa9d1c72d324ff1879760b5b0bfb76522eee892075cf
+            - path: 1.15.2
+              level: 3
+              title: 15.2 Classification cost (Layer 3)
+              byte_offset: 43361
+              byte_count: 510
+              word_count: 81
+              content_hash: 11d3885ef517b3c426f2fdaebede2425192cda3307ddf59dc327a57a2a3729b1
+            - path: 1.15.3
+              level: 3
+              title: 15.3 Query cost
+              byte_offset: 43871
+              byte_count: 188
+              word_count: 32
+              content_hash: 81f0b598f38d7a700db4814c9854c71517d431ae705b453876da45f8fac30481
+            - path: 1.15.4
+              level: 3
+              title: 15.4 Amortisation
+              byte_offset: 44059
+              byte_count: 309
+              word_count: 50
+              content_hash: de5c69c68c7f08aeeeff073aa1add94468d2558f65f0c180760ac98132272faa
+        - path: "1.16"
+          level: 2
+          title: 16. What This Document Is Not
+          byte_offset: 44368
+          byte_count: 1023
+          word_count: 164
+          content_hash: c6b44800f0ce15a51364cb10ec7a79bbb2221b11d8e79d1b54fd49bb9bf3645a
+        - path: "1.17"
+          level: 2
+          title: 17. Open Questions
+          byte_offset: 45391
+          byte_count: 2745
+          word_count: 387
+          content_hash: 7174bf946a7e03cc0573643c7615dde94f9a37ef10e43b263caced33ab954830
+          children:
+            - path: 1.17.1
+              level: 3
+              title: 17.1 Design questions
+              byte_offset: 45414
+              byte_count: 61
+              word_count: 9
+              content_hash: c01a61aa814b0c11cbbaef82b685023bcdbf60267f971705abd35522eef86627
+            - path: 1.17.2
+              level: 3
+              title: 17.2 Implementation questions
+              byte_offset: 45475
+              byte_count: 1478
+              word_count: 208
+              content_hash: 2eb1386cc2ecbb6b6125c8ed3350ebc119edb3041df59ca411c45b5afec0e27f
+            - path: 1.17.3
+              level: 3
+              title: 17.3 Resolved questions
+              byte_offset: 46953
+              byte_count: 1183
+              word_count: 166
+              content_hash: 01cd376801e51cd303873f58503ed9942b43845e46e879a2f999cf5a64676705
+        - path: "1.18"
+          level: 2
+          title: 18. Phasing
+          byte_offset: 48136
+          byte_count: 1281
+          word_count: 182
+          content_hash: 09ce2f214e5e282ba1b8ce5cf7dd496c6ab23affe04a672ed27bea8601a7a95c
+          children:
+            - path: 1.18.1
+              level: 3
+              title: 18.1 Phase 1
+              byte_offset: 48152
+              byte_count: 275
+              word_count: 43
+              content_hash: 4f32723aa2e57797c56f1ee9d606054e663afd0d5447739a4242b3bba690cc6e
+            - path: 1.18.2
+              level: 3
+              title: 18.2 Phase 2
+              byte_offset: 48427
+              byte_count: 494
+              word_count: 68
+              content_hash: fd12b3b5dbf873caa6d6a7ecddcedbff0b8631877995271ffc1e38dc3e333ec6
+            - path: 1.18.3
+              level: 3
+              title: 18.3 Phase 3 and beyond
+              byte_offset: 48921
+              byte_count: 496
+              word_count: 68
+              content_hash: 72b095212962962c822f7077091312ac5161465ad4de885ccbfadd90e5c61f93
+        - path: "1.19"
+          level: 2
+          title: 19. Summary
+          byte_offset: 49417
+          byte_count: 1425
+          word_count: 201
+          content_hash: 0e2ccb26d9fbb0e896d920f7d2c0757bf365ef09f444eea803ef74d2e92552c6
+front_matter:
+    status: draft design
+    date: "2026-07-18"
+    related:
+        - work/design/document-centric-interface.md` §7, §8, §9
+        - work/design/machine-context-design.md` §4.1, §8, §13
+        - work/design/workflow-design-basis.md` §6.4, §8.5, §15
+        - work/spec/phase-1-specification.md
+    extra:
+        Purpose: define the structural analysis backend for design documents — the mechanism that enables code-intelligence-like capabilities for the document corpus
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 8275
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 9230
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.7.3
+      byte_offset: 17232
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.14.2
+      byte_offset: 38765
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.5.2
+      byte_offset: 8298
+    - entity_id: BUG-xxx
+      entity_type: bug
+      section_path: 1.5.2
+      byte_offset: 8310
+    - entity_id: DEC-xxx
+      entity_type: decision
+      section_path: 1.5.2
+      byte_offset: 8287
+    - entity_id: DEC-017
+      entity_type: decision
+      section_path: 1.5.2
+      byte_offset: 9243
+    - entity_id: DEC-008
+      entity_type: decision
+      section_path: 1.13.4
+      byte_offset: 37393
+    - entity_id: EPIC-xxx
+      entity_type: epic
+      section_path: 1.5.2
+      byte_offset: 8332
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.5.2
+      byte_offset: 8321
+    - entity_id: DOC-xxxxx
+      entity_type: document
+      section_path: 1.13.1
+      byte_offset: 34839
+    - entity_id: DOC-yyyyy
+      entity_type: document
+      section_path: 1.13.1
+      byte_offset: 34933
+    - entity_id: DOC-A1B2C3D4E5F6G
+      entity_type: document
+      section_path: 1.13.2
+      byte_offset: 35398
+    - entity_id: DOC-A1B2C3D4E5F6G
+      entity_type: document
+      section_path: 1.13.3
+      byte_offset: 36861
+    - entity_id: DOC-B2C3D4E5F6G7H
+      entity_type: document
+      section_path: 1.13.3
+      byte_offset: 36963
+    - entity_id: DOC-C3D4E5F6G7H8I
+      entity_type: document
+      section_path: 1.13.3
+      byte_offset: 37035
+cross_doc_links:
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.1"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1.1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: 1.2.4
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1.4"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: 1.6.1
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: 1.12.5
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: 1.12.6
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: 1.14.1
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: 1.14.2
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: 1.14.3
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: 1.14.4
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: 1.14.5
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1.16"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: 1.18.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.4
+      role: narrative
+      confidence: high
+    - section_path: 1.7.3
+      role: example
+      confidence: high
+    - section_path: 1.12.3
+      role: constraint
+      confidence: high
+    - section_path: 1.12.4
+      role: constraint
+      confidence: high
+    - section_path: 1.14.2
+      role: narrative
+      confidence: high
+    - section_path: "1.17"
+      role: question
+      confidence: high
+    - section_path: 1.17.1
+      role: question
+      confidence: high
+    - section_path: 1.17.2
+      role: question
+      confidence: high
+    - section_path: 1.17.3
+      role: question
+      confidence: high
+    - section_path: "1.19"
+      role: narrative
+      confidence: high
+classified: false

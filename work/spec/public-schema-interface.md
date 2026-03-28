@@ -3,8 +3,8 @@
 | Document | Public Schema Interface Specification        |
 |----------|----------------------------------------------|
 | Status   | Draft                                        |
-| Created  | 2026-05-31                                   |
-| Updated  | 2026-05-31                                   |
+| Created  | 2026-03-26T14:35:25Z                                   |
+| Updated  | 2026-03-26T14:35:25Z                                   |
 | Related  | `work/design/public-schema-interface.md`     |
 |          | `work/design/kanbanzai-1.0.md` §7            |
 

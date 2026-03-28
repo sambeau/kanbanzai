@@ -1,0 +1,992 @@
+document_id: PROJECT/design-workflow-system-design
+document_path: work/design/workflow-system-design.md
+content_hash: 53326ee2a0da2676fcac21879d1859fa6e46c2854aa253dbaf38ba16283c16c0
+indexed_at: 2026-03-25T21:38:22.325114Z
+sections:
+    - path: "1"
+      level: 1
+      title: Workflow System Design
+      byte_offset: 0
+      byte_count: 56420
+      word_count: 8067
+      content_hash: 53326ee2a0da2676fcac21879d1859fa6e46c2854aa253dbaf38ba16283c16c0
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 442
+          byte_count: 416
+          word_count: 59
+          content_hash: 4f08f7bf49f9d303b0b9cf99e74b4d982f2781ed0b364b53fb825a11941fc80c
+        - path: "1.2"
+          level: 2
+          title: 2. Design Principles
+          byte_offset: 858
+          byte_count: 4926
+          word_count: 736
+          content_hash: ce56c0c4691bb51b7b61afb185c06571a6d8741775350ddf5c602f243e1634b5
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 The Parsley Aesthetic
+              byte_offset: 883
+              byte_count: 136
+              word_count: 16
+              content_hash: 7818ff33ade0e85e0167a986cdcc6f2b1697f716a1bd18c44e24f8df10e7c192
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Disciplined Normalisation
+              byte_offset: 1019
+              byte_count: 1935
+              word_count: 300
+              content_hash: cf0d857ea13e760901d7397b033b6adf2bc9dde1e557f2aaf63f4a0fe092d98c
+            - path: 1.2.3
+              level: 3
+              title: 2.3 Workflow State Is the Source of Truth, Conversation Is the Interface
+              byte_offset: 2954
+              byte_count: 322
+              word_count: 50
+              content_hash: 00a28f8d0f162c0ec48b05b4da6516dafca28023fb071e31984173250361e060
+            - path: 1.2.4
+              level: 3
+              title: 2.4 One Canonical Fact in One Place
+              byte_offset: 3276
+              byte_count: 259
+              word_count: 44
+              content_hash: da6f2e314d876b542d82cf1df1c23b0dc1218f2c90e5143277245fdc63d01743
+            - path: 1.2.5
+              level: 3
+              title: 2.5 Codebase Is the Source of Truth for Code
+              byte_offset: 3535
+              byte_count: 265
+              word_count: 42
+              content_hash: 40e6f9119a1c044e5b6f86147bd5d1626b76fa559523df2bff2486edbbc42540
+            - path: 1.2.6
+              level: 3
+              title: 2.6 Humans Approve Intent; Agents Execute Scoped Work
+              byte_offset: 3800
+              byte_count: 344
+              word_count: 46
+              content_hash: 59ff796c6f2b1e29497b4db6eafa8283baf24e09d7aa34e335229d8956a887fa
+            - path: 1.2.7
+              level: 3
+              title: 2.7 Contexts Are Small; Links Are Strong
+              byte_offset: 4144
+              byte_count: 232
+              word_count: 36
+              content_hash: 58ea83154be375ac22fcafe83201e44382572a5f4777c73f6615da7c4a84a986
+            - path: 1.2.8
+              level: 3
+              title: 2.8 Parallelism Is Earned Through Isolation, Not Hope
+              byte_offset: 4376
+              byte_count: 215
+              word_count: 27
+              content_hash: fd974110348a276b5c003b2d9f881f0ecce29f3474fa276d5c02cba297aed118
+            - path: 1.2.9
+              level: 3
+              title: 2.9 Operational Documents Are Generated; Human Documents Are Validated
+              byte_offset: 4591
+              byte_count: 574
+              word_count: 75
+              content_hash: 352e4863fe493e74c419a5a6d8eae09c77ce1c69dd4d915d54e9e56fe1b99cff
+            - path: 1.2.10
+              level: 3
+              title: 2.10 Verification Is Attached to Every Unit of Work
+              byte_offset: 5165
+              byte_count: 202
+              word_count: 31
+              content_hash: 8bb2a27796867237ae9d328498c1440c7b6c449d70c3193bd00259552c595e4c
+            - path: 1.2.11
+              level: 3
+              title: 2.11 Bugs Are First-Class Workflow Objects
+              byte_offset: 5367
+              byte_count: 203
+              word_count: 29
+              content_hash: 0ae8a5efb54890838997adb3f7726dc47e0db7de8ddc064496668f6496bc9f6e
+            - path: 1.2.12
+              level: 3
+              title: 2.12 The Workflow System Must Stay Simpler Than the Project It Manages
+              byte_offset: 5570
+              byte_count: 214
+              word_count: 36
+              content_hash: 5a4ed217a33a101071c9a7449841af0fa214ec4e64ea8366a0c20c03857983a5
+        - path: "1.3"
+          level: 2
+          title: 3. Lessons From Existing Systems
+          byte_offset: 5784
+          byte_count: 2686
+          word_count: 396
+          content_hash: 13e7795c5a12d4a31b41b793dc0dbd508e514a5a4d398a33d769161809dcfea0
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 What to Preserve From Basil
+              byte_offset: 5821
+              byte_count: 564
+              word_count: 85
+              content_hash: 1ac8e3a08ba9eec2964ff324e850ab3d867429227e050afdb6127247085b8c7d
+            - path: 1.3.2
+              level: 3
+              title: 3.2 What to Fix From Basil
+              byte_offset: 6385
+              byte_count: 730
+              word_count: 113
+              content_hash: 2b48d84fa0b912e8e4fffd8949e3c86ee95686c9fb37766e2970e336ebe54d30
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Ideas Borrowed From External Systems
+              byte_offset: 7115
+              byte_count: 1355
+              word_count: 192
+              content_hash: 6bb64c6d8262fd99bba0ed8c8a30c7a73e11a7e9b840e0f12d0b10c95f1ed4fb
+        - path: "1.4"
+          level: 2
+          title: 4. Architecture
+          byte_offset: 8470
+          byte_count: 5812
+          word_count: 767
+          content_hash: 8a432e2c30ccabbf5f91ff623518ad6c0c58606beecafb72340c17e75dd7a38d
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Overview
+              byte_offset: 8490
+              byte_count: 543
+              word_count: 86
+              content_hash: cf6fc618d366867cb079b5c63a665600dc68a093c678c49a1c571f1e5ef85639
+            - path: 1.4.2
+              level: 3
+              title: 4.2 The kanbanzai Binary
+              byte_offset: 9033
+              byte_count: 740
+              word_count: 117
+              content_hash: 1b452bc16e6342f6fed06b0863aae6470e8e44eb08864ecb61c20c6ebd40088e
+            - path: 1.4.3
+              level: 3
+              title: 4.3 The Material Taxonomy
+              byte_offset: 9773
+              byte_count: 1191
+              word_count: 166
+              content_hash: 2928fb115a14e35ca12dbd98cf9d1cbec2a4ede7990c6dca5e7c9cfd2c3a9be0
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Three Layers of State
+              byte_offset: 10964
+              byte_count: 1953
+              word_count: 184
+              content_hash: 6ba4eebe613b053ac5f8a304947a15c7f7957c8dac836997cdfc9eacf89e0847
+            - path: 1.4.5
+              level: 3
+              title: '4.5 Storage Design: Git-Native With Local Cache'
+              byte_offset: 12917
+              byte_count: 604
+              word_count: 95
+              content_hash: 4c2cb54a6326579fabc2f7b23067659f25a10e947ecc5641c7a763476acc9e2d
+            - path: 1.4.6
+              level: 3
+              title: '4.6 File Format: YAML'
+              byte_offset: 13521
+              byte_count: 761
+              word_count: 116
+              content_hash: 0002a176727f35b35a4cbb182000b3bd50c029ddba624e0c1154071b14eb9170
+        - path: "1.5"
+          level: 2
+          title: 5. Object Model
+          byte_offset: 14282
+          byte_count: 8575
+          word_count: 1166
+          content_hash: e11815988607972e53ea6260968629aba9652e96313db9ef2627005bab47febd
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Task Hierarchy
+              byte_offset: 14302
+              byte_count: 881
+              word_count: 133
+              content_hash: 4612a945ab89b5bbb3be491ceeb7289b8b8c77d782d2200747f9f5b2d959f8d0
+            - path: 1.5.2
+              level: 3
+              title: 5.2 The Feature as Composite Entity (v1 Simplification)
+              byte_offset: 15183
+              byte_count: 1015
+              word_count: 154
+              content_hash: f469a8f50fa36989b2e211ebe611fbcc91ae0b4544eed091a5f9d7e08741033a
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Entity Schemas
+              byte_offset: 16198
+              byte_count: 1843
+              word_count: 214
+              content_hash: 98fd1e8b382e1d47a7607bef9dfbb3d37249f7ce190a87f6e0618d3fdfbd013f
+              children:
+                - path: 1.5.3.1
+                  level: 4
+                  title: Epic
+                  byte_offset: 16222
+                  byte_count: 255
+                  word_count: 30
+                  content_hash: 6a4c42d96679e14b8c349dfb0efe3d0b2665a3a89c780c487cd1dd2ac345b84e
+                - path: 1.5.3.2
+                  level: 4
+                  title: Feature
+                  byte_offset: 16477
+                  byte_count: 425
+                  word_count: 42
+                  content_hash: f37b0068292126c99ac53542d694f58b21d86403695f8f2e5f2239db2f9a8c60
+                - path: 1.5.3.3
+                  level: 4
+                  title: Task
+                  byte_offset: 16902
+                  byte_count: 317
+                  word_count: 32
+                  content_hash: ad694d84ce68a1a25a9a787c030a2f4c4f9708e91035d2ae889fdccddd441175
+                - path: 1.5.3.4
+                  level: 4
+                  title: Bug
+                  byte_offset: 17219
+                  byte_count: 516
+                  word_count: 67
+                  content_hash: 386dfd6f32ce17c0a683208df219c51d0822b286c6bb89f235fd86e9dac7b27f
+                - path: 1.5.3.5
+                  level: 4
+                  title: Decision
+                  byte_offset: 17735
+                  byte_count: 306
+                  word_count: 39
+                  content_hash: c62aa94f72bf718401c58f6de97d204566b5cb6c2012eec8d087f7814f284ad7
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Lifecycle State Machines
+              byte_offset: 18041
+              byte_count: 1303
+              word_count: 138
+              content_hash: 620b5e0654334d3c9b8339e206a4a8655689e59fa1187d73de09e7cdb8af3342
+              children:
+                - path: 1.5.4.1
+                  level: 4
+                  title: Epic
+                  byte_offset: 18146
+                  byte_count: 119
+                  word_count: 13
+                  content_hash: 343385103c9e567804c79610ae608acaccfb8af8b6afeb0fbb24939ea705181d
+                - path: 1.5.4.2
+                  level: 4
+                  title: Feature
+                  byte_offset: 18265
+                  byte_count: 425
+                  word_count: 49
+                  content_hash: 076331cdcb31bec677c12dbac9701a2dcdfccf652aac0986605672a260caeef5
+                - path: 1.5.4.3
+                  level: 4
+                  title: Task
+                  byte_offset: 18690
+                  byte_count: 162
+                  word_count: 19
+                  content_hash: 692e69a70f5563c768fb10dd9e7559313fe28b5cd83f407fb59b4ba27fb57862
+                - path: 1.5.4.4
+                  level: 4
+                  title: Bug
+                  byte_offset: 18852
+                  byte_count: 393
+                  word_count: 29
+                  content_hash: f3efd401b65580940bb05278d9a244c191efa701ad52c9231f57c7754d1b3976
+                - path: 1.5.4.5
+                  level: 4
+                  title: Decision
+                  byte_offset: 19245
+                  byte_count: 99
+                  word_count: 11
+                  content_hash: de7d641074ac4cf813436f447359ec30c7afd22eb54974fe2f5ff6208ae6bbad
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Formal Supersession
+              byte_offset: 19344
+              byte_count: 453
+              word_count: 67
+              content_hash: be910aef858170efb7418322a70f3cfa8409999b8142f3d12f2d8d7e753e140e
+            - path: 1.5.6
+              level: 3
+              title: 5.6 Bug Classification
+              byte_offset: 19797
+              byte_count: 537
+              word_count: 81
+              content_hash: 03ffdaf912f2b432143ce2a17131db9d75ff731e7872d4b45763e3145bd69005
+            - path: 1.5.7
+              level: 3
+              title: 5.7 The Standard Bugfix Path
+              byte_offset: 20334
+              byte_count: 949
+              word_count: 140
+              content_hash: b6d94f630ecee6c4c5ea5eb63089d8937a18ab32b344a27838fa0f874e6f4fb3
+            - path: 1.5.8
+              level: 3
+              title: 5.8 Bug Metadata
+              byte_offset: 21283
+              byte_count: 672
+              word_count: 100
+              content_hash: 4907bf79743079a226252d2d1503846ff20136cd8e47da883c65e3fceaa8e2a5
+            - path: 1.5.9
+              level: 3
+              title: 5.9 Deferred Entity Types
+              byte_offset: 21955
+              byte_count: 902
+              word_count: 135
+              content_hash: 4887bd82c848fb1558f83b575247d094d25150abc4c9d791eff6a5324f33d4c3
+        - path: "1.6"
+          level: 2
+          title: 6. Identity Strategy
+          byte_offset: 22857
+          byte_count: 2699
+          word_count: 402
+          content_hash: 54a0ed114a0fa5d3ce6f4599fc15c0945829be12afda8d1217991625884dac02
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Requirements
+              byte_offset: 22882
+              byte_count: 310
+              word_count: 44
+              content_hash: 797bc1eaed35999d53387d68ea46057e9b15c001afa7304e3178b44a0bd1b223
+            - path: 1.6.2
+              level: 3
+              title: '6.2 Format: ID + Slug'
+              byte_offset: 23192
+              byte_count: 327
+              word_count: 42
+              content_hash: abe8fe47ca4de946c4ab01004fae1f44fadeaff98359045845db7f2de422b687
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Distributed ID Allocation
+              byte_offset: 23519
+              byte_count: 825
+              word_count: 128
+              content_hash: a11f275dacf440504384390d4a4693a162482d6dbb21599b9b67eeae86c5e4ca
+            - path: 1.6.4
+              level: 3
+              title: '6.4 ID Strategy: Known Edge Cases'
+              byte_offset: 24344
+              byte_count: 666
+              word_count: 107
+              content_hash: 9d9db349ad5fddd81649d1a53362168770d6005d83454affaec8fe82cf932cd0
+            - path: 1.6.5
+              level: 3
+              title: '6.5 Alternative: Distributed Sortable IDs'
+              byte_offset: 25010
+              byte_count: 546
+              word_count: 77
+              content_hash: b856ac8c4d6596f78230f95a16c03b1e315df99b1705a2f71100a9c2a831b00e
+        - path: "1.7"
+          level: 2
+          title: 7. Directory Structure
+          byte_offset: 25556
+          byte_count: 1649
+          word_count: 147
+          content_hash: f6a5592be7a99dc1a7dd76d69cd759eeec98f83bf68c9f62380e7a2fb33f7f03
+        - path: "1.8"
+          level: 2
+          title: 8. MCP Server Interface
+          byte_offset: 27205
+          byte_count: 4423
+          word_count: 730
+          content_hash: 5e06804e5808b1d126d9dea93d3322e0e22b7141c3a561ebb5c41f00e4793e39
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Identity & Scaffolding
+              byte_offset: 27426
+              byte_count: 716
+              word_count: 120
+              content_hash: 09f89bf24667c3252ca0af904f7d514eedc17fc1d6bfd4d63261427a5e0b9d57
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Status & Lifecycle
+              byte_offset: 28142
+              byte_count: 429
+              word_count: 80
+              content_hash: 89c91e69b29f656eaa90ca1c13c7f66102bf3cbdfb05849f9fe77535307f8d11
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Querying
+              byte_offset: 28571
+              byte_count: 525
+              word_count: 94
+              content_hash: 4a0e64986f3dc45520a8e5d194cae2b74d00aa08ac8008475122d8e143360494
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Knowledge & Memory
+              byte_offset: 29096
+              byte_count: 423
+              word_count: 67
+              content_hash: c7ff843825d3651b897248aed35be6077f9d7eff60f67b40332ad3c09ca675f6
+            - path: 1.8.5
+              level: 3
+              title: 8.5 Documents
+              byte_offset: 29519
+              byte_count: 323
+              word_count: 49
+              content_hash: bfe8e6135c96216551aa9afd7321d7586c757afd9d73b55b5caa13e786d35b27
+            - path: 1.8.6
+              level: 3
+              title: 8.6 Git & Branches
+              byte_offset: 29842
+              byte_count: 344
+              word_count: 58
+              content_hash: 505fbc7ed9837453bfc83ec41acc7cd4bdf90ac338352950520e4fa3476390a5
+            - path: 1.8.7
+              level: 3
+              title: 8.7 Normalisation Support
+              byte_offset: 30186
+              byte_count: 890
+              word_count: 133
+              content_hash: 1ce080a95fe5246bce6eda2b5932313e76dbd05a8156dc5b7372a7ceb9957a3f
+            - path: 1.8.8
+              level: 3
+              title: 8.8 Tool Design Principles
+              byte_offset: 31076
+              byte_count: 552
+              word_count: 92
+              content_hash: 62a51ae15687536d00ac7171703ca27d89a7b19effdcc3da454de3be01dc522b
+        - path: "1.9"
+          level: 2
+          title: 9. Concurrency and Source Control
+          byte_offset: 31628
+          byte_count: 3093
+          word_count: 461
+          content_hash: f2a1690278c1d57dc2445e10900d1fa77cb1e2b59724ea76ba17b9c8ff3392e8
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Worktrees for Isolation
+              byte_offset: 31666
+              byte_count: 608
+              word_count: 73
+              content_hash: 28b258d83751b5fae37202f3e9b2aa27c2281b94914c26825b9711bbaa8b3d74
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Conflict Domain Awareness
+              byte_offset: 32274
+              byte_count: 772
+              word_count: 116
+              content_hash: b7d87644b1351cf6a32ddd29ab4736747635d313ce32b1df47296f1999db20ef
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Prefer Vertical Slices
+              byte_offset: 33046
+              byte_count: 424
+              word_count: 62
+              content_hash: 284d21333aceec43cd8e487a60afe84b3aa511d292165bca7d8e1dfde695475a
+            - path: 1.9.4
+              level: 3
+              title: 9.4 Branch Hygiene
+              byte_offset: 33470
+              byte_count: 462
+              word_count: 76
+              content_hash: f35a91db6a67a2e7f8e1b4ff31f3afa107a2b1497204b7586c65c7c08e21d2dc
+            - path: 1.9.5
+              level: 3
+              title: 9.5 Merge Strategy
+              byte_offset: 33932
+              byte_count: 401
+              word_count: 62
+              content_hash: 1268aa0ca752261bb4608b10c1c2772ae04bc8de018b276e3fbe2e935d1b6a49
+            - path: 1.9.6
+              level: 3
+              title: 9.6 Merge Gates
+              byte_offset: 34333
+              byte_count: 388
+              word_count: 66
+              content_hash: dbe6caefb33344394c65154126d652fb5b0ef11c0d3f32617c345292b113467c
+        - path: "1.10"
+          level: 2
+          title: 10. Human-AI Delegation Model
+          byte_offset: 34721
+          byte_count: 4135
+          word_count: 603
+          content_hash: 777bbd71594d0f1211025bb18d1739552dabfc563f0e4dedec8c56979477f2b6
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Role Hierarchy
+              byte_offset: 34755
+              byte_count: 820
+              word_count: 106
+              content_hash: 9a1d3205510d9840465d8b34eb6423a6d69c08847cdfa6906aaea8cb2ab1716a
+            - path: 1.10.2
+              level: 3
+              title: 10.2 The Orchestrator
+              byte_offset: 35575
+              byte_count: 667
+              word_count: 98
+              content_hash: 6139de7d3cbd0481ca3708317a40c29d3f596bb68c3d9ea42279667716808c50
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Specialist Team Agents
+              byte_offset: 36242
+              byte_count: 757
+              word_count: 114
+              content_hash: ccc6f3c655b065b132d1526ef58b7874c1066ae97e85bd7f2b146f270a6ab37a
+            - path: 1.10.4
+              level: 3
+              title: 10.4 The Worker
+              byte_offset: 36999
+              byte_count: 475
+              word_count: 76
+              content_hash: a39ebae498b7cff0eaab104b6447bdcfac47a222f7b52223d65f83e9063a1d3a
+            - path: 1.10.5
+              level: 3
+              title: 10.5 The Conversational Boundary
+              byte_offset: 37474
+              byte_count: 1382
+              word_count: 204
+              content_hash: 53dfd721becc26b9d3044319733b36c03d256fc5acbc9412467b1f1787066c2c
+        - path: "1.11"
+          level: 2
+          title: 11. Knowledge and Memory
+          byte_offset: 38856
+          byte_count: 3343
+          word_count: 481
+          content_hash: c7b836a74510fd1437854cfff4ababae18de72d9dcffdcb3696526efe95f852f
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Memory Classes
+              byte_offset: 38885
+              byte_count: 823
+              word_count: 95
+              content_hash: a89c85743cc5fa2278e174fc3267349fc9bf029a3eb95d59f5c803ce504b2057
+            - path: 1.11.2
+              level: 3
+              title: 11.2 Knowledge Entry Format
+              byte_offset: 39708
+              byte_count: 757
+              word_count: 106
+              content_hash: 1794e501f239a3cd3dd6eb9af5871e356d186154fa9d801b77e661452b9548da
+            - path: 1.11.3
+              level: 3
+              title: 11.3 Decision Records
+              byte_offset: 40465
+              byte_count: 624
+              word_count: 98
+              content_hash: 4485bdc3038f4303c544ac1d7b4603fd556a71088b039789d7bde0a99b77be5b
+            - path: 1.11.4
+              level: 3
+              title: 11.4 What Goes Where
+              byte_offset: 41089
+              byte_count: 1110
+              word_count: 177
+              content_hash: f4c1ceec19a808450165a0384a2e3909fbb3d5317820f2ef2dc72d562b25ae7b
+        - path: "1.12"
+          level: 2
+          title: 12. Metadata Governance
+          byte_offset: 42199
+          byte_count: 1644
+          word_count: 250
+          content_hash: 89ff5337129b8186d54e188e234cf9908528a1bef79a4f91a955e8e015628018
+          children:
+            - path: 1.12.1
+              level: 3
+              title: 12.1 Principle
+              byte_offset: 42227
+              byte_count: 197
+              word_count: 30
+              content_hash: 688233d0b9a19747cc431f3de4fb39455299f2c72164687157e306313314de24
+            - path: 1.12.2
+              level: 3
+              title: 12.2 Metadata Registration
+              byte_offset: 42424
+              byte_count: 515
+              word_count: 85
+              content_hash: 7bcaf2e56205c192ac2753dbbbff1441741e0f019c98152d786ab5a67c31f07b
+            - path: 1.12.3
+              level: 3
+              title: 12.3 Standard Metadata Families
+              byte_offset: 42939
+              byte_count: 493
+              word_count: 74
+              content_hash: 877c013c8272e6b5cfc17336497f8261b14f83bfd10d17680abc0ba0ab42f8af
+            - path: 1.12.4
+              level: 3
+              title: 12.4 Text Search vs Structured Metadata
+              byte_offset: 43432
+              byte_count: 411
+              word_count: 57
+              content_hash: 0b044ca036b2d57089a0c43769f7c9bb2731c94962f5ca739ef5870a46da2d3f
+        - path: "1.13"
+          level: 2
+          title: 13. Continuous Validation
+          byte_offset: 43843
+          byte_count: 1264
+          word_count: 190
+          content_hash: 2f4383560982ea67ded98ed46ffb668ae00d94170f5bc6e92fa1782150e8c26b
+          children:
+            - path: 1.13.1
+              level: 3
+              title: 13.1 Health Checks
+              byte_offset: 43873
+              byte_count: 838
+              word_count: 132
+              content_hash: 492b2a0294fb8a8724495429504d6f450208251569068d68ec09dcb64ae0d1cd
+            - path: 1.13.2
+              level: 3
+              title: 13.2 Document Validation
+              byte_offset: 44711
+              byte_count: 396
+              word_count: 54
+              content_hash: 75d839b1e8a09b04a00b7b819d5bbf4eca23812d95dde62e4bb60e36a3d05bba
+        - path: "1.14"
+          level: 2
+          title: 14. GitHub Integration
+          byte_offset: 45107
+          byte_count: 1014
+          word_count: 166
+          content_hash: 83c35bf0f924884a82aa7bbefbab6ddc4a4c4291c1d87cb157640a9e981cf6d6
+          children:
+            - path: 1.14.1
+              level: 3
+              title: 14.1 What Stays in kanbanzai
+              byte_offset: 45290
+              byte_count: 238
+              word_count: 38
+              content_hash: ce3d56e160aa83665f5803bf11d12d1bd2242fbb2a20f0f21ff57ce532cea375
+            - path: 1.14.2
+              level: 3
+              title: 14.2 What Gets Pushed to GitHub
+              byte_offset: 45528
+              byte_count: 356
+              word_count: 55
+              content_hash: 8b6da1587ad8e1112d92656712d262c43450408f7f04355b00a5f1d052b70257
+            - path: 1.14.3
+              level: 3
+              title: 14.3 Principle
+              byte_offset: 45884
+              byte_count: 237
+              word_count: 41
+              content_hash: 63e7d3eabd4eeb92f23847cea90f64aa067ca464091500afd13ee30535266f05
+        - path: "1.15"
+          level: 2
+          title: 15. Relationship to Agent Instruction Systems
+          byte_offset: 46121
+          byte_count: 1614
+          word_count: 217
+          content_hash: 1303cbc2d2dd13ab2d2b0b38f51867d9138bc7fe9c2081a47c36559f683ce9f3
+          children:
+            - path: 1.15.1
+              level: 3
+              title: 15.1 Layered Configuration
+              byte_offset: 46171
+              byte_count: 1056
+              word_count: 135
+              content_hash: 0d22b0653c6453f03ec3e541df40d55e6713ead2bb5d3d87c8d86a79f2e99da1
+            - path: 1.15.2
+              level: 3
+              title: 15.2 What Changes
+              byte_offset: 47227
+              byte_count: 508
+              word_count: 75
+              content_hash: 7f7bb1307e2dd28b2b9899a4c6f301316ca52a98ee802621b4ff3378bb746523
+        - path: "1.16"
+          level: 2
+          title: 16. Error Correction and Rollback
+          byte_offset: 47735
+          byte_count: 1418
+          word_count: 214
+          content_hash: 02a522488ab067b9b364647a997363d794e0e7d58b63f11803f233c57deaf3c9
+          children:
+            - path: 1.16.1
+              level: 3
+              title: 16.1 Principle
+              byte_offset: 47773
+              byte_count: 133
+              word_count: 18
+              content_hash: 13b88771ee2938c32c3f5f34f9e2af1943140042eb109608b6819790b9d39ed1
+            - path: 1.16.2
+              level: 3
+              title: 16.2 Types of Error
+              byte_offset: 47906
+              byte_count: 985
+              word_count: 155
+              content_hash: d249fd11eda87b8b32259b2154684aabcfa8a18309d1b1f7ae00aa4749b70c1b
+            - path: 1.16.3
+              level: 3
+              title: 16.3 No Destructive Undo
+              byte_offset: 48891
+              byte_count: 262
+              word_count: 35
+              content_hash: 5a3d2678314d7819488aaf4ed1fe90ce2967b12a4b7ee2f67948cb2298ab849d
+        - path: "1.17"
+          level: 2
+          title: 17. Migration
+          byte_offset: 49153
+          byte_count: 1257
+          word_count: 192
+          content_hash: 22c52b27dfd52c64a9938281cd9545e75b64a674197c07c7f09f6b88f5c0676c
+          children:
+            - path: 1.17.1
+              level: 3
+              title: 17.1 Existing Projects
+              byte_offset: 49171
+              byte_count: 154
+              word_count: 23
+              content_hash: 83d60f69d6ebce57c4a88acf73376eca34aa0d66e8954f362d5ee47cc1283543
+            - path: 1.17.2
+              level: 3
+              title: 17.2 Recommended Approach
+              byte_offset: 49325
+              byte_count: 759
+              word_count: 113
+              content_hash: c9b84bdc5c8f902414f8c93626c96154db1011f04f76c3799f9571d7dbee7cb6
+            - path: 1.17.3
+              level: 3
+              title: 17.3 Caveats
+              byte_offset: 50084
+              byte_count: 326
+              word_count: 53
+              content_hash: 79cfb1f57b9a91af3050211e86ee3e2cba1f95b1fd23649bf3d99ced7fa57bfb
+        - path: "1.18"
+          level: 2
+          title: 18. Implementation Phases
+          byte_offset: 50410
+          byte_count: 1926
+          word_count: 252
+          content_hash: 47dce9ab50b662605f47227f2454390cdf2ab7575a4863439a3a63f4b6e94276
+          children:
+            - path: 1.18.1
+              level: 3
+              title: 'Phase 1: Workflow Kernel'
+              byte_offset: 50440
+              byte_count: 712
+              word_count: 79
+              content_hash: bfaf0dc8e5ff3480aa1f25a0c9e2d099bb2c023c34a4547ed3c7f73a8dc07eb6
+            - path: 1.18.2
+              level: 3
+              title: 'Phase 2: Retrieval and Context Packing'
+              byte_offset: 51152
+              byte_count: 521
+              word_count: 67
+              content_hash: 82518d707401064ce920cbec83f77c7d5a5370eeb9cd782b8656c8b294c721eb
+            - path: 1.18.3
+              level: 3
+              title: 'Phase 3: Git Integration'
+              byte_offset: 51673
+              byte_count: 297
+              word_count: 46
+              content_hash: 9fd312e524be877de50f71b82ac42834e04653e1b9349249360c5c7fc98b4c9a
+            - path: 1.18.4
+              level: 3
+              title: 'Phase 4: Orchestration'
+              byte_offset: 51970
+              byte_count: 366
+              word_count: 56
+              content_hash: 1bf73b5d6b19d40ef23e827dacb43c569c2f179b8b4878c8d8d04a1e8311b770
+        - path: "1.19"
+          level: 2
+          title: 19. Future Considerations
+          byte_offset: 52336
+          byte_count: 1099
+          word_count: 151
+          content_hash: da64d1e2bdf3ce031d4ac4c1348b7faeb7fed879102a52a4d2b9218a64bdbe63
+        - path: "1.20"
+          level: 2
+          title: 20. Open Questions
+          byte_offset: 53435
+          byte_count: 1761
+          word_count: 253
+          content_hash: 833c167d7722d60379e868e57b05360836684e9680144f9f02777dd68acf6aec
+        - path: "1.21"
+          level: 2
+          title: 21. Summary
+          byte_offset: 55196
+          byte_count: 1224
+          word_count: 182
+          content_hash: 21a00ba1344cedc992d13fbe075b3f1ee12cffc5893abbaec1981e41d8a5038b
+front_matter:
+    status: superseded
+    date: "2026-03-18"
+    extra:
+        Author: Sam & Claude
+        Incorporates: initial-workflow-analysis.md, initial-workflow-analysis-review.md, workflow-system-design-review.md
+        Note: This was the original consolidated design proposal. Its content has been incorporated into the workflow design basis document. Retained as part of the design history.
+        Superseded by: '`work/design/workflow-design-basis.md`'
+entity_refs:
+    - entity_id: FEAT-XXX
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 6145
+    - entity_id: FEAT-XXX
+      entity_type: feature
+      section_path: 1.5.1
+      byte_offset: 14415
+    - entity_id: FEAT-150
+      entity_type: feature
+      section_path: 1.5.3.1
+      byte_offset: 16442
+    - entity_id: FEAT-151
+      entity_type: feature
+      section_path: 1.5.3.1
+      byte_offset: 16452
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: 1.5.3.1
+      byte_offset: 16462
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: 1.5.3.2
+      byte_offset: 16499
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: 1.5.3.3
+      byte_offset: 16921
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: 1.5.3.4
+      byte_offset: 17456
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: 1.5.3.5
+      byte_offset: 17989
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: 1.6.2
+      byte_offset: 23285
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 23804
+    - entity_id: FEAT-156
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 23821
+    - entity_id: FEAT-26H3K4
+      entity_type: feature
+      section_path: 1.6.5
+      byte_offset: 25318
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: 1.6.5
+      byte_offset: 25346
+    - entity_id: FEAT-150
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 25664
+    - entity_id: FEAT-151
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 25702
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 25737
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: 1.9.1
+      byte_offset: 31892
+    - entity_id: FEAT-153
+      entity_type: feature
+      section_path: 1.9.1
+      byte_offset: 31961
+    - entity_id: FEAT-138
+      entity_type: feature
+      section_path: 1.10.5
+      byte_offset: 38785
+    - entity_id: FEAT-128
+      entity_type: feature
+      section_path: 1.11.2
+      byte_offset: 40214
+    - entity_id: FEAT-150
+      entity_type: feature
+      section_path: 1.17.2
+      byte_offset: 49807
+    - entity_id: BUG-XXX
+      entity_type: bug
+      section_path: 1.3.1
+      byte_offset: 6155
+    - entity_id: BUG-XXX
+      entity_type: bug
+      section_path: 1.5.1
+      byte_offset: 14516
+    - entity_id: BUG-027
+      entity_type: bug
+      section_path: 1.5.3.4
+      byte_offset: 17237
+    - entity_id: BUG-027
+      entity_type: bug
+      section_path: 1.6.2
+      byte_offset: 23314
+    - entity_id: BUG-027
+      entity_type: bug
+      section_path: "1.7"
+      byte_offset: 25944
+    - entity_id: BUG-027
+      entity_type: bug
+      section_path: 1.9.1
+      byte_offset: 32029
+    - entity_id: DEC-XXX
+      entity_type: decision
+      section_path: 1.5.1
+      byte_offset: 14572
+    - entity_id: DEC-041
+      entity_type: decision
+      section_path: 1.5.3.2
+      byte_offset: 16888
+    - entity_id: DEC-041
+      entity_type: decision
+      section_path: 1.5.3.5
+      byte_offset: 17758
+    - entity_id: DEC-041
+      entity_type: decision
+      section_path: 1.6.2
+      byte_offset: 23372
+    - entity_id: DEC-041
+      entity_type: decision
+      section_path: "1.7"
+      byte_offset: 26000
+    - entity_id: DEC-041
+      entity_type: decision
+      section_path: 1.11.3
+      byte_offset: 40785
+    - entity_id: DEC-057
+      entity_type: decision
+      section_path: 1.11.3
+      byte_offset: 40807
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.6
+      role: constraint
+      confidence: high
+    - section_path: 1.2.7
+      role: narrative
+      confidence: high
+    - section_path: 1.4.1
+      role: narrative
+      confidence: high
+    - section_path: 1.5.3.5
+      role: decision
+      confidence: high
+    - section_path: 1.5.4.5
+      role: decision
+      confidence: high
+    - section_path: 1.6.1
+      role: requirement
+      confidence: high
+    - section_path: 1.6.5
+      role: alternative
+      confidence: high
+    - section_path: 1.11.3
+      role: decision
+      confidence: high
+    - section_path: 1.18.2
+      role: narrative
+      confidence: high
+    - section_path: "1.20"
+      role: question
+      confidence: high
+    - section_path: "1.21"
+      role: narrative
+      confidence: high
+classified: false

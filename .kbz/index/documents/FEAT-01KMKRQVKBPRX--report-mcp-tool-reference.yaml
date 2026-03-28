@@ -1,0 +1,1246 @@
+document_id: FEAT-01KMKRQVKBPRX/report-mcp-tool-reference
+document_path: docs/mcp-tool-reference.md
+content_hash: bbdc0f4350e9e9ded77872e40b1f5f42bbe78a8aa16109e737c677d507f19f77
+indexed_at: 2026-03-26T16:49:14.621357Z
+sections:
+    - path: "1"
+      level: 1
+      title: MCP Tool Reference
+      byte_offset: 0
+      byte_count: 100345
+      word_count: 13442
+      content_hash: bbdc0f4350e9e9ded77872e40b1f5f42bbe78a8aa16109e737c677d507f19f77
+      children:
+        - path: "1.1"
+          level: 2
+          title: Table of Contents
+          byte_offset: 301
+          byte_count: 1361
+          word_count: 97
+          content_hash: a94e8f00fdbb73fb02b2a0d7a81f16135c197dff2c98bf2b730f8107558982fd
+        - path: "1.2"
+          level: 2
+          title: 1. Transport and Protocol
+          byte_offset: 1662
+          byte_count: 715
+          word_count: 114
+          content_hash: 7e90f50bf85353ed0520b773fa418fefe6c0d5ea819cd15cffee2a5e63590ce7
+        - path: "1.3"
+          level: 2
+          title: 2. Tool Organisation by Domain
+          byte_offset: 2377
+          byte_count: 2311
+          word_count: 247
+          content_hash: 4675688fd183360b5937b09f3e6ba61402651462d3e218e60e690b0b1026179a
+        - path: "1.4"
+          level: 2
+          title: 3. Entity Management
+          byte_offset: 4688
+          byte_count: 13682
+          word_count: 1972
+          content_hash: 84f36f2beea9d5c689c6c2348338f7c28fcb171401858ba9c73fc57556371112
+          children:
+            - path: 1.4.1
+              level: 3
+              title: create_epic
+              byte_offset: 4713
+              byte_count: 1082
+              word_count: 150
+              content_hash: b8e06a9d6209345087fe72dddb322c14d8380715c9c04a183f346b035b22813d
+            - path: 1.4.2
+              level: 3
+              title: create_feature
+              byte_offset: 5795
+              byte_count: 1209
+              word_count: 170
+              content_hash: 20346dd4b01371b7d07360d49824a9fc7393b7124f92440d84d3497e3083a5c0
+            - path: 1.4.3
+              level: 3
+              title: create_task
+              byte_offset: 7004
+              byte_count: 942
+              word_count: 124
+              content_hash: 79401b2fec637a866b779c1b3280b7576f69e8c6fe048308e89dbc70f1345606
+            - path: 1.4.4
+              level: 3
+              title: create_bug
+              byte_offset: 7946
+              byte_count: 1480
+              word_count: 216
+              content_hash: dad4638bfb54e707a8c41220073c8c468523425c4933c56fe83d6b12a4d467b3
+            - path: 1.4.5
+              level: 3
+              title: record_decision
+              byte_offset: 9426
+              byte_count: 1054
+              word_count: 145
+              content_hash: c0428cfd6e1c1facb6d45846f37ce49ec6f411f4e00538dd2f0d4e00acbe70e0
+            - path: 1.4.6
+              level: 3
+              title: get_entity
+              byte_offset: 10480
+              byte_count: 922
+              word_count: 136
+              content_hash: e22e235fa08ac7135fbb82d45b1bcebfb76e9bfd3a1d3f76d0458e6126f19e8a
+            - path: 1.4.7
+              level: 3
+              title: list_entities
+              byte_offset: 11402
+              byte_count: 731
+              word_count: 101
+              content_hash: ba6b4152e99736c792f9115cb067301696755ca004824917116d6c04f3b357a1
+            - path: 1.4.8
+              level: 3
+              title: list_entities_filtered
+              byte_offset: 12133
+              byte_count: 1188
+              word_count: 195
+              content_hash: 2807e1501739a8d5a42af153fa071a1f52bbfd966b8f3067b440e2401fa0f2ed
+            - path: 1.4.9
+              level: 3
+              title: list_by_tag
+              byte_offset: 13321
+              byte_count: 491
+              word_count: 72
+              content_hash: 1bf2eaed4af66a5ba70caf7cfe23fe23bbe2d85b296f763f521e0a15e0655d51
+            - path: 1.4.10
+              level: 3
+              title: list_tags
+              byte_offset: 13812
+              byte_count: 498
+              word_count: 67
+              content_hash: fdf39efb587f8d021cb14cdf167ba83a02a891989422c7d1f0d7235aec72c8bd
+            - path: 1.4.11
+              level: 3
+              title: update_status
+              byte_offset: 14310
+              byte_count: 1061
+              word_count: 161
+              content_hash: 896feadde6fe77799bad1b865a8b0fe3d09d50265ed1156f40a20cc4a2be9eab
+            - path: 1.4.12
+              level: 3
+              title: update_entity
+              byte_offset: 15371
+              byte_count: 967
+              word_count: 153
+              content_hash: 8406c987d1077654cc210663c146a848a82315ff257ddc3e9e48902bd664b148
+            - path: 1.4.13
+              level: 3
+              title: validate_candidate
+              byte_offset: 16338
+              byte_count: 814
+              word_count: 116
+              content_hash: a57467a5f433ad96a5804589a543c3fc45d38b06ba2e70610a6dd6c45d29de09
+            - path: 1.4.14
+              level: 3
+              title: health_check
+              byte_offset: 17152
+              byte_count: 739
+              word_count: 96
+              content_hash: c90376ce1709016dc42fcf35f5d62e6b89b58662512a1fd6945ac4d3805edd3c
+            - path: 1.4.15
+              level: 3
+              title: rebuild_cache
+              byte_offset: 17891
+              byte_count: 479
+              word_count: 66
+              content_hash: 776bba70fd8273a6e94bfc3a13c64af564bc3eeeb9bef69ec4af3ce7d37c1c6f
+        - path: "1.5"
+          level: 2
+          title: 4. Plan Management
+          byte_offset: 18370
+          byte_count: 4232
+          word_count: 638
+          content_hash: b9ac0d680e1ed942fde3e110fa57e12e4f6645bb774e25099daf4e74e42a30ef
+          children:
+            - path: 1.5.1
+              level: 3
+              title: create_plan
+              byte_offset: 18393
+              byte_count: 1329
+              word_count: 194
+              content_hash: da5e90178c03f821f251643ef13b400179a430cf113f0efe5fcb061e897cbab2
+            - path: 1.5.2
+              level: 3
+              title: get_plan
+              byte_offset: 19722
+              byte_count: 516
+              word_count: 72
+              content_hash: aecffc03f48617cdd15c7673b95537df83fced03a675fd236ccd32b8d29e658b
+            - path: 1.5.3
+              level: 3
+              title: list_plans
+              byte_offset: 20238
+              byte_count: 693
+              word_count: 106
+              content_hash: 42f266f91db6c9747293e90f82997399f19e6cdafd946985fa2dba4dd50c0a84
+            - path: 1.5.4
+              level: 3
+              title: update_plan
+              byte_offset: 20931
+              byte_count: 815
+              word_count: 138
+              content_hash: ccadd0de1fd4cec715bea4d5333c065dc0afe0367840f8849c8258d7f0fbfae3
+            - path: 1.5.5
+              level: 3
+              title: update_plan_status
+              byte_offset: 21746
+              byte_count: 856
+              word_count: 124
+              content_hash: 4addcb2fd7c9e55cbff6c65e3f0ef2a57f86e723c838a781ef8abfd2d63e77c9
+        - path: "1.6"
+          level: 2
+          title: 5. Configuration
+          byte_offset: 22602
+          byte_count: 2802
+          word_count: 386
+          content_hash: ac96a89aca0a123daf2dc5fe3ac346a63aa8f6dc65b8e5fd8e5f34769801ef17
+          children:
+            - path: 1.6.1
+              level: 3
+              title: get_project_config
+              byte_offset: 22623
+              byte_count: 655
+              word_count: 83
+              content_hash: 4236ae5fca021c13752dc3fd2a56fc5aff12e90ae8663eef1e3ddd9abe820dfd
+            - path: 1.6.2
+              level: 3
+              title: get_prefix_registry
+              byte_offset: 23278
+              byte_count: 626
+              word_count: 79
+              content_hash: 0b478a7237e9a960dd62d8ae50b3026a9feded1e892f387ac77035dd560e73d2
+            - path: 1.6.3
+              level: 3
+              title: add_prefix
+              byte_offset: 23904
+              byte_count: 861
+              word_count: 125
+              content_hash: 1e8924f0db37dc8f0aab169c74df4353a9c0220b778a4ea55f1b80ae7f37def3
+            - path: 1.6.4
+              level: 3
+              title: retire_prefix
+              byte_offset: 24765
+              byte_count: 639
+              word_count: 96
+              content_hash: 3c2458e2fac1a92a7a4cb1aea44048513bf540ace8c4be8e18a5ca6a5ce4ac0c
+        - path: "1.7"
+          level: 2
+          title: 6. Document Records
+          byte_offset: 25404
+          byte_count: 8877
+          word_count: 1185
+          content_hash: 1b361ef7f3dcd3ef4ad79aa207afd19e57f6d4dab6e4641b248cdab6ab8b1828
+          children:
+            - path: 1.7.1
+              level: 3
+              title: doc_record_submit
+              byte_offset: 25428
+              byte_count: 1514
+              word_count: 212
+              content_hash: bbc75605a686e5622457def4722e29653841a3e5dc4939ee80557830bb788fe5
+            - path: 1.7.2
+              level: 3
+              title: doc_record_approve
+              byte_offset: 26942
+              byte_count: 869
+              word_count: 121
+              content_hash: 6e4fdacba8d1d8753e93972f5bbdc1ab44a2187e13ad07b5479f92986cfd0134
+            - path: 1.7.3
+              level: 3
+              title: doc_record_supersede
+              byte_offset: 27811
+              byte_count: 895
+              word_count: 116
+              content_hash: e89b101d9ad2f39d11ec3f80a571d358664ae4a3b2e1c403e2fa5b9c3cd061f8
+            - path: 1.7.4
+              level: 3
+              title: doc_record_get
+              byte_offset: 28706
+              byte_count: 767
+              word_count: 105
+              content_hash: d20fd23799344bfa9d99604f987987ee269aff9c75362baf9d84102d0bfe8c8d
+            - path: 1.7.5
+              level: 3
+              title: doc_record_get_content
+              byte_offset: 29473
+              byte_count: 706
+              word_count: 96
+              content_hash: 7748af4c18641b223ea4f0f60345c2c6cf5819544ca86839de9cd0647b444a5c
+            - path: 1.7.6
+              level: 3
+              title: doc_record_list
+              byte_offset: 30179
+              byte_count: 751
+              word_count: 109
+              content_hash: a00ba515b999acd096d7dedbf8174256233dc44978efaa621a19f88d0c696d1c
+            - path: 1.7.7
+              level: 3
+              title: doc_record_list_pending
+              byte_offset: 30930
+              byte_count: 525
+              word_count: 68
+              content_hash: 9fd3cbadc780a30f08f314264209edf61748885255774536e23614a5fd16af00
+            - path: 1.7.8
+              level: 3
+              title: doc_record_validate
+              byte_offset: 31455
+              byte_count: 570
+              word_count: 74
+              content_hash: c7f518d60cbf9667d9f8eda54114209ae08b7b78203082b1109b77e94ae3372b
+            - path: 1.7.9
+              level: 3
+              title: doc_gaps
+              byte_offset: 32025
+              byte_count: 693
+              word_count: 87
+              content_hash: 1d4f36cf7af188d897405427b758c6799f55e04935a9a03c7cddcd442de38d43
+            - path: 1.7.10
+              level: 3
+              title: doc_trace
+              byte_offset: 32718
+              byte_count: 728
+              word_count: 96
+              content_hash: 96370d3b338e52156056deebc1937cf565d6e4029e0f4b485b03f65200bd3c37
+            - path: 1.7.11
+              level: 3
+              title: doc_supersession_chain
+              byte_offset: 33446
+              byte_count: 835
+              word_count: 97
+              content_hash: 90d2bc5d0d93050933d113d4798da41ddb98ce0c2cafdc9882dc475ce54134ba
+        - path: "1.8"
+          level: 2
+          title: 7. Document Intelligence
+          byte_offset: 34281
+          byte_count: 7803
+          word_count: 1006
+          content_hash: 9f652e4eeb6f8099415bedf9f16ad56d9cfd9ec7671509bdf450127db6347637
+          children:
+            - path: 1.8.1
+              level: 3
+              title: doc_outline
+              byte_offset: 34310
+              byte_count: 719
+              word_count: 96
+              content_hash: 66f3d756541a6283f6499ad3523f4864cac7b98df6ddc106d21142cbcc417d5d
+            - path: 1.8.2
+              level: 3
+              title: doc_section
+              byte_offset: 35029
+              byte_count: 818
+              word_count: 108
+              content_hash: 55a917b452770341a1ff3722892948422f6c63c335a529b7980c3ff8ccc8ee3b
+            - path: 1.8.3
+              level: 3
+              title: doc_classify
+              byte_offset: 35847
+              byte_count: 1731
+              word_count: 223
+              content_hash: 695637e17e55abc6b1f366c8f46c8dbec6491cae752cabae6400c768a95e659e
+            - path: 1.8.4
+              level: 3
+              title: doc_pending
+              byte_offset: 37578
+              byte_count: 487
+              word_count: 66
+              content_hash: 50b9f4bda829b8458115c5a9e7b46a7dd9684b4d49e75e79ed8284ccdfedc0fb
+            - path: 1.8.5
+              level: 3
+              title: doc_find_by_entity
+              byte_offset: 38065
+              byte_count: 703
+              word_count: 89
+              content_hash: 3c47609df18bc5a4ef8e4072c627b9bbf8b27b3d7c09d0c65432c4ef885e3814
+            - path: 1.8.6
+              level: 3
+              title: doc_find_by_concept
+              byte_offset: 38768
+              byte_count: 635
+              word_count: 86
+              content_hash: 7f376b533a355c6b43a5ffcd8287db5b2bf98812c8e8eae71d2af8752cc7b8dc
+            - path: 1.8.7
+              level: 3
+              title: doc_find_by_role
+              byte_offset: 39403
+              byte_count: 775
+              word_count: 109
+              content_hash: 47f10f52c8e6f358395ad191b5246244918b20980401f36c4b9232844a86ed66
+            - path: 1.8.8
+              level: 3
+              title: doc_impact
+              byte_offset: 40178
+              byte_count: 834
+              word_count: 103
+              content_hash: b89425d9917007ac0e131dc691dc966aa596eac15e77e146141a7e553c5b2388
+            - path: 1.8.9
+              level: 3
+              title: doc_extraction_guide
+              byte_offset: 41012
+              byte_count: 1072
+              word_count: 122
+              content_hash: fb3cccb31be68aab9fb3a9bfe55554b44b21e5fc0389dcea59b190a109f77121
+        - path: "1.9"
+          level: 2
+          title: 8. Knowledge Management
+          byte_offset: 42084
+          byte_count: 11834
+          word_count: 1656
+          content_hash: c81fe5c6c4c490a19ba5aab3a7712a46c1fddbbecd202845561bd9e82edf31a3
+          children:
+            - path: 1.9.1
+              level: 3
+              title: knowledge_contribute
+              byte_offset: 42112
+              byte_count: 1602
+              word_count: 234
+              content_hash: 4deb8ec6eb475473e73a4ed85c5e72e1638997c00f917a83b817b48bae553540
+            - path: 1.9.2
+              level: 3
+              title: knowledge_get
+              byte_offset: 43714
+              byte_count: 620
+              word_count: 81
+              content_hash: 83100cda5d43373c33e7cc0a99803a0f261e0448bc9949f930f212b33f1e097e
+            - path: 1.9.3
+              level: 3
+              title: knowledge_list
+              byte_offset: 44334
+              byte_count: 981
+              word_count: 158
+              content_hash: 73bafcad3f96539a5e17199e7501c9b5ec6057bc0ab488b626534935fed9d0b5
+            - path: 1.9.4
+              level: 3
+              title: knowledge_update
+              byte_offset: 45315
+              byte_count: 825
+              word_count: 116
+              content_hash: a95e0b6ec358b07b9d09e715b3dff8390bf323be8863ffb630b5887b4365b745
+            - path: 1.9.5
+              level: 3
+              title: knowledge_confirm
+              byte_offset: 46140
+              byte_count: 630
+              word_count: 82
+              content_hash: fc16c816dc7ea54725c20f2efe16e47a71e257c525dd4693a9430620f5e19b59
+            - path: 1.9.6
+              level: 3
+              title: knowledge_flag
+              byte_offset: 46770
+              byte_count: 768
+              word_count: 107
+              content_hash: d0dd3fb4f4f675b660a663ac7fe9b14c9163b79b152b6f91bc853146613fb754
+            - path: 1.9.7
+              level: 3
+              title: knowledge_retire
+              byte_offset: 47538
+              byte_count: 715
+              word_count: 103
+              content_hash: 7290b7fa22e8f58302973f6986c0585f677fa22eb59350eaff2e23b29918e8ae
+            - path: 1.9.8
+              level: 3
+              title: knowledge_promote
+              byte_offset: 48253
+              byte_count: 601
+              word_count: 90
+              content_hash: f769ef603127e2aedc412a937e7accf254950f570ce02630dd1e379fdcdbfa4e
+            - path: 1.9.9
+              level: 3
+              title: knowledge_check_staleness
+              byte_offset: 48854
+              byte_count: 945
+              word_count: 125
+              content_hash: 1b627882a5b87d3f32c00a328fa7bacdc66f640c6bb2524c9aea46cda03d3b52
+            - path: 1.9.10
+              level: 3
+              title: knowledge_prune
+              byte_offset: 49799
+              byte_count: 896
+              word_count: 132
+              content_hash: ed5fb78cb06f870b17369f91c372ce862cc4a5f3e8d5422d145f0d229968a2b0
+            - path: 1.9.11
+              level: 3
+              title: knowledge_compact
+              byte_offset: 50695
+              byte_count: 1094
+              word_count: 128
+              content_hash: c90d2132c402ca29b6e01a4d43b740dbdb0f71321180d19bcd91be928bfa63a5
+            - path: 1.9.12
+              level: 3
+              title: knowledge_resolve_conflict
+              byte_offset: 51789
+              byte_count: 957
+              word_count: 136
+              content_hash: aedeaf120688ab0c1f4cb49645ae283205e62f6a2a94ba4fb6c46e648620a840
+            - path: 1.9.13
+              level: 3
+              title: context_report
+              byte_offset: 52746
+              byte_count: 1172
+              word_count: 160
+              content_hash: 73cab4d03e95c0530baff9b2f9c55f51c4b26b8e87b5919610145b166f13d9dc
+        - path: "1.10"
+          level: 2
+          title: 9. Context and Profiles
+          byte_offset: 53918
+          byte_count: 3292
+          word_count: 445
+          content_hash: 23860e639965cadbc471c42149a2fa0a2791a4beca00b21d70d9114e78792f27
+          children:
+            - path: 1.10.1
+              level: 3
+              title: context_assemble
+              byte_offset: 53946
+              byte_count: 1671
+              word_count: 234
+              content_hash: 99f73c48f92504c61d9e1e9e04132d8d20ece00d526e19d8a0c904884c8eeb63
+            - path: 1.10.2
+              level: 3
+              title: profile_get
+              byte_offset: 55617
+              byte_count: 885
+              word_count: 116
+              content_hash: ad828bdf884385f8f8f428807ace9faae2bd84c3b34a54c708db69cc1a9207b5
+            - path: 1.10.3
+              level: 3
+              title: profile_list
+              byte_offset: 56502
+              byte_count: 708
+              word_count: 90
+              content_hash: e944b5a53eae447ca2b996d016dfa060684226944fc2d7e43fd3726fbea6335e
+        - path: "1.11"
+          level: 2
+          title: 10. Work Queue and Dispatch
+          byte_offset: 57210
+          byte_count: 5791
+          word_count: 761
+          content_hash: 8cca99299b9ec10dcc37e407232543b9ee66b91da1955227d0821ed19901f162
+          children:
+            - path: 1.11.1
+              level: 3
+              title: work_queue
+              byte_offset: 57242
+              byte_count: 1331
+              word_count: 174
+              content_hash: 60adbec2fcf2545734c838e101e1ad1b4f667a0408e218f939432e6755c4bd80
+            - path: 1.11.2
+              level: 3
+              title: dependency_status
+              byte_offset: 58573
+              byte_count: 1007
+              word_count: 117
+              content_hash: 267db57b4a19783bece89f860395289a4c038f204a891d61e89c5285afb6f912
+            - path: 1.11.3
+              level: 3
+              title: dispatch_task
+              byte_offset: 59580
+              byte_count: 1433
+              word_count: 208
+              content_hash: a10907032c1bb8c7791b374519521d08bf2c3a0fdaafe97af3dfe45e098f0508
+            - path: 1.11.4
+              level: 3
+              title: complete_task
+              byte_offset: 61013
+              byte_count: 1988
+              word_count: 256
+              content_hash: 99cdca960af4dc11ba16afd64e805fe11a228fb0449ec6751839f6007569eba1
+        - path: "1.12"
+          level: 2
+          title: 11. Human Checkpoints
+          byte_offset: 63001
+          byte_count: 3572
+          word_count: 456
+          content_hash: dd1cc873fe61fa4bd2621f676c93c557f8dc5f6e12ad882f3ca732142bb4374c
+          children:
+            - path: 1.12.1
+              level: 3
+              title: human_checkpoint
+              byte_offset: 63027
+              byte_count: 1386
+              word_count: 185
+              content_hash: 50f3f984c65433870d8f75786bac7cfb5a9318b072eb24f30148646acfa739c7
+            - path: 1.12.2
+              level: 3
+              title: human_checkpoint_respond
+              byte_offset: 64413
+              byte_count: 772
+              word_count: 99
+              content_hash: ace7da052343b51ed64e53b428e310ce5a9b75a31c42fdfe54ffe98eaf22edea
+            - path: 1.12.3
+              level: 3
+              title: human_checkpoint_get
+              byte_offset: 65185
+              byte_count: 782
+              word_count: 93
+              content_hash: 886ca1513e463c5d2d5e4067d29c772edc1a3c972678b5dd67d8be8fd5d7fafb
+            - path: 1.12.4
+              level: 3
+              title: human_checkpoint_list
+              byte_offset: 65967
+              byte_count: 606
+              word_count: 75
+              content_hash: 9cfcfd18166a73e4b170ff1bbc8c4eb3a91746334164df19577a57de8e92ee93
+        - path: "1.13"
+          level: 2
+          title: 12. Estimation
+          byte_offset: 66573
+          byte_count: 3764
+          word_count: 485
+          content_hash: 84135aee2006d2705705e7095810862d40f3270ffa877d6fb95abcff25c2884e
+          children:
+            - path: 1.13.1
+              level: 3
+              title: estimate_set
+              byte_offset: 66592
+              byte_count: 1081
+              word_count: 147
+              content_hash: d4d64a761ee80602d4d21265be5df4c4aa9de4ccddfaf973597cfefd3d92c1bc
+            - path: 1.13.2
+              level: 3
+              title: estimate_query
+              byte_offset: 67673
+              byte_count: 1073
+              word_count: 126
+              content_hash: 9ea2f1b28fa22ab5b99b08717343778dc3bdf0892c6cf2f12021b8b45db7247c
+            - path: 1.13.3
+              level: 3
+              title: estimate_reference_add
+              byte_offset: 68746
+              byte_count: 999
+              word_count: 136
+              content_hash: 46f1e055644e32bd45ed1292247182f4a526543e7c5efadc36c48dd5b7abf6a8
+            - path: 1.13.4
+              level: 3
+              title: estimate_reference_remove
+              byte_offset: 69745
+              byte_count: 592
+              word_count: 73
+              content_hash: 70e917c2761c7051a0a9070845b7c89b4531c28ed3060c8d854311f0335a89c0
+        - path: "1.14"
+          level: 2
+          title: 13. Feature Decomposition and Review
+          byte_offset: 70337
+          byte_count: 4945
+          word_count: 625
+          content_hash: c8bab5b009e7a6d486457f5489ac1acffc9bf76f5cb02ed83027170009d3b00e
+          children:
+            - path: 1.14.1
+              level: 3
+              title: decompose_feature
+              byte_offset: 70378
+              byte_count: 1297
+              word_count: 166
+              content_hash: 0d4ab1d5fa18493db6fe2c161b9bd78453801cdd2563bef5e261b932dff1dd6d
+            - path: 1.14.2
+              level: 3
+              title: decompose_review
+              byte_offset: 71675
+              byte_count: 1049
+              word_count: 135
+              content_hash: 2cc0ec9e64b5e05437f6d663fd08463f51c4287316aac14d8b77dd75d807390d
+            - path: 1.14.3
+              level: 3
+              title: slice_analysis
+              byte_offset: 72724
+              byte_count: 1414
+              word_count: 162
+              content_hash: 206351f9762d0e8372582182c06773d20bc8f2ffac1101df2919688fc2d4aad7
+            - path: 1.14.4
+              level: 3
+              title: review_task_output
+              byte_offset: 74138
+              byte_count: 1144
+              word_count: 156
+              content_hash: e803fc84c0cbb1981b02c6851cdcfeba676396c89228e1d41f96c1bbe0e10db7
+        - path: "1.15"
+          level: 2
+          title: 14. Conflict Analysis
+          byte_offset: 75282
+          byte_count: 1371
+          word_count: 154
+          content_hash: 54c00b517eb29ab6d0bd190c5a65707c0afb7fe91e624246297a1f73f4c1dd48
+          children:
+            - path: 1.15.1
+              level: 3
+              title: conflict_domain_check
+              byte_offset: 75308
+              byte_count: 1345
+              word_count: 150
+              content_hash: c6f6d2a8523f06484f61e699349b133b986161160b334bb089e5cbad570e2e4e
+        - path: "1.16"
+          level: 2
+          title: 15. Incident Management
+          byte_offset: 76653
+          byte_count: 3629
+          word_count: 533
+          content_hash: fa775a9cf7030ae70a25f8fffb02143cece186224b9b761ffd0dd0ca3542f2e1
+          children:
+            - path: 1.16.1
+              level: 3
+              title: incident_create
+              byte_offset: 76681
+              byte_count: 1140
+              word_count: 171
+              content_hash: 2793170f19dc21776985a1f7664458bee0dc1ceb0ff68c9e12d6c882c671f77b
+            - path: 1.16.2
+              level: 3
+              title: incident_update
+              byte_offset: 77821
+              byte_count: 1132
+              word_count: 170
+              content_hash: 7938b95c0a9c53091b5f36f20ed2b560d2fbc7901163d0c76d73b363ac269bf7
+            - path: 1.16.3
+              level: 3
+              title: incident_list
+              byte_offset: 78953
+              byte_count: 663
+              word_count: 89
+              content_hash: 26e9b171a182d85e5e50566e5eeadd169adaefad05852948fdd944901c48a80b
+            - path: 1.16.4
+              level: 3
+              title: incident_link_bug
+              byte_offset: 79616
+              byte_count: 666
+              word_count: 99
+              content_hash: 91e0f9d958f682f054f847d899d5546bfabc5cfb77aca94e34fc7835ca59e3f7
+        - path: "1.17"
+          level: 2
+          title: 16. Git Integration — Worktrees
+          byte_offset: 80282
+          byte_count: 3454
+          word_count: 458
+          content_hash: 5e523bde9188e6fac38020417048ebc851a4baeb7e0cbe486af0a0b283b36ebb
+          children:
+            - path: 1.17.1
+              level: 3
+              title: worktree_create
+              byte_offset: 80320
+              byte_count: 1279
+              word_count: 167
+              content_hash: fc91b67d6e09c59bf8e1bcd240a9fe2204c5d2a72a414408afb1e39f0580edc2
+            - path: 1.17.2
+              level: 3
+              title: worktree_get
+              byte_offset: 81599
+              byte_count: 610
+              word_count: 76
+              content_hash: 2e1dab4bf0fa6fc2b2c0a330e1bd5e8896ae759d6f7030aba4f829453a3d12d4
+            - path: 1.17.3
+              level: 3
+              title: worktree_list
+              byte_offset: 82209
+              byte_count: 695
+              word_count: 97
+              content_hash: b6edc068982b37efc5042a51aee3abf6e7398a1b6e84b3add110438072e40183
+            - path: 1.17.4
+              level: 3
+              title: worktree_remove
+              byte_offset: 82904
+              byte_count: 832
+              word_count: 112
+              content_hash: 539afd601df7bb665deadfa1fa5f9cbd8f79ad0d58f8eec8a1d67ac2403dcb04
+        - path: "1.18"
+          level: 2
+          title: 17. Git Integration — Branches and Cleanup
+          byte_offset: 83736
+          byte_count: 3240
+          word_count: 393
+          content_hash: faa5a61545b440a82aba9a403dbd81eb8bb2ece6596cbee74086bfd90d353019
+          children:
+            - path: 1.18.1
+              level: 3
+              title: branch_status
+              byte_offset: 83785
+              byte_count: 1001
+              word_count: 110
+              content_hash: 6a680504da8860eaaff5834cf79325b0807d3f9395d9b98b78202807bd4d7281
+            - path: 1.18.2
+              level: 3
+              title: cleanup_list
+              byte_offset: 84786
+              byte_count: 1065
+              word_count: 127
+              content_hash: 92514dc968bf81ecab60adfbb1d1a9e453409f4e71d9cac6fda6b9c2ecccbce2
+            - path: 1.18.3
+              level: 3
+              title: cleanup_execute
+              byte_offset: 85851
+              byte_count: 1125
+              word_count: 148
+              content_hash: 6c1b489377cbaadb44dbbc9d496cdaab6e54efd2429f69aec242659e9639e28c
+        - path: "1.19"
+          level: 2
+          title: 18. Git Integration — Merge
+          byte_offset: 86976
+          byte_count: 2452
+          word_count: 315
+          content_hash: 0e700471af003be2601cf2dbbbde1a7e6d033333d844df2440825f1bcfbc76fc
+          children:
+            - path: 1.19.1
+              level: 3
+              title: merge_readiness_check
+              byte_offset: 87010
+              byte_count: 1030
+              word_count: 122
+              content_hash: d6f41b2ed31ed0f7d0355e0e23df233c197f6b55b655eb479bcdf26157fcd893
+            - path: 1.19.2
+              level: 3
+              title: merge_execute
+              byte_offset: 88040
+              byte_count: 1388
+              word_count: 187
+              content_hash: f50c3f6c9d9390e3e2df0675abcf8c6eb5bb5bcc91783437f0df885d5e2c3881
+        - path: "1.20"
+          level: 2
+          title: 19. Git Integration — Pull Requests
+          byte_offset: 89428
+          byte_count: 2599
+          word_count: 342
+          content_hash: b8e98c59f94db22dbb00dd6fda58748315fccd6ce903a0215650f7010313a8c3
+          children:
+            - path: 1.20.1
+              level: 3
+              title: pr_create
+              byte_offset: 89470
+              byte_count: 874
+              word_count: 121
+              content_hash: d387d53be8ab29082c431a0eaf8d879391650da6c3494f38ee2b648aff19b38b
+            - path: 1.20.2
+              level: 3
+              title: pr_update
+              byte_offset: 90344
+              byte_count: 757
+              word_count: 99
+              content_hash: e5984f4c62695c205be1a937e088b2c1739866d8af45f0740ac934c7ffb6d5aa
+            - path: 1.20.3
+              level: 3
+              title: pr_status
+              byte_offset: 91101
+              byte_count: 926
+              word_count: 115
+              content_hash: f99c826f942bf46e55a45ca9506bce72b9ae66a5052b3e8553b1a62005ed8625
+        - path: "1.21"
+          level: 2
+          title: 20. Agent Capabilities
+          byte_offset: 92027
+          byte_count: 2788
+          word_count: 363
+          content_hash: 46272f47238d7b904c403b480796f5801881f0fb68bea882fdc6dd6faf61d2c6
+          children:
+            - path: 1.21.1
+              level: 3
+              title: suggest_links
+              byte_offset: 92054
+              byte_count: 1223
+              word_count: 160
+              content_hash: b547a188dc0ae7eea501e33808db5ef7d65d1ec036bde44aebf728504901262d
+            - path: 1.21.2
+              level: 3
+              title: check_duplicates
+              byte_offset: 93277
+              byte_count: 1304
+              word_count: 170
+              content_hash: 7b137cf47a7ea8bbae1053932c6edda9ec801cddd215a53cb9f3ee4556fdfe23
+            - path: 1.21.3
+              level: 3
+              title: doc_extraction_guide
+              byte_offset: 94581
+              byte_count: 234
+              word_count: 29
+              content_hash: 0699ae27173015d221f80234df83f1536aaf53ab01e1cad6c020ec6e64fea31c
+        - path: "1.22"
+          level: 2
+          title: 21. Batch Operations
+          byte_offset: 94815
+          byte_count: 1406
+          word_count: 206
+          content_hash: f13280f453dbbb77e71c5c71a917f76604298589ead25e07ea262c853dd96738
+          children:
+            - path: 1.22.1
+              level: 3
+              title: batch_import_documents
+              byte_offset: 94840
+              byte_count: 1381
+              word_count: 202
+              content_hash: 7b4a336be47544f8d26f1f7f16119fc7bd083c69bf1c674b8603a66d657fee30
+        - path: "1.23"
+          level: 2
+          title: 22. Migration
+          byte_offset: 96221
+          byte_count: 888
+          word_count: 110
+          content_hash: d75496cb509385ecd54f20bfbb7d26ae26751e095b89d95e5833d53dc439974f
+          children:
+            - path: 1.23.1
+              level: 3
+              title: migrate_phase2
+              byte_offset: 96239
+              byte_count: 870
+              word_count: 107
+              content_hash: 0b38b93afcf4cb37adaed9a037c52d27984467b6dd177496228e3355b622e2e9
+        - path: "1.24"
+          level: 2
+          title: 23. Rich Queries
+          byte_offset: 97109
+          byte_count: 683
+          word_count: 93
+          content_hash: 2f3a6d0a2e85fbb3109e89ae3838730e93becf2d71abcd78001e265b8867eb0a
+          children:
+            - path: 1.24.1
+              level: 3
+              title: query_plan_tasks
+              byte_offset: 97130
+              byte_count: 662
+              word_count: 89
+              content_hash: 1faa032226a9c5b0b04d5ba11a47568d4af673bad0a92961e7daee82aed2e665
+        - path: "1.25"
+          level: 2
+          title: 24. Lifecycle Operation Constraints
+          byte_offset: 97792
+          byte_count: 1540
+          word_count: 207
+          content_hash: fd2afc11318ef82408caa8af1b99239ba71a34d98fb07a8d51b53a368a6a5d27
+          children:
+            - path: 1.25.1
+              level: 3
+              title: Status transition enforcement
+              byte_offset: 97958
+              byte_count: 301
+              word_count: 44
+              content_hash: 87d40a0c4e7c894feafa8b2aa510ecc5070627374bca5817b5a6f9dfd74700f2
+            - path: 1.25.2
+              level: 3
+              title: Document-driven lifecycle advancement
+              byte_offset: 98259
+              byte_count: 513
+              word_count: 62
+              content_hash: eef9cf760110d3c5e49d4116b396da4d99cb3b560e795d92f70341fee750bd07
+            - path: 1.25.3
+              level: 3
+              title: Dispatch constraints
+              byte_offset: 98772
+              byte_count: 327
+              word_count: 50
+              content_hash: 261c4ae571aefc2f9d32022ab25aa5e6f0e9b7c1b53d875b3a4a2078a0131c6c
+            - path: 1.25.4
+              level: 3
+              title: Review constraints
+              byte_offset: 99099
+              byte_count: 233
+              word_count: 31
+              content_hash: a235dc555a3d5bcb60a7386b5a9949c21329e968fe4a47c7a9f3a68d69280ba5
+        - path: "1.26"
+          level: 2
+          title: 25. Idempotency Notes
+          byte_offset: 99332
+          byte_count: 1013
+          word_count: 153
+          content_hash: bf67935d908ae254e72784459e29f4467fbe5a57ea0c8ee002e9dbb0bb7ad612
+entity_refs:
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.4.2
+      byte_offset: 6770
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 7539
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.4.6
+      byte_offset: 11152
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.4.7
+      byte_offset: 12015
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.4.8
+      byte_offset: 13219
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.4.12
+      byte_offset: 16128
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.7.1
+      byte_offset: 26632
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.7.9
+      byte_offset: 32512
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.7.10
+      byte_offset: 33253
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.8.5
+      byte_offset: 38294
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.8.5
+      byte_offset: 38576
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.8.9
+      byte_offset: 41911
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.11.1
+      byte_offset: 58433
+    - entity_id: FEAT-01ABC
+      entity_type: feature
+      section_path: 1.13.1
+      byte_offset: 66943
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.13.2
+      byte_offset: 68471
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.14.1
+      byte_offset: 71221
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.14.2
+      byte_offset: 72442
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.14.3
+      byte_offset: 73622
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.16.2
+      byte_offset: 78826
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.17.1
+      byte_offset: 81311
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.17.2
+      byte_offset: 82013
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.17.3
+      byte_offset: 82830
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.17.4
+      byte_offset: 83591
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.18.1
+      byte_offset: 84489
+    - entity_id: FEAT-01JXold
+      entity_type: feature
+      section_path: 1.18.2
+      byte_offset: 85669
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.19.1
+      byte_offset: 87689
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.19.2
+      byte_offset: 89158
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.20.1
+      byte_offset: 90133
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.20.2
+      byte_offset: 90924
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.20.3
+      byte_offset: 91735
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.21.1
+      byte_offset: 92852
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.21.2
+      byte_offset: 94367
+    - entity_id: TASK-042
+      entity_type: task
+      section_path: 1.8.5
+      byte_offset: 38306
+    - entity_id: BUG-01JX
+      entity_type: bug
+      section_path: 1.4.4
+      byte_offset: 9185
+    - entity_id: BUG-01ABC
+      entity_type: bug
+      section_path: 1.13.1
+      byte_offset: 66960
+    - entity_id: BUG-01JX
+      entity_type: bug
+      section_path: 1.16.4
+      byte_offset: 80191
+    - entity_id: DEC-01JX
+      entity_type: decision
+      section_path: 1.4.5
+      byte_offset: 10264
+    - entity_id: DEC-01JX
+      entity_type: decision
+      section_path: 1.21.1
+      byte_offset: 92896
+    - entity_id: EPIC-01JX
+      entity_type: epic
+      section_path: 1.4.1
+      byte_offset: 5555
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.7.1
+      byte_offset: 26744
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.7.2
+      byte_offset: 27627
+    - entity_id: DOC-01JXaaa
+      entity_type: document
+      section_path: 1.7.3
+      byte_offset: 28469
+    - entity_id: DOC-01JXbbb
+      entity_type: document
+      section_path: 1.7.3
+      byte_offset: 28504
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.7.4
+      byte_offset: 29284
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.7.5
+      byte_offset: 30022
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.7.6
+      byte_offset: 30864
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.7.7
+      byte_offset: 31389
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.7.8
+      byte_offset: 31879
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.7.11
+      byte_offset: 33951
+    - entity_id: DOC-01JXaaa
+      entity_type: document
+      section_path: 1.7.11
+      byte_offset: 34060
+    - entity_id: DOC-01JXbbb
+      entity_type: document
+      section_path: 1.7.11
+      byte_offset: 34119
+    - entity_id: DOC-01JXccc
+      entity_type: document
+      section_path: 1.7.11
+      byte_offset: 34204
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.8.1
+      byte_offset: 34775
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.8.2
+      byte_offset: 35542
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.8.3
+      byte_offset: 37249
+    - entity_id: DOC-01JXaaa
+      entity_type: document
+      section_path: 1.8.4
+      byte_offset: 38019
+    - entity_id: DOC-01JXbbb
+      entity_type: document
+      section_path: 1.8.4
+      byte_offset: 38037
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.8.8
+      byte_offset: 40770
+    - entity_id: DOC-01JX
+      entity_type: document
+      section_path: 1.8.9
+      byte_offset: 41703
+    - entity_id: P1-user-auth
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 6640
+    - entity_id: P1-user-auth
+      entity_type: plan
+      section_path: 1.4.6
+      byte_offset: 11376
+    - entity_id: P1-user-auth
+      entity_type: plan
+      section_path: 1.5.1
+      byte_offset: 19537
+    - entity_id: P1-basic-ui
+      entity_type: plan
+      section_path: 1.5.2
+      byte_offset: 19861
+    - entity_id: P1-user-auth
+      entity_type: plan
+      section_path: 1.5.2
+      byte_offset: 20077
+    - entity_id: P1-user-auth
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 20860
+    - entity_id: P1-user-auth
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 21562
+    - entity_id: P1-user-auth
+      entity_type: plan
+      section_path: 1.5.5
+      byte_offset: 22448
+    - entity_id: P1-basic-ui
+      entity_type: plan
+      section_path: 1.8.5
+      byte_offset: 38318
+    - entity_id: P1-user-auth
+      entity_type: plan
+      section_path: 1.22.1
+      byte_offset: 96065
+    - entity_id: P1-basic-ui
+      entity_type: plan
+      section_path: 1.24.1
+      byte_offset: 97374
+    - entity_id: P1-user-auth
+      entity_type: plan
+      section_path: 1.24.1
+      byte_offset: 97597
+conventional_roles:
+    - section_path: 1.4.5
+      role: decision
+      confidence: high
+    - section_path: 1.9.13
+      role: narrative
+      confidence: high
+    - section_path: "1.10"
+      role: narrative
+      confidence: high
+    - section_path: 1.10.1
+      role: narrative
+      confidence: high
+    - section_path: "1.25"
+      role: constraint
+      confidence: high
+    - section_path: 1.25.3
+      role: constraint
+      confidence: high
+    - section_path: 1.25.4
+      role: constraint
+      confidence: high
+classified: false

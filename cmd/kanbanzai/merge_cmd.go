@@ -5,12 +5,12 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/core"
-	kbzgit "kanbanzai/internal/git"
-	"kanbanzai/internal/merge"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/core"
+	kbzgit "github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/merge"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 func runMerge(args []string, deps dependencies) error {

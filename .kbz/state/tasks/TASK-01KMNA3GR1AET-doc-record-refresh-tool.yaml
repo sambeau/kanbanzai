@@ -2,4 +2,15 @@ id: TASK-01KMNA3GR1AET
 parent_feature: FEAT-01KMKRQWF0FCH
 slug: doc-record-refresh-tool
 summary: "Implement doc_record_refresh MCP tool: reads current file content, computes hash, returns changed:false if unchanged; updates hash if changed; transitions approved→draft if changed content was approved (returns old hash, new hash, and transition message). Includes error conditions for missing document/file. Tests for AC-11, AC-12, AC-13."
-status: queued
+status: done
+files_planned:
+  - internal/service/documents.go
+  - internal/mcp/doc_record_tools.go
+  - internal/mcp/doc_record_refresh_test.go
+completed: "2026-03-26T15:35:19Z"
+claimed_at: "2026-03-26T15:01:29Z"
+dispatched_to: backend
+dispatched_at: "2026-03-26T15:01:29Z"
+dispatched_by: agent/hardening
+completion_summary: "Implemented doc_record_refresh MCP tool. Added RefreshDocumentInput/RefreshDocumentResult types and RefreshDocument method to DocumentService (internal/service/documents.go). Added docRecordRefreshTool to DocRecordTools (internal/mcp/doc_record_tools.go) with readOnly=false, destructive=false, idempotent=false annotations. Returns changed/old_hash/new_hash/status/status_transition/message fields; transitions approved→draft when file content changes. Wrote 5 tests covering AC-11 (hash updated), AC-12 (approved→draft transition), AC-13 (unchanged file returns changed=false), record-not-found, and file-not-found error cases."
+verification: go test -race ./internal/mcp/ ./internal/service/ — all pass

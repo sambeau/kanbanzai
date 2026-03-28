@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 const queueUsageText = `Usage: kbz queue [options]

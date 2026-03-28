@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/fsutil"
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/fsutil"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 // DocumentDir is the directory name for document records within state.

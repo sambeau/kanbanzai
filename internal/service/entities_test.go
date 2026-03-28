@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // assertIDFormat checks that an ID has the expected prefix and total length.
@@ -443,7 +443,8 @@ func TestEntityService_StatusUpdate_UsesLifecycleValidation(t *testing.T) {
 		{from: "designing", to: "specifying"},
 		{from: "specifying", to: "dev-planning"},
 		{from: "dev-planning", to: "developing"},
-		{from: "developing", to: "done"},
+		{from: "developing", to: "reviewing"},
+		{from: "reviewing", to: "done"},
 	}
 
 	current := created

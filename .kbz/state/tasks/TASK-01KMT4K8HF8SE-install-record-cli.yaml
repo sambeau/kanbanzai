@@ -1,0 +1,12 @@
+id: TASK-01KMT4K8HF8SE
+parent_feature: FEAT-01KMT40GZSMHB
+slug: install-record-cli
+summary: "Add kbz install-record write [--by <source>] CLI subcommand. Writes install record using current git rev-parse HEAD SHA, os.Executable() path, and --by value (default: manual). Exits non-zero with diagnostic outside a kanbanzai-initialised directory. Covers AC-14 to AC-17."
+status: done
+depends_on:
+  - TASK-01KMT4K8H10XB
+files_planned:
+  - cmd/kanbanzai/install_cmd.go
+  - cmd/kanbanzai/main.go
+completed: "2026-03-28T13:02:49Z"
+completion_summary: "Added install-record write CLI subcommand with --by flag, root discovery, and git SHA resolution"

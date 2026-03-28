@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"kanbanzai/internal/kbzinit"
+	"github.com/sambeau/kanbanzai/internal/kbzinit"
 )
 
 const initUsageText = `kanbanzai init [flags]

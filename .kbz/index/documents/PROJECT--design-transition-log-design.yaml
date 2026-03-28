@@ -1,0 +1,244 @@
+document_id: PROJECT/design-transition-log-design
+document_path: work/design/transition-log-design.md
+content_hash: d935ecf655d4855f7c34b7ae2747e45f52f7bd0398ecfdf876507564c720bcc4
+indexed_at: 2026-03-25T21:38:22.289448Z
+sections:
+    - path: "1"
+      level: 1
+      title: Transition Log Design
+      byte_offset: 0
+      byte_count: 10294
+      word_count: 1572
+      content_hash: d935ecf655d4855f7c34b7ae2747e45f52f7bd0398ecfdf876507564c720bcc4
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 484
+          byte_count: 1040
+          word_count: 155
+          content_hash: 75865b73de2c3a1d97937b3dd7ef877f6138da8e0f81f80a0b5407e2309b2667
+        - path: "1.2"
+          level: 2
+          title: 2. Design Principles
+          byte_offset: 1524
+          byte_count: 923
+          word_count: 146
+          content_hash: ca6dd62d22c1ce345bc634c6fdead8dea06bb18a0780ddb38116651056136e8f
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Append-only
+              byte_offset: 1549
+              byte_count: 176
+              word_count: 26
+              content_hash: 615acad1055f7e0195386ce1feb7de66886b9418114e644316ef528ddbcaabe8
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Per-entity, not global
+              byte_offset: 1725
+              byte_count: 197
+              word_count: 31
+              content_hash: d40ee9557b7ffb205b06548c0bc00ea6ce22126bf48abf3f07923348a15b46ca
+            - path: 1.2.3
+              level: 3
+              title: 2.3 Derived, not authoritative
+              byte_offset: 1922
+              byte_count: 296
+              word_count: 50
+              content_hash: 5d9326cabe230a93bd84c6965278b91db1df06e372065b03633130a9d3348ddb
+            - path: 1.2.4
+              level: 3
+              title: 2.4 Optional in early phases
+              byte_offset: 2218
+              byte_count: 229
+              word_count: 35
+              content_hash: 106d6ddd31ee865cc8e36476fd5c0169c78f41c2e142ce3470fc2463d38729dc
+        - path: "1.3"
+          level: 2
+          title: 3. Transition Entry Schema
+          byte_offset: 2447
+          byte_count: 676
+          word_count: 122
+          content_hash: 73dee193545bc62882e77ffee979f466924afe58e23cf07b733a5d2b7e9ad286
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Required fields
+              byte_offset: 2551
+              byte_count: 340
+              word_count: 64
+              content_hash: bcab3796d3d4f9ebba65523a69609be8003dba82134abaf27cc05789532da67b
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Optional fields
+              byte_offset: 2891
+              byte_count: 232
+              word_count: 42
+              content_hash: c72dec9c49d01828d8af6b8e54b88beee52e798b16e0ee6494caff8048abcfc9
+        - path: "1.4"
+          level: 2
+          title: 4. Storage
+          byte_offset: 3123
+          byte_count: 1784
+          word_count: 259
+          content_hash: 3151668b0816948676f21d7f4e1b88c9bc36ac4b3c003addf897a2516e175334
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 On-entity storage
+              byte_offset: 3138
+              byte_count: 503
+              word_count: 62
+              content_hash: 52111307b6e4077b82f2a0fe6a1f8f21e1f942b2d36e6fc7dc2d0b54468933ba
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Rationale for on-entity storage
+              byte_offset: 3641
+              byte_count: 711
+              word_count: 106
+              content_hash: 82fb2a57f8911e3da8fab1966e12c60072e25a10f69613863351cf8cc766a715
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Field ordering
+              byte_offset: 4352
+              byte_count: 242
+              word_count: 40
+              content_hash: 83aa4dc555e7ad4855c43e716c0486c2d9f9888bde8eeb75218237e5b9ec193e
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Cache integration
+              byte_offset: 4594
+              byte_count: 313
+              word_count: 48
+              content_hash: 9567521fd88921c28cfab38560ccb545926dc89f2f88f67207a2a603a86494f5
+        - path: "1.5"
+          level: 2
+          title: 5. Recording Transitions
+          byte_offset: 4907
+          byte_count: 1308
+          word_count: 201
+          content_hash: 53beb2652b1036d2e9c1a5e1e1fb8c7f852edac8ea10425a8dfe363ed8217a5a
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 When to record
+              byte_offset: 4936
+              byte_count: 321
+              word_count: 55
+              content_hash: 296669d617309338d7a9f89ff794eab05a9274a4a267950a466a5f96bcf7d728
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Entry state recording
+              byte_offset: 5257
+              byte_count: 410
+              word_count: 63
+              content_hash: d41b51618aad471f38f875cd272a793d80c69a953c3239060a3d1b42abc0ac8a
+            - path: 1.5.3
+              level: 3
+              title: 5.3 The `by` field
+              byte_offset: 5667
+              byte_count: 548
+              word_count: 79
+              content_hash: 69ffec4df256eb29216a516f9f39034767d4fcac145546560d8e522b1cf370d7
+        - path: "1.6"
+          level: 2
+          title: 6. Querying Transition History
+          byte_offset: 6215
+          byte_count: 806
+          word_count: 122
+          content_hash: 67a6c4a1bff7394ed7629a4d8fb6f52ff8250e1a9b8620d2f090ada67cd1e029
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Per-entity history
+              byte_offset: 6250
+              byte_count: 172
+              word_count: 25
+              content_hash: 38cfaa22b82d53471a502c1884a4b56d3f6562014a73bcc9672e8fad67d0b107
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Cross-entity queries
+              byte_offset: 6422
+              byte_count: 599
+              word_count: 92
+              content_hash: 2cc010f85db24299bb36b8a70531a8fd8782c63f8f9ad2ad8ba0537e9ce92ccc
+        - path: "1.7"
+          level: 2
+          title: 7. Health Check Integration
+          byte_offset: 7021
+          byte_count: 663
+          word_count: 102
+          content_hash: e2fad835f8ab0ff37a41c51adfbcf7c408975daadece284e07e8f616ea8d1848
+        - path: "1.8"
+          level: 2
+          title: 8. Migration From Phase 1
+          byte_offset: 7684
+          byte_count: 542
+          word_count: 90
+          content_hash: 174edcf1a1229d8904e2e392dec17b1ffcba195482fae898329ccd7c791a2b4b
+        - path: "1.9"
+          level: 2
+          title: 9. Relationship to Concurrency Controls
+          byte_offset: 8226
+          byte_count: 577
+          word_count: 85
+          content_hash: b0e873bc78e314f5cc9e2b8078d1f51ed87611231d45a88d39aab65360b0770f
+        - path: "1.10"
+          level: 2
+          title: 10. Open Questions
+          byte_offset: 8803
+          byte_count: 855
+          word_count: 133
+          content_hash: 032e6bd93c7068915ce53f57446033c70e0f6b18e546eb5c6950adadcc1b53a2
+        - path: "1.11"
+          level: 2
+          title: 11. Summary
+          byte_offset: 9658
+          byte_count: 636
+          word_count: 95
+          content_hash: 3dfecb246803a948d8937279d0779a9b0f00e8be0e50f4e07e0acdcb3bf1b69d
+front_matter:
+    status: design
+    date: "2026-07-24"
+    extra:
+        Basis: workflow-design-basis.md` §9 (lifecycle state machines); phase-1-specification.md` §10 (lifecycle requirements); phase-1-decision-log.md` P1-DEC-010 (lifecycle transition graph)
+        Phase: post-Phase 1 (Phase 1 derives transition history from Git; this design covers the dedicated transition log planned for later phases)
+        Purpose: design for recording lifecycle transition history on entities
+entity_refs:
+    - entity_id: DEC-010
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 441
+    - entity_id: DEC-020
+      entity_type: decision
+      section_path: 1.6.2
+      byte_offset: 7005
+    - entity_id: DEC-010
+      entity_type: decision
+      section_path: "1.7"
+      byte_offset: 7316
+cross_doc_links:
+    - target_path: workflow-design-basis.md
+      link_text: workflow-design-basis.md
+      section_path: "1"
+    - target_path: phase-1-specification.md
+      link_text: phase-1-specification.md
+      section_path: "1"
+    - target_path: phase-1-decision-log.md
+      link_text: phase-1-decision-log.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.2
+      role: rationale
+      confidence: high
+    - section_path: "1.10"
+      role: question
+      confidence: high
+    - section_path: "1.11"
+      role: narrative
+      confidence: high
+classified: false

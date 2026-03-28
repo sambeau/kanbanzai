@@ -3,9 +3,9 @@ package mcp
 import (
 	"time"
 
-	"kanbanzai/internal/health"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/health"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // Phase4bHealthChecker returns an AdditionalHealthChecker that validates

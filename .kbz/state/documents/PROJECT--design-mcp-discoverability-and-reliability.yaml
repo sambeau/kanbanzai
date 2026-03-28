@@ -1,0 +1,11 @@
+id: PROJECT/design-mcp-discoverability-and-reliability
+path: work/design/mcp-discoverability-and-reliability.md
+type: design
+title: MCP Server Discoverability and Reliability Design
+status: approved
+approved_by: sambeau
+approved_at: "2026-03-28T14:08:58Z"
+content_hash: 148d4c7ea37ac414392763991b6c546b05757bbeef86b7f83c6087569d67b63c
+created: "2026-03-28T14:08:54Z"
+created_by: sambeau
+updated: "2026-03-28T14:08:58Z"

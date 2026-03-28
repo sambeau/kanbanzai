@@ -6,9 +6,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"kanbanzai/internal/git"
-	"kanbanzai/internal/knowledge"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/knowledge"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // CheckWorktree checks worktree state consistency.

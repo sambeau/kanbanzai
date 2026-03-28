@@ -1,0 +1,169 @@
+document_id: FEAT-01KMKRQSD1TKK/design-skills-content
+document_path: work/design/skills-content.md
+content_hash: c3e2811f1cc3f1bd79feff8476a9e15cb422eef40a0a83a98377c550a3d1bce0
+indexed_at: 2026-03-26T11:08:58.549626Z
+sections:
+    - path: "1"
+      level: 1
+      title: Skills Content Design
+      byte_offset: 0
+      byte_count: 16475
+      word_count: 2436
+      content_hash: c3e2811f1cc3f1bd79feff8476a9e15cb422eef40a0a83a98377c550a3d1bce0
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 368
+          byte_count: 731
+          word_count: 98
+          content_hash: 512116b52df57ea890b5e4750583e783158b437c718d2324a9991cee66f97c6a
+        - path: "1.2"
+          level: 2
+          title: 2. Skill File Format
+          byte_offset: 1099
+          byte_count: 806
+          word_count: 114
+          content_hash: bc53ba8c25bfa71cf98ee6eb0831dd13cf9694c13bf9a9927a1e6d01a7be2d5d
+        - path: "1.3"
+          level: 2
+          title: 3. Procedural Skills
+          byte_offset: 1905
+          byte_count: 9271
+          word_count: 1395
+          content_hash: f2706e2dbb752be1433b9fdf9a388e38b15b9e4a089a89b2665a06253642bdd4
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 `kanbanzai-getting-started`
+              byte_offset: 1930
+              byte_count: 2085
+              word_count: 327
+              content_hash: f336534a32a2b553f88ca1184425db636031edba83d63c91c9fb11f079a7237e
+            - path: 1.3.2
+              level: 3
+              title: 3.2 `kanbanzai-workflow`
+              byte_offset: 4015
+              byte_count: 2256
+              word_count: 371
+              content_hash: 04c3199c13fe0e65e8c3e52cd50903feddb999be25044b106f33e73e9eca9340
+            - path: 1.3.3
+              level: 3
+              title: 3.3 `kanbanzai-documents`
+              byte_offset: 6271
+              byte_count: 2217
+              word_count: 317
+              content_hash: e00d1fdb055358a2dc02b365fc2779e3148846210a691da8b8205afb24d22f59
+            - path: 1.3.4
+              level: 3
+              title: 3.4 `kanbanzai-agents`
+              byte_offset: 8488
+              byte_count: 2688
+              word_count: 376
+              content_hash: 3efbeadc933b38af87b13def071795cbe406ce1030280e7b3591adc758da3f3f
+        - path: "1.4"
+          level: 2
+          title: 4. Opinionated Skills (Design Discussion Required)
+          byte_offset: 11176
+          byte_count: 3605
+          word_count: 562
+          content_hash: 5f6e5f58ea3c46747ecf3e14f21fab400bb29cd0b3070b7fd1ad497946bae71a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 `kanbanzai-planning` *(Opinionated — Design Discussion Required)*
+              byte_offset: 11884
+              byte_count: 1301
+              word_count: 204
+              content_hash: 42c6ca2cb2fc57540f48b26a7833b39363c1de3d8ab9a900918af2e93a25d900
+            - path: 1.4.2
+              level: 3
+              title: 4.2 `kanbanzai-design` *(Opinionated — Design Discussion Required)*
+              byte_offset: 13185
+              byte_count: 1596
+              word_count: 250
+              content_hash: 32e4311c71c44820154a9991dc79dc74f1269697f04ad17dac42f6f84cba8987
+        - path: "1.5"
+          level: 2
+          title: 5. Relationship Between Skills and `AGENTS.md`
+          byte_offset: 14781
+          byte_count: 1064
+          word_count: 139
+          content_hash: 6cc7487c9916b5b869bc0bbedb98eca87d05982c69256dd17a09da6b88a65f5d
+        - path: "1.6"
+          level: 2
+          title: 6. Content Maintenance
+          byte_offset: 15845
+          byte_count: 630
+          word_count: 88
+          content_hash: 3e9cb9f6db7e5b37ce33eeb4aba7e0c2390b2d7974cc7369750173cb4fefd5dc
+front_matter:
+    status: draft design
+    date: "2026-05-31"
+    related:
+        - work/design/kanbanzai-1.0.md` §4
+        - work/design/init-command.md` §2
+        - work/design/agent-interaction-protocol.md
+        - work/design/document-centric-interface.md
+        - 'Feature: FEAT-01KMKRQSD1TKK'
+    extra:
+        Purpose: define the content of each skill file installed by `kanbanzai init`
+entity_refs:
+    - entity_id: FEAT-01KMKRQSD1TKK
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 343
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: 1.3.4
+      byte_offset: 9852
+    - entity_id: TASK-152
+      entity_type: task
+      section_path: 1.3.4
+      byte_offset: 9964
+    - entity_id: BUG-027
+      entity_type: bug
+      section_path: 1.3.4
+      byte_offset: 9895
+cross_doc_links:
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1"
+    - target_path: work/design/init-command.md
+      link_text: work/design/init-command.md
+      section_path: "1"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "1"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-{name}/SKILL.md
+      link_text: .agents/skills/kanbanzai-{name}/SKILL.md
+      section_path: "1.2"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.4
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+    - target_path: .agents/skills/my-project-workflow/SKILL.md
+      link_text: .agents/skills/my-project-workflow/SKILL.md
+      section_path: "1.6"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

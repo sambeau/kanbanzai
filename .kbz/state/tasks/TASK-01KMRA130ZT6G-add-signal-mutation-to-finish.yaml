@@ -1,0 +1,7 @@
+id: TASK-01KMRA130ZT6G
+parent_feature: FEAT-01KMR8QW7A3A8
+slug: add-signal-mutation-to-finish
+summary: "F3: Add SignalMutation(ctx) to finish tool so side_effects: [] is always present in single-mode responses (spec §8.4). Depends on F2 fix being complete. Add test asserting side_effects: [] is present when finish completes a task with no downstream dependents and no knowledge."
+status: done
+depends_on:
+  - TASK-01KMRA0Y02BC2

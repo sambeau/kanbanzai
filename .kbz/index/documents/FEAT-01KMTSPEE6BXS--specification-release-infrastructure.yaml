@@ -1,0 +1,144 @@
+document_id: FEAT-01KMTSPEE6BXS/specification-release-infrastructure
+document_path: work/spec/release-infrastructure.md
+content_hash: 20bb6a6122cce44fe540613f66906bf00698913c96bedc42efcd0962cbbe9b72
+indexed_at: 2026-03-28T18:02:56.313326Z
+sections:
+    - path: "1"
+      level: 1
+      title: Release Infrastructure Specification
+      byte_offset: 0
+      byte_count: 7746
+      word_count: 1033
+      content_hash: 20bb6a6122cce44fe540613f66906bf00698913c96bedc42efcd0962cbbe9b72
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 656
+          byte_count: 719
+          word_count: 103
+          content_hash: 0c4697a8453c8a50b60ba2b633aca7506a7b7f2c66ae988e96c908a769441bf7
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 1375
+          byte_count: 687
+          word_count: 101
+          content_hash: 15338e5a556c7ff898afa7f1df799a09636257aa001b45ae9b29e1a2317bd3fe
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 1388
+              byte_count: 364
+              word_count: 50
+              content_hash: b9484e49d43d70f74df26d7d889c4392adbd51dfc628704398a5e8b6f2c0c6e8
+            - path: 1.2.2
+              level: 3
+              title: Out of scope
+              byte_offset: 1752
+              byte_count: 310
+              word_count: 48
+              content_hash: 7df7bbee54b4170760c085f0336cad728ad91e3557adb73be0d3a98c75235045
+        - path: "1.3"
+          level: 2
+          title: 3. Acceptance Criteria
+          byte_offset: 2062
+          byte_count: 3111
+          word_count: 454
+          content_hash: fc415fbbfd7f4c448014fdce0ae6c3411b782b94a5eb6f4906eb87e44362daad
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Module path
+              byte_offset: 2089
+              byte_count: 960
+              word_count: 141
+              content_hash: cadac8ea1c61f1eaec255231b10561e11f0f642449ff67ec864edc02af1f3c8e
+            - path: 1.3.2
+              level: 3
+              title: Go version
+              byte_offset: 3049
+              byte_count: 797
+              word_count: 130
+              content_hash: a6118686ff719ff8e8b9ea65db76e0d1b30b5ea597b1b187e91459eed7b44451
+            - path: 1.3.3
+              level: 3
+              title: README and documentation
+              byte_offset: 3846
+              byte_count: 810
+              word_count: 103
+              content_hash: 18abd82c285f15fd0c04af4c7f22d20c12542ffec1b52964bd94be0500476dde
+            - path: 1.3.4
+              level: 3
+              title: Build system
+              byte_offset: 4656
+              byte_count: 517
+              word_count: 76
+              content_hash: 703f455c070533f676a4c0787ef38c67369f41ef9cab5c1a9bc57641f3acad1b
+        - path: "1.4"
+          level: 2
+          title: 4. Verification
+          byte_offset: 5173
+          byte_count: 1320
+          word_count: 149
+          content_hash: d73e56f804852aa42cc5e955bcf7f6f134ce93a76919877fbbf554ba0ce5f95e
+        - path: "1.5"
+          level: 2
+          title: 5. Prerequisites
+          byte_offset: 6493
+          byte_count: 598
+          word_count: 84
+          content_hash: 6528860cd80013bb43577ac63ba62568d132571d681e571e4353473db4347558
+        - path: "1.6"
+          level: 2
+          title: 6. Implementation Notes
+          byte_offset: 7091
+          byte_count: 655
+          word_count: 100
+          content_hash: c1ff96eb6b38a5dacaf2744d833ff8390b369d1cd280f7fda9b6169181203c59
+entity_refs:
+    - entity_id: FEAT-01KMTSPEE6BXS
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 410
+    - entity_id: P3-kanbanzai-1
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 496
+cross_doc_links:
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1"
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.2.1
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: 1.2.1
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.3.3
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: 1.3.3
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: "1.4"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+classified: false

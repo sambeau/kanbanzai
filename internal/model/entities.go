@@ -29,6 +29,7 @@ const (
 	PlanStatusProposed   PlanStatus = "proposed"
 	PlanStatusDesigning  PlanStatus = "designing"
 	PlanStatusActive     PlanStatus = "active"
+	PlanStatusReviewing  PlanStatus = "reviewing"
 	PlanStatusDone       PlanStatus = "done"
 	PlanStatusSuperseded PlanStatus = "superseded"
 	PlanStatusCancelled  PlanStatus = "cancelled"
@@ -55,17 +56,18 @@ const (
 	FeatureStatusSpecifying  FeatureStatus = "specifying"
 	FeatureStatusDevPlanning FeatureStatus = "dev-planning"
 	FeatureStatusDeveloping  FeatureStatus = "developing"
+	FeatureStatusReviewing   FeatureStatus = "reviewing"
+	FeatureStatusNeedsRework FeatureStatus = "needs-rework"
 	FeatureStatusDone        FeatureStatus = "done"
 	FeatureStatusSuperseded  FeatureStatus = "superseded"
 	FeatureStatusCancelled   FeatureStatus = "cancelled"
 
 	// Phase 1 Feature statuses (deprecated, for migration compatibility)
-	FeatureStatusDraft       FeatureStatus = "draft"
-	FeatureStatusInReview    FeatureStatus = "in-review"
-	FeatureStatusApproved    FeatureStatus = "approved"
-	FeatureStatusInProgress  FeatureStatus = "in-progress"
-	FeatureStatusReview      FeatureStatus = "review"
-	FeatureStatusNeedsRework FeatureStatus = "needs-rework"
+	FeatureStatusDraft      FeatureStatus = "draft"
+	FeatureStatusInReview   FeatureStatus = "in-review"
+	FeatureStatusApproved   FeatureStatus = "approved"
+	FeatureStatusInProgress FeatureStatus = "in-progress"
+	FeatureStatusReview     FeatureStatus = "review"
 )
 
 // TaskStatus is the lifecycle state for a Task.
@@ -284,6 +286,7 @@ func (e Epic) GetSlug() string {
 type Feature struct {
 	ID        string        `yaml:"id"`
 	Slug      string        `yaml:"slug"`
+	Label     string        `yaml:"label,omitempty"`
 	Parent    string        `yaml:"parent,omitempty"` // Parent Plan ID (renamed from epic)
 	Status    FeatureStatus `yaml:"status"`
 	Estimate  *float64      `yaml:"estimate,omitempty"`
@@ -331,6 +334,7 @@ type Task struct {
 	ID            string     `yaml:"id"`
 	ParentFeature string     `yaml:"parent_feature"`
 	Slug          string     `yaml:"slug"`
+	Label         string     `yaml:"label,omitempty"`
 	Summary       string     `yaml:"summary"`
 	Status        TaskStatus `yaml:"status"`
 	Estimate      *float64   `yaml:"estimate,omitempty"`

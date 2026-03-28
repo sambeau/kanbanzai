@@ -3,11 +3,11 @@ package mcp
 import (
 	"time"
 
-	chk "kanbanzai/internal/checkpoint"
-	"kanbanzai/internal/health"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/validate"
-	"kanbanzai/internal/worktree"
+	chk "github.com/sambeau/kanbanzai/internal/checkpoint"
+	"github.com/sambeau/kanbanzai/internal/health"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // Phase4aHealthChecker returns an AdditionalHealthChecker that validates
@@ -72,6 +72,10 @@ func Phase4aHealthChecker(
 		}
 		coverageResult := health.CheckEstimationCoverage(featureMaps, taskMaps, activeStatuses)
 		mergeHealthResult(report, "estimation_coverage", coverageResult)
+
+		// Feature-child state consistency checks.
+		featureChildResult := health.CheckFeatureChildConsistency(featureMaps, taskMaps)
+		mergeHealthResult(report, "feature_child_consistency", featureChildResult)
 
 		// checkpointStore reserved for future checkpoint health checks.
 		_ = checkpointStore

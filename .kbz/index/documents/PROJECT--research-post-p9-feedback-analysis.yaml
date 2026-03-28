@@ -1,0 +1,259 @@
+document_id: PROJECT/research-post-p9-feedback-analysis
+document_path: work/research/post-p9-feedback-analysis.md
+content_hash: b50e3b3c0c8b410b23b35a7ef7323b1b7aeb4dbe89f6bb438a8003eec61147f8
+indexed_at: 2026-03-28T15:33:30.818668Z
+sections:
+    - path: "1"
+      level: 1
+      title: Post-P9 Feedback Analysis and Recommendations
+      byte_offset: 0
+      byte_count: 15476
+      word_count: 2196
+      content_hash: b50e3b3c0c8b410b23b35a7ef7323b1b7aeb4dbe89f6bb438a8003eec61147f8
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 471
+          byte_count: 407
+          word_count: 58
+          content_hash: 85c42d6c0fc63c3fd441afeafe5b7bfa72563f0f63a5acd7643d7c85141f731c
+        - path: "1.2"
+          level: 2
+          title: 2. Feedback Sources
+          byte_offset: 878
+          byte_count: 632
+          word_count: 84
+          content_hash: 180ebb9982cb88839d0edc6d2869f4188deeed2df32e22ed173d5f0dccd3664f
+        - path: "1.3"
+          level: 2
+          title: 3. What Worked Well
+          byte_offset: 1510
+          byte_count: 2052
+          word_count: 282
+          content_hash: 7c70bf1975fb1a931e8675379cff2f066c671e76745f6a84b6eac2cf316a2647
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Specification Quality Drives Review Efficiency
+              byte_offset: 1602
+              byte_count: 778
+              word_count: 105
+              content_hash: 354ea886d14930a70ff07f96f4731d03dc660cd5ec4e76e3988645b8fae556a5
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Project Structure Is Navigable
+              byte_offset: 2380
+              byte_count: 450
+              word_count: 64
+              content_hash: a099e9e82f9f39b86f392215f11d9a6d071772624f1a7149d5cceca393c0e5bd
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Test Quality Provides Confidence
+              byte_offset: 2830
+              byte_count: 732
+              word_count: 100
+              content_hash: bcb661d53c89a9fa8c3851cc84aa4e3ff50e28c88e1d776a0dd734dbf5da9834
+        - path: "1.4"
+          level: 2
+          title: 4. Friction Analysis
+          byte_offset: 3562
+          byte_count: 4609
+          word_count: 675
+          content_hash: 62cfe55aca8d40dd2b1e1378f096bc5812a2a795e037ed118786455148e236fd
+          children:
+            - path: 1.4.1
+              level: 3
+              title: '4.1 Theme: Review Workflow Gap'
+              byte_offset: 3722
+              byte_count: 2684
+              word_count: 407
+              content_hash: 36ba745ab31b43e11a25aecd9ec83857e6bdd87e573ea358a8710dbe4472360f
+              children:
+                - path: 1.4.1.1
+                  level: 4
+                  title: 4.1.1 No Plan-Level Review Procedure
+                  byte_offset: 3904
+                  byte_count: 776
+                  word_count: 109
+                  content_hash: 8af5b0a5905fbef07eb3e29d20708b75236dca273af00b721a6d0cfaadad0c7e
+                - path: 1.4.1.2
+                  level: 4
+                  title: 4.1.2 Reviews Happen Outside the Workflow System
+                  byte_offset: 4680
+                  byte_count: 1034
+                  word_count: 163
+                  content_hash: 45962fc69d032ce2732231136f2f56e156949d586f9aeb0745819ebe6ef8712e
+                - path: 1.4.1.3
+                  level: 4
+                  title: 4.1.3 Plan Scope Discovery Requires Detective Work
+                  byte_offset: 5714
+                  byte_count: 692
+                  word_count: 105
+                  content_hash: 39a6f219ca627a0e7a308ccf38b72bfded1b20a190221959442d6e01257e46eb
+            - path: 1.4.2
+              level: 3
+              title: '4.2 Theme: Documentation Drift'
+              byte_offset: 6406
+              byte_count: 1765
+              word_count: 246
+              content_hash: 43309be2df03869ec74bef051a2978f65a65912ad31152e0774598804f4e8563
+              children:
+                - path: 1.4.2.1
+                  level: 4
+                  title: 4.2.1 Stale Tool References Survive Multiple Plans
+                  byte_offset: 6521
+                  byte_count: 940
+                  word_count: 134
+                  content_hash: da197a87646469967d76636b1cd80a7cb5e85949c78c54bfd2f857e67f80b025
+                - path: 1.4.2.2
+                  level: 4
+                  title: 4.2.2 No Automated Documentation Currency Check
+                  byte_offset: 7461
+                  byte_count: 710
+                  word_count: 97
+                  content_hash: 8e8b1bb460da4849eafc018261e197d2ad9721dc5114aaa578dadf3e741d2861
+        - path: "1.5"
+          level: 2
+          title: 5. Corroborating Evidence
+          byte_offset: 8171
+          byte_count: 921
+          word_count: 128
+          content_hash: 5a57666eda557e55e30b8bb542df3ce3f1b5053d696ff94fa24684284366ea4e
+        - path: "1.6"
+          level: 2
+          title: 6. Recommendations
+          byte_offset: 9092
+          byte_count: 4179
+          word_count: 590
+          content_hash: f05ee1f1a074e531b8bf2a5175d5e04a2bea6706ae6c9ad25e34d71fe2e3de38
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'R1: Plan-Level Review SKILL'
+              byte_offset: 9202
+              byte_count: 1357
+              word_count: 181
+              content_hash: be18539bdee57c875f130ba47f06c1a60019a0dbff3b2b2df03d42366911d66f
+            - path: 1.6.2
+              level: 3
+              title: 'R2: Review Tasks as First-Class Workflow Entities'
+              byte_offset: 10559
+              byte_count: 1249
+              word_count: 180
+              content_hash: c0d96f82f5bb602692bd1e18d0085a963555d9b591a37081727075006e4d8916
+            - path: 1.6.3
+              level: 3
+              title: 'R3: Documentation Currency Health Check'
+              byte_offset: 11808
+              byte_count: 1463
+              word_count: 214
+              content_hash: 7efacb8f504f8755f5dc23dad4a6b3cb75dcace812d1da2aeb7a648e775110fc
+        - path: "1.7"
+          level: 2
+          title: 7. Non-Recommendations
+          byte_offset: 13271
+          byte_count: 961
+          word_count: 137
+          content_hash: 472ed65b25af8134b587a13c888faaa52e1ad0a2854bb562b02c0b42a7498351
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Acceptance Criteria Tables as a Mandatory Spec Convention
+              byte_offset: 13379
+              byte_count: 411
+              word_count: 57
+              content_hash: 62d59d02ad913e1ae70d56f729e61e2cf2d8b1ae51922cd96352787d11aa91c3
+            - path: 1.7.2
+              level: 3
+              title: Retro Signal Auto-Capture from Unstructured Channels
+              byte_offset: 13790
+              byte_count: 442
+              word_count: 64
+              content_hash: 8ad5df32070b38ed6a35511cd488f6ef84a3b945e92ab2633306e362c260325f
+        - path: "1.8"
+          level: 2
+          title: 8. Summary
+          byte_offset: 14232
+          byte_count: 1244
+          word_count: 192
+          content_hash: cc3df0d617ba0d7a173e285a8031474fc1411eff18923c7fb11a4a30ea19bb78
+entity_refs:
+    - entity_id: P9-mcp-discoverability
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 1081
+    - entity_id: P8-decompose-reliability
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 1194
+    - entity_id: P7-developer-experience
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 1288
+    - entity_id: P9-mcp-discoverability
+      entity_type: plan
+      section_path: 1.4.1.3
+      byte_offset: 5794
+    - entity_id: P7-developer-experience
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 8632
+    - entity_id: P8-decompose-reliability
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 8816
+cross_doc_links:
+    - target_path: review-P9-mcp-discoverability.md
+      link_text: review-P9-mcp-discoverability.md
+      section_path: "1.2"
+    - target_path: review-P8-decompose-reliability.md
+      link_text: review-P8-decompose-reliability.md
+      section_path: "1.2"
+    - target_path: review-P7-developer-experience.md
+      link_text: review-P7-developer-experience.md
+      section_path: "1.2"
+    - target_path: work/spec/mcp-discoverability-and-reliability.md
+      link_text: work/spec/mcp-discoverability-and-reliability.md
+      section_path: 1.3.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.4.1.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.4.2.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.4.2.2
+    - target_path: review-P7-developer-experience.md
+      link_text: review-P7-developer-experience.md
+      section_path: "1.5"
+    - target_path: review-P8-decompose-reliability.md
+      link_text: review-P8-decompose-reliability.md
+      section_path: "1.5"
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.6.1
+    - target_path: work/reviews/review-<plan-slug>.md
+      link_text: work/reviews/review-<plan-slug>.md
+      section_path: 1.6.1
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: 1.6.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.6.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.1.3
+      role: constraint
+      confidence: high
+    - section_path: 1.7.1
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: narrative
+      confidence: high
+classified: false

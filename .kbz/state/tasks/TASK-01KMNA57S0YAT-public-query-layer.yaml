@@ -2,4 +2,13 @@ id: TASK-01KMNA57S0YAT
 parent_feature: FEAT-01KMKRQV025FA
 slug: public-query-layer
 summary: "Implement a read-only Go query layer (Reader type) providing get/list methods for Plan, Feature (ListFeaturesByPlan), Task (ListTasksByFeature), Bug, DocumentRecord, and GetDocumentContent. Unknown enum values returned as raw strings without dropping records. Drift between file content and stored hash is a structured warning, not an error. No write methods exposed."
-status: queued
+status: done
+files_planned:
+  - kbzschema/reader.go
+completed: "2026-03-26T15:37:51Z"
+claimed_at: "2026-03-26T15:37:38Z"
+dispatched_to: backend
+dispatched_at: "2026-03-26T15:37:38Z"
+dispatched_by: agent/public-schema-interface
+completion_summary: "Implemented Reader type in kbzschema/ package. NewReader validates the .kbz directory exists. Methods: GetPlan, ListPlans, GetFeature, ListFeaturesByPlan, GetTask, ListTasksByFeature, GetBug, ListBugs, GetDocumentRecord, ListDocumentRecords, GetDocumentContent. Uses yaml.v3 directly, no internal/ imports. Drift detection in GetDocumentContent computes SHA-256 of current file and compares to content_hash in record, returning non-empty driftWarning if they differ."
+verification: Full test suite pass including drift detection tests

@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"strings"
 
-	"kanbanzai/internal/fsutil"
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/fsutil"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 type EntityRecord struct {
@@ -250,6 +250,7 @@ func fieldOrderForEntityType(entityType string) []string {
 		return []string{
 			"id",
 			"slug",
+			"label",
 			"parent",
 			"status",
 			"estimate",
@@ -272,6 +273,7 @@ func fieldOrderForEntityType(entityType string) []string {
 			"id",
 			"parent_feature",
 			"slug",
+			"label",
 			"summary",
 			"status",
 			"estimate",

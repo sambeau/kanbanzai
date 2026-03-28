@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // CreateIncidentInput holds the parameters for creating a new incident.

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 const maxCollisionRetries = 3

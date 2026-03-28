@@ -1,0 +1,507 @@
+document_id: PROJECT/design-entity-structure-and-document-pipeline
+document_path: work/design/entity-structure-and-document-pipeline.md
+content_hash: 7454143f0465e0a2ef61894014bbadf9b7bbe3625074497e4bf5f73dee596c74
+indexed_at: 2026-03-25T21:38:22.217049Z
+sections:
+    - path: "1"
+      level: 1
+      title: Plan Entity and Document Pipeline
+      byte_offset: 0
+      byte_count: 34929
+      word_count: 5138
+      content_hash: 7454143f0465e0a2ef61894014bbadf9b7bbe3625074497e4bf5f73dee596c74
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 616
+          byte_count: 591
+          word_count: 87
+          content_hash: 77d147d9037f7a3c3daef61066cb7ec03733ba0a228041ba423d902593c64353
+        - path: "1.2"
+          level: 2
+          title: 2. The Problem
+          byte_offset: 1207
+          byte_count: 1393
+          word_count: 202
+          content_hash: 858fbf8e354aa7a3546a525e4944a0e38b871b72589d617c761467d24678f130
+        - path: "1.3"
+          level: 2
+          title: 3. Design Principles
+          byte_offset: 2600
+          byte_count: 1581
+          word_count: 220
+          content_hash: 04a079fc295a78c0fb02a6541e773cc992a34f1e3a6b21f38a0ef737060e46ed
+        - path: "1.4"
+          level: 2
+          title: 4. The Two-Entity-Type Model
+          byte_offset: 4181
+          byte_count: 10253
+          word_count: 1551
+          content_hash: 5054fe2f27a7cea347afde7a9a4c8a941ce154b1ad9f2d64720d52d1e6f0e28c
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Overview
+              byte_offset: 4214
+              byte_count: 906
+              word_count: 139
+              content_hash: 1da021f525db07ef6283302313a9dc0e40735cfbdec2ef748d326cb2054578ba
+            - path: 1.4.2
+              level: 3
+              title: 4.2 The Plan entity
+              byte_offset: 5120
+              byte_count: 1125
+              word_count: 176
+              content_hash: 0225950d117baf6d27b737c73649de0d91416a8df94216cd040f79884a1e3174
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Feature
+              byte_offset: 6245
+              byte_count: 1632
+              word_count: 238
+              content_hash: 35275359980babf9c74ece76deb92be92ceae049567e010ba3df137ea39e5b47
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Task
+              byte_offset: 7877
+              byte_count: 244
+              word_count: 42
+              content_hash: 85e71aaa1ab42b0db4a45822a6905d15c7c83f379695f3436078bd11ebbad55b
+            - path: 1.4.5
+              level: 3
+              title: 4.5 The full pipeline
+              byte_offset: 8121
+              byte_count: 593
+              word_count: 68
+              content_hash: 2ae788ada08bc345f79e840c8e02e87fbcbbb34e716cf702b961a0b1b9db71e9
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Plan ID scheme
+              byte_offset: 8714
+              byte_count: 1445
+              word_count: 238
+              content_hash: dee8ef7e0831af411add4b4ad0c081106fe14609dcbeacb34cdd9a030a5ccdf7
+            - path: 1.4.7
+              level: 3
+              title: 4.7 Prefix registry
+              byte_offset: 10159
+              byte_count: 1826
+              word_count: 250
+              content_hash: 20aa2d9611478731fa6ed3ca549734262e80dd9f4d36239b33d797008827aeb5
+            - path: 1.4.8
+              level: 3
+              title: 4.8 Why not recursive nesting
+              byte_offset: 11985
+              byte_count: 1113
+              word_count: 178
+              content_hash: e1d653487756b82324e549cd015e956ce61ba452a02e27c7d90cd101763150f1
+            - path: 1.4.9
+              level: 3
+              title: 4.9 Tags for cross-cutting concerns
+              byte_offset: 13098
+              byte_count: 1336
+              word_count: 217
+              content_hash: 9b018f9dfab24036be5cf3e88c067f4a9eb0afda2c0e72bcce61b6cc15711adb
+        - path: "1.5"
+          level: 2
+          title: 5. The Document Pipeline as Feature Lifecycle
+          byte_offset: 14434
+          byte_count: 1243
+          word_count: 191
+          content_hash: c499849fbbb274833b17db7c603b538459bffbb4b0355696903f9dc9d26f57b7
+        - path: "1.6"
+          level: 2
+          title: 6. The Document-Driven Feature Pipeline
+          byte_offset: 15677
+          byte_count: 2437
+          word_count: 375
+          content_hash: 967fe4be9ae6e9daf6352fb27bdcda7cbddbe10bc3820bdf7a8f9d79de7e9539
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 The primary path
+              byte_offset: 15721
+              byte_count: 567
+              word_count: 84
+              content_hash: 639ee413551fe2d4ed3c0c122c5cfc0e1b100bdfa1dbeba12e46327e2e7d4723
+            - path: 1.6.2
+              level: 3
+              title: '6.2 Scoping principle: one spec, one Feature'
+              byte_offset: 16288
+              byte_count: 430
+              word_count: 64
+              content_hash: a0f6e14917e3e2e313d5b89d970b394613594da417e44c32553069e339df22e5
+            - path: 1.6.3
+              level: 3
+              title: '6.3 The secondary path: bottom-up Features'
+              byte_offset: 16718
+              byte_count: 521
+              word_count: 86
+              content_hash: 6167aaf9ad16b970234cf86c7558fb4f0dce5503909285354643460d82fd092e
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Plan-Feature relationship
+              byte_offset: 17239
+              byte_count: 441
+              word_count: 73
+              content_hash: 83a8b859af9a3bd106022a4815ce4900c5eea4dd87ed00d26d2661a2407d92b8
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Cross-cutting documents
+              byte_offset: 17680
+              byte_count: 434
+              word_count: 62
+              content_hash: 9ce41b18ed1d6232307daa994ca99ccdb4d0a28c14166264b55a222f88b2c11b
+        - path: "1.7"
+          level: 2
+          title: 7. Effect on the Entity Model
+          byte_offset: 18114
+          byte_count: 3860
+          word_count: 590
+          content_hash: 95bf17f64ecc4a204d4173e47ca3e554a3ef159f15c7469f0702687e0a50a2a2
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Plan replaces Epic
+              byte_offset: 18148
+              byte_count: 1168
+              word_count: 181
+              content_hash: 5e48dafcad27f61e1176c433b9f31bdf355f7e3409a0e9fcd6edebbd73e6ffc6
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Feature gains document ownership
+              byte_offset: 19316
+              byte_count: 392
+              word_count: 59
+              content_hash: 5381bf8d064766885b699547579029c85a84d7f592abddc4ab5786f55adcb67d
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Deferred entity types — resolved
+              byte_offset: 19708
+              byte_count: 1418
+              word_count: 214
+              content_hash: d54418da2104d51ac205bd0e310b65359f7b6715f0b1920fdc127867389e8d50
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Document lifecycle
+              byte_offset: 21126
+              byte_count: 848
+              word_count: 129
+              content_hash: 3e7bc9460622de2c3011478cff7cc676e1d4d929c2fab3dfa3997cd91b7692ab
+        - path: "1.8"
+          level: 2
+          title: 8. Effect on the Document-Centric Interface
+          byte_offset: 21974
+          byte_count: 1509
+          word_count: 218
+          content_hash: 01de0fd811f87847c7556c641dc1c2a6e3c397fae60155e2171c6f70c037bf64
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Document-to-entity mapping (revised)
+              byte_offset: 22204
+              byte_count: 809
+              word_count: 126
+              content_hash: d6b4ad7a15af66ca3510f667aca3afc9044d6f5cdb32ea589142fdddac4998be
+            - path: 1.8.2
+              level: 3
+              title: 8.2 The design-to-delivery boundary
+              byte_offset: 23013
+              byte_count: 470
+              word_count: 64
+              content_hash: 9815cd4dd0ed591798a5e97302d2efdbd811f38465e1006efea92703eaeb4d5a
+        - path: "1.9"
+          level: 2
+          title: 9. Effect on Context Assembly
+          byte_offset: 23483
+          byte_count: 1264
+          word_count: 171
+          content_hash: 4cf95801db1fcf8c1c67baf8793fa44fe0db02eb5a1d95ce387157010de44346
+        - path: "1.10"
+          level: 2
+          title: 10. Effect on Phase 1
+          byte_offset: 24747
+          byte_count: 933
+          word_count: 145
+          content_hash: b6967f6d63270cef7d83d318af27576128865a44574eebb6513a53770b394081
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Migration
+              byte_offset: 24773
+              byte_count: 745
+              word_count: 114
+              content_hash: f7f97393ec491d28fe71c29970bb4578be58121a029a269f9278e54f313674b1
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Timing
+              byte_offset: 25518
+              byte_count: 162
+              word_count: 25
+              content_hash: 28e16e0e85cee56acea18a6260cf039df95c8f4e28fb7aacf4815466a2155c10
+        - path: "1.11"
+          level: 2
+          title: 11. Open Questions
+          byte_offset: 25680
+          byte_count: 3697
+          word_count: 525
+          content_hash: b92181b7129f9959e23f783446262869b258f253031895d0abb6f323dad0d518
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Plan lifecycle states — RESOLVED
+              byte_offset: 25703
+              byte_count: 415
+              word_count: 62
+              content_hash: e6f9b6c68af1941bfa05bba4dbf1ca0ef1f1c7ef82bdd093a8d277e512658106
+            - path: 1.11.2
+              level: 3
+              title: 11.2 Can a Feature change its parent? — RESOLVED
+              byte_offset: 26118
+              byte_count: 168
+              word_count: 28
+              content_hash: 2c6df4a2610a0b67281d1812c606193eeea1166618f02e8b69306ca0b462330c
+            - path: 1.11.3
+              level: 3
+              title: 11.3 Parent-less Features — RESOLVED
+              byte_offset: 26286
+              byte_count: 176
+              word_count: 26
+              content_hash: ee48da01a19dd2ad720bab9d43fef66bae0f2c0194535076947e1cfe5c584129
+            - path: 1.11.4
+              level: 3
+              title: 11.4 Document metadata schema — RESOLVED
+              byte_offset: 26462
+              byte_count: 630
+              word_count: 71
+              content_hash: 96cd8400574bb099c6ed590bff5047fbe9a22ed4ae4ea724f581302f79594fb6
+            - path: 1.11.5
+              level: 3
+              title: 11.5 Computed vs stored Feature status — RESOLVED
+              byte_offset: 27092
+              byte_count: 556
+              word_count: 80
+              content_hash: 1dbcf4a6e983097f856cab2d2326b69afabe6db328f2f37a2bb3261648e28942
+            - path: 1.11.6
+              level: 3
+              title: 11.6 Bug and Decision entity relationships — RESOLVED
+              byte_offset: 27648
+              byte_count: 669
+              word_count: 106
+              content_hash: dbbf287cca1c8b996cfd74886d8b93de160638bb5d1ce85c998c3bbbd1f7ff1a
+            - path: 1.11.7
+              level: 3
+              title: 11.7 Storage model for Plans — RESOLVED
+              byte_offset: 28317
+              byte_count: 219
+              word_count: 29
+              content_hash: 6dd5e5b2e38cd98ff0ea1d3057e931cec25f70139c3de7553f707ae146fa588d
+            - path: 1.11.8
+              level: 3
+              title: 11.8 Tag schema and conventions — RESOLVED
+              byte_offset: 28536
+              byte_count: 264
+              word_count: 38
+              content_hash: 37fe5d8592aef53e1f9855ebc1a45f1f6a58311ee0d4fe823083134a31276a04
+            - path: 1.11.9
+              level: 3
+              title: 11.9 Prefix registry location and format — RESOLVED
+              byte_offset: 28800
+              byte_count: 577
+              word_count: 81
+              content_hash: 5571e6ea6487c47221f9da5aa7293de050c30222bb1f051d7c5574a45b84c583
+        - path: "1.12"
+          level: 2
+          title: 12. Relationship to Existing Designs
+          byte_offset: 29377
+          byte_count: 2801
+          word_count: 401
+          content_hash: 91bd42d86252779ca4ece84a28363813eab0789b56c60da74fb49f6896c3d79f
+          children:
+            - path: 1.12.1
+              level: 3
+              title: 12.1 Workflow design basis
+              byte_offset: 29418
+              byte_count: 737
+              word_count: 108
+              content_hash: efb58ade17aa9149fd12ba34c19f22999724b98adb472f4ff1cfb139d46c773e
+            - path: 1.12.2
+              level: 3
+              title: 12.2 Document-centric interface
+              byte_offset: 30155
+              byte_count: 373
+              word_count: 49
+              content_hash: 676f2a9e7028c5b6bb3af0c50901ddc84704ee04dc0351f1ed248fac45d37de4
+            - path: 1.12.3
+              level: 3
+              title: 12.3 Machine-context design
+              byte_offset: 30528
+              byte_count: 627
+              word_count: 88
+              content_hash: a157b1d140bd45a48b18d7f90c208d06c7481fcc9d1388ac5e029146321106f9
+            - path: 1.12.4
+              level: 3
+              title: 12.4 Document intelligence design
+              byte_offset: 31155
+              byte_count: 372
+              word_count: 51
+              content_hash: 6fbc31bbc30ec77d6052d4a07da7e5e77a6b4b68b2250314b7ba8dd4dc28b357
+            - path: 1.12.5
+              level: 3
+              title: 12.5 Phase 1 specification
+              byte_offset: 31527
+              byte_count: 212
+              word_count: 35
+              content_hash: 1bd1c0c3443be2c76d16c6d9678d039b3ff901e64097c335eb73462c5f04cdf9
+            - path: 1.12.6
+              level: 3
+              title: 12.6 P1-DEC-002
+              byte_offset: 31739
+              byte_count: 439
+              word_count: 64
+              content_hash: bd948943efa834ba2b020ee7f396134b5a000a41d997c41350f62ba5f6a80739
+        - path: "1.13"
+          level: 2
+          title: 13. Summary
+          byte_offset: 32178
+          byte_count: 2751
+          word_count: 396
+          content_hash: a500bc516d41022d0236147c783b2b8083457823dee3bcda861c9c7251e7dbbf
+front_matter:
+    status: draft design
+    date: "2026-03-21"
+    related:
+        - work/design/workflow-design-basis.md` §8
+        - work/design/document-centric-interface.md` §8, §9
+        - work/spec/phase-1-specification.md` §7, §7.1
+        - work/design/machine-context-design.md` §15
+        - work/design/document-intelligence-design.md` §14, §18
+        - work/plan/phase-1-decision-log.md` P1-DEC-002
+    extra:
+        Purpose: define the structural relationship between workflow entities and design documents, resolving the deferred question of how documents and entities work together in Phase 2
+        Updated: "2026-03-22"
+entity_refs:
+    - entity_id: DEC-002
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 602
+    - entity_id: DEC-002
+      entity_type: decision
+      section_path: "1.2"
+      byte_offset: 2112
+    - entity_id: DEC-002
+      entity_type: decision
+      section_path: 1.12.6
+      byte_offset: 31751
+    - entity_id: P2-basic-ui
+      entity_type: plan
+      section_path: 1.4.5
+      byte_offset: 8158
+    - entity_id: D3-auth-redesign
+      entity_type: plan
+      section_path: 1.4.5
+      byte_offset: 8171
+    - entity_id: P2-basic-ui
+      entity_type: plan
+      section_path: 1.4.6
+      byte_offset: 9056
+    - entity_id: D3-auth-redesign
+      entity_type: plan
+      section_path: 1.4.6
+      byte_offset: 9124
+    - entity_id: F1-frontend-core
+      entity_type: plan
+      section_path: 1.4.6
+      byte_offset: 9211
+    - entity_id: B5-api-layer
+      entity_type: plan
+      section_path: 1.4.6
+      byte_offset: 9300
+    - entity_id: P2-basic-ui
+      entity_type: plan
+      section_path: 1.4.7
+      byte_offset: 10448
+    - entity_id: P3-advanced-ui
+      entity_type: plan
+      section_path: 1.4.7
+      byte_offset: 10509
+    - entity_id: F1-frontend-core
+      entity_type: plan
+      section_path: 1.4.7
+      byte_offset: 10564
+    - entity_id: B5-api-layer
+      entity_type: plan
+      section_path: 1.4.7
+      byte_offset: 10618
+    - entity_id: P2-basic-ui
+      entity_type: plan
+      section_path: 1.4.9
+      byte_offset: 13335
+    - entity_id: P2-basic-ui
+      entity_type: plan
+      section_path: 1.11.7
+      byte_offset: 28490
+    - entity_id: D3-auth-redesign
+      entity_type: plan
+      section_path: 1.11.7
+      byte_offset: 28510
+    - entity_id: P2-basic-ui
+      entity_type: plan
+      section_path: "1.13"
+      byte_offset: 32456
+    - entity_id: D3-auth-redesign
+      entity_type: plan
+      section_path: "1.13"
+      byte_offset: 32471
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/design/document-intelligence-design.md
+      link_text: work/design/document-intelligence-design.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: "1"
+    - target_path: workflow-design-basis.md
+      link_text: workflow-design-basis.md
+      section_path: 1.4.9
+    - target_path: document-centric-interface.md
+      link_text: document-centric-interface.md
+      section_path: "1.8"
+    - target_path: machine-context-design.md
+      link_text: machine-context-design.md
+      section_path: "1.9"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.1
+      role: narrative
+      confidence: high
+    - section_path: "1.9"
+      role: narrative
+      confidence: high
+    - section_path: "1.11"
+      role: question
+      confidence: high
+    - section_path: 1.11.6
+      role: decision
+      confidence: high
+    - section_path: 1.12.3
+      role: narrative
+      confidence: high
+    - section_path: "1.13"
+      role: narrative
+      confidence: high
+classified: false

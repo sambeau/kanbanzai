@@ -1,0 +1,269 @@
+document_id: FEAT-01KMKRQVKBPRX/report-configuration-reference
+document_path: docs/configuration-reference.md
+content_hash: 5e3116bed2f0e69c229d0de13e8a32dc0e0f9c68d2693bdccd0424ce69dcfd71
+indexed_at: 2026-03-26T16:49:15.464168Z
+sections:
+    - path: "1"
+      level: 1
+      title: Configuration Reference
+      byte_offset: 0
+      byte_count: 12066
+      word_count: 1735
+      content_hash: 5e3116bed2f0e69c229d0de13e8a32dc0e0f9c68d2693bdccd0424ce69dcfd71
+      children:
+        - path: "1.1"
+          level: 2
+          title: Table of Contents
+          byte_offset: 177
+          byte_count: 391
+          word_count: 28
+          content_hash: 0232edb7a2aec3fe0b9c4ad4438ed21bbe6cd6b0ef7e47833ecd605b40a64ac5
+        - path: "1.2"
+          level: 2
+          title: 1. config.yaml — Project Configuration
+          byte_offset: 568
+          byte_count: 5828
+          word_count: 831
+          content_hash: 07190384034c2ef3cd0356c03c1c75bb3e1594b95cc3f7d658ddad26cffbd24a
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Top-Level Fields
+              byte_offset: 890
+              byte_count: 841
+              word_count: 126
+              content_hash: a7ee8658a27aa6d3cdf8b03d5012bcb79fd84b66c60e9bbcd0baada1a0d3ed4f
+            - path: 1.2.2
+              level: 3
+              title: PrefixEntry
+              byte_offset: 1731
+              byte_count: 481
+              word_count: 81
+              content_hash: 58e98016d5b67b2e11e9d6f85b484790be3c4a2692e3d500a81a97b1b24088ec
+            - path: 1.2.3
+              level: 3
+              title: ImportConfig
+              byte_offset: 2212
+              byte_count: 652
+              word_count: 97
+              content_hash: d1423d177b5a2757c2ca83b35e2bfa952cb1defdc0818faf3d8e1dbaa94a7ca8
+            - path: 1.2.4
+              level: 3
+              title: BranchTrackingConfig
+              byte_offset: 2864
+              byte_count: 471
+              word_count: 73
+              content_hash: 3153060afce98ebd0d7b2e34fc44e5f34c7a85fc7b6495533cea8d2ca43728a4
+            - path: 1.2.5
+              level: 3
+              title: CleanupConfig
+              byte_offset: 3335
+              byte_count: 362
+              word_count: 56
+              content_hash: 1cd600ccf25d5f7a931b54561a7f1ba50998610159d7423e4545debfbf0dcc54
+            - path: 1.2.6
+              level: 3
+              title: KnowledgeConfig
+              byte_offset: 3697
+              byte_count: 934
+              word_count: 133
+              content_hash: 0d229486a65219907704e6f377ae0e5a001f72be8efa22739ab962264be6dfb7
+            - path: 1.2.7
+              level: 3
+              title: DispatchConfig
+              byte_offset: 4631
+              byte_count: 218
+              word_count: 33
+              content_hash: f8fb9fd4190df4665349cf863c8a235f6e605fb9b5e64057dd7cff2bd681f25f
+            - path: 1.2.8
+              level: 3
+              title: IncidentsConfig
+              byte_offset: 4849
+              byte_count: 240
+              word_count: 34
+              content_hash: 2f3be6c0a9d0bb7f9a90655b30ea89608fd398b962e18bbcbe4705340acb15b2
+            - path: 1.2.9
+              level: 3
+              title: DecompositionConfig
+              byte_offset: 5089
+              byte_count: 221
+              word_count: 32
+              content_hash: 88ba401247275be48976c27a5c23e09d9ecb4f10b471cd940b520d5cbd7f66f3
+            - path: 1.2.10
+              level: 3
+              title: Minimal Example
+              byte_offset: 5310
+              byte_count: 169
+              word_count: 23
+              content_hash: 0d47d8fb0b7fe31f57ed9d1d5014d575f35bc7a2b8eb14a63852e4d7744896f0
+            - path: 1.2.11
+              level: 3
+              title: Full Example
+              byte_offset: 5479
+              byte_count: 917
+              word_count: 95
+              content_hash: 528622e756d11feecd6536cc8b00f7b3b0ad6086de6488878c4a45a95c836e2b
+        - path: "1.3"
+          level: 2
+          title: 2. Prefix Registry
+          byte_offset: 6396
+          byte_count: 860
+          word_count: 135
+          content_hash: c4a8321e472b09323482b72587ebb587fc937ae91ffb8bb11f62758b53f3891b
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Rules
+              byte_offset: 6518
+              byte_count: 351
+              word_count: 50
+              content_hash: 94458035e40b04d83a53714e3fda82ee2cf63f10d32869e27fb8bf9b6a16d67b
+            - path: 1.3.2
+              level: 3
+              title: Managing Prefixes
+              byte_offset: 6869
+              byte_count: 387
+              word_count: 66
+              content_hash: 019d1092a860582bb195cc013f7d669f17ef65277cf88e6e56040bb4424ee284
+        - path: "1.4"
+          level: 2
+          title: 3. local.yaml — User-Local Configuration
+          byte_offset: 7256
+          byte_count: 1148
+          word_count: 167
+          content_hash: 4f78f9482e70c95ec6f2c0aee46112c1dea5855ae4e81244aee63d2658bd30be
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Fields
+              byte_offset: 7518
+              byte_count: 410
+              word_count: 62
+              content_hash: 1278d00ef15ec29eae1f2575a48763050ebc95509d3e9c853cee049f8461ed49
+            - path: 1.4.2
+              level: 3
+              title: Identity Resolution
+              byte_offset: 7928
+              byte_count: 347
+              word_count: 56
+              content_hash: b540df6cddc8729c8a563236e5174ce49c5b5f50c9ea8cdf7a8822d40e0266cc
+            - path: 1.4.3
+              level: 3
+              title: Example
+              byte_offset: 8275
+              byte_count: 129
+              word_count: 15
+              content_hash: fb3707f2cf49744ac5539f4e9c2789f05c3389a718f3dfbf5f54f3813ca5cdf1
+        - path: "1.5"
+          level: 2
+          title: 4. Context Profiles
+          byte_offset: 8404
+          byte_count: 1642
+          word_count: 246
+          content_hash: ba8ef1f6495664211c722826eb30b00fb8303a68a5f751a87c3b94d288ecbf16
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Fields
+              byte_offset: 8709
+              byte_count: 694
+              word_count: 119
+              content_hash: 5d59638fbea42652ceb95ff5d1c7598f88525cf142ce7dc8b7e63d0970cfef9e
+            - path: 1.5.2
+              level: 3
+              title: Inheritance
+              byte_offset: 9403
+              byte_count: 237
+              word_count: 38
+              content_hash: bd319020e6318c9aac4c7533cb5d067bfb1a422cdc6bd889482a0fc3530b4832
+            - path: 1.5.3
+              level: 3
+              title: Example
+              byte_offset: 9640
+              byte_count: 406
+              word_count: 47
+              content_hash: cda70c6864cd3ba59bdb0762a5de2d7a95f6d2c5e2bc3cde128f6e6397ed3bb0
+        - path: "1.6"
+          level: 2
+          title: 5. Environment Variables
+          byte_offset: 10046
+          byte_count: 260
+          word_count: 34
+          content_hash: 10839a174d8209b6c46a285a37a55eee87638cd3ad0cd1865eb1f263faa41965
+        - path: "1.7"
+          level: 2
+          title: 6. Validation
+          byte_offset: 10306
+          byte_count: 1002
+          word_count: 163
+          content_hash: 0d86d970aed949b3b4e9a779c3c53ca69e2612e93a18f2a731967b320ecaa647
+          children:
+            - path: 1.7.1
+              level: 3
+              title: CLI
+              byte_offset: 10324
+              byte_count: 417
+              word_count: 59
+              content_hash: 9834e80540575bcf10a92ab55b9bf3ff4fe9a3a1bca4114f09b3c67e5041f195
+            - path: 1.7.2
+              level: 3
+              title: MCP
+              byte_offset: 10741
+              byte_count: 100
+              word_count: 15
+              content_hash: e0f76725b3afcfce5843a56c7d4894da2a77bf43c0eddcec7c9bddbc47fcd642
+            - path: 1.7.3
+              level: 3
+              title: Common Config Errors
+              byte_offset: 10841
+              byte_count: 467
+              word_count: 86
+              content_hash: 8968bf129b557ec2edc3838e68d1c77d1bd50af5ecab7cb9115aa7be1e668143
+        - path: "1.8"
+          level: 2
+          title: 7. Migration
+          byte_offset: 11308
+          byte_count: 758
+          word_count: 111
+          content_hash: 220fff75b5166af14d4d9f74b21ab424cc99a2d1823e08bccc2db61046b7df8f
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Automatic Defaults
+              byte_offset: 11434
+              byte_count: 407
+              word_count: 54
+              content_hash: 5601f5c2cc51abb08e9a8b8f521f8e74f9635c4c99a6fa7912d28320cf84684e
+            - path: 1.8.2
+              level: 3
+              title: Phase 1 → Phase 2
+              byte_offset: 11841
+              byte_count: 225
+              word_count: 39
+              content_hash: a78f0e85213c58f3a633232a168ccfd6f425f1dc095f6f614558f9093c6ff327
+entity_refs:
+    - entity_id: P1-basic-ui
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 6838
+    - entity_id: M3-tech-debt
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 6853
+conventional_roles:
+    - section_path: 1.2.10
+      role: example
+      confidence: high
+    - section_path: 1.2.11
+      role: example
+      confidence: high
+    - section_path: 1.4.3
+      role: example
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+    - section_path: 1.5.3
+      role: example
+      confidence: high
+classified: false

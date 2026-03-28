@@ -1,0 +1,312 @@
+document_id: PROJECT/research-orchestration-landscape-2025
+document_path: work/research/orchestration-landscape-2025.md
+content_hash: 674a6ab839c1f065e69ca55c8c053f3aefd5c209c90f20d18a7e03b7f8af7eb9
+indexed_at: 2026-03-25T21:38:29.047885Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Orchestration Landscape Review: Phase 4 Planning Research'
+      byte_offset: 0
+      byte_count: 28177
+      word_count: 3891
+      content_hash: 674a6ab839c1f065e69ca55c8c053f3aefd5c209c90f20d18a7e03b7f8af7eb9
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 474
+          byte_count: 639
+          word_count: 97
+          content_hash: 6c5d0581ff6a289857581e4583f102a0010b9b6f64dfe9818c4b1c4346044a18
+        - path: "1.2"
+          level: 2
+          title: 2. Research Motivation
+          byte_offset: 1113
+          byte_count: 663
+          word_count: 105
+          content_hash: 86c14466fca8b6d37be2e8b455a93b45534ba445ce59177eb3fb781eaeca26a0
+        - path: "1.3"
+          level: 2
+          title: 3. The Orchestration Landscape in 2025
+          byte_offset: 1776
+          byte_count: 10049
+          word_count: 1350
+          content_hash: 18798c31b53ca3c7b5d5dc75b7c4f53e04db3f3fa4d33ffc6d4653ddd14158e8
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Major Frameworks and SDKs
+              byte_offset: 1819
+              byte_count: 3920
+              word_count: 482
+              content_hash: c3239efefad835b821da38f391735fc4c0d5500fde0a36f14a21bcbd328904ce
+              children:
+                - path: 1.3.1.1
+                  level: 4
+                  title: '`mcp-agent` (lastmile-ai) — ⭐ 8.1k'
+                  byte_offset: 1854
+                  byte_count: 961
+                  word_count: 117
+                  content_hash: 2e0229f6f5d08e949f3ec763ebd6c8d84e523f8ea2c1a8e6660204930d4793e4
+                - path: 1.3.1.2
+                  level: 4
+                  title: '`openai-agents-python` (OpenAI Agents SDK) — ⭐ 20.3k'
+                  byte_offset: 2815
+                  byte_count: 795
+                  word_count: 96
+                  content_hash: 2461cf747845d1cbe3483d03f6c6e9ddf5bd06f764349a975a918501fe129058
+                - path: 1.3.1.3
+                  level: 4
+                  title: LangGraph (langchain-ai) — ⭐ 27.5k
+                  byte_offset: 3610
+                  byte_count: 718
+                  word_count: 88
+                  content_hash: ee081fceceef0603810ed24e6e52db0eb9272fa21c047670cd31db989d1f01b8
+                - path: 1.3.1.4
+                  level: 4
+                  title: AutoGen (Microsoft) — ⭐ 56.2k
+                  byte_offset: 4328
+                  byte_count: 715
+                  word_count: 85
+                  content_hash: 1a1d54d58dae769e61aa51786fe6c2d66a56bca8367912e7a6e44c400c9dec67
+                - path: 1.3.1.5
+                  level: 4
+                  title: CrewAI — ⭐ 47.2k
+                  byte_offset: 5043
+                  byte_count: 696
+                  word_count: 90
+                  content_hash: 27f22076b494015253fd13179c00018fab862c7f2483f4536c9a7f270426502e
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Dedicated Orchestration MCP Servers
+              byte_offset: 5739
+              byte_count: 2795
+              word_count: 355
+              content_hash: 9f1475fd4807fa6c7582d9a545269be9982cb21fa6985f09100c10f1605d33fc
+              children:
+                - path: 1.3.2.1
+                  level: 4
+                  title: '`Agent-MCP` (rinadelph) — ⭐ 1.2k'
+                  byte_offset: 5911
+                  byte_count: 1215
+                  word_count: 160
+                  content_hash: 2f34418b30a3b2bf3bc1d958f3f1dc5d99dd12cec6dd1305cf4f3c431a081a91
+                - path: 1.3.2.2
+                  level: 4
+                  title: Network-AI (Jovancoding)
+                  byte_offset: 7126
+                  byte_count: 621
+                  word_count: 82
+                  content_hash: 6a852869aa9f846d555ca6185b2f52f3de1b51671c4f8137e91106f90e907624
+                - path: 1.3.2.3
+                  level: 4
+                  title: '`claude-task-master` (eyaltoledano)'
+                  byte_offset: 7747
+                  byte_count: 196
+                  word_count: 23
+                  content_hash: 4ddff66d68a9b13e5780e9bc0de825c2ed916dcbe8555c9f092d937d35e94ab0
+                - path: 1.3.2.4
+                  level: 4
+                  title: '`mcp-shrimp-task-manager` (cjo4m06)'
+                  byte_offset: 7943
+                  byte_count: 152
+                  word_count: 15
+                  content_hash: 63afaaebabb486b3f29a7407f4802b3f29c8ce2410cb832afec069ed83530c5c
+                - path: 1.3.2.5
+                  level: 4
+                  title: '`dagger/container-use`'
+                  byte_offset: 8095
+                  byte_count: 228
+                  word_count: 27
+                  content_hash: 5172e8d9f115811b1f553e37650b993d1942ace76a7b4ede7729848d73df9ab8
+                - path: 1.3.2.6
+                  level: 4
+                  title: '`context-rot-detection`'
+                  byte_offset: 8323
+                  byte_count: 211
+                  word_count: 24
+                  content_hash: 130d6ed0d7e5a16f4dd1767913fe1ce7df919bea2a351eaf33568b2681def0ec
+            - path: 1.3.3
+              level: 3
+              title: 3.3 The kagan Project (Notable Comparison)
+              byte_offset: 8534
+              byte_count: 2621
+              word_count: 418
+              content_hash: f097b0fb25faaf59ee741b1c93d90a42ca94e3c65c30ef7d55b2038a2ffe414d
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Anthropic-Native Capabilities (2025)
+              byte_offset: 11155
+              byte_count: 670
+              word_count: 88
+              content_hash: 6872d111fac4634be34157387e2ca8d84921c67009e7d5c403ce7e6d065d2f06
+        - path: "1.4"
+          level: 2
+          title: 4. Capability Matrix
+          byte_offset: 11825
+          byte_count: 1983
+          word_count: 134
+          content_hash: dc9e5684118ba240cbec7a65db76f54e4fe28cd3665e765936afce4625076a3e
+        - path: "1.5"
+          level: 2
+          title: 5. What kanbanzai Already Has That Is Unique
+          byte_offset: 13808
+          byte_count: 5123
+          word_count: 724
+          content_hash: 4854239a1d4371c85427eb66cd5578b3717a316848019c273c9544c9f518f913
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Entity Hierarchy as a Context Scoping Instrument
+              byte_offset: 14014
+              byte_count: 852
+              word_count: 126
+              content_hash: 73b310dc2dba9afd00076e09e2f62fcf16cf647398d62fd12ed1216cc157e8e7
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Document Intelligence Pipeline
+              byte_offset: 14866
+              byte_count: 1299
+              word_count: 166
+              content_hash: 9f804e4c043bc642ff0eba96d4af58228415237c67c5ed85b1e8c6850b5df1b4
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Tiered Knowledge with Lifecycle Management
+              byte_offset: 16165
+              byte_count: 872
+              word_count: 122
+              content_hash: d8b2aac38ea85d9c5df41bb1b7908b86c87c475bce6a3b530395bc269bc8d412
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Byte-Budgeted, Priority-Trimmed Context Assembly
+              byte_offset: 17037
+              byte_count: 845
+              word_count: 121
+              content_hash: 89150d8ed179766f53bedfff541d74675888a96f85dd395e0e7ca2b54750b577
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Semantic Merge Gates
+              byte_offset: 17882
+              byte_count: 464
+              word_count: 70
+              content_hash: 6061aa024dcb00199395dd9af107748426f0c940739e4ce4df881a7e6f1f91a1
+            - path: 1.5.6
+              level: 3
+              title: 5.6 Behavioral Protocol for Normalization Discipline
+              byte_offset: 18346
+              byte_count: 585
+              word_count: 85
+              content_hash: dfe50dc42a924c363ffe76c104437986b0227fa9d0d8e06a0e7d8a0147d0eb03
+        - path: "1.6"
+          level: 2
+          title: 6. Should kanbanzai Build Its Own Orchestration?
+          byte_offset: 18931
+          byte_count: 1260
+          word_count: 189
+          content_hash: 4a6ac2a2e268280551fbda7d9476dc33f9a9bb4bdd987461ab07808c3f533097
+        - path: "1.7"
+          level: 2
+          title: 7. Key Learnings from the Field
+          byte_offset: 20191
+          byte_count: 3067
+          word_count: 452
+          content_hash: 175228e4c7115e831ab9e677fdcf17c3b5c4e7c2158e5ea7594e1636e2591ed2
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Ephemeral Agents + Shared Knowledge Store
+              byte_offset: 20366
+              byte_count: 564
+              word_count: 77
+              content_hash: 256a73ceea7cabef9ce642549d6bff4c019568f59b469fe6c0527c9d961ffba9
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Task Decomposition Must Gate Dispatch
+              byte_offset: 20930
+              byte_count: 448
+              word_count: 68
+              content_hash: d2a66fbe4b623fbc455244aea76c6030c580c16db73b7ad8da98f83f9901041e
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Atomic Claiming Prevents Parallel Conflicts
+              byte_offset: 21378
+              byte_count: 615
+              word_count: 91
+              content_hash: 16d66a166dcbf60fc45ace8ecc7bd0a1fad6fe49e38f14e86b985eacd744b67c
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Budget Awareness Must Be Visible to the Receiving Agent
+              byte_offset: 21993
+              byte_count: 621
+              word_count: 92
+              content_hash: 3cbd35c1550be81ce0afa772cc9128436760f977426a954906aefe8d3e55314f
+            - path: 1.7.5
+              level: 3
+              title: 7.5 Expose Orchestration as MCP Tools, Not a Framework
+              byte_offset: 22614
+              byte_count: 644
+              word_count: 98
+              content_hash: 6d9e919a5f3689cf6fb4f3de48ab6d6b2830a0fedf7f0ac723d8257d945c4cab
+        - path: "1.8"
+          level: 2
+          title: 8. The Web/Desktop UI Opportunity
+          byte_offset: 23258
+          byte_count: 1687
+          word_count: 278
+          content_hash: 2f6e352d75a3dae59059c8f7b3dfc956358159a64630cd73ed81eea6e9be0b3b
+        - path: "1.9"
+          level: 2
+          title: 9. New Items Identified for the Phase 4 Plan
+          byte_offset: 24945
+          byte_count: 1823
+          word_count: 305
+          content_hash: 5a94e39ae06c91ef6caa32d8d22b1f99fffafd9dc902f21c581dc5906fa1e9e8
+        - path: "1.10"
+          level: 2
+          title: 10. Summary
+          byte_offset: 26768
+          byte_count: 1409
+          word_count: 202
+          content_hash: 14cd28f5e20bcb6c4e5665f1a859ba83310a3ea7628497b5bee3166b7adb2f6c
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 15167
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.5.2
+      byte_offset: 15177
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1"
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1.9"
+    - target_path: estimation-and-progress-design.md
+      link_text: estimation-and-progress-design.md
+      section_path: "1.9"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.2.6
+      role: narrative
+      confidence: high
+    - section_path: 1.5.1
+      role: narrative
+      confidence: high
+    - section_path: 1.5.4
+      role: narrative
+      confidence: high
+    - section_path: "1.10"
+      role: narrative
+      confidence: high
+classified: false

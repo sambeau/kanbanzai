@@ -2,4 +2,12 @@ id: TASK-01KMNA2WTBQ7T
 parent_feature: FEAT-01KMKRQSD1TKK
 slug: author-planning-skill
 summary: "Author the kanbanzai-planning skill file (opinionated) covering: how to create a Plan with create_plan and the prefix registry, how to create Features under a Plan, how to check the work queue, task lifecycle (ready→active→done), and decision recording with record_decision."
-status: queued
+status: done
+files_planned:
+  - internal/init/skills/planning/SKILL.md
+completed: "2026-03-26T15:06:42Z"
+claimed_at: "2026-03-26T15:05:54Z"
+dispatched_to: content
+dispatched_at: "2026-03-26T15:05:54Z"
+dispatched_by: agent/skills-content
+completion_summary: "Authored kanbanzai-planning SKILL.md covering: agent's active role and the ambition principle, sizing signals for one feature vs. multiple features vs. too large to plan, feature vs. plan distinction, anti-patterns to name explicitly (premature simplification, comfort-driven reduction, deferred design), drift into design redirect, planning output definition, and two gotchas (unrecorded conversational scope, simple version framing)."

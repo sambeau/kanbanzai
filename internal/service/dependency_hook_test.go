@@ -3,7 +3,7 @@ package service
 import (
 	"testing"
 
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 const testPlanIDDep = "P1-dep-test"
@@ -720,6 +720,51 @@ func TestCompositeTransitionHook_AllNilReturnsNil(t *testing.T) {
 
 	if result != nil {
 		t.Errorf("expected nil result when all hooks return nil, got %+v", result)
+	}
+}
+
+func TestDependencyUnblockingHook_PreviousStatusRecorded(t *testing.T) {
+	// Verifies that UnblockedTask.PreviousStatus is populated with the task's
+	// status before promotion. This allows MCP tools to include from_status in
+	// task_unblocked side effects (spec §8.2).
+	t.Parallel()
+	svc, featID := setupDepHookTest(t)
+
+	taskAID, taskASlug := createTestTask(t, svc, featID, "task-a", "Task A")
+	taskBID, taskBSlug := createTestTask(t, svc, featID, "task-b", "Task B")
+
+	setTestDependsOn(t, svc, taskBID, taskBSlug, []string{taskAID})
+
+	// Advance A to active (B remains in "queued" — its initial status).
+	advanceTaskTo(t, svc, taskAID, taskASlug, "active")
+
+	hook := NewDependencyUnblockingHook(svc)
+	svc.SetStatusTransitionHook(hook)
+
+	result, err := svc.UpdateStatus(UpdateStatusInput{
+		Type:   "task",
+		ID:     taskAID,
+		Slug:   taskASlug,
+		Status: "done",
+	})
+	if err != nil {
+		t.Fatalf("UpdateStatus to done: %v", err)
+	}
+
+	if result.WorktreeHookResult == nil || len(result.WorktreeHookResult.UnblockedTasks) != 1 {
+		t.Fatalf("expected 1 unblocked task, got %v", result.WorktreeHookResult)
+	}
+
+	ut := result.WorktreeHookResult.UnblockedTasks[0]
+	if ut.TaskID != taskBID {
+		t.Errorf("UnblockedTask.TaskID = %q, want %q", ut.TaskID, taskBID)
+	}
+	if ut.Status != "ready" {
+		t.Errorf("UnblockedTask.Status = %q, want ready", ut.Status)
+	}
+	// PreviousStatus must reflect the task's status before promotion.
+	if ut.PreviousStatus != "queued" {
+		t.Errorf("UnblockedTask.PreviousStatus = %q, want queued (task was queued before being promoted to ready)", ut.PreviousStatus)
 	}
 }
 

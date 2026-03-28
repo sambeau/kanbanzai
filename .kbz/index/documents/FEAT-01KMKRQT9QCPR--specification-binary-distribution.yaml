@@ -1,0 +1,232 @@
+document_id: FEAT-01KMKRQT9QCPR/specification-binary-distribution
+document_path: work/spec/binary-distribution.md
+content_hash: c101b972c7bd469eef16ff505cbbbfe194c82512894b97809d48ea87b94b17e6
+indexed_at: 2026-03-26T14:24:23.661578Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Binary Distribution: Pre-compiled Releases via GitHub'
+      byte_offset: 0
+      byte_count: 10562
+      word_count: 1558
+      content_hash: c101b972c7bd469eef16ff505cbbbfe194c82512894b97809d48ea87b94b17e6
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 354
+          byte_count: 259
+          word_count: 36
+          content_hash: 3af0105a3b469b0652c04caa553aeedfe04345cfdb00ab5a1a5fd21d503ea07e
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 613
+          byte_count: 415
+          word_count: 65
+          content_hash: e4192d986e44625b4cb846de564cc105146ee20432ad40cb25d48b08bfe870eb
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1028
+          byte_count: 1153
+          word_count: 169
+          content_hash: d89191dfbebdd166048635d3200ea457f4e97ac46dfd929d678783d5bde48044
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 1041
+              byte_count: 529
+              word_count: 76
+              content_hash: 7af00923870bed38ceeedec13e8a44d5ed5becb38aceae29a754220f62a3a24a
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred
+              byte_offset: 1570
+              byte_count: 282
+              word_count: 38
+              content_hash: 55948982dadef4309cffde0eb269e6b7fd7deff22161228392d5ecef8e31b8f1
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly excluded
+              byte_offset: 1852
+              byte_count: 329
+              word_count: 52
+              content_hash: 6bb8c33bed3103b93b65b1b76094ff85107ba7d0fc1d13ac67f2c0fc7afa0579
+        - path: "1.4"
+          level: 2
+          title: 4. Design Principles
+          byte_offset: 2181
+          byte_count: 945
+          word_count: 139
+          content_hash: ef5a5106dd65e0053dc84af186a07e0d81b513528ba640b83c7969392002e74d
+        - path: "1.5"
+          level: 2
+          title: 5. Platform Support and Rollout Schedule
+          byte_offset: 3126
+          byte_count: 1078
+          word_count: 167
+          content_hash: 18dc61d446c4ab21663c7e40fb5ea8ed6ce3b16e3cc9e3a5b266b7bfea1afb80
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Target platforms
+              byte_offset: 3171
+              byte_count: 746
+              word_count: 105
+              content_hash: 2388e8b43929d331fcb78f64deb9388e581bd65a611f69cd3ae4f2cbeb26cbab
+            - path: 1.5.2
+              level: 3
+              title: 5.2 GOARCH and GOOS values
+              byte_offset: 3917
+              byte_count: 287
+              word_count: 55
+              content_hash: 806ff4d0a5f095ca9bbb3af74305664eb64be53b8745dcd5734e3d7d28995781
+        - path: "1.6"
+          level: 2
+          title: 6. Archive Format and Naming
+          byte_offset: 4204
+          byte_count: 1181
+          word_count: 161
+          content_hash: 45ce889e059ded5dd7fb1c761ce7756e8fad5cf437d6c8b0cadcdb892903e481
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Archive format by OS
+              byte_offset: 4237
+              byte_count: 148
+              word_count: 27
+              content_hash: 79a41ce052fe795429e69ba71de1d7b0dae46260ee31077d1dc1010e2310b7ce
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Archive naming convention
+              byte_offset: 4385
+              byte_count: 394
+              word_count: 42
+              content_hash: 314290fafc15c024ebfc6c5a1e3c601de6f1bbc0d7f11ce81944a4034d42f53a
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Archive contents
+              byte_offset: 4779
+              byte_count: 226
+              word_count: 34
+              content_hash: e2149152860cf19697ffff38c870512aebea1c1ba7c0a9bfa4b6c3a9dacf8356
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Checksum file
+              byte_offset: 5005
+              byte_count: 380
+              word_count: 52
+              content_hash: 4f3a0b4b85094650c45aae9b638134ec6193590315bade3d6b8efff017476507
+        - path: "1.7"
+          level: 2
+          title: 7. Release Pipeline
+          byte_offset: 5385
+          byte_count: 1470
+          word_count: 222
+          content_hash: d75de21eb3e467753014433e553760fadc3931c07b1a00c9e508ff534e08103e
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Trigger
+              byte_offset: 5409
+              byte_count: 222
+              word_count: 32
+              content_hash: 185be5c60ab7daaa75f49d7d258d1e3072cf82e3602332c26321d4684b2e8d87
+            - path: 1.7.2
+              level: 3
+              title: 7.2 GoReleaser
+              byte_offset: 5631
+              byte_count: 500
+              word_count: 73
+              content_hash: 488fe915f7f4905a28dd367635f9f4cca5741aaf712157535084f178a8c513a4
+            - path: 1.7.3
+              level: 3
+              title: 7.3 GitHub Actions workflow
+              byte_offset: 6131
+              byte_count: 451
+              word_count: 68
+              content_hash: 88a52c237abf46b14b10591b78d6c2625a456309f52baa7d6f6cc450384dc2c2
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Build reproducibility
+              byte_offset: 6582
+              byte_count: 273
+              word_count: 45
+              content_hash: 003dc100c2615a9cd545e1e1c47d215656f295d4eb18c6f622ab3203cde817a8
+        - path: "1.8"
+          level: 2
+          title: 8. Installation Experience
+          byte_offset: 6855
+          byte_count: 1720
+          word_count: 270
+          content_hash: e3760de76aecac7fb194142ecaa0cc7d59bfa868e34055125449e23f8758f8ce
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Single-command install
+              byte_offset: 6886
+              byte_count: 495
+              word_count: 84
+              content_hash: 1c033d69df17fe5914f3fd995545b673b1de1f49e8184d187103de509693a1cc
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Install script requirements
+              byte_offset: 7381
+              byte_count: 528
+              word_count: 79
+              content_hash: 6896f27e156d1dfe70d6222b7b9e225029e7e79275d266e52f9f9874a21af7ee
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Manual installation fallback
+              byte_offset: 7909
+              byte_count: 333
+              word_count: 52
+              content_hash: ce74056992380cb08f4b7ef4692fb6711f4bd9300a61301bc45daf1a8f790c55
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Post-install
+              byte_offset: 8242
+              byte_count: 333
+              word_count: 51
+              content_hash: e4b1a33db965c4a324b247a2873091f599313140461f3f91e39d9360952f8505
+        - path: "1.9"
+          level: 2
+          title: 9. Acceptance Criteria
+          byte_offset: 8575
+          byte_count: 1987
+          word_count: 292
+          content_hash: fec99484c40b8d7ffea07cc75c67f8019ceb53b50eb2269e15eb5cd71f777be4
+entity_refs:
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.8.4
+      byte_offset: 8418
+cross_doc_links:
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1"
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.6.3
+    - target_path: README.md
+      link_text: README.md
+      section_path: "1.9"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.8.2
+      role: requirement
+      confidence: high
+    - section_path: "1.9"
+      role: requirement
+      confidence: high
+classified: false

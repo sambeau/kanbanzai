@@ -5,37 +5,44 @@ import (
 
 	"github.com/mark3labs/mcp-go/server"
 
-	"kanbanzai/internal/cache"
-	"kanbanzai/internal/checkpoint"
-	"kanbanzai/internal/config"
-	kbzctx "kanbanzai/internal/context"
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/git"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/validate"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/checkpoint"
+	"github.com/sambeau/kanbanzai/internal/config"
+	kbzctx "github.com/sambeau/kanbanzai/internal/context"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 const (
 	ServerName    = "kanbanzai"
-	ServerVersion = "phase-4b"
+	ServerVersion = "2.0"
 )
 
 // NewServer creates a new MCP server with all tools registered.
-// The entityRoot is the root path for entity storage (typically ".kbz/state").
-// Pass empty strings to use the default paths.
+// Group registration is controlled by the mcp.groups / mcp.preset section in
+// .kbz/config.yaml. If no mcp section is present, all groups are enabled
+// (preset: full). The entityRoot is the path for entity storage (typically
+// ".kbz/state"); pass an empty string to use the default.
 func NewServer(entityRoot string) *server.MCPServer {
+	return newServerWithConfig(entityRoot, config.LoadOrDefault())
+}
+
+// newServerWithConfig creates an MCP server using the provided configuration.
+// Separated from NewServer to allow config injection in tests.
+func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServer {
 	entitySvc := service.NewEntityService(entityRoot)
 
-	// Create document record service for Phase 2a document management
+	// Documents are stored relative to the repository root (current directory).
 	stateRoot := entityRoot
 	if stateRoot == "" {
 		stateRoot = core.StatePath()
 	}
-	// Documents are stored relative to the repository root (current directory)
 	repoRoot := "."
 
-	// Create intelligence service for document intelligence (Layers 1-4)
+	// Intelligence service for document intelligence (Layers 1-4).
 	indexRoot := filepath.Join(core.InstanceRootDir, "index")
 	intelligenceSvc := service.NewIntelligenceService(indexRoot, repoRoot)
 
@@ -51,10 +58,8 @@ func NewServer(entityRoot string) *server.MCPServer {
 		entitySvc.SetCache(c)
 	}
 
-	// Phase 2b: knowledge service
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
 
-	// Phase 2b: context profile store
 	profileRoot := filepath.Join(core.InstanceRootDir, "context", "roles")
 	profileStore := kbzctx.NewProfileStore(profileRoot)
 
@@ -64,13 +69,15 @@ func NewServer(entityRoot string) *server.MCPServer {
 		server.WithToolCapabilities(false),
 	)
 
-	// Phase 3 worktree store and git ops (needed for health checker and cleanup tools)
+	// Worktree store and git ops (needed for transition hooks, git group tools, and health).
 	worktreeStore := worktree.NewStore(stateRoot)
 	gitOps := worktree.NewGit(repoRoot)
-	cfg := config.LoadOrDefault()
 
-	// Phase 3: automatic worktree creation on task→active / bug→in-progress
-	// Phase 4b: automatic dependency unblocking on task→done/not-planned/duplicate
+	// Resolve effective group configuration (Kanbanzai 2.0 feature group framework).
+	groups := resolveServerGroups(cfg)
+
+	// Automatic worktree creation on task→active / bug→in-progress.
+	// Automatic dependency unblocking on task→done/not-planned/duplicate.
 	entitySvc.SetStatusTransitionHook(
 		service.NewCompositeTransitionHook(
 			service.NewWorktreeTransitionHook(worktreeStore, gitOps, entitySvc),
@@ -78,96 +85,96 @@ func NewServer(entityRoot string) *server.MCPServer {
 		),
 	)
 
-	// Phase 3: load local config for GitHub token (best-effort)
+	// Load local config for GitHub token (best-effort).
 	localConfig, _ := config.LoadLocalConfig()
 
-	// Phase 4a: checkpoint store and dispatch service
+	// Checkpoint store and dispatch service.
 	checkpointStore := checkpoint.NewStore(stateRoot)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 
-	// Phase 1 entity tools (with Phase 2b, Phase 3, Phase 4a, and Phase 4b health checkers)
-	mcpServer.AddTools(EntityTools(entitySvc,
-		phase2bKnowledgeHealthChecker(knowledgeSvc, profileStore),
-		phase2bProfileHealthChecker(profileStore),
-		Phase3HealthChecker(worktreeStore, knowledgeSvc, cfg, repoRoot),
-		Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
-		Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
-	)...)
-
-	// Phase 2a Plan tools
-	mcpServer.AddTools(PlanTools(entitySvc)...)
-
-	// Phase 2a Document record tools
-	mcpServer.AddTools(DocRecordTools(docRecordSvc)...)
-
-	// Phase 2a Config tools
-	mcpServer.AddTools(ConfigTools()...)
-
-	// Phase 2a Document intelligence tools
-	mcpServer.AddTools(DocIntelligenceTools(intelligenceSvc, docRecordSvc)...)
-
-	// Phase 2a Rich query tools
-	mcpServer.AddTools(QueryTools(entitySvc, docRecordSvc)...)
-
-	// Phase 2a Migration tools
-	mcpServer.AddTools(MigrationTools(entitySvc)...)
-
-	// Phase 2b Knowledge tools (contribute, get, list, update, confirm, flag, retire, promote, context_report)
-	mcpServer.AddTools(KnowledgeTools(knowledgeSvc)...)
-
-	// Phase 2b Context profile tools (profile_get, profile_list)
-	mcpServer.AddTools(ProfileTools(profileStore)...)
-
-	// Phase 2b Context assembly tools (context_assemble)
-	mcpServer.AddTools(ContextTools(profileStore, knowledgeSvc, entitySvc, intelligenceSvc)...)
-
-	// Phase 2b Agent capability tools (suggest_links, check_duplicates, doc_extraction_guide)
-	mcpServer.AddTools(AgentCapabilityTools(entitySvc, knowledgeSvc, intelligenceSvc)...)
-
-	// Phase 2b Batch import tools (batch_import_documents)
-	mcpServer.AddTools(BatchImportTools(docRecordSvc)...)
-
-	// Phase 3 worktree and branch tools
+	// Shared services used by both GroupPlanning and GroupGit.
+	decomposeSvc := service.NewDecomposeService(entitySvc, docRecordSvc)
+	conflictSvc := service.NewConflictService(entitySvc, newWorktreeBranchLookup(worktreeStore, repoRoot), repoRoot)
 	branchThresholds := git.BranchThresholds{
 		StaleAfterDays:      cfg.BranchTracking.StaleAfterDays,
 		DriftWarningCommits: cfg.BranchTracking.DriftWarningCommits,
 		DriftErrorCommits:   cfg.BranchTracking.DriftErrorCommits,
 	}
-	mcpServer.AddTools(WorktreeTools(worktreeStore, entitySvc, gitOps)...)
-	mcpServer.AddTools(BranchTools(worktreeStore, repoRoot, branchThresholds)...)
 
-	// Phase 3 cleanup tools
-	mcpServer.AddTools(CleanupTools(worktreeStore, gitOps, &cfg.Cleanup)...)
+	// server_info is unconditional — present regardless of mcp.groups or mcp.preset config.
+	mcpServer.AddTools(ServerInfoTool()...)
 
-	// Phase 3 merge tools (merge_readiness_check, merge_execute)
-	mcpServer.AddTools(MergeTools(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
+	// 2.0 core group tools.
+	if groups[config.GroupCore] {
+		// Track D: status synthesis dashboard
+		mcpServer.AddTools(StatusTools(entitySvc, docRecordSvc, worktreeStore)...)
+		// Track E: finish — completion + inline knowledge + lenient lifecycle
+		mcpServer.AddTools(FinishTools(entitySvc, dispatchSvc)...)
+		// Track F: next — work queue inspection and task claiming
+		mcpServer.AddTools(NextTools(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc)...)
+		// Track G: handoff — sub-agent prompt generation
+		mcpServer.AddTools(HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc)...)
+		// Track H: entity — consolidated entity CRUD
+		mcpServer.AddTools(EntityTool(entitySvc, docRecordSvc)...)
+		// Track I: doc — consolidated document operations
+		mcpServer.AddTools(DocTool(docRecordSvc, intelligenceSvc)...)
 
-	// Phase 3 PR tools (pr_create, pr_update, pr_status)
-	mcpServer.AddTools(PRTools(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
+	}
 
-	// Phase 4a Queue tools (work_queue, dependency_status)
-	mcpServer.AddTools(QueueTools(entitySvc)...)
+	// GroupPlanning: decompose, estimate, conflict, retro.
+	if groups[config.GroupPlanning] {
+		mcpServer.AddTools(DecomposeTool(decomposeSvc, entitySvc)...)
+		mcpServer.AddTools(EstimateTool(entitySvc, knowledgeSvc)...)
+		mcpServer.AddTools(ConflictTool(conflictSvc)...)
+		retroSvc := service.NewRetroService(knowledgeSvc, entitySvc, docRecordSvc, repoRoot)
+		mcpServer.AddTools(RetroTool(retroSvc)...)
+	}
 
-	// Phase 4a Estimation tools (estimate_set, estimate_query, estimate_reference_add, estimate_reference_remove)
-	mcpServer.AddTools(EstimationTools(entitySvc, knowledgeSvc)...)
+	// GroupKnowledge: knowledge, profile.
+	if groups[config.GroupKnowledge] {
+		mcpServer.AddTools(KnowledgeTool(knowledgeSvc)...)
+		mcpServer.AddTools(ProfileTool(profileStore)...)
+	}
 
-	// Phase 4a Dispatch tools (dispatch_task, complete_task, human_checkpoint*)
-	mcpServer.AddTools(DispatchTools(dispatchSvc, checkpointStore, profileStore, knowledgeSvc, entitySvc, intelligenceSvc)...)
+	// GroupGit: worktree, merge, pr, branch, cleanup.
+	if groups[config.GroupGit] {
+		mcpServer.AddTools(WorktreeTool(worktreeStore, entitySvc, gitOps)...)
+		mcpServer.AddTools(MergeTool(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
+		mcpServer.AddTools(PRTool(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
+		mcpServer.AddTools(BranchTool(worktreeStore, repoRoot, branchThresholds)...)
+		mcpServer.AddTools(CleanupTool(worktreeStore, gitOps, &cfg.Cleanup)...)
+	}
 
-	// Phase 4b Incident tools (incident_create, incident_update, incident_list, incident_link_bug)
-	mcpServer.AddTools(IncidentTools(entitySvc)...)
+	// GroupDocuments: doc_intel.
+	if groups[config.GroupDocuments] {
+		mcpServer.AddTools(DocIntelTool(intelligenceSvc, docRecordSvc)...)
+	}
 
-	// Phase 4b Decompose tools (decompose_feature, decompose_review)
-	decomposeSvc := service.NewDecomposeService(entitySvc, docRecordSvc)
-	mcpServer.AddTools(DecomposeTools(decomposeSvc)...)
+	// GroupIncidents: incident.
+	if groups[config.GroupIncidents] {
+		mcpServer.AddTools(IncidentTool(entitySvc)...)
+	}
 
-	// Phase 4b Review tools (review_task_output)
-	reviewSvc := service.NewReviewService(entitySvc, intelligenceSvc, repoRoot)
-	mcpServer.AddTools(ReviewTools(reviewSvc)...)
+	// GroupCheckpoints: checkpoint.
+	if groups[config.GroupCheckpoints] {
+		mcpServer.AddTools(CheckpointTool(checkpointStore)...)
+	}
 
-	// Phase 4b Conflict tools (conflict_domain_check)
-	conflictSvc := service.NewConflictService(entitySvc, newWorktreeBranchLookup(worktreeStore, repoRoot), repoRoot)
-	mcpServer.AddTools(ConflictTools(conflictSvc)...)
+	// Register health tool last so DocCurrencyHealthChecker can see all tool names.
+	if groups[config.GroupCore] {
+		toolNames := make(map[string]bool)
+		for name := range mcpServer.ListTools() {
+			toolNames[name] = true
+		}
+		mcpServer.AddTools(HealthTool(entitySvc,
+			knowledgeHealthChecker(knowledgeSvc, profileStore),
+			profileHealthChecker(profileStore),
+			Phase3HealthChecker(worktreeStore, knowledgeSvc, cfg, repoRoot),
+			Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
+			Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
+			DocCurrencyHealthChecker(toolNames, repoRoot, entitySvc, docRecordSvc),
+		)...)
+	}
 
 	return mcpServer
 }
@@ -178,9 +185,9 @@ func Serve() error {
 	return server.ServeStdio(mcpServer)
 }
 
-// phase2bKnowledgeHealthChecker returns an AdditionalHealthChecker that validates
+// knowledgeHealthChecker returns an AdditionalHealthChecker that validates
 // all knowledge entries against schema and confidence consistency.
-func phase2bKnowledgeHealthChecker(knowledgeSvc *service.KnowledgeService, profileStore *kbzctx.ProfileStore) AdditionalHealthChecker {
+func knowledgeHealthChecker(knowledgeSvc *service.KnowledgeService, profileStore *kbzctx.ProfileStore) AdditionalHealthChecker {
 	return func() (*validate.HealthReport, error) {
 		loadAll := func() ([]validate.KnowledgeInfo, error) {
 			records, err := knowledgeSvc.LoadAllRaw()
@@ -201,9 +208,30 @@ func phase2bKnowledgeHealthChecker(knowledgeSvc *service.KnowledgeService, profi
 	}
 }
 
-// phase2bProfileHealthChecker returns an AdditionalHealthChecker that validates
+// worktreeBranchLookup adapts a worktree.Store into the service.BranchLookup interface.
+type worktreeBranchLookup struct {
+	store *worktree.Store
+}
+
+func newWorktreeBranchLookup(store *worktree.Store, repoRoot string) *worktreeBranchLookup {
+	return &worktreeBranchLookup{store: store}
+}
+
+func (w *worktreeBranchLookup) GetBranchForEntity(entityID string) (string, error) {
+	rec, err := w.store.GetByEntityID(entityID)
+	if err != nil {
+		return "", err
+	}
+	return rec.Branch, nil
+}
+
+func (w *worktreeBranchLookup) GetFilesOnBranch(repoRoot, branch string) ([]string, error) {
+	return git.GetFilesChangedOnBranch(repoRoot, branch)
+}
+
+// profileHealthChecker returns an AdditionalHealthChecker that validates
 // all context profiles for schema correctness and inheritance resolution.
-func phase2bProfileHealthChecker(profileStore *kbzctx.ProfileStore) AdditionalHealthChecker {
+func profileHealthChecker(profileStore *kbzctx.ProfileStore) AdditionalHealthChecker {
 	return func() (*validate.HealthReport, error) {
 		loadAll := func() ([]validate.ProfileInfo, error) {
 			profiles, err := profileStore.LoadAll()

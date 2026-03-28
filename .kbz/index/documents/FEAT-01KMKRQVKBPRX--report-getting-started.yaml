@@ -1,0 +1,170 @@
+document_id: FEAT-01KMKRQVKBPRX/report-getting-started
+document_path: docs/getting-started.md
+content_hash: 4aea49523c00d256bfb4672093e805859d9460d874481b567045edb4294db5dc
+indexed_at: 2026-03-26T16:49:12.604259Z
+sections:
+    - path: "1"
+      level: 1
+      title: Getting Started with Kanbanzai
+      byte_offset: 0
+      byte_count: 8490
+      word_count: 1200
+      content_hash: 4aea49523c00d256bfb4672093e805859d9460d874481b567045edb4294db5dc
+      children:
+        - path: "1.1"
+          level: 2
+          title: Installation
+          byte_offset: 34
+          byte_count: 877
+          word_count: 126
+          content_hash: 2a2db65b0fec0d5231f66bf89b49c3eb9f3ad4813bb4a17e2090edd3d4633d9f
+          children:
+            - path: 1.1.1
+              level: 3
+              title: From source
+              byte_offset: 51
+              byte_count: 320
+              word_count: 49
+              content_hash: bc4cb9239c3a12d0993a1dfd987771898e530d7ffd6be7ccba122cd7995a4fac
+            - path: 1.1.2
+              level: 3
+              title: Prebuilt binaries
+              byte_offset: 371
+              byte_count: 337
+              word_count: 43
+              content_hash: 7341be34f0f42f296cf7e3fc7aeb154f6c367f280d9b34e8445fcc75f4daa3e5
+            - path: 1.1.3
+              level: 3
+              title: Verify the installation
+              byte_offset: 708
+              byte_count: 203
+              word_count: 32
+              content_hash: b903f7c07e8c75676d72aff6143551acbf63d03d6c6ebcd6cbde9c7a566c6851
+        - path: "1.2"
+          level: 2
+          title: What Kanbanzai is
+          byte_offset: 911
+          byte_count: 1232
+          word_count: 192
+          content_hash: 87caf3af9d757f56f297cb628607ca03364f097ed7ba19b77a9b682c9d743015
+        - path: "1.3"
+          level: 2
+          title: Editor integration
+          byte_offset: 2143
+          byte_count: 2193
+          word_count: 287
+          content_hash: 73d5ee32f9bebd4faf65609b053ef0661e4a5731acc96c0e5a2cbc8d77b02198
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Zed
+              byte_offset: 2370
+              byte_count: 409
+              word_count: 57
+              content_hash: f0ea5ccb0fff553d56e026d1b36286f4245ccde540ae55e1548ac4b90bf31865
+            - path: 1.3.2
+              level: 3
+              title: Claude Desktop
+              byte_offset: 2779
+              byte_count: 563
+              word_count: 67
+              content_hash: 27fe790990f32b23c94970376dfd96b807960f4d5dd9f82eedfa2a7e4e3f77e5
+            - path: 1.3.3
+              level: 3
+              title: VS Code
+              byte_offset: 3342
+              byte_count: 597
+              word_count: 74
+              content_hash: 02099652054c5514165048a7b16f28837e7997efd648bf6290b35686f46076bd
+            - path: 1.3.4
+              level: 3
+              title: Cursor
+              byte_offset: 3939
+              byte_count: 397
+              word_count: 52
+              content_hash: 4b30b02fb0a5c6a235862fff58dd2063db628561fdd654d2fde4ce2d7e01820b
+        - path: "1.4"
+          level: 2
+          title: Initialising a project
+          byte_offset: 4336
+          byte_count: 1715
+          word_count: 219
+          content_hash: bbe61973ef923573db2357362613c65205643994c33c60b3c045b10b9c0f0932
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Local configuration
+              byte_offset: 5577
+              byte_count: 474
+              word_count: 61
+              content_hash: afa7ddd8cba53383a4551e223662ceeb14eb99afd3027e6d8e25005522af8547
+        - path: "1.5"
+          level: 2
+          title: Your first plan
+          byte_offset: 6051
+          byte_count: 1736
+          word_count: 281
+          content_hash: fa99628e99942f62f800970b3aa9ebc74e000cb32d1d832162fe201e8a3c460e
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Step 1: Create a plan'
+              byte_offset: 6313
+              byte_count: 350
+              word_count: 51
+              content_hash: 5c14f393abee2cd9c65f1b62a5ab9a1d7fb6c788c3925e81ccf92076310737b3
+            - path: 1.5.2
+              level: 3
+              title: 'Step 2: Create a feature'
+              byte_offset: 6663
+              byte_count: 341
+              word_count: 52
+              content_hash: 4c976844ff3c84d08eef7795a48a0e6cc56a12b99a3860221449388183969ad7
+            - path: 1.5.3
+              level: 3
+              title: 'Step 3: Create a task'
+              byte_offset: 7004
+              byte_count: 304
+              word_count: 51
+              content_hash: 06044fa4acdf5edcfab4969b68591fab1b32596b40320f47b1b46c8085eb5066
+            - path: 1.5.4
+              level: 3
+              title: 'Step 4: Check the work queue'
+              byte_offset: 7308
+              byte_count: 479
+              word_count: 81
+              content_hash: 40f9fb12f8becf9bb22cfdb330424425e193c17b347a0ddb5863c05305dbf071
+        - path: "1.6"
+          level: 2
+          title: Next steps
+          byte_offset: 7787
+          byte_count: 703
+          word_count: 90
+          content_hash: 672f83c4e46113b8ad013d9ba8de1d0409d878b7f9b4cc77702170dfb88c12ff
+entity_refs:
+    - entity_id: FEAT-01ABC
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 6875
+    - entity_id: P1-my-first-project
+      entity_type: plan
+      section_path: 1.5.1
+      byte_offset: 6558
+    - entity_id: P1-my-first-project
+      entity_type: plan
+      section_path: 1.5.2
+      byte_offset: 6737
+cross_doc_links:
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview
+      section_path: "1.6"
+    - target_path: schema-reference.md
+      link_text: Schema Reference
+      section_path: "1.6"
+    - target_path: mcp-tool-reference.md
+      link_text: MCP Tool Reference
+      section_path: "1.6"
+    - target_path: configuration-reference.md
+      link_text: Configuration Reference
+      section_path: "1.6"
+classified: false

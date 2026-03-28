@@ -1,0 +1,8 @@
+id: TASK-01KMRJC8N0B3A
+parent_feature: FEAT-01KMRJ83GYAQ9
+slug: retro-experiments-section
+summary: 'Extend `retro` synthesis to produce an `experiments` section. Parse "Related: {decision_id}" from signal content during synthesis. Fetch all decision entities tagged workflow-experiment. For each referenced decision ID, count positive signals (worked-well category) and negative signals (all other categories). Produce an experiments array with: decision_id, title (decision summary), positive_signals, negative_signals, net_assessment (informational string), recommendation (keep/revise/revert heuristic). The experiments section is absent (not empty array) when no signals reference any decision. Include experiments in report-mode markdown output. Acceptance criteria: P5-3.4, P5-3.5, P5-3.6, P5-3.7.'
+status: queued
+depends_on:
+  - TASK-01KMRJBC8KGHA
+  - TASK-01KMRJC1KZ0Y6

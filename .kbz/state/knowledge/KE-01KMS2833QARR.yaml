@@ -1,0 +1,17 @@
+id: KE-01KMS2833QARR
+tier: 3
+topic: human-checkpoint-review-integration
+scope: project
+content: "human_checkpoint integrates with review by replacing automated verdict routing when findings are ambiguous (e.g., test adequacy is concern — could be blocking or non-blocking). The orchestrator creates the checkpoint with the ambiguous finding context, halts transitions, and resumes based on the human response. Checkpoint CHK-01KMS1R2689WC demonstrated this pattern for Feature E's test adequacy concern."
+learned_from: TASK-01KMRXK5ARR1S
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - code-review
+  - checkpoint
+created: "2026-03-28T01:51:56Z"
+created_by: unknown
+updated: "2026-03-28T01:51:56Z"

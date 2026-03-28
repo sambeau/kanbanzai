@@ -1,0 +1,284 @@
+document_id: PROJECT/dev-plan-phase-1-audit-2-remediation
+document_path: work/plan/phase-1-audit-2-remediation.md
+content_hash: f0ea8d704bfc3e3c1dac77b932f84cd30514cb143ff27a4fa92768f78e949729
+indexed_at: 2026-03-25T21:38:28.283589Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 1 Audit 2 Remediation Plan
+      byte_offset: 0
+      byte_count: 16904
+      word_count: 2537
+      content_hash: f0ea8d704bfc3e3c1dac77b932f84cd30514cb143ff27a4fa92768f78e949729
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 399
+          byte_count: 660
+          word_count: 95
+          content_hash: b9220351391d3d75422f44d0f34699a8f5f3d8315b250a9aba7a9d50777fa007
+        - path: "1.2"
+          level: 2
+          title: 2. Audit Scope and Method
+          byte_offset: 1059
+          byte_count: 808
+          word_count: 156
+          content_hash: a0bcfb8590818f3a92379a23131904b9725d789ffbf316a5872372e7860afaad
+        - path: "1.3"
+          level: 2
+          title: 3. Audit Findings Summary
+          byte_offset: 1867
+          byte_count: 1549
+          word_count: 255
+          content_hash: a2a22265198685c2d2b29eba1d9540bdd322abf6729a225d8bf99ad5616e26a8
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Bugs
+              byte_offset: 1897
+              byte_count: 579
+              word_count: 80
+              content_hash: 0920796c0b5d686a3de4e3ffc0e4fb5d63d3a79427dc1333746a79e4018b4f41
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Spec compliance gaps
+              byte_offset: 2476
+              byte_count: 636
+              word_count: 115
+              content_hash: 4f8a6c5d7ccfc0666f9899fef48e6c25d75e01fde8e26cb63a7f27ce75701dc7
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Layer 7 gap
+              byte_offset: 3112
+              byte_count: 304
+              word_count: 55
+              content_hash: 6945298f2da29d0303f18a33d1bdd183f8a9ecc13b5a5d96939df3e6556c32b7
+        - path: "1.4"
+          level: 2
+          title: 4. Remediation Tracks
+          byte_offset: 3416
+          byte_count: 8413
+          word_count: 1184
+          content_hash: ea043347ccf0af6bc6e38af8ab3768d37af78332d5b93f21cd58e91173f4889f
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Track R7 — Bug fix (Decision field order)
+              byte_offset: 3442
+              byte_count: 671
+              word_count: 89
+              content_hash: 61e182b01e5a5411679de24ae1a825405f12ca521457746e5f484c83f06012db
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Track R8 — Document-to-entity extraction
+              byte_offset: 4113
+              byte_count: 2747
+              word_count: 376
+              content_hash: d5013bf92de4663616ee432a0993ad6bb926a1c8483df73e00112f3d0938d44c
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Track R9 — CLI parity for document operations
+              byte_offset: 6860
+              byte_count: 1241
+              word_count: 177
+              content_hash: b084d9b868aa25e4f8a3856f9371656f893e708c70efc737227da620339cc45e
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Track R10 — CLI utility commands
+              byte_offset: 8101
+              byte_count: 576
+              word_count: 87
+              content_hash: c77da77e098478c4e4776eaed779a12be74d354c85d5ed3180ca35d0c8aed809
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Track R11 — Validation hardening
+              byte_offset: 8677
+              byte_count: 1477
+              word_count: 205
+              content_hash: 7b3f509562f0a67557a04c23834181b6a3ba791fedee64e84996f55b3519aca8
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Track R12 — Bootstrap usage (Layer 7)
+              byte_offset: 10154
+              byte_count: 1675
+              word_count: 246
+              content_hash: 97400cf9cd363b4c6de35cb2248289f636682286993c5fc6fa3521886be87d46
+        - path: "1.5"
+          level: 2
+          title: 5. Execution Record
+          byte_offset: 11829
+          byte_count: 368
+          word_count: 54
+          content_hash: 1a80239c727ac2898dee2cbcbb531d49603eb3906d3ab6a962d0c5047493b6db
+        - path: "1.6"
+          level: 2
+          title: 6. Estimated Scope
+          byte_offset: 12197
+          byte_count: 580
+          word_count: 93
+          content_hash: cc47daa12d4c3716d5697803095e5c3b26fe60c202177feecde55c1d5e6ba450
+        - path: "1.7"
+          level: 2
+          title: 7. Relationship to First Audit Remediation
+          byte_offset: 12777
+          byte_count: 706
+          word_count: 116
+          content_hash: 4bcc5f634ae0a1dc3c397299d3c40fdf5e097b33db6ad8d1f3e1e96ed3f69055
+        - path: "1.8"
+          level: 2
+          title: 8. Acceptance Criteria
+          byte_offset: 13483
+          byte_count: 883
+          word_count: 139
+          content_hash: 6798e2bde65ef84c3207aace7524e048ecb6ab1c8b1f62c5a9d2c4b784695b62
+        - path: "1.9"
+          level: 2
+          title: 9. Phase 1 Completion Criteria
+          byte_offset: 14366
+          byte_count: 451
+          word_count: 76
+          content_hash: 271cb17127feaa5dec89d3322191353597f6b285a8afff6964ca62a2795d55f4
+        - path: "1.10"
+          level: 2
+          title: 10. Track R12 — Bootstrap Verification Results
+          byte_offset: 14817
+          byte_count: 2087
+          word_count: 324
+          content_hash: 8180737090266c8ba0982db27f95a7f66d1784088bc330c2d21742f89686c0ed
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Instance state
+              byte_offset: 14906
+              byte_count: 401
+              word_count: 73
+              content_hash: 9766341af35e06b687ab275cdf8a5733a1c3ed9c4d5ba58c9f1e3ff264be488d
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Round-trip determinism
+              byte_offset: 15307
+              byte_count: 287
+              word_count: 39
+              content_hash: d136a117157258352b446ef4bde2d1ecd43e73083c141d47c32f12824df46ba9
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Lifecycle transition enforcement
+              byte_offset: 15594
+              byte_count: 517
+              word_count: 89
+              content_hash: 56621dd2d9dbb636005e295884081ffc5ecd2bb793367634e16df6b89dbd3813
+            - path: 1.10.4
+              level: 3
+              title: 10.4 Product/instance boundary
+              byte_offset: 16111
+              byte_count: 268
+              word_count: 38
+              content_hash: 7d075b3f767e386302e680b84e4198276b3d41e776a4eea7c16d39141975e1be
+            - path: 1.10.5
+              level: 3
+              title: 10.5 Health check
+              byte_offset: 16379
+              byte_count: 79
+              word_count: 14
+              content_hash: ecbfc31916ecc0305c20197da995d085157758c0d6989ff2969bc4c861c4845b
+            - path: 1.10.6
+              level: 3
+              title: 10.6 Cache rebuild
+              byte_offset: 16458
+              byte_count: 98
+              word_count: 13
+              content_hash: a0d17b9cf64373c21d67a12203a9050d6ba9b58f3d9a757450b102ea659708df
+            - path: 1.10.7
+              level: 3
+              title: 10.7 Conclusion
+              byte_offset: 16556
+              byte_count: 348
+              word_count: 47
+              content_hash: cd074bc38c8dcfd26549d9873d44057ef6b7bdabfcb7161aa724dd2a3338c1f3
+front_matter:
+    status: complete
+    date: "2025-07-21"
+    related:
+        - work/spec/phase-1-specification.md
+        - work/plan/phase-1-implementation-plan.md
+        - work/plan/phase-1-audit-remediation.md
+        - work/plan/phase-1-decision-log.md
+    extra:
+        Completed: "2026-03-20"
+        Purpose: define the work needed to close remaining gaps found during the second Phase 1 implementation audit
+entity_refs:
+    - entity_id: FEAT-003
+      entity_type: feature
+      section_path: 1.4.5
+      byte_offset: 9729
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.10.1
+      byte_offset: 15172
+    - entity_id: FEAT-002
+      entity_type: feature
+      section_path: 1.10.1
+      byte_offset: 15229
+    - entity_id: BUG-009
+      entity_type: bug
+      section_path: "1.5"
+      byte_offset: 11923
+    - entity_id: DEC-019
+      entity_type: decision
+      section_path: 1.4.2
+      byte_offset: 4529
+    - entity_id: DEC-019
+      entity_type: decision
+      section_path: "1.5"
+      byte_offset: 12006
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.10.1
+      byte_offset: 15285
+    - entity_id: EPIC-001
+      entity_type: epic
+      section_path: 1.4.5
+      byte_offset: 9473
+cross_doc_links:
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-implementation-plan.md
+      link_text: work/plan/phase-1-implementation-plan.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-audit-remediation.md
+      link_text: work/plan/phase-1-audit-remediation.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: "1"
+    - target_path: phase-1-implementation-plan.md
+      link_text: phase-1-implementation-plan.md
+      section_path: "1.1"
+    - target_path: phase-1-implementation-plan.md
+      link_text: phase-1-implementation-plan.md
+      section_path: "1.2"
+    - target_path: phase-1-audit-remediation.md
+      link_text: phase-1-audit-remediation.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.1
+      role: decision
+      confidence: high
+    - section_path: "1.6"
+      role: constraint
+      confidence: high
+    - section_path: "1.8"
+      role: requirement
+      confidence: high
+classified: false

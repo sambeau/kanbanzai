@@ -1,0 +1,341 @@
+document_id: PROJECT/dev-plan-phase-4a-implementation-plan
+document_path: work/plan/phase-4a-implementation-plan.md
+content_hash: 07ce2948711e08a7aabb223bccd79aeeacb948fcf8bfa9206aac69eadc260402
+indexed_at: 2026-03-25T21:38:28.893737Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 4a Implementation Plan
+      byte_offset: 0
+      byte_count: 38530
+      word_count: 5302
+      content_hash: 07ce2948711e08a7aabb223bccd79aeeacb948fcf8bfa9206aac69eadc260402
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 641
+          byte_count: 783
+          word_count: 103
+          content_hash: 4b916409dd7f2836adeb63951be4850d3bd741cdda5a9dc61822b4ac171ea432
+        - path: "1.2"
+          level: 2
+          title: 2. Implementation Strategy
+          byte_offset: 1424
+          byte_count: 3205
+          word_count: 382
+          content_hash: c1247f99f69af0aa779897e6fdcfce63c0f4ee2d179cb879fbde6290e77bca80
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Dependency structure
+              byte_offset: 1455
+              byte_count: 1237
+              word_count: 96
+              content_hash: c043f5d42c25811d8c7f9fe7ec4d8bd7a52d0bc0d88bea75a79ad0284b9c019c
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Build order within tracks
+              byte_offset: 2692
+              byte_count: 1387
+              word_count: 173
+              content_hash: 5bcc89bf82f0d66c9c7c45fef4490846db2f17d5cb70f495a251e2e9b4e55975
+            - path: 1.2.3
+              level: 3
+              title: 2.3 Parallelism opportunities
+              byte_offset: 4079
+              byte_count: 550
+              word_count: 109
+              content_hash: d08cfc6df63cdd0c40c09efca12d2c6e2b2fde6d0e2e65b0cf57da79cbad880e
+        - path: "1.3"
+          level: 2
+          title: 3. Track Breakdown
+          byte_offset: 4629
+          byte_count: 15851
+          word_count: 2365
+          content_hash: 549575d5c8cf646d264c48ee38674b14fc7adb9e34299ebee37d88c5c3b50a5a
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Track A: Estimation'
+              byte_offset: 4652
+              byte_count: 2658
+              word_count: 411
+              content_hash: 0b7e5439c511c00d6d943221860ee7325a8127b5dffbb9cbf195bf3cff11acf3
+            - path: 1.3.2
+              level: 3
+              title: 'Track B: Dependency Enforcement'
+              byte_offset: 7310
+              byte_count: 2745
+              word_count: 408
+              content_hash: e572fdb39ecc3ba1f1d0127c3704be1fcdd842ad262da3f028172bec30704789
+            - path: 1.3.3
+              level: 3
+              title: 'Track C: Task Dispatch and Completion'
+              byte_offset: 10055
+              byte_count: 4490
+              word_count: 648
+              content_hash: b9897a7aec84c825b7e7afa34ef9ff130b3cbce86682c6855f28916f43f25fea
+            - path: 1.3.4
+              level: 3
+              title: 'Track D: Context Assembly Enhancements'
+              byte_offset: 14545
+              byte_count: 2784
+              word_count: 415
+              content_hash: fe39726b1e8d6d2b73a2e12f41b717c837bb6b7fea892fa8f3e0e6a7f89b3442
+            - path: 1.3.5
+              level: 3
+              title: 'Track E: Health Check Extensions'
+              byte_offset: 17329
+              byte_count: 3151
+              word_count: 479
+              content_hash: a7961bf5d01897266b42d9355e3096520ac0ac2d42fc6a63042744f92df70bdc
+        - path: "1.4"
+          level: 2
+          title: 4. Dependency Graph
+          byte_offset: 20480
+          byte_count: 3118
+          word_count: 112
+          content_hash: b7a9ad2bc88a98491fbac9ed4a36b637ae095a8994f7ba28cda58e735ec82f7b
+        - path: "1.5"
+          level: 2
+          title: 5. Effort Estimates
+          byte_offset: 23598
+          byte_count: 1221
+          word_count: 231
+          content_hash: e6ca0cfc1024f8695a9740481c08b55a160793856766f6272bc5e58a6dcd3bd7
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Size definitions
+              byte_offset: 23622
+              byte_count: 317
+              word_count: 53
+              content_hash: ef2ac6ddf232e8c26d4359b7344ed8b77a621cf4e3b27d5a8433c0cc378e33b4
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Track estimates
+              byte_offset: 23939
+              byte_count: 522
+              word_count: 112
+              content_hash: 933f6a48f89bb29c0b191f7ae3c93b1bee193125db4163bfdbea0a2fba742461
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Phase estimate
+              byte_offset: 24461
+              byte_count: 358
+              word_count: 62
+              content_hash: 1b3ea91f0c8b774ff0f9ad813e92531a804b77fb3eacb2ea50a539c6b71ac3a2
+        - path: "1.6"
+          level: 2
+          title: 6. Implementation Order
+          byte_offset: 24819
+          byte_count: 1469
+          word_count: 251
+          content_hash: 4c4327ab12ed485899b1c6c6c582289688a94d84c26ca076c2f979030550bf0b
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Recommended sequence (single agent)
+              byte_offset: 24847
+              byte_count: 614
+              word_count: 104
+              content_hash: 400151034354e3bc60f76fe7e51d0aeff088391859742198d048897593a6872b
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Parallel execution (two agents)
+              byte_offset: 25461
+              byte_count: 827
+              word_count: 143
+              content_hash: 8f0cb976842a6045f84990b5d822f04d3454a42c3bbda2f6a82530285f0eb494
+        - path: "1.7"
+          level: 2
+          title: 7. Verification Strategy
+          byte_offset: 26288
+          byte_count: 2408
+          word_count: 377
+          content_hash: 1c154ecf4d01f45dbb93901592d1366878b880f08966a87a684fabb714832871
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Test coverage requirements
+              byte_offset: 26317
+              byte_count: 595
+              word_count: 87
+              content_hash: 6941f5918570de55da5193b538c2ffd3ddb9e987c1b3c97fde0f2248be158b47
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Verification checkpoints
+              byte_offset: 26912
+              byte_count: 1313
+              word_count: 215
+              content_hash: 2e34ce809ea99c3778d66f8459ed23e4ebb0649bd9f26f66646913eb6b38a9c5
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Acceptance criteria verification
+              byte_offset: 28225
+              byte_count: 471
+              word_count: 71
+              content_hash: a125b639ec530cd42eefb5bd9ee8fb536627b147784186be9e0d151cdec7dda7
+        - path: "1.8"
+          level: 2
+          title: 8. Risk Mitigations
+          byte_offset: 28696
+          byte_count: 4202
+          word_count: 611
+          content_hash: 628ed6ccedddf2554526e3a7e5f5d2ab6ad6b5cb22371f9481bee5616af7cb40
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 dispatch_task atomicity assumption
+              byte_offset: 28720
+              byte_count: 756
+              word_count: 108
+              content_hash: 160c12a0653a50f72b917152501bdfdd5bc9237febae352efc689a1f855fe6ed
+            - path: 1.8.2
+              level: 3
+              title: 8.2 work_queue write-through mutation
+              byte_offset: 29476
+              byte_count: 763
+              word_count: 110
+              content_hash: 75139185fb8e7bccec2db67ef68cf7ea7660b64a688971bedd877acf3f439722
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Estimation rollup performance
+              byte_offset: 30239
+              byte_count: 480
+              word_count: 76
+              content_hash: d7dc76a313aabb1bd8484bcb9ddf0a3c700891205231e98008587bd7267eabb0
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Checkpoint explicit nulls
+              byte_offset: 30719
+              byte_count: 812
+              word_count: 117
+              content_hash: e9cb7c273d1afc9cfc85c50d1d3146d6d6fa401afd613729e0cb4ea78cc46d17
+            - path: 1.8.5
+              level: 3
+              title: 8.5 Track D integration timing
+              byte_offset: 31531
+              byte_count: 732
+              word_count: 103
+              content_hash: 30b7e741349354d83f9c94a1b9bb9e8fb16b131435d56cb3afd72fe26596168b
+            - path: 1.8.6
+              level: 3
+              title: 8.6 Scope creep into Phase 4b
+              byte_offset: 32263
+              byte_count: 635
+              word_count: 93
+              content_hash: 26bd1a1187b2b9af82ea6634b1e40be769c27f8dfa4b7b54e2c04d19e42d326d
+        - path: "1.9"
+          level: 2
+          title: 9. Definition of Done
+          byte_offset: 32898
+          byte_count: 1015
+          word_count: 164
+          content_hash: 666258d27d28e9683680d42619947ac34593de07ee0cbd52c8725ef5a2f70788
+        - path: "1.10"
+          level: 2
+          title: 10. Open Items
+          byte_offset: 33913
+          byte_count: 3366
+          word_count: 494
+          content_hash: bcf60e9310cc2456b6e640eddd298d88541f6e9b408e40a84365474d5cf737e0
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Questions to resolve during implementation
+              byte_offset: 33932
+              byte_count: 987
+              word_count: 145
+              content_hash: 8ba85966de99f593c0f2ebbcaececa26c26618e04b8ef9e81b2b9e7f773fd93f
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Punch list (known gaps to fix before validation)
+              byte_offset: 34919
+              byte_count: 1785
+              word_count: 259
+              content_hash: 2a5795ea16c7a9bbbbc96a1f241bb025f7ea174dbdf272a2c628e1879aa897bb
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Potential Phase 4a.1 scope (defer if needed)
+              byte_offset: 36704
+              byte_count: 575
+              word_count: 86
+              content_hash: 258fe3a1ab1dd4ba803fc14a624613f556d72888d79bfed92cf3d57e05b02976
+        - path: "1.11"
+          level: 2
+          title: 11. Summary
+          byte_offset: 37279
+          byte_count: 1251
+          word_count: 165
+          content_hash: b3669d293f03c6573c1f529395ecc1bf8bf8b4d2de8c9e138ccaeffa1d5aa3e6
+cross_doc_links:
+    - target_path: work/spec/phase-4a-specification.md
+      link_text: work/spec/phase-4a-specification.md
+      section_path: "1"
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1"
+    - target_path: work/plan/phase-4-decision-log.md
+      link_text: work/plan/phase-4-decision-log.md
+      section_path: "1"
+    - target_path: work/design/estimation-and-progress-design.md
+      link_text: work/design/estimation-and-progress-design.md
+      section_path: "1"
+    - target_path: estimation-and-progress-design.md
+      link_text: estimation-and-progress-design.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.9"
+    - target_path: work/plan/phase-4a-progress.md
+      link_text: work/plan/phase-4a-progress.md
+      section_path: "1.9"
+    - target_path: phase-4a-progress.md
+      link_text: phase-4a-progress.md
+      section_path: 1.10.2
+    - target_path: phase-3-progress.md
+      link_text: phase-3-progress.md
+      section_path: 1.10.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.10.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.4
+      role: narrative
+      confidence: high
+    - section_path: 1.5.1
+      role: definition
+      confidence: high
+    - section_path: 1.7.1
+      role: requirement
+      confidence: high
+    - section_path: 1.7.3
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: risk
+      confidence: high
+    - section_path: 1.8.1
+      role: assumption
+      confidence: high
+    - section_path: 1.8.6
+      role: constraint
+      confidence: high
+    - section_path: "1.9"
+      role: definition
+      confidence: high
+    - section_path: 1.10.1
+      role: question
+      confidence: high
+    - section_path: 1.10.3
+      role: constraint
+      confidence: high
+    - section_path: "1.11"
+      role: narrative
+      confidence: high
+classified: false

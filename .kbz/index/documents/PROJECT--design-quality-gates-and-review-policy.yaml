@@ -1,0 +1,278 @@
+document_id: PROJECT/design-quality-gates-and-review-policy
+document_path: work/design/quality-gates-and-review-policy.md
+content_hash: 987ee6117a776ada0c250f5f8cf7e9b635b4eb11d70203ac75918a10b90725ee
+indexed_at: 2026-03-25T21:38:22.278475Z
+sections:
+    - path: "1"
+      level: 1
+      title: Quality Gates and Review Policy
+      byte_offset: 0
+      byte_count: 16340
+      word_count: 2407
+      content_hash: 987ee6117a776ada0c250f5f8cf7e9b635b4eb11d70203ac75918a10b90725ee
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 287
+          byte_count: 747
+          word_count: 113
+          content_hash: bb5d5a77d9caaeead921c0e313d4eb6a4727eed15510dd91572ec08ab707e577
+        - path: "1.2"
+          level: 2
+          title: 2. Core Principle
+          byte_offset: 1034
+          byte_count: 570
+          word_count: 87
+          content_hash: 557f8d60b93f095563c5d8f5eb47ff36f4a4f3d9da3dc08093f56f459b0dd67d
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1604
+          byte_count: 406
+          word_count: 61
+          content_hash: 1e06722f9c225f2ea15e32a256279536eafcd27ef68a1da821bcbc6701894d0f
+        - path: "1.4"
+          level: 2
+          title: 4. Review Dimensions
+          byte_offset: 2010
+          byte_count: 114
+          word_count: 15
+          content_hash: 6c6cf07516c9dc68653267c4a8f3c664a835ebc4a13cd3313f2a701a687da45a
+        - path: "1.5"
+          level: 2
+          title: 4.1 Specification Conformance
+          byte_offset: 2124
+          byte_count: 556
+          word_count: 78
+          content_hash: a7241f53a3ef864563ff96b4a839f615dddd5c6a215a008eba219322733bcb64
+        - path: "1.6"
+          level: 2
+          title: 4.2 Implementation Quality
+          byte_offset: 2680
+          byte_count: 678
+          word_count: 97
+          content_hash: cd155972189286b6722753b45c9ecf63ce77ff335bc323a57ac8dd8e781ac62b
+        - path: "1.7"
+          level: 2
+          title: 4.3 Test Adequacy
+          byte_offset: 3358
+          byte_count: 629
+          word_count: 96
+          content_hash: 6f248b3294cbe50969a3fd3ddcc3a1b6cd86dea922b80ba9359f8ab19ea15103
+        - path: "1.8"
+          level: 2
+          title: 4.4 Documentation Currency
+          byte_offset: 3987
+          byte_count: 571
+          word_count: 82
+          content_hash: 47021046aafecb48d48674fc7d672bba72743547ace4e6fadf6930b7f7c4c5b9
+        - path: "1.9"
+          level: 2
+          title: 4.5 Workflow Integrity
+          byte_offset: 4558
+          byte_count: 494
+          word_count: 79
+          content_hash: 93e545cb7301f6b801eff81041918f898e87b94046342df2b9fb569a45edf922
+        - path: "1.10"
+          level: 2
+          title: 5. Review Profiles
+          byte_offset: 5052
+          byte_count: 191
+          word_count: 32
+          content_hash: 576c23ad3e5998c33def2c8f1c6e6054114e02cddf229c3dcb38703f7713d537
+        - path: "1.11"
+          level: 2
+          title: 5.1 Feature Implementation Review Profile
+          byte_offset: 5243
+          byte_count: 424
+          word_count: 62
+          content_hash: 2040a1d64f3c587670bc819f88cf88e3babd6fa4ab57c2a31419e4f0df8ddcc8
+        - path: "1.12"
+          level: 2
+          title: 5.2 Bugfix Review Profile
+          byte_offset: 5667
+          byte_count: 765
+          word_count: 114
+          content_hash: fbd948a3cb80e7eb88dedff0328c42ee0e7d15cdaf948275903cad4b66339bfa
+        - path: "1.13"
+          level: 2
+          title: 5.3 Merge Readiness Review Profile
+          byte_offset: 6432
+          byte_count: 505
+          word_count: 77
+          content_hash: 2978c7a4029be6fc056f46f0f9d738683bec7f0fbfab8b004d4de5bcace06345
+        - path: "1.14"
+          level: 2
+          title: 5.4 Lightweight Review Profile
+          byte_offset: 6937
+          byte_count: 398
+          word_count: 56
+          content_hash: 9ef5ee9ed977069d02fed91f01939329144b3cfdc85cce1bda348809079d2d19
+        - path: "1.15"
+          level: 2
+          title: 6. Feature Review Policy
+          byte_offset: 7335
+          byte_count: 617
+          word_count: 95
+          content_hash: 25ab7f39b4d1a5ce72eace2fddc0c4d8072269b0c8c5213601d2e823d82ca212
+        - path: "1.16"
+          level: 2
+          title: 7. Bugfix Review Policy
+          byte_offset: 7952
+          byte_count: 528
+          word_count: 87
+          content_hash: 06efa22b05b610f49d7ea5ba233f171e0958e249b08088b1606b20a3569f1dab
+        - path: "1.17"
+          level: 2
+          title: 8. Documentation Review Policy
+          byte_offset: 8480
+          byte_count: 660
+          word_count: 91
+          content_hash: 29523211188928de5afd23ed2b368cbbaf31b9cbf99aeebc9246575a00014065
+        - path: "1.18"
+          level: 2
+          title: 9. Test Review Policy
+          byte_offset: 9140
+          byte_count: 711
+          word_count: 106
+          content_hash: ad920283620bfa6b5221210ffd0e6d9854b3bd1156cd3c1321fbe5ef87b9f54c
+        - path: "1.19"
+          level: 2
+          title: 10. Code Quality Policy
+          byte_offset: 9851
+          byte_count: 444
+          word_count: 64
+          content_hash: 281efce193e601fdd9b75b231ab4b8f533c396e8f96add6d5b420f209e19d3ba
+        - path: "1.20"
+          level: 2
+          title: 11. Review Output Format
+          byte_offset: 10295
+          byte_count: 601
+          word_count: 82
+          content_hash: a415bea7bb2c970dce2010c3ef79053df1770ae6d6c7f4dc07b08b05b5a8ef6d
+        - path: "1.21"
+          level: 2
+          title: 12. Blocking vs Non-Blocking Findings
+          byte_offset: 10896
+          byte_count: 756
+          word_count: 109
+          content_hash: c5b242ed8ac4d7472d4fc9ad495cf4aa7ef7536ca66096a5c8162a2f40d3ea46
+          children:
+            - path: 1.21.1
+              level: 3
+              title: Blocking findings
+              byte_offset: 10985
+              byte_count: 328
+              word_count: 50
+              content_hash: 03172f4ec6af4cca6115a66f79d1aa649480041fc4120eaecb1f83081df3e774
+            - path: 1.21.2
+              level: 3
+              title: Non-blocking findings
+              byte_offset: 11313
+              byte_count: 339
+              word_count: 47
+              content_hash: 5dbe65ec0fac0e6eb746c7a425cc16a6efe9e4c012e62b3dbb3ed4f711f40c47
+        - path: "1.22"
+          level: 2
+          title: 13. Human and Agent Responsibilities in Review
+          byte_offset: 11652
+          byte_count: 51
+          word_count: 8
+          content_hash: 5eeaada3702ed5bbd84394f16ead1f158bec0fe8b1d3fe695d1c6cae9b7a0b42
+        - path: "1.23"
+          level: 2
+          title: 13.1 Human role
+          byte_offset: 11703
+          byte_count: 205
+          word_count: 33
+          content_hash: e56c593a5e6226f18da68f1e5d1fb3e776f3fe3512442914126bbfe6cff1980f
+        - path: "1.24"
+          level: 2
+          title: 13.2 Agent role
+          byte_offset: 11908
+          byte_count: 271
+          word_count: 44
+          content_hash: 90644901149c2344405ea2f1d093ed7c98d85ca37d29d77507d722f46a7a5720
+        - path: "1.25"
+          level: 2
+          title: 14. Relationship to the Workflow System
+          byte_offset: 12179
+          byte_count: 579
+          word_count: 91
+          content_hash: 7062574bb3fb2ff35ab0f74d117ba1a590481366b2c63dd08ace31ef5ad6b2c3
+        - path: "1.26"
+          level: 2
+          title: 15. Relationship to the Agent Interaction Protocol
+          byte_offset: 12758
+          byte_count: 429
+          word_count: 56
+          content_hash: e7e9788b947040da41163d55eb7d41ca5ca6d1ce2517c7815d174db090b3223f
+        - path: "1.27"
+          level: 2
+          title: 16. Relationship to Skills and Instructions
+          byte_offset: 13187
+          byte_count: 675
+          word_count: 103
+          content_hash: 08dbbb1ac67f73ec53e9072267c6987e06cc84f66941e4294a430c963575109d
+        - path: "1.28"
+          level: 2
+          title: 17. Bootstrap Guidance
+          byte_offset: 13862
+          byte_count: 573
+          word_count: 90
+          content_hash: 7f9bada53b0d4a0ba0911f7544815a204119b2450e6d034c602be7d33942e205
+        - path: "1.29"
+          level: 2
+          title: 18. Standard Default Review Instruction
+          byte_offset: 14435
+          byte_count: 698
+          word_count: 94
+          content_hash: 605226e795b3f1ef4cbc4760328e39de372ccae1db6b0b57164a1551c27004cd
+        - path: "1.30"
+          level: 2
+          title: 19. Future Evolution
+          byte_offset: 15133
+          byte_count: 441
+          word_count: 60
+          content_hash: 9394b410770f1a71874cb8a9ff425c6fcbc51c0bed97850eb674ee0c20d5a2f1
+        - path: "1.31"
+          level: 2
+          title: 20. Summary
+          byte_offset: 15574
+          byte_count: 766
+          word_count: 110
+          content_hash: e08b1107bdb6ed8ac9d552301e2a371099605f208870375d2cd7a489d2aa6aa4
+front_matter:
+    status: policy draft
+    date: "2026-03-18"
+    related:
+        - workflow-design-basis.md
+        - phase-1-specification.md
+        - agent-interaction-protocol.md
+    extra:
+        Purpose: define the standard quality gates and review expectations for workflow-managed work
+cross_doc_links:
+    - target_path: workflow-design-basis.md
+      link_text: workflow-design-basis.md
+      section_path: "1"
+    - target_path: phase-1-specification.md
+      link_text: phase-1-specification.md
+      section_path: "1"
+    - target_path: agent-interaction-protocol.md
+      link_text: agent-interaction-protocol.md
+      section_path: "1"
+    - target_path: agent-interaction-protocol.md
+      link_text: agent-interaction-protocol.md
+      section_path: "1.26"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.31"
+      role: narrative
+      confidence: high
+classified: false

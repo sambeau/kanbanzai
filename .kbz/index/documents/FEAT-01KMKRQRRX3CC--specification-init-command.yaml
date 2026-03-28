@@ -1,0 +1,311 @@
+document_id: FEAT-01KMKRQRRX3CC/specification-init-command
+document_path: work/spec/init-command.md
+content_hash: 195e7228e8205f8d7c6decf8a2cea23ad3508ae3b2ba63744fdbcf87f2026f39
+indexed_at: 2026-03-26T14:34:53.66593Z
+sections:
+    - path: "1"
+      level: 1
+      title: '`kanbanzai init` Command Specification'
+      byte_offset: 0
+      byte_count: 21830
+      word_count: 3073
+      content_hash: 195e7228e8205f8d7c6decf8a2cea23ad3508ae3b2ba63744fdbcf87f2026f39
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 538
+          byte_count: 519
+          word_count: 80
+          content_hash: af53c939a4b89a49871b047767edc6c6923389a5dbd6cb52072c1870705dc2db
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1057
+          byte_count: 766
+          word_count: 113
+          content_hash: 888c5fdcb743870ebe3389570186e42d78340937369c92babe84e7162bcbdb33
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1823
+          byte_count: 1444
+          word_count: 189
+          content_hash: 69e1b18eac7f2d15618ac277610fb54567641067f8b6dc09cabb16a9fc3ab154
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 1836
+              byte_count: 839
+              word_count: 106
+              content_hash: 4a83b153069684b09f6f4a14c1b1a17f1c24169979eb9cf79b10d5d003f12d2e
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred
+              byte_offset: 2675
+              byte_count: 269
+              word_count: 36
+              content_hash: 145c489a669c1c49cfaebc048fde8c01984e0e62f6a47ca3f51ce2611db152d4
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly excluded
+              byte_offset: 2944
+              byte_count: 323
+              word_count: 44
+              content_hash: ff3b88c6c2eac2d9913f7e7f280e41694717d6959ce28cbd96a574f9f4d70fa6
+        - path: "1.4"
+          level: 2
+          title: 4. Design Principles
+          byte_offset: 3267
+          byte_count: 1468
+          word_count: 220
+          content_hash: c7431882e77cce7a30b23433e85bd7104b14007c94d7faf3d73bdb15337ca52e
+        - path: "1.5"
+          level: 2
+          title: 5. Output File Specification
+          byte_offset: 4735
+          byte_count: 3927
+          word_count: 478
+          content_hash: b86fa5991892e70b9b7c6dc369161b0de4ccc8fc995e7660e3a755df22b69836
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Complete output path list
+              byte_offset: 4768
+              byte_count: 622
+              word_count: 56
+              content_hash: d0d30134e365c4f22e071c57e287a97cac89b8c39dfcb2f83b5e4906db8709a3
+            - path: 1.5.2
+              level: 3
+              title: 5.2 `.kbz/config.yaml`
+              byte_offset: 5390
+              byte_count: 1000
+              word_count: 132
+              content_hash: b0e312c73ae8e7117ec14c9a3acc890679ee44a0fcc3816a0e921620a31617d2
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Skill files
+              byte_offset: 6390
+              byte_count: 1500
+              word_count: 170
+              content_hash: d647e92c4a880d5aa00479c9a4f359769b89fefd07eb7aabc1b4a0b63889e615
+            - path: 1.5.4
+              level: 3
+              title: 5.4 `work/` placeholder directories
+              byte_offset: 7890
+              byte_count: 427
+              word_count: 61
+              content_hash: 5e5a2c610d6061dbf88eb354f2618074e41cc4598105964e921829002bf72b54
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Non-interference guarantees
+              byte_offset: 8317
+              byte_count: 345
+              word_count: 54
+              content_hash: cf905fe5d74ff9fac08d7e6792ea032ff570de5fba33d40a9027f958813acab6
+        - path: "1.6"
+          level: 2
+          title: 6. Project Detection and Behaviour
+          byte_offset: 8662
+          byte_count: 1661
+          word_count: 259
+          content_hash: 81e19ecd4f9986c5b453801d3391e9edb3fc048acaec3ab4db512e6876173a73
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 New project definition
+              byte_offset: 8701
+              byte_count: 333
+              word_count: 58
+              content_hash: bc932fad727a5f205ffc41243e8066e0eb2f7d2584f03e7f025b45a7db09439c
+            - path: 1.6.2
+              level: 3
+              title: 6.2 New project behaviour
+              byte_offset: 9034
+              byte_count: 418
+              word_count: 62
+              content_hash: 0f874ab9e2e0de4f13a22eaa0fea8dc241f9210c72d7798dee0151806247f609
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Existing project behaviour
+              byte_offset: 9452
+              byte_count: 871
+              word_count: 133
+              content_hash: 0d8edef4f256acce12b993cf45732eb5d73d813747033763cf9d3854688527dd
+        - path: "1.7"
+          level: 2
+          title: 7. Skill Update Rules
+          byte_offset: 10323
+          byte_count: 1292
+          word_count: 191
+          content_hash: 1fe681ece5949428bac764dcadbb50b453fcb4a9117626ba0630896d1380164b
+        - path: "1.8"
+          level: 2
+          title: 8. Configuration Output
+          byte_offset: 11615
+          byte_count: 1187
+          word_count: 183
+          content_hash: 6449c804d224c3e209ac0955ab24fc99b455f5820ff2299333bfeb1ccf5539a1
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Schema version
+              byte_offset: 11643
+              byte_count: 254
+              word_count: 39
+              content_hash: 354cb9f7f9b8202c9525053d8ffaa8755e3ab4753f504cd65eaae61f07beaf41
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Prefix registry
+              byte_offset: 11897
+              byte_count: 269
+              word_count: 43
+              content_hash: 1a975b7d6bb1791bc010e5ae41540937c68e711825e4600b98a08e745c2f1898
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Document roots
+              byte_offset: 12166
+              byte_count: 438
+              word_count: 65
+              content_hash: d65779b18d6ca905acfdfffb287be59e6bf3ae4d020d829db8fcad7b3b01b4c8
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Fields not written
+              byte_offset: 12604
+              byte_count: 198
+              word_count: 32
+              content_hash: 7f577cdf01fa32f06efb40f859cdea8ad3b7ead7fc1897d9e9f11c2e2e288b18
+        - path: "1.9"
+          level: 2
+          title: 9. CLI Flags
+          byte_offset: 12802
+          byte_count: 1304
+          word_count: 196
+          content_hash: ca5c8f7c1787a448b5223a60e5c4a5aa29a0d1b365d31884286302c298429642
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Flag interactions
+              byte_offset: 13627
+              byte_count: 479
+              word_count: 69
+              content_hash: edd473a77bafaad6cbac30a349f47a9f4b5b39bb8ca5ba9862eb40f6c27eb90e
+        - path: "1.10"
+          level: 2
+          title: 10. Error Handling
+          byte_offset: 14106
+          byte_count: 2998
+          word_count: 434
+          content_hash: 30ace3b7b06ad8111934aea52f5a8ea6fead20bdcfd41727ddd22f5de3699bd8
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Not a git repository
+              byte_offset: 14531
+              byte_count: 311
+              word_count: 50
+              content_hash: fbfd25c8ed271ce30f295066bf58e47e3ed1fe2d298b9521073671e86c658da3
+            - path: 1.10.2
+              level: 3
+              title: 10.2 No write permission
+              byte_offset: 14842
+              byte_count: 245
+              word_count: 35
+              content_hash: 2ccfaf78512854ee5f44017bb98775328f148d29b5d0529b739f73f13bf2c582
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Existing config at newer schema version
+              byte_offset: 15087
+              byte_count: 435
+              word_count: 63
+              content_hash: 30b362e6885ff84b4ca402517536c15dd3a931758844c57064e9118fd591c036
+            - path: 1.10.4
+              level: 3
+              title: 10.4 Partial or invalid config
+              byte_offset: 15522
+              byte_count: 418
+              word_count: 57
+              content_hash: a3eb0caf9d485c695bf81d770ed62838f508401a25021f6105ba7f8b936fe3fc
+            - path: 1.10.5
+              level: 3
+              title: 10.5 Conflicting unmanaged skill file
+              byte_offset: 15940
+              byte_count: 614
+              word_count: 89
+              content_hash: 89377027521716a28277422329e1ce696586c94f83e91727ae7db0c71d896d88
+            - path: 1.10.6
+              level: 3
+              title: 10.6 Mutually exclusive flags
+              byte_offset: 16554
+              byte_count: 191
+              word_count: 24
+              content_hash: 9de8a8de6f90c606eb3f515e19f6aceab8f8991ac7c48b17cb53d186e2c580a0
+            - path: 1.10.7
+              level: 3
+              title: 10.7 Non-interactive without docs-path on existing project
+              byte_offset: 16745
+              byte_count: 359
+              word_count: 44
+              content_hash: f96f98619cc9120b35d7b117a9fd62ea12fb38ec436c36def6169f164df4f168
+        - path: "1.11"
+          level: 2
+          title: 11. Acceptance Criteria
+          byte_offset: 17104
+          byte_count: 4726
+          word_count: 684
+          content_hash: c08111c4812049ee69c15939bbfd978429bf7be281871c316e94858d4de25dab
+cross_doc_links:
+    - target_path: work/design/init-command.md
+      link_text: work/design/init-command.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1"
+    - target_path: work/spec/hardening.md
+      link_text: work/spec/hardening.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.3
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.5.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.5.5
+    - target_path: .agents/skills/kanbanzai-{name}/SKILL.md
+      link_text: .agents/skills/kanbanzai-{name}/SKILL.md
+      section_path: "1.7"
+    - target_path: .agents/skills/kanbanzai-{name}/SKILL.md
+      link_text: .agents/skills/kanbanzai-{name}/SKILL.md
+      section_path: 1.10.5
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: "1.11"
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: "1.11"
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: "1.11"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.6.1
+      role: definition
+      confidence: high
+    - section_path: "1.11"
+      role: requirement
+      confidence: high
+classified: false

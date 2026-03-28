@@ -1,0 +1,288 @@
+document_id: FEAT-01KMT40P0AGS7/specification-review-naming-and-folder-conventions
+document_path: work/spec/review-naming-and-folder-conventions.md
+content_hash: 82e587c8b4c2191bc864b1f63aa5af613e334cb4b1210105543f104d2ed30ce3
+indexed_at: 2026-03-28T11:43:55.865572Z
+sections:
+    - path: "1"
+      level: 1
+      title: Review Naming and Folder Conventions Specification
+      byte_offset: 0
+      byte_count: 7856
+      word_count: 960
+      content_hash: 82e587c8b4c2191bc864b1f63aa5af613e334cb4b1210105543f104d2ed30ce3
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 525
+          byte_count: 709
+          word_count: 103
+          content_hash: 11ac3690a0b0d911a97bb1625f6f52be618f8a7f7e7b7228836c32ac41df9e2d
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1234
+          byte_count: 868
+          word_count: 113
+          content_hash: b4e72c2f70cd44d3f16b7f0a24fcf32e77e4fdbe6bf0bcdfbc7b0229a7952fa0
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2102
+          byte_count: 1028
+          word_count: 140
+          content_hash: 1107bb57c3f1803d0ad54033b6dac05e1947ddbfdfe9de65f9a94ca66eefa553
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 2115
+              byte_count: 590
+              word_count: 74
+              content_hash: 68089d14ca4c3ed412f2510beb590485caec45ea41a1bb68d16e47e78f37c822
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Explicitly excluded
+              byte_offset: 2705
+              byte_count: 425
+              word_count: 63
+              content_hash: e4eae6e88c2d7274d5c4f09359c5e96383ca5977af206e67a973ee8f6d3cdcb2
+        - path: "1.4"
+          level: 2
+          title: 4. Naming Convention
+          byte_offset: 3130
+          byte_count: 743
+          word_count: 83
+          content_hash: 706d38e0fb53211f604abfa7b8d0f0e2db73bf4f6dc146cb7f66e796e0b64309
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Format
+              byte_offset: 3155
+              byte_count: 633
+              word_count: 67
+              content_hash: a556ea9327f442e3387764a09ee0c44afd51e1af54053ea10bc9dad8bb187990
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Destination folder
+              byte_offset: 3788
+              byte_count: 85
+              word_count: 12
+              content_hash: 334666aa1cece55b940885a3df8217630362a41ba03f7b29d43ed30afdc931bd
+        - path: "1.5"
+          level: 2
+          title: 5. Folder Distinction
+          byte_offset: 3873
+          byte_count: 600
+          word_count: 81
+          content_hash: 53d73efd714bb1520bb29df2bcaa83669aea1e305d82bca85b4f95080a560e9a
+        - path: "1.6"
+          level: 2
+          title: 6. Acceptance Criteria
+          byte_offset: 4473
+          byte_count: 2553
+          word_count: 282
+          content_hash: fa64ab6ed18867e6e3af36ad9749e2d018ba31ee798e1fa326dc3f6f092ff7d0
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Review report naming convention and folder
+              byte_offset: 4500
+              byte_count: 848
+              word_count: 101
+              content_hash: 48c00a4a4496ee9b1d7da7bea634f4d930a253c7dd94e715302eacd8c18feaeb
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Migration of existing review reports
+              byte_offset: 5348
+              byte_count: 1381
+              word_count: 131
+              content_hash: b7bc4533fe30eb5214a45ef0fa4260e94e2cf8ed9b5e41d9a72ce9b938c678e5
+            - path: 1.6.3
+              level: 3
+              title: 6.3 No regressions
+              byte_offset: 6729
+              byte_count: 297
+              word_count: 46
+              content_hash: 0928ed3598111bc24010a7fcb37be93ea3efd145d733154a940d72d792490138
+        - path: "1.7"
+          level: 2
+          title: 7. Verification
+          byte_offset: 7026
+          byte_count: 830
+          word_count: 104
+          content_hash: 45323ead8f4ec48332e1eb5642b7adc134d648545748590a94e4d90e1f29fa63
+entity_refs:
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 327
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 2999
+    - entity_id: FEAT-01KMRX1SEQV49
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 3344
+    - entity_id: FEAT-01KMR
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 3370
+    - entity_id: FEAT-01KMR8QW7A3A8
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 3695
+    - entity_id: FEAT-01KMKRQSD1TKK
+      entity_type: feature
+      section_path: 1.6.2
+      byte_offset: 5623
+    - entity_id: FEAT-01KMRX1F47Z94
+      entity_type: feature
+      section_path: 1.6.2
+      byte_offset: 5732
+    - entity_id: FEAT-01KMRX1HG8BAX
+      entity_type: feature
+      section_path: 1.6.2
+      byte_offset: 5850
+    - entity_id: FEAT-01KMRX1QPN3CB
+      entity_type: feature
+      section_path: 1.6.2
+      byte_offset: 5979
+    - entity_id: FEAT-01KMRX1SEQV49
+      entity_type: feature
+      section_path: 1.6.2
+      byte_offset: 6102
+    - entity_id: FEAT-01KMR8QW7A3A8
+      entity_type: feature
+      section_path: 1.6.2
+      byte_offset: 6424
+    - entity_id: BUG-01KMRX1F47Z94
+      entity_type: bug
+      section_path: 1.4.1
+      byte_offset: 3748
+    - entity_id: P7-developer-experience
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 401
+cross_doc_links:
+    - target_path: work/design/human-friendly-ids.md
+      link_text: work/design/human-friendly-ids.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: review-{id}-{slug}.md
+      link_text: review-{id}-{slug}.md
+      section_path: "1.2"
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: "1.2"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.3.1
+    - target_path: review-{id}-{slug}.md
+      link_text: review-{id}-{slug}.md
+      section_path: 1.3.1
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.1
+    - target_path: review-{unsplit-id}-{slug}.md
+      link_text: |4
+        review-{unsplit-id}-{slug}.md
+      section_path: 1.4.1
+    - target_path: review-FEAT-01KMRX1SEQV49-policy-and-documentation-updates.md
+      link_text: |4
+        review-FEAT-01KMRX1SEQV49-policy-and-documentation-updates.md
+        review-FEAT-01KMR8QW7A3A8-review-batch-operations.md
+        review-BUG-01KMRX1F47Z94-some-bug-slug.md
+      section_path: 1.4.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.6.1
+    - target_path: review-{unsplit-id}-{slug}.md
+      link_text: review-{unsplit-id}-{slug}.md
+      section_path: 1.6.1
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: 1.6.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.6.1
+    - target_path: work/reports/review-FEAT-01KMKRQSD1TKK.md
+      link_text: work/reports/review-FEAT-01KMKRQSD1TKK.md
+      section_path: 1.6.2
+    - target_path: work/reviews/review-FEAT-01KMKRQSD1TKK-skills-content.md
+      link_text: work/reviews/review-FEAT-01KMKRQSD1TKK-skills-content.md
+      section_path: 1.6.2
+    - target_path: work/reports/review-FEAT-01KMRX1F47Z94.md
+      link_text: work/reports/review-FEAT-01KMRX1F47Z94.md
+      section_path: 1.6.2
+    - target_path: work/reviews/review-FEAT-01KMRX1F47Z94-review-lifecycle-states.md
+      link_text: work/reviews/review-FEAT-01KMRX1F47Z94-review-lifecycle-states.md
+      section_path: 1.6.2
+    - target_path: work/reports/review-FEAT-01KMRX1HG8BAX.md
+      link_text: work/reports/review-FEAT-01KMRX1HG8BAX.md
+      section_path: 1.6.2
+    - target_path: work/reviews/review-FEAT-01KMRX1HG8BAX-reviewer-context-profile-and-skill.md
+      link_text: work/reviews/review-FEAT-01KMRX1HG8BAX-reviewer-context-profile-and-skill.md
+      section_path: 1.6.2
+    - target_path: work/reports/review-FEAT-01KMRX1QPN3CB.md
+      link_text: work/reports/review-FEAT-01KMRX1QPN3CB.md
+      section_path: 1.6.2
+    - target_path: work/reviews/review-FEAT-01KMRX1QPN3CB-review-orchestration-pattern.md
+      link_text: work/reviews/review-FEAT-01KMRX1QPN3CB-review-orchestration-pattern.md
+      section_path: 1.6.2
+    - target_path: work/reports/review-FEAT-01KMRX1SEQV49.md
+      link_text: work/reports/review-FEAT-01KMRX1SEQV49.md
+      section_path: 1.6.2
+    - target_path: work/reviews/review-FEAT-01KMRX1SEQV49-policy-and-documentation-updates.md
+      link_text: work/reviews/review-FEAT-01KMRX1SEQV49-policy-and-documentation-updates.md
+      section_path: 1.6.2
+    - target_path: work/reviews/track-c-batch-operations-review.md
+      link_text: work/reviews/track-c-batch-operations-review.md
+      section_path: 1.6.2
+    - target_path: work/reviews/review-FEAT-01KMR8QW7A3A8-review-batch-operations.md
+      link_text: work/reviews/review-FEAT-01KMR8QW7A3A8-review-batch-operations.md
+      section_path: 1.6.2
+    - target_path: track-c-batch-operations-review.md
+      link_text: track-c-batch-operations-review.md
+      section_path: "1.7"
+    - target_path: review-{id}-{slug}.md
+      link_text: review-{id}-{slug}.md
+      section_path: "1.7"
+    - target_path: review-FEAT-*.md
+      link_text: review-FEAT-*.md
+      section_path: "1.7"
+    - target_path: review-BUG-*.md
+      link_text: review-BUG-*.md
+      section_path: "1.7"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.7"
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: "1.7"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+classified: false

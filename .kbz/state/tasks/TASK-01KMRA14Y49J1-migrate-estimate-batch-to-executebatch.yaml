@@ -1,0 +1,5 @@
+id: TASK-01KMRA14Y49J1
+parent_feature: FEAT-01KMR8QW7A3A8
+slug: migrate-estimate-batch-to-executebatch
+summary: "F4: Migrate estimate(set) batch to use ExecuteBatch shared infrastructure. Replace estimateSetBatch custom loop with ExecuteBatch call so response shape matches spec §9.4 (summary object, item_id, ok/error status, structured error, side_effects). Add 100-item batch limit enforcement."
+status: done

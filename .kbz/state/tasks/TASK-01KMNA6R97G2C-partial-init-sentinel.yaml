@@ -2,12 +2,4 @@ id: TASK-01KMNA6R97G2C
 parent_feature: FEAT-01KMKRQWF0FCH
 slug: partial-init-sentinel
 summary: "Implement .kbz/.init-complete sentinel file and partial-state detection: kanbanzai init writes .init-complete as its final step. On any Kanbanzai command: if .kbz/ exists but .init-complete is absent, detect partial initialisation, print a warning with a concrete recovery action, and do not proceed silently. Ensure init atomicity: failed init cleans up all created files, leaving no partial .kbz/. Tests for interrupted init and recovery warning."
-status: done
-completed: "2026-03-26T16:23:38Z"
-completion_summary: "Added CheckInitComplete() to internal/core/paths.go that detects .kbz/ without .init-complete sentinel. Wired into CLI run() for all commands except help/version/init, and into MCP serve path. Returns clear error with recovery instructions. Three tests covering: no .kbz/ dir, fully initialised, and partial init detection."
-verification: "go test -race ./internal/core/ — all 6 tests pass including 3 new CheckInitComplete tests"
-files_planned:
-  - internal/core/paths.go
-  - internal/core/paths_test.go
-  - cmd/kanbanzai/main.go
-  - internal/mcp/server.go
+status: ready

@@ -1,0 +1,14 @@
+id: TASK-01KMRSNR04V4A
+parent_feature: FEAT-01KMRSMVP15PD
+slug: valid-next-states-and-error-messages
+summary: "Add ValidNextStates(kind, from) exported function to internal/validate/lifecycle.go that returns valid transitions from a given state. Update ValidateTransition error messages to include valid next states: 'invalid feature transition \"proposed\" → \"done\"; valid transitions from \"proposed\": designing, specifying, superseded, cancelled'. Design ref: smart-lifecycle-transitions.md §5."
+status: done
+files_planned:
+  - internal/validate/lifecycle.go
+  - internal/validate/lifecycle_test.go
+completed: "2026-03-27T23:38:02Z"
+claimed_at: "2026-03-27T23:25:29Z"
+dispatched_to: backend
+dispatched_at: "2026-03-27T23:25:29Z"
+dispatched_by: orchestrator
+completion_summary: "Added ValidNextStates(kind, from) function returning sorted valid transitions. Updated ValidateTransition error messages to include valid next states hint."

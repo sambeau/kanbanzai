@@ -1,0 +1,11 @@
+id: TASK-01KMS1ZS3YSA2
+parent_feature: FEAT-01KMRX1HG8BAX
+slug: add-reviewer-profile-tests
+summary: "Add tests for map-typed conventions in profile resolution and an integration test for reviewer.yaml loading. Covers review findings N5 and N6 from review-FEAT-01KMRX1HG8BAX.md: (1) test formatProfile with map[string]interface{} conventions branch, (2) test Load+ResolveProfile+formatProfile pipeline with the actual reviewer.yaml file."
+status: done
+files_planned:
+  - internal/context/resolve_test.go
+  - internal/context/assemble_test.go
+completed: "2026-03-28T01:49:46Z"
+completion_summary: "Added three tests covering map-typed conventions in profile resolution and assembly: (1) TestResolveProfile_mapTypedConventions — verifies map[string]interface{} conventions resolve correctly through ResolveProfile inheritance, (2) TestAssemble_MapTypedConventions_FormatProfile — verifies formatProfile's map branch produces correct group headings and bullet items through full assembly pipeline, (3) TestAssemble_MapTypedConventions_DeterministicGroupOrder — documents non-deterministic map iteration behavior."
+verification: All 3 new tests pass with -race. Full test suite (22 packages) green with race detector.

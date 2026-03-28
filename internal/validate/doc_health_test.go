@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 func docInfo(id string, fields map[string]any) DocumentInfo {

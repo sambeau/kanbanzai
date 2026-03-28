@@ -1,0 +1,17 @@
+id: TASK-01KMRXK3V9009
+parent_feature: FEAT-01KMRX1QPN3CB
+slug: run-single-feature-review
+summary: "Run a complete review cycle on a single real feature: transition to reviewing, decompose into review units, run parallel sub-agent review, collate findings, write the review findings document (registered to the feature), and transition to done (or needs-rework → remediation → re-review → done). Verify that re-review is targeted to affected sections only. Covers spec AC-F-16 through AC-F-19."
+status: done
+depends_on:
+  - TASK-01KMRXK1G474P
+files_planned:
+  - internal/service/advance_test.go
+  - work/reports/review-FEAT-01KMRX1F47Z94.md
+completed: "2026-03-28T01:30:43Z"
+claimed_at: "2026-03-28T01:21:04Z"
+dispatched_to: reviewer
+dispatched_at: "2026-03-28T01:21:04Z"
+dispatched_by: sambeau
+completion_summary: "Ran a complete review cycle on Feature D (FEAT-01KMRX1F47Z94, review-lifecycle-states). Analysis phase: queried metadata, decomposed into 2 review units (Unit A: spec conformance + implementation quality; Unit B: test adequacy + workflow integrity), dispatched 2 parallel sub-agents via spawn_agent. Collation found 1 blocking finding (F1: AC-17 advance-from-reviewing test gap) and 4 non-blocking findings. Review document written and registered (FEAT-01KMRX1F47Z94/report-review-feat-01kmrx1f47z94). Feature transitioned to needs-rework. Remediation phase: created TASK-01KMS0W9NHRWJ (fix-ac17-advance-from-reviewing-test), added the missing test, ran targeted re-review on affected file only (not full feature), confirmed fix. Feature transitioned reviewing → done. All ACs satisfied: AC-F-16 (complete cycle with blocking finding → remediation), AC-F-17 (targeted re-review), AC-F-18 (feature reaches done), AC-F-19 (review document registered with structured findings)."
+verification: "AC-F-16: Feature went reviewing → needs-rework (blocking finding F1) → remediation task created → re-review → done. AC-F-17: Re-review covered only advance_test.go and spec §4.5, not full feature. AC-F-18: Feature status is done. AC-F-19: Review document at work/reports/review-FEAT-01KMRX1F47Z94.md, registered as FEAT-01KMRX1F47Z94/report-review-feat-01kmrx1f47z94 (type: report, owner: FEAT-01KMRX1F47Z94), contains structured findings with location/dimension/severity/description/remediation per finding, per-dimension verdicts, and aggregate verdict. go test -race ./... all 22 packages pass."

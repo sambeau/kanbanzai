@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 func TestAllocator_AllocateEpic(t *testing.T) {

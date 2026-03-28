@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // WorkQueueInput holds parameters for the work_queue operation.
@@ -32,9 +32,10 @@ type WorkQueueItem struct {
 
 // WorkQueueResult is the result of the work_queue operation.
 type WorkQueueResult struct {
-	Queue         []WorkQueueItem
-	PromotedCount int
-	TotalQueued   int
+	Queue           []WorkQueueItem
+	PromotedCount   int
+	PromotedTaskIDs []string // IDs of tasks promoted from queued → ready in this call
+	TotalQueued     int
 }
 
 // WorkQueue promotes eligible queued tasks to ready and returns the ready queue.
@@ -91,6 +92,7 @@ func (s *EntityService) WorkQueue(input WorkQueueInput) (WorkQueueResult, error)
 		}
 
 		result.PromotedCount++
+		result.PromotedTaskIDs = append(result.PromotedTaskIDs, t.ID)
 		// Update our local status map so later dependency checks reflect the promotion
 		taskStatuses[t.ID] = string(model.TaskStatusReady)
 	}

@@ -9,14 +9,15 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"kanbanzai/internal/cache"
-	"kanbanzai/internal/config"
-	kbzctx "kanbanzai/internal/context"
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/id"
-	kbzmcp "kanbanzai/internal/mcp"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/validate"
+	_ "github.com/sambeau/kanbanzai/internal/buildinfo"
+	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/config"
+	kbzctx "github.com/sambeau/kanbanzai/internal/context"
+	"github.com/sambeau/kanbanzai/internal/core"
+
+	kbzmcp "github.com/sambeau/kanbanzai/internal/mcp"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // version is set at link time via -ldflags "-X main.version=<semver>".
@@ -89,428 +90,76 @@ func run(args []string, deps dependencies) error {
 	case "help", "-h", "--help":
 		printUsage(deps.stdout)
 		return nil
-	case "version", "--version", "-v":
-		fmt.Fprintln(deps.stdout, "kanbanzai "+deps.version)
+	case "version", "--version":
+		fmt.Fprintln(deps.stdout, "kanbanzai 2.0")
 		return nil
 	case "serve":
-		if err := core.CheckInitComplete(); err != nil {
-			return err
-		}
 		return kbzmcp.Serve()
 	case "init":
 		return runInit(args[1:], deps)
-	default:
-		// All other commands require a fully initialised instance.
-		if err := core.CheckInitComplete(); err != nil {
-			return err
-		}
-	}
 
-	switch args[0] {
-	case "create":
-		return runCreate(args[1:], deps)
-	case "get":
-		return runGet(args[1:], deps)
-	case "list":
-		return runList(args[1:], deps)
-	case "update":
-		return runUpdate(args[1:], deps)
-
+	// ── Core workflow commands (spec §23.2) ──────────────────────────────
+	case "status":
+		return runStatus(args[1:], deps)
+	case "next":
+		return runNextCmd(args[1:], deps)
+	case "finish":
+		return runFinish(args[1:], deps)
+	case "handoff":
+		return runHandoff(args[1:], deps)
+	case "entity":
+		return runEntity(args[1:], deps)
+	case "doc":
+		return runDoc(args[1:], deps)
 	case "health":
-		if len(args) > 1 && wantsHelp(args[1:]) {
-			fmt.Fprint(deps.stdout, healthUsageText)
-			return nil
-		}
 		return runHealth(deps)
+
+	// ── Feature group commands (spec §23.3) ──────────────────────────────
+	case "decompose":
+		return runDecompose(args[1:], deps)
+	case "estimate":
+		return runEstimate(args[1:], deps)
+	case "conflict":
+		return runConflict(args[1:], deps)
+	case "knowledge":
+		return runKnowledge(args[1:], deps)
+	case "profile":
+		return runProfile(args[1:], deps)
+	case "worktree":
+		return runWorktree(args[1:], deps)
+	case "merge":
+		return runMerge(args[1:], deps)
+	case "pr":
+		return runPR(args[1:], deps)
+	case "branch":
+		return runBranch(args[1:], deps)
+	case "cleanup":
+		return runCleanup(args[1:], deps)
+	case "incident":
+		return runIncident(args[1:], deps)
+	case "checkpoint":
+		return runCheckpoint(args[1:], deps)
+	case "task":
+		return runTask(args[1:], deps)
+
+	// ── Utility commands ─────────────────────────────────────────────────
 	case "validate":
 		return runValidate(args[1:], deps)
 	case "cache":
 		return runCache(args[1:], deps)
 	case "import":
 		return runImport(args[1:], deps)
-	case "knowledge":
-		return runKnowledge(args[1:], deps)
-	case "profile":
-		return runProfile(args[1:], deps)
-	case "context":
-		return runContext(args[1:], deps)
-	case "worktree":
-		return runWorktree(args[1:], deps)
-	case "branch":
-		return runBranch(args[1:], deps)
-	case "merge":
-		return runMerge(args[1:], deps)
-	case "pr":
-		return runPR(args[1:], deps)
-	case "cleanup":
-		return runCleanup(args[1:], deps)
-	case "feature":
-		return runFeature(args[1:], deps)
-	case "task":
-		return runTask(args[1:], deps)
-	case "queue":
-		return runQueue(args[1:], deps)
-	case "incident":
-		return runIncident(args[1:], deps)
+	case "install-record":
+		return runInstallRecord(args[1:], deps)
+
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
 	}
 }
 
-func runCreate(args []string, deps dependencies) error {
-	if len(args) == 0 || wantsHelp(args) {
-		fmt.Fprint(deps.stdout, createUsageText)
-		return nil
-	}
-
-	svc := deps.newEntityService("")
-
-	switch args[0] {
-	case "plan":
-		values, err := parseFlags(args[1:])
-		if err != nil {
-			return err
-		}
-		result, err := svc.CreatePlan(service.CreatePlanInput{
-			Prefix:    values["prefix"],
-			Slug:      values["slug"],
-			Title:     values["title"],
-			Summary:   values["summary"],
-			CreatedBy: values["created_by"],
-		})
-		if err != nil {
-			return err
-		}
-		return printCreateResult(deps.stdout, result)
-	case "epic":
-		return fmt.Errorf("'epic' is deprecated; use 'create plan' instead")
-	case "feature":
-		values, err := parseFlags(args[1:])
-		if err != nil {
-			return err
-		}
-		result, err := svc.CreateFeature(service.CreateFeatureInput{
-			Slug:      values["slug"],
-			Parent:    values["parent"],
-			Summary:   values["summary"],
-			CreatedBy: values["created_by"],
-		})
-		if err != nil {
-			return err
-		}
-		return printCreateResult(deps.stdout, result)
-	case "task":
-		values, err := parseFlags(args[1:])
-		if err != nil {
-			return err
-		}
-		result, err := svc.CreateTask(service.CreateTaskInput{
-			ParentFeature: values["parent_feature"],
-			Slug:          values["slug"],
-			Summary:       values["summary"],
-		})
-		if err != nil {
-			return err
-		}
-		return printCreateResult(deps.stdout, result)
-	case "bug":
-		values, err := parseFlags(args[1:])
-		if err != nil {
-			return err
-		}
-		result, err := svc.CreateBug(service.CreateBugInput{
-			Slug:       values["slug"],
-			Title:      values["title"],
-			ReportedBy: values["reported_by"],
-			Observed:   values["observed"],
-			Expected:   values["expected"],
-			Severity:   values["severity"],
-			Priority:   values["priority"],
-			Type:       values["type"],
-		})
-		if err != nil {
-			return err
-		}
-		return printCreateResult(deps.stdout, result)
-	case "decision":
-		values, err := parseFlags(args[1:])
-		if err != nil {
-			return err
-		}
-		result, err := svc.CreateDecision(service.CreateDecisionInput{
-			Slug:      values["slug"],
-			Summary:   values["summary"],
-			Rationale: values["rationale"],
-			DecidedBy: values["decided_by"],
-		})
-		if err != nil {
-			return err
-		}
-		return printCreateResult(deps.stdout, result)
-	default:
-		return fmt.Errorf("unknown create target %q\n\n%s", args[0], createUsageText)
-	}
-}
-
-func runGet(args []string, deps dependencies) error {
-	if len(args) == 0 || wantsHelp(args) {
-		fmt.Fprint(deps.stdout, getUsageText)
-		return nil
-	}
-
-	svc := deps.newEntityService("")
-
-	switch args[0] {
-	case "plan":
-		values, err := parseFlags(args[1:])
-		if err != nil {
-			return err
-		}
-		listResult, err := svc.GetPlan(values["id"])
-		if err != nil {
-			return err
-		}
-		return printGetResult(deps.stdout, service.GetResult{
-			Type:  listResult.Type,
-			ID:    listResult.ID,
-			Slug:  listResult.Slug,
-			Path:  listResult.Path,
-			State: listResult.State,
-		})
-	case "epic", "feature", "task", "bug", "decision":
-		values, err := parseFlags(args[1:])
-		if err != nil {
-			return err
-		}
-		result, err := svc.Get(args[0], values["id"], values["slug"])
-		if err != nil {
-			return err
-		}
-		return printGetResult(deps.stdout, result)
-	default:
-		return fmt.Errorf("unknown get target %q\n\n%s", args[0], getUsageText)
-	}
-}
-
-func runList(args []string, deps dependencies) error {
-	if len(args) == 0 || wantsHelp(args) {
-		fmt.Fprint(deps.stdout, listUsageText)
-		return nil
-	}
-
-	svc := deps.newEntityService("")
-
-	switch args[0] {
-	case "plans":
-		results, err := svc.ListPlans(service.PlanFilters{})
-		if err != nil {
-			return fmt.Errorf("list plans: %w", err)
-		}
-		fmt.Fprintln(deps.stdout, "listed plan")
-		for _, r := range results {
-			status, _ := r.State["status"].(string)
-			fmt.Fprintf(deps.stdout, "%s\t%s\t%s\t%s\n", r.ID, r.Slug, r.Path, status)
-		}
-		return nil
-	case "epics":
-		return printListResults(deps.stdout, "epic", svc)
-	case "features":
-		return printListResults(deps.stdout, "feature", svc)
-	case "tasks":
-		return printListResults(deps.stdout, "task", svc)
-	case "bugs":
-		return printListResults(deps.stdout, "bug", svc)
-	case "decisions":
-		return printListResults(deps.stdout, "decision", svc)
-	default:
-		return fmt.Errorf("unknown list target %q\n\n%s", args[0], listUsageText)
-	}
-}
-
-func runUpdate(args []string, deps dependencies) error {
-	if len(args) == 0 || wantsHelp(args) {
-		fmt.Fprint(deps.stdout, updateUsageText)
-		return nil
-	}
-
-	switch args[0] {
-	case "status":
-		values, err := parseFlags(args[1:])
-		if err != nil {
-			return err
-		}
-
-		entityType := values["type"]
-		if entityType == "" {
-			entityType = values["entity"]
-		}
-		if entityType == "" {
-			return fmt.Errorf("type is required\n\n%s", updateUsageText)
-		}
-
-		svc := deps.newEntityService("")
-		result, err := svc.UpdateStatus(service.UpdateStatusInput{
-			Type:   entityType,
-			ID:     values["id"],
-			Slug:   values["slug"],
-			Status: values["status"],
-		})
-		if err != nil {
-			return err
-		}
-
-		return printStatusUpdateResult(deps.stdout, result)
-
-	case "fields":
-		values, err := parseFlags(args[1:])
-		if err != nil {
-			return err
-		}
-
-		entityType := values["type"]
-		if entityType == "" {
-			return fmt.Errorf("type is required\n\n%s", updateUsageText)
-		}
-		id := values["id"]
-		if id == "" {
-			return fmt.Errorf("id is required\n\n%s", updateUsageText)
-		}
-		slug := values["slug"]
-
-		fields := make(map[string]string, len(values))
-		for k, v := range values {
-			if k == "type" || k == "id" || k == "slug" {
-				continue
-			}
-			fields[k] = v
-		}
-
-		svc := deps.newEntityService("")
-		result, err := svc.UpdateEntity(service.UpdateEntityInput{
-			Type:   entityType,
-			ID:     id,
-			Slug:   slug,
-			Fields: fields,
-		})
-		if err != nil {
-			return err
-		}
-
-		return printGetResult(deps.stdout, result)
-
-	default:
-		return fmt.Errorf("unknown update target %q\n\n%s", args[0], updateUsageText)
-	}
-}
-
-func parseFlags(args []string) (map[string]string, error) {
-	values := map[string]string{}
-
-	for i := 0; i < len(args); i++ {
-		arg := args[i]
-		if !strings.HasPrefix(arg, "--") {
-			return nil, fmt.Errorf("unexpected argument %q", arg)
-		}
-
-		name := strings.TrimPrefix(arg, "--")
-		if name == "" {
-			return nil, fmt.Errorf("empty flag name")
-		}
-
-		if strings.Contains(name, "=") {
-			parts := strings.SplitN(name, "=", 2)
-			values[parts[0]] = parts[1]
-			continue
-		}
-
-		if i+1 >= len(args) {
-			return nil, fmt.Errorf("missing value for --%s", name)
-		}
-
-		values[name] = args[i+1]
-		i++
-	}
-
-	return values, nil
-}
-
-func printCreateResult(w io.Writer, result service.CreateResult) error {
-	_, err := fmt.Fprintf(
-		w,
-		"created %s\nid: %s\nslug: %s\npath: %s\n",
-		result.Type,
-		id.FormatFullDisplay(result.ID),
-		result.Slug,
-		result.Path,
-	)
-	return err
-}
-
-func printGetResult(w io.Writer, result service.GetResult) error {
-	_, err := fmt.Fprintf(
-		w,
-		"type: %s\nid: %s\nslug: %s\npath: %s\nstatus: %v\n",
-		result.Type,
-		id.FormatFullDisplay(result.ID),
-		result.Slug,
-		result.Path,
-		result.State["status"],
-	)
-	return err
-}
-
-func printListResults(w io.Writer, entityType string, svc entityService) error {
-	results, err := svc.List(entityType)
-	if err != nil {
-		return err
-	}
-
-	if _, err := fmt.Fprintf(w, "listed %s\n", entityType); err != nil {
-		return err
-	}
-
-	for _, result := range results {
-		if _, err := fmt.Fprintf(
-			w,
-			"%s\t%s\t%s\t%v\n",
-			id.FormatFullDisplay(result.ID),
-			result.Slug,
-			result.Path,
-			result.State["status"],
-		); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func printStatusUpdateResult(w io.Writer, result service.GetResult) error {
-	_, err := fmt.Fprintf(
-		w,
-		"updated %s\nid: %s\nslug: %s\npath: %s\nstatus: %v\n",
-		result.Type,
-		id.FormatFullDisplay(result.ID),
-		result.Slug,
-		result.Path,
-		result.State["status"],
-	)
-	return err
-}
-
-const healthUsageText = `kanbanzai health
-
-Run health checks across all entities, knowledge entries, and context profiles.
-Reports warnings and errors for invalid state, broken references, and
-lifecycle inconsistencies.
-
-Example:
-  kanbanzai health
-`
+// ─── Health ──────────────────────────────────────────────────────────────────
 
 func runHealth(deps dependencies) error {
-	// health takes no args, but check if it was called via "health --help"
-	// (handled at the dispatch level in run())
 	svc := deps.newEntityService("")
 	report, err := svc.HealthCheck()
 	if err != nil {
@@ -598,11 +247,9 @@ func runProfileHealthCheck(profileStore *kbzctx.ProfileStore) (*validate.HealthR
 	return validate.CheckProfileHealth(loadAll, resolveProfile)
 }
 
+// ─── Validate ────────────────────────────────────────────────────────────────
+
 func runValidate(args []string, deps dependencies) error {
-	if wantsHelp(args) {
-		fmt.Fprint(deps.stdout, validateUsageText)
-		return nil
-	}
 	values, err := parseFlags(args)
 	if err != nil {
 		return err
@@ -642,7 +289,8 @@ func printValidationResults(w io.Writer, errs []validate.ValidationError) error 
 	return nil
 }
 
-// wantsHelp returns true if the first argument is a help flag.
+// ─── Usage ───────────────────────────────────────────────────────────────────
+
 func wantsHelp(args []string) bool {
 	return len(args) > 0 && (args[0] == "-h" || args[0] == "--help")
 }
@@ -651,126 +299,50 @@ func printUsage(w io.Writer) {
 	_, _ = fmt.Fprint(w, usageText)
 }
 
-const usageText = `kanbanzai — Git-native workflow for human-AI collaborative development
+const usageText = `kanbanzai 2.0
 
-Kanbanzai coordinates AI agent teams to turn designs into working software.
-It maintains structured workflow state as YAML files in Git, enforces lifecycle
-rules, and assembles targeted context for each agent at each step.
+Resource-oriented workflow CLI.
 
 Usage:
-  kanbanzai <command> [flags]
+  kbz <command> [options]
 
-Getting Started:
-  init         Initialise a Git repository for use with Kanbanzai
-  serve        Start the MCP server (stdio transport)
+Setup commands:
+  init                       Initialise a Git repository for use with Kanbanzai
 
-Entities:
-  create       Create a plan, feature, task, bug, or decision
-  get          Retrieve an entity by type and ID
-  list         List entities by type
-  update       Update entity status or fields
+Core commands:
+  status [<id>]              Project overview or entity dashboard
+  next [<task-id>]           Show the ready queue or claim a task
+  finish <task-id> [opts]    Complete a task
+  handoff <task-id>          Print a sub-agent prompt
+  entity <action> [opts]     Create, get, list, or transition entities
+  doc <action> [opts]        Register, approve, or list documents
+  health                     Run a health check
 
-Orchestration:
-  queue        Show the ready task queue with optional conflict checking
-  feature      Decompose features into tasks via vertical slice analysis
-  task         Review completed task output against acceptance criteria
-  incident     Create, list, and manage incidents
+Feature group commands:
+  decompose <feat-id>        Propose task decomposition
+  estimate <id> [<pts>]      Query or set story point estimate
+  conflict <id> <id> [...]   Analyse conflict risk between tasks
+  knowledge <action> [opts]  Manage knowledge entries
+  profile <action> [opts]    Manage context profiles
+  worktree <action> [opts]   Manage Git worktrees
+  merge [check] <id>         Check merge readiness or execute merge
+  pr <action> <id>           Manage GitHub pull requests
+  branch <id>                Check branch health
+  cleanup [opts]             Manage post-merge cleanup
+  incident <action> [opts]   Create, list, and show incidents
+  checkpoint <action> [opts] Create or respond to human checkpoints
+  task review <id>           Review completed task output
 
-Development:
-  worktree     Create and manage Git worktrees for feature/bug branches
-  branch       Check branch health (staleness, drift, conflicts)
-  merge        Check merge readiness and execute merges
-  pr           Create and manage GitHub pull requests
-  cleanup      Remove merged or abandoned worktrees and branches
+Utility commands:
+  validate [flags]           Validate a candidate entity
+  cache rebuild              Rebuild the local derived cache
+  import <path> [flags]      Batch import document records
+  install-record write       Write binary install record
 
-Knowledge & Context:
-  knowledge    Contribute, list, confirm, prune, and compact knowledge entries
-  profile      View and manage agent context profiles
-  context      Assemble context packets for agent roles
-
-Documents:
-  import       Batch-import document records from a directory
-
-Diagnostics:
-  health       Run health checks across entities, knowledge, and profiles
-  validate     Validate a candidate entity without persisting it
-  cache        Rebuild the local derived cache
-
-Help:
-  help         Show this help text
-  version      Show the installed version
-
-Examples:
-  kanbanzai init                      Set up a new project
-  kanbanzai serve                     Start the MCP server for your editor
-  kanbanzai create plan --prefix P --slug my-plan --title "My Plan" --summary "..."
-  kanbanzai list plans                List all plans
-  kanbanzai queue                     See what tasks are ready to work on
-  kanbanzai health                    Check project health
-
-Run 'kanbanzai <command> --help' for details on any command.
-`
-
-const createUsageText = `kanbanzai create <entity> [flags]
-
-Entities:
-  plan
-    --prefix
-    --slug
-    --title
-    --summary
-    --created_by
-
-  feature
-    --slug
-    --parent
-    --summary
-    --created_by
-
-  task
-    --slug
-    --parent_feature
-    --summary
-
-  bug
-    --slug
-    --title
-    --reported_by
-    --observed
-    --expected
-    [--severity]
-    [--priority]
-    [--type]
-
-  decision
-    --slug
-    --summary
-    --rationale
-    --decided_by
-`
-
-const getUsageText = `kanbanzai get <entity> [flags]
-
-Entities:
-  plan
-  feature
-  task
-  bug
-  decision
-
-Flags:
-  --id
-  --slug
-`
-
-const listUsageText = `kanbanzai list <collection>
-
-Collections:
-  plans
-  features
-  tasks
-  bugs
-  decisions
+Other:
+  serve                      Start the MCP server (stdio transport)
+  help                       Show this help text
+  version                    Show the version
 `
 
 const validateUsageText = `kanbanzai validate [flags]
@@ -782,10 +354,11 @@ Flags:
 All flags other than --type are treated as candidate entity fields.
 `
 
+// ─── Cache ───────────────────────────────────────────────────────────────────
+
 func runCache(args []string, deps dependencies) error {
-	if len(args) == 0 || wantsHelp(args) {
-		fmt.Fprint(deps.stdout, cacheUsageText)
-		return nil
+	if len(args) == 0 {
+		return fmt.Errorf("missing cache subcommand\n\n%s", cacheUsageText)
 	}
 
 	if args[0] != "rebuild" {
@@ -810,38 +383,17 @@ func runCache(args []string, deps dependencies) error {
 	return nil
 }
 
-const updateUsageText = `kanbanzai update status [flags]
-
-Subcommands:
-  status    Update the lifecycle status of an entity
-  fields    Update fields of an existing entity (error correction)
-
-status flags:
-  --type
-  --id
-  --slug
-  --status
-
-fields flags:
-  --type
-  --id
-  --slug
-  --<field_name> <value>   (any other flags become field updates)
-
-Cannot change id (immutable) or status (use update status).
-`
-
 const cacheUsageText = `kanbanzai cache <subcommand>
 
 Subcommands:
   rebuild    Rebuild the local derived cache from canonical entity files
 `
 
-// runKnowledge handles the `kbz knowledge` subcommands.
+// ─── Knowledge ───────────────────────────────────────────────────────────────
+
 func runKnowledge(args []string, deps dependencies) error {
-	if len(args) == 0 || wantsHelp(args) {
-		fmt.Fprint(deps.stdout, knowledgeUsageText)
-		return nil
+	if len(args) == 0 {
+		return fmt.Errorf("missing knowledge subcommand\n\n%s", knowledgeUsageText)
 	}
 
 	switch args[0] {
@@ -920,11 +472,22 @@ func runKnowledgeGet(args []string, deps dependencies) error {
 	return nil
 }
 
-// runProfile handles the `kbz profile` subcommands.
+const knowledgeUsageText = `kanbanzai knowledge <subcommand> [flags]
+
+Subcommands:
+  list    List knowledge entries
+    [--tier <2|3>]
+    [--scope <name>]
+    [--status <status>]
+
+  get <id>    Get a knowledge entry by ID
+`
+
+// ─── Profile ─────────────────────────────────────────────────────────────────
+
 func runProfile(args []string, deps dependencies) error {
-	if len(args) == 0 || wantsHelp(args) {
-		fmt.Fprint(deps.stdout, profileUsageText)
-		return nil
+	if len(args) == 0 {
+		return fmt.Errorf("missing profile subcommand\n\n%s", profileUsageText)
 	}
 
 	switch args[0] {
@@ -992,10 +555,25 @@ func runProfileGet(args []string, deps dependencies) error {
 		if len(p.Packages) > 0 {
 			fmt.Fprintf(deps.stdout, "packages:    %s\n", strings.Join(p.Packages, ", "))
 		}
-		if len(p.Conventions) > 0 {
-			fmt.Fprintf(deps.stdout, "conventions:\n")
-			for _, c := range p.Conventions {
-				fmt.Fprintf(deps.stdout, "  - %s\n", c)
+		switch c := p.Conventions.(type) {
+		case []interface{}:
+			if len(c) > 0 {
+				fmt.Fprintf(deps.stdout, "conventions:\n")
+				for _, item := range c {
+					fmt.Fprintf(deps.stdout, "  - %v\n", item)
+				}
+			}
+		case map[string]interface{}:
+			if len(c) > 0 {
+				fmt.Fprintf(deps.stdout, "conventions:\n")
+				for key, val := range c {
+					fmt.Fprintf(deps.stdout, "  %s:\n", key)
+					if items, ok := val.([]interface{}); ok {
+						for _, item := range items {
+							fmt.Fprintf(deps.stdout, "    - %v\n", item)
+						}
+					}
+				}
 			}
 		}
 		return nil
@@ -1010,10 +588,25 @@ func runProfileGet(args []string, deps dependencies) error {
 	if len(resolved.Packages) > 0 {
 		fmt.Fprintf(deps.stdout, "packages:    %s\n", strings.Join(resolved.Packages, ", "))
 	}
-	if len(resolved.Conventions) > 0 {
-		fmt.Fprintf(deps.stdout, "conventions:\n")
-		for _, c := range resolved.Conventions {
-			fmt.Fprintf(deps.stdout, "  - %s\n", c)
+	switch c := resolved.Conventions.(type) {
+	case []interface{}:
+		if len(c) > 0 {
+			fmt.Fprintf(deps.stdout, "conventions:\n")
+			for _, item := range c {
+				fmt.Fprintf(deps.stdout, "  - %v\n", item)
+			}
+		}
+	case map[string]interface{}:
+		if len(c) > 0 {
+			fmt.Fprintf(deps.stdout, "conventions:\n")
+			for key, val := range c {
+				fmt.Fprintf(deps.stdout, "  %s:\n", key)
+				if items, ok := val.([]interface{}); ok {
+					for _, item := range items {
+						fmt.Fprintf(deps.stdout, "    - %v\n", item)
+					}
+				}
+			}
 		}
 	}
 	if resolved.Architecture != nil {
@@ -1028,76 +621,16 @@ func runProfileGet(args []string, deps dependencies) error {
 	return nil
 }
 
-// runContext handles the `kbz context` subcommands.
-func runContext(args []string, deps dependencies) error {
-	if wantsHelp(args) {
-		fmt.Fprint(deps.stdout, contextUsageText)
-		return nil
-	}
-	if len(args) == 0 {
-		return fmt.Errorf("missing context subcommand\n\n%s", contextUsageText)
-	}
+const profileUsageText = `kanbanzai profile <subcommand> [flags]
 
-	switch args[0] {
-	case "assemble":
-		return runContextAssemble(args[1:], deps)
-	default:
-		return fmt.Errorf("unknown context subcommand %q\n\n%s", args[0], contextUsageText)
-	}
-}
+Subcommands:
+  list    List available context profiles
 
-func runContextAssemble(args []string, deps dependencies) error {
-	flags, err := parseFlags(args)
-	if err != nil {
-		return err
-	}
+  get <id> [--raw]    Get a context profile (resolved by default)
+    --raw    Return the raw profile without inheritance resolution
+`
 
-	role := flags["role"]
-	if role == "" {
-		return fmt.Errorf("--role is required\n\n%s", contextUsageText)
-	}
-
-	taskID := flags["task"]
-	maxBytes := 30720
-	if mb := flags["max-bytes"]; mb != "" {
-		n, err := strconv.Atoi(mb)
-		if err != nil {
-			return fmt.Errorf("--max-bytes must be an integer: %w", err)
-		}
-		maxBytes = n
-	}
-
-	profileRoot := filepath.Join(core.InstanceRootDir, "context", "roles")
-	profileStore := kbzctx.NewProfileStore(profileRoot)
-	knowledgeSvc := service.NewKnowledgeService("")
-	entitySvc := service.NewEntityService("")
-	indexRoot := filepath.Join(core.InstanceRootDir, "index")
-	intelligenceSvc := service.NewIntelligenceService(indexRoot, ".")
-
-	result, err := kbzctx.Assemble(kbzctx.AssemblyInput{
-		Role:     role,
-		TaskID:   taskID,
-		MaxBytes: maxBytes,
-	}, profileStore, knowledgeSvc, entitySvc, intelligenceSvc)
-	if err != nil {
-		return fmt.Errorf("context assemble: %w", err)
-	}
-
-	fmt.Fprintf(deps.stdout, "role: %s\n", result.Role)
-	if result.TaskID != "" {
-		fmt.Fprintf(deps.stdout, "task: %s\n", result.TaskID)
-	}
-	fmt.Fprintf(deps.stdout, "items: %d  bytes: %d", len(result.Items), result.ByteCount)
-	if result.Trimmed > 0 {
-		fmt.Fprintf(deps.stdout, "  trimmed: %d", result.Trimmed)
-	}
-	fmt.Fprintln(deps.stdout)
-	fmt.Fprintln(deps.stdout)
-	for _, item := range result.Items {
-		fmt.Fprintf(deps.stdout, "--- [%s] ---\n%s\n\n", item.Source, item.Content)
-	}
-	return nil
-}
+// ─── Helpers ─────────────────────────────────────────────────────────────────
 
 // toString2 is a local helper (avoids shadowing the validate package's toString).
 func toString2(v any) string {
@@ -1125,56 +658,9 @@ func toAny(v any) any {
 	return v
 }
 
-const knowledgeUsageText = `kanbanzai knowledge <subcommand> [flags]
-
-Subcommands:
-  list    List knowledge entries
-    [--tier <2|3>]
-    [--scope <name>]
-    [--status <status>]
-
-  get <id>    Get a knowledge entry by ID
-`
-
-const profileUsageText = `kanbanzai profile <subcommand> [flags]
-
-Subcommands:
-  list    List available context profiles
-
-  get <id> [--raw]    Get a context profile (resolved by default)
-    --raw    Return the raw profile without inheritance resolution
-`
-
-const contextUsageText = `kanbanzai context <subcommand> [flags]
-
-Subcommands:
-  assemble    Assemble a context packet for a role
-    --role <name>        Profile ID (required)
-    [--task <id>]        Task ID for task-specific context
-    [--max-bytes <n>]    Byte ceiling (default: 30720)
-`
-
-const importUsageText = `kanbanzai import <path> [flags]
-
-Batch-import document records from a directory. Scans for Markdown files and
-creates document records idempotently. Already-imported files are skipped.
-
-Flags:
-  --glob <pattern>        Glob pattern to filter files (default: all .md files)
-  --default-type <type>   Fallback document type (design, specification, dev-plan,
-                          research, report, policy)
-  --owner <entity-id>     Parent Plan or Feature ID for imported documents
-
-Example:
-  kanbanzai import work/
-  kanbanzai import work/design --default-type design
-`
+// ─── Import ──────────────────────────────────────────────────────────────────
 
 func runImport(args []string, deps dependencies) error {
-	if wantsHelp(args) {
-		fmt.Fprint(deps.stdout, importUsageText)
-		return nil
-	}
 	if len(args) == 0 {
 		return fmt.Errorf("path is required\n\n%s", importUsageText)
 	}
@@ -1229,3 +715,18 @@ func runImport(args []string, deps dependencies) error {
 	}
 	return nil
 }
+
+const importUsageText = `kanbanzai import <path> [flags]
+
+Import document records from a directory. Scans recursively for Markdown files
+and creates document records. Already-imported files are skipped (idempotent).
+
+Arguments:
+  <path>    Directory to scan for documents
+
+Flags:
+  --type    <type>      Default document type when no path pattern matches
+                        (design, specification, dev-plan, research, report, policy)
+  --owner   <id>        Optional parent Plan or Feature ID for imported documents
+  --glob    <pattern>   Only import files matching this glob pattern (e.g. "*.md", "design-*.md")
+`

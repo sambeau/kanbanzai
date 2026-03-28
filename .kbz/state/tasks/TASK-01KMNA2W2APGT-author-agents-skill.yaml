@@ -2,4 +2,12 @@ id: TASK-01KMNA2W2APGT
 parent_feature: FEAT-01KMKRQSD1TKK
 slug: author-agents-skill
 summary: "Author the kanbanzai-agents skill file covering: agent roles and context profiles, context_assemble usage, task dispatch and completion, sub-agent delegation conventions including codebase-memory context propagation, and the agent interaction protocol summary."
-status: queued
+status: done
+files_planned:
+  - internal/init/skills/agents/SKILL.md
+completed: "2026-03-26T15:05:54Z"
+claimed_at: "2026-03-26T15:05:05Z"
+dispatched_to: content
+dispatched_at: "2026-03-26T15:05:05Z"
+dispatched_by: agent/skills-content
+completion_summary: "Authored kanbanzai-agents SKILL.md covering: context_assemble usage and context_report after task completion, task dispatch and completion protocol with work_queue/dispatch_task/complete_task, commit message format table with all types and examples, knowledge contribution with tier 3 default, sub-agent spawning context requirements, and three gotchas (dispatch_task failure, tool call failures, missing verification summary)."

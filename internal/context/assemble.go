@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	kbzsvc "kanbanzai/internal/service"
+	kbzsvc "github.com/sambeau/kanbanzai/internal/service"
 )
 
 // AssemblyInput contains the parameters for context assembly.
@@ -323,10 +323,32 @@ func formatProfile(p *ResolvedProfile) string {
 	if len(p.Packages) > 0 {
 		fmt.Fprintf(&sb, "\nPackages: %s\n", strings.Join(p.Packages, ", "))
 	}
-	if len(p.Conventions) > 0 {
-		fmt.Fprintf(&sb, "\nConventions:\n")
-		for _, c := range p.Conventions {
-			fmt.Fprintf(&sb, "- %s\n", c)
+	switch c := p.Conventions.(type) {
+	case []interface{}:
+		if len(c) > 0 {
+			fmt.Fprintf(&sb, "\nConventions:\n")
+			for _, item := range c {
+				fmt.Fprintf(&sb, "- %v\n", item)
+			}
+		}
+	case []string:
+		if len(c) > 0 {
+			fmt.Fprintf(&sb, "\nConventions:\n")
+			for _, item := range c {
+				fmt.Fprintf(&sb, "- %s\n", item)
+			}
+		}
+	case map[string]interface{}:
+		if len(c) > 0 {
+			fmt.Fprintf(&sb, "\nConventions:\n")
+			for key, val := range c {
+				fmt.Fprintf(&sb, "%s:\n", key)
+				if items, ok := val.([]interface{}); ok {
+					for _, item := range items {
+						fmt.Fprintf(&sb, "  - %v\n", item)
+					}
+				}
+			}
 		}
 	}
 	if p.Architecture != nil {

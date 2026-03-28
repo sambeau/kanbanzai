@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/fsutil"
-	"kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/fsutil"
+	"github.com/sambeau/kanbanzai/internal/id"
 )
 
 // CheckpointsDir is the directory name for checkpoint records within state.

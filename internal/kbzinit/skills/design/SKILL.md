@@ -58,7 +58,7 @@ A design document is ready for approval when it contains:
 
 When the human approves verbally, record it immediately:
 
-    doc_record_approve(id="DOC-...")
+    doc(action="approve", id="DOC-...")
 
 ## Surfacing Risks
 
@@ -83,7 +83,7 @@ Create a new design document and supersede the old one. Do not silently amend an
 document — downstream entities depend on its content, and silent amendments break
 referential integrity.
 
-    doc_record_supersede(id="old-DOC-...", superseded_by="new-DOC-...")
+    doc(action="supersede", id="old-DOC-...", superseded_by="new-DOC-...")
 
 ## Design Quality
 
@@ -105,7 +105,7 @@ quality in practice.
 **Alternatives in an approved document:** An approved document must reflect one direction.
 If alternatives remain in the document, it is not ready for approval — resolve them first.
 
-**Verbal approval not recorded:** Call `doc_record_approve` immediately when a human
+**Verbal approval not recorded:** Call `doc` with action: `approve` immediately when a human
 approves in conversation. Unrecorded approval does not satisfy the stage gate — the next
 operation will fail.
 

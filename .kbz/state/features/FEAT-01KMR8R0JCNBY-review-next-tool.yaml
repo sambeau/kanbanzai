@@ -1,0 +1,10 @@
+id: FEAT-01KMR8R0JCNBY
+slug: review-next-tool
+parent: P4-kanbanzai-2.0
+status: cancelled
+summary: "Review Track F (next tool) implementation against spec §11, §30.5. Verify queue inspection, task claiming, context assembly, lenient lifecycle, and promoted task reporting."
+tags:
+  - review
+  - track-f
+created: "2026-03-27T18:26:15Z"
+created_by: sambeau

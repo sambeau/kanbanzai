@@ -1,0 +1,886 @@
+document_id: PROJECT/specification-phase-2b-specification
+document_path: work/spec/phase-2b-specification.md
+content_hash: ce729b5ad863ceef0315fa1d1686f19f6f9551a1e98671208f9e51ec366aa4c6
+indexed_at: 2026-03-25T21:38:27.795274Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Phase 2b Specification: Context Management and Agent Capabilities'
+      byte_offset: 0
+      byte_count: 46551
+      word_count: 6940
+      content_hash: ce729b5ad863ceef0315fa1d1686f19f6f9551a1e98671208f9e51ec366aa4c6
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 792
+          byte_count: 1026
+          word_count: 144
+          content_hash: 0a784ca9b610ee662adb9734470e5721b4482f77541f212724bc928f41a87f4d
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1818
+          byte_count: 534
+          word_count: 87
+          content_hash: 8899161ecabb6bbf596f80deebf06ae6dadfac3c18c1cf20ee0ccd68423b9e04
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2352
+          byte_count: 1288
+          word_count: 181
+          content_hash: 08a3b13b63ae17be1a718c568a6ae2ebb273685a70e4845ba8d28637a8e0a276
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope for Phase 2b
+              byte_offset: 2365
+              byte_count: 650
+              word_count: 88
+              content_hash: de434ba70348ae996042c0725f5ab7a450cb8146132063be5f8270fc8575f719
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred to Phase 3
+              byte_offset: 3015
+              byte_count: 331
+              word_count: 47
+              content_hash: 8abfddc4c512844fd050f7d1dc49c748c1b9d25596edac1603e06b9992540f2b
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Excluded from Phase 2
+              byte_offset: 3346
+              byte_count: 294
+              word_count: 43
+              content_hash: 13214b6301e982c3a13213b2df76a058bba03986be5d9d3c14ac23eb8a7f49d2
+        - path: "1.4"
+          level: 2
+          title: 4. Design Principles
+          byte_offset: 3640
+          byte_count: 1500
+          word_count: 226
+          content_hash: ec53b3b2d5ed7cf5ca22ba6fc017640f06fd055852d1cd0431a21d1e4e49e1e9
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 The tool is a database; agents provide intelligence
+              byte_offset: 3665
+              byte_count: 322
+              word_count: 45
+              content_hash: 40c8d640fb20351dc1bb0e53bb3023c6a9d2bfce66f117f9e7e66b7765e8798d
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Context is scoped, not broadcast
+              byte_offset: 3987
+              byte_count: 256
+              word_count: 44
+              content_hash: a96bd885fbb68439473d81fe86eeb67b0c14dcf140114290d19b9c8830aecd28
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Confidence is earned, not declared
+              byte_offset: 4243
+              byte_count: 286
+              word_count: 39
+              content_hash: 53f154f7db8cb02165fca040db77e8651f78b5b2f53c57d857a7f1e0f2eb3683
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Graceful degradation by layer
+              byte_offset: 4529
+              byte_count: 287
+              word_count: 44
+              content_hash: 3dcc1155b3bc6d46839bac0988b3d09a6009afd8e94e5671c495a528ea0969af
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Leaf-level replace for composition
+              byte_offset: 4816
+              byte_count: 324
+              word_count: 50
+              content_hash: 454f9e32afa779f3a924fa91b475c024b63fe7baec1183d6e90605b3f16ad13d
+        - path: "1.5"
+          level: 2
+          title: 5. Context Tiers
+          byte_offset: 5140
+          byte_count: 1386
+          word_count: 193
+          content_hash: ee280ccf6f8426d27e1b30b858f4afa8e157969803a2ca16798335dbc2420755
+          children:
+            - path: 1.5.1
+              level: 3
+              title: '5.1 Tier 1: Project conventions'
+              byte_offset: 5339
+              byte_count: 446
+              word_count: 60
+              content_hash: b7b89b30ea3b63fc3385f2315f12e6e9d2ccf7708fb886ab5b5b6c27553102b6
+            - path: 1.5.2
+              level: 3
+              title: '5.2 Tier 2: Architecture knowledge'
+              byte_offset: 5785
+              byte_count: 387
+              word_count: 55
+              content_hash: 1ec7ecd74a1207f6c31650ec0e107269d2de6422af2c99664d35a43018a2dffe
+            - path: 1.5.3
+              level: 3
+              title: '5.3 Tier 3: Session knowledge'
+              byte_offset: 6172
+              byte_count: 354
+              word_count: 50
+              content_hash: 6c2d2df58fee49728961ae2aa9dd8b34c706d5a642cf1937c30db0bdd16ed682
+        - path: "1.6"
+          level: 2
+          title: 6. KnowledgeEntry Entity
+          byte_offset: 6526
+          byte_count: 3187
+          word_count: 547
+          content_hash: aa1d7e5e487ccb341b5654a2c144a94ca42b0977af14365cb76371f70c686fbd
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Purpose
+              byte_offset: 6555
+              byte_count: 344
+              word_count: 53
+              content_hash: 49abbf8ae84fa35c17b111722d9497aa66137f110bcf471af7d2d4d436419a03
+            - path: 1.6.2
+              level: 3
+              title: 6.2 ID format
+              byte_offset: 6899
+              byte_count: 427
+              word_count: 67
+              content_hash: c7bcc03b9dc33174ab8e01d10180a25420c92643ad3559fcff0347458796c9fc
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Required fields
+              byte_offset: 7326
+              byte_count: 1735
+              word_count: 324
+              content_hash: 314668a96caa87d45f67e569468ba33a64a917062b3135926adae42dfeade2d6
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Field order for deterministic YAML
+              byte_offset: 9061
+              byte_count: 381
+              word_count: 46
+              content_hash: 0f8f3662825ac9ecdcd129b54124f88db075993a2856625b9c89fec03c02caa2
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Default values
+              byte_offset: 9442
+              byte_count: 271
+              word_count: 53
+              content_hash: 2dc29483b631ee589bb387a9203bda99776574181803632a41725e822b092356
+        - path: "1.7"
+          level: 2
+          title: 7. Knowledge Lifecycle
+          byte_offset: 9713
+          byte_count: 2562
+          word_count: 396
+          content_hash: a17b5d4dafd263c6782a4c604f47c5a1ae6f6ec31adedb668a5ca0f74d04845f
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 States
+              byte_offset: 9740
+              byte_count: 410
+              word_count: 67
+              content_hash: 47bd7878c025c70df365fe4bb39453dc94c4f471f9604b7f1e3f096df3967fa7
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Transitions
+              byte_offset: 10150
+              byte_count: 1039
+              word_count: 166
+              content_hash: e4b62e8e1e9a61da59de8d98dccb0fbfee7fa91a58e1377b96997de7e64e061d
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Transition enforcement
+              byte_offset: 11189
+              byte_count: 494
+              word_count: 68
+              content_hash: 4862ec365253390baf8dc010088f91c1bd10baeefc93da950229372a31fdbe82
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Phase 2b lifecycle scope
+              byte_offset: 11683
+              byte_count: 592
+              word_count: 91
+              content_hash: d05309d92e7e878fcb8d51b20dbcc3f4dd17f06476871d2604f0f97cb444e34d
+        - path: "1.8"
+          level: 2
+          title: 8. Confidence Scoring
+          byte_offset: 12275
+          byte_count: 1664
+          word_count: 251
+          content_hash: 2bcc354b10ff5a18d6005582bc639e485d29463214976ac9b2ff7427e6b3daa6
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Wilson score lower bound
+              byte_offset: 12301
+              byte_count: 633
+              word_count: 104
+              content_hash: 1980ad42f9dd1267abd173f266f92bb4719c1813f61ff4d0c553183f676f6e16
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Confidence updates
+              byte_offset: 12934
+              byte_count: 340
+              word_count: 49
+              content_hash: 7540ffe785de327781e53d1c0d4d8e9561dccd318173f812abdf347f566a98cc
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Tier-dependent confidence filtering
+              byte_offset: 13274
+              byte_count: 665
+              word_count: 94
+              content_hash: 6b6ce8441bba3aac27ed242e162d615d52e8e2aa13a0b9820597d4b45996e883
+        - path: "1.9"
+          level: 2
+          title: 9. Knowledge Contribution
+          byte_offset: 13939
+          byte_count: 1719
+          word_count: 244
+          content_hash: 70ef9ca455986633596e6bca607b6b6fc701ffffe275287de10cbd6dac44dee3
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Contribution mechanism
+              byte_offset: 13969
+              byte_count: 445
+              word_count: 57
+              content_hash: 0bba91c3bf97a312a528d5bc315a6aedde1c6439e234aa794972ac19e832f72d
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Deduplication on write
+              byte_offset: 14414
+              byte_count: 954
+              word_count: 145
+              content_hash: 7dd9ea4fecb2eedf26948a9db62bb648f777c97b743847ace71f9a2f93eb0acf
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Topic normalisation
+              byte_offset: 15368
+              byte_count: 290
+              word_count: 38
+              content_hash: ef0ab69bc8c07d7fed2df9496718e9e4abe0abdd20b633a2bfd47e2f16e22920
+        - path: "1.10"
+          level: 2
+          title: 10. Usage Reporting
+          byte_offset: 15658
+          byte_count: 1232
+          word_count: 193
+          content_hash: 4e3b6a89f0cfc2921ddb50e00d690c721833f4628d123c26e3097d146e74f31b
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Reporting mechanism
+              byte_offset: 15682
+              byte_count: 192
+              word_count: 30
+              content_hash: 4da8039a2813aee890b1f1a1dda19dfd5cc5185a99aa34c7d042abc507ba7643
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Report structure
+              byte_offset: 15874
+              byte_count: 271
+              word_count: 43
+              content_hash: f2beb7238c39402f3dbac386b71833ab03fed79a873ee4b900757f3e303070a2
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Report processing
+              byte_offset: 16145
+              byte_count: 492
+              word_count: 79
+              content_hash: e2200dee182b8ee7485c559b7f825b2ac17909807a25e9be3f8c21f77309e4e1
+            - path: 1.10.4
+              level: 3
+              title: 10.4 Reporting cost
+              byte_offset: 16637
+              byte_count: 253
+              word_count: 37
+              content_hash: e45fd61ceb0f6c154a9cb76cf9e025d82403a144025a516fb8ac3f3429103937
+        - path: "1.11"
+          level: 2
+          title: 11. Context Profiles
+          byte_offset: 16890
+          byte_count: 4599
+          word_count: 686
+          content_hash: be5279fd9ad7911f410d4b2008d36e050e2c5d5184ab9abb0a26ca1e2a96675e
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Purpose
+              byte_offset: 16915
+              byte_count: 354
+              word_count: 62
+              content_hash: 93a98342b9ad7c87c63b85f1e958b7f819455b914c92a04155332c1a20b34874
+            - path: 1.11.2
+              level: 3
+              title: 11.2 Profile storage
+              byte_offset: 17269
+              byte_count: 370
+              word_count: 54
+              content_hash: 783e3b3c8450a22d0d3238a25a97782b52a703eff407940530ccbb083d3aff8e
+            - path: 1.11.3
+              level: 3
+              title: 11.3 Required fields
+              byte_offset: 17639
+              byte_count: 839
+              word_count: 140
+              content_hash: 933d2594e6958a5a6d4d4b3d17d84a5ed98b32bf988431c2fe6440003ecf8ec1
+            - path: 1.11.4
+              level: 3
+              title: 11.4 Field order for deterministic YAML
+              byte_offset: 18478
+              byte_count: 117
+              word_count: 15
+              content_hash: 0ba5efb28e5072d5c33e32d734c884d100eb6c6d3ec0df0be2bc6b2c18764bed
+            - path: 1.11.5
+              level: 3
+              title: 11.5 Example profile
+              byte_offset: 18595
+              byte_count: 689
+              word_count: 88
+              content_hash: 0dd1c62f0cf6b367270160048f7c6e26e7fd420d1367cf2f2afb4840e4673817
+            - path: 1.11.6
+              level: 3
+              title: 11.6 Inheritance and resolution
+              byte_offset: 19284
+              byte_count: 1115
+              word_count: 158
+              content_hash: 99a99bcb9e1166c91cd15e970562cb74752faecec2fd2864295cfef2f46e9e64
+            - path: 1.11.7
+              level: 3
+              title: 11.7 Profile validation
+              byte_offset: 20399
+              byte_count: 402
+              word_count: 61
+              content_hash: 579cbb29446e986790327da39258dfc6b1c632f516e4f4eb8dfccf91af2edf4e
+            - path: 1.11.8
+              level: 3
+              title: 11.8 Suggested initial profiles
+              byte_offset: 20801
+              byte_count: 688
+              word_count: 104
+              content_hash: 56c213be07b35dd98774958065c8c16661b74dec0e9ceb387359ec1efbc8f31b
+        - path: "1.12"
+          level: 2
+          title: 12. Context Assembly
+          byte_offset: 21489
+          byte_count: 2948
+          word_count: 433
+          content_hash: 5eab28f183f7e68b8583c2115eaf919888c9d15cd152090821c98b20219ec972
+          children:
+            - path: 1.12.1
+              level: 3
+              title: 12.1 Assembly model
+              byte_offset: 21514
+              byte_count: 847
+              word_count: 123
+              content_hash: 53ad36498f9553deb82fea7fd679f5cad9639346c509b4bb11195a074c8d37a8
+            - path: 1.12.2
+              level: 3
+              title: 12.2 Byte-based budgeting
+              byte_offset: 22361
+              byte_count: 498
+              word_count: 68
+              content_hash: d9323fa2f40396447ee565996afd0af297976ce17dc45c2ce130a4e3fcf318d4
+            - path: 1.12.3
+              level: 3
+              title: 12.3 Priority and trimming
+              byte_offset: 22859
+              byte_count: 572
+              word_count: 85
+              content_hash: 90c312ad999ee1352684302364a70c315a5bc1c6c5fb09cc573be2a77b24a489
+            - path: 1.12.4
+              level: 3
+              title: 12.4 Tiered retrieval
+              byte_offset: 23431
+              byte_count: 612
+              word_count: 93
+              content_hash: 3310c6122050526750801d4243cffa7f1edb417d8d7ab886bb6aa84e4a67a866
+            - path: 1.12.5
+              level: 3
+              title: 12.5 Assembly without a task
+              byte_offset: 24043
+              byte_count: 394
+              word_count: 60
+              content_hash: 436e6bbb95f7ec4785dc7f7233960dbbdf57c4e2527328cd91cab88fc4e0c13f
+        - path: "1.13"
+          level: 2
+          title: 13. Agent Capabilities
+          byte_offset: 24437
+          byte_count: 2687
+          word_count: 391
+          content_hash: e89373d0787122dde0361ba3f33d2a5c240f88e7f38ddd5d97e49fb6080cc1e1
+          children:
+            - path: 1.13.1
+              level: 3
+              title: 13.1 Link resolution
+              byte_offset: 24464
+              byte_count: 960
+              word_count: 142
+              content_hash: 68e39d1e294cfcf5ec4bfc189711e87f680049c363530bcc2d275f5cc3717a43
+            - path: 1.13.2
+              level: 3
+              title: 13.2 Duplicate detection
+              byte_offset: 25424
+              byte_count: 757
+              word_count: 113
+              content_hash: 4d7be3b4b8ac9f668bb837fff47022388ba012095408a47abaae2c5b59df225c
+            - path: 1.13.3
+              level: 3
+              title: 13.3 Document-to-entity extraction guidance
+              byte_offset: 26181
+              byte_count: 943
+              word_count: 132
+              content_hash: ccc5cdede545c953b2060144f01bf5ee04eff5b6ee3f3333ce9f46acf589a20e
+        - path: "1.14"
+          level: 2
+          title: 14. Batch Document Import
+          byte_offset: 27124
+          byte_count: 1872
+          word_count: 277
+          content_hash: b5cf674581ee0ab899d44b59c6bc2220dafe669d0ca0ee2b148733a352cc666c
+          children:
+            - path: 1.14.1
+              level: 3
+              title: 14.1 Import operation
+              byte_offset: 27258
+              byte_count: 583
+              word_count: 86
+              content_hash: bf09a04024baba67974e15a7ae244fa58e453909d404c1268b0fbd465b9b65de
+            - path: 1.14.2
+              level: 3
+              title: 14.2 Document type inference
+              byte_offset: 27841
+              byte_count: 680
+              word_count: 100
+              content_hash: 679ceb1ebe38157c04a79918b7fe84ca1b52ad1e1b348b872411010a467a064a
+            - path: 1.14.3
+              level: 3
+              title: 14.3 Import constraints
+              byte_offset: 28521
+              byte_count: 475
+              word_count: 72
+              content_hash: fe44322da3bab6794729df1a84a1f15153f9d2483056f5e6c4c8f5852c0cedab
+        - path: "1.15"
+          level: 2
+          title: 15. User Identity Resolution
+          byte_offset: 28996
+          byte_count: 1466
+          word_count: 208
+          content_hash: 04d439c44f12b12b0b85b23276d5a5b77d6b55531481a56e5d757fbe0f0f37ac
+          children:
+            - path: 1.15.1
+              level: 3
+              title: 15.1 Resolution order
+              byte_offset: 29138
+              byte_count: 463
+              word_count: 76
+              content_hash: b97dba02a4ec94e912bfa1a4408697d2e595ce63ce3717beceff836e589ded7f
+            - path: 1.15.2
+              level: 3
+              title: 15.2 Local config file
+              byte_offset: 29601
+              byte_count: 202
+              word_count: 29
+              content_hash: c765158ec48ef11a97a3113bfc5c2e2c65876d5cc7378fe93025e9695e1912f7
+            - path: 1.15.3
+              level: 3
+              title: 15.3 Scope of auto-resolution
+              byte_offset: 29803
+              byte_count: 478
+              word_count: 57
+              content_hash: e1388c5e97cb906c9ac38bd8845dec6f5f85f56bbdb8a1f6e77c4d83473bf406
+            - path: 1.15.4
+              level: 3
+              title: 15.4 Existing records
+              byte_offset: 30281
+              byte_count: 181
+              word_count: 25
+              content_hash: 7fefcd5d1460a958618afae62b07beedd4cd089511e7c474a2f0713e1a3c9cc5
+        - path: "1.16"
+          level: 2
+          title: 16. Storage and File Requirements
+          byte_offset: 30462
+          byte_count: 1927
+          word_count: 241
+          content_hash: ea99fa25b315104040657259261de7dc9a421d33a204b1bac5812674cc577b06
+          children:
+            - path: 1.16.1
+              level: 3
+              title: 16.1 KnowledgeEntry storage
+              byte_offset: 30500
+              byte_count: 189
+              word_count: 22
+              content_hash: d4541978ac50253ea6a3d0e8b527ac04001670031ca2f14f822dbc24006f096b
+            - path: 1.16.2
+              level: 3
+              title: 16.2 Context profile storage
+              byte_offset: 30689
+              byte_count: 186
+              word_count: 23
+              content_hash: 5613dc7f69ca38506addb7f1d7b325a7a57e6ad1c23514f07b5ac745d240cc71
+            - path: 1.16.3
+              level: 3
+              title: 16.3 Context directory structure
+              byte_offset: 30875
+              byte_count: 785
+              word_count: 96
+              content_hash: 8b6d1cb72c823072e2d2744180e6e0a734eb06bfbbe1e7234b4a124f40549326
+            - path: 1.16.4
+              level: 3
+              title: 16.4 Deterministic formatting
+              byte_offset: 31660
+              byte_count: 452
+              word_count: 61
+              content_hash: 04b9c41758f871317c7ad9821fe2c31ca6cd93470887551bc3c71db08be74f46
+            - path: 1.16.5
+              level: 3
+              title: 16.5 Gitignore additions
+              byte_offset: 32112
+              byte_count: 277
+              word_count: 33
+              content_hash: 57455f58ee7de28be755d6a7b4bda2a09fd9d06f7c2eae2c08f9540e51b34d2c
+        - path: "1.17"
+          level: 2
+          title: 17. MCP Interface Requirements
+          byte_offset: 32389
+          byte_count: 4414
+          word_count: 613
+          content_hash: d59fe04aed1317d939ea122c4c2035ced7df1b7403015b8dc535c9035946af03
+          children:
+            - path: 1.17.1
+              level: 3
+              title: 17.1 Knowledge operations
+              byte_offset: 32424
+              byte_count: 1376
+              word_count: 202
+              content_hash: dc32aaa38638ff56e94b195311c61b5c495149e63fff5bcb9db5614c19c7ee99
+            - path: 1.17.2
+              level: 3
+              title: 17.2 Context profile operations
+              byte_offset: 33800
+              byte_count: 639
+              word_count: 89
+              content_hash: 4dfd7fa2af95efd5b3e94f3e46ac5a01e52d05aa62b6c10ddd77ce95dfb6b52e
+            - path: 1.17.3
+              level: 3
+              title: 17.3 Context assembly operations
+              byte_offset: 34439
+              byte_count: 589
+              word_count: 79
+              content_hash: ff4f97dbc983e3129e4a392b8193737ed71f2cae0e96cc0a904f540230b57b48
+            - path: 1.17.4
+              level: 3
+              title: 17.4 Agent capability operations
+              byte_offset: 35028
+              byte_count: 691
+              word_count: 91
+              content_hash: 5eeb512f8aac0c77b131ae27a41ffec0784268edb1cec5fa853b973233320f9f
+            - path: 1.17.5
+              level: 3
+              title: 17.5 Batch import operations
+              byte_offset: 35719
+              byte_count: 357
+              word_count: 42
+              content_hash: b80fdf9231a318f407f649519e5e9ddce168af02b180ce1108e720a61b4f8f37
+            - path: 1.17.6
+              level: 3
+              title: 17.6 MCP output requirements
+              byte_offset: 36076
+              byte_count: 367
+              word_count: 54
+              content_hash: 39500b0d69dec50b21e3bdecd28ab8eb5ef8c49f3d12b364de63cbdc0d190285
+            - path: 1.17.7
+              level: 3
+              title: 17.7 Strict validation
+              byte_offset: 36443
+              byte_count: 360
+              word_count: 51
+              content_hash: 4109eb19aa17af130e6ec1199ec2fadba1079f2dd00e8f0eb5d28e5c6e70fed9
+        - path: "1.18"
+          level: 2
+          title: 18. Validation and Health Requirements
+          byte_offset: 36803
+          byte_count: 938
+          word_count: 148
+          content_hash: 8a18e8e0c5adcd30390cc256e0eed2f9c07aabe24fc15f1f9f7dabc371607872
+          children:
+            - path: 1.18.1
+              level: 3
+              title: 18.1 Extended health check coverage
+              byte_offset: 36846
+              byte_count: 728
+              word_count: 114
+              content_hash: e5ca17fa70c188fb6d30550bb55682520251b5dfb805a36da8853635cb24dd44
+            - path: 1.18.2
+              level: 3
+              title: 18.2 Validation timing
+              byte_offset: 37574
+              byte_count: 167
+              word_count: 28
+              content_hash: 1deffcfbdebf3c59ba0049a3e393a9f82cd103d209d9e0cf79a36e5f0e17842e
+        - path: "1.19"
+          level: 2
+          title: 19. CLI Requirements
+          byte_offset: 37741
+          byte_count: 735
+          word_count: 120
+          content_hash: 4e62792fadf483b08f02e0bbcbaef5b076344a27cabc6f36fa6d63c17fd23b08
+          children:
+            - path: 1.19.1
+              level: 3
+              title: 19.1 New CLI commands
+              byte_offset: 37766
+              byte_count: 710
+              word_count: 116
+              content_hash: 32cfec11d07f7eadc8d434ed8d0438da450a9c567f2572c05e47fabbbf3d80a9
+        - path: "1.20"
+          level: 2
+          title: 20. Acceptance Criteria
+          byte_offset: 38476
+          byte_count: 5123
+          word_count: 845
+          content_hash: dc04c989270571875e1bdd7551b9d3dad45b83eb381912549d6157021067e257
+          children:
+            - path: 1.20.1
+              level: 3
+              title: 20.1 Knowledge contribution and retrieval
+              byte_offset: 38504
+              byte_count: 734
+              word_count: 120
+              content_hash: 8b3f2357afc3fe6555ae35595ad3433820059d821483b74ca52cb2fdd7b01058
+            - path: 1.20.2
+              level: 3
+              title: 20.2 Knowledge lifecycle
+              byte_offset: 39238
+              byte_count: 597
+              word_count: 94
+              content_hash: 92e3d523530e5a7d96f56554dd71a3c3f6f2c2866ff34ee464688a20a5f6cc69
+            - path: 1.20.3
+              level: 3
+              title: 20.3 Confidence scoring
+              byte_offset: 39835
+              byte_count: 352
+              word_count: 58
+              content_hash: cfa20bac9cf8e7b14b5623298ddb1e2438cebb44f6cee0bbbee0227445504d13
+            - path: 1.20.4
+              level: 3
+              title: 20.4 Usage reporting
+              byte_offset: 40187
+              byte_count: 439
+              word_count: 75
+              content_hash: ea0c8a88bcb1d1c9280d7ad9afa3ced8aeade80205862b9d54d141a680fdf683
+            - path: 1.20.5
+              level: 3
+              title: 20.5 Context profiles
+              byte_offset: 40626
+              byte_count: 548
+              word_count: 89
+              content_hash: f2529372fa879799c9e040e3ad5c295dbaf6b3face14a338bc27837cecab3dce
+            - path: 1.20.6
+              level: 3
+              title: 20.6 Context assembly
+              byte_offset: 41174
+              byte_count: 709
+              word_count: 124
+              content_hash: 217140bd1c156d45e1f840f52af6c896f870f98b9bf6a3a6b05427533fca54e8
+            - path: 1.20.7
+              level: 3
+              title: 20.7 Agent capabilities
+              byte_offset: 41883
+              byte_count: 269
+              word_count: 41
+              content_hash: c410c1edc93ebace905d0eb4fd015f5ff5ff955b4c7105a04e34537e01c45419
+            - path: 1.20.8
+              level: 3
+              title: 20.8 Batch document import
+              byte_offset: 42152
+              byte_count: 490
+              word_count: 84
+              content_hash: c8ee3635ccee3cfc3db2de76cc6c240bdd21b91ebb4cfa62e08d4e20792d8ccc
+            - path: 1.20.9
+              level: 3
+              title: 20.9 User identity resolution
+              byte_offset: 42642
+              byte_count: 497
+              word_count: 84
+              content_hash: e322607ece0ee980b93618aad8d9e6edbc5d8ad47755ca8c486f419b4d469f66
+            - path: 1.20.10
+              level: 3
+              title: 20.10 Deterministic storage
+              byte_offset: 43139
+              byte_count: 270
+              word_count: 44
+              content_hash: 012d76e085bfe48009bc78284f99043c15847e32e504441f71c16d50bc5d7bc0
+            - path: 1.20.11
+              level: 3
+              title: 20.11 Health checks
+              byte_offset: 43409
+              byte_count: 190
+              word_count: 28
+              content_hash: ca34913fe43de21c93700b74fbdbf964354096930dc3fae4a4f36fd159b75668
+        - path: "1.21"
+          level: 2
+          title: 21. Open Questions for Planning
+          byte_offset: 43599
+          byte_count: 1290
+          word_count: 197
+          content_hash: acd31dbf393e638df344c51dedaec8d3855493b382b5a8457e60adb4bf3fa958
+        - path: "1.22"
+          level: 2
+          title: 22. Summary
+          byte_offset: 44889
+          byte_count: 1662
+          word_count: 228
+          content_hash: b4ef635f73df7d9911c92655c43ef7f68c11488508c56127ce78cd595aa671de
+entity_refs:
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 759
+    - entity_id: DEC-004
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 778
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.3.2
+      byte_offset: 3051
+    - entity_id: DEC-002
+      entity_type: decision
+      section_path: 1.4.5
+      byte_offset: 4867
+    - entity_id: DEC-021
+      entity_type: decision
+      section_path: 1.6.2
+      byte_offset: 6977
+    - entity_id: DEC-004
+      entity_type: decision
+      section_path: 1.6.3
+      byte_offset: 8021
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.7.4
+      byte_offset: 11724
+    - entity_id: DEC-002
+      entity_type: decision
+      section_path: 1.11.6
+      byte_offset: 19328
+    - entity_id: DEC-003
+      entity_type: decision
+      section_path: "1.14"
+      byte_offset: 27161
+    - entity_id: DEC-004
+      entity_type: decision
+      section_path: "1.15"
+      byte_offset: 29036
+    - entity_id: DEC-008
+      entity_type: decision
+      section_path: 1.16.4
+      byte_offset: 31806
+    - entity_id: DEC-003
+      entity_type: decision
+      section_path: 1.19.1
+      byte_offset: 38412
+cross_doc_links:
+    - target_path: work/spec/phase-2-specification.md
+      link_text: work/spec/phase-2-specification.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/plan/phase-2-decision-log.md
+      link_text: work/plan/phase-2-decision-log.md
+      section_path: "1"
+    - target_path: work/**/*.md
+      link_text: work/**/*.md
+      section_path: 1.14.1
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.4.2
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+    - section_path: 1.6.1
+      role: narrative
+      confidence: high
+    - section_path: 1.7.4
+      role: constraint
+      confidence: high
+    - section_path: "1.11"
+      role: narrative
+      confidence: high
+    - section_path: 1.11.1
+      role: narrative
+      confidence: high
+    - section_path: 1.11.5
+      role: example
+      confidence: high
+    - section_path: "1.12"
+      role: narrative
+      confidence: high
+    - section_path: 1.14.3
+      role: constraint
+      confidence: high
+    - section_path: 1.15.3
+      role: constraint
+      confidence: high
+    - section_path: "1.16"
+      role: requirement
+      confidence: high
+    - section_path: 1.16.2
+      role: narrative
+      confidence: high
+    - section_path: 1.16.3
+      role: narrative
+      confidence: high
+    - section_path: "1.17"
+      role: requirement
+      confidence: high
+    - section_path: 1.17.2
+      role: narrative
+      confidence: high
+    - section_path: 1.17.3
+      role: narrative
+      confidence: high
+    - section_path: 1.17.6
+      role: requirement
+      confidence: high
+    - section_path: "1.18"
+      role: requirement
+      confidence: high
+    - section_path: "1.19"
+      role: requirement
+      confidence: high
+    - section_path: "1.20"
+      role: requirement
+      confidence: high
+    - section_path: 1.20.5
+      role: narrative
+      confidence: high
+    - section_path: 1.20.6
+      role: narrative
+      confidence: high
+    - section_path: "1.21"
+      role: question
+      confidence: high
+    - section_path: "1.22"
+      role: narrative
+      confidence: high
+classified: false

@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 func newDispatchTestServices(t *testing.T) (*EntityService, *KnowledgeService, *DispatchService) {

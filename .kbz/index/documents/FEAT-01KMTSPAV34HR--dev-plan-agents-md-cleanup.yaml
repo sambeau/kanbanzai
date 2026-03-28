@@ -1,0 +1,134 @@
+document_id: FEAT-01KMTSPAV34HR/dev-plan-agents-md-cleanup
+document_path: work/dev/agents-md-cleanup.md
+content_hash: 797606bd214a05d03bf23d57a5ee444432ab8b4807021c3f2f0085fbbf866c7f
+indexed_at: 2026-03-28T18:20:01.379691Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: AGENTS.md Cleanup'
+      byte_offset: 0
+      byte_count: 4338
+      word_count: 544
+      content_hash: 797606bd214a05d03bf23d57a5ee444432ab8b4807021c3f2f0085fbbf866c7f
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 433
+          byte_count: 358
+          word_count: 48
+          content_hash: 90c9e8a70a7cf561c4441203f70033cafadcd305e6d7ea24a0b8c841a5dbad96
+        - path: "1.2"
+          level: 2
+          title: 2. Task Execution Order
+          byte_offset: 791
+          byte_count: 3032
+          word_count: 391
+          content_hash: 52e6d9aaac6bc648b0d62f4438d1453204b7d3cd200a59429ab2a4dc9e67c5c9
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: remove-redundant-sections (TASK-01KMTT3VY4R5C)'
+              byte_offset: 819
+              byte_count: 755
+              word_count: 102
+              content_hash: d8d39d63a5b506fd0eca7d1c4f36023ef0f209fbb8027099598f5f80b275dd2d
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: update-terminology (TASK-01KMTT3VYM1AA)'
+              byte_offset: 1574
+              byte_count: 563
+              word_count: 69
+              content_hash: 046cb1864ca6442e0b814838f3ac341ffee800108b4d794ee9f8bf10207a94bf
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: move-principles-to-skills (TASK-01KMTT3VZ2ZXQ)'
+              byte_offset: 2137
+              byte_count: 968
+              word_count: 115
+              content_hash: 75634e416377242637023188f873d1e4525333844eb067fbc77afad11c9c8cf4
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: verify-coherence (TASK-01KMTT3VZFXT8)'
+              byte_offset: 3105
+              byte_count: 718
+              word_count: 100
+              content_hash: 108364980a82edc1c6b05ed64182fb3a05ebd1db1ee72cdbc92c918dba4dc059
+        - path: "1.3"
+          level: 2
+          title: 3. Risk Assessment
+          byte_offset: 3823
+          byte_count: 410
+          word_count: 54
+          content_hash: c546c73a8cc4f02b46f859505424bc1d07f747fa35b5023ff88fca15a5b7a1b8
+        - path: "1.4"
+          level: 2
+          title: 4. Verification
+          byte_offset: 4233
+          byte_count: 105
+          word_count: 18
+          content_hash: 62b7a75ba26e55ffa5c621ab22ca1950451a4d5ad693b10ad418c0bc1443290c
+entity_refs:
+    - entity_id: FEAT-01KMTSPAV34HR
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 180
+    - entity_id: TASK-01KMTT3VY4R5C
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 858
+    - entity_id: TASK-01KMTT3VYM1AA
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1606
+    - entity_id: TASK-01KMTT3VZ2ZXQ
+      entity_type: task
+      section_path: 1.2.3
+      byte_offset: 2176
+    - entity_id: TASK-01KMTT3VZFXT8
+      entity_type: task
+      section_path: 1.2.4
+      byte_offset: 3135
+    - entity_id: P3-kanbanzai-1
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 246
+cross_doc_links:
+    - target_path: work/spec/agents-md-cleanup.md
+      link_text: work/spec/agents-md-cleanup.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.2.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.2
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: 1.2.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.3
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.3
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.2.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.4
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: risk
+      confidence: high
+classified: false

@@ -1,0 +1,463 @@
+document_id: PROJECT/dev-plan-phase-2-scope
+document_path: work/plan/phase-2-scope.md
+content_hash: ed34adfc566bc0c9657b80333c21d422260b2ac444329feb3baec4e425dc3e37
+indexed_at: 2026-03-25T21:38:28.506108Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 2 Scope and Planning
+      byte_offset: 0
+      byte_count: 21675
+      word_count: 2862
+      content_hash: ed34adfc566bc0c9657b80333c21d422260b2ac444329feb3baec4e425dc3e37
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 457
+          byte_count: 408
+          word_count: 65
+          content_hash: 35f4daae50b3d39a2495e606cad9238039f4a2bbb6f2139c4629d6820baec1a2
+        - path: "1.2"
+          level: 2
+          title: 2. Phase 2 Split
+          byte_offset: 865
+          byte_count: 596
+          word_count: 83
+          content_hash: ce6a3397a1a5b77cf7dca6392a16280f38431c4098913c86da2c27e3d94743ce
+          children:
+            - path: 1.2.1
+              level: 3
+              title: '2a: Entity Evolution, Document Management, and Document Intelligence'
+              byte_offset: 973
+              byte_count: 212
+              word_count: 26
+              content_hash: 9d60efbad92ef9e5f48b1f4f35c127695a8e62adeb9e3a327a995983745970de
+            - path: 1.2.2
+              level: 3
+              title: '2b: Context Management and Agent Capabilities'
+              byte_offset: 1185
+              byte_count: 276
+              word_count: 38
+              content_hash: d0b3bee55804a53b38df35bf1b37807dce01a3da3166df5666faec2d892195c2
+        - path: "1.3"
+          level: 2
+          title: 3. Phase 2a Scope
+          byte_offset: 1461
+          byte_count: 5758
+          word_count: 732
+          content_hash: 53434cda712fcb43477df352b220ab458269872c95bfd0a4ac85a91d2c8eb3af
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Entity model evolution
+              byte_offset: 1483
+              byte_count: 2405
+              word_count: 315
+              content_hash: 22ce83b3e47cffda3558b84d6c5e696a8c9ae55ab920e2bae6b4e2c9c962bb04
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Document management
+              byte_offset: 3888
+              byte_count: 891
+              word_count: 107
+              content_hash: 688e474cd018c3ebfabc7276c4d650f754bbed31db87b6253b7dda019c3398f0
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Document intelligence
+              byte_offset: 4779
+              byte_count: 1071
+              word_count: 121
+              content_hash: 867c2618e65fb5e252ac6bf1c293e3cb6bcad9c69d86e97dfdb2c378331099b2
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Query and infrastructure
+              byte_offset: 5850
+              byte_count: 768
+              word_count: 106
+              content_hash: 586386374f000179d207163915cf10fab360113995be2686a9c80ec58d1d79ee
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Phase 2a does NOT include
+              byte_offset: 6618
+              byte_count: 601
+              word_count: 78
+              content_hash: 07f6e0ba6646b010d7b61a0f1db7dfa01ad7f9dda7649b15b0c4a8dacd758629
+        - path: "1.4"
+          level: 2
+          title: 4. Phase 2b Scope
+          byte_offset: 7219
+          byte_count: 1739
+          word_count: 223
+          content_hash: 86cd63ea27d89b43787ab8d79aeb91be2c9f4d88ff98a6cc045909e9a7e62761
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Context management
+              byte_offset: 7241
+              byte_count: 960
+              word_count: 116
+              content_hash: 9821d1644890f7b9005126526ef73c6b80dd4d285a6e91020c04241bed639d84
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Agent capabilities
+              byte_offset: 8201
+              byte_count: 459
+              word_count: 58
+              content_hash: 950cb744f0ed464e2d59bf606132007cb108602a3166b784a40170c364fe1e95
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Phase 2b does NOT include
+              byte_offset: 8660
+              byte_count: 298
+              word_count: 44
+              content_hash: 1db8c1500029dd9046e6d0064acf087e6e5bafa05fd9c9a3f473c7cb99d7f60e
+        - path: "1.5"
+          level: 2
+          title: 5. Updated Phase Roadmap
+          byte_offset: 8958
+          byte_count: 888
+          word_count: 129
+          content_hash: ad5f4cf55acb231e31173d1fa6f4d1f3f50953d3bea91bc1a6407e626f258373
+        - path: "1.6"
+          level: 2
+          title: 6. Deferred Decisions Affecting Phase 2a
+          byte_offset: 9846
+          byte_count: 952
+          word_count: 145
+          content_hash: ba9be965ea1018d6b0af36bf226cbc2e4b531a38012514dc3d436cf7f42b251d
+        - path: "1.7"
+          level: 2
+          title: 7. Dependencies Within Phase 2a
+          byte_offset: 10798
+          byte_count: 1320
+          word_count: 169
+          content_hash: 6f8ce28ce9c3c91c0aff02842af0b118601bb7859dfa853c8068ac97cb4178cc
+        - path: "1.8"
+          level: 2
+          title: 8. Open Design Questions for Phase 2a
+          byte_offset: 12118
+          byte_count: 3752
+          word_count: 474
+          content_hash: 5268a5ddb25a9a71b6c803bc57211fcab99280748f9c5ead3905d4f0438aba1b
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Plan lifecycle states and transitions
+              byte_offset: 12241
+              byte_count: 440
+              word_count: 56
+              content_hash: 2c4f9b1166a7703e142b05eb14e7c82b8b648e161ffa3232f9a67a7709a73bb5
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Document metadata schema
+              byte_offset: 12681
+              byte_count: 548
+              word_count: 59
+              content_hash: ff688019a69af1702dcf98d963ef6598a17c2e57ab5678fbab511aa56e8814a2
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Computed vs stored Feature status
+              byte_offset: 13229
+              byte_count: 323
+              word_count: 43
+              content_hash: cb700c124c5ed5955430a72284f24e762dfaa7e1158b157d2b0362a106afbf8e
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Document storage model
+              byte_offset: 13552
+              byte_count: 304
+              word_count: 41
+              content_hash: f22aaa0c940714a9a6c327680bbdbc72efc11f8b36829254174529455e451e89
+            - path: 1.8.5
+              level: 3
+              title: 8.5 Plan storage model
+              byte_offset: 13856
+              byte_count: 162
+              word_count: 24
+              content_hash: 80382d83d7f5b3d51fd4804ef9294d049f7b819ac000fdcc33894eddf2f40452
+            - path: 1.8.6
+              level: 3
+              title: 8.6 Tag schema
+              byte_offset: 14018
+              byte_count: 239
+              word_count: 33
+              content_hash: a7b81cbfe575fda77537260881ef88e58aaf12e82728d87cd02692015f1f2c92
+            - path: 1.8.7
+              level: 3
+              title: 8.7 Prefix registry details
+              byte_offset: 14257
+              byte_count: 465
+              word_count: 61
+              content_hash: e0d4fedbc7d246fecfd554553d0cb9d3bd07ade60e90d0695c79a8db9c7da5cd
+            - path: 1.8.8
+              level: 3
+              title: 8.8 Concurrency model
+              byte_offset: 14722
+              byte_count: 226
+              word_count: 31
+              content_hash: 5a90e3569d10bd19022467319bad067836aa37c5b5a450d9b287d9dfc01889be
+            - path: 1.8.9
+              level: 3
+              title: 8.9 Migration strategy
+              byte_offset: 14948
+              byte_count: 439
+              word_count: 50
+              content_hash: 49c02783e70dbf11a17b1851fb572d2d413744cf067972a7007ca18582073199
+            - path: 1.8.10
+              level: 3
+              title: 8.10 Document intelligence implementation questions
+              byte_offset: 15387
+              byte_count: 483
+              word_count: 56
+              content_hash: c5a08015d25336c7a58f251de3608bdb82bf798915e698a781dc78699c6152ab
+        - path: "1.9"
+          level: 2
+          title: 9. Open Design Questions for Phase 2b
+          byte_offset: 15870
+          byte_count: 1863
+          word_count: 250
+          content_hash: 3a9ccef9876e85dca0a54f638d6c15535df0968e6eb4a6ce0d8c8a01a13464ed
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Knowledge entry schema
+              byte_offset: 16053
+              byte_count: 408
+              word_count: 55
+              content_hash: b2c766c5cb2ec87efd7d2d14476621788d78fa5ce41509f2e1b27f5420feceeb
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Context profile inheritance
+              byte_offset: 16461
+              byte_count: 314
+              word_count: 46
+              content_hash: 3be04f6a8efb02c0c6b14ba1da02ead3d92273f83f8447ea62d1302f2e7562fc
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Knowledge lifecycle boundaries
+              byte_offset: 16775
+              byte_count: 421
+              word_count: 46
+              content_hash: 58d50f4fce564b53cf2161c36b867fab1ba23fa680dedc0d7533f1834f03f9e8
+            - path: 1.9.4
+              level: 3
+              title: 9.4 Bootstrap story for existing projects
+              byte_offset: 17196
+              byte_count: 537
+              word_count: 70
+              content_hash: 19a3edcf125093362a70385efb5fa1a6decf5bde2a8463af2606bbf02baf66a7
+        - path: "1.10"
+          level: 2
+          title: 10. Risks
+          byte_offset: 17733
+          byte_count: 1968
+          word_count: 276
+          content_hash: 64f247d2c586e921987210d336e4d2293c84870bd2f774d8b6832b7b30a6eb5f
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Scope creep within Phase 2a
+              byte_offset: 17747
+              byte_count: 447
+              word_count: 65
+              content_hash: e54b4f9617a44647d8b33e74ce8e3446d624daae3f8d74e89a41758e57fd4589
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Document intelligence complexity
+              byte_offset: 18194
+              byte_count: 612
+              word_count: 81
+              content_hash: 5f40041cc71220ef3c5a515e0a00823abcd2e933292b5e0c6f34a2a2463b1872
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Migration risk
+              byte_offset: 18806
+              byte_count: 487
+              word_count: 70
+              content_hash: 5d2ddcdd5448e1942f5f0ca1602b6eccd19e36557d1314d0c9f91a0168a659d9
+            - path: 1.10.4
+              level: 3
+              title: 10.4 Concurrency under-design
+              byte_offset: 19293
+              byte_count: 408
+              word_count: 57
+              content_hash: c0ba1cf8da4016ec78120cee6640459342397befe93b66416bd868691ca0d6e5
+        - path: "1.11"
+          level: 2
+          title: 11. Next Steps
+          byte_offset: 19701
+          byte_count: 812
+          word_count: 117
+          content_hash: 457bb2c8a9382b4a0bf15276f2f4c485ec8fcb1f123b5ee6f0cae61daf6c4675
+        - path: "1.12"
+          level: 2
+          title: 12. Summary
+          byte_offset: 20513
+          byte_count: 1162
+          word_count: 159
+          content_hash: f5db0fd0535100fb57c0271b64ef6115c2dd7a061b9aa5ad6d2fc5d27d44ba32
+front_matter:
+    status: draft
+    date: "2026-03-21"
+    related:
+        - work/design/entity-structure-and-document-pipeline.md
+        - work/design/document-centric-interface.md
+        - work/design/document-intelligence-design.md
+        - work/design/machine-context-design.md
+        - work/spec/phase-1-specification.md` §7.1
+        - work/plan/phase-1-decision-log.md
+    extra:
+        Purpose: define Phase 2 scope boundaries, phasing, dependencies, and open questions
+entity_refs:
+    - entity_id: DEC-013
+      entity_type: decision
+      section_path: 1.3.4
+      byte_offset: 5895
+    - entity_id: DEC-020
+      entity_type: decision
+      section_path: 1.3.4
+      byte_offset: 5907
+    - entity_id: DEC-017
+      entity_type: decision
+      section_path: 1.4.2
+      byte_offset: 8240
+    - entity_id: DEC-018
+      entity_type: decision
+      section_path: 1.4.2
+      byte_offset: 8252
+    - entity_id: DEC-019
+      entity_type: decision
+      section_path: 1.4.2
+      byte_offset: 8264
+    - entity_id: DEC-013
+      entity_type: decision
+      section_path: "1.6"
+      byte_offset: 10082
+    - entity_id: DEC-017
+      entity_type: decision
+      section_path: "1.6"
+      byte_offset: 10198
+    - entity_id: DEC-018
+      entity_type: decision
+      section_path: "1.6"
+      byte_offset: 10298
+    - entity_id: DEC-019
+      entity_type: decision
+      section_path: "1.6"
+      byte_offset: 10404
+    - entity_id: DEC-020
+      entity_type: decision
+      section_path: "1.6"
+      byte_offset: 10529
+    - entity_id: DEC-013
+      entity_type: decision
+      section_path: "1.7"
+      byte_offset: 11733
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.9.1
+      byte_offset: 16203
+    - entity_id: DEC-002
+      entity_type: decision
+      section_path: 1.9.2
+      byte_offset: 16765
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.9.3
+      byte_offset: 17186
+    - entity_id: DEC-003
+      entity_type: decision
+      section_path: 1.9.4
+      byte_offset: 17569
+    - entity_id: DEC-004
+      entity_type: decision
+      section_path: 1.9.4
+      byte_offset: 17718
+cross_doc_links:
+    - target_path: work/design/entity-structure-and-document-pipeline.md
+      link_text: work/design/entity-structure-and-document-pipeline.md
+      section_path: "1"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1"
+    - target_path: work/design/document-intelligence-design.md
+      link_text: work/design/document-intelligence-design.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: "1"
+    - target_path: work/design/entity-structure-and-document-pipeline.md
+      link_text: work/design/entity-structure-and-document-pipeline.md
+      section_path: 1.3.1
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: 1.3.2
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: 1.3.2
+    - target_path: work/design/document-intelligence-design.md
+      link_text: work/design/document-intelligence-design.md
+      section_path: 1.3.3
+    - target_path: entity-structure-and-document-pipeline.md
+      link_text: entity-structure-and-document-pipeline.md
+      section_path: 1.3.5
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: 1.4.1
+    - target_path: work/design/foo.md
+      link_text: work/design/foo.md
+      section_path: 1.8.4
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.2
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: constraint
+      confidence: high
+    - section_path: 1.4.1
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: decision
+      confidence: high
+    - section_path: "1.8"
+      role: question
+      confidence: high
+    - section_path: 1.8.10
+      role: question
+      confidence: high
+    - section_path: "1.9"
+      role: question
+      confidence: high
+    - section_path: 1.9.2
+      role: narrative
+      confidence: high
+    - section_path: "1.10"
+      role: risk
+      confidence: high
+    - section_path: 1.10.1
+      role: constraint
+      confidence: high
+    - section_path: 1.10.3
+      role: risk
+      confidence: high
+    - section_path: "1.12"
+      role: narrative
+      confidence: high
+classified: false

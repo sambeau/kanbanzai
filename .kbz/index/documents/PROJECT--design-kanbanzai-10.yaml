@@ -1,0 +1,242 @@
+document_id: PROJECT/design-kanbanzai-10
+document_path: work/design/kanbanzai-1.0.md
+content_hash: 27b90d1de71ee0d789713484c2e21786d530f0285f075aa1aaf738e74c2ad694
+indexed_at: 2026-03-25T23:44:41.45181Z
+sections:
+    - path: "1"
+      level: 1
+      title: Kanbanzai 1.0 Design
+      byte_offset: 0
+      byte_count: 16476
+      word_count: 2518
+      content_hash: 27b90d1de71ee0d789713484c2e21786d530f0285f075aa1aaf738e74c2ad694
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 424
+          byte_count: 1112
+          word_count: 182
+          content_hash: 67541d59a28a36ae44c7483696ca6b7b415852c3826d51876680537880d958dc
+        - path: "1.2"
+          level: 2
+          title: 2. What Changes at 1.0
+          byte_offset: 1536
+          byte_count: 710
+          word_count: 125
+          content_hash: 8e503a9e90250e1f49cf1973064b55c15f5dd2e5471dcd6296bed52e633d9003
+        - path: "1.3"
+          level: 2
+          title: 3. The Viewer Is a Separate Product
+          byte_offset: 2246
+          byte_count: 2039
+          word_count: 321
+          content_hash: 3ee677c8d772448f8305fdb77e13869a5fb0f9d80b70efbd1a7107321377218a
+        - path: "1.4"
+          level: 2
+          title: 4. Skills-Based Onboarding
+          byte_offset: 4285
+          byte_count: 3512
+          word_count: 524
+          content_hash: 2ca3731212e4462c7eca857b30e158c32f49c59750fcf414d0be3f953e8fbd38
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 The Problem
+              byte_offset: 4316
+              byte_count: 644
+              word_count: 110
+              content_hash: e3f635feac5d09671b0f77c04d1f36ae68fc22545f7b0f5442a887d52a4f663b
+            - path: 1.4.2
+              level: 3
+              title: '4.2 The Solution: Installed Skills'
+              byte_offset: 4960
+              byte_count: 1211
+              word_count: 174
+              content_hash: 545126dfb270454080385d6c5dc244d5606a84c641647314176be92c77e1ba99
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Skills vs. AGENTS.md
+              byte_offset: 6171
+              byte_count: 608
+              word_count: 86
+              content_hash: 3a5a2be4f40f710704146f553c66aa817b8fe7fc0be5757089a9e034b0d76318
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Skills and Sub-Agents
+              byte_offset: 6779
+              byte_count: 469
+              word_count: 63
+              content_hash: a775247ef497ea5bec9cd26daccb41a386ba51665865741aa93d319230c7be45
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Skill Updates
+              byte_offset: 7248
+              byte_count: 549
+              word_count: 87
+              content_hash: 998c82044a22974bc3215ce6898ef060e803dacef27e587639e63888048e9b98
+        - path: "1.5"
+          level: 2
+          title: 5. Distribution and Installation
+          byte_offset: 7797
+          byte_count: 1639
+          word_count: 250
+          content_hash: e3d786facd67d796b142de635eb006268dc56bf68e9ed0ca0901a03a1c8ad6d9
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Pre-Compiled Binaries
+              byte_offset: 7834
+              byte_count: 658
+              word_count: 103
+              content_hash: 4c364262dad4ef3e6ea6572dba46d732baad53d4a502a6307ce0a57287b4a20a
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Installation Experience
+              byte_offset: 8492
+              byte_count: 342
+              word_count: 52
+              content_hash: f0c22ab3dd263056562dcf2f978f95f927fc732342151d88f36a48ad70f05d21
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Initialising a New Project
+              byte_offset: 8834
+              byte_count: 602
+              word_count: 90
+              content_hash: e601b26cc5a1afb6d97d3ed26d6473cee730d4c3f2c2f5107d420f1e25abc2b3
+        - path: "1.6"
+          level: 2
+          title: 6. The `.kbz` Schema as a Public Interface
+          byte_offset: 9436
+          byte_count: 2551
+          word_count: 378
+          content_hash: 761022e3ca8ef18c43bc2c95c8125df7f856bad4b525ec1901976eb6276fd3ef
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Current Status
+              byte_offset: 9483
+              byte_count: 305
+              word_count: 44
+              content_hash: cfa81921ba7cc90a0a067e7b6fb2ff20c92ad24533c3ba319d9a22a39b299c0b
+            - path: 1.6.2
+              level: 3
+              title: 6.2 What the Schema Covers
+              byte_offset: 9788
+              byte_count: 474
+              word_count: 73
+              content_hash: 4399564f8cc8d29f8d510958ad099a8a05aeed5cf0afdec09acb34c05d71d5a2
+            - path: 1.6.3
+              level: 3
+              title: 6.3 The Schema Library
+              byte_offset: 10262
+              byte_count: 1058
+              word_count: 156
+              content_hash: 0b2d26fc1ba8d051e4e42bc5e863250cc41787ead7a1416e00285f255ca56dbc
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Versioning and Compatibility
+              byte_offset: 11320
+              byte_count: 667
+              word_count: 96
+              content_hash: fca71d57084ef84d77e6b366db2858a0099e077f1c5d1defc98c4aa1c089d728
+        - path: "1.7"
+          level: 2
+          title: 7. Editor Independence
+          byte_offset: 11987
+          byte_count: 911
+          word_count: 133
+          content_hash: a17e3b6c7cf1cb535876422a59a694e8457be41f84777efed9119caa95ebaa4d
+        - path: "1.8"
+          level: 2
+          title: 8. Documentation
+          byte_offset: 12898
+          byte_count: 892
+          word_count: 145
+          content_hash: f49367ffb738b92a59946701c45fad4966e8fb04e68266397abde9979f7136fa
+        - path: "1.9"
+          level: 2
+          title: 9. Hardening
+          byte_offset: 13790
+          byte_count: 1194
+          word_count: 173
+          content_hash: f3c342e5384f77bd97ffbadf5eb1b20c627de4d57208f8f6f7ea1faa5e96e748
+        - path: "1.10"
+          level: 2
+          title: 10. What 1.0 Does Not Include
+          byte_offset: 14984
+          byte_count: 736
+          word_count: 115
+          content_hash: 0ecc952867b3b361112a1c6987589321fa8b1e7d966933636201a500098a9709
+        - path: "1.11"
+          level: 2
+          title: 11. The Viewer Project as Validation
+          byte_offset: 15720
+          byte_count: 756
+          word_count: 127
+          content_hash: 62f29b598bcd7e4bdc8d59bfc360c72f5bd22810e3cf3ac350c56e8d3c2f7154
+front_matter:
+    status: draft design
+    date: "2026-05-31"
+    related:
+        - work/design/workflow-design-basis.md
+        - work/design/document-centric-interface.md
+        - work/design/agent-interaction-protocol.md
+        - work/plan/phase-4-scope.md
+        - work/plan/phase-4b-review.md
+    extra:
+        Purpose: define what Kanbanzai 1.0 means — a distributable, installable workflow tool ready for use by projects other than itself
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "1"
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1"
+    - target_path: work/plan/phase-4b-review.md
+      link_text: work/plan/phase-4b-review.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.1
+    - target_path: .skills/kanbanzai-getting-started.md
+      link_text: .skills/kanbanzai-getting-started.md
+      section_path: 1.4.2
+    - target_path: .skills/kanbanzai-workflow.md
+      link_text: .skills/kanbanzai-workflow.md
+      section_path: 1.4.2
+    - target_path: .skills/kanbanzai-planning.md
+      link_text: .skills/kanbanzai-planning.md
+      section_path: 1.4.2
+    - target_path: .skills/kanbanzai-design.md
+      link_text: .skills/kanbanzai-design.md
+      section_path: 1.4.2
+    - target_path: .skills/kanbanzai-documents.md
+      link_text: .skills/kanbanzai-documents.md
+      section_path: 1.4.2
+    - target_path: .skills/kanbanzai-agents.md
+      link_text: .skills/kanbanzai-agents.md
+      section_path: 1.4.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.3
+    - target_path: .skills/kanbanzai-*.md
+      link_text: .skills/kanbanzai-*.md
+      section_path: 1.5.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.5.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

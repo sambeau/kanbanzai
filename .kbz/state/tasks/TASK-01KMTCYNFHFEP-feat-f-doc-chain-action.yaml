@@ -1,0 +1,15 @@
+id: TASK-01KMTCYNFHFEP
+parent_feature: FEAT-01KMTCWXAGX06
+slug: feat-f-doc-chain-action
+summary: "Wire doc(action: chain) in internal/mcp/doc_tool.go. The service method DocumentService.SupersessionChain(docID string) ([]DocumentResult, error) is already implemented and tested in internal/service/documents.go. This task is purely the MCP layer: add a case for action==chain, call the service method, return the chain as {chain: [...], length: N} per spec §8.3. Add an MCP-layer test. No service layer changes."
+status: done
+files_planned:
+  - internal/mcp/doc_tool.go
+  - internal/mcp/doc_tool_test.go
+completed: "2026-03-28T15:12:30Z"
+claimed_at: "2026-03-28T14:54:14Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T14:54:14Z"
+dispatched_by: sambeau
+completion_summary: "Wired doc(action: chain) in doc_tool.go. Calls existing DocumentService.SupersessionChain, returns {chain: [...], length: N}. Returns error when id is empty. Added 2 MCP tests including chain ordering."
+verification: go test -race ./internal/mcp/... passes

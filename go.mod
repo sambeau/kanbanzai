@@ -1,4 +1,4 @@
-module kanbanzai
+module github.com/sambeau/kanbanzai
 
 go 1.25.0
 

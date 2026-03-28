@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"strings"
 
-	"kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/config"
 )
 
 // RepoInfo contains the owner and repository name.

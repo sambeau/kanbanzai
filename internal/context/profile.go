@@ -21,7 +21,7 @@ type Profile struct {
 	Inherits     string        `yaml:"inherits,omitempty"`
 	Description  string        `yaml:"description"`
 	Packages     []string      `yaml:"packages,omitempty"`
-	Conventions  []string      `yaml:"conventions,omitempty"`
+	Conventions  any           `yaml:"conventions,omitempty"`
 	Architecture *Architecture `yaml:"architecture,omitempty"`
 }
 
@@ -38,7 +38,7 @@ type ResolvedProfile struct {
 	ID           string
 	Description  string
 	Packages     []string
-	Conventions  []string
+	Conventions  any
 	Architecture *Architecture
 }
 

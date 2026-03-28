@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/id"
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 const incidentUsageText = `Usage: kbz incident <subcommand> [options]
@@ -28,9 +28,12 @@ Subcommands:
 `
 
 func runIncident(args []string, deps dependencies) error {
-	if len(args) == 0 || wantsHelp(args) {
+	if wantsHelp(args) {
 		fmt.Fprint(deps.stdout, incidentUsageText)
 		return nil
+	}
+	if len(args) == 0 {
+		return fmt.Errorf("missing incident subcommand\n\n%s", incidentUsageText)
 	}
 
 	switch args[0] {

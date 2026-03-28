@@ -2,19 +2,4 @@ id: TASK-01KMNA62ZFM9Q
 parent_feature: FEAT-01KMKRQWF0FCH
 slug: cli-help-text
 summary: "Implement top-level and per-command --help output meeting hardening spec §7. kanbanzai --help must list every subcommand with a one-line description grouped by category. kanbanzai <command> --help must list all flags with types, descriptions, defaults, and at least one usage example, and exit 0. Verify every command produces non-empty help output. Ensure kanbanzai init --help is complete."
-status: done
-completed: "2026-03-26T16:23:38Z"
-completion_summary: "Rewrote top-level usageText with proper product description, grouped commands by category (Getting Started, Entities, Orchestration, Development, Knowledge & Context, Documents, Diagnostics, Help), examples section, and 'Run kanbanzai <command> --help' footer. Added wantsHelp() helper and wired --help/-h handling into all 16 subcommand dispatch functions (create, get, list, update, health, validate, cache, import, knowledge, profile, context, worktree, branch, merge, pr, cleanup, feature, task, queue, incident). All return exit 0 with usage text. Fixed version output to use actual binary version instead of hardcoded 'phase-4b'. Updated tests for new help-on-no-args behavior."
-verification: "go test -race ./cmd/kanbanzai/ — all tests pass. go build, go vet, go fmt all clean."
-files_planned:
-  - cmd/kanbanzai/main.go
-  - cmd/kanbanzai/cleanup_cmd.go
-  - cmd/kanbanzai/feature_cmd.go
-  - cmd/kanbanzai/incident_cmd.go
-  - cmd/kanbanzai/merge_cmd.go
-  - cmd/kanbanzai/pr_cmd.go
-  - cmd/kanbanzai/queue_cmd.go
-  - cmd/kanbanzai/task_cmd.go
-  - cmd/kanbanzai/worktree.go
-  - cmd/kanbanzai/main_test.go
-  - cmd/kanbanzai/task_cmd_test.go
+status: ready

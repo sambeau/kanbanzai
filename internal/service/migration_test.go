@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 func setupMigrationConfig(t *testing.T, prefix, label string) {

@@ -1,0 +1,11 @@
+id: TASK-01KMT4KR7VSW6
+parent_feature: FEAT-01KMT40P0AGS7
+slug: update-documentation
+summary: "Update .skills/code-review.md Step 6 to specify work/reviews/ as destination and review-{unsplit-id}-{slug}.md as filename format, with a concrete example. Update work/bootstrap/bootstrap-workflow.md placement table: add work/reviews/ row and clarify work/reports/ is for general-purpose reports only. Update AGENTS.md repository structure section to list work/reviews/ with its purpose. Covers AC-01 to AC-04."
+status: done
+files_planned:
+  - .skills/code-review.md
+  - work/bootstrap/bootstrap-workflow.md
+  - AGENTS.md
+completed: "2026-03-28T12:52:36Z"
+completion_summary: "Updated .skills/code-review.md Step 6, work/bootstrap/bootstrap-workflow.md placement table, and AGENTS.md repository structure to reference work/reviews/ folder and review-{id}-{slug}.md naming convention"

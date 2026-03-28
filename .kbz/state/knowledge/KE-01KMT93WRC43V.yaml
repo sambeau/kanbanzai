@@ -1,0 +1,18 @@
+id: KE-01KMT93WRC43V
+tier: 2
+topic: p7-retro-sub-agent-state-isolation
+scope: project
+content: "Sub-agents spawned via spawn_agent share the same filesystem and MCP server as the main agent, but they don't share in-session awareness of state changes. When the main agent approves specs and transitions features, those changes exist only on disk (via the MCP server). Sub-agents that then run git operations (stash, checkout, reset) can destroy those changes. The correct mitigation is: (1) commit .kbz/state/ changes before spawning sub-agents, or (2) ensure sub-agents don't run git operations that affect the working tree outside their file scope, or (3) have the main agent re-apply state changes after sub-agents complete. Option 1 is cleanest but requires a workflow state commit step."
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - workflow-friction
+  - retrospective
+  - sub-agents
+  - state-isolation
+created: "2026-03-28T13:11:13Z"
+created_by: sambeau
+updated: "2026-03-28T13:11:13Z"

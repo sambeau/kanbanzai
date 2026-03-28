@@ -1,0 +1,173 @@
+document_id: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill
+document_path: work/spec/reviewer-context-profile-and-skill.md
+content_hash: 330463d929f37e292458a54e72de3401331aafdcde8f7209eb618e916fe18292
+indexed_at: 2026-03-28T00:28:18.60594Z
+sections:
+    - path: "1"
+      level: 1
+      title: Reviewer Context Profile and SKILL Specification
+      byte_offset: 0
+      byte_count: 11237
+      word_count: 1509
+      content_hash: 330463d929f37e292458a54e72de3401331aafdcde8f7209eb618e916fe18292
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 524
+          byte_count: 1061
+          word_count: 143
+          content_hash: 3e53d55523a630e104cb54de17c191f9f753b978f36cdc70c455012652be54d0
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1585
+          byte_count: 770
+          word_count: 105
+          content_hash: 6a1fb6cb5f0e17ffb0c0d198a47a191710b3b44d926e169274477650ac6eff7b
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2355
+          byte_count: 1388
+          word_count: 192
+          content_hash: c699becfde765179e857c805599e11fe69bcd1101193a0b4df1c0f5db44c1a44
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 2368
+              byte_count: 644
+              word_count: 78
+              content_hash: c34c336e09ff3bf966423e29263725df5a8114a5d258eab25380dc8f23487d1e
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred
+              byte_offset: 3012
+              byte_count: 372
+              word_count: 57
+              content_hash: 1e20e6e8456fafe5f961ded043fc1b723405c777691ec875b9ae726e7db72242
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly excluded
+              byte_offset: 3384
+              byte_count: 359
+              word_count: 54
+              content_hash: 843ca26b53c5d1912e5aebad74342aa7fe0829a0288018bf93cfbcfaaf27329b
+        - path: "1.4"
+          level: 2
+          title: 4. Acceptance Criteria
+          byte_offset: 3743
+          byte_count: 5866
+          word_count: 774
+          content_hash: 3a5d59426abdb4a3cf19c3df2894bbceaa00e25acd92713c4ae273bbc97f246a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Reviewer context profile
+              byte_offset: 3770
+              byte_count: 1610
+              word_count: 202
+              content_hash: d4f7f346256b3f28f567cc49613567d2639d9bd924dfe43b13b52f85fe43f50a
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Code review SKILL document
+              byte_offset: 5380
+              byte_count: 3276
+              word_count: 444
+              content_hash: 3dd0baa818b188022d3b62757514a00f3db978811aca972431060edd7f74f47c
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Quality gates policy update
+              byte_offset: 8656
+              byte_count: 755
+              word_count: 92
+              content_hash: 1368205112920db9fa6989fbfdf190224657f2484fe9dec969712c4f09a46066
+            - path: 1.4.4
+              level: 3
+              title: 4.4 README update
+              byte_offset: 9411
+              byte_count: 198
+              word_count: 32
+              content_hash: da3f60b2534921941dd286b7ee030849987893edfa16b014d2e6bbda3f2b1534
+        - path: "1.5"
+          level: 2
+          title: 5. Verification
+          byte_offset: 9609
+          byte_count: 1628
+          word_count: 247
+          content_hash: 2d2b30180e83d8ccce7310f6d54d07117e164cb3beca42435d2d6edc3b1d5410
+entity_refs:
+    - entity_id: FEAT-01KMRX1HG8BAX
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 386
+cross_doc_links:
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: "1"
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: "1.1"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.1"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.3.1
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: 1.3.1
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: 1.4.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.4.2
+    - target_path: .skills/README.md
+      link_text: .skills/README.md
+      section_path: 1.4.2
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: 1.4.2
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: 1.4.3
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.4.3
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: 1.4.3
+    - target_path: .skills/README.md
+      link_text: .skills/README.md
+      section_path: 1.4.4
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.5"
+    - target_path: .skills/README.md
+      link_text: .skills/README.md
+      section_path: "1.5"
+    - target_path: quality-gates-and-review-policy.md
+      link_text: quality-gates-and-review-policy.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: 1.4.1
+      role: narrative
+      confidence: high
+classified: false

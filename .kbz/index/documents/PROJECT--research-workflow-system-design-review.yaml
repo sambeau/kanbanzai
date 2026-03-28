@@ -1,0 +1,437 @@
+document_id: PROJECT/research-workflow-system-design-review
+document_path: work/research/workflow-system-design-review.md
+content_hash: dd9e6837941fb87bae765b345be20b9856a6b87dddc15f1bbff602c0e692c9f2
+indexed_at: 2026-03-25T21:38:29.128714Z
+sections:
+    - path: "1"
+      level: 1
+      title: Workflow System Design Review
+      byte_offset: 0
+      byte_count: 15348
+      word_count: 2298
+      content_hash: dd9e6837941fb87bae765b345be20b9856a6b87dddc15f1bbff602c0e692c9f2
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 341
+          byte_count: 440
+          word_count: 68
+          content_hash: ebca3c70d51b8244441c9536704e5218fc573da6a854b3b88e0aaf00eb58c34b
+        - path: "1.2"
+          level: 2
+          title: 2. Overall Assessment
+          byte_offset: 781
+          byte_count: 798
+          word_count: 115
+          content_hash: 6c71d5a2948df2a7c57ac6f8da65df76ad170f6636ef2e3defc0e4a30562357d
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Verdict
+              byte_offset: 1255
+              byte_count: 324
+              word_count: 45
+              content_hash: 3d4bcd09c21e7c037c54359eb1e57b154d0de6ab34ec340578448098ad893ce8
+        - path: "1.3"
+          level: 2
+          title: 3. Recommendation on Merging Documents
+          byte_offset: 1579
+          byte_count: 920
+          word_count: 129
+          content_hash: 043c73c8d45584c2120a940bbb154dcace227bb75eccc45c04374130823cbafa
+          children:
+            - path: 1.3.1
+              level: 3
+              title: '`initial-workflow-analysis.md`'
+              byte_offset: 1736
+              byte_count: 254
+              word_count: 36
+              content_hash: 5d3d4749936f79ebe7185fee25c0eab46b29f1a767b7fdd01b7c307b63347bb0
+            - path: 1.3.2
+              level: 3
+              title: '`workflow-system-design.md`'
+              byte_offset: 1990
+              byte_count: 205
+              word_count: 28
+              content_hash: 39aca04e7acd907d437163f8ad704774d542dc2ef65b952d52ed5363bfaad6ee
+            - path: 1.3.3
+              level: 3
+              title: Recommendation
+              byte_offset: 2195
+              byte_count: 304
+              word_count: 41
+              content_hash: 0418d125a057d60b8eda1da527a76098817f9c479badbcb770b82efb788003d0
+        - path: "1.4"
+          level: 2
+          title: 4. Strong Ideas Worth Keeping
+          byte_offset: 2499
+          byte_count: 122
+          word_count: 17
+          content_hash: 9b69a6fded6cce17442ff63ca12ebc39f0b95a83f9260e2a5cfe364ef5e88d22
+        - path: "1.5"
+          level: 2
+          title: 4.1 Workflow State Is the Source of Truth, Conversation Is the Interface
+          byte_offset: 2621
+          byte_count: 380
+          word_count: 58
+          content_hash: 3ece4704157b758073bee5c90882d6a51dc3799cc5a9703d271cb274b06ab5a4
+        - path: "1.6"
+          level: 2
+          title: 4.2 Disciplined Normalisation
+          byte_offset: 3001
+          byte_count: 515
+          word_count: 80
+          content_hash: 640a0d2ad10983d36c65be9be24f8bac1364413026e148ed6855f174b31851ca
+        - path: "1.7"
+          level: 2
+          title: 4.3 The MCP-First Model
+          byte_offset: 3516
+          byte_count: 317
+          word_count: 53
+          content_hash: a918d2e044ef2e58ed5b8019d6152a12f80e98c46f1eec684724dfcef5bf30e5
+        - path: "1.8"
+          level: 2
+          title: 4.4 One File Per Entity
+          byte_offset: 3833
+          byte_count: 347
+          word_count: 57
+          content_hash: a02fe117afafd769605ba2706bc9cff0b0b56f77f5a3eb94bf0600c12e26668f
+        - path: "1.9"
+          level: 2
+          title: 4.5 Git-Native State with Local SQLite Cache
+          byte_offset: 4180
+          byte_count: 326
+          word_count: 53
+          content_hash: 6d086ded34fa84956ad34189b68608e688af980377dd599254445975595cdba1
+        - path: "1.10"
+          level: 2
+          title: 4.6 Bugs as First-Class Workflow Objects
+          byte_offset: 4506
+          byte_count: 307
+          word_count: 51
+          content_hash: f09b64f4eae8d019e5ef40616e95f345728922cc4eceeecb5cf59a78426c0bcd
+        - path: "1.11"
+          level: 2
+          title: 4.7 Concurrency and Worktree Strategy
+          byte_offset: 4813
+          byte_count: 249
+          word_count: 39
+          content_hash: 7e492b178252b9c1e1e3df3ccb5e6cd38805d8452cc4dfa00bb1ccb276896ed7
+        - path: "1.12"
+          level: 2
+          title: 4.8 The Conversational Boundary
+          byte_offset: 5062
+          byte_count: 294
+          word_count: 45
+          content_hash: e4cf1d7b29a9f03fc64986449f83c5c35b4a394a713e083ca8bed3189a957513
+        - path: "1.13"
+          level: 2
+          title: 4.9 Phased Implementation
+          byte_offset: 5356
+          byte_count: 263
+          word_count: 40
+          content_hash: 64ca5fa3410957341a77c316b5991453a6aa26bf8a90e3c21d511a0ec9d8d1b8
+        - path: "1.14"
+          level: 2
+          title: 5. Areas That Need Refinement
+          byte_offset: 5619
+          byte_count: 123
+          word_count: 20
+          content_hash: 72d441484bb4dc24a97b5cb918e23ee73447a89994037c7530e030fcbfc6af2f
+        - path: "1.15"
+          level: 2
+          title: 5.1 The Object Model May Be Too Compressed
+          byte_offset: 5742
+          byte_count: 1255
+          word_count: 199
+          content_hash: 452b7f38829932d5d3477558875a403043b6c89459b88690945b2f154e92af7f
+          children:
+            - path: 1.15.1
+              level: 3
+              title: Why this matters
+              byte_offset: 6232
+              byte_count: 350
+              word_count: 54
+              content_hash: df2d202efc3fd1fe2aab7fa64f7469bfab19a4a712725b7074f48580188a6474
+            - path: 1.15.2
+              level: 3
+              title: Review recommendation
+              byte_offset: 6582
+              byte_count: 415
+              word_count: 62
+              content_hash: d212b53133f017eedc5fd10f0f4c6119a9c79aa9fb993efa74c7839ae69445ea
+        - path: "1.16"
+          level: 2
+          title: 5.2 The ID Strategy May Be Too Complex Too Early
+          byte_offset: 6997
+          byte_count: 935
+          word_count: 143
+          content_hash: b796870d7244b02fe9ffd4efcf55b9ea713cbcd78b5db437f96fa6764f738ab4
+          children:
+            - path: 1.16.1
+              level: 3
+              title: Alternative worth evaluating
+              byte_offset: 7379
+              byte_count: 268
+              word_count: 38
+              content_hash: d272b3b7c5f31e2407e3afbe610683ae20f3c22153cf34566c46d11ed1c8d4d5
+            - path: 1.16.2
+              level: 3
+              title: Review recommendation
+              byte_offset: 7647
+              byte_count: 285
+              word_count: 43
+              content_hash: 49fd808111aa9cc98c67cae18d976cf834756ccaf7ed0d3fc24e992869da8ae6
+        - path: "1.17"
+          level: 2
+          title: 5.3 The Proposal Needs a Clearer Distinction Between Intake Artifacts and Projections
+          byte_offset: 7932
+          byte_count: 1164
+          word_count: 172
+          content_hash: 49a08b5a62ce6dc3f897288111a10da9ffd6a22d157815c5c1594f10b67e3e9c
+          children:
+            - path: 1.17.1
+              level: 3
+              title: Intake artifacts
+              byte_offset: 8386
+              byte_count: 174
+              word_count: 27
+              content_hash: f143ff410791562524085d16e0478ab7dda31298474ec178faca333931c5ca2c
+            - path: 1.17.2
+              level: 3
+              title: Projections
+              byte_offset: 8560
+              byte_count: 375
+              word_count: 57
+              content_hash: 8684a1f52438ae9de3f6b5b1ace578e840945bf7f768ca4c44ec5f003f35769b
+            - path: 1.17.3
+              level: 3
+              title: Review recommendation
+              byte_offset: 8935
+              byte_count: 161
+              word_count: 24
+              content_hash: 24e80f77692f53ba2588025c26e241673ac3b4956da08653db92cd71865b6d41
+        - path: "1.18"
+          level: 2
+          title: 5.4 “Documents Should Be Generated, Not Maintained” Needs Slight Tightening
+          byte_offset: 9096
+          byte_count: 753
+          word_count: 113
+          content_hash: fdc08c9f41c8d1c49b1f1d87628438dbb2011c6135f8122b0fde87f928209167
+          children:
+            - path: 1.18.1
+              level: 3
+              title: Review recommendation
+              byte_offset: 9615
+              byte_count: 234
+              word_count: 31
+              content_hash: 90c7aaf2162b9f74b19f92ba3787923552ef3708b8c0903060b3c5a8f98d1021
+        - path: "1.19"
+          level: 2
+          title: 5.5 The Knowledge Layer Needs Stronger Governance Rules
+          byte_offset: 9849
+          byte_count: 675
+          word_count: 98
+          content_hash: 383219b9f2900d93d9f1fd59a4e16e992893cd5db6ee743da9e41a265f081ebb
+          children:
+            - path: 1.19.1
+              level: 3
+              title: Review recommendation
+              byte_offset: 10205
+              byte_count: 319
+              word_count: 43
+              content_hash: 8ffa4033cf6418612f8edb235451c590087a52a49876a248410f6a4ec72cbae0
+        - path: "1.20"
+          level: 2
+          title: 5.6 State Machine Design Needs Slight Clarification
+          byte_offset: 10524
+          byte_count: 643
+          word_count: 88
+          content_hash: 8deff8e0c497468fd1e99b9ac1260dd55524bc150ff0392fe9b6b50d5619f78a
+          children:
+            - path: 1.20.1
+              level: 3
+              title: Review recommendation
+              byte_offset: 10966
+              byte_count: 201
+              word_count: 27
+              content_hash: 5679314385af9421ca037ee2ddace21830ca71ae55c5ee140afe73985317358d
+        - path: "1.21"
+          level: 2
+          title: 6. Are There Fundamental Problems?
+          byte_offset: 11167
+          byte_count: 233
+          word_count: 33
+          content_hash: 90a152e8b8cebcb86b4b572151363b11518c912e7c26f42870a674f431949622
+        - path: "1.22"
+          level: 2
+          title: '6.1 Tension: Composite `Feature` vs First-Class `Feature` / `Specification` / `Plan`'
+          byte_offset: 11400
+          byte_count: 380
+          word_count: 57
+          content_hash: 78be84ad101c855969e9a945b16f28f1b78e32419dce2a5f094c651a981a4eb5
+        - path: "1.23"
+          level: 2
+          title: '6.2 Tension: Human-Friendly Sequential IDs vs Distributed-Safe IDs'
+          byte_offset: 11780
+          byte_count: 331
+          word_count: 49
+          content_hash: b2ec251db96d2932c1d22da4008fe05cbcc6cefcf36d5d045dcab7b82f56781a
+        - path: "1.24"
+          level: 2
+          title: 7. Suggested Near-Term Direction
+          byte_offset: 12111
+          byte_count: 166
+          word_count: 26
+          content_hash: 58288e021daf0d20b84bae8039222849e8f823519b866ed2b89aff98dd9a1067
+        - path: "1.25"
+          level: 2
+          title: 7.1 Keep the Current Overall Structure
+          byte_offset: 12277
+          byte_count: 285
+          word_count: 46
+          content_hash: dbd7ba3849a3c6a4f5ed81a7611c17b7a6c8b581c7685b3f9a9a7527bfe31c73
+        - path: "1.26"
+          level: 2
+          title: 7.2 Revise the Architecture Section to Reflect the Intake / Canonical / Projection Split
+          byte_offset: 12562
+          byte_count: 327
+          word_count: 48
+          content_hash: 292c4618623de8846ba54c95b0c185bc3d41642a824491276f88af975b432356
+        - path: "1.27"
+          level: 2
+          title: 7.3 Revisit the Object Model Before Implementation
+          byte_offset: 12889
+          byte_count: 295
+          word_count: 42
+          content_hash: a25b537d5ea5085b21418f3fed92005b9b9604437f2ee6357f45f86c804a60e6
+        - path: "1.28"
+          level: 2
+          title: 7.4 Keep the MCP Interface but Expand It Around Normalisation Support
+          byte_offset: 13184
+          byte_count: 382
+          word_count: 57
+          content_hash: 9c4510f3b92690b9f03481ce711871bc77c4d4fe535e74e975b48cd4cad17d81
+        - path: "1.29"
+          level: 2
+          title: 7.5 Keep the Current Phased Implementation Order
+          byte_offset: 13566
+          byte_count: 171
+          word_count: 28
+          content_hash: d0c8d1512a82560d0ffc6e8f2ede305212f4a171de385f8234a894aeee4fac4b
+        - path: "1.30"
+          level: 2
+          title: 8. Recommended Merge Strategy for Documents
+          byte_offset: 13737
+          byte_count: 509
+          word_count: 75
+          content_hash: 3955bd827391388588bb3ce7943d7871fb358da2b4504fa44b0729e6a0c4b82f
+          children:
+            - path: 1.30.1
+              level: 3
+              title: 'Layer 1: Research and rationale'
+              byte_offset: 13833
+              byte_count: 68
+              word_count: 7
+              content_hash: a3f13ad22a91c68c7715dc1131ebfcb625278eedd99908d7b68ed4bcfda92949
+            - path: 1.30.2
+              level: 3
+              title: 'Layer 2: Design proposal'
+              byte_offset: 13901
+              byte_count: 345
+              word_count: 52
+              content_hash: c75983dbf0329384f7c8e85ac4af119065304725e72db0aa8647d8ed32159742
+        - path: "1.31"
+          level: 2
+          title: 9. Final Verdict
+          byte_offset: 14246
+          byte_count: 1102
+          word_count: 156
+          content_hash: d3191fd52c2c0fd51f114cfe1260e5f1e2616f9db5fed5c62d869857337c9afd
+          children:
+            - path: 1.31.1
+              level: 3
+              title: Final recommendation
+              byte_offset: 15046
+              byte_count: 302
+              word_count: 46
+              content_hash: b101bcde83ee58c8de734f977c9faf23ad4b4b255222ae8cb6d4658d35ee14ca
+front_matter:
+    status: historical — research trail
+    date: "2026-03-18"
+    related:
+        - initial-workflow-analysis.md
+    extra:
+        Author: Claude
+        Note: This review fed into the consolidation that produced `work/design/workflow-design-basis.md`. Retained as part of the research trail.
+        Reviews: '`workflow-system-design.md`'
+cross_doc_links:
+    - target_path: workflow-system-design.md
+      link_text: workflow-system-design.md
+      section_path: "1"
+    - target_path: initial-workflow-analysis.md
+      link_text: initial-workflow-analysis.md
+      section_path: "1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: workflow-system-design.md
+      link_text: workflow-system-design.md
+      section_path: "1.1"
+    - target_path: initial-workflow-analysis.md
+      link_text: initial-workflow-analysis.md
+      section_path: "1.1"
+    - target_path: workflow-system-design.md
+      link_text: workflow-system-design.md
+      section_path: "1.2"
+    - target_path: initial-workflow-analysis.md
+      link_text: initial-workflow-analysis.md
+      section_path: "1.2"
+    - target_path: initial-workflow-analysis.md
+      link_text: initial-workflow-analysis.md
+      section_path: 1.2.1
+    - target_path: initial-workflow-analysis.md
+      link_text: initial-workflow-analysis.md
+      section_path: 1.3.1
+    - target_path: workflow-system-design.md
+      link_text: workflow-system-design.md
+      section_path: 1.3.2
+    - target_path: initial-workflow-analysis.md
+      link_text: initial-workflow-analysis.md
+      section_path: 1.3.3
+    - target_path: workflow-system-design.md
+      link_text: workflow-system-design.md
+      section_path: 1.3.3
+    - target_path: workflow-system-design.md
+      link_text: workflow-system-design.md
+      section_path: "1.4"
+    - target_path: workflow-system-design.md
+      link_text: workflow-system-design.md
+      section_path: "1.17"
+    - target_path: initial-workflow-analysis.md
+      link_text: initial-workflow-analysis.md
+      section_path: 1.30.1
+    - target_path: workflow-system-design.md
+      link_text: workflow-system-design.md
+      section_path: 1.30.2
+    - target_path: workflow-system-design.md
+      link_text: workflow-system-design.md
+      section_path: "1.31"
+    - target_path: initial-workflow-analysis.md
+      link_text: initial-workflow-analysis.md
+      section_path: "1.31"
+    - target_path: workflow-system-design.md
+      link_text: workflow-system-design.md
+      section_path: 1.31.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.16.1
+      role: alternative
+      confidence: high
+    - section_path: 1.30.1
+      role: rationale
+      confidence: high
+classified: false

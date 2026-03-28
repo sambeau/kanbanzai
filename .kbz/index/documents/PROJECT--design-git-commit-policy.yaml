@@ -1,0 +1,394 @@
+document_id: PROJECT/design-git-commit-policy
+document_path: work/design/git-commit-policy.md
+content_hash: 43d09d285c07d294f633b4c35d1f4610e4c3f0d992d99cddd905d8720916b8a5
+indexed_at: 2026-03-25T21:38:22.23339Z
+sections:
+    - path: "1"
+      level: 1
+      title: Git Commit Policy
+      byte_offset: 0
+      byte_count: 17033
+      word_count: 2600
+      content_hash: 43d09d285c07d294f633b4c35d1f4610e4c3f0d992d99cddd905d8720916b8a5
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 376
+          byte_count: 712
+          word_count: 118
+          content_hash: c3f4630cd20934d38035071b71cb15cef834d28631ed97465ba428bf7eb49d1e
+        - path: "1.2"
+          level: 2
+          title: 2. Core Principles
+          byte_offset: 1088
+          byte_count: 1743
+          word_count: 288
+          content_hash: d2013da43f5ff7f00cf06e464f271b2aee2185f33d574db6d5401037c192072f
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 One coherent change per commit
+              byte_offset: 1111
+              byte_count: 417
+              word_count: 67
+              content_hash: bb82c39a3b03552a9fec903352c91f81cc9c94e46ab897ee2fee08e527056bee
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Commits must be traceable to workflow objects
+              byte_offset: 1528
+              byte_count: 264
+              word_count: 47
+              content_hash: a7658ae41721a2d5112d796cf7b489c3fad04077327c4f98237a7d0562e62783
+            - path: 1.2.3
+              level: 3
+              title: 2.3 Commit history must support review and diagnosis
+              byte_offset: 1792
+              byte_count: 334
+              word_count: 56
+              content_hash: d403e119101a36249693d4e6b275299c07fc1842653b74fbe713731daca0e578
+            - path: 1.2.4
+              level: 3
+              title: 2.4 Commits should help, not hinder, Git bisect
+              byte_offset: 2126
+              byte_count: 347
+              word_count: 56
+              content_hash: e400b17f20f6f4c1c8701c3bbf01457612042edf1a4b2b6c698dc3604a86464a
+            - path: 1.2.5
+              level: 3
+              title: 2.5 Commit discipline matters more with AI agents
+              byte_offset: 2473
+              byte_count: 358
+              word_count: 58
+              content_hash: 59fc15607cf0cb3db01de39c8e1f31470f476e49afacd67aaa7c5f3f1f8427a5
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2831
+          byte_count: 453
+          word_count: 71
+          content_hash: 7cef24cbdc85739c6e28fa6932413a50b6cedae8ef5d3c0342b43fd4ba632947
+        - path: "1.4"
+          level: 2
+          title: 4. What Should Be in a Commit
+          byte_offset: 3284
+          byte_count: 34
+          word_count: 8
+          content_hash: 8ffbeb67012ecc38e7355de661963faa07d7898d59f0f0f8b32126ea3feba88b
+        - path: "1.5"
+          level: 2
+          title: 4.1 A commit should contain one coherent unit of work
+          byte_offset: 3318
+          byte_count: 546
+          word_count: 87
+          content_hash: 0a0a862776d398b21dff6c59765b34e11fdcabde6c6486f9f9f1ee0f6e906648
+        - path: "1.6"
+          level: 2
+          title: 4.2 Allowed commit scopes
+          byte_offset: 3864
+          byte_count: 393
+          word_count: 69
+          content_hash: 20247462722b43067efe2af777ad08c7665919a7c4e862578e1087c52ac8fbb6
+        - path: "1.7"
+          level: 2
+          title: 4.3 Workflow state and implementation changes
+          byte_offset: 4257
+          byte_count: 848
+          word_count: 124
+          content_hash: b9afebea9f8ae7155129dbecec5baf28d2f0c51c923076dd114dbcae9f0a2e35
+        - path: "1.8"
+          level: 2
+          title: 4.4 Generated files
+          byte_offset: 5105
+          byte_count: 493
+          word_count: 78
+          content_hash: a9833766cc37e882ccff66ca7654052270ce1fdb8918e5529c581afb8781ad8d
+        - path: "1.9"
+          level: 2
+          title: 5. What Must Not Be in a Commit
+          byte_offset: 5598
+          byte_count: 507
+          word_count: 82
+          content_hash: f332b91b9d53691dd49b31e113770c2b31abbd051a9c92748a68b1225954aec4
+        - path: "1.10"
+          level: 2
+          title: 6. Commit Message Policy
+          byte_offset: 6105
+          byte_count: 29
+          word_count: 5
+          content_hash: 1a05d6b7de6af99508e32b140c65c9ce4df14c3c139229cee071bc5adacac607
+        - path: "1.11"
+          level: 2
+          title: 6.1 Message goals
+          byte_offset: 6134
+          byte_count: 146
+          word_count: 27
+          content_hash: 2cbb02c50d71d6ba51aec69c93b364046e8a41c57fa272c4eae1ba4fedb8b37a
+        - path: "1.12"
+          level: 2
+          title: 6.2 Required structure
+          byte_offset: 6280
+          byte_count: 524
+          word_count: 64
+          content_hash: a7c837e115a79e37ddb3e270ae355fa35d87d779b72099a6dab8eb5edf514b80
+        - path: "1.13"
+          level: 2
+          title: 6.3 Preferred commit types
+          byte_offset: 6804
+          byte_count: 484
+          word_count: 70
+          content_hash: 6f189ca22e1a7f0098b428f72ae95003be24f22e69cf46bdf484bfe27f0faa1b
+        - path: "1.14"
+          level: 2
+          title: 6.4 Summary style
+          byte_offset: 7288
+          byte_count: 252
+          word_count: 42
+          content_hash: 296a0f95c1a73b688ed0a5dfe24bdab60cf2ca365a87fa41035b3a9681820374
+        - path: "1.15"
+          level: 2
+          title: 6.5 Multi-line commit messages
+          byte_offset: 7540
+          byte_count: 345
+          word_count: 52
+          content_hash: 8606af16e7a93cc4f90365f0073bba910ffb815a7e0ca0db5fb626fae6030e99
+        - path: "1.16"
+          level: 2
+          title: 7. Preconditions Before Commit
+          byte_offset: 7885
+          byte_count: 516
+          word_count: 83
+          content_hash: bada7d1e8e486dfd18090fb7ef5b26d265fc2059238d278faa7d2cccae0bbd7b
+        - path: "1.17"
+          level: 2
+          title: 8. Commits and Review Dimensions
+          byte_offset: 8401
+          byte_count: 406
+          word_count: 70
+          content_hash: c4039e250b10ee9c9127c1fab5b64ec9ee7ff0324ddb1d9c310b8256837245ca
+        - path: "1.18"
+          level: 2
+          title: 9. Commit Policy for Features
+          byte_offset: 8807
+          byte_count: 677
+          word_count: 92
+          content_hash: 04ceee87c47f44f88bb9de8da8ccbf4042e25751bc98ad8ce34ba4db322fe127
+        - path: "1.19"
+          level: 2
+          title: 10. Commit Policy for Bugs
+          byte_offset: 9484
+          byte_count: 523
+          word_count: 84
+          content_hash: f4e1af6a492c5ec6f9b5c2aacb5243c2c25dae4ddc094e29e8790a0d184d49d1
+        - path: "1.20"
+          level: 2
+          title: 11. Commit Policy for Workflow State
+          byte_offset: 10007
+          byte_count: 608
+          word_count: 85
+          content_hash: 2a1688573d3b8f90196c771541ce9995437fa9818150185c0405c418163baf2a
+        - path: "1.21"
+          level: 2
+          title: 12. Commit Policy for Documentation
+          byte_offset: 10615
+          byte_count: 577
+          word_count: 78
+          content_hash: c49f35254eae1000905dbf4e4e5f8461b6daa7c70c81e0ccce4d3f0b9f29bcf8
+        - path: "1.22"
+          level: 2
+          title: 13. Commit Policy for Refactors
+          byte_offset: 11192
+          byte_count: 546
+          word_count: 86
+          content_hash: d5ffeb27aa271dd322b32d0c3248a2474671a81b53584d7f9cf99aa720b36b0b
+        - path: "1.23"
+          level: 2
+          title: 14. Prohibited Commit Behaviors for Agents
+          byte_offset: 11738
+          byte_count: 613
+          word_count: 90
+          content_hash: 7236906b93fbad5596567375c7efed8f8eea4b43ee0937f587cc8e17bf5792bc
+        - path: "1.24"
+          level: 2
+          title: 15. Checkpoint Commits
+          byte_offset: 12351
+          byte_count: 502
+          word_count: 72
+          content_hash: 0a15549e5be56d8dc6de7ef9de819e85a261bb3c39abceecaed7e2e3dc8e45e8
+        - path: "1.25"
+          level: 2
+          title: 16. Relationship to Branches and Pull Requests
+          byte_offset: 12853
+          byte_count: 547
+          word_count: 91
+          content_hash: aafadbda8f219427baa02f95eaaf6ea9547c1b2213fe2bebbe8a11a14677a8d6
+        - path: "1.26"
+          level: 2
+          title: 17. Error Correction
+          byte_offset: 13400
+          byte_count: 523
+          word_count: 73
+          content_hash: 13f52235f230ac3c99ef19e5c526aeb138380e3091549a68ac72a3c1cd5bb2e6
+          children:
+            - path: 1.26.1
+              level: 3
+              title: 17.1 Before publishing
+              byte_offset: 13492
+              byte_count: 103
+              word_count: 16
+              content_hash: 999647d7324c32e03343afc0a5d0bab17b323e645d6a899b5e1717553bbe2369
+            - path: 1.26.2
+              level: 3
+              title: 17.2 After publishing or shared visibility
+              byte_offset: 13595
+              byte_count: 328
+              word_count: 41
+              content_hash: a91caf700394fa3bf306eda96456f0cb88478a9a0b9f2eadd2fee1079e521c3e
+        - path: "1.27"
+          level: 2
+          title: 18. Relationship to the Workflow System
+          byte_offset: 13923
+          byte_count: 494
+          word_count: 76
+          content_hash: 78e66ba6cc3553dbee1a129d34460927709f7d97c65170c484d26586c8c16799
+        - path: "1.28"
+          level: 2
+          title: 19. Relationship to Agent Protocol and Review Policy
+          byte_offset: 14417
+          byte_count: 618
+          word_count: 86
+          content_hash: 6304cad0f989a1deac319356ff5b0623b9083f49b7604677c4ff43d097d17aa7
+        - path: "1.29"
+          level: 2
+          title: 20. Bootstrap Guidance
+          byte_offset: 15035
+          byte_count: 527
+          word_count: 83
+          content_hash: d116f0a97701a11fb759d29e69e8079393a7637726e8c24e16e4ae0818694cf5
+        - path: "1.30"
+          level: 2
+          title: 21. Standard Default Guidance for Agents
+          byte_offset: 15562
+          byte_count: 507
+          word_count: 76
+          content_hash: ca7795e8fc28b739099a4b9aaeac632c70217d11008741338bfec2a0302c0a24
+        - path: "1.31"
+          level: 2
+          title: 22. Acceptance Criteria
+          byte_offset: 16069
+          byte_count: 422
+          word_count: 65
+          content_hash: 9c3e174b5dfb8f039e1023cfc2b1e6af269c75faea11c5e4fd04a92e5f972010
+        - path: "1.32"
+          level: 2
+          title: 23. Summary
+          byte_offset: 16491
+          byte_count: 542
+          word_count: 86
+          content_hash: 48ee07661b32fb20748d67b5df09f65aebd3458a1a57188bcb9fefa32a499422
+front_matter:
+    status: policy draft
+    date: "2026-03-18"
+    related:
+        - work/design/workflow-design-basis.md
+        - work/design/agent-interaction-protocol.md
+        - work/design/quality-gates-and-review-policy.md
+        - work/spec/phase-1-specification.md
+    extra:
+        Purpose: define how Git commits should be created, structured, described, and managed in the workflow system
+entity_refs:
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: "1.12"
+      byte_offset: 6494
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: "1.18"
+      byte_offset: 9269
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: "1.20"
+      byte_offset: 10414
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: "1.21"
+      byte_offset: 11089
+    - entity_id: FEAT-152
+      entity_type: feature
+      section_path: "1.24"
+      byte_offset: 12722
+    - entity_id: TASK-123
+      entity_type: task
+      section_path: "1.7"
+      byte_offset: 4503
+    - entity_id: TASK-152
+      entity_type: task
+      section_path: "1.12"
+      byte_offset: 6683
+    - entity_id: BUG-027
+      entity_type: bug
+      section_path: "1.7"
+      byte_offset: 4567
+    - entity_id: BUG-027
+      entity_type: bug
+      section_path: "1.12"
+      byte_offset: 6552
+    - entity_id: BUG-027
+      entity_type: bug
+      section_path: "1.14"
+      byte_offset: 7414
+    - entity_id: BUG-027
+      entity_type: bug
+      section_path: "1.19"
+      byte_offset: 9873
+    - entity_id: BUG-027
+      entity_type: bug
+      section_path: "1.21"
+      byte_offset: 11141
+    - entity_id: DEC-041
+      entity_type: decision
+      section_path: "1.12"
+      byte_offset: 6754
+    - entity_id: DEC-041
+      entity_type: decision
+      section_path: "1.20"
+      byte_offset: 10478
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "1"
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: "1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "1.28"
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: "1.28"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: constraint
+      confidence: high
+    - section_path: "1.14"
+      role: narrative
+      confidence: high
+    - section_path: "1.31"
+      role: requirement
+      confidence: high
+    - section_path: "1.32"
+      role: narrative
+      confidence: high
+classified: false

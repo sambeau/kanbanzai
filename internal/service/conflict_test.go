@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 const testPlanIDConflict = "P1-conflict-plan"

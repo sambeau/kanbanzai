@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 const taskUsageText = `Usage: kbz task <subcommand> [options]

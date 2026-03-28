@@ -1,0 +1,7 @@
+id: TASK-01KMRJAFJHNN5
+parent_feature: FEAT-01KMRJ7Z2PVR9
+slug: finish-retrospective-response
+summary: "Extend the `finish` response with a `retrospective` section: accepted (entry_id, topic, category per signal), rejected (category, observation, reason per signal), total_attempted, total_accepted. Add retrospective_signal_contributed to the side-effects vocabulary (§8.3 of the 2.0 spec): one entry per accepted signal containing entry_id and category. Update the finish response type definitions and any response serialisation tests. Acceptance criteria: P5-1.14, P5-1.15."
+status: done
+depends_on:
+  - TASK-01KMRJA8G9C9F

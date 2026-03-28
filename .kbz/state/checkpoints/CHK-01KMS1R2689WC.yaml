@@ -1,0 +1,9 @@
+id: CHK-01KMS1R2689WC
+question: "Feature E (FEAT-01KMRX1HG8BAX, reviewer-context-profile-and-skill) review found no blocking findings but has an ambiguous test adequacy concern: the reviewer profile introduces map-typed conventions — a code path in formatProfile not covered by existing tests, and there is no integration test loading the actual reviewer.yaml. Should this be treated as BLOCKING (create remediation task for missing tests before transitioning to done) or NON-BLOCKING (transition to done now, track test improvement as future work)?"
+context: "Review report: work/reports/review-FEAT-01KMRX1HG8BAX.md. The feature delivered reviewer.yaml, code-review.md SKILL, and quality gates policy update. All 21 spec ACs substantially pass. The concern is specifically about N5 (no tests for map-typed conventions branch in formatProfile) and N6 (no integration test for reviewer.yaml loading). The formatProfile function works correctly in practice — the untested code path handles map[string]interface{} conventions which is what the reviewer profile uses. Full review details are in the report."
+orchestration_summary: "Multi-feature review (TASK-01KMRXK5ARR1S). Two features reviewed simultaneously: Feature E (FEAT-01KMRX1HG8BAX) and Skills Content (FEAT-01KMKRQSD1TKK). Skills Content transitioned to needs-rework (clear blocking findings — fabricated lifecycle states + stale 1.0 tool names). Feature E verdict is approved_with_followups but test adequacy dimension is ambiguous — awaiting human judgment."
+status: responded
+created_at: "2026-03-28T01:43:11Z"
+created_by: orchestrator
+responded_at: "2026-03-28T01:47:17Z"
+response: "BLOCKING — create remediation task for missing tests. The reviewer profile's map-typed conventions code path and reviewer.yaml integration loading must be tested before the feature can reach done."
