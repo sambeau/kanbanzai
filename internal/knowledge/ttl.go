@@ -42,10 +42,8 @@ func GetDefaultTTL(tier int) int {
 // Returns the updated fields map.
 func ResetTTL(fields map[string]any, tier int, config TTLConfig, now time.Time) map[string]any {
 	result := make(map[string]any)
-	if fields != nil {
-		for k, v := range fields {
-			result[k] = v
-		}
+	for k, v := range fields {
+		result[k] = v
 	}
 
 	ttlDays := getTTLDaysFromConfig(tier, config)
