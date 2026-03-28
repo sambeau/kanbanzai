@@ -1,0 +1,7 @@
+id: DEC-01KMTTMSG2R3H
+slug: go-version-technical-eval
+summary: "Go version: evaluate minimum purely on technical grounds (what compiles). Binary-only distribution means end users don't need a matching compiler."
+rationale: "User preference: since kanbanzai ships as a binary, the minimum Go version only matters for anyone compiling from source, which is unlikely to be a problem given Go's backwards compatibility."
+decided_by: sambeau
+date: "2026-03-28T18:17:32Z"
+status: proposed
