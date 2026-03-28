@@ -1,4 +1,4 @@
-updated_at: 2026-03-28T12:01:36.625138Z
+updated_at: 2026-03-28T12:04:56.989424Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -27576,6 +27576,191 @@ edges:
       to_type: section
       edge_type: CONTAINS
     - from: PROJECT/design-decompose-reliability#1.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule
+      from_type: document
+      to: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1
+      from_type: section
+      to: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1
+      from_type: section
+      to: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1
+      from_type: section
+      to: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.3
+      from_type: section
+      to: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.3
+      from_type: section
+      to: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1
+      from_type: section
+      to: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1
+      from_type: section
+      to: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1
+      from_type: section
+      to: FEAT-01KMT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.1
+      from_type: section
+      to: FEAT-01KMT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1
+      from_type: section
+      to: P8-decompose-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1
+      from_type: section
+      to: work/design/decompose-reliability.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.3.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.3.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.3.2
+      from_type: section
+      to: work/bootstrap/bootstrap-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule#1.5
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates
+      from_type: document
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1
+      from_type: section
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1
+      from_type: section
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1
+      from_type: section
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.3
+      from_type: section
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.3
+      from_type: section
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1
+      from_type: section
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.4
+      from_type: section
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.4
+      from_type: section
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.4
+      from_type: section
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.4
+      from_type: section
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1
+      from_type: section
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1
+      from_type: section
+      to: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1
+      from_type: section
+      to: FEAT-01KMT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.3.2
+      from_type: section
+      to: FEAT-01KMT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1
+      from_type: section
+      to: P8-decompose-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1
+      from_type: section
+      to: work/design/decompose-reliability.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates#1.3.2
       from_type: section
       to: AGENTS.md
       to_type: document
