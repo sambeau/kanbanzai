@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"strconv"
 
+	_ "kanbanzai/internal/buildinfo"
 	"kanbanzai/internal/cache"
 	"kanbanzai/internal/config"
 	kbzctx "kanbanzai/internal/context"
