@@ -1,7 +1,7 @@
 id: FEAT-01KMRX1F47Z94
 slug: review-lifecycle-states
 parent: P6-workflow-quality-and-review
-status: needs-rework
+status: done
 summary: "Add 'reviewing' and 'needs-rework' states to the feature lifecycle. Remove the developing → done direct path. Implement the transition map from the code review workflow design §4.2. Ensure smart-skip logic from Phase 1 composes correctly. Update health checks and merge gate checks for the new states."
 design: PROJECT/design-code-review-workflow
 spec: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states
