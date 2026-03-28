@@ -20,7 +20,7 @@ build:
 
 install: build
 	go install -ldflags "$(LDFLAGS)" ./cmd/kanbanzai
-	kanbanzai install-record write --by makefile
+	./$(BINARY) install-record write --by makefile
 
 clean:
 	rm -f $(BINARY)

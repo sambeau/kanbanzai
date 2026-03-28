@@ -1,4 +1,4 @@
-updated_at: 2026-03-28T18:20:01.379691Z
+updated_at: 2026-03-28T19:03:06.383309Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -31168,5 +31168,130 @@ edges:
     - from: FEAT-01KMTSPAV34HR/dev-plan-agents-md-cleanup#1.2.4
       from_type: section
       to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content
+      from_type: document
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.2
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.2
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK/specification-skills-content#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1
+      from_type: section
+      to: work/design/workflow-design-basis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1
+      from_type: section
+      to: work/design/agent-interaction-protocol.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1
+      from_type: section
+      to: work/design/document-centric-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.2.1
+      from_type: section
+      to: .agents/skills/{name}/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6.1
+      from_type: section
+      to: .agents/skills/{name}/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6.4
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/references/lifecycle.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6.5
+      from_type: section
+      to: .agents/skills/kanbanzai-design/references/design-quality.md
       to_type: document
       edge_type: LINKS_TO

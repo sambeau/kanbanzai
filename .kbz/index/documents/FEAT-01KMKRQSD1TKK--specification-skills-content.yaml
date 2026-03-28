@@ -1,0 +1,171 @@
+document_id: FEAT-01KMKRQSD1TKK/specification-skills-content
+document_path: work/spec/skills-content.md
+content_hash: 1ee3183aea45d541ef1fb62300984ab87a19934a60bc44c8be18988554aeff11
+indexed_at: 2026-03-28T19:03:06.383309Z
+sections:
+    - path: "1"
+      level: 1
+      title: Skills Content Specification
+      byte_offset: 0
+      byte_count: 9157
+      word_count: 1117
+      content_hash: 1ee3183aea45d541ef1fb62300984ab87a19934a60bc44c8be18988554aeff11
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 573
+          byte_count: 524
+          word_count: 75
+          content_hash: b7f527f18f3d7b7efecbe7838f34242ccffaeebc25810ba8c6bf99a03103c5d4
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 1097
+          byte_count: 540
+          word_count: 85
+          content_hash: c6f2cf23d4d70f3ab9e5b3eec227df76a256855916498bdbc57fa2c4598c73e3
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 In scope
+              byte_offset: 1110
+              byte_count: 281
+              word_count: 45
+              content_hash: 03805847f056fdfb4664deb098292061226d0e57627600d394b1552ba82715a4
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Out of scope
+              byte_offset: 1391
+              byte_count: 246
+              word_count: 37
+              content_hash: 1a996c1bd8b524be0ec4f203067a6f158415d6166a0973bcf3ce08c53cde2550
+        - path: "1.3"
+          level: 2
+          title: 3. The Six Skills
+          byte_offset: 1637
+          byte_count: 802
+          word_count: 91
+          content_hash: d0677c8ac1e3d50d3f32f59eae42d5d34b8b9432ba74725240ae1183debe5b7a
+        - path: "1.4"
+          level: 2
+          title: 4. 2.0 MCP Tool Surface
+          byte_offset: 2439
+          byte_count: 1750
+          word_count: 177
+          content_hash: 3aecfd6a6847c6947fed79f6331e6856f8eb1012e348c9150ce5a13adfa84682
+        - path: "1.5"
+          level: 2
+          title: 5. Entity Lifecycles
+          byte_offset: 4189
+          byte_count: 947
+          word_count: 129
+          content_hash: 5a5ef776fc8af9b77fb2b4678227516a2868d0fbcf66ea9d23d725327a76d6dc
+        - path: "1.6"
+          level: 2
+          title: 6. Acceptance Criteria
+          byte_offset: 5136
+          byte_count: 3514
+          word_count: 445
+          content_hash: 80ea5879fc1d3a3e8e65da1fc88458e2b7869d2a9adec4ef937a3b99737a0794
+          children:
+            - path: 1.6.1
+              level: 3
+              title: File Structure
+              byte_offset: 5163
+              byte_count: 650
+              word_count: 85
+              content_hash: 6a42b01f383055c64171bf21f7965379e584251c1c7df853be5f0a1cb141b27f
+            - path: 1.6.2
+              level: 3
+              title: Content Accuracy
+              byte_offset: 5813
+              byte_count: 1119
+              word_count: 143
+              content_hash: 12cf1124a1334ad589aa006a67b93296acd9b8987d65d62a3e442976b6021368
+            - path: 1.6.3
+              level: 3
+              title: Tool References
+              byte_offset: 6932
+              byte_count: 516
+              word_count: 55
+              content_hash: 6b567c75fe605fc9a63b8b160271a44439ed5335f4ffe9ea4990f7a4347c873f
+            - path: 1.6.4
+              level: 3
+              title: Lifecycle Reference
+              byte_offset: 7448
+              byte_count: 429
+              word_count: 52
+              content_hash: fc3af7048c51d8dbb29ef585adacdbf58606788374a4a41aed378e64680c1b8e
+            - path: 1.6.5
+              level: 3
+              title: Design Quality Reference
+              byte_offset: 7877
+              byte_count: 177
+              word_count: 17
+              content_hash: ebd7d7d00aa9149af567fef853b673c7c6576e386caded733354e539086f45bb
+            - path: 1.6.6
+              level: 3
+              title: Cross-References
+              byte_offset: 8054
+              byte_count: 319
+              word_count: 46
+              content_hash: 7e05e532a9a0d2801abad304b6ca8de848180b13965318d3273f8fad73c842c5
+            - path: 1.6.7
+              level: 3
+              title: Quality
+              byte_offset: 8373
+              byte_count: 277
+              word_count: 43
+              content_hash: 94062fb9b8121c8e41d8481ca2e7ad2c566cfed4431024ecb943a03751f7f946
+        - path: "1.7"
+          level: 2
+          title: 7. Verification
+          byte_offset: 8650
+          byte_count: 507
+          word_count: 74
+          content_hash: 2ed8860ac7c4ae00fe83d27b815f89b831bce509b8a509842c7556d4ea4d26d2
+entity_refs:
+    - entity_id: FEAT-01KMKRQSD1TKK
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 246
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "1"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1"
+    - target_path: .agents/skills/{name}/SKILL.md
+      link_text: .agents/skills/{name}/SKILL.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/{name}/SKILL.md
+      link_text: .agents/skills/{name}/SKILL.md
+      section_path: 1.6.1
+    - target_path: .agents/skills/kanbanzai-workflow/references/lifecycle.md
+      link_text: .agents/skills/kanbanzai-workflow/references/lifecycle.md
+      section_path: 1.6.4
+    - target_path: .agents/skills/kanbanzai-design/references/design-quality.md
+      link_text: .agents/skills/kanbanzai-design/references/design-quality.md
+      section_path: 1.6.5
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+classified: false
