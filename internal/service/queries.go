@@ -19,6 +19,7 @@ type ListFilteredInput struct {
 	UpdatedAfter  *time.Time
 	UpdatedBefore *time.Time
 	Parent        string // optional parent filter (for features)
+	Label         string // optional label filter (exact match)
 }
 
 // ListEntitiesFiltered returns entities of a given type matching the provided filters.
@@ -165,6 +166,13 @@ func matchesFilteredInput(r ListResult, input ListFilteredInput) bool {
 			parent = stringFromState(r.State, "epic")
 		}
 		if parent != input.Parent {
+			return false
+		}
+	}
+
+	if input.Label != "" {
+		label := stringFromState(r.State, "label")
+		if label != input.Label {
 			return false
 		}
 	}

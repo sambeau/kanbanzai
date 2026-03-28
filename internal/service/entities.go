@@ -33,12 +33,14 @@ type CreateFeatureInput struct {
 	Tags      []string
 	Summary   string
 	CreatedBy string
+	Label     string
 }
 
 type CreateTaskInput struct {
 	ParentFeature string
 	Slug          string
 	Summary       string
+	Label         string
 }
 
 type CreateBugInput struct {
@@ -243,6 +245,7 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 	entity := model.Feature{
 		ID:        idValue,
 		Slug:      normalizeSlug(input.Slug),
+		Label:     strings.TrimSpace(input.Label),
 		Parent:    parentID,
 		Status:    model.FeatureStatusProposed,
 		Summary:   strings.TrimSpace(input.Summary),
@@ -287,6 +290,7 @@ func (s *EntityService) CreateTask(input CreateTaskInput) (CreateResult, error) 
 		ID:            idValue,
 		ParentFeature: featureID,
 		Slug:          normalizeSlug(input.Slug),
+		Label:         strings.TrimSpace(input.Label),
 		Summary:       strings.TrimSpace(input.Summary),
 		Status:        model.TaskStatus("queued"),
 	}

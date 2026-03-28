@@ -73,6 +73,7 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		mcp.WithString("created_by", mcp.Description("Who created it. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 		mcp.WithString("design", mcp.Description("Design document reference (feature or plan)")),
 		mcp.WithArray("depends_on", mcp.Description("Task IDs this task depends on (task update only). Each must be a valid TASK-... ID.")),
+		mcp.WithString("label", mcp.Description("Short label for feature/task (max 24 chars). Set on create/update; empty string clears. Exact-match filter on list.")),
 		mcp.WithString("created_after", mcp.Description("Created-after filter, RFC3339 (list only)")),
 		mcp.WithString("created_before", mcp.Description("Created-before filter, RFC3339 (list only)")),
 		mcp.WithBoolean("advance", mcp.Description(
@@ -145,6 +146,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 			ParentFeature: entityArgStr(args, "parent_feature"),
 			Slug:          entityArgStr(args, "slug"),
 			Summary:       entityArgStr(args, "summary"),
+			Label:         entityArgStr(args, "label"),
 		})
 
 	case "feature":
@@ -155,6 +157,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 			Design:    entityArgStr(args, "design"),
 			Tags:      entityArgStringSlice(args, "tags"),
 			CreatedBy: createdBy,
+			Label:     entityArgStr(args, "label"),
 		})
 
 	case "plan":
@@ -203,14 +206,21 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 		return nil, err
 	}
 
+	displayID := id.FormatFullDisplay(result.ID)
+	label := entityStateStr(result.State, "label")
+	entityOut := map[string]any{
+		"display_id": displayID,
+		"id":         result.ID,
+		"type":       result.Type,
+		"slug":       result.Slug,
+		"status":     entityStateStr(result.State, "status"),
+		"entity_ref": id.FormatEntityRef(displayID, result.Slug, label),
+	}
+	if label != "" {
+		entityOut["label"] = label
+	}
 	out := map[string]any{
-		"entity": map[string]any{
-			"id":         result.ID,
-			"type":       result.Type,
-			"slug":       result.Slug,
-			"status":     entityStateStr(result.State, "status"),
-			"display_id": id.FormatFullDisplay(result.ID),
-		},
+		"entity": entityOut,
 	}
 
 	if len(advisory) > 0 {
@@ -289,7 +299,7 @@ func entityDuplicateAdvisory(entityType string, args map[string]any, entitySvc *
 func entityGetAction(entitySvc *service.EntityService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		args, _ := req.Params.Arguments.(map[string]any)
-		entityID := entityArgStr(args, "id")
+		entityID := id.NormalizeID(entityArgStr(args, "id"))
 		if entityID == "" {
 			return nil, fmt.Errorf("id is required for get")
 		}
@@ -332,6 +342,7 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 		statusFilter := entityArgStr(args, "status")
 		parentFilter := entityArgStr(args, "parent")
 		tagsFilter := entityArgStringSlice(args, "tags")
+		labelFilter := entityArgStr(args, "label")
 
 		var createdAfter, createdBefore *time.Time
 		if caStr := entityArgStr(args, "created_after"); caStr != "" {
@@ -367,6 +378,7 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 			Status:        statusFilter,
 			Parent:        parentFilter,
 			Tags:          tagsFilter,
+			Label:         labelFilter,
 			CreatedAfter:  createdAfter,
 			CreatedBefore: createdBefore,
 		})
@@ -396,14 +408,21 @@ func entitySummaries(results []service.ListResult) []map[string]any {
 			summary, _ = r.State["title"].(string)
 		}
 		status, _ := r.State["status"].(string)
-		out = append(out, map[string]any{
+		label, _ := r.State["label"].(string)
+		displayID := id.FormatFullDisplay(r.ID)
+		item := map[string]any{
+			"display_id": displayID,
 			"id":         r.ID,
 			"type":       r.Type,
 			"slug":       r.Slug,
 			"status":     status,
 			"summary":    summary,
-			"display_id": id.FormatFullDisplay(r.ID),
-		})
+			"entity_ref": id.FormatEntityRef(displayID, r.Slug, label),
+		}
+		if label != "" {
+			item["label"] = label
+		}
+		out = append(out, item)
 	}
 	return out
 }
@@ -440,7 +459,7 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 		SignalMutation(ctx)
 
 		args, _ := req.Params.Arguments.(map[string]any)
-		entityID := entityArgStr(args, "id")
+		entityID := id.NormalizeID(entityArgStr(args, "id"))
 		if entityID == "" {
 			return nil, fmt.Errorf("id is required for update")
 		}
@@ -491,6 +510,13 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 			}
 		}
 
+		// Label: non-empty sets, empty string "" clears.
+		if v, exists := args["label"]; exists {
+			if s, ok := v.(string); ok {
+				fields["label"] = strings.TrimSpace(s)
+			}
+		}
+
 		// List-valued fields (e.g. depends_on for tasks).
 		var listFields map[string][]string
 		if deps := entityArgStringSlice(args, "depends_on"); len(deps) > 0 {
@@ -528,7 +554,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 		SignalMutation(ctx)
 
 		args, _ := req.Params.Arguments.(map[string]any)
-		entityID := entityArgStr(args, "id")
+		entityID := id.NormalizeID(entityArgStr(args, "id"))
 		if entityID == "" {
 			return nil, fmt.Errorf("id is required for transition")
 		}
@@ -808,15 +834,20 @@ func entityStateStr(state map[string]any, key string) string {
 }
 
 // entityFullRecord builds the full response map for a get/update/transition response.
-// It merges the entity ID, type, slug, and display_id on top of the full state.
+// It merges the entity ID, type, slug, display_id, and entity_ref on top of the full state.
+// display_id and entity_ref are placed first conceptually (JSON key order is not
+// guaranteed, but callers reading the map will see all fields).
 func entityFullRecord(entityID, entityType, slug string, state map[string]any) map[string]any {
-	out := make(map[string]any, len(state)+4)
+	out := make(map[string]any, len(state)+6)
 	for k, v := range state {
 		out[k] = v
 	}
+	displayID := id.FormatFullDisplay(entityID)
+	label, _ := state["label"].(string)
+	out["display_id"] = displayID
 	out["id"] = entityID
 	out["type"] = entityType
 	out["slug"] = slug
-	out["display_id"] = id.FormatFullDisplay(entityID)
+	out["entity_ref"] = id.FormatEntityRef(displayID, slug, label)
 	return out
 }
