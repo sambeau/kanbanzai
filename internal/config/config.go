@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
+	"strconv"
 	"strings"
 	"unicode"
 
@@ -14,6 +16,13 @@ import (
 
 	"kanbanzai/internal/core"
 )
+
+// BinarySupportedSchemaVersion is the schema version this binary understands.
+// It follows MAJOR.MINOR.PATCH semver format.
+const BinarySupportedSchemaVersion = "1.0.0"
+
+// semverRe matches a strict MAJOR.MINOR.PATCH semver string.
+var semverRe = regexp.MustCompile(`^(\d+)\.(\d+)\.(\d+)$`)
 
 // ConfigFile is the configuration filename.
 const ConfigFile = "config.yaml"
@@ -137,6 +146,10 @@ type MCPConfig struct {
 type Config struct {
 	// Version is the configuration schema version.
 	Version string `yaml:"version"`
+	// SchemaVersion is the public schema version in MAJOR.MINOR.PATCH format.
+	// It is independent of Version and only increments when the committed file
+	// format changes. See the public schema interface specification §6.
+	SchemaVersion string `yaml:"schema_version,omitempty"`
 	// Prefixes is the registry of Plan ID prefixes.
 	Prefixes []PrefixEntry `yaml:"prefixes"`
 	// Import holds configuration for batch document import.
@@ -163,7 +176,8 @@ type Config struct {
 // The default prefix 'P' for Plan is included.
 func DefaultConfig() Config {
 	return Config{
-		Version: "2",
+		Version:       "2",
+		SchemaVersion: BinarySupportedSchemaVersion,
 		Prefixes: []PrefixEntry{
 			{Prefix: "P", Name: "Plan"},
 		},
@@ -278,7 +292,77 @@ func LoadFrom(path string) (*Config, error) {
 		return nil, fmt.Errorf("invalid config: %w", err)
 	}
 
+	// Apply schema version boundary checks. A missing or older schema version
+	// produces a warning on stderr; a future major version is a hard failure.
+	if err := checkSchemaVersionBoundary(&cfg); err != nil {
+		return nil, err
+	}
+
 	return &cfg, nil
+}
+
+// checkSchemaVersionBoundary enforces the binary behaviour at version
+// boundaries as specified in §6.5 of the public schema interface spec:
+//
+//   - schema_version absent       → warn, continue (AC-7)
+//   - schema_version older        → warn, continue (AC-6)
+//   - schema_version newer major  → hard error     (AC-5)
+func checkSchemaVersionBoundary(cfg *Config) error {
+	if cfg.SchemaVersion == "" {
+		// AC-7: absent — treat as pre-1.0, prompt migration.
+		fmt.Fprintf(os.Stderr,
+			"warning: config.yaml has no schema_version field; "+
+				"treating repository as pre-1.0.\n"+
+				"Run 'kanbanzai migrate' to upgrade the schema.\n")
+		return nil
+	}
+
+	binaryMajor, binaryMinor, binaryPatch, err := parseSemver(BinarySupportedSchemaVersion)
+	if err != nil {
+		// Should never happen — BinarySupportedSchemaVersion is a compile-time constant.
+		return fmt.Errorf("internal error: invalid BinarySupportedSchemaVersion %q: %w", BinarySupportedSchemaVersion, err)
+	}
+
+	cfgMajor, cfgMinor, cfgPatch, err := parseSemver(cfg.SchemaVersion)
+	if err != nil {
+		// Malformed — Validate() already rejected it, but guard defensively.
+		return fmt.Errorf("invalid schema_version %q: %w", cfg.SchemaVersion, err)
+	}
+
+	// AC-5: schema major version newer than binary — refuse to operate.
+	if cfgMajor > binaryMajor {
+		return fmt.Errorf(
+			"schema_version %s in config.yaml is newer than the version this binary supports (%s).\n"+
+				"Please upgrade the kanbanzai binary to continue.",
+			cfg.SchemaVersion, BinarySupportedSchemaVersion,
+		)
+	}
+
+	// AC-6: schema version older than binary — offer migration.
+	cfgNewer := cfgMajor > binaryMajor ||
+		(cfgMajor == binaryMajor && cfgMinor > binaryMinor) ||
+		(cfgMajor == binaryMajor && cfgMinor == binaryMinor && cfgPatch > binaryPatch)
+	if !cfgNewer && cfg.SchemaVersion != BinarySupportedSchemaVersion {
+		fmt.Fprintf(os.Stderr,
+			"warning: config.yaml schema_version (%s) is older than this binary supports (%s).\n"+
+				"Run 'kanbanzai migrate' to upgrade the schema before proceeding.\n",
+			cfg.SchemaVersion, BinarySupportedSchemaVersion)
+	}
+
+	return nil
+}
+
+// parseSemver parses a "MAJOR.MINOR.PATCH" string and returns the three
+// components as integers.
+func parseSemver(v string) (major, minor, patch int, err error) {
+	m := semverRe.FindStringSubmatch(v)
+	if m == nil {
+		return 0, 0, 0, fmt.Errorf("not a valid MAJOR.MINOR.PATCH version: %q", v)
+	}
+	major, _ = strconv.Atoi(m[1])
+	minor, _ = strconv.Atoi(m[2])
+	patch, _ = strconv.Atoi(m[3])
+	return major, minor, patch, nil
 }
 
 // LoadOrDefault loads the configuration, returning defaults if not found.
@@ -321,6 +405,11 @@ func (c *Config) SaveTo(path string) error {
 
 // Validate checks that the configuration is valid.
 func (c *Config) Validate() error {
+	// Validate schema_version format when present.
+	if c.SchemaVersion != "" && !semverRe.MatchString(c.SchemaVersion) {
+		return fmt.Errorf("schema_version %q is not valid MAJOR.MINOR.PATCH semver", c.SchemaVersion)
+	}
+
 	if len(c.Prefixes) == 0 {
 		return errors.New("at least one prefix is required")
 	}
