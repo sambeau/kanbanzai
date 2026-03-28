@@ -565,6 +565,9 @@ func TestEnumStringValues(t *testing.T) {
 	if model.FeatureStatusReview != "review" {
 		t.Errorf("FeatureStatusReview = %q, want %q", model.FeatureStatusReview, "review")
 	}
+	if model.FeatureStatusReviewing != "reviewing" {
+		t.Errorf("FeatureStatusReviewing = %q, want %q", model.FeatureStatusReviewing, "reviewing")
+	}
 	if model.FeatureStatusNeedsRework != "needs-rework" {
 		t.Errorf("FeatureStatusNeedsRework = %q, want %q", model.FeatureStatusNeedsRework, "needs-rework")
 	}
