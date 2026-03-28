@@ -194,8 +194,8 @@ When you create a new document in the `work/` directory, you must register it wi
 **Follow the `document-creation` SKILL:** `.skills/document-creation.md`
 
 The SKILL provides step-by-step procedures for:
-- Registering single documents with `doc_record_submit`
-- Batch importing multiple documents with `batch_import_documents`
+- Registering single documents with `doc(action: register)`
+- Batch importing multiple documents with `doc(action: import)`
 - Document type mapping (directory → type)
 - Safety checks and verification
 - Troubleshooting common issues
@@ -208,10 +208,10 @@ The SKILL provides step-by-step procedures for:
 
 ```
 # Single document
-doc_record_submit(path="work/design/my-doc.md", type="design", title="...")
+doc(action: "register", path: "work/design/my-doc.md", type: "design", title: "...")
 
 # Batch import (idempotent, safe to repeat)
-batch_import_documents(path="work")
+doc(action: "import", path: "work")
 ```
 
 ## Workflow Stage Gates

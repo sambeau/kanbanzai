@@ -6,7 +6,7 @@ Register new documents with the kanbanzai system when creating markdown files in
 
 ## When to Use
 
-- After creating any new `.md` file in `work/design/`, `work/spec/`, `work/plan/`, `work/research/`, or `work/reports/`
+- After creating any new `.md` file in `work/design/`, `work/spec/`, `work/plan/`, `work/research/`, `work/reports/`, or `work/reviews/`
 - Before committing new documents to Git
 - As a safety check before major commits or phase transitions
 
@@ -24,19 +24,15 @@ work/spec/       → specifications with acceptance criteria
 work/plan/       → implementation plans, decision logs, progress tracking
 work/research/   → research reports, analysis, exploration
 work/reports/    → review reports, audit reports, post-implementation reviews
+work/reviews/    → feature and bug review reports from the reviewing lifecycle gate
 ```
 
 ### Step 2: Register with the system
 
-Immediately call `doc_record_submit`:
+Call `doc(action: register)`:
 
 ```
-doc_record_submit(
-  path="work/design/my-document.md",
-  type="design",
-  title="Human-Readable Title",
-  created_by="your-agent-name"
-)
+doc(action: "register", path: "work/design/my-document.md", type: "design", title: "Human-Readable Title")
 ```
 
 **Type must match location:**
@@ -48,6 +44,7 @@ doc_record_submit(
 | `work/plan/` | `dev-plan` |
 | `work/research/` | `research` |
 | `work/reports/` | `report` |
+| `work/reviews/` | `report` |
 
 The `created_by` parameter is optional and will auto-resolve from `.kbz/local.yaml` or `git config` if omitted.
 
@@ -56,10 +53,14 @@ The `created_by` parameter is optional and will auto-resolve from `.kbz/local.ya
 Check that the document record was created:
 
 ```
-doc_record_get(id="PROJECT/design-my-document")
+doc(action: "get", path: "work/design/my-document.md")
 ```
 
-The document ID follows the pattern: `PROJECT/{type}-{slug}` where the slug is derived from the filename.
+Or if you have the document record ID from the register response:
+
+```
+doc(action: "get", id: "DOC-01JX...")
+```
 
 ### Step 4: Commit both together
 
@@ -82,20 +83,13 @@ Use when you have created multiple documents or as a safety check.
 ### Step 1: Run batch import
 
 ```
-batch_import_documents(
-  path="work/plan",
-  default_type="dev-plan",
-  created_by="your-agent-name"
-)
+doc(action: "import", path: "work/plan", default_type: "dev-plan")
 ```
 
 Or import all of `work/`:
 
 ```
-batch_import_documents(
-  path="work",
-  created_by="your-agent-name"
-)
+doc(action: "import", path: "work")
 ```
 
 The tool will:
@@ -123,12 +117,30 @@ git commit -m "workflow(PROJECT): register new documents with system
 
 ---
 
+## Refreshing Stale Documents
+
+When a registered document file is edited after registration, its stored content hash becomes stale. Use `doc(action: refresh)` to fix the hash in place:
+
+```
+doc(action: "refresh", id: "DOC-01JX...")
+```
+
+Or by path:
+
+```
+doc(action: "refresh", path: "work/design/my-document.md")
+```
+
+If the document was `approved` and the file has changed, the refresh will demote the status back to `draft` and report the transition.
+
+---
+
 ## Safety Check Pattern
 
 Before major commits or phase transitions:
 
 ```
-batch_import_documents(path="work")
+doc(action: "import", path: "work")
 ```
 
 This catches any documents you forgot to register individually. It's safe to run repeatedly.
@@ -143,19 +155,19 @@ This catches any documents you forgot to register individually. It's safe to run
 
 **Cause:** Document IDs are auto-generated from the file path and type.
 
-**Solution:** Use `doc_record_get` to find the actual ID, or list documents to see all registered IDs:
+**Solution:** Use `doc(action: get)` to find the actual record, or list documents to see all registered IDs:
 
 ```
-doc_record_list(type="design")
+doc(action: "list", type: "design")
 ```
 
 ### Issue: Document already registered
 
-**Symptom:** `doc_record_submit` returns an error that the document already exists.
+**Symptom:** `doc(action: register)` returns an error that the document already exists.
 
 **Cause:** The document was already registered in a previous session.
 
-**Solution:** This is not an error. The document is already in the system. Use `doc_record_get` to retrieve its metadata.
+**Solution:** This is not an error. The document is already in the system. Use `doc(action: get)` to retrieve its metadata.
 
 ### Issue: Wrong document type
 
@@ -163,7 +175,7 @@ doc_record_list(type="design")
 
 **Cause:** Type parameter didn't match the directory or was explicitly set incorrectly.
 
-**Solution:** Currently there's no `doc_record_update_type` tool. The workaround is to delete the record file from `.kbz/state/documents/` and re-register with the correct type. (Future enhancement: add update tool.)
+**Solution:** Currently there's no type update action. The workaround is to delete the record file from `.kbz/state/documents/` and re-register with the correct type.
 
 ### Issue: Forgot to commit document record
 
@@ -174,9 +186,21 @@ doc_record_list(type="design")
 **Solution:** Register the document now and commit the record:
 
 ```
-doc_record_submit(path="work/design/my-document.md", type="design", title="...")
+doc(action: "register", path: "work/design/my-document.md", type: "design", title: "...")
 git add .kbz/state/documents/
 git commit -m "workflow(my-document): register document record (missed in previous commit)"
+```
+
+### Issue: Content hash is stale after editing
+
+**Symptom:** Health check reports stale content hashes, or `doc(action: validate)` shows hash mismatch.
+
+**Cause:** The document file was edited after registration but the record was not refreshed.
+
+**Solution:** Refresh the content hash:
+
+```
+doc(action: "refresh", path: "work/design/my-document.md")
 ```
 
 ---
@@ -186,8 +210,8 @@ git commit -m "workflow(my-document): register document record (missed in previo
 A document is properly registered when:
 
 1. ✅ The markdown file exists in `work/`
-2. ✅ A YAML file exists in `.kbz/state/documents/PROJECT--{type}-{slug}.yaml`
-3. ✅ `doc_record_get(id="PROJECT/{type}-{slug}")` returns the document metadata
+2. ✅ A YAML file exists in `.kbz/state/documents/`
+3. ✅ `doc(action: "get", path: "work/...")` returns the document metadata
 4. ✅ Both files are committed to Git
 
 ---
