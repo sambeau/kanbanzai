@@ -202,20 +202,17 @@ natural place to add the install step.
 5. Write `.kbz/last-install.yaml`
 6. Return merge result with a new `install` field in `side_effects`
 
-Step 4 is conditional: only runs if the repository root contains
-`cmd/kanbanzai/main.go` (i.e. the repo is the kanbanzai project itself, not a
-user project managed by kanbanzai). This keeps the behaviour contained and
-avoids running arbitrary build steps in user repos.
+Step 4 is **on by default** when `cmd/kanbanzai/main.go` exists at the
+repository root. This auto-detection means no configuration is needed for the
+kanbanzai project itself, and user projects (which don't have that path) are
+unaffected automatically.
 
-Alternatively, the install step can be opt-in via `.kbz/config.yaml`:
+To opt out explicitly, set in `.kbz/config.yaml`:
 
 ```yaml
 merge:
-  post_merge_install: true
+  post_merge_install: false
 ```
-
-This is the safer default for a tool intended to manage other projects — only
-the kanbanzai project itself needs auto-install on merge.
 
 ### 5.2 Restart notice
 
@@ -285,9 +282,9 @@ health() → warnings: ["MCP server is running an older binary (9bcaf9c).
 
 ## 7. Open Questions
 
-| # | Question | Suggested answer |
-|---|----------|-----------------|
-| Q1 | Should post-merge install be on by default? | No — opt-in via `merge.post_merge_install: true` in `.kbz/config.yaml`. Default off for user projects; the kanbanzai repo sets it to true. |
-| Q2 | What if the build fails during merge? | Merge succeeds regardless; install failure is reported as a warning in side_effects, not a merge rollback. Code correctness and install are independent concerns. |
+| # | Question | Decision |
+|---|----------|----------|
+| Q1 | Should post-merge install be on by default? | **Yes — on by default** when the repository contains `cmd/kanbanzai/main.go`. Opt-out via `merge.post_merge_install: false` in `.kbz/config.yaml`. User projects that don't have that path are unaffected automatically; no config change needed for the common case. |
+| Q2 | What if the build fails during merge? | Merge succeeds regardless; install failure is reported as a warning in `side_effects`, not a merge rollback. Code correctness and install are independent concerns. |
 | Q3 | Should the health check warn when no install record exists? | No — only warn on a confirmed mismatch (`in_sync: false`). Missing record is a neutral `null`, not a problem. |
 | Q4 | Plain `go install` without metadata — should it be blocked? | No. Plain `go install` remains valid; it just produces `in_sync: null` rather than `true`. The Makefile `install` target is the recommended path, not the only one. |

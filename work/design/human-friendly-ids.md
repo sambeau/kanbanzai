@@ -163,8 +163,8 @@ parent_feature: FEAT-01KMRX1SEQV49
 **Display with label set:**
 
 ```
-FEAT-01KMR-X1SEQV49 (G · policy-and-documentation-updates)
-TASK-01KMR-XK75ZA20 (G-1 · update-agents-md)
+FEAT-01KMR-X1SEQV49 (G policy-docs)
+TASK-01KMR-XK75ZA20 (G-1 update-agents)
 ```
 
 **Display without label:**
@@ -189,10 +189,12 @@ the plan document called it Feature G in a specific phase context — not becaus
 it was the 7th entity created. Letting the human (or orchestrator) assert the
 label explicitly preserves that intent.
 
-Labels are short (recommended: 1–4 characters or a brief phrase), unique within
-a plan by convention (not enforced), and can encode plan-phase structure
-naturally: `D`, `E`, `F`, `G` for Phase 2 features; `G-1`, `G-2`, `G-3` for
-tasks within Feature G.
+Labels combine a short ordering prefix with a short descriptive suffix — just
+enough words to be self-describing without a lookup. Max 24 characters enforced.
+Examples: `G policy-docs`, `D review-states`, `F orchestration`, `G-1 update-agents`.
+The ordering prefix (`G`, `G-1`, `Phase2-F`) preserves sequence; the words remove
+ambiguity. Ragged right across table rows is fine — the ID column provides the
+consistent left anchor.
 
 #### Setting labels
 
@@ -268,9 +270,9 @@ for this purpose.
 
 | Context | Format |
 |---------|--------|
-| Label set | `FEAT-01KMR-X1SEQV49 (G · policy-and-documentation-updates)` |
+| Label set | `FEAT-01KMR-X1SEQV49 (G policy-docs)` |
 | Label not set | `FEAT-01KMR-X1SEQV49 (policy-and-documentation-updates)` |
-| Space-constrained (tables) | `FEAT-01KMR-X1SEQV49 (G)` or `FEAT-01KMR-X1SEQV49 (policy-…)` |
+| Space-constrained (tables) | `FEAT-01KMR-X1SEQV49 (G policy-docs)` — label already compact, no truncation needed |
 | Input (tool call arguments) | Accept both `FEAT-01KMR-X1SEQV49` and `FEAT-01KMRX1SEQV49` |
 | Storage — YAML keys | Always unsplit `FEAT-01KMRX1SEQV49` — no change |
 | Storage — YAML filenames | Already correct: `FEAT-01KMRX1SEQV49-policy-and-documentation-updates.yaml` |
@@ -342,6 +344,6 @@ for this purpose.
 | Q1 | Should label be searchable / filterable in `entity list`? | Yes — a label filter makes it easy to find "all tasks for Feature G" without knowing the FEAT ID. Low implementation cost; high navigation value. |
 | Q2 | Should label appear in Git commit messages and worktree branch names? | Branch names already include the slug. Label could optionally prefix the branch: `feature/G-FEAT-01KMRX1SEQV49-policy-…`. Probably too verbose — slug alone is sufficient for branches. |
 | Q3 | Should `status` dashboard include a label column? | Yes, when any feature in the plan has a label set. Omit the column entirely when no labels are present, to avoid clutter for plans that don't use them. |
-| Q4 | Max label length? | Recommend 16 characters enforced; enough for "Phase 2 / G" but short enough to stay readable in table columns. |
+| Q4 | Label format and length? | A label should be short ordering letters or numbers followed by a short descriptive word or two — just enough to be self-describing. The ordering prefix preserves sequence; the words remove the need for a lookup. Examples: `G policy-docs`, `D review-states`, `F orchestration`, `Phase2-E reviewer`. Max 24 characters enforced. Ragged right (variable label lengths across rows) is not a problem in table display — the ID and slug columns provide consistent structure. |
 | Q5 | Should the `track-c-batch-operations-review.md` already in `work/reviews/` be renamed to follow the new convention? | Yes — rename to `review-FEAT-01KMR8QW7A3A8-review-batch-operations.md` in the same migration pass for consistency. |
 | Q6 | Should `work/reviews/` be added to the document type mapping with its own type? | No — review reports remain type `report`. The folder distinction is organisational, not a schema change. The bootstrap-workflow.md placement table is the right place to document the folder's purpose. |
