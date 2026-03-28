@@ -95,6 +95,8 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 			"gaps":      docGapsAction(docSvc),
 			"validate":  docValidateAction(docSvc),
 			"supersede": docSupersedeAction(docSvc),
+			"refresh":   docRefreshAction(docSvc),
+			"chain":     docChainAction(docSvc),
 			"import":    docImportAction(docSvc),
 		})
 	})
@@ -460,6 +462,61 @@ func docSupersedeAction(docSvc *service.DocumentService) ActionHandler {
 		}
 
 		return map[string]any{"document": docRecordToMap(result)}, nil
+	}
+}
+
+// ─── refresh ──────────────────────────────────────────────────────────────────
+
+func docRefreshAction(docSvc *service.DocumentService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+		args, _ := req.Params.Arguments.(map[string]any)
+		id := docArgStr(args, "id")
+		path := docArgStr(args, "path")
+		result, err := docSvc.RefreshContentHash(service.RefreshInput{ID: id, Path: path})
+		if err != nil {
+			return nil, err
+		}
+		return map[string]any{
+			"id":                result.ID,
+			"path":              result.Path,
+			"changed":           result.Changed,
+			"old_hash":          result.OldHash,
+			"new_hash":          result.NewHash,
+			"status":            result.Status,
+			"status_transition": result.StatusTransition,
+		}, nil
+	}
+}
+
+// ─── chain ────────────────────────────────────────────────────────────────────
+
+func docChainAction(docSvc *service.DocumentService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		args, _ := req.Params.Arguments.(map[string]any)
+		id := docArgStr(args, "id")
+		if id == "" {
+			return nil, fmt.Errorf("id is required for action: chain")
+		}
+		chain, err := docSvc.SupersessionChain(id)
+		if err != nil {
+			return nil, err
+		}
+		items := make([]map[string]any, len(chain))
+		for i, doc := range chain {
+			items[i] = map[string]any{
+				"id":            doc.ID,
+				"path":          doc.Path,
+				"type":          doc.Type,
+				"title":         doc.Title,
+				"status":        doc.Status,
+				"superseded_by": doc.SupersededBy,
+			}
+		}
+		return map[string]any{
+			"chain":  items,
+			"length": len(chain),
+		}, nil
 	}
 }
 

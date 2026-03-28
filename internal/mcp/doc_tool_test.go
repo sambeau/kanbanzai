@@ -988,3 +988,105 @@ func TestDocTool_UnknownAction(t *testing.T) {
 		t.Fatalf("expected error response for unknown action, got: %v", resp)
 	}
 }
+
+// ─── refresh ──────────────────────────────────────────────────────────────────
+
+func TestDocRefresh_ChangedDoc(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	// Register a document then modify its underlying file.
+	id := registerDoc(t, env, "work/design/refresh-me.md", "design", "Refresh Me")
+	writeDocFile(t, env.repoRoot, "work/design/refresh-me.md", "# Refresh Me\n\nRevised content.\n")
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "refresh",
+		"id":     id,
+	})
+
+	if changed, _ := resp["changed"].(bool); !changed {
+		t.Errorf("expected changed=true, got: %v", resp)
+	}
+	if status, _ := resp["status"].(string); status != "draft" {
+		t.Errorf("status = %q, want draft", status)
+	}
+	if _, ok := resp["old_hash"]; !ok {
+		t.Errorf("expected old_hash field in response")
+	}
+	if _, ok := resp["new_hash"]; !ok {
+		t.Errorf("expected new_hash field in response")
+	}
+}
+
+func TestDocRefresh_UnchangedDoc(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	id := registerDoc(t, env, "work/design/unchanged.md", "design", "Unchanged")
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "refresh",
+		"id":     id,
+	})
+
+	if changed, _ := resp["changed"].(bool); changed {
+		t.Errorf("expected changed=false, got: %v", resp)
+	}
+}
+
+// ─── chain ────────────────────────────────────────────────────────────────────
+
+func TestDocChain_ReturnsChain(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	// Register and approve v1.
+	v1ID := registerDoc(t, env, "work/spec/chain-v1.md", "specification", "Chain V1")
+	callDoc(t, env, map[string]any{"action": "approve", "id": v1ID})
+
+	// Register and approve v2.
+	v2ID := registerDoc(t, env, "work/spec/chain-v2.md", "specification", "Chain V2")
+	callDoc(t, env, map[string]any{"action": "approve", "id": v2ID})
+
+	// Supersede v1 with v2.
+	callDoc(t, env, map[string]any{
+		"action":        "supersede",
+		"id":            v1ID,
+		"superseded_by": v2ID,
+	})
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "chain",
+		"id":     v1ID,
+	})
+
+	length, _ := resp["length"].(float64)
+	if int(length) != 2 {
+		t.Errorf("length = %v, want 2", resp["length"])
+	}
+	chain, _ := resp["chain"].([]any)
+	if len(chain) != 2 {
+		t.Fatalf("chain slice length = %d, want 2", len(chain))
+	}
+	first, _ := chain[0].(map[string]any)
+	if first["id"] != v1ID {
+		t.Errorf("chain[0].id = %q, want %q", first["id"], v1ID)
+	}
+	second, _ := chain[1].(map[string]any)
+	if second["id"] != v2ID {
+		t.Errorf("chain[1].id = %q, want %q", second["id"], v2ID)
+	}
+}
+
+func TestDocChain_EmptyID(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "chain",
+	})
+
+	if _, hasErr := resp["error"]; !hasErr {
+		t.Errorf("expected error for missing id, got: %v", resp)
+	}
+}

@@ -40,6 +40,23 @@ type SupersedeDocumentInput struct {
 	SupersededBy string
 }
 
+// RefreshInput identifies the document to refresh. ID is preferred; Path is the fallback.
+type RefreshInput struct {
+	ID   string
+	Path string
+}
+
+// RefreshResult is the outcome of a RefreshContentHash call.
+type RefreshResult struct {
+	ID               string
+	Path             string
+	Changed          bool
+	OldHash          string
+	NewHash          string
+	Status           string // final status after refresh
+	StatusTransition string // e.g., "approved → draft", or "" if unchanged
+}
+
 // DocumentResult is the result of a document operation.
 // DocEntityTransition records an entity lifecycle transition triggered by a
 // document operation (approval, supersession). It is used by 2.0 tools to
@@ -704,6 +721,89 @@ func (s *DocumentService) SupersessionChain(docID string) ([]DocumentResult, err
 // DocumentExists checks if a document record exists.
 func (s *DocumentService) DocumentExists(id string) bool {
 	return s.store.Exists(id)
+}
+
+// RefreshContentHash recomputes the content hash of the document's file and
+// updates the record if it has changed. If the document was approved, it is
+// demoted to draft status.
+func (s *DocumentService) RefreshContentHash(input RefreshInput) (RefreshResult, error) {
+	id := strings.TrimSpace(input.ID)
+	path := strings.TrimSpace(input.Path)
+
+	if id == "" && path == "" {
+		return RefreshResult{}, fmt.Errorf("id or path is required")
+	}
+
+	var record storage.DocumentRecord
+	var err error
+
+	if id != "" {
+		record, err = s.store.Load(id)
+		if err != nil {
+			return RefreshResult{}, err
+		}
+	} else {
+		records, listErr := s.store.List()
+		if listErr != nil {
+			return RefreshResult{}, fmt.Errorf("list documents: %w", listErr)
+		}
+		found := false
+		for _, r := range records {
+			doc := storage.RecordToDocument(r)
+			if doc.Path == path {
+				record = r
+				found = true
+				break
+			}
+		}
+		if !found {
+			return RefreshResult{}, fmt.Errorf("document not found: %s", path)
+		}
+	}
+
+	doc := storage.RecordToDocument(record)
+	fullPath := filepath.Join(s.repoRoot, doc.Path)
+
+	currentHash, err := storage.ComputeContentHash(fullPath)
+	if err != nil {
+		return RefreshResult{}, fmt.Errorf("document file not found at path %s; verify the file exists before calling refresh", fullPath)
+	}
+
+	if currentHash == doc.ContentHash {
+		return RefreshResult{
+			Changed: false,
+			OldHash: doc.ContentHash,
+			NewHash: doc.ContentHash,
+			Status:  string(doc.Status),
+			ID:      doc.ID,
+			Path:    doc.Path,
+		}, nil
+	}
+
+	oldHash := doc.ContentHash
+	doc.ContentHash = currentHash
+	doc.Updated = s.now()
+
+	var statusTransition string
+	if doc.Status == model.DocumentStatusApproved {
+		doc.Status = model.DocumentStatusDraft
+		statusTransition = "approved → draft"
+	}
+
+	updatedRecord := storage.DocumentToRecord(doc, record.FileHash)
+	if _, err := s.store.Write(updatedRecord); err != nil {
+		return RefreshResult{}, fmt.Errorf("write document record: %w", err)
+	}
+
+	return RefreshResult{
+		Changed:          true,
+		OldHash:          oldHash,
+		NewHash:          currentHash,
+		Status:           string(doc.Status),
+		StatusTransition: statusTransition,
+		ID:               doc.ID,
+		Path:             doc.Path,
+	}, nil
 }
 
 // generateDocumentSlug generates a unique slug for a document.
