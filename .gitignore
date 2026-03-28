@@ -57,3 +57,6 @@ Desktop.ini
 .worktrees/
 # Nested .kbz directories created by tests running inside package directories
 **/.kbz/cache/
+
+# Compiled external-import test binary (platform-specific, rebuildable from source)
+_testexternal/testexternal
