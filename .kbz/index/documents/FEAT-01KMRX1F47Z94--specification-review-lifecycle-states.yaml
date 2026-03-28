@@ -1,0 +1,153 @@
+document_id: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states
+document_path: work/spec/review-lifecycle-states.md
+content_hash: 2bac27bc6e1645f975b0d798bf91dd3447d91e6406d3a2d8949585fc9f475f66
+indexed_at: 2026-03-28T00:27:13.817707Z
+sections:
+    - path: "1"
+      level: 1
+      title: Review Lifecycle States Specification
+      byte_offset: 0
+      byte_count: 9284
+      word_count: 1298
+      content_hash: 2bac27bc6e1645f975b0d798bf91dd3447d91e6406d3a2d8949585fc9f475f66
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 309
+          byte_count: 423
+          word_count: 62
+          content_hash: 8d1f0b73e05994a28a8c443d2ce8bf7a054fdbecbd7a0acb5fa9d6bb4236df53
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 732
+          byte_count: 785
+          word_count: 115
+          content_hash: 2d02e6436b9c82f0676158a0ef2a51773c13876013cd0d33d2d7c026acb2bd57
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1517
+          byte_count: 1628
+          word_count: 229
+          content_hash: cd138037bd0b5fca04534d2cdd79b45f54cc946ff4a8ea283389f3efe57a8947
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 1530
+              byte_count: 1020
+              word_count: 138
+              content_hash: 705608a0c4c1f64b8ab85233c87926bae38583ab3c1baaf2f4e8ef22ec46a45c
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred
+              byte_offset: 2550
+              byte_count: 251
+              word_count: 38
+              content_hash: b2e3ce4a01902c01eb3fad20cf6162691aa931beb7f5ecb4982116f5ca24e792
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly excluded
+              byte_offset: 2801
+              byte_count: 344
+              word_count: 50
+              content_hash: 37c50d1f85e96ce5efa49aafd031653e27103b0e82bc790632a505eb36be8698
+        - path: "1.4"
+          level: 2
+          title: 4. Acceptance Criteria
+          byte_offset: 3145
+          byte_count: 4038
+          word_count: 524
+          content_hash: c105e5f71c2dd70f24b104f3f2b98394816927bc6e828a2bfc5e136c5dc99e3d
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 New status constants
+              byte_offset: 3172
+              byte_count: 261
+              word_count: 25
+              content_hash: 787b0c2c99bc57e9650ccb3663f38048a179fea719935e3e178e7ca223fe37e2
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Updated transition map
+              byte_offset: 3433
+              byte_count: 1327
+              word_count: 156
+              content_hash: acbd941d7c66de37b2479b88f5676c22f50c5d8e9e98a193f2a5aa534614346b
+            - path: 1.4.3
+              level: 3
+              title: 4.3 ValidNextStates
+              byte_offset: 4760
+              byte_count: 377
+              word_count: 45
+              content_hash: 8e4c88a0e348b28b05a1700a3071eab86a54a45f321a8e0b16f8045ed73a37c2
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Error messages
+              byte_offset: 5137
+              byte_count: 380
+              word_count: 57
+              content_hash: 0ed88fa0284a32a7245efc95dd12c881a135b342df1969785aeddd47773ef3c7
+            - path: 1.4.5
+              level: 3
+              title: '4.5 Smart-skip (`advance: true`) composition'
+              byte_offset: 5517
+              byte_count: 542
+              word_count: 78
+              content_hash: 1896bc8af3acc8c14241ff2c2e5692e824c955e8ceb0c5e0819289c6ef69421c
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Health checks
+              byte_offset: 6059
+              byte_count: 484
+              word_count: 63
+              content_hash: 32695afb5cbe4e0ddfa41a96c909e2c768991e33e492498e8bbf8f4a7bdea1a8
+            - path: 1.4.7
+              level: 3
+              title: 4.7 Merge gate integration
+              byte_offset: 6543
+              byte_count: 396
+              word_count: 59
+              content_hash: 7f678a436e1c34f0f7103a6f0471634c21d40dae4c02d3d8da46fb0ed1fd550c
+            - path: 1.4.8
+              level: 3
+              title: 4.8 Regression
+              byte_offset: 6939
+              byte_count: 244
+              word_count: 37
+              content_hash: 9fd3b8ee4b4f73300d6bcf624f9de3416b94ddf13b4a168b49dff79151c2b781
+        - path: "1.5"
+          level: 2
+          title: 5. Verification
+          byte_offset: 7183
+          byte_count: 2101
+          word_count: 331
+          content_hash: 7063d211a71edb944ad34b114ecd9b82a86815fb13ea13be5a6804290f1cf9d4
+entity_refs:
+    - entity_id: P6-workflow-quality-and-review
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 693
+cross_doc_links:
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: "1"
+    - target_path: work/spec/phase-*.md
+      link_text: work/spec/phase-*.md
+      section_path: 1.3.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

@@ -1,0 +1,207 @@
+document_id: FEAT-01KMKRQVKBPRX/specification-user-documentation
+document_path: work/spec/user-documentation.md
+content_hash: 87a690d3774ad246415a02379a97332822bee8a693d344e1dcd8c21317f1058e
+indexed_at: 2026-03-26T14:29:20.415442Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'User Documentation: Specification'
+      byte_offset: 0
+      byte_count: 15712
+      word_count: 2224
+      content_hash: 87a690d3774ad246415a02379a97332822bee8a693d344e1dcd8c21317f1058e
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 338
+          byte_count: 296
+          word_count: 44
+          content_hash: 9084db448d52c8b240ee584b058817f2acb9dcf18655110460ae3a7dbf0f9bae
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 634
+          byte_count: 534
+          word_count: 86
+          content_hash: 47cc1874ac872df420f61972f62454da8d11b84d0c086bf15d852a6d317ccbba
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1168
+          byte_count: 1243
+          word_count: 175
+          content_hash: 083a5af03d970bd711ce710d906bdb1764a356981c795e4c44efbb6c83c9d0bc
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 1181
+              byte_count: 639
+              word_count: 90
+              content_hash: 1b4184a02696dfee674bce9060aaaa803a8f4cb9cab6db9538aea80478467e76
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred
+              byte_offset: 1820
+              byte_count: 288
+              word_count: 41
+              content_hash: 4735cea57a98e7ccfb91ddf0379bb32d95d3b0a7ab68ec90f08cff6b045f74e6
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly excluded
+              byte_offset: 2108
+              byte_count: 303
+              word_count: 41
+              content_hash: f7b5d11bfd2d8ed0cf5e7f9d635ccb6e7a8dc92b5b5d14c618e94e18c8fe71fd
+        - path: "1.4"
+          level: 2
+          title: 4. Design Principles
+          byte_offset: 2411
+          byte_count: 1438
+          word_count: 213
+          content_hash: f2aafc214a9bc169a67a330a71c6ffe396a07ce5171c01dcbc2fabbe5a22adc1
+        - path: "1.5"
+          level: 2
+          title: 5. Documents Required
+          byte_offset: 3849
+          byte_count: 7789
+          word_count: 1068
+          content_hash: 54e7bbc19b89ca8e94923746bfbba43ff08af6dc0395b3d7de6b3cb1df15d41e
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Getting Started
+              byte_offset: 3875
+              byte_count: 1965
+              word_count: 288
+              content_hash: e5b6cf5df2939c49f9d9f3b72c5b93ea0374468b1bf3fd1b0f250d75178bc214
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Workflow Overview
+              byte_offset: 5840
+              byte_count: 1682
+              word_count: 236
+              content_hash: 2b6566102abf4deb9bc41f92e39d58cd903ebf021c9159aec63fed76804ff96f
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Schema Reference
+              byte_offset: 7522
+              byte_count: 1544
+              word_count: 206
+              content_hash: 25b87686b30f5c53822e7490bdd317c7192b4f474e19295d497267c0d3e6a243
+            - path: 1.5.4
+              level: 3
+              title: 5.4 MCP Tool Reference
+              byte_offset: 9066
+              byte_count: 1283
+              word_count: 166
+              content_hash: a3fa9d9cd16ecca5bf050ec4d680691ce25bee4691b22fb8524bb0051f8d213a
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Configuration Reference
+              byte_offset: 10349
+              byte_count: 1289
+              word_count: 168
+              content_hash: 7f427dec7ec5833e0776c046cf71043a772195c352f9824e89bc4325af0a2662
+        - path: "1.6"
+          level: 2
+          title: 6. Quality Standards
+          byte_offset: 11638
+          byte_count: 1732
+          word_count: 263
+          content_hash: f4e8f5f3f8882bee1e00ba66b02018d2f8d3ca85ddc5788cf3e66f8d2d46e99e
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Tone and voice
+              byte_offset: 11663
+              byte_count: 303
+              word_count: 44
+              content_hash: 51790bc75dd57c20809004fe13a2dd007b6fcf956d16f8c387d9a7a4c7497fe3
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Completeness
+              byte_offset: 11966
+              byte_count: 331
+              word_count: 54
+              content_hash: e707a6eae1add2d8283bdd8bec7b43d5e7ed32e039608558f3726598ebdf0a11
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Accuracy
+              byte_offset: 12297
+              byte_count: 405
+              word_count: 60
+              content_hash: 61ae5d1a065a9774f4a8060be1c5d04c5293a7b51fc288dcb7c46bea4ada785d
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Navigability
+              byte_offset: 12702
+              byte_count: 326
+              word_count: 47
+              content_hash: 5b443a23e9f22cedb5572a68834b17403ded39a9e91ab347fad550191bdce39a
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Testability for readers
+              byte_offset: 13028
+              byte_count: 342
+              word_count: 54
+              content_hash: 2ed3f51550062b1614987f6c83fb88f29bef750869837a8ac9dc8470a382d0de
+        - path: "1.7"
+          level: 2
+          title: 7. Acceptance Criteria
+          byte_offset: 13370
+          byte_count: 2342
+          word_count: 340
+          content_hash: f58cfbedecaeb840fd64d7ef8517bdb963f3e39894069a63090fae9631d7e46d
+cross_doc_links:
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1"
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: 1.5.1
+    - target_path: docs/workflow-overview.md
+      link_text: docs/workflow-overview.md
+      section_path: 1.5.2
+    - target_path: docs/schema-reference.md
+      link_text: docs/schema-reference.md
+      section_path: 1.5.3
+    - target_path: docs/mcp-tool-reference.md
+      link_text: docs/mcp-tool-reference.md
+      section_path: 1.5.4
+    - target_path: docs/configuration-reference.md
+      link_text: docs/configuration-reference.md
+      section_path: 1.5.5
+    - target_path: getting-started.md
+      link_text: getting-started.md
+      section_path: "1.7"
+    - target_path: workflow-overview.md
+      link_text: workflow-overview.md
+      section_path: "1.7"
+    - target_path: schema-reference.md
+      link_text: schema-reference.md
+      section_path: "1.7"
+    - target_path: mcp-tool-reference.md
+      link_text: mcp-tool-reference.md
+      section_path: "1.7"
+    - target_path: configuration-reference.md
+      link_text: configuration-reference.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.5.2
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: requirement
+      confidence: high
+classified: false

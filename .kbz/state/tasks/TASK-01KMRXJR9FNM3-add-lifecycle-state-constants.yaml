@@ -1,0 +1,16 @@
+id: TASK-01KMRXJR9FNM3
+parent_feature: FEAT-01KMRX1F47Z94
+slug: add-lifecycle-state-constants
+summary: "Add FeatureStatusReviewing and FeatureStatusNeedsRework constants to model/entities.go. Update the feature transition map in validate/lifecycle.go to include all new transitions (developing → reviewing, reviewing → done/needs-rework, needs-rework → developing/reviewing) and remove the developing → done direct path. Covers spec AC-01 through AC-10."
+status: done
+files_planned:
+  - internal/model/entities.go
+  - internal/validate/lifecycle.go
+  - internal/validate/lifecycle_test.go
+completed: "2026-03-28T00:41:36Z"
+claimed_at: "2026-03-28T00:35:38Z"
+dispatched_to: backend
+dispatched_at: "2026-03-28T00:35:38Z"
+dispatched_by: orchestrator
+completion_summary: "Added FeatureStatusReviewing (\"reviewing\") and FeatureStatusNeedsRework (\"needs-rework\") to the Phase 2 section of model/entities.go (moving NeedsRework out of the deprecated Phase 1 section). Updated the feature transition map in validate/lifecycle.go: removed the developing→done direct path, replaced it with developing→reviewing, added the full reviewing block (→done, →needs-rework, →superseded, →cancelled), added Phase 2 targets to the needs-rework block (→developing, →reviewing, →superseded, →cancelled), and updated the Phase 2 lifecycle comment. Also updated the one stale test case (feature_developing_to_done: want true → false) that directly contradicts AC-04."
+verification: go build ./... — clean; go test ./internal/model/... ./internal/validate/... — all pass

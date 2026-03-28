@@ -1,0 +1,855 @@
+{
+  "$id": "https://kanbanzai.dev/schema/1.0.0/kanbanzai.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "schema_version: 1.0.0",
+  "title": "Kanbanzai Entity Schema",
+  "description": "JSON Schema for all entity types in a Kanbanzai-managed repository (.kbz/state/). Generated from the kbzschema Go package.",
+  "$defs": {
+    "Bug": {
+      "title": "Bug",
+      "description": "A Bug entity record stored in .kbz/state/bugs/.",
+      "type": "object",
+      "properties": {
+        "affects": {
+          "description": "Feature or entity IDs affected",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "duplicate_of": {
+          "description": "ID of the canonical duplicate Bug",
+          "type": "string"
+        },
+        "environment": {
+          "description": "Environment description",
+          "type": "string"
+        },
+        "estimate": {
+          "description": "Story point estimate",
+          "type": "number"
+        },
+        "expected": {
+          "description": "Description of the expected (correct) behaviour",
+          "type": "string"
+        },
+        "fixed_by": {
+          "description": "Commit or PR that fixed the bug",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique Bug identifier (BUG-…)",
+          "type": "string"
+        },
+        "observed": {
+          "description": "Description of the observed (incorrect) behaviour",
+          "type": "string"
+        },
+        "origin_feature": {
+          "description": "Feature ID where the bug was introduced",
+          "type": "string"
+        },
+        "origin_task": {
+          "description": "Task ID where the bug was introduced",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Bug priority",
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "release_target": {
+          "description": "Target release for the fix",
+          "type": "string"
+        },
+        "reported": {
+          "description": "Report timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "reported_by": {
+          "description": "Identity of the reporter",
+          "type": "string"
+        },
+        "reproduction": {
+          "description": "Steps to reproduce",
+          "type": "string"
+        },
+        "severity": {
+          "description": "Bug severity",
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "slug": {
+          "description": "URL-friendly slug",
+          "type": "string"
+        },
+        "status": {
+          "description": "Lifecycle status",
+          "type": "string",
+          "enum": [
+            "reported",
+            "triaged",
+            "reproduced",
+            "planned",
+            "in-progress",
+            "needs-review",
+            "needs-rework",
+            "verified",
+            "closed",
+            "duplicate",
+            "not-planned",
+            "cannot-reproduce"
+          ]
+        },
+        "tags": {
+          "description": "Freeform tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "title": {
+          "description": "Human-readable bug title",
+          "type": "string"
+        },
+        "type": {
+          "description": "Bug classification",
+          "type": "string",
+          "enum": [
+            "implementation-defect",
+            "specification-defect",
+            "design-problem"
+          ]
+        },
+        "verified_by": {
+          "description": "Identity of the verifier",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "slug",
+        "title",
+        "status",
+        "severity",
+        "priority",
+        "type",
+        "reported_by",
+        "reported",
+        "observed",
+        "expected"
+      ]
+    },
+    "Decision": {
+      "title": "Decision",
+      "description": "A Decision entity record stored in .kbz/state/decisions/.",
+      "type": "object",
+      "properties": {
+        "affects": {
+          "description": "Entity IDs affected by this decision",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "date": {
+          "description": "Decision timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "decided_by": {
+          "description": "Identity of the decision maker",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique Decision identifier (DEC-…)",
+          "type": "string"
+        },
+        "rationale": {
+          "description": "Rationale and reasoning",
+          "type": "string"
+        },
+        "slug": {
+          "description": "URL-friendly slug",
+          "type": "string"
+        },
+        "status": {
+          "description": "Lifecycle status",
+          "type": "string",
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected",
+            "superseded"
+          ]
+        },
+        "summary": {
+          "description": "Brief summary of the decision",
+          "type": "string"
+        },
+        "superseded_by": {
+          "description": "ID of the Decision that supersedes this one",
+          "type": "string"
+        },
+        "supersedes": {
+          "description": "ID of the Decision this one supersedes",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Freeform tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "slug",
+        "summary",
+        "rationale",
+        "decided_by",
+        "date",
+        "status"
+      ]
+    },
+    "DocumentRecord": {
+      "title": "DocumentRecord",
+      "description": "A document metadata record stored in .kbz/state/documents/.",
+      "type": "object",
+      "properties": {
+        "approved_at": {
+          "description": "Approval timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "approved_by": {
+          "description": "Identity of the approver",
+          "type": "string"
+        },
+        "content_hash": {
+          "description": "SHA-256 hex digest of the document file content at last registration",
+          "type": "string"
+        },
+        "created": {
+          "description": "Creation timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "description": "Identity of the creator",
+          "type": "string"
+        },
+        "id": {
+          "description": "Document record ID in the form {owner}/{slug}",
+          "type": "string"
+        },
+        "owner": {
+          "description": "Owning Plan or Feature ID",
+          "type": "string"
+        },
+        "path": {
+          "description": "Relative path to the document file from the repository root",
+          "type": "string"
+        },
+        "status": {
+          "description": "Document status",
+          "type": "string",
+          "enum": [
+            "draft",
+            "approved",
+            "superseded"
+          ]
+        },
+        "superseded_by": {
+          "description": "ID of the DocumentRecord that supersedes this one",
+          "type": "string"
+        },
+        "supersedes": {
+          "description": "ID of the DocumentRecord this one supersedes",
+          "type": "string"
+        },
+        "title": {
+          "description": "Human-readable document title",
+          "type": "string"
+        },
+        "type": {
+          "description": "Document type",
+          "type": "string",
+          "enum": [
+            "design",
+            "specification",
+            "dev-plan",
+            "research",
+            "report",
+            "policy",
+            "rca"
+          ]
+        },
+        "updated": {
+          "description": "Last update timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "path",
+        "type",
+        "title",
+        "status",
+        "content_hash",
+        "created",
+        "created_by",
+        "updated"
+      ]
+    },
+    "Feature": {
+      "title": "Feature",
+      "description": "A Feature entity record stored in .kbz/state/features/.",
+      "type": "object",
+      "properties": {
+        "branch": {
+          "description": "Git branch name for this Feature",
+          "type": "string"
+        },
+        "created": {
+          "description": "Creation timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "description": "Identity of the creator",
+          "type": "string"
+        },
+        "decisions": {
+          "description": "Decision IDs associated with this Feature",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "design": {
+          "description": "Design document record ID",
+          "type": "string"
+        },
+        "dev_plan": {
+          "description": "Dev-plan document record ID",
+          "type": "string"
+        },
+        "estimate": {
+          "description": "Story point estimate",
+          "type": "number"
+        },
+        "id": {
+          "description": "Unique Feature identifier (FEAT-…)",
+          "type": "string"
+        },
+        "parent": {
+          "description": "Parent Plan ID",
+          "type": "string"
+        },
+        "slug": {
+          "description": "URL-friendly slug",
+          "type": "string"
+        },
+        "spec": {
+          "description": "Specification document record ID",
+          "type": "string"
+        },
+        "status": {
+          "description": "Lifecycle status",
+          "type": "string",
+          "enum": [
+            "proposed",
+            "designing",
+            "specifying",
+            "dev-planning",
+            "developing",
+            "done",
+            "superseded",
+            "cancelled"
+          ]
+        },
+        "summary": {
+          "description": "Brief description of the Feature",
+          "type": "string"
+        },
+        "superseded_by": {
+          "description": "ID of the Feature that supersedes this one",
+          "type": "string"
+        },
+        "supersedes": {
+          "description": "ID of the Feature this one supersedes",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Freeform tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tasks": {
+          "description": "Task IDs belonging to this Feature",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "updated": {
+          "description": "Last update timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "slug",
+        "status",
+        "summary",
+        "created",
+        "created_by"
+      ]
+    },
+    "HumanCheckpoint": {
+      "title": "HumanCheckpoint",
+      "description": "A human checkpoint record stored in .kbz/state/checkpoints/.",
+      "type": "object",
+      "properties": {
+        "context": {
+          "description": "Background information for the human",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Creation timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "description": "Identity of the orchestrating agent",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique checkpoint identifier (CHK-…)",
+          "type": "string"
+        },
+        "orchestration_summary": {
+          "description": "State of the orchestration session at checkpoint time",
+          "type": "string"
+        },
+        "question": {
+          "description": "The question or decision requiring human input",
+          "type": "string"
+        },
+        "responded_at": {
+          "description": "Response timestamp (RFC 3339); absent until responded",
+          "type": "string",
+          "format": "date-time"
+        },
+        "response": {
+          "description": "Human's answer or decision; absent until responded",
+          "type": "string"
+        },
+        "status": {
+          "description": "Checkpoint status",
+          "type": "string",
+          "enum": [
+            "pending",
+            "responded"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "question",
+        "context",
+        "orchestration_summary",
+        "status",
+        "created_at",
+        "created_by"
+      ]
+    },
+    "KnowledgeEntry": {
+      "title": "KnowledgeEntry",
+      "description": "A knowledge entry record stored in .kbz/state/knowledge/.",
+      "type": "object",
+      "properties": {
+        "confidence": {
+          "description": "Confidence score in [0, 1] computed from use/miss counts",
+          "type": "number"
+        },
+        "content": {
+          "description": "Concise, actionable statement of the knowledge",
+          "type": "string"
+        },
+        "created": {
+          "description": "Creation timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "description": "Identity of the contributor",
+          "type": "string"
+        },
+        "deprecated_reason": {
+          "description": "Reason for deprecation or retirement",
+          "type": "string"
+        },
+        "git_anchors": {
+          "description": "File paths that anchor this entry for staleness detection",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "description": "Unique knowledge entry identifier (KE-…)",
+          "type": "string"
+        },
+        "last_used": {
+          "description": "Timestamp of last use (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "learned_from": {
+          "description": "Provenance: Task ID or other reference",
+          "type": "string"
+        },
+        "merged_from": {
+          "description": "Entry IDs that were merged into this one",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "miss_count": {
+          "description": "Number of times this entry was flagged as incorrect",
+          "type": "integer"
+        },
+        "promoted_from": {
+          "description": "Original entry ID if this was promoted from tier 3",
+          "type": "string"
+        },
+        "scope": {
+          "description": "Scope of the entry (profile name or 'project')",
+          "type": "string"
+        },
+        "status": {
+          "description": "Lifecycle status",
+          "type": "string",
+          "enum": [
+            "contributed",
+            "confirmed",
+            "disputed",
+            "stale",
+            "retired"
+          ]
+        },
+        "tags": {
+          "description": "Freeform tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tier": {
+          "description": "Knowledge tier (2 = project-level, 3 = session-level)",
+          "type": "integer",
+          "enum": [
+            "2",
+            "3"
+          ]
+        },
+        "topic": {
+          "description": "Normalised topic identifier",
+          "type": "string"
+        },
+        "ttl_days": {
+          "description": "Time-to-live in days (0 = exempt)",
+          "type": "integer"
+        },
+        "updated": {
+          "description": "Last update timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "use_count": {
+          "description": "Number of times this entry was used by an agent",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "tier",
+        "topic",
+        "scope",
+        "content",
+        "status",
+        "use_count",
+        "miss_count",
+        "confidence",
+        "ttl_days",
+        "created",
+        "created_by",
+        "updated"
+      ]
+    },
+    "Plan": {
+      "title": "Plan",
+      "description": "A Plan entity record stored in .kbz/state/plans/. Plan IDs have the form {prefix}{n}-{slug} (e.g. P1-my-plan).",
+      "type": "object",
+      "properties": {
+        "created": {
+          "description": "Creation timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "description": "Identity of the creator",
+          "type": "string"
+        },
+        "design": {
+          "description": "Reference to design document record ID",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique Plan identifier (e.g. P1-my-plan)",
+          "type": "string"
+        },
+        "slug": {
+          "description": "URL-friendly slug",
+          "type": "string"
+        },
+        "status": {
+          "description": "Lifecycle status",
+          "type": "string",
+          "enum": [
+            "proposed",
+            "designing",
+            "active",
+            "done",
+            "superseded",
+            "cancelled"
+          ]
+        },
+        "summary": {
+          "description": "Brief description of the Plan",
+          "type": "string"
+        },
+        "superseded_by": {
+          "description": "ID of the Plan that supersedes this one",
+          "type": "string"
+        },
+        "supersedes": {
+          "description": "ID of the Plan this one supersedes",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Freeform tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "title": {
+          "description": "Human-readable title",
+          "type": "string"
+        },
+        "updated": {
+          "description": "Last update timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "slug",
+        "title",
+        "status",
+        "summary",
+        "created",
+        "created_by",
+        "updated"
+      ]
+    },
+    "PrefixEntry": {
+      "title": "PrefixEntry",
+      "description": "A single entry in the Plan ID prefix registry.",
+      "type": "object",
+      "properties": {
+        "description": {
+          "description": "Optional longer description of the prefix purpose",
+          "type": "string"
+        },
+        "name": {
+          "description": "Human-readable name for the prefix",
+          "type": "string"
+        },
+        "prefix": {
+          "description": "Single non-digit character used as Plan ID prefix",
+          "type": "string"
+        },
+        "retired": {
+          "description": "Whether this prefix is retired (no longer used for new Plans)",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "prefix",
+        "name"
+      ]
+    },
+    "ProjectConfig": {
+      "title": "ProjectConfig",
+      "description": "Project configuration stored in .kbz/config.yaml.",
+      "type": "object",
+      "properties": {
+        "prefixes": {
+          "description": "Plan ID prefix registry",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PrefixEntry"
+          }
+        },
+        "schema_version": {
+          "description": "Public schema version in MAJOR.MINOR.PATCH format (e.g. '1.0.0')",
+          "type": "string"
+        },
+        "version": {
+          "description": "Config format version (legacy field; preserved for backwards compatibility)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "prefixes"
+      ]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "A Task entity record stored in .kbz/state/tasks/.",
+      "type": "object",
+      "properties": {
+        "assignee": {
+          "description": "Assigned agent or user identity",
+          "type": "string"
+        },
+        "claimed_at": {
+          "description": "Claim timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed": {
+          "description": "Completion timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "completion_summary": {
+          "description": "Summary written at completion",
+          "type": "string"
+        },
+        "depends_on": {
+          "description": "Task IDs this Task depends on",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dispatched_at": {
+          "description": "Dispatch timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "dispatched_by": {
+          "description": "Orchestrator that dispatched the Task",
+          "type": "string"
+        },
+        "dispatched_to": {
+          "description": "Agent the Task was dispatched to",
+          "type": "string"
+        },
+        "estimate": {
+          "description": "Story point estimate",
+          "type": "number"
+        },
+        "files_planned": {
+          "description": "File paths planned to be modified",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "description": "Unique Task identifier (TASK-…)",
+          "type": "string"
+        },
+        "parent_feature": {
+          "description": "Parent Feature ID",
+          "type": "string"
+        },
+        "rework_reason": {
+          "description": "Reason the Task was sent for rework",
+          "type": "string"
+        },
+        "slug": {
+          "description": "URL-friendly slug",
+          "type": "string"
+        },
+        "started": {
+          "description": "Start timestamp (RFC 3339)",
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "description": "Lifecycle status",
+          "type": "string",
+          "enum": [
+            "queued",
+            "ready",
+            "active",
+            "blocked",
+            "needs-review",
+            "needs-rework",
+            "done",
+            "not-planned",
+            "duplicate"
+          ]
+        },
+        "summary": {
+          "description": "Brief description of the Task",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Freeform tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "verification": {
+          "description": "Verification steps or criteria",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "parent_feature",
+        "slug",
+        "summary",
+        "status"
+      ]
+    }
+  }
+}

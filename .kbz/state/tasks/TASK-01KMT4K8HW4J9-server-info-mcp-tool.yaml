@@ -1,0 +1,19 @@
+id: TASK-01KMT4K8HW4J9
+parent_feature: FEAT-01KMT40GZSMHB
+slug: server-info-mcp-tool
+summary: "Register server_info tool in the core MCP group (always present regardless of mcp.groups config). Returns version, git_sha, git_sha_short (7 chars), build_time, go_version, binary_path, dirty (bool), install_record (or null), in_sync (true/false/null). Reads install record at call time, not startup. Update tool count assertions 20→21. Tests: in_sync derivation (match, mismatch, unknown). Covers AC-18 to AC-25, AC-33, AC-37, AC-38."
+status: done
+depends_on:
+  - TASK-01KMT4K8GA3QE
+  - TASK-01KMT4K8H10XB
+files_planned:
+  - internal/mcp/server_info_tool.go
+  - internal/mcp/server_info_tool_test.go
+  - internal/mcp/server.go
+  - internal/mcp/groups.go
+  - internal/mcp/groups_test.go
+  - internal/mcp/server_groups_test.go
+  - internal/mcp/server_test.go
+  - internal/mcp/track_j_tools_test.go
+completed: "2026-03-28T13:02:49Z"
+completion_summary: "Registered server_info MCP tool in core group with version/SHA/build_time/go_version/dirty/install_record/in_sync fields, updated tool count 20→21 in all tests"

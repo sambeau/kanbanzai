@@ -1,0 +1,302 @@
+document_id: PROJECT/dev-plan-phase-1-review-remediation
+document_path: work/plan/phase-1-review-remediation.md
+content_hash: b068eb1e43742dd1f2b80a15f44c77ea413a055787ac49364b05c3cec012d208
+indexed_at: 2026-03-25T21:38:28.445823Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 1 Review Remediation Plan
+      byte_offset: 0
+      byte_count: 17144
+      word_count: 2352
+      content_hash: b068eb1e43742dd1f2b80a15f44c77ea413a055787ac49364b05c3cec012d208
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Findings Summary
+          byte_offset: 456
+          byte_count: 1774
+          word_count: 288
+          content_hash: 05ec865149aeac55442addf4e3dc8dc92a27c48c49fbcc9b3c8b4792693fec8a
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Blocking
+              byte_offset: 552
+              byte_count: 283
+              word_count: 53
+              content_hash: 9a358cc8a43abef471bd0c3e0a150abedb62b8c09a5f9f9b872875307235a081
+            - path: 1.1.2
+              level: 3
+              title: Non-blocking
+              byte_offset: 835
+              byte_count: 710
+              word_count: 121
+              content_hash: ab184575d52bd335387030c58a0387a4fe94d3277938860ae725f35c1aed8481
+            - path: 1.1.3
+              level: 3
+              title: 'Disposition: N7 (§9.5 semantics)'
+              byte_offset: 1545
+              byte_count: 685
+              word_count: 100
+              content_hash: e964405e16c5f09c9bde26802fa427aac6a8d75e28d9f4a320203ecf9d04ca9f
+        - path: "1.2"
+          level: 2
+          title: 2. Work Items
+          byte_offset: 2230
+          byte_count: 10737
+          word_count: 1405
+          content_hash: f6c2ae3ae42cb5d9988561a598e62388c28cd91b6ba653db16809bae209f2564
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'W1: Prefix Resolution (B1)'
+              byte_offset: 2248
+              byte_count: 2492
+              word_count: 338
+              content_hash: 6ae912b3e62b0238e580cd8e10b80da5666370c63231dbe9a48451fca5dda01e
+            - path: 1.2.2
+              level: 3
+              title: 'W2: Display Formatting Wiring (B2)'
+              byte_offset: 4740
+              byte_count: 1849
+              word_count: 230
+              content_hash: 826f0d8cb25400e5cb6b4920ca0c8c52a4dc69a0bbc0902edd1d56f359128910
+            - path: 1.2.3
+              level: 3
+              title: 'W3: Bootstrap Feature Status (B3)'
+              byte_offset: 6589
+              byte_count: 577
+              word_count: 78
+              content_hash: 7d9b418b6396db3dd30fcf33696670d256827072348dc0c9c7f811418f0506b5
+            - path: 1.2.4
+              level: 3
+              title: 'W4: Test Fixture Migration (N1)'
+              byte_offset: 7166
+              byte_count: 2300
+              word_count: 277
+              content_hash: 376d995a8f8c3b96729c312e1dc30ae2ff5d05c1a56a0a090df4dd264d200172
+            - path: 1.2.5
+              level: 3
+              title: 'W5: CLI Test Modernisation (N2)'
+              byte_offset: 9466
+              byte_count: 985
+              word_count: 134
+              content_hash: 9997f34af05136020de067935f3e9c53ac18088b13978ecbbfb9b61e35e4b944
+            - path: 1.2.6
+              level: 3
+              title: 'W6: Decision Log Housekeeping (N3, N4)'
+              byte_offset: 10451
+              byte_count: 758
+              word_count: 94
+              content_hash: c1cf4d307239b8a7a0ba88ea997f78e375251ede68c2238cd58e71c86f17de7f
+            - path: 1.2.7
+              level: 3
+              title: 'W7: Crockford Normalisation Fix (N5)'
+              byte_offset: 11209
+              byte_count: 1013
+              word_count: 129
+              content_hash: 4343130c9cbabf3ad66e962b180b2ee4ea05bf6aeb518787f0916c015240b99d
+            - path: 1.2.8
+              level: 3
+              title: 'W8: Bootstrap Bug Verification (N6)'
+              byte_offset: 12222
+              byte_count: 745
+              word_count: 121
+              content_hash: 4a29766e183de49fe85005c8878c34982b381bde68fbfb6bdf3d7c691ab2a17f
+        - path: "1.3"
+          level: 2
+          title: 3. Dependency Graph
+          byte_offset: 12967
+          byte_count: 831
+          word_count: 96
+          content_hash: 1c3d5022fa780a3a251b37a666af1b8c29bce7b75f905296feb973db3e49ef49
+        - path: "1.4"
+          level: 2
+          title: 4. Recommended Execution Order
+          byte_offset: 13798
+          byte_count: 1662
+          word_count: 243
+          content_hash: 3911cc8c37de7abc40a26a7622d615aa9205829c7435bd18baf71a41792413b8
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Phase A: Independent Fixes (W6, W7)'
+              byte_offset: 13833
+              byte_count: 353
+              word_count: 49
+              content_hash: 63260d33e85dca5d76519920c92d029f798f168208db70f0fd79c29edc9c8be3
+            - path: 1.4.2
+              level: 3
+              title: 'Phase B: Core Features (W1, W2)'
+              byte_offset: 14186
+              byte_count: 510
+              word_count: 78
+              content_hash: 37120ccec973d0575cc25a0fa74bcddcd07b6eaee4fa239d9561b748d6220993
+            - path: 1.4.3
+              level: 3
+              title: 'Phase C: Test Migration (W4, W5)'
+              byte_offset: 14696
+              byte_count: 490
+              word_count: 71
+              content_hash: 125a3814686e19e0ad0b777f8167e728476191e9bc395e732afad756fe6b8942
+            - path: 1.4.4
+              level: 3
+              title: 'Phase D: Bootstrap Completion (W3, W8)'
+              byte_offset: 15186
+              byte_count: 274
+              word_count: 40
+              content_hash: e21dbf9c11f766bd374e21ec310a9472ed3af83cf887bac9161769c53c0f843d
+        - path: "1.5"
+          level: 2
+          title: 5. Effort Estimates
+          byte_offset: 15460
+          byte_count: 878
+          word_count: 151
+          content_hash: 2fe23a0f4afbc1fe245a41b13c7514d63660048189e6445683c635fde879cd88
+        - path: "1.6"
+          level: 2
+          title: 6. Items Not Included
+          byte_offset: 16338
+          byte_count: 806
+          word_count: 117
+          content_hash: 6036f83cb262476c472ba6b8d7c4293f17b00ab71770c1f9395cacf2ad9337bb
+front_matter:
+    status: implementation plan
+    date: "2025-07-26"
+    extra:
+        Based on: Phase 1 remaining work review (Feature Implementation Review Profile); work/plan/phase-1-remaining-work.md; work/spec/id-system-specification.md; work/spec/phase-1-specification.md; work/spec/bootstrap-specification.md
+        Purpose: fix all blocking issues and non-blocking follow-ups identified in the Phase 1 remaining work review
+entity_refs:
+    - entity_id: FEAT-01J3K
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 6378
+    - entity_id: FEAT-01KM8JTBFEJ4Q
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 6828
+    - entity_id: FEAT-01KM8JTF0MK91
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 6926
+    - entity_id: FEAT-01J3K7MXP3RT5
+      entity_type: feature
+      section_path: 1.2.4
+      byte_offset: 7759
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.2.4
+      byte_offset: 7980
+    - entity_id: FEAT-002
+      entity_type: feature
+      section_path: 1.2.4
+      byte_offset: 8146
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.2.4
+      byte_offset: 8498
+    - entity_id: FEAT-999
+      entity_type: feature
+      section_path: 1.2.4
+      byte_offset: 8597
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.2.5
+      byte_offset: 9666
+    - entity_id: FEAT-NNN
+      entity_type: feature
+      section_path: 1.2.5
+      byte_offset: 9732
+    - entity_id: FEAT-01J3K7MXP3RT5
+      entity_type: feature
+      section_path: 1.2.6
+      byte_offset: 10972
+    - entity_id: TASK-01J3KZZZBB4KF
+      entity_type: task
+      section_path: 1.2.4
+      byte_offset: 7796
+    - entity_id: BUG-01J4AR7WHN4F2
+      entity_type: bug
+      section_path: 1.2.4
+      byte_offset: 7832
+    - entity_id: BUG-001
+      entity_type: bug
+      section_path: 1.2.4
+      byte_offset: 7992
+    - entity_id: DEC-016
+      entity_type: decision
+      section_path: 1.1.2
+      byte_offset: 1102
+    - entity_id: DEC-006
+      entity_type: decision
+      section_path: 1.1.2
+      byte_offset: 1167
+    - entity_id: DEC-01J3KABCDE7MX
+      entity_type: decision
+      section_path: 1.2.4
+      byte_offset: 7872
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.2.4
+      byte_offset: 8003
+    - entity_id: DEC-016
+      entity_type: decision
+      section_path: 1.2.6
+      byte_offset: 10666
+    - entity_id: DEC-006
+      entity_type: decision
+      section_path: 1.2.6
+      byte_offset: 10898
+    - entity_id: DEC-016
+      entity_type: decision
+      section_path: 1.4.1
+      byte_offset: 14042
+    - entity_id: DEC-006
+      entity_type: decision
+      section_path: 1.4.1
+      byte_offset: 14072
+    - entity_id: EPIC-TESTEPIC
+      entity_type: epic
+      section_path: 1.2.4
+      byte_offset: 7724
+    - entity_id: EPIC-TESTEPIC
+      entity_type: epic
+      section_path: 1.2.5
+      byte_offset: 9966
+    - entity_id: EPIC-PHASE1
+      entity_type: epic
+      section_path: 1.2.6
+      byte_offset: 11015
+    - entity_id: DOC-01J3KDOCTEST01
+      entity_type: document
+      section_path: 1.2.4
+      byte_offset: 7912
+    - entity_id: DOC-001
+      entity_type: document
+      section_path: 1.2.4
+      byte_offset: 8487
+cross_doc_links:
+    - target_path: work/plan/phase-1-remaining-work.md
+      link_text: work/plan/phase-1-remaining-work.md
+      section_path: "1"
+    - target_path: work/spec/id-system-specification.md
+      link_text: work/spec/id-system-specification.md
+      section_path: "1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/spec/bootstrap-specification.md
+      link_text: work/spec/bootstrap-specification.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: 1.2.6
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.6
+      role: decision
+      confidence: high
+classified: false

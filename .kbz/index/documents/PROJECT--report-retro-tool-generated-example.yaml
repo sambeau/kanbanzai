@@ -1,0 +1,51 @@
+document_id: PROJECT/report-retro-tool-generated-example
+document_path: work/reports/retro-tool-generated-example.md
+content_hash: 87011376af4e36ecc4a7f99ad86d0c4746fb19378382753cf8270d8966a312f4
+indexed_at: 2026-03-28T13:17:19.467116Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Retrospective: Project (retro tool output for comparison)'
+      byte_offset: 0
+      byte_count: 1581
+      word_count: 235
+      content_hash: 87011376af4e36ecc4a7f99ad86d0c4746fb19378382753cf8270d8966a312f4
+      children:
+        - path: "1.1"
+          level: 2
+          title: Themes
+          byte_offset: 203
+          byte_count: 589
+          word_count: 87
+          content_hash: ac50fbc2e24c6b6948799855e6972f456f224615f0eee717988b6943c9ec2b60
+          children:
+            - path: 1.1.1
+              level: 3
+              title: '1. tool-friction: The stale MCP binary issue wasted significant verification t...'
+              byte_offset: 214
+              byte_count: 578
+              word_count: 85
+              content_hash: 8d799e0a017794cd634544a1ff094a2ee054e6ecefdda6d9860d753639e0bcb3
+        - path: "1.2"
+          level: 2
+          title: What Worked Well
+          byte_offset: 792
+          byte_count: 789
+          word_count: 115
+          content_hash: e7cbc0696c600d38d0feff76b73258d3eb7310931e5a1fad7052dee2e9636b0d
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'worked-well: The advance: true flag on entity transitions worked perfectl...'
+              byte_offset: 813
+              byte_count: 357
+              word_count: 49
+              content_hash: e514ddd14bac064a0e42745588996e3b51a806462fc0fbd02dbcb3cd80874969
+            - path: 1.2.2
+              level: 3
+              title: 'worked-well: Using a cross-plan feature (Skills Content from P3) as a sec...'
+              byte_offset: 1170
+              byte_count: 411
+              word_count: 62
+              content_hash: c1eda988cec034b668dd90e1d54481233952848b12f3216802c452dd498b51f2
+classified: false

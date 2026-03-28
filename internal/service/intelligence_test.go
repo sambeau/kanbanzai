@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/docint"
+	"github.com/sambeau/kanbanzai/internal/docint"
 )
 
 func writeTestDoc(t *testing.T, dir, name, content string) string {

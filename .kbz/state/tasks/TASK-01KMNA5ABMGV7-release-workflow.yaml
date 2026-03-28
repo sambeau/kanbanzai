@@ -2,4 +2,13 @@ id: TASK-01KMNA5ABMGV7
 parent_feature: FEAT-01KMKRQT9QCPR
 slug: release-workflow
 summary: "Create .github/workflows/release.yml triggered only by version tag push matching v*.*.*. Workflow: check out tagged commit, set up Go from go.mod version, run goreleaser release --clean. Requires no secrets beyond the automatically injected GITHUB_TOKEN. Must not commit back to the repository."
-status: queued
+status: done
+files_planned:
+  - .github/workflows/release.yml
+completed: "2026-03-26T15:08:28Z"
+claimed_at: "2026-03-26T15:01:20Z"
+dispatched_to: backend
+dispatched_at: "2026-03-26T15:01:20Z"
+dispatched_by: agent/binary-distribution
+completion_summary: "Created .github/workflows/release.yml. Trigger: push tags matching v*.*.* only. Permissions: contents: write. Steps: actions/checkout@v4 with fetch-depth: 0, actions/setup-go@v5 with go-version-file: go.mod, goreleaser/goreleaser-action@v6 with args: release --clean. GITHUB_TOKEN injected automatically — no additional secrets required."
+verification: "YAML syntax validated with ruby. Workflow trigger verified to match only v*.*.* tag pushes via on.push.tags pattern."

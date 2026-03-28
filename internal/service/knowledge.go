@@ -7,12 +7,12 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/id"
-	"kanbanzai/internal/knowledge"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/knowledge"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // ContributeInput holds the parameters for contributing a new knowledge entry.

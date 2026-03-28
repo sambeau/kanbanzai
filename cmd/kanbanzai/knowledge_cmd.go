@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/git"
-	"kanbanzai/internal/knowledge"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/knowledge"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 // runKnowledgeLifecycle handles the Phase 3 knowledge lifecycle subcommands.

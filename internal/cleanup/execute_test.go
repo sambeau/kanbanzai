@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 func TestExecuteCleanup_DryRun(t *testing.T) {

@@ -1,0 +1,19 @@
+id: TASK-01KMRXK5ARR1S
+parent_feature: FEAT-01KMRX1QPN3CB
+slug: run-multi-feature-review
+summary: Run a review over two or more features in reviewing state simultaneously to verify the orchestrator iterates independently without conflating state between features. Verify that a human_checkpoint is correctly raised for at least one ambiguous finding scenario. Covers spec AC-F-20 through AC-F-22.
+status: done
+depends_on:
+  - TASK-01KMRXK3V9009
+files_planned:
+  - internal/context/resolve_test.go
+  - internal/context/assemble_test.go
+  - work/reports/review-FEAT-01KMRX1HG8BAX.md
+  - work/reports/review-FEAT-01KMKRQSD1TKK.md
+completed: "2026-03-28T01:51:56Z"
+claimed_at: "2026-03-28T01:33:34Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T01:33:34Z"
+dispatched_by: sambeau
+completion_summary: "Completed multi-feature review demonstrating AC-F-20 through AC-F-22. Two features reviewed simultaneously: Feature E (FEAT-01KMRX1HG8BAX, P6) and Skills Content (FEAT-01KMKRQSD1TKK, P3). Three sub-agents dispatched in parallel (1 for Feature E, 2 for Skills Content). Feature E: approved_with_followups → human checkpoint for ambiguous test adequacy → BLOCKING → remediation task (add-reviewer-profile-tests) → re-review → done. Skills Content: changes_required (8 blocking findings: fabricated lifecycle states + pervasive 1.0 tool names) → needs-rework. Human checkpoint CHK-01KMS1R2689WC exercised for Feature E. Both review documents registered."
+verification: "AC-F-20: entity list(status=reviewing) returned both features, independent cycles initiated. AC-F-21: Two features in reviewing simultaneously, separate review docs, no state conflation — Feature E reached done, Skills Content reached needs-rework. AC-F-22: human_checkpoint (CHK-01KMS1R2689WC) raised for ambiguous test adequacy finding, human responded BLOCKING, remediation executed, re-review passed."

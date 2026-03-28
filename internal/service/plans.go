@@ -6,10 +6,10 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // CreatePlanInput contains the fields needed to create a new Plan.
@@ -51,11 +51,9 @@ func (s *EntityService) CreatePlan(input CreatePlanInput) (CreateResult, error) 
 		return CreateResult{}, err
 	}
 
-	// Load and validate prefix registry
-	cfg, err := config.Load()
-	if err != nil {
-		return CreateResult{}, fmt.Errorf("load config: %w", err)
-	}
+	// Load and validate prefix registry (fall back to defaults if no config file exists,
+	// so that Plan creation works in fresh projects before kbz init has been run).
+	cfg := config.LoadOrDefault()
 
 	prefix := strings.TrimSpace(input.Prefix)
 	if !cfg.IsActivePrefix(prefix) {

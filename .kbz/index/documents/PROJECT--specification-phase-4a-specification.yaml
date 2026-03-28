@@ -1,0 +1,892 @@
+document_id: PROJECT/specification-phase-4a-specification
+document_path: work/spec/phase-4a-specification.md
+content_hash: 8ed19c7d918331aebc61e00ea84f8f07a09196b345dfd6f8f34f6642f4926829
+indexed_at: 2026-03-25T21:38:27.849958Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Phase 4a Specification: Orchestration MVP'
+      byte_offset: 0
+      byte_count: 68905
+      word_count: 9078
+      content_hash: 8ed19c7d918331aebc61e00ea84f8f07a09196b345dfd6f8f34f6642f4926829
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 781
+          byte_count: 779
+          word_count: 116
+          content_hash: ef49596457f54b56af3c237841faec436ba98950165c6119ed5e34d438e31262
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1560
+          byte_count: 1157
+          word_count: 162
+          content_hash: 9a98bdac604af3572a846c4d8cccfb716f753342981e91ba68f08294ef6d3661
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2717
+          byte_count: 2187
+          word_count: 275
+          content_hash: 8b6e278f2572cfb028535728aa463ee005e1b888c53a329a0134f12881259b20
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope for Phase 4a
+              byte_offset: 2730
+              byte_count: 1530
+              word_count: 200
+              content_hash: 7f58c10b140064a45e9dd34ca58a7b685dca4f47146ff3e00c3743e1d7e37888
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred to Phase 4b
+              byte_offset: 4260
+              byte_count: 363
+              word_count: 39
+              content_hash: c05f72c98dbbcd96f1bd7136c4662e1ad7ef8e011d61e066b353aafb743884ea
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly excluded
+              byte_offset: 4623
+              byte_count: 281
+              word_count: 33
+              content_hash: 10c4dad7d842da40ef0dde78d3d2235ba53f3a059f5f515b4147430b590de4f0
+        - path: "1.4"
+          level: 2
+          title: 4. Design Principles
+          byte_offset: 4904
+          byte_count: 1836
+          word_count: 277
+          content_hash: 0073fd9c1b9fa624f7dbd07583a3abb920fc1fdbec3db767fcd486bf48c9b9a4
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Orchestration closes the loop, not the system
+              byte_offset: 4929
+              byte_count: 400
+              word_count: 60
+              content_hash: 6acaef7ae9c411f78db532add60eeb70804a56093a17b2406ae841a13cf1b04d
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Dependency enforcement is upstream of dispatch
+              byte_offset: 5329
+              byte_count: 383
+              word_count: 60
+              content_hash: 8dc719b3413bce0de0b378b07a3a4913b410865cf2c5f57b10b25dc6908891ac
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Dispatch is atomic
+              byte_offset: 5712
+              byte_count: 339
+              word_count: 53
+              content_hash: 4552ce70a3840a5caf168a37d28b4f52599743254fe3723da4436e705bb169aa
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Self-management is earned, not assumed
+              byte_offset: 6051
+              byte_count: 385
+              word_count: 57
+              content_hash: 27680108ced0a234e759938188aa95f478fe499e0c4f8941567df414583e5cbf
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Estimation is planning, not accounting
+              byte_offset: 6436
+              byte_count: 304
+              word_count: 43
+              content_hash: 5ba9f0c54990a5d84a2841789402e967271dc2f965a245a5049feca9a5a5d8da
+        - path: "1.5"
+          level: 2
+          title: 5. Approved Design Decisions
+          byte_offset: 6740
+          byte_count: 1049
+          word_count: 124
+          content_hash: 11848690dbdbec183d34f0a440cc564899859cccc18e261be951bb706e78e667
+        - path: "1.6"
+          level: 2
+          title: 6. Estimation
+          byte_offset: 7789
+          byte_count: 5097
+          word_count: 696
+          content_hash: fa0a0cfb59a07b7fe45ca02362476b4e1fa36beba4359dd3ce38e2ec22db3ef3
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Purpose
+              byte_offset: 7807
+              byte_count: 305
+              word_count: 46
+              content_hash: f7be8b469efbf36ed4ab5292d43bfd56905668743e77116897e2da477baeb23c
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Estimation scale
+              byte_offset: 8112
+              byte_count: 1221
+              word_count: 161
+              content_hash: bb6243b4d918d8cd897995be09876663b6113fc7a382805e61681b2eacbe84c1
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Entity fields
+              byte_offset: 9333
+              byte_count: 682
+              word_count: 87
+              content_hash: 45b909990e1ae904fe5eb7edf251527707c6b5080732473d06c9e5f28af4eba3
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Rollup rules
+              byte_offset: 10015
+              byte_count: 1111
+              word_count: 164
+              content_hash: 9a2dd3da6efc5235ef3912f9092de1560bc369de4888d88a83d7c9802873112f
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Soft limits
+              byte_offset: 11126
+              byte_count: 612
+              word_count: 81
+              content_hash: 7ec2f6a01b7ab0812e8d0f0a66b2542e655a750a6a910efafaa1d8d1c2fe68c6
+            - path: 1.6.6
+              level: 3
+              title: 6.6 Calibration reference examples
+              byte_offset: 11738
+              byte_count: 1148
+              word_count: 154
+              content_hash: cacd770469d1b33fa369ced1b1c412622ae2481ff149c5ca69ae24ca993f3eb9
+        - path: "1.7"
+          level: 2
+          title: 7. Dependency Enforcement
+          byte_offset: 12886
+          byte_count: 2601
+          word_count: 380
+          content_hash: ad52ee8c9975f969c248b3693b20a7e0fc59be168911948ce22448685a354cec
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Purpose
+              byte_offset: 12916
+              byte_count: 202
+              word_count: 29
+              content_hash: da5395b594cbffeaf5264cd11b7a56f5f6fd69983f3080cf1fdf371e13858edc
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Enforcement rule
+              byte_offset: 13118
+              byte_count: 978
+              word_count: 139
+              content_hash: afaaffe20c4aa93e38c8ac5cc715bcf074f437c10e35eccac8c784067e814078
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Work queue promotion
+              byte_offset: 14096
+              byte_count: 1081
+              word_count: 159
+              content_hash: 26bd59d623d0e0a1026b0523f8858a3919d23bd7812e19999d29b95066599b66
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Dependency status
+              byte_offset: 15177
+              byte_count: 310
+              word_count: 49
+              content_hash: 8a4d3c13b8d029c3068d83fda9bb6c6bb137a8840b4da597481097ab38e3331d
+        - path: "1.8"
+          level: 2
+          title: 8. Task Dispatch and Completion
+          byte_offset: 15487
+          byte_count: 9311
+          word_count: 1209
+          content_hash: 36e61c1e5424d2f5e166a1e0caccd6f029b48db435849ba15e95da1181351ea9
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Purpose
+              byte_offset: 15523
+              byte_count: 462
+              word_count: 69
+              content_hash: e897f6b99dbce5e89351500efedd014c27d08170c379c0ba2d12951e23fd864c
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Dispatch fields
+              byte_offset: 15985
+              byte_count: 923
+              word_count: 109
+              content_hash: 8d0621db78cf60b1ce1e936ce9b7051354e7101f09f9ed2da10e4bfe2b7156a4
+            - path: 1.8.3
+              level: 3
+              title: 8.3 The dispatch loop
+              byte_offset: 16908
+              byte_count: 1025
+              word_count: 151
+              content_hash: 1f9f47d4bf5177bc8e8b5d948aa23655e29e500974c440b87c352daad2c839a9
+            - path: 1.8.4
+              level: 3
+              title: 8.4 `dispatch_task` semantics
+              byte_offset: 17933
+              byte_count: 1134
+              word_count: 178
+              content_hash: 900ce723b45a81fbe6814b24a2fb28e07b9d5d3d28b94e6e51ee2852be7527b9
+            - path: 1.8.5
+              level: 3
+              title: 8.5 `complete_task` semantics
+              byte_offset: 19067
+              byte_count: 2448
+              word_count: 291
+              content_hash: b974c8a44e2a9940a8a22e1cc9c8e5359167cc03f984440c3dc1edb74b9769d7
+            - path: 1.8.6
+              level: 3
+              title: 8.6 Human checkpoint mechanism
+              byte_offset: 21515
+              byte_count: 1443
+              word_count: 195
+              content_hash: 63fa94ccb403ae7bec06a16e87db5b8ac1351dd2dafef6d67d7103e6ddf86f6e
+            - path: 1.8.7
+              level: 3
+              title: 8.7 Checkpoint record
+              byte_offset: 22958
+              byte_count: 1840
+              word_count: 210
+              content_hash: 425f7871a880ddec299a5881ba2a3bd73fd8ec2730941bf529b1e20183640d01
+        - path: "1.9"
+          level: 2
+          title: 9. Context Assembly Enhancements
+          byte_offset: 24798
+          byte_count: 2017
+          word_count: 289
+          content_hash: 8f3a432cc90f35164d7da6543399f6aeeaa45ffba6f520b763fa548dbaeaaae4
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Trimming visibility
+              byte_offset: 24835
+              byte_count: 1175
+              word_count: 164
+              content_hash: 47cc94615253bafa1813eb88d57cc9365487875b76d746a568f81d6990c1328b
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Orchestration context injection
+              byte_offset: 26010
+              byte_count: 805
+              word_count: 120
+              content_hash: 048fa3a47b81518d244f87b8fc71fa35e9e49a250547953bc43b7ae8eb03f515
+        - path: "1.10"
+          level: 2
+          title: 10. Health Check Extensions
+          byte_offset: 26815
+          byte_count: 2566
+          word_count: 380
+          content_hash: 2f98d69a88739ffea28454a8f0b3db82dad09790f5b2aa23cfc9cf5f21a8aba6
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Dependency cycle detection
+              byte_offset: 26937
+              byte_count: 616
+              word_count: 93
+              content_hash: a2fe3db45a21d5fbe5e17d30219bea670eea8e35f3eb9f083d74b8eee6678601
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Stalled dispatch detection
+              byte_offset: 27553
+              byte_count: 1100
+              word_count: 160
+              content_hash: 546ce8e08c10710a7c2bf3bfcc56d7bd11743f7cc8860db9244e3c842c4cb988
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Estimation coverage
+              byte_offset: 28653
+              byte_count: 728
+              word_count: 108
+              content_hash: 0ad036314eb3e390ffedc65ca5a860fbbaef49fd81fc1276e09f411c130a6edd
+        - path: "1.11"
+          level: 2
+          title: 11. Storage Model
+          byte_offset: 29381
+          byte_count: 4930
+          word_count: 621
+          content_hash: 6fc61126764ceda04c01102d2ca9ca6d591b6c150d6705ff3a9118e3bde775bb
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Task schema additions
+              byte_offset: 29403
+              byte_count: 2504
+              word_count: 303
+              content_hash: d6290b0b5a5665a18a7d4b315cc956033a26c02ab680e134fa4dd2464b3a9e7f
+            - path: 1.11.2
+              level: 3
+              title: 11.2 Feature schema additions
+              byte_offset: 31907
+              byte_count: 419
+              word_count: 49
+              content_hash: cbd47b88ca2df087517965ad08c7ecd49977bd632630c730ca08ef4f90be1e6c
+            - path: 1.11.3
+              level: 3
+              title: 11.3 Epic schema additions
+              byte_offset: 32326
+              byte_count: 413
+              word_count: 49
+              content_hash: bf6c3e5f780b9afb229278f808392cae688a9b6153a432cb1b9e4fa24efe664f
+            - path: 1.11.4
+              level: 3
+              title: 11.4 Bug schema additions
+              byte_offset: 32739
+              byte_count: 403
+              word_count: 48
+              content_hash: b1030ac619245205e009285c14c5f90448cc6cb585301632fd99e0026dce1f36
+            - path: 1.11.5
+              level: 3
+              title: 11.5 Checkpoint record
+              byte_offset: 33142
+              byte_count: 700
+              word_count: 95
+              content_hash: 18f77edacbb94acf95f4904ae2cc21032d3209d4e957bcf6af4c49072383168d
+            - path: 1.11.6
+              level: 3
+              title: 11.6 Deterministic formatting
+              byte_offset: 33842
+              byte_count: 469
+              word_count: 73
+              content_hash: 2cc3695ae9620a9e85461dc4b1d93738572cc9ca7c769eeed430f746ba410823
+        - path: "1.12"
+          level: 2
+          title: 12. MCP Interface
+          byte_offset: 34311
+          byte_count: 15615
+          word_count: 1820
+          content_hash: 37296534ac95642d88e4be78bbd39ffcb65071f7a657b0a9b34aa2fac5633267
+          children:
+            - path: 1.12.1
+              level: 3
+              title: 12.1 Estimation operations
+              byte_offset: 34333
+              byte_count: 4328
+              word_count: 526
+              content_hash: 65073d1be69012ad18ee69bbfe835cb4d4549fd5b5714ec7d6e7c8bca5ab651d
+              children:
+                - path: 1.12.1.1
+                  level: 4
+                  title: '`estimate_set`'
+                  byte_offset: 34365
+                  byte_count: 1573
+                  word_count: 203
+                  content_hash: 51b0c738f7778c2ca71d29b06eb76f7e1c4582c2ec899efa285e356d812101d4
+                - path: 1.12.1.2
+                  level: 4
+                  title: '`estimate_query`'
+                  byte_offset: 35938
+                  byte_count: 1346
+                  word_count: 168
+                  content_hash: 3057ebc71edf5ccb56a4aa4929003131cb2d2cf35d563e2caa30ae769b227eae
+                - path: 1.12.1.3
+                  level: 4
+                  title: '`estimate_reference_add`'
+                  byte_offset: 37284
+                  byte_count: 869
+                  word_count: 97
+                  content_hash: 2d114cf3e8cf0673a0bd813c6e8b496da084cff3a6620683a5a7ebb1b402f02a
+                - path: 1.12.1.4
+                  level: 4
+                  title: '`estimate_reference_remove`'
+                  byte_offset: 38153
+                  byte_count: 508
+                  word_count: 54
+                  content_hash: 3da068ea99f11fd6e2959db724736f2ff6858bf7370811934381dd48fd55014f
+            - path: 1.12.2
+              level: 3
+              title: 12.2 Dependency operations
+              byte_offset: 38661
+              byte_count: 2787
+              word_count: 325
+              content_hash: c026690ef7b8d42f05868aa228167a180ab3a87e9fc320c558621df41c232394
+              children:
+                - path: 1.12.2.1
+                  level: 4
+                  title: '`work_queue`'
+                  byte_offset: 38693
+                  byte_count: 1947
+                  word_count: 227
+                  content_hash: 944bd70f3c16b3e1eb536e653dad4c336f1c997fd70ac81d91c205172bc84131
+                - path: 1.12.2.2
+                  level: 4
+                  title: '`dependency_status`'
+                  byte_offset: 40640
+                  byte_count: 808
+                  word_count: 94
+                  content_hash: 1946fda8735833ca967f6ed661196b4e845856c3e54e2626b243d12ccbf94bb6
+            - path: 1.12.3
+              level: 3
+              title: 12.3 Dispatch and completion operations
+              byte_offset: 41448
+              byte_count: 7243
+              word_count: 800
+              content_hash: c8ccfb4a8235d556847d43800cad893fca4ced6d53c866c687b2e001f9b57481
+              children:
+                - path: 1.12.3.1
+                  level: 4
+                  title: '`dispatch_task`'
+                  byte_offset: 41493
+                  byte_count: 2035
+                  word_count: 234
+                  content_hash: ef8612f073975a24cd95fc98ba65478a4974045ccbf4c44fca8bc74a12b4d54a
+                - path: 1.12.3.2
+                  level: 4
+                  title: '`complete_task`'
+                  byte_offset: 43528
+                  byte_count: 1674
+                  word_count: 184
+                  content_hash: d605d68e206d0f0227adc15915c87a4ffd3d30dee2672bb93b5a5aead5818a42
+                - path: 1.12.3.3
+                  level: 4
+                  title: '`human_checkpoint`'
+                  byte_offset: 45202
+                  byte_count: 1041
+                  word_count: 107
+                  content_hash: 4fe3053e7de2f4c4d6d162865bd796fb2b02156d9dfda6cec305bbe945da078c
+                - path: 1.12.3.4
+                  level: 4
+                  title: '`human_checkpoint_respond`'
+                  byte_offset: 46243
+                  byte_count: 664
+                  word_count: 72
+                  content_hash: d1aae8da57c0780216107514e30c82cf3c7ca477c5142f203808586e0f4a9f70
+                - path: 1.12.3.5
+                  level: 4
+                  title: '`human_checkpoint_get`'
+                  byte_offset: 46907
+                  byte_count: 879
+                  word_count: 111
+                  content_hash: 6bf48ec77150acb1b1f5630cebeea9c7f11023dbbf8fd9f048919ed1449b161b
+                - path: 1.12.3.6
+                  level: 4
+                  title: '`human_checkpoint_list`'
+                  byte_offset: 47786
+                  byte_count: 905
+                  word_count: 86
+                  content_hash: 6414b70547870c39b7e4cecdbe0746d5c154b6b9d68cda297cae5548aa1c6f2c
+            - path: 1.12.4
+              level: 3
+              title: 12.4 `context_assemble` extensions
+              byte_offset: 48691
+              byte_count: 701
+              word_count: 81
+              content_hash: 2f11fb9b9a438b4bb1ba650a63684611d8297c53cb4d67369cd9c2419d21a4e4
+            - path: 1.12.5
+              level: 3
+              title: 12.5 MCP validation
+              byte_offset: 49392
+              byte_count: 534
+              word_count: 84
+              content_hash: 0f830ee0c4476615a7bb172de9fd41b97608594e096a2decc397b8b0cbd7f661
+        - path: "1.13"
+          level: 2
+          title: 13. CLI Interface
+          byte_offset: 49926
+          byte_count: 2194
+          word_count: 298
+          content_hash: 467148e522bcfe2f6746e09befad7e474af374520b8d1462df005e431dfe20e0
+          children:
+            - path: 1.13.1
+              level: 3
+              title: 13.1 Estimation commands
+              byte_offset: 49948
+              byte_count: 771
+              word_count: 104
+              content_hash: e82abdd72583d00a23251b59a839bf43615087d5f35604ea0cd80005153bddd5
+            - path: 1.13.2
+              level: 3
+              title: 13.2 Queue and dependency commands
+              byte_offset: 50719
+              byte_count: 410
+              word_count: 63
+              content_hash: 5cf5e48937aaca37f509af32dfd130194ae4b29bfee942c2e0ee83858289bd30
+            - path: 1.13.3
+              level: 3
+              title: 13.3 Dispatch commands
+              byte_offset: 51129
+              byte_count: 465
+              word_count: 62
+              content_hash: 0fdc7ebe4f741109af68c5ca8ab976d340625185c7e643ad65dfe9fe931a81a9
+            - path: 1.13.4
+              level: 3
+              title: 13.4 Checkpoint commands
+              byte_offset: 51594
+              byte_count: 526
+              word_count: 65
+              content_hash: 52b25cbaf46fb8c803bca32c1afcf3f6b396813014c1759dc57a8b0bc7797195
+        - path: "1.14"
+          level: 2
+          title: 14. Configuration
+          byte_offset: 52120
+          byte_count: 719
+          word_count: 91
+          content_hash: 200c9262bbba66defbbd507d2f529195de432799634e58ad3968f9e5bb7db56f
+        - path: "1.15"
+          level: 2
+          title: 15. Acceptance Criteria
+          byte_offset: 52839
+          byte_count: 6356
+          word_count: 976
+          content_hash: 536eb9474d5d4f2490a3f855ef766c2662015ed794cc352dc23f10ad6e211f20
+          children:
+            - path: 1.15.1
+              level: 3
+              title: 15.1 Estimation
+              byte_offset: 52867
+              byte_count: 1430
+              word_count: 234
+              content_hash: 3fdf865f77078bcc46b8bb944134c525a254a4d7a06472ad71687e3220c813ee
+            - path: 1.15.2
+              level: 3
+              title: 15.2 Dependency enforcement
+              byte_offset: 54297
+              byte_count: 867
+              word_count: 137
+              content_hash: 03f2e58434fcc6789cb3e6e260c5cc58ae42969682153fd038fd5d4a7ec84513
+            - path: 1.15.3
+              level: 3
+              title: 15.3 Dispatch and completion
+              byte_offset: 55164
+              byte_count: 1883
+              word_count: 271
+              content_hash: 236e14a2ed3677036fdd0b829c8a02e4d246f35660439803a6943199ebb08262
+            - path: 1.15.4
+              level: 3
+              title: 15.4 Context assembly enhancements
+              byte_offset: 57047
+              byte_count: 784
+              word_count: 115
+              content_hash: 99be55eefa950e07fb9cff0ef73640b8c0fd134665f18cc58bd4a039fa2ed53c
+            - path: 1.15.5
+              level: 3
+              title: 15.5 Health checks
+              byte_offset: 57831
+              byte_count: 810
+              word_count: 124
+              content_hash: 5ebdcf8cc8e3975d3316ea60870e65a7c9c401e55f11d9b30c07371714eb97a4
+            - path: 1.15.6
+              level: 3
+              title: 15.6 Deterministic storage
+              byte_offset: 58641
+              byte_count: 554
+              word_count: 91
+              content_hash: 17a0364833879df4aa1179b8514373d8ff8bc680d1362b8871d39dfee85f3c91
+        - path: "1.16"
+          level: 2
+          title: 16. Open Questions Resolved During Specification
+          byte_offset: 59195
+          byte_count: 4025
+          word_count: 530
+          content_hash: 0a78cd2b3a5d44a4c118e88394cdc2b5b89d86fa21014d298108bcc9dd1647fa
+          children:
+            - path: 1.16.1
+              level: 3
+              title: 16.1 `work_queue` and the `queued → ready` transition
+              byte_offset: 59248
+              byte_count: 822
+              word_count: 110
+              content_hash: df397b0f0efe65a6ca71da73110f413bde3040effa3d502ecc499790f339e772
+            - path: 1.16.2
+              level: 3
+              title: 16.2 `complete_task` default target status
+              byte_offset: 60070
+              byte_count: 645
+              word_count: 85
+              content_hash: b195bf7ea340759c4096fc6792ad7964067e69f9411a6614688fc68c99b82c09
+            - path: 1.16.3
+              level: 3
+              title: 16.3 Calibration reference example storage
+              byte_offset: 60715
+              byte_count: 766
+              word_count: 104
+              content_hash: 4f63e40c11b8962b02dcd6691edd4d37a333087e98f80bf7a5267d7b45feb0e8
+            - path: 1.16.4
+              level: 3
+              title: 16.4 `orchestration_context` persistence
+              byte_offset: 61481
+              byte_count: 704
+              word_count: 87
+              content_hash: 830f3247afccda84b7a0a097fe19412a4a756de65e9d876e861cfa93fe1c4056
+            - path: 1.16.5
+              level: 3
+              title: 16.5 Checkpoint cleanup policy
+              byte_offset: 62185
+              byte_count: 570
+              word_count: 79
+              content_hash: bf91396fb3d921566aa7dd10673acfaae5747422e4bb9f73a40f421bc8d9b74f
+            - path: 1.16.6
+              level: 3
+              title: 16.6 `work_queue` sorting tie-breaking
+              byte_offset: 62755
+              byte_count: 465
+              word_count: 58
+              content_hash: 089fe528168c3a95562f6c98e5d7bcc247eeee807157308813226fd6066a8c3b
+        - path: "1.17"
+          level: 2
+          title: 17. Implementation Notes
+          byte_offset: 63220
+          byte_count: 3777
+          word_count: 540
+          content_hash: f364bff01bab2aafab0bc21a09a77d8550146083be6f74b22b67b1450d1fdd6f
+          children:
+            - path: 1.17.1
+              level: 3
+              title: 17.1 Estimation implementation order
+              byte_offset: 63249
+              byte_count: 393
+              word_count: 52
+              content_hash: b8617ea09a3116ebbb8e2cc85e2f147083d58756fd8cd7469dabf4a12f7a3023
+            - path: 1.17.2
+              level: 3
+              title: 17.2 `dispatch_task` atomicity
+              byte_offset: 63642
+              byte_count: 668
+              word_count: 96
+              content_hash: c6e8a8ab93d0e1424654eea33c59665b8111d98776c571c79a3e0a71d42220d0
+            - path: 1.17.3
+              level: 3
+              title: 17.3 Estimation rollup performance
+              byte_offset: 64310
+              byte_count: 572
+              word_count: 84
+              content_hash: 0cd1f8fb81a161c6233de5f2943d3ebb305922c389094543f2e360b13e2e782d
+            - path: 1.17.4
+              level: 3
+              title: 17.4 `work_queue` promotion side effects
+              byte_offset: 64882
+              byte_count: 494
+              word_count: 74
+              content_hash: d1911015780ce8e9c1b9327a844fab8a16582bed65fc7a82e37917794ff199a6
+            - path: 1.17.5
+              level: 3
+              title: 17.5 Checkpoint record format
+              byte_offset: 65376
+              byte_count: 436
+              word_count: 62
+              content_hash: 084118dbb6614a3ecc5e0d941d24160fc86eb38e1a1c79d0dc7a0fe71269fd10
+            - path: 1.17.6
+              level: 3
+              title: 17.6 `StatusTransitionHook` interaction
+              byte_offset: 65812
+              byte_count: 529
+              word_count: 69
+              content_hash: 1d8190c075b75144d19f2b2416e441f683e288381ff3631496e4b48e9c12bbaf
+            - path: 1.17.7
+              level: 3
+              title: 17.7 Phase 4a validation workload
+              byte_offset: 66341
+              byte_count: 656
+              word_count: 99
+              content_hash: d0d8779884abbaddc47ca70ddb8c90fe6f3d3db2b1ba8db332e1139293ff5189
+        - path: "1.18"
+          level: 2
+          title: 18. Summary
+          byte_offset: 66997
+          byte_count: 1908
+          word_count: 233
+          content_hash: 207a55b886e748fb424b9a7a4cda3351fb301f2ec5ff9c970ea8b8ad21d6c73c
+entity_refs:
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.10.3
+      byte_offset: 29108
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.12.1.2
+      byte_offset: 36303
+    - entity_id: FEAT-01JA
+      entity_type: feature
+      section_path: 1.12.2.1
+      byte_offset: 39721
+    - entity_id: FEAT-01JB
+      entity_type: feature
+      section_path: 1.12.2.1
+      byte_offset: 39955
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.13.1
+      byte_offset: 50279
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.6.6
+      byte_offset: 12149
+    - entity_id: TASK-01JY
+      entity_type: task
+      section_path: 1.8.7
+      byte_offset: 24473
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.10.1
+      byte_offset: 27380
+    - entity_id: TASK-01JY
+      entity_type: task
+      section_path: 1.10.1
+      byte_offset: 27394
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.10.2
+      byte_offset: 28188
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.12.1.1
+      byte_offset: 34873
+    - entity_id: TASK-01JY
+      entity_type: task
+      section_path: 1.12.1.1
+      byte_offset: 35078
+    - entity_id: TASK-01JZ
+      entity_type: task
+      section_path: 1.12.1.1
+      byte_offset: 35231
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.12.1.2
+      byte_offset: 36718
+    - entity_id: TASK-01JY
+      entity_type: task
+      section_path: 1.12.1.3
+      byte_offset: 37839
+    - entity_id: TASK-01JY
+      entity_type: task
+      section_path: 1.12.1.4
+      byte_offset: 38536
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.12.2.1
+      byte_offset: 39566
+    - entity_id: TASK-01JY
+      entity_type: task
+      section_path: 1.12.2.1
+      byte_offset: 39835
+    - entity_id: TASK-01JZ
+      entity_type: task
+      section_path: 1.12.2.1
+      byte_offset: 40063
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.12.2.2
+      byte_offset: 40911
+    - entity_id: TASK-01JW
+      entity_type: task
+      section_path: 1.12.2.2
+      byte_offset: 41035
+    - entity_id: TASK-01JV
+      entity_type: task
+      section_path: 1.12.2.2
+      byte_offset: 41152
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.12.3.1
+      byte_offset: 42467
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.12.3.2
+      byte_offset: 44663
+    - entity_id: TASK-01JY
+      entity_type: task
+      section_path: 1.12.3.5
+      byte_offset: 47385
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.13.1
+      byte_offset: 50160
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.13.2
+      byte_offset: 51114
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.13.3
+      byte_offset: 51368
+    - entity_id: DEC-008
+      entity_type: decision
+      section_path: 1.11.6
+      byte_offset: 33972
+    - entity_id: EPIC-01JX
+      entity_type: epic
+      section_path: 1.12.1.2
+      byte_offset: 36874
+cross_doc_links:
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1"
+    - target_path: work/plan/phase-4-decision-log.md
+      link_text: work/plan/phase-4-decision-log.md
+      section_path: "1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/design/estimation-and-progress-design.md
+      link_text: work/design/estimation-and-progress-design.md
+      section_path: "1"
+    - target_path: work/spec/phase-3-specification.md
+      link_text: work/spec/phase-3-specification.md
+      section_path: "1"
+    - target_path: estimation-and-progress-design.md
+      link_text: estimation-and-progress-design.md
+      section_path: "1.2"
+    - target_path: work/plan/phase-4-decision-log.md
+      link_text: work/plan/phase-4-decision-log.md
+      section_path: "1.5"
+    - target_path: estimation-and-progress-design.md
+      link_text: estimation-and-progress-design.md
+      section_path: 1.17.1
+    - target_path: estimation-and-progress-design.md
+      link_text: estimation-and-progress-design.md
+      section_path: 1.17.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: decision
+      confidence: high
+    - section_path: 1.6.1
+      role: narrative
+      confidence: high
+    - section_path: 1.6.6
+      role: example
+      confidence: high
+    - section_path: 1.7.1
+      role: narrative
+      confidence: high
+    - section_path: 1.8.1
+      role: narrative
+      confidence: high
+    - section_path: "1.9"
+      role: narrative
+      confidence: high
+    - section_path: 1.9.2
+      role: narrative
+      confidence: high
+    - section_path: 1.12.4
+      role: narrative
+      confidence: high
+    - section_path: "1.15"
+      role: requirement
+      confidence: high
+    - section_path: 1.15.4
+      role: narrative
+      confidence: high
+    - section_path: "1.16"
+      role: question
+      confidence: high
+    - section_path: 1.16.3
+      role: example
+      confidence: high
+    - section_path: 1.16.4
+      role: narrative
+      confidence: high
+    - section_path: "1.18"
+      role: narrative
+      confidence: high
+classified: false

@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/config"
 )
 
 // matchGlob reports whether name matches the glob pattern.

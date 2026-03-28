@@ -1,0 +1,17 @@
+id: TASK-01KMRSNZGDFNB
+parent_feature: FEAT-01KMRSMVP15PD
+slug: mcp-advance-parameter
+summary: "Expose the advance parameter through the update_status MCP tool. When advance=true is passed for a feature entity, invoke the advance operation instead of a single-step transition. Include advanced_through and stopped_reason in the tool response. Non-feature entities ignore the parameter (or return an error). Design ref: smart-lifecycle-transitions.md §4.2."
+status: done
+depends_on:
+  - TASK-01KMRSNXFKNK2
+files_planned:
+  - internal/mcp/entity_tool.go
+  - internal/mcp/server.go
+  - internal/mcp/entity_tool_test.go
+completed: "2026-03-27T23:53:50Z"
+claimed_at: "2026-03-27T23:46:59Z"
+dispatched_to: backend
+dispatched_at: "2026-03-27T23:46:59Z"
+dispatched_by: orchestrator
+completion_summary: "Exposed advance parameter on update_status MCP tool. When advance=true for features, calls AdvanceFeatureStatus for multi-step advancement. Returns advanced_through and stopped_reason. Non-feature entities get clear error. 5 new tests."

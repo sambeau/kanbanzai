@@ -1,0 +1,199 @@
+document_id: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup
+document_path: work/spec/agents-md-cleanup.md
+content_hash: 7eee7bea897f39d0275037eb7f521ea3d9f89298b68a9129da59098b4592b615
+indexed_at: 2026-03-28T18:02:59.288395Z
+sections:
+    - path: "1"
+      level: 1
+      title: AGENTS.md Cleanup Specification
+      byte_offset: 0
+      byte_count: 10092
+      word_count: 1405
+      content_hash: 7eee7bea897f39d0275037eb7f521ea3d9f89298b68a9129da59098b4592b615
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 384
+          byte_count: 891
+          word_count: 106
+          content_hash: cb1b3166f3c44f98cad8ba70052adfc09731769ea62da4f7e55e79f7562c861f
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 1275
+          byte_count: 852
+          word_count: 120
+          content_hash: 97dd6b78fab176c81234c4e6c79ca3c1e9d95760254b6c2591f5a987bed1791f
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 In scope
+              byte_offset: 1288
+              byte_count: 338
+              word_count: 44
+              content_hash: ab1ecb85b87a048c0160690668d5acd62be64b56df6a5d3f37a933ecad164ae6
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Out of scope
+              byte_offset: 1626
+              byte_count: 501
+              word_count: 73
+              content_hash: 955f8bfe691ee53ed5e833c7dace8db125cbce81da8cb7fbfa3459a54a62574b
+        - path: "1.3"
+          level: 2
+          title: 3. Acceptance Criteria
+          byte_offset: 2127
+          byte_count: 5155
+          word_count: 726
+          content_hash: bc4e652f8fbbd15615b71413e29ef7d0157604287037c4c64b81038a6e8a9d30
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Sections to remove from AGENTS.md (redundant with skills)
+              byte_offset: 2154
+              byte_count: 1371
+              word_count: 190
+              content_hash: 94250d659ee0b456629b34e58daf96931d41d22015201705c4624854a7676609
+            - path: 1.3.2
+              level: 3
+              title: Content to move into skills (product-facing, not yet in skills)
+              byte_offset: 3525
+              byte_count: 1097
+              word_count: 157
+              content_hash: 65148800c4074f4fd22c0be6c35a78791715a88486c8a4dd249e9ec482eadbcb
+            - path: 1.3.3
+              level: 3
+              title: Terminology update
+              byte_offset: 4622
+              byte_count: 592
+              word_count: 77
+              content_hash: ad0e39a41c881a649308c41b9d8750dd79c18e8c7e81caa88450c758b66293fb
+            - path: 1.3.4
+              level: 3
+              title: What must stay in AGENTS.md
+              byte_offset: 5214
+              byte_count: 1094
+              word_count: 167
+              content_hash: 85a82a8ac304a41720f0c2225fde89ba0a463b6242a720b5a8bf5f9f4966bb64
+            - path: 1.3.5
+              level: 3
+              title: Structural integrity
+              byte_offset: 6308
+              byte_count: 543
+              word_count: 73
+              content_hash: 1e824623f53a7136b0409e8883438fffb41008ed7aab152a872349fa0fe2fdfe
+            - path: 1.3.6
+              level: 3
+              title: Verification
+              byte_offset: 6851
+              byte_count: 431
+              word_count: 58
+              content_hash: bf4988419237091a65974b6ddbaefe59f248fdf6755b24b462c3cce66b2c1afe
+        - path: "1.4"
+          level: 2
+          title: 4. Verification Methods
+          byte_offset: 7282
+          byte_count: 2316
+          word_count: 347
+          content_hash: 16305b09c49059cec5449153840e29007575eb38c27a066a4f4667b95a51ba9b
+        - path: "1.5"
+          level: 2
+          title: 5. Notes
+          byte_offset: 9598
+          byte_count: 494
+          word_count: 61
+          content_hash: 781ea7cd997f870adeb79180ab6c25f99dab1d3b07bc2a1fe986f117c9b7a93a
+entity_refs:
+    - entity_id: FEAT-01KMTSPAV34HR
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 213
+    - entity_id: P3-kanbanzai-1
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 267
+cross_doc_links:
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: "1.1"
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.2.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.2
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.2.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.1
+    - target_path: .skills/document-creation.md
+      link_text: .skills/document-creation.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.3
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: 1.3.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.4
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.5
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.3.5
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.3.6
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.6
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.4"
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1.5"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+classified: false

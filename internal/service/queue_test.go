@@ -3,7 +3,7 @@ package service
 import (
 	"testing"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 const testPlanIDQueue = "P1-queue-test"

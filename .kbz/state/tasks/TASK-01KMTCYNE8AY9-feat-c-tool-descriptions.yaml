@@ -1,0 +1,20 @@
+id: TASK-01KMTCYNE8AY9
+parent_feature: FEAT-01KMTCWXAGX06
+slug: feat-c-tool-descriptions
+summary: "Update the description strings for 7 tools: status, entity, next, finish, doc, knowledge, retro. Exact replacement text is in spec §5.2. The doc description must include refresh and chain in the actions list (coordinate with or apply after Feature E and F, or update the list incrementally). Do not modify any other tool descriptions."
+status: done
+files_planned:
+  - internal/mcp/status_tool.go
+  - internal/mcp/entity_tool.go
+  - internal/mcp/next_tool.go
+  - internal/mcp/finish_tool.go
+  - internal/mcp/doc_tool.go
+  - internal/mcp/knowledge_tool.go
+  - internal/mcp/retro_tool.go
+completed: "2026-03-28T15:12:30Z"
+claimed_at: "2026-03-28T14:54:13Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T14:54:13Z"
+dispatched_by: sambeau
+completion_summary: "Updated description strings for 7 tools (status, entity, next, finish, doc, knowledge, retro) per spec §5.2 verbatim. Doc description includes refresh and chain in actions list."
+verification: go test -race ./internal/mcp/... passes

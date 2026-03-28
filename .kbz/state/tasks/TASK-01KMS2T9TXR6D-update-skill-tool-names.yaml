@@ -1,0 +1,14 @@
+id: TASK-01KMS2T9TXR6D
+parent_feature: FEAT-01KMRX1QPN3CB
+slug: update-skill-tool-names
+summary: "Replace all 1.0 tool references in the ## Orchestration Procedure section of .skills/code-review.md with 2.0 equivalents. See B1 in review-FEAT-01KMRX1QPN3CB.md for the full mapping table. Also: add transition tool reference to Decision Point section (N3), add required review document sections list to Step 6 (N4)."
+status: done
+files_planned:
+  - kanbanzai/.skills/code-review.md
+completed: "2026-03-28T02:04:33Z"
+claimed_at: "2026-03-28T02:02:42Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T02:02:42Z"
+dispatched_by: sambeau
+completion_summary: "Updated all 1.0 tool references in the Orchestration Procedure section to 2.0 equivalents: update_status → entity(transition), doc_outline → doc_intel(outline), doc_section → doc_intel(section), list_entities_filtered → entity(list), context_assemble → profile(get), create_task → entity(create), conflict_domain_check → conflict(check), dispatch_task → next, human_checkpoint → checkpoint(create), get_entity → entity(get), record_decision → entity(create decision). Also added Tool column to Decision Point table (N3) and added required review document sections list to Step 6 (N4). Added After checkpoint response sub-section addressing B2/AC-F-22."
+verification: grep confirms all 2.0 tool names present. After checkpoint response section confirmed present. No 1.0 tool names remain in Orchestration Procedure.

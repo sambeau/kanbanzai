@@ -1,0 +1,17 @@
+id: KE-01KMS2833SK10
+tier: 3
+topic: retro-task-01kmrxk5arr1s
+scope: project
+content: "[minor] worked-well: The advance: true flag on entity transitions worked perfectly for walking Feature E through specifying → dev-planning → developing → reviewing, checking document prerequisites at each gate. The spec approval side-effect auto-advanced the first gate."
+learned_from: TASK-01KMRXK5ARR1S
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - worked-well
+created: "2026-03-28T01:51:56Z"
+created_by: unknown
+updated: "2026-03-28T01:51:56Z"

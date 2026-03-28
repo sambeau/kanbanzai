@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // DispatchInput holds parameters for dispatch_task.
@@ -30,6 +30,22 @@ type KnowledgeEntryInput struct {
 	Tags    []string
 }
 
+// RetroContributionResult is the result of retrospective signal contributions.
+type RetroContributionResult struct {
+	Accepted []struct {
+		EntryID  string
+		Topic    string
+		Category string
+	}
+	Rejected []struct {
+		Category    string
+		Observation string
+		Reason      string
+	}
+	TotalAttempted int
+	TotalAccepted  int
+}
+
 // CompleteInput holds parameters for complete_task.
 type CompleteInput struct {
 	TaskID                string
@@ -39,6 +55,7 @@ type CompleteInput struct {
 	VerificationPerformed string
 	BlockersEncountered   string
 	KnowledgeEntries      []KnowledgeEntryInput
+	RetroSignals          []RetroSignalInput
 }
 
 // KnowledgeContributionResult is the result of knowledge entry contributions.
@@ -59,6 +76,7 @@ type KnowledgeContributionResult struct {
 type CompleteResult struct {
 	Task                   map[string]any
 	KnowledgeContributions KnowledgeContributionResult
+	RetroContributions     RetroContributionResult
 	UnblockedTasks         []UnblockedTask
 }
 
@@ -175,6 +193,37 @@ func (s *DispatchService) DispatchTask(input DispatchInput) (DispatchResult, err
 	}, nil
 }
 
+// AnyTaskHasRetroSignals returns true if any of the given task IDs has at least
+// one retrospective knowledge entry (learned_from == taskID and tags includes "retrospective").
+// Returns false on error (best-effort).
+func (s *DispatchService) AnyTaskHasRetroSignals(taskIDs []string) bool {
+	if len(taskIDs) == 0 {
+		return false
+	}
+	taskSet := make(map[string]bool, len(taskIDs))
+	for _, id := range taskIDs {
+		taskSet[id] = true
+	}
+	entries, err := s.knowledgeSvc.LoadAllRaw()
+	if err != nil {
+		return false // best-effort
+	}
+	for _, rec := range entries {
+		learnedFrom, _ := rec.Fields["learned_from"].(string)
+		if !taskSet[learnedFrom] {
+			continue
+		}
+		// Check for "retrospective" tag
+		rawTags, _ := rec.Fields["tags"].([]any)
+		for _, t := range rawTags {
+			if s, ok := t.(string); ok && s == "retrospective" {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 // CompleteTask closes the dispatch loop for a completed task.
 func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, error) {
 	taskID := strings.TrimSpace(input.TaskID)
@@ -277,6 +326,50 @@ func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, err
 		}
 	}
 
+	// Process retrospective signals (best-effort, per-signal).
+	// Only reached after a successful status transition, satisfying P5-1.7.
+	var rResult RetroContributionResult
+	topicSeq := 0 // increments for each signal that passes validation
+	for _, signal := range input.RetroSignals {
+		rResult.TotalAttempted++
+
+		if err := ValidateRetroSignal(signal); err != nil {
+			rResult.Rejected = append(rResult.Rejected, struct {
+				Category    string
+				Observation string
+				Reason      string
+			}{Category: signal.Category, Observation: signal.Observation, Reason: err.Error()})
+			continue
+		}
+
+		topicSeq++
+		topic := RetroSignalTopic(task.ID, topicSeq)
+		content := EncodeRetroContent(signal)
+
+		rec, _, err := s.knowledgeSvc.Contribute(ContributeInput{
+			Topic:       topic,
+			Content:     content,
+			Scope:       "project",
+			Tier:        3,
+			LearnedFrom: task.ID,
+			Tags:        []string{"retrospective", signal.Category},
+		})
+		if err != nil {
+			rResult.Rejected = append(rResult.Rejected, struct {
+				Category    string
+				Observation string
+				Reason      string
+			}{Category: signal.Category, Observation: signal.Observation, Reason: err.Error()})
+		} else {
+			rResult.Accepted = append(rResult.Accepted, struct {
+				EntryID  string
+				Topic    string
+				Category string
+			}{EntryID: rec.ID, Topic: topic, Category: signal.Category})
+			rResult.TotalAccepted++
+		}
+	}
+
 	// Reload final task state.
 	finalTask, err := s.entitySvc.Get("task", task.ID, "")
 	if err != nil {
@@ -286,6 +379,7 @@ func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, err
 	return CompleteResult{
 		Task:                   finalTask.State,
 		KnowledgeContributions: kResult,
+		RetroContributions:     rResult,
 		UnblockedTasks:         unblockedTasks,
 	}, nil
 }

@@ -3,8 +3,8 @@
 | Document | Kanbanzai 1.0 Delivery Plan        |
 |----------|------------------------------------|
 | Status   | Draft                              |
-| Created  | 2026-05-31                         |
-| Updated  | 2026-05-31                         |
+| Created  | 2026-03-26T14:41:37Z                         |
+| Updated  | 2026-03-26T14:41:37Z                         |
 | Related  | `work/design/kanbanzai-1.0.md`     |
 
 ---

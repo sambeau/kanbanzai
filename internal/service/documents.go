@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 // SubmitDocumentInput contains the fields needed to submit a new document.
@@ -40,7 +40,39 @@ type SupersedeDocumentInput struct {
 	SupersededBy string
 }
 
+// RefreshInput identifies the document to refresh. ID is preferred; Path is the fallback.
+type RefreshInput struct {
+	ID   string
+	Path string
+}
+
+// RefreshResult is the outcome of a RefreshContentHash call.
+type RefreshResult struct {
+	ID               string
+	Path             string
+	Changed          bool
+	OldHash          string
+	NewHash          string
+	Status           string // final status after refresh
+	StatusTransition string // e.g., "approved → draft", or "" if unchanged
+}
+
 // DocumentResult is the result of a document operation.
+// DocEntityTransition records an entity lifecycle transition triggered by a
+// document operation (approval, supersession). It is used by 2.0 tools to
+// report status_transition side effects without modifying the EntityLifecycleHook
+// interface (spec §8.3, Track B task B.9 / Track I prerequisite).
+type DocEntityTransition struct {
+	// EntityID is the owning entity that was transitioned (feature or plan ID).
+	EntityID string
+	// EntityType is the type of the owning entity ("feature" or "plan").
+	EntityType string
+	// FromStatus is the entity's status before the transition.
+	FromStatus string
+	// ToStatus is the entity's status after the transition.
+	ToStatus string
+}
+
 type DocumentResult struct {
 	ID           string
 	Path         string
@@ -58,6 +90,10 @@ type DocumentResult struct {
 	ApprovedAt   *time.Time
 	Supersedes   string
 	SupersededBy string
+	// EntityTransition is set when this operation triggered a lifecycle
+	// transition on the owning entity. Nil when no transition occurred.
+	// Read by 2.0 tools (Track I) to push status_transition side effects.
+	EntityTransition *DocEntityTransition
 }
 
 // DocumentFilters contains optional filters for listing documents.
@@ -301,22 +337,32 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 		ApprovedAt:  doc.ApprovedAt,
 	}
 
-	// Trigger entity lifecycle hooks on approval
+	// Trigger entity lifecycle hooks on approval and record any transition
+	// in result.EntityTransition for 2.0 side-effect reporting (Track I).
 	if s.entityHook != nil && doc.Owner != "" {
-		entityType, _, _ := s.entityHook.GetEntityStatus(doc.Owner)
-		var targetStatus string
-		switch {
-		case entityType == "plan" && doc.Type == model.DocumentTypeDesign:
-			targetStatus = "active"
-		case entityType == "feature" && doc.Type == model.DocumentTypeDesign:
-			targetStatus = "specifying"
-		case entityType == "feature" && doc.Type == model.DocumentTypeSpecification:
-			targetStatus = "dev-planning"
-		case entityType == "feature" && doc.Type == model.DocumentTypeDevPlan:
-			targetStatus = "developing"
-		}
-		if targetStatus != "" {
-			_ = s.entityHook.TransitionStatus(doc.Owner, targetStatus)
+		entityType, currentStatus, getErr := s.entityHook.GetEntityStatus(doc.Owner)
+		if getErr == nil {
+			var targetStatus string
+			switch {
+			case entityType == "plan" && doc.Type == model.DocumentTypeDesign:
+				targetStatus = "active"
+			case entityType == "feature" && doc.Type == model.DocumentTypeDesign:
+				targetStatus = "specifying"
+			case entityType == "feature" && doc.Type == model.DocumentTypeSpecification:
+				targetStatus = "dev-planning"
+			case entityType == "feature" && doc.Type == model.DocumentTypeDevPlan:
+				targetStatus = "developing"
+			}
+			if targetStatus != "" && currentStatus != targetStatus {
+				if err := s.entityHook.TransitionStatus(doc.Owner, targetStatus); err == nil {
+					result.EntityTransition = &DocEntityTransition{
+						EntityID:   doc.Owner,
+						EntityType: entityType,
+						FromStatus: currentStatus,
+						ToStatus:   targetStatus,
+					}
+				}
+			}
 		}
 	}
 
@@ -396,10 +442,11 @@ func (s *DocumentService) SupersedeDocument(input SupersedeDocumentInput) (Docum
 		SupersededBy: doc.SupersededBy,
 	}
 
-	// Trigger entity lifecycle hooks on supersession
+	// Trigger entity lifecycle hooks on supersession and record any backward
+	// transition in result.EntityTransition for 2.0 side-effect reporting (Track I).
 	if s.entityHook != nil && doc.Owner != "" {
-		entityType, _, _ := s.entityHook.GetEntityStatus(doc.Owner)
-		if entityType == "feature" {
+		entityType, currentStatus, getErr := s.entityHook.GetEntityStatus(doc.Owner)
+		if getErr == nil && entityType == "feature" {
 			var targetStatus string
 			switch doc.Type {
 			case model.DocumentTypeDesign:
@@ -409,8 +456,15 @@ func (s *DocumentService) SupersedeDocument(input SupersedeDocumentInput) (Docum
 			case model.DocumentTypeDevPlan:
 				targetStatus = "dev-planning"
 			}
-			if targetStatus != "" {
-				_ = s.entityHook.TransitionStatus(doc.Owner, targetStatus)
+			if targetStatus != "" && currentStatus != targetStatus {
+				if err := s.entityHook.TransitionStatus(doc.Owner, targetStatus); err == nil {
+					result.EntityTransition = &DocEntityTransition{
+						EntityID:   doc.Owner,
+						EntityType: entityType,
+						FromStatus: currentStatus,
+						ToStatus:   targetStatus,
+					}
+				}
 			}
 		}
 	}
@@ -667,6 +721,89 @@ func (s *DocumentService) SupersessionChain(docID string) ([]DocumentResult, err
 // DocumentExists checks if a document record exists.
 func (s *DocumentService) DocumentExists(id string) bool {
 	return s.store.Exists(id)
+}
+
+// RefreshContentHash recomputes the content hash of the document's file and
+// updates the record if it has changed. If the document was approved, it is
+// demoted to draft status.
+func (s *DocumentService) RefreshContentHash(input RefreshInput) (RefreshResult, error) {
+	id := strings.TrimSpace(input.ID)
+	path := strings.TrimSpace(input.Path)
+
+	if id == "" && path == "" {
+		return RefreshResult{}, fmt.Errorf("id or path is required")
+	}
+
+	var record storage.DocumentRecord
+	var err error
+
+	if id != "" {
+		record, err = s.store.Load(id)
+		if err != nil {
+			return RefreshResult{}, err
+		}
+	} else {
+		records, listErr := s.store.List()
+		if listErr != nil {
+			return RefreshResult{}, fmt.Errorf("list documents: %w", listErr)
+		}
+		found := false
+		for _, r := range records {
+			doc := storage.RecordToDocument(r)
+			if doc.Path == path {
+				record = r
+				found = true
+				break
+			}
+		}
+		if !found {
+			return RefreshResult{}, fmt.Errorf("document not found: %s", path)
+		}
+	}
+
+	doc := storage.RecordToDocument(record)
+	fullPath := filepath.Join(s.repoRoot, doc.Path)
+
+	currentHash, err := storage.ComputeContentHash(fullPath)
+	if err != nil {
+		return RefreshResult{}, fmt.Errorf("document file not found at path %s; verify the file exists before calling refresh", fullPath)
+	}
+
+	if currentHash == doc.ContentHash {
+		return RefreshResult{
+			Changed: false,
+			OldHash: doc.ContentHash,
+			NewHash: doc.ContentHash,
+			Status:  string(doc.Status),
+			ID:      doc.ID,
+			Path:    doc.Path,
+		}, nil
+	}
+
+	oldHash := doc.ContentHash
+	doc.ContentHash = currentHash
+	doc.Updated = s.now()
+
+	var statusTransition string
+	if doc.Status == model.DocumentStatusApproved {
+		doc.Status = model.DocumentStatusDraft
+		statusTransition = "approved → draft"
+	}
+
+	updatedRecord := storage.DocumentToRecord(doc, record.FileHash)
+	if _, err := s.store.Write(updatedRecord); err != nil {
+		return RefreshResult{}, fmt.Errorf("write document record: %w", err)
+	}
+
+	return RefreshResult{
+		Changed:          true,
+		OldHash:          oldHash,
+		NewHash:          currentHash,
+		Status:           string(doc.Status),
+		StatusTransition: statusTransition,
+		ID:               doc.ID,
+		Path:             doc.Path,
+	}, nil
 }
 
 // generateDocumentSlug generates a unique slug for a document.

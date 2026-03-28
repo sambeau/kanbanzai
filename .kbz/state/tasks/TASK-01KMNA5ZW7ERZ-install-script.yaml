@@ -2,4 +2,13 @@ id: TASK-01KMNA5ZW7ERZ
 parent_feature: FEAT-01KMKRQT9QCPR
 slug: install-script
 summary: "Write install.sh at the repository root. Must: detect host OS (uname -s) and architecture (uname -m), map to GoReleaser archive naming, download the correct archive from GitHub Releases, download and validate checksums.txt before extracting (abort with clear error if fails), install binary to /usr/local/bin (fallback to ~/.local/bin), be idempotent. Store at repository root for curl | sh usage."
-status: queued
+status: done
+files_planned:
+  - install.sh
+completed: "2026-03-26T15:08:34Z"
+claimed_at: "2026-03-26T15:01:22Z"
+dispatched_to: backend
+dispatched_at: "2026-03-26T15:01:22Z"
+dispatched_by: agent/binary-distribution
+completion_summary: Created install.sh. Detects OS (uname -s → darwin/linux/windows) and arch (uname -m → arm64/amd64). Resolves latest release tag via GitHub API or --version flag. Constructs archive URL as kanbanzai_VERSION_OS_ARCH.EXT. Downloads archive + checksums.txt. Validates with sha256sum or shasum -a 256; aborts with error if checksum fails. Extracts binary and installs to /usr/local/bin (falls back to ~/.local/bin if not writable). Idempotent — shows previous version when upgrading. Shows installed version on success. PATH warning if install dir is not on PATH.
+verification: sh -n install.sh confirms POSIX shell syntax is valid. Logic reviewed manually against spec requirements.

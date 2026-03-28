@@ -7,6 +7,7 @@
   - `workflow-design-basis.md`
   - `phase-1-specification.md`
   - `agent-interaction-protocol.md`
+  - `code-review-workflow.md` — defines the review orchestration workflow, lifecycle states, and parallel review mechanics
 
 ---
 
@@ -475,6 +476,12 @@ A likely future pattern is:
 - MCP tools support structured review reporting
 
 That is how the repeated sentence becomes part of the system rather than part of your memory.
+
+### 16.1 Operationalisation
+
+The review dimensions and profiles defined in this document are now operationalised through the reviewer context profile (`.kbz/context/roles/reviewer.yaml`) and the code review SKILL (`.skills/code-review.md`). Agents performing reviews should consult those artefacts rather than reading this policy directly.
+
+The review orchestration workflow — covering lifecycle states, parallel reviewer assignment, and review completion — is defined in `work/design/code-review-workflow.md`.
 
 ---
 

@@ -6,9 +6,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 // MigrationResult summarises the outcome of a Phase 2 migration.

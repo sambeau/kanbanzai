@@ -1,10 +1,57 @@
 package id
 
 import (
+	"regexp"
 	"strings"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
+
+// splitIDPattern matches TSID-based entity IDs in split display form:
+// PREFIX-XXXXX-XXXXXXXX where PREFIX is a known entity type prefix and
+// the TSID portion has been split at position 5 with a hyphen.
+// Examples: FEAT-01KMR-X1SEQV49, TASK-01J3K-ZZZBB4KF, BUG-01J4A-R7WHN4F2
+var splitIDPattern = regexp.MustCompile(
+	`^(FEAT|TASK|BUG|DEC|DOC|INC)-([0-9A-Z]{5})-([0-9A-Z]{8})$`,
+)
+
+// NormalizeID strips the display break hyphen from a split entity ID,
+// returning the canonical unsplit form. IDs that do not match the split
+// pattern (including plan IDs, epic IDs, and already-canonical IDs) pass
+// through unchanged.
+//
+// Examples:
+//
+//	NormalizeID("FEAT-01KMR-X1SEQV49") → "FEAT-01KMRX1SEQV49"
+//	NormalizeID("FEAT-01KMRX1SEQV49")  → "FEAT-01KMRX1SEQV49" (no change)
+//	NormalizeID("P7-developer-experience") → "P7-developer-experience" (no change)
+//	NormalizeID("EPIC-MYPROJECT") → "EPIC-MYPROJECT" (no change)
+func NormalizeID(id string) string {
+	trimmed := strings.TrimSpace(id)
+	upper := strings.ToUpper(trimmed)
+
+	m := splitIDPattern.FindStringSubmatch(upper)
+	if m == nil {
+		return trimmed
+	}
+	// m[1] = prefix, m[2] = first 5 chars, m[3] = remaining 8 chars
+	return m[1] + "-" + m[2] + m[3]
+}
+
+// FormatEntityRef formats an entity reference for human-readable display.
+// It combines the display ID with the slug and optional label.
+//
+// Without label: "FEAT-01KMR-X1SEQV49 (my-feature-slug)"
+// With label:    "FEAT-01KMR-X1SEQV49 (A my-feature-slug)"
+func FormatEntityRef(displayID, slug, label string) string {
+	if slug == "" {
+		return displayID
+	}
+	if label != "" {
+		return displayID + " (" + label + " " + slug + ")"
+	}
+	return displayID + " (" + slug + ")"
+}
 
 // FormatFullDisplay formats an ID in full display form with break hyphen.
 // For TSID-based IDs: FEAT-01J3K-7MXP3RT5

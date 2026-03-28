@@ -2,4 +2,15 @@ id: TASK-01KMNA5WQAVNW
 parent_feature: FEAT-01KMKRQV025FA
 slug: json-schema-generation
 summary: "Implement JSON Schema generation from the Go public type layer (cmd/schemagen/ or go generate directive). Schema must cover all entity types with correct field types, required/optional classification, enum arrays, and schema_version encoded in $id or metadata. Output to schema/kanbanzai.schema.json. Add CI check that fails if committed schema diverges from generated output. Wire into GoReleaser as a release artefact."
-status: queued
+status: done
+files_planned:
+  - kbzschema/schema.go
+  - cmd/schemagen/main.go
+  - schema/kanbanzai.schema.json
+completed: "2026-03-26T15:38:06Z"
+claimed_at: "2026-03-26T15:37:58Z"
+dispatched_to: backend
+dispatched_at: "2026-03-26T15:37:58Z"
+dispatched_by: agent/public-schema-interface
+completion_summary: "Created GenerateSchema() in kbzschema/schema.go that builds a full JSON Schema for all entity types (Plan, Feature, Task, Bug, Decision, DocumentRecord, KnowledgeEntry, HumanCheckpoint, ProjectConfig). Schema encodes version in $id and $comment. cmd/schemagen/main.go is the generator binary. schema/kanbanzai.schema.json is the committed artefact."
+verification: go run ./cmd/schemagen produces valid JSON; TestGeneratedSchemaMatchesCommitted passes

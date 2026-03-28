@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/git"
 )
 
 func TestTasksCompleteGate_Interface(t *testing.T) {
@@ -543,6 +543,134 @@ func TestHealthCheckCleanGate_Check(t *testing.T) {
 	}
 	if result.Message != "" {
 		t.Errorf("Message: got %q, want empty", result.Message)
+	}
+}
+
+func TestEntityDoneGate_Interface(t *testing.T) {
+	var g Gate = EntityDoneGate{}
+
+	if g.Name() != "entity_done" {
+		t.Errorf("Name: got %q, want %q", g.Name(), "entity_done")
+	}
+	if g.Severity() != GateSeverityBlocking {
+		t.Errorf("Severity: got %q, want %q", g.Severity(), GateSeverityBlocking)
+	}
+}
+
+func TestEntityDoneGate_Check(t *testing.T) {
+	tests := []struct {
+		name       string
+		entityID   string
+		entity     map[string]any
+		wantStatus GateStatus
+		wantMsg    string
+	}{
+		{
+			name:       "feature done passes",
+			entityID:   "FEAT-001",
+			entity:     map[string]any{"status": "done"},
+			wantStatus: GateStatusPassed,
+		},
+		{
+			name:       "feature reviewing fails",
+			entityID:   "FEAT-001",
+			entity:     map[string]any{"status": "reviewing"},
+			wantStatus: GateStatusFailed,
+			wantMsg:    `feature status is "reviewing", expected "done"`,
+		},
+		{
+			name:       "feature needs-rework fails",
+			entityID:   "FEAT-001",
+			entity:     map[string]any{"status": "needs-rework"},
+			wantStatus: GateStatusFailed,
+			wantMsg:    `feature status is "needs-rework", expected "done"`,
+		},
+		{
+			name:       "feature developing fails",
+			entityID:   "FEAT-001",
+			entity:     map[string]any{"status": "developing"},
+			wantStatus: GateStatusFailed,
+			wantMsg:    `feature status is "developing", expected "done"`,
+		},
+		{
+			name:       "feature proposed fails",
+			entityID:   "FEAT-001",
+			entity:     map[string]any{"status": "proposed"},
+			wantStatus: GateStatusFailed,
+			wantMsg:    `feature status is "proposed", expected "done"`,
+		},
+		{
+			name:       "feature empty status fails",
+			entityID:   "FEAT-001",
+			entity:     map[string]any{},
+			wantStatus: GateStatusFailed,
+			wantMsg:    "feature status not set",
+		},
+		{
+			name:       "feature nil entity fails",
+			entityID:   "FEAT-001",
+			entity:     nil,
+			wantStatus: GateStatusFailed,
+			wantMsg:    "feature status not set",
+		},
+		{
+			name:       "bug closed passes",
+			entityID:   "BUG-001",
+			entity:     map[string]any{"status": "closed"},
+			wantStatus: GateStatusPassed,
+		},
+		{
+			name:       "bug in-progress fails",
+			entityID:   "BUG-001",
+			entity:     map[string]any{"status": "in-progress"},
+			wantStatus: GateStatusFailed,
+			wantMsg:    `bug status is "in-progress", expected "closed"`,
+		},
+		{
+			name:       "bug needs-rework fails",
+			entityID:   "BUG-001",
+			entity:     map[string]any{"status": "needs-rework"},
+			wantStatus: GateStatusFailed,
+			wantMsg:    `bug status is "needs-rework", expected "closed"`,
+		},
+		{
+			name:       "bug empty status fails",
+			entityID:   "BUG-001",
+			entity:     map[string]any{},
+			wantStatus: GateStatusFailed,
+			wantMsg:    "bug status not set",
+		},
+		{
+			name:       "unknown entity type passes unconditionally",
+			entityID:   "TASK-001",
+			entity:     map[string]any{"status": "active"},
+			wantStatus: GateStatusPassed,
+		},
+	}
+
+	gate := EntityDoneGate{}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctx := GateContext{
+				EntityID: tt.entityID,
+				Entity:   tt.entity,
+			}
+
+			result := gate.Check(ctx)
+
+			if result.Status != tt.wantStatus {
+				t.Errorf("Status: got %q, want %q", result.Status, tt.wantStatus)
+			}
+			if tt.wantMsg != "" && result.Message != tt.wantMsg {
+				t.Errorf("Message: got %q, want %q", result.Message, tt.wantMsg)
+			}
+			if result.Name != "entity_done" {
+				t.Errorf("Name: got %q, want %q", result.Name, "entity_done")
+			}
+			if result.Severity != GateSeverityBlocking {
+				t.Errorf("Severity: got %q, want %q", result.Severity, GateSeverityBlocking)
+			}
+		})
 	}
 }
 

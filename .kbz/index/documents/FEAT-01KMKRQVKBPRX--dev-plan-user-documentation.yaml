@@ -1,0 +1,109 @@
+document_id: FEAT-01KMKRQVKBPRX/dev-plan-user-documentation
+document_path: work/dev/user-documentation.md
+content_hash: 09d2cac56d3e81704f323b0b90e1378103cdbf2948228b0e1ed53ca282c13ac6
+indexed_at: 2026-03-26T14:51:22.687971Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'User Documentation: Feature Dev-Plan'
+      byte_offset: 0
+      byte_count: 5118
+      word_count: 661
+      content_hash: 09d2cac56d3e81704f323b0b90e1378103cdbf2948228b0e1ed53ca282c13ac6
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 419
+          byte_count: 514
+          word_count: 69
+          content_hash: 450b0a2837d027b12f5371a0f2fb3af513dd1800ecb64324825806e2f856b403
+        - path: "1.2"
+          level: 2
+          title: Tasks
+          byte_offset: 933
+          byte_count: 3233
+          word_count: 408
+          content_hash: 4809549c2c6e2cbdba9fab525c3578992a83aa3b01e7dc1da649cf8272ee2e01
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — `getting-started-doc`
+              byte_offset: 943
+              byte_count: 564
+              word_count: 77
+              content_hash: d3d20a852aaab9d99529dea74f88d6346b3b3621dde366a64abe6fa0841fadef
+            - path: 1.2.2
+              level: 3
+              title: T2 — `workflow-overview-doc`
+              byte_offset: 1507
+              byte_count: 560
+              word_count: 66
+              content_hash: ba561343e656aaa39752db828bcef3a35ae57d0d855953c7a9c08227bde815d4
+            - path: 1.2.3
+              level: 3
+              title: T3 — `schema-reference-doc`
+              byte_offset: 2067
+              byte_count: 663
+              word_count: 82
+              content_hash: 5f31d1e852ced161b5df6cc66044ba35347ccbd9a31dbd7209ec6924fbb345a3
+            - path: 1.2.4
+              level: 3
+              title: T4 — `mcp-tool-reference-doc`
+              byte_offset: 2730
+              byte_count: 800
+              word_count: 104
+              content_hash: a5e71fc61489e2c94050af4d462ba1a548d99ad9063d85c71a7c97b2d57a3d0f
+            - path: 1.2.5
+              level: 3
+              title: T5 — `configuration-reference-doc`
+              byte_offset: 3530
+              byte_count: 636
+              word_count: 77
+              content_hash: da3d123ebd68119ff9685d34d91edf93477ec4a503ba15bef872f10bb2ada9c2
+        - path: "1.3"
+          level: 2
+          title: Implementation Notes
+          byte_offset: 4166
+          byte_count: 764
+          word_count: 122
+          content_hash: 79427ef0633a9e8b133e9bbe6a61152810389c10fdbb0ae0345738dc1d5f9f5c
+        - path: "1.4"
+          level: 2
+          title: Completion Criteria
+          byte_offset: 4930
+          byte_count: 188
+          word_count: 23
+          content_hash: a81e04f0a3cfee4a49e39128574414901eb51e638c1304b3118a90f6eb50a1a7
+entity_refs:
+    - entity_id: FEAT-01KMKRQVKBPRX
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 177
+cross_doc_links:
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: 1.2.1
+    - target_path: docs/workflow-overview.md
+      link_text: docs/workflow-overview.md
+      section_path: 1.2.2
+    - target_path: docs/schema-reference.md
+      link_text: docs/schema-reference.md
+      section_path: 1.2.3
+    - target_path: docs/mcp-tool-reference.md
+      link_text: docs/mcp-tool-reference.md
+      section_path: 1.2.4
+    - target_path: docs/configuration-reference.md
+      link_text: docs/configuration-reference.md
+      section_path: 1.2.5
+    - target_path: work/spec/user-documentation.md
+      link_text: work/spec/user-documentation.md
+      section_path: "1.4"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.2
+      role: narrative
+      confidence: high
+classified: false

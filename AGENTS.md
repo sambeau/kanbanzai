@@ -29,24 +29,9 @@ Examples:
 - `kbz status` (CLI, typed by a human)
 - `.kbz/state/` (instance directory on disk)
 
-## Project Status
+## Self-Managed Development
 
-**Phase 1 is complete. Phase 2a is complete. Phase 2b is complete. Phase 3 is complete. Phase 4a is complete. Phase 4b is complete.** The repository contains design documents, specifications, planning documents, research, and working implementation code. All Phase 2a acceptance criteria are met, all audit bugs (B1–B8) are fixed, and all tests pass with race detector enabled. All Phase 2b acceptance criteria are met. All Phase 3 acceptance criteria (§20.1–§20.12) are met, all audit remediation items (R1–R17) are resolved, automatic worktree creation on task/bug transition is implemented, and all tests pass with race detector enabled. All Phase 4a acceptance criteria are met: estimation tools, work queue, dispatch/complete task, human checkpoints, and orchestration health dashboard are implemented, and all tests pass with race detector enabled. All Phase 4b acceptance criteria (§16.1–§16.7) are met: feature decomposition and review, automatic dependency unblocking, worker review with rework lifecycle, conflict domain analysis with work queue integration, vertical slice guidance, incidents and RCA, and Phase 1 document store removal are implemented, and all tests pass with race detector enabled.
-
-The binding contracts for implementation are `work/spec/phase-1-specification.md` (Phase 1), `work/spec/phase-2-specification.md` (Phase 2), `work/spec/phase-2b-specification.md` (Phase 2b), `work/spec/phase-3-specification.md` (Phase 3), `work/spec/phase-4a-specification.md` (Phase 4a), and `work/spec/phase-4b-specification.md` (Phase 4b). The design basis is vision, the implementation plan is guidance, the spec is law. If code contradicts the spec, surface the conflict to the human.
-
-Current Phase 2a status is tracked in `work/plan/phase-2a-progress.md`. Phase 2b status is tracked in `work/plan/phase-2b-progress.md`. Phase 3 status is tracked in `work/plan/phase-3-progress.md`.
-
-## Two Workflows
-
-This project has two distinct workflows. Do not confuse them.
-
-- **kbz-workflow** — the workflow process the Kanbanzai tool will implement and enforce. Described in `work/design/` and `work/spec/`. This is what we are *building*.
-- **bootstrap-workflow** — the simplified process we use right now to build Kanbanzai. Described in `work/bootstrap/bootstrap-workflow.md`. This is what we *follow*.
-
-When working on this project, follow bootstrap-workflow. When designing or implementing the tool, refer to kbz-workflow.
-
-If you are unsure which workflow a rule or instruction belongs to, ask.
+Kanbanzai manages its own development — this project uses the tool it is building. The workflow rules, stage gates, and lifecycle states are defined in the `.agents/skills/kanbanzai-*/SKILL.md` files (the product interface) and enforced by the MCP tools. This file (`AGENTS.md`) contains only project-specific instructions for developing the kanbanzai server itself.
 
 ## Repository Structure
 
@@ -69,7 +54,7 @@ kanbanzai/
 │   ├── id/                ← canonical ID allocation and display formatting
 │   ├── knowledge/         ← deduplication, confidence scoring, link resolution (Phase 2b), TTL pruning, promotion, compaction (Phase 3)
 │   ├── checkpoint/        ← human checkpoint creation and management (Phase 4a)
-│   ├── mcp/               ← MCP server and tools (Phase 1 + Phase 2a + Phase 2b + Phase 3 + Phase 4a)
+│   ├── mcp/               ← MCP server and 22 workflow-oriented 2.0 tools across 7 feature groups (Kanbanzai 2.0)
 │   ├── merge/             ← merge gate definitions, checker, override (Phase 3)
 │   ├── model/             ← entity type definitions and ID utilities
 │   ├── service/           ← entity, plan, and document record service logic
@@ -79,11 +64,12 @@ kanbanzai/
 │   └── worktree/          ← worktree store, git worktree operations, naming (Phase 3)
 ├── docs/                  ← user-facing and reference documentation (reserved for later)
 ├── work/                  ← active design, spec, planning, and research documents
-│   ├── bootstrap/         ← bootstrap-workflow: the process we follow now
-│   ├── design/            ← kbz-workflow: design documents and policy documents
-│   ├── spec/              ← kbz-workflow: formal specifications
+│   ├── bootstrap/         ← historical process documents
+│   ├── design/            ← design documents and policy documents
+│   ├── spec/              ← formal specifications
 │   ├── plan/              ← implementation plans, decision log, and progress tracking
-│   └── research/          ← background analysis and review memos
+│   ├── research/          ← background analysis and review memos
+│   └── reviews/           ← feature and bug review reports from the reviewing lifecycle gate
 └── .kbz/                  ← instance root (project-local workflow state, not committed)
     ├── config.yaml        ← project configuration including prefix registry
     ├── local.yaml            ← per-machine settings, not committed (Phase 2b)
@@ -103,25 +89,23 @@ kanbanzai/
 
 1. Run `git status` — if there are uncommitted changes from previous work, commit or stash before starting new work.
 2. Read this file (`AGENTS.md`).
-3. Read `work/bootstrap/bootstrap-workflow.md` — it defines the process we follow right now.
-4. If the task involves understanding the system design, follow the reading order below.
+3. If the task involves understanding the system design, follow the reading order below.
 
 ## Document Reading Order
 
 If you need to understand the project, read in this order:
 
-1. `work/bootstrap/bootstrap-workflow.md` — how we work right now (bootstrap-workflow)
-2. `work/design/workflow-design-basis.md` — consolidated design vision (kbz-workflow)
-3. `work/design/document-centric-interface.md` — document-centric human interface model (kbz-workflow)
-4. `work/spec/phase-1-specification.md` — Phase 1 scope and verification basis (kbz-workflow)
-5. `work/spec/phase-2-specification.md` — Phase 2 scope and verification basis (kbz-workflow)
-6. `work/design/agent-interaction-protocol.md` — agent behavior and normalization protocol
-7. `work/design/quality-gates-and-review-policy.md` — review expectations and quality gates
-8. `work/design/git-commit-policy.md` — commit message and commit discipline policy
+1. `work/design/workflow-design-basis.md` — consolidated design vision
+2. `work/design/document-centric-interface.md` — document-centric human interface model
+3. `work/spec/phase-1-specification.md` — Phase 1 scope and verification basis
+4. `work/spec/phase-2-specification.md` — Phase 2 scope and verification basis
+5. `work/design/agent-interaction-protocol.md` — agent behavior and normalization protocol
+6. `work/design/quality-gates-and-review-policy.md` — review expectations and quality gates
+7. `work/design/git-commit-policy.md` — commit message and commit discipline policy
 
 Then refer to these as needed:
 
-- `work/spec/phase-4a-specification.md` — Phase 4a scope and verification basis (kbz-workflow)
+- `work/spec/phase-4a-specification.md` — Phase 4a scope and verification basis
 - `work/plan/phase-2a-progress.md` — Phase 2a implementation status and remaining work
 - `work/plan/phase-2-scope.md` — Phase 2 scope and planning
 - `work/spec/phase-2b-specification.md` — Phase 2b scope and verification basis
@@ -136,169 +120,34 @@ Then refer to these as needed:
 
 ## Key Design Documents by Topic
 
-| Topic | Document | Workflow |
-|---|---|---|
-| What we do right now | `work/bootstrap/bootstrap-workflow.md` | bootstrap |
-| What the system is and why | `work/design/workflow-design-basis.md` | kbz |
-| How humans interact with the system | `work/design/document-centric-interface.md` | kbz |
-| What Phase 1 must deliver | `work/spec/phase-1-specification.md` | kbz |
-| What Phase 2 must deliver | `work/spec/phase-2-specification.md` | kbz |
-| Phase 2a implementation status | `work/plan/phase-2a-progress.md` | both |
-| Phase 2 scope and planning | `work/plan/phase-2-scope.md` | kbz |
-| How agents should behave | `work/design/agent-interaction-protocol.md` | both |
-| How to review and verify work | `work/design/quality-gates-and-review-policy.md` | both |
-| How to write commits | `work/design/git-commit-policy.md` | both |
-| Architectural decisions made | `work/plan/phase-1-decision-log.md` | both |
-| Implementation plan and work breakdown | `work/plan/phase-1-implementation-plan.md` | kbz |
-| Machine context model (Phase 2) | `work/design/machine-context-design.md` | kbz |
-| Document intelligence (Phase 2) | `work/design/document-intelligence-design.md` | kbz |
-| Phase 2b specification | `work/spec/phase-2b-specification.md` | kbz |
-| Phase 2b implementation plan | `work/plan/phase-2b-implementation-plan.md` | kbz |
-| Phase 2 decisions | `work/plan/phase-2-decision-log.md` | both |
-| Phase 3 spec and status | `work/spec/phase-3-specification.md`, `work/plan/phase-3-progress.md` | kbz |
-| Phase 4a specification | `work/spec/phase-4a-specification.md` | kbz |
-| Phase 4b specification | `work/spec/phase-4b-specification.md` | kbz |
-| Phase 4b implementation plan | `work/plan/phase-4b-implementation-plan.md` | kbz |
-| Phase 4 decisions | `work/plan/phase-4-decision-log.md` | both |
+| Topic | Document |
+|---|---|
+| Historical process documents | `work/bootstrap/bootstrap-workflow.md` |
+| What the system is and why | `work/design/workflow-design-basis.md` |
+| How humans interact with the system | `work/design/document-centric-interface.md` |
+| What Phase 1 must deliver | `work/spec/phase-1-specification.md` |
+| What Phase 2 must deliver | `work/spec/phase-2-specification.md` |
+| Phase 2a implementation status | `work/plan/phase-2a-progress.md` |
+| Phase 2 scope and planning | `work/plan/phase-2-scope.md` |
+| How agents should behave | `work/design/agent-interaction-protocol.md` |
+| How to review and verify work | `work/design/quality-gates-and-review-policy.md` |
+| Code review SKILL (procedure + orchestration) | `.skills/code-review.md` |
+| Plan review SKILL (procedure + checklist) | `.skills/plan-review.md` |
+| How to write commits | `work/design/git-commit-policy.md` |
+| Architectural decisions made | `work/plan/phase-1-decision-log.md` |
+| Implementation plan and work breakdown | `work/plan/phase-1-implementation-plan.md` |
+| Machine context model (Phase 2) | `work/design/machine-context-design.md` |
+| Document intelligence (Phase 2) | `work/design/document-intelligence-design.md` |
+| Phase 2b specification | `work/spec/phase-2b-specification.md` |
+| Phase 2b implementation plan | `work/plan/phase-2b-implementation-plan.md` |
+| Phase 2 decisions | `work/plan/phase-2-decision-log.md` |
+| Phase 3 spec and status | `work/spec/phase-3-specification.md`, `work/plan/phase-3-progress.md` |
+| Phase 4a specification | `work/spec/phase-4a-specification.md` |
+| Phase 4b specification | `work/spec/phase-4b-specification.md` |
+| Phase 4b implementation plan | `work/plan/phase-4b-implementation-plan.md` |
+| Phase 4 decisions | `work/plan/phase-4-decision-log.md` |
 
-## Communicating With Humans
 
-Documents are the human interface to the system. Decision records and their IDs are internal tracking mechanisms — important for system integrity and useful for agents, but not how humans navigate the project.
-
-When talking with humans:
-
-- Reference **documents** by name: "the ID system design", "the Phase 1 spec §10"
-- Use **prose descriptions** of decisions: "the decision about cache-based locking"
-- Do **not** lead with decision IDs: ~~"P1-DEC-021 defines the ID format"~~
-
-Decision IDs don't carry enough context for a human to act on without querying the system. A document name or a prose summary is immediately meaningful. Save decision IDs for commit messages, entity cross-references, and agent-to-agent communication.
-
-This rule is also codified in the agent interaction protocol (`work/design/agent-interaction-protocol.md` §6.11).
-
-## Document Creation Workflow
-
-When you create a new document in the `work/` directory, you must register it with the kanbanzai system. Documents are the human interface, but the system needs metadata records to track status, ownership, and lifecycle.
-
-**Follow the `document-creation` SKILL:** `.skills/document-creation.md`
-
-The SKILL provides step-by-step procedures for:
-- Registering single documents with `doc_record_submit`
-- Batch importing multiple documents with `batch_import_documents`
-- Document type mapping (directory → type)
-- Safety checks and verification
-- Troubleshooting common issues
-
-**Key principle:** Always register documents immediately after creating them. Unregistered documents are invisible to document intelligence, entity extraction, approval workflow, and health checks.
-
-**Quick reference:**
-
-```
-# Single document
-doc_record_submit(path="work/design/my-doc.md", type="design", title="...")
-
-# Batch import (idempotent, safe to repeat)
-batch_import_documents(path="work")
-```
-
-## Workflow Stage Gates
-
-The proper workflow progression is:
-
-**planning → design → features → spec → dev-plan → tasks**
-
-You must not skip stages. Each stage has a human approval gate.
-
-### Stage 1: Planning (Human-Led)
-
-**What happens:** Human identifies a need or opportunity. Discussion about *whether* to do something and *what* the high-level goal is.
-
-**Output:** Rough consensus that work should proceed to design.
-
-**Agent role:** Answer questions, surface related context, but do not make architectural decisions.
-
-### Stage 2: Design (Human-Led, Agent-Assisted)
-
-**What happens:** Human writes or approves a design document in `work/design/` that describes:
-- What the feature/system is
-- Why it exists
-- How it fits the vision
-- Key architectural decisions and tradeoffs
-
-**Output:** An approved design document in `work/design/`.
-
-**Gate:** Design document must exist and be approved before proceeding.
-
-**Agent role:**
-- Draft design documents when asked
-- Surface design alternatives and tradeoffs
-- **DO NOT make technical architecture decisions without human approval**
-- **DO NOT create planning documents with embedded design decisions**
-
-**Rules for agents:**
-- Before making technology choices (frameworks, libraries, protocols) → stop and ask for design document approval
-- Before defining API structures or data models → stop and ask for design document approval
-- Before deciding on system boundaries or deployment models → stop and ask for design document approval
-- If you find yourself using "P5-DES-xxx" or similar invented ID patterns → stop, you are making design decisions without approval
-
-### Stage 3: Features (Agent-Assisted)
-
-**What happens:** With an approved design in hand, create a Plan entity (if needed) and extract Feature entities from the design document.
-
-**Output:** Plan entity and Feature entities in `.kbz/state/`.
-
-**Gate:** Design document must be approved before creating Plan or Feature entities.
-
-**Agent role:**
-- Create Plan entity using `create_plan` (ensure prefix is registered)
-- Extract features from approved design using document intelligence
-- Create Feature entities with `create_feature`
-
-### Stage 4: Specification (Human-Led, Agent-Assisted)
-
-**What happens:** Write detailed acceptance criteria for each feature. Specifications are binding contracts.
-
-**Output:** Specification document in `work/spec/`.
-
-**Gate:** Features must exist before writing specification.
-
-**Agent role:**
-- Draft specification documents when asked
-- Ensure acceptance criteria map to features
-- Ensure specification is testable and complete
-
-### Stage 5: Dev Plan & Tasks (Agent-Assisted)
-
-**What happens:** Decompose features into tasks, define dependencies, estimate.
-
-**Output:** Dev plan document and Task entities.
-
-**Gate:** Specification must exist and be approved before decomposition.
-
-**Agent role:**
-- Use `decompose_feature` to propose task breakdown
-- Create Task entities after human reviews proposal
-- Record decisions in decision log
-
-### Stage 6: Implementation (Agent-Driven)
-
-**What happens:** Execute tasks, verify, review, merge.
-
-**Gate:** Tasks must exist before implementation begins.
-
-**Agent role:** Execute as designed, within the constraints defined in earlier stages.
-
-### Emergency Brake
-
-**If you are about to:**
-- Write a document in `work/plan/` that contains "Decision:", "Architecture:", "Technology Choice:", or similar design content
-- Create entities (Plan, Feature, Task) without an approved design document
-- Use decision ID formats that don't exist in the system
-- Make technology or architecture choices without human approval
-
-**Then STOP and ask the human:**
-- "Should we write a design document for this first?"
-- "Is there an approved design that covers this decision?"
-- "Which design document should I reference for this work?"
 
 ## Decision-Making Rules
 </thinking>
@@ -321,30 +170,8 @@ When making a non-trivial change to any document or code:
 - AI merges to main.
 - AI can push to remote when delegated by human.
 - Human creates release tags.
-- Use commit message format: `<type>(<object-id>): <summary>`
 
-### Commit types
-
-Per `work/design/git-commit-policy.md`:
-
-- `feat` — new feature behavior
-- `fix` — bug fix
-- `docs` — documentation change
-- `test` — test-only change
-- `refactor` — behavior-preserving structural improvement
-- `workflow` — workflow-state-only change
-- `decision` — decision-record change
-- `chore` — small maintenance change with no better category
-
-Add `!` after the type for breaking changes: `feat(FEAT-001)!: description`
-
-### Examples
-
-- `feat(FEAT-152): add profile editing API and validation`
-- `fix(BUG-027): prevent avatar uploads hanging on large files`
-- `docs(FEAT-152): update profile editing user documentation`
-- `workflow(TASK-152.3): mark upload task complete after verification`
-- `decision(DEC-041): record no-client-side-cropping choice`
+For commit message format, types, and examples, see the `kanbanzai-agents` skill.
 
 ## Preserving Work Through Commits
 
@@ -372,15 +199,9 @@ During the current design/planning phase, most work produces document changes. C
 
 Do not let document changes accumulate uncommitted across long sessions.
 
-## Documentation Accuracy
-
-- **Code is truth** — if documentation conflicts with code, fix the documentation.
-- **Spec is intent** — if code conflicts with the specification, surface the conflict to the human.
-- Do not silently resolve spec-vs-code conflicts in either direction without human input.
-
 ## Scope Guard
 
-Phase 1 (workflow kernel), Phase 2a (entity model evolution, document intelligence, migration), Phase 2b (context profiles, knowledge management, user identity), Phase 3 (Git integration, knowledge lifecycle), Phase 4a (estimation, work queue, dispatch, human checkpoints, orchestration health), and Phase 4b (feature decomposition, automatic unblocking, worker review, conflict analysis, vertical slice guidance, incidents/RCA, document store removal) are complete. Current work should focus on Phase 5 planning and implementation as directed by the human.
+Phase 1 (workflow kernel), Phase 2a (entity model evolution, document intelligence, migration), Phase 2b (context profiles, knowledge management, user identity), Phase 3 (Git integration, knowledge lifecycle), Phase 4a (estimation, work queue, dispatch, human checkpoints, orchestration health), Phase 4b (feature decomposition, automatic unblocking, worker review, conflict analysis, vertical slice guidance, incidents/RCA, document store removal), Kanbanzai 2.0 (MCP tool surface redesign — all 11 tracks A–K complete), P6 (workflow quality and code review), P7 (developer experience), P8 (decompose reliability), P9 (MCP discoverability and reliability), and P10 (review workflow and documentation currency) are all complete. There is no current in-progress phase. For detailed delivery history, see `docs/project-timeline.md`.
 
 Do not build beyond the current phase without explicit direction:
 

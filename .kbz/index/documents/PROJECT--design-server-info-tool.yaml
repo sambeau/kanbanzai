@@ -1,0 +1,107 @@
+document_id: PROJECT/design-server-info-tool
+document_path: work/design/server-info-tool.md
+content_hash: f3304e43e4a14e90606784021b8e52c8a9a7e1f03f5c95282f0fd9b67a434e62
+indexed_at: 2026-03-28T02:33:45.813825Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design Proposal: `server_info` MCP Tool'
+      byte_offset: 0
+      byte_count: 5160
+      word_count: 730
+      content_hash: f3304e43e4a14e90606784021b8e52c8a9a7e1f03f5c95282f0fd9b67a434e62
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Problem
+          byte_offset: 260
+          byte_count: 453
+          word_count: 80
+          content_hash: 4f8402274550544301a2244906fdc75d3b4f1fff08cdcbb16c59bfd36193cee3
+        - path: "1.2"
+          level: 2
+          title: 2. Proposed Solution
+          byte_offset: 713
+          byte_count: 1464
+          word_count: 205
+          content_hash: 14573cb93cddfdc256c23f7cb6923ab7ef37d05e995f042c94c40215cf1e2b19
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Tool definition
+              byte_offset: 855
+              byte_count: 958
+              word_count: 128
+              content_hash: 3fab80b942c2491b9e4bc0c4a1481ce7d5e910e00098691fa1b35b487157940e
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Diagnosing a stale binary
+              byte_offset: 1813
+              byte_count: 364
+              word_count: 55
+              content_hash: ea5cf3648f61a4fec4830ad52d58b6bb4ac6ebfad97b00029e765042e570b7d8
+        - path: "1.3"
+          level: 2
+          title: 3. Implementation
+          byte_offset: 2177
+          byte_count: 1870
+          word_count: 240
+          content_hash: a9dd26805e830d05773af1b3cd55629ac3d77a1d1ac9a71b938afffd32916ea5
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Build-time variable injection
+              byte_offset: 2199
+              byte_count: 1010
+              word_count: 134
+              content_hash: f0f5711ac08a131d227fc929c679ff7c5f7ae15829b9dd97398d8bcdf27c2ec2
+            - path: 1.3.2
+              level: 3
+              title: 3.2 MCP handler
+              byte_offset: 3209
+              byte_count: 603
+              word_count: 64
+              content_hash: fbb9bd459eee25fccb2eabd90429b227edd546970c1deb5dd93b5ba727f5c394
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Tool count
+              byte_offset: 3812
+              byte_count: 235
+              word_count: 39
+              content_hash: 24356540d9425e243b3a164e030bb14e6e70a5f7762f54a0b3e307888b0ab27b
+        - path: "1.4"
+          level: 2
+          title: 4. Scope
+          byte_offset: 4047
+          byte_count: 513
+          word_count: 80
+          content_hash: b9aacd15572fc69293c99b0239db264d838457aefda914e9cbc571b07419ba51
+        - path: "1.5"
+          level: 2
+          title: 5. Open Questions
+          byte_offset: 4560
+          byte_count: 600
+          word_count: 96
+          content_hash: 5bd93bdf1eedd7bd1a5580e8ce1bc9a532b887a98cf0e6a2b6cdec3495d70629
+front_matter:
+    status: proposal
+    date: "2026-03-28"
+    extra:
+        Author: orchestrator
+        Related: '`work/reports/kanbanzai-2.0-workflow-retrospective.md` §3.11'
+        Retro signal: KE-01KMS0EE97M2P (stale MCP binary, tool-friction, moderate)
+cross_doc_links:
+    - target_path: work/reports/kanbanzai-2.0-workflow-retrospective.md
+      link_text: work/reports/kanbanzai-2.0-workflow-retrospective.md
+      section_path: "1"
+conventional_roles:
+    - section_path: 1.2.1
+      role: definition
+      confidence: high
+    - section_path: "1.4"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: question
+      confidence: high
+classified: false

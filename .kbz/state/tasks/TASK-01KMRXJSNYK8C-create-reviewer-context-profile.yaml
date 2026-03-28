@@ -1,0 +1,20 @@
+id: TASK-01KMRXJSNYK8C
+parent_feature: FEAT-01KMRX1HG8BAX
+slug: create-reviewer-context-profile
+summary: "Create .kbz/context/roles/reviewer.yaml inheriting from base, containing the three convention sub-keys: review_approach, output_format, and dimensions, as specified in code-review-workflow.md §8. Verify context_assemble(role=\"reviewer\") returns a packet containing the reviewer conventions. Covers spec AC-E-01 through AC-E-06."
+status: done
+files_planned:
+  - kanbanzai/.kbz/context/roles/reviewer.yaml
+  - kanbanzai/internal/context/profile.go
+  - kanbanzai/internal/context/assemble.go
+  - kanbanzai/internal/context/profile_test.go
+  - kanbanzai/internal/context/resolve_test.go
+  - kanbanzai/internal/mcp/assembly.go
+  - kanbanzai/cmd/kanbanzai/main.go
+completed: "2026-03-28T00:45:17Z"
+claimed_at: "2026-03-28T00:35:39Z"
+dispatched_to: backend
+dispatched_at: "2026-03-28T00:35:39Z"
+dispatched_by: orchestrator
+completion_summary: "Created .kbz/context/roles/reviewer.yaml with id, inherits: base, description, and conventions map containing review_approach, output_format, and dimensions sub-keys as specified in design §8. Extended Profile.Conventions and ResolvedProfile.Conventions from []string to any to support both flat-list (existing profiles) and map-of-lists (reviewer) YAML formats. Updated formatProfile in assemble.go, flattenConventions in assembly.go, and CLI display in main.go to handle both formats via type switch. Updated profile_test.go and resolve_test.go to use type assertions. All context/profile/assemble/mcp tests pass with -race."
+verification: "go build ./... — clean. go test -race ./internal/context/... ./cmd/kanbanzai/... ./internal/mcp/... — all pass. go run ./cmd/kanbanzai profile get --id reviewer — resolves correctly, showing all three convention sub-keys (review_approach, output_format, dimensions) plus inherited base architecture. Pre-existing TestEntityService_StatusUpdate_UsesLifecycleValidation failure confirmed unrelated (caused by uncommitted lifecycle.go changes from other P6 tasks)."

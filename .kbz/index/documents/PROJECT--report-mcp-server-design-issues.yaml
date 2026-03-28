@@ -1,0 +1,273 @@
+document_id: PROJECT/report-mcp-server-design-issues
+document_path: work/reports/mcp-server-design-issues.md
+content_hash: 2e57e0d0e3729a62845d43157a97884875e3192b8e5ab3b5f1c8f2342f6ee95c
+indexed_at: 2026-03-26T17:17:36.095949Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Kanbanzai MCP Server: Design Issues & Feedback Collation'
+      byte_offset: 0
+      byte_count: 21849
+      word_count: 3209
+      content_hash: 2e57e0d0e3729a62845d43157a97884875e3192b8e5ab3b5f1c8f2342f6ee95c
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Executive Summary
+          byte_offset: 305
+          byte_count: 1478
+          word_count: 221
+          content_hash: bc25ef3ac0290735fc4f1fa6b9d0962d254c3e10944eaf836e5e004663f16d5d
+        - path: "1.2"
+          level: 2
+          title: 2. Who Gave Feedback
+          byte_offset: 1783
+          byte_count: 567
+          word_count: 90
+          content_hash: dd53ac6d6104ca4a88d11496be5303857a9542bc4bb609e76a2a84be9889f321
+        - path: "1.3"
+          level: 2
+          title: 3. Issues Identified
+          byte_offset: 2350
+          byte_count: 11144
+          word_count: 1646
+          content_hash: 8346d80b99316dc8aa25ac90435a0246684fcec41de5230fee985b1a5e1363ef
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Tool Sprawl and Context Window Cost
+              byte_offset: 2478
+              byte_count: 1548
+              word_count: 255
+              content_hash: 8df8b455a4287fef128d21a58bfce0d4fded85895d3ff21dc8095d156645babc
+            - path: 1.3.2
+              level: 3
+              title: 3.2 No Batch Operations
+              byte_offset: 4026
+              byte_count: 727
+              word_count: 109
+              content_hash: 361eaee98bec0d5cfae1cc5851b29a5beb0e093bf30bb624af5fbbcef0b4227b
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Silent Cascade Side Effects
+              byte_offset: 4753
+              byte_count: 728
+              word_count: 97
+              content_hash: 4f616df1d69a912b15292007b8f3d3f2f71b6a0d8c9aff53b1b6317f3ee3e959
+            - path: 1.3.4
+              level: 3
+              title: 3.4 `dispatch_task` Couples Claiming with Context Assembly
+              byte_offset: 5481
+              byte_count: 930
+              word_count: 133
+              content_hash: d75b7803cf93ffc367270d7559ca65bc1184de5399fb244f5edd699d71268706
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Lifecycle Enforcement Creates Friction for Solo Agents
+              byte_offset: 6411
+              byte_count: 932
+              word_count: 140
+              content_hash: c755a11b336cd0d98e70ecac51c9d437327d8574173a987808d5a6aea1974d51
+            - path: 1.3.6
+              level: 3
+              title: 3.6 No Plan/Feature Dashboard Query
+              byte_offset: 7343
+              byte_count: 810
+              word_count: 118
+              content_hash: 85f944b9024c66aebb0afde86d632cdf4c4d7933e8205e30d51f90fda5565417
+            - path: 1.3.7
+              level: 3
+              title: 3.7 Document Intelligence Tools Unused
+              byte_offset: 8153
+              byte_count: 1073
+              word_count: 148
+              content_hash: 1c89a2aaa71229a96eabce4a727114a099d20c51db544542e2069d0b5d16a6ad
+            - path: 1.3.8
+              level: 3
+              title: 3.8 Knowledge System Goes Unused
+              byte_offset: 9226
+              byte_count: 1021
+              word_count: 140
+              content_hash: f82a568354ad83aeb8499b748f6da430a0024da679ab08ccc22c6e4de402bc8a
+            - path: 1.3.9
+              level: 3
+              title: 3.9 `decompose_feature` Bypassed
+              byte_offset: 10247
+              byte_count: 891
+              word_count: 127
+              content_hash: c7b00cf8b8164a4da3e81a7a163dbf0eb60faaee8445972a70cee07ecd52606a
+            - path: 1.3.10
+              level: 3
+              title: 3.10 Permission Friction for Human Overseer
+              byte_offset: 11138
+              byte_count: 567
+              word_count: 90
+              content_hash: 06a1e29a49823947002fab205e38949d2b21b523b2400d6f1872a7dfc939af30
+            - path: 1.3.11
+              level: 3
+              title: 3.11 No Agent Handoff Tool
+              byte_offset: 11705
+              byte_count: 712
+              word_count: 99
+              content_hash: e56661d0420428e0d50133661424041cfc76e4e49665f95785c96724f81e1e99
+            - path: 1.3.12
+              level: 3
+              title: 3.12 Missing Document Type for User Documentation
+              byte_offset: 12417
+              byte_count: 432
+              word_count: 65
+              content_hash: 7dbe8423786d0167de495f6e192f1454b1e75fd3700797f69f7493d510fb9a6f
+            - path: 1.3.13
+              level: 3
+              title: 3.13 Cross-Feature Task Dependencies Not Modelled
+              byte_offset: 12849
+              byte_count: 645
+              word_count: 105
+              content_hash: 45fc4b11a975fc585619c1a4fb1bb456ec976e910be006531df2ebaf542b4be9
+        - path: "1.4"
+          level: 2
+          title: 4. What Works Well
+          byte_offset: 13494
+          byte_count: 1435
+          word_count: 221
+          content_hash: 4976dc138568fea203caabaa3c367e8f55b27abf1b03838d431ddae0aa344b08
+        - path: "1.5"
+          level: 2
+          title: 5. What Agents Would Change — Consolidated Suggestions
+          byte_offset: 14929
+          byte_count: 3837
+          word_count: 503
+          content_hash: de21ed3d38844089e0b851602168bb20ee4fe05f2a40db577ee3232d1f9df0ac
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Collapse the Tool Surface (97 → ~10–18 tools)
+              byte_offset: 15144
+              byte_count: 888
+              word_count: 98
+              content_hash: 3f5c83b24ad9c91ecd2c37045ad5fd3bc52154f6b0084cd6e82a9d71add3c467
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Add Batch Mutations
+              byte_offset: 16032
+              byte_count: 278
+              word_count: 46
+              content_hash: da0c470b382595a4eb6573b15b2e5081d74aa6de85336abaaf4b75921001e0f7
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Surface Side Effects in Responses
+              byte_offset: 16310
+              byte_count: 351
+              word_count: 44
+              content_hash: af7a3d5790eed7de9b1807678e0e7f05e1f1dc20e6f08718b669f0ed227970fc
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Higher-Level Workflow Tools
+              byte_offset: 16661
+              byte_count: 545
+              word_count: 74
+              content_hash: 2f1f7cdbaa95f34832363d5d851048e9d580021ad8b831ef4781671ffbc00d58
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Decouple Claiming from Context Assembly
+              byte_offset: 17206
+              byte_count: 238
+              word_count: 33
+              content_hash: b0d140b4f4423a2b7389aa6c26e8524ab08b96c0e20be36767342d8f562a64f1
+            - path: 1.5.6
+              level: 3
+              title: 5.6 Make Knowledge Contribution Inline
+              byte_offset: 17444
+              byte_count: 293
+              word_count: 38
+              content_hash: b790b012038ba8eb11c14fe21b53843d10b6cc763b6aaac43f2609b834ca2fc5
+            - path: 1.5.7
+              level: 3
+              title: 5.7 Simplify `decompose_feature` Pipeline
+              byte_offset: 17737
+              byte_count: 272
+              word_count: 34
+              content_hash: 1ae9be7db23bafc787b2a580a58e72c347af101968c9d73700bcf8770899da85
+            - path: 1.5.8
+              level: 3
+              title: 5.8 Tool Groups / Lazy Loading
+              byte_offset: 18009
+              byte_count: 451
+              word_count: 67
+              content_hash: f514eaa7a4f0b87b78c818847751ab116010dd2e2c383db122800a6165313c63
+            - path: 1.5.9
+              level: 3
+              title: 5.9 Smart Self-Advertising Between Tools
+              byte_offset: 18460
+              byte_count: 306
+              word_count: 39
+              content_hash: 2bde3064ad6577985a2d18b6d49f6e8f015322b96eecfd799d69c8de505d20f2
+        - path: "1.6"
+          level: 2
+          title: 6. Root Cause Analysis
+          byte_offset: 18766
+          byte_count: 1604
+          word_count: 243
+          content_hash: 5fbe8500316f49fb13a479785a96f12cc132830d0226142bbc6fb3cbbfb2d8f0
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Database Schema API, Not Workflow API
+              byte_offset: 18846
+              byte_count: 438
+              word_count: 76
+              content_hash: d51c2c9d3f0050e42cf8b310115e4eb5b19809da6a71359a085e43b407d08a7a
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Designed for Multi-Agent Coordination, Used by Solo Agents
+              byte_offset: 19284
+              byte_count: 425
+              word_count: 55
+              content_hash: 6f30d525b7b7a6be4ba0e199f3fdfc72fe1edaaec959ec79b30e9d441667fa34
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Tool-Per-Operation in a Token-Budgeted Environment
+              byte_offset: 19709
+              byte_count: 324
+              word_count: 50
+              content_hash: 60e71d6d9bafcc33ef26df8e3492fd193d7d9f41ab212d0427f6d4062d5adde6
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Intelligence Layer Without an On-Ramp
+              byte_offset: 20033
+              byte_count: 337
+              word_count: 48
+              content_hash: 810c9c35546270dac0316c76997c8a7af59f8b4a5a528aef2cc8eebe6ccaddf1
+        - path: "1.7"
+          level: 2
+          title: '7. Summary: What Needs to Happen'
+          byte_offset: 20370
+          byte_count: 1479
+          word_count: 238
+          content_hash: e1a2170faec410ae6b25e71d4c0f0b2a6d316cbd31c5c1315899488bd3752fd7
+entity_refs:
+    - entity_id: TASK-01KM
+      entity_type: task
+      section_path: 1.3.6
+      byte_offset: 7635
+    - entity_id: P3-kanbanzai-1
+      entity_type: plan
+      section_path: 1.3.6
+      byte_offset: 7737
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+    - section_path: 1.3.4
+      role: narrative
+      confidence: high
+    - section_path: 1.5.5
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+classified: false

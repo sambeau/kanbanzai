@@ -1,9 +1,10 @@
 package validate
 
 import (
+	"strings"
 	"testing"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 func TestEntryState(t *testing.T) {
@@ -92,6 +93,8 @@ func TestIsTerminalState(t *testing.T) {
 		{name: "feature superseded", kind: EntityFeature, state: "superseded", want: true},
 		{name: "feature cancelled", kind: EntityFeature, state: "cancelled", want: true},
 		{name: "feature review", kind: EntityFeature, state: "review", want: false},
+		{name: "feature reviewing", kind: EntityFeature, state: "reviewing", want: false},
+		{name: "feature needs-rework", kind: EntityFeature, state: "needs-rework", want: false},
 		{name: "task done", kind: EntityTask, state: "done", want: true},
 		{name: "task active", kind: EntityTask, state: "active", want: false},
 		{name: "bug closed", kind: EntityBug, state: "closed", want: true},
@@ -280,10 +283,45 @@ func TestCanTransition(t *testing.T) {
 			want: true,
 		},
 		{
-			name: "plan active to done",
+			name: "plan active to reviewing",
+			kind: EntityPlan,
+			from: "active",
+			to:   "reviewing",
+			want: true,
+		},
+		{
+			name: "plan active to done is illegal (must go through reviewing)",
 			kind: EntityPlan,
 			from: "active",
 			to:   "done",
+			want: false,
+		},
+		{
+			name: "plan reviewing to done",
+			kind: EntityPlan,
+			from: "reviewing",
+			to:   "done",
+			want: true,
+		},
+		{
+			name: "plan reviewing to active (rework)",
+			kind: EntityPlan,
+			from: "reviewing",
+			to:   "active",
+			want: true,
+		},
+		{
+			name: "plan reviewing to superseded",
+			kind: EntityPlan,
+			from: "reviewing",
+			to:   "superseded",
+			want: true,
+		},
+		{
+			name: "plan reviewing to cancelled",
+			kind: EntityPlan,
+			from: "reviewing",
+			to:   "cancelled",
 			want: true,
 		},
 		{
@@ -362,6 +400,70 @@ func TestCanTransition(t *testing.T) {
 			kind: EntityFeature,
 			from: "developing",
 			to:   "done",
+			want: false,
+		},
+		// Phase 2 review lifecycle transitions (AC-03, AC-05, AC-06, AC-07, AC-08, AC-10)
+		{
+			name: "feature developing to reviewing (AC-03)",
+			kind: EntityFeature,
+			from: "developing",
+			to:   "reviewing",
+			want: true,
+		},
+		{
+			name: "feature reviewing to done (AC-05)",
+			kind: EntityFeature,
+			from: "reviewing",
+			to:   "done",
+			want: true,
+		},
+		{
+			name: "feature reviewing to needs-rework (AC-06)",
+			kind: EntityFeature,
+			from: "reviewing",
+			to:   "needs-rework",
+			want: true,
+		},
+		{
+			name: "feature needs-rework to developing (AC-07)",
+			kind: EntityFeature,
+			from: "needs-rework",
+			to:   "developing",
+			want: true,
+		},
+		{
+			name: "feature needs-rework to reviewing quick-fix (AC-08)",
+			kind: EntityFeature,
+			from: "needs-rework",
+			to:   "reviewing",
+			want: true,
+		},
+		{
+			name: "feature reviewing to superseded (AC-10)",
+			kind: EntityFeature,
+			from: "reviewing",
+			to:   "superseded",
+			want: true,
+		},
+		{
+			name: "feature reviewing to cancelled (AC-10)",
+			kind: EntityFeature,
+			from: "reviewing",
+			to:   "cancelled",
+			want: true,
+		},
+		{
+			name: "feature needs-rework to superseded (AC-10)",
+			kind: EntityFeature,
+			from: "needs-rework",
+			to:   "superseded",
+			want: true,
+		},
+		{
+			name: "feature needs-rework to cancelled (AC-10)",
+			kind: EntityFeature,
+			from: "needs-rework",
+			to:   "cancelled",
 			want: true,
 		},
 		{
@@ -818,4 +920,340 @@ func TestEntryStateOrPanic_PanicsOnUnknownKind(t *testing.T) {
 	}()
 
 	EntryStateOrPanic(EntityKind("unknown"))
+}
+
+func TestValidNextStates(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name       string
+		kind       EntityKind
+		from       string
+		wantStates []string
+	}{
+		{
+			name:       "plan proposed has designing, cancelled, superseded",
+			kind:       EntityPlan,
+			from:       "proposed",
+			wantStates: []string{"cancelled", "designing", "superseded"},
+		},
+		{
+			name:       "plan active has reviewing, cancelled, superseded",
+			kind:       EntityPlan,
+			from:       "active",
+			wantStates: []string{"cancelled", "reviewing", "superseded"},
+		},
+		{
+			name:       "plan reviewing has active, cancelled, done, superseded",
+			kind:       EntityPlan,
+			from:       "reviewing",
+			wantStates: []string{"active", "cancelled", "done", "superseded"},
+		},
+		{
+			name:       "task queued has duplicate, not-planned, ready",
+			kind:       EntityTask,
+			from:       string(model.TaskStatusQueued),
+			wantStates: []string{"duplicate", "not-planned", "ready"},
+		},
+		{
+			name:       "task active has many transitions",
+			kind:       EntityTask,
+			from:       string(model.TaskStatusActive),
+			wantStates: []string{"blocked", "done", "duplicate", "needs-review", "needs-rework", "not-planned"},
+		},
+		{
+			name:       "task blocked only goes to active",
+			kind:       EntityTask,
+			from:       string(model.TaskStatusBlocked),
+			wantStates: []string{"active"},
+		},
+		{
+			name:       "bug reported has duplicate, triaged",
+			kind:       EntityBug,
+			from:       string(model.BugStatusReported),
+			wantStates: []string{"duplicate", "triaged"},
+		},
+		{
+			name:       "feature proposed phase2",
+			kind:       EntityFeature,
+			from:       string(model.FeatureStatusProposed),
+			wantStates: []string{"cancelled", "designing", "specifying", "superseded"},
+		},
+		{
+			name:       "feature developing includes reviewing (AC-11)",
+			kind:       EntityFeature,
+			from:       string(model.FeatureStatusDeveloping),
+			wantStates: []string{"cancelled", "dev-planning", "reviewing", "superseded"},
+		},
+		{
+			name:       "feature reviewing includes done and needs-rework (AC-12)",
+			kind:       EntityFeature,
+			from:       string(model.FeatureStatusReviewing),
+			wantStates: []string{"cancelled", "done", "needs-rework", "superseded"},
+		},
+		{
+			name:       "feature needs-rework includes developing and reviewing (AC-13)",
+			kind:       EntityFeature,
+			from:       string(model.FeatureStatusNeedsRework),
+			wantStates: []string{"cancelled", "developing", "in-progress", "in-review", "reviewing", "superseded"},
+		},
+		{
+			name:       "terminal task done returns nil",
+			kind:       EntityTask,
+			from:       string(model.TaskStatusDone),
+			wantStates: nil,
+		},
+		{
+			name:       "terminal task not-planned returns nil",
+			kind:       EntityTask,
+			from:       string(model.TaskStatusNotPlanned),
+			wantStates: nil,
+		},
+		{
+			name:       "terminal bug duplicate returns nil",
+			kind:       EntityBug,
+			from:       string(model.BugStatusDuplicate),
+			wantStates: nil,
+		},
+		{
+			name:       "unknown kind returns nil",
+			kind:       EntityKind("unknown"),
+			from:       "proposed",
+			wantStates: nil,
+		},
+		{
+			name:       "unknown state returns nil",
+			kind:       EntityTask,
+			from:       "nonexistent",
+			wantStates: nil,
+		},
+		{
+			name:       "decision proposed has accepted, rejected",
+			kind:       EntityDecision,
+			from:       string(model.DecisionStatusProposed),
+			wantStates: []string{"accepted", "rejected"},
+		},
+		{
+			name:       "decision terminal superseded returns nil",
+			kind:       EntityDecision,
+			from:       string(model.DecisionStatusSuperseded),
+			wantStates: nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			got := ValidNextStates(tt.kind, tt.from)
+
+			if tt.wantStates == nil {
+				if got != nil {
+					t.Errorf("ValidNextStates(%s, %q) = %v, want nil", tt.kind, tt.from, got)
+				}
+				return
+			}
+
+			if len(got) != len(tt.wantStates) {
+				t.Fatalf("ValidNextStates(%s, %q) returned %d states %v, want %d states %v",
+					tt.kind, tt.from, len(got), got, len(tt.wantStates), tt.wantStates)
+			}
+
+			for i, want := range tt.wantStates {
+				if got[i] != want {
+					t.Errorf("ValidNextStates(%s, %q)[%d] = %q, want %q", tt.kind, tt.from, i, got[i], want)
+				}
+			}
+		})
+	}
+}
+
+func TestValidateTransition_ErrorContainsValidStates(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name           string
+		kind           EntityKind
+		from           string
+		to             string
+		wantSubstrings []string
+	}{
+		{
+			name: "plan proposed to done shows valid transitions",
+			kind: EntityPlan,
+			from: "proposed",
+			to:   "done",
+			wantSubstrings: []string{
+				`valid transitions from "proposed"`,
+				"designing",
+				"cancelled",
+				"superseded",
+			},
+		},
+		{
+			name: "task queued to done shows valid transitions",
+			kind: EntityTask,
+			from: string(model.TaskStatusQueued),
+			to:   string(model.TaskStatusDone),
+			wantSubstrings: []string{
+				`valid transitions from "queued"`,
+				"ready",
+				"not-planned",
+				"duplicate",
+			},
+		},
+		{
+			name: "feature proposed to done shows valid transitions",
+			kind: EntityFeature,
+			from: string(model.FeatureStatusProposed),
+			to:   string(model.FeatureStatusDone),
+			wantSubstrings: []string{
+				`valid transitions from "proposed"`,
+				"designing",
+				"specifying",
+			},
+		},
+		{
+			name: "bug reported to closed shows valid transitions",
+			kind: EntityBug,
+			from: string(model.BugStatusReported),
+			to:   string(model.BugStatusClosed),
+			wantSubstrings: []string{
+				`valid transitions from "reported"`,
+				"triaged",
+			},
+		},
+		{
+			name: "feature developing to done names reviewing as valid (AC-14)",
+			kind: EntityFeature,
+			from: string(model.FeatureStatusDeveloping),
+			to:   string(model.FeatureStatusDone),
+			wantSubstrings: []string{
+				`valid transitions from "developing"`,
+				"reviewing",
+			},
+		},
+		{
+			name: "feature reviewing invalid transition includes valid alternatives (AC-15)",
+			kind: EntityFeature,
+			from: string(model.FeatureStatusReviewing),
+			to:   string(model.FeatureStatusDeveloping),
+			wantSubstrings: []string{
+				`valid transitions from "reviewing"`,
+				"done",
+				"needs-rework",
+			},
+		},
+		{
+			name: "feature needs-rework invalid transition includes valid alternatives (AC-15)",
+			kind: EntityFeature,
+			from: string(model.FeatureStatusNeedsRework),
+			to:   string(model.FeatureStatusDone),
+			wantSubstrings: []string{
+				`valid transitions from "needs-rework"`,
+				"developing",
+				"reviewing",
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			err := ValidateTransition(tt.kind, tt.from, tt.to)
+			if err == nil {
+				t.Fatal("expected error, got nil")
+			}
+
+			msg := err.Error()
+			for _, substr := range tt.wantSubstrings {
+				if !strings.Contains(msg, substr) {
+					t.Errorf("error message %q does not contain %q", msg, substr)
+				}
+			}
+		})
+	}
+}
+
+func TestPlanLifecycle_ReviewingTransitions(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name   string
+		from   string
+		to     string
+		wantOK bool
+	}{
+		{name: "active to reviewing succeeds", from: "active", to: "reviewing", wantOK: true},
+		{name: "reviewing to done succeeds", from: "reviewing", to: "done", wantOK: true},
+		{name: "reviewing to active succeeds (rework path)", from: "reviewing", to: "active", wantOK: true},
+		{name: "reviewing to superseded succeeds", from: "reviewing", to: "superseded", wantOK: true},
+		{name: "reviewing to cancelled succeeds", from: "reviewing", to: "cancelled", wantOK: true},
+		{name: "active to done fails (must go through reviewing)", from: "active", to: "done", wantOK: false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			err := ValidateTransition(EntityPlan, tt.from, tt.to)
+			if tt.wantOK && err != nil {
+				t.Fatalf("expected plan transition %s → %s to succeed, got error: %v", tt.from, tt.to, err)
+			}
+			if !tt.wantOK && err == nil {
+				t.Fatalf("expected plan transition %s → %s to fail, but it succeeded", tt.from, tt.to)
+			}
+		})
+	}
+}
+
+func TestPlanLifecycle_ActiveToDoneErrorMessage(t *testing.T) {
+	t.Parallel()
+
+	err := ValidateTransition(EntityPlan, "active", "done")
+	if err == nil {
+		t.Fatal("expected error for plan active → done, got nil")
+	}
+
+	msg := err.Error()
+	if !strings.Contains(msg, "reviewing") {
+		t.Errorf("error message %q does not contain \"reviewing\" in valid transitions list", msg)
+	}
+}
+
+// TestPlanLifecycle_ActiveCannotSkipReviewing verifies that plans cannot skip
+// the reviewing state when transitioning from active to done.
+func TestPlanLifecycle_ActiveCannotSkipReviewing(t *testing.T) {
+	t.Parallel()
+
+	// active → done should fail
+	if CanTransition(EntityPlan, "active", "done") {
+		t.Error("CanTransition(plan, active, done) = true; want false")
+	}
+
+	err := ValidateTransition(EntityPlan, "active", "done")
+	if err == nil {
+		t.Error("ValidateTransition(plan, active, done) = nil; want error")
+	}
+
+	// active → reviewing should succeed
+	if !CanTransition(EntityPlan, "active", "reviewing") {
+		t.Error("CanTransition(plan, active, reviewing) = false; want true")
+	}
+}
+
+// TestPlanLifecycle_FullLifecyclePath verifies the happy path through the
+// complete plan lifecycle: proposed → designing → active → reviewing → done.
+func TestPlanLifecycle_FullLifecyclePath(t *testing.T) {
+	t.Parallel()
+
+	path := []string{"proposed", "designing", "active", "reviewing", "done"}
+
+	for i := 0; i < len(path)-1; i++ {
+		from, to := path[i], path[i+1]
+		if err := ValidateTransition(EntityPlan, from, to); err != nil {
+			t.Errorf("ValidateTransition(plan, %q, %q) = %v; want nil", from, to, err)
+		}
+	}
 }

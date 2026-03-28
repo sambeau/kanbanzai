@@ -1,0 +1,251 @@
+document_id: P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan
+document_path: work/plan/workflow-quality-and-review-plan.md
+content_hash: 495a8fb41c01f889ec6c63826427ecd0f36bbf240b966389953c4805745ad344
+indexed_at: 2026-03-27T23:08:32.769355Z
+sections:
+    - path: "1"
+      level: 1
+      title: Workflow Quality & Code Review Plan
+      byte_offset: 0
+      byte_count: 11134
+      word_count: 1613
+      content_hash: 495a8fb41c01f889ec6c63826427ecd0f36bbf240b966389953c4805745ad344
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 286
+          byte_count: 632
+          word_count: 85
+          content_hash: b2ad0935d082be0e9d04f102be09147e9b50bedb7c7ec9bf2ac891c05f0a3a89
+        - path: "1.2"
+          level: 2
+          title: 2. Sequencing Rationale
+          byte_offset: 918
+          byte_count: 904
+          word_count: 121
+          content_hash: 78333e7a900c8ecbbc3af343948005255f5b7319e4e55ddf85ec60b55f6b34ca
+        - path: "1.3"
+          level: 2
+          title: 3. Work Phases
+          byte_offset: 1822
+          byte_count: 6619
+          word_count: 963
+          content_hash: 173d827ee632ff597e6d960a58258727a9d3d680a39a8e7d197d4bb4e90c0373
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Phase 1: Lifecycle & Entity Foundations'
+              byte_offset: 1841
+              byte_count: 2804
+              word_count: 416
+              content_hash: 9edd6bfb243c4b6e9ffa639caa84ebacf1ff7fa6dcb9af1b0fb44fda0dd45156
+              children:
+                - path: 1.3.1.1
+                  level: 4
+                  title: 'Feature A: Smart Lifecycle Transitions'
+                  byte_offset: 2028
+                  byte_count: 1126
+                  word_count: 167
+                  content_hash: b8342f04fea9637d7262cc09ed9316997c716e40413c84560f45d83779505318
+                - path: 1.3.1.2
+                  level: 4
+                  title: 'Feature B: Entity State Consistency'
+                  byte_offset: 3154
+                  byte_count: 600
+                  word_count: 89
+                  content_hash: 2ed946a2ac5c26840e45fe292ece4bf0c9c3f2f1e39ea4920dc7a165aa18f9cd
+                - path: 1.3.1.3
+                  level: 4
+                  title: 'Feature C: Entity Query & Update Fixes'
+                  byte_offset: 3754
+                  byte_count: 455
+                  word_count: 64
+                  content_hash: cf5d5cbcf10dc1f4ef62794ccda0b3e2196e83c298b4bb3665e7136c584ac90b
+                - path: 1.3.1.4
+                  level: 4
+                  title: Phase 1 Dependencies
+                  byte_offset: 4209
+                  byte_count: 436
+                  word_count: 67
+                  content_hash: 5cd40c75ad3e2bb5a0b1ab4c44884f788f5c30481bfa6235b5ced05c5da1ec1a
+            - path: 1.3.2
+              level: 3
+              title: 'Phase 2: Code Review Workflow'
+              byte_offset: 4645
+              byte_count: 2646
+              word_count: 373
+              content_hash: 51d04e0099eb9eb1eacaa647c3a8dfd833097435e6e31793f280fd2bac98ae46
+              children:
+                - path: 1.3.2.1
+                  level: 4
+                  title: 'Feature D: Review Lifecycle States'
+                  byte_offset: 4998
+                  byte_count: 575
+                  word_count: 84
+                  content_hash: 82b595dd343d0f82b29dcba1d3fc5e2f5c7df5a7058ed6b364d21b949dc954bf
+                - path: 1.3.2.2
+                  level: 4
+                  title: 'Feature E: Reviewer Context Profile & SKILL'
+                  byte_offset: 5573
+                  byte_count: 375
+                  word_count: 54
+                  content_hash: 63dbd977ed831fb77b0a82e33d1cb1a76b3ec9a35881e22a2d00132039f69f5e
+                - path: 1.3.2.3
+                  level: 4
+                  title: 'Feature F: Review Orchestration Pattern'
+                  byte_offset: 5948
+                  byte_count: 645
+                  word_count: 82
+                  content_hash: c115f6a657d764fa287c984c11554052e0f52d6d4fb1133cae4f248193d1b1e0
+                - path: 1.3.2.4
+                  level: 4
+                  title: 'Feature G: Policy & Documentation Updates'
+                  byte_offset: 6593
+                  byte_count: 207
+                  word_count: 27
+                  content_hash: 1971985611dec32a4adec7d3ce512e88f56fc2d6777fb47708b26fae34c6f888
+                - path: 1.3.2.5
+                  level: 4
+                  title: Phase 2 Dependencies
+                  byte_offset: 6800
+                  byte_count: 491
+                  word_count: 83
+                  content_hash: 41702c4977ffeb0035a413be13863b991a94d4babb8b0d32a6bf458fc09d4c81
+            - path: 1.3.3
+              level: 3
+              title: 'Phase 3: Quality of Life (Independent)'
+              byte_offset: 7291
+              byte_count: 1150
+              word_count: 170
+              content_hash: 53984669a073958371b7ad258810738f86ec62f7ff6cd810c64346c585aafd82
+              children:
+                - path: 1.3.3.1
+                  level: 4
+                  title: 'Feature H: Human-Friendly ID Display'
+                  byte_offset: 7526
+                  byte_count: 221
+                  word_count: 29
+                  content_hash: da82a92c1b8989bbae28088838527e744e029d5a32c651b920e4811ee3aa7053
+                - path: 1.3.3.2
+                  level: 4
+                  title: 'Feature I: Bulk Task Operations'
+                  byte_offset: 7747
+                  byte_count: 184
+                  word_count: 29
+                  content_hash: 3093d2023665c313b5f845c4afb74947562851707e2b009649a4c753d039fd56
+                - path: 1.3.3.3
+                  level: 4
+                  title: 'Feature J: Plan-to-Feature Guidance'
+                  byte_offset: 7931
+                  byte_count: 227
+                  word_count: 37
+                  content_hash: 8bb8cfbc749805b94f3c479d04ec379f36c27f81828be0d72f40545dd4ea82ed
+                - path: 1.3.3.4
+                  level: 4
+                  title: 'Feature K: Minor Improvements'
+                  byte_offset: 8158
+                  byte_count: 283
+                  word_count: 38
+                  content_hash: 075e4812b121c5ec0121d38929c5b9bd40f748713f4bfbd37a6a7f3614659a2f
+        - path: "1.4"
+          level: 2
+          title: 4. Work Summary
+          byte_offset: 8441
+          byte_count: 968
+          word_count: 143
+          content_hash: cdf98567b7ba468dd80538be754d8ec2feda4d1a2c66fda0e4b7f17b45b96475
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Critical Path
+              byte_offset: 8882
+              byte_count: 527
+              word_count: 68
+              content_hash: 01045082d1031077cfcb26fe603def42d1f60c2d3fc6c2ce3aa906960b577ffe
+        - path: "1.5"
+          level: 2
+          title: 5. Design Document Status
+          byte_offset: 9409
+          byte_count: 505
+          word_count: 90
+          content_hash: 9faa17935d93b668d3bf713d140f8654ca0098635b45ad45ffc670f54d24e0a4
+        - path: "1.6"
+          level: 2
+          title: 6. What This Plan Does Not Cover
+          byte_offset: 9914
+          byte_count: 632
+          word_count: 92
+          content_hash: 6b5f329b06d508069d05d5a5f6fbab8e832dfa46f515c31c2fc2c4e7ea909547
+        - path: "1.7"
+          level: 2
+          title: 7. Next Steps
+          byte_offset: 10546
+          byte_count: 588
+          word_count: 91
+          content_hash: b9df3f14829074ae0183ca13f01d6fffa10e7283794bb22dd11fd7f76e404f16
+front_matter:
+    status: proposed
+    date: "2026-03-27T23:07:03Z"
+    extra:
+        Motivation: '`work/reports/kanbanzai-2.0-workflow-retrospective.md`'
+        Plan ID: P6-workflow-quality-and-review
+        Related design: '`work/design/code-review-workflow.md` (status: design proposal)'
+entity_refs:
+    - entity_id: FEAT-01KMR
+      entity_type: feature
+      section_path: 1.3.3.1
+      byte_offset: 7637
+    - entity_id: FEAT-01KMRJ81DZ3X2
+      entity_type: feature
+      section_path: 1.3.3.1
+      byte_offset: 7670
+    - entity_id: P6-workflow-quality-and-review
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 98
+cross_doc_links:
+    - target_path: work/reports/kanbanzai-2.0-workflow-retrospective.md
+      link_text: work/reports/kanbanzai-2.0-workflow-retrospective.md
+      section_path: "1"
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: "1"
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: "1.1"
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: 1.3.2
+    - target_path: code-review-workflow.md
+      link_text: code-review-workflow.md
+      section_path: 1.3.2.1
+    - target_path: code-review-workflow.md
+      link_text: code-review-workflow.md
+      section_path: 1.3.2.2
+    - target_path: code-review-workflow.md
+      link_text: code-review-workflow.md
+      section_path: 1.3.2.3
+    - target_path: code-review-workflow.md
+      link_text: code-review-workflow.md
+      section_path: 1.3.2.4
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: "1.5"
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: rationale
+      confidence: high
+    - section_path: 1.3.2.2
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: narrative
+      confidence: high
+classified: false

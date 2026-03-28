@@ -1,0 +1,510 @@
+document_id: PROJECT/dev-plan-phase-3-decision-log
+document_path: work/plan/phase-3-decision-log.md
+content_hash: ac1e471c468fa649189e2aae17632928afb7b37c4ae9247843e696381d340ac4
+indexed_at: 2026-03-25T21:38:28.673442Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 3 Decision Log
+      byte_offset: 0
+      byte_count: 15126
+      word_count: 2098
+      content_hash: ac1e471c468fa649189e2aae17632928afb7b37c4ae9247843e696381d340ac4
+      children:
+        - path: "1.1"
+          level: 2
+          title: Decision Register
+          byte_offset: 346
+          byte_count: 620
+          word_count: 105
+          content_hash: 9ba9e680c6efb4e0ee1cfd032ef4bce7ff41941d8aa51d8ff31dd909927c9688
+        - path: "1.2"
+          level: 2
+          title: '`P3-DES-001: Branch naming convention`'
+          byte_offset: 966
+          byte_count: 1644
+          word_count: 209
+          content_hash: 66becc5d86cb77d561b1ccadf334a94062510619aa94fe76003de816cb85e016
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Decision
+              byte_offset: 1153
+              byte_count: 472
+              word_count: 58
+              content_hash: fb0ff417dcb6a991d0820432f9469067cf5a5aa6c2543bc5ebb5bc9d7214fcc0
+            - path: 1.2.2
+              level: 3
+              title: Rationale
+              byte_offset: 1625
+              byte_count: 362
+              word_count: 49
+              content_hash: 7ade93fb41053096792253fb803d6122490bb1f7bf60f37d1e089a4572131b54
+            - path: 1.2.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 1987
+              byte_count: 237
+              word_count: 33
+              content_hash: c778bb1769b64ac74f95a483eb6b3d44b128eb67f42326db4f8a23419276e3ab
+            - path: 1.2.4
+              level: 3
+              title: Consequences
+              byte_offset: 2224
+              byte_count: 276
+              word_count: 35
+              content_hash: 7e73d70c41c1c58c32d59f8b74f2994f91982dd3e9c8786f30bff10454763d73
+            - path: 1.2.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 2500
+              byte_count: 110
+              word_count: 13
+              content_hash: b12f663c6d0b80c20700533677b2a54d0fbe7378f0e21109be8d5b5e307aa517
+        - path: "1.3"
+          level: 2
+          title: '`P3-DES-002: Worktree lifecycle ownership`'
+          byte_offset: 2610
+          byte_count: 1948
+          word_count: 262
+          content_hash: 989f123abd6c7d2b9440cd275ce9cc7e741aff23bf6e306fdf28d86ad8d7e5cc
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Decision
+              byte_offset: 2801
+              byte_count: 502
+              word_count: 64
+              content_hash: af255a0f93968e94d7f2975180a0d5cd7fc57a6034ad9c8ca233c92221459d74
+            - path: 1.3.2
+              level: 3
+              title: Rationale
+              byte_offset: 3303
+              byte_count: 507
+              word_count: 74
+              content_hash: fe4b55f38063dc74a0d8626ef1a1fb7a9dca71f52922d46dbac627ea56afa3fa
+            - path: 1.3.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 3810
+              byte_count: 334
+              word_count: 41
+              content_hash: b0815927495f3e00f0fe9a8042891b4c654d040dde4570ea7fda79a364a4411c
+            - path: 1.3.4
+              level: 3
+              title: Consequences
+              byte_offset: 4144
+              byte_count: 251
+              word_count: 37
+              content_hash: ab61c01bfdd955f189bb6b3d5371be661914c963f3db669ea44684caf552c4da
+            - path: 1.3.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 4395
+              byte_count: 163
+              word_count: 25
+              content_hash: 65d957a9533f2f1ce4c5fe148ab6bdddb494472f0eaa8d55b25fe6b63b9a696c
+        - path: "1.4"
+          level: 2
+          title: '`P3-DES-003: Multiple worktrees per feature`'
+          byte_offset: 4558
+          byte_count: 1633
+          word_count: 227
+          content_hash: 58c28e60a1812042cfd3629d0bc9f37e12a5bf861f8423bf0cd33cfd009383b7
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Decision
+              byte_offset: 4751
+              byte_count: 489
+              word_count: 69
+              content_hash: 8a870f5b4d8be7e46f3068c6f409043281a22ebf0d9290a7b50385de8dfec27c
+            - path: 1.4.2
+              level: 3
+              title: Rationale
+              byte_offset: 5240
+              byte_count: 378
+              word_count: 53
+              content_hash: ae4c56117ca91050ae232a5b08d8d42867c4f5712c50a40d3a5f851e94e8474a
+            - path: 1.4.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 5618
+              byte_count: 295
+              word_count: 41
+              content_hash: 09dccc904b96054183c6124423513f115ba74e9cc4eb4125a6a7d4ea1775a3f6
+            - path: 1.4.4
+              level: 3
+              title: Consequences
+              byte_offset: 5913
+              byte_count: 242
+              word_count: 36
+              content_hash: 382acd6654696b39e2d81df5e8e99e167ea69a43a2b8e35d7f2864bff5d0e0d5
+            - path: 1.4.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 6155
+              byte_count: 36
+              word_count: 6
+              content_hash: 077bf32a92b238a6dd6265868177fd81cedd3a2d68795666da3f0f9017bc0af9
+        - path: "1.5"
+          level: 2
+          title: '`P3-DES-004: Platform scope`'
+          byte_offset: 6191
+          byte_count: 1567
+          word_count: 214
+          content_hash: 582bcf91e89cc67a015b3ceec44e9959a9af32e84a2e171af7f5015e024e5e91
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Decision
+              byte_offset: 6371
+              byte_count: 451
+              word_count: 61
+              content_hash: 281b1e68db66acc055e9df72ef5414de5636257402e7be851c84c6698562b0a1
+            - path: 1.5.2
+              level: 3
+              title: Rationale
+              byte_offset: 6822
+              byte_count: 395
+              word_count: 55
+              content_hash: cb14607640bb231bf2b50ebdb04c2eb5474fe83ca974c4891cf17f3b31b9158f
+            - path: 1.5.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 7217
+              byte_count: 244
+              word_count: 33
+              content_hash: e2f44d465591feb0e6a9e936b78d626bd1ff6befa77d5df6665530d47d9011a7
+            - path: 1.5.4
+              level: 3
+              title: Consequences
+              byte_offset: 7461
+              byte_count: 249
+              word_count: 36
+              content_hash: a116b45bd14ee8f088668775122b9a8899835c8aa3ae0d76c5a2ec684f3895be
+            - path: 1.5.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 7710
+              byte_count: 48
+              word_count: 9
+              content_hash: fdf89a94f776ee0b79eda3666db3f507b1069047bbad83fe1d5faae7bf7f3bcf
+        - path: "1.6"
+          level: 2
+          title: '`P3-DES-005: PR operation scope`'
+          byte_offset: 7758
+          byte_count: 1645
+          word_count: 227
+          content_hash: 94c090326e2c38ccc198a787adc43407d87316953f7be9e355678a0fca608951
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Decision
+              byte_offset: 7940
+              byte_count: 404
+              word_count: 54
+              content_hash: 9055a01f514ac90f72bfb09b0b1677c08ee9f9c1f8b786c58230e6fdb613cbae
+            - path: 1.6.2
+              level: 3
+              title: Rationale
+              byte_offset: 8344
+              byte_count: 412
+              word_count: 58
+              content_hash: f37f5be7b72311b99978d85ed445703f190db2a71576849912aef4c737df0ce6
+            - path: 1.6.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 8756
+              byte_count: 273
+              word_count: 37
+              content_hash: 21e65bf92f08f04beca603a55ed998798b99c08e2d64375c1de01fac5ca19d06
+            - path: 1.6.4
+              level: 3
+              title: Consequences
+              byte_offset: 9029
+              byte_count: 251
+              word_count: 38
+              content_hash: c87b964121d4c39294212f00a1580fba05a44244956ed8716509be2afc2ea871
+            - path: 1.6.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 9280
+              byte_count: 123
+              word_count: 19
+              content_hash: f055445c6647df3328d6170070cdd5015fd9d78ff56cd9fee17a774eab612fc4
+        - path: "1.7"
+          level: 2
+          title: '`P3-DES-006: Merge gate workflow model`'
+          byte_offset: 9403
+          byte_count: 1558
+          word_count: 212
+          content_hash: 339b32f455a0188c8243102323f99e6248af23d54bc1f5357e0ec3f4d79483b6
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Decision
+              byte_offset: 9587
+              byte_count: 392
+              word_count: 51
+              content_hash: 5a5d074e4cd331246c52ab5a4c4e062efc7d732efb435ac3ce85bd13ee161a9f
+            - path: 1.7.2
+              level: 3
+              title: Rationale
+              byte_offset: 9979
+              byte_count: 316
+              word_count: 44
+              content_hash: 956cb645db2fb0e1338f2b2bd1114ddcde4260db39eea74644bb159404400c56
+            - path: 1.7.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 10295
+              byte_count: 330
+              word_count: 44
+              content_hash: 9a27811362297d7686974083c8451d713f60d68805045bf9c963dfe9ef966c42
+            - path: 1.7.4
+              level: 3
+              title: Consequences
+              byte_offset: 10625
+              byte_count: 205
+              word_count: 29
+              content_hash: 8f6c47363448dd7f3a002a1535ff48928a0fb0b74e2a151bfbe2dd52772b37aa
+            - path: 1.7.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 10830
+              byte_count: 131
+              word_count: 22
+              content_hash: 07a52f07364c266c35aa6e01164b342e7ca4e8bbac91d8fcf2b2ef0c2fd5111b
+        - path: "1.8"
+          level: 2
+          title: '`P3-DES-007: Merge gate failure behavior`'
+          byte_offset: 10961
+          byte_count: 1643
+          word_count: 227
+          content_hash: 79b8ad57aa8d99b47e9ba98bd360f48b969443b11f512210923a68bab2dffbbb
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Decision
+              byte_offset: 11162
+              byte_count: 445
+              word_count: 59
+              content_hash: ee53c4d013e7edda818ee1c9c25a5504afa82cc170649a5f5e315ae0f4221c2c
+            - path: 1.8.2
+              level: 3
+              title: Rationale
+              byte_offset: 11607
+              byte_count: 352
+              word_count: 52
+              content_hash: 09697464b0c926e1407e6f9bedfa438cd88c93a2c517e79f5c0724ea3806dbde
+            - path: 1.8.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 11959
+              byte_count: 268
+              word_count: 39
+              content_hash: 636d80264d0b6170c00c032231fd3af06a30264b880115819a98b016b7351a34
+            - path: 1.8.4
+              level: 3
+              title: Consequences
+              byte_offset: 12227
+              byte_count: 225
+              word_count: 31
+              content_hash: 4167ba21593212c4dd292cc7bfa93437b73b4cd478b641b0d0909f1a5885e201
+            - path: 1.8.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 12452
+              byte_count: 152
+              word_count: 22
+              content_hash: c18f7845346b879c12526d347146e5683a3589b6a2d8409fcc5b0e1454255d35
+        - path: "1.9"
+          level: 2
+          title: '`P3-DES-008: Cleanup scope and triggering`'
+          byte_offset: 12604
+          byte_count: 1795
+          word_count: 248
+          content_hash: 04dda85d619cbfacd8462cffd017e9fb343e7abf7df6f84c72d39d07d41b3342
+          children:
+            - path: 1.9.1
+              level: 3
+              title: Decision
+              byte_offset: 12787
+              byte_count: 401
+              word_count: 54
+              content_hash: e168fd6c843be3f89d3d47a065a6a5525bdbc721b5cf7671d796b6b836504c47
+            - path: 1.9.2
+              level: 3
+              title: Rationale
+              byte_offset: 13188
+              byte_count: 475
+              word_count: 67
+              content_hash: 472cb3b27dfe868393c68192fbc53714cc1f8a5163f5168aa381d9eb6517b792
+            - path: 1.9.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 13663
+              byte_count: 298
+              word_count: 41
+              content_hash: 33d30ea067a6820a437efce189648b512b930a75692e03282e2f021855a07772
+            - path: 1.9.4
+              level: 3
+              title: Consequences
+              byte_offset: 13961
+              byte_count: 305
+              word_count: 44
+              content_hash: ee0dc0def55bf9f6712366ba4e6fac642cbde410f3e980dd61a383c0a2823b42
+            - path: 1.9.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 14266
+              byte_count: 133
+              word_count: 20
+              content_hash: 22bf80c9922fa0b0d102d413686a54620d77ff36228b3707d2a450c11f53e154
+        - path: "1.10"
+          level: 2
+          title: Summary
+          byte_offset: 14399
+          byte_count: 727
+          word_count: 120
+          content_hash: 640a576b5bdb51c8d7479e2355ea366043552f1b4bcc7095406f5c3a9e3b2d85
+entity_refs:
+    - entity_id: FEAT-01JX
+      entity_type: feature
+      section_path: 1.2.1
+      byte_offset: 1405
+    - entity_id: FEAT-01J
+      entity_type: feature
+      section_path: 1.7.1
+      byte_offset: 9909
+    - entity_id: BUG-01JX
+      entity_type: bug
+      section_path: 1.2.1
+      byte_offset: 1435
+cross_doc_links:
+    - target_path: work/plan/phase-3-scope.md
+      link_text: work/plan/phase-3-scope.md
+      section_path: "1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.2"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.3"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.4"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.5"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.6"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.7"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.8"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.9"
+conventional_roles:
+    - section_path: "1"
+      role: decision
+      confidence: high
+    - section_path: "1.1"
+      role: decision
+      confidence: high
+    - section_path: 1.2.1
+      role: decision
+      confidence: high
+    - section_path: 1.2.2
+      role: rationale
+      confidence: high
+    - section_path: 1.2.3
+      role: alternative
+      confidence: high
+    - section_path: 1.3.1
+      role: decision
+      confidence: high
+    - section_path: 1.3.2
+      role: rationale
+      confidence: high
+    - section_path: 1.3.3
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: decision
+      confidence: high
+    - section_path: 1.4.2
+      role: rationale
+      confidence: high
+    - section_path: 1.4.3
+      role: alternative
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: 1.5.1
+      role: decision
+      confidence: high
+    - section_path: 1.5.2
+      role: rationale
+      confidence: high
+    - section_path: 1.5.3
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: constraint
+      confidence: high
+    - section_path: 1.6.1
+      role: decision
+      confidence: high
+    - section_path: 1.6.2
+      role: rationale
+      confidence: high
+    - section_path: 1.6.3
+      role: alternative
+      confidence: high
+    - section_path: 1.7.1
+      role: decision
+      confidence: high
+    - section_path: 1.7.2
+      role: rationale
+      confidence: high
+    - section_path: 1.7.3
+      role: alternative
+      confidence: high
+    - section_path: 1.8.1
+      role: decision
+      confidence: high
+    - section_path: 1.8.2
+      role: rationale
+      confidence: high
+    - section_path: 1.8.3
+      role: alternative
+      confidence: high
+    - section_path: "1.9"
+      role: constraint
+      confidence: high
+    - section_path: 1.9.1
+      role: decision
+      confidence: high
+    - section_path: 1.9.2
+      role: rationale
+      confidence: high
+    - section_path: 1.9.3
+      role: alternative
+      confidence: high
+    - section_path: "1.10"
+      role: narrative
+      confidence: high
+classified: false

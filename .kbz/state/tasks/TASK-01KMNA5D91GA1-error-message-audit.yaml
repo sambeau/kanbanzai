@@ -2,4 +2,17 @@ id: TASK-01KMNA5D91GA1
 parent_feature: FEAT-01KMKRQWF0FCH
 slug: error-message-audit
 summary: "Audit all CLI and MCP error messages against quality standards in hardening spec §5: every message must include (a) plain-language description of what went wrong and (b) concrete action to take. Fix messages containing Go type names, raw YAML field names, or missing action guidance. Pay attention to storage-layer errors bubbling up to CLI output. Verify MCP error response structure."
-status: queued
+status: done
+files_planned:
+  - internal/service/entities.go
+  - internal/service/status_transition_hook.go
+  - internal/service/documents.go
+  - internal/service/documents_test.go
+  - internal/service/status_transition_hook_test.go
+completed: "2026-03-26T15:35:32Z"
+claimed_at: "2026-03-26T15:01:30Z"
+dispatched_to: backend
+dispatched_at: "2026-03-26T15:01:30Z"
+dispatched_by: agent/hardening
+completion_summary: "Audited error messages across CLI and MCP server. Fixed the following violations: (1) entities.go:989 — %T format leaking Go type names, replaced with user-friendly internal error message; (2) status_transition_hook.go:144 — 'parent_feature' raw YAML field name in warning message, replaced with 'not associated with a feature'; (3) documents.go — 'document already registered' now says to use doc_record_get; (4) documents.go — 'document file not found' now directs user to ensure file exists; (5) documents.go — content hash mismatch during approval now directs user to run doc_record_refresh first; (6) documents.go — 'cannot approve document in status' and 'cannot supersede document in status' errors now include what to do next; (7) Updated two existing tests that validated the old error text. Internal plumbing errors (write/marshal failures) left as-is since they're non-actionable system errors per spec guidance."
+verification: go test -race ./... — all packages pass; zero vet warnings

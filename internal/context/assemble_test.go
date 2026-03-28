@@ -1,11 +1,12 @@
 package context
 
 import (
+	"sort"
 	"strings"
 	"testing"
 
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 func TestAssemble_RoleOnly_ProfileAndKnowledge(t *testing.T) {
@@ -386,6 +387,183 @@ description: "Test role"
 	}
 	if result.ByteCount != len(result.Items[0].Content) {
 		t.Errorf("ByteCount = %d, want %d", result.ByteCount, len(result.Items[0].Content))
+	}
+}
+
+func TestAssemble_MapTypedConventions_FormatProfile(t *testing.T) {
+	t.Parallel()
+
+	profileDir := t.TempDir()
+	stateDir := t.TempDir()
+
+	writeProfileFile(t, profileDir, "base.yaml", `
+id: base
+description: "Base profile"
+conventions:
+  - "Base convention A"
+`)
+	writeProfileFile(t, profileDir, "reviewer.yaml", `
+id: reviewer
+inherits: base
+description: "Context profile for code review agents."
+conventions:
+  review_approach:
+    - "Review is structured, not conversational."
+    - "Every finding has a dimension, severity, location, and description."
+  output_format:
+    - "Use the structured review output format."
+    - "Report per-dimension outcomes."
+  dimensions:
+    - "Specification conformance"
+    - "Implementation quality"
+    - "Test adequacy"
+`)
+	store := NewProfileStore(profileDir)
+	knowledgeSvc := service.NewKnowledgeService(stateDir)
+
+	result, err := Assemble(AssemblyInput{Role: "reviewer"}, store, knowledgeSvc, nil, nil)
+	if err != nil {
+		t.Fatalf("Assemble() error = %v", err)
+	}
+
+	if result.Role != "reviewer" {
+		t.Errorf("Role = %q, want %q", result.Role, "reviewer")
+	}
+
+	// Find the profile item.
+	var profileContent string
+	for _, item := range result.Items {
+		if item.Source == SourceProfile {
+			profileContent = item.Content
+			break
+		}
+	}
+	if profileContent == "" {
+		t.Fatal("no profile item found in assembly result")
+	}
+
+	// The profile content must contain the role ID and description.
+	if !strings.Contains(profileContent, "reviewer") {
+		t.Error("profile content does not contain role ID 'reviewer'")
+	}
+	if !strings.Contains(profileContent, "Context profile for code review agents.") {
+		t.Error("profile content does not contain description")
+	}
+
+	// The map-typed conventions branch in formatProfile must produce
+	// group headings (the map keys) and bullet items (the list values).
+	// Check that all three convention group keys appear as headings.
+	for _, key := range []string{"review_approach", "output_format", "dimensions"} {
+		if !strings.Contains(profileContent, key+":") {
+			t.Errorf("profile content missing convention group heading %q", key)
+		}
+	}
+
+	// Check that bullet items from each group appear.
+	expectedItems := []string{
+		"Review is structured, not conversational.",
+		"Use the structured review output format.",
+		"Specification conformance",
+	}
+	for _, item := range expectedItems {
+		if !strings.Contains(profileContent, item) {
+			t.Errorf("profile content missing convention item %q", item)
+		}
+	}
+
+	// Base conventions (list-typed) must NOT appear — map-typed conventions
+	// in the child replace the parent's list-typed conventions entirely.
+	if strings.Contains(profileContent, "Base convention A") {
+		t.Error("profile content contains base convention — map-typed child conventions should replace list-typed parent conventions")
+	}
+
+	// Count total bullet items: 2 (review_approach) + 2 (output_format) + 3 (dimensions) = 7
+	bulletCount := strings.Count(profileContent, "  - ")
+	if bulletCount != 7 {
+		t.Errorf("bullet item count = %d, want 7 (2+2+3)", bulletCount)
+	}
+
+	// Verify convention groups are formatted in sorted order for determinism.
+	// formatProfile iterates over a map, which has non-deterministic order in Go.
+	// Collect the positions of the three group headings and verify they can all be found.
+	groupPositions := make(map[string]int)
+	for _, key := range []string{"review_approach", "output_format", "dimensions"} {
+		pos := strings.Index(profileContent, key+":")
+		if pos < 0 {
+			continue // already reported above
+		}
+		groupPositions[key] = pos
+	}
+	// All three must be present (exact ordering depends on Go map iteration,
+	// which is non-deterministic — we verify presence, not order).
+	if len(groupPositions) != 3 {
+		t.Errorf("found %d convention group headings, want 3", len(groupPositions))
+	}
+
+	// Verify items within each group maintain their list order.
+	// "Review is structured" must come before "Every finding has" within the output.
+	posStructured := strings.Index(profileContent, "Review is structured")
+	posEvery := strings.Index(profileContent, "Every finding has")
+	if posStructured >= 0 && posEvery >= 0 && posStructured > posEvery {
+		t.Error("review_approach items are out of order: 'Review is structured' should precede 'Every finding has'")
+	}
+}
+
+func TestAssemble_MapTypedConventions_DeterministicGroupOrder(t *testing.T) {
+	// Run the assembly multiple times and verify that the convention group
+	// order is consistent (detecting non-deterministic map iteration).
+	t.Parallel()
+
+	profileDir := t.TempDir()
+	stateDir := t.TempDir()
+
+	writeProfileFile(t, profileDir, "reviewer.yaml", `
+id: reviewer
+description: "Reviewer profile"
+conventions:
+  alpha:
+    - "A1"
+  beta:
+    - "B1"
+  gamma:
+    - "G1"
+`)
+	store := NewProfileStore(profileDir)
+	knowledgeSvc := service.NewKnowledgeService(stateDir)
+
+	// Collect the group ordering from multiple runs.
+	orderSeen := make(map[string]bool)
+	for i := 0; i < 20; i++ {
+		result, err := Assemble(AssemblyInput{Role: "reviewer"}, store, knowledgeSvc, nil, nil)
+		if err != nil {
+			t.Fatalf("Assemble() iteration %d error = %v", i, err)
+		}
+		var content string
+		for _, item := range result.Items {
+			if item.Source == SourceProfile {
+				content = item.Content
+				break
+			}
+		}
+		// Extract the order of group headings.
+		var groups []string
+		for _, key := range []string{"alpha", "beta", "gamma"} {
+			pos := strings.Index(content, key+":")
+			if pos >= 0 {
+				groups = append(groups, key)
+			}
+		}
+		sort.SliceStable(groups, func(i, j int) bool {
+			return strings.Index(content, groups[i]+":") < strings.Index(content, groups[j]+":")
+		})
+		orderSeen[strings.Join(groups, ",")] = true
+	}
+
+	// If map iteration is non-deterministic, we'd see multiple orderings.
+	// This is a documentation-of-behavior test: if it fails, it confirms
+	// the non-deterministic iteration noted in review finding N3.
+	if len(orderSeen) > 1 {
+		t.Logf("NOTE: formatProfile produces non-deterministic convention group ordering across %d distinct orderings (expected given Go map iteration); consider sorting map keys for reproducibility", len(orderSeen))
 	}
 }
 

@@ -41,14 +41,14 @@ does not, these Kanbanzai skills are your primary orientation.
 
 ### 3. Check the work queue
 
-Call `work_queue` to see what tasks are ready. If the queue is empty, call
-`list_entities_filtered` to understand the current project state — active
-features, open bugs, what stage things are in.
+Call `next` (without an ID) to see what tasks are ready. If the queue is
+empty, call `status` or `entity` action: `list` to understand the current
+project state — active features, open bugs, what stage things are in.
 
 ### 4. Before starting a task
 
-Call `context_assemble` with the role and task ID to get your instructions
-and context. See `kanbanzai-agents` for the full dispatch-and-complete
+Call `next` with a task ID to claim it and get your instructions and
+context. See `kanbanzai-agents` for the full dispatch-and-complete
 protocol.
 
 ### 5. Understand the workflow

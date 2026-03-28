@@ -2,7 +2,7 @@
 
 - Status: draft design
 - Purpose: define the behaviour of `kanbanzai init` — the command that prepares a repository for use with Kanbanzai
-- Date: 2026-05-31
+- Date: 2026-03-26T10:12:57Z
 - Related:
   - `work/design/kanbanzai-1.0.md` §4, §5, §6
   - `work/design/agent-interaction-protocol.md`

@@ -1,0 +1,449 @@
+document_id: PROJECT/design-product-instance-boundary
+document_path: work/design/product-instance-boundary.md
+content_hash: d188c7e6ba4a19462373096c26fcff44cad89f57946d143b77062e5cfb772961
+indexed_at: 2026-03-25T21:38:22.26761Z
+sections:
+    - path: "1"
+      level: 1
+      title: Product–Instance Boundary and Bootstrapping
+      byte_offset: 0
+      byte_count: 20452
+      word_count: 3060
+      content_hash: d188c7e6ba4a19462373096c26fcff44cad89f57946d143b77062e5cfb772961
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 447
+          byte_count: 819
+          word_count: 134
+          content_hash: caf4b0e72a3be317877833ba296ad91f445e6078ffe668dd5352d32e949f1302
+        - path: "1.2"
+          level: 2
+          title: 2. Core Principle
+          byte_offset: 1266
+          byte_count: 706
+          word_count: 113
+          content_hash: 56b098cb6e81c0f92ee1b4f9e72acd40cc99e459ef98928dd6524eb27bd48021
+        - path: "1.3"
+          level: 2
+          title: 3. Definitions
+          byte_offset: 1972
+          byte_count: 19
+          word_count: 3
+          content_hash: 1148b9afa1e95b47e1c981056250937d2d32d541903db84bd4d76b82dc7c23bd
+        - path: "1.4"
+          level: 2
+          title: 3.1 Product
+          byte_offset: 1991
+          byte_count: 605
+          word_count: 90
+          content_hash: 170e23f4975c6946433d2c8086bec4416a4fd7229495c49e53710ef24f4ff196
+        - path: "1.5"
+          level: 2
+          title: 3.2 Instance
+          byte_offset: 2596
+          byte_count: 585
+          word_count: 84
+          content_hash: c4368c538de71cf9d7f5c84f68bb84d0f577b11ddb1f535c27836b53123a547b
+        - path: "1.6"
+          level: 2
+          title: 3.3 Project design materials
+          byte_offset: 3181
+          byte_count: 484
+          word_count: 70
+          content_hash: 40d5f0e12e23054ca78bc28db8efb4c512c944b707283370f465170628e0fd58
+        - path: "1.7"
+          level: 2
+          title: 3.4 Promotion
+          byte_offset: 3665
+          byte_count: 489
+          word_count: 75
+          content_hash: 95b696709aec7a0de9c91c408a650a149ada87ef3a27592853433e6a03657266
+        - path: "1.8"
+          level: 2
+          title: 4. The Three Domains
+          byte_offset: 4154
+          byte_count: 84
+          word_count: 14
+          content_hash: 78367c8452118918b57f385eda64a15f90b62d47ffe81c8790a1a645dea4a629
+        - path: "1.9"
+          level: 2
+          title: '4.1 Domain A: Reusable system'
+          byte_offset: 4238
+          byte_count: 440
+          word_count: 63
+          content_hash: 8dafbd4bff2d1bd0198237e6f99986acc04b869243f16cfcc6a0f665e2d7f8f4
+        - path: "1.10"
+          level: 2
+          title: '4.2 Domain B: Live project instance'
+          byte_offset: 4678
+          byte_count: 494
+          word_count: 70
+          content_hash: 5971343ab687b04ba4a25820a369cf2b4442e459697a5e6da3d43a0857d73084
+        - path: "1.11"
+          level: 2
+          title: '4.3 Domain C: Design and implementation planning for the product'
+          byte_offset: 5172
+          byte_count: 491
+          word_count: 78
+          content_hash: 77ffb13a3b26806a113d0242c652e84284d253fcc3b03406b8b3ff95dcda056d
+        - path: "1.12"
+          level: 2
+          title: 5. Required Hygiene Rules
+          byte_offset: 5663
+          byte_count: 30
+          word_count: 5
+          content_hash: 6e4fd05c2b9abada7a4f86a504247dc53696cb9482909ff766d5ca656589a7d2
+        - path: "1.13"
+          level: 2
+          title: 5.1 Product assets must not contain live instance state
+          byte_offset: 5693
+          byte_count: 491
+          word_count: 72
+          content_hash: 97f6443064c1169409e4331a06ae7e0f92f1d85eb3d0d2de6fce448cc001f3bb
+        - path: "1.14"
+          level: 2
+          title: 5.2 Instance state must not be treated as reusable defaults
+          byte_offset: 6184
+          byte_count: 463
+          word_count: 70
+          content_hash: de6f7a9042f0ed2719c8c6158309da0412ef9d932e5ab92dacad96a9a0eff698
+        - path: "1.15"
+          level: 2
+          title: 5.3 Draft design documents are not product assets by default
+          byte_offset: 6647
+          byte_count: 259
+          word_count: 39
+          content_hash: 0fd5795c1383e7e4bbe739f037eebb46af183af21f75d43e758c9f45a12e0b1b
+        - path: "1.16"
+          level: 2
+          title: 5.4 Generated projections must not become canonical by accident
+          byte_offset: 6906
+          byte_count: 235
+          word_count: 32
+          content_hash: e563e55842a4ce681936089fdab75d6fdc76aa25d5a614a91a9bed46f8b16d48
+        - path: "1.17"
+          level: 2
+          title: 5.5 The system must support manual stewardship during bootstrap
+          byte_offset: 7141
+          byte_count: 347
+          word_count: 55
+          content_hash: 5c47ae5e6d265f0547d95d42c11168248cdccb57624099e60f97dda1c018c7d4
+        - path: "1.18"
+          level: 2
+          title: 6. Product Artifacts
+          byte_offset: 7488
+          byte_count: 121
+          word_count: 18
+          content_hash: ece73357fb1ebecf26a638d807254c2912c28106c8017606ba062a7b17aa6eee
+        - path: "1.19"
+          level: 2
+          title: 6.1 Code
+          byte_offset: 7609
+          byte_count: 115
+          word_count: 18
+          content_hash: 1ec064c2c7a30bcccdcfa8f1f7039498e3a7826f9997e12ac1ee1ff32f7785bd
+        - path: "1.20"
+          level: 2
+          title: 6.2 Schemas
+          byte_offset: 7724
+          byte_count: 204
+          word_count: 30
+          content_hash: 3b599bf617fa72daca22603e1e34f8fbb4f68cdaa1b0e4eddc19d7f8bf0b8f1d
+        - path: "1.21"
+          level: 2
+          title: 6.3 Templates
+          byte_offset: 7928
+          byte_count: 206
+          word_count: 30
+          content_hash: 529f81ae383c165275a348b75aad6af68450339e0ca2cc5f7ceecd8bd332694d
+        - path: "1.22"
+          level: 2
+          title: 6.4 Default policies
+          byte_offset: 8134
+          byte_count: 255
+          word_count: 36
+          content_hash: c5160e1d0069c3a1ce183575bd47273aaecc2d34cc89b0f78dbd7e398d5ed205
+        - path: "1.23"
+          level: 2
+          title: 6.5 Default instructions and skills
+          byte_offset: 8389
+          byte_count: 353
+          word_count: 49
+          content_hash: f932782799b1a8b396903fca0663baad1ba41279c84c5b7178e1a32f3443ad9e
+        - path: "1.24"
+          level: 2
+          title: 6.6 Initialization and migration logic
+          byte_offset: 8742
+          byte_count: 213
+          word_count: 34
+          content_hash: c9f8d217fb37538320b0217961e945b89a61c6b96202d9601d7568bbcf773935
+        - path: "1.25"
+          level: 2
+          title: 6.7 Product reference documentation
+          byte_offset: 8955
+          byte_count: 170
+          word_count: 24
+          content_hash: 9a531f123a4406a09129490aea34028da9ca34a21213c1f2700e1ec8708da8e4
+        - path: "1.26"
+          level: 2
+          title: 7. Instance Artifacts
+          byte_offset: 9125
+          byte_count: 136
+          word_count: 21
+          content_hash: d6f4a2508732c0ae01c090dbee3f46c7f59e7c2b5e529b56b2f06dfc0847ad65
+        - path: "1.27"
+          level: 2
+          title: 7.1 Canonical state for the current project
+          byte_offset: 9261
+          byte_count: 226
+          word_count: 35
+          content_hash: c357ade534816d6c8a18a572e08b2cb73625fb80e93b314a25bf5d859537e1e5
+        - path: "1.28"
+          level: 2
+          title: 7.2 Project-specific content
+          byte_offset: 9487
+          byte_count: 232
+          word_count: 26
+          content_hash: d270043ac6bcdbd5161573326c41a9b9a3b4b60bfead2c51f4232be08658623a
+        - path: "1.29"
+          level: 2
+          title: 7.3 Project-specific memory
+          byte_offset: 9719
+          byte_count: 233
+          word_count: 28
+          content_hash: ea38b2a070d6ba326e6398678b63a339dc33be2e84bfaf96cba4f1187bb24d49
+        - path: "1.30"
+          level: 2
+          title: 7.4 Local cache and generated instance artifacts
+          byte_offset: 9952
+          byte_count: 209
+          word_count: 33
+          content_hash: 9f56dff50953fe1fcaeb13912598a34d0f823355e5869c037fa8485fe2d54d5b
+        - path: "1.31"
+          level: 2
+          title: 8. Project Design Artifacts
+          byte_offset: 10161
+          byte_count: 453
+          word_count: 67
+          content_hash: 42f65b16b9759e733a5ed95bf69e6bb0ee7d8ebae6e659e8ca9e3ad9f06a44a5
+        - path: "1.32"
+          level: 2
+          title: 9. Promotion Path
+          byte_offset: 10614
+          byte_count: 149
+          word_count: 25
+          content_hash: 2a6c918d1d9e941ad261bc856ee0645b935a66e2f0aaef977bc17a362b89e0ed
+        - path: "1.33"
+          level: 2
+          title: 9.1 Draft stage
+          byte_offset: 10763
+          byte_count: 279
+          word_count: 49
+          content_hash: 8412c0885c88c318f8a1a3c654c26a2311480aa1ef053b293b9121ed6471a841
+        - path: "1.34"
+          level: 2
+          title: 9.2 Stabilization stage
+          byte_offset: 11042
+          byte_count: 395
+          word_count: 69
+          content_hash: f8cb0db06a37f84a92a5ed2ec9f37c639e742474bc05bb8ed566b3fc26a6436d
+        - path: "1.35"
+          level: 2
+          title: 9.3 Productization stage
+          byte_offset: 11437
+          byte_count: 453
+          word_count: 69
+          content_hash: 91f8e6a0ef2cc68e093a2b85b53a8fd0bafdf9bc40bd1601770e98e98995841e
+        - path: "1.36"
+          level: 2
+          title: 9.4 Instance initialization stage
+          byte_offset: 11890
+          byte_count: 316
+          word_count: 51
+          content_hash: 1bd181daba105c03a3af8902972bd4fbd0fe881d2633fa5b7e1882d6ae306b4f
+        - path: "1.37"
+          level: 2
+          title: 10. Recommended Repository Boundary Model
+          byte_offset: 12206
+          byte_count: 595
+          word_count: 82
+          content_hash: bc29cff1a6e69ad45fc569ed22c043c227e306b313fdba58cb62eae231b8765f
+        - path: "1.38"
+          level: 2
+          title: 11. Recommended Instance Root
+          byte_offset: 12801
+          byte_count: 682
+          word_count: 107
+          content_hash: 635656b0dc54d9dda40a62e01e3f9aa4b4fd1781c8354139b5349f5ba31790ca
+        - path: "1.39"
+          level: 2
+          title: 12. Boundary Rules for Policies and Protocols
+          byte_offset: 13483
+          byte_count: 341
+          word_count: 59
+          content_hash: c1dc97de5de3daf33d19f031a097dafe12f3dfdbea8dea9437951572e852cf08
+        - path: "1.40"
+          level: 2
+          title: 12.1 Draft policy
+          byte_offset: 13824
+          byte_count: 68
+          word_count: 9
+          content_hash: 8a90f864a10ba306b77250cacc9f767e65f314092e93fa6bc888cda54a8fbbb7
+        - path: "1.41"
+          level: 2
+          title: 12.2 Active project policy
+          byte_offset: 13892
+          byte_count: 92
+          word_count: 14
+          content_hash: 7ee8cd19a425bf6976c57725e545cee3d0fad5badfa8a8db76a220d25caffe86
+        - path: "1.42"
+          level: 2
+          title: 12.3 Product default policy
+          byte_offset: 13984
+          byte_count: 188
+          word_count: 30
+          content_hash: 85815df7f35ae3b66e7baa2ecee398dc962321d4a151af2047c34b888e7dee11
+        - path: "1.43"
+          level: 2
+          title: 13. Boundary Rules for Instructions and Skills
+          byte_offset: 14172
+          byte_count: 108
+          word_count: 16
+          content_hash: fba1623967375228824c86199ab405c3f98f00ec00e2374950bce060cf9af8a8
+        - path: "1.44"
+          level: 2
+          title: 13.1 Current project instructions
+          byte_offset: 14280
+          byte_count: 175
+          word_count: 22
+          content_hash: 6f4003d3e3f90fdd2c813e696751f63d67a76af660816d2c4d42b48d724decde
+        - path: "1.45"
+          level: 2
+          title: 13.2 Reusable default instructions
+          byte_offset: 14455
+          byte_count: 179
+          word_count: 26
+          content_hash: 4cf9535697c5050e57b1edee6576f03cc0818361cae15fd063263413f7ae92e6
+        - path: "1.46"
+          level: 2
+          title: 13.3 Runtime-specific wrappers
+          byte_offset: 14634
+          byte_count: 184
+          word_count: 25
+          content_hash: 7883aada2821d189d9f41fe88cd01726435d7aef732a1ef9bf64edc88d314069
+        - path: "1.47"
+          level: 2
+          title: 14. Boundary Rules for Workflow State
+          byte_offset: 14818
+          byte_count: 629
+          word_count: 98
+          content_hash: 6f6d4812efecb908990a7e975377b7c87d86520dad74db24ec7b7d1e17beb087
+        - path: "1.48"
+          level: 2
+          title: 15. Bootstrapping Model
+          byte_offset: 15447
+          byte_count: 85
+          word_count: 13
+          content_hash: 86b12488d987729422a17a5e96d7b54183a466e6fbc30753f44b9ff80fe81269
+        - path: "1.49"
+          level: 2
+          title: '15.1 Stage 1: manual stewardship with supporting documents'
+          byte_offset: 15532
+          byte_count: 272
+          word_count: 41
+          content_hash: 4f30d78f8f466bb95ff688f092e458c878ad003dc3e75742eef99a460d8086fc
+        - path: "1.50"
+          level: 2
+          title: '15.2 Stage 2: kernel-assisted project management'
+          byte_offset: 15804
+          byte_count: 286
+          word_count: 46
+          content_hash: 689d37c02b414142324666918f0334bf45241cd86022d7b82ee2209d1f645a21
+        - path: "1.51"
+          level: 2
+          title: '15.3 Stage 3: partial self-management'
+          byte_offset: 16090
+          byte_count: 278
+          word_count: 42
+          content_hash: 0868bc1ea3e166586dbacb8101af186ba55a2e306df48d37ade9833e207c3239
+        - path: "1.52"
+          level: 2
+          title: '15.4 Stage 4: reusable initialization for new projects'
+          byte_offset: 16368
+          byte_count: 315
+          word_count: 48
+          content_hash: 595936a0906801cd598d7a04ec638792651d75189fb6edbaed19e79efc513ceb
+        - path: "1.53"
+          level: 2
+          title: 16. Hygiene Rules for Future Initialization
+          byte_offset: 16683
+          byte_count: 841
+          word_count: 124
+          content_hash: b751a226e41950e68aa2460e1d94ef706febf93c5a7ce5ec6dfcfd1eef95469a
+        - path: "1.54"
+          level: 2
+          title: 17. Rules for Current Repository Organization
+          byte_offset: 17524
+          byte_count: 879
+          word_count: 116
+          content_hash: 8b6507041ebea3f4e8c328dec47108f41c0c2ac8b558599d26bc4e8e3e35af06
+        - path: "1.55"
+          level: 2
+          title: 18. Promotion Criteria
+          byte_offset: 18403
+          byte_count: 508
+          word_count: 89
+          content_hash: bbb8082b7c2efd291fe9e91c533ae2ad433cd7490d6e5646de528cabf80dc399
+        - path: "1.56"
+          level: 2
+          title: 19. Acceptance Criteria
+          byte_offset: 18911
+          byte_count: 602
+          word_count: 91
+          content_hash: df17e140eba404c556fb047b42fed2a1478cf939f698b835d6f9de422cc445a7
+        - path: "1.57"
+          level: 2
+          title: 20. Summary
+          byte_offset: 19513
+          byte_count: 939
+          word_count: 138
+          content_hash: 4e9fbada438dd9431d83d65e8fb911df5a3c59d019e5ff52778a68e55d0902cc
+front_matter:
+    status: design draft
+    date: "2026-03-18"
+    related:
+        - work/design/workflow-design-basis.md
+        - work/spec/phase-1-specification.md
+        - work/design/agent-interaction-protocol.md
+        - work/design/git-commit-policy.md
+    extra:
+        Purpose: define the boundary between the reusable workflow system, the current project instance using it, and the current project’s design/implementation materials
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "1"
+    - target_path: work/design/git-commit-policy.md
+      link_text: work/design/git-commit-policy.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: definition
+      confidence: high
+    - section_path: "1.56"
+      role: requirement
+      confidence: high
+    - section_path: "1.57"
+      role: narrative
+      confidence: high
+classified: false

@@ -32,21 +32,25 @@ and spawning sub-agents.
 
 ## Context Assembly
 
-Before beginning any task, assemble context:
+Before beginning any task, assemble context by claiming it:
 
-1. Call `context_assemble(role="<role>", task_id="<task_id>")` to get a
-   context packet containing role instructions, relevant knowledge entries,
-   design context, and task details.
+1. Call `next` with a task ID to claim the task and receive a context packet
+   containing role instructions, relevant knowledge entries, design context,
+   and task details.
 2. The packet is byte-budgeted and prioritised — it contains what matters
    most for this task and role.
+3. To generate a prompt for a sub-agent instead, call `handoff` with the
+   task ID — it produces a self-contained Markdown prompt ready for
+   delegation.
 
-After completing the task, call `context_report` to record which knowledge
-entries were used and which were incorrect:
+After completing the task, maintain the knowledge base:
 
-- **Used entries** — their use count increments; frequently-used entries are
-  auto-confirmed.
-- **Flagged entries** — their miss count increments; repeatedly-flagged
-  entries are auto-retired.
+- Call `knowledge` action: `confirm` on entries that were accurate and
+  useful — their use count increments; frequently-confirmed entries gain
+  confidence.
+- Call `knowledge` action: `flag` on entries that were incorrect or
+  misleading — their miss count increments; repeatedly-flagged entries are
+  auto-retired.
 
 This feedback loop keeps the knowledge base accurate over time.
 
@@ -56,20 +60,21 @@ This feedback loop keeps the knowledge base accurate over time.
 
 ### Picking up work
 
-1. Call `work_queue` to see ready tasks, sorted by priority.
-2. Call `dispatch_task(task_id, role, dispatched_by)` to atomically claim a
-   task. This moves it from `ready` to `active` and returns a context packet.
+1. Call `next` (without an ID) to see ready tasks, sorted by priority.
+2. Call `next` with a task ID to claim it. This moves it from `ready` to
+   `active` and returns a context packet with role instructions, knowledge
+   entries, and task details.
 3. Do the work.
 
 ### Finishing work
 
-Call `complete_task` with:
+Call `finish` with:
 
 - `task_id` — the task being completed
 - `summary` — brief description of what was accomplished
 - `files_modified` — files created or changed
-- `verification_performed` — what testing or verification was done
-- `knowledge_entries` — any reusable knowledge learned during the task
+- `verification` — what testing or verification was done
+- `knowledge` — any reusable knowledge learned during the task
 
 ---
 
@@ -119,7 +124,8 @@ When you learn something useful during a task that is not already in the
 knowledge base, contribute it:
 
 ```
-knowledge_contribute(
+knowledge(
+  action="contribute",
   topic="<topic>",
   content="<concise actionable statement>",
   scope="<role or 'project'>",
@@ -138,6 +144,27 @@ the API" is not.
 
 ---
 
+## Communicating With Humans
+
+Documents are the human interface to the system. Decision records and their
+IDs are internal tracking mechanisms — important for system integrity and
+useful for agents, but not how humans navigate the project.
+
+When talking with humans:
+
+- Reference **documents** by name: "the ID system design", "the Phase 1
+  spec §10"
+- Use **prose descriptions** of decisions: "the decision about cache-based
+  locking"
+- Do **not** lead with decision IDs: ~~"P1-DEC-021 defines the ID format"~~
+
+Decision IDs don't carry enough context for a human to act on without
+querying the system. A document name or a prose summary is immediately
+meaningful. Save decision IDs for commit messages, entity cross-references,
+and agent-to-agent communication.
+
+---
+
 ## Sub-Agent Spawning
 
 When delegating work to a sub-agent:
@@ -149,7 +176,7 @@ When delegating work to a sub-agent:
 2. **Scope boundaries** — tell each sub-agent which files or directories it
    owns. If spawning multiple agents in parallel, ensure they do not write to
    the same files.
-3. **MCP delivery** — `context_assemble` automatically includes relevant
+3. **MCP delivery** — `next` and `handoff` automatically include relevant
    skill content in the context packet for sub-agents running through MCP.
    This is the primary skill delivery mechanism for sub-agents.
 
@@ -157,8 +184,9 @@ When delegating work to a sub-agent:
 
 ## Gotchas
 
-- If `dispatch_task` fails, another agent likely claimed the task. Call
-  `work_queue` again to pick a different one. Do not retry the same task.
+- If `next` fails when claiming a task, another agent likely claimed it.
+  Call `next` again (without an ID) to pick a different one. Do not retry
+  the same task.
 - If a Kanbanzai tool call returns an error, read the message — it usually
   tells you exactly what went wrong and what the valid options are. Do not
   retry with the same arguments.
@@ -167,6 +195,77 @@ When delegating work to a sub-agent:
 - If you are unsure about the workflow rules (stage gates, human vs. agent
   ownership, when to stop and ask), see `kanbanzai-workflow` — it is the
   canonical reference.
+
+---
+
+## Retrospective Observations
+
+When completing a task, reflect briefly on the process — not just the output.
+If you noticed any of the following, include a `retrospective` signal in your
+`finish` call:
+
+- The spec was ambiguous or contradictory on a point that mattered
+- Information you needed was not in the context packet
+- A tool was missing, or an existing tool was awkward or returned unhelpful output
+- The task was too large, too small, or had undeclared dependencies
+- A workflow step felt unnecessary or was confusing
+- Something worked particularly well and should be preserved
+
+**Not every task will have observations. That's fine — don't force it.**
+When you do have something to note, be specific: name the section, the tool,
+or the step that caused friction. "Things were confusing" is not useful.
+"Spec §3.2 didn't define the error format for async callbacks" is.
+
+### At task completion (primary mechanism)
+
+Pass a `retrospective` array to `finish`:
+
+```
+finish(
+  task_id: "TASK-...",
+  summary: "Implemented the billing webhook handler",
+  retrospective: [
+    {
+      category: "spec-ambiguity",
+      observation: "Spec did not define retry behaviour for failed webhook deliveries",
+      suggestion: "Add retry policy section to webhook specs",
+      severity: "moderate"
+    },
+    {
+      category: "worked-well",
+      observation: "Context packet included the billing API idempotency entry, which saved a round of debugging",
+      severity: "minor"
+    }
+  ]
+)
+```
+
+**Valid categories:** `workflow-friction`, `tool-gap`, `tool-friction`,
+`spec-ambiguity`, `context-gap`, `decomposition-issue`, `design-gap`,
+`worked-well`
+
+**Valid severities:** `minor` (slight friction), `moderate` (required
+workaround), `significant` (materially slowed the work)
+
+The `suggestion` field is optional. The `category`, `observation`, and
+`severity` fields are required per signal. Invalid signals are rejected
+individually — they do not block task completion or other signals.
+
+### Outside a task context (secondary mechanism)
+
+Observations that arise during planning, design review, or general usage
+can be contributed directly:
+
+```
+knowledge(
+  action="contribute",
+  topic="retro-planning-session-2026-03-27",
+  content="[moderate] workflow-friction: Observation here. Suggestion: ...",
+  scope="project",
+  tier=3,
+  tags=["retrospective", "workflow-friction"]
+)
+```
 
 ---
 

@@ -1,0 +1,18 @@
+id: KE-01KMS0EE96969
+tier: 3
+topic: stale-mcp-binary-debugging
+scope: project
+content: "When MCP tool calls fail with errors about unknown states or type mismatches, check whether the running server binary predates the code changes. Use `ps aux | grep kanbanzai` to find the binary path and `ls -la` to check its timestamp. The binary at ~/go/bin/kanbanzai is installed via `go install` and must be explicitly rebuilt after code changes."
+learned_from: TASK-01KMRXK1G474P
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - debugging
+  - mcp
+  - binary
+created: "2026-03-28T01:20:27Z"
+created_by: unknown
+updated: "2026-03-28T01:20:27Z"
