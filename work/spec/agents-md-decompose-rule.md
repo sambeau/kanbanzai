@@ -2,7 +2,7 @@
 
 | Document | AGENTS.md Decompose Precondition Rule        |
 |----------|----------------------------------------------|
-| Status   | Draft                                        |
+| Status   | Approved                                     |
 | Created  | 2026-03-28T12:04:00Z                         |
 | Updated  | 2026-03-28T12:04:00Z                         |
 | Feature  | FEAT-01KMT-58SKYM5C (agents-md-decompose-rule) |

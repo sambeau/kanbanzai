@@ -2,7 +2,7 @@
 
 | Document | decompose propose Precondition Gates              |
 |----------|---------------------------------------------------|
-| Status   | Draft                                             |
+| Status   | Approved                                          |
 | Created  | 2026-03-28T12:04:30Z                              |
 | Updated  | 2026-03-28T12:04:30Z                              |
 | Feature  | FEAT-01KMT-58TV8V9C (decompose-precondition-gates) |
