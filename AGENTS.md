@@ -151,6 +151,7 @@ Then refer to these as needed:
 | Phase 2 scope and planning | `work/plan/phase-2-scope.md` | kbz |
 | How agents should behave | `work/design/agent-interaction-protocol.md` | both |
 | How to review and verify work | `work/design/quality-gates-and-review-policy.md` | both |
+| Code review SKILL (procedure + orchestration) | `.skills/code-review.md` | both |
 | How to write commits | `work/design/git-commit-policy.md` | both |
 | Architectural decisions made | `work/plan/phase-1-decision-log.md` | both |
 | Implementation plan and work breakdown | `work/plan/phase-1-implementation-plan.md` | kbz |
@@ -210,7 +211,7 @@ batch_import_documents(path="work")
 
 The proper workflow progression is:
 
-**planning → design → features → spec → dev-plan → tasks**
+**planning → design → features → spec → dev-plan → tasks → developing → reviewing → done**
 
 You must not skip stages. Each stage has a human approval gate.
 
@@ -285,13 +286,15 @@ You must not skip stages. Each stage has a human approval gate.
 - Create Task entities after human reviews proposal
 - Record decisions in decision log
 
-### Stage 6: Implementation (Agent-Driven)
+### Stage 6: Implementation and Review (Agent-Driven)
 
-**What happens:** Execute tasks, verify, review, merge.
+**What happens:** Execute tasks through the `developing` state. When implementation is complete, the feature transitions to `reviewing` for a mandatory code review pass, then to `done` after the review passes.
 
-**Gate:** Tasks must exist before implementation begins.
+**Gates:**
+- Tasks must exist before implementation begins.
+- **Code review is a mandatory feature lifecycle gate.** Features must pass through the `reviewing` state before they can transition to `done`. There is no shortcut from `developing` to `done`.
 
-**Agent role:** Execute as designed, within the constraints defined in earlier stages.
+**Agent role:** Execute tasks as designed, within the constraints defined in earlier stages. When implementation is complete, load and follow the review orchestration procedure in `.skills/code-review.md` — the canonical source for review expectations, per-dimension review guidance, finding classification rules, and the full orchestration procedure.
 
 ### Emergency Brake
 
