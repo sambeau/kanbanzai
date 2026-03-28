@@ -2,9 +2,11 @@ id: P7-developer-experience/report-review-p7-developer-experience
 path: work/reviews/review-P7-developer-experience.md
 type: report
 title: "Review: P7 — Developer Experience"
-status: draft
+status: approved
 owner: P7-developer-experience
+approved_by: sambeau
+approved_at: "2026-03-28T14:48:56Z"
 content_hash: e86bfb180ac571477871040455794de7af3b90656f03dc7554db48eec43d97cf
 created: "2026-03-28T14:09:51Z"
 created_by: sambeau
-updated: "2026-03-28T14:09:51Z"
+updated: "2026-03-28T14:48:56Z"
