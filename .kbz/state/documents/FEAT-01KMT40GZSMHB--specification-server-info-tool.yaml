@@ -2,9 +2,11 @@ id: FEAT-01KMT40GZSMHB/specification-server-info-tool
 path: work/spec/server-info-tool.md
 type: specification
 title: server_info Tool Specification
-status: draft
+status: approved
 owner: FEAT-01KMT40GZSMHB
+approved_by: sambeau
+approved_at: "2026-03-28T12:51:55Z"
 content_hash: c6e7946ad9a203a08b52740406a643adc4a7d395a0a40fb7f0c9619c53491ed3
 created: "2026-03-28T11:43:55Z"
 created_by: sambeau
-updated: "2026-03-28T11:43:55Z"
+updated: "2026-03-28T12:51:55Z"
