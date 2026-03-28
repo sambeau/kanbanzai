@@ -416,13 +416,27 @@ These are related improvements that came up during analysis but are deferred fro
 
 ## 11. Open Questions
 
-1. **Should `branch` be Tier 1 or Tier 2?** It currently only has a `status` action (read-only). Classifying it as Tier 1 is accurate today but would need reclassification if write actions are added. Classifying it as Tier 2 is conservative but slightly noisy for permissions. Leaning Tier 2 for safety.
+### 11.1 Implementation decisions (developer resolves during spec or dev-planning)
 
-2. **Should `retro report` auto-call `retro synthesise` internally?** The P7 retro showed agents skipping the synthesise step before writing retrospectives. The server could enforce this by having the `report` action call `synthesise` internally as a prerequisite. This is a workflow enforcement (§1 Problem C) but changes the semantics of `report` — it would no longer just format; it would also gather. Is that desirable or should they remain separate?
+These are technical choices with clear tradeoffs that a developer can evaluate and decide during specification or implementation. They don't affect the human interface or the agent interaction model in ways that need external input.
 
-3. **How aggressive should nudges be?** The design proposes nudges as a `nudge` string field — informational, not blocking. An alternative is to make `finish` on the last task in a feature return `isError: true` if no retro signals exist, forcing the agent to acknowledge the gap. This is more reliable but more intrusive. Starting with soft nudges and escalating if they prove ineffective seems right.
+1. **Should `branch` be Tier 1 or Tier 2?** It currently only has a `status` action (read-only). Classifying it as Tier 1 is accurate today but would need reclassification if write actions are added. Classifying it as Tier 2 is conservative but slightly noisy for permissions. Leaning Tier 2 for safety. *The developer can assess the likelihood of future write actions and choose accordingly.*
 
-4. **Should we update `handoff` to include a retro reminder?** The `handoff` tool assembles a prompt for sub-agents. Adding "when completing this task, include retrospective signals in your finish call" to the assembled prompt costs a few tokens and nudges the sub-agent at the right time. This is cheap and likely effective, but adds to the prompt size for every task. Worth including?
+2. **Should `retro report` auto-call `retro synthesise` internally?** The P7 retro showed agents skipping the synthesise step before writing retrospectives. The server could enforce this by having the `report` action call `synthesise` internally as a prerequisite. This changes the semantics of `report` — it would no longer just format; it would also gather. *The developer can evaluate whether composing these internally is cleaner than requiring two calls, and whether the composed version introduces unwanted coupling.*
+
+### 11.2 Agent interface decisions (best decided by an AI agent)
+
+These concern how agents experience the tools — what's helpful vs. noisy, what changes behaviour vs. what gets ignored. An AI agent is better positioned than a human to judge whether a nudge in a tool response will actually influence its own decision-making.
+
+3. **Should we update `handoff` to include a retro reminder?** The `handoff` tool assembles a prompt for sub-agents. Adding "when completing this task, include retrospective signals in your finish call" costs a few tokens and nudges the sub-agent at the right time. *An agent can best judge whether this kind of inline instruction in an assembled prompt actually changes its behaviour, or whether it becomes noise that gets filtered out alongside other boilerplate.*
+
+4. **What description phrasing most effectively steers agents toward MCP tools?** The §6.3 descriptions include phrases like "use this instead of reading .kbz/ files directly." *An agent can evaluate whether this phrasing is clear enough to override the habit of reaching for shell commands, or whether stronger/different language would be more effective.*
+
+### 11.3 Human design decisions (human resolves before implementation)
+
+These affect the overall system behaviour, the human experience of using Kanbanzai, or set precedents for how the server communicates with agents. They need a human designer's judgement.
+
+5. **How aggressive should nudges be?** The design proposes nudges as a `nudge` string field — informational, not blocking. An alternative is to make `finish` on the last task in a feature return `isError: true` if no retro signals exist, forcing the agent to acknowledge the gap. This is more reliable but more intrusive. *This sets a precedent for how the Kanbanzai server communicates dissatisfaction with agent behaviour — soft guidance vs. hard enforcement. That's a product design choice about the system's personality and the human's tolerance for false positives.*
 
 ---
 
