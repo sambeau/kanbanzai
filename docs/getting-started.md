@@ -20,13 +20,17 @@ ln -s ~/go/bin/kanbanzai ~/go/bin/kbz
 
 ### Prebuilt binaries
 
-The project uses GoReleaser for binary distribution. At the 1.0 release, prebuilt binaries will be available from [GitHub Releases](https://github.com/kanbanzai/kanbanzai/releases) for:
+The project uses GoReleaser for binary distribution. At the 1.0 release, prebuilt binaries will be available from [GitHub Releases](https://github.com/sambeau/kanbanzai/releases) for:
 
 - macOS (arm64, amd64)
 - Linux (arm64, amd64)
 - Windows (amd64)
 
-Until then, `go install` is the primary installation method.
+Until then, `go install` is the primary installation method:
+
+```sh
+go install github.com/sambeau/kanbanzai/cmd/kanbanzai@latest
+```
 
 ### Verify the installation
 
@@ -186,12 +190,12 @@ The init command does not create `.kbz/local.yaml` — this file is for per-mach
 
 ```yaml
 user:
-  name: your-name
+  name: Your Name
 
 github:
   token: ghp_xxxxxxxxxxxxxxxxxxxx
-  owner: your-org-or-username
-  repo: your-repo-name
+  owner: sambeau
+  repo: kanbanzai
 ```
 
 Add `.kbz/local.yaml` to your `.gitignore` — it contains credentials and machine-specific paths.
