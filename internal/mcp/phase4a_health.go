@@ -73,6 +73,10 @@ func Phase4aHealthChecker(
 		coverageResult := health.CheckEstimationCoverage(featureMaps, taskMaps, activeStatuses)
 		mergeHealthResult(report, "estimation_coverage", coverageResult)
 
+		// Feature-child state consistency checks.
+		featureChildResult := health.CheckFeatureChildConsistency(featureMaps, taskMaps)
+		mergeHealthResult(report, "feature_child_consistency", featureChildResult)
+
 		// checkpointStore reserved for future checkpoint health checks.
 		_ = checkpointStore
 		// time imported for future time-based checks.

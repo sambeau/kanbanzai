@@ -120,6 +120,10 @@ func Phase3HealthChecker(
 		cleanupResult := health.CheckCleanup(worktrees, now)
 		mergeHealthResult(report, "cleanup", cleanupResult)
 
+		// Check worktrees whose branch is already merged into main (best-effort).
+		worktreeMergedResult := health.CheckWorktreeBranchMerged(repoPath, worktrees)
+		mergeHealthResult(report, "worktree_branch_merged", worktreeMergedResult)
+
 		// Get knowledge entries for knowledge health checks
 		records, err := knowledgeSvc.LoadAllRaw()
 		if err != nil {

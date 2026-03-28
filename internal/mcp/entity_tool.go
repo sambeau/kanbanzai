@@ -630,9 +630,13 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 
 	if advResult.StoppedReason != "" {
 		resp["stopped_reason"] = advResult.StoppedReason
+		stageWord := "stages"
+		if stagesSkipped == 1 {
+			stageWord = "stage"
+		}
 		resp["message"] = fmt.Sprintf(
-			"Advanced from %s to %s (%d stage). Stopped: %s",
-			startStatus, advResult.FinalStatus, stagesSkipped, advResult.StoppedReason,
+			"Advanced from %s to %s (%d %s). Stopped: %s",
+			startStatus, advResult.FinalStatus, stagesSkipped, stageWord, advResult.StoppedReason,
 		)
 	} else if stagesSkipped == 0 {
 		resp["message"] = fmt.Sprintf("Already at %s", advResult.FinalStatus)
