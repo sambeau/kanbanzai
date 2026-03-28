@@ -1,7 +1,7 @@
 id: FEAT-01KMTJH8YQ17P
 slug: plan-review-lifecycle
 parent: P10-review-and-doc-currency
-status: specifying
+status: done
 summary: "Add a reviewing state to the Plan lifecycle state machine (active → reviewing → done), removing the active → done shortcut. Plans must pass through review."
 created: "2026-03-28T15:55:49Z"
 created_by: sambeau
