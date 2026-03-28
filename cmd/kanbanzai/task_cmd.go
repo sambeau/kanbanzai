@@ -18,8 +18,9 @@ Subcommands:
 `
 
 func runTask(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing task subcommand\n\n%s", taskUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, taskUsageText)
+		return nil
 	}
 
 	switch args[0] {

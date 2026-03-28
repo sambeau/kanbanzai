@@ -38,6 +38,9 @@ func conflictTool(conflictSvc *service.ConflictService) server.ServerTool {
 			mcp.Required(),
 			mcp.Description("Two or more task IDs to check for conflict risk"),
 		),
+		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(true),
 	)
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {

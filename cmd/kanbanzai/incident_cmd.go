@@ -28,6 +28,10 @@ Subcommands:
 `
 
 func runIncident(args []string, deps dependencies) error {
+	if wantsHelp(args) {
+		fmt.Fprint(deps.stdout, incidentUsageText)
+		return nil
+	}
 	if len(args) == 0 {
 		return fmt.Errorf("missing incident subcommand\n\n%s", incidentUsageText)
 	}

@@ -19,6 +19,11 @@ Options:
 `
 
 func runQueue(args []string, deps dependencies) error {
+	if wantsHelp(args) {
+		fmt.Fprint(deps.stdout, queueUsageText)
+		return nil
+	}
+
 	var role string
 	var conflictCheck bool
 

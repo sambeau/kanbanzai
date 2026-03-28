@@ -142,7 +142,7 @@ func (h *WorktreeTransitionHook) handleTaskActivation(taskID string, taskState m
 	parentFeature, _ := taskState["parent_feature"].(string)
 	if parentFeature == "" {
 		return &WorktreeResult{
-			Warning: fmt.Sprintf("task %s has no parent_feature; skipping automatic worktree creation", taskID),
+			Warning: fmt.Sprintf("task %s is not associated with a feature; skipping automatic worktree creation", taskID),
 		}
 	}
 

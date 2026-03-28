@@ -13,8 +13,9 @@ import (
 )
 
 func runPR(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing pr subcommand\n\n%s", prUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, prUsageText)
+		return nil
 	}
 
 	switch args[0] {

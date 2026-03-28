@@ -999,7 +999,7 @@ func recordFromEntity(entity model.Entity) (storage.EntityRecord, error) {
 			Fields: incidentFields(e),
 		}, nil
 	default:
-		return storage.EntityRecord{}, fmt.Errorf("unsupported entity type %T", entity)
+		return storage.EntityRecord{}, fmt.Errorf("internal error: entity type is not supported for serialisation — this is likely a bug; please report it")
 	}
 }
 

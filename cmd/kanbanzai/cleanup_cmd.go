@@ -11,8 +11,9 @@ import (
 )
 
 func runCleanup(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing cleanup subcommand\n\n%s", cleanupUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, cleanupUsageText)
+		return nil
 	}
 
 	switch args[0] {

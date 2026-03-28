@@ -14,8 +14,9 @@ import (
 
 // runWorktree handles the worktree subcommand.
 func runWorktree(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing worktree subcommand\n\n%s", worktreeUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, worktreeUsageText)
+		return nil
 	}
 
 	switch args[0] {
@@ -34,8 +35,9 @@ func runWorktree(args []string, deps dependencies) error {
 
 // runBranch handles the branch subcommand.
 func runBranch(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing branch subcommand\n\n%s", branchUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, branchUsageText)
+		return nil
 	}
 
 	switch args[0] {

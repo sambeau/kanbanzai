@@ -291,6 +291,10 @@ func printValidationResults(w io.Writer, errs []validate.ValidationError) error 
 
 // ─── Usage ───────────────────────────────────────────────────────────────────
 
+func wantsHelp(args []string) bool {
+	return len(args) > 0 && (args[0] == "-h" || args[0] == "--help")
+}
+
 func printUsage(w io.Writer) {
 	_, _ = fmt.Fprint(w, usageText)
 }

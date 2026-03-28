@@ -14,8 +14,9 @@ import (
 )
 
 func runMerge(args []string, deps dependencies) error {
-	if len(args) == 0 {
-		return fmt.Errorf("missing merge subcommand\n\n%s", mergeUsageText)
+	if len(args) == 0 || wantsHelp(args) {
+		fmt.Fprint(deps.stdout, mergeUsageText)
+		return nil
 	}
 
 	switch args[0] {

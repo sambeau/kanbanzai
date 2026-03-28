@@ -301,8 +301,8 @@ func TestApproveDocument_ContentHashMismatch(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected error for content hash mismatch")
 	}
-	if !strings.Contains(err.Error(), "hash mismatch") {
-		t.Errorf("error = %q, want to contain 'hash mismatch'", err.Error())
+	if !strings.Contains(err.Error(), "changed since it was registered") {
+		t.Errorf("error = %q, want to contain 'changed since it was registered'", err.Error())
 	}
 }
 

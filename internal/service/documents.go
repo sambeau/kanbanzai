@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -103,6 +104,22 @@ type DocumentFilters struct {
 	Owner  string
 }
 
+// RefreshDocumentInput contains the parameters for refreshing a document record's content hash.
+type RefreshDocumentInput struct {
+	ID string
+}
+
+// RefreshDocumentResult contains the result of a document refresh operation.
+type RefreshDocumentResult struct {
+	ID               string
+	OldHash          string
+	NewHash          string
+	Status           string
+	Changed          bool
+	StatusTransition string // populated when an approved document is reset to draft
+	Message          string // human-readable explanation of the status transition
+}
+
 // DocumentService handles document record operations.
 type DocumentService struct {
 	stateRoot       string
@@ -176,7 +193,7 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 	// Verify the file exists
 	if _, err := os.Stat(fullPath); err != nil {
 		if os.IsNotExist(err) {
-			return DocumentResult{}, fmt.Errorf("document file not found: %s", docPath)
+			return DocumentResult{}, fmt.Errorf("document file not found at %q — ensure the file exists at that path before registering it", docPath)
 		}
 		return DocumentResult{}, fmt.Errorf("access document file: %w", err)
 	}
@@ -200,7 +217,7 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 
 	// Check if document already exists
 	if s.store.Exists(docID) {
-		return DocumentResult{}, fmt.Errorf("document already registered: %s", docID)
+		return DocumentResult{}, fmt.Errorf("document %q is already registered. Use doc_record_get to view the existing record", docID)
 	}
 
 	now := s.now()
@@ -294,7 +311,7 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 
 	// Validate current status
 	if doc.Status != model.DocumentStatusDraft {
-		return DocumentResult{}, fmt.Errorf("cannot approve document in status %s (must be draft)", doc.Status)
+		return DocumentResult{}, fmt.Errorf("cannot approve a document with status %q — only draft documents can be approved. If the document was previously approved, use doc_record_get to check its current status", doc.Status)
 	}
 
 	// Verify content hash matches current file
@@ -305,7 +322,7 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 	}
 
 	if currentHash != doc.ContentHash {
-		return DocumentResult{}, fmt.Errorf("content hash mismatch: document has been modified since submission (recorded=%s, current=%s)", doc.ContentHash[:12], currentHash[:12])
+		return DocumentResult{}, fmt.Errorf("document file has changed since it was registered. Run doc_record_refresh to update the stored hash, then retry doc_record_approve")
 	}
 
 	// Update status
@@ -388,12 +405,12 @@ func (s *DocumentService) SupersedeDocument(input SupersedeDocumentInput) (Docum
 
 	// Validate current status
 	if doc.Status != model.DocumentStatusApproved {
-		return DocumentResult{}, fmt.Errorf("cannot supersede document in status %s (must be approved)", doc.Status)
+		return DocumentResult{}, fmt.Errorf("cannot supersede a document with status %q — only approved documents can be superseded. Approve the document first using doc_record_approve", doc.Status)
 	}
 
 	// Verify the superseding document exists
 	if !s.store.Exists(input.SupersededBy) {
-		return DocumentResult{}, fmt.Errorf("superseding document not found: %s", input.SupersededBy)
+		return DocumentResult{}, fmt.Errorf("superseding document %q not found. Register the new document with doc_record_submit before superseding the old one", input.SupersededBy)
 	}
 
 	// Update the superseding document to reference this one
@@ -832,6 +849,82 @@ func generateDocumentSlug(docType model.DocumentType, path string) string {
 }
 
 // isValidEntityID checks if a string looks like a valid entity ID.
+// RefreshDocument updates the stored content hash to match the current file on disk.
+// If the document was approved and the content has changed, the status is reset to draft.
+func (s *DocumentService) RefreshDocument(input RefreshDocumentInput) (RefreshDocumentResult, error) {
+	if strings.TrimSpace(input.ID) == "" {
+		return RefreshDocumentResult{}, fmt.Errorf("document ID is required")
+	}
+
+	record, err := s.store.Load(input.ID)
+	if err != nil {
+		if strings.Contains(err.Error(), "not found") {
+			return RefreshDocumentResult{}, fmt.Errorf("no document record found with ID %q. Use doc_record_list to see available records", input.ID)
+		}
+		return RefreshDocumentResult{}, fmt.Errorf("load document record: %w", err)
+	}
+
+	doc := storage.RecordToDocument(record)
+
+	if doc.Status == model.DocumentStatusSuperseded {
+		return RefreshDocumentResult{}, fmt.Errorf("document %q has been superseded and cannot be refreshed. Update the superseding document instead", input.ID)
+	}
+
+	fullPath := filepath.Join(s.repoRoot, doc.Path)
+	if _, statErr := os.Stat(fullPath); statErr != nil {
+		if os.IsNotExist(statErr) {
+			return RefreshDocumentResult{}, fmt.Errorf("the file %q no longer exists. If the file was moved, delete this record and re-register the document at its new path", doc.Path)
+		}
+		return RefreshDocumentResult{}, fmt.Errorf("cannot access %q: check that the current user has read access to this file", doc.Path)
+	}
+
+	currentHash, err := storage.ComputeContentHash(fullPath)
+	if err != nil {
+		if errors.Is(err, os.ErrPermission) {
+			return RefreshDocumentResult{}, fmt.Errorf("cannot read %q: permission denied. Check that the current user has read access to this file", doc.Path)
+		}
+		return RefreshDocumentResult{}, fmt.Errorf("compute content hash for %q: %w", doc.Path, err)
+	}
+
+	oldHash := doc.ContentHash
+
+	if currentHash == oldHash {
+		return RefreshDocumentResult{
+			ID:      doc.ID,
+			OldHash: oldHash,
+			NewHash: currentHash,
+			Status:  string(doc.Status),
+			Changed: false,
+		}, nil
+	}
+
+	// Content has changed — update the hash and (if approved) reset to draft.
+	doc.ContentHash = currentHash
+	doc.Updated = s.now()
+
+	result := RefreshDocumentResult{
+		ID:      doc.ID,
+		OldHash: oldHash,
+		NewHash: currentHash,
+		Changed: true,
+	}
+
+	if doc.Status == model.DocumentStatusApproved {
+		doc.Status = model.DocumentStatusDraft
+		result.StatusTransition = "approved → draft"
+		result.Message = "Document content has changed; status reset to draft for re-review. Use doc_record_approve to re-approve after reviewing the changes."
+	}
+
+	result.Status = string(doc.Status)
+
+	updatedRecord := storage.DocumentToRecord(doc, record.FileHash)
+	if _, err := s.store.Write(updatedRecord); err != nil {
+		return RefreshDocumentResult{}, fmt.Errorf("write document record: %w", err)
+	}
+
+	return result, nil
+}
+
 func isValidEntityID(id string) bool {
 	if id == "" {
 		return false
