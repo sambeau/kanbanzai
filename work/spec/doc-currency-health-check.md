@@ -82,28 +82,24 @@ For each plan entity in `done` status, verify that project-level documentation r
 
 ### 4.2 Checks
 
-**Check 1 — AGENTS.md Project Status:**
-Read `AGENTS.md` from the repository root. Search for the plan's slug (e.g., `mcp-discoverability` for P9) in the Project Status section. If the slug does not appear anywhere in the file, emit a warning.
-
-**Check 2 — AGENTS.md Scope Guard:**
+**Check 1 — AGENTS.md Scope Guard:**
 Search the Scope Guard section of `AGENTS.md` for the plan's slug or plan ID prefix (e.g., `P9`). If neither appears in the Scope Guard section, emit a warning.
 
-**Check 3 — Spec Document Status:**
+**Check 2 — Spec Document Status:**
 For each feature under the plan in `done` status, check associated specification documents. If any spec document owned by the plan or its features has status `draft` (not `approved`), emit a warning.
 
 ### 4.3 Section Detection
 
-To locate the "Project Status" and "Scope Guard" sections in AGENTS.md, search for markdown headings containing those strings (e.g., `## Project Status`, `## Scope Guard`). The section content runs from the heading to the next heading of equal or lesser depth.
+To locate the "Scope Guard" section in AGENTS.md, search for a markdown heading containing that string (e.g., `## Scope Guard`). The section content runs from the heading to the next heading of equal or lesser depth.
 
 ### 4.4 Output
 
 For each finding, emit a health **warning** with:
 - Category: `doc_currency`
 - Message format:
-  - Check 1: `plan "{plan_id}" is done but not mentioned in AGENTS.md Project Status`
-  - Check 2: `plan "{plan_id}" is done but not mentioned in AGENTS.md Scope Guard`
-  - Check 3: `spec document "{doc_id}" is still in draft status but plan "{plan_id}" is done`
-- Entity type: `plan` (checks 1–2) or `document` (check 3)
+  - Check 1: `plan "{plan_id}" is done but not mentioned in AGENTS.md Scope Guard`
+  - Check 2: `spec document "{doc_id}" is still in draft status but plan "{plan_id}" is done`
+- Entity type: `plan` (check 1) or `document` (check 2)
 
 ### 4.5 Plans Without Specs
 
@@ -145,14 +141,13 @@ Register the checker alongside existing checkers in `internal/mcp/server.go`, fo
 | C.2 | Health check detects a backtick-wrapped tool name in `AGENTS.md` that is not in the MCP tool registry |
 | C.3 | Health check does not flag tool names that ARE in the registry (e.g., `status`, `entity`, `doc`) |
 | C.4 | Health check does not flag excluded identifiers (e.g., `go`, `git`, `kbz`) |
-| C.5 | Health check detects a plan in `done` state with no mention in AGENTS.md Project Status section |
-| C.6 | Health check detects a plan in `done` state with no mention in AGENTS.md Scope Guard section |
-| C.7 | Health check detects a feature spec document in `draft` status when the parent plan is `done` |
-| C.8 | Health check does not flag plans that are not in `done` state |
-| C.9 | Health check does not flag plans in `done` state that ARE mentioned in AGENTS.md |
-| C.10 | The new checker is registered via the `AdditionalHealthChecker` pattern |
-| C.11 | Findings are emitted as warnings (not errors) with category `doc_currency` |
-| C.12 | `go test -race ./...` passes |
+| C.5 | Health check detects a plan in `done` state with no mention in AGENTS.md Scope Guard section |
+| C.6 | Health check detects a feature spec document in `draft` status when the parent plan is `done` |
+| C.7 | Health check does not flag plans that are not in `done` state |
+| C.8 | Health check does not flag plans in `done` state that ARE mentioned in AGENTS.md Scope Guard |
+| C.9 | The new checker is registered via the `AdditionalHealthChecker` pattern |
+| C.10 | Findings are emitted as warnings (not errors) with category `doc_currency` |
+| C.11 | `go test -race ./...` passes |
 
 ---
 
@@ -172,11 +167,10 @@ Table-driven tests using temporary directories with synthetic `.skills/` and `AG
 
 Tests using the entity and document service test infrastructure:
 
-- `TestDocCurrencyHealth_DetectsMissingProjectStatus` — plan in `done`, slug absent from AGENTS.md Project Status; warning emitted.
 - `TestDocCurrencyHealth_DetectsMissingScopeGuard` — plan in `done`, slug absent from Scope Guard; warning emitted.
 - `TestDocCurrencyHealth_DetectsDraftSpec` — plan `done`, child feature `done`, spec document `draft`; warning emitted.
 - `TestDocCurrencyHealth_IgnoresActivePlan` — plan in `active`; no warning for missing AGENTS.md mention.
-- `TestDocCurrencyHealth_PassesWhenMentioned` — plan in `done`, slug present in both sections; no warning.
+- `TestDocCurrencyHealth_PassesWhenMentioned` — plan in `done`, slug present in Scope Guard; no warning.
 
 ### 7.3 Integration
 

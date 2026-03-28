@@ -222,7 +222,6 @@ func DocCurrencyHealthChecker(
 			agentsText = string(agentsContent)
 		}
 
-		projectStatusSection := extractSection(agentsText, "Project Status")
 		scopeGuardSection := extractSection(agentsText, "Scope Guard")
 
 		for _, plan := range plans {
@@ -237,17 +236,7 @@ func DocCurrencyHealthChecker(
 			// Extract the plan ID prefix (e.g. "P9" from "P9-my-plan").
 			prefix := planIDPrefix(planID)
 
-			// Check 1: Project Status mentions the plan slug.
-			if agentsErr == nil && slug != "" && !strings.Contains(projectStatusSection, slug) {
-				report.Warnings = append(report.Warnings, validate.ValidationWarning{
-					EntityType: "doc_currency",
-					EntityID:   planID,
-					Message:    fmt.Sprintf("plan %q is done but not mentioned in AGENTS.md Project Status", planID),
-				})
-				report.Summary.WarningCount++
-			}
-
-			// Check 2: Scope Guard mentions the plan slug or prefix.
+			// Check: Scope Guard mentions the plan slug or prefix.
 			if agentsErr == nil && slug != "" {
 				mentioned := strings.Contains(scopeGuardSection, slug) ||
 					(prefix != "" && strings.Contains(scopeGuardSection, prefix))

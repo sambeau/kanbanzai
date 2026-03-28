@@ -209,41 +209,6 @@ func TestDocCurrencyHealth_WarningCategoryIsDocCurrency(t *testing.T) {
 
 // ─── Tier 2: Plan Completion Documentation ───────────────────────────────────
 
-func TestDocCurrencyHealth_DetectsMissingProjectStatus(t *testing.T) {
-	t.Parallel()
-
-	repoRoot := t.TempDir()
-	entityRoot := t.TempDir()
-	entitySvc := service.NewEntityService(entityRoot)
-
-	// Write a done plan.
-	writePlanRecord(t, entitySvc, "P9-my-cool-plan", "done")
-
-	// AGENTS.md without the slug in Project Status.
-	agentsContent := "# Agent Instructions\n\n## Project Status\n\nSome other plans.\n\n## Scope Guard\n\nP9 is complete.\n"
-	writeAgentsMD(t, repoRoot, agentsContent)
-
-	toolNames := testToolNameSet()
-	checker := DocCurrencyHealthChecker(toolNames, repoRoot, entitySvc, nil)
-
-	report, err := checker()
-	if err != nil {
-		t.Fatalf("checker error: %v", err)
-	}
-
-	found := false
-	for _, w := range report.Warnings {
-		if strings.Contains(w.Message, "P9-my-cool-plan") &&
-			strings.Contains(w.Message, "Project Status") {
-			found = true
-			break
-		}
-	}
-	if !found {
-		t.Errorf("expected warning about missing Project Status mention; got: %v", report.Warnings)
-	}
-}
-
 func TestDocCurrencyHealth_DetectsMissingScopeGuard(t *testing.T) {
 	t.Parallel()
 
@@ -253,8 +218,8 @@ func TestDocCurrencyHealth_DetectsMissingScopeGuard(t *testing.T) {
 
 	writePlanRecord(t, entitySvc, "P9-my-cool-plan", "done")
 
-	// AGENTS.md with slug in Project Status but not in Scope Guard.
-	agentsContent := "# Agent Instructions\n\n## Project Status\n\nmy-cool-plan is done.\n\n## Scope Guard\n\nNothing here about the plan.\n"
+	// AGENTS.md without the plan in Scope Guard.
+	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nNothing here about the plan.\n"
 	writeAgentsMD(t, repoRoot, agentsContent)
 
 	toolNames := testToolNameSet()
@@ -308,8 +273,8 @@ func TestDocCurrencyHealth_DetectsDraftSpec(t *testing.T) {
 		t.Fatalf("SubmitDocument: %v", err)
 	}
 
-	// AGENTS.md mentions the plan in both sections to avoid Tier 2 check 1/2 noise.
-	agentsContent := "# Agent Instructions\n\n## Project Status\n\ndraft-spec-plan is done.\n\n## Scope Guard\n\nP9 is listed.\n"
+	// AGENTS.md mentions the plan in Scope Guard to avoid Tier 2 noise.
+	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nP9 is listed.\n"
 	writeAgentsMD(t, repoRoot, agentsContent)
 
 	toolNames := testToolNameSet()
@@ -344,7 +309,7 @@ func TestDocCurrencyHealth_IgnoresActivePlan(t *testing.T) {
 	writePlanRecord(t, entitySvc, "P9-active-plan", "active")
 
 	// AGENTS.md with no mention at all — but since the plan is active, no warning.
-	agentsContent := "# Agent Instructions\n\n## Project Status\n\nNothing.\n\n## Scope Guard\n\nNothing.\n"
+	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nNothing.\n"
 	writeAgentsMD(t, repoRoot, agentsContent)
 
 	toolNames := testToolNameSet()
@@ -371,7 +336,7 @@ func TestDocCurrencyHealth_PassesWhenMentioned(t *testing.T) {
 
 	writePlanRecord(t, entitySvc, "P9-well-documented", "done")
 
-	agentsContent := "# Agent Instructions\n\n## Project Status\n\nwell-documented is done.\n\n## Scope Guard\n\nP9 is handled.\n"
+	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nP9 is handled.\n"
 	writeAgentsMD(t, repoRoot, agentsContent)
 
 	toolNames := testToolNameSet()
@@ -399,7 +364,7 @@ func TestDocCurrencyHealth_ScopeGuardMatchesByPrefix(t *testing.T) {
 	writePlanRecord(t, entitySvc, "P9-prefix-test", "done")
 
 	// Scope Guard mentions "P9" but not the full slug.
-	agentsContent := "# Agent Instructions\n\n## Project Status\n\nprefix-test is done.\n\n## Scope Guard\n\nP9 is handled.\n"
+	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nP9 is handled.\n"
 	writeAgentsMD(t, repoRoot, agentsContent)
 
 	toolNames := testToolNameSet()
