@@ -228,6 +228,81 @@ conventions:
 	}
 }
 
+func TestResolveProfile_mapTypedConventions(t *testing.T) {
+	dir := t.TempDir()
+	writeResolveProfile(t, dir, "base", `
+id: base
+description: "Base profile"
+conventions:
+  - "A"
+  - "B"
+`)
+	writeResolveProfile(t, dir, "reviewer", `
+id: reviewer
+inherits: base
+description: "Context profile for code review agents."
+conventions:
+  review_approach:
+    - "Review is structured, not conversational."
+    - "Every finding has a dimension, severity, location, and description."
+  output_format:
+    - "Use the structured review output format."
+    - "Report per-dimension outcomes."
+  dimensions:
+    - "Specification conformance"
+    - "Implementation quality"
+    - "Test adequacy"
+`)
+
+	store := NewProfileStore(dir)
+	rp, err := ResolveProfile(store, "reviewer")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if rp.ID != "reviewer" {
+		t.Errorf("ID: got %q, want %q", rp.ID, "reviewer")
+	}
+	if rp.Description != "Context profile for code review agents." {
+		t.Errorf("Description: got %q", rp.Description)
+	}
+
+	// Conventions must be map[string]interface{}, NOT []interface{}.
+	// The reviewer profile's map-typed conventions replace the base profile's list-typed conventions.
+	convMap, ok := rp.Conventions.(map[string]interface{})
+	if !ok {
+		t.Fatalf("Conventions: got type %T, want map[string]interface{} (map-typed conventions should replace list-typed base)", rp.Conventions)
+	}
+
+	// All three convention groups must be present.
+	for _, key := range []string{"review_approach", "output_format", "dimensions"} {
+		val, exists := convMap[key]
+		if !exists {
+			t.Errorf("Conventions[%q]: missing", key)
+			continue
+		}
+		items, ok := val.([]interface{})
+		if !ok {
+			t.Errorf("Conventions[%q]: got type %T, want []interface{}", key, val)
+			continue
+		}
+		if len(items) == 0 {
+			t.Errorf("Conventions[%q]: empty list", key)
+		}
+	}
+
+	// Verify specific item counts.
+	if items, ok := convMap["review_approach"].([]interface{}); ok && len(items) != 2 {
+		t.Errorf("review_approach: got %d items, want 2", len(items))
+	}
+	if items, ok := convMap["output_format"].([]interface{}); ok && len(items) != 2 {
+		t.Errorf("output_format: got %d items, want 2", len(items))
+	}
+	if items, ok := convMap["dimensions"].([]interface{}); ok && len(items) != 3 {
+		t.Errorf("dimensions: got %d items, want 3", len(items))
+	}
+}
+
 func TestResolveProfile_absentFieldInherited(t *testing.T) {
 	dir := t.TempDir()
 	writeResolveProfile(t, dir, "base", `
