@@ -1,0 +1,61 @@
+# GoReleaser v2 configuration
+# Platform rollout schedule:
+#   Alpha (current): macOS ARM64 only
+#   Beta  (upcoming): add macOS AMD64, Linux AMD64, Linux ARM64
+#   1.0   (future):   add Windows AMD64
+
+version: 2
+
+project_name: kanbanzai
+
+builds:
+  - id: kanbanzai
+    main: ./cmd/kanbanzai
+    binary: kanbanzai
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+    env:
+      - CGO_ENABLED=0
+
+    # --- Active: Alpha tier (macOS ARM64) ---
+    goos:
+      - darwin
+      # beta+: - linux
+      # 1.0:   - windows
+    goarch:
+      - arm64
+      # beta+: - amd64
+
+    # When beta platforms are added, uncomment this ignore block to prevent
+    # building unsupported combinations (e.g. linux/arm64 before it's ready):
+    # ignore:
+    #   - goos: linux
+    #     goarch: arm64   # remove when linux/arm64 is promoted to active
+
+archives:
+  - id: default
+    name_template: "kanbanzai_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    # Default format: tar.gz (macOS and Linux)
+    formats:
+      - tar.gz
+    # Override to zip for Windows
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    # Contents of every archive: binary + docs
+    files:
+      - README.md
+      - LICENSE
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+release:
+  draft: false
+  prerelease: auto
+
+# Changelog generation is disabled — release notes are managed separately
+changelog:
+  disable: true

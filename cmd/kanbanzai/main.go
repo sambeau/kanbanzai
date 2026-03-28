@@ -90,8 +90,8 @@ func run(args []string, deps dependencies) error {
 	case "help", "-h", "--help":
 		printUsage(deps.stdout)
 		return nil
-	case "version", "--version":
-		fmt.Fprintln(deps.stdout, "kanbanzai 2.0")
+	case "version", "--version", "-v":
+		fmt.Fprintln(deps.stdout, "kanbanzai "+version)
 		return nil
 	case "serve":
 		return kbzmcp.Serve()
