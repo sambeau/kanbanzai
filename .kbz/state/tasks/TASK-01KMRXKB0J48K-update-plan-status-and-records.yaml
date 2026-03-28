@@ -1,0 +1,19 @@
+id: TASK-01KMRXKB0J48K
+parent_feature: FEAT-01KMRX1SEQV49
+slug: update-plan-status-and-records
+summary: "Update workflow-quality-and-review-plan.md status header from 'Phase 2 pending design approval' to 'Phase 2 active'. Verify no content hash drift in all document records modified by the Phase 2 work (use doc_record_validate or doc_record_refresh as needed). Covers spec AC-G-09 through AC-G-10."
+status: done
+depends_on:
+  - TASK-01KMRXK75ZA20
+  - TASK-01KMRXK9019ZM
+files_planned:
+  - work/plan/workflow-quality-and-review-plan.md
+  - .kbz/state/documents/P6-workflow-quality-and-review--dev-plan-workflow-quality-and-review-plan.yaml
+  - .kbz/state/documents/PROJECT--design-quality-gates-and-review-policy.yaml
+completed: "2026-03-28T02:16:04Z"
+claimed_at: "2026-03-28T02:12:31Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T02:12:31Z"
+dispatched_by: sambeau
+completion_summary: "Updated plan status header from 'Phase 2 pending design approval' to 'Phase 2 active' (AC-G-09). Refreshed content hashes for two stale doc records: workflow-quality-and-review-plan.md (edited this task) and quality-gates-and-review-policy.md (drifted during Feature F §16.1 addition but never refreshed). Both now validate clean (AC-G-10). Noted that AC-G-04–G-07 were already fully satisfied by existing content in quality-gates-and-review-policy.md preamble and §16.1 — no edits were required there."
+verification: "grep 'Phase 2 active' work/plan/workflow-quality-and-review-plan.md → L3. doc validate P6-workflow-quality-and-review/dev-plan-workflow-quality-and-review-plan → valid=true, issues=[]. doc validate PROJECT/design-quality-gates-and-review-policy → valid=true, issues=[]. AC-G-04–G-07 pre-verified: grep code-review-workflow, reviewer.yaml, code-review.md all return matches in quality-gates-and-review-policy.md. Commit 01aa71f."

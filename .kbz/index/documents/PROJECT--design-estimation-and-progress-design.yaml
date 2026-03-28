@@ -1,0 +1,288 @@
+document_id: PROJECT/design-estimation-and-progress-design
+document_path: work/design/estimation-and-progress-design.md
+content_hash: 7bea1cc761a79bb703a97c2c0939008d53624f86620faa7ba13ec4d1adc12037
+indexed_at: 2026-03-25T21:38:22.224656Z
+sections:
+    - path: "1"
+      level: 1
+      title: Estimation and Progress Design
+      byte_offset: 0
+      byte_count: 11271
+      word_count: 1773
+      content_hash: 7bea1cc761a79bb703a97c2c0939008d53624f86620faa7ba13ec4d1adc12037
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 402
+          byte_count: 448
+          word_count: 76
+          content_hash: 34235986842bfdc6c6ebc1906014c7b22e335451ee38a4a24317df67b4f3fa6a
+        - path: "1.2"
+          level: 2
+          title: 2. Design Principles
+          byte_offset: 850
+          byte_count: 1318
+          word_count: 196
+          content_hash: c05280879645b928b41b158cd93215d1a64573ba033575077981a066f00d2794
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Compute on read, never store rollups
+              byte_offset: 875
+              byte_count: 298
+              word_count: 47
+              content_hash: 0f4be074cb4d466b9f9b9717bf23eb644af66aa0a41d56a7ed9f8623b8b38238
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Preserve original estimates
+              byte_offset: 1173
+              byte_count: 284
+              word_count: 44
+              content_hash: 5891c55b42f99d6ca6af97789aedba139b369e89234a5455906f2d613f38d8b7
+            - path: 1.2.3
+              level: 3
+              title: 2.3 One scale, enforced by soft limits
+              byte_offset: 1457
+              byte_count: 319
+              word_count: 47
+              content_hash: c3620936143a37782124da344a02fd8617253a053cd5b723cebc7c1f474d4dde
+            - path: 1.2.4
+              level: 3
+              title: 2.4 Bugs are estimation-independent
+              byte_offset: 1776
+              byte_count: 392
+              word_count: 54
+              content_hash: 3dbecca1ad8b13ad1569f82f803285432ff571febb98c64bb44bc6a3567ea0c7
+        - path: "1.3"
+          level: 2
+          title: 3. The Estimation Scale
+          byte_offset: 2168
+          byte_count: 1713
+          word_count: 292
+          content_hash: af7fa8c749fdfe4746bae2b8f10ddf0d55a89b13f5de63a536a85bbaf5605c87
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Point values
+              byte_offset: 2274
+              byte_count: 895
+              word_count: 161
+              content_hash: d52c7e7bbb14dae83c2470d594c396fef3192d11b21daaf1fddbacbc8c9b2624
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Soft limits by entity type
+              byte_offset: 3169
+              byte_count: 712
+              word_count: 115
+              content_hash: 4aa1ad53064108254ca82fb12aa97e3dcfb7819bd281d2626ebf77795cbfcdd1
+        - path: "1.4"
+          level: 2
+          title: 4. Entity Fields
+          byte_offset: 3881
+          byte_count: 1238
+          word_count: 188
+          content_hash: b4b3a403600dc164012a7e34355a72afd6ef9145887781d7ee671bde7ff957d6
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Task
+              byte_offset: 3902
+              byte_count: 83
+              word_count: 12
+              content_hash: fc9db5f4a78da5dc1e0246a6cdd9dfa450ca653d05ed28d217e3556b9325d308
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Feature
+              byte_offset: 3985
+              byte_count: 454
+              word_count: 70
+              content_hash: c8756508be83a96c7e91bc053a410993f511491f211a352fde8440bd800cd4e8
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Epic
+              byte_offset: 4439
+              byte_count: 504
+              word_count: 76
+              content_hash: 3303efc38078c90bb8c8625d85789d6497242270d7edaef5a6b639945ee4f31a
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Bug
+              byte_offset: 4943
+              byte_count: 176
+              word_count: 26
+              content_hash: d940a58f20c308caeaae422e74ec01fb6527e55f9e7cf5cb54b85c1f113ae27d
+        - path: "1.5"
+          level: 2
+          title: 5. Computed Rollup Rules
+          byte_offset: 5119
+          byte_count: 1153
+          word_count: 180
+          content_hash: f7f82c4cd8c6a80ac7198792bb3e35910b945d1088103fc4c6f70821b02931d2
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Feature effective estimate
+              byte_offset: 5148
+              byte_count: 389
+              word_count: 60
+              content_hash: 4a031f1f9f0401b598d360f800104cea4ecfd5fdde97a42cc4679f71c93d0d8c
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Feature progress
+              byte_offset: 5537
+              byte_count: 191
+              word_count: 29
+              content_hash: b1d99804c8ca1466c3daf5c38c8648d80e6e49947045999e6873fd52c79cf48d
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Epic effective estimate
+              byte_offset: 5728
+              byte_count: 119
+              word_count: 18
+              content_hash: 751042117ed25b3603972c36cf828ffe3b143ef66c8142ba123d653462e91816
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Epic progress
+              byte_offset: 5847
+              byte_count: 74
+              word_count: 12
+              content_hash: 053db68e4eecf034817d3de4953cc0b7255f3ed2d895f8002d5283631f7cde13
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Excluded states
+              byte_offset: 5921
+              byte_count: 351
+              word_count: 56
+              content_hash: 73d122f39d6275de9048b76c32f87f7a1a2d7e92cfaadfb7cfe55d5424ddb630
+        - path: "1.6"
+          level: 2
+          title: 6. Delta Surfacing
+          byte_offset: 6272
+          byte_count: 561
+          word_count: 91
+          content_hash: a0bca167ef57e235139f51d0bb8b2acad8230297447cb9bc9d1860d842d5b2af
+        - path: "1.7"
+          level: 2
+          title: 7. Bug Estimation
+          byte_offset: 6833
+          byte_count: 796
+          word_count: 130
+          content_hash: 7a06de61780d28ad81ba3d7fa6b530914631b4511112b28e477268f10046c999
+        - path: "1.8"
+          level: 2
+          title: 8. AI Agent Estimation Consistency
+          byte_offset: 7629
+          byte_count: 1264
+          word_count: 189
+          content_hash: 0825893475fab61613b2029055a2a1cc126617b494178a083adbf9c67712a7fe
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Reference examples
+              byte_offset: 7862
+              byte_count: 467
+              word_count: 71
+              content_hash: 8484cb055cd933554b0d7f4082af5db1c95745a557164a255791d1cc4f7cabf9
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Estimation as a dedicated operation
+              byte_offset: 8329
+              byte_count: 355
+              word_count: 51
+              content_hash: acb8a706f0d6ccfe40c7cf582086b21029afa5f37d4344111f6e73c06f22dafd
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Human review
+              byte_offset: 8684
+              byte_count: 209
+              word_count: 32
+              content_hash: 91d1c5d4e425fc6bbaa08752dd941b843ee1549afabaf60d146bb9cc9bd0e71b
+        - path: "1.9"
+          level: 2
+          title: 9. Phase 1 Implications
+          byte_offset: 8893
+          byte_count: 1044
+          word_count: 161
+          content_hash: 1cc3600918650bc33ce4d90d7882a41ff61ad416a8f197d61cf1427d0800c11d
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Field reservation
+              byte_offset: 9031
+              byte_count: 242
+              word_count: 40
+              content_hash: a076eb26b666e4d7cfd5fc5a22ced435bb08e7444ed5535831198b08139c6326
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Terminal state semantics
+              byte_offset: 9273
+              byte_count: 412
+              word_count: 59
+              content_hash: 5bf6f257ae8bc8b00dfc03edcac798304c3e6013c44e16cda1f1d59907ab8a26
+            - path: 1.9.3
+              level: 3
+              title: 9.3 No structural changes needed
+              byte_offset: 9685
+              byte_count: 252
+              word_count: 42
+              content_hash: df4289a9fce724b2e781eb10f1d20ab37a2f31603505499ffa333374a70401e3
+        - path: "1.10"
+          level: 2
+          title: 10. Open Questions
+          byte_offset: 9937
+          byte_count: 719
+          word_count: 116
+          content_hash: db55bff8858dfb52b012ce6a786886ccd277809edb801059ec195cc36f0e6c5a
+        - path: "1.11"
+          level: 2
+          title: 11. Summary
+          byte_offset: 10656
+          byte_count: 615
+          word_count: 98
+          content_hash: c8ed4113bb10f618d9752ffa27924f7abda4339c576b186948e9857802852f67
+front_matter:
+    status: design
+    date: "2026-07-24"
+    extra:
+        Basis: workflow-design-basis.md` §8 (object model, entity hierarchy); phase-1-specification.md` §8 (entity semantics), §9 (required fields)
+        Phase: post-Phase 1 (flagged now to inform Phase 1 field design if needed)
+        Purpose: design for lightweight estimation and progress tracking across the entity hierarchy
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 6477
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.8.1
+      byte_offset: 8041
+    - entity_id: TASK-yyy
+      entity_type: task
+      section_path: 1.8.1
+      byte_offset: 8121
+    - entity_id: EPIC-yyy
+      entity_type: epic
+      section_path: "1.6"
+      byte_offset: 6542
+cross_doc_links:
+    - target_path: workflow-design-basis.md
+      link_text: workflow-design-basis.md
+      section_path: "1"
+    - target_path: phase-1-specification.md
+      link_text: phase-1-specification.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.8.1
+      role: example
+      confidence: high
+    - section_path: "1.10"
+      role: question
+      confidence: high
+    - section_path: "1.11"
+      role: narrative
+      confidence: high
+classified: false

@@ -1,0 +1,16 @@
+id: TASK-01KMRSNXFKNK2
+parent_feature: FEAT-01KMRSMVP15PD
+slug: advance-operation
+summary: "Implement the advance operation for feature status updates. When advance=true, walk through intermediate lifecycle states from current to target, checking document prerequisites at each gate. Stop at the furthest reachable state if a prerequisite is unmet. Record transitions through each intermediate state. The review gate (developing → reviewing) is never skippable. Return advanced_through list and stopped_reason if partial. Design ref: smart-lifecycle-transitions.md §4."
+status: done
+depends_on:
+  - TASK-01KMRSNTZM84N
+files_planned:
+  - internal/service/advance.go
+  - internal/service/advance_test.go
+completed: "2026-03-27T23:46:52Z"
+claimed_at: "2026-03-27T23:38:33Z"
+dispatched_to: backend
+dispatched_at: "2026-03-27T23:38:33Z"
+dispatched_by: orchestrator
+completion_summary: "Implemented AdvanceFeatureStatus function that walks features through intermediate lifecycle states, checking document prerequisites at each gate. Stops at furthest reachable state on unsatisfied prerequisites. Review gate always blocks advance to done. 15 test cases."

@@ -1,0 +1,13 @@
+id: P6-workflow-quality-and-review
+slug: workflow-quality-and-review
+title: "Workflow Quality & Code Review"
+status: active
+summary: "Fix lifecycle ceremony, entity consistency, and query issues identified in the 2.0 retrospective, then implement the feature-level code review workflow. Phased: foundations first (smart transitions, state consistency, query fixes), then review workflow (lifecycle states, reviewer profile, orchestration pattern), then independent quality-of-life improvements (ID display, bulk ops, plan-to-feature guidance)."
+design: P6-workflow-quality-and-review/design-smart-lifecycle-transitions
+tags:
+  - retrospective-driven
+  - lifecycle
+  - code-review
+created: "2026-03-27T23:08:18Z"
+created_by: sambeau
+updated: "2026-03-27T23:21:21Z"

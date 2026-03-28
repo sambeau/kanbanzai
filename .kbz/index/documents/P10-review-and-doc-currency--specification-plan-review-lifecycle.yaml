@@ -1,0 +1,148 @@
+document_id: P10-review-and-doc-currency/specification-plan-review-lifecycle
+document_path: work/spec/plan-review-lifecycle.md
+content_hash: 4cb8d6d70ceaf9b631381726c49abb905c1e759211c65d587f674ee984dfd745
+indexed_at: 2026-03-28T16:12:01.920368Z
+sections:
+    - path: "1"
+      level: 1
+      title: Plan Review Lifecycle Specification
+      byte_offset: 0
+      byte_count: 5759
+      word_count: 832
+      content_hash: 4cb8d6d70ceaf9b631381726c49abb905c1e759211c65d587f674ee984dfd745
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 452
+          byte_count: 259
+          word_count: 38
+          content_hash: ca44d0127701bfe93fc48f2f42f5ab7b7cd368896341fe77a130166ea42f1e57
+        - path: "1.2"
+          level: 2
+          title: 2. Background
+          byte_offset: 711
+          byte_count: 641
+          word_count: 96
+          content_hash: 0a2da503209436faec0e78dc549623ee5c29b4fe2704b59545aaa1651b028ac4
+        - path: "1.3"
+          level: 2
+          title: 3. New Plan Lifecycle
+          byte_offset: 1352
+          byte_count: 1322
+          word_count: 223
+          content_hash: 27f541392f7bcf52341a43094466eea3a6abe84fec04051b2bd663e9486b38ed
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Complete Transition Table
+              byte_offset: 1808
+              byte_count: 731
+              word_count: 132
+              content_hash: 08646ac63766da11f8d23654396fd50d3232cb352f0259256cd4bb1b7d5ad3a9
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Removed Transitions
+              byte_offset: 2539
+              byte_count: 135
+              word_count: 23
+              content_hash: 1cc39e803bdcb984fc5b3055e12436dade848093c4cc1d155aebb57f879437d7
+        - path: "1.4"
+          level: 2
+          title: 4. Implementation
+          byte_offset: 2674
+          byte_count: 1181
+          word_count: 162
+          content_hash: a75aa881a2d8843d04bca5bfd282f52159eceda01386f388bdaf4fb17161096b
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Model Change
+              byte_offset: 2696
+              byte_count: 162
+              word_count: 19
+              content_hash: 9a97406af4265be775feba8976d4dfba3446237bbb5ea5b48ed0fc8fb8ad454f
+            - path: 1.4.2
+              level: 3
+              title: 4.2 State Machine Change
+              byte_offset: 2858
+              byte_count: 391
+              word_count: 53
+              content_hash: a30ce0ba81b48e5bfeb4c7141311b55eaac2b5d75e1420f4b367a994c5d4307b
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Known States
+              byte_offset: 3249
+              byte_count: 256
+              word_count: 35
+              content_hash: 22c6c52f1bc17e171dafc0f6e0cfd56f1028055a03743799df276bca6066f648
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Terminal States
+              byte_offset: 3505
+              byte_count: 181
+              word_count: 27
+              content_hash: f7b408ba482593a8500034680fa7c6dba7145c424431b43166e723f9be4d55b9
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Existing Plans
+              byte_offset: 3686
+              byte_count: 169
+              word_count: 25
+              content_hash: 58be3483924c81358b9552799569f2789dcce7350a39dfe71bbf62c9760957d8
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 3855
+          byte_count: 1191
+          word_count: 180
+          content_hash: 06e3d09ecaca71a13577cbbd9bd14ffd937fc25296e3d90276093e4d206f1988
+        - path: "1.6"
+          level: 2
+          title: 6. Test Requirements
+          byte_offset: 5046
+          byte_count: 713
+          word_count: 92
+          content_hash: 2d647dc5950d7f69396b4e06ad9957ce6f551bd7dace7650251f76db8576a43e
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Unit Tests
+              byte_offset: 5071
+              byte_count: 527
+              word_count: 61
+              content_hash: bcfc4a7a6845e4c2c9d2c0f3d49ce6254ddf3abef7cae99e26b5ca16c8663221
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Existing Tests
+              byte_offset: 5598
+              byte_count: 161
+              word_count: 27
+              content_hash: 76c1ecdd8c2497467109186507ea2ca3f05e984c87b611c81f649c2b1a7c5c05
+entity_refs:
+    - entity_id: FEAT-01KMTJH8YQ17P
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 337
+    - entity_id: P10-review-and-doc-currency
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 280
+    - entity_id: P10-review-and-doc-currency-plan
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 404
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+classified: false

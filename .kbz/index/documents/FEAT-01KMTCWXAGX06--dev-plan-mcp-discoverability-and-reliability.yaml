@@ -1,0 +1,325 @@
+document_id: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability
+document_path: work/dev/mcp-discoverability-and-reliability.md
+content_hash: 4e913134fffd8137d400cbec25bf1c27d915dba0f829fe6d9628b1bd72176675
+indexed_at: 2026-03-28T14:20:07.966423Z
+sections:
+    - path: "1"
+      level: 1
+      title: MCP Discoverability and Reliability — Development Plan
+      byte_offset: 0
+      byte_count: 18100
+      word_count: 2330
+      content_hash: 4e913134fffd8137d400cbec25bf1c27d915dba0f829fe6d9628b1bd72176675
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 610
+          byte_count: 511
+          word_count: 67
+          content_hash: 41ea22d3a3ddad3546f1947cc73d135cb81d6596b70015cdf50935b89eed5a59
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 1121
+          byte_count: 1075
+          word_count: 171
+          content_hash: 5ad0c75970eef2c849c0b9a3a61d25d7a6bb41e711c083d2f5089764a09da223
+        - path: "1.3"
+          level: 2
+          title: 3. Feature A — Tool Annotations
+          byte_offset: 2196
+          byte_count: 2280
+          word_count: 222
+          content_hash: 5a1ae60f0cab9e02c1d3f06cb8451d465696978a3907dd32a8db3efdccc4be5a
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Files to modify
+              byte_offset: 2234
+              byte_count: 524
+              word_count: 33
+              content_hash: db205a6d64de199639073db514e7e1965015446875883eb1ae864196a00135e6
+            - path: 1.3.2
+              level: 3
+              title: Implementation pattern
+              byte_offset: 2758
+              byte_count: 1264
+              word_count: 121
+              content_hash: d2dcfe40bebdd8c03b18c9811a8ef3e1e18ed72899615d25b1b91387e988cea3
+            - path: 1.3.3
+              level: 3
+              title: Classification reference
+              byte_offset: 4022
+              byte_count: 260
+              word_count: 32
+              content_hash: fe1b3685f9c5f52b33f17001916aa66d7865fdd7d8d5b5225dc87ed376ae610a
+            - path: 1.3.4
+              level: 3
+              title: Verification
+              byte_offset: 4282
+              byte_count: 194
+              word_count: 29
+              content_hash: e2c2cbb71d1d08e2998dd1364d9abd1f12235c0c8f1e5f46258634d5956a65c0
+        - path: "1.4"
+          level: 2
+          title: 4. Feature A — Annotations Canary Test
+          byte_offset: 4476
+          byte_count: 1684
+          word_count: 222
+          content_hash: 9875f7fd59e02dade35dfeb116aa50ef8ca23a67ac3d6080b576673a8f7d6d18
+          children:
+            - path: 1.4.1
+              level: 3
+              title: File to create
+              byte_offset: 4521
+              byte_count: 56
+              word_count: 5
+              content_hash: 0b201cd83137ab330a497dff16d424de493e2e33d87853422aba47a78f33e7bb
+            - path: 1.4.2
+              level: 3
+              title: Design
+              byte_offset: 4577
+              byte_count: 1160
+              word_count: 145
+              content_hash: 5346a1732664d7539ea780af9953a0df45ba54679adaa507e766cfd7748866bf
+            - path: 1.4.3
+              level: 3
+              title: Optional stronger assertions
+              byte_offset: 5737
+              byte_count: 423
+              word_count: 64
+              content_hash: ce0926d1435f2c0f586a57d181c9ad4ff2636e477f669dcd0c57e137ca40a0ad
+        - path: "1.5"
+          level: 2
+          title: 5. Feature B — Tool Titles
+          byte_offset: 6160
+          byte_count: 654
+          word_count: 100
+          content_hash: 8901690b0dfdc11ca91117cd3ec2325a7a314b3e9f2fa210a17fe5b08bb05c86
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Files to modify
+              byte_offset: 6193
+              byte_count: 159
+              word_count: 28
+              content_hash: dfdb42652a68df804d38604405f448a2f0be299802bba1ff5cc2456884a31983
+            - path: 1.5.2
+              level: 3
+              title: Title strings
+              byte_offset: 6352
+              byte_count: 313
+              word_count: 50
+              content_hash: d4070edc7f2d612dafcdb53e994afe2b8743828a840f0dfae8940b7b266ec1c6
+            - path: 1.5.3
+              level: 3
+              title: Implementation
+              byte_offset: 6665
+              byte_count: 149
+              word_count: 15
+              content_hash: 2d018bbe5cd37fccd2e91436bbc9ee1536afe30b84e6b735217adf0cb17d9da4
+        - path: "1.6"
+          level: 2
+          title: 6. Feature C — Tool Descriptions
+          byte_offset: 6814
+          byte_count: 1156
+          word_count: 185
+          content_hash: 46404192829cd5b0995a5d02531ae79e2150b6cdce7b4809dfa2ed78f958a6c2
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Files to modify
+              byte_offset: 6853
+              byte_count: 312
+              word_count: 51
+              content_hash: 498551ed70951e888e78e37a29666eab586c94b9e8f355a5da23e09c54955f66
+            - path: 1.6.2
+              level: 3
+              title: Description text
+              byte_offset: 7165
+              byte_count: 494
+              word_count: 79
+              content_hash: c65f45459db93c24bf4907faa30759f59ce2255a03da3efc9837723f89d1d470
+            - path: 1.6.3
+              level: 3
+              title: Go string literal notes
+              byte_offset: 7659
+              byte_count: 311
+              word_count: 48
+              content_hash: 3bb8bc8e9d5b9dde88f3f9c9c790aa56636152c63e9fe8be02f989c829e61c51
+        - path: "1.7"
+          level: 2
+          title: 7. Feature D — `finish` Response Nudges
+          byte_offset: 7970
+          byte_count: 3261
+          word_count: 437
+          content_hash: 72d8ad5978f66b9317bb850c1d6196f2af6e7b5d5ab8e9359f7f0c5f624142c9
+          children:
+            - path: 1.7.1
+              level: 3
+              title: File to modify
+              byte_offset: 8016
+              byte_count: 51
+              word_count: 5
+              content_hash: 36afc599e08ef2cab89841cc99061a3e386cb00fb60c4116c217685c3fbb54aa
+            - path: 1.7.2
+              level: 3
+              title: Implementation approach
+              byte_offset: 8067
+              byte_count: 2506
+              word_count: 365
+              content_hash: fc4b288795199f7c39d4f9f4bfe622e997a6a6dfe84532b8026bde930a871c08
+            - path: 1.7.3
+              level: 3
+              title: Tests
+              byte_offset: 10573
+              byte_count: 658
+              word_count: 59
+              content_hash: d496686c8abbdb475ed2aee76e689fff4d380221678d41a582d823655cde4752
+        - path: "1.8"
+          level: 2
+          title: '8. Feature E — `doc(action: refresh)`'
+          byte_offset: 11231
+          byte_count: 3364
+          word_count: 428
+          content_hash: a317dc3f1047d9729582ec1170b66d594c90ec614760877b91b9cdbac7d75826
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Files to modify
+              byte_offset: 11275
+              byte_count: 143
+              word_count: 16
+              content_hash: 0848cb1f0dc8c2f347ae8515148b5cae0623075adbde3a2db7ed148dc1cb20cb
+            - path: 1.8.2
+              level: 3
+              title: Service layer
+              byte_offset: 11418
+              byte_count: 1374
+              word_count: 178
+              content_hash: 06b7e56a3daac7219270ef47e5f2771e83280262304cace2ceda899c63ef6804
+            - path: 1.8.3
+              level: 3
+              title: MCP layer
+              byte_offset: 12792
+              byte_count: 757
+              word_count: 71
+              content_hash: cec129a9aea96e2b9bfed4277af654741ad76115421c64b8225cfa72cbb26e9a
+            - path: 1.8.4
+              level: 3
+              title: Tests
+              byte_offset: 13549
+              byte_count: 777
+              word_count: 119
+              content_hash: b1a18ba6692a33b2e6d20c095f74bfb71b4fe68ccbf9f1903cc432a86f6507cf
+            - path: 1.8.5
+              level: 3
+              title: Reference
+              byte_offset: 14326
+              byte_count: 269
+              word_count: 37
+              content_hash: 104e8a177a0f447f77dba3f795cacff5cbef8d7f3043651beff91369c2364f95
+        - path: "1.9"
+          level: 2
+          title: '9. Feature F — `doc(action: chain)`'
+          byte_offset: 14595
+          byte_count: 1914
+          word_count: 220
+          content_hash: 0792adbabf196cc50f32a9600433f3fd0f4b800f620919120de6b44aad4ea7a9
+          children:
+            - path: 1.9.1
+              level: 3
+              title: File to modify
+              byte_offset: 14637
+              byte_count: 74
+              word_count: 9
+              content_hash: e7147d4e99888aad21278b37e6e60724a1bce24a57ee5554f1638171867d0687
+            - path: 1.9.2
+              level: 3
+              title: Implementation
+              byte_offset: 14711
+              byte_count: 1273
+              word_count: 137
+              content_hash: 23e48f60da00a1e81ba2b5b33df76a7b8ed1030d438c34c07a6bf1ac3fafee5f
+            - path: 1.9.3
+              level: 3
+              title: Tests
+              byte_offset: 15984
+              byte_count: 525
+              word_count: 67
+              content_hash: 1959a196698600c8345f15f04744791903dd1988fc910bfb4af15ca5e0e6b038
+        - path: "1.10"
+          level: 2
+          title: 10. Integration Checklist
+          byte_offset: 16509
+          byte_count: 616
+          word_count: 102
+          content_hash: 33f21ba9ce5e227398637cdb206c70ccf9730ce47d1227ab29d4bb00cb7b1db5
+        - path: "1.11"
+          level: 2
+          title: 11. Key File Index
+          byte_offset: 17125
+          byte_count: 975
+          word_count: 126
+          content_hash: c8a2c241c42a87358f3228f90a4f6a026ae525c73f3e8cf71c3a30c9a25b18b2
+entity_refs:
+    - entity_id: FEAT-01KMTCWXAGX06
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 413
+    - entity_id: FEAT-01KMKRQWF0FCH
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1025
+    - entity_id: FEAT-01KMKRQWF0FCH
+      entity_type: feature
+      section_path: 1.8.5
+      byte_offset: 14370
+    - entity_id: TASK-01KMTCYNCX1HC
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1247
+    - entity_id: TASK-01KMTCYNDC99R
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1314
+    - entity_id: TASK-01KMTCYNDTJWP
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1403
+    - entity_id: TASK-01KMTCYNE8AY9
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1465
+    - entity_id: TASK-01KMTCYNEPYPN
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1533
+    - entity_id: TASK-01KMTCYNF4A4K
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1607
+    - entity_id: TASK-01KMTCYNFHFEP
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1677
+    - entity_id: P9-mcp-discoverability
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 345
+cross_doc_links:
+    - target_path: work/spec/mcp-discoverability-and-reliability.md
+      link_text: work/spec/mcp-discoverability-and-reliability.md
+      section_path: "1.11"
+    - target_path: work/design/mcp-discoverability-and-reliability.md
+      link_text: work/design/mcp-discoverability-and-reliability.md
+      section_path: "1.11"
+    - target_path: work/reports/kanbanzai-2.0-migration-audit.md
+      link_text: work/reports/kanbanzai-2.0-migration-audit.md
+      section_path: "1.11"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

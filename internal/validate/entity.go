@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 
-	"kanbanzai/internal/id"
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 // ValidationError describes a single field-level validation failure.
@@ -54,6 +54,9 @@ var validBugTypes = map[string]struct{}{
 
 var slugPattern = regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)
 
+// maxLabelLength is the maximum allowed length for an entity label.
+const maxLabelLength = 24
+
 // ValidateBugSeverity returns an error if value is not a valid bug severity.
 func ValidateBugSeverity(value string) error {
 	if _, ok := validBugSeverities[value]; !ok {
@@ -82,6 +85,15 @@ func ValidateBugType(value string) error {
 func ValidateIncidentSeverity(value string) error {
 	if _, ok := validIncidentSeverities[value]; !ok {
 		return fmt.Errorf("invalid incident severity %q: must be one of critical, high, medium, low", value)
+	}
+	return nil
+}
+
+// ValidateLabel returns an error if label exceeds the maximum length (24 characters).
+// An empty label is valid (labels are optional).
+func ValidateLabel(label string) error {
+	if len(label) > maxLabelLength {
+		return fmt.Errorf("label %q exceeds maximum length of %d characters (got %d)", label, maxLabelLength, len(label))
 	}
 	return nil
 }
@@ -219,6 +231,19 @@ func ValidateRecord(entityType string, fields map[string]any) []ValidationError 
 					EntityType: entityType,
 					EntityID:   entityID,
 					Field:      "type",
+					Message:    err.Error(),
+				})
+			}
+		}
+	}
+
+	if kind == EntityFeature || kind == EntityTask {
+		if label, ok := stringField(fields, "label"); ok && label != "" {
+			if err := ValidateLabel(label); err != nil {
+				errs = append(errs, ValidationError{
+					EntityType: entityType,
+					EntityID:   entityID,
+					Field:      "label",
 					Message:    err.Error(),
 				})
 			}

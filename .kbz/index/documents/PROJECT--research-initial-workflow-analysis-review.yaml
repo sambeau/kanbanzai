@@ -1,0 +1,226 @@
+document_id: PROJECT/research-initial-workflow-analysis-review
+document_path: work/research/initial-workflow-analysis-review.md
+content_hash: d2b7b1ad5a223767f5524faa13ac496bdf47c63960ed5abcf5ecd3c5fdbe4b72
+indexed_at: 2026-03-25T21:38:28.953426Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: Initial Workflow Analysis'
+      byte_offset: 0
+      byte_count: 18126
+      word_count: 2624
+      content_hash: d2b7b1ad5a223767f5524faa13ac496bdf47c63960ed5abcf5ecd3c5fdbe4b72
+      children:
+        - path: "1.1"
+          level: 2
+          title: Purpose
+          byte_offset: 326
+          byte_count: 261
+          word_count: 34
+          content_hash: 9201d5ce20d1f54fb29d06e8cbffe3857ab2945f167d0e647bd1be3715b3c47a
+        - path: "1.2"
+          level: 2
+          title: 1. Overall Assessment
+          byte_offset: 587
+          byte_count: 967
+          word_count: 144
+          content_hash: fccd20b46fdeff1fef9b4317bd6991948ba586408bea5007f5a030b51f74d311
+        - path: "1.3"
+          level: 2
+          title: 2. Ideas in the Initial Analysis Missing From the Design Document
+          byte_offset: 1554
+          byte_count: 9425
+          word_count: 1366
+          content_hash: ccff9a3fe9ffcb706e88f96b32de7d575e543af0bea1ee5004fed5eb63116c50
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 2.1 The Intake / Canonical / Projection Taxonomy
+              byte_offset: 1740
+              byte_count: 996
+              word_count: 137
+              content_hash: d41da835bc67e0f75a2ed8ade707ce3f133cd4e86fd28b6e3beb9866349111b6
+            - path: 1.3.2
+              level: 3
+              title: 2.2 The Detailed Bug Workflow
+              byte_offset: 2736
+              byte_count: 1129
+              word_count: 147
+              content_hash: 2d37dd9f46365b38ad863c8806e5ef7a452b14607476d2867bc382a0b652e147
+            - path: 1.3.3
+              level: 3
+              title: 2.3 Incident and Root-Cause Analysis
+              byte_offset: 3865
+              byte_count: 937
+              word_count: 136
+              content_hash: 7505ab7f3877927e2c917e0655286d443cb743933fcf6c8a07da2b67ee698c32
+            - path: 1.3.4
+              level: 3
+              title: 2.4 Metadata Governance
+              byte_offset: 4802
+              byte_count: 1049
+              word_count: 152
+              content_hash: 9e4fe16211a444e048df135bcd57d9638300a7b5d2adc0aff6ce827888b2ef20
+            - path: 1.3.5
+              level: 3
+              title: 2.5 The Four-Tier Agent Hierarchy
+              byte_offset: 5851
+              byte_count: 980
+              word_count: 133
+              content_hash: 205f9b5aa84676b2c8d5191ccbb923e5e024f55aa9b90ba911f3e065c1619b88
+            - path: 1.3.6
+              level: 3
+              title: 2.6 Parallelise by Conflict Domain
+              byte_offset: 6831
+              byte_count: 724
+              word_count: 102
+              content_hash: 08eedfb27b8410f8eb851cf3a6e217eb98a43803361e36336cba3733eed3b7d8
+            - path: 1.3.7
+              level: 3
+              title: 2.7 Prefer Vertical Slices
+              byte_offset: 7555
+              byte_count: 460
+              word_count: 61
+              content_hash: d4e13c074fe9615d75355a670debc5e0696eb431872e5b4d80617d7624adc12b
+            - path: 1.3.8
+              level: 3
+              title: 2.8 External Tools Worth Considering
+              byte_offset: 8015
+              byte_count: 766
+              word_count: 110
+              content_hash: 8552df3ffaea0df3224c294f86d82811c2a2ee155f53d38619ecf82cc35ef182
+            - path: 1.3.9
+              level: 3
+              title: 2.9 The Four-Layer Agent Instruction Model
+              byte_offset: 8781
+              byte_count: 786
+              word_count: 108
+              content_hash: 5a3c356eeeac887cf5115c1a5597c0c06c6e44b0a5ee3ee3ebf0fa93c6b918ac
+            - path: 1.3.10
+              level: 3
+              title: 2.10 Richer Deferred Object Model
+              byte_offset: 9567
+              byte_count: 1412
+              word_count: 251
+              content_hash: 6c76f703d2d9c1840b41d9bb3970473bf4ffbd0de3d0aaa053c00d9c6bab43cc
+        - path: "1.4"
+          level: 2
+          title: 3. Ideas in the Design Document Missing From the Initial Analysis
+          byte_offset: 10979
+          byte_count: 1464
+          word_count: 209
+          content_hash: 764da0c8cbaf8392c2c203dd80ddf8f37d7806d1ae235f0710fe28bfc0015799
+        - path: "1.5"
+          level: 2
+          title: 4. Problems in Both Documents
+          byte_offset: 12443
+          byte_count: 2901
+          word_count: 443
+          content_hash: ae22e1a3feea87ecf0856ea76896183cb748048188faa5b65ffafce0e0914116
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 4.1 No Migration Path
+              byte_offset: 12477
+              byte_count: 463
+              word_count: 70
+              content_hash: 100353387f3ec14f1589ad7b178f4f8025c8278f11066dd1ea96a9617cb09b32
+            - path: 1.5.2
+              level: 3
+              title: 4.2 No Rollback or Undo Story
+              byte_offset: 12940
+              byte_count: 585
+              word_count: 92
+              content_hash: 79071bf1f0e68693fa280f9f4cafce4d2b8bfa96a6b19fd72b3ba9635a68f940
+            - path: 1.5.3
+              level: 3
+              title: 4.3 Normalisation Reliability
+              byte_offset: 13525
+              byte_count: 684
+              word_count: 103
+              content_hash: a91b803600605c16ad387a4db5ba398b4786ac4bddcd4b8230d3ed10440b75a5
+            - path: 1.5.4
+              level: 3
+              title: 4.4 Phase 1 Scope Creep Risk
+              byte_offset: 14209
+              byte_count: 678
+              word_count: 102
+              content_hash: 4965748c664effc51c566fbd9e09d11caece4e4014f2c6c1c409bb48486bd38b
+            - path: 1.5.5
+              level: 3
+              title: 4.5 The ID Strategy Needs Testing
+              byte_offset: 14887
+              byte_count: 457
+              word_count: 70
+              content_hash: 303abca1b07168db0787924f5db9a2f1a370e8895f7bfe7c145d2d7994e3b4c1
+        - path: "1.6"
+          level: 2
+          title: 5. Structural Issues
+          byte_offset: 15344
+          byte_count: 1167
+          word_count: 161
+          content_hash: 2041b11071553aa64657c664eeaf962ae773873de9789b2f6e88aff43092077f
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 5.1 The Initial Analysis Has Inconsistent Heading Levels
+              byte_offset: 15369
+              byte_count: 362
+              word_count: 52
+              content_hash: 020564ac64f75c9d9a8cac31fa9f4151af40ec3a28de5b32e769ee28fa1d269d
+            - path: 1.6.2
+              level: 3
+              title: 5.2 The Design Document's Principles Are Stronger
+              byte_offset: 15731
+              byte_count: 350
+              word_count: 48
+              content_hash: f3fdd9ebf7b578fd5418053fca2ed2da5fdbecba7fdad12fb509babd4f69dfb3
+            - path: 1.6.3
+              level: 3
+              title: 5.3 The Initial Analysis Splits Related Content
+              byte_offset: 16081
+              byte_count: 430
+              word_count: 57
+              content_hash: 7746b8a46227cfd951e1e343d79210fafc3da1603e305e783dda7d71e292969b
+        - path: "1.7"
+          level: 2
+          title: 6. Recommendations for the Consolidated Document
+          byte_offset: 16511
+          byte_count: 1129
+          word_count: 162
+          content_hash: a9ec6ad62f0171a4c59c74cf42d422bada2606567d880b980e173f1654ae3b0c
+        - path: "1.8"
+          level: 2
+          title: 7. Summary
+          byte_offset: 17640
+          byte_count: 486
+          word_count: 64
+          content_hash: cd68dfc9137215ab2ee19b920a16b5619904c4d53ba57804ca494478c2c26b5d
+front_matter:
+    status: historical — research trail
+    date: "2026-03-18"
+    extra:
+        In light of: workflow-system-design.md
+        Note: This review fed into the consolidation that produced `work/design/workflow-design-basis.md`. Retained as part of the research trail.
+        Reviewing: initial-workflow-analysis.md
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: initial-workflow-analysis.md
+      link_text: initial-workflow-analysis.md
+      section_path: "1.1"
+    - target_path: workflow-system-design.md
+      link_text: workflow-system-design.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.5.4
+      role: risk
+      confidence: high
+    - section_path: "1.8"
+      role: narrative
+      confidence: high
+classified: false

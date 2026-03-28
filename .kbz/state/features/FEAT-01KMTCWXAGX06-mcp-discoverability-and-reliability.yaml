@@ -1,0 +1,10 @@
+id: FEAT-01KMTCWXAGX06
+slug: mcp-discoverability-and-reliability
+parent: P9-mcp-discoverability
+status: developing
+summary: "Six improvements to the MCP server to make agent interactions more reliable: tool annotations (readOnly/destructive/idempotent/openWorld hints on all 22 tools + canary test), human-readable tool titles, revised descriptions that steer agents away from shell commands and toward MCP tools, response nudges in finish when retro signals or knowledge entries are absent, doc refresh action (fix stale content hash without re-registering), and doc chain action (expose existing SupersessionChain service method)."
+design: work/design/mcp-discoverability-and-reliability.md
+spec: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability
+dev_plan: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability
+created: "2026-03-28T14:17:18Z"
+created_by: sambeau

@@ -1,0 +1,342 @@
+document_id: P5-workflow-retrospective/specification-workflow-retrospective
+document_path: work/spec/workflow-retrospective.md
+content_hash: 474a732541dbb6db5f49713d8ad186c302ad4a99e61f3cae3036d5bbbca239fe
+indexed_at: 2026-03-27T21:09:18.710539Z
+sections:
+    - path: "1"
+      level: 1
+      title: Workflow Retrospective Specification
+      byte_offset: 0
+      byte_count: 30087
+      word_count: 4165
+      content_hash: 474a732541dbb6db5f49713d8ad186c302ad4a99e61f3cae3036d5bbbca239fe
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 707
+          byte_count: 947
+          word_count: 138
+          content_hash: 3036f34da1531ededf6aaebba45145279880ff6e6133893f0d0b518df5a05205
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1654
+          byte_count: 1116
+          word_count: 160
+          content_hash: 103378116e28db4a2cd35e49208518eea1d32c6b31f630b3ea3e0586203b6648
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2770
+          byte_count: 1443
+          word_count: 187
+          content_hash: 727b3c02f5d16376784985770a782f3aac4b8293ba3601a90e71b52572c34eb6
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 2783
+              byte_count: 552
+              word_count: 71
+              content_hash: 9b9e7ec3fa940f2a2ef28c8651a03381e1abc38bd52893f6a7fe2a95ae071859
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred beyond P5
+              byte_offset: 3335
+              byte_count: 493
+              word_count: 59
+              content_hash: a38cbc256c3aa65e4b696d5295553586bc56807553c71ecd125985a5d264df06
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly excluded
+              byte_offset: 3828
+              byte_count: 385
+              word_count: 54
+              content_hash: 8926a6029f5c7dcaee1dfc9cd8c902f739986eebcb144cb00e1231e0db57e11c
+        - path: "1.4"
+          level: 2
+          title: 4. Design Principles
+          byte_offset: 4213
+          byte_count: 1299
+          word_count: 174
+          content_hash: 25985d863dce8985b8836c0acf1ea80b54b81bfa374eee00bdf7daeb63646569
+        - path: "1.5"
+          level: 2
+          title: 5. Retrospective Signals
+          byte_offset: 5512
+          byte_count: 3938
+          word_count: 591
+          content_hash: dec1f2558ca2b9940b3a1832ee433ac87850f5ffb3a9fcb03a8eefff5d1ce332
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Structure
+              byte_offset: 5541
+              byte_count: 787
+              word_count: 129
+              content_hash: c9a3d1344f9345a0a691aea7ffd9d49283248c26b733e753c20d2e7780df928d
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Categories
+              byte_offset: 6328
+              byte_count: 1251
+              word_count: 189
+              content_hash: 1f13a85616be425fb32b79b263ed542fa41793158217411ddd3735a93ff2b904
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Severity
+              byte_offset: 7579
+              byte_count: 375
+              word_count: 59
+              content_hash: 2aee69b360ee07802078d1f8db49df20888790f60fff4ba9a6a98943dde0bca2
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Storage convention
+              byte_offset: 7954
+              byte_count: 642
+              word_count: 105
+              content_hash: e1034c2e796b28950c1e3b900739d699fd5d00350b7b669544c9769dbe0a81b7
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Content format
+              byte_offset: 8596
+              byte_count: 854
+              word_count: 105
+              content_hash: ac897ba6a9fff66a3d337ce7e94830322e09b3fdf22c85edcf7810daccbefd7c
+        - path: "1.6"
+          level: 2
+          title: '6. Phase 1: Signal Collection'
+          byte_offset: 9450
+          byte_count: 3408
+          word_count: 455
+          content_hash: 2e4a86fcefe3418110f3aa8c5b6edcf5fe4c4708e11050cb7ec2566b9e069c4a
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 `retrospective` parameter on `finish`
+              byte_offset: 9484
+              byte_count: 1234
+              word_count: 177
+              content_hash: 18fce670453a66aa3d477f0d72d03f58a290b514fbb13a4fc187c528da1ece44
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Extended `finish` response
+              byte_offset: 10718
+              byte_count: 842
+              word_count: 90
+              content_hash: e2d3cee34b86142ad8335a72ee655d83a13d9e4d681837e215343652cbaf2a6d
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Standalone contribution
+              byte_offset: 11560
+              byte_count: 552
+              word_count: 77
+              content_hash: 2c32cfd2077625f7415ed41daf3b5f9677d4f330e5311b29f2c77ee3eee110e1
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Skill instructions
+              byte_offset: 12112
+              byte_count: 746
+              word_count: 105
+              content_hash: 611babcb0d6439cb7ed88dda6f4772fd079a253142f01803d6bd42b106eaf9d1
+        - path: "1.7"
+          level: 2
+          title: '7. Phase 2: Synthesis'
+          byte_offset: 12858
+          byte_count: 5283
+          word_count: 710
+          content_hash: f493a09fb06b0f7af0d6e9dbed8c37825f578b7257a5c76815d7085c474a9814
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 `retro` tool
+              byte_offset: 12884
+              byte_count: 1146
+              word_count: 171
+              content_hash: c4185def28e74403605e9c91c558a36b781ba4225ec0f777f9c38694751d1d84
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Clustering and ranking
+              byte_offset: 14030
+              byte_count: 1143
+              word_count: 149
+              content_hash: 16994e195a5c53c8298bdd3ddd2e0d3798a30c468e8123f07ad6d18cf75490fc
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Response structure
+              byte_offset: 15173
+              byte_count: 1409
+              word_count: 166
+              content_hash: a9c3154f6d2247215d49c122f44a856760a190d2751a121e31b94ba55cb9b86f
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Report mode
+              byte_offset: 16582
+              byte_count: 1156
+              word_count: 158
+              content_hash: 0aa6cce603f628f409f1947619970ca52a1167e6d0c861aa33a18eb8454d0120
+            - path: 1.7.5
+              level: 3
+              title: 7.5 Feature group placement
+              byte_offset: 17738
+              byte_count: 403
+              word_count: 61
+              content_hash: 340fdc5fc24564e6f52dc2d703a1988e6c1e1b2a7532ef263306dc4133f29a99
+        - path: "1.8"
+          level: 2
+          title: '8. Phase 3: Experiment Tracking'
+          byte_offset: 18141
+          byte_count: 3204
+          word_count: 430
+          content_hash: 070b73a9b5d5ca865f7f80f0b13d993c7558464cd2c1d952e498b7a2e518da64
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Workflow experiment decisions
+              byte_offset: 18177
+              byte_count: 848
+              word_count: 115
+              content_hash: e4f9df5438c017f342f519c9a7a35d05c8db60c8bc89bf1bc71d9964a9b89611
+            - path: 1.8.2
+              level: 3
+              title: 8.2 `related_decision` in signals
+              byte_offset: 19025
+              byte_count: 538
+              word_count: 80
+              content_hash: 214128d08afc687e4c117a01e02d4c22beb6c26df9f1708641e42427d6e98be6
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Experiment effectiveness section in synthesis
+              byte_offset: 19563
+              byte_count: 1144
+              word_count: 134
+              content_hash: 974c8ad7888a5a4d696523f61849a7f1db57559c871e23ae292b6dc5c2192594
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Context nudge for active experiments
+              byte_offset: 20707
+              byte_count: 638
+              word_count: 95
+              content_hash: 97c5eb4c3ba931fa7802f50cd83f5bd2c3420bb16cfac4037d3d2647da677121
+        - path: "1.9"
+          level: 2
+          title: 9. What This Does Not Cover
+          byte_offset: 21345
+          byte_count: 869
+          word_count: 122
+          content_hash: 97953fd26e76780f3f1ce08e7f071c0f6f9278563398e5058e22f6d077115734
+        - path: "1.10"
+          level: 2
+          title: 10. Acceptance Criteria
+          byte_offset: 22214
+          byte_count: 7873
+          word_count: 1149
+          content_hash: 31de2e056a45cc8411272a892dce80920a8260b1da69fab31e21e5fd867f25c0
+          children:
+            - path: 1.10.1
+              level: 3
+              title: '10.1 Phase 1: Signal Collection'
+              byte_offset: 22425
+              byte_count: 3127
+              word_count: 466
+              content_hash: f687bbc606a04a0e7a916d1faf90895efa57dc53293629cd8bd7695823cec925
+            - path: 1.10.2
+              level: 3
+              title: '10.2 Phase 2: Synthesis'
+              byte_offset: 25552
+              byte_count: 2600
+              word_count: 374
+              content_hash: 3627865f1df3ddf587689dd150a4634d11d1d947999ebcef1545c77da4993251
+            - path: 1.10.3
+              level: 3
+              title: '10.3 Phase 3: Experiment Tracking'
+              byte_offset: 28152
+              byte_count: 1935
+              word_count: 274
+              content_hash: c63ee6d20c7231f4ac9b64987eb3ff420fae1b99171e87224678c92f99516ccc
+entity_refs:
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: 1.6.2
+      byte_offset: 11293
+    - entity_id: DEC-042
+      entity_type: decision
+      section_path: 1.5.1
+      byte_offset: 6087
+    - entity_id: DEC-042
+      entity_type: decision
+      section_path: 1.5.5
+      byte_offset: 9432
+    - entity_id: DEC-042
+      entity_type: decision
+      section_path: 1.8.3
+      byte_offset: 19797
+    - entity_id: DEC-043
+      entity_type: decision
+      section_path: 1.8.3
+      byte_offset: 20036
+    - entity_id: DEC-042
+      entity_type: decision
+      section_path: 1.10.3
+      byte_offset: 28302
+    - entity_id: P5-workflow-retrospective
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 272
+    - entity_id: P1-basic-ui
+      entity_type: plan
+      section_path: 1.8.1
+      byte_offset: 18628
+    - entity_id: P1-basic-ui
+      entity_type: plan
+      section_path: 1.10.2
+      byte_offset: 26374
+cross_doc_links:
+    - target_path: work/design/workflow-retrospective.md
+      link_text: work/design/workflow-retrospective.md
+      section_path: "1"
+    - target_path: work/spec/kanbanzai-2.0-specification.md
+      link_text: work/spec/kanbanzai-2.0-specification.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-2.0-design-vision.md
+      link_text: work/design/kanbanzai-2.0-design-vision.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/design/workflow-retrospective.md
+      link_text: work/design/workflow-retrospective.md
+      section_path: "1.4"
+    - target_path: work/spec/kanbanzai-2.0-specification.md
+      link_text: work/spec/kanbanzai-2.0-specification.md
+      section_path: 1.6.2
+    - target_path: work/spec/kanbanzai-2.0-specification.md
+      link_text: work/spec/kanbanzai-2.0-specification.md
+      section_path: 1.7.1
+    - target_path: work/design/workflow-retrospective.md
+      link_text: work/design/workflow-retrospective.md
+      section_path: 1.8.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.8.1
+      role: decision
+      confidence: high
+    - section_path: 1.8.2
+      role: decision
+      confidence: high
+    - section_path: 1.8.4
+      role: narrative
+      confidence: high
+    - section_path: "1.10"
+      role: requirement
+      confidence: high
+classified: false

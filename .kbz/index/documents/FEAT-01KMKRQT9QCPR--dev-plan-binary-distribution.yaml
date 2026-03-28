@@ -1,0 +1,98 @@
+document_id: FEAT-01KMKRQT9QCPR/dev-plan-binary-distribution
+document_path: work/dev/binary-distribution.md
+content_hash: 8ea9e01c9e621a195bbe8ce8ea6432ad434669ca6478b735c40fa9ef7f42f36a
+indexed_at: 2026-03-26T14:51:21.880937Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Binary Distribution: Feature Dev-Plan'
+      byte_offset: 0
+      byte_count: 4540
+      word_count: 630
+      content_hash: 8ea9e01c9e621a195bbe8ce8ea6432ad434669ca6478b735c40fa9ef7f42f36a
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 395
+          byte_count: 657
+          word_count: 89
+          content_hash: b62c594a742d684e62e33c44a0766e97e920b892cdf2bebdb78e2aabca847297
+        - path: "1.2"
+          level: 2
+          title: 2. Tasks
+          byte_offset: 1052
+          byte_count: 2611
+          word_count: 382
+          content_hash: b977a82aaaa713162ae8513485ddc7ccc9fbce0bb365b194530220a67062d3e5
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — `version-flag`
+              byte_offset: 1065
+              byte_count: 329
+              word_count: 45
+              content_hash: 5ff42b4a8168e17dc13930cf682f2da2d717815ac3e94407089e38e8c0746515
+            - path: 1.2.2
+              level: 3
+              title: T2 — `goreleaser-config`
+              byte_offset: 1394
+              byte_count: 614
+              word_count: 84
+              content_hash: 651679cf392b29b8ad832c0495ebc7f35b742e7a08d4db958377ec295bc59295
+            - path: 1.2.3
+              level: 3
+              title: T3 — `release-workflow`
+              byte_offset: 2008
+              byte_count: 363
+              word_count: 52
+              content_hash: edb4cabe39eab53cd731120753ba872b2b990cebea701d6f38981fb8ea18ceec
+            - path: 1.2.4
+              level: 3
+              title: T4 — `install-script`
+              byte_offset: 2371
+              byte_count: 607
+              word_count: 91
+              content_hash: 5883bf27221fb0947406e555842423741abb60f37e1cf86e95aa946148089e60
+            - path: 1.2.5
+              level: 3
+              title: T5 — `release-validation`
+              byte_offset: 2978
+              byte_count: 685
+              word_count: 107
+              content_hash: 2c273b46b697c3b644d4bc344ccd500202a9d5cc0c5fd47a76ec76f0afdd365b
+        - path: "1.3"
+          level: 2
+          title: 3. Implementation Order
+          byte_offset: 3663
+          byte_count: 305
+          word_count: 40
+          content_hash: f27a86a3b3f38e6eef4d9022b1dd791e5899db3623429633c10c446c72b667a8
+        - path: "1.4"
+          level: 2
+          title: 4. Notes
+          byte_offset: 3968
+          byte_count: 572
+          word_count: 84
+          content_hash: f2b9c4f0c3670f4c5a9ce186a5e2c84a59e87b574484571536b25848bb9be78b
+entity_refs:
+    - entity_id: FEAT-01KMKRQT9QCPR
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 229
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 864
+cross_doc_links:
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.2.2
+    - target_path: README.md
+      link_text: README.md
+      section_path: "1.4"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

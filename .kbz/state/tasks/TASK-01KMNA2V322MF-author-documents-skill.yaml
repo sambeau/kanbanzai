@@ -2,4 +2,12 @@ id: TASK-01KMNA2V322MF
 parent_feature: FEAT-01KMKRQSD1TKK
 slug: author-documents-skill
 summary: "Author the kanbanzai-documents skill file covering: document types and where they live, how to register with doc_record_submit, when to use batch_import_documents, drift detection and doc_record_refresh, and the document approval lifecycle."
-status: queued
+status: done
+files_planned:
+  - internal/init/skills/documents/SKILL.md
+completed: "2026-03-26T15:05:05Z"
+claimed_at: "2026-03-26T15:04:13Z"
+dispatched_to: content
+dispatched_at: "2026-03-26T15:04:13Z"
+dispatched_by: agent/skills-content
+completion_summary: "Authored kanbanzai-documents SKILL.md covering: document types table with directories and use cases, registration procedure with doc_record_submit and batch_import_documents, three-status approval lifecycle, drift/refresh cycle with consequences, supersession procedure, and four gotchas (unregistered docs, editing after registration, wrong placement, blind retries)."

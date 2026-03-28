@@ -1,0 +1,355 @@
+document_id: PROJECT/dev-plan-phase-2-decision-log
+document_path: work/plan/phase-2-decision-log.md
+content_hash: 33ea89d8e466cc60e4fdab8af249af64aaa88ca72e806a8ef01b048fb2e57a90
+indexed_at: 2026-03-25T21:38:28.475498Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 2 Decision Log
+      byte_offset: 0
+      byte_count: 18758
+      word_count: 2746
+      content_hash: 33ea89d8e466cc60e4fdab8af249af64aaa88ca72e806a8ef01b048fb2e57a90
+      children:
+        - path: "1.1"
+          level: 2
+          title: Decision Register
+          byte_offset: 302
+          byte_count: 27
+          word_count: 4
+          content_hash: d13c93be7ae04521a9d8c1d7a6c4f4eae3f1d365597827d6bb0bd3715fdd77a4
+        - path: "1.2"
+          level: 2
+          title: '`P2-DEC-001: Knowledge lifecycle MVP scope for Phase 2b`'
+          byte_offset: 329
+          byte_count: 5194
+          word_count: 754
+          content_hash: d0831fa1f773d32b9bdb3bac784fcd619d3ea6c84267a775bb288c41e00ca60e
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Decision
+              byte_offset: 621
+              byte_count: 2013
+              word_count: 291
+              content_hash: 6624a95d2404ab29c14dc9942d93339bcbcd9fff6bc361dbd5fb8e13ae4b59d7
+            - path: 1.2.2
+              level: 3
+              title: Rationale
+              byte_offset: 2634
+              byte_count: 918
+              word_count: 145
+              content_hash: cc7cbd0cb5be724c108cda41f56d0e1f89048809bbc10b0e191900085f0b3dc7
+            - path: 1.2.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 3552
+              byte_count: 946
+              word_count: 136
+              content_hash: 29a262d61e08303ec1ef62aba786fc1938b96657f240f3ff1b4b707af7051676
+            - path: 1.2.4
+              level: 3
+              title: Consequences
+              byte_offset: 4498
+              byte_count: 641
+              word_count: 97
+              content_hash: 6be606e29b3dde2fe9524dd52248c8ab730aa560b7d9e26bebf53985dd21c8f6
+            - path: 1.2.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 5139
+              byte_count: 384
+              word_count: 54
+              content_hash: 3ce5b371517d32d7b37060f753f837a292ade74fb536b8547920e28c9ec7404d
+        - path: "1.3"
+          level: 2
+          title: '`P2-DEC-002: Context profile inheritance uses leaf-level replace`'
+          byte_offset: 5523
+          byte_count: 3883
+          word_count: 572
+          content_hash: b887fdfa3ee110c065672936e481738e9197abcd79f587de2ec0176d816f9eb9
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Decision
+              byte_offset: 5816
+              byte_count: 1163
+              word_count: 178
+              content_hash: 35923da2c658ff0075249b12f411253a43b926e44ed95fe53bdaea1d296a7d8e
+            - path: 1.3.2
+              level: 3
+              title: Rationale
+              byte_offset: 6979
+              byte_count: 784
+              word_count: 118
+              content_hash: 93cac6537f29d693a3bbd6ecd3111fbe6fb06d6d228ad1124f9e03c9eec623a0
+            - path: 1.3.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 7763
+              byte_count: 785
+              word_count: 114
+              content_hash: fadc9f01f198f726cb8b4c4ef66938b7b6490655a2c960c3b667589e47e9d2a9
+            - path: 1.3.4
+              level: 3
+              title: Consequences
+              byte_offset: 8548
+              byte_count: 569
+              word_count: 89
+              content_hash: e71669d366396c882161d26a697f2c85bc01b98e7557b580ff630150599daecc
+            - path: 1.3.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 9117
+              byte_count: 289
+              word_count: 44
+              content_hash: c5e2146e0be0ed9a340f0b757c549b0e0778a6deffe0db6d2ec60c6748909ad5
+        - path: "1.4"
+          level: 2
+          title: '`P2-DEC-003: Batch document import for project bootstrap`'
+          byte_offset: 9406
+          byte_count: 4187
+          word_count: 585
+          content_hash: d2e688120a67a8b001d5bd80a0f13ba6d847576586b88a048c9f93f162dbe4a5
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Decision
+              byte_offset: 9702
+              byte_count: 1477
+              word_count: 209
+              content_hash: 2c657e95ed2d3495d90b407269edca0d9fdc5340287639aed180174bb8ec1aae
+            - path: 1.4.2
+              level: 3
+              title: Rationale
+              byte_offset: 11179
+              byte_count: 714
+              word_count: 101
+              content_hash: 710e8ed3281b19c7abc27189b667c6cdc0ed877e3e0ec96862e2f22d7b6c02f8
+            - path: 1.4.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 11893
+              byte_count: 808
+              word_count: 112
+              content_hash: 838118bf09f5b0b299f2670af8d40ace0f98fa06d14bbbc26ea87809c11bfc15
+            - path: 1.4.4
+              level: 3
+              title: Consequences
+              byte_offset: 12701
+              byte_count: 514
+              word_count: 77
+              content_hash: 08659d7779b66296c3592c3854a87478919305cc826a8d85a89e921592029956
+            - path: 1.4.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 13215
+              byte_count: 378
+              word_count: 56
+              content_hash: 8d623220a41782151b57b0ff94ad603d913d899d3c5c1eddb049e340515c7f6b
+        - path: "1.5"
+          level: 2
+          title: '`P2-DEC-004: created_by auto-resolution from git config with local override`'
+          byte_offset: 13593
+          byte_count: 4558
+          word_count: 694
+          content_hash: 685e1ee07121013d9400be6f824ab54f9f508d99c719485c7872e5abc21e6b3c
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Decision
+              byte_offset: 13845
+              byte_count: 1123
+              word_count: 178
+              content_hash: 604f49ab9499059d0e85826d7aed4671ea0b0bc089e1aa275c985751b6b168e1
+            - path: 1.5.2
+              level: 3
+              title: Rationale
+              byte_offset: 14968
+              byte_count: 1116
+              word_count: 172
+              content_hash: 18db91e6d721e0af68b8e58cabdcc3e7b77bf069d98a2dfdcaef9cb7db6bc860
+            - path: 1.5.3
+              level: 3
+              title: Alternatives Considered
+              byte_offset: 16084
+              byte_count: 909
+              word_count: 137
+              content_hash: 4e32977b1d77ee60703a485d50876ad08956c7d4dc65f18140682e39bde7c897
+            - path: 1.5.4
+              level: 3
+              title: Consequences
+              byte_offset: 16993
+              byte_count: 676
+              word_count: 103
+              content_hash: f9f66822f700fd679f1e0ea2a5c4e0b4bb85a32a36995ad2e2806f8962b74d42
+            - path: 1.5.5
+              level: 3
+              title: Follow-up Needed
+              byte_offset: 17669
+              byte_count: 482
+              word_count: 76
+              content_hash: 886ff024061f431e87191c6ad4a60b778e55dc09d57d696437f7b4f9be798177
+        - path: "1.6"
+          level: 2
+          title: Summary
+          byte_offset: 18151
+          byte_count: 607
+          word_count: 94
+          content_hash: bbbcd69fb202988e7ac99e6fef8116c964696729c77c4b5e8b849c29ee755af1
+entity_refs:
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 208
+    - entity_id: DEC-021
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 227
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: "1.2"
+      byte_offset: 336
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.2.5
+      byte_offset: 5237
+    - entity_id: DEC-002
+      entity_type: decision
+      section_path: "1.3"
+      byte_offset: 5530
+    - entity_id: DEC-003
+      entity_type: decision
+      section_path: "1.4"
+      byte_offset: 9413
+    - entity_id: DEC-004
+      entity_type: decision
+      section_path: 1.4.1
+      byte_offset: 10486
+    - entity_id: DEC-004
+      entity_type: decision
+      section_path: "1.5"
+      byte_offset: 13600
+    - entity_id: DEC-003
+      entity_type: decision
+      section_path: 1.5.4
+      byte_offset: 17586
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: "1.6"
+      byte_offset: 18315
+    - entity_id: DEC-021
+      entity_type: decision
+      section_path: "1.6"
+      byte_offset: 18334
+    - entity_id: DEC-002
+      entity_type: decision
+      section_path: "1.6"
+      byte_offset: 18482
+    - entity_id: DEC-003
+      entity_type: decision
+      section_path: "1.6"
+      byte_offset: 18575
+    - entity_id: DEC-004
+      entity_type: decision
+      section_path: "1.6"
+      byte_offset: 18660
+cross_doc_links:
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1.2"
+    - target_path: work/spec/phase-2-specification.md
+      link_text: work/spec/phase-2-specification.md
+      section_path: "1.2"
+    - target_path: work/plan/phase-2-scope.md
+      link_text: work/plan/phase-2-scope.md
+      section_path: "1.2"
+    - target_path: phase-2-scope.md
+      link_text: phase-2-scope.md
+      section_path: 1.2.5
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1.3"
+    - target_path: work/spec/phase-2-specification.md
+      link_text: work/spec/phase-2-specification.md
+      section_path: "1.3"
+    - target_path: work/plan/phase-2-scope.md
+      link_text: work/plan/phase-2-scope.md
+      section_path: "1.3"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1.4"
+    - target_path: work/spec/phase-2-specification.md
+      link_text: work/spec/phase-2-specification.md
+      section_path: "1.4"
+    - target_path: work/plan/phase-2-scope.md
+      link_text: work/plan/phase-2-scope.md
+      section_path: "1.4"
+    - target_path: work/**/*.md
+      link_text: work/**/*.md
+      section_path: 1.4.1
+    - target_path: work/spec/phase-2-specification.md
+      link_text: work/spec/phase-2-specification.md
+      section_path: "1.5"
+    - target_path: work/plan/phase-2-scope.md
+      link_text: work/plan/phase-2-scope.md
+      section_path: "1.5"
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1"
+      role: decision
+      confidence: high
+    - section_path: "1.1"
+      role: decision
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: decision
+      confidence: high
+    - section_path: 1.2.2
+      role: rationale
+      confidence: high
+    - section_path: 1.2.3
+      role: alternative
+      confidence: high
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.1
+      role: decision
+      confidence: high
+    - section_path: 1.3.2
+      role: rationale
+      confidence: high
+    - section_path: 1.3.3
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: decision
+      confidence: high
+    - section_path: 1.4.2
+      role: rationale
+      confidence: high
+    - section_path: 1.4.3
+      role: alternative
+      confidence: high
+    - section_path: 1.5.1
+      role: decision
+      confidence: high
+    - section_path: 1.5.2
+      role: rationale
+      confidence: high
+    - section_path: 1.5.3
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+classified: false

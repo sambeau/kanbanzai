@@ -1,0 +1,156 @@
+document_id: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern
+document_path: work/spec/review-orchestration-pattern.md
+content_hash: 27b3ff9fcb60b55e060390ef573f5d20f7d7719d907e816d1b70b93e3a32c516
+indexed_at: 2026-03-28T00:28:19.747209Z
+sections:
+    - path: "1"
+      level: 1
+      title: Review Orchestration Pattern Specification
+      byte_offset: 0
+      byte_count: 12424
+      word_count: 1718
+      content_hash: 27b3ff9fcb60b55e060390ef573f5d20f7d7719d907e816d1b70b93e3a32c516
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 418
+          byte_count: 582
+          word_count: 82
+          content_hash: 38645592b901ef8cbf6b4688e5c17db9876462bc4ca34ef12b0c4e5df9712925
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1000
+          byte_count: 634
+          word_count: 91
+          content_hash: 96c632dbd69b4d566f6bd535a7926f5506710effaf98c988034361f8a6980dd7
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1634
+          byte_count: 1473
+          word_count: 216
+          content_hash: 3a72ac408adba69ae31424eb94d00462281f6cc175738ab161bdf394dfbf45b2
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 1647
+              byte_count: 728
+              word_count: 103
+              content_hash: dc3f72cc8e4ffbeec1da4c74ac0537b8ed8093adb0a10bdc12b6041133cf8667
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred
+              byte_offset: 2375
+              byte_count: 357
+              word_count: 57
+              content_hash: 05afbd9d9ad7321f0158282de3611894ebf985b6ab9d2a8313f2aed436aa7fe1
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly excluded
+              byte_offset: 2732
+              byte_count: 375
+              word_count: 53
+              content_hash: 060900f82ef7fa710693c436c52cb9995333c3b10ad2b2a610e92e36af42f7f4
+        - path: "1.4"
+          level: 2
+          title: 4. Acceptance Criteria
+          byte_offset: 3107
+          byte_count: 7582
+          word_count: 1027
+          content_hash: 9a0243b3bad5dfff49ad59b075d5bd70de3ba9cb3f86f46faaa5d47896af808a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Orchestration procedure documentation
+              byte_offset: 3134
+              byte_count: 3052
+              word_count: 411
+              content_hash: 70532d6e545a7bb923ce10e2586f0ef35b502d9c3ef162621a3663b58c3717f2
+            - path: 1.4.2
+              level: 3
+              title: Tool chain verification
+              byte_offset: 6186
+              byte_count: 1948
+              word_count: 266
+              content_hash: f062cad1d5bfcb0265ebfd647ad65c649d43f6cb5077dffc3e67dcf01c3ef11b
+            - path: 1.4.3
+              level: 3
+              title: Single-feature review cycle
+              byte_offset: 8134
+              byte_count: 1056
+              word_count: 151
+              content_hash: 71a9c6dd320db0778d4e9b5d608092f3156376757ea4aec37777573d4cacbfe2
+            - path: 1.4.4
+              level: 3
+              title: Multi-feature review
+              byte_offset: 9190
+              byte_count: 562
+              word_count: 74
+              content_hash: f60fcbdb97813258f186362027ef9b95572b46814987d16deca60c2b9054ddd0
+            - path: 1.4.5
+              level: 3
+              title: Human checkpoint integration
+              byte_offset: 9752
+              byte_count: 367
+              word_count: 51
+              content_hash: 75faae131fc2169d91717cc8833f2d586e68f106cf3c06fadd8d42f66a56c53d
+            - path: 1.4.6
+              level: 3
+              title: Review document
+              byte_offset: 10119
+              byte_count: 570
+              word_count: 70
+              content_hash: 0c9a852e92bc85940907dd50c65827f36fce9af0687f5f4ee834c3d8a2a1b50c
+        - path: "1.5"
+          level: 2
+          title: 5. Verification
+          byte_offset: 10689
+          byte_count: 1735
+          word_count: 262
+          content_hash: 5f4bfab079c99541037a0969889e3311081cfd160cb15f3a515b3528a594a3fd
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Manual verification steps
+              byte_offset: 10709
+              byte_count: 988
+              word_count: 138
+              content_hash: b44f9949a8585008a8335b6e28d5f6d6f05db3227b43c1e4c6286591b75d46a2
+            - path: 1.5.2
+              level: 3
+              title: Tool chain spot-checks
+              byte_offset: 11697
+              byte_count: 260
+              word_count: 43
+              content_hash: 5bea36c839dfbd8b565498a410be704550b18ad613b21e5e75f5587aa71f6523
+            - path: 1.5.3
+              level: 3
+              title: Definition of done for this feature
+              byte_offset: 11957
+              byte_count: 467
+              word_count: 78
+              content_hash: 1ba5afd38e2999a80c374e0e6f7683ce0a34b54b77e78515ab3868cfe62a7ebf
+cross_doc_links:
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: 1.5.3
+      role: definition
+      confidence: high
+classified: false

@@ -1,0 +1,139 @@
+document_id: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates
+document_path: work/spec/decompose-precondition-gates.md
+content_hash: 24b8bf8f14268fbab2c039b076df1f5b9aaefa6aabd08605d7c5d3d8cb3d02ee
+indexed_at: 2026-03-28T12:04:56.989424Z
+sections:
+    - path: "1"
+      level: 1
+      title: decompose propose Precondition Gates Specification
+      byte_offset: 0
+      byte_count: 6333
+      word_count: 933
+      content_hash: 24b8bf8f14268fbab2c039b076df1f5b9aaefa6aabd08605d7c5d3d8cb3d02ee
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 581
+          byte_count: 757
+          word_count: 119
+          content_hash: 53aad3a836716c57a3a927716aef57ad37228bae595b23e60cfd06672acfd80d
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1338
+          byte_count: 511
+          word_count: 87
+          content_hash: 8a1210c1b63e90ca3d836f3a8de8a4c687bccdac9df7aa91cc890fa5a0dac890
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1849
+          byte_count: 843
+          word_count: 130
+          content_hash: 0f1f34457aa945927d450192491452a4c0b17135c9495bdfb5ca050a471e1b54
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 1862
+              byte_count: 358
+              word_count: 57
+              content_hash: ef416996a3b7a398d303a2ea907518baceb89177bdd91909fc2ef4fbda2932d1
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Out of scope
+              byte_offset: 2220
+              byte_count: 472
+              word_count: 70
+              content_hash: 2adf86e6b241cfe193323617513abccc9c2ce37c199f1849894199314a7f9eb3
+        - path: "1.4"
+          level: 2
+          title: 4. Acceptance Criteria
+          byte_offset: 2692
+          byte_count: 2902
+          word_count: 441
+          content_hash: 827becedbfcc4f90dcaf15a892280545062997ba6aebf5ba6ee4d260476a70a0
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Spec approval gate
+              byte_offset: 2719
+              byte_count: 770
+              word_count: 116
+              content_hash: df5b908576448bc06c9d1f985f6069d09eff8691221ab33bd95c9c7c95ece626
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Index content gate
+              byte_offset: 3489
+              byte_count: 826
+              word_count: 124
+              content_hash: c2e20e9cdc81cd16453f9b9bfd9f354d271af2acc4ebb7eea6df0a0821151d78
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Fallback removal
+              byte_offset: 4315
+              byte_count: 551
+              word_count: 80
+              content_hash: 7bc9d777418dcee2841a1d560da4ca187005da4f8b117bc359e13d92050ce6d8
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Testing
+              byte_offset: 4866
+              byte_count: 728
+              word_count: 117
+              content_hash: d9af66f70daa294e877f0cb1acf32a5032ba48b4c12ea9232814e340547cfc9e
+        - path: "1.5"
+          level: 2
+          title: 5. Error Message Reference
+          byte_offset: 5594
+          byte_count: 471
+          word_count: 71
+          content_hash: 671d83c57c82a3f88ce1c9f52e031c4828489f51fde7a8981e7b349269740631
+        - path: "1.6"
+          level: 2
+          title: 6. File Summary
+          byte_offset: 6065
+          byte_count: 268
+          word_count: 38
+          content_hash: f1d835288d8e2bb9604d7f0bed81c9a7299661b32b3ab42809fb95260a9a8ec1
+entity_refs:
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 392
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 2456
+    - entity_id: P8-decompose-reliability
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 458
+cross_doc_links:
+    - target_path: work/design/decompose-reliability.md
+      link_text: work/design/decompose-reliability.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+classified: false

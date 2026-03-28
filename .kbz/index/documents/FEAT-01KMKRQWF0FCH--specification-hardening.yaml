@@ -1,0 +1,372 @@
+document_id: FEAT-01KMKRQWF0FCH/specification-hardening
+document_path: work/spec/hardening.md
+content_hash: e2a114b299fcb59b027f697f2e35dc43acf4facdd406055f5f4a11d7d2f13d79
+indexed_at: 2026-03-26T14:28:38.390012Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Hardening: Kanbanzai 1.0 Robustness Specification'
+      byte_offset: 0
+      byte_count: 30811
+      word_count: 4289
+      content_hash: e2a114b299fcb59b027f697f2e35dc43acf4facdd406055f5f4a11d7d2f13d79
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 450
+          byte_count: 1003
+          word_count: 148
+          content_hash: 08312e1017a2fe31d8abc25897daefbbe42dfcce2a66da8d0b318f1efec5aa04
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1453
+          byte_count: 1316
+          word_count: 190
+          content_hash: 5830e78b011cc1ef0a15f28eb0e222051554d7cd582e52f5ec5f7c452286831e
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2769
+          byte_count: 1261
+          word_count: 185
+          content_hash: 92c83806b894c9d7078c70949dc7d7b57d005b84316f91c52e7be006550c9611
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 2782
+              byte_count: 691
+              word_count: 99
+              content_hash: 0d86c347cfce5236763ff197aac6fba432b2003f81044cb174de881fb1c372d2
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred
+              byte_offset: 3473
+              byte_count: 309
+              word_count: 47
+              content_hash: 0996292c0a388568f4627fefba15f35e5c2d5f4b9b170657998aa13af2c8ab65
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly excluded
+              byte_offset: 3782
+              byte_count: 248
+              word_count: 36
+              content_hash: a26f6e47bbb699a33a18189e359278916d1b86c7d4c2a368cea1849d6777b195
+        - path: "1.4"
+          level: 2
+          title: 4. Design Principles
+          byte_offset: 4030
+          byte_count: 1586
+          word_count: 244
+          content_hash: 9ebb5c78b529e72a924e0c6bdbe1110251d787075006c8a0e78f387a35cc260a
+        - path: "1.5"
+          level: 2
+          title: 5. Error Message Standards
+          byte_offset: 5616
+          byte_count: 2002
+          word_count: 306
+          content_hash: 3a214ab56ec8b90674aaeca163123486393888cb581a8550c42653244dc7c08d
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Required structure
+              byte_offset: 5647
+              byte_count: 464
+              word_count: 78
+              content_hash: 9e8b8a900c490be1a310b0172ef7e2e46ac7ea8988200886705211977b90c22d
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Prohibited content
+              byte_offset: 6111
+              byte_count: 544
+              word_count: 73
+              content_hash: 9fc7a854bb41415647fb5ba6d542b59e72fa3bf24bac39a7a6ae2ec3273088b8
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Examples
+              byte_offset: 6655
+              byte_count: 638
+              word_count: 96
+              content_hash: e48ecd68c684ba38059aa0f9805c759d7c62ee993756936890542ce88aae35b0
+            - path: 1.5.4
+              level: 3
+              title: 5.4 MCP error responses
+              byte_offset: 7293
+              byte_count: 325
+              word_count: 54
+              content_hash: c9cb90f7744f73e629360967dc27d4d7be789280d40883d16878dd608836f125
+        - path: "1.6"
+          level: 2
+          title: 6. `kanbanzai init` Edge Cases
+          byte_offset: 7618
+          byte_count: 3211
+          word_count: 480
+          content_hash: 6ff222f9b69768735eea970e25dc037241d3f6ad58263559d5fe2382e03189ea
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Non-Git directory
+              byte_offset: 7809
+              byte_count: 558
+              word_count: 81
+              content_hash: a65c46ce946cd451e159af7fb1cdcc07a633cd2653be450c593ad5987d3f7059
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Existing `.kbz/` directory
+              byte_offset: 8367
+              byte_count: 577
+              word_count: 86
+              content_hash: e370bb7f8bdd49da914d37d0726278a2a4a1c91d95a391b7f45afdd318fea7f2
+            - path: 1.6.3
+              level: 3
+              title: 6.3 No write permission
+              byte_offset: 8944
+              byte_count: 682
+              word_count: 105
+              content_hash: 5ad90c9408e38eb44a6471ae9a1d97dfc561d6eebabfbf01b029ad16e488a7c4
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Conflicting `.skills/` files
+              byte_offset: 9626
+              byte_count: 723
+              word_count: 103
+              content_hash: 5d3cfd0d99a306e3fcd6a3cb8aef51ad2acf21845656e9de56b03d7116fe6d24
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Atomicity requirement
+              byte_offset: 10349
+              byte_count: 480
+              word_count: 74
+              content_hash: 31ed889d332f405c1b5cc71c47f7639d2199ee012b2c32aabb4842d00e9d89c0
+        - path: "1.7"
+          level: 2
+          title: 7. CLI Help and Discoverability
+          byte_offset: 10829
+          byte_count: 2008
+          word_count: 312
+          content_hash: 73d340c676e5288dd936c089ece67d5a61c9e0b3150b9aeca9bc6edd56699b40
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Top-level help
+              byte_offset: 10865
+              byte_count: 515
+              word_count: 78
+              content_hash: 63c87973c74c615a05121037758ab54e317020e737dd657b0bd2d35d8e39f288
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Per-command help
+              byte_offset: 11380
+              byte_count: 533
+              word_count: 83
+              content_hash: 707810d7e8c806f132bb885bef569a6ebba3748cf29b338701661e230e7b1f28
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Discoverability standard
+              byte_offset: 11913
+              byte_count: 482
+              word_count: 76
+              content_hash: 59f47b6085294310cf42fe1186917c4be58652601f7ce2c97cbfafafae94eb80
+            - path: 1.7.4
+              level: 3
+              title: 7.4 MCP tool descriptions
+              byte_offset: 12395
+              byte_count: 442
+              word_count: 69
+              content_hash: fba289b77341a18ccf5a85d631e05e47485025b9aacbefb6861b94b4cad3766d
+        - path: "1.8"
+          level: 2
+          title: 8. Partial State Recovery
+          byte_offset: 12837
+          byte_count: 2669
+          word_count: 411
+          content_hash: 5972b410f359dfc414d27dfdb30d9856e798f5569a230ea27320a1f69e233baf
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Operations that produce detectable partial state
+              byte_offset: 12867
+              byte_count: 655
+              word_count: 101
+              content_hash: 6cb8fb61456c408c6123c923d01aec5ad050b8d3c948ad24fe0ceef2314dd081
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Detection mechanism
+              byte_offset: 13522
+              byte_count: 839
+              word_count: 124
+              content_hash: c24a05bfb296636995a51351d5331a08510d449f786ea094acdde498d24d94af
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Reporting behaviour
+              byte_offset: 14361
+              byte_count: 661
+              word_count: 104
+              content_hash: d6934918d5a421b6c8bc8866b5fda9dedada0830b620f486b5328003082a9c0b
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Scope of detection
+              byte_offset: 15022
+              byte_count: 484
+              word_count: 77
+              content_hash: ec8469a3908cd6f73ae281187855691aab90fb750c1031ca3f999ed73fd9d3da
+        - path: "1.9"
+          level: 2
+          title: 9. `doc_record_refresh` MCP Tool
+          byte_offset: 15506
+          byte_count: 4437
+          word_count: 590
+          content_hash: bcfba62bc629755539b148a5a7df03363970c8c49eb55f8cb41930a02346d765
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Purpose
+              byte_offset: 15543
+              byte_count: 627
+              word_count: 90
+              content_hash: b6d53fcbec33298417c5b536b1e541c2e79c6ecd9c4e4d5937b8a477e4067411
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Inputs
+              byte_offset: 16170
+              byte_count: 319
+              word_count: 26
+              content_hash: 2d34383e97f70d536af75b1a70ba4df8820d5d76140029b0233915ae147fe60c
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Behaviour
+              byte_offset: 16489
+              byte_count: 931
+              word_count: 161
+              content_hash: 085d10607faf864276129cdd21d973a0dd6701989c546169529159c9b1658fbd
+            - path: 1.9.4
+              level: 3
+              title: 9.4 Outputs
+              byte_offset: 17420
+              byte_count: 829
+              word_count: 103
+              content_hash: aff16a578d33be71bb359ff916c84b64d71712a7f4418fc13b30319fccd53c65
+            - path: 1.9.5
+              level: 3
+              title: 9.5 Status transition on refresh of approved documents
+              byte_offset: 18249
+              byte_count: 610
+              word_count: 95
+              content_hash: 2aa5826b578768deec889906a11df316d557901fa1c4260ef77246a170bcba07
+            - path: 1.9.6
+              level: 3
+              title: 9.6 Error conditions
+              byte_offset: 18859
+              byte_count: 1084
+              word_count: 110
+              content_hash: dc102f6102ebb69071110caf02e459363617f0b91a5a153e3a4a856fce23d335
+        - path: "1.10"
+          level: 2
+          title: 10. MCP Tool Safety Annotations
+          byte_offset: 19943
+          byte_count: 6674
+          word_count: 765
+          content_hash: f755227cc1c6f6dd2351c5256be1c1ad7e117440dbac41ebbbf111f8f644d0f2
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Purpose
+              byte_offset: 19979
+              byte_count: 705
+              word_count: 101
+              content_hash: d897eac7461a532783ba27342535b1921e5ea927537fcf1046f208569187eeec
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Annotation semantics
+              byte_offset: 20684
+              byte_count: 1328
+              word_count: 141
+              content_hash: 40a63a41710df018b5f835e5f245f21b746ea542e3c16ed9f0f814c79cb00a9a
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Auto-approvability classification
+              byte_offset: 22012
+              byte_count: 624
+              word_count: 85
+              content_hash: 6d167fc410a7a8a85c18ef7ec14d833f927fd47d2033911aea1ce88f3e68f00d
+            - path: 1.10.4
+              level: 3
+              title: 10.4 Tool classification table
+              byte_offset: 22636
+              byte_count: 3029
+              word_count: 292
+              content_hash: 8aacc07f46aec7d407bc072827ad123921df2c2e718ec382490f62186b83a3e9
+            - path: 1.10.5
+              level: 3
+              title: 10.5 Implementation requirement
+              byte_offset: 25665
+              byte_count: 453
+              word_count: 61
+              content_hash: 50c6e34271913c9ae40f9504958e72e172558c1b16dfabc814c2b12f03f77d9d
+            - path: 1.10.6
+              level: 3
+              title: 10.6 Annotation accuracy requirement
+              byte_offset: 26118
+              byte_count: 499
+              word_count: 79
+              content_hash: cc6f668b58cb32ec8d6daacf4ce6d6f4f872ca613d01e6c29d7e7d805bba2403
+        - path: "1.11"
+          level: 2
+          title: 11. Acceptance Criteria
+          byte_offset: 26617
+          byte_count: 4194
+          word_count: 620
+          content_hash: 41c510d907b7cb1171b5dd8bdf1dc43028afc8c60f16dc94a4ff55de07b2b3d4
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 6530
+    - entity_id: DOC-01KMKRQWF0FCH
+      entity_type: document
+      section_path: 1.9.2
+      byte_offset: 16448
+cross_doc_links:
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1"
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.7.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.5.3
+      role: example
+      confidence: high
+    - section_path: 1.6.5
+      role: requirement
+      confidence: high
+    - section_path: 1.8.4
+      role: constraint
+      confidence: high
+    - section_path: 1.9.1
+      role: narrative
+      confidence: high
+    - section_path: 1.10.1
+      role: narrative
+      confidence: high
+    - section_path: 1.10.5
+      role: requirement
+      confidence: high
+    - section_path: 1.10.6
+      role: requirement
+      confidence: high
+    - section_path: "1.11"
+      role: requirement
+      confidence: high
+classified: false

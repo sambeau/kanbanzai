@@ -1,0 +1,86 @@
+document_id: PROJECT/research-sub-agent-context-propagation
+document_path: work/research/sub-agent-context-propagation.md
+content_hash: 484d34c7c5c868968d93c84ea133769a705842b369f9cc3c923a20768f554b4d
+indexed_at: 2026-03-25T21:38:29.086767Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Sub-Agent Context Propagation: A Real-World Validation'
+      byte_offset: 0
+      byte_count: 6124
+      word_count: 874
+      content_hash: 484d34c7c5c868968d93c84ea133769a705842b369f9cc3c923a20768f554b4d
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. The Observation
+          byte_offset: 334
+          byte_count: 948
+          word_count: 135
+          content_hash: 45558c37677b9eb745bc6570f92d30cea55ae28b4c6d77d38cab9ff711049da6
+        - path: "1.2"
+          level: 2
+          title: 2. The Manual Fix
+          byte_offset: 1282
+          byte_count: 940
+          word_count: 136
+          content_hash: 470aa11ae2199941a89050e26cbd59e99f1baf8283a421850e9e5c92231cb86c
+        - path: "1.3"
+          level: 2
+          title: 3. Why This Matters for Kanbanzai
+          byte_offset: 2222
+          byte_count: 1067
+          word_count: 156
+          content_hash: 971a444369642ea225c15cc969a19877ea0e46ae9656d521b73b6e04e84f569c
+        - path: "1.4"
+          level: 2
+          title: 4. What Kanbanzai Could Do Instead
+          byte_offset: 3289
+          byte_count: 1442
+          word_count: 214
+          content_hash: 81c3972edb804847923903989efbb45c8d28de6b23db12a47e816e517795ab17
+        - path: "1.5"
+          level: 2
+          title: 5. Design Implications
+          byte_offset: 4731
+          byte_count: 959
+          word_count: 132
+          content_hash: 65ed0a693fcb8cebce6d63488e13f9eba6307da1bf16ffa4e05ee9713bccd37c
+        - path: "1.6"
+          level: 2
+          title: 6. Summary
+          byte_offset: 5690
+          byte_count: 434
+          word_count: 66
+          content_hash: ce371ffee3291542aebad25a273ed2ef6601b5d603a9d371801ae69dea95f2e5
+front_matter:
+    status: research note
+    date: "2025-07-26"
+    related:
+        - work/design/machine-context-design.md` §2.3 (sharing problem), §2.4 (scoping problem), §11.1 (AGENTS.md limitations)
+        - work/design/agent-interaction-protocol.md
+        - AGENTS.md` §Delegating to Sub-Agents
+cross_doc_links:
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+classified: false

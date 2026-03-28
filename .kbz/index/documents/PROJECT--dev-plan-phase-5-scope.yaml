@@ -1,0 +1,372 @@
+document_id: PROJECT/dev-plan-phase-5-scope
+document_path: work/plan/phase-5-scope.md
+content_hash: 9f5946d410294626f9168ed9a7e58b2b5ee68d5b1636d76122b39848f75459bf
+indexed_at: 2026-03-25T22:00:34.218937Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 5 Scope and Planning
+      byte_offset: 0
+      byte_count: 25930
+      word_count: 3740
+      content_hash: 9f5946d410294626f9168ed9a7e58b2b5ee68d5b1636d76122b39848f75459bf
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 516
+          byte_count: 809
+          word_count: 126
+          content_hash: 9b9fe35d2530510d65999ebde71c9f336863e2ddea5138bafc8abe33a92fb1a6
+        - path: "1.2"
+          level: 2
+          title: '2. Background: The Visibility Gap'
+          byte_offset: 1325
+          byte_count: 1464
+          word_count: 224
+          content_hash: 893b134abb3936978787b4ed81e903f47fc1254fcecaaa6c45ec487af59087bb
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 What Exists Today
+              byte_offset: 1363
+              byte_count: 554
+              word_count: 84
+              content_hash: 3e0e841f7b6fe7498453093e44e436461a495ab45b809fa07b31a5ea09a35200
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Who Is Excluded
+              byte_offset: 1917
+              byte_count: 558
+              word_count: 77
+              content_hash: c2416d700ec37bb6dd2204a2d41b336b7f9ba146389e57889b6d7dcc189ecad5
+            - path: 1.2.3
+              level: 3
+              title: 2.3 Why This Matters for 1.0
+              byte_offset: 2475
+              byte_count: 314
+              word_count: 57
+              content_hash: 93709b33852e3e6a94f081c75311a6c3d1c0308c13fbb06abee16f22112fc1ea
+        - path: "1.3"
+          level: 2
+          title: 3. Phase 5 Goals
+          byte_offset: 2789
+          byte_count: 587
+          word_count: 83
+          content_hash: 272d45a71c5880dd4c9c689500a450584333de17cdce824ee38d88f2abdc5bb1
+        - path: "1.4"
+          level: 2
+          title: 4. Design Decisions
+          byte_offset: 3376
+          byte_count: 5847
+          word_count: 840
+          content_hash: fbb49d5a3587cdbb17b8a73a5635af93ea28ec5f78c5fd2b91aea8a698ceb5a2
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'P5-DES-001: Read-Only Scope'
+              byte_offset: 3400
+              byte_count: 1048
+              word_count: 155
+              content_hash: 4a84d92a35a90db220e604bc7b57b7ac84bc67d7804b720d6d7624087139a73a
+            - path: 1.4.2
+              level: 3
+              title: 'P5-DES-002: Embedded HTTP Server'
+              byte_offset: 4448
+              byte_count: 1343
+              word_count: 193
+              content_hash: 0e9d313597f2f07799b5a36dccbbb99ffeb193b733a7a0e9be6d1705e21aa56a
+            - path: 1.4.3
+              level: 3
+              title: 'P5-DES-003: Static SPA with REST API'
+              byte_offset: 5791
+              byte_count: 1312
+              word_count: 198
+              content_hash: c5ee4e987f190ee08cd9e96ba8e4ffcaeca21841159a96e9feefeaf028f14a7d
+            - path: 1.4.4
+              level: 3
+              title: 'P5-DES-004: No Authentication in Phase 5'
+              byte_offset: 7103
+              byte_count: 1398
+              word_count: 193
+              content_hash: 24677c438ec839ecc6157d45d61caa47ae19f431aad47afb5f75e16c337387c7
+            - path: 1.4.5
+              level: 3
+              title: 'P5-DES-005: Mobile-Responsive but Desktop-First'
+              byte_offset: 8501
+              byte_count: 722
+              word_count: 97
+              content_hash: 0ddfc5db9ae61073045abe0422baed1446d83b5970c6b9197353e534ce474091
+        - path: "1.5"
+          level: 2
+          title: 5. Phase 5 Feature Breakdown
+          byte_offset: 9223
+          byte_count: 7909
+          word_count: 1195
+          content_hash: adb4a8acb40ec6a8defbec95f4229c9cdbea0236cf4e4b6cfc402eb9a3e5173e
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Core Dashboard Views
+              byte_offset: 9256
+              byte_count: 6466
+              word_count: 976
+              content_hash: 76a4d6fcc337ce4dc23e16f3a2cf2cd770de7528221d39bbb29cd03f0df5b50b
+              children:
+                - path: 1.5.1.1
+                  level: 4
+                  title: 5.1.1 Entity Hierarchy View
+                  byte_offset: 9286
+                  byte_count: 1029
+                  word_count: 162
+                  content_hash: 0cb497b62ad5421a1f6039e3bc5a6b4d5eadbe6bb396f41bc5f85c53ed3ba799
+                - path: 1.5.1.2
+                  level: 4
+                  title: 5.1.2 Work Queue View
+                  byte_offset: 10315
+                  byte_count: 943
+                  word_count: 148
+                  content_hash: 132f7d8b17237b270857ff592522682d6ced7f71f5d6da7a568aee6d2c1cc453
+                - path: 1.5.1.3
+                  level: 4
+                  title: 5.1.3 Document Browser
+                  byte_offset: 11258
+                  byte_count: 1170
+                  word_count: 166
+                  content_hash: 7bcb2c87c3c6f04b00665523c19cd243af0fe953a1f14bc86a85877aaf058065
+                - path: 1.5.1.4
+                  level: 4
+                  title: 5.1.4 Worktree and Branch Health
+                  byte_offset: 12428
+                  byte_count: 1139
+                  word_count: 180
+                  content_hash: 2a6e50179663fefea3a527b4587589a986d35dde9e4e2d0bdf656f89ece1eef1
+                - path: 1.5.1.5
+                  level: 4
+                  title: 5.1.5 Knowledge and Decision Browser
+                  byte_offset: 13567
+                  byte_count: 1145
+                  word_count: 168
+                  content_hash: ea795165a08f7333e752442ce78167ccce7a9f5250b80d4764fb734451a62781
+                - path: 1.5.1.6
+                  level: 4
+                  title: 5.1.6 Incident Status Board
+                  byte_offset: 14712
+                  byte_count: 1010
+                  word_count: 147
+                  content_hash: 57c5b6ab747c9b4069e4a9e899f4506438fc556ef0a5b442d7784f633e23c4de
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Estimation and Progress Metrics
+              byte_offset: 15722
+              byte_count: 731
+              word_count: 106
+              content_hash: c646381e2ad35a67b3a6ff6e1cd2addeea2ff0a3de5346dc985f2dbf8088cca6
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Health Check Dashboard
+              byte_offset: 16453
+              byte_count: 679
+              word_count: 107
+              content_hash: 7198d54facd7995d3199cf59a3658345effa8abf5814fb1fcea440eccf55fb1f
+        - path: "1.6"
+          level: 2
+          title: 6. API Design
+          byte_offset: 17132
+          byte_count: 1175
+          word_count: 142
+          content_hash: f94b8a1352cd65bdcd20ca8ace1218661b6203f65029d8e90892fb27daf60d4f
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 REST API Principles
+              byte_offset: 17150
+              byte_count: 639
+              word_count: 94
+              content_hash: ce27eaa86e5e70e813aeb0c9f78554383d244b4e6824008d3bad9d9e8d746308
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Example Endpoint Structure
+              byte_offset: 17789
+              byte_count: 518
+              word_count: 44
+              content_hash: 6cace4f117269fbff99773c1bf09eb08ed347fafc479a7c6c7ccf7de97dfe9e6
+        - path: "1.7"
+          level: 2
+          title: 7. Frontend Architecture
+          byte_offset: 18307
+          byte_count: 1685
+          word_count: 213
+          content_hash: bbe054d3000e3a126025f59f3a7516413f315475033778a0cb5cff7512745403
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Technology Choices
+              byte_offset: 18336
+              byte_count: 363
+              word_count: 53
+              content_hash: e1ec87491fe48369c75f634bbef268ae41523a10e38f1fe0dbe1e41181ff3e92
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Component Structure
+              byte_offset: 18699
+              byte_count: 956
+              word_count: 102
+              content_hash: 563fb27816762ddfe0e26ccc5449fb11621645eefad6d927fe78796fd220d320
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Build and Embed
+              byte_offset: 19655
+              byte_count: 337
+              word_count: 54
+              content_hash: d355d916639b29df96365a1d5d2d18b9e33c08af52639e8c5f4c42f8aaf42bd3
+        - path: "1.8"
+          level: 2
+          title: 8. Configuration
+          byte_offset: 19992
+          byte_count: 304
+          word_count: 37
+          content_hash: 11332db7f8a3701221a8460d146e1b5b0e00ff1d043a80b7eb3f6cfd7d823655
+        - path: "1.9"
+          level: 2
+          title: 9. Dependencies
+          byte_offset: 20296
+          byte_count: 772
+          word_count: 112
+          content_hash: 3dce051d05ba65521f3896b1e7e2260fdaa5a09d11ae46299142a8b41aa5def5
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Internal Dependencies (Prior Phases)
+              byte_offset: 20316
+              byte_count: 385
+              word_count: 54
+              content_hash: 6dff3565e64ac8a00d1bd86c043eb064bdf5d92538c0aba7e03660aab992dedb
+            - path: 1.9.2
+              level: 3
+              title: 9.2 External Dependencies
+              byte_offset: 20701
+              byte_count: 367
+              word_count: 55
+              content_hash: 4eda4f10a83b697eaca9546e551dd816a5dd5b542bb4b8299416c1cc18e9d68f
+        - path: "1.10"
+          level: 2
+          title: 10. Risks
+          byte_offset: 21068
+          byte_count: 668
+          word_count: 107
+          content_hash: 5de69c6c2241c8f1e4b8ff4ce6bb36a9ce0aae82d281d90bdd707d53affa32a2
+        - path: "1.11"
+          level: 2
+          title: 11. Future Considerations (Phase 5.1+)
+          byte_offset: 21736
+          byte_count: 1329
+          word_count: 195
+          content_hash: b990729e0f10b04fcfc5eecd7bbe9b4d363314df01dcc662ca3e3d7e8c57c0ea
+          children:
+            - path: 1.11.1
+              level: 3
+              title: Editing Features (Deferred)
+              byte_offset: 21779
+              byte_count: 496
+              word_count: 75
+              content_hash: 3e14cb623c06f4c53f958c3882303571dcd8f3d91c8f138f95117a34b6e76155
+            - path: 1.11.2
+              level: 3
+              title: Authentication (Deferred)
+              byte_offset: 22275
+              byte_count: 274
+              word_count: 40
+              content_hash: cc8731da12928715950773144668dea406bd626aabd6487f22a4aed22d6cb10e
+            - path: 1.11.3
+              level: 3
+              title: Advanced Visualizations (Deferred)
+              byte_offset: 22549
+              byte_count: 356
+              word_count: 52
+              content_hash: 308ab837ebbcc98a2e7f4beeaa0847ea8118708b7d2c76b199ce883d67999c85
+            - path: 1.11.4
+              level: 3
+              title: Mobile Optimization (Deferred)
+              byte_offset: 22905
+              byte_count: 160
+              word_count: 22
+              content_hash: aa65c507d692adeef1cc410ac1ab5e9a9874ddf6d52429e0d7908ed932ba48cb
+        - path: "1.12"
+          level: 2
+          title: 12. Next Steps
+          byte_offset: 23065
+          byte_count: 1643
+          word_count: 238
+          content_hash: c406abf9ee31944dbbb5ca1c82367f982b765d1849d35c0f6ed814df461be0fa
+          children:
+            - path: 1.12.1
+              level: 3
+              title: 12.1 Pre-Implementation
+              byte_offset: 23084
+              byte_count: 381
+              word_count: 55
+              content_hash: 4bd4d7a7a5848bdac269c6e9e89070602a3bf1239996093b30a4f5fb21710b6e
+            - path: 1.12.2
+              level: 3
+              title: 12.2 Implementation Tracks
+              byte_offset: 23465
+              byte_count: 773
+              word_count: 115
+              content_hash: 4ec9d2145a92aadac15d2861efebc129877f98c54dbb70949bae34014d3e9271
+            - path: 1.12.3
+              level: 3
+              title: 12.3 Validation
+              byte_offset: 24238
+              byte_count: 470
+              word_count: 64
+              content_hash: 3a69654a7f3f8f1eb60c43f11bc5e2249cdf2658fba37e0a25732cff6d4a2291
+        - path: "1.13"
+          level: 2
+          title: 13. Summary
+          byte_offset: 24708
+          byte_count: 1222
+          word_count: 184
+          content_hash: c6c2c97b4baeb9d1d32f1d991c026b1d7109bf4da6bd90800ecad34f6d4cf028
+cross_doc_links:
+    - target_path: work/plan/phase-4-scope.md
+      link_text: work/plan/phase-4-scope.md
+      section_path: "1"
+    - target_path: work/plan/phase-4b-review.md
+      link_text: work/plan/phase-4b-review.md
+      section_path: "1"
+    - target_path: work/reports/phase-5-planning-analysis.md
+      link_text: work/reports/phase-5-planning-analysis.md
+      section_path: "1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: decision
+      confidence: high
+    - section_path: 1.4.1
+      role: constraint
+      confidence: high
+    - section_path: 1.5.1.5
+      role: decision
+      confidence: high
+    - section_path: 1.6.2
+      role: example
+      confidence: high
+    - section_path: "1.10"
+      role: risk
+      confidence: high
+    - section_path: "1.13"
+      role: narrative
+      confidence: high
+classified: false

@@ -1,0 +1,252 @@
+document_id: P10-review-and-doc-currency/specification-doc-currency-health-check
+document_path: work/spec/doc-currency-health-check.md
+content_hash: 50a072075fa0ec16aff4fa6d3904da9e1164642a8ee7e7d3501e2a3e2171ac9d
+indexed_at: 2026-03-28T16:12:02.010254Z
+sections:
+    - path: "1"
+      level: 1
+      title: Documentation Currency Health Check Specification
+      byte_offset: 0
+      byte_count: 10202
+      word_count: 1454
+      content_hash: 50a072075fa0ec16aff4fa6d3904da9e1164642a8ee7e7d3501e2a3e2171ac9d
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 514
+          byte_count: 390
+          word_count: 55
+          content_hash: 5763f26585c1e822384e84bfdf6f34f33938262a203a8d8d8612afcbae925709
+        - path: "1.2"
+          level: 2
+          title: 2. Background
+          byte_offset: 904
+          byte_count: 768
+          word_count: 108
+          content_hash: 407c1d346a01fdf0d7c81a6a30d6f0c763ac059a866d99095b50e62bde3e7090
+        - path: "1.3"
+          level: 2
+          title: '3. Tier 1: Tool Name Validation'
+          byte_offset: 1672
+          byte_count: 2794
+          word_count: 406
+          content_hash: 29f2025b35803423fb0d5fa7affd8216c71e0ca0e668f9887431be14b7baed2d
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Scope
+              byte_offset: 1708
+              byte_count: 214
+              word_count: 26
+              content_hash: 591cafb49b1aec66905e20afb6ef68fb104faa7b3707565acb08007e47be1ce8
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Tool Name Extraction
+              byte_offset: 1922
+              byte_count: 683
+              word_count: 91
+              content_hash: 1d7e7bf26705e183550e92d33894c51c26f5f96dfb6bd9d9bc292f2da82a2659
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Known Tool Set
+              byte_offset: 2605
+              byte_count: 406
+              word_count: 51
+              content_hash: 655179280cdc95c69df2e8817ec1c6cce559f34f3e48f19516fb2fb9efc9bcbf
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Matching Rules
+              byte_offset: 3011
+              byte_count: 293
+              word_count: 55
+              content_hash: b170696a230f28334e1a244aa38d48fcaeda5e2fefd86e9660a041607fa82fca
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Exclusion List
+              byte_offset: 3304
+              byte_count: 791
+              word_count: 121
+              content_hash: 008ff25122b4e3ff2f731c64dd72872c6790f67cf5f29984a79b71d55e7e094c
+            - path: 1.3.6
+              level: 3
+              title: 3.6 Output
+              byte_offset: 4095
+              byte_count: 371
+              word_count: 55
+              content_hash: 79078c6f8b7d50b95defb8cb408d57d5bdcd282d06fd6038ba301e1c10cdd5aa
+        - path: "1.4"
+          level: 2
+          title: '4. Tier 2: Plan Completion Documentation Checklist'
+          byte_offset: 4466
+          byte_count: 1933
+          word_count: 307
+          content_hash: 740a6caffd0db0c2a6c11657f6b0f58e7c8c2c721928ffe778c60599a4328081
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Scope
+              byte_offset: 4521
+              byte_count: 120
+              word_count: 17
+              content_hash: f2e579e2a368fc4f7d204669dd7ce72e74a2ea8908c1b4a869b6ccbea27d46c9
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Checks
+              byte_offset: 4641
+              byte_count: 703
+              word_count: 114
+              content_hash: db4e68676aa2b11f4da4373810afcd6ab0e4b4385ac004a2533ceac94d2944ff
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Section Detection
+              byte_offset: 5344
+              byte_count: 289
+              word_count: 45
+              content_hash: e7debfcd98fea759631fe4be1d2b37ad530d16bb86785e73c8d8b12c86f1f5e1
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Output
+              byte_offset: 5633
+              byte_count: 436
+              word_count: 71
+              content_hash: 108d819746d51e20c45510929ad19c0ac0c03c44f488b3224ed26f7b3d008416
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Plans Without Specs
+              byte_offset: 6069
+              byte_count: 330
+              word_count: 52
+              content_hash: e493c09dcea179ac61850e538b3bab56891edea3e8ed1b929920c644890fa5f3
+        - path: "1.5"
+          level: 2
+          title: 5. Implementation
+          byte_offset: 6399
+          byte_count: 1002
+          word_count: 127
+          content_hash: 3767f488bc75a7be7dceaa531b00e4580fbdb3bf5d5c1ebb6f8a266b2cd884be
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Architecture
+              byte_offset: 6421
+              byte_count: 587
+              word_count: 82
+              content_hash: e694448c08b71739344599667a9fea097369bc9f12397add053c2d70af71a632
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Registration
+              byte_offset: 7008
+              byte_count: 206
+              word_count: 20
+              content_hash: f976f74bca33ccc7079574a44a93bfb370c0c86c372e580b97105d6015e88e70
+            - path: 1.5.3
+              level: 3
+              title: 5.3 File Layout
+              byte_offset: 7214
+              byte_count: 187
+              word_count: 22
+              content_hash: 127026e16db2ef7095b3e4c6ff9154c0d2d25e2b3ea4304c27e16117e053ac2d
+        - path: "1.6"
+          level: 2
+          title: 6. Acceptance Criteria
+          byte_offset: 7401
+          byte_count: 1173
+          word_count: 218
+          content_hash: 97bda292da58742ebea714f849667170e2fa7e348f72ae03d82d103c1ff7255c
+        - path: "1.7"
+          level: 2
+          title: 7. Test Requirements
+          byte_offset: 8574
+          byte_count: 1628
+          word_count: 189
+          content_hash: f6cabf0f11185675dfaf97c58f04c5074778ece325596400f533dacdaa2e0a91
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Tier 1 Tests
+              byte_offset: 8599
+              byte_count: 707
+              word_count: 79
+              content_hash: fc8d10538c5657fe7bce7c23e0e7d1708f5a18bd28431ea6f551167a49f8b597
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Tier 2 Tests
+              byte_offset: 9306
+              byte_count: 680
+              word_count: 79
+              content_hash: 009405515dfc367b6e314aa88431fa1272a14c021bae79ce2b7eb8b5e7c98a62
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Integration
+              byte_offset: 9986
+              byte_count: 216
+              word_count: 27
+              content_hash: 2ea627ea0500011922389d9a64198b4a45f22001a6c6672ffcae5bafbc79df9e
+entity_refs:
+    - entity_id: FEAT-01KMTJH8Z2AQ5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 391
+    - entity_id: P10-review-and-doc-currency
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 326
+    - entity_id: P10-review-and-doc-currency-plan
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 465
+cross_doc_links:
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: "1.2"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+    - target_path: code-review.md
+      link_text: code-review.md
+      section_path: 1.3.1
+    - target_path: document-creation.md
+      link_text: document-creation.md
+      section_path: 1.3.1
+    - target_path: plan-review.md
+      link_text: plan-review.md
+      section_path: 1.3.1
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.5.1
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: "1.6"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.6"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.7.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.4.1
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: requirement
+      confidence: high
+classified: false

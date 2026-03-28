@@ -7,13 +7,22 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
+	"strconv"
 	"strings"
 	"unicode"
 
 	"gopkg.in/yaml.v3"
 
-	"kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/core"
 )
+
+// BinarySupportedSchemaVersion is the schema version this binary understands.
+// It follows MAJOR.MINOR.PATCH semver format.
+const BinarySupportedSchemaVersion = "1.0.0"
+
+// semverRe matches a strict MAJOR.MINOR.PATCH semver string.
+var semverRe = regexp.MustCompile(`^(\d+)\.(\d+)\.(\d+)$`)
 
 // ConfigFile is the configuration filename.
 const ConfigFile = "config.yaml"
@@ -114,10 +123,33 @@ type DispatchConfig struct {
 	StallThresholdDays int `yaml:"stall_threshold_days"`
 }
 
+// MCPConfig holds settings for the MCP tool surface (Kanbanzai 2.0).
+// MergeConfig holds settings for merge operations.
+type MergeConfig struct {
+	// PostMergeInstall controls whether to automatically rebuild and install
+	// the binary after a successful merge. Defaults to true (nil = true).
+	PostMergeInstall *bool `yaml:"post_merge_install,omitempty"`
+}
+
+type MCPConfig struct {
+	// Preset is a shorthand for a common group configuration.
+	// Valid values: "minimal", "orchestration", "full".
+	// Defaults to "full" when neither preset nor groups are specified.
+	Preset string `yaml:"preset,omitempty"`
+	// Groups controls which feature groups are enabled.
+	// Explicit group settings override the preset.
+	// The "core" group is always enabled and cannot be disabled.
+	Groups map[string]bool `yaml:"groups,omitempty"`
+}
+
 // Config is the project configuration structure stored in .kbz/config.yaml.
 type Config struct {
 	// Version is the configuration schema version.
 	Version string `yaml:"version"`
+	// SchemaVersion is the public schema version in MAJOR.MINOR.PATCH format.
+	// It is independent of Version and only increments when the committed file
+	// format changes. See the public schema interface specification §6.
+	SchemaVersion string `yaml:"schema_version,omitempty"`
 	// Prefixes is the registry of Plan ID prefixes.
 	Prefixes []PrefixEntry `yaml:"prefixes"`
 	// Import holds configuration for batch document import.
@@ -134,13 +166,18 @@ type Config struct {
 	Incidents IncidentsConfig `yaml:"incidents,omitempty"`
 	// Decomposition holds settings for feature decomposition operations.
 	Decomposition DecompositionConfig `yaml:"decomposition,omitempty"`
+	// Merge holds settings for merge operations.
+	Merge MergeConfig `yaml:"merge,omitempty"`
+	// MCP holds settings for the MCP tool surface (Kanbanzai 2.0 feature groups).
+	MCP MCPConfig `yaml:"mcp,omitempty"`
 }
 
 // DefaultConfig returns a new Config with sensible defaults.
 // The default prefix 'P' for Plan is included.
 func DefaultConfig() Config {
 	return Config{
-		Version: "2",
+		Version:       "2",
+		SchemaVersion: BinarySupportedSchemaVersion,
 		Prefixes: []PrefixEntry{
 			{Prefix: "P", Name: "Plan"},
 		},
@@ -255,7 +292,77 @@ func LoadFrom(path string) (*Config, error) {
 		return nil, fmt.Errorf("invalid config: %w", err)
 	}
 
+	// Apply schema version boundary checks. A missing or older schema version
+	// produces a warning on stderr; a future major version is a hard failure.
+	if err := checkSchemaVersionBoundary(&cfg); err != nil {
+		return nil, err
+	}
+
 	return &cfg, nil
+}
+
+// checkSchemaVersionBoundary enforces the binary behaviour at version
+// boundaries as specified in §6.5 of the public schema interface spec:
+//
+//   - schema_version absent       → warn, continue (AC-7)
+//   - schema_version older        → warn, continue (AC-6)
+//   - schema_version newer major  → hard error     (AC-5)
+func checkSchemaVersionBoundary(cfg *Config) error {
+	if cfg.SchemaVersion == "" {
+		// AC-7: absent — treat as pre-1.0, prompt migration.
+		fmt.Fprintf(os.Stderr,
+			"warning: config.yaml has no schema_version field; "+
+				"treating repository as pre-1.0.\n"+
+				"Run 'kanbanzai migrate' to upgrade the schema.\n")
+		return nil
+	}
+
+	binaryMajor, binaryMinor, binaryPatch, err := parseSemver(BinarySupportedSchemaVersion)
+	if err != nil {
+		// Should never happen — BinarySupportedSchemaVersion is a compile-time constant.
+		return fmt.Errorf("internal error: invalid BinarySupportedSchemaVersion %q: %w", BinarySupportedSchemaVersion, err)
+	}
+
+	cfgMajor, cfgMinor, cfgPatch, err := parseSemver(cfg.SchemaVersion)
+	if err != nil {
+		// Malformed — Validate() already rejected it, but guard defensively.
+		return fmt.Errorf("invalid schema_version %q: %w", cfg.SchemaVersion, err)
+	}
+
+	// AC-5: schema major version newer than binary — refuse to operate.
+	if cfgMajor > binaryMajor {
+		return fmt.Errorf(
+			"schema_version %s in config.yaml is newer than the version this binary supports (%s).\n"+
+				"Please upgrade the kanbanzai binary to continue.",
+			cfg.SchemaVersion, BinarySupportedSchemaVersion,
+		)
+	}
+
+	// AC-6: schema version older than binary — offer migration.
+	cfgNewer := cfgMajor > binaryMajor ||
+		(cfgMajor == binaryMajor && cfgMinor > binaryMinor) ||
+		(cfgMajor == binaryMajor && cfgMinor == binaryMinor && cfgPatch > binaryPatch)
+	if !cfgNewer && cfg.SchemaVersion != BinarySupportedSchemaVersion {
+		fmt.Fprintf(os.Stderr,
+			"warning: config.yaml schema_version (%s) is older than this binary supports (%s).\n"+
+				"Run 'kanbanzai migrate' to upgrade the schema before proceeding.\n",
+			cfg.SchemaVersion, BinarySupportedSchemaVersion)
+	}
+
+	return nil
+}
+
+// parseSemver parses a "MAJOR.MINOR.PATCH" string and returns the three
+// components as integers.
+func parseSemver(v string) (major, minor, patch int, err error) {
+	m := semverRe.FindStringSubmatch(v)
+	if m == nil {
+		return 0, 0, 0, fmt.Errorf("not a valid MAJOR.MINOR.PATCH version: %q", v)
+	}
+	major, _ = strconv.Atoi(m[1])
+	minor, _ = strconv.Atoi(m[2])
+	patch, _ = strconv.Atoi(m[3])
+	return major, minor, patch, nil
 }
 
 // LoadOrDefault loads the configuration, returning defaults if not found.
@@ -298,6 +405,11 @@ func (c *Config) SaveTo(path string) error {
 
 // Validate checks that the configuration is valid.
 func (c *Config) Validate() error {
+	// Validate schema_version format when present.
+	if c.SchemaVersion != "" && !semverRe.MatchString(c.SchemaVersion) {
+		return fmt.Errorf("schema_version %q is not valid MAJOR.MINOR.PATCH semver", c.SchemaVersion)
+	}
+
 	if len(c.Prefixes) == 0 {
 		return errors.New("at least one prefix is required")
 	}
@@ -563,6 +675,98 @@ func (c *Config) mergePhase3Defaults() {
 	if c.Knowledge.Pruning.GracePeriodDays == 0 {
 		c.Knowledge.Pruning.GracePeriodDays = knowledgeDefaults.Pruning.GracePeriodDays
 	}
+}
+
+// ToolGroup constants define the feature groups for MCP tool registration (Kanbanzai 2.0).
+const (
+	GroupCore        = "core"
+	GroupPlanning    = "planning"
+	GroupKnowledge   = "knowledge"
+	GroupGit         = "git"
+	GroupDocuments   = "documents"
+	GroupIncidents   = "incidents"
+	GroupCheckpoints = "checkpoints"
+)
+
+// ValidPresets is the set of recognised preset names.
+var ValidPresets = map[string]bool{
+	"minimal":       true,
+	"orchestration": true,
+	"full":          true,
+}
+
+// presetGroups maps preset names to the set of enabled groups.
+var presetGroups = map[string]map[string]bool{
+	"minimal": {
+		GroupCore: true,
+	},
+	"orchestration": {
+		GroupCore:     true,
+		GroupPlanning: true,
+		GroupGit:      true,
+	},
+	"full": {
+		GroupCore:        true,
+		GroupPlanning:    true,
+		GroupKnowledge:   true,
+		GroupGit:         true,
+		GroupDocuments:   true,
+		GroupIncidents:   true,
+		GroupCheckpoints: true,
+	},
+}
+
+// KnownGroups is the set of recognised group names.
+var KnownGroups = map[string]bool{
+	GroupCore:        true,
+	GroupPlanning:    true,
+	GroupKnowledge:   true,
+	GroupGit:         true,
+	GroupDocuments:   true,
+	GroupIncidents:   true,
+	GroupCheckpoints: true,
+}
+
+// EffectiveGroups resolves the effective group configuration from the MCP config.
+// It starts from the preset (defaulting to "full" when neither preset nor groups are set),
+// then applies explicit group overrides. The "core" group is always enabled.
+// Returns the resolved group map, advisory warnings, and any startup error.
+// An error is returned only for unrecognised preset names.
+func (c *Config) EffectiveGroups() (groups map[string]bool, warnings []string, err error) {
+	preset := c.MCP.Preset
+	if preset == "" {
+		preset = "full"
+	}
+
+	base, ok := presetGroups[preset]
+	if !ok {
+		return nil, nil, fmt.Errorf("unknown preset %q: valid presets are minimal, orchestration, full", preset)
+	}
+
+	// Start from a copy of the preset base.
+	groups = make(map[string]bool, len(base))
+	for k, v := range base {
+		groups[k] = v
+	}
+
+	// Apply explicit group overrides.
+	for name, enabled := range c.MCP.Groups {
+		if !KnownGroups[name] {
+			warnings = append(warnings, fmt.Sprintf("unknown group %q in mcp.groups (ignored)", name))
+			continue
+		}
+		if name == GroupCore && !enabled {
+			warnings = append(warnings, "mcp.groups.core cannot be disabled; overriding to true")
+			groups[GroupCore] = true
+			continue
+		}
+		groups[name] = enabled
+	}
+
+	// Always enforce core enabled regardless of configuration.
+	groups[GroupCore] = true
+
+	return groups, warnings, nil
 }
 
 // parsePlanIDParts extracts prefix, number, and slug from a Plan ID.

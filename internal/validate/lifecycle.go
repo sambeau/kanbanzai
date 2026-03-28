@@ -2,8 +2,10 @@ package validate
 
 import (
 	"fmt"
+	"sort"
+	"strings"
 
-	"kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/model"
 )
 
 type EntityKind = model.EntityKind
@@ -63,7 +65,7 @@ var terminalStates = map[EntityKind]map[string]struct{}{
 }
 
 var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
-	// Plan lifecycle: proposed → designing → active → done
+	// Plan lifecycle: proposed → designing → active → reviewing → done
 	// Terminal: superseded, cancelled (from any non-terminal)
 	EntityPlan: {
 		string(model.PlanStatusProposed): {
@@ -77,7 +79,13 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 			string(model.PlanStatusCancelled):  {},
 		},
 		string(model.PlanStatusActive): {
+			string(model.PlanStatusReviewing):  {},
+			string(model.PlanStatusSuperseded): {},
+			string(model.PlanStatusCancelled):  {},
+		},
+		string(model.PlanStatusReviewing): {
 			string(model.PlanStatusDone):       {},
+			string(model.PlanStatusActive):     {},
 			string(model.PlanStatusSuperseded): {},
 			string(model.PlanStatusCancelled):  {},
 		},
@@ -106,7 +114,7 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 	// Feature lifecycle supports both Phase 1 and Phase 2 states for backward compatibility.
 	//
 	// Phase 1 (legacy): draft → in-review → approved → in-progress → review → done
-	// Phase 2 (document-driven): proposed → designing → specifying → dev-planning → developing → done
+	// Phase 2 (document-driven): proposed → designing → specifying → dev-planning → developing → reviewing → done
 	EntityFeature: {
 		// Phase 1 transitions (backward compatibility)
 		string(model.FeatureStatusDraft): {
@@ -131,6 +139,11 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 		string(model.FeatureStatusNeedsRework): {
 			string(model.FeatureStatusInReview):   {},
 			string(model.FeatureStatusInProgress): {},
+			// Phase 2 targets
+			string(model.FeatureStatusDeveloping): {},
+			string(model.FeatureStatusReviewing):  {},
+			string(model.FeatureStatusSuperseded): {},
+			string(model.FeatureStatusCancelled):  {},
 		},
 		// Phase 2 transitions (document-driven lifecycle)
 		string(model.FeatureStatusProposed): {
@@ -157,8 +170,14 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 			string(model.FeatureStatusCancelled):  {},
 		},
 		string(model.FeatureStatusDeveloping): {
-			string(model.FeatureStatusDone):        {},
+			string(model.FeatureStatusReviewing):   {},
 			string(model.FeatureStatusDevPlanning): {}, // Backward: dev plan superseded
+			string(model.FeatureStatusSuperseded):  {},
+			string(model.FeatureStatusCancelled):   {},
+		},
+		string(model.FeatureStatusReviewing): {
+			string(model.FeatureStatusDone):        {},
+			string(model.FeatureStatusNeedsRework): {},
 			string(model.FeatureStatusSuperseded):  {},
 			string(model.FeatureStatusCancelled):   {},
 		},
@@ -384,10 +403,31 @@ func ValidateTransition(kind EntityKind, from, to string) error {
 	}
 
 	if !CanTransition(kind, from, to) {
+		valid := ValidNextStates(kind, from)
+		if len(valid) > 0 {
+			return fmt.Errorf("invalid %s transition %q -> %q; valid transitions from %q: %s", kind, from, to, from, strings.Join(valid, ", "))
+		}
 		return fmt.Errorf("invalid %s transition %q -> %q", kind, from, to)
 	}
 
 	return nil
+}
+
+// ValidNextStates returns the sorted list of states reachable from the given
+// state via a single valid transition. Returns nil if the state is terminal,
+// unknown, or has no outgoing transitions.
+func ValidNextStates(kind EntityKind, from string) []string {
+	nextStates, ok := allowedTransitions[kind][from]
+	if !ok {
+		return nil
+	}
+
+	states := make([]string, 0, len(nextStates))
+	for s := range nextStates {
+		states = append(states, s)
+	}
+	sort.Strings(states)
+	return states
 }
 
 // AllStates returns all known states for the given entity kind.

@@ -1,0 +1,630 @@
+document_id: PROJECT/dev-plan-phase-1-implementation-plan
+document_path: work/plan/phase-1-implementation-plan.md
+content_hash: 29b7e3c4f0c7de7d6e4e7d3edb91d331fa040b7955ce2f826bf24245d33cc302
+indexed_at: 2026-03-25T21:38:28.385222Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 1 Implementation Plan
+      byte_offset: 0
+      byte_count: 22452
+      word_count: 3241
+      content_hash: 29b7e3c4f0c7de7d6e4e7d3edb91d331fa040b7955ce2f826bf24245d33cc302
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 529
+          byte_count: 649
+          word_count: 104
+          content_hash: 6567f76f693b7110256065df62afe264e40c6fe6ecc0bb979a0f2b912d5aa4a6
+        - path: "1.2"
+          level: 2
+          title: 2. Phase 1 Outcome
+          byte_offset: 1178
+          byte_count: 852
+          word_count: 135
+          content_hash: ee116666a0259c966687c8a83d7c1cbe8f7da98be231d9d7495944363429cb3a
+        - path: "1.3"
+          level: 2
+          title: 3. Planning Principles
+          byte_offset: 2030
+          byte_count: 1512
+          word_count: 214
+          content_hash: 703f93d7dd6e6d6e603f734e6995fd24c052cd88a6c76fb726679a3bbbdf8af5
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 The specification is binding
+              byte_offset: 2123
+              byte_count: 203
+              word_count: 25
+              content_hash: 5924d724324c90522c116b9542b33b000fa2db644612a9f0f53890cee7d7156f
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Keep Phase 1 narrow
+              byte_offset: 2326
+              byte_count: 238
+              word_count: 37
+              content_hash: 6ed5ae49dfe63e12b13f37e74b338e52b0d46c8177521fe6e15112606226eda1
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Build for later evolution
+              byte_offset: 2564
+              byte_count: 541
+              word_count: 76
+              content_hash: 850a0b94cfabcaa562ce270e9de2f04e8f1193430825750510bce21bfd9c3cbc
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Build the product, not the instance
+              byte_offset: 3105
+              byte_count: 158
+              word_count: 23
+              content_hash: a3bbd0b96a03ad19b17f38e67827aa5351b6c52cc60166ff0c1aa9e22a042317
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Start obeying the workflow while building it
+              byte_offset: 3263
+              byte_count: 279
+              word_count: 40
+              content_hash: b2b59a3d309cc3fd2e0cfe1798cde0ddf564829b24631b629429fcacf8d962a0
+        - path: "1.4"
+          level: 2
+          title: 4. Deliverables
+          byte_offset: 3542
+          byte_count: 101
+          word_count: 13
+          content_hash: 85c1a75e6faf5b54d960d94eb5ef69829d4a0ff8e967beab46485cc4665c9c47
+        - path: "1.5"
+          level: 2
+          title: 4.1 Product deliverables
+          byte_offset: 3643
+          byte_count: 450
+          word_count: 69
+          content_hash: df27a114e36d6c37906693958ea03734234b3d24fdb4f082c178d908df60baf9
+        - path: "1.6"
+          level: 2
+          title: 4.2 Instance deliverables for this project
+          byte_offset: 4093
+          byte_count: 358
+          word_count: 54
+          content_hash: 1df235a213d944869bb244a8710e62d896e4db065bb5ee26fe7c58ac79f08451
+        - path: "1.7"
+          level: 2
+          title: 4.3 Verification deliverables
+          byte_offset: 4451
+          byte_count: 284
+          word_count: 45
+          content_hash: b98b91a9bd807402ba506064576fc0ecfff054a9a3910a65ec8cf903aa1576cf
+        - path: "1.8"
+          level: 2
+          title: 5. Product–Instance Boundary for Implementation
+          byte_offset: 4735
+          byte_count: 114
+          word_count: 12
+          content_hash: f91595fd535eea17a2d26bc297cfa95f17818b074c07b2ace08a74d79a9105a2
+        - path: "1.9"
+          level: 2
+          title: 5.1 Product code and reusable assets
+          byte_offset: 4849
+          byte_count: 244
+          word_count: 35
+          content_hash: 594e6f5fb5d0fde1814c1bbd87d8804757711a29fbd4bfe2e2a45595e0697223
+        - path: "1.10"
+          level: 2
+          title: 5.2 Project instance state
+          byte_offset: 5093
+          byte_count: 329
+          word_count: 51
+          content_hash: c50578a473dd0cf67b3fc0c392385e6767f8f13d6dd75c0f011be233152dfe9d
+        - path: "1.11"
+          level: 2
+          title: 5.3 Design docs are not product assets by default
+          byte_offset: 5422
+          byte_count: 261
+          word_count: 34
+          content_hash: 22d12aef74b89e39a99dbc60d5a8de5ae7586514ddb196e9edf9baf9084112a9
+        - path: "1.12"
+          level: 2
+          title: 6. Recommended Implementation Order
+          byte_offset: 5683
+          byte_count: 86
+          word_count: 11
+          content_hash: e7d7de61794db07e795cf80ee0bf9ca31e5e27ca840899499035c1bea6917b49
+        - path: "1.13"
+          level: 2
+          title: '6.1 Layer 1: core data model and storage'
+          byte_offset: 5769
+          byte_count: 308
+          word_count: 45
+          content_hash: 34e87f7c95d2dc3505a5ff353a2591940b5247ae0918183ad52e6d179759ddf9
+        - path: "1.14"
+          level: 2
+          title: '6.2 Layer 2: schema and validation engine'
+          byte_offset: 6077
+          byte_count: 293
+          word_count: 39
+          content_hash: 1b8b72b6afabfe02aa2e19e20413cd597611f2d6ad57686007e548aac5bf870f
+        - path: "1.15"
+          level: 2
+          title: '6.3 Layer 3: document support'
+          byte_offset: 6370
+          byte_count: 1154
+          word_count: 145
+          content_hash: 53205594c7b7d1b79e09469fb28096ad409ebdff79f19aeb2345058004026ee8
+        - path: "1.16"
+          level: 2
+          title: '6.4 Layer 4: MCP service layer'
+          byte_offset: 7524
+          byte_count: 388
+          word_count: 52
+          content_hash: 3e9759979ae8124174f6e5cfa94450af257f0647e530d31914f869bbc10f9f11
+        - path: "1.17"
+          level: 2
+          title: '6.5 Layer 5: strict CLI layer'
+          byte_offset: 7912
+          byte_count: 186
+          word_count: 35
+          content_hash: ac07fd29e80f2406457f9f7012bcb3f4ef535033a7023abb3bd8323e51592995
+        - path: "1.18"
+          level: 2
+          title: '6.6 Layer 6: local derived cache'
+          byte_offset: 8098
+          byte_count: 213
+          word_count: 32
+          content_hash: 61df79434256ff9dbeffa2f58f80084d942d4fb14220653a4c4cd8a461e0935b
+        - path: "1.19"
+          level: 2
+          title: '6.7 Layer 7: project bootstrap usage'
+          byte_offset: 8311
+          byte_count: 207
+          word_count: 33
+          content_hash: 2ed19dad004f17cdda8de53c4471a38d16c22c74d2aad00e85335591e3b15f1f
+        - path: "1.20"
+          level: 2
+          title: 7. Work Breakdown
+          byte_offset: 8518
+          byte_count: 75
+          word_count: 12
+          content_hash: d703a73cf42f47d9be1a1ff358802dfd19f7079082117ce998921933d2051661
+        - path: "1.21"
+          level: 2
+          title: 7.1 Track A — Core model and file representation
+          byte_offset: 8593
+          byte_count: 537
+          word_count: 81
+          content_hash: 4ff5788cc809d5cea13ab54866e55c43fad69b76f45b282d4da52981c716fee9
+        - path: "1.22"
+          level: 2
+          title: 7.2 Track B — Validation engine
+          byte_offset: 9130
+          byte_count: 442
+          word_count: 65
+          content_hash: 65f8385bc075519c5436ee8f0e9f7ee473f7a036dab4656d8e0d2da44d84a80d
+        - path: "1.23"
+          level: 2
+          title: 7.3 Track C — ID allocation
+          byte_offset: 9572
+          byte_count: 460
+          word_count: 73
+          content_hash: 7c6fa64f99e1afa83d962087acce54c5a22eae9205a121368ba01d2d2e2559f7
+        - path: "1.24"
+          level: 2
+          title: 7.4 Track D — Document lifecycle
+          byte_offset: 10032
+          byte_count: 1127
+          word_count: 142
+          content_hash: 0e1016d57b16f80eac6f5c95adfd45784088e77d98a460b1f403d5f7b1d8c03f
+        - path: "1.25"
+          level: 2
+          title: 7.5 Track E — MCP interface
+          byte_offset: 11159
+          byte_count: 700
+          word_count: 94
+          content_hash: ea3ba440a1552fe02f53d0bb740cd0fa085d3f38e2bf4884e3d48a496585d83b
+        - path: "1.26"
+          level: 2
+          title: 7.6 Track F — CLI interface
+          byte_offset: 11859
+          byte_count: 344
+          word_count: 58
+          content_hash: 1a65e15fdd5fd2cda801a5ee400180746bbd64412bd12d46ac0a8a6e997d1196
+        - path: "1.27"
+          level: 2
+          title: 7.7 Track G — Local cache
+          byte_offset: 12203
+          byte_count: 385
+          word_count: 58
+          content_hash: a482f3d552ac29ca3331c5595de9b3af62d6cc5a10136bb7b24df51e573ec8f2
+        - path: "1.28"
+          level: 2
+          title: 7.8 Track H — Phase 1 bootstrap usage
+          byte_offset: 12588
+          byte_count: 488
+          word_count: 80
+          content_hash: de24bae26522d5b35e9d6a719e0cf8282daa84f87ff2d9b9e89c4a34591a19e1
+        - path: "1.29"
+          level: 2
+          title: 8. Phase 1 Required Operations
+          byte_offset: 13076
+          byte_count: 117
+          word_count: 15
+          content_hash: ac9f375e6814f138f2cbd62817da3a3b5b8f56a62861c3936afe0ba8012c1bb4
+        - path: "1.30"
+          level: 2
+          title: 8.1 Required entity create operations
+          byte_offset: 13193
+          byte_count: 119
+          word_count: 21
+          content_hash: 035099a08a60159d9cb464d3466446f1e51ef4901110c1203c8efc5c1e020691
+        - path: "1.31"
+          level: 2
+          title: 8.2 Required entity read/query operations
+          byte_offset: 13312
+          byte_count: 131
+          word_count: 19
+          content_hash: 5424ca721ddea54718416213c0e8e3e617f58a09e42b5785acc82a9da63283fa
+        - path: "1.32"
+          level: 2
+          title: 8.3 Required entity update operations
+          byte_offset: 13443
+          byte_count: 144
+          word_count: 22
+          content_hash: 82b1aacb247418f814795ceee6de09ef7817271c073689dc89a1e7c5375be001
+        - path: "1.33"
+          level: 2
+          title: 8.4 Required validation operations
+          byte_offset: 13587
+          byte_count: 118
+          word_count: 17
+          content_hash: 1163b4e8ce9537f2bd4842dcee6a99919074a4d728d0d8f4575ea339868f18a0
+        - path: "1.34"
+          level: 2
+          title: 8.5 Required document lifecycle operations
+          byte_offset: 13705
+          byte_count: 420
+          word_count: 54
+          content_hash: 80bb867399e98912ca57435c54ac30083aba05980fe3d7751138302b87ecbddc
+        - path: "1.35"
+          level: 2
+          title: 8.6 Required extraction operations
+          byte_offset: 14125
+          byte_count: 102
+          word_count: 14
+          content_hash: cb7c37ecb9118bd8b797b9e0f6bdfe6ad8a05a2a4b0318dacf5b728e2013f0bf
+        - path: "1.36"
+          level: 2
+          title: 9. Implementation Constraints
+          byte_offset: 14227
+          byte_count: 34
+          word_count: 4
+          content_hash: 6bcad0088a2cf5071f424a65003d54099b5f940566b443464cc28ad9c2f4b4b5
+        - path: "1.37"
+          level: 2
+          title: 9.1 No silent scope expansion
+          byte_offset: 14261
+          byte_count: 160
+          word_count: 28
+          content_hash: 3f8ca868978c6e8a5cebe8a1061dec4d3945435da0ef6e5f43a529251ec717b6
+        - path: "1.38"
+          level: 2
+          title: 9.2 No conflation of product and project state
+          byte_offset: 14421
+          byte_count: 166
+          word_count: 25
+          content_hash: 4d0ea5b40db37d9a7c89cc26ed05aa9fb82fa9b1eb60d194592f0785533d17c8
+        - path: "1.39"
+          level: 2
+          title: 9.3 No reliance on future orchestration
+          byte_offset: 14587
+          byte_count: 181
+          word_count: 29
+          content_hash: bb749b4cd61ef9ebdac490d02fbf09218d14477a2561100b8707a9f7c20c7a1f
+        - path: "1.40"
+          level: 2
+          title: 9.4 No destructive workflows by default
+          byte_offset: 14768
+          byte_count: 164
+          word_count: 24
+          content_hash: c045d36d4c65384536adc25696500f73b9bcc58f7a9fe94eb8d4f1f6ffdfacaa
+        - path: "1.41"
+          level: 2
+          title: 9.5 Keep the ID strategy replaceable
+          byte_offset: 14932
+          byte_count: 171
+          word_count: 26
+          content_hash: f76544b5341eded7c42b09229d1d6e447da24bf843c1671358a0299fc5d955d2
+        - path: "1.42"
+          level: 2
+          title: 10. Review and Quality Expectations for Implementation
+          byte_offset: 15103
+          byte_count: 131
+          word_count: 18
+          content_hash: 9627a5c8479411f0fc5d9b3d7d8ee8aaf335e855f843f7e69bdfbf49b99a84a4
+        - path: "1.43"
+          level: 2
+          title: 10.1 Agent interaction protocol
+          byte_offset: 15234
+          byte_count: 302
+          word_count: 37
+          content_hash: e9eb1cca663a25396809e30ce8616646268dc72ee3a55213e1bd2be7471f6b67
+        - path: "1.44"
+          level: 2
+          title: 10.2 Quality gates and review policy
+          byte_offset: 15536
+          byte_count: 294
+          word_count: 34
+          content_hash: 2df65a5fb0edbea68734be5cc4f7437a86d8350c8064d397eee27c91d9b44e81
+        - path: "1.45"
+          level: 2
+          title: 10.3 Git commit policy
+          byte_offset: 15830
+          byte_count: 248
+          word_count: 34
+          content_hash: 4ddd6527df732a1b51a9beec5840138218c279e05a2665de544cc842c03d6e6d
+        - path: "1.46"
+          level: 2
+          title: 11. Testing and Verification Plan
+          byte_offset: 16078
+          byte_count: 114
+          word_count: 17
+          content_hash: b6dd1421fac6fadbceed6ce2f2d96c999dc9522dde62f38bfa177369d97e7071
+        - path: "1.47"
+          level: 2
+          title: 11.1 Core verification categories
+          byte_offset: 16192
+          byte_count: 310
+          word_count: 40
+          content_hash: a07dbc50183b6a528be7420a45185ff03c8029f17b1cf2926e02ac9948b46c4e
+        - path: "1.48"
+          level: 2
+          title: 11.2 Test types
+          byte_offset: 16502
+          byte_count: 483
+          word_count: 75
+          content_hash: b0322f86511218295c2819b7b4915d937d4a5a0f4db3742e0b9253183e2020e2
+        - path: "1.49"
+          level: 2
+          title: 11.3 Fixture strategy
+          byte_offset: 16985
+          byte_count: 287
+          word_count: 44
+          content_hash: 2b3dd23c6338e59de473345f7b295e3ef0afb1331c5702759e49a556c1db6aef
+        - path: "1.50"
+          level: 2
+          title: 11.4 Verification against acceptance criteria
+          byte_offset: 17272
+          byte_count: 246
+          word_count: 32
+          content_hash: 05560ac1a71f3d28976350e73f94212c392e840bb2dc4abc7ed3a506a6b24381
+        - path: "1.51"
+          level: 2
+          title: 12. Bootstrap Plan for Using the Kernel on Itself
+          byte_offset: 17518
+          byte_count: 149
+          word_count: 27
+          content_hash: 1f8f0ae83f0c841b0d0e46da30a89c42ea127c3652aee23384ec33e10c7f9e94
+        - path: "1.52"
+          level: 2
+          title: 12.1 Initial bootstrap target
+          byte_offset: 17667
+          byte_count: 289
+          word_count: 53
+          content_hash: cfd00fbd8960b425d3858fe316a5cc9370eed3bd601ca4330720c41ef33f8349
+        - path: "1.53"
+          level: 2
+          title: 12.2 Bootstrap discipline
+          byte_offset: 17956
+          byte_count: 235
+          word_count: 38
+          content_hash: e08ef1e40caa7b36e8b9064ade78dcf5a649103189981467a6a1300bc06645aa
+        - path: "1.54"
+          level: 2
+          title: 12.3 Success condition
+          byte_offset: 18191
+          byte_count: 240
+          word_count: 34
+          content_hash: a781c93020cf035e1544c218e89d6010d7354b6822ff92aa033bda56983f32db
+        - path: "1.55"
+          level: 2
+          title: 13. Risks and Mitigations
+          byte_offset: 18431
+          byte_count: 30
+          word_count: 5
+          content_hash: ef1e5cb989df91ae799217ea10a5835e9a5265c0d4b3b447b261170fa9779639
+        - path: "1.56"
+          level: 2
+          title: '13.1 Risk: Phase 1 scope creep'
+          byte_offset: 18461
+          byte_count: 252
+          word_count: 42
+          content_hash: 318ebc090cc117017a79b8eae814cd6b62b64c48e3ce5f1b947601caa4d7b647
+        - path: "1.57"
+          level: 2
+          title: '13.2 Risk: Composite Feature becomes confusing'
+          byte_offset: 18713
+          byte_count: 290
+          word_count: 41
+          content_hash: bd598ae5d3de0a06e202f7c569e88a07b7ba14d5845cbe127aa0af5979080924
+        - path: "1.58"
+          level: 2
+          title: '13.3 Risk: ID strategy churn'
+          byte_offset: 19003
+          byte_count: 255
+          word_count: 43
+          content_hash: 10097b99178d63b48d5b27d3c80023a11f436f285211c4a722402c55b492d12d
+        - path: "1.59"
+          level: 2
+          title: '13.4 Risk: product/instance leakage'
+          byte_offset: 19258
+          byte_count: 290
+          word_count: 35
+          content_hash: 79f02b481d3b5e9697b6ab86e59c3de23019a3dfa553f408063f1a76852bbb89
+        - path: "1.60"
+          level: 2
+          title: '13.5 Risk: overreliance on immature automation'
+          byte_offset: 19548
+          byte_count: 251
+          word_count: 36
+          content_hash: 11fce5fbe784b99a1a69b06ae4ee4cb09aa06db12ba300bb51347c323c047040
+        - path: "1.61"
+          level: 2
+          title: 14. Decisions Needed Before or Early in Implementation
+          byte_offset: 19799
+          byte_count: 1256
+          word_count: 181
+          content_hash: 2cc1dcdf50fbcec198d3a41816c95c118cfd1f257dcaa4ef8cd1bb832110d417
+        - path: "1.62"
+          level: 2
+          title: 15. Definition of Done for the Phase 1 Implementation Plan
+          byte_offset: 21055
+          byte_count: 454
+          word_count: 71
+          content_hash: 64356273cf10b53ead6353f137485c20daf963e03e41d1068dd133ee60df241e
+        - path: "1.63"
+          level: 2
+          title: 16. Summary
+          byte_offset: 21509
+          byte_count: 943
+          word_count: 140
+          content_hash: 4476bfe734f58b584529e2a106e23615e9aa2d6fb96766172f3fb6ab632c284a
+front_matter:
+    status: plan draft
+    date: "2026-03-18"
+    extra:
+        Based on: work/design/workflow-design-basis.md; work/spec/phase-1-specification.md; work/design/document-centric-interface.md; work/design/machine-context-design.md; work/design/agent-interaction-protocol.md; work/design/quality-gates-and-review-policy.md; work/design/git-commit-policy.md; work/design/product-instance-boundary.md
+        Purpose: define the implementation plan for Phase 1 of the workflow system
+entity_refs:
+    - entity_id: DEC-007
+      entity_type: decision
+      section_path: "1.61"
+      byte_offset: 20112
+    - entity_id: DEC-006
+      entity_type: decision
+      section_path: "1.61"
+      byte_offset: 20207
+    - entity_id: DEC-008
+      entity_type: decision
+      section_path: "1.61"
+      byte_offset: 20281
+    - entity_id: DEC-009
+      entity_type: decision
+      section_path: "1.61"
+      byte_offset: 20358
+    - entity_id: DEC-010
+      entity_type: decision
+      section_path: "1.61"
+      byte_offset: 20424
+    - entity_id: DEC-014
+      entity_type: decision
+      section_path: "1.61"
+      byte_offset: 20492
+    - entity_id: DEC-011
+      entity_type: decision
+      section_path: "1.61"
+      byte_offset: 20575
+    - entity_id: DEC-012
+      entity_type: decision
+      section_path: "1.61"
+      byte_offset: 20669
+    - entity_id: DEC-013
+      entity_type: decision
+      section_path: "1.61"
+      byte_offset: 20835
+    - entity_id: DEC-015
+      entity_type: decision
+      section_path: "1.61"
+      byte_offset: 20968
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "1"
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: "1"
+    - target_path: work/design/git-commit-policy.md
+      link_text: work/design/git-commit-policy.md
+      section_path: "1"
+    - target_path: work/design/product-instance-boundary.md
+      link_text: work/design/product-instance-boundary.md
+      section_path: "1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: 1.3.1
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: 1.3.3
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1.15"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "1.43"
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: "1.44"
+    - target_path: work/design/git-commit-policy.md
+      link_text: work/design/git-commit-policy.md
+      section_path: "1.45"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1.50"
+    - target_path: work/design/product-instance-boundary.md
+      link_text: work/design/product-instance-boundary.md
+      section_path: "1.59"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1.62"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.36"
+      role: constraint
+      confidence: high
+    - section_path: "1.37"
+      role: constraint
+      confidence: high
+    - section_path: "1.50"
+      role: requirement
+      confidence: high
+    - section_path: "1.55"
+      role: risk
+      confidence: high
+    - section_path: "1.56"
+      role: risk
+      confidence: high
+    - section_path: "1.57"
+      role: risk
+      confidence: high
+    - section_path: "1.58"
+      role: risk
+      confidence: high
+    - section_path: "1.59"
+      role: risk
+      confidence: high
+    - section_path: "1.60"
+      role: risk
+      confidence: high
+    - section_path: "1.61"
+      role: decision
+      confidence: high
+    - section_path: "1.62"
+      role: definition
+      confidence: high
+    - section_path: "1.63"
+      role: narrative
+      confidence: high
+classified: false

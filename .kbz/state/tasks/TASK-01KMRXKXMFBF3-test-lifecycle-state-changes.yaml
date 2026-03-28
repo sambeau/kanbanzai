@@ -1,0 +1,18 @@
+id: TASK-01KMRXKXMFBF3
+parent_feature: FEAT-01KMRX1F47Z94
+slug: test-lifecycle-state-changes
+summary: "Write and update tests covering all 25 acceptance criteria in the review-lifecycle-states spec: new constants exist, all valid transitions succeed, all invalid transitions are rejected, developing → done is blocked, smart-skip stops at reviewing, ValidNextStates exposes new states, error messages include valid transitions, health checks handle new states correctly, merge gate still requires done. Run go test -race ./... and go vet ./... to green. Covers spec AC-23 through AC-25."
+status: done
+depends_on:
+  - TASK-01KMRXKQ9ENYX
+  - TASK-01KMRXKT6DDH5
+files_planned:
+  - internal/model/entities_test.go
+  - internal/validate/lifecycle_test.go
+completed: "2026-03-28T00:59:45Z"
+claimed_at: "2026-03-28T00:56:32Z"
+dispatched_to: developer
+dispatched_at: "2026-03-28T00:56:32Z"
+dispatched_by: orchestrator
+completion_summary: "Audited all 25 acceptance criteria against existing tests and filled gaps. \n\n**Already covered by existing tests (17 ACs):**\n- AC-02: FeatureStatusNeedsRework constant — entities_test.go TestEnumStringValues\n- AC-04: developing → done rejected — lifecycle_test.go TestCanTransition\n- AC-09: reviewing/needs-rework non-terminal — lifecycle_test.go TestIsTerminalState\n- AC-11–13: ValidNextStates for developing, reviewing, needs-rework — lifecycle_test.go TestValidNextStates\n- AC-14: developing → done error names reviewing — lifecycle_test.go TestValidateTransition_ErrorContainsValidStates\n- AC-16–18: Smart-skip stops at reviewing — advance_test.go (3 tests: AdvanceToDone_StopsAtReviewing, AdvanceFromDeveloping_ToDone_StopsAtReviewing, NeverAutoTransitionsThroughReviewing)\n- AC-19–20: Health checks treat reviewing/needs-rework as non-terminal — health/entity_consistency_test.go TestCheckFeatureChildConsistency_ReviewingFeatureNoFalseWarnings\n- AC-21–22: Merge gate requires done, reviewing fails — merge/gates_test.go TestEntityDoneGate_Check\n\n**New tests added (8 ACs):**\n- AC-01: Added FeatureStatusReviewing == \"reviewing\" assertion to TestEnumStringValues in entities_test.go\n- AC-03: developing → reviewing valid (CanTransition)\n- AC-05: reviewing → done valid (CanTransition)\n- AC-06: reviewing → needs-rework valid (CanTransition)\n- AC-07: needs-rework → developing valid (CanTransition)\n- AC-08: needs-rework → reviewing quick-fix valid (CanTransition)\n- AC-10: reviewing → superseded/cancelled and needs-rework → superseded/cancelled (4 CanTransition cases)\n- AC-15: Invalid transition error messages from reviewing and needs-rework include valid alternatives (2 error message test cases)\n\n**Regression (AC-23–25):** `go test -race ./...` passes (all 20 packages), `go vet ./...` clean, no existing tests broken."
+verification: "go test -race ./... (all 20 packages pass), go vet ./... (clean)"

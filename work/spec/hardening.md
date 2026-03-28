@@ -3,8 +3,8 @@
 | Document | Hardening: Kanbanzai 1.0 Robustness Specification |
 |----------|---------------------------------------------------|
 | Status   | Draft                                             |
-| Created  | 2026-05-31                                        |
-| Updated  | 2026-05-31                                        |
+| Created  | 2026-03-26T14:28:26Z                                        |
+| Updated  | 2026-03-26T14:28:26Z                                        |
 | Related  | `work/design/kanbanzai-1.0.md` §10                |
 
 ---

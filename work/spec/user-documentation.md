@@ -3,8 +3,8 @@
 | Document | User Documentation Specification |
 |----------|----------------------------------|
 | Status   | Draft                            |
-| Created  | 2026-05-31                       |
-| Updated  | 2026-05-31                       |
+| Created  | 2026-03-26T14:24:58Z                       |
+| Updated  | 2026-03-26T14:24:58Z                       |
 | Related  | `work/design/kanbanzai-1.0.md` §8, §9 |
 
 ---

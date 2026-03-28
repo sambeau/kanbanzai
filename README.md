@@ -26,14 +26,22 @@ Everything lives in plain YAML files in your Git repo. Nothing is hidden in a da
 
 ### 1. Requirements
 
-- Go 1.22 or later
+- Go 1.25 or later
 - Zed (recommended) — or any MCP client that supports stdio transport
 - Git
 
 ### 2. Install
 
+**Remote install** (easiest):
+
 ```sh
-git clone https://github.com/your-org/kanbanzai
+go install github.com/sambeau/kanbanzai/cmd/kanbanzai@latest
+```
+
+**From source:**
+
+```sh
+git clone https://github.com/sambeau/kanbanzai
 cd kanbanzai
 go install ./cmd/kanbanzai
 ```
@@ -74,11 +82,11 @@ Create `.kbz/local.yaml` (not committed — this is yours):
 
 ```yaml
 user:
-  name: your-name
+  name: Your Name
 github:            # optional, only needed for PR tools
   token: ghp_...
-  owner: your-org
-  repo: your-repo
+  owner: sambeau
+  repo: kanbanzai
 ```
 
 If you skip `local.yaml`, identity falls back to `git config user.name` automatically.

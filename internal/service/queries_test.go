@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 func writeTestEntity(t *testing.T, root, entityType, id, slug string, fields map[string]any) {
@@ -256,6 +256,38 @@ func TestListEntitiesFiltered_ByTags(t *testing.T) {
 	}
 }
 
+func TestListEntitiesFiltered_ByLabel(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := NewEntityService(root)
+
+	fields1 := makeFeatureFields("FEAT-01AAAAAAAAA13", "feat-labeled-g", "", "draft", nil)
+	fields1["label"] = "G"
+	writeTestEntity(t, root, "feature", "FEAT-01AAAAAAAAA13", "feat-labeled-g", fields1)
+
+	fields2 := makeFeatureFields("FEAT-01AAAAAAAAA14", "feat-labeled-q", "", "draft", nil)
+	fields2["label"] = "Q"
+	writeTestEntity(t, root, "feature", "FEAT-01AAAAAAAAA14", "feat-labeled-q", fields2)
+
+	writeTestEntity(t, root, "feature", "FEAT-01AAAAAAAAA15", "feat-unlabeled",
+		makeFeatureFields("FEAT-01AAAAAAAAA15", "feat-unlabeled", "", "draft", nil))
+
+	results, err := svc.ListEntitiesFiltered(ListFilteredInput{
+		Type:  "feature",
+		Label: "G",
+	})
+	if err != nil {
+		t.Fatalf("ListEntitiesFiltered() error = %v", err)
+	}
+
+	if len(results) != 1 {
+		t.Fatalf("expected 1 result, got %d", len(results))
+	}
+	if results[0].ID != "FEAT-01AAAAAAAAA13" {
+		t.Errorf("unexpected ID: %s", results[0].ID)
+	}
+}
+
 func TestListEntitiesFiltered_ByParent(t *testing.T) {
 	t.Parallel()
 	root := t.TempDir()
@@ -309,6 +341,69 @@ func TestListEntitiesFiltered_ByDateRange(t *testing.T) {
 		t.Fatalf("expected 1 result, got %d", len(results))
 	}
 	if results[0].ID != "FEAT-01AAAAAAAAA12" {
+		t.Errorf("unexpected ID: %s", results[0].ID)
+	}
+}
+
+func TestListEntitiesFiltered_ByParent_Task(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := NewEntityService(root)
+
+	writeTestEntity(t, root, "task", "TASK-01AAAAAAAAA20", "task-a",
+		makeTaskFields("TASK-01AAAAAAAAA20", "task-a", "FEAT-01AAAAAAAAA09", "queued", nil))
+
+	writeTestEntity(t, root, "task", "TASK-01AAAAAAAAA21", "task-b",
+		makeTaskFields("TASK-01AAAAAAAAA21", "task-b", "FEAT-01AAAAAAAAA09", "queued", nil))
+
+	writeTestEntity(t, root, "task", "TASK-01AAAAAAAAA22", "task-c",
+		makeTaskFields("TASK-01AAAAAAAAA22", "task-c", "FEAT-01AAAAAAAAA10", "queued", nil))
+
+	results, err := svc.ListEntitiesFiltered(ListFilteredInput{
+		Type:   "task",
+		Parent: "FEAT-01AAAAAAAAA09",
+	})
+	if err != nil {
+		t.Fatalf("ListEntitiesFiltered() error = %v", err)
+	}
+
+	if len(results) != 2 {
+		t.Fatalf("expected 2 tasks for FEAT-01AAAAAAAAA09, got %d", len(results))
+	}
+
+	ids := map[string]bool{}
+	for _, r := range results {
+		ids[r.ID] = true
+	}
+	if !ids["TASK-01AAAAAAAAA20"] || !ids["TASK-01AAAAAAAAA21"] {
+		t.Errorf("unexpected task IDs: %v", ids)
+	}
+}
+
+func TestListEntitiesFiltered_ByParent_TaskWithStatus(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := NewEntityService(root)
+
+	writeTestEntity(t, root, "task", "TASK-01AAAAAAAAA23", "task-d",
+		makeTaskFields("TASK-01AAAAAAAAA23", "task-d", "FEAT-01AAAAAAAAA09", "queued", nil))
+
+	writeTestEntity(t, root, "task", "TASK-01AAAAAAAAA24", "task-e",
+		makeTaskFields("TASK-01AAAAAAAAA24", "task-e", "FEAT-01AAAAAAAAA09", "done", nil))
+
+	results, err := svc.ListEntitiesFiltered(ListFilteredInput{
+		Type:   "task",
+		Parent: "FEAT-01AAAAAAAAA09",
+		Status: "queued",
+	})
+	if err != nil {
+		t.Fatalf("ListEntitiesFiltered() error = %v", err)
+	}
+
+	if len(results) != 1 {
+		t.Fatalf("expected 1 queued task, got %d", len(results))
+	}
+	if results[0].ID != "TASK-01AAAAAAAAA23" {
 		t.Errorf("unexpected ID: %s", results[0].ID)
 	}
 }

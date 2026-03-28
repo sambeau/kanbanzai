@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // initTestGitRepo creates a minimal git repo at path with one commit on "main".

@@ -1,0 +1,18 @@
+id: KE-01KMT5T79D9Q1
+tier: 2
+topic: spec-file-status-not-updated-on-doc-approve
+scope: project
+content: "Approving a spec document via doc approve updates the system record in .kbz/state/documents/ but does not patch the Status field in the file itself. The file continues to show \"Status: Draft\" after approval, creating a confusing inconsistency for human readers. This is a latent workflow-friction issue that will keep catching people out. Two possible fixes: (1) doc approve could automatically patch the Status line in the file header as a side effect; (2) the manual step \"update Status in file header after approval\" could be added to AGENTS.md and bootstrap-workflow.md. Either way the current state — system says approved, file says draft — is wrong and misleading."
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - doc-approve
+  - workflow-friction
+  - spec
+  - status-sync
+created: "2026-03-28T12:13:30Z"
+created_by: sambeau
+updated: "2026-03-28T12:13:30Z"

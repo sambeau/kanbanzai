@@ -10,12 +10,12 @@ import (
 	"strings"
 	"time"
 
-	"kanbanzai/internal/cache"
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/id"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/storage"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 type CreateEpicInput struct {
@@ -33,12 +33,14 @@ type CreateFeatureInput struct {
 	Tags      []string
 	Summary   string
 	CreatedBy string
+	Label     string
 }
 
 type CreateTaskInput struct {
 	ParentFeature string
 	Slug          string
 	Summary       string
+	Label         string
 }
 
 type CreateBugInput struct {
@@ -67,10 +69,11 @@ type UpdateStatusInput struct {
 }
 
 type UpdateEntityInput struct {
-	Type   string            // entity type: "epic", "feature", "task", "bug", "decision"
-	ID     string            // entity ID
-	Slug   string            // entity slug
-	Fields map[string]string // field name → new value (string values only)
+	Type       string              // entity type: "epic", "feature", "task", "bug", "decision"
+	ID         string              // entity ID
+	Slug       string              // entity slug
+	Fields     map[string]string   // field name → new value (string values only)
+	ListFields map[string][]string // field name → new value (list values, e.g. depends_on)
 }
 
 type CreateResult struct {
@@ -242,6 +245,7 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 	entity := model.Feature{
 		ID:        idValue,
 		Slug:      normalizeSlug(input.Slug),
+		Label:     strings.TrimSpace(input.Label),
 		Parent:    parentID,
 		Status:    model.FeatureStatusProposed,
 		Summary:   strings.TrimSpace(input.Summary),
@@ -286,6 +290,7 @@ func (s *EntityService) CreateTask(input CreateTaskInput) (CreateResult, error) 
 		ID:            idValue,
 		ParentFeature: featureID,
 		Slug:          normalizeSlug(input.Slug),
+		Label:         strings.TrimSpace(input.Label),
 		Summary:       strings.TrimSpace(input.Summary),
 		Status:        model.TaskStatus("queued"),
 	}
@@ -696,6 +701,14 @@ func (s *EntityService) UpdateEntity(input UpdateEntityInput) (GetResult, error)
 
 	for k, v := range input.Fields {
 		record.Fields[k] = v
+	}
+
+	for k, v := range input.ListFields {
+		if len(v) == 0 {
+			delete(record.Fields, k)
+		} else {
+			record.Fields[k] = append([]string(nil), v...)
+		}
 	}
 
 	if newSlug, ok := input.Fields["slug"]; ok {

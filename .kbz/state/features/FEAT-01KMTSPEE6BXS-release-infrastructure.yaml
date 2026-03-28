@@ -1,0 +1,10 @@
+id: FEAT-01KMTSPEE6BXS
+slug: release-infrastructure
+parent: P3-kanbanzai-1.0
+status: done
+summary: "Pre-release infrastructure changes needed before the first public release: change Go module path from bare kanbanzai to the canonical GitHub URL (enabling go install from remote), evaluate and potentially lower the Go version requirement from 1.25.0, and update README installation instructions with the real repository path. These changes must land before the binary-distribution feature branch is merged."
+design: PROJECT/design-kanbanzai-10
+spec: FEAT-01KMTSPEE6BXS/specification-release-infrastructure
+dev_plan: FEAT-01KMTSPEE6BXS/dev-plan-release-infrastructure
+created: "2026-03-28T18:00:58Z"
+created_by: sambeau

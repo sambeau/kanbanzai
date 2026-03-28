@@ -1,0 +1,395 @@
+document_id: PROJECT/dev-plan-phase-4-scope
+document_path: work/plan/phase-4-scope.md
+content_hash: a321bc612a1707a31ed3ef4973f6a9531e24bf2dffb21866af303d9a0bde276d
+indexed_at: 2026-03-25T21:38:28.854148Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 4 Scope and Planning
+      byte_offset: 0
+      byte_count: 30308
+      word_count: 4304
+      content_hash: a321bc612a1707a31ed3ef4973f6a9531e24bf2dffb21866af303d9a0bde276d
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 547
+          byte_count: 990
+          word_count: 145
+          content_hash: 333c97dbd72928f220a29317567bfe110402923541da10e3bd66997176277bb9
+        - path: "1.2"
+          level: 2
+          title: '2. Background: The Orchestration Landscape Review'
+          byte_offset: 1537
+          byte_count: 1758
+          word_count: 250
+          content_hash: f149e09ae9387bca40d74b9c4b726c97a09a37e9e4406ddb464003481a5d29a4
+        - path: "1.3"
+          level: 2
+          title: 3. Phase 4 Goals
+          byte_offset: 3295
+          byte_count: 1391
+          word_count: 196
+          content_hash: c665479f5b50d3d47e08bc57a40b619dfe6d4861e09772bf9e92784e7dac761b
+        - path: "1.4"
+          level: 2
+          title: 4. Design Decisions
+          byte_offset: 4686
+          byte_count: 7502
+          word_count: 1085
+          content_hash: ce67cb6b79d42c24338fbd4e248fb49f5e9e666ed4560d7bc9f4691a012b2839
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'P4-DES-001: Phase Split'
+              byte_offset: 4900
+              byte_count: 916
+              word_count: 138
+              content_hash: 3056be348b4f1934d863a257c85ea35cc317edea85bb5d7e88512a97bd0c6576
+            - path: 1.4.2
+              level: 3
+              title: 'P4-DES-002: Estimation Assignment'
+              byte_offset: 5816
+              byte_count: 767
+              word_count: 114
+              content_hash: 4af8e57376497b8bbea29562ef5f6127e007eee2bc0fdeb1414c2880ba47cbb3
+            - path: 1.4.3
+              level: 3
+              title: 'P4-DES-003: Self-Management Threshold'
+              byte_offset: 6583
+              byte_count: 1358
+              word_count: 200
+              content_hash: 376faa52f5163bcd68b117f39466118477bf4fda172e9f8bfeba2b4336c78a18
+            - path: 1.4.4
+              level: 3
+              title: 'P4-DES-004: Dependency Modelling'
+              byte_offset: 7941
+              byte_count: 1272
+              word_count: 172
+              content_hash: 2ce989bd2839e71f3cf6c44786ccd9bbb44bcfa407c895df28b9cc63981fa774
+            - path: 1.4.5
+              level: 3
+              title: 'P4-DES-005: Agent Delegation Model'
+              byte_offset: 9213
+              byte_count: 1669
+              word_count: 243
+              content_hash: 6a8f0f2a19a6e0c581a76f2d32482cf2e5a9507129f684e0332e77ad49a46117
+            - path: 1.4.6
+              level: 3
+              title: 'P4-DES-006: Incidents and Root Cause Analysis'
+              byte_offset: 10882
+              byte_count: 1306
+              word_count: 186
+              content_hash: fe3dc76479bb20e1256de092a512dee0f535e2a51e3202628859cb19ce9ab2e6
+        - path: "1.5"
+          level: 2
+          title: 5. Decisions Deferred to Specification and Development
+          byte_offset: 12188
+          byte_count: 2272
+          word_count: 330
+          content_hash: 3cf6622eea2eee175f3e9790040c74f8f3e9f8adcf210857e7dfc9d9f3cebcc3
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Implementation decisions (developer-resolvable during specification)
+              byte_offset: 12247
+              byte_count: 995
+              word_count: 144
+              content_hash: 46b8762981c81a61bd5013558ba9ae5dd6a2b2a671e31e677bd6c3e4cc3a3b52
+            - path: 1.5.2
+              level: 3
+              title: 5.2 AI Agent UX decisions (best resolved by an agent during specification)
+              byte_offset: 13242
+              byte_count: 1218
+              word_count: 178
+              content_hash: cc5dac1508dbf23b6d19a6db34bf15f72c65ac9786d0c0faeec06a6e940dc046
+        - path: "1.6"
+          level: 2
+          title: 6. Phase 4a Feature Breakdown
+          byte_offset: 14460
+          byte_count: 3255
+          word_count: 456
+          content_hash: d15edecf52c466b4cada9d51660815543182dc30bbe5687b5b4509301133504c
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Estimation
+              byte_offset: 14641
+              byte_count: 661
+              word_count: 88
+              content_hash: 7502428bb857c581bfd10b39c9a41c45d29ed2cbae1f991bb8301a11acd5ca05
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Dependency Enforcement
+              byte_offset: 15302
+              byte_count: 563
+              word_count: 81
+              content_hash: 719f6d273dd5685344275f8cbc70bc9ed11304478109a243b7d14a90718fecc7
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Task Dispatch and Completion
+              byte_offset: 15865
+              byte_count: 960
+              word_count: 124
+              content_hash: b632cfe19ff5af338c57a1d0e955949c5e04efcd3f8d9febcb4b79d063c2b03c
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Context Assembly Enhancements
+              byte_offset: 16825
+              byte_count: 486
+              word_count: 75
+              content_hash: 1926fad79246343ae6065462d08f37eedd398f9672f1192e4b645cb25eb67573
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Health Check Extensions
+              byte_offset: 17311
+              byte_count: 404
+              word_count: 60
+              content_hash: 8beaf0c306e01ca0a5870e778606b0458c5d67e1cd99c356884b920ed89a881f
+        - path: "1.7"
+          level: 2
+          title: 7. Phase 4b Feature Breakdown
+          byte_offset: 17715
+          byte_count: 3819
+          word_count: 521
+          content_hash: ffc4467efd512db1364eb19665438e7ab8e729d8fb29147cecbae9213feaa90a
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Feature Decomposition
+              byte_offset: 17911
+              byte_count: 663
+              word_count: 89
+              content_hash: 3ef9224cd8cc5bd2f052b8bfe0f4a096fb3c2d118bb07212149978839f2c5cae
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Automatic Dependency Unblocking
+              byte_offset: 18574
+              byte_count: 452
+              word_count: 63
+              content_hash: 5c0887afd86939f292d26658beb6b6ba0b6b54bbbb4e951d722bd8ad2b9b3652
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Worker Review
+              byte_offset: 19026
+              byte_count: 726
+              word_count: 104
+              content_hash: b3e94f88b91d0d2fd372181a2c44dd0351ea3f79bfaa05aca8987d2f1984745b
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Conflict Domain Analysis
+              byte_offset: 19752
+              byte_count: 495
+              word_count: 68
+              content_hash: 9a083c04277004f70badc552edc8a52625a703e07247ddb0a39c7fd65550cc6b
+            - path: 1.7.5
+              level: 3
+              title: 7.5 Vertical Slice Decomposition Guidance
+              byte_offset: 20247
+              byte_count: 469
+              word_count: 63
+              content_hash: b8d624b7e00825239a53ab6e76e327caa06b33b8c9e937e1508c6c343be67b64
+            - path: 1.7.6
+              level: 3
+              title: 7.6 Incidents and Root Cause Analysis
+              byte_offset: 20716
+              byte_count: 818
+              word_count: 103
+              content_hash: 31edc105ac12ca1021dd1572d50727aa79eafb595066059fa386e7b6e311853b
+        - path: "1.8"
+          level: 2
+          title: 8. New Items from the Orchestration Landscape Review
+          byte_offset: 21534
+          byte_count: 1382
+          word_count: 214
+          content_hash: f0427dff76c1d7630eefaf8fa60e8ddc66fdc6a0f950ad496852bc25c8c6f2c1
+        - path: "1.9"
+          level: 2
+          title: 9. Dependencies
+          byte_offset: 22916
+          byte_count: 1255
+          word_count: 174
+          content_hash: 34dfa49f4445a82d890e7b676d8f86e0f364b3924ba39c69d429172ef3a62eec
+          children:
+            - path: 1.9.1
+              level: 3
+              title: Internal dependencies (within Phase 4)
+              byte_offset: 22936
+              byte_count: 373
+              word_count: 53
+              content_hash: 0606250ba324fb19eb3c5a8f844c9c0ad1463456925ef8cabd105dca75ad1593
+            - path: 1.9.2
+              level: 3
+              title: External dependencies (prior phases)
+              byte_offset: 23309
+              byte_count: 671
+              word_count: 91
+              content_hash: 1edb5edf386eeed9caf05e978e866e5d2dbabc8751aabf33e8033c7bbeb3e8be
+            - path: 1.9.3
+              level: 3
+              title: External tool dependencies
+              byte_offset: 23980
+              byte_count: 191
+              word_count: 27
+              content_hash: b84860550ede731b6bad3519749ddf1ffaf827bff3ce3f0ba0fa16de551e2d4b
+        - path: "1.10"
+          level: 2
+          title: 10. Risks
+          byte_offset: 24171
+          byte_count: 2435
+          word_count: 332
+          content_hash: 09461922b4b8a14dad1b95777c8861640c2ae4573e909df70a05ae103c9975f5
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Self-management transition risk
+              byte_offset: 24185
+              byte_count: 508
+              word_count: 72
+              content_hash: e0d5ca2b52f7aecb452dbdf47fd75e93357dca5f164db34968f0c77390a0f49e
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Estimation calibration cold start
+              byte_offset: 24693
+              byte_count: 468
+              word_count: 66
+              content_hash: 636d1825b71b24e7a98487c69a261f585a7344044a43050872f21f7d958c97e9
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Decomposition quality
+              byte_offset: 25161
+              byte_count: 456
+              word_count: 61
+              content_hash: a6f2da375c428f91a22d793eb309902ed1f549487dbca36209c05b60bea6ea8e
+            - path: 1.10.4
+              level: 3
+              title: 10.4 Parallel agent conflicts
+              byte_offset: 25617
+              byte_count: 468
+              word_count: 59
+              content_hash: f7c348b9aafc88cb0f3574b70ed575c70ef25f782d4126787897c3cc242e6380
+            - path: 1.10.5
+              level: 3
+              title: 10.5 Context packet quality degradation
+              byte_offset: 26085
+              byte_count: 521
+              word_count: 71
+              content_hash: beb00b01c2b0cb17bf2d4924b99f887428cadbec3a525731cc6378db49013247
+        - path: "1.11"
+          level: 2
+          title: 11. Future Considerations
+          byte_offset: 26606
+          byte_count: 1470
+          word_count: 214
+          content_hash: 18817826d7e054c68b46d6c8de3498f9f7808ec76ff8b6404a992ffbbf47f846
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 'Phase 5: Web/Desktop UI for Designers and Managers'
+              byte_offset: 26636
+              byte_count: 971
+              word_count: 146
+              content_hash: 3bd84f6444eef59228a5b602148074bce5ca521e7a13873aff53394711bcd7d3
+            - path: 1.11.2
+              level: 3
+              title: Possible future phases
+              byte_offset: 27607
+              byte_count: 469
+              word_count: 64
+              content_hash: 4e03d2a27d95d50042c99e6bb63e3f78dbef7e191e4280fd98fd3c8866f78ce3
+        - path: "1.12"
+          level: 2
+          title: 12. Next Steps
+          byte_offset: 28076
+          byte_count: 906
+          word_count: 126
+          content_hash: bea9ba65d40fdbdcae9d8a5d9f87edfc68a1d1545aa15a81ef843da11a92ddb6
+        - path: "1.13"
+          level: 2
+          title: 13. Summary
+          byte_offset: 28982
+          byte_count: 1326
+          word_count: 203
+          content_hash: 418f5f3afaff6ff4d97904b754ee452bb9dda2e41c7eefdd2c3a69957d4557aa
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/research/orchestration-landscape-2025.md
+      link_text: work/research/orchestration-landscape-2025.md
+      section_path: "1"
+    - target_path: work/design/estimation-and-progress-design.md
+      link_text: work/design/estimation-and-progress-design.md
+      section_path: "1"
+    - target_path: work/plan/phase-3-scope.md
+      link_text: work/plan/phase-3-scope.md
+      section_path: "1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.1"
+    - target_path: work/research/orchestration-landscape-2025.md
+      link_text: work/research/orchestration-landscape-2025.md
+      section_path: "1.2"
+    - target_path: estimation-and-progress-design.md
+      link_text: estimation-and-progress-design.md
+      section_path: "1.3"
+    - target_path: estimation-and-progress-design.md
+      link_text: estimation-and-progress-design.md
+      section_path: 1.4.2
+    - target_path: estimation-and-progress-design.md
+      link_text: estimation-and-progress-design.md
+      section_path: 1.5.2
+    - target_path: estimation-and-progress-design.md
+      link_text: estimation-and-progress-design.md
+      section_path: 1.6.1
+    - target_path: work/research/orchestration-landscape-2025.md
+      link_text: work/research/orchestration-landscape-2025.md
+      section_path: "1.8"
+    - target_path: work/plan/phase-4-decision-log.md
+      link_text: work/plan/phase-4-decision-log.md
+      section_path: "1.12"
+    - target_path: work/design/estimation-and-progress-design.md
+      link_text: work/design/estimation-and-progress-design.md
+      section_path: "1.12"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: decision
+      confidence: high
+    - section_path: "1.5"
+      role: decision
+      confidence: high
+    - section_path: 1.5.1
+      role: decision
+      confidence: high
+    - section_path: 1.5.2
+      role: decision
+      confidence: high
+    - section_path: 1.6.4
+      role: narrative
+      confidence: high
+    - section_path: "1.10"
+      role: risk
+      confidence: high
+    - section_path: 1.10.1
+      role: risk
+      confidence: high
+    - section_path: 1.10.5
+      role: narrative
+      confidence: high
+    - section_path: "1.13"
+      role: narrative
+      confidence: high
+classified: false

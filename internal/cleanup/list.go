@@ -6,7 +6,7 @@ import (
 	"sort"
 	"time"
 
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // CleanupItem represents an item in the cleanup list.

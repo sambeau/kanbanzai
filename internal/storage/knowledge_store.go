@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"kanbanzai/internal/fsutil"
+	"github.com/sambeau/kanbanzai/internal/fsutil"
 )
 
 // KnowledgeDir is the directory name for knowledge entry records within state.

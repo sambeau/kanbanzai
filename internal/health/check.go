@@ -3,8 +3,8 @@ package health
 import (
 	"time"
 
-	"kanbanzai/internal/git"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // CheckOptions configures the health check.
@@ -23,6 +23,12 @@ type CheckOptions struct {
 
 	// SkipStalenessCheck skips knowledge staleness checks (useful when git is unavailable).
 	SkipStalenessCheck bool
+
+	// Features is a slice of feature entity field maps for entity consistency checks.
+	Features []map[string]any
+
+	// Tasks is a slice of task entity field maps for entity consistency checks.
+	Tasks []map[string]any
 }
 
 // DefaultCheckOptions returns default options with sensible defaults.
@@ -80,6 +86,18 @@ func RunHealthCheck(
 	cleanupResult := CheckCleanup(worktrees, now)
 	if opts.IncludeOK || cleanupResult.Status != SeverityOK {
 		categories["cleanup"] = cleanupResult
+	}
+
+	// Run feature-child state consistency checks
+	featureChildResult := CheckFeatureChildConsistency(opts.Features, opts.Tasks)
+	if opts.IncludeOK || featureChildResult.Status != SeverityOK {
+		categories["feature_child_consistency"] = featureChildResult
+	}
+
+	// Run worktree-branch merged checks (best-effort, requires git)
+	worktreeMergedResult := CheckWorktreeBranchMerged(opts.RepoPath, worktrees)
+	if opts.IncludeOK || worktreeMergedResult.Status != SeverityOK {
+		categories["worktree_branch_merged"] = worktreeMergedResult
 	}
 
 	return HealthResult{

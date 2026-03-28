@@ -2,8 +2,8 @@
 
 - Status: draft design
 - Purpose: define the content of each skill file installed by `kanbanzai init`
-- Date: 2026-05-31
-- Updated: 2026-06-01
+- Date: 2026-03-26T14:03:34Z
+- Updated: 2026-03-26T14:03:34Z
 - Related:
   - `work/design/kanbanzai-1.0.md` §4
   - `work/design/init-command.md` §2

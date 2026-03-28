@@ -1,0 +1,261 @@
+package mcp
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+
+	"github.com/mark3labs/mcp-go/mcp"
+	"github.com/mark3labs/mcp-go/server"
+
+	"github.com/sambeau/kanbanzai/internal/service"
+)
+
+// DecomposeTool returns the 2.0 decompose consolidated tool.
+// It wraps DecomposeService (propose/review/slice) and EntityService (apply).
+func DecomposeTool(decomposeSvc *service.DecomposeService, entitySvc *service.EntityService) []server.ServerTool {
+	return []server.ServerTool{decomposeTool(decomposeSvc, entitySvc)}
+}
+
+func decomposeTool(decomposeSvc *service.DecomposeService, entitySvc *service.EntityService) server.ServerTool {
+	tool := mcp.NewTool("decompose",
+		mcp.WithReadOnlyHintAnnotation(false),
+		mcp.WithDestructiveHintAnnotation(false),
+		mcp.WithIdempotentHintAnnotation(false),
+		mcp.WithOpenWorldHintAnnotation(false),
+		mcp.WithTitleAnnotation("Feature Decomposition"),
+		mcp.WithDescription(
+			"Feature decomposition and vertical slice analysis. "+
+				"Actions: propose (propose task breakdown from spec), review (review a proposal), "+
+				"apply (create tasks from a confirmed proposal), slice (vertical slice analysis). "+
+				"Use propose → review → apply as the standard decomposition workflow.",
+		),
+		mcp.WithString("action",
+			mcp.Required(),
+			mcp.Description("Action: propose, review, apply, slice"),
+		),
+		mcp.WithString("feature_id",
+			mcp.Description("FEAT ID of the feature (required for propose, review, apply, slice)"),
+		),
+		mcp.WithString("context",
+			mcp.Description("Additional guidance for the decomposition (propose only)"),
+		),
+		mcp.WithObject("proposal",
+			mcp.Description("The proposal object from propose output (required for review and apply)"),
+		),
+	)
+
+	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		return DispatchAction(ctx, req, map[string]ActionHandler{
+			"propose": decomposePropose(decomposeSvc),
+			"review":  decomposeReview(decomposeSvc),
+			"apply":   decomposeApply(entitySvc),
+			"slice":   decomposeSlice(decomposeSvc),
+		})
+	})
+
+	return server.ServerTool{Tool: tool, Handler: handler}
+}
+
+// ─── propose ─────────────────────────────────────────────────────────────────
+
+func decomposePropose(svc *service.DecomposeService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		featureID, err := req.RequireString("feature_id")
+		if err != nil {
+			return inlineErr("missing_parameter", "feature_id is required for propose")
+		}
+
+		input := service.DecomposeInput{
+			FeatureID: featureID,
+			Context:   req.GetString("context", ""),
+		}
+
+		result, err := svc.DecomposeFeature(input)
+		if err != nil {
+			return nil, fmt.Errorf("propose failed: %w", err)
+		}
+
+		return result, nil
+	}
+}
+
+// ─── review ──────────────────────────────────────────────────────────────────
+
+func decomposeReview(svc *service.DecomposeService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		featureID, err := req.RequireString("feature_id")
+		if err != nil {
+			return inlineErr("missing_parameter", "feature_id is required for review")
+		}
+
+		args := req.GetArguments()
+		proposalRaw, ok := args["proposal"]
+		if !ok {
+			return inlineErr("missing_parameter", "proposal is required for review")
+		}
+
+		proposal, err := parseProposal(proposalRaw)
+		if err != nil {
+			return inlineErr("invalid_parameter", "invalid proposal: "+err.Error())
+		}
+
+		result, err := svc.ReviewProposal(service.DecomposeReviewInput{
+			FeatureID: featureID,
+			Proposal:  proposal,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("review failed: %w", err)
+		}
+
+		return result, nil
+	}
+}
+
+// ─── apply ───────────────────────────────────────────────────────────────────
+
+func decomposeApply(entitySvc *service.EntityService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+
+		featureID, err := req.RequireString("feature_id")
+		if err != nil {
+			return inlineErr("missing_parameter", "feature_id is required for apply")
+		}
+
+		args := req.GetArguments()
+		proposalRaw, ok := args["proposal"]
+		if !ok {
+			return inlineErr("missing_parameter", "proposal is required for apply")
+		}
+
+		proposal, err := parseProposal(proposalRaw)
+		if err != nil {
+			return inlineErr("invalid_parameter", "invalid proposal: "+err.Error())
+		}
+
+		if len(proposal.Tasks) == 0 {
+			return inlineErr("invalid_parameter", "proposal contains no tasks to apply")
+		}
+
+		// Pass 1: create all tasks; build slug→ID map for dependency resolution.
+		type createdTask struct {
+			ID     string
+			Slug   string
+			Status string
+			DepsOn []string // raw slug-based depends_on from the proposal
+		}
+
+		slugToID := make(map[string]string, len(proposal.Tasks))
+		created := make([]createdTask, 0, len(proposal.Tasks))
+
+		for _, pt := range proposal.Tasks {
+			result, err := entitySvc.CreateTask(service.CreateTaskInput{
+				ParentFeature: featureID,
+				Slug:          pt.Slug,
+				Summary:       pt.Summary,
+			})
+			if err != nil {
+				return nil, fmt.Errorf("create task %q: %w", pt.Slug, err)
+			}
+
+			slugToID[pt.Slug] = result.ID
+			status, _ := result.State["status"].(string)
+			created = append(created, createdTask{
+				ID:     result.ID,
+				Slug:   pt.Slug,
+				Status: status,
+				DepsOn: pt.DependsOn,
+			})
+		}
+
+		// Pass 2: resolve slug-based depends_on to task IDs and persist.
+		type taskOut struct {
+			ID        string   `json:"id"`
+			Slug      string   `json:"slug"`
+			Status    string   `json:"status"`
+			DependsOn []string `json:"depends_on,omitempty"`
+		}
+
+		tasksOut := make([]taskOut, 0, len(created))
+
+		for _, ct := range created {
+			if len(ct.DepsOn) == 0 {
+				tasksOut = append(tasksOut, taskOut{
+					ID:     ct.ID,
+					Slug:   ct.Slug,
+					Status: ct.Status,
+				})
+				continue
+			}
+
+			// Resolve slug→ID; skip any unresolvable slugs (best-effort).
+			// Two cases are mutually exclusive:
+			//   1. The dep is a slug from the current proposal → resolve to new task ID.
+			//   2. The dep is already a full task ID (cross-feature dep) → keep as-is.
+			// The else-if ensures the same value is never appended twice.
+			resolvedIDs := make([]string, 0, len(ct.DepsOn))
+			for _, depSlug := range ct.DepsOn {
+				if id, ok := slugToID[depSlug]; ok {
+					resolvedIDs = append(resolvedIDs, id)
+				} else if len(depSlug) > 5 && (depSlug[:5] == "TASK-" || depSlug[:2] == "T-") {
+					// Cross-feature dep: depSlug is already a resolved task ID.
+					resolvedIDs = append(resolvedIDs, depSlug)
+				}
+			}
+
+			if len(resolvedIDs) > 0 {
+				// Write depends_on directly to the entity store record.
+				store := entitySvc.Store()
+				rec, loadErr := store.Load("task", ct.ID, ct.Slug)
+				if loadErr == nil {
+					rec.Fields["depends_on"] = resolvedIDs
+					_, _ = store.Write(rec) // best-effort; task already created
+				}
+			}
+
+			tasksOut = append(tasksOut, taskOut{
+				ID:        ct.ID,
+				Slug:      ct.Slug,
+				Status:    ct.Status,
+				DependsOn: resolvedIDs,
+			})
+		}
+
+		return map[string]any{
+			"feature_id":    featureID,
+			"tasks_created": tasksOut,
+			"total_created": len(tasksOut),
+		}, nil
+	}
+}
+
+// ─── slice ────────────────────────────────────────────────────────────────────
+
+func decomposeSlice(svc *service.DecomposeService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		featureID, err := req.RequireString("feature_id")
+		if err != nil {
+			return inlineErr("missing_parameter", "feature_id is required for slice")
+		}
+
+		result, err := svc.SliceAnalysis(service.SliceAnalysisInput{FeatureID: featureID})
+		if err != nil {
+			return nil, fmt.Errorf("slice analysis failed: %w", err)
+		}
+
+		return result, nil
+	}
+}
+
+func parseProposal(raw any) (service.Proposal, error) {
+	data, err := json.Marshal(raw)
+	if err != nil {
+		return service.Proposal{}, fmt.Errorf("marshal proposal: %w", err)
+	}
+	var proposal service.Proposal
+	if err := json.Unmarshal(data, &proposal); err != nil {
+		return service.Proposal{}, fmt.Errorf("unmarshal proposal: %w", err)
+	}
+	return proposal, nil
+}

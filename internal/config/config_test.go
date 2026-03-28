@@ -797,3 +797,150 @@ func TestParsePlanIDParts(t *testing.T) {
 		})
 	}
 }
+
+// TestConfig_MCPConfigParseFromYAML verifies that the mcp section (preset and groups)
+// is correctly parsed from a YAML config file (spec §27.1, task A.2).
+func TestConfig_MCPConfigParseFromYAML(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name       string
+		yaml       string
+		wantPreset string
+		wantGroups map[string]bool
+	}{
+		{
+			name: "preset_only",
+			yaml: `version: "2"
+prefixes:
+  - prefix: P
+    name: Plan
+mcp:
+  preset: orchestration
+`,
+			wantPreset: "orchestration",
+			wantGroups: nil,
+		},
+		{
+			name: "groups_only",
+			yaml: `version: "2"
+prefixes:
+  - prefix: P
+    name: Plan
+mcp:
+  groups:
+    core: true
+    planning: false
+    knowledge: true
+`,
+			wantPreset: "",
+			wantGroups: map[string]bool{
+				"core":      true,
+				"planning":  false,
+				"knowledge": true,
+			},
+		},
+		{
+			name: "preset_and_groups",
+			yaml: `version: "2"
+prefixes:
+  - prefix: P
+    name: Plan
+mcp:
+  preset: minimal
+  groups:
+    checkpoints: true
+`,
+			wantPreset: "minimal",
+			wantGroups: map[string]bool{"checkpoints": true},
+		},
+		{
+			name: "no_mcp_section",
+			yaml: `version: "2"
+prefixes:
+  - prefix: P
+    name: Plan
+`,
+			wantPreset: "",
+			wantGroups: nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			dir := t.TempDir()
+			path := filepath.Join(dir, "config.yaml")
+			if err := os.WriteFile(path, []byte(tt.yaml), 0o644); err != nil {
+				t.Fatalf("write config: %v", err)
+			}
+
+			cfg, err := LoadFrom(path)
+			if err != nil {
+				t.Fatalf("LoadFrom() error = %v", err)
+			}
+
+			if cfg.MCP.Preset != tt.wantPreset {
+				t.Errorf("MCP.Preset = %q, want %q", cfg.MCP.Preset, tt.wantPreset)
+			}
+
+			if len(tt.wantGroups) == 0 {
+				if len(cfg.MCP.Groups) != 0 {
+					t.Errorf("MCP.Groups = %v, want empty", cfg.MCP.Groups)
+				}
+			} else {
+				for k, want := range tt.wantGroups {
+					got, ok := cfg.MCP.Groups[k]
+					if !ok {
+						t.Errorf("MCP.Groups[%q] missing, want %v", k, want)
+					} else if got != want {
+						t.Errorf("MCP.Groups[%q] = %v, want %v", k, got, want)
+					}
+				}
+			}
+		})
+	}
+}
+
+// TestConfig_MCPConfigRoundTrip verifies that an MCPConfig survives a save/load cycle
+// without mutation (YAML serialisation correctness).
+func TestConfig_MCPConfigRoundTrip(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	path := filepath.Join(dir, "config.yaml")
+
+	original := Config{
+		Version:  "2",
+		Prefixes: []PrefixEntry{{Prefix: "P", Name: "Plan"}},
+		MCP: MCPConfig{
+			Preset: "orchestration",
+			Groups: map[string]bool{
+				GroupCheckpoints: true,
+				GroupKnowledge:   false,
+			},
+		},
+	}
+
+	if err := original.SaveTo(path); err != nil {
+		t.Fatalf("SaveTo() error = %v", err)
+	}
+
+	loaded, err := LoadFrom(path)
+	if err != nil {
+		t.Fatalf("LoadFrom() error = %v", err)
+	}
+
+	if loaded.MCP.Preset != original.MCP.Preset {
+		t.Errorf("MCP.Preset = %q, want %q", loaded.MCP.Preset, original.MCP.Preset)
+	}
+	for k, want := range original.MCP.Groups {
+		got, ok := loaded.MCP.Groups[k]
+		if !ok {
+			t.Errorf("MCP.Groups[%q] missing after round-trip", k)
+		} else if got != want {
+			t.Errorf("MCP.Groups[%q] = %v, want %v", k, got, want)
+		}
+	}
+}

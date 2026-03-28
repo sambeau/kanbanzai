@@ -2,4 +2,8 @@ id: TASK-01KMNA5GGKAB3
 parent_feature: FEAT-01KMKRQVKBPRX
 slug: schema-reference-doc
 summary: "Write docs/schema-reference.md covering: annotated .kbz/ directory tree, YAML serialisation rules, per-entity-type field tables with required/optional and valid enum values plus example YAML, lifecycle state machine tables for all entities with a status field, ULID-based ID format, Plan ID format and prefix registry, and referential integrity rules. Register with doc_record_submit."
-status: queued
+status: done
+files_planned:
+  - docs/schema-reference.md
+completed: "2026-03-26T16:49:30Z"
+completion_summary: "Wrote docs/schema-reference.md (764 lines) — annotated .kbz/ directory tree, YAML serialisation rules, per-entity-type field tables with valid enum values and example YAML for all 10 types (Plan, Feature, Task, Bug, Decision, Knowledge Entry, Document Record, Worktree, Incident, Human Checkpoint), lifecycle state machine diagrams, ULID/Plan ID format, prefix registry, and referential integrity rules. Registered as document record FEAT-01KMKRQVKBPRX/report-schema-reference."

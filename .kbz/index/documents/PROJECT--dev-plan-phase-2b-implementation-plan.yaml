@@ -1,0 +1,599 @@
+document_id: PROJECT/dev-plan-phase-2b-implementation-plan
+document_path: work/plan/phase-2b-implementation-plan.md
+content_hash: f9b7037b9b9b83c233e8c57a976a59bef84a79d7e92d74d1ea9aa4afcad090c9
+indexed_at: 2026-03-25T21:38:28.606267Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 2b Implementation Plan
+      byte_offset: 0
+      byte_count: 36162
+      word_count: 5073
+      content_hash: f9b7037b9b9b83c233e8c57a976a59bef84a79d7e92d74d1ea9aa4afcad090c9
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 445
+          byte_count: 311
+          word_count: 44
+          content_hash: c7a68f5b3e000dca160b122c395af061f847d9fd71a4fa522516d1e552fa20d7
+        - path: "1.2"
+          level: 2
+          title: 2. Phase 2b Outcome
+          byte_offset: 756
+          byte_count: 945
+          word_count: 136
+          content_hash: c621bdccc567846b54ef0923e22986f9c2839127d506b6f10c1317d5707f9f40
+        - path: "1.3"
+          level: 2
+          title: 3. Planning Principles
+          byte_offset: 1701
+          byte_count: 1303
+          word_count: 204
+          content_hash: f9d9dc4b1d65edbdad500dfd37f5c2d878485eaad142aeb2b70b0b5b44a7c3ef
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Foundation first
+              byte_offset: 1728
+              byte_count: 210
+              word_count: 33
+              content_hash: b394c342bf64d1db8e59955f0afe2dc67eae05dc5ac940abbc937ff21ff37fc9
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Each track delivers a working vertical
+              byte_offset: 1938
+              byte_count: 219
+              word_count: 35
+              content_hash: c0a2f65e3afd38e664ba44ddee5d9ebb573295f39e2d2d9f69e94c78c7921446
+            - path: 1.3.3
+              level: 3
+              title: 3.3 The assembly is the product
+              byte_offset: 2157
+              byte_count: 291
+              word_count: 47
+              content_hash: 37ded7d03a8396e71c60dc32513fc997c1b1ca7111dff213486627ece8ddc816
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Start with YAML, add cache if needed
+              byte_offset: 2448
+              byte_count: 312
+              word_count: 50
+              content_hash: 750ba88fec4f2727b19459ca2b52e4e26e152ca093d75c0733837ec13b8e1ea3
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Agent UX over internal elegance
+              byte_offset: 2760
+              byte_count: 244
+              word_count: 35
+              content_hash: 5c17f9f185ddcad3972965a24f1edd9deb10c4cfd63cca5044a938972c41e72d
+        - path: "1.4"
+          level: 2
+          title: 4. Deliverables
+          byte_offset: 3004
+          byte_count: 1727
+          word_count: 234
+          content_hash: 390727520e281f6343e2b934b4da6c234661d5fc122bef4a8c814e78ab8ae649
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Product deliverables
+              byte_offset: 3024
+              byte_count: 859
+              word_count: 121
+              content_hash: f46031ba63134a1b062c1af86fc2368d2f0528c2193b8e51d0f15fbf0793a5fa
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Instance deliverables for this project
+              byte_offset: 3883
+              byte_count: 310
+              word_count: 35
+              content_hash: 83a34b7bd82b85d1b17e4a7fa43492d628daf6667ee4dd938e14aae117be365b
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Verification deliverables
+              byte_offset: 4193
+              byte_count: 538
+              word_count: 75
+              content_hash: 3e9bd1e3de75b34511c2d2b1f1934fa8d663177a55aa18c1ab9298a32874340e
+        - path: "1.5"
+          level: 2
+          title: 5. Resolved Implementation Questions
+          byte_offset: 4731
+          byte_count: 1891
+          word_count: 281
+          content_hash: 971c11319cfb72f6eb85839c774c5a92e6bf205462ded23b54b34fe9568303b3
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Cache schema for knowledge entries
+              byte_offset: 4848
+              byte_count: 365
+              word_count: 52
+              content_hash: 5d0ebb659e6e4d85fa42e93113a3b28888a03070d692639effb890213ec4c430
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Context assembly performance
+              byte_offset: 5213
+              byte_count: 248
+              word_count: 37
+              content_hash: f5e4b18fd85768b820336f1835625b0450e898af455c8a01d030cfc7283da529
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Stop word list for Jaccard deduplication
+              byte_offset: 5461
+              byte_count: 508
+              word_count: 85
+              content_hash: 85d9afdc66910ebaebf14b4f636fa091effcaefe9487597adb9e42cdafa97c6a
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Import path configuration
+              byte_offset: 5969
+              byte_count: 444
+              word_count: 56
+              content_hash: 39fbe2bd9eee5db3eb4a058cb4bb7e621b913859d6a6f22b9f1c692b8d4c0d9e
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Profile creation tooling
+              byte_offset: 6413
+              byte_count: 209
+              word_count: 35
+              content_hash: 65bb2d23f2974686e1aeb2a6873177e9594011f6dfe894d71d12985cc64424e5
+        - path: "1.6"
+          level: 2
+          title: 6. Recommended Implementation Order
+          byte_offset: 6622
+          byte_count: 3732
+          word_count: 523
+          content_hash: de57512d8e5a5973d7d882bcb7e57ccf04534d08293dc8bf6848d435d9ada41d
+          children:
+            - path: 1.6.1
+              level: 3
+              title: '6.1 Layer 1: User identity resolution'
+              byte_offset: 6662
+              byte_count: 289
+              word_count: 40
+              content_hash: bb87a8ca8cd57cb3da962014cf41194bbb20afd6a7d3f88489f3983ce913f605
+            - path: 1.6.2
+              level: 3
+              title: '6.2 Layer 2: KnowledgeEntry core'
+              byte_offset: 6951
+              byte_count: 430
+              word_count: 57
+              content_hash: 6287025c815026efacef4b35c53321b36ad73c01ebfbf108a64d254d4ef9ba72
+            - path: 1.6.3
+              level: 3
+              title: '6.3 Layer 3: Confidence and deduplication'
+              byte_offset: 7381
+              byte_count: 424
+              word_count: 54
+              content_hash: a294ae0f01734e469716d16a0e90ed9acdd9892b0e409e5de84e0c2428cdf3a6
+            - path: 1.6.4
+              level: 3
+              title: '6.4 Layer 4: Context profiles'
+              byte_offset: 7805
+              byte_count: 348
+              word_count: 47
+              content_hash: 8cde5670f9c9cf48e443ecff35621ea5704965f528b6df7c403cbd957d012ad3
+            - path: 1.6.5
+              level: 3
+              title: '6.5 Layer 5: Usage reporting'
+              byte_offset: 8153
+              byte_count: 338
+              word_count: 49
+              content_hash: 657230f43dd9bb952f06841058aa8897cbec4d790175e5824cbccdaae0ecb1ad
+            - path: 1.6.6
+              level: 3
+              title: '6.6 Layer 6: Context assembly'
+              byte_offset: 8491
+              byte_count: 547
+              word_count: 87
+              content_hash: e364441f3e1eae8709c285bff42ce3264b2cd1f38f0e1d97cfce357a401cd2c7
+            - path: 1.6.7
+              level: 3
+              title: '6.7 Layer 7: Agent capabilities'
+              byte_offset: 9038
+              byte_count: 447
+              word_count: 59
+              content_hash: 98ef94f4a13988a3ceec6f1ab965818e94992de8836a3827e7a7a2e390118a9e
+            - path: 1.6.8
+              level: 3
+              title: '6.8 Layer 8: Batch import'
+              byte_offset: 9485
+              byte_count: 401
+              word_count: 55
+              content_hash: 1b77eb2f0c676795b9b9405cd83545768785c254a1864e36066eb2525e396861
+            - path: 1.6.9
+              level: 3
+              title: '6.9 Layer 9: Health checks, CLI, and integration testing'
+              byte_offset: 9886
+              byte_count: 468
+              word_count: 70
+              content_hash: fcb2330134bd33068839e8edb33b82cb104d12026200ba4cd6d8d9133e592e12
+        - path: "1.7"
+          level: 2
+          title: 7. Work Breakdown
+          byte_offset: 10354
+          byte_count: 10179
+          word_count: 1370
+          content_hash: 9e9e57700e8abe7cfc9ae5c952ba6f60d3105b33199c42e85040ca6169471c51
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Track A — User identity resolution
+              byte_offset: 10376
+              byte_count: 913
+              word_count: 133
+              content_hash: e57aec750f36520afb687ed470b37298b12fc6ebe2bc9e50bc29cb0ff5f55f4a
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Track B — KnowledgeEntry entity model and storage
+              byte_offset: 11289
+              byte_count: 1255
+              word_count: 158
+              content_hash: 9a910d2295986fa9efc016c0c31efdf1c35956bc81aaa377d3ea20e4b5cb6dfb
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Track C — Knowledge contribution and deduplication
+              byte_offset: 12544
+              byte_count: 1176
+              word_count: 156
+              content_hash: c369b597e1979f1e7049880bcb9ed004865f7370760fa486503c94bd38d70f74
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Track D — Context profiles and inheritance
+              byte_offset: 13720
+              byte_count: 1118
+              word_count: 140
+              content_hash: d3a99314f65b3e74261383a57304a48167605542e0859421937c797910cf0f89
+            - path: 1.7.5
+              level: 3
+              title: 7.5 Track E — Usage reporting and feedback loop
+              byte_offset: 14838
+              byte_count: 1028
+              word_count: 133
+              content_hash: 1889d9a943be927a3af37279cbc6f65f126f4de3ba063fbdd2fd0c1afd1ba6f1
+            - path: 1.7.6
+              level: 3
+              title: 7.6 Track F — Context assembly
+              byte_offset: 15866
+              byte_count: 1272
+              word_count: 179
+              content_hash: 4177ed5fbef9eefd7497e93971a19fdba3039df3c47a2fcad45152a3af79fe42
+            - path: 1.7.7
+              level: 3
+              title: 7.7 Track G — Agent capabilities
+              byte_offset: 17138
+              byte_count: 1242
+              word_count: 156
+              content_hash: 1b1ab039174eabc7119558a5cd3c7f91b7f53a9ebb9889c06f0439f523d85811
+            - path: 1.7.8
+              level: 3
+              title: 7.8 Track H — Batch document import
+              byte_offset: 18380
+              byte_count: 917
+              word_count: 127
+              content_hash: 21ab2fcd724204cfb55726683079261ba69c05ca1664b724a894f05bbe155241
+            - path: 1.7.9
+              level: 3
+              title: 7.9 Track I — Health checks, CLI, and integration testing
+              byte_offset: 19297
+              byte_count: 1236
+              word_count: 184
+              content_hash: a75525526e0162330301624d2715cd295d0bb4e2c2b1e11bf9c8c79af42fec42
+        - path: "1.8"
+          level: 2
+          title: 8. Parallelism Opportunities
+          byte_offset: 20533
+          byte_count: 1466
+          word_count: 198
+          content_hash: 73376e08b4a989804540475f343689abcfc2e1d91636d929b72f3013ebd784a9
+        - path: "1.9"
+          level: 2
+          title: 9. Implementation Constraints
+          byte_offset: 21999
+          byte_count: 1464
+          word_count: 222
+          content_hash: 2cecdadc83eb7abaf297f07e693b454b6618efc270a547d94506cee4e8b84677
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 No cache-first implementation
+              byte_offset: 22033
+              byte_count: 253
+              word_count: 40
+              content_hash: 26f01ef388b11e902eee90a2e907c9d4bb2a728af1e95c4a436229e4a53b7bd6
+            - path: 1.9.2
+              level: 3
+              title: 9.2 No automated pruning
+              byte_offset: 22286
+              byte_count: 224
+              word_count: 35
+              content_hash: 731004f1017bca22894abe2f16ca49eac9a5402017c6c014e4c4775beb76c9c9
+            - path: 1.9.3
+              level: 3
+              title: 9.3 No git anchoring
+              byte_offset: 22510
+              byte_count: 168
+              word_count: 25
+              content_hash: f53bc2ee061586e523a1ffe6a70cb6753b63cda084ccd010e3ad17d06239c9d8
+            - path: 1.9.4
+              level: 3
+              title: 9.4 No post-merge compaction
+              byte_offset: 22678
+              byte_count: 158
+              word_count: 21
+              content_hash: ebf1ad587a76594580bf4fdb9aff33ca225e9b6af309985d070799628c426fbe
+            - path: 1.9.5
+              level: 3
+              title: 9.5 No deep merge in profile inheritance
+              byte_offset: 22836
+              byte_count: 230
+              word_count: 35
+              content_hash: a162c3e5a9498f46431a26c73086c003dfb972f592f93013deef235144fb2d97
+            - path: 1.9.6
+              level: 3
+              title: 9.6 No automatic entity extraction
+              byte_offset: 23066
+              byte_count: 175
+              word_count: 23
+              content_hash: bd66debbb20dbd6b43ed81d78b72ccd1a71ed5543bd13d4ba5a6ad74d968d718
+            - path: 1.9.7
+              level: 3
+              title: 9.7 MCP tools are built with their feature
+              byte_offset: 23241
+              byte_count: 222
+              word_count: 39
+              content_hash: 50c2fca311e9c131d083eab00d4d0f83db048a6190bc2a8708ac44a396bd077b
+        - path: "1.10"
+          level: 2
+          title: 10. Testing and Verification Plan
+          byte_offset: 23463
+          byte_count: 2008
+          word_count: 287
+          content_hash: aeaa65906d3cdecb23b9f9f119cb57f5dd9f021bdce3352a5fc3403b23210fb8
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Core verification categories
+              byte_offset: 23501
+              byte_count: 1018
+              word_count: 143
+              content_hash: e8574734a100760331e384e8de5b1ffdf6365d703a6002c217c72d7653a464fb
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Test types
+              byte_offset: 24519
+              byte_count: 445
+              word_count: 68
+              content_hash: 85706c1ad935626037a5faeb4d2b20bfcf7abab9de191d7301e1c39183d29793
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Fixture strategy
+              byte_offset: 24964
+              byte_count: 228
+              word_count: 33
+              content_hash: 3bee866fbba00695de41c62fffadd9f4c9e99169c107a14eb4371b013f05b8e9
+            - path: 1.10.4
+              level: 3
+              title: 10.4 Verification against acceptance criteria
+              byte_offset: 25192
+              byte_count: 279
+              word_count: 37
+              content_hash: cc8d4f6a3b1c9c032cb7f824f1125c2c44e8ef0f2ab729e51fb8e9e5691ecde8
+        - path: "1.11"
+          level: 2
+          title: 11. Risks and Mitigations
+          byte_offset: 25471
+          byte_count: 2146
+          word_count: 309
+          content_hash: 5eb6515c93a0e00a9b4f7676cd3303a1d8d477594d6af4d4ffee6f387bc7cf49
+          children:
+            - path: 1.11.1
+              level: 3
+              title: '11.1 Risk: Context assembly complexity'
+              byte_offset: 25501
+              byte_count: 432
+              word_count: 57
+              content_hash: dd5997e98dcd7b33e4077eab9d36ae9417944a76e3869522c363af16d20c477e
+            - path: 1.11.2
+              level: 3
+              title: '11.2 Risk: Deduplication false positives'
+              byte_offset: 25933
+              byte_count: 402
+              word_count: 60
+              content_hash: 291b0d9c6694762e7df990a245e8e8ac845f325ce392a53dd99b09ecd86ae494
+            - path: 1.11.3
+              level: 3
+              title: '11.3 Risk: Design context integration'
+              byte_offset: 26335
+              byte_count: 471
+              word_count: 67
+              content_hash: 4a78db7ec661bfcda36c77f5f5bcd075ead4294db2a0877e08e521785869fe10
+            - path: 1.11.4
+              level: 3
+              title: '11.4 Risk: Profile authoring burden'
+              byte_offset: 26806
+              byte_count: 390
+              word_count: 55
+              content_hash: 3ba977b74807ee8271d6ffef5bb2512280e09df3ae03270a84c6a47ecb0b5b05
+            - path: 1.11.5
+              level: 3
+              title: '11.5 Risk: Scope creep into Phase 3'
+              byte_offset: 27196
+              byte_count: 421
+              word_count: 65
+              content_hash: b62c949de83d9c12538b9f08bed6ce74aa7c2fcf4d3b12c790faa9af56b667c4
+        - path: "1.12"
+          level: 2
+          title: 12. Definition of Done for Phase 2b
+          byte_offset: 27617
+          byte_count: 689
+          word_count: 114
+          content_hash: e5645b1282664ec1c1446c87a1dee6a9b474258a8f4325896bbe8a4172d67b31
+        - path: "1.13"
+          level: 2
+          title: 13. Post-Implementation Audit Remediation
+          byte_offset: 28306
+          byte_count: 6489
+          word_count: 875
+          content_hash: e0d98660623b49a3e66d945cbf9c9a67b86636796259cb6d9507218d997d6666
+          children:
+            - path: 1.13.1
+              level: 3
+              title: 13.1 Must fix
+              byte_offset: 28833
+              byte_count: 2125
+              word_count: 278
+              content_hash: 13c956019c645c2db020853272b254e9d87d20cabbbfe5f36bcf640fc5846c30
+            - path: 1.13.2
+              level: 3
+              title: 13.2 Should fix
+              byte_offset: 30958
+              byte_count: 2102
+              word_count: 281
+              content_hash: 6c560b41312ef8cea76771693e1282568786b209149ff3e95d1b1bd35e0dfd81
+            - path: 1.13.3
+              level: 3
+              title: 13.3 Nice to have
+              byte_offset: 33060
+              byte_count: 1735
+              word_count: 241
+              content_hash: 0f70feb6bf36ae41bdd85ba303171a41fdbbbe3a5118ecfaa63401e8ca390081
+        - path: "1.14"
+          level: 2
+          title: 14. Summary
+          byte_offset: 34795
+          byte_count: 1367
+          word_count: 233
+          content_hash: b31fe4205155ff777bb0c3771d3eb69027769dd498acd3b5617c7223cee06b51
+front_matter:
+    status: active
+    date: "2026-03-24"
+    extra:
+        Based on: work/spec/phase-2b-specification.md; work/spec/phase-2-specification.md; work/design/machine-context-design.md; work/plan/phase-2-decision-log.md` (P2-DEC-001 through P2-DEC-004); work/plan/phase-1-implementation-plan.md` (format reference)
+        Purpose: define the work breakdown, sequencing, and constraints for Phase 2b implementation
+entity_refs:
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 345
+    - entity_id: DEC-004
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 364
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.9.2
+      byte_offset: 22323
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.9.3
+      byte_offset: 22543
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.9.4
+      byte_offset: 22719
+    - entity_id: DEC-002
+      entity_type: decision
+      section_path: 1.9.5
+      byte_offset: 22889
+    - entity_id: DEC-019
+      entity_type: decision
+      section_path: 1.9.6
+      byte_offset: 23113
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.11.5
+      byte_offset: 27303
+cross_doc_links:
+    - target_path: work/spec/phase-2b-specification.md
+      link_text: work/spec/phase-2b-specification.md
+      section_path: "1"
+    - target_path: work/spec/phase-2-specification.md
+      link_text: work/spec/phase-2-specification.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/plan/phase-2-decision-log.md
+      link_text: work/plan/phase-2-decision-log.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-implementation-plan.md
+      link_text: work/plan/phase-1-implementation-plan.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.13.1
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.13.1
+    - target_path: bootstrap-workflow.md
+      link_text: bootstrap-workflow.md
+      section_path: 1.13.1
+    - target_path: machine-context-design.md
+      link_text: machine-context-design.md
+      section_path: 1.13.1
+    - target_path: work/plan/phase-2b-progress.md
+      link_text: work/plan/phase-2b-progress.md
+      section_path: 1.13.1
+    - target_path: phase-2a-progress.md
+      link_text: phase-2a-progress.md
+      section_path: 1.13.1
+    - target_path: phase-2b-progress.md
+      link_text: phase-2b-progress.md
+      section_path: 1.13.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: question
+      confidence: high
+    - section_path: 1.5.2
+      role: narrative
+      confidence: high
+    - section_path: 1.6.4
+      role: narrative
+      confidence: high
+    - section_path: 1.6.6
+      role: narrative
+      confidence: high
+    - section_path: 1.7.4
+      role: narrative
+      confidence: high
+    - section_path: 1.7.6
+      role: narrative
+      confidence: high
+    - section_path: "1.9"
+      role: constraint
+      confidence: high
+    - section_path: 1.10.4
+      role: requirement
+      confidence: high
+    - section_path: "1.11"
+      role: risk
+      confidence: high
+    - section_path: 1.11.1
+      role: narrative
+      confidence: high
+    - section_path: 1.11.2
+      role: risk
+      confidence: high
+    - section_path: 1.11.3
+      role: narrative
+      confidence: high
+    - section_path: 1.11.4
+      role: risk
+      confidence: high
+    - section_path: 1.11.5
+      role: risk
+      confidence: high
+    - section_path: "1.12"
+      role: definition
+      confidence: high
+    - section_path: "1.14"
+      role: narrative
+      confidence: high
+classified: false

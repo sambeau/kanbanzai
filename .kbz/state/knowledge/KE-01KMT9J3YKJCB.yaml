@@ -1,0 +1,18 @@
+id: KE-01KMT9J3YKJCB
+tier: 2
+topic: p7-retro-must-consult-knowledge-before-writing-reports
+scope: project
+content: "When writing retrospective or review documents, agents must call `retro synthesise` for the relevant scope AND `knowledge list` with tags like retrospective, workflow-friction before composing the document. During P7, the agent wrote the entire retrospective from in-session memory, missing: (1) a P6 friction signal that directly motivated the server_info feature (cross-plan learning), (2) a doc-approve Status-header friction entry, and (3) the fact that zero finish calls included retrospective signals. The retro and knowledge tools contain accumulated project learning that in-session memory does not. The same bypass-MCP-tools habit that affected state queries also affected document authoring."
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - workflow-friction
+  - retrospective
+  - mcp-tools
+  - agent-behavior
+created: "2026-03-28T13:18:59Z"
+created_by: sambeau
+updated: "2026-03-28T13:18:59Z"

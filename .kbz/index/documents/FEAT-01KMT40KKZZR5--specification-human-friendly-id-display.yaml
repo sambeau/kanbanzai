@@ -1,0 +1,204 @@
+document_id: FEAT-01KMT40KKZZR5/specification-human-friendly-id-display
+document_path: work/spec/human-friendly-id-display.md
+content_hash: 66d377652a98989d225d6247a2a69afd9388fd7a7be70a87b687e706279058ed
+indexed_at: 2026-03-28T11:43:55.782504Z
+sections:
+    - path: "1"
+      level: 1
+      title: Human-Friendly ID Display Specification
+      byte_offset: 0
+      byte_count: 10494
+      word_count: 1572
+      content_hash: 66d377652a98989d225d6247a2a69afd9388fd7a7be70a87b687e706279058ed
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 513
+          byte_count: 731
+          word_count: 115
+          content_hash: c77eb05442123a759576d67389c4678aba5c63bfa309840d7d1d3b53e3969e92
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1244
+          byte_count: 835
+          word_count: 133
+          content_hash: 9d45f481efff7b7e9fcee50b6d8f7bd74df428a17f30b24ddc25a9df69716e71
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2079
+          byte_count: 1670
+          word_count: 256
+          content_hash: b22b0e1115107b64f5851c820a7d7c44cac2ba6ecec0b4d832812f2ab7e64607
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 2092
+              byte_count: 1006
+              word_count: 150
+              content_hash: ea8b8fcc6888a46407f7f809bbe3cdb0bc1b3499cbc0123b36de0c724630dc37
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred / out of scope
+              byte_offset: 3098
+              byte_count: 651
+              word_count: 103
+              content_hash: e7821a917b6b44bc2d0337cf0153798bf3c78d9a94bb67e4ee20f4f6318a3f31
+        - path: "1.4"
+          level: 2
+          title: 4. Acceptance Criteria
+          byte_offset: 3749
+          byte_count: 5118
+          word_count: 776
+          content_hash: 567c19dc6860149edc1923e8dbadd565b811de7450d95966ecad8b6dbe33e617
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Model — Label field
+              byte_offset: 3776
+              byte_count: 622
+              word_count: 98
+              content_hash: f67aee8d7723e836538006086d0dfaac53fbba3fb385445076d36532e0260f59
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Storage — Canonical field order
+              byte_offset: 4398
+              byte_count: 678
+              word_count: 104
+              content_hash: b8412e4c3ca1693c4ba4e68902b6bed1920408108f518ee2c41df85b14b34a66
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Storage — Input acceptance
+              byte_offset: 5076
+              byte_count: 436
+              word_count: 60
+              content_hash: e7ec0ab7a82e9128317a8525894a031e1e7c958afbe998181ec90cbf88f89632
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Display — `display_id` as primary
+              byte_offset: 5512
+              byte_count: 631
+              word_count: 88
+              content_hash: ab2fb14c08bc922eac5ee7d187bcf4f0736a4c3051009f68ae4e28c4cd07beeb
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Display — Slug alongside ID
+              byte_offset: 6143
+              byte_count: 875
+              word_count: 128
+              content_hash: 1e1625ae50d7f9f55edda9901e4bad661c0bed17484fd7f29e5cfab75d96978e
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Label — Create and update
+              byte_offset: 7018
+              byte_count: 495
+              word_count: 80
+              content_hash: ae6e4afc9c949b82b954e67ad9e605810046ec22fea62d2935d84b9fe248fcfd
+            - path: 1.4.7
+              level: 3
+              title: 4.7 Label — List filter
+              byte_offset: 7513
+              byte_count: 308
+              word_count: 46
+              content_hash: f6b12d6296f66a47a80c3f8199dcc514ad522643fb005f8d0ed972c6815dc91a
+            - path: 1.4.8
+              level: 3
+              title: 4.8 Status dashboard — Conditional label column
+              byte_offset: 7821
+              byte_count: 557
+              word_count: 95
+              content_hash: 3031ff12c000b784f7b59e28e9d344d17d1ec99337c3d225c32fd256491a6819
+            - path: 1.4.9
+              level: 3
+              title: 4.9 Backward compatibility
+              byte_offset: 8378
+              byte_count: 489
+              word_count: 73
+              content_hash: 9567e736f3561f3f6aafa40cc315abbacc05a663b80468ccdf896cbd34675e70
+        - path: "1.5"
+          level: 2
+          title: 5. Display Convention Reference
+          byte_offset: 8867
+          byte_count: 536
+          word_count: 81
+          content_hash: 9bfa338e096dc9eb9cd5a746e6c16207f8972ee359a0e80dc1e4162a3d3798e2
+        - path: "1.6"
+          level: 2
+          title: 6. Test Plan
+          byte_offset: 9403
+          byte_count: 1091
+          word_count: 161
+          content_hash: 8ebeb13819f5564c66354b30a9a11cebf73d5ca0c9b25d985300b55850fd5632
+entity_refs:
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 333
+    - entity_id: FEAT-01KMR
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1871
+    - entity_id: FEAT-01KMRX1SEQV49
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1907
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 3212
+    - entity_id: FEAT-01KMR
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 5198
+    - entity_id: FEAT-01KMRX1SEQV49
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 5263
+    - entity_id: FEAT-01KMR
+      entity_type: feature
+      section_path: 1.4.5
+      byte_offset: 6320
+    - entity_id: FEAT-01KMR
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 8960
+    - entity_id: FEAT-01KMRX1SEQV49
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 9298
+    - entity_id: TASK-01KMR
+      entity_type: task
+      section_path: 1.4.5
+      byte_offset: 6511
+    - entity_id: P7-developer-experience
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 396
+    - entity_id: P7-developer-experience
+      entity_type: plan
+      section_path: 1.3.2
+      byte_offset: 3690
+cross_doc_links:
+    - target_path: work/design/human-friendly-ids.md
+      link_text: work/design/human-friendly-ids.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

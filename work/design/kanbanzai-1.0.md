@@ -2,7 +2,7 @@
 
 - Status: draft design
 - Purpose: define what Kanbanzai 1.0 means — a distributable, installable workflow tool ready for use by projects other than itself
-- Date: 2026-05-31
+- Date: 2026-03-26T00:20:29Z
 - Related:
   - `work/design/workflow-design-basis.md`
   - `work/design/document-centric-interface.md`

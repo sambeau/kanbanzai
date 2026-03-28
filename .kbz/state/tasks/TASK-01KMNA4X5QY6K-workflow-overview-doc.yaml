@@ -2,4 +2,8 @@ id: TASK-01KMNA4X5QY6K
 parent_feature: FEAT-01KMKRQVKBPRX
 slug: workflow-overview-doc
 summary: "Write docs/workflow-overview.md covering: the human-AI collaboration model (humans own intent, agents own execution), stage-overview table (all six stages with trigger/output/approval gate), per-stage detail sections, the document-centric interface model, and common failure modes (skipped stages, unauthorised architecture decisions). Register with doc_record_submit."
-status: queued
+status: done
+files_planned:
+  - docs/workflow-overview.md
+completed: "2026-03-26T16:49:27Z"
+completion_summary: "Wrote docs/workflow-overview.md (466 lines) — covers the human-AI collaboration model, six-stage overview table, per-stage detail with who-drives/output/approval-gate/agent-boundaries, document-centric interface model, common failure modes, and lifecycle summaries. Registered as document record FEAT-01KMKRQVKBPRX/report-workflow-overview."

@@ -144,7 +144,7 @@ A design document is ready for approval when it contains:
 4. **No unresolved design questions**
 
 Approval can be signalled verbally: "Approved", "LGTM", "Let's move to spec".
-Record it with `doc_record_approve` immediately so system state matches
+Record it with `doc` action: `approve` immediately so system state matches
 reality.
 
 ---
@@ -206,19 +206,19 @@ systems that are easy to understand, easy to trust, and easy to extend.
 ## Gotchas
 
 - **Forgetting to register the document.** After creating or renaming a
-  design document, call `doc_record_submit` immediately. Unregistered
+  design document, call `doc` action: `register` immediately. Unregistered
   documents are invisible to the system. See `kanbanzai-documents`.
 - **Approving with open questions.** If the human says "approved" but the
   document still contains unresolved design questions, flag them before
-  calling `doc_record_approve`. An incomplete approval creates problems
+  calling `doc` action: `approve`. An incomplete approval creates problems
   downstream when the spec tries to reference undecided points.
 - **Editing an approved document.** If the approved design needs changes,
   create a new document and supersede the old one. Do not silently edit an
   approved document — the approval is tied to the content hash and will
   become void.
-- **Tool call failures.** If `doc_record_approve` fails, it usually means
+- **Tool call failures.** If `doc` action: `approve` fails, it usually means
   the content hash has drifted (the file was edited since registration).
-  Call `doc_record_refresh` first, then re-approve.
+  Call `doc` action: `refresh` first, then re-approve.
 
 ---
 

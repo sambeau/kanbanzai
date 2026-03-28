@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"strings"
 
-	"kanbanzai/internal/config"
-	"kanbanzai/internal/core"
-	"kanbanzai/internal/github"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/github"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 func runPR(args []string, deps dependencies) error {

@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/config"
 )
 
 func newTestImportSetup(t *testing.T) (*BatchImportService, *DocumentService, string, *config.Config) {

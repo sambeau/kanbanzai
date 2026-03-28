@@ -2,4 +2,17 @@ id: TASK-01KMNA39KTWW4
 parent_feature: FEAT-01KMKRQRRX3CC
 slug: init-command-skeleton
 summary: "Implement kanbanzai init CLI subcommand skeleton with flag parsing: --docs-path, --skip-skills, --update-skills, --non-interactive. Validate mutually exclusive flags (--skip-skills + --update-skills). Wire --help output with all flags and a usage example. Add init to top-level help output."
-status: queued
+status: done
+files_planned:
+  - cmd/kanbanzai/init_cmd.go
+  - cmd/kanbanzai/main.go
+  - internal/kbzinit/init.go
+  - internal/kbzinit/git.go
+  - internal/kbzinit/config_writer.go
+completed: "2026-03-26T15:13:30Z"
+claimed_at: "2026-03-26T15:03:55Z"
+dispatched_to: backend
+dispatched_at: "2026-03-26T15:03:55Z"
+dispatched_by: agent/init-command
+completion_summary: "Implemented `kanbanzai init` as a CLI subcommand in cmd/kanbanzai/init_cmd.go. Flag definitions: --docs-path (repeatable string), --skip-skills (bool), --update-skills (bool), --non-interactive (bool), --skip-work-dirs (bool). Validates --skip-skills and --update-skills are mutually exclusive (exits non-zero before touching filesystem). --help prints full usage with all flags, types, defaults, and examples. Wired into the run() switch in main.go. Created internal/kbzinit/ package (package kbzinit, not 'init') containing Initializer, Options, and all supporting logic."
+verification: "go build ./..., go test -race ./internal/kbzinit/... (37 tests pass), go vet ./..."

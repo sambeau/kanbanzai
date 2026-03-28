@@ -1,0 +1,198 @@
+document_id: FEAT-01KMKRQV025FA/design-public-schema-interface
+document_path: work/design/public-schema-interface.md
+content_hash: bc7024f3cbdc3d2bdcb50eba49d70dcb6e9f75eecb91bff26a4a90d0e064e3d1
+indexed_at: 2026-03-26T10:53:32.080861Z
+sections:
+    - path: "1"
+      level: 1
+      title: Public Schema Interface Design
+      byte_offset: 0
+      byte_count: 12160
+      word_count: 1844
+      content_hash: bc7024f3cbdc3d2bdcb50eba49d70dcb6e9f75eecb91bff26a4a90d0e064e3d1
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 381
+          byte_count: 626
+          word_count: 100
+          content_hash: 66abaa7400ae11a0e55fe390c9425c5492ea0069d98bc916f46f1c167d453368
+        - path: "1.2"
+          level: 2
+          title: 2. Defining the Public Schema
+          byte_offset: 1007
+          byte_count: 2277
+          word_count: 349
+          content_hash: 192acb0d14209d83ef3277e75cd1faeb0bf33ed2f0324905b458195a8c2e9d51
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 The Simplest Possible Definition
+              byte_offset: 1041
+              byte_count: 572
+              word_count: 92
+              content_hash: 47807b4ccd03c7acbca0ac7f32011ba20d623fe474409217a0021aaa7710ecf9
+            - path: 1.2.2
+              level: 3
+              title: 2.2 What Is Committed
+              byte_offset: 1613
+              byte_count: 723
+              word_count: 105
+              content_hash: 4cb35d91205ea57b56bc887090073ed1b08627187aece6931b7e355de7542b89
+            - path: 1.2.3
+              level: 3
+              title: 2.3 What Is Not Committed
+              byte_offset: 2336
+              byte_count: 948
+              word_count: 146
+              content_hash: 8a74af4ebcaed8fbf57b72d08d502ea9be77648a1c03596df75878838fec880b
+        - path: "1.3"
+          level: 2
+          title: 3. Schema Versioning
+          byte_offset: 3284
+          byte_count: 2735
+          word_count: 401
+          content_hash: a9c15c305673ea66a7769bd7a9bba911058c5df320cb3becfc30bc54841cec5e
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Two Version Fields
+              byte_offset: 3309
+              byte_count: 802
+              word_count: 107
+              content_hash: ae9d60385e6bbdfa8f024f95802903700600b6a6cca6465f5b0528f0d7b785d6
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Binary Version vs. Schema Version
+              byte_offset: 4111
+              byte_count: 520
+              word_count: 83
+              content_hash: 230ede595bd6fab24fbe2894b1f2ff35098629cc34cfa8cbd57224944b508c2b
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Compatibility Policy
+              byte_offset: 4631
+              byte_count: 706
+              word_count: 108
+              content_hash: b424a63b7baca8473a24f6143e459b4831e9dbd4bafbc30d3974f366d665cb58
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Unknown Values
+              byte_offset: 5337
+              byte_count: 313
+              word_count: 47
+              content_hash: 8162b0b5e0a8f0da4ca6193bd5386cf971a57bf748aa13e800ccd298ea1d44b1
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Binary Behaviour at Version Boundaries
+              byte_offset: 5650
+              byte_count: 369
+              word_count: 52
+              content_hash: 179eb48f0a6bfabb3ae29415d487d721064189ffc27c3d5618432eca26a004f5
+        - path: "1.4"
+          level: 2
+          title: 4. The Go Interface
+          byte_offset: 6019
+          byte_count: 1859
+          word_count: 264
+          content_hash: 123dc2e1990b042e8cd7dde5f505c2f7ebf8c10c5ffeff5a9ee2a17196e0493e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: '4.1 Principle: Types and a Query Layer'
+              byte_offset: 6043
+              byte_count: 1202
+              word_count: 164
+              content_hash: 6bb10dffd480d11eb5aaccbad023f2977e9ec6cd449a148cb25594fca695150a
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Packaging
+              byte_offset: 7245
+              byte_count: 416
+              word_count: 58
+              content_hash: 396893234b2dad539d9b8aa32bfe29e0e899f76bcadd7d31f07a2e1c64a865c4
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Stability Guarantee
+              byte_offset: 7661
+              byte_count: 217
+              word_count: 37
+              content_hash: 93099f345ebaf808a68b7c32dd27d8603067834470de7235b2ac26afd223dec2
+        - path: "1.5"
+          level: 2
+          title: 5. JSON Schema for Non-Go Consumers
+          byte_offset: 7878
+          byte_count: 767
+          word_count: 129
+          content_hash: f88285ee520115b4aaaef85f88fd0d3f416cd5af8d842cf90175ef1ebebd34cb
+        - path: "1.6"
+          level: 2
+          title: 6. Notes for the Viewer
+          byte_offset: 8645
+          byte_count: 3515
+          word_count: 552
+          content_hash: a8d18fd533ae8c958103aa02eb109b6a072fbbdba01c30dcc5eb266e65a6aaab
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 The Viewer Has Its Own Clone
+              byte_offset: 8897
+              byte_count: 616
+              word_count: 103
+              content_hash: 1a87abb81273d4e4d0ded0a8128c32bfd1f3de428488cf2c43c27645cfdf0468
+            - path: 1.6.2
+              level: 3
+              title: '6.2 Freshness: Webhooks and Filesystem Watching'
+              byte_offset: 9513
+              byte_count: 958
+              word_count: 139
+              content_hash: 0ca847a3345caa0838a8af60e187f50e3f36b7bae8140962851c0f64dc165724
+            - path: 1.6.3
+              level: 3
+              title: 6.3 What the Viewer Can and Cannot See
+              byte_offset: 10471
+              byte_count: 594
+              word_count: 95
+              content_hash: f92dcc81caa261438bdfe4178ab7f7844f171710c65765d7d17034ccac069b9d
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Estimated Progress
+              byte_offset: 11065
+              byte_count: 527
+              word_count: 83
+              content_hash: ae34f5284510012ba34c7c89ddb28224184a4e914deb498d85bd57586be40a77
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Write Access
+              byte_offset: 11592
+              byte_count: 568
+              word_count: 93
+              content_hash: 6f501f35da01e72864b9acb44af9993af91ef4774122fc5024a757563e3e9e68
+front_matter:
+    status: draft design
+    date: "2026-05-31"
+    related:
+        - work/design/kanbanzai-1.0.md` §7
+        - work/design/init-command.md` §6
+        - work/design/document-centric-interface.md
+    extra:
+        Purpose: define the .kbz schema as a stable public interface for external consumers, including the viewer and any other tools that read Kanbanzai workflow state
+cross_doc_links:
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1"
+    - target_path: work/design/init-command.md
+      link_text: work/design/init-command.md
+      section_path: "1"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.1
+      role: definition
+      confidence: high
+classified: false

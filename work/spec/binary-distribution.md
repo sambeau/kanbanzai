@@ -3,8 +3,8 @@
 | Document | Binary Distribution Specification |
 |----------|----------------------------------|
 | Status   | Draft                            |
-| Created  | 2026-05-31                       |
-| Updated  | 2026-05-31                       |
+| Created  | 2026-03-26T14:24:17Z                       |
+| Updated  | 2026-03-26T14:24:17Z                       |
 | Related  | `work/design/kanbanzai-1.0.md` §5 |
 
 ---

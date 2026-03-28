@@ -2,4 +2,18 @@ id: TASK-01KMNA6M90AWP
 parent_feature: FEAT-01KMKRQT9QCPR
 slug: release-validation
 summary: "Validate the release pipeline end-to-end by pushing a v1.0.0-alpha.1 tag and verifying: workflow completes without manual steps, correct artefacts produced for alpha tier (macOS ARM64 only), checksums.txt present and passes sha256sum -c, kanbanzai --version prints 1.0.0-alpha.1 on the downloaded binary, and install script installs and runs the binary successfully."
-status: queued
+status: needs-review
+files_planned:
+  - cmd/kanbanzai/main.go
+  - cmd/kanbanzai/main_test.go
+  - .goreleaser.yml
+  - LICENSE
+  - .github/workflows/release.yml
+  - install.sh
+completed: "2026-03-26T15:08:45Z"
+claimed_at: "2026-03-26T15:01:25Z"
+dispatched_to: backend
+dispatched_at: "2026-03-26T15:01:25Z"
+dispatched_by: agent/binary-distribution
+completion_summary: "Pipeline files verified locally; human must push v1.0.0-alpha.1 tag to complete end-to-end validation. All four prior tasks are done and consistent. go build -ldflags \\\"-X main.version=1.0.0-alpha.1\\\" ./... builds cleanly. All tests pass. goreleaser not available in this environment — YAML syntax validated via ruby. Human action required: git tag v1.0.0-alpha.1 && git push origin v1.0.0-alpha.1 to trigger the GitHub Actions release workflow and verify artefacts appear on GitHub Releases."
+verification: "go build -ldflags \\\"-X main.version=1.0.0-alpha.1\\\" ./... confirmed clean. go test ./... all pass. goreleaser check skipped (not installed). install.sh syntax valid. YAML files validated with ruby. All generated files consistent with each other and the spec."

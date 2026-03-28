@@ -1,0 +1,16 @@
+id: TASK-01KMRXK75ZA20
+parent_feature: FEAT-01KMRX1SEQV49
+slug: update-agents-md
+summary: "Update AGENTS.md: add a clear statement that code review is a mandatory feature lifecycle gate (developing → reviewing → done, no shortcut); add a cross-reference to .skills/code-review.md for review expectations; identify and remove any inline review instructions that duplicate what is now in the SKILL. Covers spec AC-G-01 through AC-G-03."
+status: done
+depends_on:
+  - TASK-01KMRXK5ARR1S
+files_planned:
+  - AGENTS.md
+completed: "2026-03-28T02:12:24Z"
+claimed_at: "2026-03-28T02:09:10Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T02:09:10Z"
+dispatched_by: sambeau
+completion_summary: "Updated AGENTS.md: Stage 6 renamed to 'Implementation and Review', workflow progression now shows developing→reviewing→done, mandatory gate statement added (AC-G-01), .skills/code-review.md referenced in Stage 6 agent role and in Key Design Documents table (AC-G-02), no inline review instructions existed to remove (AC-G-03 satisfied)."
+verification: "grep -n 'code-review.md' AGENTS.md → 2 matches (L154, L297). grep -n 'mandatory.*lifecycle gate' AGENTS.md → L295. Commit 9bcaf9c."

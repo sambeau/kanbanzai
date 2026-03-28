@@ -1,0 +1,15 @@
+id: TASK-01KMRSPEPVZ53
+parent_feature: FEAT-01KMRSN1B2GJA
+slug: update-entity-depends-on
+summary: Add depends_on field support to update_entity for task entities. Currently agents must edit YAML directly to set task dependencies. The update_entity tool should accept depends_on as a list of task IDs and validate they exist. Include test coverage.
+status: done
+files_planned:
+  - internal/service/entities.go
+  - internal/mcp/entity_tool.go
+  - internal/mcp/entity_tool_test.go
+completed: "2026-03-27T23:38:12Z"
+claimed_at: "2026-03-27T23:25:37Z"
+dispatched_to: backend
+dispatched_at: "2026-03-27T23:25:37Z"
+dispatched_by: orchestrator
+completion_summary: "Added depends_on support to update_entity — new ListFields map on UpdateEntityInput, depends_on array parameter on entity tool, validation for task-only and TASK- prefix. 3 test cases."

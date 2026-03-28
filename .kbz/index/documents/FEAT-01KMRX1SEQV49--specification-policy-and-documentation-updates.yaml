@@ -1,0 +1,154 @@
+document_id: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates
+document_path: work/spec/policy-and-documentation-updates.md
+content_hash: 5961187aa76b504f8eddf00c4009b04417aab6ae83a8d35cf529e9eb1c1efe8c
+indexed_at: 2026-03-28T00:28:15.743298Z
+sections:
+    - path: "1"
+      level: 1
+      title: Policy and Documentation Updates Specification
+      byte_offset: 0
+      byte_count: 8462
+      word_count: 1132
+      content_hash: 5961187aa76b504f8eddf00c4009b04417aab6ae83a8d35cf529e9eb1c1efe8c
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 364
+          byte_count: 619
+          word_count: 89
+          content_hash: 102034d1dce4a79a9c2dc0c38e1e1cb5fe9fd3814b6ad775750822948c156db2
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 983
+          byte_count: 640
+          word_count: 90
+          content_hash: 11c81276032c41236e2cc12a8fb3c7895dbf47294aa2b058eae7d94b42f52efa
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1623
+          byte_count: 1680
+          word_count: 242
+          content_hash: fa227ad00e32210ac948fcd31461742aef596c901e08225c91679f8e8fc6c9df
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 1636
+              byte_count: 913
+              word_count: 122
+              content_hash: be4c932880be4147dfbc1e0c40431410e3f17901810ef8a5f14647fc3a153577
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred
+              byte_offset: 2549
+              byte_count: 326
+              word_count: 51
+              content_hash: 0130abc39f537d6cc5a07318fe0ba8567655594e248aee28d453623857507203
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly excluded
+              byte_offset: 2875
+              byte_count: 428
+              word_count: 66
+              content_hash: 741ca533fcdc02e6288f63ce0723f3beb510d4f91986eb482957317a1adb636f
+        - path: "1.4"
+          level: 2
+          title: 4. Acceptance Criteria
+          byte_offset: 3303
+          byte_count: 3555
+          word_count: 453
+          content_hash: b5725ed9d32577fd7bb63141fb71c5b9c2c1f2f1ee8ca5aa8f24e1c779ae357d
+        - path: "1.5"
+          level: 2
+          title: 5. Verification
+          byte_offset: 6858
+          byte_count: 1604
+          word_count: 220
+          content_hash: 2ed99beb9d7877e37ccf0ae923915c6de7b7b9ea7b136034f5089f1caca88cc7
+cross_doc_links:
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: "1.2"
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: "1.2"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.3.1
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: 1.3.1
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: 1.3.1
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: 1.3.1
+    - target_path: work/plan/workflow-quality-and-review-plan.md
+      link_text: work/plan/workflow-quality-and-review-plan.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.2
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.3.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.4"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.4"
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: "1.4"
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: "1.4"
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: "1.4"
+    - target_path: work/plan/workflow-quality-and-review-plan.md
+      link_text: work/plan/workflow-quality-and-review-plan.md
+      section_path: "1.4"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.5"
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: "1.5"
+    - target_path: work/plan/workflow-quality-and-review-plan.md
+      link_text: work/plan/workflow-quality-and-review-plan.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

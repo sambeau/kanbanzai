@@ -1,0 +1,203 @@
+document_id: PROJECT/dev-plan-phase-1-audit-remediation
+document_path: work/plan/phase-1-audit-remediation.md
+content_hash: acad72717172d0f9dc0823b6751b39618d98c4858a23e1a47b49b6e029fa9bc8
+indexed_at: 2026-03-25T21:38:28.317515Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 1 Audit Remediation Plan
+      byte_offset: 0
+      byte_count: 18147
+      word_count: 2704
+      content_hash: acad72717172d0f9dc0823b6751b39618d98c4858a23e1a47b49b6e029fa9bc8
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 309
+          byte_count: 568
+          word_count: 79
+          content_hash: 7ba3c566d9ba9e1c272f8f7f8f1c19999362ead9f54cd5bfd87593d072582d0f
+        - path: "1.2"
+          level: 2
+          title: 2. Relationship to the Implementation Plan
+          byte_offset: 877
+          byte_count: 520
+          word_count: 83
+          content_hash: 03ff45889734a4a5b93b166849fa86036cae1a031eedb69a8495ec5c57406aaa
+        - path: "1.3"
+          level: 2
+          title: 3. Audit Findings Summary
+          byte_offset: 1397
+          byte_count: 2688
+          word_count: 439
+          content_hash: 1f19c065c2610a68f8c89d4acb9e459fec0b88bfaacea8061fcd43edf3b3d42b
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Bugs
+              byte_offset: 1427
+              byte_count: 990
+              word_count: 143
+              content_hash: 831fb835dd306e455ea085032626a13d25738e68726a85dbb9e84ae181f0df79
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Spec compliance gaps
+              byte_offset: 2417
+              byte_count: 544
+              word_count: 93
+              content_hash: 752df93aeabfb09184fa8b20e04463961fd1fa76531854b796076a649f1ee880
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Test coverage gaps
+              byte_offset: 2961
+              byte_count: 579
+              word_count: 104
+              content_hash: 0870c80da263350d42655ee07e78bec953e194b833957dbc4396295edbcaac7c
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Code quality issues
+              byte_offset: 3540
+              byte_count: 545
+              word_count: 94
+              content_hash: fa6e7b3517884bdb4335ef5169a61aa7abe1f423f7514dd6121cf738bb38f59e
+        - path: "1.4"
+          level: 2
+          title: 4. Remediation Tracks
+          byte_offset: 4085
+          byte_count: 11783
+          word_count: 1680
+          content_hash: 77e1e06349ec7daab7176ffb3f82897af55cc98cb1dca4c7acf25a5979ce9f42
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Track R1 — Bug fixes (high priority)
+              byte_offset: 4111
+              byte_count: 2769
+              word_count: 386
+              content_hash: 17cbc1288103a30d25ff2ebbfb4e25e53484c801c8b214252fe0efca7ace4147
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Track R2 — Entity field update for error correction
+              byte_offset: 6880
+              byte_count: 1675
+              word_count: 238
+              content_hash: 78b9958c6d3d0bac321b1fe6edbf54545b6bc581ca012a750f8b5d6c2bef7ff2
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Track R3 — Test coverage improvements
+              byte_offset: 8555
+              byte_count: 1983
+              word_count: 279
+              content_hash: 73f867ca9cdc9f15a6a03df8f9908b5799a605b9f2597f0dc9ae601a2a108169
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Track R4 — Code quality improvements
+              byte_offset: 10538
+              byte_count: 2093
+              word_count: 279
+              content_hash: d2683776beddae115b661f7c5ffd915043581043cbeecf488c816a683198ef8e
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Track R5 — Spec compliance deferrals
+              byte_offset: 12631
+              byte_count: 1900
+              word_count: 283
+              content_hash: 99901ab95c65dd522095da32e3ecd48bd9b993db7fa0f7fe92a714da90261afa
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Track R6 — Local derived cache (Track G from original plan)
+              byte_offset: 14531
+              byte_count: 1337
+              word_count: 211
+              content_hash: 5d84159cd85ff278d2d1ed2941c467828ad2629adc2abdcf3acdc50b16895e6e
+        - path: "1.5"
+          level: 2
+          title: 5. Recommended Execution Order
+          byte_offset: 15868
+          byte_count: 1119
+          word_count: 182
+          content_hash: bb2b9e03370ef469a965024125fe58bcb13750c61ef8af4cb65ef7af75a335e5
+        - path: "1.6"
+          level: 2
+          title: 6. Estimated Scope
+          byte_offset: 16987
+          byte_count: 450
+          word_count: 88
+          content_hash: c3fc0a87de570b371155f0f7d3d73ef549a54a78256b3455e78424909b574ca0
+        - path: "1.7"
+          level: 2
+          title: 7. Acceptance Criteria
+          byte_offset: 17437
+          byte_count: 710
+          word_count: 116
+          content_hash: 2652a068dc6515abcf7cc7b1f26e4172fa257ae12a687fcf971c6c8147b1d441
+front_matter:
+    status: active
+    date: "2025-07-17"
+    related:
+        - work/spec/phase-1-specification.md
+        - work/plan/phase-1-implementation-plan.md
+        - work/plan/phase-1-decision-log.md
+    extra:
+        Purpose: define the work needed to close gaps found during the Phase 1 implementation audit
+entity_refs:
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.4.2
+      byte_offset: 8128
+    - entity_id: DEC-017
+      entity_type: decision
+      section_path: 1.4.5
+      byte_offset: 13085
+    - entity_id: DEC-018
+      entity_type: decision
+      section_path: 1.4.5
+      byte_offset: 13403
+    - entity_id: DEC-019
+      entity_type: decision
+      section_path: 1.4.5
+      byte_offset: 13694
+    - entity_id: DEC-020
+      entity_type: decision
+      section_path: 1.4.5
+      byte_offset: 14099
+    - entity_id: DEC-013
+      entity_type: decision
+      section_path: 1.4.5
+      byte_offset: 14302
+    - entity_id: DEC-013
+      entity_type: decision
+      section_path: 1.4.6
+      byte_offset: 14847
+    - entity_id: DOC-NNN
+      entity_type: document
+      section_path: 1.4.1
+      byte_offset: 5079
+cross_doc_links:
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-implementation-plan.md
+      link_text: work/plan/phase-1-implementation-plan.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: "1"
+    - target_path: phase-1-implementation-plan.md
+      link_text: phase-1-implementation-plan.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: constraint
+      confidence: high
+    - section_path: "1.7"
+      role: requirement
+      confidence: high
+classified: false

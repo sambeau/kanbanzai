@@ -2,4 +2,12 @@ id: TASK-01KMNA2T6ZTFR
 parent_feature: FEAT-01KMKRQSD1TKK
 slug: author-workflow-skill
 summary: "Author the kanbanzai-workflow skill file covering: the six stage-gate model (planning→design→features→spec→dev-plan→tasks), the human-AI responsibility split, when to stop and ask vs proceed autonomously, and links to planning and design skills."
-status: queued
+status: done
+files_planned:
+  - internal/init/skills/workflow/SKILL.md
+completed: "2026-03-26T15:04:13Z"
+claimed_at: "2026-03-26T15:03:09Z"
+dispatched_to: content
+dispatched_at: "2026-03-26T15:03:09Z"
+dispatched_by: agent/skills-content
+completion_summary: "Authored kanbanzai-workflow SKILL.md covering: six stage gates table with owners and gate conditions, human vs. agent ownership boundary, emergency brake with concrete triggers, entity lifecycle pointer to references/lifecycle.md, and three gotchas (tool failures, gate applies by entity type, verbal approval recording)."

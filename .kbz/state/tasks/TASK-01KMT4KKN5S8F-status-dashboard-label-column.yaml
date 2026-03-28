@@ -1,0 +1,11 @@
+id: TASK-01KMT4KKN5S8F
+parent_feature: FEAT-01KMT40KKZZR5
+slug: status-dashboard-label-column
+summary: "Add conditional label column to status dashboard feature table: present when any feature in the scoped plan has a non-empty label, absent otherwise. Same conditional logic for task table within a feature view. Covers AC-28 to AC-30."
+status: done
+depends_on:
+  - TASK-01KMT4KKKSA9V
+files_planned:
+  - internal/mcp/status_tool.go
+completed: "2026-03-28T13:07:36Z"
+completion_summary: "Added conditional Label column to status dashboard feature and task tables, HasLabels flag for consumer display logic"

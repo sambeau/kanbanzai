@@ -1,0 +1,157 @@
+document_id: FEAT-01KMT40GZSMHB/specification-server-info-tool
+document_path: work/spec/server-info-tool.md
+content_hash: c6e7946ad9a203a08b52740406a643adc4a7d395a0a40fb7f0c9619c53491ed3
+indexed_at: 2026-03-28T11:43:55.694949Z
+sections:
+    - path: "1"
+      level: 1
+      title: server_info Tool Specification
+      byte_offset: 0
+      byte_count: 11886
+      word_count: 1634
+      content_hash: c6e7946ad9a203a08b52740406a643adc4a7d395a0a40fb7f0c9619c53491ed3
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 568
+          byte_count: 602
+          word_count: 91
+          content_hash: 5fa5900cf45d183d3f9a533b059a18f5365edb80e1f412c6303826af70b621a5
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1170
+          byte_count: 1384
+          word_count: 201
+          content_hash: fb7a9957dff1433286d8abb7b90bc070017587ffc1f02848bae467835a95bde2
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2554
+          byte_count: 1346
+          word_count: 188
+          content_hash: d8f984ce937f484464e01b1ed733c952d4b102e0840686e25af3d75349dcc279
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 2567
+              byte_count: 754
+              word_count: 100
+              content_hash: fa417b25aa7a62c45c26e05704ae32511f06634f81370d26beeaee729d2401d3
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Deferred
+              byte_offset: 3321
+              byte_count: 338
+              word_count: 49
+              content_hash: 07e6d79effb42f9ebe0264ce679b7bdcf171a40def24d083c3172d572797ae62
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Explicitly excluded
+              byte_offset: 3659
+              byte_count: 241
+              word_count: 36
+              content_hash: 2054da9d1ebb3d8ee22de5b7a13019178a2bb9d6502ea13af36e35e32ce7b0f4
+        - path: "1.4"
+          level: 2
+          title: 4. Acceptance Criteria
+          byte_offset: 3900
+          byte_count: 7243
+          word_count: 1004
+          content_hash: eb1079ad3af6ca5804896bc90c5850acce73ff9a4861dfd127e6c9c92827bbe3
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 `internal/buildinfo` package
+              byte_offset: 3927
+              byte_count: 594
+              word_count: 84
+              content_hash: 26f276b15be8477f5d69f38f804407abaa83eaa5894d80c46a670f016e5ad520
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Makefile
+              byte_offset: 4521
+              byte_count: 769
+              word_count: 93
+              content_hash: 7ea54d8bc1d61e1e918e87de3efa62cd36695f551c2074ef060cfb941d8beb22
+            - path: 1.4.3
+              level: 3
+              title: 4.3 `internal/install` package
+              byte_offset: 5290
+              byte_count: 1280
+              word_count: 161
+              content_hash: 27732e301d58a01312fc55bca0129b00e84d4590038a291e381d142ed40d8784
+            - path: 1.4.4
+              level: 3
+              title: 4.4 `kbz install-record write` CLI subcommand
+              byte_offset: 6570
+              byte_count: 553
+              word_count: 77
+              content_hash: d87b222d73593079f4eb6bce684e3e74f1bb4a7321db96352eeaa26694abe28e
+            - path: 1.4.5
+              level: 3
+              title: 4.5 `server_info` MCP tool
+              byte_offset: 7123
+              byte_count: 1795
+              word_count: 270
+              content_hash: 6010da93ab791ae7d166f4b837161bb338371e40986e7fdfd1a454663f8caa0c
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Post-merge install step
+              byte_offset: 8918
+              byte_count: 1190
+              word_count: 167
+              content_hash: bd56049f0f4f055754540897ddb82e30c6ec3ff0f5bfb0834238b8ce6dd260a0
+            - path: 1.4.7
+              level: 3
+              title: 4.7 Build correctness without ldflags
+              byte_offset: 10108
+              byte_count: 371
+              word_count: 48
+              content_hash: 01d2cded24a4e6fcfab011a83f43c861aea4f166f5cc8b3defd69908f298e6c5
+            - path: 1.4.8
+              level: 3
+              title: 4.8 Testing
+              byte_offset: 10479
+              byte_count: 664
+              word_count: 100
+              content_hash: 4e75ca5487679acf8bac4394a08de9454d7983f47b96611271b90346b1592751
+        - path: "1.5"
+          level: 2
+          title: 5. File and Package Summary
+          byte_offset: 11143
+          byte_count: 743
+          word_count: 103
+          content_hash: db2a840ea6249aefbcf58b1b13bee8e9ef6274bb40d1a180a44f1aa44d3804ea
+entity_refs:
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 377
+    - entity_id: P7-developer-experience
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 443
+cross_doc_links:
+    - target_path: work/design/server-info-tool.md
+      link_text: work/design/server-info-tool.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+classified: false

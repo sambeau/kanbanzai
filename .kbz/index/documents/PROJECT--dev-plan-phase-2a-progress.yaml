@@ -1,0 +1,332 @@
+document_id: PROJECT/dev-plan-phase-2a-progress
+document_path: work/plan/phase-2a-progress.md
+content_hash: c8c9f55cc93de38374c107a87b79bb8d5423d5c37392cf910de666650fb40477
+indexed_at: 2026-03-25T21:38:28.571375Z
+sections:
+    - path: "1"
+      level: 1
+      title: Phase 2a Progress and Remaining Work
+      byte_offset: 0
+      byte_count: 18063
+      word_count: 2484
+      content_hash: c8c9f55cc93de38374c107a87b79bb8d5423d5c37392cf910de666650fb40477
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 232
+          byte_count: 237
+          word_count: 40
+          content_hash: ccd3f412e9909c0054879fcf65d3868c3e469f4eb7fe45b07c9a2252d455ee8f
+        - path: "1.2"
+          level: 2
+          title: 2. Implementation Status Summary
+          byte_offset: 469
+          byte_count: 1609
+          word_count: 250
+          content_hash: 701fd8f6e119d58125c7ec10eb31f64c95b352b8967f0f36c109d2079e5dd5bc
+        - path: "1.3"
+          level: 2
+          title: 3. What Was Implemented
+          byte_offset: 2078
+          byte_count: 7406
+          word_count: 924
+          content_hash: 5acc37cbdd42f4d01ea1dcaa7ed45afda8ac1d9d94582d2b89448d93fd8b1564
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Entity model evolution (spec §6, §8)
+              byte_offset: 2106
+              byte_count: 665
+              word_count: 99
+              content_hash: 681402d9d892ade18143a9d8abe96ae112f9deca54a70fe7b355847bd12e4eb0
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Prefix registry (spec §10)
+              byte_offset: 2771
+              byte_count: 350
+              word_count: 43
+              content_hash: c964bb803d07e9db7062ea9cd3136eceba1a706733e5979f57b3052b7a950a79
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Lifecycle (spec §9)
+              byte_offset: 3121
+              byte_count: 600
+              word_count: 84
+              content_hash: 34943b0f2d58d50cfa9fcc83390750cb79ba14652f6d56bc6963788bb023f1db
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Document management (spec §11)
+              byte_offset: 3721
+              byte_count: 442
+              word_count: 54
+              content_hash: c619a83f3bb9a211f468c15cde88d6478be9382b3fd6b0b712a57bbeb7d5b9ac
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Plan service (spec §7, §18.1)
+              byte_offset: 4163
+              byte_count: 187
+              word_count: 25
+              content_hash: 0a193db2e6553e6eeddd4769ce5f1969ef96f6018a5ff9643078634efb0df7cc
+            - path: 1.3.6
+              level: 3
+              title: 3.6 MCP tools (spec §18.1)
+              byte_offset: 4350
+              byte_count: 747
+              word_count: 66
+              content_hash: 306f9818ca4c62537118234293f6bfb6cc4cc00bc797c6899ba8c4a62995fa19
+            - path: 1.3.7
+              level: 3
+              title: 3.7 Deterministic YAML (spec §15.4)
+              byte_offset: 5097
+              byte_count: 225
+              word_count: 36
+              content_hash: d16110b030d8ca525d31be905e7a7ec737e78874a115538bba5fffe3938576ed
+            - path: 1.3.8
+              level: 3
+              title: 3.8 Optimistic locking (spec §16)
+              byte_offset: 5322
+              byte_count: 398
+              word_count: 51
+              content_hash: fd11dfd21691fbf2c778db86b7d8b9139252b480c99682be4c9dfe2a3c7eadda
+            - path: 1.3.9
+              level: 3
+              title: 3.9 Document intelligence (spec §12, §13)
+              byte_offset: 5720
+              byte_count: 1322
+              word_count: 149
+              content_hash: ec4e4bd198412f6d90378f29a613e4a9c22d8c1dcd3bce43d62a8fdaf64a67af
+            - path: 1.3.10
+              level: 3
+              title: 3.10 Rich queries (spec §14)
+              byte_offset: 7042
+              byte_count: 377
+              word_count: 55
+              content_hash: e00684c954dcb797b9a1e86da8511e41a6aadedc9257dec7066217a1db722fbf
+            - path: 1.3.11
+              level: 3
+              title: 3.11 Migration (spec §17)
+              byte_offset: 7419
+              byte_count: 596
+              word_count: 89
+              content_hash: d2e6563470f6c83c68479ad5820be2e081a9e012b1f726121314cc8b89475ee8
+            - path: 1.3.12
+              level: 3
+              title: 3.12 Extended health checks (spec §21)
+              byte_offset: 8015
+              byte_count: 643
+              word_count: 76
+              content_hash: 76b21857801fae0feb1d0f7fef8b7db54d0c43772db85ca4c7499ae30ea32be0
+            - path: 1.3.13
+              level: 3
+              title: 3.13 Test coverage
+              byte_offset: 8658
+              byte_count: 826
+              word_count: 92
+              content_hash: 6330be0b8f20a07628a8c4d9d38c05121da3b7575afb98915f1cf8cf80720ac9
+        - path: "1.4"
+          level: 2
+          title: 4. Known Issues
+          byte_offset: 9484
+          byte_count: 3167
+          word_count: 433
+          content_hash: 34e6cd4f4636440e3b9487f886c9d43beb7c0b76e097c4672dbaea8bab035669
+          children:
+            - path: 1.4.1
+              level: 3
+              title: '4.1 Spec deviation: prefix field name'
+              byte_offset: 9633
+              byte_count: 170
+              word_count: 26
+              content_hash: af0e12a92340ae78220407821a6b2499606a14aa619a32ced9dd76b4a3a7e28d
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Config serialization
+              byte_offset: 9803
+              byte_count: 249
+              word_count: 32
+              content_hash: 17b2686afe21157a9976cbfd71491ca9fe8f7efd4d6b8d5e9491ad4e4f6d9606
+            - path: 1.4.3
+              level: 3
+              title: 4.3 DocumentService hook error handling
+              byte_offset: 10052
+              byte_count: 413
+              word_count: 48
+              content_hash: 63cd4d19655583717cb332444bf2e0e646eb1f6ff2614bf8da910ed84599da72
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Migration config isolation
+              byte_offset: 10465
+              byte_count: 323
+              word_count: 44
+              content_hash: 8011f1899c00b8c478569620d41a51460d34f7f011dbcf92a64baad08b2c929e
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Submit response does not include structural skeleton
+              byte_offset: 10788
+              byte_count: 451
+              word_count: 65
+              content_hash: 30c6f9834c22a4647dd93a9909ca579d0a0b3c19af1e10e3c340aba37a49871a
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Plan `done` incorrectly marked terminal (B1) — ✅ Fixed
+              byte_offset: 11239
+              byte_count: 176
+              word_count: 27
+              content_hash: bee9e9602bdc4835035272aacdb5af6491de5573c092949ee249df03784644bc
+            - path: 1.4.7
+              level: 3
+              title: 4.7 Feature `done` incorrectly marked terminal (B2) — ✅ Fixed
+              byte_offset: 11415
+              byte_count: 182
+              word_count: 27
+              content_hash: 17134e0cf84d26e7f850cbe51daf2f45c466f303b60e67de133862adf9df6f55
+            - path: 1.4.8
+              level: 3
+              title: 4.8 Feature entry state stuck at Phase 1 `draft` (B3) — ✅ Fixed
+              byte_offset: 11597
+              byte_count: 207
+              word_count: 35
+              content_hash: c939717420921e2dd6274be89786ece64ff1caf1e6adac0a2dc107f5405e0378
+            - path: 1.4.9
+              level: 3
+              title: 4.9 Optimistic locking bypassed in DocumentService (B4) — ✅ Fixed
+              byte_offset: 11804
+              byte_count: 215
+              word_count: 27
+              content_hash: 8a813172f51e2eaa5398c54a52acaf0d9eb75e0ccfc1cceb52eadae6f39567a0
+            - path: 1.4.10
+              level: 3
+              title: 4.10 `ClassifiedAt` timestamp not set in `doc_classify` (B5) — ✅ Fixed
+              byte_offset: 12019
+              byte_count: 188
+              word_count: 25
+              content_hash: 154f8dcd8898c7f433aad96e51205aeb8c14b137fafb716d4c865304b317644d
+            - path: 1.4.11
+              level: 3
+              title: 4.11 `MatchConventionalRole` non-deterministic (B6) — ✅ Fixed
+              byte_offset: 12207
+              byte_count: 162
+              word_count: 18
+              content_hash: a8700d95608d4a8429a548fce047a56b2d49a95fedd876fbc4753f727eab5df0
+            - path: 1.4.12
+              level: 3
+              title: 4.12 `NormalizeConcept` produces double hyphens (B7) — ✅ Fixed
+              byte_offset: 12369
+              byte_count: 145
+              word_count: 17
+              content_hash: 22570356a89eeb9be5c527c481a3c7e5014352bab8bdf03644df151206bf9d2a
+            - path: 1.4.13
+              level: 3
+              title: 4.13 `TestEntityService_ResolvePrefix` flaky (B8) — ✅ Fixed
+              byte_offset: 12514
+              byte_count: 137
+              word_count: 18
+              content_hash: a393a4290ec4b55ad76e30af1e1cfe5d5d2fd891fa6966be255c1da995ae97b4
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria Status
+          byte_offset: 12651
+          byte_count: 4111
+          word_count: 635
+          content_hash: 0615bbd703ed2bb2a2f316caf053eef6e4aa56eaf750b247843ef71b4c712875
+          children:
+            - path: 1.5.1
+              level: 3
+              title: §22.1 Plan creation and management — ✅ Met
+              byte_offset: 12779
+              byte_count: 357
+              word_count: 64
+              content_hash: c5d61a5f2c5c5d665727ef5e5a3be461a9582009aeb31425f9b34d24affa19aa
+            - path: 1.5.2
+              level: 3
+              title: §22.2 Prefix registry — ✅ Met
+              byte_offset: 13136
+              byte_count: 348
+              word_count: 57
+              content_hash: 0329c7681ac81c39e215bcabdb01084dd90e94b8c45a5d3817b6fedd422bd50c
+            - path: 1.5.3
+              level: 3
+              title: §22.3 Feature lifecycle driven by documents — ✅ Met
+              byte_offset: 13484
+              byte_count: 503
+              word_count: 76
+              content_hash: a3cf2d376d9326f9c106e20c2302b6a84551b8e7cef5d4c6f34f7926d82f1578
+            - path: 1.5.4
+              level: 3
+              title: §22.4 Document management — ✅ Met
+              byte_offset: 13987
+              byte_count: 533
+              word_count: 81
+              content_hash: 3dd9646c2e05992be80816fe9e98ce34c978763135a77bd3109275fe1be28916
+            - path: 1.5.5
+              level: 3
+              title: §22.5 Document intelligence — structural analysis — ✅ Met
+              byte_offset: 14520
+              byte_count: 333
+              word_count: 54
+              content_hash: e8a2899ab72e6fc3e902425c0e22d1566a428a3db554cb326be9e9e63f5505b0
+            - path: 1.5.6
+              level: 3
+              title: §22.6 Document intelligence — classification — ✅ Met
+              byte_offset: 14853
+              byte_count: 530
+              word_count: 73
+              content_hash: 2376450001e4da05dafc28864973536cab84661193b4c3b40482cedaf63c1355
+            - path: 1.5.7
+              level: 3
+              title: §22.7 Rich queries — ✅ Met
+              byte_offset: 15383
+              byte_count: 408
+              word_count: 59
+              content_hash: ce80914b463193f110e013f5ee2d5c73c202257c1f1ab04c734f1ee4cef62de7
+            - path: 1.5.8
+              level: 3
+              title: §22.8 Concurrency — ✅ Met
+              byte_offset: 15791
+              byte_count: 209
+              word_count: 27
+              content_hash: 2666685605d5112e2259db91f0be109ab86bb6c9637a4f6422b26dabe3d61a48
+            - path: 1.5.9
+              level: 3
+              title: §22.9 Migration — ✅ Met
+              byte_offset: 16000
+              byte_count: 315
+              word_count: 52
+              content_hash: 49f9f029bb11eca47163c23bf427933a807a682a69e738a98b438ea5e57b699f
+            - path: 1.5.10
+              level: 3
+              title: §22.10 Deterministic storage — ✅ Met
+              byte_offset: 16315
+              byte_count: 212
+              word_count: 35
+              content_hash: 4d886808c99b3f543fec69d240039e707a989bbd2be870968233835b8829b227
+            - path: 1.5.11
+              level: 3
+              title: §22.11 Tags — ✅ Met
+              byte_offset: 16527
+              byte_count: 235
+              word_count: 37
+              content_hash: 550e3998c36eb18cf32454b519bb7e087a41298c84c2a79afe8d87f1e864b4f4
+        - path: "1.6"
+          level: 2
+          title: 6. Remaining Work (Post-Acceptance)
+          byte_offset: 16762
+          byte_count: 1301
+          word_count: 171
+          content_hash: ea528428d05034e2b3c526c19cad1f2ca7dd998fa121206b7588b55316cddc4c
+cross_doc_links:
+    - target_path: work/plan/phase-2a-audit-report.md
+      link_text: work/plan/phase-2a-audit-report.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+classified: false

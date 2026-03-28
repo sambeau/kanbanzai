@@ -2,4 +2,8 @@ id: TASK-01KMNA66KDFWH
 parent_feature: FEAT-01KMKRQVKBPRX
 slug: mcp-tool-reference-doc
 summary: "Write docs/mcp-tool-reference.md with stdio transport description, tool organisation by domain, and a complete per-tool entry for every tool in the 1.0 MCP server — each entry: tool name, one-sentence description, parameters table (name/type/required/description/valid values), return value structure, error conditions, and at least one example call + response. Lifecycle constraints and idempotency notes included. Register with doc_record_submit."
-status: queued
+status: done
+files_planned:
+  - docs/mcp-tool-reference.md
+completed: "2026-03-26T16:49:33Z"
+completion_summary: "Wrote docs/mcp-tool-reference.md (2779 lines) — complete reference for all 97 MCP tools. Covers stdio transport, tool organisation by 16 domains, per-tool entries with parameters table/return value/error conditions/example call+response, lifecycle operation constraints, and idempotency notes. Registered as document record FEAT-01KMKRQVKBPRX/report-mcp-tool-reference."

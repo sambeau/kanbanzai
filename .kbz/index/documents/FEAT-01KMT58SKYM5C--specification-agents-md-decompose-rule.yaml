@@ -1,0 +1,115 @@
+document_id: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule
+document_path: work/spec/agents-md-decompose-rule.md
+content_hash: 929b338ffb443f80ec59ac7ee4d98893dff33ddc0a21ed6f47a96f4910edfa06
+indexed_at: 2026-03-28T12:04:56.900264Z
+sections:
+    - path: "1"
+      level: 1
+      title: agents-md-decompose-rule Specification
+      byte_offset: 0
+      byte_count: 3256
+      word_count: 462
+      content_hash: 929b338ffb443f80ec59ac7ee4d98893dff33ddc0a21ed6f47a96f4910edfa06
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 534
+          byte_count: 436
+          word_count: 63
+          content_hash: 2b780d097b2b41819f620ef8dde61e3ccbe0a0332062eee5d87d212bb1e5a90f
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 970
+          byte_count: 455
+          word_count: 70
+          content_hash: 3a0b7ffbf1c3ca6edd2fa4dfc762eb1cac2091d5ef4c8543c645bf7fd2467682
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1425
+          byte_count: 416
+          word_count: 67
+          content_hash: 104a407c12166df0d5bffbe05b31976c14cb2928dd8772d4c95ca38bfafe6e7c
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 1438
+              byte_count: 109
+              word_count: 20
+              content_hash: a4f3cd5a5b156fc7c38a6128c7309f76fd8ca60c735cd93ac4e332958f6bf8d2
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Explicitly excluded
+              byte_offset: 1547
+              byte_count: 294
+              word_count: 44
+              content_hash: 2bf7c88e05c1dce998d21203ea3d6f6755f5633d939721118a3c53aa2a190463
+        - path: "1.4"
+          level: 2
+          title: 4. Acceptance Criteria
+          byte_offset: 1841
+          byte_count: 1042
+          word_count: 159
+          content_hash: e30e53e2834828d114d067b83c34f17373e1ed1b7224ed14adaa9a4b652af5b4
+        - path: "1.5"
+          level: 2
+          title: 5. Verification
+          byte_offset: 2883
+          byte_count: 373
+          word_count: 56
+          content_hash: a7c117c75aa48e0cc0480cbffe994225711c848f24d324e8f42db2fb77fdee4c
+entity_refs:
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 355
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 892
+    - entity_id: P8-decompose-reliability
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 417
+cross_doc_links:
+    - target_path: work/design/decompose-reliability.md
+      link_text: work/design/decompose-reliability.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.2
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: 1.3.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.4"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

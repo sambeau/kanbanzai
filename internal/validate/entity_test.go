@@ -403,6 +403,105 @@ func TestValidateEntityExists_NotExists(t *testing.T) {
 	}
 }
 
+func TestValidateLabel(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name    string
+		label   string
+		wantErr bool
+	}{
+		{name: "empty is valid", label: "", wantErr: false},
+		{name: "short label", label: "G", wantErr: false},
+		{name: "typical label", label: "G policy-docs", wantErr: false},
+		{name: "exactly 24 chars", label: "123456789012345678901234", wantErr: false},
+		{name: "25 chars exceeds limit", label: "1234567890123456789012345", wantErr: true},
+		{name: "very long label", label: "this label is way too long to be valid here", wantErr: true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			err := ValidateLabel(tt.label)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ValidateLabel(%q) error = %v, wantErr %v", tt.label, err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestLabelMaxLength(t *testing.T) {
+	t.Parallel()
+
+	t.Run("feature label too long", func(t *testing.T) {
+		t.Parallel()
+		fields := validFeatureFields()
+		fields["label"] = "this-label-exceeds-the-twenty-four-char-limit"
+
+		errs := ValidateRecord("feature", fields)
+		found := false
+		for _, e := range errs {
+			if e.Field == "label" {
+				found = true
+				if !strings.Contains(e.Message, "exceeds maximum length") {
+					t.Errorf("expected error message to mention max length, got %q", e.Message)
+				}
+				break
+			}
+		}
+		if !found {
+			t.Errorf("expected label validation error, got errors: %v", errs)
+		}
+	})
+
+	t.Run("task label too long", func(t *testing.T) {
+		t.Parallel()
+		fields := validTaskFields()
+		fields["label"] = "this-label-exceeds-the-twenty-four-char-limit"
+
+		errs := ValidateRecord("task", fields)
+		found := false
+		for _, e := range errs {
+			if e.Field == "label" {
+				found = true
+				if !strings.Contains(e.Message, "exceeds maximum length") {
+					t.Errorf("expected error message to mention max length, got %q", e.Message)
+				}
+				break
+			}
+		}
+		if !found {
+			t.Errorf("expected label validation error, got errors: %v", errs)
+		}
+	})
+
+	t.Run("feature valid label no error", func(t *testing.T) {
+		t.Parallel()
+		fields := validFeatureFields()
+		fields["label"] = "G policy-docs"
+
+		errs := ValidateRecord("feature", fields)
+		for _, e := range errs {
+			if e.Field == "label" {
+				t.Errorf("unexpected label validation error: %v", e)
+			}
+		}
+	})
+
+	t.Run("bug label ignored", func(t *testing.T) {
+		t.Parallel()
+		fields := validBugFields()
+		fields["label"] = "this-label-exceeds-the-twenty-four-char-limit"
+
+		errs := ValidateRecord("bug", fields)
+		for _, e := range errs {
+			if e.Field == "label" {
+				t.Errorf("label validation should not apply to bugs, got error: %v", e)
+			}
+		}
+	})
+}
+
 func TestValidationError_Error(t *testing.T) {
 	t.Parallel()
 

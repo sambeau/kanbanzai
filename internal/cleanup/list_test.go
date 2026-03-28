@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"kanbanzai/internal/worktree"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 func TestListCleanupItems_EmptyRecords(t *testing.T) {

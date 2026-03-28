@@ -7,10 +7,10 @@ import (
 	"strings"
 	"testing"
 
-	"kanbanzai/internal/cache"
-	"kanbanzai/internal/model"
-	"kanbanzai/internal/service"
-	"kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 func TestRun_NoArgs_PrintsUsage(t *testing.T) {
@@ -21,11 +21,11 @@ func TestRun_NoArgs_PrintsUsage(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "Phase 4b workflow kernel CLI.") {
+	if !strings.Contains(stdout, "Resource-oriented workflow CLI.") {
 		t.Fatalf("stdout missing usage header:\n%s", stdout)
 	}
-	if !strings.Contains(stdout, "create     Create a Phase 1 entity") {
-		t.Fatalf("stdout missing create command:\n%s", stdout)
+	if !strings.Contains(stdout, "entity <action> [opts]") {
+		t.Fatalf("stdout missing entity command:\n%s", stdout)
 	}
 }
 
@@ -53,47 +53,29 @@ func TestRun_VersionFlag_PrintsVersion(t *testing.T) {
 	}
 }
 
-func TestRun_VersionShortFlag_PrintsVersion(t *testing.T) {
-	deps, output := testDependencies()
-
-	if err := run([]string{"-v"}, deps); err != nil {
-		t.Fatalf("run(-v) error = %v", err)
-	}
-
-	if got, want := strings.TrimSpace(output.String()), "kanbanzai dev"; got != want {
-		t.Fatalf("version output = %q, want %q", got, want)
-	}
-}
-
 func TestRunCreate_MissingTarget_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 
-	err := run([]string{"create"}, deps)
+	err := run([]string{"entity", "create"}, deps)
 	if err == nil {
-		t.Fatal("run(create) error = nil, want non-nil")
+		t.Fatal("run(entity create) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), "missing create target") {
+	if !strings.Contains(err.Error(), "missing create type") {
 		t.Fatalf("error missing target message: %v", err)
-	}
-	if !strings.Contains(err.Error(), "kanbanzai create <entity>") {
-		t.Fatalf("error missing create usage: %v", err)
 	}
 }
 
 func TestRunCreate_UnknownTarget_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 
-	err := run([]string{"create", "unknown"}, deps)
+	err := run([]string{"entity", "create", "unknown"}, deps)
 	if err == nil {
-		t.Fatal("run(create unknown) error = nil, want non-nil")
+		t.Fatal("run(entity create unknown) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), `unknown create target "unknown"`) {
+	if !strings.Contains(err.Error(), "unknown entity type") {
 		t.Fatalf("error missing unknown target message: %v", err)
-	}
-	if !strings.Contains(err.Error(), "Entities:") {
-		t.Fatalf("error missing entity list: %v", err)
 	}
 }
 
@@ -108,7 +90,7 @@ func TestRunCreate_CreatesEntities(t *testing.T) {
 		{
 			name: "plan",
 			args: []string{
-				"create", "plan",
+				"entity", "create", "plan",
 				"--prefix", "P",
 				"--slug", "phase 1 kernel",
 				"--title", "Phase 1 Kernel",
@@ -122,7 +104,7 @@ func TestRunCreate_CreatesEntities(t *testing.T) {
 		{
 			name: "feature",
 			args: []string{
-				"create", "feature",
+				"entity", "create", "feature",
 				"--slug", "storage layer",
 				"--parent", "P1-phase-1-kernel",
 				"--summary", "Implement canonical storage",
@@ -135,7 +117,7 @@ func TestRunCreate_CreatesEntities(t *testing.T) {
 		{
 			name: "task",
 			args: []string{
-				"create", "task",
+				"entity", "create", "task",
 				"--slug", "write entity files",
 				"--parent_feature", "FEAT-01J3K7MXP3RT5",
 				"--summary", "Write canonical entity files to disk",
@@ -147,7 +129,7 @@ func TestRunCreate_CreatesEntities(t *testing.T) {
 		{
 			name: "bug",
 			args: []string{
-				"create", "bug",
+				"entity", "create", "bug",
 				"--slug", "bad-yaml-output",
 				"--title", "Writer produces unstable YAML",
 				"--reported_by", "sam",
@@ -161,7 +143,7 @@ func TestRunCreate_CreatesEntities(t *testing.T) {
 		{
 			name: "decision",
 			args: []string{
-				"create", "decision",
+				"entity", "create", "decision",
 				"--slug", "strict-yaml-subset",
 				"--summary", "Use a strict canonical YAML subset",
 				"--rationale", "Deterministic output is required for Git-friendly state",
@@ -245,12 +227,12 @@ func TestRunCreate_CreatesEntities(t *testing.T) {
 func TestRunGet_MissingTarget_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 
-	err := run([]string{"get"}, deps)
+	err := run([]string{"entity", "get"}, deps)
 	if err == nil {
-		t.Fatal("run(get) error = nil, want non-nil")
+		t.Fatal("run(entity get) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), "missing get target") {
+	if !strings.Contains(err.Error(), "missing get type") {
 		t.Fatalf("error missing target message: %v", err)
 	}
 }
@@ -258,12 +240,12 @@ func TestRunGet_MissingTarget_ReturnsUsageError(t *testing.T) {
 func TestRunGet_UnknownTarget_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 
-	err := run([]string{"get", "unknown"}, deps)
+	err := run([]string{"entity", "get", "unknown"}, deps)
 	if err == nil {
-		t.Fatal("run(get unknown) error = nil, want non-nil")
+		t.Fatal("run(entity get unknown) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), `unknown get target "unknown"`) {
+	if !strings.Contains(err.Error(), "unknown entity type") {
 		t.Fatalf("error missing unknown target message: %v", err)
 	}
 }
@@ -271,7 +253,7 @@ func TestRunGet_UnknownTarget_ReturnsUsageError(t *testing.T) {
 func TestRunGet_MissingFlags_ReturnsValidationError(t *testing.T) {
 	deps, _ := testDependenciesWithService(newFakeEntityService())
 
-	err := run([]string{"get", "feature"}, deps)
+	err := run([]string{"entity", "get", "feature"}, deps)
 	if err == nil {
 		t.Fatal("run(get feature missing id) error = nil, want non-nil")
 	}
@@ -285,7 +267,7 @@ func TestRunGet_PrintsEntityDetails(t *testing.T) {
 	fake := newFakeEntityService()
 	deps, output := testDependenciesWithService(fake)
 
-	if err := run([]string{"get", "feature", "--id", "FEAT-01J3K7MXP3RT5", "--slug", "storage-layer"}, deps); err != nil {
+	if err := run([]string{"entity", "get", "feature", "--id", "FEAT-01J3K7MXP3RT5", "--slug", "storage-layer"}, deps); err != nil {
 		t.Fatalf("run(get feature) error = %v", err)
 	}
 
@@ -309,7 +291,7 @@ func TestRunGet_PrefixResolution(t *testing.T) {
 	deps, output := testDependenciesWithService(fake)
 
 	// Get feature with --id only (no --slug) — prefix resolution in fake service
-	if err := run([]string{"get", "feature", "--id", "FEAT-01J3K7"}, deps); err != nil {
+	if err := run([]string{"entity", "get", "feature", "--id", "FEAT-01J3K7"}, deps); err != nil {
 		t.Fatalf("run(get feature with prefix) error = %v", err)
 	}
 
@@ -328,12 +310,12 @@ func TestRunGet_PrefixResolution(t *testing.T) {
 func TestRunList_MissingTarget_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 
-	err := run([]string{"list"}, deps)
+	err := run([]string{"entity", "list"}, deps)
 	if err == nil {
-		t.Fatal("run(list) error = nil, want non-nil")
+		t.Fatal("run(entity list) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), "missing list target") {
+	if !strings.Contains(err.Error(), "missing list type") {
 		t.Fatalf("error missing target message: %v", err)
 	}
 }
@@ -341,12 +323,12 @@ func TestRunList_MissingTarget_ReturnsUsageError(t *testing.T) {
 func TestRunList_UnknownTarget_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 
-	err := run([]string{"list", "unknown"}, deps)
+	err := run([]string{"entity", "list", "unknown"}, deps)
 	if err == nil {
-		t.Fatal("run(list unknown) error = nil, want non-nil")
+		t.Fatal("run(entity list unknown) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), `unknown list target "unknown"`) {
+	if !strings.Contains(err.Error(), "unknown entity list type") {
 		t.Fatalf("error missing unknown target message: %v", err)
 	}
 }
@@ -355,7 +337,7 @@ func TestRunList_PrintsEntityCountAndEntries(t *testing.T) {
 	fake := newFakeEntityService()
 	deps, output := testDependenciesWithService(fake)
 
-	if err := run([]string{"list", "features"}, deps); err != nil {
+	if err := run([]string{"entity", "list", "features"}, deps); err != nil {
 		t.Fatalf("run(list features) error = %v", err)
 	}
 
@@ -416,12 +398,12 @@ func TestRunValidate_PrintsCandidateValidationResult(t *testing.T) {
 func TestRunUpdateStatus_MissingTarget_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 
-	err := run([]string{"update", "status"}, deps)
+	err := run([]string{"entity", "transition"}, deps)
 	if err == nil {
-		t.Fatal("run(update status) error = nil, want non-nil")
+		t.Fatal("run(entity transition) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), "type is required") {
+	if !strings.Contains(err.Error(), "--type is required") {
 		t.Fatalf("error missing target message: %v", err)
 	}
 }
@@ -429,12 +411,12 @@ func TestRunUpdateStatus_MissingTarget_ReturnsUsageError(t *testing.T) {
 func TestRunUpdateStatus_UnknownTarget_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 
-	err := run([]string{"update", "status", "unknown"}, deps)
+	err := run([]string{"entity", "transition", "unknown"}, deps)
 	if err == nil {
-		t.Fatal("run(update status unknown) error = nil, want non-nil")
+		t.Fatal("run(entity transition unknown) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), `unexpected argument "unknown"`) {
+	if !strings.Contains(err.Error(), "unexpected argument") {
 		t.Fatalf("error missing unknown target message: %v", err)
 	}
 }
@@ -443,16 +425,16 @@ func TestRunUpdateStatus_MissingRequiredFlags_ReturnsValidationError(t *testing.
 	deps, _ := testDependenciesWithService(newFakeEntityService())
 
 	err := run([]string{
-		"update", "status",
+		"entity", "transition",
 		"--type", "feature",
 		"--id", "FEAT-01J3K7MXP3RT5",
 		"--slug", "storage-layer",
 	}, deps)
 	if err == nil {
-		t.Fatal("run(update status feature missing status) error = nil, want non-nil")
+		t.Fatal("run(entity transition feature missing status) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), "status is required") {
+	if !strings.Contains(err.Error(), "--status is required") {
 		t.Fatalf("unexpected error: %v", err)
 	}
 }
@@ -462,7 +444,7 @@ func TestRunUpdateStatus_UpdatesEntityStatus(t *testing.T) {
 	deps, output := testDependenciesWithService(fake)
 
 	err := run([]string{
-		"update", "status",
+		"entity", "transition",
 		"--type", "feature",
 		"--id", "FEAT-01J3K9ABC5DE7",
 		"--slug", "status-updates",
@@ -489,7 +471,7 @@ func TestRunUpdateStatus_RejectsIllegalTransition(t *testing.T) {
 	deps, _ := testDependenciesWithService(fake)
 
 	err := run([]string{
-		"update", "status",
+		"entity", "transition",
 		"--type", "epic",
 		"--id", "EPIC-TESTEPIC",
 		"--slug", "phase-1-kernel",
@@ -507,12 +489,12 @@ func TestRunUpdateStatus_RejectsIllegalTransition(t *testing.T) {
 func TestRunFeature_MissingSubcommand_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 
-	err := run([]string{"feature"}, deps)
+	err := run([]string{"decompose"}, deps)
 	if err == nil {
-		t.Fatal("run(feature) error = nil, want non-nil")
+		t.Fatal("run(decompose) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), "missing feature subcommand") {
+	if !strings.Contains(err.Error(), "missing feature ID") {
 		t.Fatalf("error missing subcommand message: %v", err)
 	}
 }
@@ -520,12 +502,12 @@ func TestRunFeature_MissingSubcommand_ReturnsUsageError(t *testing.T) {
 func TestRunFeature_UnknownSubcommand_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 
-	err := run([]string{"feature", "explode"}, deps)
+	err := run([]string{"decompose", "--unknown"}, deps)
 	if err == nil {
-		t.Fatal("run(feature explode) error = nil, want non-nil")
+		t.Fatal("run(decompose --unknown) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), "unknown feature subcommand") {
+	if !strings.Contains(err.Error(), "unknown flag") {
 		t.Fatalf("error missing unknown subcommand message: %v", err)
 	}
 }
@@ -582,12 +564,44 @@ func TestRunIncidentShow_MissingID_ReturnsUsageError(t *testing.T) {
 	}
 }
 
+func TestRunHandoff_MissingTaskID_ReturnsUsageError(t *testing.T) {
+	deps, _ := testDependencies()
+
+	err := run([]string{"handoff"}, deps)
+	if err == nil {
+		t.Fatal("run(handoff) error = nil, want non-nil")
+	}
+
+	if !strings.Contains(err.Error(), "missing task ID") {
+		t.Fatalf("error missing 'missing task ID' message: %v", err)
+	}
+}
+
+func TestRunHandoff_UsageTextMentionsTaskID(t *testing.T) {
+	// Verify the usage text includes the key parameter name so human users
+	// know what to pass.
+	if !strings.Contains(handoffUsageText, "task-id") {
+		t.Error("handoffUsageText does not mention 'task-id'")
+	}
+	if !strings.Contains(handoffUsageText, "kbz handoff") {
+		t.Error("handoffUsageText does not contain example invocation 'kbz handoff'")
+	}
+}
+
+func TestRunHandoff_AppearsInMainUsageText(t *testing.T) {
+	// Verify kbz handoff is documented in the top-level usage text so users
+	// can discover it.
+	if !strings.Contains(usageText, "handoff") {
+		t.Error("main usageText does not mention the handoff command")
+	}
+}
+
 func TestRunFeatureDecompose_MissingID_ReturnsUsageError(t *testing.T) {
 	deps, _ := testDependencies()
 
-	err := run([]string{"feature", "decompose"}, deps)
+	err := run([]string{"decompose"}, deps)
 	if err == nil {
-		t.Fatal("run(feature decompose) error = nil, want non-nil")
+		t.Fatal("run(decompose) error = nil, want non-nil")
 	}
 
 	if !strings.Contains(err.Error(), "missing feature ID") {
