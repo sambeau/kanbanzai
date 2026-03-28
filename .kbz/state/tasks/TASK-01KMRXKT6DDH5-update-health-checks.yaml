@@ -2,6 +2,20 @@ id: TASK-01KMRXKT6DDH5
 parent_feature: FEAT-01KMRX1F47Z94
 slug: update-health-checks
 summary: "'Update health check logic so reviewing and needs-rework are treated as non-terminal feature states (a feature in reviewing or needs-rework is not \"stuck\" and should not fire the \"all-terminal children but early-state feature\" warning). Verify merge gate integration: done is still required before merge, and reviewing/needs-rework do not unblock it. Covers spec AC-19 through AC-22.'"
-status: ready
+status: done
 depends_on:
   - TASK-01KMRXJR9FNM3
+files_planned:
+  - internal/merge/gates.go
+  - internal/merge/checker.go
+  - internal/merge/gates_test.go
+  - internal/merge/checker_test.go
+  - internal/validate/lifecycle_test.go
+  - internal/health/entity_consistency_test.go
+completed: "2026-03-28T00:55:38Z"
+claimed_at: "2026-03-28T00:48:22Z"
+dispatched_to: developer
+dispatched_at: "2026-03-28T00:48:22Z"
+dispatched_by: orchestrator
+completion_summary: "Updated health check and merge gate logic so `reviewing` and `needs-rework` are correctly treated as non-terminal, non-early feature states.\n\n**Findings:**\n1. `IsTerminalState` already correctly classifies `reviewing` and `needs-rework` as non-terminal (only `superseded`/`cancelled` are terminal for features). Added explicit test cases.\n2. Health checks already correct — `reviewing`/`needs-rework` are not in `featureTerminalOrDone` (no false \"done with non-terminal children\" warning) nor in `featureEarlyStatuses` (no false \"early state with all terminal children\" warning). Added test coverage.\n3. Merge gates had NO entity status check — a feature in `reviewing` could theoretically pass all gates. Added `EntityDoneGate` that requires feature status `done` (or bug status `closed`) before merge is allowed. This is a blocking gate, first in evaluation order.\n\n**AC satisfaction:**\n- AC-19: `reviewing` classified as non-terminal ✅ (test added)\n- AC-20: `needs-rework` classified as non-terminal ✅ (test added)\n- AC-21: Merge gate requires `done` — `reviewing` does not satisfy it ✅ (new `EntityDoneGate`)\n- AC-22: Health checks produce no false warnings for `reviewing`/`needs-rework` ✅ (tests added)"
+verification: "All tests pass with race detector: go test ./... -race -count=1 (20 packages OK)"

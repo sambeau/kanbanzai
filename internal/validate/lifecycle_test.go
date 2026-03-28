@@ -93,6 +93,8 @@ func TestIsTerminalState(t *testing.T) {
 		{name: "feature superseded", kind: EntityFeature, state: "superseded", want: true},
 		{name: "feature cancelled", kind: EntityFeature, state: "cancelled", want: true},
 		{name: "feature review", kind: EntityFeature, state: "review", want: false},
+		{name: "feature reviewing", kind: EntityFeature, state: "reviewing", want: false},
+		{name: "feature needs-rework", kind: EntityFeature, state: "needs-rework", want: false},
 		{name: "task done", kind: EntityTask, state: "done", want: true},
 		{name: "task active", kind: EntityTask, state: "active", want: false},
 		{name: "bug closed", kind: EntityBug, state: "closed", want: true},
@@ -873,6 +875,24 @@ func TestValidNextStates(t *testing.T) {
 			wantStates: []string{"cancelled", "designing", "specifying", "superseded"},
 		},
 		{
+			name:       "feature developing includes reviewing (AC-11)",
+			kind:       EntityFeature,
+			from:       string(model.FeatureStatusDeveloping),
+			wantStates: []string{"cancelled", "dev-planning", "reviewing", "superseded"},
+		},
+		{
+			name:       "feature reviewing includes done and needs-rework (AC-12)",
+			kind:       EntityFeature,
+			from:       string(model.FeatureStatusReviewing),
+			wantStates: []string{"cancelled", "done", "needs-rework", "superseded"},
+		},
+		{
+			name:       "feature needs-rework includes developing and reviewing (AC-13)",
+			kind:       EntityFeature,
+			from:       string(model.FeatureStatusNeedsRework),
+			wantStates: []string{"cancelled", "developing", "in-progress", "in-review", "reviewing", "superseded"},
+		},
+		{
 			name:       "terminal task done returns nil",
 			kind:       EntityTask,
 			from:       string(model.TaskStatusDone),
@@ -996,6 +1016,16 @@ func TestValidateTransition_ErrorContainsValidStates(t *testing.T) {
 			wantSubstrings: []string{
 				`valid transitions from "reported"`,
 				"triaged",
+			},
+		},
+		{
+			name: "feature developing to done names reviewing as valid (AC-14)",
+			kind: EntityFeature,
+			from: string(model.FeatureStatusDeveloping),
+			to:   string(model.FeatureStatusDone),
+			wantSubstrings: []string{
+				`valid transitions from "developing"`,
+				"reviewing",
 			},
 		},
 	}

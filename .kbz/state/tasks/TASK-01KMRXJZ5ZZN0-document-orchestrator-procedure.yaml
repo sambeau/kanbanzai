@@ -2,6 +2,15 @@ id: TASK-01KMRXJZ5ZZN0
 parent_feature: FEAT-01KMRX1QPN3CB
 slug: document-orchestrator-procedure
 summary: "Extend .skills/code-review.md with an orchestration section covering: two-phase structure (analysis/remediation), full step sequence for each phase (steps 1–10 from design §5), context budget strategy (orchestrator works at metadata level, sub-agents at review unit level), tool chain reference table (which tools at each step), and human checkpoint integration points. Does NOT create a new MCP tool. Covers spec AC-F-01 through AC-F-06."
-status: ready
+status: done
 depends_on:
   - TASK-01KMRXJVQ9XH6
+files_planned:
+  - .skills/code-review.md
+completed: "2026-03-28T00:51:21Z"
+claimed_at: "2026-03-28T00:48:23Z"
+dispatched_to: developer
+dispatched_at: "2026-03-28T00:48:23Z"
+dispatched_by: orchestrator
+completion_summary: "Extended `.skills/code-review.md` with a comprehensive Orchestration Procedure section covering the orchestrator agent's perspective on the full review workflow. The new content includes: (1) Two-Phase Structure table documenting analysis (read-only, parallel) and remediation (write, sequential/parallel) phases; (2) Full 10-step sequence — steps 1–6 for analysis (trigger, query metadata, decompose into review units, dispatch sub-agents, collate findings, write review document) and steps 7–10 for remediation (create tasks, dispatch with conflict checking, re-review affected sections, transition); (3) Decision Point routing table (no blocking → done, blocking → needs-rework, ambiguous → human_checkpoint); (4) Context Budget Strategy with orchestrator (~6–14 KB, metadata only) and sub-agent (~12–30 KB per unit) budget tables explaining the key scaling strategy; (5) Tool Chain Reference table mapping all 10 workflow steps to specific Kanbanzai tools; (6) Human Checkpoint Integration Points documenting three specific scenarios (ambiguous findings, high-stakes features, dimension disagreement); (7) Review at Different Scales table. Also updated the Scope Exclusion section to reference both perspectives now covered in the single SKILL document."
+verification: "Verified all 6 acceptance criteria (AC-F-01 through AC-F-06) are met. Read back the modified file to confirm the orchestration section is correctly appended after existing content, existing sub-agent content is preserved, and all design source material from §5, §6, §10, §11, and §13 is faithfully represented."

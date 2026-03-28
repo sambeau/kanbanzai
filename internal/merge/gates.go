@@ -310,6 +310,51 @@ func (g HealthCheckCleanGate) Check(ctx GateContext) GateResult {
 	}
 }
 
+// EntityDoneGate checks that the entity has reached its "done" lifecycle state.
+// Features must be "done"; bugs must be "closed". Other entity types pass unconditionally.
+type EntityDoneGate struct{}
+
+func (g EntityDoneGate) Name() string {
+	return "entity_done"
+}
+
+func (g EntityDoneGate) Severity() GateSeverity {
+	return GateSeverityBlocking
+}
+
+func (g EntityDoneGate) Check(ctx GateContext) GateResult {
+	result := GateResult{
+		Name:     g.Name(),
+		Severity: g.Severity(),
+		Status:   GateStatusPassed,
+	}
+
+	status := toString(ctx.Entity["status"])
+
+	switch {
+	case strings.HasPrefix(ctx.EntityID, "FEAT-"):
+		if status != "done" {
+			result.Status = GateStatusFailed
+			if status == "" {
+				result.Message = "feature status not set"
+			} else {
+				result.Message = fmt.Sprintf("feature status is %q, expected \"done\"", status)
+			}
+		}
+	case strings.HasPrefix(ctx.EntityID, "BUG-"):
+		if status != "closed" {
+			result.Status = GateStatusFailed
+			if status == "" {
+				result.Message = "bug status not set"
+			} else {
+				result.Message = fmt.Sprintf("bug status is %q, expected \"closed\"", status)
+			}
+		}
+	}
+
+	return result
+}
+
 // toString extracts a string from an any value, returning "" if nil or not a string.
 func toString(v any) string {
 	if v == nil {

@@ -9,12 +9,13 @@ import (
 func TestDefaultGates(t *testing.T) {
 	gates := DefaultGates()
 
-	if len(gates) != 6 {
-		t.Errorf("DefaultGates: got %d gates, want 6", len(gates))
+	if len(gates) != 7 {
+		t.Errorf("DefaultGates: got %d gates, want 7", len(gates))
 	}
 
 	// Verify order and names
 	expectedNames := []string{
+		"entity_done",
 		"tasks_complete",
 		"verification_exists",
 		"verification_passed",
@@ -39,6 +40,7 @@ func TestCheckGates_AllPassing(t *testing.T) {
 		Branch:   "feature/FEAT-001",
 		RepoPath: "/repo",
 		Entity: map[string]any{
+			"status":              "done",
 			"verification":        "All tests pass",
 			"verification_status": "passed",
 		},
@@ -67,8 +69,8 @@ func TestCheckGates_AllPassing(t *testing.T) {
 	if result.OverallStatus != OverallStatusPassed {
 		t.Errorf("OverallStatus: got %q, want %q", result.OverallStatus, OverallStatusPassed)
 	}
-	if len(result.Gates) != 6 {
-		t.Errorf("Gates: got %d, want 6", len(result.Gates))
+	if len(result.Gates) != 7 {
+		t.Errorf("Gates: got %d, want 7", len(result.Gates))
 	}
 
 	for _, g := range result.Gates {
@@ -84,6 +86,7 @@ func TestCheckGates_BlockingFailure(t *testing.T) {
 		Branch:   "feature/FEAT-001",
 		RepoPath: "/repo",
 		Entity: map[string]any{
+			"status":              "done",
 			"verification":        "", // Missing verification
 			"verification_status": "passed",
 		},
@@ -128,6 +131,7 @@ func TestCheckGates_WarningsOnly(t *testing.T) {
 		Branch:   "feature/FEAT-001",
 		RepoPath: "/repo",
 		Entity: map[string]any{
+			"status":              "done",
 			"verification":        "Tests pass",
 			"verification_status": "passed",
 		},

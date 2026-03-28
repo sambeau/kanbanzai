@@ -20,7 +20,15 @@ var featureForwardPath = []string{
 	string(model.FeatureStatusSpecifying),
 	string(model.FeatureStatusDevPlanning),
 	string(model.FeatureStatusDeveloping),
+	string(model.FeatureStatusReviewing),
 	string(model.FeatureStatusDone),
+}
+
+// advanceStopStates are lifecycle states where advance always halts after
+// entering. These represent mandatory human/orchestrator gates that cannot
+// be auto-transitioned through.
+var advanceStopStates = map[string]bool{
+	string(model.FeatureStatusReviewing): true,
 }
 
 // featurePathIndex returns the index of a status in the forward path, or -1 if
@@ -44,9 +52,9 @@ func featurePathIndex(status string) int {
 // partial result explaining why.
 //
 // The target state itself is not gate-checked — only intermediate states are.
-// The exception is "done": the "reviewing" gate is always checked before
-// entering done, and it is never satisfied, so advance always stops at
-// developing.
+// States in advanceStopStates (e.g. "reviewing") are mandatory gates: advance
+// transitions into them but never auto-transitions through them. This ensures
+// human/orchestrator review cannot be skipped.
 //
 // Backward transitions are not supported and return an error.
 func AdvanceFeatureStatus(
@@ -85,29 +93,29 @@ func AdvanceFeatureStatus(
 
 	for i, nextState := range path {
 		isTarget := i == len(path)-1
+		isStopState := advanceStopStates[nextState]
 
-		// Gate-check intermediate states using their own name as the gate.
-		// The target is not gate-checked, except "done" which requires the
-		// "reviewing" gate (always unsatisfied).
-		var shouldCheck bool
-		var gate string
+		// Stop states (e.g. reviewing) are mandatory gates: we transition
+		// into them without a prerequisite check, then halt. Non-stop
+		// intermediate states are gate-checked before entry.
+		if !isStopState {
+			var shouldCheck bool
+			var gate string
 
-		if !isTarget {
-			shouldCheck = true
-			gate = nextState
-		} else if nextState == string(model.FeatureStatusDone) {
-			shouldCheck = true
-			gate = "reviewing"
-		}
+			if !isTarget {
+				shouldCheck = true
+				gate = nextState
+			}
 
-		if shouldCheck {
-			result := CheckFeatureGate(gate, feature, docSvc, entitySvc)
-			if !result.Satisfied {
-				return AdvanceResult{
-					FinalStatus:     string(feature.Status),
-					AdvancedThrough: advancedThrough,
-					StoppedReason:   fmt.Sprintf("stopped before %s: %s", nextState, result.Reason),
-				}, nil
+			if shouldCheck {
+				result := CheckFeatureGate(gate, feature, docSvc, entitySvc)
+				if !result.Satisfied {
+					return AdvanceResult{
+						FinalStatus:     string(feature.Status),
+						AdvancedThrough: advancedThrough,
+						StoppedReason:   fmt.Sprintf("stopped before %s: %s", nextState, result.Reason),
+					}, nil
+				}
 			}
 		}
 
@@ -126,6 +134,15 @@ func AdvanceFeatureStatus(
 		// Keep in-memory feature in sync with persisted state.
 		feature.Status = model.FeatureStatus(nextState)
 		advancedThrough = append(advancedThrough, nextState)
+
+		// Halt after entering a stop state (unless it was the target).
+		if isStopState && !isTarget {
+			return AdvanceResult{
+				FinalStatus:     nextState,
+				AdvancedThrough: advancedThrough,
+				StoppedReason:   fmt.Sprintf("stopped at %s: review is a mandatory gate that cannot be auto-advanced", nextState),
+			}, nil
+		}
 	}
 
 	return AdvanceResult{

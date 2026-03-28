@@ -16,12 +16,13 @@ how to evaluate it, and how to format the output.
 
 ## Scope Exclusion
 
-This SKILL covers the sub-agent perspective only — how a single review sub-agent evaluates
-its assigned review unit and formats its output.
+This SKILL covers two perspectives:
 
-**This SKILL does not cover orchestration.** Orchestration — decomposing a feature into review
-units, dispatching sub-agents in parallel, collating findings, creating remediation tasks, and
-managing lifecycle transitions — is handled by the orchestrator agent using a separate SKILL.
+1. **Sub-agent perspective** (the Procedure, Per-Dimension Guidance, and Structured Output
+   sections below) — how a single review sub-agent evaluates its assigned review unit and
+   formats its output.
+2. **Orchestrator perspective** (the Orchestration Procedure section at the end) — how an
+   orchestrator agent coordinates the full review workflow across multiple sub-agents.
 
 ---
 
@@ -426,3 +427,251 @@ Run through this checklist before submitting your findings:
   orchestrator pattern, context budgets, and lifecycle integration.
 - `AGENTS.md` — project conventions, Go code style, and commit policy.
 - `.kbz/context/roles/reviewer.yaml` — the context profile assembled for review sub-agents.
+
+---
+
+## Orchestration Procedure
+
+This section is for **orchestrator agents** — agents coordinating the full review workflow for
+a feature or set of features. If you are a review sub-agent, follow the Procedure section above
+instead.
+
+### Two-Phase Structure
+
+Review is split into two distinct phases:
+
+| Phase | Mode | Parallelism | Purpose |
+|-------|------|-------------|---------|
+| **Analysis** (steps 1–6) | Read-only | Parallel sub-agents | Discover and document findings |
+| **Remediation** (steps 7–10) | Write | Sequential or parallel (conflict-checked) | Fix blocking findings |
+
+The phases are strictly ordered. Analysis completes fully before any remediation begins. This
+separation ensures that findings are comprehensive before code changes start, and that
+remediation tasks are scoped precisely to the blocking issues found.
+
+---
+
+### Analysis Phase (Read-Only, Parallel)
+
+#### Step 1: Feature transitions to `reviewing`
+
+Transition the feature to `reviewing` status. This can happen:
+- When all implementation tasks are terminal (the orchestrator triggers it)
+- When a human explicitly requests review
+- When the `finish` tool completes the last task (future enhancement)
+
+Use `update_status(entity_type="feature", id=<feature-id>, status="reviewing")`.
+
+#### Step 2: Query metadata
+
+Gather the information needed to plan the review. **Do not read source code** — that is the
+sub-agents' job.
+
+Collect:
+- **Feature entity** — the feature record and its spec document reference
+- **Spec document structure** — via `doc_outline` to understand what the spec covers
+- **Task list and modified files** — via `list_entities_filtered(entity_type="task", parent=<feature-id>)` to know what was implemented and which files were touched
+- **Review profile** — which dimensions and thresholds to apply (default: Feature Implementation Review Profile from quality gates policy §5.1)
+
+#### Step 3: Decompose into review units
+
+Partition the feature's files and spec sections into logical review units. Choose a
+decomposition strategy based on the feature's size and structure:
+
+| Strategy | When to use | Example |
+|----------|-------------|---------|
+| **By package** | Feature spans multiple Go packages | `internal/service/`, `internal/storage/`, `internal/mcp/` as separate units |
+| **By spec section** | Spec has clear independent sections | §3 (API), §4 (validation), §5 (persistence) as separate units |
+| **By concern** | Cross-cutting concerns need focused attention | Tests as one unit, documentation as another, implementation as a third |
+| **By layer** | Feature touches multiple architectural layers | Service layer, storage layer, MCP layer as separate units |
+
+**Sizing guidance:**
+- **Small features** (≤10 files): 1 review unit. No decomposition needed.
+- **Medium features** (11–30 files): 2–4 review units.
+- **Large features** (30+ files): 3–8 review units. Aim for 5–15 files per unit.
+
+Each review unit is defined by:
+- A set of source files to examine
+- The relevant spec section(s) (retrieved via `doc_section`)
+- The review dimensions to check
+- The review profile to apply
+
+#### Step 4: Dispatch sub-agents in parallel
+
+For each review unit, spawn a sub-agent with:
+
+1. **Context packet** — `context_assemble(role="reviewer")` provides the reviewer profile,
+   relevant knowledge entries, and project conventions.
+2. **This SKILL** — the sub-agent follows the Procedure section (steps 1–4 above in the
+   sub-agent procedure) to produce structured findings.
+3. **File and spec scope** — the specific files and spec sections for this unit.
+4. **Structured output format** — the sub-agent must return findings in the format defined
+   in the Structured Output Format section of this SKILL.
+
+Sub-agents are **read-only**. They examine files and produce findings. They do not modify
+any code, create tasks, or transition entity states.
+
+#### Step 5: Collate findings
+
+When all sub-agents return, merge their outputs:
+
+1. **Deduplicate** — multiple sub-agents may flag the same issue from different angles.
+   Keep the most specific finding and note the overlap.
+2. **Categorise** — separate findings into blocking and non-blocking using the rules in the
+   Finding Classification section of this SKILL.
+3. **Per-dimension verdict** — determine the verdict for each review dimension across all
+   units. A dimension fails if any unit produces a blocking finding in that dimension.
+4. **Aggregate verdict** — compute the overall verdict:
+   - `approved` — no blocking findings in any dimension
+   - `approved_with_followups` — no blocking findings, but non-blocking findings exist
+   - `changes_required` — one or more blocking findings
+
+#### Step 6: Write review document
+
+Write the collated findings to a review document associated with the feature. This provides:
+- A human-readable record of what was reviewed and what was found
+- A machine-readable structure for remediation planning
+- An audit trail for the feature's review history
+
+---
+
+### Decision Point
+
+After the analysis phase, the orchestrator makes a routing decision based on the aggregate
+verdict:
+
+| Verdict | Action |
+|---------|--------|
+| No blocking findings | Transition feature to `done` |
+| Blocking findings | Transition feature to `needs-rework`, proceed to remediation phase |
+| Ambiguous findings requiring human judgment | Call `human_checkpoint` and wait for response |
+
+---
+
+### Remediation Phase (Write, Sequential or Parallel)
+
+Enter this phase only when blocking findings exist.
+
+#### Step 7: Create remediation tasks
+
+Create tasks as children of the feature, one per blocking finding or logical group of related
+findings. Each task summary should reference the review finding it addresses.
+
+Use `create_task(parent_feature=<feature-id>, slug=<descriptive-slug>, summary=<summary>)`.
+
+#### Step 8: Dispatch tasks with conflict checking
+
+Before dispatching remediation tasks in parallel, check for file overlap:
+
+Use `conflict_domain_check(task_ids=[...])` to determine which tasks can safely run
+concurrently. Tasks modifying the same files should be serialised or checkpointed.
+
+Dispatch tasks through the normal workflow (`dispatch_task`).
+
+#### Step 9: Re-review affected sections only
+
+After remediation tasks complete, re-review **only the affected sections** — not the entire
+feature. This is a targeted re-analysis:
+
+- Identify which review units are affected by the remediation
+- Spawn sub-agents for those units only
+- Collate the new findings with the unchanged findings from step 5
+
+#### Step 10: Transition
+
+- If re-review passes (no blocking findings): transition feature to `done`.
+- If new blocking issues are found: repeat the remediation cycle (steps 7–10).
+- If the cycle has repeated and issues persist: use `human_checkpoint` to escalate.
+
+---
+
+### Context Budget Strategy
+
+The orchestrator and sub-agents have deliberately different context profiles. This is the
+key scaling strategy that allows review to work on features of any size.
+
+**The orchestrator works at the metadata level only.** It holds:
+
+| Data | Approximate size | Source |
+|------|-----------------|--------|
+| Feature entity state | ~200 bytes | `get_entity` |
+| Spec document outline | ~1–2 KB | `doc_outline` |
+| Task list with file paths | ~1–3 KB | `list_entities_filtered` |
+| Review SKILL (this document) | ~2–3 KB | `.skills/code-review.md` |
+| Collated findings | ~2–5 KB | Sub-agent outputs |
+| **Total** | **~6–14 KB** | |
+
+The orchestrator **never reads source code**. It plans and coordinates.
+
+**Sub-agents hold their review unit's context.** Each sub-agent holds:
+
+| Data | Approximate size | Source |
+|------|-----------------|--------|
+| Reviewer profile | ~2 KB | `context_assemble(role="reviewer")` |
+| Review SKILL (this document) | ~2–3 KB | `.skills/code-review.md` |
+| Spec section(s) for their unit | ~2–5 KB | `doc_section` |
+| Source files for their unit | ~5–20 KB | File reads |
+| Structured output template | ~0.5 KB | From this SKILL |
+| **Total** | **~12–30 KB per sub-agent** | |
+
+This means:
+- The orchestrator's context cost is **constant** regardless of codebase size.
+- Sub-agent context scales with the review unit size, not the feature size.
+- A 100-file feature with 5 review units uses the same orchestrator budget as a 10-file
+  feature with 1 unit.
+
+---
+
+### Tool Chain Reference
+
+| Step | Tools |
+|------|-------|
+| Find features to review | `list_entities_filtered(entity_type="feature", status="reviewing")` |
+| Get spec structure | `doc_outline`, `doc_section` |
+| Get task/file lists | `list_entities_filtered(entity_type="task", parent=<feature-id>)` |
+| Build sub-agent context | `context_assemble(role="reviewer")` |
+| Dispatch sub-agents | `spawn_agent` (each gets review SKILL + unit scope) |
+| Create remediation tasks | `create_task` |
+| Transition feature state | `update_status` |
+| Check conflict risk | `conflict_domain_check` |
+| Request human input | `human_checkpoint` |
+| Record decisions | `record_decision` |
+
+---
+
+### Human Checkpoint Integration Points
+
+Use `human_checkpoint` when:
+
+1. **Ambiguous findings** — findings that are not clearly blocking or non-blocking. The
+   orchestrator cannot make a confident routing decision and needs human judgment on whether
+   to proceed to `done` or enter remediation.
+
+2. **High-stakes features** — when the feature is critical and final approval should be
+   explicit rather than automated. The orchestrator can pass the review document summary
+   in the checkpoint context so the human can make an informed decision.
+
+3. **Disagreement between dimensions** — when review dimensions produce conflicting signals.
+   For example, spec conformance passes but implementation quality fails, or tests pass but
+   documentation is missing. The human decides whether the passing dimensions are sufficient
+   or the failing dimensions are blocking.
+
+When creating a checkpoint, include:
+- The aggregate verdict and per-dimension verdicts
+- A summary of the contentious findings
+- The recommended action and why the orchestrator is uncertain
+
+Wait for the human response before proceeding. Do not dispatch remediation tasks or
+transition feature state while a checkpoint is pending.
+
+---
+
+### Review at Different Scales
+
+The orchestration procedure scales across different review scopes:
+
+| Scale | Approach |
+|-------|----------|
+| **Single feature** | The primary use case. One pass through steps 1–10. Typically 2–5 parallel review sub-agents. |
+| **Multiple features (phase review)** | Iterate over features in `reviewing` state. Features are independent — review them in parallel at the feature level, with sub-agent parallelism within each. |
+| **Full codebase audit** | Decompose by package or module rather than by feature. Requires a separate decomposition strategy outside the feature-based workflow. |

@@ -189,7 +189,7 @@ func TestAdvanceFeatureStatus_TargetBehindCurrent(t *testing.T) {
 	}
 }
 
-func TestAdvanceFeatureStatus_AdvanceToDone_StopsAtDeveloping(t *testing.T) {
+func TestAdvanceFeatureStatus_AdvanceToDone_StopsAtReviewing(t *testing.T) {
 	t.Parallel()
 	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
 
@@ -216,15 +216,15 @@ func TestAdvanceFeatureStatus_AdvanceToDone_StopsAtDeveloping(t *testing.T) {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	// Should stop at developing because the reviewing gate is never satisfied.
-	if result.FinalStatus != "developing" {
-		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "developing")
+	// Should stop at reviewing — it is a mandatory gate that advance never skips.
+	if result.FinalStatus != "reviewing" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "reviewing")
 	}
 	if result.StoppedReason == "" {
 		t.Error("expected non-empty StoppedReason for review gate")
 	}
 
-	wantThrough := []string{"designing", "specifying", "dev-planning", "developing"}
+	wantThrough := []string{"designing", "specifying", "dev-planning", "developing", "reviewing"}
 	if len(result.AdvancedThrough) != len(wantThrough) {
 		t.Fatalf("AdvancedThrough = %v, want %v", result.AdvancedThrough, wantThrough)
 	}
@@ -234,13 +234,13 @@ func TestAdvanceFeatureStatus_AdvanceToDone_StopsAtDeveloping(t *testing.T) {
 		}
 	}
 
-	// Verify it persisted at developing, not done.
+	// Verify it persisted at reviewing, not done.
 	got, err := entitySvc.Get("feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
-	if s := stringFromState(got.State, "status"); s != "developing" {
-		t.Errorf("persisted status = %q, want %q", s, "developing")
+	if s := stringFromState(got.State, "status"); s != "reviewing" {
+		t.Errorf("persisted status = %q, want %q", s, "reviewing")
 	}
 }
 
@@ -314,7 +314,7 @@ func TestAdvanceFeatureStatus_AllGatesUnsatisfied(t *testing.T) {
 	}
 }
 
-func TestAdvanceFeatureStatus_AdvanceFromDeveloping_ToDone_ReviewBlocks(t *testing.T) {
+func TestAdvanceFeatureStatus_AdvanceFromDeveloping_ToDone_StopsAtReviewing(t *testing.T) {
 	t.Parallel()
 	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
 
@@ -331,15 +331,107 @@ func TestAdvanceFeatureStatus_AdvanceFromDeveloping_ToDone_ReviewBlocks(t *testi
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	// The reviewing gate blocks the single step from developing → done.
-	if result.FinalStatus != "developing" {
-		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "developing")
+	// Advance enters reviewing (the mandatory gate) and stops there.
+	if result.FinalStatus != "reviewing" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "reviewing")
 	}
 	if result.StoppedReason == "" {
 		t.Error("expected non-empty StoppedReason for review gate")
 	}
-	if len(result.AdvancedThrough) != 0 {
-		t.Errorf("AdvancedThrough = %v, want empty", result.AdvancedThrough)
+	if len(result.AdvancedThrough) != 1 || result.AdvancedThrough[0] != "reviewing" {
+		t.Errorf("AdvancedThrough = %v, want [reviewing]", result.AdvancedThrough)
+	}
+
+	// Verify it persisted at reviewing.
+	got, err := entitySvc.Get("feature", featureID, slug)
+	if err != nil {
+		t.Fatalf("Get after advance: %v", err)
+	}
+	if s := stringFromState(got.State, "status"); s != "reviewing" {
+		t.Errorf("persisted status = %q, want %q", s, "reviewing")
+	}
+}
+
+// TestAdvanceFeatureStatus_AdvanceToReviewing_IsTarget verifies that when
+// reviewing is the explicit target, advance transitions to it normally (AC-17).
+func TestAdvanceFeatureStatus_AdvanceToReviewing_IsTarget(t *testing.T) {
+	t.Parallel()
+	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01AAAAAAAAA18"
+	slug := "dev-to-rev"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "developing", nil)
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "developing")
+
+	result, err := AdvanceFeatureStatus(feature, "reviewing", entitySvc, docSvc)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	// Reviewing is the target — advance reaches it and stops normally (no StoppedReason).
+	if result.FinalStatus != "reviewing" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "reviewing")
+	}
+	if result.StoppedReason != "" {
+		t.Errorf("StoppedReason = %q, want empty (target was reached)", result.StoppedReason)
+	}
+	if len(result.AdvancedThrough) != 1 || result.AdvancedThrough[0] != "reviewing" {
+		t.Errorf("AdvancedThrough = %v, want [reviewing]", result.AdvancedThrough)
+	}
+}
+
+// TestAdvanceFeatureStatus_NeverAutoTransitionsThroughReviewing verifies AC-18:
+// advance never auto-transitions through reviewing to reach done, even when
+// starting from an early state with all prerequisites satisfied.
+func TestAdvanceFeatureStatus_NeverAutoTransitionsThroughReviewing(t *testing.T) {
+	t.Parallel()
+	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01AAAAAAAAA19"
+	slug := "no-skip-review"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
+
+	// Provide ALL documents and a task — every prerequisite is met.
+	designDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/design/noskip.md", "design", featureID, true)
+	specDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/spec/noskip.md", "specification", featureID, true)
+	devPlanDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/plan/noskip.md", "dev-plan", featureID, true)
+	writeTestEntity(t, stateRoot, "task", "T-01AAAAAAAAA19", "noskip-task",
+		makeTaskFields("T-01AAAAAAAAA19", "noskip-task", featureID, "queued", nil))
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
+	feature.Design = designDocID
+	feature.Spec = specDocID
+	feature.DevPlan = devPlanDocID
+
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	// Must stop at reviewing, never reaching done.
+	if result.FinalStatus != "reviewing" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "reviewing")
+	}
+	if result.FinalStatus == "done" {
+		t.Fatal("advance must never auto-transition through reviewing to done")
+	}
+	if result.StoppedReason == "" {
+		t.Error("expected non-empty StoppedReason for mandatory review gate")
+	}
+
+	wantThrough := []string{"designing", "specifying", "dev-planning", "developing", "reviewing"}
+	if len(result.AdvancedThrough) != len(wantThrough) {
+		t.Fatalf("AdvancedThrough = %v, want %v", result.AdvancedThrough, wantThrough)
+	}
+	for i, s := range wantThrough {
+		if result.AdvancedThrough[i] != s {
+			t.Errorf("AdvancedThrough[%d] = %q, want %q", i, result.AdvancedThrough[i], s)
+		}
 	}
 }
 

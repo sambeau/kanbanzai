@@ -333,3 +333,63 @@ func TestCheckFeatureChildConsistency_DevelopingFeatureAllChildrenTerminal(t *te
 		t.Errorf("len(Issues) = %d, want 0", len(result.Issues))
 	}
 }
+
+func TestCheckFeatureChildConsistency_ReviewingFeatureNoFalseWarnings(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name          string
+		featureStatus string
+	}{
+		{"reviewing", "reviewing"},
+		{"needs-rework", "needs-rework"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name+"_with_non_terminal_children", func(t *testing.T) {
+			t.Parallel()
+
+			// Feature in reviewing/needs-rework with non-terminal children is normal
+			// (review states are not terminal/done, so no warning).
+			features := []map[string]any{
+				{"id": "FEAT-001", "status": tt.featureStatus},
+			}
+			tasks := []map[string]any{
+				{"id": "TASK-001", "parent_feature": "FEAT-001", "status": "active"},
+				{"id": "TASK-002", "parent_feature": "FEAT-001", "status": "done"},
+			}
+
+			result := CheckFeatureChildConsistency(features, tasks)
+
+			if result.Status != SeverityOK {
+				t.Errorf("Status = %v, want %v", result.Status, SeverityOK)
+			}
+			if len(result.Issues) != 0 {
+				t.Errorf("len(Issues) = %d, want 0", len(result.Issues))
+			}
+		})
+
+		t.Run(tt.name+"_with_all_terminal_children", func(t *testing.T) {
+			t.Parallel()
+
+			// Feature in reviewing/needs-rework with all children terminal is not
+			// an early-state warning — these are active review states, not early states.
+			features := []map[string]any{
+				{"id": "FEAT-001", "status": tt.featureStatus},
+			}
+			tasks := []map[string]any{
+				{"id": "TASK-001", "parent_feature": "FEAT-001", "status": "done"},
+				{"id": "TASK-002", "parent_feature": "FEAT-001", "status": "not-planned"},
+			}
+
+			result := CheckFeatureChildConsistency(features, tasks)
+
+			if result.Status != SeverityOK {
+				t.Errorf("Status = %v, want %v", result.Status, SeverityOK)
+			}
+			if len(result.Issues) != 0 {
+				t.Errorf("len(Issues) = %d, want 0", len(result.Issues))
+			}
+		})
+	}
+}

@@ -4,6 +4,7 @@ package merge
 // Blocking gates are evaluated first, followed by warning gates.
 func DefaultGates() []Gate {
 	return []Gate{
+		EntityDoneGate{},
 		TasksCompleteGate{},
 		VerificationExistsGate{},
 		VerificationPassedGate{},
