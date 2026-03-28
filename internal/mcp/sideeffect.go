@@ -33,6 +33,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"kanbanzai/internal/id"
 	"strings"
 	"sync"
 
@@ -81,6 +82,10 @@ type SideEffect struct {
 
 	// EntityID is the ID of the entity affected by the cascade.
 	EntityID string `json:"entity_id,omitempty"`
+
+	// DisplayID is the human-friendly display form of EntityID (e.g. FEAT-01KMR-X1SEQV49).
+	// Auto-populated by PushSideEffect when EntityID is set.
+	DisplayID string `json:"display_id,omitempty"`
 
 	// EntityType is the type of the affected entity (task, feature, bug, …).
 	EntityType string `json:"entity_type,omitempty"`
@@ -168,8 +173,13 @@ func CollectorFromContext(ctx context.Context) *SideEffectCollector {
 
 // PushSideEffect pushes a side effect onto the collector in the context.
 // It is a no-op if the context carries no collector.
+// When EntityID is set and DisplayID is empty, DisplayID is auto-populated
+// using id.FormatFullDisplay.
 func PushSideEffect(ctx context.Context, e SideEffect) {
 	if c := CollectorFromContext(ctx); c != nil {
+		if e.EntityID != "" && e.DisplayID == "" {
+			e.DisplayID = id.FormatFullDisplay(e.EntityID)
+		}
 		c.Push(e)
 	}
 }

@@ -23,6 +23,7 @@ import (
 	"github.com/mark3labs/mcp-go/server"
 
 	kbzctx "kanbanzai/internal/context"
+	"kanbanzai/internal/id"
 	"kanbanzai/internal/service"
 )
 
@@ -122,8 +123,9 @@ func handoffTool(
 		}
 
 		resp := map[string]any{
-			"task_id": task.ID,
-			"prompt":  prompt,
+			"task_id":    task.ID,
+			"display_id": id.FormatFullDisplay(task.ID),
+			"prompt":     prompt,
 			"context_metadata": map[string]any{
 				"spec_sections_included":     len(actx.specSections),
 				"knowledge_entries_included": len(actx.knowledge),

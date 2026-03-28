@@ -25,6 +25,7 @@ import (
 
 	"kanbanzai/internal/config"
 	kbzctx "kanbanzai/internal/context"
+	idpkg "kanbanzai/internal/id"
 	"kanbanzai/internal/model"
 	"kanbanzai/internal/service"
 )
@@ -121,6 +122,7 @@ func nextQueueMode(ctx context.Context, role string, conflictCheck bool, entityS
 	for _, item := range result.Queue {
 		qitem := map[string]any{
 			"task_id":        item.TaskID,
+			"display_id":     idpkg.FormatFullDisplay(item.TaskID),
 			"slug":           item.Slug,
 			"summary":        item.Summary,
 			"parent_feature": item.ParentFeature,
@@ -235,9 +237,10 @@ func nextClaimMode(
 	if parentFeature != "" {
 		if feat, ferr := entitySvc.Get("feature", parentFeature, ""); ferr == nil {
 			parentFeatureInfo = map[string]any{
-				"id":      feat.ID,
-				"slug":    feat.Slug,
-				"plan_id": nextStateStr(feat.State, "parent"),
+				"id":         feat.ID,
+				"display_id": idpkg.FormatFullDisplay(feat.ID),
+				"slug":       feat.Slug,
+				"plan_id":    nextStateStr(feat.State, "parent"),
 			}
 		}
 	}
@@ -245,6 +248,7 @@ func nextClaimMode(
 	// Build task summary.
 	taskOut := map[string]any{
 		"id":             task.ID,
+		"display_id":     idpkg.FormatFullDisplay(task.ID),
 		"slug":           task.Slug,
 		"summary":        nextStateStr(task.State, "summary"),
 		"status":         nextStateStr(task.State, "status"),

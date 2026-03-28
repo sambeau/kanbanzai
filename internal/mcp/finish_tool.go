@@ -20,6 +20,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"kanbanzai/internal/id"
 	"kanbanzai/internal/service"
 )
 
@@ -270,6 +271,11 @@ func finishOne(
 	rejected := make([]rejectedKE, len(result.KnowledgeContributions.Rejected))
 	for i, r := range result.KnowledgeContributions.Rejected {
 		rejected[i] = rejectedKE{Topic: r.Topic, Reason: r.Reason}
+	}
+
+	// Enrich task output with display_id.
+	if tid, ok := result.Task["id"].(string); ok {
+		result.Task["display_id"] = id.FormatFullDisplay(tid)
 	}
 
 	resp := map[string]any{

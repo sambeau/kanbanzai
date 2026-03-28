@@ -40,6 +40,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"kanbanzai/internal/id"
 	"kanbanzai/internal/model"
 	"kanbanzai/internal/service"
 	"kanbanzai/internal/worktree"
@@ -190,11 +191,12 @@ type dispatchInfo struct {
 // featureInfo is a compact feature record used in feature detail and task parent context.
 // plan_id holds the parent plan ID (e.g. "P1-my-plan").
 type featureInfo struct {
-	ID      string `json:"id"`
-	Slug    string `json:"slug"`
-	Summary string `json:"summary,omitempty"`
-	Status  string `json:"status"`
-	PlanID  string `json:"plan_id,omitempty"`
+	DisplayID string `json:"display_id"`
+	ID        string `json:"id"`
+	Slug      string `json:"slug"`
+	Summary   string `json:"summary,omitempty"`
+	Status    string `json:"status"`
+	PlanID    string `json:"plan_id,omitempty"`
 }
 
 // ─── Project overview synthesis ───────────────────────────────────────────────
@@ -220,12 +222,13 @@ type planAggregate struct {
 }
 
 type planSummary struct {
-	ID       string `json:"id"`
-	Slug     string `json:"slug"`
-	Title    string `json:"title,omitempty"`
-	Status   string `json:"status"`
-	Features int    `json:"features"`
-	Tasks    struct {
+	DisplayID string `json:"display_id"`
+	ID        string `json:"id"`
+	Slug      string `json:"slug"`
+	Title     string `json:"title,omitempty"`
+	Status    string `json:"status"`
+	Features  int    `json:"features"`
+	Tasks     struct {
 		Ready  int `json:"ready"`
 		Active int `json:"active"`
 		Done   int `json:"done"`
@@ -299,11 +302,12 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 		agg.Tasks.Total += planTasks.total
 
 		ps := planSummary{
-			ID:       p.ID,
-			Slug:     p.Slug,
-			Title:    title,
-			Status:   status,
-			Features: len(features),
+			DisplayID: id.FormatFullDisplay(p.ID),
+			ID:        p.ID,
+			Slug:      p.Slug,
+			Title:     title,
+			Status:    status,
+			Features:  len(features),
 		}
 		ps.Tasks.Ready = planTasks.ready
 		ps.Tasks.Active = planTasks.active
@@ -331,6 +335,7 @@ type planDashboard struct {
 	Scope       string               `json:"scope"`
 	Plan        planHeader           `json:"plan"`
 	Features    []featureSummary     `json:"features"`
+	HasLabels   bool                 `json:"has_labels,omitempty"`
 	DocGaps     []string             `json:"doc_gaps,omitempty"`
 	Health      *statusHealthSummary `json:"health,omitempty"`
 	Attention   []string             `json:"attention,omitempty"`
@@ -338,18 +343,21 @@ type planDashboard struct {
 }
 
 type planHeader struct {
-	ID     string `json:"id"`
-	Slug   string `json:"slug"`
-	Title  string `json:"title,omitempty"`
-	Status string `json:"status"`
+	DisplayID string `json:"display_id"`
+	ID        string `json:"id"`
+	Slug      string `json:"slug"`
+	Title     string `json:"title,omitempty"`
+	Status    string `json:"status"`
 }
 
 type featureSummary struct {
-	ID      string `json:"id"`
-	Slug    string `json:"slug"`
-	Summary string `json:"summary,omitempty"`
-	Status  string `json:"status"`
-	Tasks   struct {
+	DisplayID string `json:"display_id"`
+	ID        string `json:"id"`
+	Slug      string `json:"slug"`
+	Summary   string `json:"summary,omitempty"`
+	Status    string `json:"status"`
+	Label     string `json:"label,omitempty"`
+	Tasks     struct {
 		Queued int `json:"queued"`
 		Ready  int `json:"ready"`
 		Active int `json:"active"`
@@ -426,11 +434,15 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 		hasSpec := hasDocType(docs, "specification")
 		hasDevPlan := hasDocType(docs, "dev-plan")
 
+		flabel, _ := f.State["label"].(string)
+
 		fs := featureSummary{
+			DisplayID:  id.FormatFullDisplay(f.ID),
 			ID:         f.ID,
 			Slug:       f.Slug,
 			Summary:    fsummary,
 			Status:     fstatus,
+			Label:      flabel,
 			HasSpec:    hasSpec,
 			HasDevPlan: hasDevPlan,
 		}
@@ -451,18 +463,29 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 	title, _ := plan.State["title"].(string)
 	planStatus, _ := plan.State["status"].(string)
 
+	// Detect whether any feature has a label set.
+	hasLabels := false
+	for _, fs := range featureSummaries {
+		if fs.Label != "" {
+			hasLabels = true
+			break
+		}
+	}
+
 	attention := generatePlanAttention(featureSummaries, docGaps)
 	health := buildHealthSummary(entitySvc)
 
 	return &planDashboard{
 		Scope: "plan",
 		Plan: planHeader{
-			ID:     plan.ID,
-			Slug:   plan.Slug,
-			Title:  title,
-			Status: planStatus,
+			DisplayID: id.FormatFullDisplay(plan.ID),
+			ID:        plan.ID,
+			Slug:      plan.Slug,
+			Title:     title,
+			Status:    planStatus,
 		},
 		Features:    featureSummaries,
+		HasLabels:   hasLabels,
 		DocGaps:     docGaps,
 		Health:      health,
 		Attention:   attention,
@@ -476,6 +499,7 @@ type featureDetail struct {
 	Scope       string      `json:"scope"`
 	Feature     featureInfo `json:"feature"`
 	Tasks       []taskInfo  `json:"tasks"`
+	HasLabels   bool        `json:"has_labels,omitempty"`
 	TaskSummary struct {
 		Queued int `json:"queued"`
 		Ready  int `json:"ready"`
@@ -491,19 +515,22 @@ type featureDetail struct {
 }
 
 type taskInfo struct {
-	ID       string   `json:"id"`
-	Slug     string   `json:"slug"`
-	Summary  string   `json:"summary,omitempty"`
-	Status   string   `json:"status"`
-	Estimate *float64 `json:"estimate,omitempty"`
+	DisplayID string   `json:"display_id"`
+	ID        string   `json:"id"`
+	Slug      string   `json:"slug"`
+	Summary   string   `json:"summary,omitempty"`
+	Status    string   `json:"status"`
+	Label     string   `json:"label,omitempty"`
+	Estimate  *float64 `json:"estimate,omitempty"`
 }
 
 type docInfo struct {
-	ID     string `json:"id"`
-	Type   string `json:"type"`
-	Title  string `json:"title,omitempty"`
-	Status string `json:"status"`
-	Path   string `json:"path,omitempty"`
+	DisplayID string `json:"display_id"`
+	ID        string `json:"id"`
+	Type      string `json:"type"`
+	Title     string `json:"title,omitempty"`
+	Status    string `json:"status"`
+	Path      string `json:"path,omitempty"`
 }
 
 func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store) (*featureDetail, error) {
@@ -544,12 +571,15 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 				est = &ef
 			}
 		}
+		tlabel, _ := t.State["label"].(string)
 		tasks = append(tasks, taskInfo{
-			ID:       t.ID,
-			Slug:     t.Slug,
-			Summary:  summary,
-			Status:   status,
-			Estimate: est,
+			DisplayID: id.FormatFullDisplay(t.ID),
+			ID:        t.ID,
+			Slug:      t.Slug,
+			Summary:   summary,
+			Status:    status,
+			Label:     tlabel,
+			Estimate:  est,
 		})
 	}
 
@@ -559,11 +589,12 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 		ownerDocs, _ := docSvc.ListDocumentsByOwner(featID)
 		for _, d := range ownerDocs {
 			docs = append(docs, docInfo{
-				ID:     d.ID,
-				Type:   d.Type,
-				Title:  d.Title,
-				Status: d.Status,
-				Path:   d.Path,
+				DisplayID: id.FormatFullDisplay(d.ID),
+				ID:        d.ID,
+				Type:      d.Type,
+				Title:     d.Title,
+				Status:    d.Status,
+				Path:      d.Path,
 			})
 		}
 	}
@@ -591,18 +622,29 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 		}
 	}
 
+	// Detect whether any task has a label set.
+	hasLabels := false
+	for _, ti := range tasks {
+		if ti.Label != "" {
+			hasLabels = true
+			break
+		}
+	}
+
 	attention := generateFeatureAttention(tasks, docs, taskSummary.total)
 
 	d := &featureDetail{
 		Scope: "feature",
 		Feature: featureInfo{
-			ID:      feat.ID,
-			Slug:    feat.Slug,
-			Summary: fsummary,
-			Status:  fstatus,
-			PlanID:  fplanID,
+			DisplayID: id.FormatFullDisplay(feat.ID),
+			ID:        feat.ID,
+			Slug:      feat.Slug,
+			Summary:   fsummary,
+			Status:    fstatus,
+			PlanID:    fplanID,
 		},
 		Tasks:       tasks,
+		HasLabels:   hasLabels,
 		Documents:   docs,
 		Estimate:    est,
 		Worktree:    wt,
@@ -631,6 +673,7 @@ type taskDetail struct {
 }
 
 type taskFullInfo struct {
+	DisplayID     string   `json:"display_id"`
 	ID            string   `json:"id"`
 	Slug          string   `json:"slug"`
 	Summary       string   `json:"summary,omitempty"`
@@ -641,10 +684,11 @@ type taskFullInfo struct {
 }
 
 type depInfo struct {
-	TaskID   string `json:"task_id"`
-	Slug     string `json:"slug,omitempty"`
-	Status   string `json:"status"`
-	Blocking bool   `json:"blocking"`
+	DisplayID string `json:"display_id"`
+	TaskID    string `json:"task_id"`
+	Slug      string `json:"slug,omitempty"`
+	Status    string `json:"status"`
+	Blocking  bool   `json:"blocking"`
 }
 
 func synthesiseTask(taskID string, entitySvc *service.EntityService) (*taskDetail, error) {
@@ -676,6 +720,7 @@ func synthesiseTask(taskID string, entitySvc *service.EntityService) (*taskDetai
 	}
 
 	ti := taskFullInfo{
+		DisplayID:     id.FormatFullDisplay(task.ID),
 		ID:            task.ID,
 		Slug:          task.Slug,
 		Summary:       tsummary,
@@ -694,11 +739,12 @@ func synthesiseTask(taskID string, entitySvc *service.EntityService) (*taskDetai
 			// Features store their parent plan in the "parent" field, not "owner".
 			pfplanID, _ := pf.State["parent"].(string)
 			parentFeat = &featureInfo{
-				ID:      pf.ID,
-				Slug:    pf.Slug,
-				Summary: pfsummary,
-				Status:  pfstatus,
-				PlanID:  pfplanID,
+				DisplayID: id.FormatFullDisplay(pf.ID),
+				ID:        pf.ID,
+				Slug:      pf.Slug,
+				Summary:   pfsummary,
+				Status:    pfstatus,
+				PlanID:    pfplanID,
 			}
 		}
 	}
@@ -745,12 +791,13 @@ type bugDetail struct {
 }
 
 type bugInfo struct {
-	ID       string `json:"id"`
-	Slug     string `json:"slug"`
-	Title    string `json:"title,omitempty"`
-	Status   string `json:"status"`
-	Severity string `json:"severity,omitempty"`
-	Priority string `json:"priority,omitempty"`
+	DisplayID string `json:"display_id"`
+	ID        string `json:"id"`
+	Slug      string `json:"slug"`
+	Title     string `json:"title,omitempty"`
+	Status    string `json:"status"`
+	Severity  string `json:"severity,omitempty"`
+	Priority  string `json:"priority,omitempty"`
 }
 
 func synthesiseBug(bugID string, entitySvc *service.EntityService) (*bugDetail, error) {
@@ -775,12 +822,13 @@ func synthesiseBug(bugID string, entitySvc *service.EntityService) (*bugDetail, 
 	return &bugDetail{
 		Scope: "bug",
 		Bug: bugInfo{
-			ID:       bug.ID,
-			Slug:     bug.Slug,
-			Title:    btitle,
-			Status:   bstatus,
-			Severity: bseverity,
-			Priority: bpriority,
+			DisplayID: id.FormatFullDisplay(bug.ID),
+			ID:        bug.ID,
+			Slug:      bug.Slug,
+			Title:     btitle,
+			Status:    bstatus,
+			Severity:  bseverity,
+			Priority:  bpriority,
 		},
 		Attention:   attention,
 		GeneratedAt: time.Now().UTC().Format(time.RFC3339),
@@ -805,7 +853,7 @@ func generateProjectAttention(plans []planSummary, allTasks []service.ListResult
 	// Find plans with ready tasks.
 	for _, p := range plans {
 		if p.Tasks.Ready > 0 {
-			items = append(items, fmt.Sprintf("%d task(s) ready to claim in plan %s", p.Tasks.Ready, p.ID))
+			items = append(items, fmt.Sprintf("%d task(s) ready to claim in plan %s", p.Tasks.Ready, p.DisplayID))
 		}
 		if len(items) >= maxAttentionItems {
 			break
@@ -845,7 +893,7 @@ func generatePlanAttention(features []featureSummary, docGaps []string) []string
 	// Features with ready tasks.
 	for _, f := range features {
 		if f.Tasks.Ready > 0 && len(items) < maxAttentionItems {
-			items = append(items, fmt.Sprintf("%d task(s) ready in %s (%s)", f.Tasks.Ready, f.ID, f.Slug))
+			items = append(items, fmt.Sprintf("%d task(s) ready in %s (%s)", f.Tasks.Ready, f.DisplayID, f.Slug))
 		}
 	}
 
@@ -860,7 +908,7 @@ func generatePlanAttention(features []featureSummary, docGaps []string) []string
 	// Features with no tasks.
 	for _, f := range features {
 		if f.Tasks.Total == 0 && f.Status != "done" && len(items) < maxAttentionItems {
-			items = append(items, fmt.Sprintf("%s has no tasks — decompose the feature to start work", f.ID))
+			items = append(items, fmt.Sprintf("%s has no tasks — decompose the feature to start work", f.DisplayID))
 		}
 	}
 
@@ -966,16 +1014,17 @@ func resolveDependencies(taskState map[string]any, entitySvc *service.EntityServ
 		}
 		dep, err := entitySvc.Get("task", depID, "")
 		if err != nil {
-			result = append(result, depInfo{TaskID: depID, Status: "unknown", Blocking: true})
+			result = append(result, depInfo{DisplayID: id.FormatFullDisplay(depID), TaskID: depID, Status: "unknown", Blocking: true})
 			continue
 		}
 		depStatus, _ := dep.State["status"].(string)
 		blocking := !isTerminalStatus(depStatus)
 		result = append(result, depInfo{
-			TaskID:   dep.ID,
-			Slug:     dep.Slug,
-			Status:   depStatus,
-			Blocking: blocking,
+			DisplayID: id.FormatFullDisplay(dep.ID),
+			TaskID:    dep.ID,
+			Slug:      dep.Slug,
+			Status:    depStatus,
+			Blocking:  blocking,
 		})
 	}
 	return result
