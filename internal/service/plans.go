@@ -51,11 +51,9 @@ func (s *EntityService) CreatePlan(input CreatePlanInput) (CreateResult, error) 
 		return CreateResult{}, err
 	}
 
-	// Load and validate prefix registry
-	cfg, err := config.Load()
-	if err != nil {
-		return CreateResult{}, fmt.Errorf("load config: %w", err)
-	}
+	// Load and validate prefix registry (fall back to defaults if no config file exists,
+	// so that Plan creation works in fresh projects before kbz init has been run).
+	cfg := config.LoadOrDefault()
 
 	prefix := strings.TrimSpace(input.Prefix)
 	if !cfg.IsActivePrefix(prefix) {

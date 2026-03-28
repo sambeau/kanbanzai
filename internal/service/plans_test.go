@@ -4,31 +4,12 @@ import (
 	"strings"
 	"testing"
 
-	"kanbanzai/internal/config"
 	"kanbanzai/internal/model"
 )
 
 func TestCreatePlan_Success(t *testing.T) {
-	// Skip this test in CI - it requires config file setup at .kbz/config.yaml
-	// which is difficult to set up in parallel tests due to the global config path.
-	// The Plan creation logic is tested through integration tests.
-	t.Skip("Skipping: requires .kbz/config.yaml setup")
-}
-
-func TestCreatePlan_WithConfig(t *testing.T) {
-	// This test requires .kbz/config.yaml to exist with a valid prefix registry.
-	// Run manually when testing Plan creation functionality.
-
-	// Check if config exists, skip if not
-	cfg, err := config.Load()
-	if err != nil {
-		t.Skipf("Skipping: %v", err)
-	}
-
-	if !cfg.IsActivePrefix("P") {
-		t.Skip("Skipping: prefix 'P' not active in config")
-	}
-
+	// CreatePlan uses LoadOrDefault(), so it works even without .kbz/config.yaml.
+	// The default config includes prefix "P" for Plan.
 	root := t.TempDir()
 	svc := NewEntityService(root)
 
@@ -38,13 +19,11 @@ func TestCreatePlan_WithConfig(t *testing.T) {
 		Title:     "Test Plan",
 		Summary:   "A test plan for unit testing",
 		CreatedBy: "tester",
-		Tags:      []string{"test", "phase:2"},
 	})
 	if err != nil {
 		t.Fatalf("CreatePlan() error = %v", err)
 	}
 
-	// Verify result
 	if result.Type != string(model.EntityKindPlan) {
 		t.Errorf("Type = %q, want %q", result.Type, model.EntityKindPlan)
 	}
@@ -56,6 +35,56 @@ func TestCreatePlan_WithConfig(t *testing.T) {
 	}
 	if result.State["status"] != string(model.PlanStatusProposed) {
 		t.Errorf("status = %q, want %q", result.State["status"], model.PlanStatusProposed)
+	}
+}
+
+func TestCreatePlan_WithTags(t *testing.T) {
+	root := t.TempDir()
+	svc := NewEntityService(root)
+
+	result, err := svc.CreatePlan(CreatePlanInput{
+		Prefix:    "P",
+		Slug:      "tagged-plan",
+		Title:     "Tagged Plan",
+		Summary:   "A test plan with tags",
+		CreatedBy: "tester",
+		Tags:      []string{"test", "phase:2"},
+	})
+	if err != nil {
+		t.Fatalf("CreatePlan() error = %v", err)
+	}
+
+	if result.Type != string(model.EntityKindPlan) {
+		t.Errorf("Type = %q, want %q", result.Type, model.EntityKindPlan)
+	}
+	if !strings.HasPrefix(result.ID, "P") {
+		t.Errorf("ID = %q, should start with P", result.ID)
+	}
+	if result.Slug != "tagged-plan" {
+		t.Errorf("Slug = %q, want %q", result.Slug, "tagged-plan")
+	}
+	if result.State["status"] != string(model.PlanStatusProposed) {
+		t.Errorf("status = %q, want %q", result.State["status"], model.PlanStatusProposed)
+	}
+}
+
+func TestCreatePlan_UndeclaredPrefix(t *testing.T) {
+	root := t.TempDir()
+	svc := NewEntityService(root)
+
+	// Default config only has prefix "P". Using "Z" should fail.
+	_, err := svc.CreatePlan(CreatePlanInput{
+		Prefix:    "Z",
+		Slug:      "test-plan",
+		Title:     "Test Plan",
+		Summary:   "A test plan",
+		CreatedBy: "tester",
+	})
+	if err == nil {
+		t.Fatal("expected error for undeclared prefix, got nil")
+	}
+	if !strings.Contains(err.Error(), "undeclared prefix") {
+		t.Errorf("error = %q, want to contain 'undeclared prefix'", err.Error())
 	}
 }
 
