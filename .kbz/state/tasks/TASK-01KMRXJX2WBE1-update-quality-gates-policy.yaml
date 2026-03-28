@@ -1,0 +1,5 @@
+id: TASK-01KMRXJX2WBE1
+parent_feature: FEAT-01KMRX1HG8BAX
+slug: update-quality-gates-policy
+summary: Update work/design/quality-gates-and-review-policy.md to cross-reference the code review design (work/design/code-review-workflow.md) and note that review dimensions and profiles are now operationalised through reviewer.yaml and the review SKILL. No normative content changes — cross-references and operationalisation note only. Covers spec AC-E-16 through AC-E-17.
+status: ready

@@ -1,0 +1,7 @@
+id: TASK-01KMRXK5ARR1S
+parent_feature: FEAT-01KMRX1QPN3CB
+slug: run-multi-feature-review
+summary: "Run a review over two or more features in reviewing state simultaneously to verify the orchestrator iterates independently without conflating state between features. Verify that a human_checkpoint is correctly raised for at least one ambiguous finding scenario. Covers spec AC-F-20 through AC-F-22."
+status: queued
+depends_on:
+  - TASK-01KMRXK3V9009

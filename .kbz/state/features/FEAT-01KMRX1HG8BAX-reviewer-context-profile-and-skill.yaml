@@ -1,0 +1,14 @@
+id: FEAT-01KMRX1HG8BAX
+slug: reviewer-context-profile-and-skill
+parent: P6-workflow-quality-and-review
+status: specifying
+summary: "Create the reviewer context profile in .kbz/context/roles/ and write the code review SKILL document in .skills/. Update quality gates policy with any refinements from the review design. Design ref: code-review-workflow.md §8, §9."
+design: PROJECT/design-code-review-workflow
+spec: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill
+tags:
+  - "phase:2"
+  - code-review
+  - context-profile
+  - skill
+created: "2026-03-28T00:20:59Z"
+created_by: sambeau

@@ -1,0 +1,8 @@
+id: TASK-01KMRXKB0J48K
+parent_feature: FEAT-01KMRX1SEQV49
+slug: update-plan-status-and-records
+summary: "Update workflow-quality-and-review-plan.md status header from 'Phase 2 pending design approval' to 'Phase 2 active'. Verify no content hash drift in all document records modified by the Phase 2 work (use doc_record_validate or doc_record_refresh as needed). Covers spec AC-G-09 through AC-G-10."
+status: queued
+depends_on:
+  - TASK-01KMRXK75ZA20
+  - TASK-01KMRXK9019ZM

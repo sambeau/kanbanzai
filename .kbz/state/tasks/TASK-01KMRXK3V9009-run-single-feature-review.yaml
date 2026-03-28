@@ -1,0 +1,7 @@
+id: TASK-01KMRXK3V9009
+parent_feature: FEAT-01KMRX1QPN3CB
+slug: run-single-feature-review
+summary: "Run a complete review cycle on a single real feature: transition to reviewing, decompose into review units, run parallel sub-agent review, collate findings, write the review findings document (registered to the feature), and transition to done (or needs-rework → remediation → re-review → done). Verify that re-review is targeted to affected sections only. Covers spec AC-F-16 through AC-F-19."
+status: queued
+depends_on:
+  - TASK-01KMRXK1G474P

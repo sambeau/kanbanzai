@@ -1,0 +1,8 @@
+id: TASK-01KMRXKXMFBF3
+parent_feature: FEAT-01KMRX1F47Z94
+slug: test-lifecycle-state-changes
+summary: "Write and update tests covering all 25 acceptance criteria in the review-lifecycle-states spec: new constants exist, all valid transitions succeed, all invalid transitions are rejected, developing → done is blocked, smart-skip stops at reviewing, ValidNextStates exposes new states, error messages include valid transitions, health checks handle new states correctly, merge gate still requires done. Run go test -race ./... and go vet ./... to green. Covers spec AC-23 through AC-25."
+status: queued
+depends_on:
+  - TASK-01KMRXKQ9ENYX
+  - TASK-01KMRXKT6DDH5
