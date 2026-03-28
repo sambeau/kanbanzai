@@ -1,0 +1,213 @@
+document_id: FEAT-01KMRX1QPN3CB/report-review-feat-01kmrx1qpn3cb
+document_path: work/reports/review-FEAT-01KMRX1QPN3CB.md
+content_hash: 59a5523533f02673f3d482b09b15536f2b20ebb07b67ed7f6c81fb90d6627292
+indexed_at: 2026-03-28T02:01:38.554426Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: FEAT-01KMRX1QPN3CB (review-orchestration-pattern)'
+      byte_offset: 0
+      byte_count: 13282
+      word_count: 1729
+      content_hash: 59a5523533f02673f3d482b09b15536f2b20ebb07b67ed7f6c81fb90d6627292
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 794
+          byte_count: 1292
+          word_count: 188
+          content_hash: 2c7a8931ae0792fd021585e8c76a6d6b07fbc7513cb529406d3eab72c04cc315
+        - path: "1.2"
+          level: 2
+          title: Per-Dimension Verdicts
+          byte_offset: 2086
+          byte_count: 758
+          word_count: 69
+          content_hash: dfcd5c250fff7b0488a496241db5ad3da4e51e49b6245bcda64fe6523515057c
+        - path: "1.3"
+          level: 2
+          title: Blocking Findings
+          byte_offset: 2844
+          byte_count: 4865
+          word_count: 646
+          content_hash: d5b21429d701323d5bd00d613a2e0ac4b063f568274153b2b9a31d86f1add001
+          children:
+            - path: 1.3.1
+              level: 3
+              title: B1. Orchestration Procedure uses removed 1.0 tool names throughout
+              byte_offset: 2866
+              byte_count: 2458
+              word_count: 321
+              content_hash: a17a0be1bd0a224a6b10ed6c8431825e83143f28bc6e1ce409343b1836bf8309
+            - path: 1.3.2
+              level: 3
+              title: B2. SKILL does not document both human checkpoint response paths
+              byte_offset: 5324
+              byte_count: 1257
+              word_count: 172
+              content_hash: 03cbb07c40376da34f72abf84fb9eced2f6ccb26f65f5801b70f52fbb593c660
+            - path: 1.3.3
+              level: 3
+              title: B3. No re-review artifact for Feature D — AC-F-17 unverifiable
+              byte_offset: 6581
+              byte_count: 1128
+              word_count: 150
+              content_hash: e319ff53ca9bfbd9b48f87f715f9173eef1fe0d366f90e55054f1bf51089123e
+        - path: "1.4"
+          level: 2
+          title: Non-Blocking Notes
+          byte_offset: 7709
+          byte_count: 3810
+          word_count: 546
+          content_hash: f9450ee712975f59b7dc77ba3e981334701bfeae8996b471f37e58c557e5d9dc
+          children:
+            - path: 1.4.1
+              level: 3
+              title: N1. AC-F-03 step 7 placed in "Decision Point" section rather than as a numbered Analysis Phase step
+              byte_offset: 7732
+              byte_count: 553
+              word_count: 83
+              content_hash: 844ad31a495b0a9904e1d32d6d9a4c82a3028ab4665d25ed323472e59fd0784d
+            - path: 1.4.2
+              level: 3
+              title: N2. `context_assemble` appears at Step 4 rather than Step 2 as AC-F-03 specifies
+              byte_offset: 8285
+              byte_count: 600
+              word_count: 87
+              content_hash: 01935851027b8d08c019d2368757c67f0ff129a7901e36a4df1a3f8207925a4c
+            - path: 1.4.3
+              level: 3
+              title: N3. Decision Point section does not name the transition tool for `done` / `needs-rework`
+              byte_offset: 8885
+              byte_count: 450
+              word_count: 64
+              content_hash: 0c2cb0d9658779f0aa21934cfd7420c445d238e0dccd984ef4361b8865b1d1b1
+            - path: 1.4.4
+              level: 3
+              title: N4. SKILL Step 6 does not enumerate required review document sections by name
+              byte_offset: 9335
+              byte_count: 682
+              word_count: 92
+              content_hash: fb0b729e9dd02936ef7deda89eb1b6096bc5cef57eabf2cd73de791f466def33
+            - path: 1.4.5
+              level: 3
+              title: N5. Feature D remediation task creation is not traceable from the review artifact
+              byte_offset: 10017
+              byte_count: 468
+              word_count: 72
+              content_hash: daee779f6a62273cd3d5d39388977d2ffc85275f7f85dc5dab3a4f95c6130c56
+            - path: 1.4.6
+              level: 3
+              title: N6. Review reports for Feature D and Feature E remain in `draft` status
+              byte_offset: 10485
+              byte_count: 474
+              word_count: 63
+              content_hash: 3cbac6e64681cf1e393993cfe8737ee4ca338aca2521558148a812d8e59d3869
+            - path: 1.4.7
+              level: 3
+              title: N7. Feature E checkpoint response and resolution are not recorded in the review artifact
+              byte_offset: 10959
+              byte_count: 560
+              word_count: 82
+              content_hash: 6691d521506d2f2b39495d0cecebc962589ddefcfe56a4525d92f84215010e14
+        - path: "1.5"
+          level: 2
+          title: Reviewer Unit Breakdown
+          byte_offset: 11519
+          byte_count: 896
+          word_count: 92
+          content_hash: f1bb53d548bb27d1bca20f30848934cf22b78771d7ca3f83a802fc8e114c775f
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Unit 1: Orchestration Procedure Documentation'
+              byte_offset: 11547
+              byte_count: 254
+              word_count: 29
+              content_hash: 51cf5ea7b23e1a29dca3e587613a5e7b37457b970d7c6039adeadb7a8b467e32
+            - path: 1.5.2
+              level: 3
+              title: 'Unit 2: Review Cycle Evidence'
+              byte_offset: 11801
+              byte_count: 614
+              word_count: 59
+              content_hash: 4402a9f26fe76c70ff4a82c1cbd02ca9f9a9c8b18289d3677ba4da2cd9f0f4d9
+        - path: "1.6"
+          level: 2
+          title: Recommended Remediation
+          byte_offset: 12415
+          byte_count: 867
+          word_count: 128
+          content_hash: 94132826eb5712318e6ea77b6b0af9cc82050319075dec49bbf95a18bf9e02df
+entity_refs:
+    - entity_id: FEAT-01KMRX1QPN3CB
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 17
+    - entity_id: FEAT-01KMRX1F47Z94
+      entity_type: feature
+      section_path: 1.3.3
+      byte_offset: 6756
+    - entity_id: FEAT-01KMRX1F47Z94
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 11963
+    - entity_id: FEAT-01KMRX1HG8BAX
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 12075
+    - entity_id: FEAT-01KMKRQSD1TKK
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 12120
+    - entity_id: FEAT-01KMRX1F47Z94
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 13173
+    - entity_id: P6-workflow-quality-and-review
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 409
+cross_doc_links:
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.1"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.3.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.3.2
+    - target_path: work/reports/review-FEAT-01KMRX1F47Z94.md
+      link_text: work/reports/review-FEAT-01KMRX1F47Z94.md
+      section_path: 1.3.3
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.5.1
+    - target_path: work/reports/review-FEAT-01KMRX1F47Z94.md
+      link_text: work/reports/review-FEAT-01KMRX1F47Z94.md
+      section_path: 1.5.2
+    - target_path: work/reports/review-FEAT-01KMRX1HG8BAX.md
+      link_text: work/reports/review-FEAT-01KMRX1HG8BAX.md
+      section_path: 1.5.2
+    - target_path: work/reports/review-FEAT-01KMKRQSD1TKK.md
+      link_text: work/reports/review-FEAT-01KMKRQSD1TKK.md
+      section_path: 1.5.2
+    - target_path: work/reports/review-FEAT-01KMRX1F47Z94.md
+      link_text: work/reports/review-FEAT-01KMRX1F47Z94.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.1
+      role: decision
+      confidence: high
+    - section_path: 1.4.2
+      role: narrative
+      confidence: high
+    - section_path: 1.4.3
+      role: decision
+      confidence: high
+classified: false

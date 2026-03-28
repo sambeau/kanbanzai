@@ -1,0 +1,14 @@
+id: TASK-01KMS2TEJHF2S
+parent_feature: FEAT-01KMRX1QPN3CB
+slug: document-checkpoint-response-paths
+summary: "Add explicit post-response branches to .skills/code-review.md (Decision Point or Human Checkpoint Integration Points section): if human responds proceed/non-blocking → transition to done; if human responds blocking → enter remediation phase. Addresses B2 (AC-F-22). Must be serialised after update-skill-tool-names (both touch .skills/code-review.md)."
+status: done
+depends_on:
+  - TASK-01KMS2T9TXR6D
+completed: "2026-03-28T02:04:54Z"
+claimed_at: "2026-03-28T02:04:47Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T02:04:47Z"
+dispatched_by: sambeau
+completion_summary: "Addressed B2 (AC-F-22) as part of TASK-01KMS2T9TXR6D — the After checkpoint response sub-section was added to the Decision Point section of .skills/code-review.md, documenting both human response paths: proceed/non-blocking → done, blocking/create remediation task → enter remediation phase. No additional changes needed."
+verification: grep confirms After checkpoint response section present in .skills/code-review.md with both response branches explicitly documented.

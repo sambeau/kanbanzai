@@ -2,9 +2,11 @@ id: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern
 path: work/spec/review-orchestration-pattern.md
 type: specification
 title: Review Orchestration Pattern Specification
-status: draft
+status: approved
 owner: FEAT-01KMRX1QPN3CB
+approved_by: sambeau
+approved_at: "2026-03-28T01:53:02Z"
 content_hash: 27b3ff9fcb60b55e060390ef573f5d20f7d7719d907e816d1b70b93e3a32c516
 created: "2026-03-28T00:28:19Z"
 created_by: sambeau
-updated: "2026-03-28T00:28:19Z"
+updated: "2026-03-28T01:53:02Z"

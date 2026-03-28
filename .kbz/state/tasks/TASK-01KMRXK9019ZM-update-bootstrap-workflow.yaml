@@ -2,6 +2,15 @@ id: TASK-01KMRXK9019ZM
 parent_feature: FEAT-01KMRX1SEQV49
 slug: update-bootstrap-workflow
 summary: "Review work/bootstrap/bootstrap-workflow.md for any description of the feature completion workflow. If it describes the feature lifecycle path, update it to include the reviewing state (developing → reviewing → done). If it does not describe the lifecycle, add a note pointing to the review SKILL. Covers spec AC-G-08."
-status: queued
+status: done
 depends_on:
   - TASK-01KMRXK5ARR1S
+files_planned:
+  - work/bootstrap/bootstrap-workflow.md
+completed: "2026-03-28T02:12:25Z"
+claimed_at: "2026-03-28T02:09:10Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T02:09:10Z"
+dispatched_by: sambeau
+completion_summary: "Updated work/bootstrap/bootstrap-workflow.md: Stage 6 expanded with reviewing state in feature completion path (developing→reviewing→done). Mandatory gate statement added. .skills/code-review.md reference added. Workflow progression line updated. Change required (reviewing was not previously mentioned as a formal state). AC-G-08 satisfied."
+verification: "grep -n 'reviewing' work/bootstrap/bootstrap-workflow.md → L64, L217, L294, L298, L300 (L217 and L294-300 are the feature completion path). Commit 636439c."

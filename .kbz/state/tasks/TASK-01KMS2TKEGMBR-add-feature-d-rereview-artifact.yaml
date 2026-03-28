@@ -1,0 +1,14 @@
+id: TASK-01KMS2TKEGMBR
+parent_feature: FEAT-01KMRX1QPN3CB
+slug: add-feature-d-rereview-artifact
+summary: "Add a Re-Review section to work/reports/review-FEAT-01KMRX1F47Z94.md documenting the targeted re-review performed after remediation: which spec sections and files were re-evaluated, the passing outcome, and confirmation only affected sections were reviewed. Addresses B3 (AC-F-17). Independent of other remediation tasks."
+status: done
+files_planned:
+  - work/reports/review-FEAT-01KMRX1F47Z94.md
+completed: "2026-03-28T02:04:37Z"
+claimed_at: "2026-03-28T02:02:42Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-28T02:02:42Z"
+dispatched_by: sambeau
+completion_summary: "Added Re-Review Record section to the Feature D report documenting the targeted re-review performed after F1 remediation: scope limited to internal/service/advance_test.go and spec AC-17 only; confirmed TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone exists at L389; all 22 packages pass with race detector; re-review verdict approved; feature transitioned to done."
+verification: "Re-review section added to report; confirms targeted scope (single file, single AC); references actual test at correct line number."
