@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"kanbanzai/internal/config"
+	"kanbanzai/internal/model"
 )
 
 // DecomposeInput is the input for DecomposeService.DecomposeFeature.
@@ -127,14 +128,24 @@ func (s *DecomposeService) DecomposeFeature(input DecomposeInput) (DecomposeResu
 		return DecomposeResult{}, fmt.Errorf("load spec document %s: %w", specDocID, err)
 	}
 
-	// 4. Parse the spec for structure.
+	// 4. Gate: spec must be approved before decomposition.
+	if docResult.Status != string(model.DocumentStatusApproved) {
+		return DecomposeResult{}, fmt.Errorf("spec %q is in %q status — approve the spec before decomposing", specDocID, docResult.Status)
+	}
+
+	// 5. Parse the spec for structure.
 	spec := parseSpecStructure(content)
 
-	// 5. Generate proposal by applying embedded guidance.
+	// 6. Gate: spec must contain parseable acceptance criteria.
+	if len(spec.acceptanceCriteria) == 0 {
+		return DecomposeResult{}, fmt.Errorf("no acceptance criteria found in spec %q — ensure the spec uses checkbox items (- [ ] ...) or numbered items within an Acceptance Criteria section", specDocID)
+	}
+
+	// 7. Generate proposal by applying embedded guidance.
 	cfg := config.LoadOrDefault()
 	proposal, guidance := generateProposal(spec, featureSlug, input.Context, cfg.Decomposition.MaxTasksPerFeature)
 
-	// 6. Enrich with detailed slice analysis.
+	// 8. Enrich with detailed slice analysis.
 	proposal.SliceDetails = analyzeSlices(spec, content)
 
 	return DecomposeResult{
@@ -377,27 +388,6 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 			}
 			tasks = append(tasks, task)
 		}
-	} else if len(spec.sections) > 0 {
-		// Fallback: one task per major section when no explicit ACs exist.
-		for i, sec := range spec.sections {
-			if sec.level > 3 {
-				continue // skip deeply nested sections
-			}
-			slug := buildTaskSlug(featureSlug, sec.title, i)
-			task := ProposedTask{
-				Slug:      slug,
-				Summary:   fmt.Sprintf("Implement %s", sec.title),
-				Rationale: fmt.Sprintf("Derived from spec section: %q", sec.title),
-			}
-			tasks = append(tasks, task)
-		}
-		if len(tasks) > 0 {
-			warnings = append(warnings, "No acceptance criteria found in spec; tasks derived from section headers")
-		}
-	}
-
-	if len(tasks) == 0 {
-		warnings = append(warnings, "No acceptance criteria or sections found in spec; empty proposal")
 	}
 
 	// Check if any tasks need a test companion (guidance rule 6).

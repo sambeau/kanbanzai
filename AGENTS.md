@@ -281,6 +281,12 @@ You must not skip stages. Each stage has a human approval gate.
 
 **Gate:** Specification must exist and be approved before decomposition.
 
+**Before calling `decompose propose`:**
+1. Confirm the spec document record is in `approved` status. If not, call `doc approve` first.
+2. If the spec was registered in the current session, call `index_repository` before calling `decompose propose` to ensure the document intelligence index has processed it.
+
+Skipping either step will cause `decompose propose` to fail or produce wrong output.
+
 **Agent role:**
 - Use `decompose_feature` to propose task breakdown
 - Create Task entities after human reviews proposal

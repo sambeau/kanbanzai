@@ -62,6 +62,14 @@ func setupDecomposeTest(t *testing.T, specContent string) (*DecomposeService, st
 			t.Fatalf("submit spec document: %v", err)
 		}
 
+		// Approve the spec so it passes the approval gate in DecomposeFeature.
+		if _, err := docSvc.ApproveDocument(ApproveDocumentInput{
+			ID:         docResult.ID,
+			ApprovedBy: "tester",
+		}); err != nil {
+			t.Fatalf("approve spec document: %v", err)
+		}
+
 		// Manually link the spec document to the feature via UpdateEntity.
 		_, err = entitySvc.UpdateEntity(UpdateEntityInput{
 			Type:   "feature",
@@ -257,7 +265,69 @@ func TestDecomposeFeature_ContextPassed(t *testing.T) {
 	}
 }
 
-func TestDecomposeFeature_NoACs_FallsBackToSections(t *testing.T) {
+func TestDecomposeFeature_DraftSpec_ReturnsError(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+
+	entitySvc := NewEntityService(stateRoot)
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+
+	planID := "P1-decompose-plan"
+	writeDecomposeTestPlan(t, entitySvc, planID)
+
+	featResult, err := entitySvc.CreateFeature(CreateFeatureInput{
+		Slug:      "test-feature",
+		Parent:    planID,
+		Summary:   "Test feature",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("create feature: %v", err)
+	}
+
+	specPath := "work/spec/draft-spec.md"
+	fullPath := repoRoot + "/" + specPath
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# Spec\n- [ ] Something works\n"), 0o644); err != nil {
+		t.Fatalf("write spec: %v", err)
+	}
+
+	// Submit but deliberately do NOT approve.
+	docResult, err := docSvc.SubmitDocument(SubmitDocumentInput{
+		Path:      specPath,
+		Type:      "specification",
+		Title:     "Draft Spec",
+		Owner:     featResult.ID,
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("submit spec: %v", err)
+	}
+
+	if _, err := entitySvc.UpdateEntity(UpdateEntityInput{
+		Type:   "feature",
+		ID:     featResult.ID,
+		Slug:   "test-feature",
+		Fields: map[string]string{"spec": docResult.ID},
+	}); err != nil {
+		t.Fatalf("link spec: %v", err)
+	}
+
+	svc := NewDecomposeService(entitySvc, docSvc)
+	_, err = svc.DecomposeFeature(DecomposeInput{FeatureID: featResult.ID})
+	if err == nil {
+		t.Fatal("expected error for draft spec, got nil")
+	}
+	if !contains(err.Error(), "approve the spec before decomposing") {
+		t.Errorf("error = %q, want it to contain %q", err.Error(), "approve the spec before decomposing")
+	}
+}
+
+func TestDecomposeFeature_NoACs_ReturnsError(t *testing.T) {
 	t.Parallel()
 
 	specContent := `# Feature Spec
@@ -269,33 +339,15 @@ Design the database schema.
 ## API Layer
 
 Implement REST endpoints.
-
-## UI Layer
-
-Build the user interface.
 `
 	svc, featureID, _ := setupDecomposeTest(t, specContent)
 
-	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
-	if err != nil {
-		t.Fatalf("DecomposeFeature() error = %v", err)
+	_, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err == nil {
+		t.Fatal("expected error when spec has no acceptance criteria, got nil")
 	}
-
-	// Should derive tasks from sections since no checkboxes exist.
-	if result.Proposal.TotalTasks == 0 {
-		t.Fatal("expected non-empty proposal from section-based fallback")
-	}
-
-	// Should warn about missing acceptance criteria.
-	found := false
-	for _, w := range result.Proposal.Warnings {
-		if contains(w, "No acceptance criteria") {
-			found = true
-			break
-		}
-	}
-	if !found {
-		t.Errorf("Warnings = %v, want warning about missing acceptance criteria", result.Proposal.Warnings)
+	if !contains(err.Error(), "no acceptance criteria found in spec") {
+		t.Errorf("error = %q, want it to contain %q", err.Error(), "no acceptance criteria found in spec")
 	}
 }
 
