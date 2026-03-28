@@ -285,6 +285,7 @@ func (e Epic) GetSlug() string {
 type Feature struct {
 	ID        string        `yaml:"id"`
 	Slug      string        `yaml:"slug"`
+	Label     string        `yaml:"label,omitempty"`
 	Parent    string        `yaml:"parent,omitempty"` // Parent Plan ID (renamed from epic)
 	Status    FeatureStatus `yaml:"status"`
 	Estimate  *float64      `yaml:"estimate,omitempty"`
@@ -332,6 +333,7 @@ type Task struct {
 	ID            string     `yaml:"id"`
 	ParentFeature string     `yaml:"parent_feature"`
 	Slug          string     `yaml:"slug"`
+	Label         string     `yaml:"label,omitempty"`
 	Summary       string     `yaml:"summary"`
 	Status        TaskStatus `yaml:"status"`
 	Estimate      *float64   `yaml:"estimate,omitempty"`

@@ -1274,3 +1274,152 @@ func TestFeaturePhase2Fields_RoundTrip(t *testing.T) {
 		t.Fatalf("Phase 2 Feature field order mismatch\nwant: %v\ngot:  %v", expectedOrder, actualOrder)
 	}
 }
+
+func TestFeatureLabelRoundTrip(t *testing.T) {
+	t.Parallel()
+
+	fields := map[string]any{
+		"id":         "FEAT-01J3K7MXP3RT5",
+		"slug":       "labelled-feature",
+		"label":      "G policy-docs",
+		"parent":     "P1-test",
+		"status":     "proposed",
+		"summary":    "Feature with a label",
+		"created":    "2025-01-15T10:00:00Z",
+		"created_by": "tester",
+	}
+
+	yaml, err := MarshalCanonicalYAML("feature", fields)
+	if err != nil {
+		t.Fatalf("MarshalCanonicalYAML() error = %v", err)
+	}
+
+	got, err := UnmarshalCanonicalYAML(yaml)
+	if err != nil {
+		t.Fatalf("UnmarshalCanonicalYAML() error = %v", err)
+	}
+
+	if got["label"] != "G policy-docs" {
+		t.Errorf("label = %q, want %q", got["label"], "G policy-docs")
+	}
+
+	// Verify label appears after slug and before parent in field order.
+	lines := strings.Split(strings.TrimSpace(yaml), "\n")
+	var keys []string
+	for _, line := range lines {
+		if strings.Contains(line, ":") {
+			key := strings.TrimSpace(strings.Split(line, ":")[0])
+			keys = append(keys, key)
+		}
+	}
+
+	wantOrder := []string{
+		"id", "slug", "label", "parent", "status",
+		"summary", "created", "created_by",
+	}
+	if !reflect.DeepEqual(keys, wantOrder) {
+		t.Fatalf("field order mismatch\nwant: %v\ngot:  %v", wantOrder, keys)
+	}
+}
+
+func TestFeatureNoLabelOmitted(t *testing.T) {
+	t.Parallel()
+
+	fields := map[string]any{
+		"id":         "FEAT-01J3K7MXP3RT5",
+		"slug":       "no-label-feature",
+		"parent":     "P1-test",
+		"status":     "proposed",
+		"summary":    "Feature without a label",
+		"created":    "2025-01-15T10:00:00Z",
+		"created_by": "tester",
+	}
+
+	yaml, err := MarshalCanonicalYAML("feature", fields)
+	if err != nil {
+		t.Fatalf("MarshalCanonicalYAML() error = %v", err)
+	}
+
+	if strings.Contains(yaml, "label:") {
+		t.Errorf("YAML should not contain label: key when label is not set\nYAML:\n%s", yaml)
+	}
+}
+
+func TestTaskLabelRoundTrip(t *testing.T) {
+	t.Parallel()
+
+	fields := map[string]any{
+		"id":             "TASK-01J3K7MXP3RT5",
+		"parent_feature": "FEAT-01J3K7MXP3RT5",
+		"slug":           "labelled-task",
+		"label":          "T1 backend",
+		"summary":        "Task with a label",
+		"status":         "queued",
+	}
+
+	yaml, err := MarshalCanonicalYAML("task", fields)
+	if err != nil {
+		t.Fatalf("MarshalCanonicalYAML() error = %v", err)
+	}
+
+	got, err := UnmarshalCanonicalYAML(yaml)
+	if err != nil {
+		t.Fatalf("UnmarshalCanonicalYAML() error = %v", err)
+	}
+
+	if got["label"] != "T1 backend" {
+		t.Errorf("label = %q, want %q", got["label"], "T1 backend")
+	}
+
+	// Verify label appears after slug and before summary in field order.
+	lines := strings.Split(strings.TrimSpace(yaml), "\n")
+	var keys []string
+	for _, line := range lines {
+		if strings.Contains(line, ":") {
+			key := strings.TrimSpace(strings.Split(line, ":")[0])
+			keys = append(keys, key)
+		}
+	}
+
+	wantOrder := []string{
+		"id", "parent_feature", "slug", "label", "summary", "status",
+	}
+	if !reflect.DeepEqual(keys, wantOrder) {
+		t.Fatalf("field order mismatch\nwant: %v\ngot:  %v", wantOrder, keys)
+	}
+}
+
+func TestFeatureWithoutLabel_BackwardCompat(t *testing.T) {
+	t.Parallel()
+
+	// Simulate loading a feature YAML that was written before the label field existed.
+	yamlContent := `id: FEAT-01J3K7MXP3RT5
+slug: old-feature
+parent: P1-test
+status: proposed
+summary: Feature created before label existed
+created: "2025-01-15T10:00:00Z"
+created_by: tester
+`
+
+	got, err := UnmarshalCanonicalYAML(yamlContent)
+	if err != nil {
+		t.Fatalf("UnmarshalCanonicalYAML() error = %v", err)
+	}
+
+	if got["id"] != "FEAT-01J3K7MXP3RT5" {
+		t.Errorf("id = %q, want FEAT-01J3K7MXP3RT5", got["id"])
+	}
+	if _, hasLabel := got["label"]; hasLabel {
+		t.Errorf("old features without label should not have a label key after loading, got %v", got["label"])
+	}
+
+	// Re-write without label should produce valid YAML without label key.
+	yaml, err := MarshalCanonicalYAML("feature", got)
+	if err != nil {
+		t.Fatalf("MarshalCanonicalYAML() error = %v", err)
+	}
+	if strings.Contains(yaml, "label:") {
+		t.Errorf("re-marshalled YAML should not contain label: key\nYAML:\n%s", yaml)
+	}
+}
