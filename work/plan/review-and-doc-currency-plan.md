@@ -117,47 +117,54 @@ The SKILL must cover at minimum:
 
 ### 6.1 Summary
 
-Make plan-level reviews first-class participants in the entity lifecycle. When a plan's implementation is complete, a review task can be created, claimed via `next`, and completed via `finish` — giving the reviewer context assembly, nudges, and retro signal capture.
+Add a `reviewing` state to the Plan lifecycle, making plan-level reviews a first-class lifecycle gate. This mirrors the feature-level `reviewing` state added in P6, following the same pattern: add the lifecycle gate first, build automation around it later.
 
-### 6.2 Design questions
+### 6.2 Decided approach: Plan lifecycle extension (Option 1)
 
-This feature changes the entity lifecycle and needs a design document before specification. The design must resolve:
+Add `reviewing` to the plan state machine: `active → reviewing → done`. A plan review is a plan-level activity, so it belongs on the plan lifecycle — not shoehorned into the task model via a synthetic feature.
 
-1. **Plan lifecycle extension** — should plans gain a `reviewing` state (mirroring features), or should plan review be modelled as a task under a special "plan review" feature? The former is cleaner but requires lifecycle changes; the latter reuses existing machinery.
+**Key design decisions:**
 
-2. **Relationship to feature-level review** — plan review and feature review are different activities (aggregate vs. individual). The design must clarify whether plan review subsumes feature reviews, is additive to them, or is independent. The recommendation is independent: feature reviews happen during the `developing → reviewing → done` feature lifecycle; plan review happens after all features are done.
+1. **Plan lifecycle change.** The plan state machine gains `reviewing` between `active` and `done`. The transition `active → done` is removed (plans must pass through review, just as features must). The current plan lifecycle is `proposed → designing → active → done` (plus `superseded`/`cancelled` terminals). The new lifecycle is `proposed → designing → active → reviewing → done`.
 
-3. **Context assembly for plan review** — `next` currently assembles context for tasks (spec sections, file lists, knowledge entries). A plan review task needs different context: the plan dashboard, associated spec documents, feature summaries, and the plan review SKILL. The design must specify how context assembly handles this.
+2. **Plan review is independent of feature review.** Feature reviews happen during the feature `developing → reviewing → done` lifecycle. Plan review happens after all features are done. It reviews the aggregate — documentation currency, spec status, AGENTS.md updates, cross-cutting concerns. The two review types are complementary, not overlapping.
 
-4. **Automatic review task creation** — should the system automatically create a review task when all features in a plan reach terminal state, or should this be manual? The recommendation is manual creation with a nudge (similar to P9's approach) — automatic creation adds complexity and may not suit all workflows.
+3. **Context assembly is `status`, not `next`.** `status(id: "<plan>")` already produces the plan dashboard: feature list, task status, associated documents, attention items. This *is* the context assembly for a plan review. There is no need to extend `next` to handle plans in this phase. The plan review SKILL (Feature A) routes the reviewer through `status` as the entry point.
+
+4. **No automatic review creation.** Transitioning a plan to `reviewing` is a manual action. No nudge or automatic trigger when features complete — that adds complexity and may not suit all workflows.
+
+5. **Deferred: `next`/`finish` for plans.** Making plans claimable via `next` and completable via `finish` (with nudges) is valuable but not required for the lifecycle gate to work. This is future work, following the same incremental pattern as P6: lifecycle gate first, tooling automation later.
 
 ### 6.3 Approach
 
-1. Write a design document (`work/design/plan-review-entities.md`) resolving the questions above.
-2. Write a specification with acceptance criteria.
-3. Implement the chosen approach.
+1. Write a specification with acceptance criteria.
+2. Add `PlanStatusReviewing` to `internal/model/entities.go`.
+3. Update the plan state machine in `internal/validate/` to add the `reviewing` state and transitions: `active → reviewing`, `reviewing → done`, `reviewing → needs-rework` (if we want rework parity with features — to be decided in spec).
+4. Remove the direct `active → done` transition.
+5. Update `status` dashboard to reflect the new state.
+6. Update `advance: true` logic if it applies to plans.
+7. Verify existing plans in `done` state are unaffected (the state machine change only affects future transitions).
 
-### 6.4 Deliverables (provisional — subject to design)
+### 6.4 Deliverables
 
 | Deliverable | Path |
 |-------------|------|
-| Design document | `work/design/plan-review-entities.md` |
-| Specification | `work/spec/plan-review-entities.md` |
-| Lifecycle changes (if chosen) | `internal/validate/`, `internal/model/` |
-| Context assembly extension | `internal/mcp/next_tool.go` or `internal/context/` |
+| Specification | `work/spec/plan-review-lifecycle.md` |
+| Model change | `internal/model/entities.go` (add `PlanStatusReviewing`) |
+| State machine update | `internal/validate/` (plan transitions) |
 | Tests | Colocated `*_test.go` files |
 
-### 6.5 Provisional acceptance criteria
-
-These will be refined after the design document is approved.
+### 6.5 Acceptance criteria
 
 | # | Criterion |
 |---|-----------|
-| B.1 | A plan review can be represented in the entity model |
-| B.2 | A plan review task is claimable via `next` and returns assembled context |
-| B.3 | Completing a plan review via `finish` triggers nudges for retro signals |
-| B.4 | The review report is linkable as a document record to the plan |
-| B.5 | `go test -race ./...` passes |
+| B.1 | `PlanStatusReviewing` exists in the plan status enum |
+| B.2 | Plan state machine allows `active → reviewing` and `reviewing → done` |
+| B.3 | Plan state machine does not allow `active → done` (must pass through `reviewing`) |
+| B.4 | Plans already in `done` state are unaffected (no migration required) |
+| B.5 | `status(id: "<plan>")` correctly displays plans in `reviewing` state |
+| B.6 | `entity(action: "transition", id: "<plan>", status: "reviewing")` works |
+| B.7 | `go test -race ./...` passes |
 
 ---
 
@@ -235,12 +242,10 @@ Phase 1: Documentation (Feature A)
 └── Gate: human approval of SKILL content
 
 Phase 2: Parallel implementation (Features B and C)
-├── Track B: Review entities
-│   ├── Write design document
-│   ├── Gate: human approval of design
+├── Track B: Plan review lifecycle
 │   ├── Write specification
 │   ├── Gate: human approval of spec
-│   └── Implement
+│   └── Implement (model, state machine, tests)
 │
 └── Track C: Health check
     ├── Write specification
@@ -254,7 +259,7 @@ Phase 3: Integration and review
 └── Gate: plan review passes
 ```
 
-Feature A ships first because it's immediately useful and defines the procedure that Feature B will automate. Features B and C are independent and can be developed in parallel. Phase 3 is a natural validation — we use Feature A's output to review the plan that created it.
+Feature A ships first because it's immediately useful and defines the procedure that Feature B will enforce as a lifecycle gate. Features B and C are independent and can be developed in parallel. Phase 3 is a natural validation — we use Feature A's SKILL to conduct the plan review, which now passes through Feature B's `reviewing` lifecycle state, and Feature C's health check validates that the documentation was updated.
 
 ---
 
@@ -262,7 +267,7 @@ Feature A ships first because it's immediately useful and defines the procedure 
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| Feature B design takes multiple iterations | Delays B but not A or C | A and C are independent; ship them first |
+| Removing `active → done` breaks existing automation or scripts | Plans can't be closed without review | Verify no tooling assumes direct `active → done`; add `reviewing` transition guidance to plan review SKILL |
 | Tool name extraction produces false positives | Noisy health output | Use conservative matching (backtick-wrapped names, known tool name patterns); tune in spec |
 | AGENTS.md format changes break Tier 2 checks | Health check produces false negatives | Match on plan slug (stable) not section formatting; document expected AGENTS.md structure |
 | Plan review SKILL becomes stale (ironic) | Same drift problem we're solving | Feature C Tier 1 will catch stale tool names in SKILL files; Tier 2 catches missing plan updates |
