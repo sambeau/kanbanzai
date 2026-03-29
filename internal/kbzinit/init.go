@@ -228,8 +228,9 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 // runExistingProject handles the existing project path: validate/write config
 // (if absent), and install/update skill files.
 // kbzExisted reports whether .kbz/ was present before this run. When false
-// (first-time kanbanzai init on a project that already has commits), .zed/ is
-// created if absent — the same behaviour as runNewProject.
+// (first-time kanbanzai init on a project that already has commits), work/
+// directories, work/README.md, and .zed/settings.json are created — the same
+// behaviour as runNewProject.
 func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string, kbzExisted bool) error {
 	baseDir := filepath.Dir(kbzDir)
 
@@ -240,6 +241,11 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 	}
 
 	fmt.Fprintln(i.stdout, "Existing project detected.")
+
+	// workRoots holds the document roots written to config on this run.
+	// It is only set when a new config is created (i.e. on a first-time init),
+	// and is used below to create the matching work/ directories.
+	var workRoots []DocumentRoot
 
 	// Check whether config.yaml already exists.
 	configExists := false
@@ -258,11 +264,24 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 		if err != nil {
 			return err
 		}
+		workRoots = roots
 
 		if err := WriteInitConfig(kbzDir, roots); err != nil {
 			return err
 		}
 		fmt.Fprintf(i.stdout, "Created %s\n", configPath)
+	}
+
+	// On a first-time init (no prior .kbz/), create work/ directories and README
+	// using the same roots that were written to config. On re-runs, leave existing
+	// work/ alone.
+	if !kbzExisted && !opts.SkipWorkDirs && len(workRoots) > 0 {
+		if err := i.createWorkDirs(baseDir, workRoots); err != nil {
+			return err
+		}
+		if err := i.writeWorkReadme(baseDir); err != nil {
+			return err
+		}
 	}
 
 	if !opts.SkipSkills {
@@ -429,6 +448,11 @@ func (i *Initializer) writeWorkReadme(baseDir string) error {
 	readmePath := filepath.Join(baseDir, "work", "README.md")
 	if _, err := os.Stat(readmePath); err == nil {
 		// Already exists — leave it alone.
+		return nil
+	}
+	// If work/ itself doesn't exist (custom --docs-path without a work/ root),
+	// skip silently — the README is only meaningful alongside the standard layout.
+	if _, err := os.Stat(filepath.Join(baseDir, "work")); os.IsNotExist(err) {
 		return nil
 	}
 	content := `# work/
