@@ -1070,9 +1070,9 @@ func TestInit_ZedDir_WritesSettingsJson(t *testing.T) {
 		t.Fatalf("parse: %v", err)
 	}
 
-	managed := cfg["_managed"].(map[string]interface{})
-	if managed["tool"] != "kanbanzai" {
-		t.Errorf("_managed.tool = %v, want kanbanzai", managed["tool"])
+	// _managed must NOT be present — Zed's schema rejects unknown top-level properties.
+	if _, ok := cfg["_managed"]; ok {
+		t.Error(".zed/settings.json must not contain _managed (Zed schema rejects it)")
 	}
 
 	servers := cfg["context_servers"].(map[string]interface{})
@@ -1176,7 +1176,48 @@ func TestInit_FirstTimeInit_WithCommits_CreatesZedSettings(t *testing.T) {
 	}
 }
 
-// TestInit_UnmanagedZedSettings_Skips verifies AC-10.
+// TestInit_ZedSettings_MigratesOldManagedBlock verifies that a .zed/settings.json written
+// by an older kanbanzai version (which included a _managed block) is rewritten without it.
+func TestInit_ZedSettings_MigratesOldManagedBlock(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	if err := os.MkdirAll(filepath.Join(dir, ".zed"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	// Simulate old-format file that includes _managed (which Zed rejects).
+	old := `{"_managed":{"tool":"kanbanzai","version":1},"context_servers":{"kanbanzai":{"command":"kanbanzai","args":["serve"]}}}`
+	if err := os.WriteFile(filepath.Join(dir, ".zed", "settings.json"), []byte(old), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, err := os.ReadFile(filepath.Join(dir, ".zed", "settings.json"))
+	if err != nil {
+		t.Fatalf("read .zed/settings.json: %v", err)
+	}
+	var cfg map[string]interface{}
+	if err := json.Unmarshal(data, &cfg); err != nil {
+		t.Fatalf("parse migrated .zed/settings.json: %v", err)
+	}
+	if _, ok := cfg["_managed"]; ok {
+		t.Error("migrated .zed/settings.json still contains _managed block")
+	}
+	servers, ok := cfg["context_servers"].(map[string]interface{})
+	if !ok {
+		t.Fatal("migrated .zed/settings.json missing context_servers")
+	}
+	if _, ok := servers["kanbanzai"]; !ok {
+		t.Fatal("migrated .zed/settings.json missing context_servers.kanbanzai")
+	}
+}
+
+// TestInit_UnmanagedZedSettings_Skips verifies that an existing .zed/settings.json
+// without a kanbanzai entry is left untouched with a warning.
 func TestInit_UnmanagedZedSettings_Skips(t *testing.T) {
 	t.Parallel()
 	dir := makeGitRepoNoCommits(t)

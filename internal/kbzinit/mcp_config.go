@@ -27,9 +27,10 @@ type mcpServer struct {
 	Args    []string `json:"args"`
 }
 
-// zedConfig is the structure written to .zed/settings.json
+// zedConfig is the structure written to .zed/settings.json.
+// It does not include a _managed block — Zed validates settings.json against
+// its own schema and rejects unknown top-level properties.
 type zedConfig struct {
-	Managed        managedBlock                `json:"_managed"`
 	ContextServers map[string]zedContextServer `json:"context_servers"`
 }
 
@@ -60,21 +61,26 @@ func (i *Initializer) writeMCPConfig(baseDir string) error {
 	return i.writeJSONConfig(destPath, ".mcp.json", data, "add the kanbanzai server entry to it manually. See docs/getting-started.md for the snippet")
 }
 
-// writeZedConfig writes .zed/settings.json to baseDir, applying the same
-// version-aware conflict logic as writeMCPConfig.
+// writeZedConfig writes .zed/settings.json to baseDir.
 //
-// When createIfAbsent is true (new projects), the .zed/ directory is created
-// if it does not already exist. When false (existing projects), a missing .zed/
-// directory is treated as a signal that the project does not use Zed, and the
-// function returns without writing anything.
+// When createIfAbsent is true (first-time init), the .zed/ directory is created
+// if it does not already exist. When false (re-running on an already-initialised
+// project), a missing .zed/ directory signals the project does not use Zed and
+// the function returns without writing anything.
+//
+// Unlike .mcp.json, the Zed settings file does not include a _managed block —
+// Zed validates settings.json against its own schema and rejects unknown
+// top-level properties. Managed state is inferred from the file content instead:
+//   - context_servers.kanbanzai present → already configured, no-op
+//   - _managed.tool == "kanbanzai" present → old format written by an earlier
+//     version of kanbanzai; rewrite without the _managed block (migration)
+//   - neither present → user's own settings file, warn and skip
 func (i *Initializer) writeZedConfig(baseDir string, createIfAbsent bool) error {
 	zedDir := filepath.Join(baseDir, ".zed")
 	if _, err := os.Stat(zedDir); os.IsNotExist(err) {
 		if !createIfAbsent {
-			// No .zed/ directory and we're on an existing project — silently skip.
 			return nil
 		}
-		// New project: create .zed/ so settings.json can be written.
 		if err := os.MkdirAll(zedDir, 0o755); err != nil {
 			return fmt.Errorf("create .zed/: %w", err)
 		}
@@ -83,22 +89,63 @@ func (i *Initializer) writeZedConfig(baseDir string, createIfAbsent bool) error 
 	destPath := filepath.Join(zedDir, "settings.json")
 
 	content := zedConfig{
-		Managed: managedBlock{Tool: "kanbanzai", Version: mcpVersion},
 		ContextServers: map[string]zedContextServer{
-			"kanbanzai": {
-				Command: "kanbanzai",
-				Args:    []string{"serve"},
-			},
+			"kanbanzai": {Command: "kanbanzai", Args: []string{"serve"}},
 		},
 	}
-
 	data, err := json.MarshalIndent(content, "", "  ")
 	if err != nil {
 		return fmt.Errorf("marshal .zed/settings.json: %w", err)
 	}
 	data = append(data, '\n')
 
-	return i.writeJSONConfig(destPath, ".zed/settings.json", data, "add the kanbanzai context server entry manually. See docs/getting-started.md for the snippet")
+	existing, readErr := os.ReadFile(destPath)
+	if readErr != nil {
+		if !os.IsNotExist(readErr) {
+			return fmt.Errorf("read .zed/settings.json: %w", readErr)
+		}
+		// File does not exist — create it.
+		if err := os.WriteFile(destPath, data, 0o644); err != nil {
+			return fmt.Errorf("write .zed/settings.json: %w", err)
+		}
+		fmt.Fprintln(i.stdout, "Created .zed/settings.json")
+		return nil
+	}
+
+	// File exists — parse it.
+	var raw map[string]json.RawMessage
+	if err := json.Unmarshal(existing, &raw); err != nil {
+		fmt.Fprintf(i.stdout, "Warning: .zed/settings.json exists but could not be parsed. To enable the MCP server in Zed, add the kanbanzai context server entry manually. See docs/getting-started.md for the snippet.\n")
+		return nil
+	}
+
+	// Migration: older kanbanzai versions wrote a _managed block that Zed's schema
+	// rejects. If we find our marker, rewrite the file without it.
+	if managedRaw, ok := raw["_managed"]; ok {
+		var managed managedBlock
+		if err := json.Unmarshal(managedRaw, &managed); err == nil && managed.Tool == "kanbanzai" {
+			if err := os.WriteFile(destPath, data, 0o644); err != nil {
+				return fmt.Errorf("update .zed/settings.json: %w", err)
+			}
+			fmt.Fprintln(i.stdout, "Updated .zed/settings.json")
+			return nil
+		}
+	}
+
+	// Check whether context_servers.kanbanzai is already present.
+	if csRaw, ok := raw["context_servers"]; ok {
+		var cs map[string]json.RawMessage
+		if err := json.Unmarshal(csRaw, &cs); err == nil {
+			if _, ok := cs["kanbanzai"]; ok {
+				// Already configured — no-op.
+				return nil
+			}
+		}
+	}
+
+	// File exists but has no kanbanzai entry — this is the user's own Zed settings.
+	fmt.Fprintf(i.stdout, "Warning: .zed/settings.json exists and does not include a kanbanzai server entry. To enable the MCP server in Zed, add the kanbanzai context server entry manually. See docs/getting-started.md for the snippet.\n")
+	return nil
 }
 
 // writeJSONConfig applies version-aware create/update/skip logic to a JSON config file.
