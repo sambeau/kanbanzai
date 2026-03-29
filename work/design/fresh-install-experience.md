@@ -135,9 +135,31 @@ Unlike `.mcp.json`, the Zed config is only written when the editor is already in
 
 #### 5.1.3 Getting-started skill update
 
-The `kanbanzai-getting-started` skill gains a preflight note as its first section, before any tool calls:
+**The discovery model.** `.mcp.json` is the primary discovery mechanism. When an editor finds `.mcp.json`, it starts the kanbanzai server and registers its tools (`next`, `entity`, `doc`, `status`, and others) in the agent's tool list. The agent discovers kanbanzai through the tool catalogue — not through the skill files. Skills are the *procedure layer*: they tell the agent how to use those tools effectively once it knows they exist.
 
-> **Preflight check:** Kanbanzai works through MCP tools. Before calling `next` or any other tool, confirm the kanbanzai server is connected (your editor should show it as active). If tools are unavailable, the server is not running — consult `docs/getting-started.md` for setup instructions. The project's `.mcp.json` configures most editors automatically.
+This means the `kanbanzai-getting-started` skill has a secondary but important role: it provides orientation and procedure, and it serves as a fallback discovery signal when an agent scans the skills directory without yet having seen the tool list.
+
+**The description must be self-identifying.** The current description reads: *"Use at the start of any agent session in a Kanbanzai-managed project"*. This is circular — an agent must already know it is in a Kanbanzai project to apply this condition. It should instead state that fact directly. The updated description:
+
+```
+description: >
+  This repository is managed with Kanbanzai. Read this skill at the start of
+  every session, before writing any code or running any searches. Kanbanzai
+  provides MCP tools (next, entity, doc, status, and others) that replace
+  manual grep and file searching for project state and work queue. If you can
+  see a .kbz/ directory or kanbanzai tools in your tool list, this skill
+  applies.
+```
+
+**The skill body gains a preflight section** as its first item, before any tool calls:
+
+> **Preflight check:** Kanbanzai works through MCP tools. Before calling `next` or any other tool, confirm the kanbanzai MCP server is connected (your editor should show it as active in its server list). If the kanbanzai tools are not available, the server is not running — the project's `.mcp.json` configures most editors automatically; consult `docs/getting-started.md` for manual setup instructions.
+
+#### Design decision FI-D-007: `.mcp.json` is the primary discovery mechanism; skills are the procedure layer
+
+An agent that finds the kanbanzai tools available in its tool list knows it is in a Kanbanzai-managed project without reading any skill file. An agent that finds the skill files but no tools is in a degraded state: the server is not running. The getting-started skill must handle both cases — confirming context for the first and diagnosing the problem for the second.
+
+The skill description is therefore written as a statement of fact ("this repository is managed with Kanbanzai"), not a conditional that requires the agent to already know the context. This removes the circular dependency and ensures the skill functions as both a discovery signal and a procedure guide.
 
 ---
 
@@ -328,3 +350,4 @@ Skips creation of `.mcp.json` (and `.zed/settings.json`). Useful when the user w
 | FI-D-004 | `work/plan/` (new `plan` type, human-facing) and `work/dev/` (existing `dev-plan` type, agent-facing) are separate directories |
 | FI-D-005 | `work/report/` (singular) and `work/review/` (separate directory for review gate artefacts) both use document type `report` |
 | FI-D-006 | `work/retro/` uses a new `retrospective` document type, distinct from `report` |
+| FI-D-007 | `.mcp.json` is the primary discovery mechanism (tools); skills are the procedure layer. The getting-started skill description is self-identifying, not conditional. |

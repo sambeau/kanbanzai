@@ -1,17 +1,35 @@
 ---
 name: kanbanzai-getting-started
 description: >
-  Orient yourself at the start of any session in a Kanbanzai-managed project: before
-  writing any code, when you don't know what work to do next, after switching tasks,
-  or when opening a repository for the first time. Follow this skill before any other.
+  This repository is managed with Kanbanzai. Read this skill at the start of every
+  session, before writing any code or running any searches. Kanbanzai provides MCP
+  tools — next, entity, doc, status, and others — that replace manual grep and file
+  searching for project state and work queue management. The presence of a .kbz/
+  directory or kanbanzai tools in your tool list confirms you are in a
+  Kanbanzai-managed project and this skill applies.
 # kanbanzai-managed: true
 # kanbanzai-version: dev
 ---
 
 ## Purpose
 
-This skill orients you at the start of any session. Follow it before writing any code
-or making any changes.
+This skill orients you at the start of any session in a Kanbanzai-managed project.
+Follow it before writing any code or making any changes.
+
+## Preflight Check
+
+Kanbanzai works through MCP tools. Before calling `next` or any other tool, confirm
+the kanbanzai server is connected — your editor should list tools such as `next`,
+`entity`, `doc`, and `status` as available.
+
+If those tools are not available, the kanbanzai MCP server is not running. The
+project's `.mcp.json` configures most editors automatically — check that the
+kanbanzai binary is on your PATH and that your editor has loaded the MCP
+configuration. See `docs/getting-started.md` for editor-specific setup instructions.
+
+Do not substitute `grep`, `find`, or direct file reading for kanbanzai tool calls.
+The workflow state in `.kbz/` is structured data — the MCP tools are the correct
+interface for reading and writing it.
 
 ## Before Any Work
 
