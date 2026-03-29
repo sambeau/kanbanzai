@@ -1,4 +1,4 @@
-updated_at: 2026-03-28T19:03:06.383309Z
+updated_at: 2026-03-29T09:49:01.03408Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -31293,5 +31293,310 @@ edges:
     - from: FEAT-01KMKRQSD1TKK/specification-skills-content#1.6.5
       from_type: section
       to: .agents/skills/kanbanzai-design/references/design-quality.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience
+      from_type: document
+      to: PROJECT/design-fresh-install-experience#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.1
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.1
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.1
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.1
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4.1
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4.2
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4.2
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4.3
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4.4
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4.4
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4.4
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4.4
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4.4
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4.4
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4.4
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1.4
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: PROJECT/design-fresh-install-experience#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: work/design/init-command.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: work/design/kanbanzai-1.0.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: work/design/machine-context-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: work/design/code-review-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: work/spec/phase-2b-specification.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1
+      from_type: section
+      to: work/spec/hardening.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.1.3
+      from_type: section
+      to: code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.1.3
+      from_type: section
+      to: plan-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.1.3
+      from_type: section
+      to: document-creation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.1.3
+      from_type: section
+      to: README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.1.3
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.1.3
+      from_type: section
+      to: .skills/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.1.4
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.1.4
+      from_type: section
+      to: .skills/plan-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.3
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.1
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.2
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.2
+      from_type: section
+      to: .agents/skills/kanbanzai-review/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.2
+      from_type: section
+      to: .skills/plan-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.2
+      from_type: section
+      to: .agents/skills/kanbanzai-plan-review/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.2
+      from_type: section
+      to: .skills/document-creation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.2
+      from_type: section
+      to: .skills/README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.2
+      from_type: section
+      to: document-creation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.2.2
+      from_type: section
+      to: .skills/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.2.2
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.4.1
+      from_type: section
+      to: work/README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.4.7
+      from_type: section
+      to: work/README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.4.5
+      from_type: section
+      to: work/README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.6
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.6
+      from_type: section
+      to: .skills/plan-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.6
+      from_type: section
+      to: .skills/document-creation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.6
+      from_type: section
+      to: .skills/README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-fresh-install-experience#1.6
+      from_type: section
+      to: AGENTS.md
       to_type: document
       edge_type: LINKS_TO

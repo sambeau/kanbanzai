@@ -1,0 +1,358 @@
+document_id: PROJECT/design-fresh-install-experience
+document_path: work/design/fresh-install-experience.md
+content_hash: 3b6d210e56c8f274c0a8cd49e3f12399fe0ab3ce957cba9a277e824d8781cfe6
+indexed_at: 2026-03-29T09:49:01.03408Z
+sections:
+    - path: "1"
+      level: 1
+      title: Fresh Install Experience Design
+      byte_offset: 0
+      byte_count: 21558
+      word_count: 2937
+      content_hash: 3b6d210e56c8f274c0a8cd49e3f12399fe0ab3ce957cba9a277e824d8781cfe6
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Problem Statement
+          byte_offset: 697
+          byte_count: 3243
+          word_count: 455
+          content_hash: 0b1607023dc50ce9c392b45fdec29c40e1d1ac03e41dd53e8fb31cf0675da739
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 1.1 The MCP server is not connected
+              byte_offset: 818
+              byte_count: 646
+              word_count: 97
+              content_hash: 9f5863e622afc0d0d81e76aa818812f28189addc6ce123f20f0173c59d308091
+            - path: 1.1.2
+              level: 3
+              title: 1.2 No context roles are installed
+              byte_offset: 1464
+              byte_count: 496
+              word_count: 66
+              content_hash: 0c4eb3df9828271e5321f85e374e6650efc767dcbb377a19ea5d1f5057c6845c
+            - path: 1.1.3
+              level: 3
+              title: 1.3 The `.skills/` directory is a design artifact with no architectural basis
+              byte_offset: 1960
+              byte_count: 985
+              word_count: 135
+              content_hash: b3ad2589d302192e8a16fabc59dec6ed9191c79162b723d572ef7e1865ab00bf
+            - path: 1.1.4
+              level: 3
+              title: 1.4 The default document layout is inconsistent
+              byte_offset: 2945
+              byte_count: 995
+              word_count: 136
+              content_hash: a49fbf5894f31b00b8d0ddfc3bc5722dec71c661b9270e68a54b2a471c1770a3
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 3940
+          byte_count: 653
+          word_count: 97
+          content_hash: d9091390af097c051a440e38733dd83647936b90b91192e9a4ba5d7c90b53b41
+        - path: "1.3"
+          level: 2
+          title: 3. Non-Goals
+          byte_offset: 4593
+          byte_count: 739
+          word_count: 102
+          content_hash: 7153b72496ac976a1c1f7faca8d9a6fceca67f0f54f7dd282392ca78c27c30a4
+        - path: "1.4"
+          level: 2
+          title: 4. Design
+          byte_offset: 5332
+          byte_count: 12912
+          word_count: 1763
+          content_hash: 82351ec428540019dc91f12a0cdefb50523612d74258b492cacdf6c6dae689b9
+          children:
+            - path: 1.4.1
+              level: 3
+              title: '4.1 MCP server connection: `.mcp.json`'
+              byte_offset: 5346
+              byte_count: 2101
+              word_count: 302
+              content_hash: c658531e43c4b88246a499c847443f8c6d1fb5757d98bc43aec5d8c51171c68d
+              children:
+                - path: 1.4.1.1
+                  level: 4
+                  title: 'Design decision FI-D-001: `.mcp.json` is committed, not gitignored'
+                  byte_offset: 6881
+                  byte_count: 566
+                  word_count: 82
+                  content_hash: 9f2920fd65e41d071cd115a8ce451a27afa0d64ea7e89f60ab52d15e4dfb2217
+            - path: 1.4.2
+              level: 3
+              title: '4.2 Skills consolidation: eliminate `.skills/`'
+              byte_offset: 7447
+              byte_count: 3127
+              word_count: 395
+              content_hash: ffc0b351ace4a6686be45a91b5145591f70316f2df19a645367f352471224b7e
+              children:
+                - path: 1.4.2.1
+                  level: 4
+                  title: 'Design decision FI-D-002: skills are procedural; roles are contextual conventions'
+                  byte_offset: 9101
+                  byte_count: 1157
+                  word_count: 171
+                  content_hash: 237b7d84a56595a2bfbd94438ffa0d91396a58bcd345b87a8bae2b1394a1d910
+                - path: 1.4.2.2
+                  level: 4
+                  title: 'Design decision FI-D-003: doc-currency health checker scans `.agents/skills/` instead of `.skills/`'
+                  byte_offset: 10258
+                  byte_count: 316
+                  word_count: 37
+                  content_hash: 47b8310e6078a56a12b185b7a8a799571158d48a77c93b169e49955d5b416a6c
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Default context roles
+              byte_offset: 10574
+              byte_count: 2128
+              word_count: 306
+              content_hash: fff37e7bef0f12c890055fdb269d5390e935428ce4b453a09de624ba1e227758
+              children:
+                - path: 1.4.3.1
+                  level: 4
+                  title: 'Design decision FI-D-004: `reviewer.yaml` is version-managed'
+                  byte_offset: 12237
+                  byte_count: 465
+                  word_count: 66
+                  content_hash: 884fe1e9a1ff6b3197b392270e606484a2c1974c29822ecde8dafd20252c409a
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Standard document layout
+              byte_offset: 12702
+              byte_count: 4508
+              word_count: 622
+              content_hash: 9cf3ab1e16c39fbf71092e7607e4cd391af271bddefa16ef6766884756e4d4fa
+              children:
+                - path: 1.4.4.1
+                  level: 4
+                  title: 4.4.1 Proposed standard directories
+                  byte_offset: 12816
+                  byte_count: 706
+                  word_count: 99
+                  content_hash: 4f5d2a4809c3a60020ef157a8e1216645ae108c522a56833ae8d43d48f3eff8c
+                - path: 1.4.4.2
+                  level: 4
+                  title: 'Design decision FI-D-005: `work/dev/` is replaced by `work/plan/`'
+                  byte_offset: 13522
+                  byte_count: 599
+                  word_count: 80
+                  content_hash: 2898b187f38031403f098ee97f5a032fdc64b64e65f56a33473bf0a9b9c293c8
+                - path: 1.4.4.3
+                  level: 4
+                  title: 'Design decision FI-D-006: `work/reports/` is renamed `work/report/` (singular)'
+                  byte_offset: 14121
+                  byte_count: 368
+                  word_count: 47
+                  content_hash: d2d07add3424d2483b7073fa19e631fe42325524d4c33c40da0d84b6cd59ecb4
+                - path: 1.4.4.4
+                  level: 4
+                  title: 'Design decision FI-D-007: `work/review/` is not in the standard layout; review artefacts go in `work/report/`'
+                  byte_offset: 14489
+                  byte_count: 546
+                  word_count: 73
+                  content_hash: ddafdad3326336492575fe2980f31da6c2e5f225a4759e19666afc194e01e5c5
+                - path: 1.4.4.5
+                  level: 4
+                  title: 'Design decision FI-D-008: `work/retro/` is introduced as a distinct directory for retrospective documents'
+                  byte_offset: 15035
+                  byte_count: 731
+                  word_count: 96
+                  content_hash: 73678614c56f243f1af878eff92747f91b1afbcb1924a41152bff16d6b0c2142
+                - path: 1.4.4.6
+                  level: 4
+                  title: 4.4.2 Backwards compatibility
+                  byte_offset: 15766
+                  byte_count: 427
+                  word_count: 55
+                  content_hash: a9bab1b27f4d05997602879dba08ab133d353b57fec98ada76f802347855b46d
+                - path: 1.4.4.7
+                  level: 4
+                  title: 4.4.3 `work/README.md`
+                  byte_offset: 16193
+                  byte_count: 1017
+                  word_count: 153
+                  content_hash: a7f3547e986f44d0aa24d7ea03d784a79c5f789be4b17b8224ab89c63b22f7f2
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Init command surface changes
+              byte_offset: 17210
+              byte_count: 1034
+              word_count: 135
+              content_hash: 7839e4b36acac3c453ce87d3da3b3d3789c3a3232b15044ff8aede59de957e69
+        - path: "1.5"
+          level: 2
+          title: 5. What this does not change
+          byte_offset: 18244
+          byte_count: 704
+          word_count: 106
+          content_hash: 41b35124db398efbd381ed62cd6286b783c2fa788a8478f9acf56d125900ee89
+        - path: "1.6"
+          level: 2
+          title: 6. Migration for this repository
+          byte_offset: 18948
+          byte_count: 915
+          word_count: 108
+          content_hash: c19911d562a6ca520c2641dad35e70b5ab0bb5845547c8ba48f263870885b3e6
+        - path: "1.7"
+          level: 2
+          title: 7. Open questions
+          byte_offset: 19863
+          byte_count: 1695
+          word_count: 231
+          content_hash: f2c05a12eb84cd5a6fd197b2559fec108ffd6d92a45b96a431dcd1743f38064d
+front_matter:
+    status: design proposal
+    date: "2026-03-29T09:46:34Z"
+    related:
+        - work/design/init-command.md` (original init command design)
+        - work/design/kanbanzai-1.0.md` (skills-based onboarding, §4)
+        - work/design/machine-context-design.md` (context profiles)
+        - work/design/code-review-workflow.md` (code review skill, §9)
+        - work/spec/phase-2b-specification.md` §11 (context profile storage and suggested initial profiles)
+        - work/spec/hardening.md` §6 (init edge cases)
+    extra:
+        Purpose: redesign the out-of-box experience for new kanbanzai projects — MCP server connection, skills consolidation, default context roles, and standard document layout
+cross_doc_links:
+    - target_path: work/design/init-command.md
+      link_text: work/design/init-command.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1"
+    - target_path: work/design/code-review-workflow.md
+      link_text: work/design/code-review-workflow.md
+      section_path: "1"
+    - target_path: work/spec/phase-2b-specification.md
+      link_text: work/spec/phase-2b-specification.md
+      section_path: "1"
+    - target_path: work/spec/hardening.md
+      link_text: work/spec/hardening.md
+      section_path: "1"
+    - target_path: code-review.md
+      link_text: code-review.md
+      section_path: 1.1.3
+    - target_path: plan-review.md
+      link_text: plan-review.md
+      section_path: 1.1.3
+    - target_path: document-creation.md
+      link_text: document-creation.md
+      section_path: 1.1.3
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.1.3
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.1.3
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: 1.1.3
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.1.4
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.1.4
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: "1.3"
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: 1.4.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.4.2
+    - target_path: .agents/skills/kanbanzai-review/SKILL.md
+      link_text: .agents/skills/kanbanzai-review/SKILL.md
+      section_path: 1.4.2
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.4.2
+    - target_path: .agents/skills/kanbanzai-plan-review/SKILL.md
+      link_text: .agents/skills/kanbanzai-plan-review/SKILL.md
+      section_path: 1.4.2
+    - target_path: .skills/document-creation.md
+      link_text: .skills/document-creation.md
+      section_path: 1.4.2
+    - target_path: .skills/README.md
+      link_text: .skills/README.md
+      section_path: 1.4.2
+    - target_path: document-creation.md
+      link_text: document-creation.md
+      section_path: 1.4.2
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: 1.4.2.2
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.4.2.2
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: 1.4.4.1
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: 1.4.4.7
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: 1.4.5
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.6"
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: "1.6"
+    - target_path: .skills/document-creation.md
+      link_text: .skills/document-creation.md
+      section_path: "1.6"
+    - target_path: .skills/README.md
+      link_text: .skills/README.md
+      section_path: "1.6"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: 1.1.2
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.4.1.1
+      role: decision
+      confidence: high
+    - section_path: 1.4.2.1
+      role: decision
+      confidence: high
+    - section_path: 1.4.2.2
+      role: decision
+      confidence: high
+    - section_path: 1.4.3
+      role: narrative
+      confidence: high
+    - section_path: 1.4.3.1
+      role: decision
+      confidence: high
+    - section_path: 1.4.4.2
+      role: decision
+      confidence: high
+    - section_path: 1.4.4.3
+      role: decision
+      confidence: high
+    - section_path: 1.4.4.4
+      role: decision
+      confidence: high
+    - section_path: 1.4.4.5
+      role: decision
+      confidence: high
+    - section_path: "1.7"
+      role: question
+      confidence: high
+classified: false
