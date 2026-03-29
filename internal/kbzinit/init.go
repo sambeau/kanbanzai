@@ -102,7 +102,7 @@ func (i *Initializer) Run(opts Options) error {
 	if isNew {
 		return i.runNewProject(opts, kbzDir, configPath)
 	}
-	return i.runExistingProject(opts, kbzDir, configPath)
+	return i.runExistingProject(opts, kbzDir, configPath, kbzExists)
 }
 
 // findKbzDir searches from workDir up to gitRoot for an existing .kbz directory.
@@ -227,7 +227,10 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 
 // runExistingProject handles the existing project path: validate/write config
 // (if absent), and install/update skill files.
-func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string) error {
+// kbzExisted reports whether .kbz/ was present before this run. When false
+// (first-time kanbanzai init on a project that already has commits), .zed/ is
+// created if absent — the same behaviour as runNewProject.
+func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string, kbzExisted bool) error {
 	baseDir := filepath.Dir(kbzDir)
 
 	// Detect partial init: .kbz/ exists but sentinel is absent.
@@ -272,7 +275,7 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 		if err := i.writeMCPConfig(baseDir); err != nil {
 			return err
 		}
-		if err := i.writeZedConfig(baseDir, false); err != nil {
+		if err := i.writeZedConfig(baseDir, !kbzExisted); err != nil {
 			return err
 		}
 	}

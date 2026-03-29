@@ -1123,9 +1123,9 @@ func TestInit_NewProject_NoZedDir_CreatesSettingsJson(t *testing.T) {
 	}
 }
 
-// TestInit_ExistingProject_NoZedDir_NoSettingsJson verifies that an existing project does
-// not get a .zed/ directory when one is absent — the missing directory signals the project
-// does not use Zed.
+// TestInit_ExistingProject_NoZedDir_NoSettingsJson verifies that re-running init on a
+// project where kanbanzai was already set up (.kbz/ existed) does not create .zed/ —
+// the missing directory signals the project does not use Zed.
 func TestInit_ExistingProject_NoZedDir_NoSettingsJson(t *testing.T) {
 	t.Parallel()
 	dir := makeGitRepoWithCommit(t)
@@ -1140,7 +1140,39 @@ func TestInit_ExistingProject_NoZedDir_NoSettingsJson(t *testing.T) {
 	}
 
 	if _, err := os.Stat(filepath.Join(dir, ".zed")); !os.IsNotExist(err) {
-		t.Error("expected .zed/ not to be created for an existing project without it")
+		t.Error("expected .zed/ not to be created when .kbz/ already existed")
+	}
+}
+
+// TestInit_FirstTimeInit_WithCommits_CreatesZedSettings verifies that a project with
+// existing commits but no prior kanbanzai setup (.kbz/ absent) gets .zed/settings.json
+// written. This is the common case: a repo with a README that is being initialised with
+// kanbanzai for the first time.
+func TestInit_FirstTimeInit_WithCommits_CreatesZedSettings(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoWithCommit(t)
+	// No .kbz/ pre-created — this is a first-time init on a project with commits.
+
+	in, out := newTestInit(dir, "work")
+	if err := in.Run(Options{NonInteractive: true, DocsPath: []string{"work"}}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+	_ = out
+
+	data, err := os.ReadFile(filepath.Join(dir, ".zed", "settings.json"))
+	if err != nil {
+		t.Fatalf(".zed/settings.json not created for first-time init with commits: %v", err)
+	}
+	var cfg map[string]interface{}
+	if err := json.Unmarshal(data, &cfg); err != nil {
+		t.Fatalf("parse .zed/settings.json: %v", err)
+	}
+	servers, ok := cfg["context_servers"].(map[string]interface{})
+	if !ok {
+		t.Fatal(".zed/settings.json missing context_servers")
+	}
+	if _, ok := servers["kanbanzai"]; !ok {
+		t.Fatal("missing context_servers.kanbanzai")
 	}
 }
 
