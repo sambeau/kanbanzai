@@ -18,17 +18,19 @@ Flags:
   --docs-path <path>    Document root path (repeatable). Suppresses the
                         interactive prompt on existing projects. Each value
                         becomes one entry in documents.roots.
-                        Default: work/design, work/spec, work/dev,
-                                 work/research, work/reports (new projects)
+                        Default: work/design, work/spec, work/plan, work/dev,
+                                 work/research, work/report, work/review,
+                                 work/retro (new projects)
 
   --non-interactive     Use defaults and error instead of prompting.
                         Requires --docs-path if an existing project has no
                         config.yaml.
                         Default: false
 
-  --update-skills       Perform only the skill update step. Skips config
-                        writing and work/ directory creation.
-                        Mutually exclusive with --skip-skills.
+  --update-skills       Perform only the skill and managed role update step.
+                        Updates embedded skill files and managed role files
+                        (e.g. reviewer.yaml). Skips config writing and work/
+                        directory creation. Mutually exclusive with --skip-skills.
                         Default: false
 
   --skip-skills         Do not install or update any skill files.
@@ -40,11 +42,20 @@ Flags:
                         Has no effect on existing projects.
                         Default: false
 
+  --skip-mcp            Do not write .mcp.json or .zed/settings.json.
+                        Default: false
+
+  --skip-roles          Do not install context role files (base.yaml,
+                        reviewer.yaml).
+                        Default: false
+
 Example:
   kanbanzai init
   kanbanzai init --docs-path work/docs --non-interactive
   kanbanzai init --skip-skills
   kanbanzai init --update-skills
+  kanbanzai init --skip-mcp
+  kanbanzai init --skip-roles
 `
 
 func runInit(args []string, deps dependencies) error {
@@ -66,6 +77,10 @@ func runInit(args []string, deps dependencies) error {
 			opts.SkipSkills = true
 		case "--skip-work-dirs":
 			opts.SkipWorkDirs = true
+		case "--skip-mcp":
+			opts.SkipMCP = true
+		case "--skip-roles":
+			opts.SkipRoles = true
 		case "-h", "--help":
 			fmt.Fprint(deps.stdout, initUsageText)
 			return nil

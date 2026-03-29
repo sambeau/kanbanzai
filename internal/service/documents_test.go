@@ -1262,3 +1262,47 @@ func TestOperations_NoHook_StillWork(t *testing.T) {
 		t.Fatalf("SupersedeDocument() error = %v", err)
 	}
 }
+
+// TestSubmitDocument_NewDocumentTypes verifies that SubmitDocument accepts the
+// plan and retrospective document types added in P11.
+func TestSubmitDocument_NewDocumentTypes(t *testing.T) {
+	t.Parallel()
+
+	cases := []struct {
+		docType string
+		dir     string
+	}{
+		{"plan", "work/plan"},
+		{"retrospective", "work/retro"},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.docType, func(t *testing.T) {
+			stateRoot := t.TempDir()
+			repoRoot := t.TempDir()
+			svc := NewDocumentService(stateRoot, repoRoot)
+
+			docPath := tc.dir + "/test-doc.md"
+			fullPath := filepath.Join(repoRoot, docPath)
+			if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+				t.Fatalf("mkdir: %v", err)
+			}
+			if err := os.WriteFile(fullPath, []byte("# Test\n\nContent."), 0o644); err != nil {
+				t.Fatalf("write file: %v", err)
+			}
+
+			result, err := svc.SubmitDocument(SubmitDocumentInput{
+				Path:      docPath,
+				Type:      tc.docType,
+				Title:     "Test " + tc.docType + " document",
+				CreatedBy: "tester",
+			})
+			if err != nil {
+				t.Fatalf("SubmitDocument(type=%q) error = %v", tc.docType, err)
+			}
+			if result.Type != tc.docType {
+				t.Errorf("Type = %q, want %q", result.Type, tc.docType)
+			}
+		})
+	}
+}
