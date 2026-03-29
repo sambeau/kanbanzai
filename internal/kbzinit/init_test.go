@@ -506,6 +506,35 @@ func TestRun_ExistingProject_NoConfig_Prompt(t *testing.T) {
 	}
 }
 
+// TestRun_ExistingProject_NoConfig_EmptyInput_UsesDefault verifies that pressing
+// Enter at the document root prompt (empty input) uses the standard work/ layout
+// rather than returning an error.
+func TestRun_ExistingProject_NoConfig_EmptyInput_UsesDefault(t *testing.T) {
+	dir := makeGitRepoWithCommit(t)
+	in, _ := newTestInit(dir, "\n") // simulate pressing Enter with no input
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, err := os.ReadFile(filepath.Join(dir, ".kbz", "config.yaml"))
+	if err != nil {
+		t.Fatalf("config.yaml not created: %v", err)
+	}
+	// All eight default roots must be present.
+	for _, root := range []string{"work/design", "work/spec", "work/plan", "work/dev",
+		"work/research", "work/report", "work/review", "work/retro"} {
+		if !strings.Contains(string(data), root) {
+			t.Errorf("expected default root %q in config.yaml, got:\n%s", root, data)
+		}
+	}
+	// The standard work/ directories must also be created.
+	for _, sub := range []string{"design", "spec", "plan", "dev", "research", "report", "review", "retro"} {
+		if _, err := os.Stat(filepath.Join(dir, "work", sub)); os.IsNotExist(err) {
+			t.Errorf("work/%s/ not created for default layout", sub)
+		}
+	}
+}
+
 // AC-17: --non-interactive without --docs-path on existing project with no config.
 func TestRun_NonInteractive_NoDocsPath_Error(t *testing.T) {
 	dir := makeGitRepoWithCommit(t)

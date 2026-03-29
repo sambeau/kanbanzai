@@ -406,13 +406,13 @@ func (i *Initializer) resolveDocumentRoots(opts Options) ([]DocumentRoot, error)
 
 	// Interactive prompt.
 	fmt.Fprintln(i.stdout, "No config.yaml found. Where are your workflow documents?")
-	fmt.Fprint(i.stdout, "Document root path (e.g. work/docs): ")
+	fmt.Fprint(i.stdout, "Document root path (press Enter for standard work/ layout): ")
 
 	scanner := bufio.NewScanner(i.stdin)
 	if scanner.Scan() {
 		path := strings.TrimSpace(scanner.Text())
 		if path == "" {
-			return nil, fmt.Errorf("document root path cannot be empty")
+			return DefaultDocumentRoots(), nil
 		}
 		return docPathsToRoots([]string{path}), nil
 	}
