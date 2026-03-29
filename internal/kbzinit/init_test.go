@@ -1076,8 +1076,18 @@ func TestInit_ZedDir_WritesSettingsJson(t *testing.T) {
 	}
 
 	servers := cfg["context_servers"].(map[string]interface{})
-	if _, ok := servers["kanbanzai"]; !ok {
+	kbz, ok := servers["kanbanzai"].(map[string]interface{})
+	if !ok {
 		t.Fatal("missing context_servers.kanbanzai")
+	}
+	// command must be a flat string, not a nested object — Zed silently ignores
+	// the nested {"path":..., "args":[...]} form.
+	if cmd, ok := kbz["command"].(string); !ok || cmd == "" {
+		t.Errorf("context_servers.kanbanzai.command = %v, want a non-empty string", kbz["command"])
+	}
+	args, ok := kbz["args"].([]interface{})
+	if !ok || len(args) == 0 {
+		t.Errorf("context_servers.kanbanzai.args = %v, want a non-empty array", kbz["args"])
 	}
 }
 
@@ -1100,8 +1110,16 @@ func TestInit_NewProject_NoZedDir_CreatesSettingsJson(t *testing.T) {
 	if err := json.Unmarshal(data, &cfg); err != nil {
 		t.Fatalf("parse .zed/settings.json: %v", err)
 	}
-	if _, ok := cfg["context_servers"]; !ok {
-		t.Error(".zed/settings.json missing context_servers key")
+	servers, ok := cfg["context_servers"].(map[string]interface{})
+	if !ok {
+		t.Fatal(".zed/settings.json missing context_servers key")
+	}
+	kbz, ok := servers["kanbanzai"].(map[string]interface{})
+	if !ok {
+		t.Fatal("missing context_servers.kanbanzai")
+	}
+	if cmd, ok := kbz["command"].(string); !ok || cmd == "" {
+		t.Errorf("context_servers.kanbanzai.command = %v, want a non-empty string", kbz["command"])
 	}
 }
 

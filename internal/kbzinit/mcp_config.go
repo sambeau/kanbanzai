@@ -34,12 +34,8 @@ type zedConfig struct {
 }
 
 type zedContextServer struct {
-	Command zedCommand `json:"command"`
-}
-
-type zedCommand struct {
-	Path string   `json:"path"`
-	Args []string `json:"args"`
+	Command string   `json:"command"`
+	Args    []string `json:"args"`
 }
 
 // writeMCPConfig writes .mcp.json to baseDir applying version-aware conflict logic.
@@ -90,7 +86,8 @@ func (i *Initializer) writeZedConfig(baseDir string, createIfAbsent bool) error 
 		Managed: managedBlock{Tool: "kanbanzai", Version: mcpVersion},
 		ContextServers: map[string]zedContextServer{
 			"kanbanzai": {
-				Command: zedCommand{Path: "kanbanzai", Args: []string{"serve"}},
+				Command: "kanbanzai",
+				Args:    []string{"serve"},
 			},
 		},
 	}

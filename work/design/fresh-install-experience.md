@@ -120,18 +120,18 @@ If a `.zed/` directory already exists in the repository at init time, `kbz init`
 {
   "context_servers": {
     "kanbanzai": {
-      "command": {
-        "path": "kanbanzai",
-        "args": ["serve"]
-      }
+      "command": "kanbanzai",
+      "args": ["serve"]
     }
   }
 }
 ```
 
+Note: `command` is a flat string (the binary name or path), with `args` as a sibling key. The nested `{"path": ..., "args": [...]}` form is not supported by Zed and will be silently ignored.
+
 If `.zed/settings.json` already exists without the managed marker, `init` skips it and prints a note directing the user to `docs/getting-started.md` for the snippet to add manually.
 
-Unlike `.mcp.json`, the Zed config is only written when the editor is already in evidence — the presence of `.zed/` is a reliable signal. This avoids writing Zed configuration into projects that will never use Zed.
+**New-project behaviour (updated):** For new projects, `kbz init` always writes `.zed/settings.json`, creating the `.zed/` directory if it does not exist. Zed creates `.zed/` lazily on first open, which happens *after* `kbz init` runs — so waiting for the directory to appear as a signal is not viable for new projects. For existing projects, the absence of `.zed/` remains a reliable signal that the project does not use Zed, and the file is not written.
 
 #### 5.1.3 Getting-started skill update
 
