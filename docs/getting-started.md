@@ -4,7 +4,13 @@
 
 ### From source
 
-Kanbanzai is a Go project. With Go 1.25 or later installed, run:
+Kanbanzai is a Go project. With Go 1.21 or later installed, run:
+
+```sh
+go install github.com/sambeau/kanbanzai/cmd/kanbanzai@latest
+```
+
+Or from a local clone:
 
 ```sh
 go install ./cmd/kanbanzai
@@ -12,7 +18,7 @@ go install ./cmd/kanbanzai
 
 This places the `kanbanzai` binary at `~/go/bin/kanbanzai`. Make sure `~/go/bin` is in your `PATH`.
 
-If you want a shorter command, create an alias:
+If you want a shorter command, create a symlink:
 
 ```sh
 ln -s ~/go/bin/kanbanzai ~/go/bin/kbz
@@ -20,27 +26,25 @@ ln -s ~/go/bin/kanbanzai ~/go/bin/kbz
 
 ### Prebuilt binaries
 
-The project uses GoReleaser for binary distribution. At the 1.0 release, prebuilt binaries will be available from [GitHub Releases](https://github.com/sambeau/kanbanzai/releases) for:
-
-- macOS (arm64, amd64)
-- Linux (arm64, amd64)
-- Windows (amd64)
-
-Until then, `go install` is the primary installation method:
-
-```sh
-go install github.com/sambeau/kanbanzai/cmd/kanbanzai@latest
-```
+At the 1.0 release, prebuilt binaries will be available from [GitHub Releases](https://github.com/sambeau/kanbanzai/releases) for macOS (arm64, amd64), Linux (arm64, amd64), and Windows (amd64). Until then, `go install` is the primary installation method.
 
 ### Verify the installation
-
-Run:
 
 ```sh
 kanbanzai version
 ```
 
-You should see version information printed to the terminal. If you get "command not found", check that `~/go/bin` is on your `PATH`.
+If you get "command not found", check that `~/go/bin` is on your `PATH`.
+
+### macOS GUI editors and PATH
+
+macOS GUI applications (Zed, VS Code, Cursor) launch with a minimal environment that does not inherit your shell's `PATH`. If your editor cannot find the `kanbanzai` binary, install it to `/usr/local/bin`:
+
+```sh
+sudo ln -sf ~/go/bin/kanbanzai /usr/local/bin/kanbanzai
+```
+
+This is the most reliable way to ensure any editor can start the MCP server.
 
 ---
 
@@ -54,32 +58,90 @@ The system bridges two worlds: human intent expressed through documents (designs
 
 ---
 
+## Initialising a project
+
+Navigate to a Git repository and run:
+
+```sh
+kanbanzai init
+```
+
+This must be run inside an existing Git repository. If you don't have one yet, run `git init` first.
+
+`kanbanzai init` creates the following structure:
+
+```
+your-repo/
+├── .mcp.json                  # MCP server configuration (auto-detected by most editors)
+├── .zed/
+│   └── settings.json          # Zed context server configuration
+├── .kbz/
+│   ├── config.yaml            # Project configuration (schema version, prefixes, document roots)
+│   ├── state/                 # Entity storage (features, tasks, bugs, etc.)
+│   └── context/
+│       └── roles/             # Context profiles (base.yaml scaffold, reviewer.yaml managed)
+├── .agents/
+│   └── skills/                # Kanbanzai skill files for AI agents
+└── work/
+    ├── README.md              # Directory map
+    ├── design/                # Architecture decisions, vision, policies
+    ├── spec/                  # Acceptance criteria and binding contracts
+    ├── plan/                  # Project planning: roadmaps, scope, decision logs
+    ├── dev/                   # Feature implementation plans and task breakdowns
+    ├── research/              # Analysis, exploration, background reading
+    ├── report/                # Audit reports, post-mortems, general reports
+    ├── review/                # Feature and plan review reports
+    └── retro/                 # Retrospective synthesis documents
+```
+
+`kanbanzai init` is idempotent. Running it again on an already-initialised project updates skill files and managed role files to the current version, and applies version-aware conflict logic to `.mcp.json` and `.zed/settings.json`.
+
+### Local configuration
+
+The init command does not create `.kbz/local.yaml` — this file is for per-machine settings that should not be committed. Create it manually when you need to set your identity or configure GitHub integration:
+
+```yaml
+user:
+  name: Your Name
+
+github:
+  token: ghp_xxxxxxxxxxxxxxxxxxxx
+  owner: your-org
+  repo: your-repo
+```
+
+Add `.kbz/local.yaml` to your `.gitignore` — it contains credentials and machine-specific paths.
+
+---
+
 ## Editor integration
 
-Kanbanzai runs as an MCP server. You configure your editor to start it, and then your editor's AI assistant gains access to all Kanbanzai tools. Below are setup instructions for the most common editors.
+`kbz init` writes `.mcp.json` at the project root. Most editors (Claude Code, VS Code with Copilot/Claude extensions, Cursor) read this file automatically and start the MCP server when you open the project. For Zed, `kbz init` also writes `.zed/settings.json`.
+
+If the automatic configuration does not work for your setup, use the manual snippets below.
 
 ### Zed
 
-Add the following to your project-local `.zed/settings.json`, or to your global Zed settings:
+`kbz init` writes `.zed/settings.json` automatically. If you need to configure it manually, add the following to your project-local `.zed/settings.json` or to your global Zed settings:
 
 ```json
 {
   "context_servers": {
     "kanbanzai": {
-      "command": {
-        "path": "kanbanzai",
-        "args": ["serve"]
-      }
+      "command": "kanbanzai",
+      "args": ["serve"]
     }
   }
 }
 ```
 
-**Verify:** Open Zed's agent panel and ask it to call the `health_check` tool. It should return a health report showing entity counts and system status.
+If `kanbanzai` is not on the PATH that Zed can see, use the absolute path to the binary (see [macOS GUI editors and PATH](#macos-gui-editors-and-path) above).
+
+**Verify:** Open Zed's agent panel and ask it to call the `health` tool. It should return a health report showing entity counts and system status.
 
 ### Claude Desktop
 
-Add the following to your `claude_desktop_config.json`. On macOS, this file is typically at `~/Library/Application Support/Claude/claude_desktop_config.json`:
+Add the following to your `claude_desktop_config.json`. On macOS, this file is at `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
@@ -95,13 +157,11 @@ Add the following to your `claude_desktop_config.json`. On macOS, this file is t
 
 Replace `/path/to/your/project` with the actual path to your project root. Claude Desktop requires a restart after changing this file.
 
-**Verify:** Ask Claude "call the health_check tool" — it should return a health report.
+**Verify:** Ask Claude "call the `health` tool" — it should return a health report.
 
 ### VS Code
 
-Kanbanzai works with the GitHub Copilot extension (which has built-in MCP support) or the Claude extension.
-
-For **GitHub Copilot**, add to `.vscode/settings.json`:
+For **GitHub Copilot** (built-in MCP support), `.mcp.json` is read automatically. If you need to configure manually, add to `.vscode/settings.json`:
 
 ```json
 {
@@ -114,24 +174,11 @@ For **GitHub Copilot**, add to `.vscode/settings.json`:
 }
 ```
 
-For the **Claude extension**, add to `.vscode/settings.json`:
-
-```json
-{
-  "claude.mcpServers": {
-    "kanbanzai": {
-      "command": "kanbanzai",
-      "args": ["serve"]
-    }
-  }
-}
-```
-
-**Verify:** In Copilot Chat or the Claude panel, ask the assistant to call `health_check`.
+**Verify:** In Copilot Chat, ask the assistant to call `health`.
 
 ### Cursor
 
-Add a server through Cursor's MCP settings (Settings → MCP Servers → Add):
+`.mcp.json` is read automatically by Cursor. If you need to configure manually, add a server through Settings → MCP Servers → Add:
 
 ```json
 {
@@ -145,111 +192,54 @@ Add a server through Cursor's MCP settings (Settings → MCP Servers → Add):
 }
 ```
 
-Replace `/path/to/your/project` with the actual path to your project root.
-
-**Verify:** In Cursor's agent mode, ask it to call `health_check`.
-
----
-
-## Initialising a project
-
-Navigate to a Git repository and run:
-
-```sh
-kanbanzai init
-```
-
-This must be run inside an existing Git repository. If you don't have one yet, run `git init` first.
-
-The command creates the following structure:
-
-```
-your-repo/
-├── .kbz/
-│   ├── config.yaml            # Project configuration (schema version, prefixes, document roots)
-│   ├── state/                 # Entity storage (features, tasks, bugs, etc.)
-│   └── context/
-│       └── roles/             # Context profiles for agent roles
-├── .agents/
-│   └── skills/                # Kanbanzai skill files for AI agents
-├── work/
-│   ├── design/                # Design documents
-│   ├── spec/                  # Specification documents
-│   ├── dev/                   # Development plans
-│   ├── research/              # Research documents
-│   └── reports/               # Report documents
-```
-
-The `config.yaml` starts with a single plan prefix `P` (for "Plan") and document roots pointing to the `work/` directories.
-
-`kanbanzai init` is idempotent. Running it again on an already-initialised project exits successfully without modifying existing files.
-
-### Local configuration
-
-The init command does not create `.kbz/local.yaml` — this file is for per-machine settings that should not be committed. Create it manually when you need to set your identity or configure GitHub integration:
-
-```yaml
-user:
-  name: Your Name
-
-github:
-  token: ghp_xxxxxxxxxxxxxxxxxxxx
-  owner: sambeau
-  repo: kanbanzai
-```
-
-Add `.kbz/local.yaml` to your `.gitignore` — it contains credentials and machine-specific paths.
+**Verify:** In agent mode, ask it to call `health`.
 
 ---
 
 ## Your first plan
 
-Kanbanzai's primary interface is through MCP tools, not the CLI. You interact with it by asking your editor's AI assistant to call specific tools. Here is a walkthrough that creates a plan, a feature, a task, and then checks the work queue.
+Kanbanzai's primary interface is through MCP tools. You interact with it by asking your editor's AI assistant to call specific tools. Here is a walkthrough that creates a plan, a feature, a task, and then checks the work queue.
 
 ### Step 1: Create a plan
 
-Ask your AI assistant to call `create_plan` with these arguments:
+Ask your AI assistant to call `entity` with these arguments:
 
-- **prefix**: `P`
-- **slug**: `my-first-project`
-- **title**: `My First Project`
-- **summary**: `Learning Kanbanzai`
+```
+entity(action: "create", type: "plan", prefix: "P", slug: "my-first-project",
+       title: "My First Project", summary: "Learning Kanbanzai")
+```
 
-This creates a plan with the ID `P1-my-first-project`. Plans are the top-level organising unit — they group related features together.
+This creates a plan with an ID like `P1-my-first-project`. Plans are the top-level organising unit — they group related features together.
 
 ### Step 2: Create a feature
 
-Call `create_feature` with:
+```
+entity(action: "create", type: "feature", parent: "P1-my-first-project",
+       slug: "hello-world", summary: "Implement a hello world endpoint")
+```
 
-- **parent**: `P1-my-first-project`
-- **slug**: `hello-world`
-- **summary**: `Implement a hello world endpoint`
-
-This returns a feature with an ID like `FEAT-01ABC...`. Note the full ID — you need it for the next step. Features represent deliverable units of work within a plan.
+This returns a feature with an ID like `FEAT-01ABC...`. Note the full ID.
 
 ### Step 3: Create a task
 
-Call `create_task` with:
+```
+entity(action: "create", type: "task", parent_feature: "FEAT-01ABC...",
+       slug: "write-handler", summary: "Write the HTTP handler for /hello")
+```
 
-- **parent_feature**: the `FEAT-...` ID from step 2
-- **slug**: `write-handler`
-- **summary**: `Write the HTTP handler for /hello`
-
-Tasks are the atomic units of work that an agent (or a human) picks up and completes. Each task belongs to a feature.
+Tasks are the atomic units of work. Each task belongs to a feature.
 
 ### Step 4: Check the work queue
 
-Call `work_queue` with no arguments.
+```
+next()
+```
 
-Your task should appear in the ready queue. It shows as ready because it has no dependencies blocking it. In a real project, tasks with unresolved dependencies stay queued until their blockers are completed, then automatically promote to ready.
-
-From here, you or an AI agent can dispatch the task, do the work, and mark it complete — but that workflow is covered in the documentation linked below.
+Your task should appear in the ready queue. From here, you or an AI agent can claim the task with `next(id: "TASK-...")`, do the work, and mark it complete with `finish`.
 
 ---
 
 ## Next steps
-
-Now that you have a working Kanbanzai setup, here is where to go next:
 
 - **[Workflow Overview](workflow-overview.md)** — The stage-gate model that governs how work flows from plan through feature through task to completion.
 - **[Schema Reference](schema-reference.md)** — Detailed structure of every entity type: plans, features, tasks, bugs, decisions, and their lifecycle states.
