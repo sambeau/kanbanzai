@@ -1,0 +1,82 @@
+document_id: FEAT-01KMWJ3ZQZF5R/dev-plan-p11-dev-default-roles
+document_path: work/plan/P11-dev-default-roles.md
+content_hash: e07361d23915f2ef82a46c54082f5d75ed626dfb90d8b4dcdc823b885b54f804
+indexed_at: 2026-03-29T10:39:28.735072Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P11 Feature C: Default Roles — Dev Plan'
+      byte_offset: 0
+      byte_count: 8130
+      word_count: 1026
+      content_hash: e07361d23915f2ef82a46c54082f5d75ed626dfb90d8b4dcdc823b885b54f804
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Approach
+          byte_offset: 727
+          byte_count: 1146
+          word_count: 160
+          content_hash: ac13102433509ae482466cf1ac733c98f06d0ac8bf199907259cc5e8dcc6bcbc
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 1873
+          byte_count: 404
+          word_count: 57
+          content_hash: 55e409bd83a06a619cb604112e2803063f00dc250de5e390aa2b29be7e452473
+        - path: "1.3"
+          level: 2
+          title: 3. Task Details
+          byte_offset: 2277
+          byte_count: 4913
+          word_count: 614
+          content_hash: e547f475de34476e508c839188fb7c58220b42a2d2bebafe744d9abe07a14558
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Task 1 — Embed role content and implement role writer
+              byte_offset: 2297
+              byte_count: 2271
+              word_count: 300
+              content_hash: 7365a84b931c7b53c70e40f2f1b2a5b9005be26079b8904c47f0a05b7d2b45fa
+            - path: 1.3.2
+              level: 3
+              title: Task 2 — Add `--skip-roles` flag and extend `--update-skills`
+              byte_offset: 4568
+              byte_count: 553
+              word_count: 70
+              content_hash: 682a032b7235a899a1baa05e347e342d02538ebe49bbaae5565a73fb8dfceda6
+            - path: 1.3.3
+              level: 3
+              title: Task 3 — Tests
+              byte_offset: 5121
+              byte_count: 2069
+              word_count: 240
+              content_hash: 99a661e80f81df9577d79044ca444da2c23a37a98bfe956e4249efbe6d8119bd
+        - path: "1.4"
+          level: 2
+          title: 4. Dependencies
+          byte_offset: 7190
+          byte_count: 940
+          word_count: 142
+          content_hash: 1ea7402c317e8bc9ccf999c066529b2957580980adb5399c44fbd6d4eeb1a6b9
+entity_refs:
+    - entity_id: FEAT-01KMWJ3ZQZF5R
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 229
+cross_doc_links:
+    - target_path: work/spec/spec-default-roles.md
+      link_text: work/spec/spec-default-roles.md
+      section_path: "1"
+    - target_path: work/design/fresh-install-experience.md
+      link_text: work/design/fresh-install-experience.md
+      section_path: "1"
+    - target_path: work/spec/init-command.md
+      link_text: work/spec/init-command.md
+      section_path: "1"
+    - target_path: work/spec/reviewer-context-profile-and-skill.md
+      link_text: work/spec/reviewer-context-profile-and-skill.md
+      section_path: "1"
+classified: false

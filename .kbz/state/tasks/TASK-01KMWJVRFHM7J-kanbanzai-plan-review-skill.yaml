@@ -1,0 +1,5 @@
+id: TASK-01KMWJVRFHM7J
+parent_feature: FEAT-01KMWJ3ZQKK7C
+slug: kanbanzai-plan-review-skill
+summary: "Write internal/kbzinit/skills/plan-review/SKILL.md: full plan review skill covering inputs, plan scope verification, feature completion checks, spec conformance verification, documentation currency checks, cross-cutting checks (tests, health), retrospective contribution, and the review report format. References work/review/ for output. Add 'plan-review' to skillNames in internal/kbzinit/skills.go."
+status: queued

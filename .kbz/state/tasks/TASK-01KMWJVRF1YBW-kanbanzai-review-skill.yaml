@@ -1,0 +1,5 @@
+id: TASK-01KMWJVRF1YBW
+parent_feature: FEAT-01KMWJ3ZQKK7C
+slug: kanbanzai-review-skill
+summary: "Write internal/kbzinit/skills/review/SKILL.md: full code review skill covering inputs required before review, per-dimension evaluation guidance for all five dimensions (spec conformance, implementation quality, test adequacy, documentation currency, workflow integrity), structured output format with per-dimension outcomes and overall verdict, blocking/non-blocking finding classification, edge case handling, and full orchestration procedure. References work/review/ for output. Add 'review' to skillNames in internal/kbzinit/skills.go."
+status: queued

@@ -1,0 +1,5 @@
+id: TASK-01KMWJW2ZR735
+parent_feature: FEAT-01KMWJ3ZQZF5R
+slug: role-writer-implementation
+summary: "Create internal/kbzinit/roles.go: embed base.yaml scaffold and reviewer.yaml content; implement installRoles(baseDir, version) calling writeBaseRole (write if absent, never update) and writeReviewerRole (managed marker in YAML metadata field, version-aware: skip+warn if unmanaged exists, overwrite if older, no-op if current). reviewer.yaml content: id: reviewer, inherits: base, description, conventions block with review_approach/output_format/dimensions, references kanbanzai-review skill. Wire installRoles into runNewProject in init.go."
+status: queued

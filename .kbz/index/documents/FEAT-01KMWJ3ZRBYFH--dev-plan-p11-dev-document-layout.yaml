@@ -1,0 +1,103 @@
+document_id: FEAT-01KMWJ3ZRBYFH/dev-plan-p11-dev-document-layout
+document_path: work/plan/P11-dev-document-layout.md
+content_hash: a45cde7956ef8852b84c51cb13f86fd58625e19bacd89f7f9c7b7553ba05e571
+indexed_at: 2026-03-29T10:39:29.211991Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P11 Feature D: Document Layout — Dev Plan'
+      byte_offset: 0
+      byte_count: 6105
+      word_count: 795
+      content_hash: a45cde7956ef8852b84c51cb13f86fd58625e19bacd89f7f9c7b7553ba05e571
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Implementation Approach
+          byte_offset: 511
+          byte_count: 1017
+          word_count: 128
+          content_hash: 3d40f5d2f0ec4d9e78b6af38b7fcc841570f3b2991d0e53d5170869bba7591dd
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 1528
+          byte_count: 3437
+          word_count: 460
+          content_hash: 67f62f5eeb795ade03121aaed854b5c99e062a7dee632de9e78a892036e909c1
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Task 1 — Add new document types to model
+              byte_offset: 1986
+              byte_count: 415
+              word_count: 51
+              content_hash: 149110ba6ebfac6535ea884f6257e91549b1d6741f842046fc12b790bc46aec4
+            - path: 1.2.2
+              level: 3
+              title: Task 2 — Update `DefaultDocumentRoots()` and `InferDocType()`
+              byte_offset: 2401
+              byte_count: 1251
+              word_count: 160
+              content_hash: 75124f5fc20055463fe04f7a6cdd1d85220199e2deb1c79848c70943987e9d7c
+            - path: 1.2.3
+              level: 3
+              title: Task 3 — Write `work/README.md` on init
+              byte_offset: 3652
+              byte_count: 1313
+              word_count: 189
+              content_hash: 9eb0edecfbd4218e0e299fceed1598a80b35c764974f23e41ea34d126ff249bd
+        - path: "1.3"
+          level: 2
+          title: 3. Dependencies
+          byte_offset: 4965
+          byte_count: 1140
+          word_count: 159
+          content_hash: a8db4fbecf59d89362d4a6c3cee05ceb9f072a18750411a801e2a36429e30d82
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Intra-feature dependency
+              byte_offset: 4985
+              byte_count: 423
+              word_count: 56
+              content_hash: 772a7609447d134f2c548d4809a105adddf8ef2a17fa85f789dd5ac83f226c16
+            - path: 1.3.2
+              level: 3
+              title: Inter-feature dependency (P11)
+              byte_offset: 5408
+              byte_count: 516
+              word_count: 77
+              content_hash: 17147fd0632345024fc5f13f0dc767856f2e513c5ef02217b4b0c2eb813b753d
+            - path: 1.3.3
+              level: 3
+              title: External dependencies
+              byte_offset: 5924
+              byte_count: 181
+              word_count: 23
+              content_hash: 595b44efd2db8b1532472035bff7ebf7b5fc74cbb1615e55579939d127af9e30
+entity_refs:
+    - entity_id: FEAT-01KMWJ3ZRBYFH
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 192
+cross_doc_links:
+    - target_path: work/spec/spec-document-layout.md
+      link_text: work/spec/spec-document-layout.md
+      section_path: "1"
+    - target_path: work/design/fresh-install-experience.md
+      link_text: work/design/fresh-install-experience.md
+      section_path: "1"
+    - target_path: work/spec/init-command.md
+      link_text: work/spec/init-command.md
+      section_path: "1"
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: "1.1"
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: "1.2"
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: 1.2.3
+classified: false
