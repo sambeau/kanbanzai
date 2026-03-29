@@ -1,0 +1,149 @@
+document_id: FEAT-01KMWJ3ZQZF5R/specification-spec-default-roles
+document_path: work/spec/spec-default-roles.md
+content_hash: 76f2c06f4e7cb308d0e62b49f640a415e7ba54e1bdfef9e17531886f8e7ae70f
+indexed_at: 2026-03-29T10:32:19.690174Z
+sections:
+    - path: "1"
+      level: 1
+      title: Default Context Roles Specification
+      byte_offset: 0
+      byte_count: 11515
+      word_count: 1528
+      content_hash: 76f2c06f4e7cb308d0e62b49f640a415e7ba54e1bdfef9e17531886f8e7ae70f
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 603
+          byte_count: 1319
+          word_count: 195
+          content_hash: dd717378e176a96ae03daa44422c6eb3eebfd2003949400302312544db952e71
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 1922
+          byte_count: 777
+          word_count: 109
+          content_hash: 656d50d6120adc3cd1004f394f2861a12a32de9daa0a5399956a804875ebcea6
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 In scope
+              byte_offset: 1935
+              byte_count: 469
+              word_count: 61
+              content_hash: 124a35e69fddbc5b714f96d99b3832399d38406f63cdff1d4d6647d5670f6403
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Out of scope
+              byte_offset: 2404
+              byte_count: 295
+              word_count: 45
+              content_hash: 2f069f182054478c4ec8cbd5871fe2d7cc7f3d51c2cb7ea20cd713626b78fd17
+        - path: "1.3"
+          level: 2
+          title: 3. Canonical File Content
+          byte_offset: 2699
+          byte_count: 2556
+          word_count: 331
+          content_hash: a5fefb6d18d808bd632089438340eb08920a14fcf6206296e28e289eed1d9ae1
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 `base.yaml`
+              byte_offset: 2729
+              byte_count: 740
+              word_count: 106
+              content_hash: 2b93ce296e9f216ee91234b65b659d80c401bea1daa283ef0dcb26b4f29b57b7
+            - path: 1.3.2
+              level: 3
+              title: 3.2 `reviewer.yaml`
+              byte_offset: 3469
+              byte_count: 1786
+              word_count: 220
+              content_hash: b165870dace9483dfe99e0c8faa85bff314dec6bff3abc0cfd8fe18431e97720
+        - path: "1.4"
+          level: 2
+          title: 4. Acceptance Criteria
+          byte_offset: 5255
+          byte_count: 3596
+          word_count: 465
+          content_hash: fa7e259eb39813d8e7b5aec149134aa2129294d1989c9ba0a6a3726888fb6a23
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 `base.yaml`
+              byte_offset: 5282
+              byte_count: 828
+              word_count: 112
+              content_hash: f2a5f57abad866f9a1e3f49a6f6783f453097485453a91d8efbab24357ceae61
+            - path: 1.4.2
+              level: 3
+              title: 4.2 `reviewer.yaml`
+              byte_offset: 6110
+              byte_count: 1454
+              word_count: 184
+              content_hash: d7439040e52d57aec82c1a65b17015fc9d9a55a3d521560fa99921f5ffb120e1
+            - path: 1.4.3
+              level: 3
+              title: 4.3 `developer.yaml`
+              byte_offset: 7564
+              byte_count: 169
+              word_count: 24
+              content_hash: b4850951b348f06be464d2065846e0a6e72b40a0126ad8ebf05d35d7e25c4f32
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Flags
+              byte_offset: 7733
+              byte_count: 734
+              word_count: 95
+              content_hash: 870ba29626749d51f5b88e37b3ae5c46026d31b820cf69bceb1998a06b26df19
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Profile resolution
+              byte_offset: 8467
+              byte_count: 384
+              word_count: 46
+              content_hash: f60d6b12be2841b34a6058308b6371fcc180a103addf4084aeff96eb8fd5ce4a
+        - path: "1.5"
+          level: 2
+          title: 5. Verification
+          byte_offset: 8851
+          byte_count: 2664
+          word_count: 388
+          content_hash: 7321eb1f7517d7666f6bc41f255df54b80f36af4002f14ab7fbd5552712d83e7
+entity_refs:
+    - entity_id: FEAT-01KMWJ3ZQZF5R
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 293
+cross_doc_links:
+    - target_path: work/design/fresh-install-experience.md
+      link_text: work/design/fresh-install-experience.md
+      section_path: "1"
+    - target_path: work/spec/init-command.md
+      link_text: work/spec/init-command.md
+      section_path: "1"
+    - target_path: work/spec/reviewer-context-profile-and-skill.md
+      link_text: work/spec/reviewer-context-profile-and-skill.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

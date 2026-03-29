@@ -1,0 +1,206 @@
+document_id: FEAT-01KMWJ3ZQKK7C/specification-spec-embedded-skills
+document_path: work/spec/spec-embedded-skills.md
+content_hash: 75b440b9bf1c665e4ab9e65cb026165d46e61a1cb6f653d27a966a6117fdd94a
+indexed_at: 2026-03-29T10:32:18.945472Z
+sections:
+    - path: "1"
+      level: 1
+      title: Embedded Skills Specification
+      byte_offset: 0
+      byte_count: 14927
+      word_count: 2029
+      content_hash: 75b440b9bf1c665e4ab9e65cb026165d46e61a1cb6f653d27a966a6117fdd94a
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 687
+          byte_count: 1008
+          word_count: 135
+          content_hash: cc6ba8faee3f983a65578ecc5ce6662f3c71850eea795f13b66565e47a586ece
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 1695
+          byte_count: 1033
+          word_count: 131
+          content_hash: 33b8fba1aa42c2cc966ae4b329ffa1908e989f3af1cf3e8ff848b9d359965252
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 In scope
+              byte_offset: 1708
+              byte_count: 539
+              word_count: 68
+              content_hash: 6a5f84bb4d5cb665e53bf03cc96a6627fee08f3e703cf1185ae87120dc8d148c
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Out of scope
+              byte_offset: 2247
+              byte_count: 481
+              word_count: 60
+              content_hash: 0d3443664946695d29a308934e85103362802c25de125c8227ad038822cdfa4f
+        - path: "1.3"
+          level: 2
+          title: 3. Acceptance Criteria
+          byte_offset: 2728
+          byte_count: 8218
+          word_count: 1122
+          content_hash: f8fc15e32d72032ffc35a96b3b8b1f05ebdb233454baf41c347aaa05a3b787bd
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 New skills installed by `kbz init`
+              byte_offset: 2755
+              byte_count: 920
+              word_count: 92
+              content_hash: f10cc774982285d4ce1d00b94c09e98dff7b282c2497db457c09cbcbc90ff549
+            - path: 1.3.2
+              level: 3
+              title: 3.2 `kanbanzai-review` skill content
+              byte_offset: 3675
+              byte_count: 1921
+              word_count: 269
+              content_hash: 4aff7955530a6772bf76b64a55a42b78e228ab7c523c3a1a4cdfdfd8344eedac
+            - path: 1.3.3
+              level: 3
+              title: 3.3 `kanbanzai-plan-review` skill content
+              byte_offset: 5596
+              byte_count: 2167
+              word_count: 324
+              content_hash: 93f37f27ede5ff5c42754a809a57fb6cbe048375068907d5638edb95eed9656b
+            - path: 1.3.4
+              level: 3
+              title: 3.4 `kanbanzai-workflow` skill update
+              byte_offset: 7763
+              byte_count: 1280
+              word_count: 180
+              content_hash: d4004b3645c30ce4e668539a94ee0f050b18569244c140063e41a52ef822f9a0
+            - path: 1.3.5
+              level: 3
+              title: 3.5 `kanbanzai-documents` skill update
+              byte_offset: 9043
+              byte_count: 885
+              word_count: 134
+              content_hash: 71efa25857fbb893445c6e29e34a73585613f29556e658c2a5f74a1b519b5028
+            - path: 1.3.6
+              level: 3
+              title: 3.6 `doc_currency_health` checker update
+              byte_offset: 9928
+              byte_count: 1018
+              word_count: 119
+              content_hash: 59e9e4ca8d9632fe3221cd89190f19ad6ff4c8fb161b0105bdecb09de5513e3c
+        - path: "1.4"
+          level: 2
+          title: 4. Verification
+          byte_offset: 10946
+          byte_count: 3981
+          word_count: 598
+          content_hash: c5ea736349d99f9c69422a7807c1869da67a249ae3d7f19cc96542c722003fb2
+entity_refs:
+    - entity_id: FEAT-01KMWJ3ZQKK7C
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 289
+cross_doc_links:
+    - target_path: work/design/fresh-install-experience.md
+      link_text: work/design/fresh-install-experience.md
+      section_path: "1"
+    - target_path: work/spec/skills-content.md
+      link_text: work/spec/skills-content.md
+      section_path: "1"
+    - target_path: work/spec/doc-currency-health-check.md
+      link_text: work/spec/doc-currency-health-check.md
+      section_path: "1"
+    - target_path: work/spec/review-lifecycle-states.md
+      link_text: work/spec/review-lifecycle-states.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: "1.1"
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: "1.1"
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.2.1
+    - target_path: work/spec/skills-content.md
+      link_text: work/spec/skills-content.md
+      section_path: 1.2.2
+    - target_path: work/spec/review-lifecycle-states.md
+      link_text: work/spec/review-lifecycle-states.md
+      section_path: 1.2.2
+    - target_path: .agents/skills/kanbanzai-review/SKILL.md
+      link_text: .agents/skills/kanbanzai-review/SKILL.md
+      section_path: 1.3.1
+    - target_path: .agents/skills/kanbanzai-plan-review/SKILL.md
+      link_text: .agents/skills/kanbanzai-plan-review/SKILL.md
+      section_path: 1.3.1
+    - target_path: review-{feature-id}-{slug}.md
+      link_text: review-{feature-id}-{slug}.md
+      section_path: 1.3.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.3
+    - target_path: review-{plan-id}-{slug}.md
+      link_text: review-{plan-id}-{slug}.md
+      section_path: 1.3.3
+    - target_path: work/spec/review-lifecycle-states.md
+      link_text: work/spec/review-lifecycle-states.md
+      section_path: 1.3.4
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.3.6
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: 1.3.6
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.6
+    - target_path: .agents/skills/kanbanzai-example/SKILL.md
+      link_text: .agents/skills/kanbanzai-example/SKILL.md
+      section_path: 1.3.6
+    - target_path: .skills/example.md
+      link_text: .skills/example.md
+      section_path: 1.3.6
+    - target_path: .agents/skills/kanbanzai-review/SKILL.md
+      link_text: .agents/skills/kanbanzai-review/SKILL.md
+      section_path: "1.4"
+    - target_path: .agents/skills/kanbanzai-plan-review/SKILL.md
+      link_text: .agents/skills/kanbanzai-plan-review/SKILL.md
+      section_path: "1.4"
+    - target_path: review-{feature-id}-{slug}.md
+      link_text: review-{feature-id}-{slug}.md
+      section_path: "1.4"
+    - target_path: review-{plan-id}-{slug}.md
+      link_text: review-{plan-id}-{slug}.md
+      section_path: "1.4"
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: "1.4"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.4"
+    - target_path: .agents/skills/kanbanzai-example/SKILL.md
+      link_text: .agents/skills/kanbanzai-example/SKILL.md
+      section_path: "1.4"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+classified: false

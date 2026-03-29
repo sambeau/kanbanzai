@@ -1,0 +1,181 @@
+document_id: FEAT-01KMWJ3ZRBYFH/specification-spec-document-layout
+document_path: work/spec/spec-document-layout.md
+content_hash: d06fc5d1db07d4c497a224388fe1c188b60fa258871e6bd7d97209978894ecd4
+indexed_at: 2026-03-29T10:32:20.602425Z
+sections:
+    - path: "1"
+      level: 1
+      title: Document Layout Specification
+      byte_offset: 0
+      byte_count: 11413
+      word_count: 1580
+      content_hash: d06fc5d1db07d4c497a224388fe1c188b60fa258871e6bd7d97209978894ecd4
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 478
+          byte_count: 955
+          word_count: 140
+          content_hash: fa40dedb567180ce38a88e84158fbdd9e70e26d0177c2e2ae450cf7dc40ae47d
+        - path: "1.2"
+          level: 2
+          title: 2. Background
+          byte_offset: 1433
+          byte_count: 1255
+          word_count: 163
+          content_hash: a7d9837baa933aabbbee62a5d5b95749569add0be3eb78efbcdc1cb56ad93456
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Current state
+              byte_offset: 1451
+              byte_count: 582
+              word_count: 71
+              content_hash: 092bbb90d1a2b9c8ac21accc7da3ec2a65554e85ce14cf779f0052cff12eb7f9
+            - path: 1.2.2
+              level: 3
+              title: Problems being fixed
+              byte_offset: 2033
+              byte_count: 655
+              word_count: 89
+              content_hash: 247a4707880a07a22f5b53637c2298682a35c40e81b2399c3c49d261fb181917
+        - path: "1.3"
+          level: 2
+          title: 3. Design Decisions
+          byte_offset: 2688
+          byte_count: 504
+          word_count: 72
+          content_hash: 821799ed23d3942e081c2bf4b95b5fda115861eba6fec992b341b51ef366cfc2
+        - path: "1.4"
+          level: 2
+          title: 4. Proposed Directory Layout
+          byte_offset: 3192
+          byte_count: 913
+          word_count: 143
+          content_hash: 0f4a440add1552cf2ec1f5ab8c3540fa5b67f7c48dcb91e804ba1c4d7946d9c7
+        - path: "1.5"
+          level: 2
+          title: 5. `work/README.md` Content
+          byte_offset: 4105
+          byte_count: 1008
+          word_count: 153
+          content_hash: 2cf5c3e25afec13d9d3ae856d0dd241b189e85a4d4622fa87e04722925bc51a9
+        - path: "1.6"
+          level: 2
+          title: 6. Acceptance Criteria
+          byte_offset: 5113
+          byte_count: 3522
+          word_count: 443
+          content_hash: 16d0f176fb6e69bb2c0322a285145cba2de876186297caa9576e528f5dcdd1f0
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 New document types
+              byte_offset: 5140
+              byte_count: 489
+              word_count: 49
+              content_hash: 868bfa42c6cc6a7d44d49ac25ed6784ad668f8886a47cc56f219594d6e4a4e94
+            - path: 1.6.2
+              level: 3
+              title: 6.2 `InferDocType()`
+              byte_offset: 5629
+              byte_count: 614
+              word_count: 56
+              content_hash: f80735b21703c310b996e680f7f5e97799ad4be42e977ff5f22b4291048536ee
+            - path: 1.6.3
+              level: 3
+              title: 6.3 `DefaultDocumentRoots()`
+              byte_offset: 6243
+              byte_count: 525
+              word_count: 91
+              content_hash: 1e705e542ae66b094276e6ea9059850621b5f982f0e709989a85bd81bac9c558
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Directory creation by `kbz init`
+              byte_offset: 6768
+              byte_count: 478
+              word_count: 58
+              content_hash: b8098fcea9fcd487686e4d6ead72ab0d575773d070dd5b6a858ca48925a1198b
+            - path: 1.6.5
+              level: 3
+              title: 6.5 `work/README.md`
+              byte_offset: 7246
+              byte_count: 615
+              word_count: 84
+              content_hash: 5f74a21ce2463c3b0bcab6f2cb1bd782704290ed20ee68dc22651fabc2e4a831
+            - path: 1.6.6
+              level: 3
+              title: 6.6 `--skip-work-dirs` flag
+              byte_offset: 7861
+              byte_count: 310
+              word_count: 43
+              content_hash: 6fba0cafbc74aa34cf63d522550e6a31d996a04153b74d8c1fc5acc1eac1c5cd
+            - path: 1.6.7
+              level: 3
+              title: 6.7 Backwards compatibility
+              byte_offset: 8171
+              byte_count: 464
+              word_count: 58
+              content_hash: 4ab8536f2a38fbb0af9584b07c7f91bca00ba9bc6687e2717fe125b4d142c702
+        - path: "1.7"
+          level: 2
+          title: 7. Verification Methods
+          byte_offset: 8635
+          byte_count: 2114
+          word_count: 330
+          content_hash: 556ae23512810275dfdac4413dfb798ef193b9f7048f4944c965b33630fea685
+        - path: "1.8"
+          level: 2
+          title: 8. Out of Scope
+          byte_offset: 10749
+          byte_count: 664
+          word_count: 103
+          content_hash: 058eaddf8ce084c9233c6918a67f51e891b03b7125dfd47464c1282830eabca8
+entity_refs:
+    - entity_id: FEAT-01KMWJ3ZRBYFH
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 265
+cross_doc_links:
+    - target_path: work/design/fresh-install-experience.md
+      link_text: work/design/fresh-install-experience.md
+      section_path: "1"
+    - target_path: work/spec/init-command.md
+      link_text: work/spec/init-command.md
+      section_path: "1"
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: "1.1"
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: "1.4"
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: "1.5"
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: 1.6.5
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: 1.6.6
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: decision
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: constraint
+      confidence: high
+classified: false
