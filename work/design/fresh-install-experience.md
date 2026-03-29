@@ -129,9 +129,13 @@ If a `.zed/` directory already exists in the repository at init time, `kbz init`
 
 Note: `command` is a flat string (the binary name or path), with `args` as a sibling key. The nested `{"path": ..., "args": [...]}` form is not supported by Zed and will be silently ignored.
 
-If `.zed/settings.json` already exists without the managed marker, `init` skips it and prints a note directing the user to `docs/getting-started.md` for the snippet to add manually.
+`.zed/settings.json` does **not** include a `_managed` block. Zed validates `settings.json` against its own JSON schema and rejects unknown top-level properties, so managed state is inferred from the file content instead:
 
-**New-project behaviour (updated):** For new projects, `kbz init` always writes `.zed/settings.json`, creating the `.zed/` directory if it does not exist. Zed creates `.zed/` lazily on first open, which happens *after* `kbz init` runs — so waiting for the directory to appear as a signal is not viable for new projects. For existing projects, the absence of `.zed/` remains a reliable signal that the project does not use Zed, and the file is not written.
+- `context_servers.kanbanzai` present → already configured, no-op.
+- `_managed.tool == "kanbanzai"` present → file was written by an older version of kanbanzai that included the block; rewrite without it (migration).
+- Neither present → this is the user's own Zed settings file; warn and skip.
+
+**When `.zed/settings.json` is written:** `kbz init` writes `.zed/settings.json` on any **first-time init** — defined as a run where no `.kbz/` directory existed before. This covers both brand-new projects with no commits and projects that already have commits but have never had kanbanzai set up. On re-runs of init on an already-initialised project (`.kbz/` present, no `.zed/`), the absence of `.zed/` remains a reliable signal that the project does not use Zed, and the file is not written.
 
 #### 5.1.3 Getting-started skill update
 
@@ -311,13 +315,16 @@ AI agents: see the `kanbanzai-documents` skill for registration instructions.
 
 ### 5.5 Init command surface changes
 
-**New files written on `kbz init` for a new project:**
+**New files written on `kbz init` for a first-time init** (no prior `.kbz/`):
 - `.mcp.json`
-- `.zed/settings.json` (only if `.zed/` already exists)
+- `.zed/settings.json` (created even if `.zed/` did not previously exist)
 - `.kbz/context/roles/base.yaml`
 - `.kbz/context/roles/reviewer.yaml`
+- `work/` directories matching the configured document roots
 - `work/README.md`
 - Two additional skill directories: `kanbanzai-review` and `kanbanzai-plan-review`
+
+A "first-time init" is any run where `.kbz/` was absent before init ran, regardless of whether the project has existing commits. This covers both genuinely new repositories and existing repositories being set up with kanbanzai for the first time.
 
 **`--update-skills` flag scope expands:**
 The flag is extended to also update managed role files (`reviewer.yaml`, and any future managed roles). Both skill files and managed role files carry the `kanbanzai-managed` marker and follow identical version-aware update logic. The flag may be renamed `--update-managed` in the specification to reflect its broadened scope — this is a decision for the spec to formalise.
@@ -327,6 +334,9 @@ Skips creation of `.kbz/context/roles/` files. Complements the existing `--skip-
 
 **New `--skip-mcp` flag:**
 Skips creation of `.mcp.json` (and `.zed/settings.json`). Useful when the user wants to configure their editor manually or needs a custom configuration.
+
+**Interactive prompt default:**
+When `kbz init` runs on a project that has no `config.yaml` and no `--docs-path` flag is supplied, it prompts for a document root path. Pressing Enter without typing a path selects the standard eight-directory `work/` layout (`DefaultDocumentRoots()`). Typing a path creates a single custom root. The prompt reads: `Document root path (press Enter for standard work/ layout):`.
 
 ---
 

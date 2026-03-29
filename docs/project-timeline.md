@@ -166,12 +166,20 @@ Six coordinated improvements to MCP tool usability:
 
 Four coordinated improvements to the out-of-box experience for new kanbanzai projects:
 
-- **(A) MCP server connection** — `kbz init` now writes `.mcp.json` (and `.zed/settings.json` when `.zed/` already exists) with version-aware conflict logic; new `--skip-mcp` flag; `kanbanzai-getting-started` skill updated with a self-identifying description and a Preflight Check section
+- **(A) MCP server connection** — `kbz init` now writes `.mcp.json` and `.zed/settings.json` on any first-time init (no prior `.kbz/`), creating `.zed/` if absent with version-aware conflict logic; new `--skip-mcp` flag; `kanbanzai-getting-started` skill updated with a self-identifying description and a Preflight Check section
 - **(B) Embedded review skills** — two new skills installed by `kbz init`: `kanbanzai-review` (full code review procedure with five evaluation dimensions, structured output format, and orchestration sequence) and `kanbanzai-plan-review` (plan-level review procedure with scope verification, feature completion checks, spec conformance, and retrospective contribution); `kanbanzai-workflow` updated to describe `reviewing` and `needs-rework` states; `kanbanzai-documents` updated with the new 8-row document type table; doc-currency health checker updated to scan `.agents/skills/kanbanzai-*/SKILL.md` instead of `.skills/*.md`
 - **(C) Default context roles** — `kbz init` installs `base.yaml` (scaffold, never overwritten) and `reviewer.yaml` (kanbanzai-managed, version-aware updates) into `.kbz/context/roles/`; new `--skip-roles` flag; `--update-skills` extended to also update managed role files
 - **(D) Standard document layout** — `DefaultDocumentRoots()` updated to eight directories (`work/design`, `work/spec`, `work/plan`, `work/dev`, `work/research`, `work/report`, `work/review`, `work/retro`); two new document types (`plan`, `retrospective`) added to the model; `InferDocType()` updated with new cases; `work/README.md` created on init with a directory map for humans and agents
 
 **Design:** `work/design/fresh-install-experience.md`
+
+**Post-implementation fixes** (found during real-world testing after initial delivery):
+- `.zed/settings.json` format was wrong (nested `command` object rejected silently by Zed; correct form is flat string)
+- `.zed/settings.json` not written when project had existing commits — criterion corrected to first-time init (`!kbzExisted`) not no-commit projects
+- `work/` directories not created in `runExistingProject` on first-time init
+- `_managed` block in `.zed/settings.json` caused Zed JSON schema validation errors; removed (`.mcp.json` retains it)
+- Interactive docs-path prompt errored on empty input; now defaults to standard `work/` layout
+- Interactive prompt hint `(e.g. work/docs)` looked like a suggested path; replaced with `(press Enter for standard work/ layout)`
 
 ---
 

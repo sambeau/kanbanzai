@@ -96,6 +96,10 @@ your-repo/
 
 `kanbanzai init` is idempotent. Running it again on an already-initialised project updates skill files and managed role files to the current version, and applies version-aware conflict logic to `.mcp.json` and `.zed/settings.json`.
 
+**Existing repositories:** If you run `kanbanzai init` in a repository that already has commits but has never had kanbanzai set up (no `.kbz/` directory), it behaves as a first-time init: all files listed above are created, including the `work/` directories. You will be prompted for a document root path — press Enter to use the standard `work/` layout, or type a custom path.
+
+**macOS GUI editors and PATH:** If `kanbanzai` is not on the PATH that your editor can see, the MCP server will silently fail to start. See [macOS GUI editors and PATH](#macos-gui-editors-and-path) above.
+
 ### Local configuration
 
 The init command does not create `.kbz/local.yaml` — this file is for per-machine settings that should not be committed. Create it manually when you need to set your identity or configure GitHub integration:
