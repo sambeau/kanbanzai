@@ -176,6 +176,8 @@ const (
 	DocumentTypeReport        DocumentType = "report"
 	DocumentTypePolicy        DocumentType = "policy"
 	DocumentTypeRCA           DocumentType = "rca"
+	DocumentTypePlan          DocumentType = "plan"
+	DocumentTypeRetrospective DocumentType = "retrospective"
 )
 
 // AllDocumentTypes returns the ordered list of recognised document types.
@@ -188,6 +190,8 @@ func AllDocumentTypes() []DocumentType {
 		DocumentTypeReport,
 		DocumentTypePolicy,
 		DocumentTypeRCA,
+		DocumentTypePlan,
+		DocumentTypeRetrospective,
 	}
 }
 

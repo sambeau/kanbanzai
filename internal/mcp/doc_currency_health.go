@@ -286,17 +286,18 @@ func DocCurrencyHealthChecker(
 }
 
 // collectTier1Files returns relative paths of files to scan for tool names:
-// all .md files under .skills/ and AGENTS.md at the repo root.
+// all SKILL.md files under .agents/skills/kanbanzai-*/ and AGENTS.md at the repo root.
 func collectTier1Files(repoRoot string) []string {
 	var files []string
 
-	// .skills/*.md
-	skillsDir := filepath.Join(repoRoot, ".skills")
-	entries, err := os.ReadDir(skillsDir)
+	// .agents/skills/kanbanzai-*/SKILL.md
+	pattern := filepath.Join(repoRoot, ".agents", "skills", "kanbanzai-*", "SKILL.md")
+	matches, err := filepath.Glob(pattern)
 	if err == nil {
-		for _, e := range entries {
-			if !e.IsDir() && strings.HasSuffix(e.Name(), ".md") {
-				files = append(files, filepath.Join(".skills", e.Name()))
+		for _, m := range matches {
+			rel, err := filepath.Rel(repoRoot, m)
+			if err == nil {
+				files = append(files, rel)
 			}
 		}
 	}

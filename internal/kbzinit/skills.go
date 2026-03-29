@@ -19,7 +19,9 @@ var skillNames = []string{
 	"design",
 	"documents",
 	"getting-started",
+	"plan-review",
 	"planning",
+	"review",
 	"workflow",
 }
 

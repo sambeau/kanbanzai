@@ -20,9 +20,12 @@ func DefaultDocumentRoots() []DocumentRoot {
 	return []DocumentRoot{
 		{Path: "work/design", DefaultType: "design"},
 		{Path: "work/spec", DefaultType: "specification"},
+		{Path: "work/plan", DefaultType: "plan"},
 		{Path: "work/dev", DefaultType: "dev-plan"},
 		{Path: "work/research", DefaultType: "research"},
-		{Path: "work/reports", DefaultType: "report"},
+		{Path: "work/report", DefaultType: "report"},
+		{Path: "work/review", DefaultType: "report"},
+		{Path: "work/retro", DefaultType: "retrospective"},
 	}
 }
 
@@ -33,12 +36,18 @@ func InferDocType(path string) string {
 	switch filepath.Base(path) {
 	case "spec":
 		return "specification"
+	case "plan":
+		return "plan"
 	case "dev":
 		return "dev-plan"
 	case "research":
 		return "research"
+	case "report":
+		return "report"
 	case "reports":
 		return "report"
+	case "retro":
+		return "retrospective"
 	default:
 		return "design"
 	}

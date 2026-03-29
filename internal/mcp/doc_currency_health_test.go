@@ -34,13 +34,13 @@ func TestDocCurrencyHealth_DetectsStaleToolName(t *testing.T) {
 	found := false
 	for _, w := range report.Warnings {
 		if strings.Contains(w.Message, "batch_import_documents") &&
-			strings.Contains(w.Message, ".skills/example.md") {
+			strings.Contains(w.Message, ".agents/skills/kanbanzai-example/SKILL.md") {
 			found = true
 			break
 		}
 	}
 	if !found {
-		t.Errorf("expected warning about batch_import_documents in .skills/example.md; got: %v", report.Warnings)
+		t.Errorf("expected warning about batch_import_documents in .agents/skills/kanbanzai-example/SKILL.md; got: %v", report.Warnings)
 	}
 }
 
@@ -414,11 +414,11 @@ func testToolNameSet() map[string]bool {
 
 func writeSkillFile(t *testing.T, repoRoot, name, content string) {
 	t.Helper()
-	dir := filepath.Join(repoRoot, ".skills")
+	dir := filepath.Join(repoRoot, ".agents", "skills", "kanbanzai-"+strings.TrimSuffix(name, ".md"))
 	if err := os.MkdirAll(dir, 0o755); err != nil {
-		t.Fatalf("mkdir .skills: %v", err)
+		t.Fatalf("mkdir skill dir: %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(dir, name), []byte(content), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(dir, "SKILL.md"), []byte(content), 0o644); err != nil {
 		t.Fatalf("write skill file: %v", err)
 	}
 }
@@ -512,14 +512,14 @@ func TestDocCurrencyHealth_RegisteredInHealthTool(t *testing.T) {
 
 	// Create a temp directory with a SKILL file containing a stale tool name
 	tmpDir := t.TempDir()
-	skillsDir := filepath.Join(tmpDir, ".skills")
-	if err := os.MkdirAll(skillsDir, 0755); err != nil {
-		t.Fatalf("create .skills dir: %v", err)
+	skillDir := filepath.Join(tmpDir, ".agents", "skills", "kanbanzai-test")
+	if err := os.MkdirAll(skillDir, 0755); err != nil {
+		t.Fatalf("create skill dir: %v", err)
 	}
 
 	// Write a SKILL file with a stale tool name
 	skillContent := "# Test SKILL\n\nUse `batch_import_documents` to import.\n"
-	if err := os.WriteFile(filepath.Join(skillsDir, "test.md"), []byte(skillContent), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(skillDir, "SKILL.md"), []byte(skillContent), 0644); err != nil {
 		t.Fatalf("write skill file: %v", err)
 	}
 

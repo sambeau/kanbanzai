@@ -2,4 +2,9 @@ id: TASK-01KMWJVBYMTFK
 parent_feature: FEAT-01KMWJ3ZQ57ZY
 slug: mcp-json-writer
 summary: "Implement .mcp.json writer in kbz init. New internal/kbzinit/mcp_config.go with writeMCPConfig(baseDir, version): writes .mcp.json with kanbanzai mcpServers entry and _kanbanzai managed marker; version-aware conflict logic (skip+warn if unmanaged exists, overwrite if older version, no-op if current). Wire into runNewProject and runExistingProject in init.go."
-status: queued
+status: done
+files_planned:
+  - kanbanzai/internal/kbzinit/mcp_config.go
+completed: "2026-03-29T10:58:26Z"
+completion_summary: "Created internal/kbzinit/mcp_config.go with writeMCPConfig() writing .mcp.json with kanbanzai mcpServers entry and _managed marker. Version-aware logic: skip+warn if unmanaged, overwrite if older, no-op if current."
+verification: go test -race ./internal/kbzinit/... passes

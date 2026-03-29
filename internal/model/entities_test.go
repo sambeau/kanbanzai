@@ -693,6 +693,46 @@ func TestEnumStringValues(t *testing.T) {
 	}
 }
 
+func TestValidDocumentType_NewTypes(t *testing.T) {
+	t.Parallel()
+
+	cases := []struct {
+		input string
+		want  bool
+	}{
+		{"plan", true},
+		{"retrospective", true},
+		{"design", true},
+		{"specification", true},
+		{"dev-plan", true},
+		{"research", true},
+		{"report", true},
+		{"policy", true},
+		{"rca", true},
+		{"unknown", false},
+		{"", false},
+	}
+	for _, tc := range cases {
+		t.Run(tc.input, func(t *testing.T) {
+			got := model.ValidDocumentType(tc.input)
+			if got != tc.want {
+				t.Errorf("ValidDocumentType(%q) = %v, want %v", tc.input, got, tc.want)
+			}
+		})
+	}
+}
+
+func TestDocumentType_NewConstants(t *testing.T) {
+	t.Parallel()
+
+	if model.DocumentTypePlan != "plan" {
+		t.Errorf("DocumentTypePlan = %q, want %q", model.DocumentTypePlan, "plan")
+	}
+	if model.DocumentTypeRetrospective != "retrospective" {
+		t.Errorf("DocumentTypeRetrospective = %q, want %q", model.DocumentTypeRetrospective, "retrospective")
+	}
+}
+
 func TestEntity_GetKind(t *testing.T) {
 	t.Parallel()
 

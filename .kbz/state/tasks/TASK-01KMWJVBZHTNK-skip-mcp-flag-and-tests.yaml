@@ -2,7 +2,14 @@ id: TASK-01KMWJVBZHTNK
 parent_feature: FEAT-01KMWJ3ZQ57ZY
 slug: skip-mcp-flag-and-tests
 summary: "Add SkipMCP bool to kbzinit.Options; parse --skip-mcp in init_cmd.go; gate both MCP writers behind SkipMCP in init.go. Write tests in init_test.go covering: new project creates .mcp.json and .zed/settings.json (when .zed/ exists), all three conflict cases for each file (unmanaged skip+warn, older overwrite, current no-op), --skip-mcp suppresses both files, no .zed/ means no .zed/settings.json created. Verify getting-started skill description starts with 'This repository is managed with Kanbanzai' (AC-17) and has Preflight Check section before Before Any Work (AC-18-20)."
-status: queued
+status: done
 depends_on:
   - TASK-01KMWJVBYMTFK
   - TASK-01KMWJVBZ43Q4
+files_planned:
+  - kanbanzai/internal/kbzinit/init.go
+  - kanbanzai/cmd/kanbanzai/init_cmd.go
+  - kanbanzai/internal/kbzinit/init_test.go
+completed: "2026-03-29T10:58:26Z"
+completion_summary: "Added SkipMCP bool to Options, parsed --skip-mcp in init_cmd.go, gated both MCP writers behind SkipMCP in init.go for both runNewProject and runExistingProject. Added 8 tests covering all AC-01 through AC-16."
+verification: go test -race ./... passes

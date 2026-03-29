@@ -2,4 +2,10 @@ id: TASK-01KMWJWE4WDB7
 parent_feature: FEAT-01KMWJ3ZRBYFH
 slug: new-document-types-model
 summary: "Add DocumentTypePlan = \"plan\" and DocumentTypeRetrospective = \"retrospective\" to the DocumentType constants in internal/model/entities.go. Add both to AllDocumentTypes() slice. ValidDocumentType() derives from AllDocumentTypes() automatically. Add unit tests confirming ValidDocumentType(\"plan\") and ValidDocumentType(\"retrospective\") return true, and that doc registration via DocumentService.SubmitDocument accepts both types without error."
-status: queued
+status: done
+files_planned:
+  - kanbanzai/internal/model/entities.go
+  - kanbanzai/internal/model/entities_test.go
+completed: "2026-03-29T10:57:58Z"
+completion_summary: "Added DocumentTypePlan and DocumentTypeRetrospective to model/entities.go, updated AllDocumentTypes() to include both, added unit tests confirming both types are valid"
+verification: go test -race ./internal/model/... passes

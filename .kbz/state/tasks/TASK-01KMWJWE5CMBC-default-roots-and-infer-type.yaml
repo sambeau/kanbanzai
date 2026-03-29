@@ -2,6 +2,12 @@ id: TASK-01KMWJWE5CMBC
 parent_feature: FEAT-01KMWJ3ZRBYFH
 slug: default-roots-and-infer-type
 summary: "Update internal/kbzinit/config_writer.go: DefaultDocumentRoots() returns 8 entries in order: work/design→design, work/spec→specification, work/plan→plan, work/dev→dev-plan, work/research→research, work/report→report, work/review→report, work/retro→retrospective. InferDocType() gains cases: plan→plan, report→report, retro→retrospective; retains: spec→specification, dev→dev-plan, research→research, reports→report; default remains design. Update init_test.go: TestInferDocType table gets new and old cases, TestWriteInitConfig_CanonicalContent expects 8 entries, TestRun_NewProject_CreatesWorkDirs expects 8 directories."
-status: queued
+status: done
 depends_on:
   - TASK-01KMWJWE4WDB7
+files_planned:
+  - kanbanzai/internal/kbzinit/config_writer.go
+  - kanbanzai/internal/kbzinit/init_test.go
+completed: "2026-03-29T10:57:58Z"
+completion_summary: "Updated DefaultDocumentRoots() to return 8 entries (added work/plan, work/report, work/review, work/retro replacing work/reports). Updated InferDocType() with new cases: plan→plan, report→report, retro→retrospective. Updated init_test.go for all 8 directories."
+verification: go test -race ./internal/kbzinit/... passes

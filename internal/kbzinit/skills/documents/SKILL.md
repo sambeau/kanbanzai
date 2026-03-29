@@ -3,9 +3,9 @@ name: kanbanzai-documents
 description: >
   Use this skill whenever you create, edit, register, or approve any document in a
   Kanbanzai-managed project, including files in work/design/, work/spec/, work/plan/,
-  work/research/, or any configured document root. Activate even when document
-  registration is not the primary goal of the task — any file creation in a document
-  root requires registration.
+  work/dev/, work/research/, work/report/, work/review/, work/retro/, or any configured
+  document root. Activate even when document registration is not the primary goal of
+  the task — any file creation in a document root requires registration.
 # kanbanzai-managed: true
 # kanbanzai-version: dev
 ---
@@ -21,10 +21,12 @@ approval workflow. Every document placed in a configured root must be registered
 |---|---|---|
 | `design` | `work/design/` | Architecture, vision, approach decisions |
 | `specification` | `work/spec/` | Acceptance criteria, binding contracts |
-| `dev-plan` | `work/plan/` or `work/dev/` | Implementation plans, task breakdowns |
-| `research` | `work/research/` | Analysis, exploration, background |
-| `report` | `work/reports/` | Review reports, audits, post-mortems |
-| `policy` | `work/design/` | Standing rules, process definitions |
+| `plan` | `work/plan/` | Project planning: roadmaps, scope, decision logs |
+| `dev-plan` | `work/dev/` | Feature implementation plans, task breakdowns |
+| `research` | `work/research/` | Analysis, exploration, background reading |
+| `report` | `work/report/` | Audit reports, post-mortems, general reports |
+| `report` | `work/review/` | Feature and plan review reports |
+| `retrospective` | `work/retro/` | Retrospective synthesis documents |
 
 Design decisions belong in `work/design/`, not `work/plan/`. If a document contains
 architecture, API shapes, data models, or technology choices, it is a design document.

@@ -2,11 +2,15 @@ package kbzinit
 
 import (
 	"bytes"
+	"encoding/json"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	kbzcontext "github.com/sambeau/kanbanzai/internal/context"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // ---- test helpers ----
@@ -137,6 +141,12 @@ func TestInferDocType(t *testing.T) {
 		{"research", "research"},
 		{"work/reports", "report"},
 		{"reports", "report"},
+		{"work/plan", "plan"},
+		{"plan", "plan"},
+		{"work/retro", "retrospective"},
+		{"retro", "retrospective"},
+		{"work/report", "report"},
+		{"report", "report"},
 		{"work/design", "design"},
 		{"work/docs", "design"},
 		{"custom/anything", "design"},
@@ -188,12 +198,18 @@ documents:
       default_type: design
     - path: work/spec
       default_type: specification
+    - path: work/plan
+      default_type: plan
     - path: work/dev
       default_type: dev-plan
     - path: work/research
       default_type: research
-    - path: work/reports
-      default_type: report`)
+    - path: work/report
+      default_type: report
+    - path: work/review
+      default_type: report
+    - path: work/retro
+      default_type: retrospective`)
 
 	got := strings.TrimSpace(string(data))
 	if got != want {
@@ -324,12 +340,18 @@ documents:
       default_type: design
     - path: work/spec
       default_type: specification
+    - path: work/plan
+      default_type: plan
     - path: work/dev
       default_type: dev-plan
     - path: work/research
       default_type: research
-    - path: work/reports
-      default_type: report`)
+    - path: work/report
+      default_type: report
+    - path: work/review
+      default_type: report
+    - path: work/retro
+      default_type: retrospective`)
 
 	if got := strings.TrimSpace(string(data)); got != want {
 		t.Errorf("config.yaml content mismatch\ngot:\n%s\n\nwant:\n%s", got, want)
@@ -348,7 +370,7 @@ func TestRun_NewProject_CreatesWorkDirs(t *testing.T) {
 	if err := in.Run(Options{}); err != nil {
 		t.Fatalf("Run: %v", err)
 	}
-	for _, sub := range []string{"work/design", "work/spec", "work/dev", "work/research", "work/reports"} {
+	for _, sub := range []string{"work/design", "work/spec", "work/plan", "work/dev", "work/research", "work/report", "work/review", "work/retro"} {
 		gitkeep := filepath.Join(dir, sub, ".gitkeep")
 		if _, err := os.Stat(gitkeep); err != nil {
 			t.Errorf("expected %s/.gitkeep to exist, got: %v", sub, err)
@@ -393,7 +415,7 @@ func TestRun_NewProject_SkipWorkDirs(t *testing.T) {
 		t.Error("config.yaml should be created even with --skip-work-dirs")
 	}
 	// work/ dirs should not exist.
-	for _, sub := range []string{"work/design", "work/spec", "work/dev", "work/research", "work/reports"} {
+	for _, sub := range []string{"work/design", "work/spec", "work/plan", "work/dev", "work/research", "work/report", "work/review", "work/retro"} {
 		if _, err := os.Stat(filepath.Join(dir, sub)); err == nil {
 			t.Errorf("work dir %q should not be created with --skip-work-dirs", sub)
 		}
@@ -412,7 +434,7 @@ func TestRun_NewProject_SkipSkills(t *testing.T) {
 	if _, err := os.Stat(filepath.Join(dir, ".kbz", "config.yaml")); err != nil {
 		t.Error("config.yaml should be created with --skip-skills")
 	}
-	for _, sub := range []string{"work/design", "work/spec", "work/dev", "work/research", "work/reports"} {
+	for _, sub := range []string{"work/design", "work/spec", "work/plan", "work/dev", "work/research", "work/report", "work/review", "work/retro"} {
 		if _, err := os.Stat(filepath.Join(dir, sub, ".gitkeep")); err != nil {
 			t.Errorf("work dir %s/.gitkeep should be created with --skip-skills", sub)
 		}
@@ -442,7 +464,7 @@ func TestRun_ExistingProject_NoWorkDirs(t *testing.T) {
 		t.Fatalf("Run: %v", err)
 	}
 
-	for _, sub := range []string{"work/design", "work/spec", "work/dev", "work/research", "work/reports"} {
+	for _, sub := range []string{"work/design", "work/spec", "work/plan", "work/dev", "work/research", "work/report", "work/review", "work/retro"} {
 		if _, err := os.Stat(filepath.Join(dir, sub)); err == nil {
 			t.Errorf("work dir %q should NOT be created for an existing project", sub)
 		}
@@ -902,5 +924,613 @@ func TestRun_PartialInit_Detected(t *testing.T) {
 
 	if !strings.Contains(out.String(), "incomplete") {
 		t.Errorf("expected partial-init warning mentioning 'incomplete'; got: %q", out.String())
+	}
+}
+
+// ---- Run: MCP config files ----
+
+// TestInit_WritesMcpJson verifies AC-01 to AC-03.
+func TestInit_WritesMcpJson(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, err := os.ReadFile(filepath.Join(dir, ".mcp.json"))
+	if err != nil {
+		t.Fatalf("read .mcp.json: %v", err)
+	}
+
+	var cfg map[string]interface{}
+	if err := json.Unmarshal(data, &cfg); err != nil {
+		t.Fatalf("parse .mcp.json: %v", err)
+	}
+
+	managed, ok := cfg["_managed"].(map[string]interface{})
+	if !ok {
+		t.Fatal("missing _managed block")
+	}
+	if managed["tool"] != "kanbanzai" {
+		t.Errorf("_managed.tool = %v, want kanbanzai", managed["tool"])
+	}
+
+	servers, ok := cfg["mcpServers"].(map[string]interface{})
+	if !ok {
+		t.Fatal("missing mcpServers")
+	}
+	kbz, ok := servers["kanbanzai"].(map[string]interface{})
+	if !ok {
+		t.Fatal("missing mcpServers.kanbanzai")
+	}
+	if kbz["command"] != "kanbanzai" {
+		t.Errorf("command = %v, want kanbanzai", kbz["command"])
+	}
+}
+
+// TestInit_UnmanagedMcpJson_Skips verifies AC-04.
+func TestInit_UnmanagedMcpJson_Skips(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	// Write an unmanaged .mcp.json
+	original := `{"mcpServers": {"other": {"command": "other"}}}`
+	if err := os.WriteFile(filepath.Join(dir, ".mcp.json"), []byte(original), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, out := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, _ := os.ReadFile(filepath.Join(dir, ".mcp.json"))
+	if string(data) != original {
+		t.Errorf(".mcp.json was modified; want unchanged")
+	}
+	if !strings.Contains(out.String(), ".mcp.json") {
+		t.Errorf("expected warning mentioning .mcp.json in output; got: %s", out.String())
+	}
+}
+
+// TestInit_ManagedMcpJson_OlderVersion_Overwrites verifies AC-05.
+func TestInit_ManagedMcpJson_OlderVersion_Overwrites(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	older := `{"_managed": {"tool": "kanbanzai", "version": 0}, "mcpServers": {}}`
+	if err := os.WriteFile(filepath.Join(dir, ".mcp.json"), []byte(older), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, _ := os.ReadFile(filepath.Join(dir, ".mcp.json"))
+	var cfg map[string]interface{}
+	if err := json.Unmarshal(data, &cfg); err != nil {
+		t.Fatalf("parse: %v", err)
+	}
+	// Should now have kanbanzai server entry
+	servers := cfg["mcpServers"].(map[string]interface{})
+	if _, ok := servers["kanbanzai"]; !ok {
+		t.Error("expected kanbanzai server entry after overwrite")
+	}
+}
+
+// TestInit_ManagedMcpJson_CurrentVersion_NoOp verifies AC-06.
+func TestInit_ManagedMcpJson_CurrentVersion_NoOp(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	// First run to create managed file at current version.
+	in1, _ := newTestInit(dir, "")
+	if err := in1.Run(Options{}); err != nil {
+		t.Fatalf("first Run: %v", err)
+	}
+	original, _ := os.ReadFile(filepath.Join(dir, ".mcp.json"))
+
+	// Second run should not modify it.
+	in2, _ := newTestInit(dir, "")
+	if err := in2.Run(Options{}); err != nil {
+		t.Fatalf("second Run: %v", err)
+	}
+	current, _ := os.ReadFile(filepath.Join(dir, ".mcp.json"))
+
+	if string(original) != string(current) {
+		t.Error("second run modified .mcp.json at current version")
+	}
+}
+
+// TestInit_ZedDir_WritesSettingsJson verifies AC-07 to AC-08.
+func TestInit_ZedDir_WritesSettingsJson(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	// Create .zed/ directory
+	if err := os.MkdirAll(filepath.Join(dir, ".zed"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, err := os.ReadFile(filepath.Join(dir, ".zed", "settings.json"))
+	if err != nil {
+		t.Fatalf("read .zed/settings.json: %v", err)
+	}
+
+	var cfg map[string]interface{}
+	if err := json.Unmarshal(data, &cfg); err != nil {
+		t.Fatalf("parse: %v", err)
+	}
+
+	managed := cfg["_managed"].(map[string]interface{})
+	if managed["tool"] != "kanbanzai" {
+		t.Errorf("_managed.tool = %v, want kanbanzai", managed["tool"])
+	}
+
+	servers := cfg["context_servers"].(map[string]interface{})
+	if _, ok := servers["kanbanzai"]; !ok {
+		t.Fatal("missing context_servers.kanbanzai")
+	}
+}
+
+// TestInit_NoZedDir_NoSettingsJson verifies AC-09.
+func TestInit_NoZedDir_NoSettingsJson(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	if _, err := os.Stat(filepath.Join(dir, ".zed")); !os.IsNotExist(err) {
+		t.Error("expected .zed/ not to be created when absent")
+	}
+}
+
+// TestInit_UnmanagedZedSettings_Skips verifies AC-10.
+func TestInit_UnmanagedZedSettings_Skips(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	if err := os.MkdirAll(filepath.Join(dir, ".zed"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	original := `{"context_servers": {}}`
+	if err := os.WriteFile(filepath.Join(dir, ".zed", "settings.json"), []byte(original), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, out := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, _ := os.ReadFile(filepath.Join(dir, ".zed", "settings.json"))
+	if string(data) != original {
+		t.Error(".zed/settings.json was modified")
+	}
+	if !strings.Contains(out.String(), ".zed/settings.json") {
+		t.Errorf("expected warning mentioning .zed/settings.json; got: %s", out.String())
+	}
+}
+
+// TestInit_SkipMcp verifies AC-13 to AC-16.
+func TestInit_SkipMcp(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	// Create .zed/ to test that Zed file is also skipped
+	if err := os.MkdirAll(filepath.Join(dir, ".zed"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{SkipMCP: true}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	if _, err := os.Stat(filepath.Join(dir, ".mcp.json")); !os.IsNotExist(err) {
+		t.Error("expected .mcp.json not to be created with --skip-mcp")
+	}
+	if _, err := os.Stat(filepath.Join(dir, ".zed", "settings.json")); !os.IsNotExist(err) {
+		t.Error("expected .zed/settings.json not to be created with --skip-mcp")
+	}
+	// Config should still be created
+	if _, err := os.Stat(filepath.Join(dir, ".kbz", "config.yaml")); os.IsNotExist(err) {
+		t.Error("expected config.yaml to still be created with --skip-mcp")
+	}
+}
+
+// ---- Run: work/README.md ----
+
+// TestRun_NewProject_CreatesWorkReadme verifies that work/README.md is created for new projects.
+func TestRun_NewProject_CreatesWorkReadme(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	readmePath := filepath.Join(dir, "work", "README.md")
+	data, err := os.ReadFile(readmePath)
+	if err != nil {
+		t.Fatalf("work/README.md not created: %v", err)
+	}
+	content := string(data)
+
+	// Must contain all 8 directories.
+	for _, dir := range []string{"design/", "spec/", "plan/", "dev/", "research/", "report/", "review/", "retro/"} {
+		if !strings.Contains(content, dir) {
+			t.Errorf("work/README.md missing directory entry %q", dir)
+		}
+	}
+
+	// Must contain the AI agents line.
+	if !strings.Contains(content, "AI agents") {
+		t.Error("work/README.md missing AI agents line")
+	}
+	if !strings.Contains(content, "kanbanzai-documents") {
+		t.Error("work/README.md missing kanbanzai-documents skill reference")
+	}
+}
+
+// TestRun_SkipWorkDirs_NoReadme verifies that --skip-work-dirs suppresses work/README.md.
+func TestRun_SkipWorkDirs_NoReadme(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{SkipWorkDirs: true}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	readmePath := filepath.Join(dir, "work", "README.md")
+	if _, err := os.Stat(readmePath); err == nil {
+		t.Error("work/README.md should NOT be created with --skip-work-dirs")
+	}
+}
+
+// TestRun_ExistingProject_NoReadme verifies that existing projects do not get work/README.md.
+func TestRun_ExistingProject_NoReadme(t *testing.T) {
+	dir := makeGitRepoWithCommit(t)
+	kbzDir := filepath.Join(dir, ".kbz")
+	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+		t.Fatalf("pre-create config: %v", err)
+	}
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	readmePath := filepath.Join(dir, "work", "README.md")
+	if _, err := os.Stat(readmePath); err == nil {
+		t.Error("work/README.md should NOT be created for an existing project")
+	}
+}
+
+// ---- Run: context role files ----
+
+// TestRun_NewProject_CreatesBaseRole verifies that base.yaml is created for a new project.
+func TestRun_NewProject_CreatesBaseRole(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, err := os.ReadFile(filepath.Join(dir, ".kbz", "context", "roles", "base.yaml"))
+	if err != nil {
+		t.Fatalf("read base.yaml: %v", err)
+	}
+
+	content := string(data)
+	if !strings.Contains(content, "id: base") {
+		t.Error("base.yaml missing 'id: base'")
+	}
+	if !strings.Contains(content, "conventions: []") {
+		t.Error("base.yaml missing 'conventions: []'")
+	}
+	// No managed marker
+	if strings.Contains(content, "kanbanzai-managed") {
+		t.Error("base.yaml should not have managed marker")
+	}
+}
+
+// TestRun_NewProject_CreatesReviewerRole verifies that reviewer.yaml is created with correct content.
+func TestRun_NewProject_CreatesReviewerRole(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	in, _ := newTestInitWithVersion(dir, "", "1.0.0")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, err := os.ReadFile(filepath.Join(dir, ".kbz", "context", "roles", "reviewer.yaml"))
+	if err != nil {
+		t.Fatalf("read reviewer.yaml: %v", err)
+	}
+
+	content := string(data)
+	if !strings.Contains(content, "id: reviewer") {
+		t.Error("missing 'id: reviewer'")
+	}
+	if !strings.Contains(content, "inherits: base") {
+		t.Error("missing 'inherits: base'")
+	}
+	if !strings.Contains(content, `kanbanzai-managed: "true"`) {
+		t.Error("missing managed marker")
+	}
+	if !strings.Contains(content, `version: "1.0.0"`) {
+		t.Error("missing version 1.0.0")
+	}
+	if !strings.Contains(content, "review_approach:") {
+		t.Error("missing review_approach key")
+	}
+	if !strings.Contains(content, "output_format:") {
+		t.Error("missing output_format key")
+	}
+	if !strings.Contains(content, "dimensions:") {
+		t.Error("missing dimensions key")
+	}
+	if !strings.Contains(content, "kanbanzai-review") {
+		t.Error("reviewer.yaml should reference kanbanzai-review skill")
+	}
+}
+
+// TestRun_SkipRoles_CreatesNeither verifies that --skip-roles suppresses both role files.
+func TestRun_SkipRoles_CreatesNeither(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{SkipRoles: true}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	rolesDir := filepath.Join(dir, ".kbz", "context", "roles")
+	if _, err := os.Stat(filepath.Join(rolesDir, "base.yaml")); !os.IsNotExist(err) {
+		t.Error("base.yaml should not be created with --skip-roles")
+	}
+	if _, err := os.Stat(filepath.Join(rolesDir, "reviewer.yaml")); !os.IsNotExist(err) {
+		t.Error("reviewer.yaml should not be created with --skip-roles")
+	}
+}
+
+// TestRun_BaseRole_NotOverwritten verifies that a pre-existing base.yaml is never overwritten.
+func TestRun_BaseRole_NotOverwritten(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	// Pre-create a custom base.yaml inside .kbz (which also creates the .kbz dir).
+	rolesDir := filepath.Join(dir, ".kbz", "context", "roles")
+	if err := os.MkdirAll(rolesDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	custom := "id: base\ndescription: \"custom\"\nconventions: [\"my-convention\"]\n"
+	if err := os.WriteFile(filepath.Join(rolesDir, "base.yaml"), []byte(custom), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	// Pre-create config.yaml so runExistingProject (triggered by .kbz existing) doesn't prompt.
+	kbzDir := filepath.Join(dir, ".kbz")
+	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+		t.Fatalf("pre-create config: %v", err)
+	}
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, _ := os.ReadFile(filepath.Join(rolesDir, "base.yaml"))
+	if string(data) != custom {
+		t.Error("base.yaml was overwritten but should be left alone")
+	}
+}
+
+// TestRun_ReviewerRole_UnmanagedSkipsWithWarning verifies that an unmanaged reviewer.yaml is left alone.
+func TestRun_ReviewerRole_UnmanagedSkipsWithWarning(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	rolesDir := filepath.Join(dir, ".kbz", "context", "roles")
+	if err := os.MkdirAll(rolesDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	unmanaged := "id: reviewer\nconventions: []\n"
+	if err := os.WriteFile(filepath.Join(rolesDir, "reviewer.yaml"), []byte(unmanaged), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	// Pre-create config.yaml so runExistingProject doesn't prompt.
+	kbzDir := filepath.Join(dir, ".kbz")
+	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+		t.Fatalf("pre-create config: %v", err)
+	}
+
+	in, out := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, _ := os.ReadFile(filepath.Join(rolesDir, "reviewer.yaml"))
+	if string(data) != unmanaged {
+		t.Error("unmanaged reviewer.yaml was modified")
+	}
+	if !strings.Contains(out.String(), "reviewer.yaml") {
+		t.Errorf("expected warning mentioning reviewer.yaml; got: %s", out.String())
+	}
+}
+
+// TestRun_ReviewerRole_OlderVersion_Overwritten verifies that a managed reviewer.yaml at an older version is updated.
+func TestRun_ReviewerRole_OlderVersion_Overwritten(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	rolesDir := filepath.Join(dir, ".kbz", "context", "roles")
+	if err := os.MkdirAll(rolesDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	older := "id: reviewer\ninherits: base\nmetadata:\n  kanbanzai-managed: \"true\"\n  version: \"0.9.0\"\nconventions: []\n"
+	if err := os.WriteFile(filepath.Join(rolesDir, "reviewer.yaml"), []byte(older), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	// Pre-create config.yaml so runExistingProject doesn't prompt.
+	kbzDir := filepath.Join(dir, ".kbz")
+	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+		t.Fatalf("pre-create config: %v", err)
+	}
+
+	in, _ := newTestInitWithVersion(dir, "", "1.0.0")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, _ := os.ReadFile(filepath.Join(rolesDir, "reviewer.yaml"))
+	if !strings.Contains(string(data), `version: "1.0.0"`) {
+		t.Error("reviewer.yaml was not updated to current version")
+	}
+}
+
+// TestRun_ReviewerRole_CurrentVersion_NoOp verifies that a managed reviewer.yaml at the current version is not re-written.
+func TestRun_ReviewerRole_CurrentVersion_NoOp(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	// First run to create at current version.
+	in1, _ := newTestInitWithVersion(dir, "", "1.0.0")
+	if err := in1.Run(Options{}); err != nil {
+		t.Fatalf("first Run: %v", err)
+	}
+	reviewerPath := filepath.Join(dir, ".kbz", "context", "roles", "reviewer.yaml")
+	original, _ := os.ReadFile(reviewerPath)
+
+	// Second run at same version — should be a no-op for reviewer.yaml.
+	in2, _ := newTestInitWithVersion(dir, "", "1.0.0")
+	if err := in2.Run(Options{}); err != nil {
+		t.Fatalf("second Run: %v", err)
+	}
+	current, _ := os.ReadFile(reviewerPath)
+
+	if string(original) != string(current) {
+		t.Error("second run at same version modified reviewer.yaml")
+	}
+}
+
+// TestRun_NoDeveloperYaml verifies that developer.yaml is not created by kbz init.
+func TestRun_NoDeveloperYaml(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	developerPath := filepath.Join(dir, ".kbz", "context", "roles", "developer.yaml")
+	if _, err := os.Stat(developerPath); !os.IsNotExist(err) {
+		t.Error("developer.yaml should not be created by kbz init")
+	}
+}
+
+// TestRun_UpdateSkills_UpdatesManagedReviewer verifies that --update-skills also updates managed reviewer.yaml.
+func TestRun_UpdateSkills_UpdatesManagedReviewer(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoWithCommit(t)
+
+	// Pre-create .kbz with a managed reviewer.yaml at an older version.
+	kbzDir := filepath.Join(dir, ".kbz")
+	rolesDir := filepath.Join(kbzDir, "context", "roles")
+	if err := os.MkdirAll(rolesDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	older := "id: reviewer\ninherits: base\nmetadata:\n  kanbanzai-managed: \"true\"\n  version: \"0.9.0\"\nconventions: []\n"
+	if err := os.WriteFile(filepath.Join(rolesDir, "reviewer.yaml"), []byte(older), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, _ := newTestInitWithVersion(dir, "", "1.0.0")
+	if err := in.Run(Options{UpdateSkills: true}); err != nil {
+		t.Fatalf("Run --update-skills: %v", err)
+	}
+
+	data, _ := os.ReadFile(filepath.Join(rolesDir, "reviewer.yaml"))
+	if !strings.Contains(string(data), `version: "1.0.0"`) {
+		t.Error("--update-skills did not update managed reviewer.yaml")
+	}
+}
+
+// TestRun_UpdateSkills_DoesNotTouchBaseRole verifies that --update-skills never modifies base.yaml.
+func TestRun_UpdateSkills_DoesNotTouchBaseRole(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoWithCommit(t)
+
+	kbzDir := filepath.Join(dir, ".kbz")
+	rolesDir := filepath.Join(kbzDir, "context", "roles")
+	if err := os.MkdirAll(rolesDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	custom := "id: base\ndescription: \"custom project conventions\"\nconventions: [\"custom\"]\n"
+	if err := os.WriteFile(filepath.Join(rolesDir, "base.yaml"), []byte(custom), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, _ := newTestInitWithVersion(dir, "", "1.0.0")
+	if err := in.Run(Options{UpdateSkills: true}); err != nil {
+		t.Fatalf("Run --update-skills: %v", err)
+	}
+
+	data, _ := os.ReadFile(filepath.Join(rolesDir, "base.yaml"))
+	if string(data) != custom {
+		t.Error("--update-skills modified base.yaml which should never be touched")
+	}
+}
+
+// TestRun_ContextAssemble_ReviewerRole is an integration test verifying that
+// context_assemble(role=reviewer) returns a non-empty packet after kbz init
+// installs the reviewer role file. This exercises the full path from init →
+// role file on disk → ProfileStore → Assemble.
+func TestRun_ContextAssemble_ReviewerRole(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	// Point the profile store at the roles directory created by kbz init.
+	rolesDir := filepath.Join(dir, ".kbz", "context", "roles")
+	profileStore := kbzcontext.NewProfileStore(rolesDir)
+
+	// Use a throwaway state dir for knowledge — no entries are needed here.
+	knowledgeSvc := service.NewKnowledgeService(t.TempDir())
+
+	result, err := kbzcontext.Assemble(
+		kbzcontext.AssemblyInput{Role: "reviewer"},
+		profileStore,
+		knowledgeSvc,
+		nil, // entitySvc
+		nil, // intelligenceSvc
+	)
+	if err != nil {
+		t.Fatalf("Assemble(role=reviewer): %v", err)
+	}
+	if len(result.Items) == 0 {
+		t.Error("Assemble(role=reviewer) returned an empty packet; expected at least one item (the role profile)")
+	}
+	if result.Role != "reviewer" {
+		t.Errorf("result.Role = %q, want %q", result.Role, "reviewer")
 	}
 }

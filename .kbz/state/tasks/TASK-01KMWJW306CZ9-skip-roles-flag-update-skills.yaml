@@ -2,6 +2,12 @@ id: TASK-01KMWJW306CZ9
 parent_feature: FEAT-01KMWJ3ZQZF5R
 slug: skip-roles-flag-update-skills
 summary: "Add SkipRoles bool to kbzinit.Options; parse --skip-roles in init_cmd.go; gate installRoles behind SkipRoles. Extend --update-skills path in init.go to call updateManagedRoles: updates reviewer.yaml if managed+older version, no-op if current, skips base.yaml entirely. Update --update-skills help text to mention role files."
-status: queued
+status: done
 depends_on:
   - TASK-01KMWJW2ZR735
+files_planned:
+  - kanbanzai/internal/kbzinit/init.go
+  - kanbanzai/cmd/kanbanzai/init_cmd.go
+completed: "2026-03-29T10:58:27Z"
+completion_summary: "Added SkipRoles bool to Options, parsed --skip-roles in init_cmd.go, gated installRoles behind SkipRoles. Extended --update-skills to call updateManagedRoles. Updated help text."
+verification: go test -race ./... passes

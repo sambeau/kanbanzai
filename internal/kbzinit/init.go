@@ -34,6 +34,10 @@ type Options struct {
 	NonInteractive bool
 	// SkipWorkDirs suppresses creation of work/ placeholder directories.
 	SkipWorkDirs bool
+	// SkipMCP suppresses writing .mcp.json and .zed/settings.json.
+	SkipMCP bool
+	// SkipRoles suppresses installation of context role files.
+	SkipRoles bool
 }
 
 // Initializer runs the kanbanzai init command.
@@ -79,6 +83,10 @@ func (i *Initializer) Run(opts Options) error {
 	if opts.UpdateSkills {
 		fmt.Fprintln(i.stdout, "Updating skill files...")
 		if err := i.installSkills(gitRoot); err != nil {
+			return err
+		}
+		// Also update managed role files.
+		if err := i.updateManagedRoles(kbzDir); err != nil {
 			return err
 		}
 		fmt.Fprintln(i.stdout, "Skill update complete.")
@@ -180,10 +188,28 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 		if err := i.createWorkDirs(baseDir, roots); err != nil {
 			return err
 		}
+		if err := i.writeWorkReadme(baseDir); err != nil {
+			return err
+		}
 	}
 
 	if !opts.SkipSkills {
 		if err := i.installSkills(baseDir); err != nil {
+			return err
+		}
+	}
+
+	if !opts.SkipMCP {
+		if err := i.writeMCPConfig(baseDir); err != nil {
+			return err
+		}
+		if err := i.writeZedConfig(baseDir); err != nil {
+			return err
+		}
+	}
+
+	if !opts.SkipRoles {
+		if err := i.installRoles(kbzDir); err != nil {
 			return err
 		}
 	}
@@ -238,6 +264,21 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 
 	if !opts.SkipSkills {
 		if err := i.installSkills(baseDir); err != nil {
+			return err
+		}
+	}
+
+	if !opts.SkipMCP {
+		if err := i.writeMCPConfig(baseDir); err != nil {
+			return err
+		}
+		if err := i.writeZedConfig(baseDir); err != nil {
+			return err
+		}
+	}
+
+	if !opts.SkipRoles {
+		if err := i.installRoles(kbzDir); err != nil {
 			return err
 		}
 	}
@@ -377,6 +418,37 @@ func (i *Initializer) createWorkDirs(baseDir string, roots []DocumentRoot) error
 		}
 		fmt.Fprintf(i.stdout, "Created %s/.gitkeep\n", root.Path)
 	}
+	return nil
+}
+
+// writeWorkReadme writes work/README.md to baseDir if it does not already exist.
+func (i *Initializer) writeWorkReadme(baseDir string) error {
+	readmePath := filepath.Join(baseDir, "work", "README.md")
+	if _, err := os.Stat(readmePath); err == nil {
+		// Already exists — leave it alone.
+		return nil
+	}
+	content := `# work/
+
+Workflow documents for this project. Register all documents with kanbanzai after creation.
+
+| Directory | Type | Contents |
+|---|---|---|
+| ` + "`design/`" + ` | design | Architecture decisions, technical vision, policies |
+| ` + "`spec/`" + ` | specification | Acceptance criteria and binding contracts |
+| ` + "`plan/`" + ` | plan | Project planning: roadmaps, scope, decision logs |
+| ` + "`dev/`" + ` | dev-plan | Feature implementation plans and task breakdowns |
+| ` + "`research/`" + ` | research | Analysis, exploration, background reading |
+| ` + "`report/`" + ` | report | Audit reports, post-mortems, general reports |
+| ` + "`review/`" + ` | report | Feature and plan review reports |
+| ` + "`retro/`" + ` | retrospective | Retrospective synthesis documents |
+
+AI agents: see the ` + "`kanbanzai-documents`" + ` skill for registration instructions.
+`
+	if err := os.WriteFile(readmePath, []byte(content), 0o644); err != nil {
+		return fmt.Errorf("cannot write 'work/README.md': check that the current user has write access to this directory")
+	}
+	fmt.Fprintln(i.stdout, "Created work/README.md")
 	return nil
 }
 
