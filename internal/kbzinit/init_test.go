@@ -1081,8 +1081,10 @@ func TestInit_ZedDir_WritesSettingsJson(t *testing.T) {
 	}
 }
 
-// TestInit_NoZedDir_NoSettingsJson verifies AC-09.
-func TestInit_NoZedDir_NoSettingsJson(t *testing.T) {
+// TestInit_NewProject_NoZedDir_CreatesSettingsJson verifies that a new project always gets
+// .zed/settings.json even when .zed/ does not exist at init time. Zed creates .zed/ lazily
+// on first open, so detecting its presence is not a reliable signal for new projects.
+func TestInit_NewProject_NoZedDir_CreatesSettingsJson(t *testing.T) {
 	t.Parallel()
 	dir := makeGitRepoNoCommits(t)
 	in, _ := newTestInit(dir, "")
@@ -1090,8 +1092,37 @@ func TestInit_NoZedDir_NoSettingsJson(t *testing.T) {
 		t.Fatalf("Run: %v", err)
 	}
 
+	data, err := os.ReadFile(filepath.Join(dir, ".zed", "settings.json"))
+	if err != nil {
+		t.Fatalf(".zed/settings.json not created for new project: %v", err)
+	}
+	var cfg map[string]interface{}
+	if err := json.Unmarshal(data, &cfg); err != nil {
+		t.Fatalf("parse .zed/settings.json: %v", err)
+	}
+	if _, ok := cfg["context_servers"]; !ok {
+		t.Error(".zed/settings.json missing context_servers key")
+	}
+}
+
+// TestInit_ExistingProject_NoZedDir_NoSettingsJson verifies that an existing project does
+// not get a .zed/ directory when one is absent — the missing directory signals the project
+// does not use Zed.
+func TestInit_ExistingProject_NoZedDir_NoSettingsJson(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoWithCommit(t)
+	kbzDir := filepath.Join(dir, ".kbz")
+	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+		t.Fatalf("pre-create config: %v", err)
+	}
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
 	if _, err := os.Stat(filepath.Join(dir, ".zed")); !os.IsNotExist(err) {
-		t.Error("expected .zed/ not to be created when absent")
+		t.Error("expected .zed/ not to be created for an existing project without it")
 	}
 }
 

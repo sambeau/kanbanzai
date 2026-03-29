@@ -203,7 +203,7 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 		if err := i.writeMCPConfig(baseDir); err != nil {
 			return err
 		}
-		if err := i.writeZedConfig(baseDir); err != nil {
+		if err := i.writeZedConfig(baseDir, true); err != nil {
 			return err
 		}
 	}
@@ -272,7 +272,7 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 		if err := i.writeMCPConfig(baseDir); err != nil {
 			return err
 		}
-		if err := i.writeZedConfig(baseDir); err != nil {
+		if err := i.writeZedConfig(baseDir, false); err != nil {
 			return err
 		}
 	}

@@ -64,13 +64,24 @@ func (i *Initializer) writeMCPConfig(baseDir string) error {
 	return i.writeJSONConfig(destPath, ".mcp.json", data, "add the kanbanzai server entry to it manually. See docs/getting-started.md for the snippet")
 }
 
-// writeZedConfig writes .zed/settings.json if a .zed/ directory exists at baseDir.
-// Applies the same version-aware conflict logic as writeMCPConfig.
-func (i *Initializer) writeZedConfig(baseDir string) error {
+// writeZedConfig writes .zed/settings.json to baseDir, applying the same
+// version-aware conflict logic as writeMCPConfig.
+//
+// When createIfAbsent is true (new projects), the .zed/ directory is created
+// if it does not already exist. When false (existing projects), a missing .zed/
+// directory is treated as a signal that the project does not use Zed, and the
+// function returns without writing anything.
+func (i *Initializer) writeZedConfig(baseDir string, createIfAbsent bool) error {
 	zedDir := filepath.Join(baseDir, ".zed")
 	if _, err := os.Stat(zedDir); os.IsNotExist(err) {
-		// No .zed/ directory — silently skip, no message.
-		return nil
+		if !createIfAbsent {
+			// No .zed/ directory and we're on an existing project — silently skip.
+			return nil
+		}
+		// New project: create .zed/ so settings.json can be written.
+		if err := os.MkdirAll(zedDir, 0o755); err != nil {
+			return fmt.Errorf("create .zed/: %w", err)
+		}
 	}
 
 	destPath := filepath.Join(zedDir, "settings.json")
