@@ -22,7 +22,7 @@ approval workflow. Every document placed in a configured root must be registered
 | `design` | `work/design/` | Discursive prose | What to build and why — alternatives considered, decisions made, rationale recorded. No code. No acceptance criteria. |
 | `specification` | `work/spec/` | Terse and formal | Verifiable acceptance criteria distilled from an approved design. No code, no implementation notes, no prose that does not directly support a testable criterion. |
 | `plan` | `work/plan/` | Structured reference | Project planning: roadmaps, scope, decision logs |
-| `dev-plan` | `work/dev/` | Operational | How to build it — task breakdown, engineering decisions, code sketches. Uses the approved specification as its basis. |
+| `dev-plan` | `work/dev/` | Coordination | Task breakdown, dependency graph, parallelism analysis, file ownership, estimates. No implementation code. Interface stubs that define contracts between tasks are acceptable. Uses the approved specification as its basis. |
 | `research` | `work/research/` | Exploratory | Analysis, exploration, background reading |
 | `report` | `work/report/` | Evaluative | Audit reports, post-mortems, general reports |
 | `report` | `work/review/` | Evaluative | Review findings: bugs, deviations from spec, verdict |
@@ -34,8 +34,10 @@ architecture, API shapes, data models, or technology choices, it is a design doc
 Acceptance criteria belong in `work/spec/`, not `work/design/`. If you are writing
 verifiable pass/fail criteria, you are writing a specification, not a design.
 
-Implementation notes, code sketches, and task breakdowns belong in `work/dev/`, not
-`work/spec/`. A specification that contains code has absorbed dev-plan content.
+Task breakdowns and dependency graphs belong in `work/dev/`, not `work/spec/`. A
+specification that contains code or implementation notes has absorbed dev-plan content.
+A dev-plan that contains implementation code has absorbed implementing-agent work —
+write the interface, not the implementation.
 
 ## Registration Procedure
 

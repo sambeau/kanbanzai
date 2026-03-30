@@ -14,6 +14,51 @@ description: >
 This skill defines how agents interact with Kanbanzai: assembling context, dispatching
 and completing tasks, writing commits, contributing knowledge, and spawning sub-agents.
 
+## Dev Plan and Orchestration
+
+The dev plan is a **coordination artifact**, not an implementation document. Its purpose
+is to record orchestration decisions — what tasks exist, what order they run in, what can
+be parallelised — so that this reasoning persists across agent sessions and context
+boundaries. A future orchestrator should be able to read the dev plan and resume the work
+without re-deriving the task structure from scratch.
+
+**A dev plan contains:**
+- **Task breakdown** — each task as a deliverable unit, with a one-line summary and the
+  spec ACs it satisfies
+- **Dependency graph** — which tasks must complete before others can start (`depends_on`)
+- **Parallelism analysis** — which tasks have no file overlap or data dependency and can
+  run concurrently
+- **File ownership map** — which files each task touches, to prevent conflicts when tasks
+  run in parallel
+- **Estimates** — rough sizing to inform scheduling and sequencing
+- **Risk notes** — tasks that are complex, uncertain, or on the critical path
+
+**A dev plan does not contain:**
+- Implementation code — no function bodies, no algorithm details, no full struct
+  definitions
+- Design rationale — that belongs in the design document
+- Acceptance criteria — those live in the specification
+
+**API shapes and interface stubs are acceptable** when they define the contract between
+tasks — e.g., "Task A produces `func Foo(x Bar) (Baz, error)`; Task B depends on it."
+Write the interface, not the implementation. There is no value in writing code twice.
+
+Implementing agents receive their instructions from the task entity summary and the spec
+sections assembled by `next`. They do not need the dev plan to contain their
+implementation — only enough context to understand what they are building and how it
+connects to adjacent tasks.
+
+**Use `decompose` to create tasks from the approved spec:**
+
+1. `decompose(action: "propose", feature_id: "FEAT-...")` — generates a task breakdown
+2. `decompose(action: "review", proposal: {...})` — checks the proposal for completeness
+3. `decompose(action: "apply", proposal: {...})` — creates the task entities
+
+Write the dev plan document to record the orchestration reasoning behind the
+decomposition. The document persists; the context window that produced it does not.
+
+---
+
 ## Context Assembly
 
 Before starting work on any task, call `next` with a task ID to claim it and receive a

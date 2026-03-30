@@ -141,6 +141,12 @@ plan entities.
 
 ## Gotchas
 
+**Dev plan contains implementation code.** The dev plan is a coordination artifact —
+task breakdown, dependency graph, parallelism analysis. It is not an implementation
+document and must not contain function bodies, algorithm details, or full struct
+definitions. API shapes and interface stubs that define contracts between tasks are
+acceptable; implementations are not. See `kanbanzai-agents` for the dev plan format.
+
 **Tool call failures:** Read the error message. It names the valid transitions from the
 current state. Do not retry with the same arguments — identify the correct transition first.
 
