@@ -1,0 +1,7 @@
+id: FEAT-01KMZA2Z98RAB
+slug: copilot-instructions
+parent: P12-agent-onboarding
+status: proposed
+summary: Generate .github/copilot-instructions.md on kbz init as a thin pointer to AGENTS.md. Same managed-marker pattern.
+created: "2026-03-30T12:04:23Z"
+created_by: sambeau
