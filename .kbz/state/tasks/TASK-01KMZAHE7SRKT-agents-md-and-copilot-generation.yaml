@@ -2,5 +2,17 @@ id: TASK-01KMZAHE7SRKT
 parent_feature: FEAT-01KMZA2PPSFK9
 slug: agents-md-and-copilot-generation
 summary: "Create agents_md.go with AGENTS.md and copilot-instructions.md generation: templates, markdown managed-marker writer, version-aware conflict logic, --skip-agents-md flag, init integration, and tests. Spec §3 and §4."
-status: queued
+status: done
 estimate: "5"
+files_planned:
+  - internal/kbzinit/agents_md.go
+  - internal/kbzinit/agents_md_test.go
+  - internal/kbzinit/init.go
+  - cmd/kanbanzai/init_cmd.go
+completed: "2026-03-30T12:24:29Z"
+claimed_at: "2026-03-30T12:17:03Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-30T12:17:03Z"
+dispatched_by: sambeau
+completion_summary: "Created agents_md.go with AGENTS.md and copilot-instructions generation, markdown managed-marker writer, version-aware conflict logic. Added SkipAgentsMD flag and wired both writers into init. 25 tests cover all AC-A and AC-B criteria plus a fuzz test."
+verification: go test ./internal/kbzinit/... passes full suite. 25 new tests all pass.

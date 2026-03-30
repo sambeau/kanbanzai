@@ -1,0 +1,17 @@
+id: KE-01KMZBCA4VZWW
+tier: 3
+topic: retro-task-01kmzahtwdzzs-2
+scope: project
+content: "[minor] worked-well: Version-aware conflict logic pattern from mcp_config.go translated cleanly to Markdown managed-marker pattern. The const/var embedding approach kept the template content visible and auditable in code review."
+learned_from: TASK-01KMZAHTWDZZS
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - worked-well
+created: "2026-03-30T12:26:58Z"
+created_by: unknown
+updated: "2026-03-30T12:26:58Z"

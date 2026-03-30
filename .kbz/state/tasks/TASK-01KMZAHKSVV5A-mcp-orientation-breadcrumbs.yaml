@@ -2,5 +2,17 @@ id: TASK-01KMZAHKSVV5A
 parent_feature: FEAT-01KMZA34WSPRR
 slug: mcp-orientation-breadcrumbs
 summary: "Add orientation field to status (project overview, always) and next (empty queue only) responses. Define orientationInfo struct. Tests for inclusion/exclusion conditions. Spec §7."
-status: queued
+status: done
 estimate: "3"
+files_planned:
+  - internal/mcp/status_tool.go
+  - internal/mcp/next_tool.go
+  - internal/mcp/status_tool_test.go
+  - internal/mcp/next_tool_test.go
+completed: "2026-03-30T12:20:24Z"
+claimed_at: "2026-03-30T12:17:03Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-30T12:17:03Z"
+dispatched_by: sambeau
+completion_summary: "Added orientationInfo struct. projectOverview always includes orientation field. next queue mode includes orientation only when queue is empty, excludes in claim mode. 6 new tests covering all AC-E criteria."
+verification: "go test ./internal/mcp/... passes (full suite, no regressions). 6 new orientation tests all pass."

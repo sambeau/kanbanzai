@@ -2,5 +2,15 @@ id: TASK-01KMZAHJYSG07
 parent_feature: FEAT-01KMZA33G1FFR
 slug: specification-skill
 summary: "Create kanbanzai-specification skill at skills/specification/SKILL.md with all required sections per spec §6.3. Add to skillNames in skills.go. ≤200 lines, follows design skill structure. Spec §6."
-status: queued
+status: done
 estimate: "3"
+files_planned:
+  - internal/kbzinit/skills/specification/SKILL.md
+  - internal/kbzinit/skills.go
+completed: "2026-03-30T12:16:57Z"
+claimed_at: "2026-03-30T12:14:43Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-30T12:14:43Z"
+dispatched_by: sambeau
+completion_summary: "Created kanbanzai-specification skill with all 10 required sections from spec §6.3. 137 lines, follows design skill structure. Added to skillNames in skills.go."
+verification: "go build ./... passes, go test ./internal/kbzinit/... all pass"

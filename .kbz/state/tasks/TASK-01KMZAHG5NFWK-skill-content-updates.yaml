@@ -2,5 +2,15 @@ id: TASK-01KMZAHG5NFWK
 parent_feature: FEAT-01KMZA31HYW6A
 slug: skill-content-updates
 summary: "Add 'use MCP tools, don't write files directly' rule to getting-started skill and direct-write condition to workflow skill's emergency brake list. Additions only. Spec §5."
-status: queued
+status: done
 estimate: "1"
+files_planned:
+  - internal/kbzinit/skills/getting-started/SKILL.md
+  - internal/kbzinit/skills/workflow/SKILL.md
+completed: "2026-03-30T12:16:57Z"
+claimed_at: "2026-03-30T12:14:43Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-30T12:14:43Z"
+dispatched_by: sambeau
+completion_summary: "Added MCP-tools-only rule to getting-started Preflight Check section and direct-write condition to workflow Emergency Brake list. Additions only, all existing content preserved."
+verification: "go build ./... passes, go test ./internal/kbzinit/... all pass"

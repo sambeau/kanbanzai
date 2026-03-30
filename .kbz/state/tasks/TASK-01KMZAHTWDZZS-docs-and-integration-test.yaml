@@ -2,5 +2,15 @@ id: TASK-01KMZAHTWDZZS
 parent_feature: FEAT-01KMZA2PPSFK9
 slug: docs-and-integration-test
 summary: "Update getting-started.md with new files in directory structure, add integration test verifying all P12 features work together end-to-end. Spec §9 and §11.2."
-status: queued
+status: done
 estimate: "2"
+files_planned:
+  - docs/getting-started.md
+  - internal/kbzinit/init_test.go
+completed: "2026-03-30T12:26:58Z"
+claimed_at: "2026-03-30T12:24:35Z"
+dispatched_to: unspecified
+dispatched_at: "2026-03-30T12:24:35Z"
+dispatched_by: sambeau
+completion_summary: "Updated getting-started.md with new directory structure entries and --skip-agents-md doc. Added 3 integration tests covering AC-INT-1 through AC-INT-5: full P12 artefact verification, idempotency, skip flag, and skip-both edge case."
+verification: go test ./... passes full project suite. 3 new integration tests pass.
