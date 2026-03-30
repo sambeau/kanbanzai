@@ -1,0 +1,300 @@
+document_id: P12-agent-onboarding/design-agent-onboarding
+document_path: work/design/agent-onboarding.md
+content_hash: a49d3c00e94fa7f3f80736366125d119981ebc055e8579e17d224f2c88e8d2ee
+indexed_at: 2026-03-30T11:40:52.094655Z
+sections:
+    - path: "1"
+      level: 1
+      title: Agent Onboarding and Skill Discovery
+      byte_offset: 0
+      byte_count: 15497
+      word_count: 2243
+      content_hash: a49d3c00e94fa7f3f80736366125d119981ebc055e8579e17d224f2c88e8d2ee
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Problem Statement
+          byte_offset: 749
+          byte_count: 3568
+          word_count: 529
+          content_hash: 310835f2d13ea22888043163d76d6b6e5a995f9935b6705c5c3ef6233debd3b1
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 1.1 The discovery chain
+              byte_offset: 1828
+              byte_count: 651
+              word_count: 102
+              content_hash: bc88573cacdc040280566e0f734f72ca9131cabd43c8d12c0b1c11cba3ec781f
+            - path: 1.1.2
+              level: 3
+              title: 1.2 The editor fragmentation problem
+              byte_offset: 2479
+              byte_count: 1001
+              word_count: 148
+              content_hash: f2f125353f4604553a53d698aabbf3bfb246fd3a7718c83324b5c0f1c30dd862
+            - path: 1.1.3
+              level: 3
+              title: 1.3 Secondary gaps identified
+              byte_offset: 3480
+              byte_count: 837
+              word_count: 125
+              content_hash: a8876abf225c2f0fbddfaf3f2dcd7b184b263ec4f987d8c0c3b39ffa1979877b
+        - path: "1.2"
+          level: 2
+          title: 2. Design
+          byte_offset: 4317
+          byte_count: 4850
+          word_count: 711
+          content_hash: 46da8a1867ae25ce40433771036f551f7b5473901016d1a8fcdf4ab5ca87947b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Generate AGENTS.md on init
+              byte_offset: 4331
+              byte_count: 1398
+              word_count: 224
+              content_hash: 46edc4d89721a5dc28df451c3e46754c1c2877d01829ca4bf62548bac03b69a8
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Generate .github/copilot-instructions.md on init
+              byte_offset: 5729
+              byte_count: 771
+              word_count: 106
+              content_hash: 56590600cb0b1edb636426f94c2cbe9f4c7f39c2b661aa110724ebd435257889
+            - path: 1.2.3
+              level: 3
+              title: 2.3 Update skill content
+              byte_offset: 6500
+              byte_count: 1940
+              word_count: 276
+              content_hash: 7e59bf7bb8ddb9462a39aa3c63d6fc6c562af860e6303b036876baf3989593ef
+              children:
+                - path: 1.2.3.1
+                  level: 4
+                  title: 2.3.1 Add "don't write files directly" to getting-started and workflow skills
+                  byte_offset: 6574
+                  byte_count: 767
+                  word_count: 112
+                  content_hash: 2642c9de38f680af34dc25a4dc9abba97188c709c9804b04fd0d9f03d53f2327
+                - path: 1.2.3.2
+                  level: 4
+                  title: 2.3.2 Add a kanbanzai-specification skill
+                  byte_offset: 7341
+                  byte_count: 1099
+                  word_count: 152
+                  content_hash: ac003a3946c75c9e417594ef2d0993fc373d245400072e85d3d2dc0b0d36683c
+            - path: 1.2.4
+              level: 3
+              title: 2.4 MCP tool orientation breadcrumbs
+              byte_offset: 8440
+              byte_count: 727
+              word_count: 102
+              content_hash: 50743be371c6126ae15abe0a5e5e0f2e757d889daef7e1022b8f797cc311a0bb
+        - path: "1.3"
+          level: 2
+          title: 3. Design Decisions
+          byte_offset: 9167
+          byte_count: 3279
+          word_count: 465
+          content_hash: 51cce0ef264f286cff5922c20fc1c1a72cae02fb8ec43bdc9c0d7c66a63ef739
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 AGENTS.md is a scaffold, not a managed file
+              byte_offset: 9191
+              byte_count: 825
+              word_count: 116
+              content_hash: d931798ea45c06424abd8139500acf2716f80a588c5245eb78594a7e01e53847
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Copilot instructions file is a pointer, not a duplicate
+              byte_offset: 10016
+              byte_count: 703
+              word_count: 94
+              content_hash: 801885d3b9a1e335ca287a44f6bbe0894a601a234f54c5702b74290bd2e3d976
+            - path: 1.3.3
+              level: 3
+              title: 3.3 No Cursor/Windsurf/other editor-specific files
+              byte_offset: 10719
+              byte_count: 585
+              word_count: 78
+              content_hash: ef6105b3cfe560422dc3ad4b03da30d2f08336bac6a9eca15dc043a6bf1657bc
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Orientation breadcrumbs are data, not instructions
+              byte_offset: 11304
+              byte_count: 620
+              word_count: 103
+              content_hash: 0ab217523dd6acd95330dc870a66ee815d4a03dcb21b0f31903c74163f639ca6
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Specification skill follows the design skill's structure
+              byte_offset: 11924
+              byte_count: 522
+              word_count: 70
+              content_hash: 500a5fcaf2ace1f5a82c1ae4afcae4d3dab82ef034823141f5b07afc963d513f
+        - path: "1.4"
+          level: 2
+          title: 4. Scope
+          byte_offset: 12446
+          byte_count: 1031
+          word_count: 136
+          content_hash: 05173f390a38cad60b0f952294697281a314c570929b527aa2ae376cfd41886a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 In scope
+              byte_offset: 12459
+              byte_count: 657
+              word_count: 85
+              content_hash: 21665e31d030fabe91faf80f810661bca44c87e14dbdb19a670a3056383fafd5
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Out of scope
+              byte_offset: 13116
+              byte_count: 361
+              word_count: 48
+              content_hash: 84325a459d0d46cd02e537686d56d7bc1d41e2c055363a32ec24961734502937
+        - path: "1.5"
+          level: 2
+          title: 5. Risks
+          byte_offset: 13477
+          byte_count: 1514
+          word_count: 227
+          content_hash: 25c9cba62b0dceb78cad9fff5fafbf6eea3b79a12a1981eae9c997faa1fb4dd6
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 AGENTS.md conflicts with existing files
+              byte_offset: 13490
+              byte_count: 364
+              word_count: 56
+              content_hash: 2a9bb4fe2aa11f244d5d8c6358f5e34661759e467689d26bf0e00e4bc59d0ba9
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Copilot instructions may evolve
+              byte_offset: 13854
+              byte_count: 315
+              word_count: 45
+              content_hash: c9c97b0150c217279512e9a7c0ed2ec2c28ef648929c671775982ed997ac8181
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Orientation breadcrumbs may be ignored
+              byte_offset: 14169
+              byte_count: 395
+              word_count: 59
+              content_hash: b6ecc00aa2c848a4789ccf3118cd08dff83ceec67f9e175b159af11fd843bef4
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Specification skill may be too prescriptive
+              byte_offset: 14564
+              byte_count: 427
+              word_count: 64
+              content_hash: e11748c3c25feedbdff217a189ddbca799448b49654218fe764dd57275b9ca6a
+        - path: "1.6"
+          level: 2
+          title: 6. Feature Decomposition (Proposed)
+          byte_offset: 14991
+          byte_count: 506
+          word_count: 93
+          content_hash: e402a118ac374ae67112b2d1d028c0afce6dc494a7953e3d1a311b342b268b34
+front_matter:
+    status: design proposal
+    date: "2026-03-30"
+    related:
+        - work/design/fresh-install-experience.md` (P11 — MCP config, skills, roles, document layout)
+        - work/design/init-command.md` (original init command design)
+        - work/design/kanbanzai-1.0.md` (skills-based onboarding, §4)
+        - work/spec/init-command.md` (init command specification)
+        - .agents/skills/kanbanzai-getting-started/SKILL.md` (current session-start skill)
+        - .agents/skills/kanbanzai-workflow/SKILL.md` (stage gates and lifecycle)
+    extra:
+        Plan: P12-agent-onboarding
+        Purpose: close the skill discovery gap revealed by first real-world usage — agents have kanbanzai MCP tools available but no awareness of the workflow protocol
+entity_refs:
+    - entity_id: P12-agent-onboarding
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 257
+cross_doc_links:
+    - target_path: work/design/fresh-install-experience.md
+      link_text: work/design/fresh-install-experience.md
+      section_path: "1"
+    - target_path: work/design/init-command.md
+      link_text: work/design/init-command.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1"
+    - target_path: work/spec/init-command.md
+      link_text: work/spec/init-command.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: "1.1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.1.2
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.1.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.1
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.2.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.2
+    - target_path: kanbanzai-getting-started/SKILL.md
+      link_text: kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.3.1
+    - target_path: kanbanzai-workflow/SKILL.md
+      link_text: kanbanzai-workflow/SKILL.md
+      section_path: 1.2.3.1
+    - target_path: .agents/skills/kanbanzai-specification/SKILL.md
+      link_text: .agents/skills/kanbanzai-specification/SKILL.md
+      section_path: 1.2.3.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.3
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.3.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.1
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.4.1
+conventional_roles:
+    - section_path: "1.3"
+      role: decision
+      confidence: high
+    - section_path: "1.4"
+      role: constraint
+      confidence: high
+    - section_path: 1.4.1
+      role: constraint
+      confidence: high
+    - section_path: 1.4.2
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: risk
+      confidence: high
+classified: false

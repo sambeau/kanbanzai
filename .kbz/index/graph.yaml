@@ -1,4 +1,4 @@
-updated_at: 2026-03-29T10:39:29.211991Z
+updated_at: 2026-03-30T12:12:10.040484Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -32518,5 +32518,885 @@ edges:
     - from: FEAT-01KMWJ3ZRBYFH/dev-plan-p11-dev-document-layout#1.2.3
       from_type: section
       to: work/README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding
+      from_type: document
+      to: P12-agent-onboarding/design-agent-onboarding#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.1
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.1
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.1
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.2
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.2
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.2
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.2.3
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.2.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.2.3
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.2.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.2
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.4
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.4
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.5
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.5
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.5
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1.5
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/design-agent-onboarding#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: work/design/fresh-install-experience.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: work/design/init-command.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: work/design/kanbanzai-1.0.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: work/spec/init-command.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.1
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.1
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.1.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.1.2
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.2.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.2.2
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.2.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.2.3.1
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.2.3.1
+      from_type: section
+      to: kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.2.3.2
+      from_type: section
+      to: .agents/skills/kanbanzai-specification/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.3.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.3.3
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.3.3
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.4.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/design-agent-onboarding#1.4.1
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding
+      from_type: document
+      to: P12-agent-onboarding/specification-agent-onboarding#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.3.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.4
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.4
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.4
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.4
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.4
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.4
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.4
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.5
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.5
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.5
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.5
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.5
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.3.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.3.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.3
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.3.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.7
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.7
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.7
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.7
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.7
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.7.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.7
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.7.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.9
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.9
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.9
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.11
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.11.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.11
+      from_type: section
+      to: P12-agent-onboarding/specification-agent-onboarding#1.11.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: work/design/agent-onboarding.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: work/spec/init-command.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: work/design/fresh-install-experience.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.1
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.2
+      from_type: section
+      to: work/spec/init-command.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.3.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.3.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.3.2
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.3.8
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.4.1
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.4.3
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.4.7
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.4.7
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.4.7
+      from_type: section
+      to: copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.5.1
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.5.2
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.1
+      from_type: section
+      to: .agents/skills/kanbanzai-specification/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.4
+      from_type: section
+      to: kanbanzai-design/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.6.5
+      from_type: section
+      to: .agents/skills/kanbanzai-specification/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.8
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.8
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.9.1
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.9.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.9.1
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.9.2
+      from_type: section
+      to: work/spec/init-command.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.9.3
+      from_type: section
+      to: docs/mcp-tool-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.11.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.11.2
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/specification-agent-onboarding#1.11.2
+      from_type: section
+      to: .agents/skills/kanbanzai-specification/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding
+      from_type: document
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3
+      from_type: section
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding/dev-plan-agent-onboarding#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1
+      from_type: section
+      to: P12-agent-onboarding
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1
+      from_type: section
+      to: work/design/agent-onboarding.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1
+      from_type: section
+      to: work/spec/agent-onboarding.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.2
+      from_type: section
+      to: internal/kbzinit/skills/getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.2
+      from_type: section
+      to: internal/kbzinit/skills/workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.2
+      from_type: section
+      to: internal/kbzinit/skills/specification/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.2
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.1
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.2
+      from_type: section
+      to: internal/kbzinit/skills/getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.2
+      from_type: section
+      to: internal/kbzinit/skills/workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.3
+      from_type: section
+      to: internal/kbzinit/skills/specification/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.3
+      from_type: section
+      to: kanbanzai-design/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.5
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.5
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.5
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.5
+      from_type: section
+      to: .agents/skills/kanbanzai-specification/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.3.5
+      from_type: section
+      to: docs/mcp-tool-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.5
+      from_type: section
+      to: internal/kbzinit/skills/getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.5
+      from_type: section
+      to: internal/kbzinit/skills/workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.5
+      from_type: section
+      to: internal/kbzinit/skills/specification/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.5
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P12-agent-onboarding/dev-plan-agent-onboarding#1.5
+      from_type: section
+      to: docs/mcp-tool-reference.md
       to_type: document
       edge_type: LINKS_TO

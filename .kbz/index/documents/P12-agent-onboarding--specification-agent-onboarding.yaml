@@ -1,0 +1,578 @@
+document_id: P12-agent-onboarding/specification-agent-onboarding
+document_path: work/spec/agent-onboarding.md
+content_hash: f98e09eb68246cdc0e0cf0d486bcd2b2e9e2bd528b93e024b3309200146eed63
+indexed_at: 2026-03-30T12:07:16.358614Z
+sections:
+    - path: "1"
+      level: 1
+      title: Agent Onboarding and Skill Discovery Specification
+      byte_offset: 0
+      byte_count: 20810
+      word_count: 3040
+      content_hash: f98e09eb68246cdc0e0cf0d486bcd2b2e9e2bd528b93e024b3309200146eed63
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 747
+          byte_count: 773
+          word_count: 124
+          content_hash: 9696b1a106c7c12b62f7a9fab718dd71ce68dfc2d8776a114dcf75293e6fbd70
+        - path: "1.2"
+          level: 2
+          title: 2. Supersession
+          byte_offset: 1520
+          byte_count: 307
+          word_count: 41
+          content_hash: 526198d087e6d963cbd5e04bb1c154939082bca22b38b0eb90b57ccc55267848
+        - path: "1.3"
+          level: 2
+          title: '3. Feature A: AGENTS.md Generation'
+          byte_offset: 1827
+          byte_count: 4160
+          word_count: 652
+          content_hash: a5d9f5d7df51b969cce69a933fb34a2c0b01077e551ddc0eb220da0af30ee105
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 File location and name
+              byte_offset: 1866
+              byte_count: 123
+              word_count: 19
+              content_hash: 1d153ba09a737dced79a93592784cc05d11fedb6ff017c25fa6e835cb5203383
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Content requirements
+              byte_offset: 1989
+              byte_count: 1349
+              word_count: 199
+              content_hash: d8c01d21d33aa80c2ff491394d0182b06cba423c6113682e5981cc7813049c8a
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Content constraints
+              byte_offset: 3338
+              byte_count: 276
+              word_count: 44
+              content_hash: b5f90e1f716e12bdf3b8409cc1e4b6b5c592ae7703ae981bb4d0512c8f61dd2f
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Version-aware conflict logic
+              byte_offset: 3614
+              byte_count: 621
+              word_count: 102
+              content_hash: 044dbddaed155530c39349d7dc9f1b93d2f28056a9cf6a11610264b1148f830b
+            - path: 1.3.5
+              level: 3
+              title: 3.5 CLI flag
+              byte_offset: 4235
+              byte_count: 231
+              word_count: 37
+              content_hash: b78e055ba5b63532a5c7059c106411a24db7c63b6c4247c296ff698ee4f1ffe0
+            - path: 1.3.6
+              level: 3
+              title: 3.6 Init integration
+              byte_offset: 4466
+              byte_count: 294
+              word_count: 44
+              content_hash: 294d724c412b27c703783b24dc744ec82bf0c3395fc58cdafbc1c2e65cc680d0
+            - path: 1.3.7
+              level: 3
+              title: 3.7 Idempotency
+              byte_offset: 4760
+              byte_count: 158
+              word_count: 26
+              content_hash: 15ccd7b6d7a2cccd077b4e0b948155f91d65c64413119251c21f3fff9839c029
+            - path: 1.3.8
+              level: 3
+              title: 3.8 Acceptance criteria
+              byte_offset: 4918
+              byte_count: 1069
+              word_count: 175
+              content_hash: 3e096befbe3f602abda2b37268fe860bfc7c4107f47fc5761efe6eaff3bf6174
+        - path: "1.4"
+          level: 2
+          title: '4. Feature B: Copilot Instructions Generation'
+          byte_offset: 5987
+          byte_count: 2337
+          word_count: 365
+          content_hash: a37df73831f7b42ac9095ee64f539344fd32dfcc639dcb80f409dab7cf44fd57
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 File location and name
+              byte_offset: 6037
+              byte_count: 114
+              word_count: 15
+              content_hash: 02948b8a2e258aec902ce0458e2fa28bd6c7d5e3d89c70e3edfbb013469cbb36
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Directory creation
+              byte_offset: 6151
+              byte_count: 211
+              word_count: 35
+              content_hash: ac773fea3c14d7c95c735aeecc2aa5e793ace45cfba43a8db85b971f52ba4ea2
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Content requirements
+              byte_offset: 6362
+              byte_count: 488
+              word_count: 73
+              content_hash: 93f27430cb11a66f5d15ddb4b9d934263e570c764154ef1521753472a4592763
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Content constraints
+              byte_offset: 6850
+              byte_count: 204
+              word_count: 36
+              content_hash: 17f9260cecf7b8cb4f86bf4d0c976cfe00aef3a4381712d49d5014584ad5c6b7
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Version-aware conflict logic
+              byte_offset: 7054
+              byte_count: 402
+              word_count: 66
+              content_hash: a43d727fa9c4283ebe1c8155a6ade7708789e24489ed3a60086db23595ced985
+            - path: 1.4.6
+              level: 3
+              title: 4.6 CLI flag
+              byte_offset: 7456
+              byte_count: 146
+              word_count: 25
+              content_hash: 76765d1b3e75c5a77f012ea1867c90aa92f1b6b895af3bc5148bf29f180fa85d
+            - path: 1.4.7
+              level: 3
+              title: 4.7 Acceptance criteria
+              byte_offset: 7602
+              byte_count: 722
+              word_count: 108
+              content_hash: e2a5591b6c2df59049a195e678036b6d2d4a388ce9a4cce33de26c8d13f77657
+        - path: "1.5"
+          level: 2
+          title: '5. Feature C: Skill Content Updates'
+          byte_offset: 8324
+          byte_count: 2143
+          word_count: 321
+          content_hash: ea8cb9b2a7b325b9277b1ff54e90cc627fe2c3a62ca48ce24ce8495d4b4bc5f0
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Getting-started skill update
+              byte_offset: 8364
+              byte_count: 650
+              word_count: 90
+              content_hash: 46eed99a4196b44c95ad98de7b158f57c9546938b1222df16b1b2738d62233c4
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Workflow skill update
+              byte_offset: 9014
+              byte_count: 393
+              word_count: 57
+              content_hash: 756ac08343015e5cde14c2417fcea9b0b90504bb14fa1e6fedf0328dbaaf4043
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Content constraints
+              byte_offset: 9407
+              byte_count: 265
+              word_count: 43
+              content_hash: 09b12a8cc8cdae016a19f9e0c0a3fe7eed3f892825a2d228f05cfdcf23bdfd0d
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Embedding
+              byte_offset: 9672
+              byte_count: 233
+              word_count: 36
+              content_hash: 9b4f4a782867b1aad73b07146bb4ce63b0d3bb69bf3d73a44a1da2224efb1e7c
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Acceptance criteria
+              byte_offset: 9905
+              byte_count: 562
+              word_count: 88
+              content_hash: 16e65119bd6243a4a70e9873f9f525dc1e9d1292d99f57800518e8a37153d5c5
+        - path: "1.6"
+          level: 2
+          title: '6. Feature D: Specification Skill'
+          byte_offset: 10467
+          byte_count: 4570
+          word_count: 651
+          content_hash: a15b3cf5cf09df745019c8af06421f2b09f945e97f79d2a4f0cbbd37cf5407a1
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 File location
+              byte_offset: 10505
+              byte_count: 209
+              word_count: 27
+              content_hash: 4f869947beaa6c0010bc58dad944247dbd61bd62a7138e644cb3d8832c827181
+            - path: 1.6.2
+              level: 3
+              title: 6.2 YAML frontmatter
+              byte_offset: 10714
+              byte_count: 376
+              word_count: 48
+              content_hash: dcecbcb05ab2897186fd7483b15aa1a3eefc5039b19c1efd990abd80490e2ef1
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Required sections
+              byte_offset: 11090
+              byte_count: 2745
+              word_count: 400
+              content_hash: 3bb6e37afeb0921f846adbb5d5cd6db251e582fc5e28b4fd986541bc53bc240c
+              children:
+                - path: 1.6.3.1
+                  level: 4
+                  title: 6.3.1 Purpose
+                  byte_offset: 11172
+                  byte_count: 149
+                  word_count: 22
+                  content_hash: e2093596f20f26f683e9e39871f08bc97a58c50d7c9a9fc0d7e5d74ebb67f2ac
+                - path: 1.6.3.2
+                  level: 4
+                  title: 6.3.2 When to Use
+                  byte_offset: 11321
+                  byte_count: 256
+                  word_count: 42
+                  content_hash: 01ea4bc97caf2a447133960ae5a19bbaa1b3ceee001b79d7bc53ab107538428e
+                - path: 1.6.3.3
+                  level: 4
+                  title: 6.3.3 Roles
+                  byte_offset: 11577
+                  byte_count: 260
+                  word_count: 33
+                  content_hash: ac80fd8cb5502885d129f5b703a60722698832a369d025acab04d3a3e151ec65
+                - path: 1.6.3.4
+                  level: 4
+                  title: 6.3.4 The Specification Process
+                  byte_offset: 11837
+                  byte_count: 224
+                  word_count: 37
+                  content_hash: 692023fccc37defd5dc4b361b0c283a9a0ee22fcc95f98f23e772ceca35f75c7
+                - path: 1.6.3.5
+                  level: 4
+                  title: 6.3.5 What a Good Specification Contains
+                  byte_offset: 12061
+                  byte_count: 313
+                  word_count: 42
+                  content_hash: 533515220a3f6337bc80d48b932f566f293f7d96c19e89c40ede4485bcdc50a3
+                - path: 1.6.3.6
+                  level: 4
+                  title: 6.3.6 Acceptance Criteria Quality Bar
+                  byte_offset: 12374
+                  byte_count: 390
+                  word_count: 56
+                  content_hash: 2cc04e33b7fed1c647feba20713c43e1ef5d40292a3ebc7234fba0912858e3fa
+                - path: 1.6.3.7
+                  level: 4
+                  title: 6.3.7 The Approved Specification Invariant
+                  byte_offset: 12764
+                  byte_count: 287
+                  word_count: 44
+                  content_hash: 04b1602ca0bef370dad5b592183dd9d48dd622f3d061d163f20740dfef9eac70
+                - path: 1.6.3.8
+                  level: 4
+                  title: 6.3.8 Relationship to Design
+                  byte_offset: 13051
+                  byte_count: 283
+                  word_count: 46
+                  content_hash: b57914fbf1152171cb749353a31c4c95d6b905a1abd6db680e02b0b4ba1656de
+                - path: 1.6.3.9
+                  level: 4
+                  title: 6.3.9 Gotchas
+                  byte_offset: 13334
+                  byte_count: 385
+                  word_count: 56
+                  content_hash: 7bfd4f3f877f86bab814bfcc965c6c8046bc63cea4f1accaa0f745ac7cc254e9
+                - path: 1.6.3.10
+                  level: 4
+                  title: 6.3.10 Related
+                  byte_offset: 13719
+                  byte_count: 116
+                  word_count: 9
+                  content_hash: 775969756672e12fa8bbcefda88e85d4f619dc29325944ab059a51514dc8e5b6
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Content constraints
+              byte_offset: 13835
+              byte_count: 324
+              word_count: 49
+              content_hash: 9a884f401ef986beffae267d7c60bf0cbd5e5fbffd00bfa6831708dc25772865
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Acceptance criteria
+              byte_offset: 14159
+              byte_count: 878
+              word_count: 121
+              content_hash: f7bfd575bfa730e9a39a9b3df2d66c8b99bc173c5efc60e859f3864c8ba42797
+        - path: "1.7"
+          level: 2
+          title: '7. Feature E: MCP Orientation Breadcrumbs'
+          byte_offset: 15037
+          byte_count: 2230
+          word_count: 333
+          content_hash: 31597174f5c9caa678482461bcf8c13308d36826fe09753141052f49f0bc7b40
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Status tool (project overview)
+              byte_offset: 15083
+              byte_count: 502
+              word_count: 64
+              content_hash: f21f458192f096e9f0faa0322688a551d29944586a0a77eea25984a0ed0ab324
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Next tool (empty queue)
+              byte_offset: 15585
+              byte_count: 338
+              word_count: 57
+              content_hash: b2412538a395da9618f62007ff4ad26fccc3603c07be80de69b211509ffaa458
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Next tool (claim mode)
+              byte_offset: 15923
+              byte_count: 221
+              word_count: 34
+              content_hash: f4bd9e5a48c248e3f8523235900a763f1f7ae75d8176f864255a35cb350f69a1
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Field structure
+              byte_offset: 16144
+              byte_count: 265
+              word_count: 39
+              content_hash: 7e43b2a2286f7d3fe8a3b5708528aff4af40d008d71111ab11a7c340d69ce769
+            - path: 1.7.5
+              level: 3
+              title: 7.5 Backward compatibility
+              byte_offset: 16409
+              byte_count: 240
+              word_count: 39
+              content_hash: 70758fcab748a981d27c7174d0deec0fd7b35c72709386e5504c6778f78518f8
+            - path: 1.7.6
+              level: 3
+              title: 7.6 Acceptance criteria
+              byte_offset: 16649
+              byte_count: 618
+              word_count: 93
+              content_hash: 5cbe28f3d171ce423f7db2d723486959e36e8df4760ee5d6a5a80043dcd12d14
+        - path: "1.8"
+          level: 2
+          title: 8. Integration Acceptance Criteria
+          byte_offset: 17267
+          byte_count: 1039
+          word_count: 154
+          content_hash: 42d85324b1d21ad98a2ca510d1d95a24905f68b7d610b41de647bf4de84cfbf2
+        - path: "1.9"
+          level: 2
+          title: 9. Documentation Updates
+          byte_offset: 18306
+          byte_count: 716
+          word_count: 96
+          content_hash: df42a50122e8041a2779d64308b62fff6333763657286b67d98dd47162e3310a
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Getting-started guide
+              byte_offset: 18335
+              byte_count: 292
+              word_count: 38
+              content_hash: 7e1f4242672046eab27c5fac62c22d7430950d239ca01938c2374d4a16f11ab2
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Init command specification
+              byte_offset: 18627
+              byte_count: 244
+              word_count: 34
+              content_hash: 7e54206dd68a583a30f7ade87ecddaa7312e57623fde9b3b0553c3cc7ea93dcf
+            - path: 1.9.3
+              level: 3
+              title: 9.3 MCP tool reference
+              byte_offset: 18871
+              byte_count: 151
+              word_count: 20
+              content_hash: 2320e3d540f2d5e7ddb40b30f2eb80653fad931ab8d396ed679ef133cf3eaa6a
+        - path: "1.10"
+          level: 2
+          title: 10. Out of Scope
+          byte_offset: 19022
+          byte_count: 443
+          word_count: 53
+          content_hash: 7fcc5dac33a7058471f37751b980f5a944eb53af359651bbed739c5ac1b6d07b
+        - path: "1.11"
+          level: 2
+          title: 11. Verification Approach
+          byte_offset: 19465
+          byte_count: 1345
+          word_count: 188
+          content_hash: a9e142998484341925ed102d84b9dbeac7b59ec355216aa3bf57f3ca6c204e3d
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Unit tests
+              byte_offset: 19495
+              byte_count: 876
+              word_count: 124
+              content_hash: e821c2be7c3262dfca4b118e67bb05a54ab142ccf352b17379d648b455dc0194
+            - path: 1.11.2
+              level: 3
+              title: 11.2 Integration test
+              byte_offset: 20371
+              byte_count: 439
+              word_count: 60
+              content_hash: ccac7bd8837c0e4bc9b143572a234c8aab13cf7aab46f25348aba70734d3de47
+entity_refs:
+    - entity_id: P12-agent-onboarding
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 334
+cross_doc_links:
+    - target_path: work/design/agent-onboarding.md
+      link_text: work/design/agent-onboarding.md
+      section_path: "1"
+    - target_path: work/spec/init-command.md
+      link_text: work/spec/init-command.md
+      section_path: "1"
+    - target_path: work/design/fresh-install-experience.md
+      link_text: work/design/fresh-install-experience.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.1"
+    - target_path: work/spec/init-command.md
+      link_text: work/spec/init-command.md
+      section_path: "1.2"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.2
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.3.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.8
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.4.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.3
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.4.7
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.7
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.4.7
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.5.1
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.5.2
+    - target_path: .agents/skills/kanbanzai-specification/SKILL.md
+      link_text: .agents/skills/kanbanzai-specification/SKILL.md
+      section_path: 1.6.1
+    - target_path: kanbanzai-design/SKILL.md
+      link_text: kanbanzai-design/SKILL.md
+      section_path: 1.6.4
+    - target_path: .agents/skills/kanbanzai-specification/SKILL.md
+      link_text: .agents/skills/kanbanzai-specification/SKILL.md
+      section_path: 1.6.5
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.8"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.8"
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: 1.9.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.9.1
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.9.1
+    - target_path: work/spec/init-command.md
+      link_text: work/spec/init-command.md
+      section_path: 1.9.2
+    - target_path: docs/mcp-tool-reference.md
+      link_text: docs/mcp-tool-reference.md
+      section_path: 1.9.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.11.2
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.11.2
+    - target_path: .agents/skills/kanbanzai-specification/SKILL.md
+      link_text: .agents/skills/kanbanzai-specification/SKILL.md
+      section_path: 1.11.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.2
+      role: requirement
+      confidence: high
+    - section_path: 1.3.3
+      role: constraint
+      confidence: high
+    - section_path: 1.3.8
+      role: requirement
+      confidence: high
+    - section_path: 1.4.3
+      role: requirement
+      confidence: high
+    - section_path: 1.4.4
+      role: constraint
+      confidence: high
+    - section_path: 1.4.7
+      role: requirement
+      confidence: high
+    - section_path: 1.5.3
+      role: constraint
+      confidence: high
+    - section_path: 1.5.5
+      role: requirement
+      confidence: high
+    - section_path: 1.6.3.1
+      role: narrative
+      confidence: high
+    - section_path: 1.6.3.6
+      role: requirement
+      confidence: high
+    - section_path: 1.6.4
+      role: constraint
+      confidence: high
+    - section_path: 1.6.5
+      role: requirement
+      confidence: high
+    - section_path: 1.7.1
+      role: narrative
+      confidence: high
+    - section_path: 1.7.6
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: requirement
+      confidence: high
+    - section_path: "1.10"
+      role: constraint
+      confidence: high
+classified: false

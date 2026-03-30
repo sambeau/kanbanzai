@@ -1,0 +1,106 @@
+document_id: P11-fresh-install-experience/retrospective-retro-p11-fresh-install-experience
+document_path: work/retro/retro-P11-fresh-install-experience.md
+content_hash: 8687003aad9d5002427156082ee029258dfc8581ded8f14c43bc56579ba2482f
+indexed_at: 2026-03-29T12:37:54.128053Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Retrospective: P11 — Fresh Install Experience'
+      byte_offset: 0
+      byte_count: 8415
+      word_count: 1297
+      content_hash: 8687003aad9d5002427156082ee029258dfc8581ded8f14c43bc56579ba2482f
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 189
+          byte_count: 424
+          word_count: 61
+          content_hash: 64f9152ccf116aa612919b28283cbe2742c82d4686be13a4f55597ed920da632
+        - path: "1.2"
+          level: 2
+          title: What Worked Well
+          byte_offset: 613
+          byte_count: 1573
+          word_count: 239
+          content_hash: f6b66e183e2f45ac56472d0fb6714df2aec4cd691a4dd1e9c8c4cf631767d5d5
+        - path: "1.3"
+          level: 2
+          title: Friction Points
+          byte_offset: 2186
+          byte_count: 3602
+          word_count: 558
+          content_hash: 9faebbf2c25ea2a597c5b274072fb9f28a1b3858e7abb5a69564f6c00875bc75
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 1. The spec described the happy path only
+              byte_offset: 2206
+              byte_count: 857
+              word_count: 133
+              content_hash: 4461e678200098737b309a0f378594c4764b8ced570f612259800f9da08f8825
+            - path: 1.3.2
+              level: 3
+              title: 2. Install-experience features resist spec-based review
+              byte_offset: 3063
+              byte_count: 716
+              word_count: 114
+              content_hash: 2248c2473b60e526722f4130ca65170b6da1c410d9cd9c053770e5ca52cd5936
+            - path: 1.3.3
+              level: 3
+              title: 3. The design document contained wrong third-party format information
+              byte_offset: 3779
+              byte_count: 873
+              word_count: 131
+              content_hash: 4c3c10b23d042014f4d77dec9d4340f30b734218288a27ffdaa15607ee2ad386
+            - path: 1.3.4
+              level: 3
+              title: 4. The interactive prompt UX was never designed
+              byte_offset: 4652
+              byte_count: 548
+              word_count: 87
+              content_hash: 77d295acd71d033db37e3f920605a994679ad010c862332840039a965243782e
+            - path: 1.3.5
+              level: 3
+              title: 5. `_managed` in `.zed/settings.json` was caught last
+              byte_offset: 5200
+              byte_count: 588
+              word_count: 90
+              content_hash: f0bf6609580eba0dc897be6db5bb527d26900a7933f5265d38daaa27ce3d3e1e
+        - path: "1.4"
+          level: 2
+          title: Suggestions
+          byte_offset: 5788
+          byte_count: 1958
+          word_count: 307
+          content_hash: 6cfec57038954f87a94d0787bfae28e6486000fa234792629e4ab3a35054e584
+        - path: "1.5"
+          level: 2
+          title: Summary
+          byte_offset: 7746
+          byte_count: 669
+          word_count: 110
+          content_hash: 0470bebbb12adf3292f1bca19d21baaeaa5bc6701a1cd530847afc86fcaf9ff6
+front_matter:
+    date: "2026-03-29T12:36:39Z"
+    extra:
+        Author: Claude Sonnet 4.6 (post-implementation review session)
+        Scope: P11-fresh-install-experience
+entity_refs:
+    - entity_id: P11-fresh-install-experience
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 60
+cross_doc_links:
+    - target_path: work/design/fresh-install-experience.md
+      link_text: work/design/fresh-install-experience.md
+      section_path: "1.2"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+classified: false
