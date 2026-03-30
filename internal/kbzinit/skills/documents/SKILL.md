@@ -17,19 +17,25 @@ approval workflow. Every document placed in a configured root must be registered
 
 ## Document Types and Locations
 
-| Type | Directory | When to use |
-|---|---|---|
-| `design` | `work/design/` | Architecture, vision, approach decisions |
-| `specification` | `work/spec/` | Acceptance criteria, binding contracts |
-| `plan` | `work/plan/` | Project planning: roadmaps, scope, decision logs |
-| `dev-plan` | `work/dev/` | Feature implementation plans, task breakdowns |
-| `research` | `work/research/` | Analysis, exploration, background reading |
-| `report` | `work/report/` | Audit reports, post-mortems, general reports |
-| `report` | `work/review/` | Feature and plan review reports |
-| `retrospective` | `work/retro/` | Retrospective synthesis documents |
+| Type | Directory | Character | When to use |
+|---|---|---|---|
+| `design` | `work/design/` | Discursive prose | What to build and why — alternatives considered, decisions made, rationale recorded. No code. No acceptance criteria. |
+| `specification` | `work/spec/` | Terse and formal | Verifiable acceptance criteria distilled from an approved design. No code, no implementation notes, no prose that does not directly support a testable criterion. |
+| `plan` | `work/plan/` | Structured reference | Project planning: roadmaps, scope, decision logs |
+| `dev-plan` | `work/dev/` | Operational | How to build it — task breakdown, engineering decisions, code sketches. Uses the approved specification as its basis. |
+| `research` | `work/research/` | Exploratory | Analysis, exploration, background reading |
+| `report` | `work/report/` | Evaluative | Audit reports, post-mortems, general reports |
+| `report` | `work/review/` | Evaluative | Review findings: bugs, deviations from spec, verdict |
+| `retrospective` | `work/retro/` | Reflective | Retrospective synthesis documents |
 
 Design decisions belong in `work/design/`, not `work/plan/`. If a document contains
 architecture, API shapes, data models, or technology choices, it is a design document.
+
+Acceptance criteria belong in `work/spec/`, not `work/design/`. If you are writing
+verifiable pass/fail criteria, you are writing a specification, not a design.
+
+Implementation notes, code sketches, and task breakdowns belong in `work/dev/`, not
+`work/spec/`. A specification that contains code has absorbed dev-plan content.
 
 ## Registration Procedure
 

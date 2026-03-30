@@ -18,6 +18,22 @@ This skill guides the specification process from an approved design document to 
 approved specification, ready for dev plan and task decomposition. You are the
 Specification Writer; the human is the Product Owner.
 
+A specification is a **formal distillation of the approved design** — terse, testable
+acceptance criteria that can be used to plan implementation, write tests, and verify the
+result. It is not an extension of the design, not an implementation plan, and must not
+contain code.
+
+The three document stages each serve a distinct purpose:
+
+| Document | Character | Contains |
+|---|---|---|
+| **Design** | Discursive prose | What to build and why; alternatives, decisions, rationale |
+| **Specification** | Terse and formal | Verifiable acceptance criteria distilled from the design |
+| **Dev plan** | Operational | Task breakdown, engineering decisions, code sketches |
+
+If you find yourself writing code, implementation steps, or engineering notes in a
+specification, stop — those belong in the dev plan.
+
 ## Roles
 
 **You (Specification Writer):** Draft the specification, propose acceptance criteria,
@@ -58,6 +74,18 @@ At minimum:
 3. **Constraints** — performance, compatibility, security, or operational requirements
 4. **Out-of-scope** — explicit exclusions that prevent scope creep downstream
 
+A good specification is **terse**. Each section exists to support a set of acceptance
+criteria, not to explain or re-argue the design. If a passage could be removed without
+losing a verifiable criterion, remove it.
+
+### What a Spec Must Not Contain
+
+- **Code** — no implementation examples, no pseudocode, no schema definitions
+- **Implementation notes** — no "how to build it" guidance; that belongs in the dev plan
+- **Design rationale** — no "we chose X because Y"; the design document owns that
+- **Alternatives** — a spec reflects one chosen direction (same rule as the design)
+- **Narrative padding** — no prose that does not directly support a testable criterion
+
 ## Acceptance Criteria Quality Bar
 
 Every acceptance criterion must be:
@@ -87,13 +115,21 @@ When the human approves verbally, record it immediately:
 
     doc(action="approve", id="DOC-...")
 
-## Relationship to Design
+## Relationship to Design and Dev Plan
 
-The specification operationalises the design. The design says **what to build and
-why**. The specification says **what to verify and how to know it is done**.
+The pipeline is: **design → specification → dev plan**.
 
-If the spec contradicts the design, the design governs. Surface the conflict to
-the human — do not silently resolve it in either direction.
+- The **design** says *what to build and why* — prose with decisions and rationale.
+- The **specification** says *what to verify* — a terse formal distillation of the design.
+- The **dev plan** says *how to build it* — tasks, engineering notes, code sketches.
+
+A specification is a distillation, not an extension. Every requirement in the spec must
+trace back to the approved design. If you find yourself writing acceptance criteria for
+something not in the design, stop — that is scope addition and requires updating the
+design first.
+
+If the spec contradicts the design, the design governs. Surface the conflict to the
+human — do not silently resolve it in either direction.
 
 If the spec requires a decision the design left open, stop and ask. Adding scope
 not in the approved design is a stage-gate violation — see `kanbanzai-workflow`
@@ -106,6 +142,12 @@ emergency brake.
 **Forgetting to register the document.** After creating the specification file, call
 `doc` with action: `register` immediately. Unregistered specs are invisible to the
 approval workflow, health checks, and task decomposition.
+
+**Spec full of code or implementation detail.** If the specification contains code
+snippets, schema definitions, pseudocode, or "how to build it" notes, it has absorbed
+content that belongs in the dev plan. Move that content to the dev plan. A spec that
+reads like an implementation guide will cause agents to skip the dev plan stage or
+produce a dev plan that merely repeats the spec.
 
 **Approving with ambiguous criteria.** The implementing agent will interpret ambiguous
 criteria literally and differently than you intended. Fix criteria before approval,

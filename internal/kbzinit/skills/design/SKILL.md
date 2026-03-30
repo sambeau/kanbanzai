@@ -105,6 +105,11 @@ quality in practice.
 **Alternatives in an approved document:** An approved document must reflect one direction.
 If alternatives remain in the document, it is not ready for approval — resolve them first.
 
+**Acceptance criteria in the design:** Acceptance criteria belong in the specification,
+not the design. The design says *what to build and why* — it contains decisions, rationale,
+and scope. If you find yourself writing verifiable pass/fail criteria, you have crossed
+into specification work. Stop, complete the design, get it approved, then write the spec.
+
 **Verbal approval not recorded:** Call `doc` with action: `approve` immediately when a human
 approves in conversation. Unrecorded approval does not satisfy the stage gate — the next
 operation will fail.
