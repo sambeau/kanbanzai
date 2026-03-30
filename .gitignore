@@ -60,3 +60,4 @@ Desktop.ini
 
 # Compiled external-import test binary (platform-specific, rebuildable from source)
 _testexternal/testexternal
+dist/
