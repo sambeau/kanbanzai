@@ -49,6 +49,9 @@ Flags:
                         reviewer.yaml).
                         Default: false
 
+  --skip-agents-md      Do not write AGENTS.md or .github/copilot-instructions.md.
+                        Default: false
+
 Example:
   kanbanzai init
   kanbanzai init --docs-path work/docs --non-interactive
@@ -56,6 +59,7 @@ Example:
   kanbanzai init --update-skills
   kanbanzai init --skip-mcp
   kanbanzai init --skip-roles
+  kanbanzai init --skip-agents-md
 `
 
 func runInit(args []string, deps dependencies) error {
@@ -81,6 +85,8 @@ func runInit(args []string, deps dependencies) error {
 			opts.SkipMCP = true
 		case "--skip-roles":
 			opts.SkipRoles = true
+		case "--skip-agents-md":
+			opts.SkipAgentsMD = true
 		case "-h", "--help":
 			fmt.Fprint(deps.stdout, initUsageText)
 			return nil

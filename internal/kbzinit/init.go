@@ -38,6 +38,8 @@ type Options struct {
 	SkipMCP bool
 	// SkipRoles suppresses installation of context role files.
 	SkipRoles bool
+	// SkipAgentsMD suppresses writing AGENTS.md and .github/copilot-instructions.md.
+	SkipAgentsMD bool
 }
 
 // Initializer runs the kanbanzai init command.
@@ -208,6 +210,15 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 		}
 	}
 
+	if !opts.SkipAgentsMD {
+		if err := i.writeAgentsMD(baseDir); err != nil {
+			return err
+		}
+		if err := i.writeCopilotInstructions(baseDir); err != nil {
+			return err
+		}
+	}
+
 	if !opts.SkipRoles {
 		if err := i.installRoles(kbzDir); err != nil {
 			return err
@@ -295,6 +306,15 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 			return err
 		}
 		if err := i.writeZedConfig(baseDir, !kbzExisted); err != nil {
+			return err
+		}
+	}
+
+	if !opts.SkipAgentsMD {
+		if err := i.writeAgentsMD(baseDir); err != nil {
+			return err
+		}
+		if err := i.writeCopilotInstructions(baseDir); err != nil {
 			return err
 		}
 	}
