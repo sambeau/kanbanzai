@@ -32,11 +32,55 @@ type mcpServer struct {
 // its own schema and rejects unknown top-level properties.
 type zedConfig struct {
 	ContextServers map[string]zedContextServer `json:"context_servers"`
+	Agent          *zedAgentConfig             `json:"agent,omitempty"`
 }
 
 type zedContextServer struct {
 	Command string   `json:"command"`
 	Args    []string `json:"args"`
+}
+
+type zedAgentConfig struct {
+	ToolPermissions *zedToolPermissions `json:"tool_permissions,omitempty"`
+}
+
+type zedToolPermissions struct {
+	Tools map[string]zedToolRule `json:"tools,omitempty"`
+}
+
+type zedToolRule struct {
+	Default string `json:"default"`
+}
+
+// kanbanzaiToolPermissions defines per-tool defaults for all 22 kanbanzai MCP tools.
+// All workflow tools are pre-approved (allow) to eliminate friction for normal agent
+// operations. Tools with external visibility or irreversible filesystem effects
+// (merge, pr, cleanup) require explicit confirmation.
+var kanbanzaiToolPermissions = map[string]zedToolRule{
+	// Workflow operations — auto-approve.
+	"mcp:kanbanzai:status":      {Default: "allow"},
+	"mcp:kanbanzai:next":        {Default: "allow"},
+	"mcp:kanbanzai:entity":      {Default: "allow"},
+	"mcp:kanbanzai:doc":         {Default: "allow"},
+	"mcp:kanbanzai:finish":      {Default: "allow"},
+	"mcp:kanbanzai:knowledge":   {Default: "allow"},
+	"mcp:kanbanzai:health":      {Default: "allow"},
+	"mcp:kanbanzai:server_info": {Default: "allow"},
+	"mcp:kanbanzai:profile":     {Default: "allow"},
+	"mcp:kanbanzai:handoff":     {Default: "allow"},
+	"mcp:kanbanzai:retro":       {Default: "allow"},
+	"mcp:kanbanzai:estimate":    {Default: "allow"},
+	"mcp:kanbanzai:decompose":   {Default: "allow"},
+	"mcp:kanbanzai:doc_intel":   {Default: "allow"},
+	"mcp:kanbanzai:incident":    {Default: "allow"},
+	"mcp:kanbanzai:checkpoint":  {Default: "allow"},
+	"mcp:kanbanzai:branch":      {Default: "allow"},
+	"mcp:kanbanzai:conflict":    {Default: "allow"},
+	"mcp:kanbanzai:worktree":    {Default: "allow"},
+	// External visibility or irreversible filesystem effects — require confirmation.
+	"mcp:kanbanzai:merge":   {Default: "confirm"},
+	"mcp:kanbanzai:pr":      {Default: "confirm"},
+	"mcp:kanbanzai:cleanup": {Default: "confirm"},
 }
 
 // writeMCPConfig writes .mcp.json to baseDir applying version-aware conflict logic.
@@ -92,6 +136,11 @@ func (i *Initializer) writeZedConfig(baseDir string, createIfAbsent bool) error 
 		ContextServers: map[string]zedContextServer{
 			"kanbanzai": {Command: "kanbanzai", Args: []string{"serve"}},
 		},
+		Agent: &zedAgentConfig{
+			ToolPermissions: &zedToolPermissions{
+				Tools: kanbanzaiToolPermissions,
+			},
+		},
 	}
 	data, err := json.MarshalIndent(content, "", "  ")
 	if err != nil {
@@ -137,7 +186,18 @@ func (i *Initializer) writeZedConfig(baseDir string, createIfAbsent bool) error 
 		var cs map[string]json.RawMessage
 		if err := json.Unmarshal(csRaw, &cs); err == nil {
 			if _, ok := cs["kanbanzai"]; ok {
-				// Already configured — no-op.
+				// Server is registered. Check whether tool_permissions are already
+				// present. If not (e.g. a file written by an older kanbanzai that
+				// predates this feature), and the file has no user-added "agent"
+				// block, migrate it to the full config.
+				if _, hasAgent := raw["agent"]; !hasAgent {
+					if err := os.WriteFile(destPath, data, 0o644); err != nil {
+						return fmt.Errorf("update .zed/settings.json: %w", err)
+					}
+					fmt.Fprintln(i.stdout, "Updated .zed/settings.json")
+					return nil
+				}
+				// Agent block already present (user-customised) — no-op.
 				return nil
 			}
 		}

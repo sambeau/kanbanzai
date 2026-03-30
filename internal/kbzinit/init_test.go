@@ -1075,6 +1075,61 @@ func TestInit_ManagedMcpJson_CurrentVersion_NoOp(t *testing.T) {
 }
 
 // TestInit_ZedDir_WritesSettingsJson verifies AC-07 to AC-08.
+// assertZedToolPermissions checks that cfg contains agent.tool_permissions with the
+// expected kanbanzai tool entries. Fails the test if any are missing or wrong.
+func assertZedToolPermissions(t *testing.T, cfg map[string]interface{}) {
+	t.Helper()
+	agent, ok := cfg["agent"].(map[string]interface{})
+	if !ok {
+		t.Error(".zed/settings.json missing agent block")
+		return
+	}
+	tp, ok := agent["tool_permissions"].(map[string]interface{})
+	if !ok {
+		t.Error(".zed/settings.json missing agent.tool_permissions")
+		return
+	}
+	tools, ok := tp["tools"].(map[string]interface{})
+	if !ok {
+		t.Error(".zed/settings.json missing agent.tool_permissions.tools")
+		return
+	}
+
+	// Spot-check: high-frequency read tools must be allow.
+	for _, name := range []string{
+		"mcp:kanbanzai:status",
+		"mcp:kanbanzai:next",
+		"mcp:kanbanzai:entity",
+		"mcp:kanbanzai:health",
+		"mcp:kanbanzai:finish",
+	} {
+		entry, ok := tools[name].(map[string]interface{})
+		if !ok {
+			t.Errorf("agent.tool_permissions.tools[%q] missing", name)
+			continue
+		}
+		if entry["default"] != "allow" {
+			t.Errorf("agent.tool_permissions.tools[%q].default = %v, want allow", name, entry["default"])
+		}
+	}
+
+	// Destructive tools must be confirm.
+	for _, name := range []string{
+		"mcp:kanbanzai:merge",
+		"mcp:kanbanzai:pr",
+		"mcp:kanbanzai:cleanup",
+	} {
+		entry, ok := tools[name].(map[string]interface{})
+		if !ok {
+			t.Errorf("agent.tool_permissions.tools[%q] missing", name)
+			continue
+		}
+		if entry["default"] != "confirm" {
+			t.Errorf("agent.tool_permissions.tools[%q].default = %v, want confirm", name, entry["default"])
+		}
+	}
+}
+
 func TestInit_ZedDir_WritesSettingsJson(t *testing.T) {
 	t.Parallel()
 	dir := makeGitRepoNoCommits(t)
@@ -1118,6 +1173,9 @@ func TestInit_ZedDir_WritesSettingsJson(t *testing.T) {
 	if !ok || len(args) == 0 {
 		t.Errorf("context_servers.kanbanzai.args = %v, want a non-empty array", kbz["args"])
 	}
+
+	// agent.tool_permissions must be present with kanbanzai tools pre-approved.
+	assertZedToolPermissions(t, cfg)
 }
 
 // TestInit_NewProject_NoZedDir_CreatesSettingsJson verifies that a new project always gets
@@ -1139,6 +1197,7 @@ func TestInit_NewProject_NoZedDir_CreatesSettingsJson(t *testing.T) {
 	if err := json.Unmarshal(data, &cfg); err != nil {
 		t.Fatalf("parse .zed/settings.json: %v", err)
 	}
+
 	servers, ok := cfg["context_servers"].(map[string]interface{})
 	if !ok {
 		t.Fatal(".zed/settings.json missing context_servers key")
@@ -1150,6 +1209,8 @@ func TestInit_NewProject_NoZedDir_CreatesSettingsJson(t *testing.T) {
 	if cmd, ok := kbz["command"].(string); !ok || cmd == "" {
 		t.Errorf("context_servers.kanbanzai.command = %v, want a non-empty string", kbz["command"])
 	}
+
+	assertZedToolPermissions(t, cfg)
 }
 
 // TestInit_ExistingProject_NoZedDir_NoSettingsJson verifies that re-running init on a
@@ -1205,6 +1266,68 @@ func TestInit_FirstTimeInit_WithCommits_CreatesZedSettings(t *testing.T) {
 	}
 }
 
+// TestInit_ZedSettings_MigratesNoAgentBlock verifies that an existing .zed/settings.json
+// written by an older kanbanzai version (which lacked agent.tool_permissions) is rewritten
+// to include tool_permissions when the file has no "agent" key.
+func TestInit_ZedSettings_MigratesNoAgentBlock(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	if err := os.MkdirAll(filepath.Join(dir, ".zed"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	// Simulate file written by older kanbanzai: context_servers present, no agent key.
+	old := `{"context_servers":{"kanbanzai":{"command":"kanbanzai","args":["serve"]}}}`
+	if err := os.WriteFile(filepath.Join(dir, ".zed", "settings.json"), []byte(old), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, err := os.ReadFile(filepath.Join(dir, ".zed", "settings.json"))
+	if err != nil {
+		t.Fatalf("read .zed/settings.json: %v", err)
+	}
+	var cfg map[string]interface{}
+	if err := json.Unmarshal(data, &cfg); err != nil {
+		t.Fatalf("parse migrated .zed/settings.json: %v", err)
+	}
+
+	assertZedToolPermissions(t, cfg)
+}
+
+// TestInit_ZedSettings_PreservesUserAgentBlock verifies that an existing .zed/settings.json
+// with a user-added "agent" block is not overwritten, even if tool_permissions are absent.
+func TestInit_ZedSettings_PreservesUserAgentBlock(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	if err := os.MkdirAll(filepath.Join(dir, ".zed"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	// Simulate user-customised file with agent block but no kanbanzai tool_permissions.
+	original := `{"context_servers":{"kanbanzai":{"command":"kanbanzai","args":["serve"]}},"agent":{"default_model":"custom"}}`
+	if err := os.WriteFile(filepath.Join(dir, ".zed", "settings.json"), []byte(original), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	data, err := os.ReadFile(filepath.Join(dir, ".zed", "settings.json"))
+	if err != nil {
+		t.Fatalf("read .zed/settings.json: %v", err)
+	}
+	if string(data) != original {
+		t.Errorf(".zed/settings.json with user agent block was modified; want unchanged\ngot:  %s\nwant: %s", string(data), original)
+	}
+}
+
 // TestInit_ZedSettings_MigratesOldManagedBlock verifies that a .zed/settings.json written
 // by an older kanbanzai version (which included a _managed block) is rewritten without it.
 func TestInit_ZedSettings_MigratesOldManagedBlock(t *testing.T) {
@@ -1229,13 +1352,16 @@ func TestInit_ZedSettings_MigratesOldManagedBlock(t *testing.T) {
 	if err != nil {
 		t.Fatalf("read .zed/settings.json: %v", err)
 	}
+
 	var cfg map[string]interface{}
 	if err := json.Unmarshal(data, &cfg); err != nil {
 		t.Fatalf("parse migrated .zed/settings.json: %v", err)
 	}
+
 	if _, ok := cfg["_managed"]; ok {
 		t.Error("migrated .zed/settings.json still contains _managed block")
 	}
+
 	servers, ok := cfg["context_servers"].(map[string]interface{})
 	if !ok {
 		t.Fatal("migrated .zed/settings.json missing context_servers")
@@ -1243,6 +1369,8 @@ func TestInit_ZedSettings_MigratesOldManagedBlock(t *testing.T) {
 	if _, ok := servers["kanbanzai"]; !ok {
 		t.Fatal("migrated .zed/settings.json missing context_servers.kanbanzai")
 	}
+
+	assertZedToolPermissions(t, cfg)
 }
 
 // TestInit_FirstTimeInit_WithCommits_CreatesWorkDirs verifies that a project with

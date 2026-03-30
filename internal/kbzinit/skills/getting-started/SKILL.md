@@ -27,6 +27,14 @@ project's `.mcp.json` configures most editors automatically — check that the
 kanbanzai binary is on your PATH and that your editor has loaded the MCP
 configuration. See `docs/getting-started.md` for editor-specific setup instructions.
 
+For Zed users: `.zed/settings.json` pre-approves all kanbanzai workflow tools so
+they run without confirmation prompts. The only tools that still prompt are `merge`
+(executes git merges), `pr` (creates GitHub PRs), and `cleanup` (removes worktree
+directories from disk) — these have external or irreversible effects that warrant
+a confirmation step. If you are seeing unexpected permission prompts for other
+kanbanzai tools, check that `.zed/settings.json` contains an `agent.tool_permissions`
+block; running `kbz init` will add it if missing.
+
 Do not substitute `grep`, `find`, or direct file reading for kanbanzai tool calls.
 The workflow state in `.kbz/` is structured data — the MCP tools are the correct
 interface for reading and writing it.
