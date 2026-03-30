@@ -31,6 +31,13 @@ Do not substitute `grep`, `find`, or direct file reading for kanbanzai tool call
 The workflow state in `.kbz/` is structured data — the MCP tools are the correct
 interface for reading and writing it.
 
+This applies equally to writing. Do not create documents in `work/` or entities in
+`.kbz/state/` by writing files directly with `edit_file` or equivalent shell commands.
+Use `doc` to register and manage documents. Use `entity` to create and transition
+entities. Bypassing the MCP tools skips lifecycle enforcement, document registration,
+and health checks. If MCP tools are unavailable, report the issue to the human rather
+than falling back to direct file writes.
+
 ## Before Any Work
 
 Run `git status`. If there are uncommitted changes from a previous session:

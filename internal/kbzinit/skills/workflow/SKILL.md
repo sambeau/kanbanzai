@@ -114,6 +114,9 @@ Agents never:
 
 Stop and ask the human before proceeding if any of the following are true:
 
+- You are about to create a document in `work/` or modify entity state in `.kbz/state/`
+  by writing files directly instead of using the corresponding kanbanzai MCP tool
+  (`doc`, `entity`). Direct file writes bypass lifecycle enforcement and health checks.
 - You are about to write design content (data models, API shapes, technology choices)
   without an approved design document
 - You are about to create Plan, Feature, or Task entities without an approved design

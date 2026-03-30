@@ -22,6 +22,7 @@ var skillNames = []string{
 	"plan-review",
 	"planning",
 	"review",
+	"specification",
 	"workflow",
 }
 
