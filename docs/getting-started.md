@@ -72,9 +72,12 @@ This must be run inside an existing Git repository. If you don't have one yet, r
 
 ```
 your-repo/
+├── AGENTS.md                  # Agent instructions: workflow rules and skill pointers
 ├── .mcp.json                  # MCP server configuration (auto-detected by most editors)
 ├── .zed/
 │   └── settings.json          # Zed context server configuration
+├── .github/
+│   └── copilot-instructions.md  # GitHub Copilot instructions (points to AGENTS.md)
 ├── .kbz/
 │   ├── config.yaml            # Project configuration (schema version, prefixes, document roots)
 │   ├── state/                 # Entity storage (features, tasks, bugs, etc.)
@@ -82,6 +85,15 @@ your-repo/
 │       └── roles/             # Context profiles (base.yaml scaffold, reviewer.yaml managed)
 ├── .agents/
 │   └── skills/                # Kanbanzai skill files for AI agents
+│       ├── kanbanzai-getting-started/
+│       ├── kanbanzai-workflow/
+│       ├── kanbanzai-design/
+│       ├── kanbanzai-specification/
+│       ├── kanbanzai-documents/
+│       ├── kanbanzai-agents/
+│       ├── kanbanzai-planning/
+│       ├── kanbanzai-review/
+│       └── kanbanzai-plan-review/
 └── work/
     ├── README.md              # Directory map
     ├── design/                # Architecture decisions, vision, policies
@@ -94,7 +106,11 @@ your-repo/
     └── retro/                 # Retrospective synthesis documents
 ```
 
-`kanbanzai init` is idempotent. Running it again on an already-initialised project updates skill files and managed role files to the current version, and applies version-aware conflict logic to `.mcp.json` and `.zed/settings.json`.
+`kanbanzai init` is idempotent. Running it again on an already-initialised project updates skill files and managed role files to the current version, and applies version-aware conflict logic to `.mcp.json`, `.zed/settings.json`, `AGENTS.md`, and `.github/copilot-instructions.md`. If `AGENTS.md` or `.github/copilot-instructions.md` already exist without a kanbanzai managed marker, they are left untouched and a warning is printed.
+
+**Agent orientation:** `AGENTS.md` is read by most AI agent platforms and tells agents to use kanbanzai MCP tools, follow the stage gates, and where to find the skill files. `.github/copilot-instructions.md` serves the same purpose for GitHub Copilot. Both files use a `<!-- kanbanzai-managed: v1 -->` marker on line 1 so future `kbz init` runs can update them safely.
+
+Use `--skip-agents-md` to suppress writing both files.
 
 **Existing repositories:** If you run `kanbanzai init` in a repository that already has commits but has never had kanbanzai set up (no `.kbz/` directory), it behaves as a first-time init: all files listed above are created, including the `work/` directories. You will be prompted for a document root path — press Enter to use the standard `work/` layout, or type a custom path.
 

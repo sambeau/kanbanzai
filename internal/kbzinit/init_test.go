@@ -1746,3 +1746,151 @@ func TestRun_ContextAssemble_ReviewerRole(t *testing.T) {
 		t.Errorf("result.Role = %q, want %q", result.Role, "reviewer")
 	}
 }
+
+// ---- P12 integration tests (AC-INT-1 through AC-INT-5) ----
+
+// TestP12_Integration_NewProject verifies that kbz init on a new project
+// produces all P12 artefacts: AGENTS.md, copilot-instructions.md,
+// specification skill, and updated getting-started/workflow skills.
+// Also verifies idempotency: a second run must not modify any of these files.
+func TestP12_Integration_NewProject(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("first Run: %v", err)
+	}
+
+	// AC-INT-1 / AC-A1: AGENTS.md exists with managed marker.
+	agentsMDPath := filepath.Join(dir, "AGENTS.md")
+	agentsData, err := os.ReadFile(agentsMDPath)
+	if err != nil {
+		t.Fatalf("AGENTS.md not created: %v", err)
+	}
+	v, managed, err := readMarkdownManagedVersion(agentsData)
+	if err != nil || !managed {
+		t.Errorf("AGENTS.md missing managed marker (managed=%v err=%v)", managed, err)
+	}
+	if v != agentsMDVersion {
+		t.Errorf("AGENTS.md marker version = %d, want %d", v, agentsMDVersion)
+	}
+
+	// AC-INT-1: AGENTS.md must tell agents to use MCP tools and follow stage gates.
+	agentsText := string(agentsData)
+	for _, want := range []string{"status", "next", "stage gate", ".agents/skills/"} {
+		if !strings.Contains(strings.ToLower(agentsText), strings.ToLower(want)) {
+			t.Errorf("AGENTS.md missing required content %q", want)
+		}
+	}
+
+	// AC-INT-2 / AC-B1: .github/copilot-instructions.md exists and references AGENTS.md.
+	copilotPath := filepath.Join(dir, ".github", "copilot-instructions.md")
+	copilotData, err := os.ReadFile(copilotPath)
+	if err != nil {
+		t.Fatalf(".github/copilot-instructions.md not created: %v", err)
+	}
+	if !strings.Contains(string(copilotData), "AGENTS.md") {
+		t.Error(".github/copilot-instructions.md must reference AGENTS.md")
+	}
+
+	// AC-INT-4 / AC-D1: kanbanzai-specification skill is installed.
+	specSkillPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-specification", "SKILL.md")
+	specData, err := os.ReadFile(specSkillPath)
+	if err != nil {
+		t.Fatalf("kanbanzai-specification/SKILL.md not installed: %v", err)
+	}
+	specText := string(specData)
+	if !strings.Contains(specText, "kanbanzai-specification") {
+		t.Error("specification skill missing name in frontmatter")
+	}
+
+	// AC-C1: getting-started skill contains the MCP-tools write rule.
+	gsPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-getting-started", "SKILL.md")
+	gsData, err := os.ReadFile(gsPath)
+	if err != nil {
+		t.Fatalf("kanbanzai-getting-started/SKILL.md not installed: %v", err)
+	}
+	if !strings.Contains(string(gsData), "edit_file") {
+		t.Error("getting-started skill missing MCP-tools write rule (edit_file reference)")
+	}
+
+	// AC-C2: workflow skill emergency brake includes direct-write condition.
+	wfPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-workflow", "SKILL.md")
+	wfData, err := os.ReadFile(wfPath)
+	if err != nil {
+		t.Fatalf("kanbanzai-workflow/SKILL.md not installed: %v", err)
+	}
+	if !strings.Contains(string(wfData), "work/") || !strings.Contains(string(wfData), ".kbz/state/") {
+		t.Error("workflow skill emergency brake missing direct-write condition")
+	}
+
+	// Idempotency: second run must not modify AGENTS.md or copilot-instructions.md.
+	agentsStat1, _ := os.Stat(agentsMDPath)
+	copilotStat1, _ := os.Stat(copilotPath)
+
+	in2, stdout2 := newTestInit(dir, "")
+	if err := in2.Run(Options{}); err != nil {
+		t.Fatalf("second Run: %v", err)
+	}
+
+	agentsStat2, _ := os.Stat(agentsMDPath)
+	copilotStat2, _ := os.Stat(copilotPath)
+
+	if agentsStat1.ModTime() != agentsStat2.ModTime() {
+		t.Error("AGENTS.md was modified on second run (idempotency violation)")
+	}
+	if copilotStat1.ModTime() != copilotStat2.ModTime() {
+		t.Error("copilot-instructions.md was modified on second run (idempotency violation)")
+	}
+	out := stdout2.String()
+	if strings.Contains(out, "Created AGENTS.md") || strings.Contains(out, "Updated AGENTS.md") {
+		t.Errorf("unexpected AGENTS.md output on second run: %s", out)
+	}
+}
+
+// TestP12_Integration_SkipAgentsMD verifies that --skip-agents-md suppresses
+// both AGENTS.md and .github/copilot-instructions.md (AC-INT-5).
+func TestP12_Integration_SkipAgentsMD(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{SkipAgentsMD: true}); err != nil {
+		t.Fatalf("Run --skip-agents-md: %v", err)
+	}
+
+	if _, err := os.Stat(filepath.Join(dir, "AGENTS.md")); !os.IsNotExist(err) {
+		t.Error("AGENTS.md should not be created with --skip-agents-md")
+	}
+	if _, err := os.Stat(filepath.Join(dir, ".github", "copilot-instructions.md")); !os.IsNotExist(err) {
+		t.Error(".github/copilot-instructions.md should not be created with --skip-agents-md")
+	}
+}
+
+// TestP12_Integration_SkipAgentsMDAndSkipSkills verifies that
+// --skip-agents-md --skip-skills produces a project with no AGENTS.md,
+// no copilot instructions, and no skills (AC-INT-5 edge case).
+func TestP12_Integration_SkipAgentsMDAndSkipSkills(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{SkipAgentsMD: true, SkipSkills: true}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	if _, err := os.Stat(filepath.Join(dir, "AGENTS.md")); !os.IsNotExist(err) {
+		t.Error("AGENTS.md should not exist")
+	}
+	if _, err := os.Stat(filepath.Join(dir, ".github", "copilot-instructions.md")); !os.IsNotExist(err) {
+		t.Error("copilot-instructions.md should not exist")
+	}
+	if _, err := os.Stat(filepath.Join(dir, ".agents", "skills")); !os.IsNotExist(err) {
+		t.Error(".agents/skills should not exist with --skip-skills")
+	}
+	// Config must still be created.
+	if _, err := os.Stat(filepath.Join(dir, ".kbz", "config.yaml")); os.IsNotExist(err) {
+		t.Error("config.yaml must still be created")
+	}
+}
