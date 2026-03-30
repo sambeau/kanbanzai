@@ -87,12 +87,14 @@ func (i *Initializer) installOneSkill(baseDir, name string) error {
 
 	// Has managed marker — check version.
 	existingVersion := extractVersion(existing)
-	if existingVersion == i.version {
+	// In dev builds, always overwrite — "dev" means "latest from source".
+	// In release builds, only overwrite when versions differ.
+	if existingVersion == i.version && i.version != "dev" {
 		// Already at current version — no-op, do not touch file.
 		return nil
 	}
 
-	// Version is different (older or unknown "dev") — overwrite.
+	// Version is different, or this is a dev build — overwrite.
 	if err := os.WriteFile(destPath, transformed, 0o644); err != nil {
 		return fmt.Errorf("update skill %q: %w", destPath, err)
 	}
