@@ -2,9 +2,11 @@ id: P12-agent-onboarding/specification-agent-onboarding
 path: work/spec/agent-onboarding.md
 type: specification
 title: Agent Onboarding and Skill Discovery Specification
-status: draft
+status: approved
 owner: P12-agent-onboarding
+approved_by: sambeau
+approved_at: "2026-03-30T12:08:15Z"
 content_hash: f98e09eb68246cdc0e0cf0d486bcd2b2e9e2bd528b93e024b3309200146eed63
 created: "2026-03-30T12:07:16Z"
 created_by: sambeau
-updated: "2026-03-30T12:07:16Z"
+updated: "2026-03-30T12:08:15Z"

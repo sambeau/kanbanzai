@@ -1,0 +1,6 @@
+id: TASK-01KMZAHTWDZZS
+parent_feature: FEAT-01KMZA2PPSFK9
+slug: docs-and-integration-test
+summary: "Update getting-started.md with new files in directory structure, add integration test verifying all P12 features work together end-to-end. Spec §9 and §11.2."
+status: queued
+estimate: "2"
