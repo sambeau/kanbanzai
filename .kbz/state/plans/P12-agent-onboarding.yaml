@@ -1,0 +1,9 @@
+id: P12-agent-onboarding
+slug: agent-onboarding
+title: Agent Onboarding and Skill Discovery
+status: designing
+summary: "Address the skill discovery gap revealed by first real-world usage: agents with kanbanzai MCP tools available but no awareness of the workflow protocol because skills are only discoverable via .agents/skills/ (Anthropic convention). Fix by generating AGENTS.md and cross-editor pointer files on kbz init, adding missing skills, and improving MCP tool responses with orientation breadcrumbs."
+design: P12-agent-onboarding/design-agent-onboarding
+created: "2026-03-30T11:38:31Z"
+created_by: sambeau
+updated: "2026-03-30T11:40:52Z"
