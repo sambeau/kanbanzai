@@ -196,3 +196,20 @@ Four coordinated improvements addressing the review workflow gap and documentati
 
 **Plan:** `work/plan/P10-review-and-doc-currency-plan.md`  
 **Specs:** `work/spec/plan-review-lifecycle.md`, `work/spec/doc-currency-health-check.md`
+
+---
+
+## P12: Agent Onboarding and Skill Discovery
+
+**Status:** Complete
+
+Five features making kanbanzai self-orienting for AI agents arriving at a fresh project:
+
+- **(A) AGENTS.md generation** — `kbz init` writes `AGENTS.md` at the project root with the managed-marker pattern (`<!-- kanbanzai-managed: v1 -->`), version-aware conflict logic (create / overwrite older / skip unmanaged), essential workflow rules, and a skills reference table; `--skip-agents-md` flag suppresses it; content is embedded in the binary (36 lines)
+- **(B) Copilot instructions generation** — `kbz init` writes `.github/copilot-instructions.md` as a thin redirect to `AGENTS.md`; shares the same version-aware conflict logic and `--skip-agents-md` flag; `.github/` directory is created if absent (15 lines)
+- **(C) Skill content updates** — "use MCP tools, not direct file writes" rule added to the `kanbanzai-getting-started` Preflight Check section; corresponding emergency-brake item added to `kanbanzai-workflow`; both are additions, no existing content modified
+- **(D) Specification skill** — new `kanbanzai-specification` skill (136 lines) covering the specification stage: roles, iterative process, AC quality bar (with explicit "it works correctly is not an AC" rule), the Approved Specification Invariant, relationship to design, and gotchas; added to `skillNames` and installed by `kbz init`
+- **(E) MCP orientation breadcrumbs** — `orientation` field added to `status` project-overview response (always present) and `next` empty-queue response (present only when queue is empty); field is `{message, skills_path}` pointing agents to `kanbanzai-getting-started`
+
+**Spec:** `work/spec/agent-onboarding.md`  
+**Review:** `work/reviews/review-p12-agent-onboarding.md`

@@ -64,7 +64,7 @@ initialised project.
 
 ### 3.3 Explicitly excluded
 
-- `AGENTS.md` — never created or modified by `init`.
+- `AGENTS.md` — _superseded by `work/spec/agent-onboarding.md` §3–4: `init` now creates and manages `AGENTS.md` and `.github/copilot-instructions.md`. The exclusion below no longer applies._
 - Editor-specific config files (`.cursorrules`, `.claude/skills/`, `.cursor/skills/`, etc.).
 - Global or user-level skill installation.
 - Running `git init` on behalf of the user.
