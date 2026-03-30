@@ -145,11 +145,22 @@ func nextQueueMode(ctx context.Context, role string, conflictCheck bool, entityS
 		queueItems = append(queueItems, qitem)
 	}
 
-	return map[string]any{
+	response := map[string]any{
 		"queue":          queueItems,
 		"promoted_count": result.PromotedCount,
 		"total_queued":   result.TotalQueued,
-	}, nil
+	}
+
+	// Include orientation breadcrumb when the queue is empty — the agent is
+	// likely orienting rather than mid-flow. Omit when work is available.
+	if len(queueItems) == 0 {
+		response["orientation"] = map[string]any{
+			"message":     "This is a kanbanzai-managed project. For workflow guidance, read .agents/skills/kanbanzai-getting-started/SKILL.md",
+			"skills_path": ".agents/skills/",
+		}
+	}
+
+	return response, nil
 }
 
 // ─── Claim mode ───────────────────────────────────────────────────────────────

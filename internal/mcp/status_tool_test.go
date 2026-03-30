@@ -1053,3 +1053,96 @@ func TestStatusTool_TaskDetail_HasDispatch(t *testing.T) {
 		t.Errorf("dispatch.dispatched_to = %v, want backend", dispatch["dispatched_to"])
 	}
 }
+
+// ─── Orientation breadcrumb tests (AC-E1, AC-E2, AC-E3, AC-E7) ───────────────
+
+func TestStatusTool_ProjectOverview_HasOrientation(t *testing.T) {
+	t.Parallel()
+	// AC-E1: status with no id returns orientation field.
+	// AC-E2: orientation.message references getting-started skill path.
+	// AC-E3: orientation.skills_path is ".agents/skills/".
+	entitySvc, docSvc := setupStatusTest(t)
+	tool := statusTool(entitySvc, docSvc, nil)
+	req := makeRequest(map[string]any{})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	// AC-E1: orientation field must be present.
+	orientation, ok := parsed["orientation"].(map[string]any)
+	if !ok {
+		t.Fatalf("orientation field missing or wrong type in project overview: %v", parsed)
+	}
+
+	// AC-E2: message must reference the getting-started skill.
+	message, _ := orientation["message"].(string)
+	if !strings.Contains(message, "kanbanzai-getting-started") {
+		t.Errorf("orientation.message does not reference getting-started skill: %q", message)
+	}
+	if !strings.Contains(message, ".agents/skills/") {
+		t.Errorf("orientation.message does not reference .agents/skills/ path: %q", message)
+	}
+
+	// AC-E3: skills_path must be ".agents/skills/".
+	skillsPath, _ := orientation["skills_path"].(string)
+	if skillsPath != ".agents/skills/" {
+		t.Errorf("orientation.skills_path = %q, want .agents/skills/", skillsPath)
+	}
+}
+
+func TestStatusTool_ProjectOverview_OrientationDoesNotBreakExistingFields(t *testing.T) {
+	t.Parallel()
+	// AC-E7: existing fields in status response are unchanged by orientation addition.
+	entitySvc, docSvc := setupStatusTest(t)
+	createTestPlan(t, entitySvc, "orient-plan", "Orient Plan")
+
+	tool := statusTool(entitySvc, docSvc, nil)
+	req := makeRequest(map[string]any{})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	// All pre-existing top-level fields must still be present.
+	for _, field := range []string{"scope", "plans", "total", "generated_at"} {
+		if _, ok := parsed[field]; !ok {
+			t.Errorf("expected field %q missing from project overview response", field)
+		}
+	}
+	if parsed["scope"] != "project" {
+		t.Errorf("scope = %v, want project", parsed["scope"])
+	}
+}
+
+func TestStatusTool_PlanDashboard_NoOrientation(t *testing.T) {
+	t.Parallel()
+	// Orientation is project-scope only — plan dashboard must not include it.
+	entitySvc, docSvc := setupStatusTest(t)
+	planID := createTestPlan(t, entitySvc, "no-orient-plan", "No Orient Plan")
+
+	tool := statusTool(entitySvc, docSvc, nil)
+	req := makeRequest(map[string]any{"id": planID})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+	if _, ok := parsed["orientation"]; ok {
+		t.Error("orientation field must not appear in plan dashboard response")
+	}
+}

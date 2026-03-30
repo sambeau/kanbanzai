@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -979,5 +980,69 @@ func TestNextTrimContext_T3BeforeT2(t *testing.T) {
 	}
 	if result.trimmed[0].topic != "t3-high" {
 		t.Errorf("first trimmed entry should be t3-high, got %q", result.trimmed[0].topic)
+	}
+}
+
+// ─── Orientation breadcrumb tests (AC-E4, AC-E5, AC-E6) ──────────────────────
+
+func TestNext_EmptyQueue_HasOrientation(t *testing.T) {
+	t.Parallel()
+	// AC-E4: next with no id and an empty queue returns the orientation field.
+	entitySvc, dispatchSvc := setupNextTest(t)
+
+	parsed := callNextJSON(t, entitySvc, dispatchSvc, map[string]any{})
+
+	orientation, ok := parsed["orientation"].(map[string]any)
+	if !ok {
+		t.Fatalf("orientation field missing or wrong type in empty-queue response: %v", parsed)
+	}
+	msg, _ := orientation["message"].(string)
+	if !strings.Contains(msg, "kanbanzai-getting-started/SKILL.md") {
+		t.Errorf("orientation.message does not reference getting-started skill: %q", msg)
+	}
+	skillsPath, _ := orientation["skills_path"].(string)
+	if skillsPath != ".agents/skills/" {
+		t.Errorf("orientation.skills_path = %q, want .agents/skills/", skillsPath)
+	}
+}
+
+func TestNext_NonEmptyQueue_NoOrientation(t *testing.T) {
+	t.Parallel()
+	// AC-E5: next with no id and a non-empty queue does NOT return orientation.
+	entitySvc, dispatchSvc := setupNextTest(t)
+	planID := createNextTestPlan(t, entitySvc, "orient-nonempty-plan")
+	featID := createNextTestFeature(t, entitySvc, planID, "orient-nonempty-feat")
+	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "orient-nonempty-task")
+	setNextTaskReady(t, entitySvc, taskID, taskSlug)
+
+	parsed := callNextJSON(t, entitySvc, dispatchSvc, map[string]any{})
+
+	if _, ok := parsed["orientation"]; ok {
+		t.Errorf("orientation field should not be present in non-empty queue response")
+	}
+	// Queue should have the task.
+	queue, _ := parsed["queue"].([]any)
+	if len(queue) == 0 {
+		t.Fatalf("expected non-empty queue, got empty")
+	}
+}
+
+func TestNext_ClaimMode_NoOrientation(t *testing.T) {
+	t.Parallel()
+	// AC-E6: next with an id (claim mode) does NOT return orientation.
+	entitySvc, dispatchSvc := setupNextTest(t)
+	planID := createNextTestPlan(t, entitySvc, "orient-claim-plan")
+	featID := createNextTestFeature(t, entitySvc, planID, "orient-claim-feat")
+	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "orient-claim-task")
+	setNextTaskReady(t, entitySvc, taskID, taskSlug)
+
+	parsed := callNextJSON(t, entitySvc, dispatchSvc, map[string]any{"id": taskID})
+
+	if _, ok := parsed["orientation"]; ok {
+		t.Errorf("orientation field should not be present in claim-mode response")
+	}
+	// Should have task and context fields instead.
+	if _, ok := parsed["task"]; !ok {
+		t.Errorf("task field missing from claim-mode response")
 	}
 }

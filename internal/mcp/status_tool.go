@@ -206,12 +206,18 @@ type featureInfo struct {
 
 // ─── Project overview synthesis ───────────────────────────────────────────────
 
+type orientationInfo struct {
+	Message    string `json:"message"`
+	SkillsPath string `json:"skills_path"`
+}
+
 type projectOverview struct {
 	Scope       string               `json:"scope"`
 	Plans       []planSummary        `json:"plans"`
 	Total       planAggregate        `json:"total"`
 	Health      *statusHealthSummary `json:"health,omitempty"`
 	Attention   []string             `json:"attention,omitempty"`
+	Orientation *orientationInfo     `json:"orientation,omitempty"`
 	GeneratedAt string               `json:"generated_at"`
 }
 
@@ -325,11 +331,15 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 	health := buildHealthSummary(entitySvc)
 
 	return &projectOverview{
-		Scope:       "project",
-		Plans:       summaries,
-		Total:       agg,
-		Health:      health,
-		Attention:   attention,
+		Scope:     "project",
+		Plans:     summaries,
+		Total:     agg,
+		Health:    health,
+		Attention: attention,
+		Orientation: &orientationInfo{
+			Message:    "This is a kanbanzai-managed project. For workflow guidance, read .agents/skills/kanbanzai-getting-started/SKILL.md",
+			SkillsPath: ".agents/skills/",
+		},
 		GeneratedAt: time.Now().UTC().Format(time.RFC3339),
 	}, nil
 }
