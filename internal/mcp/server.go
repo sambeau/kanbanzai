@@ -173,6 +173,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
 			Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
 			DocCurrencyHealthChecker(toolNames, repoRoot, entitySvc, docRecordSvc),
+			GateOverrideHealthChecker(entitySvc),
 		)...)
 	}
 

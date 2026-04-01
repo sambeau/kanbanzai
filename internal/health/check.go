@@ -100,6 +100,14 @@ func RunHealthCheck(
 		categories["worktree_branch_merged"] = worktreeMergedResult
 	}
 
+	// Run gate override checks
+	if len(opts.Features) > 0 {
+		overrideResult := CheckGateOverrides(opts.Features)
+		if opts.IncludeOK || overrideResult.Status != SeverityOK {
+			categories["gate_overrides"] = overrideResult
+		}
+	}
+
 	return HealthResult{
 		Status:     DetermineOverallStatus(categories),
 		Categories: categories,

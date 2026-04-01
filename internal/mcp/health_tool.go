@@ -20,6 +20,34 @@ import (
 // and returns a report to be merged into the main health check result.
 type AdditionalHealthChecker func() (*validate.HealthReport, error)
 
+// GateOverrideHealthChecker returns an AdditionalHealthChecker that loads all
+// features and calls CheckGateOverrides to flag any that used gate overrides.
+func GateOverrideHealthChecker(entitySvc *service.EntityService) AdditionalHealthChecker {
+	return func() (*validate.HealthReport, error) {
+		report := &validate.HealthReport{
+			Summary: validate.HealthSummary{
+				EntitiesByType: make(map[string]int),
+			},
+		}
+
+		features, err := entitySvc.List("feature")
+		if err != nil {
+			// Best-effort: skip gate override check if features cannot be loaded.
+			return report, nil
+		}
+
+		featureMaps := make([]map[string]any, len(features))
+		for i, f := range features {
+			featureMaps[i] = f.State
+		}
+
+		overrideResult := health.CheckGateOverrides(featureMaps)
+		mergeHealthResult(report, "gate_overrides", overrideResult)
+
+		return report, nil
+	}
+}
+
 // HealthTool returns the 2.0 health tool.
 // It replaces the 1.0 health_check tool with the same behaviour but under the
 // 2.0 naming convention (tool name: "health", registered in GroupCore).
