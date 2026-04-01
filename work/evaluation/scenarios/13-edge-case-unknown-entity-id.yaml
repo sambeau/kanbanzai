@@ -1,0 +1,14 @@
+name: Edge case - entity get with nonexistent ID
+description: Tests that an agent gracefully handles a not_found error when attempting
+  to retrieve an entity that does not exist, rather than retrying indefinitely.
+category: edge-case
+starting_state:
+  features: []
+expected_pattern:
+  tool_sequence:
+    - entity (get FEAT-NONEXISTENT - returns not_found error)
+  key_transitions: []
+success_criteria:
+  - entity get returns a not_found error code
+  - Agent does not retry the same failed call more than once
+  - Agent reports the error to the user without crashing the session

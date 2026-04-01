@@ -1,0 +1,25 @@
+name: Gate failure recovery - missing dev-plan before decompose
+description: Tests recovery when an agent attempts decompose without an approved
+  dev-plan document, which is required before task decomposition can proceed.
+category: gate-failure-recovery
+starting_state:
+  feature_stage: dev-planning
+  documents:
+    - type: design
+      status: approved
+    - type: specification
+      status: approved
+expected_pattern:
+  tool_sequence:
+    - decompose (propose - FAILS or warns: no approved dev-plan)
+    - doc (register dev-plan)
+    - doc (approve dev-plan)
+    - decompose (propose - succeeds)
+    - decompose (review)
+    - decompose (apply)
+  key_transitions: [developing]
+success_criteria:
+  - decompose fails or warns without an approved dev-plan
+  - Agent creates and approves a dev-plan document before retrying
+  - Decompose succeeds after dev-plan is approved
+  - Tasks are created and feature advances to developing

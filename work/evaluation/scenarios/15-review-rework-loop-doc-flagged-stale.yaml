@@ -1,0 +1,25 @@
+name: Review rework loop - stale document triggers rework
+description: Tests that when a knowledge health check flags a document as stale
+  during review, the agent correctly refreshes and re-approves it before proceeding.
+category: review-rework-loop
+starting_state:
+  feature_stage: reviewing
+  documents:
+    - type: design
+      status: approved
+      stale: true
+    - type: specification
+      status: approved
+    - type: dev-plan
+      status: approved
+expected_pattern:
+  tool_sequence:
+    - health (detects stale design document)
+    - doc (refresh stale design document)
+    - doc (approve refreshed design document)
+    - entity (transition to reviewing or confirm still in reviewing)
+  key_transitions: []
+success_criteria:
+  - Stale document is identified via health or doc tool
+  - Document is refreshed and re-approved
+  - Feature remains in or returns to reviewing after refresh

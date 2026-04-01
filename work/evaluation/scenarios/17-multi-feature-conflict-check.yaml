@@ -1,0 +1,25 @@
+name: Multi-feature orchestration - conflict detection between tasks
+description: Tests that an agent uses the conflict tool to check for overlap before
+  running two tasks in parallel, and serialises them if a conflict is detected.
+category: multi-feature-orchestration
+starting_state:
+  features:
+    - id: FEAT-A
+      stage: developing
+      tasks:
+        - status: active
+          slug: modify-entity-service
+    - id: FEAT-B
+      stage: developing
+      tasks:
+        - status: ready
+          slug: also-modify-entity-service
+expected_pattern:
+  tool_sequence:
+    - conflict (check TASK-A vs TASK-B)
+    - next (claim TASK-B only after TASK-A is done, or serialise)
+  key_transitions: []
+success_criteria:
+  - Agent calls conflict before claiming the second task
+  - If conflict is detected, agent serialises the tasks
+  - No two tasks that modify the same files are active simultaneously

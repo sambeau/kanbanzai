@@ -1,0 +1,26 @@
+name: Review rework loop - single cycle
+description: Tests that an agent correctly handles a feature being sent back from
+  reviewing to developing for rework, then guides it back to reviewing after fixes.
+category: review-rework-loop
+starting_state:
+  feature_stage: reviewing
+  tasks: []
+  documents:
+    - type: design
+      status: approved
+    - type: specification
+      status: approved
+    - type: dev-plan
+      status: approved
+expected_pattern:
+  tool_sequence:
+    - entity (transition back to developing for rework)
+    - entity (create rework task)
+    - finish (complete rework task)
+    - entity (transition to reviewing again)
+  key_transitions: [developing, reviewing]
+success_criteria:
+  - Feature transitions from reviewing back to developing
+  - Agent creates at least one rework task
+  - Feature returns to reviewing stage after rework
+  - review_cycles counter increments by 1

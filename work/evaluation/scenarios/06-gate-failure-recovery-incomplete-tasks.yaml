@@ -1,0 +1,26 @@
+name: Gate failure recovery - incomplete tasks before reviewing
+description: Tests recovery when an agent tries to advance a feature to reviewing
+  while some child tasks are still active or ready (not terminal).
+category: gate-failure-recovery
+starting_state:
+  feature_stage: developing
+  tasks:
+    - status: active
+      slug: pending-task
+  documents:
+    - type: design
+      status: approved
+    - type: specification
+      status: approved
+    - type: dev-plan
+      status: approved
+expected_pattern:
+  tool_sequence:
+    - entity (transition to reviewing - FAILS: non-terminal tasks exist)
+    - finish (complete the pending task)
+    - entity (transition to reviewing - succeeds)
+  key_transitions: [reviewing]
+success_criteria:
+  - Transition to reviewing fails when tasks are non-terminal
+  - Agent identifies and completes the blocking task
+  - Feature reaches reviewing stage after all tasks are terminal

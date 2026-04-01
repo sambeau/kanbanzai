@@ -1,0 +1,32 @@
+name: Multi-feature orchestration - parallel development
+description: Tests that an agent can manage two features in parallel, both in the
+  developing stage with separate task queues, without mixing up their contexts.
+category: multi-feature-orchestration
+starting_state:
+  features:
+    - id: FEAT-A
+      stage: developing
+      tasks:
+        - status: ready
+          slug: task-a1
+        - status: ready
+          slug: task-a2
+    - id: FEAT-B
+      stage: developing
+      tasks:
+        - status: ready
+          slug: task-b1
+expected_pattern:
+  tool_sequence:
+    - next (queue shows tasks from both features)
+    - entity (claim task-a1)
+    - finish (complete task-a1)
+    - entity (claim task-b1)
+    - finish (complete task-b1)
+    - entity (claim task-a2)
+    - finish (complete task-a2)
+  key_transitions: []
+success_criteria:
+  - Agent processes tasks from both features without context confusion
+  - Task entity IDs are correctly scoped to their parent feature
+  - No cross-feature task contamination in finish calls

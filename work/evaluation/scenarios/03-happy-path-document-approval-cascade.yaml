@@ -1,0 +1,18 @@
+name: Happy path - document approval triggers feature advance
+description: Tests that approving a required document automatically advances the
+  parent feature to the next lifecycle stage via the entity lifecycle hook.
+category: happy-path
+starting_state:
+  feature_stage: designing
+  documents:
+    - type: design
+      status: draft
+expected_pattern:
+  tool_sequence:
+    - doc (approve design document)
+    - entity (get feature - verify stage advanced to specifying)
+  key_transitions: [specifying]
+success_criteria:
+  - Design document reaches approved status
+  - Feature advances to specifying stage automatically after doc approval
+  - No explicit entity transition call is needed

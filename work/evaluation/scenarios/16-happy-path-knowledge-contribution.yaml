@@ -1,0 +1,19 @@
+name: Happy path - finish with inline knowledge contribution
+description: Tests that an agent correctly uses the knowledge parameter in finish
+  to contribute a reusable insight, and that the knowledge entry is created.
+category: happy-path
+starting_state:
+  feature_stage: developing
+  tasks:
+    - status: active
+      slug: implement-caching
+expected_pattern:
+  tool_sequence:
+    - finish (complete task with knowledge contribution)
+    - knowledge (list - verify new entry exists)
+  key_transitions: [done]
+success_criteria:
+  - Task reaches done status
+  - finish call includes at least one knowledge entry
+  - knowledge list shows the contributed entry
+  - Knowledge entry has non-empty topic and content
