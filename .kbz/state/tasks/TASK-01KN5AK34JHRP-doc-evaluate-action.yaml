@@ -2,6 +2,10 @@ id: TASK-01KN5AK34JHRP
 parent_feature: FEAT-01KN58J26RSB6
 slug: doc-evaluate-action
 summary: "Add an evaluate action to the doc MCP tool that accepts a document ID and quality evaluation, delegating to AttachQualityEvaluation."
-status: active
+status: done
 depends_on:
   - TASK-01KN5AK342WDJ
+files_planned:
+  - internal/mcp/doc_tool.go
+completed: "2026-04-01T21:21:48Z"
+completion_summary: "Added doc evaluate MCP action to attach quality evaluations to documents. Includes parseEvaluationMap with type coercions for numeric fields, validation for required fields (overall_score, evaluated_at), and dispatches to AttachQualityEvaluation service. docRecordToMap now includes quality_evaluation when present."
