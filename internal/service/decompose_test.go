@@ -461,6 +461,9 @@ func TestReviewProposal_GapFinding(t *testing.T) {
 	for _, f := range result.Findings {
 		if f.Type == "gap" {
 			gapCount++
+			if f.Severity != "error" {
+				t.Errorf("gap finding severity = %q, want %q", f.Severity, "error")
+			}
 		}
 	}
 	if gapCount < 2 {
@@ -506,6 +509,9 @@ func TestReviewProposal_OversizedFinding(t *testing.T) {
 			oversizedCount++
 			if f.TaskSlug != "big-task" {
 				t.Errorf("oversized finding task_slug = %q, want %q", f.TaskSlug, "big-task")
+			}
+			if f.Severity != "warning" {
+				t.Errorf("oversized finding severity = %q, want %q", f.Severity, "warning")
 			}
 		}
 	}
@@ -565,6 +571,9 @@ func TestReviewProposal_CycleFinding(t *testing.T) {
 	for _, f := range result.Findings {
 		if f.Type == "cycle" {
 			cycleCount++
+			if f.Severity != "error" {
+				t.Errorf("cycle finding severity = %q, want %q", f.Severity, "error")
+			}
 		}
 	}
 	if cycleCount == 0 {
@@ -675,6 +684,9 @@ func TestReviewProposal_AmbiguousSummary(t *testing.T) {
 	for _, f := range result.Findings {
 		if f.Type == "ambiguous" {
 			ambiguousCount++
+			if f.Severity != "warning" {
+				t.Errorf("ambiguous finding severity = %q, want %q", f.Severity, "warning")
+			}
 		}
 	}
 	if ambiguousCount == 0 {

@@ -55,6 +55,7 @@ type Finding struct {
 	Type     string `json:"type"`                // gap, overlap, oversized, ambiguous, cycle
 	TaskSlug string `json:"task_slug,omitempty"` // affected task slug, empty for feature-level findings
 	Detail   string `json:"detail"`
+	Severity string `json:"severity"` // error (blocking) or warning (non-blocking)
 }
 
 // DecomposeReviewResult is the output of DecomposeService.ReviewProposal.
@@ -234,6 +235,11 @@ func (s *DecomposeService) ReviewProposal(input DecomposeReviewInput) (Decompose
 	findings = append(findings, checkOversized(input.Proposal)...)
 	findings = append(findings, checkCycles(input.Proposal)...)
 	findings = append(findings, checkAmbiguous(input.Proposal)...)
+	findings = append(findings, checkDescriptionPresent(input.Proposal)...)
+	findings = append(findings, checkTestingCoverage(input.Proposal)...)
+	findings = append(findings, checkDependenciesDeclared(input.Proposal)...)
+	findings = append(findings, checkOrphanTasks(input.Proposal)...)
+	findings = append(findings, checkSingleAgentSizing(input.Proposal)...)
 
 	// 5. Determine status.
 	blockingCount := 0
@@ -684,8 +690,9 @@ func checkGaps(spec specStructure, proposal Proposal) []Finding {
 	for _, ac := range spec.acceptanceCriteria {
 		if !isACCovered(ac, proposal.Tasks) {
 			findings = append(findings, Finding{
-				Type:   "gap",
-				Detail: fmt.Sprintf("Uncovered acceptance criterion: %q (section: %s)", ac.text, sectionOrDefault(ac.section)),
+				Type:     "gap",
+				Severity: "error",
+				Detail:   fmt.Sprintf("Uncovered acceptance criterion: %q (section: %s)", ac.text, sectionOrDefault(ac.section)),
 			})
 		}
 	}
@@ -747,6 +754,7 @@ func checkOversized(proposal Proposal) []Finding {
 		if task.Estimate != nil && *task.Estimate > oversizedThreshold {
 			findings = append(findings, Finding{
 				Type:     "oversized",
+				Severity: "warning",
 				TaskSlug: task.Slug,
 				Detail:   fmt.Sprintf("Task %q estimated at %.0f points (soft limit: %.0f)", task.Slug, *task.Estimate, oversizedThreshold),
 			})
@@ -802,8 +810,9 @@ func checkCycles(proposal Proposal) []Finding {
 			cycleNodes = nil
 			if dfs(task.Slug) {
 				findings = append(findings, Finding{
-					Type:   "cycle",
-					Detail: fmt.Sprintf("Dependency cycle detected involving: %s", strings.Join(cycleNodes, " → ")),
+					Type:     "cycle",
+					Severity: "error",
+					Detail:   fmt.Sprintf("Dependency cycle detected involving: %s", strings.Join(cycleNodes, " → ")),
 				})
 				// Reset to find additional cycles.
 				for k := range color {
@@ -825,6 +834,7 @@ func checkAmbiguous(proposal Proposal) []Finding {
 		if len(summary) < 10 {
 			findings = append(findings, Finding{
 				Type:     "ambiguous",
+				Severity: "warning",
 				TaskSlug: task.Slug,
 				Detail:   fmt.Sprintf("Task %q has a very short summary (%d characters)", task.Slug, len(summary)),
 			})
@@ -833,15 +843,10 @@ func checkAmbiguous(proposal Proposal) []Finding {
 	return findings
 }
 
-// isBlockingFinding returns true for finding types that should block
-// confirmation of a proposal.
+// isBlockingFinding returns true for findings that should block confirmation
+// of a proposal. Blocking is determined by severity, not type.
 func isBlockingFinding(f Finding) bool {
-	switch f.Type {
-	case "gap", "cycle":
-		return true
-	default:
-		return false
-	}
+	return f.Severity == "error"
 }
 
 // ---------------------------------------------------------------------------
