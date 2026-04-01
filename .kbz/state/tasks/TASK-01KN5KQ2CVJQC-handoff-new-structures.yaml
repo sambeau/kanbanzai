@@ -1,0 +1,11 @@
+id: TASK-01KN5KQ2CVJQC
+parent_feature: FEAT-01KN588PGXATW
+slug: handoff-new-structures
+summary: Extend handoff/assembly pipeline for new attention-curve skill format and role vocabulary/anti-pattern fields. Handles mixed old/new format states.
+status: done
+files_planned:
+  - internal/context/pipeline.go
+  - internal/mcp/handoff_tool.go
+completed: "2026-04-01T22:48:34Z"
+completion_summary: "Already implemented: Pipeline handles new-format skills with attention-curve ordering, renders role vocabulary/anti-patterns."
+verification: go test ./internal/context/ -run Pipeline -v

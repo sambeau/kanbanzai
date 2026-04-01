@@ -1,10 +1,19 @@
 # Legacy Skills (Deprecated)
 
-Skills have moved to `.agents/skills/` for automatic discovery by Claude Code.
+The skill files that were previously in this directory have been retired.
 
-See the following skills:
-- `.agents/skills/kanbanzai-code-review/` — code review procedure
-- `.agents/skills/kanbanzai-plan-review/` — plan review procedure
-- `.agents/skills/kanbanzai-documents/` — document creation and registration (replaces `document-creation.md`)
+## Where skills live now
 
-The files in this directory are kept for reference but are no longer the canonical source.
+- **Agent workflow skills** (for Claude Code / MCP agent discovery):
+  `.agents/skills/kanbanzai-*/SKILL.md`
+
+- **Context assembly skills** (consumed by the 3.0 context assembly pipeline):
+  `.kbz/skills/*/SKILL.md`
+
+## Migration mapping
+
+| Old file | New location |
+|----------|-------------|
+| `code-review.md` | `.kbz/skills/review-code/SKILL.md` + `.kbz/skills/orchestrate-review/SKILL.md` |
+| `plan-review.md` | `.kbz/skills/review-plan/SKILL.md` |
+| `document-creation.md` | `.kbz/skills/write-design/`, `write-spec/`, `write-dev-plan/`, `write-research/`, `update-docs/` |

@@ -1,0 +1,12 @@
+id: TASK-01KN5KQ2C4YHF
+parent_feature: FEAT-01KN588PGXATW
+slug: profile-store-dual-root
+summary: "Extend ProfileStore/RoleStore for dual-location loading (.kbz/roles/ primary, .kbz/context/roles/ fallback). Role struct gains Vocabulary, AntiPatterns, Tools fields. ResolvedRole merges new fields."
+status: done
+files_planned:
+  - internal/context/role.go
+  - internal/context/role_store.go
+  - internal/context/resolve.go
+completed: "2026-04-01T22:48:34Z"
+completion_summary: "Already implemented: RoleStore has newRoot/legacyRoot dual-path loading, Role struct has Vocabulary/AntiPatterns/Tools fields, ResolvedRole merges them."
+verification: go test ./internal/context/ -run Role -v

@@ -1,0 +1,5 @@
+id: TASK-01KN5KQ2FYQCR
+parent_feature: FEAT-01KN588PGXATW
+slug: retirement-verification
+summary: "Verify retirement conditions (stage bindings reference new skills, no doc references to .skills/ paths, no active dependencies) and remove old .skills/ files."
+status: ready

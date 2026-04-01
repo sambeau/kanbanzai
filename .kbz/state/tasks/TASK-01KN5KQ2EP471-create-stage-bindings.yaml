@@ -1,0 +1,10 @@
+id: TASK-01KN5KQ2EP471
+parent_feature: FEAT-01KN588PGXATW
+slug: create-stage-bindings
+summary: "Create .kbz/stage-bindings.yaml with stage-to-role-to-skill mappings for all 8 lifecycle stages: designing, specifying, dev-planning, developing, reviewing, plan-reviewing, researching, documenting."
+status: done
+files_planned:
+  - .kbz/stage-bindings.yaml
+completed: "2026-04-01T22:49:37Z"
+completion_summary: "Created .kbz/stage-bindings.yaml with all 8 lifecycle stage mappings: designing (architect/write-design), specifying (spec-author/write-spec), dev-planning (architect/write-dev-plan+decompose-feature), developing (orchestrator-workers with implementer/implement-task), reviewing (orchestrator-workers with 4 specialist reviewers/review-code), plan-reviewing (reviewer-conformance/review-plan), researching (researcher/write-research), documenting (documenter/update-docs). Includes prerequisites, document templates, effort budgets, and sub-agent configs."
+verification: Loaded and validated with binding.LoadBindingFile + ValidateBinding — all 8 stages pass validation

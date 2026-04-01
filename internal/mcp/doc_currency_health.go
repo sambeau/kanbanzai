@@ -167,8 +167,8 @@ var (
 // DocCurrencyHealthChecker returns an AdditionalHealthChecker that detects
 // stale references in agent-facing documentation. It has two tiers:
 //
-//   - Tier 1: tool name validation — scans .skills/*.md and AGENTS.md for
-//     references to tools that no longer exist in the MCP registry.
+//   - Tier 1: tool name validation — scans .agents/skills/kanbanzai-*/SKILL.md
+//     and AGENTS.md for references to tools that no longer exist in the MCP registry.
 //   - Tier 2: plan completion documentation — checks that done plans are
 //     mentioned in AGENTS.md and that associated specs are approved.
 func DocCurrencyHealthChecker(
