@@ -58,9 +58,14 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Document Records"),
 		mcp.WithDescription(
-			"Manage document records: register, approve, query, supersede, refresh, chain, validate, and import. "+
-				"Use action: get or action: list to query document status — do not read .kbz/state/documents/ files directly. "+
+			"Use when you need to register, approve, query, or manage document records that track specs, "+
+				"designs, and plans through their approval lifecycle. Use INSTEAD OF reading .kbz/state/documents/ "+
+				"files directly — action: get and action: list return structured metadata with approval status. "+
+				"Do NOT use for document content analysis — use doc_intel instead. "+
 				"Actions: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate. "+
+				"For register: path, type, title required. For approve/get/content/validate/supersede/refresh/chain: "+
+				"id required (or ids for batch approve). "+
+				"Call register after writing a document, approve before advancing a feature past its stage gate. "+
 				"approve and supersede report entity lifecycle cascade side effects.",
 		),
 		mcp.WithString("action",

@@ -60,12 +60,14 @@ func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Workflow Status Dashboard"),
 		mcp.WithDescription(
-			"Synthesis dashboard — the primary way to query project, plan, feature, or task state. "+
-				"Returns lifecycle status, attention items, progress metrics, and derived state "+
-				"(what's blocked, what's ready) that raw YAML files do not contain. "+
-				"Use this instead of reading .kbz/state/ files directly. "+
+			"The primary way to check project health and progress — use this before starting work "+
+				"to understand what's blocked, what's ready, and where attention is needed. "+
+				"Returns synthesised dashboards with lifecycle status, attention items, progress metrics, "+
+				"and derived state that raw YAML files do not contain. "+
+				"Use INSTEAD OF reading .kbz/state/ files or using entity(action: list) for overview queries. "+
+				"For modifying entity state, use entity instead. "+
 				"Call with no id for project overview, plan ID for plan dashboard, "+
-				"FEAT-... for feature detail, TASK-... or BUG-... for task detail.",
+				"FEAT-... for feature detail, TASK-... or BUG-... for task/bug detail.",
 		),
 		mcp.WithString("id", mcp.Description(
 			"Optional entity ID to scope the dashboard. "+

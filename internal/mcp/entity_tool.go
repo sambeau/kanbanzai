@@ -45,11 +45,14 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Entity Manager"),
 		mcp.WithDescription(
-			"Create, read, update, and transition entities (plans, features, tasks, bugs, epics, decisions). "+
-				"Use action: get or action: list to query entities — these return structured data with lifecycle "+
-				"state and cross-references. Do not read .kbz/state/ YAML files directly. "+
+			"The primary tool for managing workflow entities (plans, features, tasks, bugs, epics, decisions) — "+
+				"use this whenever you need to create, query, modify, or advance entities through their lifecycle. "+
+				"Use INSTEAD OF reading .kbz/state/ YAML files directly — action: get and action: list return "+
+				"structured data with lifecycle state and cross-references that raw files do not provide. "+
+				"For synthesised dashboard views (progress, attention items, what's blocked), use status instead. "+
 				"Actions: create, get, list, update, transition. "+
-				"Entity type is inferred from ID prefix for get/update/transition. "+
+				"For create and list: type is required. "+
+				"For get, update, and transition: id is required (type is inferred from the ID prefix). "+
 				"Supports batch creation via the entities array.",
 		),
 		mcp.WithString("action",

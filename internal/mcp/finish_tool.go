@@ -48,13 +48,15 @@ func finishTool(entitySvc *service.EntityService, dispatchSvc *service.DispatchS
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Task Completion"),
 		mcp.WithDescription(
-			"Record task completion with optional knowledge contribution and retrospective signals. "+
-				"Transitions the task to done (default) or needs-review. "+
-				"Include the retrospective parameter to record observations about workflow friction, "+
-				"tool gaps, spec ambiguity, or things that worked well — these feed the retro tool "+
-				"for future synthesis. "+
-				"Accepts tasks in ready or active status. "+
-				"Supports batch completion via the tasks array.",
+			"Use when a task is done to record completion and contribute knowledge. "+
+				"Call AFTER completing implementation work, BEFORE moving to the next task. "+
+				"Transitions the task from active (or ready) to done (default) or needs-review. "+
+				"Do NOT use for other status changes — use entity(action: \"transition\") instead. "+
+				"In single mode: task_id and summary are required. "+
+				"In batch mode: provide the tasks array instead (each item needs task_id and summary). "+
+				"Include retrospective signals to capture observations about workflow friction, "+
+				"tool gaps, or things that worked well — these feed retro for future synthesis. "+
+				"Items are processed independently; a failure on one does not block others.",
 		),
 		mcp.WithString("task_id", mcp.Description("Task ID to complete (single-item mode)")),
 		mcp.WithString("summary", mcp.Description("Brief description of what was accomplished")),

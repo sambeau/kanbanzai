@@ -73,11 +73,13 @@ func handoffTool(
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Sub-Agent Prompt Generator"),
 		mcp.WithDescription(
-			"Generate a complete sub-agent prompt from a task. "+
-				"The output is designed to go directly into spawn_agent's message parameter. "+
-				"Assembles spec sections, knowledge constraints, file paths, and role conventions "+
-				"into a structured Markdown prompt. "+
-				"Read-only: does not modify task status. "+
+			"Use when delegating a task to a sub-agent — generates a complete, ready-to-use prompt "+
+				"by assembling spec sections, knowledge constraints, file paths, and role conventions "+
+				"from the task and its parent feature. The output goes directly into spawn_agent's "+
+				"message parameter. Call AFTER next(id) claims the task, BEFORE spawn_agent dispatches "+
+				"the sub-agent. Read-only: does not modify task status or claim the task. "+
+				"For structured JSON context instead of a rendered Markdown prompt, use next(id) which "+
+				"returns machine-readable data. Do NOT use to claim tasks — use next for that. "+
 				"Accepts tasks in active, ready, or needs-rework status.",
 		),
 		mcp.WithString("task_id",
