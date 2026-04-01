@@ -2,4 +2,13 @@ id: TASK-01KN5KQ2FYQCR
 parent_feature: FEAT-01KN588PGXATW
 slug: retirement-verification
 summary: "Verify retirement conditions (stage bindings reference new skills, no doc references to .skills/ paths, no active dependencies) and remove old .skills/ files."
-status: ready
+status: done
+files_planned:
+  - .skills/code-review.md
+  - .skills/plan-review.md
+  - .skills/document-creation.md
+  - .skills/README.md
+  - internal/mcp/doc_currency_health.go
+completed: "2026-04-01T22:53:28Z"
+completion_summary: "Verified all 5 retirement conditions, removed 3 legacy skill files (code-review.md, plan-review.md, document-creation.md), updated .skills/README.md with migration mapping table, fixed stale comment in doc_currency_health.go."
+verification: "All stage bindings reference new skills (11/11 exist). No AGENTS.md/.github/copilot-instructions.md references to .skills/. Build passes (go build, go vet)."
