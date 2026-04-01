@@ -20,6 +20,7 @@ func setupQueueTest(t *testing.T) (*EntityService, string, string, string) {
 	writeTestPlan(t, svc, testPlanIDQueue)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "queue-feat",
 		Parent:    testPlanIDQueue,
 		Summary:   "Feature for queue conflict tests",
@@ -30,6 +31,7 @@ func setupQueueTest(t *testing.T) (*EntityService, string, string, string) {
 	}
 
 	taskA, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "task-alpha",
 		Summary:       "First task for conflict testing",
@@ -39,6 +41,7 @@ func setupQueueTest(t *testing.T) (*EntityService, string, string, string) {
 	}
 
 	taskB, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "task-beta",
 		Summary:       "Second task for conflict testing",
@@ -242,6 +245,7 @@ func TestWorkQueue_ConflictCheckNoFileOverlap(t *testing.T) {
 	// Two features with completely different slugs/summaries so the boundary
 	// crossing heuristic finds fewer than 3 shared keywords.
 	featX, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "payments-gateway",
 		Parent:    "P1-no-overlap",
 		Summary:   "Stripe integration for checkout",
@@ -252,6 +256,7 @@ func TestWorkQueue_ConflictCheckNoFileOverlap(t *testing.T) {
 	}
 
 	featY, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "telemetry-pipeline",
 		Parent:    "P1-no-overlap",
 		Summary:   "OpenTelemetry collector setup",
@@ -262,6 +267,7 @@ func TestWorkQueue_ConflictCheckNoFileOverlap(t *testing.T) {
 	}
 
 	taskA, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featX.ID,
 		Slug:          "charge-endpoint",
 		Summary:       "Implement Stripe charge endpoint",
@@ -271,6 +277,7 @@ func TestWorkQueue_ConflictCheckNoFileOverlap(t *testing.T) {
 	}
 
 	taskB, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featY.ID,
 		Slug:          "span-exporter",
 		Summary:       "Configure OTLP span exporter",
@@ -321,6 +328,7 @@ func TestWorkQueue_PromotionStillWorksWithConflictCheck(t *testing.T) {
 	writeTestPlan(t, svc, "P1-promote")
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "promote-feat",
 		Parent:    "P1-promote",
 		Summary:   "Feature for promotion test",
@@ -332,6 +340,7 @@ func TestWorkQueue_PromotionStillWorksWithConflictCheck(t *testing.T) {
 
 	// Create a single task — it starts as queued with no dependencies.
 	task, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "promotable",
 		Summary:       "Task that should be auto-promoted to ready",
@@ -396,6 +405,7 @@ func TestWorkQueue_ConflictCheckMultipleActiveTasks(t *testing.T) {
 	writeTestPlan(t, svc, "P1-multi-active")
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "multi-active-feat",
 		Parent:    "P1-multi-active",
 		Summary:   "Feature for multi-active conflict test",
@@ -406,6 +416,7 @@ func TestWorkQueue_ConflictCheckMultipleActiveTasks(t *testing.T) {
 	}
 
 	taskA, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "active-one",
 		Summary:       "First active task",
@@ -415,6 +426,7 @@ func TestWorkQueue_ConflictCheckMultipleActiveTasks(t *testing.T) {
 	}
 
 	taskB, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "active-two",
 		Summary:       "Second active task",
@@ -424,6 +436,7 @@ func TestWorkQueue_ConflictCheckMultipleActiveTasks(t *testing.T) {
 	}
 
 	taskC, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "ready-one",
 		Summary:       "Ready task to check conflicts",

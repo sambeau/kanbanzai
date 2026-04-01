@@ -22,6 +22,7 @@ func setupConflictTest(t *testing.T) (*ConflictService, *EntityService, string) 
 	writeConflictTestPlan(t, entitySvc, testPlanIDConflict)
 
 	featResult, err := entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "conflict-feature",
 		Parent:    testPlanIDConflict,
 		Summary:   "Feature for conflict tests",
@@ -64,6 +65,7 @@ func createConflictTask(t *testing.T, svc *EntityService, featureID, slug, summa
 	t.Helper()
 
 	result, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featureID,
 		Slug:          slug,
 		Summary:       summary,
@@ -213,6 +215,7 @@ func TestConflictCheck_NoConflict(t *testing.T) {
 	// Use a feature whose slug tokens are all < 3 chars so
 	// extractConflictKeywords ignores them, avoiding false boundary crossing.
 	feat, err := entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "nc",
 		Parent:    testPlanIDConflict,
 		Summary:   "no",

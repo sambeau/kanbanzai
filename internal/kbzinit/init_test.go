@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/sambeau/kanbanzai/internal/config"
 )
 
 // ---- test helpers ----
@@ -2055,5 +2057,25 @@ func TestP12_Integration_SkipAgentsMDAndSkipSkills(t *testing.T) {
 	// Config must still be created.
 	if _, err := os.Stat(filepath.Join(dir, ".kbz", "config.yaml")); os.IsNotExist(err) {
 		t.Error("config.yaml must still be created")
+	}
+}
+
+// TestConfigNameField verifies that config.yaml written with a name round-trips
+// through the Config struct after Fix 1 added the Name field (AC-07).
+func TestConfigNameField(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+
+	if err := WriteInitConfig(dir, "My Test Project", DefaultDocumentRoots()); err != nil {
+		t.Fatalf("WriteInitConfig: %v", err)
+	}
+
+	cfg, err := config.LoadFrom(filepath.Join(dir, "config.yaml"))
+	if err != nil {
+		t.Fatalf("config.LoadFrom: %v", err)
+	}
+
+	if cfg.Name != "My Test Project" {
+		t.Errorf("Config.Name = %q, want %q", cfg.Name, "My Test Project")
 	}
 }

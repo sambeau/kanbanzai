@@ -50,6 +50,7 @@ func createReadyTask(t *testing.T, entitySvc *EntityService, slug string) string
 	writeDispatchTestPlan(t, entitySvc, planID)
 
 	fResult, err := entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "feat-" + slug,
 		Parent:    planID,
 		Summary:   "Feature for " + slug,
@@ -60,6 +61,7 @@ func createReadyTask(t *testing.T, entitySvc *EntityService, slug string) string
 	}
 
 	tResult, err := entitySvc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: fResult.ID,
 		Slug:          slug,
 		Summary:       "Task " + slug,
@@ -162,6 +164,7 @@ func TestDispatchTask_NonReadyStatus(t *testing.T) {
 	writeDispatchTestPlan(t, entitySvc, planID)
 
 	fResult, err := entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "feat-non-ready",
 		Parent:    planID,
 		Summary:   "Feature for non-ready test",
@@ -172,6 +175,7 @@ func TestDispatchTask_NonReadyStatus(t *testing.T) {
 	}
 
 	tResult, err := entitySvc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: fResult.ID,
 		Slug:          "non-ready-task",
 		Summary:       "Task in queued state",

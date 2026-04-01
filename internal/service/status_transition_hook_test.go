@@ -84,6 +84,7 @@ func TestUpdateStatus_FiresHookOnTransition(t *testing.T) {
 	// Create a plan and feature so we can create a task under it
 	writeTestPlan(t, svc, testPlanID)
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "test-feature",
 		Parent:    testPlanID,
 		Summary:   "A test feature",
@@ -95,6 +96,7 @@ func TestUpdateStatus_FiresHookOnTransition(t *testing.T) {
 
 	// Create a task under the feature
 	task, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "test-task",
 		Summary:       "A test task",
@@ -151,6 +153,7 @@ func TestUpdateStatus_HookResultAttachedToGetResult(t *testing.T) {
 
 	writeTestPlan(t, svc, testPlanID)
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "hook-result-test",
 		Parent:    testPlanID,
 		Summary:   "Test hook result propagation",
@@ -161,6 +164,7 @@ func TestUpdateStatus_HookResultAttachedToGetResult(t *testing.T) {
 	}
 
 	task, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "hook-result-task",
 		Summary:       "Test task",
@@ -200,6 +204,7 @@ func TestUpdateStatus_NilHookResultWhenNoHookSet(t *testing.T) {
 
 	writeTestPlan(t, svc, testPlanID)
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "no-hook-test",
 		Parent:    testPlanID,
 		Summary:   "Test no hook",
@@ -210,6 +215,7 @@ func TestUpdateStatus_NilHookResultWhenNoHookSet(t *testing.T) {
 	}
 
 	task, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "no-hook-task",
 		Summary:       "Test task",
@@ -243,6 +249,7 @@ func TestUpdateStatus_HookNilResultDoesNotPanic(t *testing.T) {
 
 	writeTestPlan(t, svc, testPlanID)
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "nil-result-test",
 		Parent:    testPlanID,
 		Summary:   "Test nil result from hook",
@@ -253,6 +260,7 @@ func TestUpdateStatus_HookNilResultDoesNotPanic(t *testing.T) {
 	}
 
 	task, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "nil-result-task",
 		Summary:       "Test task",
@@ -336,6 +344,7 @@ func TestUpdateStatus_HookNotCalledOnFailedTransition(t *testing.T) {
 
 	writeTestPlan(t, svc, testPlanID)
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "invalid-transition-test",
 		Parent:    testPlanID,
 		Summary:   "Test invalid transition",
@@ -346,6 +355,7 @@ func TestUpdateStatus_HookNotCalledOnFailedTransition(t *testing.T) {
 	}
 
 	task, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "invalid-transition-task",
 		Summary:       "Test task",
@@ -480,6 +490,7 @@ func TestWorktreeTransitionHook_TaskToActive_CreatesWorktreeForFeature(t *testin
 	writeTestPlan(t, svc, testPlanID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "auto-worktree",
 		Parent:    testPlanID,
 		Summary:   "Feature for auto worktree",
@@ -555,6 +566,7 @@ func TestWorktreeTransitionHook_TaskToActive_IdempotentWhenWorktreeExists(t *tes
 	writeTestPlan(t, svc, testPlanID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "idempotent-wt",
 		Parent:    testPlanID,
 		Summary:   "Feature for idempotent test",
@@ -797,6 +809,7 @@ func TestUpdateStatus_EndToEnd_TaskActivationCreatesWorktree(t *testing.T) {
 	// Create plan, feature and task
 	writeTestPlan(t, svc, testPlanID)
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "e2e-auto-wt",
 		Parent:    testPlanID,
 		Summary:   "E2E auto worktree",
@@ -807,6 +820,7 @@ func TestUpdateStatus_EndToEnd_TaskActivationCreatesWorktree(t *testing.T) {
 	}
 
 	task, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "e2e-task",
 		Summary:       "E2E task",
@@ -961,6 +975,7 @@ func TestUpdateStatus_EndToEnd_SecondTaskDoesNotDuplicateWorktree(t *testing.T) 
 
 	writeTestPlan(t, svc, testPlanID)
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "multi-task-wt",
 		Parent:    testPlanID,
 		Summary:   "Feature with multiple tasks",
@@ -972,6 +987,7 @@ func TestUpdateStatus_EndToEnd_SecondTaskDoesNotDuplicateWorktree(t *testing.T) 
 
 	// Create two tasks
 	task1, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "task-one",
 		Summary:       "First task",
@@ -981,6 +997,7 @@ func TestUpdateStatus_EndToEnd_SecondTaskDoesNotDuplicateWorktree(t *testing.T) 
 	}
 
 	task2, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "task-two",
 		Summary:       "Second task",
@@ -1047,6 +1064,7 @@ func TestUpdateStatus_EndToEnd_FeatureTransitionDoesNotTriggerWorktree(t *testin
 
 	writeTestPlan(t, svc, testPlanID)
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "feature-transition-test",
 		Parent:    testPlanID,
 		Summary:   "Feature transition test",

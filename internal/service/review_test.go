@@ -676,6 +676,7 @@ func TestReviewTaskOutput_InvalidStatus_RejectsQueued(t *testing.T) {
 	writeReviewTestPlan(t, entitySvc, testPlanIDReview)
 
 	featResult, err := entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "q-feature",
 		Parent:    testPlanIDReview,
 		Summary:   "Feature for queued test",
@@ -686,6 +687,7 @@ func TestReviewTaskOutput_InvalidStatus_RejectsQueued(t *testing.T) {
 	}
 
 	taskResult, err := entitySvc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featResult.ID,
 		Slug:          "queued-task",
 		Summary:       "A task that stays queued",
@@ -796,6 +798,7 @@ func TestLifecycle_ActiveToNeedsRework(t *testing.T) {
 	writeReviewTestPlan(t, entitySvc, testPlanIDReview)
 
 	featResult, err := entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "lc-feature",
 		Parent:    testPlanIDReview,
 		Summary:   "Feature for lifecycle test",
@@ -806,6 +809,7 @@ func TestLifecycle_ActiveToNeedsRework(t *testing.T) {
 	}
 
 	taskResult, err := entitySvc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featResult.ID,
 		Slug:          "lc-task",
 		Summary:       "Lifecycle test task",

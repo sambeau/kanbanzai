@@ -57,6 +57,7 @@ func createFinishTestPlan(t *testing.T, entitySvc *service.EntityService, slug s
 func createFinishTestFeature(t *testing.T, entitySvc *service.EntityService, planID, slug string) string {
 	t.Helper()
 	result, err := entitySvc.CreateFeature(service.CreateFeatureInput{
+		Name: "test",
 		Slug:      slug,
 		Parent:    planID,
 		Summary:   "Test feature " + slug,
@@ -72,6 +73,7 @@ func createFinishTestFeature(t *testing.T, entitySvc *service.EntityService, pla
 func createFinishTestTask(t *testing.T, entitySvc *service.EntityService, featID, slug string) (string, string) {
 	t.Helper()
 	result, err := entitySvc.CreateTask(service.CreateTaskInput{
+		Name: "test",
 		ParentFeature: featID,
 		Slug:          slug,
 		Summary:       "Test task " + slug,

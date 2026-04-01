@@ -56,6 +56,7 @@ func createTestPlan(t *testing.T, entitySvc *service.EntityService, slug, name s
 func createStatusTestFeature(t *testing.T, entitySvc *service.EntityService, parentPlanID, slug, summary string) string {
 	t.Helper()
 	result, err := entitySvc.CreateFeature(service.CreateFeatureInput{
+		Name: "test",
 		Slug:      slug,
 		Parent:    parentPlanID,
 		Summary:   summary,
@@ -71,6 +72,7 @@ func createStatusTestFeature(t *testing.T, entitySvc *service.EntityService, par
 func createStatusTestTask(t *testing.T, entitySvc *service.EntityService, parentFeatID, slug, summary string) string {
 	t.Helper()
 	result, err := entitySvc.CreateTask(service.CreateTaskInput{
+		Name: "test",
 		ParentFeature: parentFeatID,
 		Slug:          slug,
 		Summary:       summary,

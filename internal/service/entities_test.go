@@ -84,6 +84,7 @@ func TestEntityService_CreateFeature_AllocatesSequentialID(t *testing.T) {
 	writeTestPlan(t, service, planID)
 
 	first, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "storage layer",
 		Parent:    planID,
 		Summary:   "Implement canonical storage",
@@ -94,6 +95,7 @@ func TestEntityService_CreateFeature_AllocatesSequentialID(t *testing.T) {
 	}
 
 	second, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "validation engine",
 		Parent:    planID,
 		Summary:   "Implement lifecycle validation",
@@ -123,6 +125,7 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 	writeTestPlan(t, service, planID)
 
 	feat1, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "feature-one",
 		Parent:    planID,
 		Summary:   "First feature",
@@ -133,6 +136,7 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 	}
 
 	feat2, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "feature-two",
 		Parent:    planID,
 		Summary:   "Second feature",
@@ -143,6 +147,7 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 	}
 
 	first, err := service.CreateTask(CreateTaskInput{
+		Name:          "test",
 		ParentFeature: feat1.ID,
 		Slug:          "write entity files",
 		Summary:       "Write canonical entity files to disk",
@@ -152,6 +157,7 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 	}
 
 	second, err := service.CreateTask(CreateTaskInput{
+		Name:          "test",
 		ParentFeature: feat1.ID,
 		Slug:          "read entity files",
 		Summary:       "Read canonical entity files from disk",
@@ -161,6 +167,7 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 	}
 
 	otherFeature, err := service.CreateTask(CreateTaskInput{
+		Name:          "test",
 		ParentFeature: feat2.ID,
 		Slug:          "first task",
 		Summary:       "Start work for another feature",
@@ -229,6 +236,7 @@ func TestEntityService_CreateDecision(t *testing.T) {
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
 	got, err := service.CreateDecision(CreateDecisionInput{
+		Name:      "test",
 		Slug:      "strict-yaml-subset",
 		Summary:   "Use a strict canonical YAML subset",
 		Rationale: "Deterministic output is required for Git-friendly state",
@@ -243,6 +251,7 @@ func TestEntityService_CreateDecision(t *testing.T) {
 	wantState := map[string]any{
 		"id":         got.ID, // dynamic TSID
 		"slug":       "strict-yaml-subset",
+		"name":       "test",
 		"summary":    "Use a strict canonical YAML subset",
 		"rationale":  "Deterministic output is required for Git-friendly state",
 		"decided_by": "sam",
@@ -330,6 +339,7 @@ func TestEntityService_Get_ReturnsStoredEntity(t *testing.T) {
 	writeTestPlan(t, service, planID)
 
 	created, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "entity retrieval",
 		Parent:    planID,
 		Summary:   "Support entity reads by canonical identity",
@@ -373,6 +383,7 @@ func TestEntityService_List_ReturnsEntitiesSortedByID(t *testing.T) {
 	writeTestPlan(t, service, planID)
 
 	createdFirst, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "storage layer",
 		Parent:    planID,
 		Summary:   "Implement canonical storage",
@@ -383,6 +394,7 @@ func TestEntityService_List_ReturnsEntitiesSortedByID(t *testing.T) {
 	}
 
 	createdSecond, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "validation engine",
 		Parent:    planID,
 		Summary:   "Implement lifecycle validation",
@@ -422,6 +434,7 @@ func TestEntityService_StatusUpdate_UsesLifecycleValidation(t *testing.T) {
 	writeTestPlan(t, service, planID)
 
 	created, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "status updates",
 		Parent:    planID,
 		Summary:   "Support lifecycle status changes",
@@ -520,6 +533,7 @@ func TestEntityService_CreateTask_InvalidFeatureID(t *testing.T) {
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
 	_, err := service.CreateTask(CreateTaskInput{
+		Name:          "test",
 		ParentFeature: "EPIC-TEST",
 		Slug:          "bad parent",
 		Summary:       "This should fail",
@@ -1051,6 +1065,7 @@ func TestEntityService_CreateFeature_RejectsNonExistentParent(t *testing.T) {
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
 	_, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "orphan-feature",
 		Parent:    "P1-does-not-exist",
 		Summary:   "Feature referencing non-existent plan",
@@ -1071,6 +1086,7 @@ func TestEntityService_CreateTask_RejectsNonExistentFeature(t *testing.T) {
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
 	_, err := svc.CreateTask(CreateTaskInput{
+		Name:          "test",
 		ParentFeature: "FEAT-01ZZZZZZZZZZ9",
 		Slug:          "orphan-task",
 		Summary:       "Task referencing non-existent feature",
@@ -1371,6 +1387,7 @@ func TestEntityService_TaskLifecycle(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "task-parent-feature",
 		Parent:    planID,
 		Summary:   "Feature for task lifecycle test",
@@ -1381,6 +1398,7 @@ func TestEntityService_TaskLifecycle(t *testing.T) {
 	}
 
 	created, err := svc.CreateTask(CreateTaskInput{
+		Name:          "test",
 		ParentFeature: feat.ID,
 		Slug:          "lifecycle-task",
 		Summary:       "Test task lifecycle transitions",
@@ -1431,6 +1449,7 @@ func TestEntityService_DecisionLifecycle(t *testing.T) {
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
 	created, err := svc.CreateDecision(CreateDecisionInput{
+		Name:      "test",
 		Slug:      "lifecycle-decision",
 		Summary:   "Test decision lifecycle transitions",
 		Rationale: "Verify lifecycle state machine",
@@ -1550,6 +1569,7 @@ func TestEntityService_ResolvePrefix(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	feat1, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "alpha-feature",
 		Parent:    planID,
 		Summary:   "First feature",
@@ -1565,6 +1585,7 @@ func TestEntityService_ResolvePrefix(t *testing.T) {
 	}
 
 	feat2, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "beta-feature",
 		Parent:    planID,
 		Summary:   "Second feature",
@@ -1674,6 +1695,7 @@ func TestEntityService_Get_WithEmptySlug(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	created, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "prefix-get",
 		Parent:    planID,
 		Summary:   "Feature for prefix get",

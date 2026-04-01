@@ -479,6 +479,7 @@ func extractPlanSlug(id string) string {
 func createTestFeature(t *testing.T, entitySvc *service.EntityService, planID, slug string) service.CreateResult {
 	t.Helper()
 	result, err := entitySvc.CreateFeature(service.CreateFeatureInput{
+		Name: "test",
 		Slug:      slug,
 		Parent:    planID,
 		Summary:   "Test feature " + slug,

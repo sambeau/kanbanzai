@@ -44,6 +44,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 	writeIntegrationPlan(t, entitySvc, planID)
 
 	feat, err := entitySvc.CreateFeature(service.CreateFeatureInput{
+		Name: "test",
 		Slug:      "e2e-feature",
 		Parent:    planID,
 		Summary:   "End-to-end integration test feature",
@@ -63,6 +64,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 	}
 
 	taskResult, err := entitySvc.CreateTask(service.CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "e2e-task",
 		Summary:       "Implement the widget",

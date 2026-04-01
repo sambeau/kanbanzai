@@ -1635,3 +1635,122 @@ func TestNameFieldOrder(t *testing.T) {
 		t.Errorf("name should appear before parent: nameIdx=%d parentIdx=%d", nameIdx, parentIdx)
 	}
 }
+
+func TestNameRoundTrip_Bug(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewEntityStore(root)
+
+	record := EntityRecord{
+		Type: "bug",
+		ID:   "BUG-01J3KABCDE7BG",
+		Slug: "named-bug",
+		Fields: map[string]any{
+			"id":          "BUG-01J3KABCDE7BG",
+			"slug":        "named-bug",
+			"name":        "Named Bug",
+			"status":      "reported",
+			"severity":    "medium",
+			"priority":    "medium",
+			"type":        "implementation-defect",
+			"reported_by": "tester",
+			"reported":    "2026-01-01T00:00:00Z",
+			"observed":    "Something is broken",
+			"expected":    "Something should work",
+		},
+	}
+
+	_, err := store.Write(record)
+	if err != nil {
+		t.Fatalf("Write() error = %v", err)
+	}
+
+	got, err := store.Load("bug", "BUG-01J3KABCDE7BG", "named-bug")
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+
+	if got.Fields["name"] != "Named Bug" {
+		t.Errorf("name = %q, want %q", got.Fields["name"], "Named Bug")
+	}
+	if _, hasTitle := got.Fields["title"]; hasTitle {
+		t.Errorf("title should not be present, got %v", got.Fields["title"])
+	}
+}
+
+func TestNameRoundTrip_Incident(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewEntityStore(root)
+
+	record := EntityRecord{
+		Type: "incident",
+		ID:   "INC-01J3KABCDE7IC",
+		Slug: "named-incident",
+		Fields: map[string]any{
+			"id":          "INC-01J3KABCDE7IC",
+			"slug":        "named-incident",
+			"name":        "Named Incident",
+			"title":       "Named Incident",
+			"status":      "reported",
+			"severity":    "medium",
+			"reported_by": "tester",
+			"detected_at": "2026-01-01T00:00:00Z",
+			"summary":     "An incident with a name field",
+			"created":     "2026-01-01T00:00:00Z",
+			"created_by":  "tester",
+			"updated":     "2026-01-01T00:00:00Z",
+		},
+	}
+
+	_, err := store.Write(record)
+	if err != nil {
+		t.Fatalf("Write() error = %v", err)
+	}
+
+	got, err := store.Load("incident", "INC-01J3KABCDE7IC", "named-incident")
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+
+	if got.Fields["name"] != "Named Incident" {
+		t.Errorf("name = %q, want %q", got.Fields["name"], "Named Incident")
+	}
+}
+
+func TestLabelFieldAbsent_Task(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewEntityStore(root)
+
+	record := EntityRecord{
+		Type: "task",
+		ID:   "TASK-01J3KZZZBB5LG",
+		Slug: "no-label-task",
+		Fields: map[string]any{
+			"id":             "TASK-01J3KZZZBB5LG",
+			"parent_feature": "FEAT-01J3K7MXP3RT5",
+			"slug":           "no-label-task",
+			"name":           "No Label Task",
+			"summary":        "A task without a label",
+			"status":         "queued",
+		},
+	}
+
+	_, err := store.Write(record)
+	if err != nil {
+		t.Fatalf("Write() error = %v", err)
+	}
+
+	path, err := store.Load("task", "TASK-01J3KZZZBB5LG", "no-label-task")
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+
+	if _, hasLabel := path.Fields["label"]; hasLabel {
+		t.Errorf("label should not be present in serialised Task YAML, got %v", path.Fields["label"])
+	}
+}
