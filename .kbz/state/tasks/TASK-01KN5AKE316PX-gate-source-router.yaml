@@ -1,0 +1,9 @@
+id: TASK-01KN5AKE316PX
+parent_feature: FEAT-01KN58J27H83N
+slug: gate-source-router
+summary: "Create the routing layer that decides whether to use registry-sourced or hardcoded gate definitions for a given transition, with a source indicator for health reporting."
+status: queued
+depends_on:
+  - TASK-01KN5AKE1FMBW
+  - TASK-01KN5AKE20F2W
+  - TASK-01KN5AKE2H4VD

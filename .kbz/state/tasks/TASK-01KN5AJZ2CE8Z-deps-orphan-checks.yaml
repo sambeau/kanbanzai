@@ -1,0 +1,13 @@
+id: TASK-01KN5AJZ2CE8Z
+parent_feature: FEAT-01KN58J26CH63
+slug: deps-orphan-checks
+summary: "Implement checkDependenciesDeclared and checkOrphanTasks validation checks operating on the proposal's dependency graph structure."
+status: done
+depends_on:
+  - TASK-01KN5AJZ1A6EY
+files_planned:
+  - internal/service/decompose_validate.go
+  - internal/service/decompose_validate_test.go
+completed: "2026-04-01T20:41:40Z"
+completion_summary: "Implemented checkDependenciesDeclared (warning when a task mentions another slug without declaring a dependency, bidirectional, word-boundary, case-insensitive) and checkOrphanTasks (warning for zero-degree nodes when graph has edges, cross-feature deps ignored). Added slugMatchesAtWordBoundary helper. 11 unit tests cover word boundary, case-insensitivity, reverse deps, and cross-feature scenarios."
+verification: go test ./... passes

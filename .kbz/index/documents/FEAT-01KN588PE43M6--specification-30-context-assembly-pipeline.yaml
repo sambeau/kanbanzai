@@ -1,0 +1,292 @@
+document_id: FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline
+document_path: work/spec/3.0-context-assembly-pipeline.md
+content_hash: fcdbb076f5e1d03d9976cc01f796fd535ad584da4d6a965b64f8685de4d4c1b1
+indexed_at: 2026-04-01T19:38:23.668728Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Context Assembly Pipeline'
+      byte_offset: 0
+      byte_count: 20941
+      word_count: 3033
+      content_hash: fcdbb076f5e1d03d9976cc01f796fd535ad584da4d6a965b64f8685de4d4c1b1
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 471
+          byte_count: 589
+          word_count: 79
+          content_hash: 936d71c476e070a4b4a114bf77ef9dfe47e80b6ba6e1de53af48ef296d60e2e5
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 1060
+          byte_count: 1589
+          word_count: 230
+          content_hash: ab739398dfd8e3aca1f37b3ab0a9d73da13caf4d35eb62111591a961954704e6
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 In Scope
+              byte_offset: 1073
+              byte_count: 846
+              word_count: 114
+              content_hash: 0ce80f436197554893fda6a8d7da93443dfa2d29ce42095045f6aee74a5c2e73
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Out of Scope
+              byte_offset: 1919
+              byte_count: 730
+              word_count: 113
+              content_hash: 434cd7f9c219c5c36ef8bd47450f1b9887b1abeb260ee86d79377525deafbe9e
+        - path: "1.3"
+          level: 2
+          title: 3. Functional Requirements
+          byte_offset: 2649
+          byte_count: 12501
+          word_count: 1819
+          content_hash: 434fb4416d411ebb5f337dd4157f5be9c453e3d3eb39596bc36ed1ad0f066fa2
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: Pipeline Entry Point'
+              byte_offset: 2680
+              byte_count: 671
+              word_count: 94
+              content_hash: 3bee04d722128bd3d42612ab115fea337154a93c6f7d939a6dcacb59a7232596
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: Step 0 — Lifecycle State Validation'
+              byte_offset: 3351
+              byte_count: 691
+              word_count: 114
+              content_hash: 90ad53e610121dacc8e1eca9b86c806b86bb64fd0ce6fb9a60cd69d5f312f445
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: Step 1 — Task-to-Stage Resolution'
+              byte_offset: 4042
+              byte_count: 484
+              word_count: 79
+              content_hash: 6a1a213b54c3724cba1fd12f43a7a36b00c576e6d3df4c0c6cdb54dc782dc6ab
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: Step 2 — Stage Binding Lookup'
+              byte_offset: 4526
+              byte_count: 623
+              word_count: 97
+              content_hash: 8714469e0adf1e334bcdbb6f030a78debdd0f06daf8aae1f8487671130ec38ae
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: Step 3 — Stage-Specific Inclusion/Exclusion'
+              byte_offset: 5149
+              byte_count: 579
+              word_count: 85
+              content_hash: 6147a1dc3cbde0ca192f42e755df13690b57569e2559ba60fdb3bc2d10f630ed
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: Step 4 — Orchestration Metadata Extraction'
+              byte_offset: 5728
+              byte_count: 762
+              word_count: 101
+              content_hash: d464ccabf02c1688a604241c940d8714b0cceb1fc6181fa7d311c17961fd7b2c
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: Step 5 — Role Resolution with Inheritance'
+              byte_offset: 6490
+              byte_count: 1114
+              word_count: 154
+              content_hash: 71c73b3d705ef8a43b2cb3b9edfbb7c3713b2f996729b7b4baded662cb96002c
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008: Step 6 — Skill Loading'
+              byte_offset: 7604
+              byte_count: 634
+              word_count: 91
+              content_hash: 53a33c04243414f79d2cb4139b58b9fdbed7c55d95d8c307ef76c81cd01e885a
+            - path: 1.3.9
+              level: 3
+              title: 'FR-009: Vocabulary Merging'
+              byte_offset: 8238
+              byte_count: 579
+              word_count: 85
+              content_hash: 5a00a091f7a570611b638ee9be9b514f5bb4a1c025aff3d1547b3d79fdf9f2f0
+            - path: 1.3.10
+              level: 3
+              title: 'FR-010: Anti-Pattern Merging'
+              byte_offset: 8817
+              byte_count: 423
+              word_count: 56
+              content_hash: d92153da0d2b66763beb07c43f54fd7039db5872f49c3e8016c611ad433b26be
+            - path: 1.3.11
+              level: 3
+              title: 'FR-011: Step 7 — Knowledge Entry Integration Point'
+              byte_offset: 9240
+              byte_count: 723
+              word_count: 106
+              content_hash: bfe4c3679d341f07174a1921ed0faccee0d3b326e1251493ddf56ef115ba526a
+            - path: 1.3.12
+              level: 3
+              title: 'FR-012: Step 8 — Tool Subset Guidance'
+              byte_offset: 9963
+              byte_count: 657
+              word_count: 107
+              content_hash: 07e60fb9af2cc85c80e114dee0c952239768eed12b54860ff9729e5087a9ff9a
+            - path: 1.3.13
+              level: 3
+              title: 'FR-013: Step 9 — Token Budget Estimation'
+              byte_offset: 10620
+              byte_count: 453
+              word_count: 65
+              content_hash: 6111f8f6ecbdb340d329bbf67b86de350ba99e8f194ce1082c1f2e8ea5f50635
+            - path: 1.3.14
+              level: 3
+              title: 'FR-014: Token Budget Warning'
+              byte_offset: 11073
+              byte_count: 505
+              word_count: 80
+              content_hash: edafc7bafee29477b957471399c82726ff03a7b49d946b1d6e57dc6ed9bbfb5c
+            - path: 1.3.15
+              level: 3
+              title: 'FR-015: Token Budget Refusal'
+              byte_offset: 11578
+              byte_count: 537
+              word_count: 83
+              content_hash: 2fcf604f9bd3d9f0c601ef5c17154b7e51c3ba16370115c23177952ba4b5a26d
+            - path: 1.3.16
+              level: 3
+              title: 'FR-016: Step 10 — Attention-Curve Output Ordering'
+              byte_offset: 12115
+              byte_count: 1313
+              word_count: 167
+              content_hash: d8977781126ee4ccf07fb38234165ecc83860c91da73f39e52d8913eff4456d8
+            - path: 1.3.17
+              level: 3
+              title: 'FR-017: Within-Section Recency Bias Ordering'
+              byte_offset: 13428
+              byte_count: 599
+              word_count: 91
+              content_hash: 735ced25937a7d61a6fced53d43dca19c98a1f175d042678d8c0036c84649f94
+            - path: 1.3.18
+              level: 3
+              title: 'FR-018: Progressive Disclosure Layers'
+              byte_offset: 14027
+              byte_count: 1123
+              word_count: 160
+              content_hash: 97c59be514eb49b19969d6a9a95760caa75efe671fba6734007a8728516c3521
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Functional Requirements
+          byte_offset: 15150
+          byte_count: 2333
+          word_count: 336
+          content_hash: 6a97409a58258c7166a571a7065918702285bdbf1ab711275873bb246b9ac758
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: Assembly Latency'
+              byte_offset: 15185
+              byte_count: 456
+              word_count: 66
+              content_hash: e35afd1c6e21ab08bbb9276f1e8299c03f3f43ec22243cf92261da4fef04ef62
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: Deterministic Output'
+              byte_offset: 15641
+              byte_count: 375
+              word_count: 50
+              content_hash: fbb7a1c520d2f4b69733b8e52951f89618e734d2694809b28bcfe64a097cc52e
+            - path: 1.4.3
+              level: 3
+              title: 'NFR-003: Backward Compatibility'
+              byte_offset: 16016
+              byte_count: 591
+              word_count: 86
+              content_hash: 59fe6c1e3d831cc15302593de5d6b1aa70bab6769ccda67a2edab9cf0bcfdafd
+            - path: 1.4.4
+              level: 3
+              title: 'NFR-004: Error Message Quality'
+              byte_offset: 16607
+              byte_count: 445
+              word_count: 71
+              content_hash: c136ad3e84940309e8b2a4030e367e0e91aee71c0b69603b3b31d09cadca7f73
+            - path: 1.4.5
+              level: 3
+              title: 'NFR-005: Testability'
+              byte_offset: 17052
+              byte_count: 431
+              word_count: 59
+              content_hash: 433f642fc800548846effa3a4a69093054c49ab0ea0c784e0f6b5b0267948b3d
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 17483
+          byte_count: 2001
+          word_count: 335
+          content_hash: a0129a98bbf37cca52331027fd3b982a463aeda2fcfe9466aa199918e5f30077
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 19484
+          byte_count: 1457
+          word_count: 202
+          content_hash: e681f9a70b1408924c0a602e01e35ac205308759e904e5e095c7371fc23aab55
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 19520
+              byte_count: 870
+              word_count: 108
+              content_hash: e67efde65e899893faf1bd85be38e7ccadad328a52b67e5d79f5c20b5a5f918c
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 20390
+              byte_count: 551
+              word_count: 89
+              content_hash: cf2477373a881d6d78febb399871882355aa34c94e7ae94eaac03e9ac8577211
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 308
+cross_doc_links:
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+    - target_path: .kbz/skills/<skill-name>/SKILL.md
+      link_text: .kbz/skills/<skill-name>/SKILL.md
+      section_path: 1.3.8
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

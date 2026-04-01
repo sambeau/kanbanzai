@@ -1,0 +1,5 @@
+id: TASK-01KN5AJRR4YCC
+parent_feature: FEAT-01KN58J25K4QD
+slug: finish-summary-limit
+summary: "Add a 500-character maximum length validation on the summary field in the finish tool, returning an actionable error stating the limit and actual length when exceeded."
+status: ready

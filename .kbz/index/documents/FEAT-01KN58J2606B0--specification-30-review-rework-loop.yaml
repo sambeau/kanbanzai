@@ -1,0 +1,223 @@
+document_id: FEAT-01KN58J2606B0/specification-30-review-rework-loop
+document_path: work/spec/3.0-review-rework-loop.md
+content_hash: 489e58d66748681f55998fa21401df0cec5ec64b5ac2dfecfe12d8d785914bbf
+indexed_at: 2026-04-01T19:43:39.812125Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Review-Rework Loop Formalisation'
+      byte_offset: 0
+      byte_count: 16650
+      word_count: 2441
+      content_hash: 489e58d66748681f55998fa21401df0cec5ec64b5ac2dfecfe12d8d785914bbf
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 462
+          byte_count: 452
+          word_count: 60
+          content_hash: 84498e41bb7586ffde210aaafe5ce24e5832c6d9ab8476a3f3d15d1f9342d5a8
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 914
+          byte_count: 1640
+          word_count: 249
+          content_hash: d88d1c2941b4bd533e094071c2fbf58c9a4ec1c2d9ebbd0c9f99ab9cf6455242
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 In Scope
+              byte_offset: 927
+              byte_count: 679
+              word_count: 103
+              content_hash: 7b083e274cc57f512a61737bf5ca88b78ab0a6bc8a9f5246e4ea3aa71b2a08f1
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Out of Scope
+              byte_offset: 1606
+              byte_count: 948
+              word_count: 143
+              content_hash: 465651af8121f636471ec27616c7cdce04ac83ad546602db675d6f2d597dcb45
+        - path: "1.3"
+          level: 2
+          title: 3. Functional Requirements
+          byte_offset: 2554
+          byte_count: 8988
+          word_count: 1358
+          content_hash: dbc27cb2e6daec678b0c1f78a9c92259987b21261ec6eff2d18ea83b48a241fc
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: Review Cycle Counter Field'
+              byte_offset: 2585
+              byte_count: 573
+              word_count: 89
+              content_hash: d0429cf80562518947c76bbec51d8b9a7a6a40b505aa29e0fbc3c422aeefd0f8
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: Counter Increment on Transition to Reviewing'
+              byte_offset: 3158
+              byte_count: 1219
+              word_count: 182
+              content_hash: b7fe9de1807215a00e33c8ed232feadc9a48d580a6670b5c51dd45114c3f1686
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: Counter Visible in Status Output'
+              byte_offset: 4377
+              byte_count: 589
+              word_count: 95
+              content_hash: f3da202c17c11293f65feac73e13447f9c24be4fb4f627529f2b4feced2f85e0
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: Hardcoded Iteration Cap'
+              byte_offset: 4966
+              byte_count: 426
+              word_count: 66
+              content_hash: 86d2d500ab14e901862ef1bb3b537d14a83e7015a21d16ec62002a2fa474e537
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: Cap-Reached Blocking Behaviour'
+              byte_offset: 5392
+              byte_count: 1572
+              word_count: 233
+              content_hash: 13df28a1d36f34c0e487bb80fd69bec651534bfaf4ee60c0ae1eb6d747a31e8c
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: Automatic Checkpoint Creation at Cap'
+              byte_offset: 6964
+              byte_count: 1003
+              word_count: 150
+              content_hash: 2d6d60bcd53bbbc062e32f344f1bb8b12dac09ed4eab91fa76279903a9afcfcb
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: Blocked State Representation'
+              byte_offset: 7967
+              byte_count: 1228
+              word_count: 190
+              content_hash: c9a18f442ea9352292999fca9227222bb6260bdeba30fd8c4c732c82b3b954d4
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008: Focused Re-Review Signal'
+              byte_offset: 9195
+              byte_count: 1084
+              word_count: 170
+              content_hash: 17912a0d6eb8d0f21a644b2652b59291cf98c3740a7c6f731207bddbbfbcee5d
+            - path: 1.3.9
+              level: 3
+              title: 'FR-009: Counter Survives Non-Review Transitions'
+              byte_offset: 10279
+              byte_count: 850
+              word_count: 121
+              content_hash: bce28ef5e13829fda885c6eec62a4d2ccd95e5a6c057ce38a9d7885e1052bcc3
+            - path: 1.3.10
+              level: 3
+              title: 'FR-010: Entity Tool Exposes Review Cycle'
+              byte_offset: 11129
+              byte_count: 413
+              word_count: 58
+              content_hash: 8b6f442506520aac9d8a44b33cf2e255d279efc2aa4806c18de6c92162a9ae6f
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Functional Requirements
+          byte_offset: 11542
+          byte_count: 1800
+          word_count: 265
+          content_hash: 9689441b1acac5b332413d63aabec741cfa26b271974e6f7860bf2d0b8f14d59
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: Backward Compatibility'
+              byte_offset: 11577
+              byte_count: 462
+              word_count: 68
+              content_hash: b68960cdee19ecb3e53816a615f015c9429b90984154780c0262def5adc8bbf9
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: Performance'
+              byte_offset: 12039
+              byte_count: 427
+              word_count: 61
+              content_hash: 5021cb369ece97c27b931c786c4baf8eb87c06da68f870e796b507c96a7353ec
+            - path: 1.4.3
+              level: 3
+              title: 'NFR-003: Determinism'
+              byte_offset: 12466
+              byte_count: 517
+              word_count: 79
+              content_hash: 8678623102d70ebfc90e1fe83b04e0769ceabd3c1b5dcb8fc02c3004c44c4e7f
+            - path: 1.4.4
+              level: 3
+              title: 'NFR-004: Constant Extractability'
+              byte_offset: 12983
+              byte_count: 359
+              word_count: 53
+              content_hash: 7e1d689219901fa9097339d556300e8ce057111d38f9224c836431e8b94e5f1d
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 13342
+          byte_count: 1692
+          word_count: 254
+          content_hash: c689a643dd5c7ddc2fde4f7f5c0081c778f67dd7039cd3ddc1d97d5f0d8ac2fd
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 15034
+          byte_count: 1616
+          word_count: 226
+          content_hash: dfa6192a734f2bf7ba153f2bd0df83f288992bfcb9b77c8d837186fff8001171
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 15070
+              byte_count: 897
+              word_count: 107
+              content_hash: 201e81ebf75d99dcb8e712f2005787721d456f21c3516691736fdf8f26f9b74e
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 15967
+              byte_count: 683
+              word_count: 114
+              content_hash: 0147f75c555d57f9510023049e521e8c8ee6060536ab11a860dcaf8e789e4d7f
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 306
+cross_doc_links:
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

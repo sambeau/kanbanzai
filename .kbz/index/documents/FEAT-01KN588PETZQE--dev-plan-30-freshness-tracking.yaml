@@ -1,0 +1,139 @@
+document_id: FEAT-01KN588PETZQE/dev-plan-30-freshness-tracking
+document_path: work/plan/3.0-freshness-tracking.md
+content_hash: e77d102f0e58bbfb8bd52b4546c3886bf3230e887e64eb672824a97ca760a610
+indexed_at: 2026-04-01T20:00:20.887595Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Freshness Tracking for Skills and Roles'
+      byte_offset: 0
+      byte_count: 22316
+      word_count: 2914
+      content_hash: e77d102f0e58bbfb8bd52b4546c3886bf3230e887e64eb672824a97ca760a610
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 539
+          byte_count: 1441
+          word_count: 183
+          content_hash: 41acdb20742a4fdedfaac4e013869a034d38f66a6ba407bc7bede4a3c6bdc6c4
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 1980
+          byte_count: 14189
+          word_count: 1771
+          content_hash: d90ff8fc396dc66b69ffc4f8ad96761bc530ab45930f6f7e336fea3ce8319bfd
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Staleness Configuration and Core Detection Logic'
+              byte_offset: 2002
+              byte_count: 2279
+              word_count: 290
+              content_hash: 9fec3990aaac08233062d2c4e2707863f993264c93cb5642d2e8168cb32cb969
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Health Check Category for Stale Roles and Skills'
+              byte_offset: 4281
+              byte_count: 4546
+              word_count: 559
+              content_hash: 985c66b8a6a211bdf444a81efc70c18e629a362602cbad86091599373ecbe1fc
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Staleness Warnings in Assembled Context Metadata'
+              byte_offset: 8827
+              byte_count: 3477
+              word_count: 415
+              content_hash: c5ef983bdee0372a0ea4c8f91b92300a8bc650ec18c740b3c7b32ef622cfb7ac
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Refresh Mechanism for Roles and Skills'
+              byte_offset: 12304
+              byte_count: 3865
+              word_count: 503
+              content_hash: dc2a963330e08f65cd05e33c443cdd0290ef4d775a40dd508245c470b0ea5a04
+        - path: "1.3"
+          level: 2
+          title: 3. Dependency Graph
+          byte_offset: 16169
+          byte_count: 1042
+          word_count: 178
+          content_hash: 5335e77249a2aba656dced24308f10d1302b534c7a045c46ecc4d3d59fec8a8b
+        - path: "1.4"
+          level: 2
+          title: 4. Interface Contracts
+          byte_offset: 17211
+          byte_count: 2731
+          word_count: 359
+          content_hash: 42724b2f0ed348c1a7abe1ddfc4d59cb1ba02e762adea8062d285dce7b6f7331
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Contract A: Staleness Classification (Task 1 → Tasks 2, 3)'
+              byte_offset: 17238
+              byte_count: 980
+              word_count: 122
+              content_hash: de127d4f2f0b31460793768ae4a838b48e4cfd1fe1087142385b3985b27fa84b
+            - path: 1.4.2
+              level: 3
+              title: 'Contract B: Config Field (Task 1 → Tasks 2, 3, 4)'
+              byte_offset: 18218
+              byte_count: 342
+              word_count: 40
+              content_hash: 9ce66e59629bc1c803a20e025d0fb0344ac99f6c14e7a60c6cb6f7ee1b7efb59
+            - path: 1.4.3
+              level: 3
+              title: 'Contract C: Parsing Helpers (Task 2 → Task 3)'
+              byte_offset: 18560
+              byte_count: 601
+              word_count: 84
+              content_hash: 63b07d4bf56d498c98a8bbfbb880029c6c220bbaefd49e4bbd5a4a93ef302bb9
+            - path: 1.4.4
+              level: 3
+              title: 'Contract D: Assembly Staleness Warnings (Task 3, internal)'
+              byte_offset: 19161
+              byte_count: 466
+              word_count: 62
+              content_hash: dc936037c2bbdf1efca97cfe4bc3727f6cb81678c6adc816dab08b2b0485a370
+            - path: 1.4.5
+              level: 3
+              title: 'Contract E: Timestamp Format (all tasks)'
+              byte_offset: 19627
+              byte_count: 315
+              word_count: 47
+              content_hash: 9b2fe4a28b872f2955b4ed1394b3fddbb2ecf244f007447d0a5c0a110c6f1895
+        - path: "1.5"
+          level: 2
+          title: 5. Traceability Matrix
+          byte_offset: 19942
+          byte_count: 2374
+          word_count: 385
+          content_hash: 5638d3a3bfb898097d631fd921b5093ebd8a5a4bbf758d13f344695cd7065658
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 317
+cross_doc_links:
+    - target_path: work/spec/3.0-freshness-tracking.md
+      link_text: work/spec/3.0-freshness-tracking.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: 1.2.2
+    - target_path: skillsDir/*/SKILL.md
+      link_text: skillsDir/*/SKILL.md
+      section_path: 1.2.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.3
+      role: narrative
+      confidence: high
+classified: false

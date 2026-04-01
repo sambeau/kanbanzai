@@ -1,0 +1,10 @@
+id: FEAT-01KN588PFG6GY
+slug: review-role-content
+parent: P16-skills-and-roles-3.0
+status: developing
+summary: "Author role YAML files for the review hierarchy: reviewer (base), reviewer-conformance, reviewer-quality, reviewer-security, reviewer-testing. 5 files with inheritance, vocabulary, and anti-patterns. Design §4.3."
+design: work/design/skills-system-redesign-v2.md
+spec: FEAT-01KN588PFG6GY/specification-30-review-role-content
+dev_plan: FEAT-01KN588PFG6GY/dev-plan-30-review-role-content
+created: "2026-04-01T19:28:01Z"
+created_by: sambeau

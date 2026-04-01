@@ -1,0 +1,12 @@
+id: TASK-01KN5BX98PYCX
+parent_feature: FEAT-01KN588PFWADY
+slug: author-write-design-skill
+summary: "Author .kbz/skills/write-design/SKILL.md (name: write-design, stage: designing, roles: [architect], constraint_level: high). Guides design document authoring. 4-section output template: Problem and Motivation, Design, Alternatives Considered, Decisions. Include companion validation script at scripts/validate-design-structure.sh (POSIX shell, checks 4 required sections)."
+status: done
+depends_on:
+  - TASK-01KN5BX97TVWE
+files_planned:
+  - .kbz/skills/write-design/SKILL.md
+  - .kbz/skills/write-design/scripts/validate-design-structure.sh
+completed: "2026-04-01T20:46:41Z"
+completion_summary: "Created write-design SKILL.md (252 lines, 20 vocabulary, 7 anti-patterns, 4-section output template) and validation script checking Problem and Motivation, Design, Alternatives Considered, Decisions."

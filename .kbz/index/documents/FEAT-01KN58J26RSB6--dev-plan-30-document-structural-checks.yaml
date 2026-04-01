@@ -1,0 +1,149 @@
+document_id: FEAT-01KN58J26RSB6/dev-plan-30-document-structural-checks
+document_path: work/plan/3.0-document-structural-checks.md
+content_hash: 0003635be37d40b64051edac33edb52c02b56cff22f5fe71cd00f66fba4accc1
+indexed_at: 2026-04-01T19:54:00.076363Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Document Structural Checks and Quality Hooks'
+      byte_offset: 0
+      byte_count: 32093
+      word_count: 3846
+      content_hash: 0003635be37d40b64051edac33edb52c02b56cff22f5fe71cd00f66fba4accc1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope Boundaries
+          byte_offset: 316
+          byte_count: 1010
+          word_count: 113
+          content_hash: 266a646ec2153237972ae725e9bbed2d5ce46e722163cf820659b874aec125b9
+        - path: "1.2"
+          level: 2
+          title: Dependency on Mandatory Stage Gates
+          byte_offset: 1326
+          byte_count: 550
+          word_count: 72
+          content_hash: 377fc13ca0d2296fbcfef6f71b9ffcd95bbb89f679bf18c2d4190035a1a7b643
+        - path: "1.3"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1876
+          byte_count: 25398
+          word_count: 2961
+          content_hash: 502a7bda2b1bb00f995c13674c24c35e9c3c7fd7d9060c56c4c8fa682c85d637
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Task 1: Required Section Definitions Data Module'
+              byte_offset: 1895
+              byte_count: 2279
+              word_count: 281
+              content_hash: a29374dc8a03fe309db064df26d30ff263aa9ce0512be442c441215a15071d27
+            - path: 1.3.2
+              level: 3
+              title: 'Task 2: Structural Check Engine'
+              byte_offset: 4174
+              byte_count: 4749
+              word_count: 561
+              content_hash: bb911b894c7b175aa2419b2dae09a9b5b5828cd630f7dc0c62fb84e98d34f2f4
+            - path: 1.3.3
+              level: 3
+              title: 'Task 3: Promotion State Persistence'
+              byte_offset: 8923
+              byte_count: 3879
+              word_count: 474
+              content_hash: 60a6718b09ebd792983d7b3c1413c872820ffd53c9ea5ce4234ca1896026caea
+            - path: 1.3.4
+              level: 3
+              title: 'Task 4: Gate Integration, Enforcement, and Transition Response'
+              byte_offset: 12802
+              byte_count: 5657
+              word_count: 637
+              content_hash: 9ad347ea3e4b4820f507bee94f44605a97c2f9dd5ec590b70dce166ad7c98954
+            - path: 1.3.5
+              level: 3
+              title: 'Task 5: Quality Evaluation Schema and Attachment'
+              byte_offset: 18459
+              byte_count: 3511
+              word_count: 400
+              content_hash: 49986ba0a4aeeec4e21c28007158156714a4dff42e4d1cd7e59234270731d795
+            - path: 1.3.6
+              level: 3
+              title: 'Task 6: Doc Evaluate MCP Action'
+              byte_offset: 21970
+              byte_count: 1902
+              word_count: 219
+              content_hash: 8bde499f0e96fa11edcc0ea503ff88b6fa6a8ee04a5d31b09025df33f5ecbc11
+            - path: 1.3.7
+              level: 3
+              title: 'Task 7: Quality Evaluation Approval Gate'
+              byte_offset: 23872
+              byte_count: 3402
+              word_count: 386
+              content_hash: 316a37e138e9031ab42aeecba859a636f222d03b2441129fd910091e078abb55
+        - path: "1.4"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 27274
+          byte_count: 1647
+          word_count: 167
+          content_hash: ebfdd24aa0ed3f144f40e65b13e9a99dcb591172115165f9d56b8bb41ec3786a
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 28921
+          byte_count: 3172
+          word_count: 509
+          content_hash: c716f6955296cf0d42c09e6118dcf91acda29074fb27184f59a8c197e460b1ed
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 82
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1141
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1498
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.3.4
+      byte_offset: 17870
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.3.2
+      byte_offset: 7532
+cross_doc_links:
+    - target_path: work/design/my-design.md
+      link_text: design
+      section_path: 1.3.2
+    - target_path: work/spec/3.0-document-structural-checks.md
+      link_text: work/spec/3.0-document-structural-checks.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1"
+    - target_path: work/spec/3.0-document-structural-checks.md
+      link_text: work/spec/3.0-document-structural-checks.md
+      section_path: 1.3.1
+    - target_path: refs/go-style.md
+      link_text: refs/go-style.md
+      section_path: 1.3.1
+    - target_path: refs/go-style.md
+      link_text: refs/go-style.md
+      section_path: 1.3.3
+    - target_path: refs/go-style.md
+      link_text: refs/go-style.md
+      section_path: 1.3.5
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: definition
+      confidence: high
+classified: false

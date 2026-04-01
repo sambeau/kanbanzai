@@ -1,0 +1,12 @@
+id: TASK-01KN5AK7WB3NV
+parent_feature: FEAT-01KN58J275BWJ
+slug: log-entry-writer
+summary: "Define the 7-field log entry struct, error type constants, and a writer that appends JSON lines atomically to date-partitioned JSONL files under .kbz/logs/."
+status: done
+files_planned:
+  - internal/actionlog/entry.go
+  - internal/actionlog/entry_test.go
+  - internal/actionlog/writer.go
+  - internal/actionlog/writer_test.go
+completed: "2026-04-01T20:41:45Z"
+completion_summary: "Created internal/actionlog/entry.go (Entry struct, error type constants) and writer.go (Writer with date-based rotation, buffered append-only JSONL writes). All tests pass."

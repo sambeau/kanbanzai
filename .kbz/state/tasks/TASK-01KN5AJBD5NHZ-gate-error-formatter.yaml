@@ -1,0 +1,12 @@
+id: TASK-01KN5AJBD5NHZ
+parent_feature: FEAT-01KN58J24S2XW
+slug: gate-error-formatter
+summary: "Create a gate failure error formatter that produces structured, actionable error messages with per-gate recovery steps containing tool call examples."
+status: done
+depends_on:
+  - TASK-01KN5AJBCNCFV
+files_planned:
+  - internal/service/gate_errors.go
+  - internal/service/gate_errors_test.go
+completed: "2026-04-01T20:39:31Z"
+completion_summary: "Created gate_errors.go with GateFailureResponse, buildGateMessage, and per-gate recovery step builders (designGateRecovery, specGateRecovery, devPlanGateRecovery, taskCompletionGateRecovery, reviewReportGateRecovery, reworkTaskGateRecovery). TaskStatusPair type added. Created gate_errors_test.go with tests verifying structure, feature ID inclusion, from/to statuses, To resolve section, determinism, and all per-gate recovery step patterns."

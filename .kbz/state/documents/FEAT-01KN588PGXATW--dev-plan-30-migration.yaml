@@ -1,0 +1,12 @@
+id: FEAT-01KN588PGXATW/dev-plan-30-migration
+path: work/plan/3.0-migration.md
+type: dev-plan
+title: "Implementation Plan: Migration and Backward Compatibility"
+status: approved
+owner: FEAT-01KN588PGXATW
+approved_by: sambeau
+approved_at: "2026-04-01T20:04:47Z"
+content_hash: 140f747922ad40fd8514267409980809b854b96a6045cd9f3e356d63f74597e1
+created: "2026-04-01T20:00:21Z"
+created_by: sambeau
+updated: "2026-04-01T20:04:47Z"

@@ -1,0 +1,143 @@
+document_id: FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates
+document_path: work/spec/3.0-mandatory-stage-gates.md
+content_hash: 8a973e78b583de94077193ca91df1be1af3c0b165e92aaad85c9318c8a00a353
+indexed_at: 2026-04-01T19:43:39.426983Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Mandatory Stage Gate Enforcement (Kanbanzai 3.0)'
+      byte_offset: 0
+      byte_count: 23822
+      word_count: 3367
+      content_hash: 8a973e78b583de94077193ca91df1be1af3c0b165e92aaad85c9318c8a00a353
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 242
+          byte_count: 785
+          word_count: 116
+          content_hash: 7a022d5aef82c0deb4601157200171acabd039dcf666cdcc170fe7e0b1d79b12
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 1027
+          byte_count: 1766
+          word_count: 229
+          content_hash: 74a274ee1cb09b59bc0a743b2222accf3ad0dc71db23f4b712b5d86eacb0ec70
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 1037
+              byte_count: 902
+              word_count: 123
+              content_hash: 91489c9b2a879641197a7b007a3ac8bc7ad03197b4938b282af20cd754cb1858
+            - path: 1.2.2
+              level: 3
+              title: Explicitly excluded
+              byte_offset: 1939
+              byte_count: 854
+              word_count: 104
+              content_hash: 172a4d2a78957c4a2b09502cf9f874ebf0a4dfd68faf039b63611073f1fc6511
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2793
+          byte_count: 15415
+          word_count: 2226
+          content_hash: 6a4f3bba51fb035a4ba0f0256726502f1020f6b32418a5480af258da384e7de8
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Gate enforcement on all transitions
+              byte_offset: 2821
+              byte_count: 2141
+              word_count: 264
+              content_hash: 10d3afb7c80663d436be4c0acf40298a6e8e27e7701f7b708b5374fb88f5f3a9
+            - path: 1.3.2
+              level: 3
+              title: Complete gate prerequisite table
+              byte_offset: 4962
+              byte_count: 4591
+              word_count: 746
+              content_hash: ca3476a2f95c5c6be634bb83fa7e2ae3d059f1d4d18a1e2f1f78e7707de33b4a
+            - path: 1.3.3
+              level: 3
+              title: Override mechanism
+              byte_offset: 9553
+              byte_count: 3931
+              word_count: 543
+              content_hash: af1f0a1e78d2a65620b97e656d7c31d768e8703f2fb8b5062859364dfe2153cd
+            - path: 1.3.4
+              level: 3
+              title: Actionable error messages
+              byte_offset: 13484
+              byte_count: 4724
+              word_count: 670
+              content_hash: 04715906db5c6361b80e3a08f67d6b4096d91b05fb50307aaff43d673981ef33
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 18208
+          byte_count: 2181
+          word_count: 322
+          content_hash: 27e5140acb09e80c9fb7a13ecd3a22f7faf7c07c9126c7432cc69f99aa33a0a3
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 20389
+          byte_count: 1323
+          word_count: 187
+          content_hash: 6c1cac7695d11d770c78a92ce9f5e0dcc533c6d7ab1acbe3405fa613d6dddb3f
+        - path: "1.6"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 21712
+          byte_count: 2110
+          word_count: 268
+          content_hash: 18fda8c3c971054b5c33e1aacb913a46a612fd8fa3b74209d82734994d3afe3a
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 80
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 3132
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.3.3
+      byte_offset: 9939
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.3.4
+      byte_offset: 14333
+cross_doc_links:
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+classified: false

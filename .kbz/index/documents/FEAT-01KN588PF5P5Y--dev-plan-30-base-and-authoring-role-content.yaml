@@ -1,0 +1,144 @@
+document_id: FEAT-01KN588PF5P5Y/dev-plan-30-base-and-authoring-role-content
+document_path: work/plan/3.0-base-and-authoring-role-content.md
+content_hash: 32a3326cfc44486cc62b7c5852c05fcf477bb373e929a4c33a3ef9f0c00c24bb
+indexed_at: 2026-04-01T20:00:21.011312Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Base and Authoring Role Content'
+      byte_offset: 0
+      byte_count: 18836
+      word_count: 2396
+      content_hash: 32a3326cfc44486cc62b7c5852c05fcf477bb373e929a4c33a3ef9f0c00c24bb
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 434
+          byte_count: 1175
+          word_count: 168
+          content_hash: 9c9c0bffdd4f185f075fb6a1a499d7fe3c39d62d208b4a096e8685c4392c42f0
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 1609
+          byte_count: 13088
+          word_count: 1537
+          content_hash: 87d1108beccc05baca29ba0e0bb362c1c15afd0e8cc67e224783e3e1ffd522a0
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Author `base.yaml`'
+              byte_offset: 1631
+              byte_count: 2166
+              word_count: 277
+              content_hash: 1e7de7345f0c40387f7cf5c4017bf99fa3ce88c43263f0acfbe5d650eea2aa31
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Author `architect.yaml` and `spec-author.yaml`'
+              byte_offset: 3797
+              byte_count: 2810
+              word_count: 316
+              content_hash: 1241e0b6ac4bb307d69f419ed65767a86e9626439d49f4bcd51ef1ea3f35e6de
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Author `implementer.yaml` and `implementer-go.yaml`'
+              byte_offset: 6607
+              byte_count: 2427
+              word_count: 279
+              content_hash: bacda77269257229d3b7479812efd2a2dc11920ceb63f237b0dd5fbbe5355769
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Author `researcher.yaml` and `documenter.yaml`'
+              byte_offset: 9034
+              byte_count: 2300
+              word_count: 257
+              content_hash: 386d78d066c5a86b41d7dffd25f9d87b8c712b77da94e17630b7701ecbf6e217
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Author `orchestrator.yaml`'
+              byte_offset: 11334
+              byte_count: 3363
+              word_count: 404
+              content_hash: e13d1ff28abcb8685d3a9c1d2ef732747852dc5aeb3555afe994308b7a7168fa
+        - path: "1.3"
+          level: 2
+          title: 3. Dependency Graph
+          byte_offset: 14697
+          byte_count: 521
+          word_count: 72
+          content_hash: 008cfaf11d38762d6b74eb855e787715b5d3a78e5517329a1839e46eb4f257c7
+        - path: "1.4"
+          level: 2
+          title: 4. Interface Contracts
+          byte_offset: 15218
+          byte_count: 2477
+          word_count: 349
+          content_hash: 7c83c84056357d0c248b570e611b290c248a6081a27d44bc56bae31bf5d1e74f
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Role YAML Schema Contract
+              byte_offset: 15394
+              byte_count: 426
+              word_count: 60
+              content_hash: 1c79bb78fd3b5cef3e625b66844c723ccb6f636493dc4db3305b0511ce81b125
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Anti-Pattern Structure Contract
+              byte_offset: 15820
+              byte_count: 528
+              word_count: 77
+              content_hash: 1819d67c44872ed9eea0c382e76b5610e69ed5b411d40b42b5e9f2b38a4bfbab
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Vocabulary Term Format Contract
+              byte_offset: 16348
+              byte_count: 357
+              word_count: 52
+              content_hash: 9ef7c2b45b9693a604c2818d8c3fe11d740727b21efa8044136b245dbec2db2f
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Identity Field Contract
+              byte_offset: 16705
+              byte_count: 228
+              word_count: 37
+              content_hash: e9291a6b3b59a132ef1667d01f239c4c366e963071e279119cc8d875cd11e297
+            - path: 1.4.5
+              level: 3
+              title: 4.5 No Content Duplication Contract
+              byte_offset: 16933
+              byte_count: 278
+              word_count: 41
+              content_hash: daaf06797ac8b3ffc64bc645f7b560f2bcf524ec0005de6bde5379ccb6a9d101
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Tool Name Contract
+              byte_offset: 17211
+              byte_count: 484
+              word_count: 55
+              content_hash: af59fb293ad675cd14bf3f6373a009b5e7558c5b8f92e873fe873d2ed3107842
+        - path: "1.5"
+          level: 2
+          title: 5. Traceability Matrix
+          byte_offset: 17695
+          byte_count: 1141
+          word_count: 224
+          content_hash: 2cc52270d41a7a7ee3b20b54411a8463b2751620345ebe3cd9d4adddcc9cd58d
+entity_refs:
+    - entity_id: FEAT-01KN588PF5P5Y
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 208
+cross_doc_links:
+    - target_path: work/spec/3.0-base-and-authoring-role-content.md
+      link_text: work/spec/3.0-base-and-authoring-role-content.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

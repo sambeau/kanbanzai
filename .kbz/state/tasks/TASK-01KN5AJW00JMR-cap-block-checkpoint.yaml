@@ -1,0 +1,8 @@
+id: TASK-01KN5AJW00JMR
+parent_feature: FEAT-01KN58J2606B0
+slug: cap-block-checkpoint
+summary: "When review_cycle reaches the cap and a reviewing->needs-rework transition is requested, block the transition, set blocked_reason, and auto-create a human checkpoint."
+status: queued
+depends_on:
+  - TASK-01KN5AJVYYBSX
+  - TASK-01KN5AJVZG8AG

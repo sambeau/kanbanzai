@@ -1,0 +1,167 @@
+document_id: FEAT-01KN588PGJNM0/dev-plan-30-review-skill-content
+document_path: work/plan/3.0-review-skill-content.md
+content_hash: 4b490e89cc31bf579dbddf60f1326edd6965beb8a4b6ba8cd98cb9c39c9618cf
+indexed_at: 2026-04-01T20:00:21.518065Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Review Skill Content'
+      byte_offset: 0
+      byte_count: 26043
+      word_count: 3491
+      content_hash: 4b490e89cc31bf579dbddf60f1326edd6965beb8a4b6ba8cd98cb9c39c9618cf
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 379
+          byte_count: 1934
+          word_count: 273
+          content_hash: bca17be8e173cda3e109eec6d28b45bbb9844c062ac79559f54e6851489bef16
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 2313
+          byte_count: 16777
+          word_count: 2196
+          content_hash: e57cb0e85560aa9bef8b5bbe182b9aaeea642097f45dc36563a81565d979f3ad
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Author `review-code/SKILL.md`'
+              byte_offset: 2335
+              byte_count: 7298
+              word_count: 970
+              content_hash: 6dafd7d6da9cb5a098e99cb43a86aa7e7443181a4b83caf2cdaed94f280abc0e
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Author `orchestrate-review/SKILL.md`'
+              byte_offset: 9633
+              byte_count: 5524
+              word_count: 707
+              content_hash: 5384f1123227a298ae9a2173ae134dcfff0b713f600fbfd1ddaed6573cb28a00
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Author `review-plan/SKILL.md`'
+              byte_offset: 15157
+              byte_count: 3933
+              word_count: 515
+              content_hash: 5780a71eb9f9e833916883f268a4226e1c2b4253b993a9084129ee233f2638e9
+        - path: "1.3"
+          level: 2
+          title: 3. Dependency Graph
+          byte_offset: 19090
+          byte_count: 1511
+          word_count: 184
+          content_hash: f636f044e11310fc0791eba2a105823c1f757dc40fe0df87a80313a44692ddc9
+        - path: "1.4"
+          level: 2
+          title: 4. Interface Contracts
+          byte_offset: 20601
+          byte_count: 4229
+          word_count: 581
+          content_hash: a5c79310dd3e250eb4a0a764a10c4aee3b9107169af73b59126732a7d8c92ced
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 SKILL.md Frontmatter Schema Contract
+              byte_offset: 20803
+              byte_count: 521
+              word_count: 64
+              content_hash: fd959ee81302f0cdb62169c8c25b1b57482b1c296dd52bc896402375d68a241e
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Attention-Curve Section Ordering Contract
+              byte_offset: 21324
+              byte_count: 525
+              word_count: 68
+              content_hash: 9b6c490a3a6fd4a6cb8966b73e7eef55f62d7eade29a2d670bbbb4ab222914fb
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Anti-Pattern Structure Contract
+              byte_offset: 21849
+              byte_count: 384
+              word_count: 56
+              content_hash: 7495babacba82943a97dfd31d8d299244b1776da1e290ceb7d88823702aabf04
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Vocabulary Separation Contract (Skill vs Role)
+              byte_offset: 22233
+              byte_count: 1100
+              word_count: 164
+              content_hash: 2d6248c09d970514a76e5da862fbd5505e14e6835969344339579622e32fd96d
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Output Format Interoperability Contract
+              byte_offset: 23333
+              byte_count: 574
+              word_count: 73
+              content_hash: 5cc9945ad9f1722b31cccb6058d3648c618b046e805bf7b0903e5eb624d5e99a
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Terminology Consistency Contract
+              byte_offset: 23907
+              byte_count: 576
+              word_count: 81
+              content_hash: be916ed05fbc66bc461e4c0e87644403c282ce9d3836db78077679a9b4b941cd
+            - path: 1.4.7
+              level: 3
+              title: 4.7 500-Line Budget Contract
+              byte_offset: 24483
+              byte_count: 347
+              word_count: 46
+              content_hash: 10712952d7dae4b30036ea8925b3addd32a1b5a5702dfffc93d893c08bef5dda
+        - path: "1.5"
+          level: 2
+          title: 5. Traceability Matrix
+          byte_offset: 24830
+          byte_count: 1213
+          word_count: 215
+          content_hash: bf2b8ac107675fa7ad205925d5352650f8668a3bad89dcd11f8eee293c939b0c
+entity_refs:
+    - entity_id: FEAT-01KN588PGJNM0
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 175
+cross_doc_links:
+    - target_path: references/finding-classification.md
+      link_text: finding classification details
+      section_path: 1.4.7
+    - target_path: work/spec/3.0-review-skill-content.md
+      link_text: work/spec/3.0-review-skill-content.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+    - target_path: review-code/SKILL.md
+      link_text: review-code/SKILL.md
+      section_path: "1.1"
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: "1.1"
+    - target_path: review-plan/SKILL.md
+      link_text: review-plan/SKILL.md
+      section_path: "1.1"
+    - target_path: review-code/SKILL.md
+      link_text: review-code/SKILL.md
+      section_path: 1.2.1
+    - target_path: SKILL.md
+      link_text: " SKILL.md example (the canonical example in the design\n  document, including frontmatter, all body sections, and design decision rationale)\n- Design §5.3 — review skill descriptions and composition model\n- Design §5.4 — skill composition during review (4-specialist dispatch example)\n- Design §8.1 — novelty test (content must not explain general concepts)\n- Design §8.3 — uncertainty protocol (STOP instruction for missing/ambiguous inputs)\n- Design DP-4 — anti-patterns with BECAUSE clauses\n- Design DP-9 — constraint level alignment (medium = template with bounded flexibility)\n- The completed reviewer role files (from the Review Role Content plan) — to verify\n  vocabulary separation: skill terms are methodology terms, not domain terms\n\n**Output artifacts:**\n- "
+      section_path: 1.2.1
+    - target_path: SKILL.md
+      link_text: " SKILL.md from Task 1 — to understand the output format that\n  sub-agents produce (the orchestrator collates this output)\n\n**Output artifacts:**\n- "
+      section_path: 1.2.2
+    - target_path: review-plan/SKILL.md
+      link_text: review-plan/SKILL.md
+      section_path: 1.2.3
+    - target_path: .agents/skills/kanbanzai-plan-review/SKILL.md
+      link_text: .agents/skills/kanbanzai-plan-review/SKILL.md
+      section_path: 1.2.3
+    - target_path: .kbz/skills/review-plan/SKILL.md
+      link_text: .kbz/skills/review-plan/SKILL.md
+      section_path: 1.2.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

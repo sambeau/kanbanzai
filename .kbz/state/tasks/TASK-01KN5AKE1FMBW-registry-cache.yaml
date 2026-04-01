@@ -1,0 +1,5 @@
+id: TASK-01KN5AKE1FMBW
+parent_feature: FEAT-01KN58J27H83N
+slug: registry-cache
+summary: "Create a concurrency-safe, mtime-based cache that loads and parses the binding registry file, re-reading only when mtime changes. Return nil for missing/malformed files to trigger fallback."
+status: ready

@@ -1,0 +1,9 @@
+id: TASK-01KN5BX97TVWE
+parent_feature: FEAT-01KN588PFWADY
+slug: establish-skill-conventions
+summary: "Create .kbz/skills/CONVENTIONS.md — shared formatting reference for all skill authors. Covers: frontmatter YAML template, vocabulary section format (term + one-line definition, 15–30 terms), anti-pattern format (Name/Detect/BECAUSE/Resolve), example format (BAD with WHY BAD, GOOD with WHY GOOD, GOOD last), evaluation criteria format (gradable question + weight), Questions This Skill Answers format (5–10 queries), line-budget guidance for references/ overflow."
+status: done
+files_planned:
+  - .kbz/skills/CONVENTIONS.md
+completed: "2026-04-01T20:46:20Z"
+completion_summary: "Created .kbz/skills/CONVENTIONS.md — 163-line shared formatting reference covering frontmatter template, vocabulary format, anti-pattern format (Detect/BECAUSE/Resolve), example format (BAD/GOOD with WHY, best LAST), evaluation criteria, Questions format, line-budget guidance."

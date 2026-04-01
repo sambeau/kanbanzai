@@ -1,0 +1,12 @@
+id: TASK-01KN5AKE4HPDP
+parent_feature: FEAT-01KN58J27H83N
+slug: health-e2e-tests
+summary: "Add health check reporting for gate source indicators and checkpoint overrides, and write end-to-end integration tests for the complete pipeline."
+status: queued
+depends_on:
+  - TASK-01KN5AKE1FMBW
+  - TASK-01KN5AKE20F2W
+  - TASK-01KN5AKE2H4VD
+  - TASK-01KN5AKE316PX
+  - TASK-01KN5AKE3HG55
+  - TASK-01KN5AKE4247A

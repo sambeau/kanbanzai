@@ -1,0 +1,12 @@
+id: FEAT-01KN58J25K4QD/specification-30-stage-aware-context-assembly
+path: work/spec/3.0-stage-aware-context-assembly.md
+type: specification
+title: Stage-Aware Context Assembly Specification
+status: approved
+owner: FEAT-01KN58J25K4QD
+approved_by: sambeau
+approved_at: "2026-04-01T19:45:03Z"
+content_hash: f53adaf8354e8fb94e749b2f94bec6111f90709f0c25e8406aff72aa60907962
+created: "2026-04-01T19:43:39Z"
+created_by: sambeau
+updated: "2026-04-01T19:45:03Z"

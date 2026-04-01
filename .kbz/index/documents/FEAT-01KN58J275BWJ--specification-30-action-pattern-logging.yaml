@@ -1,0 +1,149 @@
+document_id: FEAT-01KN58J275BWJ/specification-30-action-pattern-logging
+document_path: work/spec/3.0-action-pattern-logging.md
+content_hash: 6baee64269ae3e2703d8b35e6a6902d11818e8142835ce30f14da0e2f5b52d04
+indexed_at: 2026-04-01T19:43:40.189423Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Action Pattern Logging and Metrics (Kanbanzai 3.0)'
+      byte_offset: 0
+      byte_count: 20053
+      word_count: 3007
+      content_hash: 6baee64269ae3e2703d8b35e6a6902d11818e8142835ce30f14da0e2f5b52d04
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 248
+          byte_count: 627
+          word_count: 84
+          content_hash: 247285c6f8dc483f63a809d7e13d7b850843e2e8d928e33642b5d34361f5e950
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 875
+          byte_count: 1371
+          word_count: 191
+          content_hash: 0ac9a86e2a47c343ec8c58871092f08a09a9a3280fade4bb671ff8bf8a313a6c
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 885
+              byte_count: 467
+              word_count: 68
+              content_hash: 78638e03be525d2696f75b284c31dfd14e9d67f4679186e5ced65f94218bd7d7
+            - path: 1.2.2
+              level: 3
+              title: Explicitly excluded
+              byte_offset: 1352
+              byte_count: 894
+              word_count: 121
+              content_hash: 09b6de148d23b223f029c40422eaef29a2e52d3ea59511e2bd47ddb7b2b47659
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2246
+          byte_count: 13902
+          word_count: 2155
+          content_hash: 3d81744df2f481f87943851ff402168c12eb3008e850505f3952ce7ceb78f047
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Log Infrastructure
+              byte_offset: 2274
+              byte_count: 4583
+              word_count: 715
+              content_hash: 53917c55f9adcd448c03b0a5d5887a076a8308384ebeea721709bfc38279832f
+            - path: 1.3.2
+              level: 3
+              title: Log File Management
+              byte_offset: 6857
+              byte_count: 1880
+              word_count: 285
+              content_hash: dc93099c13714cd7a529040911265a59bc638a52ec79078544cb204bb9b43237
+            - path: 1.3.3
+              level: 3
+              title: Stage-Level Workflow Metrics
+              byte_offset: 8737
+              byte_count: 3561
+              word_count: 572
+              content_hash: 283395abb010ac4a2c8b7c916a0959644dc45a5f340bbd31806f80a08ef2ca45
+            - path: 1.3.4
+              level: 3
+              title: Evaluation Suite Framework
+              byte_offset: 12298
+              byte_count: 2615
+              word_count: 375
+              content_hash: 4cbb08958dafca2dcd1971141b1e40cf2d892b1c03ead1a0b7c8d895d578aef5
+            - path: 1.3.5
+              level: 3
+              title: Logging Behaviour
+              byte_offset: 14913
+              byte_count: 1235
+              word_count: 205
+              content_hash: 2d205a0e945b2c630d3605bb6699b70e95aba39871e4658e7b8beae1a0aac7cb
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 16148
+          byte_count: 2135
+          word_count: 308
+          content_hash: 15c73c154c7d8a2f666f262682925326f69ed8624b5bf8f60cc8ef7c528604d7
+        - path: "1.5"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 18283
+          byte_count: 1770
+          word_count: 247
+          content_hash: ee500d88243a7e5deca387946729c0d500752bd3e98b848733347bf41c04b4c5
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 82
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 3984
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.3.3
+      byte_offset: 9251
+    - entity_id: TASK-042
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 5923
+cross_doc_links:
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1"
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.3.4
+    - target_path: work/evaluation/README.md
+      link_text: work/evaluation/README.md
+      section_path: 1.3.4
+    - target_path: work/evaluation/README.md
+      link_text: work/evaluation/README.md
+      section_path: "1.4"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: assumption
+      confidence: high
+classified: false

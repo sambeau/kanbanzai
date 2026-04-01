@@ -1,0 +1,9 @@
+id: TASK-01KN5AJRQNRFV
+parent_feature: FEAT-01KN58J25K4QD
+slug: next-integration
+summary: "Wire lifecycle validation into the next claim-mode handler and add stage-aware structured fields (orchestration_pattern, effort_budget, tool_subset) to the claim response."
+status: queued
+depends_on:
+  - TASK-01KN5AJRP33VW
+  - TASK-01KN5AJRPNZ7G
+  - TASK-01KN5AJRQ6F47

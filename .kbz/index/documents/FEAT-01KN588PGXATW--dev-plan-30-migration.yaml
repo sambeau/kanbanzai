@@ -1,0 +1,267 @@
+document_id: FEAT-01KN588PGXATW/dev-plan-30-migration
+document_path: work/plan/3.0-migration.md
+content_hash: 140f747922ad40fd8514267409980809b854b96a6045cd9f3e356d63f74597e1
+indexed_at: 2026-04-01T20:00:21.648297Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Migration and Backward Compatibility'
+      byte_offset: 0
+      byte_count: 27929
+      word_count: 3485
+      content_hash: 140f747922ad40fd8514267409980809b854b96a6045cd9f3e356d63f74597e1
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 553
+          byte_count: 2182
+          word_count: 299
+          content_hash: 292d58781f8e3b8da3c597ac066ed6f920258b3e26e9f00e21230a1cd866d9f1
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 2735
+          byte_count: 19320
+          word_count: 2320
+          content_hash: f0cc2e9291828529b4f66dd96f3eaf9fb70c650311e1e4098ecf6bc66375eb61
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Extend Profile Store and Profile Tool for Dual-Location Loading'
+              byte_offset: 2757
+              byte_count: 4216
+              word_count: 500
+              content_hash: 3419ddf1b03db241a0730389ac5b6831b8b57a66b23f53fa0aee6c88af34ae48
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Extend Handoff Tool for New Skill and Role Structures'
+              byte_offset: 6973
+              byte_count: 3122
+              word_count: 373
+              content_hash: 4f38c22c5dfa45b9592c0f12b5678f6fa646354e97cd406cab118e78696b5603
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Migrate Role Files to `.kbz/roles/`'
+              byte_offset: 10095
+              byte_count: 3796
+              word_count: 423
+              content_hash: e2ad83ec87a8d71845fdc3b90c6d221be928326b5148159a657242ad351e21d9
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Restructure Skills into `.kbz/skills/` Directories'
+              byte_offset: 13891
+              byte_count: 3726
+              word_count: 455
+              content_hash: bb3c1dfb962574afba598a405c65b06745308781823b0e7d7312958e6757616f
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Create Stage Bindings File'
+              byte_offset: 17617
+              byte_count: 1920
+              word_count: 232
+              content_hash: d7cbc8918f503cb542f02ef28dbd91c79a423a7b6a68d886a21949c8db343bce
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: Retirement Verification and Old File Removal'
+              byte_offset: 19537
+              byte_count: 2518
+              word_count: 333
+              content_hash: 542d884f3df5cd01158fbf6214bd6415ba72664398d7128977cd42c214bfac2d
+        - path: "1.3"
+          level: 2
+          title: 3. Dependency Graph
+          byte_offset: 22055
+          byte_count: 1232
+          word_count: 166
+          content_hash: 268b22a6998ecd85259aa2af3a93adbbf1363ee6ef8ab6ecbd875730eee65425
+        - path: "1.4"
+          level: 2
+          title: 4. Interface Contracts
+          byte_offset: 23287
+          byte_count: 2997
+          word_count: 379
+          content_hash: 540e875e2434337e00d01945fa27b001663e5fb60da5de0efdeac44e332a76d9
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 ProfileStore Dual-Root Constructor (Task 1 → Tasks 2, 3)
+              byte_offset: 23314
+              byte_count: 494
+              word_count: 62
+              content_hash: 906254ab414d272654cf8c53eb4dee84a9f447cdc686896216cc12c027947b5a
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Profile Struct Extensions (Task 1 → Tasks 2, 3)
+              byte_offset: 23808
+              byte_count: 478
+              word_count: 49
+              content_hash: 63bfa01dba9fc2ee101a67432676074dc7a80c0f0031eb74777c15d5ba25ad33
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Skill Format Detection Heuristic (Task 2 → Task 4)
+              byte_offset: 24286
+              byte_count: 641
+              word_count: 98
+              content_hash: 3154dbbc2f5ad65484008fd041a9ff410453109cd28950483a3ecc1d18f37511
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Stage Bindings Schema (Task 5 → Task 6)
+              byte_offset: 24927
+              byte_count: 544
+              word_count: 64
+              content_hash: 28925e52d47039cdcfb5967aee51d860a58324829a2eafe48a6975a2c0589ba2
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Role File Schema (Task 3 — consumed by Task 1's loader)
+              byte_offset: 25471
+              byte_count: 813
+              word_count: 102
+              content_hash: 722ff5239f04935bed11b2eaae54436381b42a119a7ba7b51ca5b812ec933f5b
+        - path: "1.5"
+          level: 2
+          title: 5. Traceability Matrix
+          byte_offset: 26284
+          byte_count: 1645
+          word_count: 284
+          content_hash: 6003520bd6593babdc52b0840cf3de7bd91de86a4d20945c6cf3311c6262312f
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 316
+cross_doc_links:
+    - target_path: work/spec/3.0-migration.md
+      link_text: work/spec/3.0-migration.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+    - target_path: code-review.md
+      link_text: code-review.md
+      section_path: "1.1"
+    - target_path: plan-review.md
+      link_text: plan-review.md
+      section_path: "1.1"
+    - target_path: document-creation.md
+      link_text: document-creation.md
+      section_path: "1.1"
+    - target_path: work/spec/3.0-migration.md
+      link_text: work/spec/3.0-migration.md
+      section_path: 1.2.1
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.1
+    - target_path: work/spec/3.0-migration.md
+      link_text: work/spec/3.0-migration.md
+      section_path: 1.2.2
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.2
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.2.2
+    - target_path: work/spec/3.0-migration.md
+      link_text: work/spec/3.0-migration.md
+      section_path: 1.2.3
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.3
+    - target_path: code-review.md
+      link_text: code-review.md
+      section_path: 1.2.4
+    - target_path: review-code/SKILL.md
+      link_text: review-code/SKILL.md
+      section_path: 1.2.4
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.2.4
+    - target_path: plan-review.md
+      link_text: plan-review.md
+      section_path: 1.2.4
+    - target_path: review-plan/SKILL.md
+      link_text: review-plan/SKILL.md
+      section_path: 1.2.4
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.2.4
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.2.4
+    - target_path: .skills/document-creation.md
+      link_text: .skills/document-creation.md
+      section_path: 1.2.4
+    - target_path: work/spec/3.0-migration.md
+      link_text: work/spec/3.0-migration.md
+      section_path: 1.2.4
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.4
+    - target_path: work/spec/3.0-migration.md
+      link_text: work/spec/3.0-migration.md
+      section_path: 1.2.5
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.5
+    - target_path: work/spec/3.0-document-authoring-skill-content.md
+      link_text: work/spec/3.0-document-authoring-skill-content.md
+      section_path: 1.2.5
+    - target_path: work/spec/3.0-implementation-skill-content.md
+      link_text: work/spec/3.0-implementation-skill-content.md
+      section_path: 1.2.5
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.6
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.2.6
+    - target_path: .skills/README.md
+      link_text: .skills/README.md
+      section_path: 1.2.6
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.2.6
+    - target_path: work/spec/3.0-migration.md
+      link_text: work/spec/3.0-migration.md
+      section_path: 1.2.6
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.2.6
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.2.6
+    - target_path: .skills/document-creation.md
+      link_text: .skills/document-creation.md
+      section_path: 1.2.6
+    - target_path: .kbz/skills/{name}/SKILL.md
+      link_text: .kbz/skills/{name}/SKILL.md
+      section_path: 1.4.3
+    - target_path: .skills/{name}.md
+      link_text: .skills/{name}.md
+      section_path: 1.4.3
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.4.4
+    - target_path: code-review.md
+      link_text: code-review.md
+      section_path: "1.5"
+    - target_path: review-code/SKILL.md
+      link_text: review-code/SKILL.md
+      section_path: "1.5"
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: "1.5"
+    - target_path: plan-review.md
+      link_text: plan-review.md
+      section_path: "1.5"
+    - target_path: review-plan/SKILL.md
+      link_text: review-plan/SKILL.md
+      section_path: "1.5"
+    - target_path: document-creation.md
+      link_text: document-creation.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

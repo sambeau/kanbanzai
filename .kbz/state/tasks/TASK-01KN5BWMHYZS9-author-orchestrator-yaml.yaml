@@ -1,0 +1,11 @@
+id: TASK-01KN5BWMHYZS9
+parent_feature: FEAT-01KN588PF5P5Y
+slug: author-orchestrator-yaml
+summary: "Author .kbz/roles/orchestrator.yaml — most complex role. Inherits base, identity: Senior engineering manager. Categorised vocabulary across 4 domains (dispatch mechanics, workflow governance, quality assessment, pattern matching, 10+ terms total). 7+ anti-patterns with research-backed BECAUSE clauses (Over-decomposition, Under-decomposition, Context forwarding, Result-without-evidence, Reactive communication, Premature delegation, Infinite refinement loop). 3 hard constraints (45% context threshold, 4-agent saturation, cascade pattern). Stages: developing, reviewing."
+status: done
+depends_on:
+  - TASK-01KN5BWME9KQQ
+files_planned:
+  - .kbz/roles/orchestrator.yaml
+completed: "2026-04-01T20:46:41Z"
+completion_summary: "Created orchestrator.yaml — 22 vocabulary terms in 4 categories + 3 hard constraints, 7 anti-patterns with research-backed BECAUSE clauses (Masters et al., Google Research). 20 tools."

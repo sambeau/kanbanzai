@@ -1,0 +1,9 @@
+id: TASK-01KN5BXHX9TX5
+parent_feature: FEAT-01KN588PG7HA3
+slug: author-decompose-feature-skill
+summary: "Author .kbz/skills/decompose-feature/SKILL.md (name: decompose-feature, stage: dev-planning, roles: [architect], constraint_level: low). Feature decomposition skill using decompose MCP tool. Centrepiece: 5-point validate → fix → re-validate loop checking: non-empty descriptions, explicit dependencies, single-agent sizing, no circular dependencies, integration/test task presence. Anti-patterns: over-decomposition, circular dependencies, missing integration tasks."
+status: done
+files_planned:
+  - .kbz/skills/decompose-feature/SKILL.md
+completed: "2026-04-01T20:46:20Z"
+completion_summary: "Created .kbz/skills/decompose-feature/SKILL.md — 259 lines. 22 vocabulary terms, 7 anti-patterns, 5-point validate→fix→re-validate loop as centrepiece (descriptions, dependencies, sizing, cycles, integration tasks)."

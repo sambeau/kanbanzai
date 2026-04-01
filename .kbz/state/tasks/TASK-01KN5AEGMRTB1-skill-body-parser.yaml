@@ -1,0 +1,9 @@
+id: TASK-01KN5AEGMRTB1
+parent_feature: FEAT-01KN588PDBW85
+slug: skill-body-parser
+summary: "Parse markdown body into sections, validate attention-curve ordering in internal/context/skill_sections.go"
+status: done
+depends_on:
+  - TASK-01KN5AEGKXXVT
+completed: "2026-04-01T20:17:01Z"
+completion_summary: "Created internal/skill/sections.go with parseSections and validateSections for attention-curve ordering, required section presence, and content validation. 22 tests."

@@ -1,0 +1,13 @@
+id: FEAT-01KN58J257X02
+slug: tool-description-audit
+parent: P17-workflow-and-tooling-3.0
+status: developing
+summary: "Audit and rewrite all MCP tool descriptions following ACI principles: lead with when-to-use, include negative guidance, state workflow position, keep under 200 tokens. Run agent-driven testing on rewritten descriptions. Audit actionable error messages across all tool handlers beyond gate failures."
+spec: FEAT-01KN58J257X02/specification-30-tool-description-audit
+dev_plan: FEAT-01KN58J257X02/dev-plan-30-tool-description-audit
+tags:
+  - phase-b
+  - descriptions
+  - high-impact
+created: "2026-04-01T19:33:07Z"
+created_by: sambeau

@@ -1,0 +1,271 @@
+document_id: FEAT-01KN58J25K4QD/specification-30-stage-aware-context-assembly
+document_path: work/spec/3.0-stage-aware-context-assembly.md
+content_hash: f53adaf8354e8fb94e749b2f94bec6111f90709f0c25e8406aff72aa60907962
+indexed_at: 2026-04-01T19:43:39.686764Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Stage-Aware Context Assembly (Kanbanzai 3.0)'
+      byte_offset: 0
+      byte_count: 26188
+      word_count: 3753
+      content_hash: f53adaf8354e8fb94e749b2f94bec6111f90709f0c25e8406aff72aa60907962
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 248
+          byte_count: 801
+          word_count: 111
+          content_hash: f71a95cd302dfb15d363eba67d2a1810a81c1c23084f7a4ae6239ab71643919f
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 1049
+          byte_count: 1441
+          word_count: 190
+          content_hash: 1fba94664d1921d5bc3c315b07782dc077040418a42da1ba556f289b2159c48a
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 1062
+              byte_count: 751
+              word_count: 99
+              content_hash: 98fcf05987cbded5107551aa3e7c7c447eda49ccdbd91118c7cbef0ee188b60c
+            - path: 1.2.2
+              level: 3
+              title: Explicitly excluded
+              byte_offset: 1813
+              byte_count: 677
+              word_count: 88
+              content_hash: e95394d393d10394ef1139edd6fe5438f85b82b5e840ff09941cae71cbd165b6
+        - path: "1.3"
+          level: 2
+          title: 3. Functional Requirements
+          byte_offset: 2490
+          byte_count: 18770
+          word_count: 2723
+          content_hash: 234a84eaa19120d149df3721a5831619d5f892e25cfb066fae774e74ddec633d
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: Lifecycle State Validation on Handoff'
+              byte_offset: 2521
+              byte_count: 848
+              word_count: 136
+              content_hash: 34402585336123caddd07895bf2a91accb913065d9f142bb3f9e9e225a160be6
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: Lifecycle State Validation on Next (Claim Mode)'
+              byte_offset: 3369
+              byte_count: 927
+              word_count: 143
+              content_hash: f896d2beb834b33ceb9af3d3b282ffded60047c74d06d1ec21af4244696d45d6
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: Stage-to-Allowed-States Mapping'
+              byte_offset: 4296
+              byte_count: 1551
+              word_count: 225
+              content_hash: 7f765fc25162f67c2e72b1852bb59c238659b5b3a838c7c382ac3c0433c01530
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: Actionable Error Messages for Validation Failures'
+              byte_offset: 5847
+              byte_count: 1178
+              word_count: 187
+              content_hash: 0dc4d42ca488553d0e6fd16999089b30b20d4ec0218acadb3f6e86af9403817f
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: Stage-Specific Assembly Strategy'
+              byte_offset: 7025
+              byte_count: 2315
+              word_count: 327
+              content_hash: e4ced6fb88f980ed7d9605776874a864e2a224ea6541636d33627e8518716ccb
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: Orchestration Pattern Signalling'
+              byte_offset: 9340
+              byte_count: 1313
+              word_count: 177
+              content_hash: 0680bcd9a5a1bf438e09426142b3632b7f1d97e19d9ef19b60f2c74ea4b0d114
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: Effort Budget in Assembled Context'
+              byte_offset: 10653
+              byte_count: 2173
+              word_count: 325
+              content_hash: 7c42813becbac8e534618f7bc34e3fa2cfbabec09d693d6477286fc147e98d8f
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008: Tool Subset Guidance in Assembled Context'
+              byte_offset: 12826
+              byte_count: 1851
+              word_count: 285
+              content_hash: c40378ebb0599bb01d148741917f28ccd3b7f7e26ab5bb9774a257d9c5cc16b1
+            - path: 1.3.9
+              level: 3
+              title: 'FR-009: Filesystem-Output Convention in Orchestrator Context'
+              byte_offset: 14677
+              byte_count: 1303
+              word_count: 174
+              content_hash: 657fb16e53ed523e62fa0fa23907647c21cd7b65b6af4257b3224792bfa9f261
+            - path: 1.3.10
+              level: 3
+              title: 'FR-010: Finish Summary Length Limit'
+              byte_offset: 15980
+              byte_count: 835
+              word_count: 133
+              content_hash: 42b4801711e5d22cbc46f89d52af4141c5c5a86c38d9645a1b5f82dda43d0e7a
+            - path: 1.3.11
+              level: 3
+              title: 'FR-011: Hardcoded Stage Configuration'
+              byte_offset: 16815
+              byte_count: 830
+              word_count: 130
+              content_hash: 69431f4736d676b1df6fd16f09bc080712a9239aae84aa9eac153ac8474773fb
+            - path: 1.3.12
+              level: 3
+              title: 'FR-012: Handoff Prompt Rendering with Stage-Aware Sections'
+              byte_offset: 17645
+              byte_count: 1309
+              word_count: 175
+              content_hash: 12d33df8e3df3df0f6da38a3b6c3ccc120639af297e5ba1e6b3ae3441bd65672
+            - path: 1.3.13
+              level: 3
+              title: 'FR-013: Next Tool Structured Response with Stage-Aware Fields'
+              byte_offset: 18954
+              byte_count: 1364
+              word_count: 172
+              content_hash: 6f97c19367d7ed8bbb55d2ebc67a310b375bc2482e8d114e07ee221296f6af9a
+            - path: 1.3.14
+              level: 3
+              title: 'FR-014: Graceful Degradation for Missing Parent Feature'
+              byte_offset: 20318
+              byte_count: 942
+              word_count: 130
+              content_hash: fefe00675b6c4a2a53ca658da8b6b0b807aad1f68bdfd880d050cd349bf48011
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Functional Requirements
+          byte_offset: 21260
+          byte_count: 1426
+          word_count: 207
+          content_hash: 13d8c8bc35f87e21d330453ce9efd01713928fe98b9c9abe99cf3e3198539de4
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: Assembly Performance'
+              byte_offset: 21295
+              byte_count: 288
+              word_count: 48
+              content_hash: 6c32e87c04e79c7488ab9ffac3b8df81af28e278118cbaa89816e4de3ac9bf10
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: Backward Compatibility'
+              byte_offset: 21583
+              byte_count: 331
+              word_count: 49
+              content_hash: 04195d205be82eab0f4b17c836e318ecbc62e15298be41257bdd00bf0bd19d21
+            - path: 1.4.3
+              level: 3
+              title: 'NFR-003: Forward Compatibility with Binding Registry'
+              byte_offset: 21914
+              byte_count: 393
+              word_count: 54
+              content_hash: 5173781cd6b1d8b9fe2c68618d240e326517c5c2ac7f51fbbdd30596bd0bb63a
+            - path: 1.4.4
+              level: 3
+              title: 'NFR-004: Testability'
+              byte_offset: 22307
+              byte_count: 379
+              word_count: 52
+              content_hash: d827fd83c56596238d0790bc88312d5623e240b987961017092e067b564bc43b
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 22686
+          byte_count: 1781
+          word_count: 277
+          content_hash: e2f27009fb2800a1aeac71cc3a21a75837fb06a0ff2cb3f1d1c5b3845eb21fbd
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 24467
+          byte_count: 1721
+          word_count: 225
+          content_hash: 3959c82e1cdc0a20e5041a772ef8a65e57d7c4c70553eac8b39fc966c1a13c86
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 24503
+              byte_count: 802
+              word_count: 95
+              content_hash: edde167d488a06324f57e4db1022acc8f9dc64365ec9e68aaeb01a97458175e3
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 25305
+              byte_count: 883
+              word_count: 125
+              content_hash: f964fcd58054779ad4979e8cbae8192d7ed588c97ad15e57374032de50645bbe
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 76
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 2011
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: 1.6.2
+      byte_offset: 25354
+cross_doc_links:
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.7
+      role: narrative
+      confidence: high
+    - section_path: 1.3.8
+      role: narrative
+      confidence: high
+    - section_path: 1.3.9
+      role: narrative
+      confidence: high
+    - section_path: 1.3.10
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

@@ -1,0 +1,12 @@
+id: FEAT-01KN58J26RSB6/specification-30-document-structural-checks
+path: work/spec/3.0-document-structural-checks.md
+type: specification
+title: Document Structural Checks and Quality Hooks Specification
+status: approved
+owner: FEAT-01KN58J26RSB6
+approved_by: sambeau
+approved_at: "2026-04-01T19:45:03Z"
+content_hash: 62a9ce7ad23909b461c3b36f7cda77826835186e8e4a10c740837964a44411f2
+created: "2026-04-01T19:43:40Z"
+created_by: sambeau
+updated: "2026-04-01T19:45:03Z"

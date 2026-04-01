@@ -1,0 +1,12 @@
+id: FEAT-01KN58J275BWJ/specification-30-action-pattern-logging
+path: work/spec/3.0-action-pattern-logging.md
+type: specification
+title: Action Pattern Logging and Metrics Specification
+status: approved
+owner: FEAT-01KN58J275BWJ
+approved_by: sambeau
+approved_at: "2026-04-01T19:45:03Z"
+content_hash: 6baee64269ae3e2703d8b35e6a6902d11818e8142835ce30f14da0e2f5b52d04
+created: "2026-04-01T19:43:40Z"
+created_by: sambeau
+updated: "2026-04-01T19:45:03Z"

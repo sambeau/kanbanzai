@@ -1,0 +1,14 @@
+id: TASK-01KN5AJBC2072
+parent_feature: FEAT-01KN58J24S2XW
+slug: override-record-model
+summary: "Add an OverrideRecord type and Overrides field to the Feature model struct, with round-trip YAML serialisation and updated featureFields serialisation."
+status: done
+files_planned:
+  - internal/model/entities.go
+  - internal/service/entities.go
+completed: "2026-04-01T20:34:23Z"
+claimed_at: "2026-04-01T20:19:15Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-01T20:19:15Z"
+dispatched_by: sambeau
+completion_summary: "Added OverrideRecord struct (FromStatus, ToStatus, Reason, Timestamp) to internal/model/entities.go and Overrides []OverrideRecord field on Feature struct. Updated featureFields in service/entities.go to serialize overrides as []any maps. Added PersistFeatureOverrides method to EntityService for durable override persistence."

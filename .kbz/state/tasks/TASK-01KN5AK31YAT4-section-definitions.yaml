@@ -1,0 +1,10 @@
+id: TASK-01KN5AK31YAT4
+parent_feature: FEAT-01KN58J26RSB6
+slug: section-definitions
+summary: "Create a data module defining required sections per document type as a lookup table, returning ordered SectionRequirement lists for design, specification, and dev-plan types."
+status: done
+files_planned:
+  - internal/structural/sections.go
+  - internal/structural/sections_test.go
+completed: "2026-04-01T20:28:35Z"
+completion_summary: "Created internal/structural package with SectionRequirement struct and RequiredSections function returning ordered required section lists for design, specification, and dev-plan document types. Tests verify all doc types and keywords."

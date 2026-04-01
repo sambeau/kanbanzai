@@ -1,0 +1,12 @@
+id: TASK-01KN5AK32GMYG
+parent_feature: FEAT-01KN58J26RSB6
+slug: check-engine
+summary: "Implement required-sections, cross-reference, and acceptance-criteria structural checks as pure functions returning CheckResult structs."
+status: done
+depends_on:
+  - TASK-01KN5AK31YAT4
+files_planned:
+  - internal/structural/checks.go
+  - internal/structural/checks_test.go
+completed: "2026-04-01T20:33:27Z"
+completion_summary: "Implemented CheckResult struct and three check functions: CheckRequiredSections (L2-3 headings, case-insensitive), CheckCrossReference (path and entity ref matching), CheckAcceptanceCriteria (conventional roles + heading fallback)."

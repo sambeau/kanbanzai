@@ -1,0 +1,136 @@
+document_id: FEAT-01KN588PE43M6/dev-plan-30-context-assembly-pipeline
+document_path: work/plan/3.0-context-assembly-pipeline.md
+content_hash: 49b84d4e9ebcada484cda79622ebf9c3c1272bc9f06f5260baf7390200898eb3
+indexed_at: 2026-04-01T20:00:20.638944Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Context Assembly Pipeline'
+      byte_offset: 0
+      byte_count: 20477
+      word_count: 2596
+      content_hash: 49b84d4e9ebcada484cda79622ebf9c3c1272bc9f06f5260baf7390200898eb3
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 477
+          byte_count: 1516
+          word_count: 190
+          content_hash: 8c0eaf05aeaacab7a49c1db7b216e1676d7ccc9f4c27d92eec95ed73d63157f1
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 1993
+          byte_count: 14251
+          word_count: 1718
+          content_hash: dde6eb875a2916dea3b95c83359f22265afab9ec433c3d7710ab8c9c45585266
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Pipeline Data Types and Step Interfaces'
+              byte_offset: 2015
+              byte_count: 4977
+              word_count: 547
+              content_hash: a8edc6a2506ca7eb03945bfc5381f7d757426ee05b4be9d0248727fdfcc8bfa4
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Pipeline Steps 0–4 — Validation, Resolution, and Orchestration Metadata'
+              byte_offset: 6992
+              byte_count: 1871
+              word_count: 219
+              content_hash: b03e4e80cb20446ce6803dfb79b3a95b0413eacb64638eaf88dd2f6f6385d6f8
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Pipeline Steps 5–6 and Merging — Role Resolution, Skill Loading, Vocabulary and Anti-Pattern Merging'
+              byte_offset: 8863
+              byte_count: 2720
+              word_count: 343
+              content_hash: 3e482de76256b888e95a357f9d5fc5d4361d84d9ac99d2a009058dcd6f86bebb
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Pipeline Steps 8–10 — Tool Guidance, Token Budget, and Output Assembly'
+              byte_offset: 11583
+              byte_count: 2597
+              word_count: 350
+              content_hash: 324357ecc697d645d8e85f1f9892df354b5f802f72df80416e5628af27db5a61
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Handoff Tool Integration and Backward Compatibility'
+              byte_offset: 14180
+              byte_count: 2064
+              word_count: 255
+              content_hash: a5bd27ea4172684b9dea75d6fd9323e30a03477d55bb56bcb4ec90ce7645278d
+        - path: "1.3"
+          level: 2
+          title: 3. Dependency Graph
+          byte_offset: 16244
+          byte_count: 785
+          word_count: 116
+          content_hash: 7cb5cad5d6a7670664284d6612456613bc9f1469b4c63936c4f598c9ae7b3c47
+        - path: "1.4"
+          level: 2
+          title: 4. Interface Contracts
+          byte_offset: 17029
+          byte_count: 2119
+          word_count: 285
+          content_hash: 8620bae555397500137d1ca5897a22575a8f6257fed82936a25d90adcf02b9d4
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Pipeline Orchestrator (Task 1 → all tasks)
+              byte_offset: 17056
+              byte_count: 987
+              word_count: 107
+              content_hash: 0960614024cb3e5475663c3fa3cbc69626bbdc57c3526a53da2c70c05b8d0967
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Knowledge Integration Point (Task 5 → Knowledge Auto-Surfacing feature)
+              byte_offset: 18043
+              byte_count: 388
+              word_count: 59
+              content_hash: 50013608d07f318374f5a71049427c48425dbd4c2cea0391a6d34bd6550b044a
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Freshness Metadata Hook (Task 5 → Freshness Tracking feature)
+              byte_offset: 18431
+              byte_count: 364
+              word_count: 55
+              content_hash: abd31462f60bd087d197dd1027566edf097ff33a9f65490a071869f9c1599a21
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Backward-Compatible Handoff (Task 5)
+              byte_offset: 18795
+              byte_count: 353
+              word_count: 60
+              content_hash: b2b5caecebf9ed56a01fdd562abd41d7abd0d478d6dd36f83f9c17927d8f42a0
+        - path: "1.5"
+          level: 2
+          title: 5. Traceability Matrix
+          byte_offset: 19148
+          byte_count: 1329
+          word_count: 254
+          content_hash: 7a4264a99025ecd7708f2bb2e11890f564a98f401d0b68638d77905bbdb11078
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 230
+cross_doc_links:
+    - target_path: work/spec/3.0-context-assembly-pipeline.md
+      link_text: work/spec/3.0-context-assembly-pipeline.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

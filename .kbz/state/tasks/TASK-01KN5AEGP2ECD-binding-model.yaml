@@ -1,0 +1,7 @@
+id: TASK-01KN5AEGP2ECD
+parent_feature: FEAT-01KN588PDPE8V
+slug: binding-model
+summary: "Define Go structs (StageBinding, Prerequisites, SubAgents, DocumentTemplate, BindingFile) and validateBinding in internal/context/binding.go"
+status: done
+completed: "2026-04-01T20:11:40Z"
+completion_summary: "Created internal/binding/model.go with StageBinding, Prerequisites, SubAgents, DocumentTemplate, BindingFile structs and ValidateBinding function. 28 table-driven tests covering all binding validation rules."

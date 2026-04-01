@@ -1,0 +1,10 @@
+id: FEAT-01KN588PG7HA3
+slug: implementation-skill-content
+parent: P16-skills-and-roles-3.0
+status: developing
+summary: "Author SKILL.md files for implement-task, orchestrate-development, and decompose-feature. Includes context compaction guidance, decomposition validation, and dependency ordering procedures. Design §5.2."
+design: work/design/skills-system-redesign-v2.md
+spec: FEAT-01KN588PG7HA3/specification-30-implementation-skill-content
+dev_plan: FEAT-01KN588PG7HA3/dev-plan-30-implementation-skill-content
+created: "2026-04-01T19:28:01Z"
+created_by: sambeau

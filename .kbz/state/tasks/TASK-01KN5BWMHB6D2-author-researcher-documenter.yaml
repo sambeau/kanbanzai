@@ -1,0 +1,12 @@
+id: TASK-01KN5BWMHB6D2
+parent_feature: FEAT-01KN588PF5P5Y
+slug: author-researcher-documenter
+summary: "Author .kbz/roles/researcher.yaml (inherits base, identity: Senior technical analyst, 5+ vocabulary terms, 3+ anti-patterns: Cherry-picking/False equivalence/Unsupported generalisation, stage: researching) and .kbz/roles/documenter.yaml (inherits base, identity: Senior technical writer, 5+ vocabulary terms, 4+ anti-patterns: Documentation-code divergence/Outdated example/Assumed knowledge/Documentation duplication, stage: documenting)."
+status: done
+depends_on:
+  - TASK-01KN5BWME9KQQ
+files_planned:
+  - .kbz/roles/researcher.yaml
+  - .kbz/roles/documenter.yaml
+completed: "2026-04-01T20:46:41Z"
+completion_summary: "Created researcher.yaml (8 vocabulary terms, 4 anti-patterns) and documenter.yaml (7 vocabulary terms, 4 anti-patterns). Both inherit base, no content duplication."

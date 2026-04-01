@@ -1,0 +1,107 @@
+document_id: FEAT-01KN58J24S2XW/dev-plan-30-mandatory-stage-gates
+document_path: work/plan/3.0-mandatory-stage-gates.md
+content_hash: 9dadd0948a0ccb5f72e561acb72a4ae531a6bffcc28b625850a3992864aa66d2
+indexed_at: 2026-04-01T19:53:59.411678Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Mandatory Stage Gate Enforcement'
+      byte_offset: 0
+      byte_count: 19833
+      word_count: 2455
+      content_hash: 9dadd0948a0ccb5f72e561acb72a4ae531a6bffcc28b625850a3992864aa66d2
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope Boundaries
+          byte_offset: 274
+          byte_count: 493
+          word_count: 66
+          content_hash: c8e2cc1aa2ae2d5d967369d949efacf1be45e3bd6ccc19d5fe2b781c1cc510f6
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 767
+          byte_count: 15869
+          word_count: 1844
+          content_hash: 1c4adf92b0bed80cf021dab31b7db3b326b7d9bb16e167ae3abd750e18bfd3d2
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Extend Feature Model with Override Records'
+              byte_offset: 786
+              byte_count: 1874
+              word_count: 216
+              content_hash: 0cbdf0d9f14ef40e417ec2ff2fa93361bceb366892841a53b48350e36d6438bb
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Expand Gate Prerequisites in `prereq.go`'
+              byte_offset: 2660
+              byte_count: 3290
+              word_count: 355
+              content_hash: 64ae1b4fac711834bba9b9a85d888466a2e3256f461f9736fba8cb2beeb1646c
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Actionable Error Message Formatter'
+              byte_offset: 5950
+              byte_count: 2654
+              word_count: 306
+              content_hash: 2c660fc1ae6fec285d01dfdacfc3465490d1ece29f5215357384126aa2c82ea0
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Update `AdvanceFeatureStatus` for Mandatory Gates'
+              byte_offset: 8604
+              byte_count: 2486
+              word_count: 298
+              content_hash: 51811d99a438cf66696b9724685e1ea843efe6ef82bd772a873ec4d509899b89
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Wire Gate Enforcement into `entityTransitionAction`'
+              byte_offset: 11090
+              byte_count: 3385
+              word_count: 406
+              content_hash: 93373502b741df2b3aa4b3b9b793ca4528cf6b60fdee221784997ff988b614f6
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: Override Health Check Warnings'
+              byte_offset: 14475
+              byte_count: 2161
+              word_count: 260
+              content_hash: a54c3033cadd81059cfffd7cbd78eb6c823e99b8438bb7b35dbdc6d9ab9d0e02
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 16636
+          byte_count: 1030
+          word_count: 141
+          content_hash: af59c7377a0b72461912b06e0f9542432dc4192ab68d4531ce34b1beae18529e
+        - path: "1.4"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 17666
+          byte_count: 2167
+          word_count: 386
+          content_hash: 040ed59b4a9827ee6117d039ebdd085c520155e5b596a48ac46247d8afecbaad
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 70
+cross_doc_links:
+    - target_path: work/spec/3.0-mandatory-stage-gates.md
+      link_text: work/spec/3.0-mandatory-stage-gates.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1"
+    - target_path: refs/go-style.md
+      link_text: refs/go-style.md
+      section_path: 1.2.1
+    - target_path: work/spec/3.0-mandatory-stage-gates.md
+      link_text: work/spec/3.0-mandatory-stage-gates.md
+      section_path: 1.2.3
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+classified: false

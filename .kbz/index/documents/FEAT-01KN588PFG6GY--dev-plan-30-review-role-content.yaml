@@ -1,0 +1,130 @@
+document_id: FEAT-01KN588PFG6GY/dev-plan-30-review-role-content
+document_path: work/plan/3.0-review-role-content.md
+content_hash: 3d7250f2ecf794981d4fd342008efe07ac1c04c0e189b57de55c066aae2421c6
+indexed_at: 2026-04-01T20:00:21.136482Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Review Role Content'
+      byte_offset: 0
+      byte_count: 18834
+      word_count: 2494
+      content_hash: 3d7250f2ecf794981d4fd342008efe07ac1c04c0e189b57de55c066aae2421c6
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 367
+          byte_count: 1865
+          word_count: 263
+          content_hash: fb8c1f524e2779900791468af1d49e647d1c289f6f1c022153e746af6abce211
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 2232
+          byte_count: 11421
+          word_count: 1453
+          content_hash: 4477f88d7225405321524132ff28a84f35edaa924944846f19770f6c72bd559f
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Author `reviewer.yaml`'
+              byte_offset: 2254
+              byte_count: 3268
+              word_count: 418
+              content_hash: b09df63216de99ffc67ca876ef574365072cc7d21ce2a46d3f278c88e373091b
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Author `reviewer-conformance.yaml` and `reviewer-quality.yaml`'
+              byte_offset: 5522
+              byte_count: 3480
+              word_count: 438
+              content_hash: 31317608d1f15ac53ceed1d41192e5e9a6c954572620d6e5b56321106d0b957d
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Author `reviewer-security.yaml` and `reviewer-testing.yaml`'
+              byte_offset: 9002
+              byte_count: 4651
+              word_count: 593
+              content_hash: 0cbfdba6bd98c7f63e79a2392f8552ec0ab368232b2782fa7b85e9297f4b834c
+        - path: "1.3"
+          level: 2
+          title: 3. Dependency Graph
+          byte_offset: 13653
+          byte_count: 696
+          word_count: 95
+          content_hash: 77cb03db9b134c859f4d304ee155bb966dfa96e441cd734521ada28005d1fe53
+        - path: "1.4"
+          level: 2
+          title: 4. Interface Contracts
+          byte_offset: 14349
+          byte_count: 3275
+          word_count: 430
+          content_hash: f1d18bfbca3cac63d2edfcdf69e77e1fe4741a7ce5c14006f049f64c12003a32
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Role YAML Schema Contract
+              byte_offset: 14532
+              byte_count: 406
+              word_count: 56
+              content_hash: 8230dafede30113acb5acc067089b07f7cbe4f1496def57f044ef271201c8cf5
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Inheritance Hierarchy Contract
+              byte_offset: 14938
+              byte_count: 385
+              word_count: 41
+              content_hash: b4ac1c446fe14e93917a30a97bba6b67b45bb0cf399b93685cf0879e1166ceb4
+            - path: 1.4.3
+              level: 3
+              title: 4.3 No-Duplication Contract
+              byte_offset: 15323
+              byte_count: 813
+              word_count: 105
+              content_hash: a88f7bb3d5ba30158c478416e3e8739ba5a5e65c9855f715b392a84717b61afd
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Tool Subset Contract
+              byte_offset: 16136
+              byte_count: 615
+              word_count: 78
+              content_hash: e2f682527e962b2929aa426906ed0f281cf237bbf88014fc4c91035801213d37
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Anti-Pattern Structure Contract
+              byte_offset: 16751
+              byte_count: 410
+              word_count: 58
+              content_hash: 0c4c179884064e75169d06f8df4eb7f0d9a70ecea14cc44350e3e9589e0c912f
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Composition Model Contract
+              byte_offset: 17161
+              byte_count: 463
+              word_count: 64
+              content_hash: 0ad4333a4881399cff5037daa5ce1f23f20d09eb7aa4a60b455ee1d4fbea72f5
+        - path: "1.5"
+          level: 2
+          title: 5. Traceability Matrix
+          byte_offset: 17624
+          byte_count: 1210
+          word_count: 212
+          content_hash: eda992230b6737cade4d8e42fc00054579731bfcd1165405556099cca8505816
+entity_refs:
+    - entity_id: FEAT-01KN588PFG6GY
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 172
+cross_doc_links:
+    - target_path: work/spec/3.0-review-role-content.md
+      link_text: work/spec/3.0-review-role-content.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

@@ -1,0 +1,160 @@
+document_id: FEAT-01KN58J257X02/specification-30-tool-description-audit
+document_path: work/spec/3.0-tool-description-audit.md
+content_hash: 916b9404645672827b906c8f2c82d08c13eaa0df3274b9a11dd891af2283a043
+indexed_at: 2026-04-01T19:43:39.559639Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: MCP Tool Description Audit (Kanbanzai 3.0)'
+      byte_offset: 0
+      byte_count: 17695
+      word_count: 2549
+      content_hash: 916b9404645672827b906c8f2c82d08c13eaa0df3274b9a11dd891af2283a043
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 231
+          byte_count: 629
+          word_count: 95
+          content_hash: 74ccc546b1842cbc9cb309ba582fcc2e981e234bbbe62030632db0fce023b28a
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 860
+          byte_count: 1463
+          word_count: 204
+          content_hash: 1d5e48eada087476815b83158771baf9ff70950c02d61c97f77bf9b9e8922158
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 870
+              byte_count: 618
+              word_count: 87
+              content_hash: 4a4d7d06f0db8d7807c8f99adaed4ecec4804addcb6913b62085ff7c822fbec5
+            - path: 1.2.2
+              level: 3
+              title: Explicitly excluded
+              byte_offset: 1488
+              byte_count: 835
+              word_count: 115
+              content_hash: 2556ab4cbd2b74cd8bf792cd6e992a8021ad5408a4978e6b8ed1b992287b51b0
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2323
+          byte_count: 10490
+          word_count: 1550
+          content_hash: 99a43690ad2d905810c1793616743d3625485c7d2febc16689c7568e8ca40bb7
+          children:
+            - path: 1.3.1
+              level: 3
+              title: ACI Description Principles
+              byte_offset: 2351
+              byte_count: 3368
+              word_count: 498
+              content_hash: e868dfa1a3ec8731ade5ff214cbc8d366c694fe3b6602388a099de63652b1eb9
+            - path: 1.3.2
+              level: 3
+              title: Audit Scope and Priority Order
+              byte_offset: 5719
+              byte_count: 1464
+              word_count: 206
+              content_hash: 51cf7c168c8a1f00a7ddfd279cdd452a63af1d57c2ca5f639f5d08e4357832ac
+            - path: 1.3.3
+              level: 3
+              title: Actionable Error Messages
+              byte_offset: 7183
+              byte_count: 2479
+              word_count: 355
+              content_hash: e89b67ae76e5d256b125f056c8964018f6075aa0c5377cd5622d0d89af4fba39
+            - path: 1.3.4
+              level: 3
+              title: Agent-Driven Testing
+              byte_offset: 9662
+              byte_count: 3151
+              word_count: 488
+              content_hash: 35ba8758cf450104e2862c2c6311c3defdad8271de996f47551db05217e51af7
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 12813
+          byte_count: 2101
+          word_count: 286
+          content_hash: 97cf0b8b00d961a8bdec2a1de1cb94e9411a88239f105ded5f11d2aabad9cad6
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 14914
+          byte_count: 1106
+          word_count: 149
+          content_hash: 5fa89b616ee3af1ef3e95db92adb1ee0a63b29fdaf6c62eab6533b048c79d4aa
+        - path: "1.6"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 16020
+          byte_count: 1675
+          word_count: 246
+          content_hash: eba6a299ba6a9bd7326c71a01dad299da2926ca25a205bbfb91c41b75cbf0f6b
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 16053
+              byte_count: 652
+              word_count: 85
+              content_hash: 8fc8c1ef683a5bd38bfe3abd34f8841c25c53ef6b312cb66d47c75fee5321803
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 16705
+              byte_count: 990
+              word_count: 157
+              content_hash: bf222de1e7f70d5e40e86215c70b97c8b73984272048fb373ab5dcd493644ab3
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 74
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 1607
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 16106
+cross_doc_links:
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

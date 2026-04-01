@@ -1,0 +1,10 @@
+id: TASK-01KN5AEGN6EBP
+parent_feature: FEAT-01KN588PDBW85
+slug: skill-store
+summary: "Implement SkillStore with Load, LoadAll reading from .kbz/skills/*/SKILL.md in internal/context/skill_store.go"
+status: done
+depends_on:
+  - TASK-01KN5AEGMBN5Y
+  - TASK-01KN5AEGMRTB1
+completed: "2026-04-01T20:21:32Z"
+completion_summary: "Created internal/skill/loader.go with SkillStore (Load/LoadAll), references/scripts directory discovery. 13 tests covering validation pipeline, missing files, name mismatches, LoadAll."

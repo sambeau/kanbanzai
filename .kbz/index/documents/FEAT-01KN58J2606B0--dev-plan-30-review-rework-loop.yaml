@@ -1,0 +1,150 @@
+document_id: FEAT-01KN58J2606B0/dev-plan-30-review-rework-loop
+document_path: work/plan/3.0-review-rework-loop.md
+content_hash: 4d35e50cb9a6e07d948894253366a470c7f9f06c7805a38f3d79a7e149c47b0b
+indexed_at: 2026-04-01T19:53:59.807804Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Review-Rework Loop Formalisation'
+      byte_offset: 0
+      byte_count: 22528
+      word_count: 2949
+      content_hash: 4d35e50cb9a6e07d948894253366a470c7f9f06c7805a38f3d79a7e149c47b0b
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 457
+          byte_count: 901
+          word_count: 113
+          content_hash: ad811b21263ca9d1a544f848c21fed2920eec12cb12efab96081f2e2b45adf9b
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Scope boundaries (carried forward from specification)
+              byte_offset: 776
+              byte_count: 582
+              word_count: 70
+              content_hash: 353c5673404422165f79dc3b61f9d71efe2631ae96759fbc4d7bb316cddb5769
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 1358
+          byte_count: 15773
+          word_count: 1964
+          content_hash: b2733cb4258f8412f14d2b2f127c36477de8657353b382cce98a094381d805fb
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Add `review_cycle` and `blocked_reason` fields to feature entity model and storage'
+              byte_offset: 1380
+              byte_count: 2525
+              word_count: 312
+              content_hash: ee5c724d887c0588461cf675cf1155ca2f661c97ce2e81f52d30a5d718623507
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Implement counter increment and define cap constant'
+              byte_offset: 3905
+              byte_count: 3065
+              word_count: 367
+              content_hash: 4f0c122435cb266a06eab726580ed27527a4e9cf0392c768144f6d0ec7a330f0
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Implement cap-reached blocking and automatic checkpoint creation'
+              byte_offset: 6970
+              byte_count: 4391
+              word_count: 531
+              content_hash: 83e1cb876214602a26b8d3df0ff30e26e9f63405b465e4fbc92bf8261b3edba9
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Expose `review_cycle` and `blocked_reason` in status and entity tool output'
+              byte_offset: 11361
+              byte_count: 2688
+              word_count: 331
+              content_hash: ee48224823d737d2b6a9a8d07e8dc6dda2e5a9c5792eae12d17f52118cd383ca
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Implement focused re-review signal in context assembly'
+              byte_offset: 14049
+              byte_count: 3082
+              word_count: 419
+              content_hash: 2727da62eb587c305f68327c5eeac7afe5acfd4b827fc5618a1606de70d07076
+        - path: "1.3"
+          level: 2
+          title: 3. Dependency Graph
+          byte_offset: 17131
+          byte_count: 771
+          word_count: 130
+          content_hash: 8f3bae76b2b97993b0b0be781993e53323533b2bf40b5ad534e5f94316dc56e6
+        - path: "1.4"
+          level: 2
+          title: 4. Traceability Matrix
+          byte_offset: 17902
+          byte_count: 2426
+          word_count: 381
+          content_hash: 5127a0a693fb39b25e6728cd8bb6c61918f0c803ef9f6f76e5fa8ed449376588
+        - path: "1.5"
+          level: 2
+          title: 5. Interface Contracts Summary
+          byte_offset: 20328
+          byte_count: 1241
+          word_count: 181
+          content_hash: 85c3fab3e0923db73e570caf077a84f6395728de3802fed2667e635d04f3f1c9
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Entity state field conventions
+              byte_offset: 20363
+              byte_count: 450
+              word_count: 75
+              content_hash: aea4673cdf9431e692c2c05cd6866158afb85fe63d59c5f2b994965fc6ea47d3
+            - path: 1.5.2
+              level: 3
+              title: 5.2 `CheckpointCreator` interface (Task 3)
+              byte_offset: 20813
+              byte_count: 391
+              word_count: 43
+              content_hash: ed12033a23eae83a9d70fab9acae2893ebe0b81ff06dbd0b147a640cdc82c541
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Re-review signal fields (Task 5)
+              byte_offset: 21204
+              byte_count: 365
+              word_count: 58
+              content_hash: e37d05c9707fa21a84751c8118e94f851d6f61d0946d734b948b52ee87fb462e
+        - path: "1.6"
+          level: 2
+          title: 6. Risks and Mitigations
+          byte_offset: 21569
+          byte_count: 959
+          word_count: 151
+          content_hash: b8aa6adc22c0a0b9fde602a7d8896e64e0f23ba77ac464417ccbc5973a0ec9b0
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 234
+cross_doc_links:
+    - target_path: work/spec/3.0-review-rework-loop.md
+      link_text: work/spec/3.0-review-rework-loop.md
+      section_path: "1"
+    - target_path: refs/go-style.md
+      link_text: refs/go-style.md
+      section_path: 1.2.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.1.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.5
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: risk
+      confidence: high
+classified: false

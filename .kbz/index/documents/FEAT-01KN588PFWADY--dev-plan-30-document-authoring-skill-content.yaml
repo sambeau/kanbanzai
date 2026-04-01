@@ -1,0 +1,233 @@
+document_id: FEAT-01KN588PFWADY/dev-plan-30-document-authoring-skill-content
+document_path: work/plan/3.0-document-authoring-skill-content.md
+content_hash: 91400719da99032d07cf7c9c300d27e5a1b0664ef740052f4348df91672599eb
+indexed_at: 2026-04-01T20:00:21.262715Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Document Authoring Skill Content'
+      byte_offset: 0
+      byte_count: 17813
+      word_count: 2222
+      content_hash: 91400719da99032d07cf7c9c300d27e5a1b0664ef740052f4348df91672599eb
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 551
+          byte_count: 1309
+          word_count: 167
+          content_hash: 9cd2b08d08884b888b9d42dd7c81d3b11b9cb93897d941dc0bce1297612d7d18
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 1860
+          byte_count: 11717
+          word_count: 1314
+          content_hash: bd192db8249817d6f8a424a75d76349cc1107242a922d4405940756bb73b9d09
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Establish Shared Conventions and Reference Materials'
+              byte_offset: 1882
+              byte_count: 1781
+              word_count: 221
+              content_hash: af96964e8c5729a21934a64cdbfebe7dde5eb509273a4621e2b30603014599f6
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Author `write-design/SKILL.md`'
+              byte_offset: 3663
+              byte_count: 2280
+              word_count: 259
+              content_hash: 260e166e7fc21f412705bd315269897e8d16d39ca3126b7ac83f242ea6812389
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Author `write-spec/SKILL.md`'
+              byte_offset: 5943
+              byte_count: 2335
+              word_count: 261
+              content_hash: 27e417ba5c8113882d816e25d39e8ee4d562b294e3be65dfa33602a6265bc978
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Author `write-dev-plan/SKILL.md`'
+              byte_offset: 8278
+              byte_count: 2391
+              word_count: 265
+              content_hash: 4b50a33229ac866ad49539d635b50646fcafcf72127c99a1f44cc726a0b3ae18
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Author `write-research/SKILL.md`'
+              byte_offset: 10669
+              byte_count: 1402
+              word_count: 149
+              content_hash: 9fd787236a8f1db993cc015d59e9132939a6f2c43b5727fcb3dab44bdc61b3cd
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: Author `update-docs/SKILL.md`'
+              byte_offset: 12071
+              byte_count: 1506
+              word_count: 155
+              content_hash: e7ade19fea6f032d865d7238b96c9442ef481bd226c555dd76d915df32e40dba
+        - path: "1.3"
+          level: 2
+          title: 3. Dependency Graph
+          byte_offset: 13577
+          byte_count: 600
+          word_count: 80
+          content_hash: 66ce239a1c2882d91edb4a05800937b5eaa711907c6822b9c47046da67ee56af
+        - path: "1.4"
+          level: 2
+          title: 4. Interface Contracts
+          byte_offset: 14177
+          byte_count: 2061
+          word_count: 295
+          content_hash: befb2e9edcdd96ef28f2aa9a0d43870d35e5eac9315bf8851d924778573b9552
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 SKILL.md Frontmatter Schema (shared across all tasks)
+              byte_offset: 14204
+              byte_count: 471
+              word_count: 55
+              content_hash: 22a34c85fa76215ce5e38463eb75f0e3eceac3dc5d3c4c0e2a2098b16e40f046
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Attention-Curve Section Order (shared across all tasks)
+              byte_offset: 14675
+              byte_count: 760
+              word_count: 111
+              content_hash: 119176a5b215b5962766a64bf61aa3041bd2de7b996ba138b8e252e191e7e2d2
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Validation Script Interface (shared across Tasks 2, 3, 4)
+              byte_offset: 15435
+              byte_count: 421
+              word_count: 74
+              content_hash: 37e19cf0bbc024f0b63348fd955eb59669e64ba4a18304690eee6f38e9a77b76
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Vocabulary Non-Overlap Contract
+              byte_offset: 15856
+              byte_count: 382
+              word_count: 51
+              content_hash: 7db597ea5b325d1b5aa18c12a6ecb8575c48e92c9a16bc1e8cea8874fc378af9
+        - path: "1.5"
+          level: 2
+          title: 5. Traceability Matrix
+          byte_offset: 16238
+          byte_count: 1575
+          word_count: 327
+          content_hash: cd68ce50e58f14f857014bc575c755e974ca7039f1376307d4011147a5a7d08a
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 312
+cross_doc_links:
+    - target_path: work/spec/3.0-document-authoring-skill-content.md
+      link_text: work/spec/3.0-document-authoring-skill-content.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+    - target_path: work/spec/3.0-document-authoring-skill-content.md
+      link_text: work/spec/3.0-document-authoring-skill-content.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: 1.2.1
+    - target_path: write-design/SKILL.md
+      link_text: write-design/SKILL.md
+      section_path: 1.2.2
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: 1.2.2
+    - target_path: work/spec/3.0-document-authoring-skill-content.md
+      link_text: work/spec/3.0-document-authoring-skill-content.md
+      section_path: 1.2.2
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.2
+    - target_path: .agents/skills/kanbanzai-design/SKILL.md
+      link_text: .agents/skills/kanbanzai-design/SKILL.md
+      section_path: 1.2.2
+    - target_path: .kbz/skills/write-design/SKILL.md
+      link_text: .kbz/skills/write-design/SKILL.md
+      section_path: 1.2.2
+    - target_path: write-spec/SKILL.md
+      link_text: write-spec/SKILL.md
+      section_path: 1.2.3
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: 1.2.3
+    - target_path: work/spec/3.0-document-authoring-skill-content.md
+      link_text: work/spec/3.0-document-authoring-skill-content.md
+      section_path: 1.2.3
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.3
+    - target_path: .kbz/skills/write-spec/SKILL.md
+      link_text: .kbz/skills/write-spec/SKILL.md
+      section_path: 1.2.3
+    - target_path: write-dev-plan/SKILL.md
+      link_text: write-dev-plan/SKILL.md
+      section_path: 1.2.4
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: 1.2.4
+    - target_path: work/spec/3.0-document-authoring-skill-content.md
+      link_text: work/spec/3.0-document-authoring-skill-content.md
+      section_path: 1.2.4
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.4
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: 1.2.4
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: 1.2.4
+    - target_path: write-research/SKILL.md
+      link_text: write-research/SKILL.md
+      section_path: 1.2.5
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: 1.2.5
+    - target_path: work/spec/3.0-document-authoring-skill-content.md
+      link_text: work/spec/3.0-document-authoring-skill-content.md
+      section_path: 1.2.5
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.5
+    - target_path: .kbz/skills/write-research/SKILL.md
+      link_text: .kbz/skills/write-research/SKILL.md
+      section_path: 1.2.5
+    - target_path: update-docs/SKILL.md
+      link_text: update-docs/SKILL.md
+      section_path: 1.2.6
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: 1.2.6
+    - target_path: work/spec/3.0-document-authoring-skill-content.md
+      link_text: work/spec/3.0-document-authoring-skill-content.md
+      section_path: 1.2.6
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.6
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.2.6
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.6
+    - target_path: .kbz/skills/update-docs/SKILL.md
+      link_text: .kbz/skills/update-docs/SKILL.md
+      section_path: 1.2.6
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

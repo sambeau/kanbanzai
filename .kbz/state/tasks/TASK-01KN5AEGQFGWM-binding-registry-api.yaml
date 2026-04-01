@@ -1,0 +1,10 @@
+id: TASK-01KN5AEGQFGWM
+parent_feature: FEAT-01KN588PDPE8V
+slug: binding-registry-api
+summary: "Implement BindingRegistry with Load, Lookup, Stages, Warnings in internal/context/binding_registry.go"
+status: done
+depends_on:
+  - TASK-01KN5AEGPJ669
+  - TASK-01KN5AEGQ075B
+completed: "2026-04-01T20:21:32Z"
+completion_summary: Created internal/binding/registry.go with BindingRegistry (Load/Lookup/Stages/Warnings). Integrated with loader and validator. 13 tests.

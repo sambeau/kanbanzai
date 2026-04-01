@@ -1,0 +1,187 @@
+document_id: FEAT-01KN58J26RSB6/specification-30-document-structural-checks
+document_path: work/spec/3.0-document-structural-checks.md
+content_hash: 62a9ce7ad23909b461c3b36f7cda77826835186e8e4a10c740837964a44411f2
+indexed_at: 2026-04-01T19:43:40.063866Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Document Structural Checks and Quality Hooks (Kanbanzai 3.0)'
+      byte_offset: 0
+      byte_count: 32557
+      word_count: 4545
+      content_hash: 62a9ce7ad23909b461c3b36f7cda77826835186e8e4a10c740837964a44411f2
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 279
+          byte_count: 793
+          word_count: 106
+          content_hash: b1157cd492874024a86abd72fb9667c9de309f75028acfbe02f3dc71ec53e297
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 1072
+          byte_count: 1950
+          word_count: 269
+          content_hash: b39dfc4b30d003c1e51e6d0097b247fd88e2de691d1172b331a42706c0bee32f
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 1082
+              byte_count: 977
+              word_count: 137
+              content_hash: 4d598b6e90b13b880942c94fc32cb355831b871d9e7317a144faa69d00b2be35
+            - path: 1.2.2
+              level: 3
+              title: Explicitly excluded
+              byte_offset: 2059
+              byte_count: 963
+              word_count: 130
+              content_hash: e78c412f53465f8a970fe35f7f55a34b527edc57281a3b6c07a53cbee5870df4
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 3022
+          byte_count: 22628
+          word_count: 3198
+          content_hash: 22cf196f7e9703e8ebfce4fae8e5e0dc50b0fd9b0222f8b4288faa2e9392ef26
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Structural Check Execution
+              byte_offset: 3050
+              byte_count: 2306
+              word_count: 314
+              content_hash: 56a6b22fdb48898f3f43c420552f0cc8cd148e7b2db63e429e841e68672b6d3a
+            - path: 1.3.2
+              level: 3
+              title: Required Section Definitions
+              byte_offset: 5356
+              byte_count: 2587
+              word_count: 364
+              content_hash: ff28eb6be36e848585a254146a344805267168e8ac6066aed3a19842e6a8bf73
+            - path: 1.3.3
+              level: 3
+              title: Cross-Reference Validation
+              byte_offset: 7943
+              byte_count: 1524
+              word_count: 214
+              content_hash: 21eb387911c3a99e0dddbefb2c08043bce46cb2393c83009fa3d2dfcc1fbd59c
+            - path: 1.3.4
+              level: 3
+              title: Acceptance Criteria Detection
+              byte_offset: 9467
+              byte_count: 1282
+              word_count: 180
+              content_hash: d0f490272f80707d9ec7b5ebb3468bbc1b5cb83c43ee444471d92b63b05bb7e1
+            - path: 1.3.5
+              level: 3
+              title: Check Result Structure
+              byte_offset: 10749
+              byte_count: 1124
+              word_count: 155
+              content_hash: a4e1891a1f76a61670b792a3a072f14d0ded428a30725d5b8ceca76a9bcb50ec
+            - path: 1.3.6
+              level: 3
+              title: Warning and Hard Gate Modes
+              byte_offset: 11873
+              byte_count: 2938
+              word_count: 408
+              content_hash: a4061dff3522b522d43ed0705a261a0c08dd7355d8c744723ea8e21bd0fdf501
+            - path: 1.3.7
+              level: 3
+              title: Promotion and Demotion
+              byte_offset: 14811
+              byte_count: 4325
+              word_count: 641
+              content_hash: bfebf278b80835fc840bbb20dba2b9b5a090c7f5f08d8854e4c8fcaa1cbc60eb
+            - path: 1.3.8
+              level: 3
+              title: Quality Evaluation Structural Hook
+              byte_offset: 19136
+              byte_count: 4890
+              word_count: 698
+              content_hash: cf05ca7ede7ffd8ad0c0ce76e8b4bef536436f5dd5684f41d3ad0da236709e64
+            - path: 1.3.9
+              level: 3
+              title: MCP Tool Integration
+              byte_offset: 24026
+              byte_count: 1624
+              word_count: 221
+              content_hash: fd9d3c72a3fb71cd5338a6a7299b6f975d4f457119c266d0ad947195a01db3f8
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 25650
+          byte_count: 1710
+          word_count: 223
+          content_hash: 73bf6de6ecfd2c3975e553a77aed643cc066ec44d0827c988654571ae030c375
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 27360
+          byte_count: 2907
+          word_count: 430
+          content_hash: cf9dcc1c6b7b94fc2b29d695ed8e6ce9952a874f43da7d77bd54088a05f4a65b
+        - path: "1.6"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 30267
+          byte_count: 2290
+          word_count: 294
+          content_hash: 77862f09c5397f194c793e5048a1f30af648913ec962aabd67dbe7503f1de44a
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 92
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 2493
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 31098
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.3.9
+      byte_offset: 24381
+cross_doc_links:
+    - target_path: work/design/my-design.md
+      link_text: design
+      section_path: 1.3.3
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.2
+      role: definition
+      confidence: high
+    - section_path: 1.3.4
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+classified: false

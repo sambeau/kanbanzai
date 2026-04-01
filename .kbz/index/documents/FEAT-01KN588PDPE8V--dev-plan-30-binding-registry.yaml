@@ -1,0 +1,154 @@
+document_id: FEAT-01KN588PDPE8V/dev-plan-30-binding-registry
+document_path: work/plan/3.0-binding-registry.md
+content_hash: b0b1ddf6e590ea906c05624279694b957fc47faf4e8d70b70f509087fb6d5b01
+indexed_at: 2026-04-01T20:00:20.516973Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Binding Registry (Kanbanzai 3.0)'
+      byte_offset: 0
+      byte_count: 20689
+      word_count: 2639
+      content_hash: b0b1ddf6e590ea906c05624279694b957fc47faf4e8d70b70f509087fb6d5b01
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 241
+          byte_count: 1425
+          word_count: 174
+          content_hash: 32fa282adbf1396b5f71db43bded69d709a290b0b795825944398e098eab0985
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Scope boundaries (from specification)
+              byte_offset: 1087
+              byte_count: 579
+              word_count: 65
+              content_hash: e556635a03d9332cb7ff28e92a4fc95d68f84bf2cec35d1c7c56cbdfc7707c3c
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1666
+          byte_count: 14340
+          word_count: 1704
+          content_hash: 6f6ac4b9bb4449c05ef7898c79f096a188633ff2f33170c544196522a4d049db
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Binding model definition'
+              byte_offset: 1685
+              byte_count: 5012
+              word_count: 494
+              content_hash: 4b43562df5a8ddd0ed96e5d74f061c97e2d2f7502ae84db1b6d194631ef4f158
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: YAML loader with duplicate key detection'
+              byte_offset: 6697
+              byte_count: 1996
+              word_count: 248
+              content_hash: 4584c8b405242f0b7d4cb83537a9c204170ed51ceeac4e747458790189e4592d
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Stage and cross-reference validation'
+              byte_offset: 8693
+              byte_count: 2754
+              word_count: 350
+              content_hash: 3efc1d8cb2151d79f2b06c67b49c0053ecba492acbbcd2866b4f7fa08dadfa82
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Binding registry and stage lookup API'
+              byte_offset: 11447
+              byte_count: 2632
+              word_count: 360
+              content_hash: 111082a85570817252179e3d8e75c45af7a6203ece10665df65ccf84aeabb65a
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Integration tests and benchmarks'
+              byte_offset: 14079
+              byte_count: 1927
+              word_count: 249
+              content_hash: 792bd18a29a87bfb0705466b14d2dc8ccd5093e41d0f2c29b2ed8e2e3eb7e335
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 16006
+          byte_count: 1257
+          word_count: 193
+          content_hash: 7e65c2d17cf08c0297eb8afdf5132b9cf0bf2dbf344d3ec22107da82b225ccac
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 17263
+          byte_count: 1991
+          word_count: 289
+          content_hash: 4602756d4b35ba4f6cee50b7a29822a669426ed26d417bad5417d0d6dcd67c9c
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Contract A: Binding model types (Task 1 → Tasks 2, 3, 4, 5)'
+              byte_offset: 17287
+              byte_count: 381
+              word_count: 54
+              content_hash: 72289217a620bb9a3c0d2d07e416ae055f8b19fabfaa67053281a88500b05eec
+            - path: 1.4.2
+              level: 3
+              title: 'Contract B: Loader output (Task 2 → Tasks 3, 4)'
+              byte_offset: 17668
+              byte_count: 359
+              word_count: 54
+              content_hash: 8d921ff2754efda913966de20f32ff0c2c13b55ecfb87d31debd739a8cf15983
+            - path: 1.4.3
+              level: 3
+              title: 'Contract C: Validation API (Task 3 → Task 4)'
+              byte_offset: 18027
+              byte_count: 491
+              word_count: 72
+              content_hash: 6619c4b17b336c68bdf5990f0e039b859a1cee28b0c21495e29e294490c77ac1
+            - path: 1.4.4
+              level: 3
+              title: 'Contract D: Registry API (Task 4 → Task 5, future context assembly)'
+              byte_offset: 18518
+              byte_count: 342
+              word_count: 51
+              content_hash: fb7d46aa38c6e2e23ef55e839a4602246775aa1ef8d60b6e70d86813e6d36995
+            - path: 1.4.5
+              level: 3
+              title: 'Cross-feature contract: RoleChecker'
+              byte_offset: 18860
+              byte_count: 394
+              word_count: 55
+              content_hash: 32b7b1b77c509db9d1fef315f4f7b3606f7125ffd72f650d6a71580a2a7c6bce
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 19254
+          byte_count: 1435
+          word_count: 262
+          content_hash: 305cdc608c598ebf9fc56c52c635c6e9f1dc070cb8502f59bad157a4bd2dbbd7
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 125
+cross_doc_links:
+    - target_path: work/spec/3.0-binding-registry.md
+      link_text: work/spec/3.0-binding-registry.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.1.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: definition
+      confidence: high
+    - section_path: 1.4.4
+      role: narrative
+      confidence: high
+classified: false

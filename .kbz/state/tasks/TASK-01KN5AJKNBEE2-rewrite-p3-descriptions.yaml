@@ -1,0 +1,8 @@
+id: TASK-01KN5AJKNBEE2
+parent_feature: FEAT-01KN58J257X02
+slug: rewrite-p3-descriptions
+summary: Rewrite descriptions for the thirteen query and support Priority 3 tools to satisfy all five ACI description principles.
+status: queued
+depends_on:
+  - TASK-01KN5AJKMW4F2
+  - TASK-01KN5AJKPDW6F

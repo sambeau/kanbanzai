@@ -1,0 +1,187 @@
+document_id: FEAT-01KN588PG7HA3/dev-plan-30-implementation-skill-content
+document_path: work/plan/3.0-implementation-skill-content.md
+content_hash: 6ab089c39640a5754af8b2b1c245d6ba897325e7426abceb1aa134d5e95e12a7
+indexed_at: 2026-04-01T20:00:21.389454Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Implementation Skill Content'
+      byte_offset: 0
+      byte_count: 17729
+      word_count: 2202
+      content_hash: 6ab089c39640a5754af8b2b1c245d6ba897325e7426abceb1aa134d5e95e12a7
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 546
+          byte_count: 1444
+          word_count: 182
+          content_hash: 974e9f912d82f26df1ff9f7b852027499d991fd40d731aa824654ec4dffa581c
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 1990
+          byte_count: 9896
+          word_count: 1147
+          content_hash: 16463cd8092d8735f1066dd3ab2fff9ddea3ea92da421b2657442d71e5eeefab
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Author `implement-task/SKILL.md`'
+              byte_offset: 2012
+              byte_count: 2786
+              word_count: 327
+              content_hash: 9eab9d2eba251c3ff995f9c783f99759cbf2da1a857bf4f7890e29cce06c1153
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Author `orchestrate-development/SKILL.md`'
+              byte_offset: 4798
+              byte_count: 3512
+              word_count: 400
+              content_hash: d55b82c3468116aabde9934f37ea44caa6da9359b11688e70e9ef158bb972d59
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Author `decompose-feature/SKILL.md`'
+              byte_offset: 8310
+              byte_count: 3576
+              word_count: 416
+              content_hash: 8db6eb3fc8a6b185d12ee6521c80a33ed9b69c2aa351f886b4227029c8d0f6d1
+        - path: "1.3"
+          level: 2
+          title: 3. Dependency Graph
+          byte_offset: 11886
+          byte_count: 796
+          word_count: 103
+          content_hash: d39237c4ff03adc02e88d10f1ead32e4051aeec2fc361dd55f787e668d1b9d73
+        - path: "1.4"
+          level: 2
+          title: 4. Interface Contracts
+          byte_offset: 12682
+          byte_count: 3430
+          word_count: 439
+          content_hash: 9f426bc0bd47787c6d2c7acd0ca6cfc3fe44f28b2de0b6b5fb5eab0115f50406
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 SKILL.md Frontmatter Schema (shared across all tasks)
+              byte_offset: 12709
+              byte_count: 880
+              word_count: 103
+              content_hash: 3bbb3649886ecec316c45e79f4370e80a09513f0966404c7eb831cede33c424b
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Attention-Curve Section Order (shared across all tasks)
+              byte_offset: 13589
+              byte_count: 756
+              word_count: 114
+              content_hash: 641f5370b4af54a2599dd2cc575ee84f5b71e1baa1fcb2ccb0dc4b806fd4d072
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Anti-Pattern Entry Format (shared across all tasks)
+              byte_offset: 14345
+              byte_count: 346
+              word_count: 44
+              content_hash: 564ace23bc2e7eda87168516325a9aacfabf91a4760b6b752f9e91ccf108aee1
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Vocabulary Non-Overlap Contract
+              byte_offset: 14691
+              byte_count: 628
+              word_count: 77
+              content_hash: 0315e2b5df058a187408c1c98e7c424f7de93a401b67ad0971d45487642f1565
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Stage Sharing Contract (Tasks 1 and 2)
+              byte_offset: 15319
+              byte_count: 793
+              word_count: 97
+              content_hash: 731b5ca225cb7aa14c9947c0195e01b70af7d9415c83db48b8b0853fb2c26c19
+        - path: "1.5"
+          level: 2
+          title: 5. Traceability Matrix
+          byte_offset: 16112
+          byte_count: 1617
+          word_count: 293
+          content_hash: 8832df2b23b8be25b6a496211e53baa7061e37115af4ea4fd0ae5ec374cb3e17
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 308
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 12424
+cross_doc_links:
+    - target_path: work/spec/3.0-implementation-skill-content.md
+      link_text: work/spec/3.0-implementation-skill-content.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+    - target_path: work/spec/3.0-implementation-skill-content.md
+      link_text: work/spec/3.0-implementation-skill-content.md
+      section_path: 1.2.1
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.2.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.2.2
+    - target_path: work/spec/3.0-implementation-skill-content.md
+      link_text: work/spec/3.0-implementation-skill-content.md
+      section_path: 1.2.2
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.2
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: 1.2.2
+    - target_path: refs/sub-agents.md
+      link_text: refs/sub-agents.md
+      section_path: 1.2.2
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.2
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.2.2
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: 1.2.3
+    - target_path: work/spec/3.0-implementation-skill-content.md
+      link_text: work/spec/3.0-implementation-skill-content.md
+      section_path: 1.2.3
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.2.3
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: 1.2.3
+    - target_path: .agents/skills/kanbanzai-planning/SKILL.md
+      link_text: .agents/skills/kanbanzai-planning/SKILL.md
+      section_path: 1.2.3
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: 1.2.3
+    - target_path: .kbz/skills/decompose-feature/SKILL.md
+      link_text: .kbz/skills/decompose-feature/SKILL.md
+      section_path: 1.2.3
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: "1.3"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

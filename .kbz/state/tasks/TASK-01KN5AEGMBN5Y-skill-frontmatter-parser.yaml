@@ -1,0 +1,9 @@
+id: TASK-01KN5AEGMBN5Y
+parent_feature: FEAT-01KN588PDBW85
+slug: skill-frontmatter-parser
+summary: Parse SKILL.md frontmatter (YAML between --- delimiters) with strict field validation in internal/context/skill_parse.go
+status: done
+depends_on:
+  - TASK-01KN5AEGKXXVT
+completed: "2026-04-01T20:17:01Z"
+completion_summary: Created internal/skill/parse.go with parseSKILLMD frontmatter parser with strict YAML decoding and 500-line limit. Table-driven tests for all parse scenarios.

@@ -1,0 +1,9 @@
+id: TASK-01KN5AK7YDKPC
+parent_feature: FEAT-01KN58J275BWJ
+slug: metrics-aggregation
+summary: "Implement the metrics computation engine that reads log files and entity data to produce the five metrics: time per stage, revision cycles, gate failures, structural checks, tool compliance."
+status: done
+depends_on:
+  - TASK-01KN5AK7WB3NV
+completed: "2026-04-01T20:44:29Z"
+completion_summary: "Created reader.go (ReadEntries across date range, skips malformed lines) and metrics.go (ComputeMetrics with gate failure rate, time per stage, revision cycles). All tests pass."

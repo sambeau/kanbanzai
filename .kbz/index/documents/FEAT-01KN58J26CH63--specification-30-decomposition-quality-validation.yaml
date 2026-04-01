@@ -1,0 +1,102 @@
+document_id: FEAT-01KN58J26CH63/specification-30-decomposition-quality-validation
+document_path: work/spec/3.0-decomposition-quality-validation.md
+content_hash: df7e0c5ad70f92bbb4a85dc2effe12e29452eb7fda2b5ec2ca65edf12c722c25
+indexed_at: 2026-04-01T19:43:39.938103Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Decomposition Quality Validation (Kanbanzai 3.0)'
+      byte_offset: 0
+      byte_count: 18868
+      word_count: 2794
+      content_hash: df7e0c5ad70f92bbb4a85dc2effe12e29452eb7fda2b5ec2ca65edf12c722c25
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 241
+          byte_count: 958
+          word_count: 131
+          content_hash: 19fce351896084e0cd379c0ebf060aaca076c37ab7623bae29883991a2c13d46
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 1199
+          byte_count: 1191
+          word_count: 167
+          content_hash: e621efe6cf9d0453ffb415fac136c534391892b219a69385ac8569d573be7509
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 1209
+              byte_count: 438
+              word_count: 61
+              content_hash: ebb615a35d63a8b0830b54cac682969488b55a1196451d9023afc93579b504d2
+            - path: 1.2.2
+              level: 3
+              title: Explicitly excluded
+              byte_offset: 1647
+              byte_count: 743
+              word_count: 104
+              content_hash: 297261d6ddc271336e53b1323c54f3a07c5cf9293b4a4e22d12af0bc2a575694
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2390
+          byte_count: 11757
+          word_count: 1778
+          content_hash: cdb83d485e7bec68db4a3f32cc66acbd521931378127639b8d1339b38458c7e5
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 14147
+          byte_count: 1432
+          word_count: 220
+          content_hash: 120e5ff20b2f773b84122c9623780a8122b5980925dd07de725adb64ca835cca
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 15579
+          byte_count: 1871
+          word_count: 284
+          content_hash: 3d7cdde4470f0374136e6308b49260f61564c867deaf26336d956c3c6e9425f1
+        - path: "1.6"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 17450
+          byte_count: 1418
+          word_count: 197
+          content_hash: eacc9a0e50306af2822fb8b167fcdd744a198066f5183d11181bcc4dcb6dbfa2
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 80
+cross_doc_links:
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+classified: false

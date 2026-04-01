@@ -1,0 +1,5 @@
+id: TASK-01KN5AJVYYBSX
+parent_feature: FEAT-01KN58J2606B0
+slug: entity-review-fields
+summary: "Add review_cycle (int, default 0) and blocked_reason (string) fields to the Feature entity model and YAML storage with backward compatibility."
+status: ready

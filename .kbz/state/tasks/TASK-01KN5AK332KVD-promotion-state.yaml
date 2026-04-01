@@ -1,0 +1,10 @@
+id: TASK-01KN5AK332KVD
+parent_feature: FEAT-01KN58J26RSB6
+slug: promotion-state
+summary: "Implement the promotion/demotion state machine tracking per (check_type, document_type) tuple, promoting to hard_gate after 5 consecutive passes with YAML persistence."
+status: done
+files_planned:
+  - internal/structural/promotion.go
+  - internal/structural/promotion_test.go
+completed: "2026-04-01T20:33:29Z"
+completion_summary: "Implemented PromotionState with CheckKey, PromotionEntry types. LoadPromotionState, Save (atomic), GetMode, RecordPass (promotes to hard_gate after 5 passes), RecordFalsePositive (resets counter, demotes from hard_gate). State file: .kbz/structural-check-state.yaml."

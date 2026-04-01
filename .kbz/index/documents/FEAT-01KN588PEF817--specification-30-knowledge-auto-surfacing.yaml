@@ -1,0 +1,258 @@
+document_id: FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing
+document_path: work/spec/3.0-knowledge-auto-surfacing.md
+content_hash: f5bcf87a7c80b56c7df3e1c9bdcde9775248f33b75356a1dc3c22b5923af9b80
+indexed_at: 2026-04-01T19:38:23.792373Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Knowledge Auto-Surfacing'
+      byte_offset: 0
+      byte_count: 15919
+      word_count: 2360
+      content_hash: f5bcf87a7c80b56c7df3e1c9bdcde9775248f33b75356a1dc3c22b5923af9b80
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 453
+          byte_count: 657
+          word_count: 91
+          content_hash: 58828b175ed067ead0b370764ddb43028224413290c6bb226ceb885f975d2192
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 1110
+          byte_count: 1319
+          word_count: 201
+          content_hash: fc8c6351880f9314ba197e6e2bcf15de86ed04f34fa92fe24ed9b790065b660c
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 In Scope
+              byte_offset: 1123
+              byte_count: 633
+              word_count: 98
+              content_hash: e3e8ecd2e53b95cd9574469ca59364a9ee11eacbddec19321d626cdba73a468b
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Out of Scope
+              byte_offset: 1756
+              byte_count: 673
+              word_count: 100
+              content_hash: c2942fd86551dc1527254c4779da7516c421633667c6c55e80f4cc7e4157d868
+        - path: "1.3"
+          level: 2
+          title: 3. Functional Requirements
+          byte_offset: 2429
+          byte_count: 8384
+          word_count: 1266
+          content_hash: b7913b7bcd41cd7f84f22b28b38b5504925452b6fb85cdfa65bb3fe378b8356d
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: File Path Matching'
+              byte_offset: 2460
+              byte_count: 609
+              word_count: 87
+              content_hash: 4555ad743d534bd40ae344e31bbc44b52eed64f4c79abf24086a321cf0af1dff
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: Tag Matching'
+              byte_offset: 3069
+              byte_count: 542
+              word_count: 83
+              content_hash: 88251f48319d0dba21e560bfd7fa324790944560323c6685d2846f6627063961
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: Explicit "Always" Entries'
+              byte_offset: 3611
+              byte_count: 558
+              word_count: 91
+              content_hash: 49f31af2ef4fcb02d79babfb1ab0a46311e330f31fb5163f676b31d4eac0cf1f
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: Recency Weighting'
+              byte_offset: 4169
+              byte_count: 686
+              word_count: 102
+              content_hash: b8a09f80966a728153b8b4ee8d58a1639691b833fc761dc746327fa0f44eeead
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: Recency-Weighted Confidence Score'
+              byte_offset: 4855
+              byte_count: 645
+              word_count: 94
+              content_hash: b3a63573875d0a9e404ecd70f1c91f3bf9c182007647f1b92c2f548b8b22dd35
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: Entry Cap'
+              byte_offset: 5500
+              byte_count: 474
+              word_count: 77
+              content_hash: 5fff3866f3b49f1f066521f46f8e8c0dd91d3825ffe2febd0c3936ccd8748a74
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: Excluded Entry Logging'
+              byte_offset: 5974
+              byte_count: 615
+              word_count: 101
+              content_hash: 59a13e4b51bcf23ece05b2ffaef167b4c1f12e766b6bc1f35e9ab3ff2084e824
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008: Output Formatting'
+              byte_offset: 6589
+              byte_count: 826
+              word_count: 129
+              content_hash: 7fad7cf8b6e254648b290b7d332e4952477a77e62a904519f6c36d98f57560be
+            - path: 1.3.9
+              level: 3
+              title: 'FR-009: Position in Assembled Context'
+              byte_offset: 7415
+              byte_count: 650
+              word_count: 94
+              content_hash: 570753d98936d6f880436386363b29ba66b7d072e70bc3d131dd2943d2f75619
+            - path: 1.3.10
+              level: 3
+              title: 'FR-010: Within-Section Ordering'
+              byte_offset: 8065
+              byte_count: 486
+              word_count: 67
+              content_hash: 2a81b349e2ac440074c33c9bef55119dc73885a7291c4ae332973ee67b239cf5
+            - path: 1.3.11
+              level: 3
+              title: 'FR-011: Deduplication Across Matching Criteria'
+              byte_offset: 8551
+              byte_count: 598
+              word_count: 90
+              content_hash: ca363c3de287fecc8578346874673171a20e1241966a864cd624f7fa894be119
+            - path: 1.3.12
+              level: 3
+              title: 'FR-012: Health Compaction Recommendation'
+              byte_offset: 9149
+              byte_count: 721
+              word_count: 109
+              content_hash: 5eab26820ec936dfbdbef7196b09fbbf26e98fde3543e3a43466961c30894595
+            - path: 1.3.13
+              level: 3
+              title: 'FR-013: Omission When No Entries Match'
+              byte_offset: 9870
+              byte_count: 467
+              word_count: 68
+              content_hash: 7337b51ccc24ded1b0622689ebd67af4b18f8b46074ffcbfa45880c8d3a61bbc
+            - path: 1.3.14
+              level: 3
+              title: 'FR-014: Filtering of Retired Entries'
+              byte_offset: 10337
+              byte_count: 476
+              word_count: 70
+              content_hash: 54ec3be94f8881b38a77d3cf98105bb315aae8115049c79537a35bb2f67110a1
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Functional Requirements
+          byte_offset: 10813
+          byte_count: 1881
+          word_count: 263
+          content_hash: 30beff00375a0232a79980604c212b791efef49096bd82001e80ebfbc85e8ccc
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: Surfacing Latency'
+              byte_offset: 10848
+              byte_count: 392
+              word_count: 57
+              content_hash: 06a93ff04d4924a3353bad80b4c2b644200711c0362f6f7abc8b6babf5354fc9
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: Deterministic Results'
+              byte_offset: 11240
+              byte_count: 432
+              word_count: 59
+              content_hash: 9e53f2fcefb8c3a57a1e28c6737d1ff6206f128cf8d04ddef7004c135c888ee2
+            - path: 1.4.3
+              level: 3
+              title: 'NFR-003: Backward Compatibility with Existing Knowledge System'
+              byte_offset: 11672
+              byte_count: 513
+              word_count: 68
+              content_hash: 2897d960ed430f153b215c4a945e60cce4a06007d544f6af01c114722e147cf7
+            - path: 1.4.4
+              level: 3
+              title: 'NFR-004: Graceful Degradation'
+              byte_offset: 12185
+              byte_count: 509
+              word_count: 75
+              content_hash: a25325bde915fd0c34ab44dcc47cfda803864932288dd5cda54b5f7e1ff02ce5
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 12694
+          byte_count: 1643
+          word_count: 277
+          content_hash: 0050fd02c14eeea3862bf23ead2c06eb404ca71e16c1b17c157dc4fa447b6b57
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 14337
+          byte_count: 1582
+          word_count: 234
+          content_hash: b66df07e080586ace5642fb98cedd42324cb6c2038ff85bfd2a8f02ebf15aeda
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 14373
+              byte_count: 637
+              word_count: 90
+              content_hash: e25e45799ab5f8822e3d1e19e39f5389396cccbefee337dd7868c3b12628c5d8
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 15010
+              byte_count: 909
+              word_count: 139
+              content_hash: baf33c1d89d0761f33b9bb40d2dc6558e3cc67f6297b74d19733befe6e12b7bc
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 298
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 14430
+cross_doc_links:
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.9
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

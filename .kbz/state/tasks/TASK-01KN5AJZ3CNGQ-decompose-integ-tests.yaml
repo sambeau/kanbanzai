@@ -1,0 +1,15 @@
+id: TASK-01KN5AJZ3CNGQ
+parent_feature: FEAT-01KN58J26CH63
+slug: decompose-integ-tests
+summary: "Add integration-level tests exercising the full ReviewProposal path with combinations of old and new findings, verifying status determination and finding aggregation."
+status: done
+depends_on:
+  - TASK-01KN5AJZ1A6EY
+  - TASK-01KN5AJZ1W4ZG
+  - TASK-01KN5AJZ2CE8Z
+  - TASK-01KN5AJZ2WAZ5
+files_planned:
+  - internal/service/decompose_test.go
+completed: "2026-04-01T20:44:49Z"
+completion_summary: "Added 5 integration tests exercising the full ReviewProposal path: EmptyDescription_Fail (empty-description error → fail), WarningsOnly_Warn (oversized + missing-test-coverage → warn, blocking_count=0), MixedOldAndNew (gap + orphan-task, both finding types in output), AllChecksClear_Pass (well-formed proposal with testing keyword → pass), ErrorAndWarningCombined (verifies BlockingCount counts only error findings, TotalFindings counts all, every finding has non-empty Severity)."
+verification: go test ./... passes — all 28 service tests pass including 5 new integration tests

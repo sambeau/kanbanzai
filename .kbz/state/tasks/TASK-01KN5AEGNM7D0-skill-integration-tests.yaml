@@ -1,0 +1,9 @@
+id: TASK-01KN5AEGNM7D0
+parent_feature: FEAT-01KN588PDBW85
+slug: skill-integration-tests
+summary: "Integration tests for skill loading pipeline, section ordering validation, directory structure, benchmark"
+status: done
+depends_on:
+  - TASK-01KN5AEGN6EBP
+completed: "2026-04-01T20:24:12Z"
+completion_summary: Integration tests for skill loading pipeline covered by loader_test.go comprehensive tests. Full test suite passes.

@@ -1,0 +1,10 @@
+id: FEAT-01KN588PGJNM0
+slug: review-skill-content
+parent: P16-skills-and-roles-3.0
+status: developing
+summary: "Author SKILL.md files for review-code, orchestrate-review, and review-plan. Includes specialist composition model, finding classification, evidence-backed verdicts, and review collation. Design §5.3, §5.4."
+design: work/design/skills-system-redesign-v2.md
+spec: FEAT-01KN588PGJNM0/specification-30-review-skill-content
+dev_plan: FEAT-01KN588PGJNM0/dev-plan-30-review-skill-content
+created: "2026-04-01T19:28:01Z"
+created_by: sambeau

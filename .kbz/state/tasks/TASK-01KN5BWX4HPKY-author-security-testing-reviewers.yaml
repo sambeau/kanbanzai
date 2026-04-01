@@ -1,0 +1,12 @@
+id: TASK-01KN5BWX4HPKY
+parent_feature: FEAT-01KN588PFG6GY
+slug: author-security-testing-reviewers
+summary: "Author .kbz/roles/reviewer-security.yaml (inherits reviewer, identity: Senior application security engineer, 12+ ADDITIONAL vocabulary terms including OWASP/STRIDE/CWE/CVSS, 5+ anti-patterns: Checkbox Compliance/Scope Creep into Exploitation/Severity Inflation (security-specific)/Framework Trust/Boundary Blindness) and .kbz/roles/reviewer-testing.yaml (inherits reviewer, identity: Senior test engineer, 8+ ADDITIONAL vocabulary terms, 5+ anti-patterns: Coverage theater/Mock overuse/Happy-path-only testing/Test coupling/Assertion-free tests). Verify no duplication with parent."
+status: done
+depends_on:
+  - TASK-01KN5BWX3BHAA
+files_planned:
+  - .kbz/roles/reviewer-security.yaml
+  - .kbz/roles/reviewer-testing.yaml
+completed: "2026-04-01T20:46:41Z"
+completion_summary: "Created reviewer-security.yaml (15 additional vocabulary incl OWASP/STRIDE/CWE/CVSS, 5 additional anti-patterns) and reviewer-testing.yaml (10 additional vocabulary, 5 additional anti-patterns). No duplication with parent."

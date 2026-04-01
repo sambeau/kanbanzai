@@ -1,0 +1,5 @@
+id: TASK-01KN5AJKKSJDN
+parent_feature: FEAT-01KN58J257X02
+slug: test-scenarios
+summary: "Create 5-10 representative task scenarios for agent-driven testing, covering all Priority 1 and Priority 2 tools and the five required workflow patterns."
+status: ready

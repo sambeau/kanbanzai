@@ -1,0 +1,134 @@
+document_id: FEAT-01KN588PCVN4Y/dev-plan-30-role-system
+document_path: work/plan/3.0-role-system.md
+content_hash: b7e0dd41932fefc2fcb251be0cb3d1c623dd433d8aa485df4a28c25e66b70f73
+indexed_at: 2026-04-01T20:00:20.25469Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Role System (Kanbanzai 3.0)'
+      byte_offset: 0
+      byte_count: 13081
+      word_count: 1724
+      content_hash: b7e0dd41932fefc2fcb251be0cb3d1c623dd433d8aa485df4a28c25e66b70f73
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 231
+          byte_count: 980
+          word_count: 124
+          content_hash: f49c6c40f8ac8e7ddd49453126c1ff0a2380cad97764329c3b84dfda97c1ffbd
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Scope boundaries (from specification)
+              byte_offset: 903
+              byte_count: 308
+              word_count: 39
+              content_hash: d6d073b73b50671e298bb9b7cbdaf2a82c69bc7220eb1d8649325ce2205d2ad3
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1211
+          byte_count: 8928
+          word_count: 1100
+          content_hash: 6d14a78218f9713ebb8ee1becc47ca7cc5c0b2fd92d4a6ed91d498936d3bb50b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Role model and validation'
+              byte_offset: 1230
+              byte_count: 2542
+              word_count: 296
+              content_hash: 0a5b1e472ca8e292596420449172e9e3150704549805741da1b1cccf31176a41
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Role store and file loading'
+              byte_offset: 3772
+              byte_count: 1919
+              word_count: 249
+              content_hash: 42fbcf9a04e2b3b10c25d568d2543b4f59ebbe74713f6c14c9b5b4a347b91fa5
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Inheritance resolution for roles'
+              byte_offset: 5691
+              byte_count: 1963
+              word_count: 248
+              content_hash: 07cafc5425012baf1629f23dada3b9f38ceea4b7df99f47c4d0cc91c82482cc4
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: MCP profile tool update'
+              byte_offset: 7654
+              byte_count: 1360
+              word_count: 172
+              content_hash: 36e209881be6d8e2a3761e2e30d108c7e21b1eee8a0253bec93662e01af19bd2
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Integration tests and backward compatibility verification'
+              byte_offset: 9014
+              byte_count: 1125
+              word_count: 132
+              content_hash: f363ffbdd6a6ecc5688115ca5f2cfd3f1b61e2124c754d0d793c076ef3acf074
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 10139
+          byte_count: 995
+          word_count: 143
+          content_hash: 481b2ae2c801edaac4bd9ff7d42f403ecdedb6a83356bffa7a6e122235e31c28
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 11134
+          byte_count: 853
+          word_count: 132
+          content_hash: ed0702d221022f070e7091c9f99e520f93958a2450c90b70d80f55306f11ec50
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Contract A: Role struct (Task 1 → Tasks 2, 3, 4)'
+              byte_offset: 11158
+              byte_count: 296
+              word_count: 48
+              content_hash: bb85c5f8fa1048b2ca3a56c31e9a22818c74270fe19449552bae0c3ebc7cf941
+            - path: 1.4.2
+              level: 3
+              title: 'Contract B: RoleStore API (Task 2 → Tasks 3, 4)'
+              byte_offset: 11454
+              byte_count: 326
+              word_count: 46
+              content_hash: 56b62759a47336166a038b82704311ba30a333ce7bffd2241a9c5df55728f5db
+            - path: 1.4.3
+              level: 3
+              title: 'Contract C: Resolve API (Task 3 → Task 4)'
+              byte_offset: 11780
+              byte_count: 207
+              word_count: 35
+              content_hash: 6fd8d2700324699338d4106c2b7da5ad11935d40a5747c2a3d2778053b4c9c59
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 11987
+          byte_count: 1094
+          word_count: 207
+          content_hash: 241d9c54ff5cb20980ad20a77d07617bea797f9dd5d920354dfd66da07c7fde1
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 115
+cross_doc_links:
+    - target_path: work/spec/3.0-role-system.md
+      link_text: work/spec/3.0-role-system.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.1.1
+      role: constraint
+      confidence: high
+classified: false

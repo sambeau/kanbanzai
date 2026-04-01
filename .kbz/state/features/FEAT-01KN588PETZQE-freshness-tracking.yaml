@@ -1,0 +1,10 @@
+id: FEAT-01KN588PETZQE
+slug: freshness-tracking
+parent: P16-skills-and-roles-3.0
+status: developing
+summary: "last_verified metadata field for role and skill files. Health tool integration to flag stale content (configurable window, default 30 days). Staleness warnings in assembled context metadata. Design §6.4."
+design: work/design/skills-system-redesign-v2.md
+spec: FEAT-01KN588PETZQE/specification-30-freshness-tracking
+dev_plan: FEAT-01KN588PETZQE/dev-plan-30-freshness-tracking
+created: "2026-04-01T19:28:00Z"
+created_by: sambeau

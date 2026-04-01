@@ -1,0 +1,13 @@
+id: FEAT-01KN58J26CH63
+slug: decomposition-quality-validation
+parent: P17-workflow-and-tooling-3.0
+status: developing
+summary: "Add quality validation checks to the decompose tool's review step: description present (error), dependencies declared (warning), single-agent sizing (warning), testing coverage (warning), no orphan tasks (warning). Errors block proposal application; warnings are surfaced in output."
+spec: FEAT-01KN58J26CH63/specification-30-decomposition-quality-validation
+dev_plan: FEAT-01KN58J26CH63/dev-plan-30-decomposition-quality-validation
+tags:
+  - phase-d
+  - decompose
+  - medium-impact
+created: "2026-04-01T19:33:07Z"
+created_by: sambeau

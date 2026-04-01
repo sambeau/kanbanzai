@@ -1,0 +1,253 @@
+document_id: FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content
+document_path: work/spec/3.0-document-authoring-skill-content.md
+content_hash: 3821e58f605ed0c37ed4c52e9ee6a9b0dec6e652835632b996c15223723d095b
+indexed_at: 2026-04-01T19:38:24.291428Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Document Authoring Skill Content'
+      byte_offset: 0
+      byte_count: 19203
+      word_count: 2621
+      content_hash: 3821e58f605ed0c37ed4c52e9ee6a9b0dec6e652835632b996c15223723d095b
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 464
+          byte_count: 768
+          word_count: 96
+          content_hash: b69ebc0a1582143ecd388014175e12ea0d30b76854cd96e9b7025986daddf8f3
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 1232
+          byte_count: 1505
+          word_count: 210
+          content_hash: 775eb4a31e344969a77138881a210ec86efffca2e0f0a2f5781d83b022d462e3
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 In Scope
+              byte_offset: 1245
+              byte_count: 619
+              word_count: 76
+              content_hash: 94ef84e1ccdaaaa05057ed15c678edbb4822dcef835790f5436093e282bd57c5
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Explicitly Excluded
+              byte_offset: 1864
+              byte_count: 873
+              word_count: 131
+              content_hash: d77f1aa3679863f6d1209a72709b8384febed32b41aa5a71b6cf5b32698b9f44
+        - path: "1.3"
+          level: 2
+          title: 3. Functional Requirements
+          byte_offset: 2737
+          byte_count: 11708
+          word_count: 1623
+          content_hash: 030ffc93f87099d094ab4119b34815833e1e60f68c6449a9a6d975d99b01df9e
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: Five Authoring Skills Replace Generic Document-Creation'
+              byte_offset: 2768
+              byte_count: 771
+              word_count: 100
+              content_hash: 0eba7174238013d056bee8881a57c82fa3db78dcdf0324a45ce6a7310094c560
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: Stage Alignment'
+              byte_offset: 3539
+              byte_count: 717
+              word_count: 109
+              content_hash: 6aa34a528dc404a35d6292979131760fd7d79b66db7fdbd139a07707f1677775
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: Paired Role Declaration'
+              byte_offset: 4256
+              byte_count: 627
+              word_count: 92
+              content_hash: 82b73def232e49adb8e58ea68fdb3a2977c80ba3766f02cb7c81263f36c438b3
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: Attention-Curve Section Ordering'
+              byte_offset: 4883
+              byte_count: 705
+              word_count: 106
+              content_hash: e1afdf85bf6a57d57fe7f7815783dc9d153f53b7c8f39f9f2933d0f2495c339b
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: Vocabulary Payload Requirements'
+              byte_offset: 5588
+              byte_count: 1337
+              word_count: 166
+              content_hash: 3a7ba2637b5a2fd5c592c9c41d7ed07406822062aeabb895bd04bdc41999a2df
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: Anti-Pattern Requirements'
+              byte_offset: 6925
+              byte_count: 736
+              word_count: 102
+              content_hash: 10eb6b36faf91d2fbdbb8886079a899b8e2c09f81d8915507ab9bdd31c844bf0
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: BAD vs GOOD Examples'
+              byte_offset: 7661
+              byte_count: 644
+              word_count: 111
+              content_hash: fe5942dfb58e0c0b1ab5ebcf4b91a03ae34c3c668f994ebc1c1edf312807250e
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008: Evaluation Criteria as Gradable Questions'
+              byte_offset: 8305
+              byte_count: 721
+              word_count: 109
+              content_hash: 91a364eb2e466bc4fa7b67eca925ec1777776177090ea473b33b81295f6c9474
+            - path: 1.3.9
+              level: 3
+              title: 'FR-009: Gate-Checkable Specification Template'
+              byte_offset: 9026
+              byte_count: 716
+              word_count: 92
+              content_hash: 8019a8d6eefa4f9c694d25df994f60d0eeb373fe42a2f48db0ae4b8b445c798b
+            - path: 1.3.10
+              level: 3
+              title: 'FR-010: Gate-Checkable Dev-Plan Template'
+              byte_offset: 9742
+              byte_count: 696
+              word_count: 90
+              content_hash: bff340eb50b79f7fc29ed451ce06698d4e7989ab461f3f6d1c1294ea87d43676
+            - path: 1.3.11
+              level: 3
+              title: 'FR-011: Gate-Checkable Design Document Template'
+              byte_offset: 10438
+              byte_count: 519
+              word_count: 65
+              content_hash: 3dc7c85a7a2d4c5100e6e89f0e43995c84ade64ff0b00e8d06fe1839f824854d
+            - path: 1.3.12
+              level: 3
+              title: 'FR-012: Cross-Reference Requirements'
+              byte_offset: 10957
+              byte_count: 887
+              word_count: 124
+              content_hash: d7182d1c365108aef26d0eb3c55d5826cf5f7dc8c7e34d8f30d2b9cd678fed5f
+            - path: 1.3.13
+              level: 3
+              title: 'FR-013: Validation Scripts'
+              byte_offset: 11844
+              byte_count: 1158
+              word_count: 143
+              content_hash: 0ad3b1f6d7bdcd402481e8b60a73eb20bc3209524d8d3afc9eae9c0d4bb5355e
+            - path: 1.3.14
+              level: 3
+              title: 'FR-014: Frontmatter Completeness'
+              byte_offset: 13002
+              byte_count: 737
+              word_count: 103
+              content_hash: 3d3ba4c453cc25e0f98a0da67cbf75faae09df5280706692ecd2ee49a40d0434
+            - path: 1.3.15
+              level: 3
+              title: 'FR-015: Questions This Skill Answers'
+              byte_offset: 13739
+              byte_count: 706
+              word_count: 107
+              content_hash: a8e15784a54944d61308afd6971c7f252fea3df665678bc28599c7379c66d95e
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Functional Requirements
+          byte_offset: 14445
+          byte_count: 1800
+          word_count: 272
+          content_hash: ca5c2782ee602e035d8379e7cacd08121818f2ba91b6c35b176750cf0991ba6c
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 16245
+          byte_count: 1357
+          word_count: 173
+          content_hash: 040625ec640b0511555cf1d191e98b5df801a3ae88bf48312009eae96ce9e682
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 17602
+          byte_count: 1601
+          word_count: 214
+          content_hash: fd41a48c62c2c91154b5ce0aff166129fcd1b66cb544819954de450da5102376
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 17638
+              byte_count: 916
+              word_count: 117
+              content_hash: f75e35c6de1e0060dc5807c1ff498146aa62a24adc63577b5acb6d8c21e04c8a
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 18554
+              byte_count: 649
+              word_count: 92
+              content_hash: 1eb8dc02a04a949834ecb30d7a642c19ec0998b82e492b1f1f4b29d77349d894
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 306
+cross_doc_links:
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+    - target_path: .skills/document-creation.md
+      link_text: .skills/document-creation.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/{skill-name}/SKILL.md
+      link_text: .kbz/skills/{skill-name}/SKILL.md
+      section_path: 1.3.1
+    - target_path: .skills/document-creation.md
+      link_text: .skills/document-creation.md
+      section_path: 1.3.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.5
+      role: requirement
+      confidence: high
+    - section_path: 1.3.6
+      role: requirement
+      confidence: high
+    - section_path: 1.3.7
+      role: example
+      confidence: high
+    - section_path: 1.3.8
+      role: question
+      confidence: high
+    - section_path: 1.3.12
+      role: requirement
+      confidence: high
+    - section_path: 1.3.15
+      role: question
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

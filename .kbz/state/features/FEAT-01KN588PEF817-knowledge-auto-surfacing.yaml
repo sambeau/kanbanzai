@@ -1,0 +1,10 @@
+id: FEAT-01KN588PEF817
+slug: knowledge-auto-surfacing
+parent: P16-skills-and-roles-3.0
+status: developing
+summary: "Automatic inclusion of relevant knowledge entries in assembled context based on file path matching, tag matching, scope, always-entries, and recency weighting. Capped at 10 entries. Position 8 in assembled context. Design §6.3."
+design: work/design/skills-system-redesign-v2.md
+spec: FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing
+dev_plan: FEAT-01KN588PEF817/dev-plan-30-knowledge-auto-surfacing
+created: "2026-04-01T19:28:00Z"
+created_by: sambeau

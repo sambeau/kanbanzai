@@ -1,0 +1,12 @@
+id: FEAT-01KN588PGXATW/specification-30-migration
+path: work/spec/3.0-migration.md
+type: specification
+title: "Specification: Migration and Backward Compatibility"
+status: approved
+owner: FEAT-01KN588PGXATW
+approved_by: sambeau
+approved_at: "2026-04-01T20:04:47Z"
+content_hash: 4b28f42a75fbf8664574c26788389c9f5eb87654c6003397e94c2cdea6916449
+created: "2026-04-01T19:38:24Z"
+created_by: sambeau
+updated: "2026-04-01T20:04:47Z"

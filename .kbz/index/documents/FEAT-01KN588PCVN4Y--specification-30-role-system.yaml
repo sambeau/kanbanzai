@@ -1,0 +1,92 @@
+document_id: FEAT-01KN588PCVN4Y/specification-30-role-system
+document_path: work/spec/3.0-role-system.md
+content_hash: 0b0e2979ec26b4b8e37e0b3607fe2520ea2d8eac835f179d95dc0d4ad5997479
+indexed_at: 2026-04-01T19:38:23.29067Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Role System (Kanbanzai 3.0)'
+      byte_offset: 0
+      byte_count: 13238
+      word_count: 1907
+      content_hash: 0b0e2979ec26b4b8e37e0b3607fe2520ea2d8eac835f179d95dc0d4ad5997479
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 193
+          byte_count: 587
+          word_count: 79
+          content_hash: 6ba0b896d2fea4d3bfa3872644335f6d3eb7b0f5301d78dd766081f82afae395
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 780
+          byte_count: 956
+          word_count: 144
+          content_hash: 48e554b9ba1482a767a4018b532ebf4fcc80218d98d0fde19814fcbc0be01e0f
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 790
+              byte_count: 405
+              word_count: 57
+              content_hash: d551d62f1652f9a1578c977395412eb27a7baca27afb7931f7e491a5c21ffa48
+            - path: 1.2.2
+              level: 3
+              title: Explicitly excluded
+              byte_offset: 1195
+              byte_count: 541
+              word_count: 85
+              content_hash: 550768dc456549ef7c7a9e73ef408f868807875979afbd7ae5a03e54f9407a6b
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 1736
+          byte_count: 8552
+          word_count: 1256
+          content_hash: c4b40d5a9a1acb5e224840ff96b1145e7bdea0a7ded648133c527aa8e8ff8324
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 10288
+          byte_count: 1609
+          word_count: 236
+          content_hash: d6b0ea928d76c39503b9a31f0879aad67d938fe80574f396763ee0206d81d1a6
+        - path: "1.5"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 11897
+          byte_count: 1341
+          word_count: 175
+          content_hash: 8d315510a278651a301eece380bccf21080c89ccfa9eb726acbffd98fa4debdf
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 59
+cross_doc_links:
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: assumption
+      confidence: high
+classified: false

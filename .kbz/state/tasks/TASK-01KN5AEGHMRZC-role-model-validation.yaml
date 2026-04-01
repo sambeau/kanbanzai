@@ -1,0 +1,11 @@
+id: TASK-01KN5AEGHMRZC
+parent_feature: FEAT-01KN588PCVN4Y
+slug: role-model-validation
+summary: "Define Go structs (Role, ResolvedRole, AntiPattern) and validateRole function in internal/context/role.go with table-driven tests"
+status: done
+completed: "2026-04-01T20:11:40Z"
+claimed_at: "2026-04-01T20:07:13Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-01T20:07:13Z"
+dispatched_by: sambeau
+completion_summary: "Created internal/context/role.go with Role, ResolvedRole, AntiPattern structs and validateRole function. 25 table-driven tests covering all field validation rules including multi-error accumulation."

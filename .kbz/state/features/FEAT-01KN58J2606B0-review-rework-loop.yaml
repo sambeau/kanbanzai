@@ -1,0 +1,13 @@
+id: FEAT-01KN58J2606B0
+slug: review-rework-loop
+parent: P17-workflow-and-tooling-3.0
+status: developing
+summary: "Add review_cycle counter to the feature entity, incrementing each time the feature enters reviewing. Implement iteration cap (from binding registry max_review_cycles, default 3) with automatic human checkpoint escalation when the cap is reached. Add focused re-review context assembly for cycle >= 2 that includes only rework changes and previous findings."
+spec: FEAT-01KN58J2606B0/specification-30-review-rework-loop
+dev_plan: FEAT-01KN58J2606B0/dev-plan-30-review-rework-loop
+tags:
+  - phase-d
+  - review
+  - medium-impact
+created: "2026-04-01T19:33:07Z"
+created_by: sambeau

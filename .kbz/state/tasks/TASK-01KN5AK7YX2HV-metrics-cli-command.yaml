@@ -1,0 +1,7 @@
+id: TASK-01KN5AK7YX2HV
+parent_feature: FEAT-01KN58J275BWJ
+slug: metrics-cli-command
+summary: "Add the kbz metrics CLI command with --since, --until, --feature, and --json flags, invoking the metrics aggregation service and formatting output."
+status: active
+depends_on:
+  - TASK-01KN5AK7YDKPC

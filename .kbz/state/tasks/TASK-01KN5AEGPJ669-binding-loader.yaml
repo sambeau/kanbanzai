@@ -1,0 +1,9 @@
+id: TASK-01KN5AEGPJ669
+parent_feature: FEAT-01KN588PDPE8V
+slug: binding-loader
+summary: YAML loader with duplicate key detection for stage-bindings.yaml in internal/context/binding_load.go
+status: done
+depends_on:
+  - TASK-01KN5AEGP2ECD
+completed: "2026-04-01T20:17:01Z"
+completion_summary: Created internal/binding/loader.go with LoadBindingFile using yaml.Node duplicate key detection and strict field parsing. 10 table-driven tests.

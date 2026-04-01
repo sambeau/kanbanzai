@@ -1,0 +1,133 @@
+document_id: FEAT-01KN588PEF817/dev-plan-30-knowledge-auto-surfacing
+document_path: work/plan/3.0-knowledge-auto-surfacing.md
+content_hash: 2daec7b4670fe9c5fd75fbd5d2717c5da9c4d9a73e5842f6a2dddf8b4bc4e3e0
+indexed_at: 2026-04-01T20:00:20.762943Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Knowledge Auto-Surfacing'
+      byte_offset: 0
+      byte_count: 18697
+      word_count: 2473
+      content_hash: 2daec7b4670fe9c5fd75fbd5d2717c5da9c4d9a73e5842f6a2dddf8b4bc4e3e0
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 459
+          byte_count: 1903
+          word_count: 229
+          content_hash: 741834551cbef10243518332107e3dbdbd7c4f0f5d680270c41b8800ef6c1754
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 2362
+          byte_count: 12107
+          word_count: 1573
+          content_hash: 65e9c821e89a494248503e50b41dec5742ca1f1268f4cbd9b5782447e3150d2c
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Matching Engine — File Path, Tag, and "Always" Matching'
+              byte_offset: 2384
+              byte_count: 3019
+              word_count: 402
+              content_hash: df402aa871bdf3e0bfb31c56234c681f008b94e002bb9d4bda2d8734cce5e9f9
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Recency-Weighted Scoring and Ranking'
+              byte_offset: 5403
+              byte_count: 2799
+              word_count: 383
+              content_hash: c2cdd679ed5c7e9e333bbf0525ac561f68dc5ad30193ae7492544062e94898e3
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Output Formatting and KnowledgeSurfacer Implementation'
+              byte_offset: 8202
+              byte_count: 3490
+              word_count: 445
+              content_hash: ba320e0808511df6a799d5534ae227e40170c2a1f1bbc732550cd1e9cad320ab
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Health Compaction Recommendation'
+              byte_offset: 11692
+              byte_count: 2777
+              word_count: 339
+              content_hash: 7749f109d97f8e1ba7888f3e97eae67c193b8db5fd3906d9c728a3bf0e5c8017
+        - path: "1.3"
+          level: 2
+          title: 3. Dependency Graph
+          byte_offset: 14469
+          byte_count: 1272
+          word_count: 196
+          content_hash: 999b8c86ad83815775a0f3781115a614ce3e5e353f98b48216dcc4b93560d0e0
+        - path: "1.4"
+          level: 2
+          title: 4. Interface Contracts
+          byte_offset: 15741
+          byte_count: 1933
+          word_count: 257
+          content_hash: c6aa973c72655f75ae5fbca9bd6c7c791eeddd3360f44ac27ade890fbfe2d57e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Matching Engine → Scoring (Task 1 → Task 2)
+              byte_offset: 15768
+              byte_count: 515
+              word_count: 65
+              content_hash: c8b38e23ea699147e13d991a74cee09f80cf0774404d171029c51441eac1a2b2
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Scoring → Surfacer (Task 2 → Task 3)
+              byte_offset: 16283
+              byte_count: 319
+              word_count: 47
+              content_hash: c7032d5a3f44d39af2f61faa9f583934f622fb29c4bc3002548ba728a472dbc4
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Surfacer → Context Assembly Pipeline (Task 3 → Pipeline Task 5)
+              byte_offset: 16602
+              byte_count: 549
+              word_count: 68
+              content_hash: 067b0f3da519db28fa64800260d35a97c54df44efc1dc5dc8068939ea214ee9c
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Surfacer → Cap Tracker (Task 3 → Task 4)
+              byte_offset: 17151
+              byte_count: 292
+              word_count: 44
+              content_hash: c2d2c9e814f6222ec0c2922f3ce334948f4ffe49649f218a416e679438afcb9b
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Cap Tracker → Health Check (Task 4)
+              byte_offset: 17443
+              byte_count: 231
+              word_count: 29
+              content_hash: 52708f879457fe1356c029235349db26f8b5445a55147d32f637a4ee785bd7d4
+        - path: "1.5"
+          level: 2
+          title: 5. Traceability Matrix
+          byte_offset: 17674
+          byte_count: 1023
+          word_count: 189
+          content_hash: 560ecd78fcb325d49d911479c887b93ffdb703524739d6226313dbbfec7f5a60
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 223
+cross_doc_links:
+    - target_path: work/spec/3.0-knowledge-auto-surfacing.md
+      link_text: work/spec/3.0-knowledge-auto-surfacing.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.3
+      role: narrative
+      confidence: high
+classified: false

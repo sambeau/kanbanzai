@@ -1,0 +1,10 @@
+id: TASK-01KN5AK7XEJ82
+parent_feature: FEAT-01KN58J275BWJ
+slug: mcp-logging-hook
+summary: "Integrate the action log writer into the MCP server's tool dispatch path so every invocation produces one log entry, with error classification."
+status: done
+depends_on:
+  - TASK-01KN5AK7WB3NV
+  - TASK-01KN5AK7WXT3S
+completed: "2026-04-01T20:44:29Z"
+completion_summary: "Created hook.go (Wrap method logs after handler), classify.go (maps errors to 5 categories), and wired hook into MCP server via wrapAllTools using ListTools+SetTools post-registration. EntityStageLookup adapter wraps EntityService."

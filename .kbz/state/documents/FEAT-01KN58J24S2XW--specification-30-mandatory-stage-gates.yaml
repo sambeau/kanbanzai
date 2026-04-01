@@ -1,0 +1,12 @@
+id: FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates
+path: work/spec/3.0-mandatory-stage-gates.md
+type: specification
+title: Mandatory Stage Gate Enforcement Specification
+status: approved
+owner: FEAT-01KN58J24S2XW
+approved_by: sambeau
+approved_at: "2026-04-01T19:45:03Z"
+content_hash: 8a973e78b583de94077193ca91df1be1af3c0b165e92aaad85c9318c8a00a353
+created: "2026-04-01T19:43:39Z"
+created_by: sambeau
+updated: "2026-04-01T19:45:03Z"

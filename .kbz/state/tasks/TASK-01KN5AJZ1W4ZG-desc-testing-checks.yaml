@@ -1,0 +1,14 @@
+id: TASK-01KN5AJZ1W4ZG
+parent_feature: FEAT-01KN58J26CH63
+slug: desc-testing-checks
+summary: Implement checkDescriptionPresent and checkTestingCoverage validation checks for empty task summaries and missing testing keywords.
+status: done
+depends_on:
+  - TASK-01KN5AJZ1A6EY
+files_planned:
+  - internal/service/decompose_validate.go
+  - internal/service/decompose_validate_test.go
+  - internal/service/decompose_test.go
+completed: "2026-04-01T20:41:40Z"
+completion_summary: "Implemented checkDescriptionPresent (error for empty/whitespace-only summaries) and checkTestingCoverage (warning if no task mentions testing keyword as whole word). Added testingKeywords list and precompiled testingKeywordRe. Updated TestReviewProposal_Pass to include 'testing' keyword in rationale. Added full unit test file decompose_validate_test.go with 9 tests covering both functions."
+verification: go test ./... passes

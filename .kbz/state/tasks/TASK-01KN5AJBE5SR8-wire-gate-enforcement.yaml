@@ -1,0 +1,10 @@
+id: TASK-01KN5AJBE5SR8
+parent_feature: FEAT-01KN58J24S2XW
+slug: wire-gate-enforcement
+summary: "Wire gate enforcement into the MCP entityTransitionAction handler, connecting gate checks, error formatting, override persistence, and advance updates into the tool layer."
+status: queued
+depends_on:
+  - TASK-01KN5AJBC2072
+  - TASK-01KN5AJBCNCFV
+  - TASK-01KN5AJBD5NHZ
+  - TASK-01KN5AJBDPQNG

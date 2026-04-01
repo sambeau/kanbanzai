@@ -1,0 +1,9 @@
+id: TASK-01KN5BWME9KQQ
+parent_feature: FEAT-01KN588PF5P5Y
+slug: author-base-yaml
+summary: "Author .kbz/roles/base.yaml — foundation role that every other role inherits. Carries project identity, hard constraints, commit conventions, orientation convention, and project-wide anti-patterns (Flattery Prompting, Silent Scope Expansion). No inherits field. Core tools subset. 200–300 token budget."
+status: done
+files_planned:
+  - .kbz/roles/base.yaml
+completed: "2026-04-01T20:46:20Z"
+completion_summary: "Created .kbz/roles/base.yaml — foundation role with project identity, 5 hard-constraint vocabulary terms, 2 anti-patterns (Flattery Prompting with PRISM citation, Silent Scope Expansion), 9 core tools. ~230 tokens."

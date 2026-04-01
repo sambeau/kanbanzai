@@ -1,0 +1,9 @@
+id: TASK-01KN5BXT4KEX0
+parent_feature: FEAT-01KN588PGJNM0
+slug: author-review-plan-skill
+summary: "Author .kbz/skills/review-plan/SKILL.md (name: review-plan, stage: plan-reviewing, roles: [reviewer-conformance], constraint_level: low). Plan-level conformance review. Checks: all features reached terminal status, all specs approved, documentation current. Conformance-focused only — no code quality/security content. Restructure of existing plan-review functionality into attention-curve format."
+status: done
+files_planned:
+  - .kbz/skills/review-plan/SKILL.md
+completed: "2026-04-01T20:46:20Z"
+completion_summary: "Created .kbz/skills/review-plan/SKILL.md — 310 lines. 15 conformance terms, 3 anti-patterns, 5-step procedure. Conformance-focused only — verifies feature delivery, spec approval, documentation currency. No code quality content."

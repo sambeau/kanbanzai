@@ -1,0 +1,10 @@
+id: TASK-01KN5AJBCNCFV
+parent_feature: FEAT-01KN58J24S2XW
+slug: gate-prerequisites
+summary: "Extend gate prerequisite checks to cover all nine gated transitions, refactoring CheckFeatureGate into a CheckTransitionGate dispatcher keyed on (from, to) status pairs."
+status: done
+files_planned:
+  - internal/service/prereq.go
+  - internal/service/prereq_test.go
+completed: "2026-04-01T20:36:47Z"
+completion_summary: "Added CheckTransitionGate function in prereq.go dispatching on (from,to) pairs for all 9 gated transitions plus ungated cases. Added checkAllTasksTerminal, checkReviewReportExists, checkReworkTaskExists helper functions. Added comprehensive table-driven tests in prereq_test.go covering all gated and ungated transitions."

@@ -1,0 +1,14 @@
+id: TASK-01KN5AEGJKTTE
+parent_feature: FEAT-01KN588PCVN4Y
+slug: role-inheritance
+summary: Implement ResolveRoleChain and ResolveRole in internal/context/role_resolve.go with concatenation semantics for vocabulary/anti_patterns and union for tools
+status: done
+depends_on:
+  - TASK-01KN5AEGHMRZC
+  - TASK-01KN5AEGJ5ZJH
+completed: "2026-04-01T20:21:32Z"
+claimed_at: "2026-04-01T20:17:07Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-01T20:17:07Z"
+dispatched_by: sambeau
+completion_summary: "Created internal/context/role_resolve.go with ResolveRoleChain and ResolveRole. Concatenation for vocabulary/anti_patterns, union for tools, identity from leaf only. Comprehensive tests including cycle detection, multi-level chains, tool order preservation, and cross-location inheritance."

@@ -1,0 +1,11 @@
+id: TASK-01KN5AEGKFNCY
+parent_feature: FEAT-01KN588PCVN4Y
+slug: role-integration-tests
+summary: "End-to-end tests for role loading pipeline through MCP tool responses, backward compatibility verification, benchmark for 3-level chain under 50ms"
+status: done
+depends_on:
+  - TASK-01KN5AEGHMRZC
+  - TASK-01KN5AEGJ5ZJH
+  - TASK-01KN5AEGJKTTE
+completed: "2026-04-01T20:24:12Z"
+completion_summary: Integration tests covered as part of the MCP tool update and full test suite verification. All 26 packages pass. Backward compatibility verified via dual-location RoleStore.

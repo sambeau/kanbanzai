@@ -1,0 +1,12 @@
+id: TASK-01KN5BX9AEBCB
+parent_feature: FEAT-01KN588PFWADY
+slug: author-write-dev-plan-skill
+summary: "Author .kbz/skills/write-dev-plan/SKILL.md (name: write-dev-plan, stage: dev-planning, roles: [architect], constraint_level: high). Guides implementation plan authoring. 5-section template: Scope, Task Breakdown, Dependency Graph, Risk Assessment, Verification Approach. Scope must cross-reference specification. Include validation script at scripts/validate-dev-plan-structure.sh."
+status: done
+depends_on:
+  - TASK-01KN5BX97TVWE
+files_planned:
+  - .kbz/skills/write-dev-plan/SKILL.md
+  - .kbz/skills/write-dev-plan/scripts/validate-dev-plan-structure.sh
+completed: "2026-04-01T20:46:41Z"
+completion_summary: "Created write-dev-plan SKILL.md (331 lines, 20 vocabulary, 7 anti-patterns, 5-section template with spec cross-ref) and validation script checking sections + specification reference."

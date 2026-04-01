@@ -1,0 +1,7 @@
+id: TASK-01KN5AK34JHRP
+parent_feature: FEAT-01KN58J26RSB6
+slug: doc-evaluate-action
+summary: "Add an evaluate action to the doc MCP tool that accepts a document ID and quality evaluation, delegating to AttachQualityEvaluation."
+status: queued
+depends_on:
+  - TASK-01KN5AK342WDJ

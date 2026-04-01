@@ -1,0 +1,14 @@
+id: TASK-01KN5AEGK14QJ
+parent_feature: FEAT-01KN588PCVN4Y
+slug: role-mcp-tool
+summary: "Update profile MCP tool to use RoleStore, return identity/vocabulary/anti_patterns/tools in list and get actions"
+status: done
+depends_on:
+  - TASK-01KN5AEGJ5ZJH
+  - TASK-01KN5AEGJKTTE
+completed: "2026-04-01T20:24:12Z"
+claimed_at: "2026-04-01T20:21:45Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-01T20:21:45Z"
+dispatched_by: sambeau
+completion_summary: Updated profile MCP tool to use RoleStore. List returns id/inherits/identity. Get returns identity/vocabulary/anti_patterns/tools. Updated server.go to construct RoleStore with dual-location paths. Fixed test references.
