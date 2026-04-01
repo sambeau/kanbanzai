@@ -396,7 +396,7 @@ func TestReviewProposal_Pass(t *testing.T) {
 			{
 				Slug:      "login",
 				Summary:   "Implement user login with email and password",
-				Rationale: "Covers acceptance criterion: users can log in",
+				Rationale: "Covers acceptance criterion: users can log in. Verified by testing.",
 			},
 			{
 				Slug:      "logout",
