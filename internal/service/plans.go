@@ -19,8 +19,8 @@ type CreatePlanInput struct {
 	Prefix string
 	// Slug is the URL-friendly identifier appended after the number.
 	Slug string
-	// Title is the human-readable title.
-	Title string
+	// Name is the human-readable name.
+	Name string
 	// Summary is a brief description of the Plan.
 	Summary string
 	// CreatedBy identifies who created the Plan.
@@ -33,7 +33,7 @@ type CreatePlanInput struct {
 type UpdatePlanInput struct {
 	ID      string
 	Slug    string
-	Title   *string
+	Name    *string
 	Summary *string
 	Design  *string
 	Tags    []string
@@ -44,11 +44,16 @@ func (s *EntityService) CreatePlan(input CreatePlanInput) (CreateResult, error) 
 	if err := validateRequired(
 		field("prefix", input.Prefix),
 		field("slug", input.Slug),
-		field("title", input.Title),
+		field("name", input.Name),
 		field("summary", input.Summary),
 		field("created_by", input.CreatedBy),
 	); err != nil {
 		return CreateResult{}, err
+	}
+
+	planName, nameErr := validate.ValidateName(input.Name)
+	if nameErr != nil {
+		return CreateResult{}, nameErr
 	}
 
 	// Load and validate prefix registry (fall back to defaults if no config file exists,
@@ -78,7 +83,7 @@ func (s *EntityService) CreatePlan(input CreatePlanInput) (CreateResult, error) 
 	entity := model.Plan{
 		ID:        idValue,
 		Slug:      slug,
-		Title:     strings.TrimSpace(input.Title),
+		Name:      planName,
 		Status:    model.PlanStatusProposed,
 		Summary:   strings.TrimSpace(input.Summary),
 		Tags:      normalizeTags(input.Tags),
@@ -222,8 +227,8 @@ func (s *EntityService) UpdatePlan(input UpdatePlanInput) (ListResult, error) {
 	}
 
 	// Apply updates
-	if input.Title != nil {
-		result.State["title"] = strings.TrimSpace(*input.Title)
+	if input.Name != nil {
+		result.State["name"] = strings.TrimSpace(*input.Name)
 	}
 	if input.Summary != nil {
 		result.State["summary"] = strings.TrimSpace(*input.Summary)
@@ -339,7 +344,7 @@ func planFields(p model.Plan) map[string]any {
 	fields := map[string]any{
 		"id":         p.ID,
 		"slug":       p.Slug,
-		"title":      p.Title,
+		"name":       p.Name,
 		"status":     string(p.Status),
 		"summary":    p.Summary,
 		"created":    p.Created.Format(time.RFC3339),
