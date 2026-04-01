@@ -5,7 +5,7 @@
 | Date | 2025-07-13 |
 | Status | Proposal |
 | Author | Design Agent |
-| Informed by | `work/research/ai-agent-best-practices-research.md` |
+| Informed by | `work/research/ai-agent-best-practices-research.md`, `work/research/agent-skills-research.md`, `work/research/agent-orchestration-research.md` |
 | Supersedes | Current `.skills/` system and `.kbz/context/roles/` profiles |
 
 ---
@@ -86,6 +86,42 @@ The agent that produces output must not be the agent that evaluates it. Evaluati
 ### DP-8: Stage Bindings Are Explicit
 
 The mapping from workflow stage → role(s) → skill(s) → MCP tool subset is declared, not inferred. When the system assembles context for a task, it knows the feature's lifecycle stage and uses the binding to select the right context units automatically.
+
+### DP-9: Match Constraint Level to Task Risk
+
+Different tasks need different degrees of freedom. The cost of over-constraining creative work is mediocre output; the cost of under-constraining fragile operations is broken state.
+
+- **Low freedom** (exact tool call sequences, deterministic scripts): lifecycle transitions, document registration, stage gate checks. One safe path — take it.
+- **Medium freedom** (templates with flexibility): specification writing, plan creation, structured review. A preferred pattern exists; variation is acceptable within bounds.
+- **High freedom** (general guidance, trust the agent): design work, implementation, research. Many valid approaches; context determines the best one.
+
+Each skill must declare its constraint level and match its procedure style accordingly. Low-freedom skills provide exact commands. High-freedom skills provide principles and vocabulary. Do not apply uniform medium freedom to everything.
+
+**Constraint levels map to gate enforcement mechanisms.** Masters et al. (2025) distinguish hard constraints (ℋ — violation terminates the workflow) from soft constraints (𝒮 — violation incurs penalties). These align directly with constraint levels:
+
+- **Low freedom → Hard gate enforcement.** The MCP server rejects violations. Lifecycle transitions are blocked if document prerequisites aren't met. Stage gate checks are programmatic, not advisory.
+- **Medium freedom → Soft gate enforcement.** The MCP server warns but allows. Document section completeness, cross-reference coverage, and output format compliance are flagged during review, not blocked at transition.
+- **High freedom → No gate enforcement.** The system trusts the agent. Design choices, research direction, and implementation approach are guided by vocabulary routing and anti-patterns, not by system-level checks.
+
+Skills that declare `constraint_level: low` should expect the system to *enforce* their procedure, not just advise it. This is the link between the skills layer and the MCP server's gate enforcement.
+
+*Source: Anthropic Skill Authoring Best Practices ("narrow bridge vs. open field" analogy); reinforced by Vaarta Analytics (2026) findings on instruction granularity. Gate enforcement alignment from Masters et al. (2025) hard/soft constraint model and orchestration recommendations §4.3.*
+
+### DP-10: Only Add What the Model Doesn't Know
+
+The context window is a shared resource. Every token in a skill must justify its presence against the question: "Does the model already know this?" The model knows what state machines are, what lifecycle transitions mean, and how to write Go. It does not know Kanbanzai's specific state machine, Kanbanzai's specific lifecycle rules, or this project's specific conventions.
+
+Strip explanations of general concepts. Focus exclusively on project-specific knowledge, constraints, and vocabulary. A skill that is 200 tokens of Kanbanzai-specific content outperforms one that is 800 tokens of general explanation with the same 200 tokens buried inside.
+
+*Source: Anthropic Skill Authoring Best Practices ("Claude is already very smart — only add context Claude doesn't already have"); Anthropic context engineering guide (Sep 2025).*
+
+### DP-11: Descriptions Must Be Assertive
+
+The model tends to under-trigger skills — to not use them when they would be useful. Skill descriptions must actively push for triggering, especially for workflow-critical skills. Both the `expert` and `natural` description registers should include assertive "use even when..." clauses that combat the default tendency to skip.
+
+Example: Instead of "Use when deciding what workflow stage work belongs to," write "Use when deciding what workflow stage work belongs to. Use even when the agent is confident about the next step — workflow errors are expensive to undo."
+
+*Source: Anthropic skill-creator meta-skill ("please make the skill descriptions a little bit 'pushy'"); Anthropic Skill Authoring Best Practices (description quality determines discovery).*
 
 ---
 
@@ -220,15 +256,19 @@ A skill defines the procedure, output format, and evaluation criteria for a spec
 .kbz/skills/
 ├── review-code/
 │   ├── SKILL.md           (<500 lines — the core skill)
-│   └── references/
-│       ├── finding-classification.md
-│       ├── edge-cases.md
-│       └── evaluation-rubric.md
+│   ├── references/        (one level deep from SKILL.md — see constraint below)
+│   │   ├── finding-classification.md
+│   │   ├── edge-cases.md
+│   │   └── evaluation-rubric.md
+│   └── scripts/           (deterministic operations — output enters context, not source)
+│       └── check-prerequisites.sh
 ├── write-spec/
 │   ├── SKILL.md
-│   └── references/
-│       ├── acceptance-criteria-patterns.md
-│       └── spec-anti-patterns.md
+│   ├── references/
+│   │   ├── acceptance-criteria-patterns.md
+│   │   └── spec-anti-patterns.md
+│   └── scripts/
+│       └── validate-spec-structure.sh
 ├── write-design/
 │   ├── SKILL.md
 │   └── references/
@@ -253,6 +293,7 @@ triggers:
 roles: [reviewer, reviewer-conformance, reviewer-quality,
         reviewer-security, reviewer-testing]
 stage: reviewing
+constraint_level: medium  # low | medium | high (see DP-9)
 ---
 
 ## Vocabulary
@@ -306,6 +347,26 @@ stage: reviewing
   conformance gap; opinions cannot be objectively verified or remediated
 - **Resolve:** Link every blocking finding to a numbered acceptance criterion
 
+## Checklist
+
+(Optional — included for workflow-critical and medium/low-freedom skills.
+Agents copy this into their response and check off items as they progress.
+This makes compliance visible and prevents step-skipping.)
+
+```
+Copy this checklist and track your progress:
+- [ ] Read spec section(s) fully
+- [ ] Read all files in file list
+- [ ] Confirm review profile and required dimensions
+- [ ] Evaluate spec_conformance dimension independently
+- [ ] Evaluate implementation_quality dimension independently
+- [ ] Evaluate test_adequacy dimension independently
+- [ ] Evaluate security dimension (if required by profile)
+- [ ] Classify all findings (blocking vs non-blocking)
+- [ ] Verify every blocking finding has a spec anchor
+- [ ] Produce structured output in required format
+```
+
 ## Procedure
 
 ### Step 1: Orient from inputs
@@ -314,6 +375,8 @@ stage: reviewing
 2. Read all files in the file list. Understand what was implemented.
 3. Note the review profile — this determines required dimensions.
 4. IF any input is missing → STOP. Report Missing Context edge case.
+5. IF the spec is ambiguous or incomplete for any dimension → STOP.
+   Report the ambiguity. Do not infer intent. (See §8.3: Uncertainty Protocol.)
 
 ### Step 2: Evaluate each dimension independently
 
@@ -321,7 +384,13 @@ For each required dimension, work through its specific evaluation
 questions. Record a per-dimension outcome. Do not let a poor result
 in one dimension affect your assessment of another.
 
-...
+### Step 3: Validate and iterate
+
+Validate findings against classification criteria:
+- Does every blocking finding cite a specific spec requirement?
+- Is any dimension's verdict influenced by another dimension's result?
+- IF validation fails → fix the issue → re-validate.
+Repeat until all findings pass validation. Only then produce final output.
 
 ## Output Format
 
@@ -419,9 +488,12 @@ OUTPUT, not for the agent to self-evaluate during execution)
 - **Anti-patterns come BEFORE the procedure.** They establish what NOT to do before the model encounters what TO do. Combined positive + negative instruction is the strongest approach (CHI 2023).
 - **Procedure is in the MIDDLE.** The middle is the weakest attention zone, but structured numbered steps with IF/THEN conditions survive attention degradation because the structure itself carries signal that prose would lose.
 - **Examples are BAD/GOOD pairs with WHY.** The model pattern-matches against examples more reliably than it follows rules (LangChain, 2024). Three examples match nine in effectiveness. Placing the best example last exploits recency bias.
-- **Evaluation criteria are SEPARATED from the procedure.** The agent that does the work should not self-evaluate (Anthropic harness design, Mar 2026). Evaluation criteria are phrased as gradable questions with weights so a separate evaluation pass (or human) can assess output quality.
+- **Evaluation criteria are SEPARATED from the procedure.** The agent that does the work should not self-evaluate (Anthropic harness design, Mar 2026). Evaluation criteria are phrased as gradable questions with weights so a separate evaluation pass (or human) can assess output quality. Note: the research template (Appendix B) places evaluation criteria in `references/evaluation-criteria.md` (Layer 3, on-demand). This design deliberately keeps them in the SKILL.md body because they benefit from the high-attention end-of-context position and are needed by every evaluation pass — making them on-demand would risk them not being loaded when the evaluator needs them most. **These criteria are designed to be usable by an LLM-as-judge automated evaluation pass** — Anthropic's multi-agent research found that "a single LLM call with a single prompt outputting scores from 0.0–1.0 and a pass-fail grade was the most consistent and aligned with human judgements." The gradable question format and 0.0–1.0 weight scale support this directly. The automated evaluation mechanism itself is an observability concern (see §10.1 scope note and companion observability design), but the criteria here are its inputs.
 - **"Questions This Skill Answers" is LAST.** This is a retrieval anchor — it sits at the high-attention end of context. It also serves as the trigger matching surface when an orchestrator or the system needs to select the right skill for an ambiguous request.
-- **`references/` directory for overflow.** The SKILL.md stays under 500 lines. Detailed anti-pattern documentation, extended examples, and evaluation rubrics go in `references/` and are loaded on-demand (progressive disclosure Layer 3).
+- **`references/` directory for overflow.** The SKILL.md stays under 500 lines. Detailed anti-pattern documentation, extended examples, and evaluation rubrics go in `references/` and are loaded on-demand (progressive disclosure Layer 3). **Critical constraint: all reference files must link directly from SKILL.md, not from each other.** The model may partially read files that are two references deep. Keep references one level deep.
+- **`scripts/` directory for deterministic operations.** Operations that are exact and repeatable — checking lifecycle prerequisites, validating document structure, verifying stage gate conditions — should be executable scripts, not prose instructions for the agent to interpret. Only script *output* enters the context window, not the script source. If agents consistently perform the same multi-step operation across tasks, that is a signal the operation should be bundled as a script.
+- **`## Checklist` is an optional section** for workflow-critical and medium/low-freedom skills. Agents copy the checklist into their response and tick off items as they progress. This makes compliance visible, creates a trackable record, and directly addresses step-skipping. High-freedom skills (design, research) do not need checklists.
+- **Procedures include validate → fix → repeat loops** for fragile operations. Linear step sequences risk the agent proceeding past failures. An explicit iteration point ("validate → if not met → fix → re-validate") ensures prerequisites are met before proceeding.
 - **`roles` field declares compatible roles.** This enables the binding registry to validate that a role-skill combination is sensible.
 - **`stage` field declares the workflow stage.** This enables stage-based automatic selection.
 
@@ -440,92 +512,150 @@ stage_bindings:
 
   designing:
     description: "Creating or revising a design document"
+    orchestration: single-agent      # sequential reasoning — do not delegate
     roles: [architect]
     skills: [write-design]
     document_type: design
     human_gate: false
-    notes: "Single agent. Architect vocabulary routes to system design expertise."
+    prerequisites: {}                # no document prerequisites for the first stage
+    notes: >
+      Single agent. Architect vocabulary routes to system design expertise.
+      Design review is human-led via document approval, not automated,
+      because design is high-freedom creative work (DP-9). The specifying
+      stage's prerequisites enforce that the design document is approved
+      before specification begins — the human is the quality gate here.
+    effort_budget: "5–15 tool calls. Read related designs, query decisions, draft structured document."
 
   specifying:
     description: "Writing a formal specification with acceptance criteria"
+    orchestration: single-agent      # sequential reasoning — do not delegate
     roles: [spec-author]
     skills: [write-spec]
     document_type: specification
-    human_gate: true  # Spec approval is a required gate
+    human_gate: true                 # Spec approval is a required gate
+    prerequisites:
+      documents:
+        - type: design
+          status: approved
     notes: "Single agent. Spec-author vocabulary routes to requirements engineering."
+    effort_budget: "5–15 tool calls. Read design document, query knowledge, check related decisions, draft each required section."
 
   dev-planning:
     description: "Breaking a spec into an implementation plan and tasks"
+    orchestration: single-agent      # sequential reasoning — decomposition quality is the critical path
     roles: [architect]
     skills: [write-dev-plan, decompose-feature]
     document_type: dev-plan
-    human_gate: true  # Plan review before implementation
+    human_gate: true                 # Plan review before implementation
+    prerequisites:
+      documents:
+        - type: specification
+          status: approved
     notes: "Single agent. Decomposition uses architect vocabulary for dependency analysis."
+    effort_budget: "5–10 tool calls. Read spec, decompose into tasks with dependencies, estimate effort, produce plan document."
 
   # ── Implementation stage ──────────────────────────────────
 
   developing:
     description: "Implementing tasks from the dev plan"
-    roles: [implementer]
-    skills: [implement-task]
+    orchestration: orchestrator-workers  # parallelisable — dispatch independent tasks
+    roles: [orchestrator]                # orchestrator coordinates dispatch
+    skills: [orchestrate-development]    # development coordination skill
+    sub_agents:
+      roles: [implementer]
+      skills: [implement-task]
+      topology: parallel
+      max_agents: null               # limited by task count, not a fixed cap (see notes)
     document_type: null
     human_gate: false
+    prerequisites:
+      documents:
+        - type: dev-plan
+          status: approved
+      tasks:
+        min_count: 1                 # at least one task must exist
     notes: >
-      Single agent per task. Implementer role carries language-specific
-      vocabulary (e.g., implementer-go for this project). Cascade: start
-      Level 0 (single agent + tools). Escalate only if measured output
-      is below 45% threshold.
+      Orchestrator dispatches implementer sub-agents in parallel, one per
+      task. Implementer role carries language-specific vocabulary (e.g.,
+      implementer-go for this project). No fixed agent cap — implementation
+      tasks are independent by construction and don't share the coordination
+      overhead that limits specialist panels. Cascade: start Level 0
+      (single agent + tools). Escalate only if measured output is below
+      45% threshold.
+    effort_budget: "10–50 tool calls per task. Read spec section, implement, test, iterate."
 
   # ── Review stage ──────────────────────────────────────────
 
   reviewing:
     description: "Evaluating implementation against the specification"
+    orchestration: orchestrator-workers  # parallelisable — specialist panel
     roles: [orchestrator]
     skills: [orchestrate-review]
     sub_agents:
       roles: [reviewer-conformance, reviewer-quality, reviewer-security, reviewer-testing]
       skills: [review-code]
       topology: parallel
-      max_agents: 4
+      max_agents: 4                  # DeepMind saturation point for specialist panels
     document_type: report
-    human_gate: true  # Verdict checkpoint
+    human_gate: true                 # Verdict checkpoint
+    max_review_cycles: 3             # escalate to human after 3 fail-rework cycles
+    prerequisites:
+      tasks:
+        all_terminal: true           # all tasks must be done or not-planned
     notes: >
       Multi-agent. Orchestrator dispatches specialist reviewers in parallel.
       Each reviewer gets its own vocabulary-routed role + the shared
       review-code skill. Max 4 concurrent sub-agents (DeepMind saturation
-      point). Orchestrator never reads source — metadata only.
+      point for specialist panels sharing coordination overhead).
+      Orchestrator never reads source — metadata only. Review-rework loop
+      capped at 3 cycles to prevent infinite refinement (Microsoft
+      maker-checker pattern).
+    effort_budget: "5–10 tool calls per review dimension."
 
   # ── Plan review stage ─────────────────────────────────────
 
   plan-reviewing:
     description: "Reviewing a completed plan for aggregate delivery"
+    orchestration: single-agent
     roles: [reviewer-conformance]
     skills: [review-plan]
     document_type: report
     human_gate: true
+    prerequisites: {}
     notes: "Single agent. Plan review is conformance-focused by nature."
+    effort_budget: "5–10 tool calls. Read plan, check feature delivery, verify documentation currency."
 
   # ── Research and documentation stages ─────────────────────
 
   researching:
     description: "Producing a research report or analysis"
+    orchestration: single-agent
     roles: [researcher]
     skills: [write-research]
     document_type: research
     human_gate: false
+    prerequisites: {}
+    effort_budget: "10–30 tool calls. Gather sources, synthesise findings, draft structured report."
 
   documenting:
     description: "Updating project documentation for currency"
+    orchestration: single-agent
     roles: [documenter]
     skills: [update-docs]
     document_type: null
     human_gate: false
+    prerequisites: {}
+    effort_budget: "5–15 tool calls. Identify stale docs, update content, verify cross-references."
 ```
 
 **Key design decisions:**
 
 - **One stage, one binding.** No ambiguity about what to load. The system looks at the feature's current lifecycle state and knows exactly which roles, skills, and tools to provide.
-- **`sub_agents` for multi-agent stages.** The `reviewing` stage is the only one that routinely uses multiple agents. The binding declares the sub-agent configuration — roles, skills, topology, and a hard cap derived from the research (max 4 agents — DeepMind saturation point).
+- **`orchestration` is a first-class field.** Each binding declares its orchestration pattern: `single-agent` (sequential reasoning — the agent does the work directly) or `orchestrator-workers` (parallelisable — the agent dispatches sub-agents). This is not a hint; the context assembly pipeline includes this in the assembled context so agents know whether to delegate or work directly. Google Research found multi-agent coordination degrades sequential reasoning tasks by 39–70% but improves parallelisable tasks by 81% — the pattern must match the task structure. *(Source: orchestration recommendations §2.3)*
+- **`prerequisites` make stage gates enforceable.** Each binding declares the document and task prerequisites required before a feature can transition *into* that stage. The `entity(action: "transition")` tool checks these prerequisites and rejects the transition if they aren't met. This converts "agents skip steps" from a quality problem into an impossibility — the system literally prevents it. *(Source: MetaGPT SOPs, Masters et al. hard constraints ℋ, orchestration recommendations §2.1)*
+- **`sub_agents` for multi-agent stages.** The `reviewing` and `developing` stages use multiple agents. The binding declares the sub-agent configuration — roles, skills, topology, and agent caps. The cap of 4 applies to specialist panels sharing coordination overhead (review). Implementation tasks are independent by construction and don't share that overhead, so `developing` has no fixed cap. *(Source: DeepMind saturation point; Google Research alignment principle)*
+- **`max_review_cycles` prevents infinite refinement.** The reviewing binding declares a maximum number of review-rework cycles before escalating to human decision. This is a hard constraint derived from Microsoft's maker-checker pattern — without an iteration cap, review loops can continue indefinitely with diminishing returns. *(Source: orchestration recommendations §2.2)*
+- **`effort_budget` embeds effort expectations.** Each binding declares the expected effort range for the stage. This is included in the assembled context so agents know how much work to invest. Anthropic found that "agents struggle to judge appropriate effort for different tasks" and that embedding scaling rules in prompts directly addresses this. *(Source: Anthropic multi-agent system, orchestration recommendations §5.1)*
 - **`human_gate` is declared per stage.** The system knows which stages require human approval before proceeding. This replaces the implicit knowledge that "spec approval is needed before development."
 - **`document_type` ties to the document lifecycle.** When a stage produces a document, the binding declares what type. The system can then enforce that the document is registered and approved before the feature advances.
 - **`notes` captures the reasoning.** BECAUSE clause at the binding level — why this configuration, not another.
@@ -546,13 +676,16 @@ When `handoff(task_id=...)` is called (or when context is assembled for any othe
 |----------|---------|--------|-----------|
 | 1 | Project identity and hard constraints | `base` role | **High** |
 | 2 | Role identity | Selected role | **High** |
-| 3 | Combined vocabulary payload | Role vocab + Skill vocab | **High** |
-| 4 | Combined anti-pattern watchlist | Role anti-patterns + Skill anti-patterns | **Medium-High** |
-| 5 | Skill procedure (numbered steps) | Selected skill | **Medium** (structured steps survive) |
-| 6 | Output format + examples | Selected skill | **Rising** |
-| 7 | Relevant knowledge entries | Knowledge system (auto-surfaced) | **Rising** |
-| 8 | Evaluation criteria | Selected skill | **High** |
-| 9 | Retrieval anchors ("Questions This Skill Answers") | Selected skill | **High** |
+| 3 | Effort budget and orchestration pattern | Stage binding `effort_budget` + `orchestration` | **High** |
+| 4 | Combined vocabulary payload | Role vocab + Skill vocab | **High** |
+| 5 | Combined anti-pattern watchlist | Role anti-patterns + Skill anti-patterns | **Medium-High** |
+| 6 | Skill procedure (numbered steps) | Selected skill | **Medium** (structured steps survive) |
+| 7 | Output format + examples | Selected skill | **Rising** |
+| 8 | Relevant knowledge entries | Knowledge system (auto-surfaced) | **Rising** |
+| 9 | Evaluation criteria | Selected skill | **High** |
+| 10 | Retrieval anchors ("Questions This Skill Answers") | Selected skill | **High** |
+
+**Position 3 — Effort budget and orchestration pattern** appears early, in the high-attention zone, because it shapes the agent's entire approach to the task. A specification agent that sees "5–15 tool calls, single-agent task — do not delegate" in position 3 will calibrate its effort before reading the procedure. An implementation orchestrator that sees "orchestrator-workers, dispatch independent tasks in parallel" knows its role immediately. This directly addresses the Anthropic finding that agents cannot judge appropriate effort without explicit guidance, and the Google finding that the wrong orchestration pattern for the task type degrades quality by 39–70%.
 
 **What is NOT included:**
 
@@ -580,6 +713,26 @@ The project-wide foundation. Every role inherits this. Contains:
 - Hard constraints ("Spec is law," "No scope creep," "Deterministic YAML serialisation")
 - Commit conventions
 - Core architectural summary
+- Orientation convention (inherited by all roles)
+- Project-wide anti-patterns (inherited by all roles)
+
+**Orientation convention** (carried by `base`, inherited by every role):
+
+> On session start, call `status` to see current project state, then call `next` to see the work queue. Orient before acting. This applies to every agent — orchestrators arriving in a fresh context, sub-agents beginning a task, and any agent resuming work after a context switch.
+
+This implements the orchestration research recommendation that every agent session begin with a structured orientation (Anthropic multi-agent system, orchestration recommendations §3.5). The `handoff`/`next` tools assemble context for sub-agents automatically, but the top-level orchestrator needs this convention to ensure it reads the current state before making dispatch decisions.
+
+**Project-wide anti-patterns** (carried by `base`, inherited by every role):
+
+- **Flattery Prompting**
+  - **Detect:** Using superlatives or praise in sub-agent dispatch prompts ("expert," "world-class," "the best," "you excel at")
+  - **BECAUSE:** PRISM research shows flattery activates motivational and marketing text patterns in the model's training distribution, degrading domain-specific output quality. Competence is defined by vocabulary payloads and anti-patterns, not adjectives.
+  - **Resolve:** Remove all superlatives from dispatch prompts. Use the role's identity field (a real job title) and let the vocabulary do the routing work.
+
+- **Silent Scope Expansion**
+  - **Detect:** Adding features, refactoring, or making "improvements" not specified in the task or spec
+  - **BECAUSE:** Undocumented design decisions made during implementation are expensive to discover during review and may conflict with the human's intent
+  - **Resolve:** Implement only what the spec requires. If something seems missing, stop and ask.
 
 **Token budget:** ~200–300 tokens. This is always-loaded context (progressive disclosure Layer 1).
 
@@ -669,10 +822,21 @@ All specialist reviewers inherit from `reviewer` and add domain-specific vocabul
 #### `orchestrator`
 
 - **Identity:** "Senior engineering manager coordinating an agent team"
-- **Vocabulary:** task decomposition, work unit boundary, handoff protocol, parallel dispatch, conflict detection, dependency ordering, cascade escalation, review collation, remediation routing, checkpoint placement
-- **Anti-patterns:** Over-decomposition (splitting tasks below useful granularity), under-decomposition (monolithic tasks that exceed context budget), context forwarding (dumping full context to sub-agents instead of scoped packets), result-without-evidence (accepting sub-agent output without checking for evidence)
-- **Used in stages:** `reviewing` (as the coordinator), complex `dev-planning`
-- **Special:** The orchestrator role also carries knowledge of team economics — the 45% threshold, the saturation point at 4 agents, and the cascade pattern. These are hard constraints, not suggestions.
+- **Vocabulary:**
+  - *Dispatch mechanics:* task decomposition, work unit boundary, handoff protocol, parallel dispatch, conflict detection, dependency ordering, cascade escalation, review collation, remediation routing, checkpoint placement
+  - *Workflow governance:* lifecycle gate, stage prerequisite, transition prerequisite check, document approval cascade, hard constraint (ℋ), soft constraint (𝒮), stage binding lookup, orchestration pattern selection
+  - *Quality assessment:* decomposition quality, vertical slice completeness, specification testability, review cycle count, escalation threshold, review verdict (pass / pass-with-notes / fail)
+  - *Pattern matching:* sequential reasoning penalty, parallelisable task, single-agent sequential, orchestrator-workers parallel, maker-checker
+- **Anti-patterns:**
+  - Over-decomposition (splitting tasks below useful granularity)
+  - Under-decomposition (monolithic tasks that exceed context budget)
+  - Context forwarding (dumping full context to sub-agents instead of scoped packets)
+  - Result-without-evidence (accepting sub-agent output without checking for evidence)
+  - Reactive communication — **Detect:** excessive `status` calls and messages with few `decompose`, `handoff`, or structural actions. **BECAUSE:** Masters et al. (2025) found this pattern correlates with weaker orchestration outcomes; proactive orchestrators decompose 14.5× more and track dependencies 26× more. **Resolve:** structure work (decompose, add dependencies, refine tasks) before communicating about it.
+  - Premature delegation — **Detect:** dispatching implementation sub-agents for a feature that hasn't completed specification. **BECAUSE:** Google Research found multi-agent coordination degrades sequential reasoning (specification, design, planning) by 39–70%. **Resolve:** complete sequential stages as a single agent before parallelising.
+  - Infinite refinement loop — **Detect:** review cycle count exceeds `max_review_cycles` for a feature. **BECAUSE:** each review-rework cycle consumes context budget with diminishing returns; after 3 cycles the remaining issues are likely specification ambiguity, not implementation error. **Resolve:** escalate to human checkpoint with a summary of the recurring pattern.
+- **Used in stages:** `developing` (as the coordinator dispatching implementers), `reviewing` (as the coordinator dispatching reviewers)
+- **Special:** The orchestrator role also carries knowledge of team economics — the 45% threshold, the saturation point at 4 agents for specialist panels, and the cascade pattern. These are hard constraints, not suggestions. The orchestrator treats the binding registry as its decision table — it looks up the orchestration pattern and prerequisites for each stage rather than deciding them.
 
 ---
 
@@ -711,16 +875,43 @@ The system enforces that documents produced during a stage match the expected ty
 
 This replaces the current `document-creation` SKILL, which is generic across all document types. Type-specific skills carry type-specific vocabulary and anti-patterns — a specification author needs requirements vocabulary, not generic document creation procedure.
 
+#### Gate-checkable document templates
+
+Each authoring skill's output format must define a **gate-checkable template** — a set of structural requirements that the system can verify programmatically at stage transitions. This implements the MetaGPT finding that structured intermediate artifacts verified before the next stage begins reduce cascading errors.
+
+Each authoring skill template defines:
+
+1. **Required sections** — the section names that must be present (5–8 sections, following DP-6). A specification template might require: Problem Statement, Requirements, Constraints, Acceptance Criteria, Verification Plan.
+2. **Cross-reference requirements** — which other documents or entities must be cited. A specification must reference its parent design document. A dev-plan must reference its parent specification.
+3. **Acceptance criteria format** — how acceptance criteria are expressed (e.g., Given/When/Then, or numbered testable assertions).
+
+The `scripts/` directory for each authoring skill (DD-14) should include a validation script that checks these structural requirements. The script's output is used at stage gates: when a feature attempts to transition past the stage, the binding's `prerequisites` trigger the validation, and the system blocks if required sections are missing. Script output enters the context window; script source does not.
+
+This creates the forcing function the research identifies: agents must engage with each required section, which distributes effort across the document and prevents the rush-to-implementation pattern. The template also provides the "clear acceptance criteria" that Microsoft's maker-checker pattern requires for consistent evaluation.
+
+*Source: MetaGPT (structured intermediate artifacts), Anthropic (output format requirements), Microsoft (acceptance criteria for checker agents), orchestration recommendations §5.2.*
+
 ### 5.2 Implementation Skills
 
 | Skill | Stage | Produces | Paired Roles |
 |-------|-------|----------|--------------|
 | `implement-task` | developing | Code changes + tests | implementer-go |
+| `orchestrate-development` | developing | Coordinated parallel task dispatch | orchestrator |
 | `decompose-feature` | dev-planning | Task breakdown (via `decompose` tool) | architect |
 
 `implement-task` is the skill for individual task execution. It is deliberately lean — the implementer role carries the language-specific expertise, and the task itself carries the spec requirements. The skill's job is to provide the procedure (read spec → implement → test → verify) and anti-patterns (scope creep, untested code paths, spec deviation).
 
-`decompose-feature` guides the use of the `decompose` tool with vocabulary for dependency analysis, vertical slicing, and sizing. It carries anti-patterns for common decomposition failures: over-decomposition, circular dependencies, and missing integration tasks.
+`orchestrate-development` is the coordinator skill for the developing stage — the counterpart of `orchestrate-review`. It guides the orchestrator through: reading the dev-plan, dispatching implementer sub-agents for independent tasks in parallel (respecting dependency ordering), monitoring progress, handling task failures, and performing context compaction between sequential sub-agent completions. It carries vocabulary for parallel task dispatch, dependency-order sequencing, progress monitoring, and sub-agent output handling (lightweight references, not full output). This skill exists because the developing stage is `orchestrator-workers` topology: the orchestrator needs its own context, distinct from what the implementing sub-agents receive.
+
+**Context compaction guidance** (to be included in the skill's procedure): The orchestration research (Microsoft, Anthropic) identifies context growth across sequential sub-agent dispatches as a quality risk. The `orchestrate-development` skill should include three specific compaction techniques:
+
+1. **Summarise after each sub-agent completes.** Reduce the sub-agent's outcome to 2–3 sentences and a task ID. Do not retain the full sub-agent output in conversation.
+2. **Write progress summaries to documents.** If context utilisation exceeds 60% during a multi-task orchestration, write a progress summary to a registered document and start a fresh orchestration session that reads the summary.
+3. **Structure multi-feature plans as a sequence of single-feature contexts.** Do not attempt to orchestrate all features in one session. Complete one feature's development tasks, write the summary, then begin the next feature.
+
+These techniques are derived from Anthropic's finding that "direct subagent outputs can bypass the main coordinator for certain types of results, improving both fidelity and performance" and Microsoft's recommendation to "monitor accumulated context size and use compaction techniques between agents."
+
+`decompose-feature` guides the use of the `decompose` tool with vocabulary for dependency analysis, vertical slicing, and sizing. It carries anti-patterns for common decomposition failures: over-decomposition, circular dependencies, and missing integration tasks. The orchestration research identifies decomposition quality as the single strongest predictor of workflow success (Masters et al.: "performance gains correlate almost linearly with the quality of the induced task graph"). This skill should invest disproportionately in decomposition validation: Do tasks have clear descriptions? Are dependencies declared? Are tasks sized for single-agent completion? Are there gaps (e.g., missing test tasks)?
 
 ### 5.3 Review Skills
 
@@ -787,38 +978,57 @@ handoff(task_id="TASK-01KN...")
   │       (e.g., feature is in "developing" → stage is "developing")
   │
   ├── 2. Look up stage binding
-  │       ("developing" → roles: [implementer-go], skills: [implement-task])
+  │       ("developing" → roles: [orchestrator], skills: [orchestrate-development],
+  │        orchestration: orchestrator-workers, effort_budget: "10–50 tool calls per task")
   │
-  ├── 3. Resolve role with inheritance
-  │       implementer-go → implementer → base
-  │       Merge: base.conventions + implementer.vocabulary + implementer-go.vocabulary
-  │       Merge: base.anti_patterns + implementer.anti_patterns + implementer-go.anti_patterns
+  ├── 3. Extract orchestration metadata
+  │       From binding: orchestration pattern, effort budget, prerequisites (for validation),
+  │       max_review_cycles (if reviewing stage)
+  │       These are included at position 3 in the assembled context (high attention).
   │
-  ├── 4. Load skill
-  │       implement-task → vocabulary, anti-patterns, procedure, output format,
+  ├── 4. Resolve role with inheritance
+  │       orchestrator → base
+  │       Merge: base.conventions + orchestrator.vocabulary
+  │       Merge: base.anti_patterns + orchestrator.anti_patterns
+  │
+  ├── 5. Load skill
+  │       orchestrate-development → vocabulary, anti-patterns, procedure, output format,
   │       examples, evaluation criteria, retrieval anchors
   │
-  ├── 5. Surface relevant knowledge entries
+  ├── 6. Surface relevant knowledge entries
   │       Query knowledge base for entries matching:
   │       - Task file paths
   │       - Parent feature scope
   │       - Role domain tags
   │       Auto-include entries tagged "always" or matching task scope
   │
-  ├── 6. Filter MCP tool definitions
+  ├── 7. Filter MCP tool definitions
   │       Include only tools listed in the role's `tools` field
-  │       (implementer-go needs: entity, read_file, edit_file, grep, terminal, diagnostics, ...)
-  │       (does NOT need: decompose, retro, merge, pr, ...)
+  │       (orchestrator needs: entity, handoff, next, status, spawn_agent, finish, ...)
+  │       (does NOT need: edit_file, terminal, diagnostics, ...)
   │
-  ├── 7. Estimate token budget
-  │       Sum: role context + skill context + knowledge entries + tool definitions + task specifics
+  ├── 8. Estimate token budget
+  │       Sum: role context + skill context + orchestration metadata +
+  │            knowledge entries + tool definitions + task specifics
   │       IF > 40% of context window → WARN
   │       IF > 60% of context window → REFUSE and suggest splitting
   │
-  └── 8. Assemble in attention-curve order
+  └── 9. Assemble in attention-curve order
           Output the assembled context as a structured prompt:
-          [identity] [vocabulary] [anti-patterns] [procedure] [format]
+          [identity] [effort budget + orchestration pattern] [vocabulary]
+          [anti-patterns] [procedure] [format]
           [examples] [knowledge] [eval criteria] [retrieval anchors]
+
+          The effort budget and orchestration pattern appear at position 3
+          (high attention) because they shape the agent's entire approach.
+          A spec-author seeing "5–15 tool calls, single-agent — do not
+          delegate" calibrates before reading the procedure.
+
+          Within each section, order items so the most critical item
+          appears LAST, exploiting recency bias (Liu et al., 2024).
+          The most dangerous anti-pattern, the most important vocabulary
+          term, and the most relevant knowledge entry should each appear
+          at the end of their respective sections.
 ```
 
 ### 6.2 Token Budget Management
@@ -854,6 +1064,18 @@ Currently, knowledge entries are available via `knowledge(action: "list")`. In t
 4. **Recency weighting:** Prefer recently confirmed entries over stale ones.
 
 The auto-surfaced entries appear in the assembled context at position 7 (after examples, before evaluation criteria) — in the rising-attention zone near the end of context. They are formatted as "Always/Never X BECAUSE Y" entries, following the format the research identifies as most effective.
+
+**Lean constraint on auto-surfacing:** The n=5-beats-n=19 finding (DP-6) applies to knowledge entries as well as to requirements. If more entries match than can fit within the knowledge portion of the token budget, the assembly pipeline must cap the number surfaced — top 10 by recency-weighted confidence score — rather than including all matches. When entries are dropped due to the cap, the assembly should log which entries were excluded so the orchestrator can request them explicitly if needed. If the knowledge base for a given scope grows past a threshold where the cap is routinely hit, the `health` tool should recommend compaction.
+
+### 6.4 Freshness Tracking for Skills and Roles
+
+Skills and roles are operational context consumed on every task. Stale skills are poisoned context — they silently misdirect every agent that receives them (P2, P3).
+
+Role files (`.kbz/roles/*.yaml`) and skill files (`.kbz/skills/*/SKILL.md`) must carry a `last_verified` metadata field recording when the content was last confirmed as current. The `health` tool should flag any role or skill that has not been verified within a configurable window (default: 30 days). This extends the same freshness tracking that document records already have (`doc(action: "refresh")`) to all operational context files.
+
+When a skill or role is flagged as stale, it remains usable — the system does not block context assembly — but the staleness warning appears in the health report and in the assembled context's metadata, so orchestrators and humans are aware the context may be outdated.
+
+*Source: P3 (Living Documentation) improvement #1 — "context profiles and SKILLs do not carry `last-verified` metadata. These files are operational context that agents read on every task. They should have the same freshness tracking as registered documents."*
 
 ---
 
@@ -916,6 +1138,9 @@ The auto-surfaced entries appear in the assembled context at position 7 (after e
 │   ├── implement-task/
 │   │   ├── SKILL.md
 │   │   └── references/
+│   ├── orchestrate-development/
+│   │   ├── SKILL.md
+│   │   └── references/
 │   ├── decompose-feature/
 │   │   ├── SKILL.md
 │   │   └── references/
@@ -942,9 +1167,141 @@ The `profile(action: "get")` and `handoff` tools are extended (not replaced) to 
 
 ---
 
-## 8. Expected Impact
+## 8. Skill Content Authoring Guidelines
 
-### 8.1 Metrics to Track
+These guidelines apply to anyone writing skill content — human or agent. They complement the structural constraints (section ordering, file layout) with content-level constraints that determine whether the assembled context actually improves agent output.
+
+### 8.1 The Novelty Test
+
+Before writing any line of skill content, apply the novelty test: "Does the model already know this?"
+
+- **Include:** Kanbanzai-specific lifecycle states, transition rules, field ordering requirements, tool call sequences, project conventions, vocabulary payloads.
+- **Exclude:** What a state machine is, how lifecycle transitions work in general, what Go interfaces are, how to write tests, what YAML is.
+
+If a paragraph explains a general concept, delete it. If it explains a general concept *and* a Kanbanzai-specific rule, keep only the Kanbanzai-specific rule. The model has the general knowledge; it lacks the project-specific knowledge.
+
+### 8.2 Tone: Explain Why, Not Rigid Imperatives
+
+Anti-patterns use BECAUSE clauses (DP-4), and this extends to all instructional content. The tone should be explanatory rather than authoritarian. When the model understands *why* a convention exists, it generalises correctly to novel situations. When it only knows *what* the rule is, it follows it rigidly in matching cases and ignores it in novel ones.
+
+- **Avoid:** "ALWAYS do X." / "NEVER do Y."
+- **Prefer:** "Do X because Y." / "Avoid X because Y — instead, do Z."
+
+This is not a prohibition on clear conventions — it is a prohibition on *unexplained* imperatives. A BECAUSE clause transforms a brittle rule into a generalisable principle.
+
+*Source: Anthropic skill-creator meta-skill ("Try to explain to the model why things are important in lieu of heavy-handed musty MUSTs").*
+
+### 8.3 Uncertainty Protocol
+
+Every skill that produces work output (authoring skills, implementation skills) must include an explicit uncertainty instruction positioned early in the procedure, where attention is highest:
+
+> If the specification is ambiguous, incomplete, or contradictory for any aspect of this task, STOP and report the ambiguity. Do not infer intent. Do not make undocumented design decisions. The cost of asking is low; the cost of guessing wrong is high.
+
+This directly addresses the observed problem of agents being too eager to proceed and making decisions that should be human-owned. The instruction grants explicit permission to admit uncertainty — without this, the model's default behaviour is to produce *something* rather than nothing.
+
+*Source: Anthropic hallucination reduction guide ("Explicitly give Claude permission to admit uncertainty").*
+
+### 8.4 Spec Citation for Implementation Decisions
+
+Authoring and implementation skills should require agents to cite the specific spec section that justifies each non-trivial decision. This creates an audit trail and forces decisions to be grounded in the specification rather than general knowledge.
+
+For the `implement-task` skill: "When making an implementation choice between alternatives, cite the spec requirement that drives the decision. If no spec requirement covers the decision, note it as an assumption and flag it for human review."
+
+For review skills, this is already captured in the "Missing Spec Anchor" anti-pattern. Implementation skills need the complementary rule.
+
+*Source: Anthropic hallucination reduction guide ("Use direct quotes for factual grounding"; "Explicitly instruct Claude to only use information from provided documents").*
+
+### 8.5 Terminology Consistency Within Skills
+
+Each skill's vocabulary payload defines the canonical terms for its domain. Within the skill's own content — procedure, examples, anti-patterns — use those terms exclusively. Do not alternate between synonyms.
+
+- If the vocabulary says "finding," never write "issue" or "problem" in the procedure.
+- If the vocabulary says "acceptance criteria," never write "requirements" or "success conditions."
+
+The vocabulary payload routes the model to the right knowledge clusters. Inconsistent terminology within the skill undermines that routing.
+
+*Source: Anthropic Skill Authoring Best Practices ("Use consistent terminology — choose one term and use it throughout").*
+
+---
+
+## 9. Skill Development Process
+
+Skills are not documentation — they are executable context that directly shapes agent output quality. They must be developed with the same rigour as code: tested against real scenarios, evaluated for effectiveness, and iterated based on observed behaviour.
+
+### 9.1 The Development Loop
+
+Every skill — new or revised — follows this loop:
+
+1. **Identify the gap.** Run agents on representative tasks *without* the skill. Document what they get wrong: missed conventions, incorrect output format, skipped steps, wrong vocabulary.
+
+2. **Write minimal content.** Address only the observed gaps. Do not document imagined problems or explain things the model already handles correctly. Start lean and add only when evaluation shows a need.
+
+3. **Define test scenarios.** Write 3–5 realistic test scenarios per skill. Each scenario should be a concrete task description — the kind of thing an orchestrator or human would actually say. Include both should-trigger and should-not-trigger scenarios for the description.
+
+4. **Run and compare.** Execute agents on the test scenarios with and without the skill. Compare outputs qualitatively. Does the skill improve the specific gaps identified in step 1? Does it introduce new problems (e.g., wasted tokens on content the agent ignores)?
+
+5. **Iterate.** Based on the comparison:
+   - If the skill doesn't improve output → cut content, not add more.
+   - If agents ignore a section → it may be in the attention dead zone, or it may explain something the model already knows. Try repositioning or deleting.
+   - If agents consistently perform the same multi-step operation → bundle it as a script in `scripts/`, not as prose instructions.
+   - If a stubborn issue persists → try different metaphors or patterns rather than adding more rigid constraints.
+   - **Use agents to diagnose failures.** Anthropic found that "Claude 4 models can diagnose prompt failures and suggest improvements when given a prompt and a failure mode." When a skill consistently fails to produce the desired output, give an agent the skill content plus a concrete failure example and ask it to identify why the skill didn't work. This is often faster than manual analysis and surfaces attention-curve or vocabulary issues that humans miss.
+
+6. **Pass the quality gate** (§9.2) before committing.
+
+This loop need not be heavy. For a simple skill update, steps 1–2 might take 15 minutes. For a new skill, the full loop might take a few hours. The point is that *zero* evaluation is never acceptable.
+
+*Source: Anthropic Skill Authoring Best Practices ("Create evaluations BEFORE writing extensive documentation"); Anthropic skill-creator meta-skill (create → test → review → improve loop).*
+
+### 9.2 Skill Quality Gate
+
+Every skill must pass this checklist before shipping. This is a gate, not a guideline.
+
+**Structure:**
+- [ ] SKILL.md body is under 500 lines
+- [ ] Section ordering follows the attention curve (Vocabulary → Anti-patterns → Checklist → Procedure → Output Format → Examples → Evaluation Criteria → Questions)
+- [ ] All reference files link directly from SKILL.md (one level deep, never reference-to-reference)
+- [ ] `constraint_level` is declared in frontmatter and procedure style matches (exact sequences for low, templates for medium, guidance for high)
+
+**Content:**
+- [ ] Every paragraph passes the novelty test (§8.1) — no general-knowledge explanations
+- [ ] Vocabulary payload has 15–30 terms that pass the 15-year practitioner test
+- [ ] Anti-patterns have 5–10 entries, each with detect/because/resolve
+- [ ] At least 2 BAD/GOOD example pairs with WHY explanations
+- [ ] Terminology is consistent with the vocabulary payload throughout (§8.5)
+- [ ] Tone is explanatory, not authoritarian (§8.2)
+- [ ] No time-sensitive information (use "current method" / "previous method," not dates)
+
+**Description:**
+- [ ] `expert` and `natural` descriptions are both present
+- [ ] Descriptions include both *what* the skill does and *when* to use it
+- [ ] Workflow-critical skills include assertive "use even when..." clauses (DP-11)
+- [ ] Description uses third person consistently
+
+**Testing:**
+- [ ] At least 3 test scenarios defined (realistic task descriptions)
+- [ ] Tested with representative tasks — outputs compared with and without skill
+- [ ] Observed improvement on the gaps the skill was written to address
+
+### 9.3 Description Optimization
+
+For the most critical skills (those bound to stage gates or high-frequency stages), run a lightweight description optimization:
+
+1. Write 10 test queries — a mix of should-trigger and should-not-trigger.
+2. Test whether the skill triggers correctly on each query.
+3. If under-triggering: make the description more assertive, add trigger terms the agent uses when thinking about the task.
+4. If over-triggering: narrow the description's scope, add "do not use when..." exclusions.
+5. Iterate until trigger accuracy is acceptable.
+
+This is not needed for every skill — only for the 3–4 skills where incorrect triggering has the highest cost (e.g., `implement-task`, `review-code`, workflow-stage skills).
+
+*Source: Anthropic skill-creator meta-skill (description optimization workflow).*
+
+---
+
+## 10. Expected Impact
+
+### 10.1 Metrics to Track
 
 | Metric | Current Baseline | Target | Source Principle |
 |--------|-----------------|--------|-----------------|
@@ -956,7 +1313,9 @@ The `profile(action: "get")` and `handoff` tools are extended (not replaced) to 
 | Sub-agent dispatch per feature | Variable | 1 (70% of tasks), 2–4 (30%) | P9 (Token Economy) |
 | MAST failure mode incidents | Unknown | Tracked and trending down | P7 (Observability) |
 
-### 8.2 Research-Backed Predictions
+**Scope note on observability:** The metrics above require collection mechanisms that are outside the scope of this design. Specifically, the original research (R8, R9, R14, R19) recommends structured handoff logging for sub-agent dispatches, per-reviewer metrics tracking (approval rate, finding count, review duration), gate rejection rate monitoring, and automated MAST failure mode detection. These are system-level instrumentation concerns — they require changes to the MCP server's logging layer, the `spawn_agent` dispatch path, and the `checkpoint` tool — not to the skills and roles architecture. They should be addressed in a companion observability design. This document provides the *inputs* to observability (structured review output, stage bindings, role declarations) but not the *collection infrastructure*.
+
+### 10.2 Research-Backed Predictions
 
 Based on the cited research:
 
@@ -969,7 +1328,7 @@ Based on the cited research:
 
 ---
 
-## 9. Design Decisions
+## 11. Design Decisions
 
 | # | Decision | Rationale |
 |---|----------|-----------|
@@ -979,36 +1338,54 @@ Based on the cited research:
 | DD-4 | Skills follow a fixed section ordering | The attention curve (Liu et al., 2024; Wu et al., 2025) is architectural, not patchable. The ordering is not a suggestion — it is a design constraint that maps content to attention weight. |
 | DD-5 | Evaluation criteria are separated from procedure | The agent doing the work must not self-evaluate (Anthropic, Mar 2026). Evaluation criteria enable a separate pass — human or automated — to assess output quality using gradable questions. |
 | DD-6 | Stage bindings are declared, not inferred | Implicit bindings (agents reading AGENTS.md and inferring the right context) are a fuzzy step that should be hardened (P1). Declared bindings are deterministic, auditable, and testable. |
-| DD-7 | Maximum 4 concurrent sub-agents per stage | DeepMind (2025) shows team effectiveness saturates at 3–4 agents. Beyond that, coordination overhead exceeds marginal benefit. This is a hard constraint, not a guideline. |
+| DD-7 | Agent cap of 4 applies to specialist panels, not independent tasks | DeepMind (2025) shows team effectiveness saturates at 3–4 agents sharing coordination overhead (e.g., specialist reviewers evaluating the same code from different angles). Implementation tasks are independent by construction — different files, different concerns — and don't share that coordination tax. The cap is per-topology: parallel-specialists cap at 4; parallel-independents are limited by task count. *(Refined based on Google Research alignment principle and orchestration recommendations.)* |
 | DD-8 | Tool filtering per role | Every loaded tool definition consumes attention budget. A security reviewer does not need `decompose`. Filtering reduces context size and focuses attention on relevant tools. Implements the jig pattern from P10. |
 | DD-9 | Skills and roles move inside `.kbz/` | The `.kbz/` directory is the instance root for all Kanbanzai state. Skills and roles are operational configuration, not project documentation. They belong with the system state, not at the project root. This also makes them manageable by MCP tools. |
 | DD-10 | Document-type-specific authoring skills replace generic `document-creation` | A specification needs requirements vocabulary; a design needs architecture vocabulary. A generic skill activates neither. Type-specific skills carry type-specific vocabulary, anti-patterns, and examples. |
+| DD-11 | Constraint level is declared per skill | Different tasks need different degrees of freedom (DP-9). Low-freedom skills provide exact tool call sequences; high-freedom skills provide principles. Declaring the constraint level in frontmatter makes this explicit and auditable, and forces the skill author to match procedure style to risk. |
+| DD-12 | Skills include optional copy-paste checklists | Checklists that agents copy into their response make compliance visible and prevent step-skipping (Anthropic Best Practices). They are required for low/medium-freedom skills and optional for high-freedom skills. |
+| DD-13 | Skill development follows an evaluation-driven loop | Skills are written to address observed gaps, not imagined problems. The create → test → compare → iterate loop (§9.1) and quality gate (§9.2) ensure skills demonstrably improve agent output before shipping. Writing evaluations before writing extensive skill content is a hard process constraint. |
+| DD-14 | Scripts replace prose for deterministic operations | Operations that are exact and repeatable (prerequisite checks, structure validation, stage gate verification) belong in `scripts/`, not in prose instructions. Script output enters the context window; script source does not. This reduces token cost and eliminates interpretation errors. |
+| DD-15 | Orchestration pattern is a first-class binding field | Google Research found multi-agent coordination degrades sequential reasoning by 39–70% but improves parallelisable tasks by 81%. The orchestration pattern (`single-agent` vs `orchestrator-workers`) must be declared per stage and included in assembled context, not left to agent discretion. *(Source: orchestration recommendations §2.3.)* |
+| DD-16 | Stage gates are enforceable prerequisites, not advisory | Masters et al. distinguish hard constraints (ℋ — violation terminates) from soft constraints (𝒮 — penalties). Stage transitions require programmatic prerequisite checks (document approval status, task completion). The `entity(action: "transition")` tool rejects transitions with unmet prerequisites. *(Source: MetaGPT SOPs, Masters et al. hard constraints, orchestration recommendations §2.1.)* |
+| DD-17 | Effort budgets are included in assembled context | Anthropic found that "agents struggle to judge appropriate effort for different tasks." Each stage binding declares an effort budget (expected tool call range and activity description). The assembly pipeline includes this at position 3 (high attention) so the agent calibrates before reading the procedure. *(Source: Anthropic multi-agent system, orchestration recommendations §5.1.)* |
+| DD-18 | Review-rework loops have an iteration cap | Microsoft's maker-checker pattern requires an iteration cap to prevent infinite refinement. The reviewing binding declares `max_review_cycles: 3`. After 3 fail-rework cycles, the system escalates to human decision. *(Source: Microsoft AI Agent Orchestration Patterns, orchestration recommendations §2.2.)* |
+| DD-19 | Document templates are gate-checkable | MetaGPT's core mechanism is structured intermediate artifacts verified before the next stage begins. Each authoring skill defines required sections and cross-references. Validation scripts in `scripts/` check these at stage gates. *(Source: MetaGPT, orchestration recommendations §5.2.)* |
+| DD-20 | Design optimises for constraint adherence over workflow runtime | Masters et al. (2025) identify a fundamental three-way trade-off: "Goal achievement, constraint adherence, and workflow runtime cannot all be maximized simultaneously." Kanbanzai's current problems (inconsistency, step-skipping, rushed specifications) indicate constraint adherence is the weakest axis. This design therefore prioritises constraint adherence — enforceable gates, structured templates, prerequisite checks — accepting that these mechanisms add latency to the workflow. This is a conscious trade-off, not an oversight. If constraint adherence improves to a satisfactory level, future iterations may relax selected gates to recover runtime. *(Source: Masters et al. (2025), orchestration recommendations §1.)* |
 
 ---
 
-## 10. Open Questions
+## 12. Open Questions
 
 1. **Should vocabulary payloads be curated per-project or shipped as defaults?** The current design assumes vocabulary is project-specific (e.g., `implementer-go` for this project). Should Kanbanzai ship default vocabulary payloads for common languages and domains, with project-level overrides?
 
-2. **How should the system handle roles that don't exist yet?** If a stage binding references `reviewer-security` but the project hasn't created that role file, should the system fall back to the parent `reviewer` role, or refuse to proceed?
+2. **~~How should the system handle roles that don't exist yet?~~** **Resolved.** If a stage binding references a role that doesn't exist (e.g., `reviewer-security` not yet created), the system falls back to the parent role (e.g., `reviewer`) and logs a warning. It does not refuse to proceed. Rationale: hard gates block *incorrect* transitions; missing context is a soft concern to be flagged, not blocked. The `health` tool reports the missing role so it can be created. *(Resolved via orchestration recommendations review — Masters et al. hard/soft constraint alignment.)*
 
 3. **Should skills carry their own test fixtures?** The `references/` directory could include test inputs and expected outputs for the skill, enabling automated quality assurance of skill output. Is this worth the added complexity?
 
-4. **How does this interact with the `decompose` tool's task creation?** When `decompose` creates tasks, should it also tag each task with the expected stage and role, so `handoff` can resolve the binding automatically?
+4. **~~How does this interact with the `decompose` tool's task creation?~~** **Resolved.** When `decompose` creates tasks, it should tag each task with the expected stage and role so that `handoff` can resolve the binding automatically. Additionally, `decompose` should validate decomposition quality: tasks have clear descriptions, dependencies are declared, tasks are sized for single-agent completion, and there are no obvious gaps (e.g., missing test tasks). Decomposition quality is the single strongest predictor of workflow success (Masters et al.). *(Resolved via orchestration recommendations §5.5.)*
 
 5. **Should vocabulary payloads have expiry dates?** Domain vocabulary evolves. "OWASP Top 10 (2021)" will eventually be superseded. Should vocabulary terms carry freshness metadata, like knowledge entries do?
 
-6. **What is the right granularity for reviewer specialisation?** Four specialists (conformance, quality, security, testing) maps to the current five review dimensions minus documentation (which is a cross-cutting concern). Should documentation currency be a specialist or remain a dimension within conformance review?
+6. **~~What is the right granularity for reviewer specialisation?~~** **Resolved.** Four specialists (conformance, quality, security, testing) is the right granularity. Documentation currency remains a cross-cutting concern within conformance review — it doesn't warrant its own vocabulary payload for most changes. The adaptive composition approach (§5.4) allows the orchestrator to dispatch fewer reviewers when the change doesn't warrant all four. *(Resolved via orchestration research — Google's finding that the optimal architecture depends on task properties, not a fixed team structure.)*
+
+7. **How should skills be versioned and tracked?** If skills follow the evaluation-driven development loop (§9), should test scenarios and evaluation results be stored alongside the skill (in `references/` or a `tests/` directory)? Should skill changes be tracked with the same lifecycle discipline as entity changes?
+
+8. **Should we adopt a skill-creator meta-skill?** The Anthropic skill-creator (§9 of the research report) demonstrates a comprehensive meta-skill for creating, testing, and iterating on skills. At our current scale (~10 skills), the full tooling is overkill. But if the skill catalog grows significantly, a Kanbanzai-adapted skill-creator could enforce the quality gate and development loop automatically.
 
 ---
 
-## 11. Relationship to Other Documents
+## 13. Relationship to Other Documents
 
 | Document | Relationship |
 |----------|-------------|
 | `work/research/ai-agent-best-practices-research.md` | Research basis — this design applies the 20 recommendations from that report |
+| `work/research/agent-orchestration-research.md` | Orchestration research — findings on enforceable gates, ACI tool design, effort budgets, orchestration patterns, and decomposition quality integrated into this design (DD-15 through DD-19, DP-9 extension, binding registry enrichment) |
+| `work/design/orchestration-recommendations.md` | Companion document — concrete orchestration-layer recommendations derived from the orchestration research. This design implements the SKILL and role integration recommendations from that document. |
 | `work/design/machine-context-design.md` | The context assembly model this design extends |
 | `work/design/agent-interaction-protocol.md` | Agent behaviour conventions this design must respect |
 | `work/design/quality-gates-and-review-policy.md` | Review policy this design operationalises |
 | `work/design/document-centric-interface.md` | Document-led workflow model this design integrates with |
 | `work/spec/phase-2b-specification.md` | The context profile system this design supersedes |
+| `work/research/agent-skills-research.md` | Anthropic documentation research — pragmatic additions (§8, §9) drawn from this report |
+| *(companion design needed)* | Observability infrastructure — structured handoff logging, review metrics, gate rejection monitoring, MAST detection (R8, R9, R14, R19 from research). Out of scope for this design; see §10.1 scope note. |

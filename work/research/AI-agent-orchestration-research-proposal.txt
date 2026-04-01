@@ -1,0 +1,85 @@
+# AI Agent Orchestration Research Proposal
+
+As part of the Kanbanzai 3.0 redesign, we are doing a thorough phase of research, looking in particular for up-to-date peer-reviewed academic research on each topic we are looking to improve.
+
+Here I’m proposing we look for articles on AI Agent orchestration to improve the way The Kanbanzai System, and the `kanbanzai` MCP server tools facilitate AI Agent Orchestration.
+
+I have had difficulty finding good, authoritative sources. Could you look for some recent academic papers (or good articles published by other authoritative sources: e.g. large tech companies: IBM, Amazon, Google, Anthropic, OpenAI etc.)
+
+In particular we are looking for guidance on how to improve our tools, systems and SKILLs in a practical way.
+
+While many orchestration research seems to be about orchestrating AI Agents for doing things other than Software Development, I’m hoping that there may be general lessons in their findings that might inform our systems.
+
+## A few sources I have found
+
+- https://www.anthropic.com/engineering/multi-agent-research-system
+- https://dl.acm.org/doi/10.1145/3772429.3772439
+- https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns
+- https://www.ibm.com/think/topics/ai-agent-orchestration
+- https://arxiv.org/html/2601.02577v1
+- https://research.google/blog/towards-a-science-of-scaling-agent-systems-when-and-why-agent-systems-work/
+
+Some of these may block you. Let me know and I will access them for you.
+
+However, I would be interesting in sources you might now about, or places we could look for more academic-related articles.
+
+## What is Kanbanzai?
+
+**Kanbanzai** — Git-native workflow system for human-AI software development.
+
+- **Humans** own intent: goals, designs, documents, approvals.
+- **AI agents** own execution: decomposition, implementation, review, status tracking.
+- **Document-led**, not ticket-led — work flows through design → spec → dev-plan → review, each with its own draft lifecycle.
+- **Features** travel a state machine from proposal → specification → done, with stage gates enforced by the system.
+
+**`kanbanzai` MCP server** — the tool agents use to manage all of this:
+
+- Stores structured workflow state (plans, features, tasks, bugs, decisions) as YAML in `.kbz/`, synced via Git.
+- Orchestrates work: decomposes specs into tasks, delegates to sub-agents, manages parallelism, reviews output.
+- Acts as a knowledge graph / long-term memory — agents query it for project context, specs, decisions, and constraints.
+- Tracks documents with structural metadata (concepts, facts, classifications) — not just workflow state.
+- Humans are mostly invisible to it; they interact by writing docs and talking to an AI.
+
+**Key technical facts:**
+
+- Written in Go, runs as an MCP server.
+- No database — YAML files in `.kbz/`, deterministically serialised, merge-friendly in Git.
+- All documents are Markdown.
+
+## Goal
+
+The goals of the Kanbanzai system is to:
+
+- Orchestrate AI Agents to produce high-quality code that meets the specifications 
+- Reduce project drift problems by adding focused, highly organised persistent memory to the workflow
+- Efficiently manage context by providing focused, highly organised information for each new context
+- Provide tools for AI Agents to find focused information in a large document store without having to read and grep hundreds of documents
+- Provide a system for humans to manage large AI-driven software projects
+
+Sub-goals:
+
+- Speed the process of creating large software projects
+- Minimise token usage of AI Agents when creating large software projects
+
+Non-goals:
+- Speed up or reduce token usage in small software projects
+
+## Problem
+
+The `kanbanzai` MCP Server and `.kbz/` store are working incredibly well.
+
+However it feels like our instructions, SKILLs, etc. aren’t working well and working together. The feel more like an ad-hoc cobbling together of knowledge, rather than a focused attempt to formalise the system processes at each stage of the workflow.
+
+### Inconsistency
+
+However, AI Agents are working with it inconsistently:
+
+- They don’t discover it
+- They forget to use it
+- They skip steps in the workflow
+- They are too keen to get to implementation
+- They write inconsistent specifications and plans
+- They don’t appear to understand the workflow system
+
+There is an overall inconsistent quality to the output. Mostly is great, occasionally it’s not. We need to work out why.
+
