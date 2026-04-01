@@ -1,0 +1,47 @@
+# Titles
+
+## The problem
+
+Currently titles are inconsistent messy and in some cases non-existent.
+
+Browsing entities and understanding workflow in the viewer app is tricky due to cognitive load
+
+IDs and Titles are getting mixed together, they should be kept apart.
+
+## Proposed solution
+
+Make titles the core of the human experience when browsing a `.kbz` store.
+
+### Better titles
+
+Every entity, including the Project itself should have a short, human-readable title, that distils what is. Preferably no more that 4 words.
+
+- The title will be used in the kanbanzai viewer
+	- in tables
+	- in lists
+	- in issue browser
+
+- The title should be simple
+	- Can be same as slug in title form
+	- 3 or 4 words
+	- No punctuation
+
+## Examples
+
+### Good examples ✅
+- Server info tool
+- Human-friendly ID display
+- Specification skill
+
+### Bad examples ❌
+- P4 Kanbanzai 2.0: MCP Tool Surface Redesign
+- P8 — decompose propose Reliability Fixes
+- P7 — Developer Experience Improvements
+
+## Add titles
+
+- Add titles to the schema
+- Add code to create consistent, informative, easy-to-read, titles
+- add to skills in kanbanzai project to enforce consistent, informative, easy-to-read, titles
+- add to **exported kanbanzai system skills** to enforce consistent, informative, easy-to-read, titles in all projects that use Kanbanzai System
+- Retrospectively add titles to the `kanbanzai` project so that they can be viewed and tested in the viewer app.

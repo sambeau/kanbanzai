@@ -1,0 +1,126 @@
+document_id: PROJECT/design-entity-names
+document_path: work/design/entity-names.md
+content_hash: 5ba8d8315a9c433cb87bc5f6f1e7e0b8f2520a9ab2417ee04f088ce0fae00527
+indexed_at: 2026-04-01T09:21:00.342674Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Entity Names'
+      byte_offset: 0
+      byte_count: 7869
+      word_count: 1277
+      content_hash: 5ba8d8315a9c433cb87bc5f6f1e7e0b8f2520a9ab2417ee04f088ce0fae00527
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Problem
+          byte_offset: 186
+          byte_count: 1761
+          word_count: 282
+          content_hash: 51fb0fe93e0ec26dda7ac325bc619bb5e78ba796a22de66e9e308cd4983080fd
+        - path: "1.2"
+          level: 2
+          title: 2. Proposed Changes
+          byte_offset: 1947
+          byte_count: 1875
+          word_count: 298
+          content_hash: 5ff11b2bfa8801ed3d8cbd130c5d6df2ceda87e50a1903b017a2d7daa7bd660b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Change 1 — Rename `title` → `name` on all entity types
+              byte_offset: 2037
+              byte_count: 1023
+              word_count: 160
+              content_hash: 8d01f2e86c23ce0b3a7df15b18bae0e404e43b7a33d7ca562a4186bd38192cae
+            - path: 1.2.2
+              level: 3
+              title: Change 2 — Retire `label` on Feature and Task
+              byte_offset: 3060
+              byte_count: 380
+              word_count: 65
+              content_hash: 540420b64fd9437b003b6e80a8dd0cbe88da5e77e2e504c451e60a5de16ead7a
+            - path: 1.2.3
+              level: 3
+              title: Change 3 — Add `name` to `config.yaml` and `kbz init`
+              byte_offset: 3440
+              byte_count: 382
+              word_count: 60
+              content_hash: 5bed320d260b7d2acb492cba0dc1edd54e86e347a67b499d2506f567194c4171
+        - path: "1.3"
+          level: 2
+          title: 3. Name Rules
+          byte_offset: 3822
+          byte_count: 2364
+          word_count: 401
+          content_hash: 9745d352ca5afa91e5441650f8305e9d914a5c0584394fa30550a9fe84acac7b
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Hard rules (validated in code, errors returned)
+              byte_offset: 3840
+              byte_count: 497
+              word_count: 83
+              content_hash: 6e115ebf9fa1a21fa588b4a2488ac211dc289faab3f5cb83c2aa649bc2ac8de7
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Skill guidance (enforced through agent instructions, not code)
+              byte_offset: 4337
+              byte_count: 1065
+              word_count: 168
+              content_hash: d180e3e5c4b036531f7cc1b7eb7ad1663bcfaf42bd71b36930d3f41892684345
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Examples
+              byte_offset: 5402
+              byte_count: 784
+              word_count: 146
+              content_hash: 2a8ac6590e40f9c46febaa5401407511fd9b3861e4f889755bef01e910d67e30
+        - path: "1.4"
+          level: 2
+          title: 4. Migration
+          byte_offset: 6186
+          byte_count: 1252
+          word_count: 212
+          content_hash: 9c22e03626af2a8eb7368131cff47512381f6b0d725d6b44ba9f537969592b31
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Existing entities in this repo
+              byte_offset: 6203
+              byte_count: 664
+              word_count: 113
+              content_hash: d1e83c316b9990ef23e2aa8521d55a65f01856d894f4d26897533cebf1faf3d3
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Backward compatibility
+              byte_offset: 6867
+              byte_count: 571
+              word_count: 96
+              content_hash: 73601124de146e50d1b7b597407074ee48d770f73ab84b0e9d83c5c816625831
+        - path: "1.5"
+          level: 2
+          title: 5. Scope
+          byte_offset: 7438
+          byte_count: 431
+          word_count: 64
+          content_hash: ff695d25dfd2af50773f2b33d26e6257c9eeea747cfb8301ae25a303d4cf2cf4
+front_matter:
+    status: proposal
+    date: "2026-06-17"
+    extra:
+        Author: orchestrator
+        Related: '`work/design/human-friendly-ids.md`'
+        Supersedes: '`work/design/titles-proposal.txt`'
+cross_doc_links:
+    - target_path: work/design/human-friendly-ids.md
+      link_text: work/design/human-friendly-ids.md
+      section_path: "1"
+conventional_roles:
+    - section_path: 1.3.3
+      role: example
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+classified: false

@@ -1,0 +1,142 @@
+document_id: PROJECT/dev-plan-entity-names-implementation-plan
+document_path: work/plan/entity-names-implementation-plan.md
+content_hash: 5e1b374687bd16c13d5d0af803fe861f1981a44a043877413b8d21770ad6e841
+indexed_at: 2026-04-01T10:09:30.016121Z
+sections:
+    - path: "1"
+      level: 1
+      title: Entity Names — Implementation Plan
+      byte_offset: 0
+      byte_count: 25861
+      word_count: 3769
+      content_hash: 5e1b374687bd16c13d5d0af803fe861f1981a44a043877413b8d21770ad6e841
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Implementation Approach
+          byte_offset: 478
+          byte_count: 2673
+          word_count: 312
+          content_hash: 97adb1303587ca0515b6be27ce05ce5ecf01defdd7e18c62e0a001b8fb3cf1a9
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 3151
+          byte_count: 1121
+          word_count: 151
+          content_hash: 673a844ae82056ef485f1a31922168341ccb1278c436939cfba103be92249f94
+        - path: "1.3"
+          level: 2
+          title: 3. Task Details
+          byte_offset: 4272
+          byte_count: 19762
+          word_count: 2919
+          content_hash: ed3a06a44da099ede6c5a4def20fb3e2c201be28fe60c12bf1028bcbf1fa6afc
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Task 1: Model'
+              byte_offset: 4292
+              byte_count: 1706
+              word_count: 253
+              content_hash: f168219aab37dc0da5aeb336e8e2d18fc0ab2886d300e30ea91613654cb614c4
+            - path: 1.3.2
+              level: 3
+              title: 'Task 2: Storage and serialisation'
+              byte_offset: 5998
+              byte_count: 3232
+              word_count: 473
+              content_hash: 6f955051e50e44c12484a31eaff8d39c4061d38ea8768ae62cb2dd1dc51e96cb
+            - path: 1.3.3
+              level: 3
+              title: 'Task 3: Validation'
+              byte_offset: 9230
+              byte_count: 2436
+              word_count: 344
+              content_hash: 1ddb7f079e143a09a3c9e5c9ee11e8b05a6f0bf7c62d63c2e7ae2f0313690f74
+            - path: 1.3.4
+              level: 3
+              title: 'Task 4: Config model and `kbz init`'
+              byte_offset: 11666
+              byte_count: 2564
+              word_count: 362
+              content_hash: 5ac604e3c5c8685230ab35fc4b49db2fcb6ea77ac37613b2d9b20d7913c52f6c
+            - path: 1.3.5
+              level: 3
+              title: 'Task 5: MCP tools'
+              byte_offset: 14230
+              byte_count: 3530
+              word_count: 515
+              content_hash: f6eb11c6500ae7b2a1d32a56e249dba0d12237219d319f48f1bc16e555c6f1bb
+            - path: 1.3.6
+              level: 3
+              title: 'Task 6: Skill files'
+              byte_offset: 17760
+              byte_count: 3301
+              word_count: 506
+              content_hash: f0a36b2486d32816e651fab407525312339c3f14b72cfd1a1ce27c0b2e757ca2
+            - path: 1.3.7
+              level: 3
+              title: 'Task 7: Backfill'
+              byte_offset: 21061
+              byte_count: 2973
+              word_count: 462
+              content_hash: bb9bce3845ee6ca92190ce67b49ecda59a1e27a415c7c03175366c8782fdcbb6
+        - path: "1.4"
+          level: 2
+          title: 4. Dependencies
+          byte_offset: 24034
+          byte_count: 1160
+          word_count: 213
+          content_hash: 4f0558d964b3703f6611b67aa6b4bb74796b900ef7570da68fb27adf50ae6566
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Parallelism guide
+              byte_offset: 24610
+              byte_count: 584
+              word_count: 90
+              content_hash: 6c7b191fcdd903d9fcfb09616acb06f5db47e8bcbdf4a946095d19a845324a68
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria Coverage
+          byte_offset: 25194
+          byte_count: 667
+          word_count: 138
+          content_hash: 18c1c66666b1e98f89de93a3558cef10d2cb59c592ba01f34b1e855c481feebe
+cross_doc_links:
+    - target_path: work/spec/entity-names.md
+      link_text: work/spec/entity-names.md
+      section_path: "1"
+    - target_path: work/design/entity-names.md
+      link_text: work/design/entity-names.md
+      section_path: "1"
+    - target_path: work/spec/entity-names.md
+      link_text: work/spec/entity-names.md
+      section_path: "1.1"
+    - target_path: work/design/entity-names.md
+      link_text: work/design/entity-names.md
+      section_path: "1.1"
+    - target_path: internal/kbzinit/skills/agents/SKILL.md
+      link_text: internal/kbzinit/skills/agents/SKILL.md
+      section_path: "1.2"
+    - target_path: internal/kbzinit/skills/plan-review/SKILL.md
+      link_text: internal/kbzinit/skills/plan-review/SKILL.md
+      section_path: "1.2"
+    - target_path: internal/kbzinit/skills/agents/SKILL.md
+      link_text: internal/kbzinit/skills/agents/SKILL.md
+      section_path: 1.3.6
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.3.6
+    - target_path: .agents/skills/kanbanzai-plan-review/SKILL.md
+      link_text: .agents/skills/kanbanzai-plan-review/SKILL.md
+      section_path: 1.3.6
+    - target_path: work/spec/entity-names.md
+      link_text: work/spec/entity-names.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+classified: false

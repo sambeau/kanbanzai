@@ -1,0 +1,141 @@
+document_id: PROJECT/specification-entity-names
+document_path: work/spec/entity-names.md
+content_hash: 17bfb9e6d3ee85b6019bf7731a69723ec1fa10e2ee8105b00323de013a2389e9
+indexed_at: 2026-04-01T09:42:26.521225Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Entity Names'
+      byte_offset: 0
+      byte_count: 12095
+      word_count: 1825
+      content_hash: 17bfb9e6d3ee85b6019bf7731a69723ec1fa10e2ee8105b00323de013a2389e9
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 391
+          byte_count: 656
+          word_count: 106
+          content_hash: 232129a7629cb4a5cf3cc3e8e46f51ae3a1437087529ad3568540268d0a7d6ac
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1047
+          byte_count: 798
+          word_count: 129
+          content_hash: 6326a7360ea945535947c98ed85ce128c348a51a86b26f5708902196fb175a84
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1845
+          byte_count: 1618
+          word_count: 249
+          content_hash: 493ecb1e0c416f9a7509ac29946d3c7cb1a05c359a6b069dc1a825bc1c6f59fe
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In scope
+              byte_offset: 1858
+              byte_count: 1011
+              word_count: 151
+              content_hash: fd13eef31aee4426114ee6bda0f574079a8572e82870587911fe499157def770
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Out of scope
+              byte_offset: 2869
+              byte_count: 594
+              word_count: 95
+              content_hash: 5a9add09a8c328355c85d9576e29faeae1ac938a4de17b6ea862a5c9d0f6b6a0
+        - path: "1.4"
+          level: 2
+          title: 4. Acceptance Criteria
+          byte_offset: 3463
+          byte_count: 5973
+          word_count: 921
+          content_hash: 53d074bb8d3de10ec9cea8b464d7db383af432fedaec19368367fb1d6aa15830
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Model — Name field
+              byte_offset: 3490
+              byte_count: 743
+              word_count: 118
+              content_hash: ffcb6023600d1bd8d847bd24f2316053c2cb74c8ef60fe2cf02e2030c29aef4b
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Config — Project name
+              byte_offset: 4233
+              byte_count: 798
+              word_count: 122
+              content_hash: 637efe1575962c8c75042f6e4f4bc357b92ddd6f4e48d22aef1eabe7285aa11e
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Validation
+              byte_offset: 5031
+              byte_count: 944
+              word_count: 145
+              content_hash: a09eebcc2ead30a0f4169eee6a7722be93fec71d06c45f8e4d8425d72a205a35
+            - path: 1.4.4
+              level: 3
+              title: 4.4 MCP tools — Entity create and update
+              byte_offset: 5975
+              byte_count: 740
+              word_count: 112
+              content_hash: e827eb83de12ee9ed8f3c73535c794f1239ab02d255e19ff3c1df2a6ae4ca9ff
+            - path: 1.4.5
+              level: 3
+              title: 4.5 MCP tools — List and status display
+              byte_offset: 6715
+              byte_count: 345
+              word_count: 54
+              content_hash: ca0566d1e01f6de030b29d82d64b5adcbf5a63661d333ad32b880411e0b3afda
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Storage and serialisation
+              byte_offset: 7060
+              byte_count: 805
+              word_count: 123
+              content_hash: 1eebedec6b230528d0b611bc073f42090e03960cad456e66a5280e7c7d86f0e8
+            - path: 1.4.7
+              level: 3
+              title: 4.7 Skill files
+              byte_offset: 7865
+              byte_count: 779
+              word_count: 116
+              content_hash: f9c0eeba15c5cadd2585c18ec91d227b4bbaa5beffaa88cb983760646a4286d1
+            - path: 1.4.8
+              level: 3
+              title: 4.8 Backfill
+              byte_offset: 8644
+              byte_count: 792
+              word_count: 127
+              content_hash: 9ba32a91c6ad1abef3878801e1e316dfa03d096892ca4b7e3e6286ee1591b638
+        - path: "1.5"
+          level: 2
+          title: 5. Test Plan
+          byte_offset: 9436
+          byte_count: 2659
+          word_count: 388
+          content_hash: 8ddfab2df91eaea49cc2bb813d4469c6392aed4c47838b9d1c86f67ccc5548d0
+cross_doc_links:
+    - target_path: work/design/entity-names.md
+      link_text: work/design/entity-names.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false
