@@ -99,61 +99,19 @@ kanbanzai/
 
 ## Document Reading Order
 
-If you need to understand the project, read in this order:
+Essential reads (in order):
 
 1. `work/design/workflow-design-basis.md` — consolidated design vision
 2. `work/design/document-centric-interface.md` — document-centric human interface model
-3. `work/spec/phase-1-specification.md` — Phase 1 scope and verification basis
-4. `work/spec/phase-2-specification.md` — Phase 2 scope and verification basis
-5. `work/design/agent-interaction-protocol.md` — agent behavior and normalization protocol
-6. `work/design/quality-gates-and-review-policy.md` — review expectations and quality gates
-7. `work/design/git-commit-policy.md` — commit message and commit discipline policy
+3. `work/design/agent-interaction-protocol.md` — agent behavior and normalization protocol
+4. `work/design/quality-gates-and-review-policy.md` — review expectations and quality gates
+5. `work/design/git-commit-policy.md` — commit message and commit discipline policy
 
-Then refer to these as needed:
-
-- `work/spec/phase-4a-specification.md` — Phase 4a scope and verification basis
-- `work/plan/phase-2a-progress.md` — Phase 2a implementation status and remaining work
-- `work/plan/phase-2-scope.md` — Phase 2 scope and planning
-- `work/spec/phase-2b-specification.md` — Phase 2b scope and verification basis
-- `work/plan/phase-2b-implementation-plan.md` — Phase 2b implementation plan and audit remediation
-- `work/plan/phase-2-decision-log.md` — Phase 2 architectural decisions
-- `work/design/workflow-system-design.md` — earlier system design document
-- `work/design/machine-context-design.md` — machine-to-machine context model (implemented in Phase 2b)
-- `work/design/document-intelligence-design.md` — structural analysis backend for design documents (Phase 2)
-- `work/design/product-instance-boundary.md` — product vs. instance separation
-- `work/plan/phase-1-implementation-plan.md` — concrete execution plan
-- `work/plan/phase-1-decision-log.md` — architectural decisions
+For phase-specific specifications, plans, and decisions, see [`refs/document-map.md`](refs/document-map.md).
 
 ## Key Design Documents by Topic
 
-| Topic | Document |
-|---|---|
-| Historical process documents | `work/bootstrap/bootstrap-workflow.md` |
-| What the system is and why | `work/design/workflow-design-basis.md` |
-| How humans interact with the system | `work/design/document-centric-interface.md` |
-| What Phase 1 must deliver | `work/spec/phase-1-specification.md` |
-| What Phase 2 must deliver | `work/spec/phase-2-specification.md` |
-| Phase 2a implementation status | `work/plan/phase-2a-progress.md` |
-| Phase 2 scope and planning | `work/plan/phase-2-scope.md` |
-| How agents should behave | `work/design/agent-interaction-protocol.md` |
-| How to review and verify work | `work/design/quality-gates-and-review-policy.md` |
-| Code review SKILL (procedure + orchestration) | `.skills/code-review.md` |
-| Plan review SKILL (procedure + checklist) | `.skills/plan-review.md` |
-| How to write commits | `work/design/git-commit-policy.md` |
-| Architectural decisions made | `work/plan/phase-1-decision-log.md` |
-| Implementation plan and work breakdown | `work/plan/phase-1-implementation-plan.md` |
-| Machine context model (Phase 2) | `work/design/machine-context-design.md` |
-| Document intelligence (Phase 2) | `work/design/document-intelligence-design.md` |
-| Phase 2b specification | `work/spec/phase-2b-specification.md` |
-| Phase 2b implementation plan | `work/plan/phase-2b-implementation-plan.md` |
-| Phase 2 decisions | `work/plan/phase-2-decision-log.md` |
-| Phase 3 spec and status | `work/spec/phase-3-specification.md`, `work/plan/phase-3-progress.md` |
-| Phase 4a specification | `work/spec/phase-4a-specification.md` |
-| Phase 4b specification | `work/spec/phase-4b-specification.md` |
-| Phase 4b implementation plan | `work/plan/phase-4b-implementation-plan.md` |
-| Phase 4 decisions | `work/plan/phase-4-decision-log.md` |
-
-
+See [`refs/document-map.md`](refs/document-map.md) for the full document-to-topic mapping.
 
 ## Decision-Making Rules
 
@@ -195,7 +153,7 @@ Do not let document changes accumulate uncommitted across long sessions.
 
 ## Scope Guard
 
-Phase 1 (workflow kernel), Phase 2a (entity model evolution, document intelligence, migration), Phase 2b (context profiles, knowledge management, user identity), Phase 3 (Git integration, knowledge lifecycle), Phase 4a (estimation, work queue, dispatch, human checkpoints, orchestration health), Phase 4b (feature decomposition, automatic unblocking, worker review, conflict analysis, vertical slice guidance, incidents/RCA, document store removal), Kanbanzai 2.0 (MCP tool surface redesign — all 11 tracks A–K complete), P6 (workflow quality and code review), P7 (developer experience), P8 (decompose reliability), P9 (MCP discoverability and reliability), P10 (review workflow and documentation currency), P11 (fresh install experience — MCP server connection, embedded review skills, default context roles, standard document layout), P12 (agent onboarding and skill discovery — AGENTS.md generation, copilot instructions, specification skill, MCP orientation breadcrumbs), and P15 (Kanbanzai 2.5 infrastructure hardening — docint bold-AC pattern recognition, sub-agent state isolation, batch handler false-positive fix, doc audit action, doc import dry-run, evaluation baseline) are all complete. There is no current in-progress phase. For detailed delivery history, see `docs/project-timeline.md`.
+Phases 1–15 and Kanbanzai 2.0/2.5 are complete. There is no current in-progress phase. For detailed delivery history, see `docs/project-timeline.md`.
 
 Do not build beyond the current phase without explicit direction:
 
