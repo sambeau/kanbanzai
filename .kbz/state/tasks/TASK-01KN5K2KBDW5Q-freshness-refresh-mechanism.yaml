@@ -1,0 +1,12 @@
+id: TASK-01KN5K2KBDW5Q
+parent_feature: FEAT-01KN588PETZQE
+slug: freshness-refresh-mechanism
+summary: "Refresh mechanism for roles and skills: RefreshRoleLastVerified and RefreshSkillLastVerified in context/refresh.go, atomic writes, profile tool refresh action"
+status: done
+files_planned:
+  - internal/context/refresh.go
+  - internal/context/refresh_test.go
+  - internal/mcp/profile_tool.go
+completed: "2026-04-01T22:37:18Z"
+completion_summary: "Already implemented: RefreshRoleLastVerified and RefreshSkillLastVerified in context/refresh.go with atomic writes. Profile tool refresh action in mcp/profile_tool.go with role/skill dispatch. 8 refresh tests passing."
+verification: go test ./internal/context/ -run Refresh -v — all 8 tests PASS

@@ -1,0 +1,15 @@
+id: TASK-01KN5K2KARYEZ
+parent_feature: FEAT-01KN588PETZQE
+slug: freshness-assembly-warnings
+summary: "Staleness warnings in assembled context metadata: stepCheckFreshness in pipeline.go, StalenessWarnings on PipelineState, MetadataWarnings on PipelineResult, surfaced via handoff_tool.go context_metadata"
+status: done
+depends_on:
+  - TASK-01KN5K2K8HQEM
+  - TASK-01KN5K2K9Z3Z4
+files_planned:
+  - internal/context/pipeline.go
+  - internal/context/pipeline_test.go
+  - internal/mcp/handoff_tool.go
+completed: "2026-04-01T22:37:18Z"
+completion_summary: "Already implemented: stepCheckFreshness in pipeline.go, StalenessWarnings on PipelineState, MetadataWarnings on PipelineResult, surfaced via handoff_tool.go context_metadata.metadata_warnings. 5 pipeline freshness tests passing."
+verification: "go test ./internal/context/ -run 'Pipeline_Freshness' -v — all 5 tests PASS"
