@@ -5,6 +5,32 @@ package service
 // registry integration (NFR-004).
 const DefaultMaxReviewCycles = 3
 
+// PersistFeatureBlockedReason writes the blocked_reason field to the feature
+// entity on disk. Pass an empty string to clear the blocked reason.
+func (s *EntityService) PersistFeatureBlockedReason(featureID, slug, reason string) error {
+	if slug == "" {
+		_, resolvedSlug, err := s.ResolvePrefix("feature", featureID)
+		if err != nil {
+			return err
+		}
+		slug = resolvedSlug
+	}
+
+	record, err := s.store.Load("feature", featureID, slug)
+	if err != nil {
+		return err
+	}
+
+	if reason == "" {
+		delete(record.Fields, "blocked_reason")
+	} else {
+		record.Fields["blocked_reason"] = reason
+	}
+
+	_, err = s.store.Write(record)
+	return err
+}
+
 // IncrementFeatureReviewCycle increments the review_cycle field on the feature
 // entity by 1 and persists the change to disk. Called each time a feature
 // transitions into the reviewing status (FR-002).

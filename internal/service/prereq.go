@@ -15,6 +15,7 @@ type GateResult struct {
 	Satisfied        bool
 	Reason           string                   // human-readable explanation
 	StructuralChecks []structural.CheckResult // populated when structural checks ran
+	ReviewCapReached bool                     // true when the review iteration cap was reached
 }
 
 // stageDocMapping maps feature lifecycle stages to their required document types.
@@ -227,6 +228,15 @@ func CheckTransitionGate(from, to string, feature *model.Feature, docSvc *Docume
 		return checkReviewReportExists(feature, docSvc)
 
 	case string(model.FeatureStatusReviewing) + "→" + string(model.FeatureStatusNeedsRework):
+		// Check review iteration cap (FR-005).
+		if feature.ReviewCycle >= DefaultMaxReviewCycles {
+			return GateResult{
+				Stage:            to,
+				Satisfied:        false,
+				Reason:           fmt.Sprintf("Review iteration cap reached (%d/%d). Human decision required: accept with known issues, rework with revised scope, or cancel.", feature.ReviewCycle, DefaultMaxReviewCycles),
+				ReviewCapReached: true,
+			}
+		}
 		// reviewing→needs-rework: ungated by design (FR-003)
 		return GateResult{Stage: to, Satisfied: true}
 

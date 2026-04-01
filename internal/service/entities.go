@@ -131,6 +131,11 @@ func (s *EntityService) SetStatusTransitionHook(hook StatusTransitionHook) {
 	s.statusHook = hook
 }
 
+// Root returns the state root path for this service.
+func (s *EntityService) Root() string {
+	return s.root
+}
+
 // Store returns the underlying entity store for low-level access in dispatch operations.
 func (s *EntityService) Store() *storage.EntityStore {
 	return s.store

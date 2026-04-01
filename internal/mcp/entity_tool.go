@@ -23,6 +23,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"github.com/sambeau/kanbanzai/internal/checkpoint"
 	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/knowledge"
@@ -624,6 +625,30 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 					structuralChecks = gateResult.StructuralChecks
 				}
 				if !gateResult.Satisfied {
+					// Handle review iteration cap (FR-005, FR-006, FR-007).
+					if gateResult.ReviewCapReached {
+						blockedReason := gateResult.Reason
+						// Persist blocked_reason on the feature.
+						_ = entitySvc.PersistFeatureBlockedReason(entityID, "", blockedReason)
+						// Auto-create a human checkpoint.
+						chkStore := checkpoint.NewStore(entitySvc.Root())
+						chk, chkErr := chkStore.Create(checkpoint.Record{
+							Question:  fmt.Sprintf("Feature %s has reached the review iteration cap (%d/%d). What should happen next?", entityID, feature.ReviewCycle, service.DefaultMaxReviewCycles),
+							Context:   fmt.Sprintf("Feature: %s | Review cycle: %d/%d | Options: (1) accept with known issues and transition to done, (2) rework with revised scope and create focused rework tasks, (3) cancel the feature.", entityID, feature.ReviewCycle, service.DefaultMaxReviewCycles),
+							Status:    checkpoint.StatusPending,
+							CreatedAt: time.Now().UTC(),
+							CreatedBy: "system",
+						})
+						resp := map[string]any{
+							"error":          blockedReason,
+							"blocked_reason": blockedReason,
+							"feature_id":     entityID,
+						}
+						if chkErr == nil {
+							resp["checkpoint_id"] = chk.ID
+						}
+						return resp, nil
+					}
 					if !override {
 						// Gate failed with no override: return structured gate failure response (FR-026).
 						var nonTerminal []service.TaskStatusPair

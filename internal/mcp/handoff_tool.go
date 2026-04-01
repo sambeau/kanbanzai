@@ -150,6 +150,31 @@ func handoffTool(
 
 		parentFeature, _ := task.State["parent_feature"].(string)
 
+		// Inject re-review guidance when the parent feature is in a focused
+		// re-review cycle (review_cycle >= 2 while in reviewing status — FR-008).
+		if parentFeature != "" {
+			if feat, featErr := entitySvc.Get("feature", parentFeature, ""); featErr == nil {
+				fstatus, _ := feat.State["status"].(string)
+				frc, _ := feat.State["review_cycle"].(int)
+				if fstatus == "reviewing" && frc >= 2 {
+					guidance := fmt.Sprintf(
+						"## Re-Review Guidance (Cycle %d of %d)\n\n"+
+							"This is a **focused re-review** (cycle %d). Narrow your scope:\n"+
+							"- Review only rework tasks created since the previous review and the changes they made.\n"+
+							"- Check that each finding from the previous review has been addressed.\n"+
+							"- Read rework task descriptions to understand what was supposed to change.\n"+
+							"- Do NOT re-review unchanged implementation from earlier cycles.",
+						frc, service.DefaultMaxReviewCycles, frc,
+					)
+					if instructions != "" {
+						instructions = guidance + "\n\n" + instructions
+					} else {
+						instructions = guidance
+					}
+				}
+			}
+		}
+
 		if pipelineResult, used := tryPipeline(pipeline, entitySvc, task.State, parentFeature, role, instructions); used {
 			if pipelineResult.err != nil {
 				return mcp.NewToolResultText(handoffErrorJSON("pipeline_error",
