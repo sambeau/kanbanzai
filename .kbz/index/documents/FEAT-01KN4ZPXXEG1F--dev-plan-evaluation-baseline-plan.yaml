@@ -1,0 +1,123 @@
+document_id: FEAT-01KN4ZPXXEG1F/dev-plan-evaluation-baseline-plan
+document_path: work/plan/evaluation-baseline-plan.md
+content_hash: 06e85c0dffcd7781604c83cc0e4c8e177c78e53387f43fad4579083e35ef9e1d
+indexed_at: 2026-04-01T17:05:23.968212Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Evaluation Baseline'
+      byte_offset: 0
+      byte_count: 10126
+      word_count: 1263
+      content_hash: 06e85c0dffcd7781604c83cc0e4c8e177c78e53387f43fad4579083e35ef9e1d
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Implementation Approach
+          byte_offset: 623
+          byte_count: 1591
+          word_count: 190
+          content_hash: 48c2f8c179c848a71fd386c5260d2ae6d9ccd2989d0ab2e188716e7eb95e80b9
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 2214
+          byte_count: 569
+          word_count: 58
+          content_hash: da7521bfe4426dab967d883c13eba8a83b9e58a859ff5177c605931ee9a26dfa
+        - path: "1.3"
+          level: 2
+          title: 3. Task Details
+          byte_offset: 2783
+          byte_count: 6272
+          word_count: 796
+          content_hash: 5037d07776b36254d327abb8d8238e8f0b788e6ba0bec37ab656fd937bb25946
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Task 1: README and Schema Definition'
+              byte_offset: 2803
+              byte_count: 1419
+              word_count: 196
+              content_hash: ede5858d6db95613f5e0596abf3e6ef7134a5db897938456d9a182e9dee8afc2
+            - path: 1.3.2
+              level: 3
+              title: 'Task 2: Author Scenario Files'
+              byte_offset: 4222
+              byte_count: 2825
+              word_count: 329
+              content_hash: 2604f3fb77efdba8a643e14757e37fdd76d5bf6cf0392b7b6ea8cd05cb55a9af
+            - path: 1.3.3
+              level: 3
+              title: 'Task 3: Capture Baseline Measurements'
+              byte_offset: 7047
+              byte_count: 2008
+              word_count: 267
+              content_hash: d8aa1f2de69bce91f9a3075c74121451b83103db860c9daae85129860acfa623
+        - path: "1.4"
+          level: 2
+          title: 4. Scope Boundaries
+          byte_offset: 9055
+          byte_count: 350
+          word_count: 51
+          content_hash: 0dd4c04e736900e7b726eb8634964f593fd348526fa8d5aa750632045bd59efa
+        - path: "1.5"
+          level: 2
+          title: 5. Traceability
+          byte_offset: 9405
+          byte_count: 721
+          word_count: 129
+          content_hash: c4a9ebd06be31825d9506dc5c701163a0a792e2120993e1859663dea90b59fec
+entity_refs:
+    - entity_id: FEAT-01KN4ZPXXEG1F
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 385
+cross_doc_links:
+    - target_path: work/spec/evaluation-baseline.md
+      link_text: work/spec/evaluation-baseline.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: "1"
+    - target_path: work/eval/README.md
+      link_text: work/eval/README.md
+      section_path: "1.1"
+    - target_path: work/eval/README.md
+      link_text: work/eval/README.md
+      section_path: "1.2"
+    - target_path: work/spec/evaluation-baseline.md
+      link_text: work/spec/evaluation-baseline.md
+      section_path: 1.3.1
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: 1.3.1
+    - target_path: work/eval/README.md
+      link_text: work/eval/README.md
+      section_path: 1.3.1
+    - target_path: work/eval/README.md
+      link_text: work/eval/README.md
+      section_path: 1.3.2
+    - target_path: work/spec/evaluation-baseline.md
+      link_text: work/spec/evaluation-baseline.md
+      section_path: 1.3.2
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: 1.3.2
+    - target_path: work/eval/README.md
+      link_text: work/eval/README.md
+      section_path: 1.3.3
+    - target_path: work/spec/evaluation-baseline.md
+      link_text: work/spec/evaluation-baseline.md
+      section_path: 1.3.3
+    - target_path: work/spec/evaluation-baseline.md
+      link_text: work/spec/evaluation-baseline.md
+      section_path: "1.4"
+conventional_roles:
+    - section_path: 1.3.1
+      role: definition
+      confidence: high
+    - section_path: "1.4"
+      role: constraint
+      confidence: high
+classified: false

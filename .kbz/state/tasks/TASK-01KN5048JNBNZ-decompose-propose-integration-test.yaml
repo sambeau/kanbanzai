@@ -2,6 +2,12 @@ id: TASK-01KN5048JNBNZ
 parent_feature: FEAT-01KN4ZPCMJ1FP
 slug: decompose-propose-integration-test
 summary: "Write integration test confirming decompose propose on a bold-AC spec produces criterion-derived task summaries, not section headings."
-status: queued
+status: done
 depends_on:
   - TASK-01KN503RX67H0
+files_planned:
+  - kanbanzai/internal/service/decompose.go
+  - kanbanzai/internal/service/decompose_test.go
+completed: "2026-04-01T17:44:20Z"
+completion_summary: "Added parseSpecStructure bold-identifier support in service/decompose.go and integration tests in decompose_test.go. Updated parseSpecStructure to extract **XX-NN.** lines as criteria in AC sections; updated error message. Added TestDecomposeFeature_BoldACSpec_ProducesCriterionDerivedSummaries and four related tests."
+verification: "go test ./internal/service/... -run TestDecomposeFeature_BoldAC|TestParseSpecStructure — all 5 new tests pass"

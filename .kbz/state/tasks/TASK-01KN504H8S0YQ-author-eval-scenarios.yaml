@@ -2,6 +2,30 @@ id: TASK-01KN504H8S0YQ
 parent_feature: FEAT-01KN4ZPXXEG1F
 slug: author-eval-scenarios
 summary: "Write 15-20 scenario YAML files in work/eval/ covering all six categories (happy path, gate failure, review loop, multi-feature, edge cases, tool selection)."
-status: queued
+status: done
 depends_on:
   - TASK-01KN5041NAGBH
+files_planned:
+  - work/eval/eval-001.yaml
+  - work/eval/eval-002.yaml
+  - work/eval/eval-003.yaml
+  - work/eval/eval-004.yaml
+  - work/eval/eval-005.yaml
+  - work/eval/eval-006.yaml
+  - work/eval/eval-007.yaml
+  - work/eval/eval-008.yaml
+  - work/eval/eval-009.yaml
+  - work/eval/eval-010.yaml
+  - work/eval/eval-011.yaml
+  - work/eval/eval-012.yaml
+  - work/eval/eval-013.yaml
+  - work/eval/eval-014.yaml
+  - work/eval/eval-015.yaml
+  - work/eval/eval-016.yaml
+  - work/eval/eval-017.yaml
+  - work/eval/eval-018.yaml
+  - work/eval/eval-019.yaml
+  - work/eval/eval-020.yaml
+completed: "2026-04-01T17:44:21Z"
+completion_summary: "Authored 20 scenario YAML files in work/eval/ covering all 6 required categories: happy-path (3), gate-failure-and-recovery (4), review-rework-loop (3), multi-feature-plan (3), edge-case (4), tool-selection (3). All files have required fields: id, name, description, category, starting_state, expected_pattern, success_criteria."
+verification: 20 files exist in work/eval/eval-001.yaml through eval-020.yaml

@@ -138,7 +138,7 @@ func (s *DecomposeService) DecomposeFeature(input DecomposeInput) (DecomposeResu
 
 	// 6. Gate: spec must contain parseable acceptance criteria.
 	if len(spec.acceptanceCriteria) == 0 {
-		return DecomposeResult{}, fmt.Errorf("no acceptance criteria found in spec %q — ensure the spec uses checkbox items (- [ ] ...) or numbered items within an Acceptance Criteria section", specDocID)
+		return DecomposeResult{}, fmt.Errorf("no acceptance criteria found in spec %q — ensure the spec uses checkbox items (- [ ] ...), numbered items, or bold-identifier lines (**AC-NN.** text) within an Acceptance Criteria section", specDocID)
 	}
 
 	// 7. Generate proposal by applying embedded guidance.
@@ -288,10 +288,19 @@ var (
 	// Matches numbered acceptance criteria: "1. text", "2. text" etc.
 	// Only within an "acceptance criteria" section.
 	reNumbered = regexp.MustCompile(`(?m)^\s*\d+\.\s+(.+)$`)
+	// Matches bold-identifier criteria: "**XX-NN.** text"
+	// where XX is one or more uppercase ASCII letters and NN is one or more digits.
+	// Group 1: identifier prefix (e.g. "AC"), Group 2: number (e.g. "01"), Group 3: criterion text.
+	reBoldIdent = regexp.MustCompile(`^\*\*([A-Z]+)-(\d+)\.\*\*\s+(.+)$`)
 )
 
 // parseSpecStructure extracts sections and acceptance criteria from a
 // markdown specification document.
+//
+// Recognised acceptance criterion formats:
+//   - Checkbox: "- [ ] text" or "- [x] text" (anywhere in the document)
+//   - Numbered list: "1. text" (only within acceptance-criteria sections)
+//   - Bold-identifier: "**XX-NN.** text" (only within acceptance-criteria sections)
 func parseSpecStructure(content string) specStructure {
 	var spec specStructure
 	lines := strings.Split(content, "\n")
@@ -301,7 +310,9 @@ func parseSpecStructure(content string) specStructure {
 	inACSection := false
 
 	for _, line := range lines {
-		if m := reHeader.FindStringSubmatch(line); m != nil {
+		trimmed := strings.TrimSpace(line)
+
+		if m := reHeader.FindStringSubmatch(trimmed); m != nil {
 			level := len(m[1])
 			title := strings.TrimSpace(m[2])
 			spec.sections = append(spec.sections, specSection{title: title, level: level})
@@ -313,7 +324,7 @@ func parseSpecStructure(content string) specStructure {
 			continue
 		}
 
-		if m := reCheckbox.FindStringSubmatch(line); m != nil {
+		if m := reCheckbox.FindStringSubmatch(trimmed); m != nil {
 			spec.acceptanceCriteria = append(spec.acceptanceCriteria, acceptanceCriterion{
 				text:     strings.TrimSpace(m[1]),
 				section:  currentSection,
@@ -323,7 +334,19 @@ func parseSpecStructure(content string) specStructure {
 		}
 
 		if inACSection {
-			if m := reNumbered.FindStringSubmatch(line); m != nil {
+			// Bold-identifier pattern: **XX-NN.** text
+			// Extracted as "XX-NN: text" to preserve the identifier prefix.
+			if m := reBoldIdent.FindStringSubmatch(trimmed); m != nil {
+				criterion := m[1] + "-" + m[2] + ": " + m[3]
+				spec.acceptanceCriteria = append(spec.acceptanceCriteria, acceptanceCriterion{
+					text:     criterion,
+					section:  currentSection,
+					parentL2: currentL2,
+				})
+				continue
+			}
+
+			if m := reNumbered.FindStringSubmatch(trimmed); m != nil {
 				spec.acceptanceCriteria = append(spec.acceptanceCriteria, acceptanceCriterion{
 					text:     strings.TrimSpace(m[1]),
 					section:  currentSection,

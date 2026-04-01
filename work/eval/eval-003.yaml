@@ -1,0 +1,94 @@
+id: eval-003
+name: Dev-Planning to Developing via Entity Task Creation
+description: >
+  A feature already in dev-planning status (with approved design and specification
+  documents) has no tasks. The agent inspects the feature, creates the required
+  tasks directly via the entity tool, transitions each task to ready status, and
+  then advances the feature to developing. decompose is intentionally not used —
+  this scenario validates that the agent can manage task lifecycle through entity
+  alone without the decompose workflow.
+category: happy-path
+
+starting_state:
+  feature_status: dev-planning
+  documents:
+    - id: DOC-031
+      type: design
+      title: Feature 003 Design
+      status: approved
+    - id: DOC-032
+      type: specification
+      title: Feature 003 Specification
+      status: approved
+  tasks: []
+  notes: >
+    Feature FEAT-003 exists in dev-planning status. Both prerequisite documents
+    (design and specification) are approved. No tasks have been created yet,
+    which means the gate from dev-planning to developing is currently blocked.
+    The agent must create tasks using entity action=create and then ready them
+    before the feature can advance.
+
+expected_pattern:
+  - stage: inspect-feature
+    tools:
+      - status
+    output: >
+      Agent calls status with id=FEAT-003 (or similar). Dashboard confirms
+      feature is in dev-planning status, shows approved design and specification
+      documents, and shows zero tasks — indicating the developing gate is
+      currently blocked.
+
+  - stage: create-tasks
+    tools:
+      - entity
+      - entity
+    output: >
+      Agent creates at least two tasks under FEAT-003 using entity action=create,
+      type=task, parent_feature=FEAT-003. Each call produces a new TASK-... ID.
+      Newly created tasks start in a non-ready status (e.g. proposed or draft).
+    tool_args_must_include:
+      - action: create
+        type: task
+        parent_feature: FEAT-003
+
+  - stage: transition-tasks-to-ready
+    tools:
+      - entity
+      - entity
+    output: >
+      Agent calls entity action=transition, status=ready for each created task.
+      All tasks move to ready status, satisfying the prerequisite for the
+      dev-planning → developing gate.
+    tool_args_must_include:
+      - action: transition
+        status: ready
+
+  - stage: verify-tasks-ready
+    tools:
+      - status
+    output: >
+      Agent confirms via status or entity list that all tasks under FEAT-003
+      are in ready status and the task count is non-zero. This verifies the
+      gate condition is satisfied before attempting the feature transition.
+
+  - stage: advance-to-developing
+    tools:
+      - entity
+    output: >
+      Agent calls entity action=transition, id=FEAT-003, status=developing.
+      Gate check passes because tasks now exist and are in ready status.
+      Feature status changes from dev-planning to developing.
+    tool_args_must_include:
+      - action: transition
+        status: developing
+
+success_criteria:
+  - "Feature FEAT-003 status is developing at the end of the scenario"
+  - "At least two tasks are created via entity action=create, type=task, parent_feature=FEAT-003"
+  - "Every created task is explicitly transitioned to ready via entity action=transition before the feature advances"
+  - "decompose is NOT called at any point — task creation is handled entirely through entity"
+  - "entity action=transition with status=developing is the final tool call and it succeeds"
+  - "Agent inspects feature state (status or entity get) before attempting task creation"
+  - "Agent does not attempt to advance the feature before all tasks are in ready status"
+  - "No documents are registered or modified — existing approved docs are used as-is"
+  - "No handoff or next call is made — the scenario stops once the feature reaches developing"

@@ -2,4 +2,9 @@ id: TASK-01KN50402DX0X
 parent_feature: FEAT-01KN4ZPTQSZT5
 slug: import-dry-run-service
 summary: "Implement ImportDryRun on the document service: run full inference pipeline without store writes, return would_import/would_skip/summary."
-status: queued
+status: done
+files_planned:
+  - kanbanzai/internal/service/import.go
+completed: "2026-04-01T17:44:20Z"
+completion_summary: "Added ImportDryRunResult, DryRunImportEntry, DryRunSkipEntry, DryRunSummary types and ImportDryRun method to BatchImportService in import.go. Full inference pipeline runs; no store writes; already-registered files appear in would_skip with reason 'already registered'."
+verification: go test ./internal/mcp/... -run TestDocImport_DryRun — all tests pass

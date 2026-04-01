@@ -1,0 +1,147 @@
+id: eval-009
+name: Rework Requiring Task Split
+description: >
+  Review feedback on a task states it conflates two separate concerns and must
+  be decomposed into two distinct tasks. The agent reads the rework notes,
+  updates the original task to a narrower scope, creates a new task for the
+  second concern, completes both tasks individually, and advances the feature
+  to done.
+category: review-rework-loop
+
+starting_state:
+  feature_status: reviewing
+  documents:
+    - type: specification
+      status: approved
+      title: Data Export Feature Specification
+      id: DOC-009-spec
+    - type: dev-plan
+      status: approved
+      title: Data Export Dev Plan
+      id: DOC-009-devplan
+  tasks:
+    - id: TASK-009-a
+      title: Implement CSV export and send email notification
+      status: needs-rework
+      rework_notes: >
+        This task conflates two distinct concerns: CSV file generation and
+        email dispatch. Split into (1) CSV export only and (2) email
+        notification only. Each concern should be independently testable
+        with its own unit tests.
+  notes: >
+    Feature FEAT-009 is in reviewing status. TASK-009-a is the only task and
+    has been returned for rework with an explicit instruction to split it into
+    two separate tasks. No other tasks exist on this feature. The agent must
+    not finish TASK-009-a while it still covers both concerns.
+
+expected_pattern:
+  - stage: identify-rework-task-and-read-feedback
+    tools:
+      - next
+      - status
+    input:
+      feature_id: FEAT-009
+    output:
+      task_in_queue: TASK-009-a
+      task_status: needs-rework
+      rework_notes_present: true
+      split_instruction_detected: true
+    notes: >
+      Agent checks the work queue or feature status dashboard, identifies
+      TASK-009-a in needs-rework, and reads the rework notes containing the
+      explicit instruction to split the task into two.
+
+  - stage: narrow-original-task-scope
+    tools:
+      - entity
+    input:
+      action: update
+      id: TASK-009-a
+      summary: Implement CSV export only
+    output:
+      updated: true
+      new_summary_contains: CSV
+    notes: >
+      Agent updates TASK-009-a's title or summary to reflect the narrowed
+      CSV-export-only scope before creating the second task.
+
+  - stage: create-new-task-for-second-concern
+    tools:
+      - entity
+    input:
+      action: create
+      type: task
+      summary: Send email notification after export completes
+      parent_feature: FEAT-009
+    output:
+      id_prefix: TASK-
+      status: ready
+    notes: >
+      Agent creates a new task covering the email notification concern,
+      correctly attached to FEAT-009 as its parent feature.
+
+  - stage: transition-original-task-to-active
+    tools:
+      - entity
+    input:
+      action: transition
+      id: TASK-009-a
+      status: active
+    output:
+      status: active
+    notes: >
+      Agent transitions TASK-009-a from needs-rework to active before
+      beginning the CSV export implementation.
+
+  - stage: complete-csv-export-task
+    tools:
+      - handoff
+      - finish
+    input:
+      task_id: TASK-009-a
+    output:
+      status: done
+      summary_references: CSV export
+    notes: >
+      Agent generates an implementation prompt via handoff for the narrowed
+      CSV-only task, then finishes it with a summary referencing CSV export.
+
+  - stage: complete-email-notification-task
+    tools:
+      - handoff
+      - finish
+    input:
+      task_id: TASK-009-new
+    output:
+      status: done
+      summary_references: email notification
+    notes: >
+      Agent generates an implementation prompt via handoff for the newly
+      created email notification task and finishes it.
+
+  - stage: advance-feature-to-done
+    tools:
+      - status
+      - entity
+    input:
+      action: transition
+      id: FEAT-009
+      status: done
+    output:
+      feature_status: done
+    notes: >
+      Agent confirms all tasks are in done status, then transitions FEAT-009
+      from reviewing to done.
+
+success_criteria:
+  - entity update is called on TASK-009-a to narrow its scope before it is finished
+  - entity create is called to produce a new task covering the email notification concern
+  - The new task is attached to FEAT-009 as its parent feature
+  - TASK-009-a is completed covering only the CSV export concern (not both concerns)
+  - The newly created email notification task is also completed and reaches done status
+  - handoff is called for at least one of the two tasks before finish
+  - Both tasks show done status before the feature is advanced
+  - entity transition moves FEAT-009 from reviewing to done
+  - Feature FEAT-009 reaches done status by the end of the scenario
+  - Agent does not finish TASK-009-a with a summary that still covers both CSV and email concerns
+  - Agent does not skip task creation and instead finish a single broad task as a workaround

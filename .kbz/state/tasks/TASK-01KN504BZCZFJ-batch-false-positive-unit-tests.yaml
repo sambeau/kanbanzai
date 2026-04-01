@@ -2,6 +2,11 @@ id: TASK-01KN504BZCZFJ
 parent_feature: FEAT-01KN4ZPKCJWPF
 slug: batch-false-positive-unit-tests
 summary: "Write unit tests covering AC-12 through AC-15: tool-error payload counted as failed, genuine success unchanged, Go error unchanged."
-status: queued
+status: done
 depends_on:
   - TASK-01KN503WNSEZC
+files_planned:
+  - kanbanzai/internal/mcp/batch_test.go
+completed: "2026-04-01T17:44:20Z"
+completion_summary: "Added 6 unit tests in batch_test.go: ToolResultError_CountedAsFailed (AC-12), ToolResultError_ItemResultShape (AC-13), GenuineSuccess_NotAffectedByToolErrorCheck (AC-14), GoError_CountedAsFailed (AC-15), MixedToolErrorAndSuccess_SummaryCorrect (REQ-08), EmptyStringNotAnError."
+verification: "go test ./internal/mcp/... -run TestExecuteBatch_ToolResult|TestExtractTool|TestExecuteBatch_Mixed — all 6 tests pass"

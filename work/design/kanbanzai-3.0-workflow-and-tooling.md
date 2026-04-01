@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | Date | 2025-07-29 |
-| Status | Draft |
+| Status | Superseded |
+| Superseded by | `work/design/kanbanzai-3.0-workflow-and-tooling-v2.md` |
 | Author | Design Agent |
 | Informed by | `work/design/orchestration-recommendations.md`, `work/research/agent-orchestration-research.md` |
 | Related | `work/design/skills-system-redesign.md`, `work/design/Kanbanzai-3.0-proposal.txt`, `work/design/smart-lifecycle-transitions.md` |

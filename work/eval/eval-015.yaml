@@ -1,0 +1,101 @@
+id: eval-015
+name: Decompose failure and recovery via spec registration
+description: >
+  Agent calls decompose on a feature that has no spec document registered.
+  decompose returns an error. Agent recovers by registering a spec document,
+  approving it, and retrying decompose successfully.
+category: edge-case
+
+starting_state:
+  feature_status: specifying
+  documents: []
+  tasks: []
+  notes: >
+    Feature FEAT-015 exists in specifying status but no spec document has been
+    registered in the knowledge base. The spec markdown file exists on disk at
+    docs/specs/feat-015-spec.md but has not been registered via doc tool.
+
+expected_pattern:
+  - stage: attempt-decompose-without-spec
+    tools:
+      - decompose
+    input:
+      action: propose
+      feature_id: FEAT-015
+    output:
+      status: error
+      message_contains: "no approved specification document"
+    notes: >
+      decompose should fail with a clear error indicating a spec document
+      is required before task decomposition can proceed.
+
+  - stage: register-spec-document
+    tools:
+      - doc
+    input:
+      action: register
+      path: docs/specs/feat-015-spec.md
+      type: specification
+      title: Feature 015 Specification
+      owner: FEAT-015
+    output:
+      status: draft
+      id_prefix: DOC-
+    notes: >
+      Agent registers the existing spec file as a specification document.
+      Document is created in draft status awaiting approval.
+
+  - stage: approve-spec-document
+    tools:
+      - doc
+    input:
+      action: approve
+      id: DOC-015
+    output:
+      status: approved
+    notes: >
+      Agent approves the spec document, making it eligible as a prerequisite
+      for decompose.
+
+  - stage: retry-decompose
+    tools:
+      - decompose
+    input:
+      action: propose
+      feature_id: FEAT-015
+    output:
+      status: success
+      proposal_contains_tasks: true
+    notes: >
+      decompose succeeds now that an approved spec document exists.
+      Returns a task breakdown proposal for the feature.
+
+  - stage: review-and-apply-proposal
+    tools:
+      - decompose
+    input:
+      action: review
+      feature_id: FEAT-015
+    output:
+      review_complete: true
+
+  - stage: apply-decomposition
+    tools:
+      - decompose
+    input:
+      action: apply
+      feature_id: FEAT-015
+    output:
+      tasks_created: true
+      task_count_min: 1
+
+success_criteria:
+  - First call to decompose returns an error (not a task proposal)
+  - Error message references missing or unapproved specification document
+  - Agent does not loop or retry decompose before addressing the root cause
+  - doc register is called with type specification and owner FEAT-015
+  - doc approve is called on the newly registered document before retrying decompose
+  - Second call to decompose succeeds and returns a valid proposal
+  - decompose apply is called and at least one task is created
+  - Agent does not attempt to create tasks manually via entity create as a workaround
+  - Recovery sequence is: decompose (fail) -> doc register -> doc approve -> decompose (success)

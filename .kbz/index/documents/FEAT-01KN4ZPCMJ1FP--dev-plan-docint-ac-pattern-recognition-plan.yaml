@@ -1,0 +1,111 @@
+document_id: FEAT-01KN4ZPCMJ1FP/dev-plan-docint-ac-pattern-recognition-plan
+document_path: work/plan/docint-ac-pattern-recognition-plan.md
+content_hash: be0411cbe089fe6ef8995ad97d5361e27b9f11d92cf0275595d362e9b6640e3e
+indexed_at: 2026-04-01T17:05:19.437163Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: `docint` Acceptance Criteria Pattern Recognition'
+      byte_offset: 0
+      byte_count: 8249
+      word_count: 1025
+      content_hash: be0411cbe089fe6ef8995ad97d5361e27b9f11d92cf0275595d362e9b6640e3e
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 687
+          byte_count: 727
+          word_count: 104
+          content_hash: b15edac8db4f26ce846f2af0e057b59e2a79b75f51f2db31858259d3396d0df5
+        - path: "1.2"
+          level: 2
+          title: 2. Context Reading
+          byte_offset: 1414
+          byte_count: 567
+          word_count: 61
+          content_hash: d615e912aa7b85a924a2b1694b4dc4f24866c970c53b0842d19516627af5004d
+        - path: "1.3"
+          level: 2
+          title: 3. Interface Contract
+          byte_offset: 1981
+          byte_count: 707
+          word_count: 108
+          content_hash: a16a5a3881492803c606d87672b2aec150c86b9e278f3814447fe2dbb72f91f0
+        - path: "1.4"
+          level: 2
+          title: 4. Task Details
+          byte_offset: 2688
+          byte_count: 4654
+          word_count: 605
+          content_hash: dee136695136eb91ca52a9ccfc900c24cb1811ca3d68e4398be9ee3806ca187f
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Task 1 — Extend `asmExtractCriteria` + Unit Tests
+              byte_offset: 2708
+              byte_count: 2878
+              word_count: 353
+              content_hash: a400564d53b36bd759227365b38b3a0afbdd79ba76ac9cdf4d7538ea3338d755
+            - path: 1.4.2
+              level: 3
+              title: 'Task 2 — Integration Test: `decompose propose` End-to-End'
+              byte_offset: 5586
+              byte_count: 1756
+              word_count: 248
+              content_hash: 4821691cc08cb172b5e863fae0763e45c5657baf458070228e4713308cc129bd
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria Traceability
+          byte_offset: 7342
+          byte_count: 529
+          word_count: 62
+          content_hash: b7fe87c2b4b5c1ba736035786b70ec738fc55ef91329e480fd8b161484789781
+        - path: "1.6"
+          level: 2
+          title: 6. Scope Boundaries (carried from spec)
+          byte_offset: 7871
+          byte_count: 378
+          word_count: 43
+          content_hash: 7878bc1706d7483aad23d90f99ad0ffbc06582a9016f0f285f6afad3537a862e
+entity_refs:
+    - entity_id: FEAT-01KN4ZPCMJ1FP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 434
+cross_doc_links:
+    - target_path: work/spec/docint-ac-pattern-recognition.md
+      link_text: work/spec/docint-ac-pattern-recognition.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: "1"
+    - target_path: work/spec/docint-ac-pattern-recognition.md
+      link_text: work/spec/docint-ac-pattern-recognition.md
+      section_path: "1.2"
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: "1.2"
+    - target_path: work/design/git-commit-policy.md
+      link_text: work/design/git-commit-policy.md
+      section_path: "1.2"
+    - target_path: internal/mcp/testdata/spec-with-bold-ac.md
+      link_text: internal/mcp/testdata/spec-with-bold-ac.md
+      section_path: 1.4.2
+conventional_roles:
+    - section_path: "1"
+      role: requirement
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: constraint
+      confidence: high
+classified: false

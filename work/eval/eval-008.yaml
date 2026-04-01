@@ -1,0 +1,92 @@
+id: eval-008
+name: Single Rework Cycle
+description: >
+  A task enters needs-rework status after review feedback. The agent uses
+  handoff to regenerate the implementation prompt incorporating the feedback,
+  applies the fix, and finishes the task, transitioning it to done.
+category: review-rework-loop
+
+starting_state:
+  feature_status: reviewing
+  documents:
+    - type: specification
+      status: approved
+      title: User Authentication Specification
+      id: DOC-008-spec
+    - type: dev-plan
+      status: approved
+      title: User Authentication Dev Plan
+      id: DOC-008-devplan
+  tasks:
+    - id: TASK-008-a
+      title: Implement password strength validation
+      status: needs-rework
+      rework_notes: >
+        Password validation does not enforce a minimum length of 8 characters.
+        Update the validation function and add a unit test covering the 8-char
+        minimum boundary.
+  notes: >
+    Feature FEAT-008 is in reviewing status. One task, TASK-008-a, has been
+    returned for rework with specific feedback about password length enforcement.
+    All other feature tasks are already in done status.
+
+expected_pattern:
+  - stage: identify-rework-task
+    tools:
+      - next
+      - status
+    input:
+      action: inspect queue or status check on FEAT-008
+    output:
+      task_in_queue: TASK-008-a
+      task_status: needs-rework
+      rework_notes_present: true
+    notes: >
+      Agent checks the work queue or feature status and identifies TASK-008-a
+      as the only task in needs-rework, along with its feedback.
+
+  - stage: regenerate-implementation-prompt
+    tools:
+      - handoff
+    input:
+      task_id: TASK-008-a
+    output:
+      prompt_generated: true
+      prompt_contains_rework_feedback: true
+    notes: >
+      Agent calls handoff to regenerate a structured implementation prompt
+      that incorporates the rework notes about the 8-character minimum.
+
+  - stage: transition-task-to-active
+    tools:
+      - entity
+    input:
+      action: transition
+      id: TASK-008-a
+      status: active
+    output:
+      status: active
+    notes: >
+      Agent transitions TASK-008-a from needs-rework to active before
+      beginning implementation.
+
+  - stage: complete-reworked-task
+    tools:
+      - finish
+    input:
+      task_id: TASK-008-a
+      summary_references_feedback: true
+    output:
+      status: done
+    notes: >
+      Agent finishes TASK-008-a with a summary that explicitly references
+      the password length fix and the added unit test.
+
+success_criteria:
+  - TASK-008-a transitions from needs-rework to done
+  - handoff is called before finish, not after
+  - finish summary references the rework feedback (password length or 8-character minimum)
+  - No new tasks are created during this rework cycle
+  - entity transition is used to move the task to active before finishing
+  - Feature FEAT-008 remains in reviewing status; no erroneous feature-level transition occurs
+  - Agent does not skip the handoff step and call finish directly from needs-rework

@@ -1121,3 +1121,205 @@ func writeDecomposeTestPlan(t *testing.T, svc *EntityService, id string) {
 		t.Fatalf("writeDecomposeTestPlan(%s) error = %v", id, err)
 	}
 }
+
+// ─── AC-06: decompose propose on bold-AC spec ─────────────────────────────────
+
+// AC-06: When decompose propose is called on a specification file that uses
+// exclusively the **AC-NN.** bold-identifier format in its acceptance criteria
+// section, the generated task summaries are derived from the criterion text,
+// not from section headings.
+//
+// This is the integration test for FEAT-01KN4ZPCMJ1FP (docint-ac-pattern-recognition).
+// It verifies that parseSpecStructure correctly extracts bold-identifier criteria
+// and that generateProposal uses them to produce criterion-derived summaries.
+func TestDecomposeFeature_BoldACSpec_ProducesCriterionDerivedSummaries(t *testing.T) {
+	t.Parallel()
+
+	// A spec that uses exclusively the **AC-NN.** bold-identifier format.
+	// No checkbox or numbered-list criteria are present.
+	specContent := `# Feature Specification: Bold AC Test
+
+## 1. Purpose
+
+This feature tests the bold-identifier extraction path in decompose propose.
+
+## 2. Acceptance Criteria
+
+**AC-01.** The handler MUST validate input before processing the request.
+
+**AC-02.** The handler MUST return a structured error when validation fails.
+
+**AC-03.** The response MUST include the request identifier in all cases.
+
+**AC-04.** The system MUST log all errors at WARNING level or above.
+`
+
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+
+	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err != nil {
+		t.Fatalf("DecomposeFeature() on bold-AC spec returned error: %v", err)
+	}
+
+	proposal := result.Proposal
+
+	// REQ-13 / AC-06: The proposal must contain tasks derived from the 4 AC lines.
+	// (Plus a test task added by the test-tasks-explicit guidance rule.)
+	if proposal.TotalTasks < 4 {
+		t.Errorf("TotalTasks = %d, want at least 4 (one per bold-AC criterion)", proposal.TotalTasks)
+	}
+
+	// Collect all task summaries for assertion.
+	summaries := make([]string, len(proposal.Tasks))
+	for i, task := range proposal.Tasks {
+		summaries[i] = task.Summary
+	}
+
+	// AC-06 assertion 1: No task summary matches the pattern "Implement <section heading>"
+	// where the section heading is from the spec document.
+	sectionHeadings := []string{
+		"Purpose",
+		"Acceptance Criteria",
+		"1. Purpose",
+		"2. Acceptance Criteria",
+	}
+	for _, summary := range summaries {
+		for _, heading := range sectionHeadings {
+			if summary == "Implement "+heading || summary == heading {
+				t.Errorf("task summary %q looks like a section-heading fallback, not a criterion-derived summary", summary)
+			}
+		}
+	}
+
+	// AC-06 assertion 2: At least one task summary contains text from a bold-AC criterion.
+	// The extracted criterion format is "AC-NN: <text>", so summaries should contain "AC-0".
+	criterionDerivedCount := 0
+	for _, summary := range summaries {
+		// Check for criterion-derived content: contains the identifier prefix "AC-"
+		// or text from one of the criterion bodies.
+		if contains(summary, "AC-0") ||
+			contains(summary, "validate input") ||
+			contains(summary, "structured error") ||
+			contains(summary, "request identifier") ||
+			contains(summary, "log all errors") {
+			criterionDerivedCount++
+		}
+	}
+	if criterionDerivedCount == 0 {
+		t.Errorf("no task summaries contain criterion-derived text; summaries: %v", summaries)
+	}
+
+	// REQ-13 assertion: the set of tasks covers the AC criteria, not just section names.
+	// Verify the feature ID and spec document are correctly linked in the result.
+	if result.FeatureID != featureID {
+		t.Errorf("result.FeatureID = %q, want %q", result.FeatureID, featureID)
+	}
+	if result.SpecDocumentID == "" {
+		t.Error("result.SpecDocumentID is empty; spec document must be linked")
+	}
+}
+
+// TestDecomposeFeature_BoldACSpec_ZeroFallbackToCheckbox verifies that a spec
+// using bold-identifier format produces tasks without requiring checkbox format.
+// This is a regression guard: before the fix, such specs returned an error.
+func TestDecomposeFeature_BoldACSpec_NoLongerReturnsError(t *testing.T) {
+	t.Parallel()
+
+	specContent := `# Spec With Only Bold ACs
+
+## Acceptance Criteria
+
+**REQ-01.** The service MUST accept JSON input.
+
+**REQ-02.** The service MUST reject malformed payloads with HTTP 400.
+`
+
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+
+	_, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err != nil {
+		t.Errorf("DecomposeFeature() returned error for bold-AC spec (should succeed after fix): %v", err)
+	}
+}
+
+// TestParseSpecStructure_BoldIdent_InACSection verifies that parseSpecStructure
+// correctly extracts bold-identifier criteria from an acceptance criteria section.
+func TestParseSpecStructure_BoldIdent_InACSection(t *testing.T) {
+	t.Parallel()
+
+	content := `# Test Spec
+
+## Acceptance Criteria
+
+**AC-01.** The system must do X.
+**AC-02.** The system must do Y.
+**C-03.** No side effects allowed.
+`
+
+	spec := parseSpecStructure(content)
+
+	if len(spec.acceptanceCriteria) != 3 {
+		t.Fatalf("len(acceptanceCriteria) = %d, want 3; criteria: %v",
+			len(spec.acceptanceCriteria),
+			spec.acceptanceCriteria)
+	}
+	if spec.acceptanceCriteria[0].text != "AC-01: The system must do X." {
+		t.Errorf("criterion[0].text = %q, want %q",
+			spec.acceptanceCriteria[0].text, "AC-01: The system must do X.")
+	}
+	if spec.acceptanceCriteria[1].text != "AC-02: The system must do Y." {
+		t.Errorf("criterion[1].text = %q, want %q",
+			spec.acceptanceCriteria[1].text, "AC-02: The system must do Y.")
+	}
+	if spec.acceptanceCriteria[2].text != "C-03: No side effects allowed." {
+		t.Errorf("criterion[2].text = %q, want %q",
+			spec.acceptanceCriteria[2].text, "C-03: No side effects allowed.")
+	}
+}
+
+// TestParseSpecStructure_BoldIdent_OutsideACSection verifies that
+// bold-identifier lines outside acceptance criteria sections are NOT extracted.
+func TestParseSpecStructure_BoldIdent_OutsideACSection(t *testing.T) {
+	t.Parallel()
+
+	content := `# Test Spec
+
+## Background
+
+**AC-01.** This appears in a non-AC section and should NOT be extracted.
+
+## Purpose
+
+Some prose about the purpose.
+`
+
+	spec := parseSpecStructure(content)
+
+	if len(spec.acceptanceCriteria) != 0 {
+		t.Errorf("len(acceptanceCriteria) = %d, want 0 (bold-ident outside AC section must not be extracted); got: %v",
+			len(spec.acceptanceCriteria), spec.acceptanceCriteria)
+	}
+}
+
+// TestParseSpecStructure_BoldIdent_MixedWithCheckbox verifies that bold-identifier
+// and checkbox criteria can coexist in the same document.
+func TestParseSpecStructure_BoldIdent_MixedWithCheckbox(t *testing.T) {
+	t.Parallel()
+
+	content := `# Test Spec
+
+## Acceptance Criteria
+
+- [ ] Checkbox criterion one.
+- [ ] Checkbox criterion two.
+**AC-01.** Bold-identifier criterion three.
+`
+
+	spec := parseSpecStructure(content)
+
+	// All three criteria should be extracted.
+	if len(spec.acceptanceCriteria) != 3 {
+		t.Fatalf("len(acceptanceCriteria) = %d, want 3; criteria: %v",
+			len(spec.acceptanceCriteria), spec.acceptanceCriteria)
+	}
+}

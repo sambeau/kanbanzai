@@ -1,0 +1,106 @@
+document_id: FEAT-01KN4ZPTQSZT5/dev-plan-doc-import-dry-run-plan
+document_path: work/plan/doc-import-dry-run-plan.md
+content_hash: ce203ce4d04c73491d4bb9e60dd79127a7b8c60c525e54fd99a000f32a34efba
+indexed_at: 2026-04-01T17:05:23.220007Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: `doc import` Dry-Run Mode'
+      byte_offset: 0
+      byte_count: 9565
+      word_count: 1299
+      content_hash: ce203ce4d04c73491d4bb9e60dd79127a7b8c60c525e54fd99a000f32a34efba
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Implementation Approach
+          byte_offset: 586
+          byte_count: 1332
+          word_count: 203
+          content_hash: 9848846002455c93bc7d0b50d93933aa1b6c348f2933aad6c3c08ee0fd4fd73e
+        - path: "1.2"
+          level: 2
+          title: 2. Interface Contract
+          byte_offset: 1918
+          byte_count: 1203
+          word_count: 145
+          content_hash: 42c8d1a83f9c3611f96b7932a55a5af6bd9a3cd3b5724cfbd16a30032dc17caa
+        - path: "1.3"
+          level: 2
+          title: 3. Task Breakdown
+          byte_offset: 3121
+          byte_count: 534
+          word_count: 49
+          content_hash: 989e89b6500ae33b776abb7005012d18be6cebf6a824442037aece5fac73bdd2
+        - path: "1.4"
+          level: 2
+          title: 4. Task Details
+          byte_offset: 3655
+          byte_count: 4758
+          word_count: 650
+          content_hash: 137196a015bfac0f57204aa33aa8e58b2c8cdca143b5992303b5df4bcb5cf206
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Task 1: Service Dry-Run Path'
+              byte_offset: 3675
+              byte_count: 1652
+              word_count: 229
+              content_hash: 616eae52a52d66a79fb7abc8deb7bbc33810cb5b5dfa27f5e968620c91c19d08
+            - path: 1.4.2
+              level: 3
+              title: 'Task 2: MCP Tool `dry_run` Parameter'
+              byte_offset: 5327
+              byte_count: 1444
+              word_count: 204
+              content_hash: 18d1edc008dea64fd2a91c2fa465a45518cadacd5b6461ca2e3606f336071de8
+            - path: 1.4.3
+              level: 3
+              title: 'Task 3: Tests'
+              byte_offset: 6771
+              byte_count: 1642
+              word_count: 213
+              content_hash: be9086414217fa4d74e6a7ad69ea97aa23bb21d52f6c613990ce36c0667bf12a
+        - path: "1.5"
+          level: 2
+          title: 5. Scope Boundaries (carried from spec)
+          byte_offset: 8413
+          byte_count: 440
+          word_count: 68
+          content_hash: 1e1f84fd5c7e788c853a764c5b3a1a510ca5c3e4bbe39c576532fed18bb59f70
+        - path: "1.6"
+          level: 2
+          title: 6. Requirement Traceability
+          byte_offset: 8853
+          byte_count: 712
+          word_count: 143
+          content_hash: aaebd4301169b8c3802e87928715cdfc06351008b486c260bea027bfce102d33
+entity_refs:
+    - entity_id: FEAT-01KN4ZPTQSZT5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 367
+cross_doc_links:
+    - target_path: work/spec/doc-import-dry-run.md
+      link_text: work/spec/doc-import-dry-run.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: "1"
+    - target_path: work/spec/doc-import-dry-run.md
+      link_text: work/spec/doc-import-dry-run.md
+      section_path: 1.4.1
+    - target_path: work/spec/doc-import-dry-run.md
+      link_text: work/spec/doc-import-dry-run.md
+      section_path: 1.4.2
+    - target_path: work/spec/doc-import-dry-run.md
+      link_text: work/spec/doc-import-dry-run.md
+      section_path: 1.4.3
+conventional_roles:
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+classified: false

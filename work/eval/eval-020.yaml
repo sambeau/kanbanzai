@@ -1,0 +1,83 @@
+id: eval-020
+name: "Batch vs single tool use for task completion"
+description: >
+  When multiple tasks are ready to be completed at once, the agent should use the
+  batch `tasks` parameter of the finish tool rather than issuing a separate finish
+  call for each individual task. This scenario verifies that the agent recognises
+  the batch-completion pattern and executes a single finish call that completes
+  three or more tasks simultaneously, avoiding unnecessary round-trips.
+category: tool-selection
+
+starting_state:
+  feature_status: developing
+  documents:
+    - type: specification
+      title: "Widget Rendering Spec"
+      status: approved
+    - type: dev-plan
+      title: "Widget Rendering Dev Plan"
+      status: approved
+  tasks:
+    - id: TASK-101
+      summary: "Implement base widget component"
+      status: active
+    - id: TASK-102
+      summary: "Add unit tests for widget component"
+      status: active
+    - id: TASK-103
+      summary: "Update widget CSS styles"
+      status: active
+    - id: TASK-104
+      summary: "Wire widget into parent layout"
+      status: ready
+
+expected_pattern:
+  - stage: survey-ready-tasks
+    tools:
+      - name: next
+        args: {}
+    output: >
+      Agent inspects the work queue and identifies TASK-101, TASK-102, TASK-103 as
+      active and TASK-104 as ready; recognises that all four tasks are complete and
+      can be closed in a single operation.
+
+  - stage: batch-complete-tasks
+    tools:
+      - name: finish
+        args:
+          tasks:
+            - task_id: TASK-101
+              summary: "Base widget component implemented and reviewed"
+              verification: "Unit tests pass locally"
+            - task_id: TASK-102
+              summary: "Unit tests written covering happy path and error states"
+              verification: "All 12 tests green"
+            - task_id: TASK-103
+              summary: "CSS styles updated to match design tokens"
+              verification: "Visual diff approved"
+            - task_id: TASK-104
+              summary: "Widget wired into parent layout; integration verified"
+              verification: "Manual smoke test passed"
+    output: >
+      A single finish call with the `tasks` array containing all four task objects
+      is issued. The tool responds confirming all four tasks transitioned to done
+      status. No additional finish calls are made.
+
+  - stage: verify-feature-progress
+    tools:
+      - name: status
+        args:
+          id: FEAT-XXX
+    output: >
+      Status dashboard shows all tasks in the feature are now done; feature
+      progress metric reflects 100% task completion.
+
+success_criteria:
+  - "finish is called exactly once during the task-completion stage"
+  - "The single finish call uses the batch `tasks` array parameter containing at least 3 task objects"
+  - "finish is NOT called separately for each individual task (no multiple single-task finish invocations)"
+  - "All tasks (TASK-101, TASK-102, TASK-103, TASK-104) are transitioned to done status"
+  - "The agent does not use entity transition to close tasks instead of finish"
+  - "Each entry in the tasks array includes task_id, summary, and verification fields"
+  - "A status check after batch completion confirms all tasks are done"
+  - "No unnecessary tool round-trips are introduced between task completions"

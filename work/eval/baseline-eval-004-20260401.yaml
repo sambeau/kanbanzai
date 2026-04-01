@@ -1,0 +1,47 @@
+scenario_id: eval-004
+system_version: "dcb96a3"
+run_date: "2026-04-01"
+
+tools_called:
+  - status
+  - entity
+  - status
+  - doc
+  - status
+  - doc
+  - doc
+  - entity
+  - status
+
+final_state:
+  feature_status: specifying
+  documents:
+    - path: work/design/eval-004-feature.md
+      status: approved
+  tasks:
+    total: 0
+    done: 0
+
+success: true
+failures: []
+
+notes: >
+  The agent correctly identified the missing design document gate failure when
+  attempting to advance the feature from designing to specifying. The entity
+  transition returned a gap error listing the missing approved design document.
+  The agent then called doc to register the design document, approved it, and
+  retried the transition successfully.
+
+  Recovery required 4 tool calls after the initial failure (doc register,
+  doc approve, entity transition retry, status check) which matches the
+  expected_pattern in the scenario.
+
+  One minor friction point: after the first failed transition attempt, the
+  agent called status to re-read the feature state before proceeding with
+  registration. This is correct behaviour but adds one extra tool call.
+  Total tool calls: 9 vs estimated 7.
+
+  The doc gaps action was not called; the agent inferred the gap from the
+  transition error message directly. This is an acceptable recovery path
+  but differs from the expected_pattern which anticipated a doc gaps call
+  for explicit diagnosis.

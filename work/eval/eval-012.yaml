@@ -1,0 +1,126 @@
+id: eval-012
+name: Cross-Feature Dependency Ordering
+description: >
+  Feature B (reporting dashboard) depends on Feature A (data ingestion pipeline)
+  being in done status. The agent detects the dependency, completes all of
+  Feature A first, advances it to done, then begins work on Feature B.
+category: multi-feature-plan
+
+starting_state:
+  feature_status: developing
+  documents:
+    - type: design
+      status: approved
+      title: Analytics Platform Design
+      id: DOC-012-design
+      owner: PLAN-012
+    - type: dev-plan
+      status: approved
+      title: Data Ingestion Dev Plan
+      id: DOC-012-devplan-a
+      owner: FEAT-012-a
+    - type: dev-plan
+      status: approved
+      title: Reporting Dashboard Dev Plan
+      id: DOC-012-devplan-b
+      owner: FEAT-012-b
+  tasks:
+    - id: TASK-012-a1
+      feature: FEAT-012-a
+      title: Build data ingestion pipeline
+      status: ready
+    - id: TASK-012-a2
+      feature: FEAT-012-a
+      title: Add data validation layer
+      status: ready
+    - id: TASK-012-b1
+      feature: FEAT-012-b
+      title: Build reporting dashboard UI
+      status: blocked
+      blocked_by: FEAT-012-a
+  notes: >
+    PLAN-012 contains FEAT-012-a (data ingestion, developing) and FEAT-012-b
+    (reporting dashboard, blocked). FEAT-012-b has a declared dependency on
+    FEAT-012-a. The agent must not begin FEAT-012-b work until FEAT-012-a
+    is done.
+
+expected_pattern:
+  - stage: assess-plan-and-detect-dependency
+    tools:
+      - status
+      - entity
+    input:
+      action: get
+      id: FEAT-012-b
+    output:
+      feat_012_b_status: blocked
+      blocked_by: FEAT-012-a
+      feat_012_a_status: developing
+    notes: >
+      Agent checks the plan dashboard, detects FEAT-012-b is blocked by
+      FEAT-012-a, and confirms FEAT-012-a is not yet done.
+
+  - stage: complete-feature-a-tasks
+    tools:
+      - next
+      - handoff
+      - finish
+    input:
+      id: FEAT-012-a
+    output:
+      tasks_done:
+        - TASK-012-a1
+        - TASK-012-a2
+    notes: >
+      Agent works exclusively on FEAT-012-a, claiming and finishing
+      TASK-012-a1 and TASK-012-a2 in sequence. handoff is used to
+      generate implementation prompts before each finish call.
+
+  - stage: advance-feature-a-to-done
+    tools:
+      - merge
+      - pr
+      - entity
+    input:
+      entity_id: FEAT-012-a
+    output:
+      feat_012_a_status: done
+    notes: >
+      Agent advances FEAT-012-a through any remaining gates (PR, merge)
+      to done status.
+
+  - stage: confirm-dependency-cleared
+    tools:
+      - status
+    input:
+      id: FEAT-012-b
+    output:
+      dependency_satisfied: true
+      feat_012_a_status: done
+    notes: >
+      Agent re-checks FEAT-012-b status to confirm the blocking dependency
+      on FEAT-012-a has been cleared before proceeding.
+
+  - stage: unblock-and-begin-feature-b
+    tools:
+      - entity
+      - next
+      - handoff
+    input:
+      entity_id: FEAT-012-b
+    output:
+      feat_012_b_status: developing
+      task_claimed: TASK-012-b1
+    notes: >
+      Agent transitions FEAT-012-b out of blocked, claims TASK-012-b1,
+      and generates an implementation prompt via handoff.
+
+success_criteria:
+  - Agent does NOT call finish, handoff, or next for any FEAT-012-b task before FEAT-012-a is done
+  - status or entity get is used to read the blocked_by dependency before starting any work
+  - TASK-012-a1 and TASK-012-a2 both reach done status before any FEAT-012-b task is touched
+  - FEAT-012-a reaches done status before FEAT-012-b transitions away from blocked
+  - A second status or entity check on FEAT-012-b is performed after FEAT-012-a completes
+  - No finish calls reference FEAT-012-b tasks until after FEAT-012-a is done
+  - Agent does not use override parameters or manually force FEAT-012-b out of blocked without FEAT-012-a being done
+  - TASK-012-b1 transitions from blocked to active or ready only after FEAT-012-a is done

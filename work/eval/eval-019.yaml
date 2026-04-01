@@ -1,0 +1,64 @@
+id: eval-019
+name: "Avoids wrong-stage tools when feature is in specifying status"
+description: >
+  When a feature is in specifying status, the agent must not call handoff (no
+  tasks exist yet) or finish (no active tasks exist). The correct path is to
+  register and approve a spec document with doc, then advance the feature to
+  dev-planning with entity. This scenario verifies the agent reads lifecycle
+  context before selecting tools.
+category: tool-selection
+
+starting_state:
+  feature_status: specifying
+  documents:
+    - id: DOC-001
+      type: design
+      status: approved
+      title: "Initial design for user-notifications feature"
+  tasks: []
+
+expected_pattern:
+  - stage: assess-current-state
+    tools:
+      - status
+    output:
+      feature_status: specifying
+      task_count: 0
+      note: "No tasks registered; handoff and finish are not applicable at this stage."
+
+  - stage: register-spec-document
+    tools:
+      - doc
+    output:
+      action: register
+      doc_type: specification
+      title: "User Notifications Specification"
+      status: draft
+      doc_id: DOC-002
+
+  - stage: approve-spec-document
+    tools:
+      - doc
+    output:
+      action: approve
+      doc_id: DOC-002
+      status: approved
+
+  - stage: advance-feature-to-dev-planning
+    tools:
+      - entity
+    output:
+      action: transition
+      feature_status: dev-planning
+      previous_status: specifying
+
+success_criteria:
+  - "Agent does not call handoff at any point during the scenario"
+  - "Agent does not call finish at any point during the scenario"
+  - "Agent calls doc with action=register to create a specification document"
+  - "Agent calls doc with action=approve before advancing the feature"
+  - "Agent calls entity with action=transition to move the feature from specifying to dev-planning"
+  - "Feature ends in dev-planning status"
+  - "The registered spec document ends in approved status"
+  - "Agent calls status or entity get early in the sequence to read current lifecycle state before selecting tools"
+  - "No more than one entity transition call is made"

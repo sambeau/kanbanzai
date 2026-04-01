@@ -1,0 +1,154 @@
+document_id: FEAT-01KN4ZPCMJ1FP/specification-docint-ac-pattern-recognition
+document_path: work/spec/docint-ac-pattern-recognition.md
+content_hash: e23643931e662c7bf214e37c944ec50bee7b534d29732604e93b6b4f59523975
+indexed_at: 2026-04-01T17:00:03.882675Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: `docint` Acceptance Criteria Pattern Recognition'
+      byte_offset: 0
+      byte_count: 8142
+      word_count: 1061
+      content_hash: e23643931e662c7bf214e37c944ec50bee7b534d29732604e93b6b4f59523975
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 729
+          byte_count: 421
+          word_count: 53
+          content_hash: f4c4540332b55cc997c014564e293427b4bc1a5db6f64236ef8076f7e42d6884
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 1150
+          byte_count: 1011
+          word_count: 132
+          content_hash: 85f05305060b4e37a69a0aa13d8116b14476f5cfe9a72ac9748628e65a3be278
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 In Scope
+              byte_offset: 1163
+              byte_count: 557
+              word_count: 68
+              content_hash: 78a48b70c53da364a6395ae2d9c95344db0bbbfc9506a68819125c2d59e95fe9
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Out of Scope
+              byte_offset: 1720
+              byte_count: 441
+              word_count: 61
+              content_hash: a925b9081ae4681d6604e15135f7492908efc2fe32c516ff5809a4b4323ab18f
+        - path: "1.3"
+          level: 2
+          title: 3. Dependencies and Assumptions
+          byte_offset: 2161
+          byte_count: 919
+          word_count: 116
+          content_hash: 159c288ca25639c80d47c99f6c3923d2daa0bd50bd00bcf209ffa5d420623e26
+        - path: "1.4"
+          level: 2
+          title: 4. Requirements
+          byte_offset: 3080
+          byte_count: 3512
+          word_count: 500
+          content_hash: 32af63c3fe186d3d9b2fc11280a367257389b23700c4b58e2e77ce5442e83c99
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Bold-Identifier Pattern
+              byte_offset: 3100
+              byte_count: 745
+              word_count: 110
+              content_hash: 2a91c4c3c3d4ed9026a34acbc66e2a5bed1698e24593ae1393e9ff331afadf31
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Context-Sensitive Extraction Rules
+              byte_offset: 3845
+              byte_count: 767
+              word_count: 106
+              content_hash: ace6d905205cadd3996c8b3ee570b421a565a3df882716584e4820cd6ac057b5
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Extracted Criterion Format
+              byte_offset: 4612
+              byte_count: 593
+              word_count: 89
+              content_hash: 09e93abddc0ca8efd1355b67e1896f7fbb1cad394da7857b0c73608ec7442fa3
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Identifier Prefix Coverage
+              byte_offset: 5205
+              byte_count: 321
+              word_count: 43
+              content_hash: e96f4a429299b3e515d382b54b2374e45cbac445fee800f684481dc4d25d7ddd
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Regression Invariants
+              byte_offset: 5526
+              byte_count: 544
+              word_count: 76
+              content_hash: 90f94a8972ef23cecb46422546d1e7dd313993644125f3778cdf53735845116b
+            - path: 1.4.6
+              level: 3
+              title: 4.6 End-to-End Behaviour
+              byte_offset: 6070
+              byte_count: 522
+              word_count: 73
+              content_hash: 309e03ac47d512c6c805cd81195c1b18937512d67bdb4ec325fb3c7a29c54312
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 6592
+          byte_count: 1048
+          word_count: 135
+          content_hash: 8c6906a7b4a2060bb94f9e74d7a8f4f68500fe29c2281d13d13a26cad6be5fac
+        - path: "1.6"
+          level: 2
+          title: 6. Non-Requirements
+          byte_offset: 7640
+          byte_count: 502
+          word_count: 74
+          content_hash: 36c20c9d3728cc150dad65adc455b6288ddf75f3dda69eee382f49a73f36bee4
+entity_refs:
+    - entity_id: FEAT-01KN4ZPCMJ1FP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 491
+cross_doc_links:
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1"
+      role: requirement
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: assumption
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: 1.4.2
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+classified: false

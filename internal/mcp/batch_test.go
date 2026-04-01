@@ -317,6 +317,176 @@ func TestExecuteBatch_InputOrderPreserved(t *testing.T) {
 	}
 }
 
+// ─── ExecuteBatch tool-result error detection tests (AC-12 through AC-15) ─────
+
+// AC-12: A handler returning (id, map{"error":"msg"}, nil) is counted as failed.
+func TestExecuteBatch_ToolResultError_CountedAsFailed(t *testing.T) {
+	t.Parallel()
+
+	items := []any{"TASK-001"}
+	result, err := ExecuteBatch(context.Background(), items, func(ctx context.Context, item any) (string, any, error) {
+		id, _ := item.(string)
+		return id, map[string]any{"error": "validation failed: missing required field"}, nil
+	})
+	if err != nil {
+		t.Fatalf("ExecuteBatch error: %v", err)
+	}
+
+	br, ok := result.(*BatchResult)
+	if !ok {
+		t.Fatalf("result type = %T, want *BatchResult", result)
+	}
+	if br.Summary.Failed != 1 {
+		t.Errorf("Summary.Failed = %d, want 1 (tool-result error must be counted as failed)", br.Summary.Failed)
+	}
+	if br.Summary.Succeeded != 0 {
+		t.Errorf("Summary.Succeeded = %d, want 0", br.Summary.Succeeded)
+	}
+}
+
+// AC-13: ItemResult for a tool-result error has Status "error" and Error contains
+// the message from the tool-result payload.
+func TestExecuteBatch_ToolResultError_ItemResultShape(t *testing.T) {
+	t.Parallel()
+
+	const errMsg = "entity not found: TASK-999"
+	items := []any{"TASK-999"}
+	result, err := ExecuteBatch(context.Background(), items, func(ctx context.Context, item any) (string, any, error) {
+		id, _ := item.(string)
+		return id, map[string]any{"error": errMsg}, nil
+	})
+	if err != nil {
+		t.Fatalf("ExecuteBatch error: %v", err)
+	}
+
+	br, _ := result.(*BatchResult)
+	if len(br.Results) != 1 {
+		t.Fatalf("len(Results) = %d, want 1", len(br.Results))
+	}
+	r := br.Results[0]
+	if r.Status != "error" {
+		t.Errorf("Results[0].Status = %q, want \"error\"", r.Status)
+	}
+	if r.Error == nil {
+		t.Fatal("Results[0].Error = nil, want non-nil ErrorDetail")
+	}
+	if r.Error.Message != errMsg {
+		t.Errorf("Results[0].Error.Message = %q, want %q", r.Error.Message, errMsg)
+	}
+	if r.Data != nil {
+		t.Errorf("Results[0].Data = %v, want nil (data must be absent for error items)", r.Data)
+	}
+}
+
+// AC-14: A handler returning genuine success data (no "error" key) is still
+// counted as succeeded with no change in result shape.
+func TestExecuteBatch_GenuineSuccess_NotAffectedByToolErrorCheck(t *testing.T) {
+	t.Parallel()
+
+	items := []any{"TASK-001"}
+	result, err := ExecuteBatch(context.Background(), items, func(ctx context.Context, item any) (string, any, error) {
+		id, _ := item.(string)
+		return id, map[string]any{"result": "ok", "status": "done"}, nil
+	})
+	if err != nil {
+		t.Fatalf("ExecuteBatch error: %v", err)
+	}
+
+	br, _ := result.(*BatchResult)
+	if br.Summary.Succeeded != 1 {
+		t.Errorf("Summary.Succeeded = %d, want 1 (genuine success must remain succeeded)", br.Summary.Succeeded)
+	}
+	if br.Summary.Failed != 0 {
+		t.Errorf("Summary.Failed = %d, want 0", br.Summary.Failed)
+	}
+	if br.Results[0].Status != "ok" {
+		t.Errorf("Results[0].Status = %q, want \"ok\"", br.Results[0].Status)
+	}
+}
+
+// AC-15: A handler returning a non-nil Go error is still counted as failed,
+// regardless of the data value.
+func TestExecuteBatch_GoError_CountedAsFailed(t *testing.T) {
+	t.Parallel()
+
+	items := []any{"TASK-001"}
+	result, err := ExecuteBatch(context.Background(), items, func(ctx context.Context, item any) (string, any, error) {
+		id, _ := item.(string)
+		return id, nil, fmt.Errorf("service unavailable")
+	})
+	if err != nil {
+		t.Fatalf("ExecuteBatch error: %v", err)
+	}
+
+	br, _ := result.(*BatchResult)
+	if br.Summary.Failed != 1 {
+		t.Errorf("Summary.Failed = %d, want 1 (Go error must be counted as failed)", br.Summary.Failed)
+	}
+	if br.Results[0].Status != "error" {
+		t.Errorf("Results[0].Status = %q, want \"error\"", br.Results[0].Status)
+	}
+	if br.Results[0].Error == nil || br.Results[0].Error.Message != "service unavailable" {
+		t.Errorf("Results[0].Error.Message = %q, want \"service unavailable\"", br.Results[0].Error.Message)
+	}
+}
+
+// REQ-08: A batch with one tool-result-error item and one genuine success
+// produces succeeded=1, failed=1 (mutually exclusive and exhaustive).
+func TestExecuteBatch_MixedToolErrorAndSuccess_SummaryCorrect(t *testing.T) {
+	t.Parallel()
+
+	items := []any{"TASK-001", "TASK-002"}
+	result, err := ExecuteBatch(context.Background(), items, func(ctx context.Context, item any) (string, any, error) {
+		id, _ := item.(string)
+		if id == "TASK-001" {
+			return id, map[string]any{"error": "not found"}, nil
+		}
+		return id, map[string]any{"status": "done"}, nil
+	})
+	if err != nil {
+		t.Fatalf("ExecuteBatch error: %v", err)
+	}
+
+	br, _ := result.(*BatchResult)
+	if br.Summary.Total != 2 {
+		t.Errorf("Summary.Total = %d, want 2", br.Summary.Total)
+	}
+	if br.Summary.Succeeded != 1 {
+		t.Errorf("Summary.Succeeded = %d, want 1", br.Summary.Succeeded)
+	}
+	if br.Summary.Failed != 1 {
+		t.Errorf("Summary.Failed = %d, want 1", br.Summary.Failed)
+	}
+	// TASK-001: error (tool-result error)
+	if br.Results[0].Status != "error" {
+		t.Errorf("Results[0].Status = %q, want \"error\"", br.Results[0].Status)
+	}
+	// TASK-002: ok (genuine success)
+	if br.Results[1].Status != "ok" {
+		t.Errorf("Results[1].Status = %q, want \"ok\"", br.Results[1].Status)
+	}
+}
+
+// extractToolResultError: empty string error value is not treated as an error.
+func TestExtractToolResultError_EmptyStringNotAnError(t *testing.T) {
+	t.Parallel()
+
+	items := []any{"TASK-001"}
+	result, err := ExecuteBatch(context.Background(), items, func(ctx context.Context, item any) (string, any, error) {
+		id, _ := item.(string)
+		return id, map[string]any{"error": ""}, nil
+	})
+	if err != nil {
+		t.Fatalf("ExecuteBatch error: %v", err)
+	}
+
+	br, _ := result.(*BatchResult)
+	// Empty string in "error" key is not a tool-result error; should succeed.
+	if br.Summary.Succeeded != 1 {
+		t.Errorf("Summary.Succeeded = %d, want 1 (empty error string is not a tool-result error)", br.Summary.Succeeded)
+	}
+}
+
 // ─── IsBatchInput tests ───────────────────────────────────────────────────────
 
 func TestIsBatchInput_True(t *testing.T) {

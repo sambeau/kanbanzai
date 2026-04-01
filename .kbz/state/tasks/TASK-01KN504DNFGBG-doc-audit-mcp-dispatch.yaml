@@ -2,4 +2,9 @@ id: TASK-01KN504DNFGBG
 parent_feature: FEAT-01KN4ZPQFQN1C
 slug: doc-audit-mcp-dispatch
 summary: "Add audit action to doc tool dispatcher: accept path and include_registered parameters, call AuditDocuments, return structured response."
-status: queued
+status: done
+files_planned:
+  - kanbanzai/internal/mcp/doc_tool.go
+completed: "2026-04-01T17:44:20Z"
+completion_summary: "Added audit action to doc_tool.go dispatcher. Added include_registered and dry_run boolean parameters to tool definition. docAuditAction calls AuditDocuments with path scoping and include_registered, returns unregistered/missing/summary (registered only when flag set)."
+verification: go test ./internal/mcp/... -run TestDocAudit — AC-16 through AC-20 pass

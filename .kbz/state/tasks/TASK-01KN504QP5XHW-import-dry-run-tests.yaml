@@ -2,7 +2,12 @@ id: TASK-01KN504QP5XHW
 parent_feature: FEAT-01KN4ZPTQSZT5
 slug: import-dry-run-tests
 summary: "Write integration tests covering AC-21 through AC-25: dry-run returns preview data, no store records created, live path unchanged."
-status: queued
+status: done
 depends_on:
   - TASK-01KN50402DX0X
   - TASK-01KN504FBWJXQ
+files_planned:
+  - kanbanzai/internal/mcp/doc_tool_test.go
+completed: "2026-04-01T17:44:20Z"
+completion_summary: "Added 7 integration tests in doc_tool_test.go for import dry-run: ReturnsWouldImport (AC-21), NoStoreRecordsCreated (AC-22), InferredMetadata (AC-23), AlreadyRegisteredSkipped (AC-24), DryRunFalse_LiveBehaviourUnchanged (AC-25), NoDryRun_LiveBehaviourUnchanged (AC-25), SummaryCounts."
+verification: "go test ./internal/mcp/... -run TestDocImport_DryRun|TestDocImport_NoDryRun|TestDocImport_DryRunFalse — all 7 tests pass"

@@ -1,0 +1,50 @@
+scenario_id: eval-018
+system_version: "dcb96a3"
+run_date: "2026-04-01"
+
+tools_called:
+  - status
+  - doc
+  - doc
+  - decompose
+  - decompose
+  - decompose
+  - entity
+  - status
+  - next
+  - handoff
+  - finish
+  - status
+  - entity
+
+final_state:
+  feature_status: done
+  documents:
+    - path: work/spec/eval-018-feature.md
+      status: approved
+    - path: work/plan/eval-018-feature.md
+      status: approved
+  tasks:
+    total: 2
+    done: 2
+
+success: true
+failures: []
+
+notes: >
+  The agent demonstrated correct tool selection throughout the scenario. Document
+  registration and approval were performed via the doc tool (not entity), task
+  generation was performed via decompose propose/review/apply (not entity create
+  directly), and task completion was performed via finish (not entity transition).
+
+  This scenario passed cleanly with no wrong-tool deviations observed. The agent
+  appeared to follow the tool selection conventions as documented in the knowledge
+  base entries for each workflow stage.
+
+  Total tool calls: 13 vs estimated 11 in the expected_pattern. The two extra
+  calls were an additional status check after decompose apply (to confirm tasks
+  were created) and a redundant entity get before the final feature transition.
+
+  No anti-pattern tool substitutions were observed. The batch finish path was
+  not tested in this scenario (only 2 tasks, completed sequentially via handoff
+  sub-agents); eval-020 covers the batch finish path specifically.

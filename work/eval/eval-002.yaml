@@ -1,0 +1,83 @@
+id: eval-002
+name: Spec-Only Feature — Happy Path
+description: >
+  A feature already in specifying status (with an approved design document) needs
+  a specification document created and approved before it can advance to
+  dev-planning. The agent registers the specification, approves it, and performs
+  the lifecycle transition in a focused three-step sequence without touching any
+  other gates or documents.
+category: happy-path
+
+starting_state:
+  feature_status: specifying
+  documents:
+    - id: DOC-002-design
+      type: design
+      title: Feature 002 Design
+      status: approved
+  tasks: []
+  notes: >
+    Feature FEAT-002 exists in specifying status. An approved design document
+    is already on record (DOC-002-design), satisfying the designing gate.
+    No specification document has been registered yet. The spec markdown file
+    exists on disk at docs/specs/feat-002-spec.md and is ready to register.
+
+expected_pattern:
+  - stage: inspect-feature
+    tools:
+      - status
+      - entity
+    output: >
+      Agent confirms FEAT-002 is in specifying status. The existing design
+      document (DOC-002-design) is visible and approved. No specification
+      document is registered. Agent identifies the gap: a specification document
+      is required before advancing to dev-planning.
+    tool_args_must_include:
+      - action: get
+        id: FEAT-002
+
+  - stage: register-specification
+    tools:
+      - doc
+    output: >
+      Agent registers docs/specs/feat-002-spec.md as a specification document
+      owned by FEAT-002. Document is created with status=draft and assigned
+      a DOC-... ID.
+    tool_args_must_include:
+      - action: register
+        type: specification
+        owner: FEAT-002
+
+  - stage: approve-specification
+    tools:
+      - doc
+    output: >
+      Agent approves the newly registered specification document. Status
+      transitions from draft to approved, satisfying the specifying gate
+      prerequisite for advancement to dev-planning.
+    tool_args_must_include:
+      - action: approve
+
+  - stage: advance-to-dev-planning
+    tools:
+      - entity
+    output: >
+      Agent calls entity with action=transition and status=dev-planning on
+      FEAT-002. Gate check passes because an approved specification document
+      is now on record. Feature status transitions from specifying to
+      dev-planning.
+    tool_args_must_include:
+      - action: transition
+        status: dev-planning
+
+success_criteria:
+  - "Feature FEAT-002 ends the scenario in dev-planning status"
+  - "doc register is called with type=specification and owner=FEAT-002 — not type=design or any other type"
+  - "doc register references docs/specs/feat-002-spec.md (the pre-existing file) rather than creating a new path"
+  - "doc approve is called for the specification document before entity transition is attempted"
+  - "entity action=transition is called with status=dev-planning — not status=specifying or any intermediate state"
+  - "The original design document DOC-002-design is not modified, re-registered, or re-approved"
+  - "No tasks are created during this scenario — decompose and entity create are not called"
+  - "Agent does not call decompose, handoff, next, or finish — those tools are out of scope for this scenario"
+  - "Exactly one specification document exists for FEAT-002 at scenario completion with status=approved"
+  - "Agent does not attempt to advance the feature before the specification document is approved"

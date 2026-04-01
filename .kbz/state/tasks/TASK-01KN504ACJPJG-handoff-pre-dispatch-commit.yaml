@@ -2,6 +2,12 @@ id: TASK-01KN504ACJPJG
 parent_feature: FEAT-01KN4ZPG44T5B
 slug: handoff-pre-dispatch-commit
 summary: "Integrate CommitStateIfDirty into handoff_tool.go pre-dispatch, add failure-path logging, and write AC-07 through AC-11 tests."
-status: queued
+status: done
 depends_on:
   - TASK-01KN503TRSPV6
+files_planned:
+  - kanbanzai/internal/mcp/handoff_tool.go
+  - kanbanzai/internal/mcp/handoff_tool_test.go
+completed: "2026-04-01T17:44:20Z"
+completion_summary: "Integrated CommitStateIfDirty into handoff_tool.go via package-level commitStateFunc variable (injectable for tests). Calls commitStateFunc before assembleContext; logs warning on failure; non-blocking. Added 3 tests: CalledBeforeAssembly (AC-07), FailureDoesNotBlockHandoff (AC-11), UsesRepoRootDot."
+verification: go test ./internal/mcp/... -run TestHandoff_PreDispatch — all 3 tests pass

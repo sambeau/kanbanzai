@@ -1,0 +1,95 @@
+id: eval-006
+name: Unapproved Design Document Gate — Failure and Recovery
+description: >
+  A feature in designing status has a design document already registered but
+  still in draft status. The agent attempts to advance the feature to specifying,
+  is blocked by the unapproved document gate, inspects the blocking document,
+  approves it, and successfully retries the transition.
+category: gate-failure-and-recovery
+
+starting_state:
+  feature_status: designing
+  documents:
+    - id: DOC-006
+      type: design
+      title: Feature 006 Design
+      status: draft
+      owner: FEAT-006
+      path: docs/design/feat-006-design.md
+  tasks: []
+  notes: >
+    Feature FEAT-006 exists in designing status. A design document has been
+    registered (DOC-006) but not yet approved — it remains in draft status.
+    The agent must recognise the document gate is blocked by draft status, not
+    by a missing document, and resolve it via approval rather than re-registration.
+
+expected_pattern:
+  - stage: attempt-advance-to-specifying
+    tools:
+      - entity
+    output: >
+      Agent calls entity with action=transition, status=specifying for FEAT-006.
+      The transition is rejected because the gate requires an approved design
+      document and DOC-006 is still in draft status. The error or gate-failure
+      response names the unapproved document as the blocking prerequisite.
+    tool_args_must_include:
+      - action: transition
+        status: specifying
+    notes: >
+      The gate failure must reference document approval status, not a missing
+      document. This distinguishes the scenario from eval-004 where no document
+      exists at all.
+
+  - stage: inspect-blocking-document
+    tools:
+      - doc
+    output: >
+      Agent calls doc with action=get (or action=list filtered to FEAT-006) to
+      retrieve the details of the blocking document. Response confirms DOC-006
+      has type=design and status=draft, establishing that approval — not
+      registration — is the required action.
+    tool_args_must_include:
+      - action: get
+    notes: >
+      Agent should NOT call doc register or doc import. The document already
+      exists; the correct remediation is approval only.
+
+  - stage: approve-design-document
+    tools:
+      - doc
+    output: >
+      Agent calls doc with action=approve and id=DOC-006. Document status
+      transitions from draft to approved. No new document is created.
+    tool_args_must_include:
+      - action: approve
+        id: DOC-006
+    notes: >
+      Exactly one document should exist for this feature after this stage —
+      the same DOC-006 now approved. A second doc register call at this point
+      would be an error.
+
+  - stage: retry-advance-to-specifying
+    tools:
+      - entity
+    output: >
+      Agent retries entity with action=transition, status=specifying for
+      FEAT-006. The transition succeeds because the design document gate is
+      now satisfied by the approved DOC-006.
+    tool_args_must_include:
+      - action: transition
+        status: specifying
+    notes: >
+      This must be a second, independent transition call — not a continuation
+      of the first blocked call.
+
+success_criteria:
+  - "First entity transition call is blocked — a gate-failure or equivalent error is returned, not a successful status change"
+  - "Error or gate message from the first attempt references document approval status, not a missing document"
+  - "Agent does NOT call doc register or doc import at any point — the document already exists"
+  - "Agent calls doc get (or doc list) to inspect DOC-006 before deciding on remediation"
+  - "doc approve is called with id=DOC-006 (or the correct DOC-... ID of the existing draft document)"
+  - "No new design document is created — document count for FEAT-006 remains exactly one after recovery"
+  - "DOC-006 ends with status=approved"
+  - "Second entity transition to specifying succeeds"
+  - "Feature FEAT-006 ends in specifying status"
+  - "Recovery sequence is strictly: entity(fail) → doc get/list → doc approve → entity(success)"

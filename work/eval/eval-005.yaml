@@ -1,0 +1,143 @@
+id: eval-005
+name: Missing Tasks Gate — Decompose Recovery
+description: >
+  A feature in dev-planning status has approved design and specification
+  documents but zero tasks. The agent attempts to advance to developing,
+  is blocked by the tasks gate, then recovers by using decompose to propose,
+  review, and apply a task breakdown before retrying the transition
+  successfully.
+category: gate-failure-and-recovery
+
+starting_state:
+  feature_status: dev-planning
+  documents:
+    - id: DOC-005-design
+      type: design
+      title: Feature 005 Design
+      status: approved
+    - id: DOC-005-spec
+      type: specification
+      title: Feature 005 Specification
+      status: approved
+  tasks: []
+  notes: >
+    Feature FEAT-005 is in dev-planning status. Its design and specification
+    documents are both approved, so those gates are satisfied. However, no
+    tasks have been created yet, which means the dev-planning → developing
+    gate will block advancement until at least one task exists in a ready
+    state.
+
+expected_pattern:
+  - stage: inspect-feature-state
+    tools:
+      - status
+    output: >
+      Agent observes FEAT-005 in dev-planning status. Two approved documents
+      are present (design, specification). Task list is empty. Agent identifies
+      that advancing to developing will require tasks to exist.
+    notes: >
+      Agent may also call entity action=get on FEAT-005 to retrieve structured
+      metadata. Either status or entity is acceptable here.
+
+  - stage: attempt-advance-to-developing
+    tools:
+      - entity
+    output:
+      status: gate-failure
+      message_contains: "no tasks"
+    tool_args_must_include:
+      - action: transition
+        status: developing
+    notes: >
+      The transition call should return a gate-failure response indicating
+      that at least one task in ready status is required before the feature
+      can enter developing. The agent must not silently succeed or skip this
+      step.
+
+  - stage: propose-task-decomposition
+    tools:
+      - decompose
+    output: >
+      decompose returns a structured proposal containing a vertical slice
+      breakdown of the feature into concrete, independently deliverable tasks.
+      The proposal includes task titles, summaries, and ordering suggestions
+      but does not yet create any tasks in the system.
+    tool_args_must_include:
+      - action: propose
+        feature_id: FEAT-005
+    notes: >
+      Agent calls decompose with action=propose in direct response to the
+      gate failure. The proposal is not applied immediately — the agent
+      must first review it.
+
+  - stage: review-decomposition-proposal
+    tools:
+      - decompose
+    output: >
+      decompose review returns the proposal with any refinements, warnings,
+      or suggestions noted. Agent confirms the proposal is acceptable and
+      proceeds to apply it.
+    tool_args_must_include:
+      - action: review
+        feature_id: FEAT-005
+    notes: >
+      Agent must call action=review before action=apply. Skipping review and
+      calling apply directly is an incorrect shortcut and should be scored
+      as a workflow violation.
+
+  - stage: apply-decomposition
+    tools:
+      - decompose
+    output: >
+      decompose apply creates the tasks in the system. At least one task is
+      created in ready status. The response includes the IDs of all newly
+      created tasks (TASK-... prefixed).
+    tool_args_must_include:
+      - action: apply
+        feature_id: FEAT-005
+    notes: >
+      After apply, tasks should be visible under FEAT-005 with status ready.
+      Agent should verify task creation before retrying the feature transition.
+
+  - stage: verify-tasks-created
+    tools:
+      - entity
+    output: >
+      Agent retrieves the task list for FEAT-005 and confirms at least one
+      task exists in ready status. This confirms the tasks gate prerequisite
+      is now satisfied.
+    tool_args_must_include:
+      - action: list
+        type: task
+        parent: FEAT-005
+    notes: >
+      This verification step is optional but strongly preferred. An agent
+      that skips verification and retries the transition directly is
+      acceptable only if the retry immediately succeeds.
+
+  - stage: retry-advance-to-developing
+    tools:
+      - entity
+    output:
+      status: success
+      feature_status: developing
+    tool_args_must_include:
+      - action: transition
+        status: developing
+    notes: >
+      The second transition attempt should succeed because the tasks gate
+      is now satisfied. Feature FEAT-005 moves from dev-planning to
+      developing. No further advancement should occur in this scenario.
+
+success_criteria:
+  - "First entity transition attempt to developing is blocked — gate-failure is returned before any decompose call is made"
+  - "Agent calls decompose in direct response to the gate failure, not before it"
+  - "decompose is called with action=propose before action=review and action=apply (order enforced)"
+  - "decompose action=review is called before action=apply — agent does not skip the review step"
+  - "decompose action=apply is called and creates at least one task under FEAT-005"
+  - "All tasks created by decompose apply have status=ready (not draft or blocked)"
+  - "Second entity transition to developing succeeds after decompose apply"
+  - "Feature FEAT-005 status is developing at the end of the scenario"
+  - "No tasks are created via entity action=create — decompose is the sole task-creation mechanism in this scenario"
+  - "Agent does not attempt to manually set feature status to developing by any means other than entity action=transition"
+  - "Recovery sequence is strictly: entity(fail) → decompose(propose) → decompose(review) → decompose(apply) → entity(success)"

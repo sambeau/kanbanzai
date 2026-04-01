@@ -1,0 +1,44 @@
+scenario_id: eval-008
+system_version: "dcb96a3"
+run_date: "2026-04-01"
+
+tools_called:
+  - status
+  - next
+  - entity
+  - entity
+  - handoff
+  - finish
+  - status
+  - entity
+
+final_state:
+  feature_status: done
+  documents:
+    - path: work/spec/eval-008-feature.md
+      status: approved
+    - path: work/plan/eval-008-feature.md
+      status: approved
+  tasks:
+    total: 1
+    done: 1
+
+success: true
+failures: []
+
+notes: >
+  The agent correctly handled the single rework cycle. The task was in
+  needs-rework status with review feedback in the task state. The agent
+  called next to claim the task, read the feedback via entity get, used
+  handoff to generate a sub-agent prompt that included the rework notes,
+  and then finished the task.
+
+  The feature was then advanced to done after verifying all tasks were
+  complete. Total tool calls: 8 vs estimated 6 in the expected_pattern.
+  The two extra calls were a redundant status check after the rework
+  finish and an entity get to confirm task status before advancing.
+
+  No issues with the rework loop mechanics. The handoff prompt correctly
+  included the review feedback from the needs-rework task state. The
+  sub-agent pre-dispatch commit was not present in this system version;
+  the orchestrator verified state manually before calling finish.

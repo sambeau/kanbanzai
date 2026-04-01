@@ -2,4 +2,9 @@ id: TASK-01KN503YAG8MY
 parent_feature: FEAT-01KN4ZPQFQN1C
 slug: audit-service-logic
 summary: "Implement AuditDocuments service function: walk directories, compare against document store, return unregistered/missing/summary."
-status: queued
+status: done
+files_planned:
+  - kanbanzai/internal/service/doc_audit.go
+completed: "2026-04-01T17:44:20Z"
+completion_summary: "Created internal/service/doc_audit.go with AuditDocuments function and all associated types (AuditResult, UnregisteredFile, MissingRecord, RegisteredFile, AuditSummary, DocAuditStore interface). Handles both relative and absolute path parameters. Uses same inferDocType mapping as doc import."
+verification: go build ./... passes; tested indirectly via TestDocAudit tests

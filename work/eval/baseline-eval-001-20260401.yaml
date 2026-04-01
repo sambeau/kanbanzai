@@ -1,0 +1,64 @@
+scenario_id: eval-001
+system_version: "dcb96a3"
+run_date: "2026-04-01"
+
+tools_called:
+  - status
+  - entity
+  - doc
+  - doc
+  - entity
+  - status
+  - decompose
+  - decompose
+  - decompose
+  - entity
+  - status
+  - next
+  - handoff
+  - finish
+  - next
+  - handoff
+  - finish
+  - next
+  - handoff
+  - finish
+  - status
+  - entity
+  - status
+
+final_state:
+  feature_status: done
+  documents:
+    - path: work/spec/eval-001-feature.md
+      status: approved
+    - path: work/plan/eval-001-feature.md
+      status: approved
+  tasks:
+    total: 3
+    done: 3
+
+success: false
+failures:
+  - "decompose propose on bold-AC spec produced section-heading task summaries instead of criterion-derived summaries"
+  - "agent required 3 prompts to advance through specifying gate (expected 1)"
+
+notes: >
+  The agent successfully completed the full lifecycle end-to-end. The primary
+  failure mode was in decompose propose: because asmExtractCriteria did not
+  recognise the **AC-NN.** bold-identifier format used in the spec, the generated
+  task summaries were derived from section headings rather than acceptance
+  criteria text. Tasks were named "Implement Acceptance Criteria" and
+  "Implement Requirements" rather than criterion-specific names.
+
+  A secondary friction point was the specifying gate: the agent attempted to
+  advance the feature before registering the spec, received a gap warning,
+  then registered without approving, received another gap warning, then
+  approved and succeeded. Three round-trips instead of one.
+
+  Tool call count was higher than expected (23 vs estimated 14) due to
+  repeated status checks and retry loops around the gates.
+
+  The pre-dispatch state commit (sub-agent state isolation) was not present
+  in this system version; one sub-agent run appeared to reset state that
+  the orchestrator had just written, requiring a manual status re-check.

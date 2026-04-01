@@ -1,0 +1,125 @@
+id: eval-014
+name: Feature Without Design Stage
+description: >
+  A feature is created directly in specifying status, intentionally skipping
+  the design stage. The agent writes and approves a specification document
+  without any design document prerequisite and advances the feature through
+  the remaining lifecycle stages to developing.
+category: edge-case
+
+starting_state:
+  feature_status: specifying
+  documents: []
+  tasks: []
+  notes: >
+    Feature FEAT-014 was created directly in specifying status; no design
+    document exists or is required. The agent must produce a specification,
+    get it approved, and advance through dev-planning (with task decomposition)
+    to developing — all without encountering a design-stage gate.
+
+expected_pattern:
+  - stage: check-feature-status-and-documents
+    tools:
+      - status
+      - doc
+    input:
+      action: list
+      owner: FEAT-014
+    output:
+      feature_status: specifying
+      document_count: 0
+      design_document_required: false
+    notes: >
+      Agent confirms feature is in specifying status, no documents exist,
+      and no design document is required to proceed.
+
+  - stage: create-specification-document
+    tools:
+      - doc
+    input:
+      action: register
+      type: specification
+      owner: FEAT-014
+      title: FEAT-014 Specification
+    output:
+      status: draft
+      id_prefix: DOC-
+    notes: >
+      Agent registers a new specification document for FEAT-014. No design
+      document is registered or referenced before or during this step.
+
+  - stage: approve-specification
+    tools:
+      - doc
+    input:
+      action: approve
+      id: DOC-014-spec
+    output:
+      status: approved
+    notes: >
+      Agent approves the specification document, satisfying the prerequisite
+      for advancing from specifying to dev-planning.
+
+  - stage: advance-to-dev-planning
+    tools:
+      - entity
+    input:
+      action: transition
+      id: FEAT-014
+      status: dev-planning
+    output:
+      feature_status: dev-planning
+    notes: >
+      Feature advances directly from specifying to dev-planning, skipping
+      the designing stage entirely with no errors or gate failures.
+
+  - stage: decompose-into-tasks
+    tools:
+      - decompose
+    input:
+      action: propose
+      feature_id: FEAT-014
+    output:
+      proposal_contains_tasks: true
+      task_count_min: 1
+    notes: >
+      Agent proposes a task breakdown derived from the approved specification.
+      decompose succeeds without requiring a design document.
+
+  - stage: review-and-apply-decomposition
+    tools:
+      - decompose
+    input:
+      action: apply
+      feature_id: FEAT-014
+    output:
+      tasks_created: true
+      task_count_min: 1
+    notes: >
+      Agent applies the decomposition proposal, creating at least one task
+      under FEAT-014 ready for development.
+
+  - stage: advance-to-developing
+    tools:
+      - entity
+    input:
+      action: transition
+      id: FEAT-014
+      status: developing
+    output:
+      feature_status: developing
+    notes: >
+      Feature advances to developing status. The full lifecycle path taken
+      is specifying -> dev-planning -> developing, with designing absent.
+
+success_criteria:
+  - Feature advances from specifying to dev-planning without a design document
+  - No design document is created or referenced at any point during the scenario
+  - Agent does not attempt to transition through designing status
+  - Specification document is registered and approved before the feature advances past specifying
+  - decompose is called during dev-planning and succeeds with an approved specification as its only document prerequisite
+  - At least one task is created by decompose apply
+  - Feature reaches developing status by the end of the scenario
+  - No gate-failure errors occur due to a missing design document
+  - The lifecycle path observed is specifying -> dev-planning -> developing (designing is absent)
+  - Agent does not create a checkpoint or stall waiting for a design document that is not required

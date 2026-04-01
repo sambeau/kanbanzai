@@ -1,0 +1,148 @@
+document_id: FEAT-01KN4ZPTQSZT5/specification-doc-import-dry-run
+document_path: work/spec/doc-import-dry-run.md
+content_hash: 0dc5253ecadb70276f86ee2a3dcd9f50342b482a60fe1f673a3411e49cecc9eb
+indexed_at: 2026-04-01T17:00:08.636607Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: `doc import` Dry-Run Mode'
+      byte_offset: 0
+      byte_count: 6285
+      word_count: 906
+      content_hash: 0dc5253ecadb70276f86ee2a3dcd9f50342b482a60fe1f673a3411e49cecc9eb
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 616
+          byte_count: 444
+          word_count: 68
+          content_hash: 2b4ccafbecb84ec7223de3d86e1ea965b9c8092d26fea82ab4d5f8a7fd125ac6
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 1060
+          byte_count: 472
+          word_count: 73
+          content_hash: 19bcef48723367cc80e24ccc1a2c30a12ce8031cdb716314b788c81c161bb431
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1532
+          byte_count: 725
+          word_count: 115
+          content_hash: 97a0b7ad61c497ba79e62f7935864dfcfbbdbcf3ec6e41d780cf8adafa864bd2
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In Scope
+              byte_offset: 1545
+              byte_count: 355
+              word_count: 55
+              content_hash: d7a400835ba81ad367633a5932f7ec5df4d030cd345dbe873b6e1b2f3c62e8cd
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Out of Scope
+              byte_offset: 1900
+              byte_count: 357
+              word_count: 57
+              content_hash: 17d3aef795277b76435b0d9e576ca2e60dfce487d2af0039611c96d66add2da8
+        - path: "1.4"
+          level: 2
+          title: 4. Requirements
+          byte_offset: 2257
+          byte_count: 2525
+          word_count: 382
+          content_hash: 8583fd480904d0dc51d1c8484f6182d43a3b6e4e4d7a376086b4743bdd19829f
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Parameter
+              byte_offset: 2277
+              byte_count: 323
+              word_count: 46
+              content_hash: cb3eee62858ba7f7491beecc8d239676f468a92b01550a5e8ab564a165523633
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Dry-Run Execution
+              byte_offset: 2600
+              byte_count: 580
+              word_count: 82
+              content_hash: ebe12732d8f3cb847c4c7cda048444e67cf289fa298941a6cd6a88263aacaa91
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Response Format
+              byte_offset: 3180
+              byte_count: 1075
+              word_count: 166
+              content_hash: 96824194ccbfa4e746409e7fe7d2cf25d1cb53aa92d09111d2a3cd342c94bcc6
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Already-Registered Files
+              byte_offset: 4255
+              byte_count: 221
+              word_count: 32
+              content_hash: e30b7f11c555d9ce53c254d3d4b8ad5bd5ca46f2f793513a295cb9098168719c
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Consistency with Live Import
+              byte_offset: 4476
+              byte_count: 306
+              word_count: 53
+              content_hash: 57e0fc60b4aa274f6753a71793c2d208514160c46c515e0c12a3971a1680d08e
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 4782
+          byte_count: 573
+          word_count: 80
+          content_hash: 300c6cfba1af4d26c5e970d10742d037e4d07042938d9976dfba3999d1afdb15
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 5355
+          byte_count: 468
+          word_count: 74
+          content_hash: a10a3c033f946b8901e877ca987a943dffcba83a0267b90f7a8b4f5af663a24b
+        - path: "1.7"
+          level: 2
+          title: 7. Non-Requirements
+          byte_offset: 5823
+          byte_count: 462
+          word_count: 74
+          content_hash: 04fc7eb10475a248c40d041a12aff714e56a1b8d6139a2f349527dbf0dacc9c0
+entity_refs:
+    - entity_id: FEAT-01KN4ZPTQSZT5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 461
+cross_doc_links:
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: "1.7"
+      role: requirement
+      confidence: high
+classified: false

@@ -17,15 +17,25 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
+	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/service"
 )
+
+// commitStateFunc is the function called by the handoff handler to commit any
+// pending .kbz/state/ changes before dispatching a sub-agent. It is a
+// package-level variable so tests can inject a stub without changing public
+// APIs. The production value delegates to git.CommitStateIfDirty.
+var commitStateFunc = func(repoRoot string) (bool, error) {
+	return git.CommitStateIfDirty(repoRoot)
+}
 
 // HandoffTools returns the `handoff` MCP tool registered in the core group.
 func HandoffTools(
@@ -100,6 +110,19 @@ func handoffTool(
 			return mcp.NewToolResultText(handoffErrorJSON("invalid_status", fmt.Sprintf(
 				"Task %s is in status %q. Handoff requires active, ready, or needs-rework.",
 				task.ID, status))), nil
+		}
+
+		// Pre-dispatch state commit: persist any uncommitted .kbz/state/ changes
+		// before the sub-agent is dispatched. This protects workflow state from
+		// being destroyed by sub-agent git operations (stash, checkout, reset).
+		// The commit is best-effort — failure logs a warning but does not block
+		// the handoff (REQ-06, REQ-07 of sub-agent-state-isolation spec).
+		// commitStateFunc is a package-level variable (see top of file) so
+		// tests can inject a stub to verify this path without a real git repo.
+		if committed, commitErr := commitStateFunc("."); commitErr != nil {
+			log.Printf("[handoff] WARNING: pre-dispatch state commit failed: %v", commitErr)
+		} else if committed {
+			log.Printf("[handoff] pre-dispatch state commit created for task %s", taskID)
 		}
 
 		// Assemble context using the shared pipeline (assembly.go).

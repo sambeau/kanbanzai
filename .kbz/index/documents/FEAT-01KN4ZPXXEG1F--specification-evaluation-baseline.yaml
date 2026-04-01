@@ -1,0 +1,167 @@
+document_id: FEAT-01KN4ZPXXEG1F/specification-evaluation-baseline
+document_path: work/spec/evaluation-baseline.md
+content_hash: ecd4c2df4792826fbc82bd1f29fb45883b6c6474c08bc4be6cf5a22c92d444a6
+indexed_at: 2026-04-01T17:00:09.631638Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Evaluation Baseline'
+      byte_offset: 0
+      byte_count: 8814
+      word_count: 1169
+      content_hash: ecd4c2df4792826fbc82bd1f29fb45883b6c6474c08bc4be6cf5a22c92d444a6
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 617
+          byte_count: 277
+          word_count: 38
+          content_hash: a4c776c54701af05ab9d865d18b479ab9fe4d636a0e3b595a6b1df50f2c3e5e4
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 894
+          byte_count: 544
+          word_count: 77
+          content_hash: 79c8e6474ea0d3189d53bf6942fbedb00b8c905a493984c2c618ccdbbc8fd61f
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1438
+          byte_count: 677
+          word_count: 108
+          content_hash: 560a72fb92b7915329c9d074abd92de96689d34681f7e7119aca90f557352c9d
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In Scope
+              byte_offset: 1451
+              byte_count: 285
+              word_count: 45
+              content_hash: 9c5e6ed21494a24d5f3e69fac9d35d5057d95b45c5b2b8a28941e3b491bc8d84
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Out of Scope
+              byte_offset: 1736
+              byte_count: 379
+              word_count: 60
+              content_hash: 64ad67e9a521661567fa1892817e67f1353d62500e7d6eebcae8f2d8c00dbade
+        - path: "1.4"
+          level: 2
+          title: 4. Scenario File Requirements
+          byte_offset: 2115
+          byte_count: 3072
+          word_count: 405
+          content_hash: 37174142446c22eba75060e4febd3f029f6ffa498e3063098a9698a7d4cc4356
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Location and Format
+              byte_offset: 2149
+              byte_count: 376
+              word_count: 52
+              content_hash: c69f2545f1d14d3c7ae44bd8136de717d2d1d3b5b147ee9fe2d5995d270898ac
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Required Fields
+              byte_offset: 2525
+              byte_count: 1657
+              word_count: 222
+              content_hash: 444d2343275d923c317d2a22bd33fdaae2ada9fdd4df10d929ad0631aacf61ad
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Quantity
+              byte_offset: 4182
+              byte_count: 115
+              word_count: 16
+              content_hash: a6ee6d269c5b399f1b7e54fb94d0cd55ec0295096045d36a12c08a083b7f8ca2
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Category Coverage
+              byte_offset: 4297
+              byte_count: 890
+              word_count: 110
+              content_hash: d305aeef7213462441e54cf6c1492772a88d5ddc729763f7b0ce71e07f38d6c7
+        - path: "1.5"
+          level: 2
+          title: 5. README Requirements
+          byte_offset: 5187
+          byte_count: 381
+          word_count: 56
+          content_hash: 3d8c6ae51ef3c3d1cb094d2e6ec099f4627cdcc8b24b499f0cb27d17b0910ff2
+        - path: "1.6"
+          level: 2
+          title: 6. Baseline Measurement Requirements
+          byte_offset: 5568
+          byte_count: 1400
+          word_count: 190
+          content_hash: 10a36e55e94d9c613c446a7a9332d63c55d665772018f699ddd6ecc7936dc32d
+        - path: "1.7"
+          level: 2
+          title: 7. Constraints and Invariants
+          byte_offset: 6968
+          byte_count: 417
+          word_count: 65
+          content_hash: 50178423876f33b1b593b8e1127294400b92188c93cfc03822a66b25cd223e23
+        - path: "1.8"
+          level: 2
+          title: 8. Acceptance Criteria
+          byte_offset: 7385
+          byte_count: 748
+          word_count: 97
+          content_hash: 25f2ade6f330d601a202e7c685c67f409bf4c7deab5d5b381571a408d36c1c52
+        - path: "1.9"
+          level: 2
+          title: 9. Dependencies and Assumptions
+          byte_offset: 8133
+          byte_count: 681
+          word_count: 95
+          content_hash: eb61905ce46a1b4b620446a07cb5b6993410dd108101219c335bd540695ca064
+entity_refs:
+    - entity_id: FEAT-01KN4ZPXXEG1F
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 461
+cross_doc_links:
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: "1"
+    - target_path: work/eval/README.md
+      link_text: work/eval/README.md
+      section_path: "1.5"
+    - target_path: work/eval/README.md
+      link_text: work/eval/README.md
+      section_path: "1.8"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: constraint
+      confidence: high
+    - section_path: "1.8"
+      role: requirement
+      confidence: high
+    - section_path: "1.9"
+      role: assumption
+      confidence: high
+classified: false

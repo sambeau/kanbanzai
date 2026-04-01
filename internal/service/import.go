@@ -10,6 +10,43 @@ import (
 	"github.com/sambeau/kanbanzai/internal/config"
 )
 
+// ─── Dry-run types ────────────────────────────────────────────────────────────
+
+// ImportDryRunResult is the result of a dry-run import operation.
+// It describes what a live import would register and skip, without making
+// any changes to the document store.
+type ImportDryRunResult struct {
+	WouldImport []DryRunImportEntry `json:"would_import"`
+	WouldSkip   []DryRunSkipEntry   `json:"would_skip"`
+	Summary     DryRunSummary       `json:"summary"`
+}
+
+// DryRunImportEntry describes a file that would be registered by a live import.
+type DryRunImportEntry struct {
+	// Path is the repository-relative path of the document.
+	Path string `json:"path"`
+	// Type is the inferred document type.
+	Type string `json:"type"`
+	// Title is the inferred document title.
+	Title string `json:"title"`
+	// Owner is the inferred owner (empty string when none).
+	Owner string `json:"owner"`
+}
+
+// DryRunSkipEntry describes a file that would be skipped by a live import.
+type DryRunSkipEntry struct {
+	// Path is the repository-relative path of the document.
+	Path string `json:"path"`
+	// Reason explains why the file would be skipped.
+	Reason string `json:"reason"`
+}
+
+// DryRunSummary holds aggregate counts for a dry-run import.
+type DryRunSummary struct {
+	WouldImport int `json:"would_import"`
+	WouldSkip   int `json:"would_skip"`
+}
+
 // matchGlob reports whether name matches the glob pattern.
 // An empty pattern matches everything.
 // Supports two matching modes:
@@ -214,6 +251,108 @@ func extractGlobSegment(glob string) string {
 		}
 	}
 	return ""
+}
+
+// ImportDryRun runs the full import inference pipeline over input.Path without
+// writing any records to the document store. It returns a preview of what a
+// live import would register and what it would skip.
+//
+// The inference logic (directory walking, type inference, title extraction,
+// owner inference) is identical to that used by Import, ensuring that
+// WouldImport matches the set that a live import would actually register
+// (REQ-07, REQ-13 of doc-import-dry-run spec).
+//
+// Files that already have a document record in the store appear in WouldSkip
+// with Reason "already registered" (REQ-12).
+func (s *BatchImportService) ImportDryRun(cfg *config.Config, input BatchImportInput) (*ImportDryRunResult, error) {
+	result := &ImportDryRunResult{
+		WouldImport: []DryRunImportEntry{},
+		WouldSkip:   []DryRunSkipEntry{},
+	}
+
+	// Verify the scan directory exists before walking.
+	if _, err := os.Stat(input.Path); err != nil {
+		return nil, fmt.Errorf("access import directory: %w", err)
+	}
+
+	repoRoot := s.docSvc.RepoRoot()
+
+	// Build a set of already-registered paths for the skip check.
+	existing, _ := s.docSvc.ListDocuments(DocumentFilters{})
+	existingPaths := make(map[string]bool, len(existing))
+	for _, doc := range existing {
+		existingPaths[doc.Path] = true
+	}
+
+	walkErr := filepath.WalkDir(input.Path, func(absPath string, d fs.DirEntry, err error) error {
+		if err != nil {
+			// Skip unreadable entries without aborting the walk.
+			return nil
+		}
+		if d.IsDir() {
+			return nil
+		}
+		// Only process Markdown files.
+		if !strings.HasSuffix(strings.ToLower(absPath), ".md") {
+			return nil
+		}
+
+		// Compute path relative to the import directory for glob matching.
+		relFromImport, _ := filepath.Rel(input.Path, absPath)
+		if relFromImport == "" {
+			relFromImport = filepath.Base(absPath)
+		}
+
+		// Apply optional glob filter.
+		if !matchGlob(input.Glob, relFromImport) {
+			return nil
+		}
+
+		// Compute a path relative to the repo root.
+		relPath, relErr := filepath.Rel(repoRoot, absPath)
+		if relErr != nil {
+			relPath = absPath
+		}
+
+		// Already-registered files go to WouldSkip (REQ-12).
+		if existingPaths[relPath] {
+			result.WouldSkip = append(result.WouldSkip, DryRunSkipEntry{
+				Path:   relPath,
+				Reason: "already registered",
+			})
+			return nil
+		}
+
+		// Infer document type — same logic as live import (REQ-07).
+		docType := inferDocType(cfg, relPath, input.DefaultType)
+		if docType == "" {
+			result.WouldSkip = append(result.WouldSkip, DryRunSkipEntry{
+				Path:   relPath,
+				Reason: "no document type available: no matching pattern and no default_type provided",
+			})
+			return nil
+		}
+
+		// Derive title — same logic as live import (REQ-07).
+		title := deriveTitle(filepath.Base(relPath))
+
+		result.WouldImport = append(result.WouldImport, DryRunImportEntry{
+			Path:  relPath,
+			Type:  docType,
+			Title: title,
+			Owner: input.Owner,
+		})
+		return nil
+	})
+	if walkErr != nil {
+		return nil, walkErr
+	}
+
+	result.Summary = DryRunSummary{
+		WouldImport: len(result.WouldImport),
+		WouldSkip:   len(result.WouldSkip),
+	}
+	return result, nil
 }
 
 // deriveTitle creates a human-readable title from a filename by removing the

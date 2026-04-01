@@ -1,0 +1,97 @@
+document_id: FEAT-01KN4ZPKCJWPF/dev-plan-batch-handler-false-positive-plan
+document_path: work/plan/batch-handler-false-positive-plan.md
+content_hash: 51518a63d79a8a74faee189e404c14981ca4c253cfbe47bff058c13769ee77e0
+indexed_at: 2026-04-01T17:05:21.523977Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Batch Handler False-Positive Fix'
+      byte_offset: 0
+      byte_count: 6286
+      word_count: 889
+      content_hash: 51518a63d79a8a74faee189e404c14981ca4c253cfbe47bff058c13769ee77e0
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Implementation Approach
+          byte_offset: 722
+          byte_count: 811
+          word_count: 133
+          content_hash: c1c6d2236d8cd263bc7703497295599030418e608d5136a634471da69e4b3a9d
+        - path: "1.2"
+          level: 2
+          title: 2. Interface Contract
+          byte_offset: 1533
+          byte_count: 422
+          word_count: 60
+          content_hash: 2406e31dcbf8e75238bd5b9b5e064190a877bc4607ebb5720f9c04c3408cacf5
+        - path: "1.3"
+          level: 2
+          title: 3. Task Breakdown
+          byte_offset: 1955
+          byte_count: 252
+          word_count: 38
+          content_hash: 62fe0d9fce244d90ac107e8cd232c1d7f137cd080f90cfc01b2f435b0a36be82
+        - path: "1.4"
+          level: 2
+          title: 4. Task Details
+          byte_offset: 2207
+          byte_count: 3138
+          word_count: 454
+          content_hash: 32ae488e49063655cd65af6ea8abe658cb78bda8d11e8a1c32a358cee14d5e56
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Task 1: Fix `ExecuteBatch`'
+              byte_offset: 2227
+              byte_count: 1764
+              word_count: 251
+              content_hash: 76cb33ba6d0a523ac4852422c50c1336fc79fd31bda99091d77d5ed95c7ebdbf
+            - path: 1.4.2
+              level: 3
+              title: 'Task 2: Unit Tests'
+              byte_offset: 3991
+              byte_count: 1354
+              word_count: 199
+              content_hash: dc22cd60ad1063615cc20da29f671f26e3b057177693aab2415406d0c1e53f20
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria Traceability
+          byte_offset: 5345
+          byte_count: 326
+          word_count: 64
+          content_hash: 1851c9314e9b340d95b244c6cb604cd5cea1050402cafb2621d22e41100e4e08
+        - path: "1.6"
+          level: 2
+          title: 6. Scope Boundaries (carried from spec)
+          byte_offset: 5671
+          byte_count: 402
+          word_count: 54
+          content_hash: b865cdd38f54ac6b80ed1ce49a683fb9ceb03631f2115c3f99bbd6f5e2638d90
+        - path: "1.7"
+          level: 2
+          title: 7. Verification
+          byte_offset: 6073
+          byte_count: 213
+          word_count: 35
+          content_hash: 6fc4564e5ddadbee83eef6db75616e493b395997021089948af2933e40cf35ac
+entity_refs:
+    - entity_id: FEAT-01KN4ZPKCJWPF
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 398
+cross_doc_links:
+    - target_path: work/spec/batch-handler-false-positive.md
+      link_text: work/spec/batch-handler-false-positive.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: constraint
+      confidence: high
+classified: false

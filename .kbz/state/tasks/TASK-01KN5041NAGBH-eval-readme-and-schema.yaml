@@ -2,4 +2,9 @@ id: TASK-01KN5041NAGBH
 parent_feature: FEAT-01KN4ZPXXEG1F
 slug: eval-readme-and-schema
 summary: "Create work/eval/README.md with scenario YAML schema, measurement record schema, and manual run instructions."
-status: queued
+status: done
+files_planned:
+  - work/eval/README.md
+completed: "2026-04-01T17:44:21Z"
+completion_summary: "Created work/eval/README.md with complete scenario YAML schema, measurement record schema, step-by-step run instructions, V3.0 comparison methodology, and category coverage table."
+verification: File created at work/eval/README.md; covers all 6 REQ-10 requirements

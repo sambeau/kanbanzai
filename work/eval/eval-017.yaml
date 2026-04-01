@@ -1,0 +1,106 @@
+id: eval-017
+name: "Empty plan bootstrapping"
+description: >
+  A plan exists in the system but has no features attached. The agent
+  creates a new feature under the plan, advances it through the designing
+  gate into specifying, registers and approves a specification document,
+  and leaves the feature in specifying status — ready for future dev-planning.
+category: edge-case
+
+starting_state:
+  feature_status: ""
+  plan_id: "P1-empty-plan"
+  documents: []
+  tasks: []
+  notes: >
+    Plan P1-empty-plan exists with title "Empty Plan" and is in active
+    status, but contains zero features. No documents or tasks exist.
+
+expected_pattern:
+  - stage: inspect-plan
+    tools:
+      - status
+    output: >
+      Agent observes the plan has no features and decides to bootstrap
+      by creating the first feature.
+
+  - stage: create-feature
+    tools:
+      - entity
+    output: >
+      Agent calls entity with action=create, type=feature, parent=P1-empty-plan,
+      summary describing the intended capability. Feature is created in
+      proposed status and assigned a FEAT-... ID.
+    tool_args_must_include:
+      - action: create
+        type: feature
+        parent: "P1-empty-plan"
+
+  - stage: advance-to-designing
+    tools:
+      - entity
+    output: >
+      Agent transitions the newly created feature from proposed to designing
+      using entity action=transition.
+    tool_args_must_include:
+      - action: transition
+        status: designing
+
+  - stage: write-design-doc
+    tools:
+      - doc
+    output: >
+      Agent registers a design document (type=design) associated with the
+      feature while it is in designing status.
+    tool_args_must_include:
+      - action: register
+        type: design
+
+  - stage: approve-design-doc
+    tools:
+      - doc
+    output: >
+      Agent approves the registered design document so the designing gate
+      can be passed.
+    tool_args_must_include:
+      - action: approve
+
+  - stage: advance-to-specifying
+    tools:
+      - entity
+    output: >
+      Agent transitions the feature from designing to specifying. Gate check
+      passes because the design document is now approved.
+    tool_args_must_include:
+      - action: transition
+        status: specifying
+
+  - stage: write-spec-doc
+    tools:
+      - doc
+    output: >
+      Agent registers a specification document (type=specification) for the
+      feature in its new specifying status.
+    tool_args_must_include:
+      - action: register
+        type: specification
+
+  - stage: approve-spec-doc
+    tools:
+      - doc
+    output: >
+      Agent approves the specification document. Feature remains in specifying
+      status — no further transitions are performed.
+    tool_args_must_include:
+      - action: approve
+
+success_criteria:
+  - "A feature is created under plan P1-empty-plan (entity action=create, type=feature, parent=P1-empty-plan)"
+  - "Feature passes through proposed → designing → specifying lifecycle in order"
+  - "A design document (type=design) is registered and approved before the designing→specifying transition"
+  - "A specification document (type=specification) is registered and approved while in specifying status"
+  - "Feature status at end of scenario is specifying — agent does NOT advance to dev-planning"
+  - "No tasks are created during this scenario"
+  - "Agent does not call decompose or handoff — feature has not reached dev-planning yet"
+  - "Agent uses entity action=transition for each lifecycle gate, not a direct status update"
+  - "The plan P1-empty-plan has exactly one feature after the scenario completes"

@@ -133,6 +133,16 @@ func ExecuteBatch(ctx context.Context, items []any, handler BatchItemHandler) (a
 				Error:       &ErrorDetail{Code: "item_error", Message: err.Error()},
 				SideEffects: nonEmptyEffects(itemEffects),
 			}
+		} else if errMsg, isToolErr := extractToolResultError(data); isToolErr {
+			// Tool-result error: handler returned (data, nil) but data contains
+			// an "error" key — treat as failure (REQ-03, REQ-04, REQ-05).
+			failed++
+			result = ItemResult{
+				ItemID:      itemID,
+				Status:      "error",
+				Error:       &ErrorDetail{Code: "item_error", Message: errMsg},
+				SideEffects: nonEmptyEffects(itemEffects),
+			}
 		} else {
 			succeeded++
 			result = ItemResult{
@@ -156,6 +166,27 @@ func ExecuteBatch(ctx context.Context, items []any, handler BatchItemHandler) (a
 		},
 		SideEffects: nonEmptyEffects(allEffects),
 	}, nil
+}
+
+// extractToolResultError checks whether v is a Kanbanzai MCP tool-result error
+// payload — a map[string]any containing a non-empty "error" string key.
+// Returns the error message and true when the pattern is detected, otherwise
+// ("", false). This implements the detection required by REQ-01 and REQ-02 of
+// the batch-handler-false-positive spec.
+func extractToolResultError(v any) (string, bool) {
+	m, ok := v.(map[string]any)
+	if !ok {
+		return "", false
+	}
+	errVal, ok := m["error"]
+	if !ok {
+		return "", false
+	}
+	msg, ok := errVal.(string)
+	if !ok || msg == "" {
+		return "", false
+	}
+	return msg, true
 }
 
 // nonEmptyEffects returns effects if non-empty, nil otherwise.

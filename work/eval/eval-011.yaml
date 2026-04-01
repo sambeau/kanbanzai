@@ -1,0 +1,164 @@
+id: eval-011
+name: Parallel Feature Development
+description: >
+  Two independent features within the same plan are both in developing status
+  with no dependency or file overlap between them. The agent uses the conflict
+  tool to confirm safety, creates separate worktrees, works on both features
+  in parallel, and finishes all tasks before advancing each feature.
+category: multi-feature-plan
+
+starting_state:
+  feature_status: developing
+  documents:
+    - type: design
+      status: approved
+      title: Notification System Design
+      id: DOC-011-design
+      owner: PLAN-011
+    - type: dev-plan
+      status: approved
+      title: Email Notifications Dev Plan
+      id: DOC-011-devplan-email
+      owner: FEAT-011-a
+    - type: dev-plan
+      status: approved
+      title: Push Notifications Dev Plan
+      id: DOC-011-devplan-push
+      owner: FEAT-011-b
+  tasks:
+    - id: TASK-011-a1
+      feature: FEAT-011-a
+      title: Implement email notification sender
+      status: ready
+    - id: TASK-011-a2
+      feature: FEAT-011-a
+      title: Add email template engine
+      status: ready
+    - id: TASK-011-b1
+      feature: FEAT-011-b
+      title: Implement push notification service
+      status: ready
+    - id: TASK-011-b2
+      feature: FEAT-011-b
+      title: Register device tokens for push delivery
+      status: ready
+  notes: >
+    PLAN-011 contains two features: FEAT-011-a (email notifications) and
+    FEAT-011-b (push notifications). Both are in developing status, touch
+    different source files, and have no declared dependencies on each other.
+
+expected_pattern:
+  - stage: assess-plan-and-check-conflicts
+    tools:
+      - status
+      - conflict
+    input:
+      action: check
+      task_ids:
+        - FEAT-011-a
+        - FEAT-011-b
+    output:
+      recommendation: safe_to_parallelise
+      file_overlap: none
+    notes: >
+      Agent checks the plan-level status dashboard and uses conflict to
+      confirm FEAT-011-a and FEAT-011-b have no file overlap or dependency
+      risk before starting parallel work.
+
+  - stage: create-worktree-for-feat-011-a
+    tools:
+      - worktree
+    input:
+      action: create
+      entity_id: FEAT-011-a
+    output:
+      worktree_created: true
+      branch_created: true
+    notes: >
+      Agent creates a dedicated git worktree for FEAT-011-a so its changes
+      are isolated from other in-flight work.
+
+  - stage: create-worktree-for-feat-011-b
+    tools:
+      - worktree
+    input:
+      action: create
+      entity_id: FEAT-011-b
+    output:
+      worktree_created: true
+      branch_created: true
+    notes: >
+      Agent creates a second dedicated git worktree for FEAT-011-b,
+      independent of the FEAT-011-a worktree.
+
+  - stage: work-on-feat-011-a
+    tools:
+      - next
+      - handoff
+      - finish
+      - finish
+    input:
+      id: FEAT-011-a
+    output:
+      tasks_done:
+        - TASK-011-a1
+        - TASK-011-a2
+    notes: >
+      Agent claims TASK-011-a1 and TASK-011-a2 via next, generates
+      implementation prompts via handoff, and finishes both tasks within
+      the FEAT-011-a worktree context.
+
+  - stage: work-on-feat-011-b
+    tools:
+      - next
+      - handoff
+      - finish
+      - finish
+    input:
+      id: FEAT-011-b
+    output:
+      tasks_done:
+        - TASK-011-b1
+        - TASK-011-b2
+    notes: >
+      Agent claims TASK-011-b1 and TASK-011-b2 via next, generates
+      implementation prompts via handoff, and finishes both tasks within
+      the FEAT-011-b worktree context.
+
+  - stage: advance-feat-011-a
+    tools:
+      - entity
+    input:
+      action: transition
+      id: FEAT-011-a
+      status: reviewing
+    output:
+      feature_status: reviewing
+    notes: >
+      With all FEAT-011-a tasks done, agent advances the feature to
+      reviewing status.
+
+  - stage: advance-feat-011-b
+    tools:
+      - entity
+    input:
+      action: transition
+      id: FEAT-011-b
+      status: reviewing
+    output:
+      feature_status: reviewing
+    notes: >
+      With all FEAT-011-b tasks done, agent advances the feature to
+      reviewing status.
+
+success_criteria:
+  - conflict tool is called with both FEAT-011-a and FEAT-011-b before beginning parallel work
+  - conflict result for FEAT-011-a vs FEAT-011-b is safe_to_parallelise
+  - worktree tool is called at least twice, once for each feature
+  - FEAT-011-a and FEAT-011-b each have their own distinct worktree and branch
+  - All four tasks (TASK-011-a1, TASK-011-a2, TASK-011-b1, TASK-011-b2) reach done status
+  - Tasks from FEAT-011-a are not processed using the FEAT-011-b worktree context and vice versa
+  - next is called with feature scoping to avoid claiming tasks from the wrong feature
+  - Both FEAT-011-a and FEAT-011-b advance past developing status by the end of the scenario
+  - Agent does not serialize the features unnecessarily (e.g. fully finishing one before starting the other's worktree)
+  - No entity create is used to add extra tasks not present in the starting state

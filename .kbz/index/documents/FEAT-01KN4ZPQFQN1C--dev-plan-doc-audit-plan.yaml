@@ -1,0 +1,106 @@
+document_id: FEAT-01KN4ZPQFQN1C/dev-plan-doc-audit-plan
+document_path: work/plan/doc-audit-plan.md
+content_hash: 27f115a5b7a7695c8af20365ae5f9195955591e216df7e7d40673bff20db92bb
+indexed_at: 2026-04-01T17:05:22.567592Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: `doc audit` Action'
+      byte_offset: 0
+      byte_count: 8523
+      word_count: 1064
+      content_hash: 27f115a5b7a7695c8af20365ae5f9195955591e216df7e7d40673bff20db92bb
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Implementation Approach
+          byte_offset: 623
+          byte_count: 1166
+          word_count: 152
+          content_hash: 141a407529ad2dc43d6affb3afbde1e700865045fc41de95a7e3cef3766441a5
+        - path: "1.2"
+          level: 2
+          title: 2. Interface Contract
+          byte_offset: 1789
+          byte_count: 1129
+          word_count: 145
+          content_hash: 1c2c9b5c4fcf95fe9b6c59f9e987b99818aad962aadad7914c8e3c697f11dd9a
+        - path: "1.3"
+          level: 2
+          title: 3. Task Breakdown
+          byte_offset: 2918
+          byte_count: 567
+          word_count: 51
+          content_hash: 268f336c86cdc9ea3276b7b0b16cf411eb5a1c23ad7fea6ca9ca068059a15b92
+        - path: "1.4"
+          level: 2
+          title: 4. Task Details
+          byte_offset: 3485
+          byte_count: 4284
+          word_count: 559
+          content_hash: 81a404f1c3ac6d699a07873e69edadec7553c8112afa717c5c35977783e89b91
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Task 1: Audit Service Logic'
+              byte_offset: 3505
+              byte_count: 1719
+              word_count: 232
+              content_hash: 575b8c7903093181d6fb5844e446942c94a11b3d94c6ec44fdd1d5994a1862c5
+            - path: 1.4.2
+              level: 3
+              title: 'Task 2: MCP Tool Dispatch'
+              byte_offset: 5224
+              byte_count: 1296
+              word_count: 173
+              content_hash: d5dca13bb545d868432b29bec0c0e43bd78ecd3d0cb913716fa64ec2e04db89c
+            - path: 1.4.3
+              level: 3
+              title: 'Task 3: Integration Tests'
+              byte_offset: 6520
+              byte_count: 1249
+              word_count: 150
+              content_hash: e6c4f1d90d84e8c0f6e4e8adb477c2700a23fa44ed8dcd4be91a1fdbaba3595c
+        - path: "1.5"
+          level: 2
+          title: 5. Scope Boundaries (from spec)
+          byte_offset: 7769
+          byte_count: 425
+          word_count: 66
+          content_hash: 219318b2db41733418fd983d69d73b4803c6ec1c33f8136681aeacf7785126bd
+        - path: "1.6"
+          level: 2
+          title: 6. Verification
+          byte_offset: 8194
+          byte_count: 329
+          word_count: 51
+          content_hash: 3416d240defecf56e7a4e3822a3b6292324f098456b0f9b10a52f8cdf9ddb5f2
+entity_refs:
+    - entity_id: FEAT-01KN4ZPQFQN1C
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 384
+cross_doc_links:
+    - target_path: work/spec/doc-audit.md
+      link_text: work/spec/doc-audit.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: "1"
+    - target_path: work/spec/doc-audit.md
+      link_text: work/spec/doc-audit.md
+      section_path: 1.4.1
+    - target_path: work/spec/doc-audit.md
+      link_text: work/spec/doc-audit.md
+      section_path: 1.4.2
+    - target_path: work/spec/doc-audit.md
+      link_text: work/spec/doc-audit.md
+      section_path: 1.4.3
+    - target_path: work/spec/doc-audit.md
+      link_text: work/spec/doc-audit.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+classified: false

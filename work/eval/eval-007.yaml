@@ -1,0 +1,139 @@
+id: eval-007
+name: Wrong Document Type — Discovery and Correction
+description: >
+  A dev-plan document was accidentally registered with type=report instead of
+  type=dev-plan. The agent audits the feature's documents, identifies the
+  mis-typed record, registers a corrected document with the right type,
+  approves it, and supersedes the incorrect record — restoring the gate
+  prerequisite so the feature can advance to developing.
+category: gate-failure-and-recovery
+
+starting_state:
+  feature_status: dev-planning
+  documents:
+    - id: DOC-071
+      type: report
+      title: Feature 007 Development Plan
+      status: approved
+      path: docs/dev-plans/feat-007-dev-plan.md
+      owner: FEAT-007
+      notes: >
+        This document was registered with the wrong type (report instead of
+        dev-plan). It is approved but does not satisfy the dev-plan gate
+        because the type field is incorrect.
+    - id: DOC-072
+      type: design
+      title: Feature 007 Design
+      status: approved
+      path: docs/designs/feat-007-design.md
+      owner: FEAT-007
+    - id: DOC-073
+      type: specification
+      title: Feature 007 Specification
+      status: approved
+      path: docs/specs/feat-007-spec.md
+      owner: FEAT-007
+  tasks: []
+  notes: >
+    Feature FEAT-007 is in dev-planning status. Design and specification
+    documents are correctly registered and approved. However, the development
+    plan was registered as type=report, which does not satisfy the dev-plan
+    gate prerequisite. The gate will block advancement to developing until
+    an approved type=dev-plan document exists.
+
+expected_pattern:
+  - stage: audit-feature-documents
+    tools:
+      - doc
+    output: >
+      Agent calls doc with action=list and owner=FEAT-007 to retrieve all
+      documents registered under the feature. The listing reveals three
+      documents: one with type=report (DOC-071), one with type=design, and one
+      with type=specification. The type=report entry is suspicious because a
+      dev-plan document is expected at this lifecycle stage.
+    tool_args_must_include:
+      - action: list
+        owner: FEAT-007
+
+  - stage: inspect-incorrect-document
+    tools:
+      - doc
+    output: >
+      Agent calls doc with action=get on DOC-071 to retrieve full metadata.
+      The record confirms the document path is docs/dev-plans/feat-007-dev-plan.md
+      and the title references a development plan, making clear the type=report
+      value is an error. The document content is a dev-plan but the type field
+      was set incorrectly at registration time.
+    tool_args_must_include:
+      - action: get
+        id: DOC-071
+
+  - stage: register-corrected-document
+    tools:
+      - doc
+    output: >
+      Agent registers the same file at docs/dev-plans/feat-007-dev-plan.md
+      again, this time with the correct type=dev-plan. A new document record
+      is created (e.g. DOC-074) in draft status under FEAT-007. The original
+      DOC-071 still exists in approved status until explicitly superseded.
+    tool_args_must_include:
+      - action: register
+        path: docs/dev-plans/feat-007-dev-plan.md
+        type: dev-plan
+        owner: FEAT-007
+
+  - stage: approve-corrected-document
+    tools:
+      - doc
+    output: >
+      Agent approves the newly registered dev-plan document (DOC-074). Status
+      transitions from draft to approved. The feature now has an approved
+      type=dev-plan document, which satisfies the gate prerequisite.
+    tool_args_must_include:
+      - action: approve
+
+  - stage: supersede-incorrect-document
+    tools:
+      - doc
+    output: >
+      Agent calls doc with action=supersede on DOC-071, providing the new
+      DOC-074 as the superseded_by value. DOC-071 status transitions to
+      superseded and is excluded from active gate checks. The feature's
+      document set now contains exactly one active dev-plan document with
+      the correct type.
+    tool_args_must_include:
+      - action: supersede
+        id: DOC-071
+
+  - stage: verify-gate-satisfied
+    tools:
+      - status
+    output: >
+      Agent calls status with the feature ID to confirm the dev-planning gate
+      prerequisites are now fully satisfied. The status report shows an
+      approved type=dev-plan document and no blocking gate conditions.
+      The feature is ready to advance to developing.
+
+  - stage: advance-to-developing
+    tools:
+      - entity
+    output: >
+      Agent calls entity with action=transition and status=developing. The
+      gate check passes because an approved type=dev-plan document now exists.
+      Feature status transitions from dev-planning to developing.
+    tool_args_must_include:
+      - action: transition
+        status: developing
+
+success_criteria:
+  - "doc action=list is called with owner=FEAT-007 as the audit step — agent does not skip straight to fixing without inspecting first"
+  - "Agent identifies DOC-071 (type=report) as the incorrectly typed record, not one of the correctly typed documents"
+  - "doc action=register is called with type=dev-plan (not report, design, or specification) for the correction"
+  - "The corrected document references the same source file (docs/dev-plans/feat-007-dev-plan.md) as the incorrect one"
+  - "doc action=approve is called on the newly registered dev-plan document before superseding the old one"
+  - "doc action=supersede is called with id=DOC-071 and a superseded_by value pointing to the new dev-plan document"
+  - "DOC-071 ends with status=superseded — it is not left in approved status alongside the corrected record"
+  - "No document with type=report remains in active (non-superseded) status under FEAT-007 after the correction"
+  - "Agent does not delete or attempt to mutate DOC-071 directly — supersede is the correct retirement mechanism"
+  - "Feature status transitions to developing after the correction — agent validates the gate is satisfied before advancing"
+  - "Agent does not register a second design or specification document as part of the recovery — only the dev-plan type is corrected"

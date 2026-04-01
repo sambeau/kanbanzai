@@ -1,0 +1,159 @@
+document_id: FEAT-01KN4ZPQFQN1C/specification-doc-audit
+document_path: work/spec/doc-audit.md
+content_hash: 6c080bf1e26e1235e745bd22da7cfb31608d59f602e462d16f23ddbfe70ea8bc
+indexed_at: 2026-04-01T17:00:07.349152Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: `doc audit` Action'
+      byte_offset: 0
+      byte_count: 9113
+      word_count: 1217
+      content_hash: 6c080bf1e26e1235e745bd22da7cfb31608d59f602e462d16f23ddbfe70ea8bc
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 618
+          byte_count: 284
+          word_count: 46
+          content_hash: 1507c65efbf05192c70385a58a6592b7a372a11264da8ab084e7bb9253f49c8b
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 902
+          byte_count: 591
+          word_count: 93
+          content_hash: 1c2517680a82097b2253378426bec6e5925a323e0d6db57fec4bd04880d686cd
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1493
+          byte_count: 926
+          word_count: 138
+          content_hash: 8efc39483d12bf43bc43b89d32efc9bd7c6d3d282c63476474772f573875cd7c
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In Scope
+              byte_offset: 1506
+              byte_count: 523
+              word_count: 78
+              content_hash: 75193868b72731a643d6fad56fe244a2d1ee22fc1994ada10c323485cbe5855f
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Out of Scope
+              byte_offset: 2029
+              byte_count: 390
+              word_count: 57
+              content_hash: 5c1fab0533e2744233396183811e1e476af44b39cc85b1777eb8955ced8cb4e8
+        - path: "1.4"
+          level: 2
+          title: 4. Default Document Directories
+          byte_offset: 2419
+          byte_count: 562
+          word_count: 70
+          content_hash: 85fa04f641cd24cd2892814b059b30130b186d04e19e18ece81060ed8154850f
+        - path: "1.5"
+          level: 2
+          title: 5. Requirements
+          byte_offset: 2981
+          byte_count: 4563
+          word_count: 605
+          content_hash: 6fde54894a1430f7267bb8271b6ff26276d37b0f8bdf7a9cc984a1a6f9d878e2
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Filesystem Walk
+              byte_offset: 3001
+              byte_count: 546
+              word_count: 80
+              content_hash: 15c918a0fa8aaf1c5ec6074254f75ad8a9801dce628b7ff583629c4a69caa255
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Comparison Against the Store
+              byte_offset: 3547
+              byte_count: 668
+              word_count: 106
+              content_hash: bac3e31847b79a2f5e277122954897840e4dd4bd12ba04ae8073a8eecb30c7fc
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Type Inference
+              byte_offset: 4215
+              byte_count: 471
+              word_count: 73
+              content_hash: 0ef039ab3f4fe74171d870c0dc7dd60e02ce529d5795067af83fe67a6a5d3478
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Output Structure
+              byte_offset: 4686
+              byte_count: 2001
+              word_count: 239
+              content_hash: 12579ff6f03530d3ed7b7912ec49f05764a60d86b4abcfbe7aad5d87d684c076
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Parameters
+              byte_offset: 6687
+              byte_count: 633
+              word_count: 69
+              content_hash: 8fcb7e0e7d77e7cf59fda403f401cf8dc3f76918520da63cb2702cf0e12dbaa5
+            - path: 1.5.6
+              level: 3
+              title: 5.6 Empty Results
+              byte_offset: 7320
+              byte_count: 224
+              word_count: 35
+              content_hash: 8df5054591de1d6bcd02691f49c47211ed02abae5d46f9128fb2e4a877c2c521
+        - path: "1.6"
+          level: 2
+          title: 6. Acceptance Criteria
+          byte_offset: 7544
+          byte_count: 612
+          word_count: 80
+          content_hash: 242e6a1ed07c36e60ed3b8f2556c172ab63eca7a48a1b90dfc685f3b46a8f898
+        - path: "1.7"
+          level: 2
+          title: 7. Dependencies and Assumptions
+          byte_offset: 8156
+          byte_count: 500
+          word_count: 74
+          content_hash: d1ccbdcb695352b9b53a1554b18c02b756848d397833f40fa1440d17e9f8b2b6
+        - path: "1.8"
+          level: 2
+          title: 8. Invariants
+          byte_offset: 8656
+          byte_count: 457
+          word_count: 72
+          content_hash: f54ff68ae6456538415ce52c93adcd603eba28e20608a819b96f2d1e888e1da7
+entity_refs:
+    - entity_id: FEAT-01KN4ZPQFQN1C
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 460
+cross_doc_links:
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+classified: false

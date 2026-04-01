@@ -2,7 +2,12 @@ id: TASK-01KN504P96YXG
 parent_feature: FEAT-01KN4ZPQFQN1C
 slug: doc-audit-integration-tests
 summary: "Write integration tests for doc audit covering AC-16 through AC-20: unregistered files, missing records, path scoping, include_registered flag."
-status: queued
+status: done
 depends_on:
   - TASK-01KN503YAG8MY
   - TASK-01KN504DNFGBG
+files_planned:
+  - kanbanzai/internal/mcp/doc_tool_test.go
+completed: "2026-04-01T17:44:20Z"
+completion_summary: "Added 6 integration tests in doc_tool_test.go for doc audit: UnregisteredFiles (AC-16), MissingRecords (AC-17), InferredType (AC-18), PathScopesResults (AC-19), RegisteredCountedNotListed (AC-20), SummaryInvariant."
+verification: go test ./internal/mcp/... -run TestDocAudit — all 6 tests pass

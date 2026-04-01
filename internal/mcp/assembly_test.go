@@ -314,3 +314,238 @@ func containsStr(s, substr string) bool {
 	}
 	return false
 }
+
+// ─── asmExtractCriteria bold-identifier tests ─────────────────────────────────
+
+// AC-01: **AC-NN.** lines in an acceptance-criteria section are extracted.
+func TestAsmExtractCriteria_BoldAC_InACSection(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Acceptance Criteria",
+			content:  "**AC-01.** The system must do X.\n**AC-02.** The system must do Y.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 2 {
+		t.Fatalf("len(criteria) = %d, want 2; got: %v", len(got), got)
+	}
+	if got[0] != "AC-01: The system must do X." {
+		t.Errorf("criteria[0] = %q, want %q", got[0], "AC-01: The system must do X.")
+	}
+	if got[1] != "AC-02: The system must do Y." {
+		t.Errorf("criteria[1] = %q, want %q", got[1], "AC-02: The system must do Y.")
+	}
+}
+
+// AC-02: **REQ-NN.** lines in a requirements section are extracted.
+func TestAsmExtractCriteria_BoldREQ_InReqSection(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Requirements",
+			content:  "**REQ-01.** The service MUST respond within 100ms.\n**REQ-02.** The service SHALL log all errors.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 2 {
+		t.Fatalf("len(criteria) = %d, want 2; got: %v", len(got), got)
+	}
+	if got[0] != "REQ-01: The service MUST respond within 100ms." {
+		t.Errorf("criteria[0] = %q, want %q", got[0], "REQ-01: The service MUST respond within 100ms.")
+	}
+}
+
+// AC-02: **C-NN.** lines in a constraints section are extracted.
+func TestAsmExtractCriteria_BoldC_InConstraintsSection(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Constraints",
+			content:  "**C-01.** No external network calls.\n**C-02.** Must be idempotent.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 2 {
+		t.Fatalf("len(criteria) = %d, want 2; got: %v", len(got), got)
+	}
+	if got[0] != "C-01: No external network calls." {
+		t.Errorf("criteria[0] = %q, want %q", got[0], "C-01: No external network calls.")
+	}
+}
+
+// AC-03: Extracted criterion text preserves the identifier prefix as "XX-NN: text".
+func TestAsmExtractCriteria_BoldIdent_PreservesPrefix(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Acceptance Criteria",
+			content:  "**INV-03.** The invariant must hold at all times.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 1 {
+		t.Fatalf("len(criteria) = %d, want 1; got: %v", len(got), got)
+	}
+	want := "INV-03: The invariant must hold at all times."
+	if got[0] != want {
+		t.Errorf("criterion = %q, want %q", got[0], want)
+	}
+}
+
+// AC-04: Bold-identifier lines outside acceptance/requirement/constraint sections
+// are only extracted when their text contains an RFC 2119 keyword.
+func TestAsmExtractCriteria_BoldIdent_OutsideACSection_NoKeyword(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Background",
+			content:  "**AC-01.** Some informational note without keywords.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 0 {
+		t.Errorf("criteria = %v, want empty (no RFC 2119 keyword outside AC section)", got)
+	}
+}
+
+func TestAsmExtractCriteria_BoldIdent_OutsideACSection_WithKeyword(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Implementation Notes",
+			content:  "**AC-01.** The handler MUST validate the input before processing.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 1 {
+		t.Fatalf("len(criteria) = %d, want 1 (has MUST keyword); got: %v", len(got), got)
+	}
+	want := "AC-01: The handler MUST validate the input before processing."
+	if got[0] != want {
+		t.Errorf("criterion = %q, want %q", got[0], want)
+	}
+}
+
+// AC-05 regression: Existing list-item extraction is unaffected.
+func TestAsmExtractCriteria_ListItems_Unaffected(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Acceptance Criteria",
+			content:  "- The system stores data correctly.\n- The system retrieves data correctly.\n- Error cases return proper codes.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 3 {
+		t.Fatalf("len(criteria) = %d, want 3 (list items unaffected); got: %v", len(got), got)
+	}
+	if got[0] != "The system stores data correctly." {
+		t.Errorf("criteria[0] = %q, want %q", got[0], "The system stores data correctly.")
+	}
+}
+
+// AC-05 regression: Existing numbered-list extraction is unaffected.
+func TestAsmExtractCriteria_NumberedList_Unaffected(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Requirements",
+			content:  "1. First requirement.\n2. Second requirement.\n3. Third requirement.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 3 {
+		t.Fatalf("len(criteria) = %d, want 3 (numbered list unaffected); got: %v", len(got), got)
+	}
+	if got[0] != "First requirement." {
+		t.Errorf("criteria[0] = %q, want %q", got[0], "First requirement.")
+	}
+}
+
+// REQ-12: No bold-idents, no list items → zero criteria.
+func TestAsmExtractCriteria_NoBoldIdents_ZeroCriteria(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Overview",
+			content:  "This is a prose paragraph.\nIt has no list items or bold identifiers.\nSo no criteria are extracted.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 0 {
+		t.Errorf("criteria = %v, want empty (no list items or bold idents)", got)
+	}
+}
+
+// REQ-03: Bold-identifier pattern is case-sensitive for the prefix (must be uppercase).
+func TestAsmExtractCriteria_BoldIdent_LowercasePrefixNotMatched(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Acceptance Criteria",
+			content:  "**ac-01.** Lowercase prefix should not match.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 0 {
+		t.Errorf("criteria = %v, want empty (lowercase prefix must not match)", got)
+	}
+}
+
+// REQ-06: Constraints section heading is treated as an acceptance section.
+func TestAsmExtractCriteria_ConstraintsSection_ExtractsAllBoldIdents(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Constraints and Invariants",
+			content:  "**C-01.** No side effects.\n**INV-01.** State is always consistent.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 2 {
+		t.Fatalf("len(criteria) = %d, want 2 (constraints section); got: %v", len(got), got)
+	}
+}
+
+// RFC 2119 keywords: SHOULD, SHOULD NOT, MAY, REQUIRED, RECOMMENDED, OPTIONAL.
+func TestAsmExtractCriteria_BoldIdent_ShouldKeyword(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Notes",
+			content:  "**REC-01.** Implementations SHOULD prefer the batch path for performance.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 1 {
+		t.Fatalf("len(criteria) = %d, want 1 (SHOULD keyword); got: %v", len(got), got)
+	}
+}
+
+func TestAsmExtractCriteria_BoldIdent_MayKeyword(t *testing.T) {
+	t.Parallel()
+	sections := []asmSpecSection{
+		{
+			document: "spec.md",
+			section:  "Notes",
+			content:  "**OPT-01.** Callers MAY pass an empty slice.",
+		},
+	}
+	got := asmExtractCriteria(sections)
+	if len(got) != 1 {
+		t.Fatalf("len(criteria) = %d, want 1 (MAY keyword); got: %v", len(got), got)
+	}
+}

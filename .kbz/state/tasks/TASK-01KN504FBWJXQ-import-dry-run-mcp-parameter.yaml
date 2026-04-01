@@ -2,6 +2,11 @@ id: TASK-01KN504FBWJXQ
 parent_feature: FEAT-01KN4ZPTQSZT5
 slug: import-dry-run-mcp-parameter
 summary: "Add dry_run boolean parameter to doc import action handler; route to ImportDryRun when true, leave live path unchanged when false."
-status: queued
+status: done
 depends_on:
   - TASK-01KN50402DX0X
+files_planned:
+  - kanbanzai/internal/mcp/doc_tool.go
+completed: "2026-04-01T17:44:20Z"
+completion_summary: "Added dry_run boolean parameter parsing to docImportAction. When true, calls ImportDryRun and returns would_import/would_skip/summary; SignalMutation is skipped. When false/absent, existing live import path runs unchanged."
+verification: "go test ./internal/mcp/... -run TestDocImport_DryRun|TestDocImport_NoDryRun|TestDocImport_DryRunFalse — AC-21 through AC-25 pass"

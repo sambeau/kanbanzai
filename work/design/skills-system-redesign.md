@@ -3,10 +3,11 @@
 | Field | Value |
 |-------|-------|
 | Date | 2025-07-13 |
-| Status | Proposal |
+| Status | Superseded |
 | Author | Design Agent |
 | Informed by | `work/research/ai-agent-best-practices-research.md`, `work/research/agent-skills-research.md`, `work/research/agent-orchestration-research.md` |
 | Supersedes | Current `.skills/` system and `.kbz/context/roles/` profiles |
+| Superseded by | `work/design/skills-system-redesign-v2.md` (post-alignment version) |
 
 ---
 

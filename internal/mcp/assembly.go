@@ -14,12 +14,36 @@
 package mcp
 
 import (
+	"regexp"
 	"sort"
 	"strings"
 
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/service"
 )
+
+// boldIdentifierRe matches lines of the form **XX-NN.** <text>
+// where XX is one or more uppercase ASCII letters and NN is one or more digits.
+// Group 1: identifier prefix (e.g. "AC"), Group 2: number (e.g. "01"), Group 3: criterion text.
+var boldIdentifierRe = regexp.MustCompile(`^\*\*([A-Z]+)-(\d+)\.\*\*\s+(.+)$`)
+
+// hasRFC2119Keyword reports whether text contains at least one RFC 2119 keyword
+// (case-insensitive). Used for context-sensitive bold-identifier extraction (REQ-05).
+func hasRFC2119Keyword(text string) bool {
+	upper := strings.ToUpper(text)
+	// Pad with spaces to simplify boundary matching.
+	padded := " " + upper + " "
+	for _, kw := range []string{
+		" MUST NOT ", " SHALL NOT ", " SHOULD NOT ",
+		" MUST ", " SHALL ", " SHOULD ", " MAY ",
+		" REQUIRED ", " RECOMMENDED ", " OPTIONAL ",
+	} {
+		if strings.Contains(padded, kw) {
+			return true
+		}
+	}
+	return false
+}
 
 const assemblyDefaultBudget = 30720
 
@@ -293,11 +317,25 @@ func asmExtractCriteria(sections []asmSpecSection) []string {
 		titleLower := strings.ToLower(s.section)
 		isAcceptanceSection := strings.Contains(titleLower, "acceptance") ||
 			strings.Contains(titleLower, "criteria") ||
-			strings.Contains(titleLower, "requirement")
+			strings.Contains(titleLower, "requirement") ||
+			strings.Contains(titleLower, "constraint")
 
 		for _, line := range strings.Split(s.content, "\n") {
-			// Strip list marker to get the bare text.
 			trimmed := strings.TrimSpace(line)
+
+			// Bold-identifier pattern: **XX-NN.** <text> (REQ-01 through REQ-09).
+			// Must be checked before the list-item guard so that bold-identifier
+			// lines are not silently skipped.
+			if m := boldIdentifierRe.FindStringSubmatch(trimmed); m != nil {
+				prefix, num, criterionText := m[1], m[2], m[3]
+				criterion := prefix + "-" + num + ": " + criterionText
+				if isAcceptanceSection || hasRFC2119Keyword(criterionText) {
+					addCriterion(criterion)
+				}
+				continue
+			}
+
+			// Strip list marker to get the bare text.
 			text := trimmed
 			for _, marker := range []string{"- ", "* ", "+ ", "• "} {
 				if strings.HasPrefix(text, marker) {

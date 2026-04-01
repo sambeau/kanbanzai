@@ -1,0 +1,353 @@
+document_id: PROJECT/report-v3-feedback-gap-analysis
+document_path: work/reports/v3-feedback-gap-analysis.md
+content_hash: 0e7db34a3b7940dc7ea087b2368d3515ee20ebd28dcfbc67b10159b2c5648727
+indexed_at: 2026-04-01T16:14:49.656917Z
+sections:
+    - path: "1"
+      level: 1
+      title: V3.0 Feedback and Gap Analysis Report
+      byte_offset: 379
+      byte_count: 22217
+      word_count: 3158
+      content_hash: dfc6031878c6913f9f7c493bda6638a45efd4bfcf05c36cc491fb54dca6304c0
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Introduction
+          byte_offset: 420
+          byte_count: 860
+          word_count: 109
+          content_hash: 1e9072f4506b548a3e727e9d9cd5bace9548f9d96d6cb2331b3f8615807d0588
+        - path: "1.2"
+          level: 2
+          title: 2. Session Feedback Summary
+          byte_offset: 1280
+          byte_count: 5125
+          word_count: 712
+          content_hash: f38c774f464a53dfe1ecb754a28267758331ad61c2aa2150c603f973373da48b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: '2.1 Consistently Strong: The Document-Led Workflow'
+              byte_offset: 1312
+              byte_count: 853
+              word_count: 114
+              content_hash: 6f7d7b6fba6ba496e0d03eb37b98f8ff2585abf5b77e60ceff0e1bfb37d803d3
+            - path: 1.2.2
+              level: 3
+              title: '2.2 Recurring Friction: Document Size'
+              byte_offset: 2165
+              byte_count: 641
+              word_count: 92
+              content_hash: be3a55b1a1c3b42d23f1cbdcb9c2196b9f9167753bbccb9f58a1a6cb0cccfb60
+            - path: 1.2.3
+              level: 3
+              title: '2.3 Recurring Friction: Cross-Reference Integrity'
+              byte_offset: 2806
+              byte_count: 574
+              word_count: 73
+              content_hash: 1d4a0a821f8d6d11c171cf32cfe9e9063f37c10cca3e6896a7a900f32ada447d
+            - path: 1.2.4
+              level: 3
+              title: '2.4 Recurring Friction: Gap Between Disk and Store'
+              byte_offset: 3380
+              byte_count: 642
+              word_count: 87
+              content_hash: b977c4bcb287770d6ee0fa12210706325b4fec98dcd46680822fbdb5079cc980
+            - path: 1.2.5
+              level: 3
+              title: '2.5 Recurring Friction: Planning Precision'
+              byte_offset: 4022
+              byte_count: 824
+              word_count: 122
+              content_hash: 09936e063448615b20d0a8a61a7479e3af70b0caae0d2fe2fa88ed59bc23df63
+            - path: 1.2.6
+              level: 3
+              title: '2.6 Recurring Friction: Context Budget and Review Scope'
+              byte_offset: 4846
+              byte_count: 544
+              word_count: 82
+              content_hash: 09513948bc4af99210de1df85fe0f5e3fca9ba1cadebe2e877d3addc79cdc3c9
+            - path: 1.2.7
+              level: 3
+              title: '2.7 Recurring Friction: Missing Workflow Stages'
+              byte_offset: 5390
+              byte_count: 478
+              word_count: 64
+              content_hash: cad61ce67c1b1ba94626d989b7e76506ed704b8eb234749b0374b6a63f9f4de5
+            - path: 1.2.8
+              level: 3
+              title: 2.8 One-Off but Notable
+              byte_offset: 5868
+              byte_count: 537
+              word_count: 73
+              content_hash: c79430d2fb1b42576c8a36ac899beafba866f2eb0757bd4e3b08d64ba0a87e89
+        - path: "1.3"
+          level: 2
+          title: 3. Retrospective Signals Summary
+          byte_offset: 6405
+          byte_count: 1884
+          word_count: 273
+          content_hash: a94977caf43eea38bf7ceaebee725308712cfdd5e0e80360b9ac0f0ba7db605e
+          children:
+            - path: 1.3.1
+              level: 3
+              title: '3.1 Critical: `decompose` + `docint` AC Pattern Recognition'
+              byte_offset: 6442
+              byte_count: 436
+              word_count: 64
+              content_hash: 79e950d2a7523fd787b6ad98254c77948f16c71cbea9216ff4f4cd4c7ce176c0
+            - path: 1.3.2
+              level: 3
+              title: '3.2 Important: Sub-Agent State Isolation'
+              byte_offset: 6878
+              byte_count: 490
+              word_count: 70
+              content_hash: af2000a3454b12505bed13efd52b529d66783117f5e53fec7da183bbb8529f29
+            - path: 1.3.3
+              level: 3
+              title: '3.3 Important: Agents Bypassing MCP Tools'
+              byte_offset: 7368
+              byte_count: 273
+              word_count: 39
+              content_hash: e0e7fe7affa99726935f2ece275cb7d3ec5d26eba0b7a094e27f583762df9e09
+            - path: 1.3.4
+              level: 3
+              title: '3.4 Important: `doc approve` Doesn''t Sync File Headers'
+              byte_offset: 7641
+              byte_count: 240
+              word_count: 37
+              content_hash: e0acdf0176cb1f0ad456a9e40f5098773ae6cda4e0eeca9edc7f281c9618670d
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Patterns Working Well (Preserve and Codify)
+              byte_offset: 7881
+              byte_count: 408
+              word_count: 58
+              content_hash: 40f43707c803038530374a00ba2a6c621c63db8a2ef0b42ca280555e91ab4198
+        - path: "1.4"
+          level: 2
+          title: '4. Gap Analysis: Feedback vs V3.0 Plans'
+          byte_offset: 8289
+          byte_count: 10056
+          word_count: 1399
+          content_hash: bad5855fb05bdbc986e92ba8b83df9bde209cd0d79d564c3afe88ca91f46ffd4
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Well-Addressed by V3.0
+              byte_offset: 8333
+              byte_count: 3162
+              word_count: 445
+              content_hash: 2c5b1a1157ad7c960772028db29c04b323ef93f9ee07b7961ed6d598ed2663de
+              children:
+                - path: 1.4.1.1
+                  level: 4
+                  title: Context Budget / Review Scope Exhaustion
+                  byte_offset: 8365
+                  byte_count: 1138
+                  word_count: 164
+                  content_hash: 5c70d4e7c6ed845be22b79c2fd5b5c59d685e110ef024448f7774914085ef41a
+                - path: 1.4.1.2
+                  level: 4
+                  title: Agents Skipping Steps / Missing Workflow Stages
+                  byte_offset: 9503
+                  byte_count: 916
+                  word_count: 118
+                  content_hash: 554d76fe13cb906ca088d5187a9e035099b64abda933b4226c7abceeee85dd2d
+                - path: 1.4.1.3
+                  level: 4
+                  title: Review-Rework Loop Structure
+                  byte_offset: 10419
+                  byte_count: 237
+                  word_count: 34
+                  content_hash: 82e5444a4ef92ef361d714dbff2be975d04b20228239b1146a1500f2a12d4cfd
+                - path: 1.4.1.4
+                  level: 4
+                  title: Agents Bypassing MCP Tools
+                  byte_offset: 10656
+                  byte_count: 839
+                  word_count: 124
+                  content_hash: 5f5ec14d749ce72db72ec7558baecf66a8a69a77d7a3b6e3cbd3bda268e21330
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Partially Addressed by V3.0
+              byte_offset: 11495
+              byte_count: 4179
+              word_count: 569
+              content_hash: 11dd72aad8f606608ee6e13b6697fd8d0c778fb7069d0b2236a346a9d6d0880f
+              children:
+                - path: 1.4.2.1
+                  level: 4
+                  title: Document Size / Progressive Disclosure
+                  byte_offset: 11532
+                  byte_count: 1144
+                  word_count: 166
+                  content_hash: e09567fd0f337c104b950c2fa5731a53ee1766c87d5836ffe6abb47fce2bf115
+                - path: 1.4.2.2
+                  level: 4
+                  title: Cross-Reference Integrity
+                  byte_offset: 12676
+                  byte_count: 983
+                  word_count: 129
+                  content_hash: a449f5cfd770794fb2c9e429f23dc91a70f44d4d9159ab194e888b80ac910eec
+                - path: 1.4.2.3
+                  level: 4
+                  title: Planning Precision / Cascading Consequences
+                  byte_offset: 13659
+                  byte_count: 861
+                  word_count: 113
+                  content_hash: 7e81a11752f36e83c304cf4317ce1beb4abc55b0a222edd573d0fb7677b4a77b
+                - path: 1.4.2.4
+                  level: 4
+                  title: Research Integrity in Reviews
+                  byte_offset: 14520
+                  byte_count: 730
+                  word_count: 95
+                  content_hash: 8378f311c964c1bf61252fdd6b4fd64cab30113aa9bd072091c8eb452738517c
+                - path: 1.4.2.5
+                  level: 4
+                  title: File Ownership in Dev-Plan Templates
+                  byte_offset: 15250
+                  byte_count: 424
+                  word_count: 60
+                  content_hash: 3f5cd99ad6044626deb3a8717bc6fa45f0c13cd68a95361a4960848e66826562
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Not Addressed by V3.0
+              byte_offset: 15674
+              byte_count: 2671
+              word_count: 377
+              content_hash: ea75c9381811ada3a71423a876ace3fad104ed1c5ef9fb87bb1430df42cb8343
+              children:
+                - path: 1.4.3.1
+                  level: 4
+                  title: '`docint` AC Pattern Recognition — Infrastructure Blocker'
+                  byte_offset: 15705
+                  byte_count: 478
+                  word_count: 71
+                  content_hash: bef561ede7e191a856c2c99bb14e55940091d3107aed48bf889cae4a7f0cdbbe
+                - path: 1.4.3.2
+                  level: 4
+                  title: Sub-Agent State Isolation
+                  byte_offset: 16183
+                  byte_count: 610
+                  word_count: 80
+                  content_hash: f4fa705a8496b0971bcdacc81720314d14d9da399c8ca934f7c4d1eb1c6f8ae4
+                - path: 1.4.3.3
+                  level: 4
+                  title: '`doc approve` File Header Sync'
+                  byte_offset: 16793
+                  byte_count: 442
+                  word_count: 64
+                  content_hash: 9ad120fc35c808589693d5663baa3f7250d49eeba7aa455ecaa88d050d6a14e4
+                - path: 1.4.3.4
+                  level: 4
+                  title: Gap Between Disk and Store
+                  byte_offset: 17235
+                  byte_count: 435
+                  word_count: 66
+                  content_hash: c3368437eca754b24743e739711845e4d7de7e1021b7736d0a0f0312571eb4dd
+                - path: 1.4.3.5
+                  level: 4
+                  title: Persistent Claim-Tracking During Verification
+                  byte_offset: 17670
+                  byte_count: 455
+                  word_count: 58
+                  content_hash: 24eafc56316d4e374ffa9e711dd649d61533ce26e6dfa9f263ca55f3b2331c72
+                - path: 1.4.3.6
+                  level: 4
+                  title: Batch Test False-Positive
+                  byte_offset: 18125
+                  byte_count: 220
+                  word_count: 32
+                  content_hash: f52410d3402db8806d7860104203e75846cffd86c28bb3b4ce17ea9de4b570d0
+        - path: "1.5"
+          level: 2
+          title: 5. Consolidated Priority View
+          byte_offset: 18345
+          byte_count: 2416
+          word_count: 400
+          content_hash: 7db88ef5ba2decc176078b55641edc1b100b0514cbc1131389cff35996a0fe7b
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Pre-V3.0 Blockers (Fix Before Implementation)
+              byte_offset: 18379
+              byte_count: 482
+              word_count: 77
+              content_hash: 7a17d52c74380ea5f5e45f71f1a3de4c233e5706947fc828422052690da760cd
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Quick Wins (Independent of V3.0, High Value)
+              byte_offset: 18861
+              byte_count: 432
+              word_count: 79
+              content_hash: 7892ab57dd813dbc26f0eee868427006213e2c8de71492fb02e77819f9bd098f
+            - path: 1.5.3
+              level: 3
+              title: 5.3 V3.0 Design Additions (Incorporate Into Next Design Round)
+              byte_offset: 19293
+              byte_count: 987
+              word_count: 157
+              content_hash: 466f7d6d3012d0b7a772d7cc6e97efa42ac30a0c1f3b81895d466876ea1844d0
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Longer-Term / Out of Scope
+              byte_offset: 20280
+              byte_count: 481
+              word_count: 82
+              content_hash: d6fc8754f82cbc142c5d437c7114e2110a1fa4d102fbd5ae82deb8a3f4bfa442
+        - path: "1.6"
+          level: 2
+          title: 6. Key Observations
+          byte_offset: 20761
+          byte_count: 1835
+          word_count: 258
+          content_hash: 1f58b11f1e27e3d3f5d2dd350d64f6e5f1fbf984282530744836b33630f428c3
+          children:
+            - path: 1.6.1
+              level: 3
+              title: The V3.0 design is strongest where the feedback is about agent execution behaviour.
+              byte_offset: 20785
+              byte_count: 413
+              word_count: 58
+              content_hash: b31d30df26de6e0216810a26874df85cc806f5a70d80a439b8b2ac955f40c970
+            - path: 1.6.2
+              level: 3
+              title: The V3.0 design is weakest where the feedback is about the design-phase experience.
+              byte_offset: 21198
+              byte_count: 510
+              word_count: 71
+              content_hash: 81a5e9d002d89bf3259f140ffc756223bba4862a5eeed52604a087275852137a
+            - path: 1.6.3
+              level: 3
+              title: The retro signals identify infrastructure prerequisites, not design gaps.
+              byte_offset: 21708
+              byte_count: 550
+              word_count: 78
+              content_hash: 72cfbd58921e1c121aa86c1ff647760576b5bcbf2dee4cba9aa438e691dec974
+            - path: 1.6.4
+              level: 3
+              title: The "working well" patterns should be explicitly codified.
+              byte_offset: 22258
+              byte_count: 338
+              word_count: 47
+              content_hash: fa967e2df8b5d09ad87413e58d8c93323642d028ef0840f534bb68fd37cec12e
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.6
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.1.1
+      role: narrative
+      confidence: high
+    - section_path: 1.5.4
+      role: constraint
+      confidence: high
+classified: false

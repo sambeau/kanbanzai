@@ -1,0 +1,428 @@
+document_id: PROJECT/design-kanbanzai-25-infrastructure-hardening
+document_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+content_hash: a8883186aaf87d3c0c563728f27600e6b478fe385a15bf76675de5c6effdf108
+indexed_at: 2026-04-01T16:35:31.473017Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Kanbanzai 2.5 — Infrastructure Hardening'
+      byte_offset: 0
+      byte_count: 27316
+      word_count: 3927
+      content_hash: a8883186aaf87d3c0c563728f27600e6b478fe385a15bf76675de5c6effdf108
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 428
+          byte_count: 2397
+          word_count: 346
+          content_hash: a553a12fef22575d13a891b3d179de47dca44c25f303a111b771a21c5bf47d9c
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 1.1 Why 2.5, Not 3.0
+              byte_offset: 796
+              byte_count: 615
+              word_count: 88
+              content_hash: a83ea59f64af3ef6256c6ba7ced0bf61b3bf0c5b54a63467beab82257658139c
+            - path: 1.1.2
+              level: 3
+              title: 1.2 Relationship to V3.0
+              byte_offset: 1411
+              byte_count: 518
+              word_count: 80
+              content_hash: 02684e7f78f5b6f9cda5e4cb3fb66995fcec1d0b3db1071d627570bf6a88fc8a
+            - path: 1.1.3
+              level: 3
+              title: 1.3 Research Basis
+              byte_offset: 1929
+              byte_count: 896
+              word_count: 125
+              content_hash: efe8d24a1d9073fff2ea18404624da13426c91589e69b905fa5f4a75ad44d9dc
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 2825
+          byte_count: 668
+          word_count: 103
+          content_hash: 5acb8ace726e03ddf848b4835245525595887a87aa89f7d9e341406e6ba46e1e
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In Scope
+              byte_offset: 2838
+              byte_count: 368
+              word_count: 52
+              content_hash: 856c5f75367d6e88a84032e44acb1e6531b5cd98a62bb69cb41d1995d7c6816d
+            - path: 1.2.2
+              level: 3
+              title: Out of Scope
+              byte_offset: 3206
+              byte_count: 287
+              word_count: 48
+              content_hash: 5993942def12e0fbfe27787e035078e51635e90c12144d6f7e3161be07ec693f
+        - path: "1.3"
+          level: 2
+          title: '3. Bug Fix: `docint` Acceptance Criteria Pattern Recognition'
+          byte_offset: 3493
+          byte_count: 3404
+          word_count: 460
+          content_hash: b48289031c157992058a4c596664d3c971d91b5cf1047d6ccad2f5e235e7d923
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Problem
+              byte_offset: 3558
+              byte_count: 932
+              word_count: 136
+              content_hash: 58bd5a2ad9c77dea37a64da8344510a2b0493051a2f1a0607087a4827080e6a3
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Impact
+              byte_offset: 4490
+              byte_count: 454
+              word_count: 65
+              content_hash: 1f82d44eda13470be6ae24028213741981b257c903b70f1256d98fdb2e04a5fb
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Design
+              byte_offset: 4944
+              byte_count: 931
+              word_count: 122
+              content_hash: 52b418ae31d9a4373bcaf3b573519b2de4b46578ceaef24f26aa71324458ea06
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Affected Files
+              byte_offset: 5875
+              byte_count: 243
+              word_count: 31
+              content_hash: bb5549856ae801ce0cbcfbf2e1e73562989a8bbd19ab2b8afab5367b25eef620
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Acceptance Criteria
+              byte_offset: 6118
+              byte_count: 779
+              word_count: 97
+              content_hash: 1c4d2eb3588c63bb26573cabe0a484c39dd3fc202188b529d202c6c87fc4875e
+        - path: "1.4"
+          level: 2
+          title: '4. Bug Fix: Sub-Agent State Isolation'
+          byte_offset: 6897
+          byte_count: 3233
+          word_count: 467
+          content_hash: 0836d0c76b544f2722bf66fb780af62f13350859b05ee92ff059484fd88a31dc
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Problem
+              byte_offset: 6939
+              byte_count: 571
+              word_count: 82
+              content_hash: adb9e828767e21f93127be89d99be3d18982b3763d77da73620513bfa5def7f5
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Impact
+              byte_offset: 7510
+              byte_count: 369
+              word_count: 51
+              content_hash: e713e552d44af30d9a77bdd4511eb12e109240bac339a18a3c5fb9129c2ad9f0
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Design
+              byte_offset: 7879
+              byte_count: 1421
+              word_count: 208
+              content_hash: 970c4f5382855cc82008c35ec43f5ff0ed15ada776757760847703b8db24b5f8
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Affected Files
+              byte_offset: 9300
+              byte_count: 306
+              word_count: 43
+              content_hash: acdd6be1ade5002d2e097f280decc2fe4789d476c0ef2d2ce94f02fef08401c2
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Acceptance Criteria
+              byte_offset: 9606
+              byte_count: 524
+              word_count: 76
+              content_hash: eaba121e7139ccbaabdd2b63fa099243cb8a4e4a6dc5b4534bab8062d98b2667
+        - path: "1.5"
+          level: 2
+          title: '5. Bug Fix: Batch Handler False-Positive'
+          byte_offset: 10130
+          byte_count: 2613
+          word_count: 383
+          content_hash: 5a7147dc1e63ff96a77a1aa7c4525db8e64319413aa88e5d3ec91e6e87af26c1
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Problem
+              byte_offset: 10175
+              byte_count: 533
+              word_count: 78
+              content_hash: 6b77b2aa90287f062749bfce7fbec4c1ddfc43f1db1a1e4bff92e4ac4601eca5
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Impact
+              byte_offset: 10708
+              byte_count: 188
+              word_count: 26
+              content_hash: 418fc25d586fa4df3e7e8bb92cbb9cfe524762f2577cb0d1d8eebc3a84105848
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Design
+              byte_offset: 10896
+              byte_count: 1039
+              word_count: 154
+              content_hash: 25ec5f266f614cecbeaa9706a482465f417ff3f008b9e796c3ff7f5b5467c577
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Affected Files
+              byte_offset: 11935
+              byte_count: 235
+              word_count: 33
+              content_hash: ca17b31d0f1c7c63e3461e5249c1e04e60ce9a2d3e80680db76dd6ed6607ad3a
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Acceptance Criteria
+              byte_offset: 12170
+              byte_count: 573
+              word_count: 85
+              content_hash: fc6d4568bf9e589d7cdf2550c025e7c53c62aaaec7540545aade757fe1bb91f7
+        - path: "1.6"
+          level: 2
+          title: '6. Tool Enhancement: `doc approve` Header Sync'
+          byte_offset: 12743
+          byte_count: 3060
+          word_count: 458
+          content_hash: 13e8c135dc66fdc9c0d3e14c55d14da3d3ad18a723b38b8cf3b857981465d421
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Problem
+              byte_offset: 12794
+              byte_count: 353
+              word_count: 55
+              content_hash: bd28a18763c03a93d2109ed1ec15752402649be992d7ed62a1617298d29b67af
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Impact
+              byte_offset: 13147
+              byte_count: 323
+              word_count: 50
+              content_hash: a0f8bfd9b369c4cbefd564545a3cec04f2e69107c217477b02b57cdce2aba883
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Design
+              byte_offset: 13470
+              byte_count: 1247
+              word_count: 186
+              content_hash: 12ae4efa12e6d5fa7e34277d329795940368e9121e044d4f6a73aad6ef2cc947
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Affected Files
+              byte_offset: 14717
+              byte_count: 509
+              word_count: 67
+              content_hash: f6c085b524453bf74c2f976856499d88270d753f53a9b00f198ac48ba2527361
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Acceptance Criteria
+              byte_offset: 15226
+              byte_count: 577
+              word_count: 92
+              content_hash: 3369617d37d735fe72a72c5122c6aac2aa5c69714ffd7a07f1d0357360a934f5
+        - path: "1.7"
+          level: 2
+          title: '7. Tool Enhancement: `doc audit`'
+          byte_offset: 15803
+          byte_count: 2502
+          word_count: 334
+          content_hash: 1d6e8a0a1fca7ee2cfdcba4768556bf523c3ee0269e9c72cf784d60ae53a2999
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Problem
+              byte_offset: 15840
+              byte_count: 234
+              word_count: 36
+              content_hash: 3f6becf7b6930a620eddcbc3e706a2382c671e78e033cddf5fe16ce4b2fa8218
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Design
+              byte_offset: 16074
+              byte_count: 1410
+              word_count: 176
+              content_hash: 28e59e750856d67fa6aacde70f32f76315737301ced404481a1559023cf70888
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Affected Files
+              byte_offset: 17484
+              byte_count: 330
+              word_count: 46
+              content_hash: 448717a5b7fce00d712456b267f9e58cbd1b3f98fa62268ceaf871fd158a1eea
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Acceptance Criteria
+              byte_offset: 17814
+              byte_count: 491
+              word_count: 70
+              content_hash: 16c62b93c2e35bef2e40a060de3fbc137eacd54a7a971db805d16410290b1e1a
+        - path: "1.8"
+          level: 2
+          title: '8. Tool Enhancement: `doc import --dry-run`'
+          byte_offset: 18305
+          byte_count: 2121
+          word_count: 299
+          content_hash: 85a0f438812832ed0e74bdf619554b475f361a31e09eb6549e31ed0f9fbbb6d8
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Problem
+              byte_offset: 18353
+              byte_count: 267
+              word_count: 44
+              content_hash: 55c1c62df375b6ec643ab9e2c6da5f9181e08d3d630e83bf5a1b68838e8b8471
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Design
+              byte_offset: 18620
+              byte_count: 1006
+              word_count: 133
+              content_hash: 19bf10fa08c932afb5276fdb648e0fd56d83710f564a68a41ec56aa8729e0930
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Affected Files
+              byte_offset: 19626
+              byte_count: 312
+              word_count: 42
+              content_hash: ae2be24b4882032087717462c63bce619cb9dd33fa1bc27ec65bdc0e0fb0c35e
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Acceptance Criteria
+              byte_offset: 19938
+              byte_count: 488
+              word_count: 73
+              content_hash: 9dd6d7ef3363be3c369ade3e667d50a5e1b87c804904dcd8a5932a6c0ef08db4
+        - path: "1.9"
+          level: 2
+          title: '9. Measurement Infrastructure: Evaluation Baseline'
+          byte_offset: 20426
+          byte_count: 3811
+          word_count: 554
+          content_hash: 732e4c368b83cc5db00cf945010130990fa6c0eac98c3a632322f79abe66fb42
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Problem
+              byte_offset: 20481
+              byte_count: 769
+              word_count: 117
+              content_hash: 91ac7a500db51d8e418236c4d1a5b4e840d112f1e5ff225c5eced1fdc00e1adc
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Design
+              byte_offset: 21250
+              byte_count: 2329
+              word_count: 334
+              content_hash: 2b474946488fc8f96eba3c7ba138a273f64d71a4bc4d34dc48883003095022a9
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Affected Files
+              byte_offset: 23579
+              byte_count: 201
+              word_count: 30
+              content_hash: e9770b0448647d60c85364ec27900852d574f2f02aafa026b78a1ecc528628c2
+            - path: 1.9.4
+              level: 3
+              title: 9.4 Acceptance Criteria
+              byte_offset: 23780
+              byte_count: 457
+              word_count: 67
+              content_hash: f1440fdef10744fe0140a501fdc8427ed0dd613f324b915f99b5381d2cedcd7a
+        - path: "1.10"
+          level: 2
+          title: 10. Implementation Priority
+          byte_offset: 24237
+          byte_count: 1046
+          word_count: 178
+          content_hash: 308979498953e57f17d968e3302bcf5435ef44e018e51c5c66eae4feec7ad3de
+        - path: "1.11"
+          level: 2
+          title: 11. Verification Plan
+          byte_offset: 25283
+          byte_count: 1045
+          word_count: 160
+          content_hash: 36177854e3e39b5186cb41979bb6a26235a90296add7b2b558535722ec271400
+        - path: "1.12"
+          level: 2
+          title: 12. Open Questions
+          byte_offset: 26328
+          byte_count: 988
+          word_count: 141
+          content_hash: 76626216563fb6939be8177475aff5c26508b4339707af8f31939e8b91e2dc36
+cross_doc_links:
+    - target_path: work/reports/v3-feedback-gap-analysis.md
+      link_text: work/reports/v3-feedback-gap-analysis.md
+      section_path: "1"
+    - target_path: work/research/agent-orchestration-research.md
+      link_text: work/research/agent-orchestration-research.md
+      section_path: "1"
+    - target_path: work/research/agent-skills-research.md
+      link_text: work/research/agent-skills-research.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+    - target_path: work/reports/v3-feedback-gap-analysis.md
+      link_text: work/reports/v3-feedback-gap-analysis.md
+      section_path: 1.1.1
+    - target_path: work/eval/README.md
+      link_text: work/eval/README.md
+      section_path: 1.9.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.5
+      role: requirement
+      confidence: high
+    - section_path: 1.4.5
+      role: requirement
+      confidence: high
+    - section_path: 1.5.5
+      role: requirement
+      confidence: high
+    - section_path: 1.6.5
+      role: requirement
+      confidence: high
+    - section_path: 1.7.4
+      role: requirement
+      confidence: high
+    - section_path: 1.8.4
+      role: requirement
+      confidence: high
+    - section_path: 1.9.4
+      role: requirement
+      confidence: high
+    - section_path: "1.12"
+      role: question
+      confidence: high
+classified: false

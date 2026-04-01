@@ -2,4 +2,10 @@ id: TASK-01KN503TRSPV6
 parent_feature: FEAT-01KN4ZPG44T5B
 slug: git-commit-state-if-dirty
 summary: Implement CommitStateIfDirty git utility that stages and commits only .kbz/state/ changes with the fixed commit message.
-status: queued
+status: done
+files_planned:
+  - kanbanzai/internal/git/commit.go
+  - kanbanzai/internal/git/commit_test.go
+completed: "2026-04-01T17:44:20Z"
+completion_summary: "Created internal/git/commit.go with CommitStateIfDirty(repoRoot string) (bool, error). Stages only .kbz/state/ files, creates commit with fixed message, returns (false, nil) when clean. Added commit_test.go with 5 tests covering AC-07 through AC-10."
+verification: go test ./internal/git/... -run TestCommitStateIfDirty — all 5 tests pass

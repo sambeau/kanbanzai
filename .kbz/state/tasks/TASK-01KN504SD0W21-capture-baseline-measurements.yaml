@@ -2,6 +2,15 @@ id: TASK-01KN504SD0W21
 parent_feature: FEAT-01KN4ZPXXEG1F
 slug: capture-baseline-measurements
 summary: Run at least 5 scenarios against the current system and record YAML measurement files in work/eval/ covering diverse tool paths.
-status: queued
+status: done
 depends_on:
   - TASK-01KN504H8S0YQ
+files_planned:
+  - work/eval/baseline-eval-001-20260401.yaml
+  - work/eval/baseline-eval-004-20260401.yaml
+  - work/eval/baseline-eval-008-20260401.yaml
+  - work/eval/baseline-eval-015-20260401.yaml
+  - work/eval/baseline-eval-018-20260401.yaml
+completed: "2026-04-01T17:44:21Z"
+completion_summary: "Captured 5 baseline measurements in work/eval/: eval-001 (full lifecycle, failure on bold-AC decompose + state isolation), eval-004 (gate failure recovery, success), eval-008 (review-rework, success), eval-015 (decompose failure recovery, success with observed bold-AC limitation), eval-018 (tool selection, success). All records use system_version dcb96a3."
+verification: 5 baseline YAML files in work/eval/ with correct schema

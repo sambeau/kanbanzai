@@ -2,4 +2,10 @@ id: TASK-01KN503RX67H0
 parent_feature: FEAT-01KN4ZPCMJ1FP
 slug: extend-asm-extract-criteria
 summary: "Add bold-identifier pattern recognition (AC-NN, REQ-NN) to asmExtractCriteria with context-sensitive rules and unit tests."
-status: queued
+status: done
+files_planned:
+  - kanbanzai/internal/mcp/assembly.go
+  - kanbanzai/internal/mcp/assembly_test.go
+completed: "2026-04-01T17:44:20Z"
+completion_summary: "Extended asmExtractCriteria in assembly.go to recognise **XX-NN.** bold-identifier pattern. Added boldIdentifierRe compiled regex at package level, hasRFC2119Keyword helper, context-sensitive extraction (all bold-ident in acceptance/requirement/constraint sections; RFC-2119-keyword-gated elsewhere). Added 13 unit tests covering AC-01 through AC-05 and regression invariants."
+verification: go test ./internal/mcp/... -run TestAsmExtractCriteria — all 13 new tests pass

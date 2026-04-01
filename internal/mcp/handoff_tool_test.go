@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -924,5 +925,86 @@ func TestRenderHandoffPrompt_SectionOrder(t *testing.T) {
 			t.Errorf("section order violation: %q (pos %d) must come before %q (pos %d)",
 				prev, positions[prev], curr, positions[curr])
 		}
+	}
+}
+
+// ─── Pre-dispatch state commit tests (AC-07, AC-11) ──────────────────────────
+
+// AC-07: When handoff is called, the commitStateFunc is invoked before context
+// assembly begins. This test verifies the call happens by injecting a stub.
+func TestHandoff_PreDispatchCommit_CalledBeforeAssembly(t *testing.T) {
+	t.Parallel()
+	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	taskID, taskSlug := createHandoffScenario(t, entitySvc, "pre-commit")
+	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
+
+	commitCalled := false
+	savedFn := commitStateFunc
+	commitStateFunc = func(repoRoot string) (bool, error) {
+		commitCalled = true
+		return false, nil // simulate nothing to commit
+	}
+	defer func() { commitStateFunc = savedFn }()
+
+	callHandoff(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+		"task_id": taskID,
+	})
+
+	if !commitCalled {
+		t.Error("commitStateFunc was not called; pre-dispatch state commit must be attempted before context assembly")
+	}
+}
+
+// AC-11: If the pre-dispatch commit fails, handoff logs a warning and
+// proceeds normally — the failure must not prevent context assembly or
+// the prompt being returned.
+func TestHandoff_PreDispatchCommit_FailureDoesNotBlockHandoff(t *testing.T) {
+	t.Parallel()
+	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	taskID, taskSlug := createHandoffScenario(t, entitySvc, "commit-fail")
+	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
+
+	savedFn := commitStateFunc
+	commitStateFunc = func(repoRoot string) (bool, error) {
+		return false, fmt.Errorf("simulated git commit failure: lock file exists")
+	}
+	defer func() { commitStateFunc = savedFn }()
+
+	// Handoff must still succeed and return a prompt.
+	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+		"task_id": taskID,
+	})
+
+	// The response must not contain a top-level "error" key.
+	if _, hasErr := resp["error"]; hasErr {
+		t.Errorf("handoff returned error after commit failure; should proceed normally: %v", resp["error"])
+	}
+	prompt, _ := resp["prompt"].(string)
+	if prompt == "" {
+		t.Error("prompt is empty after commit failure; handoff must return a prompt regardless of commit errors")
+	}
+}
+
+// The repoRoot passed to commitStateFunc must be "." (the server default).
+func TestHandoff_PreDispatchCommit_UsesRepoRootDot(t *testing.T) {
+	t.Parallel()
+	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	taskID, taskSlug := createHandoffScenario(t, entitySvc, "repo-root")
+	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
+
+	var capturedRoot string
+	savedFn := commitStateFunc
+	commitStateFunc = func(repoRoot string) (bool, error) {
+		capturedRoot = repoRoot
+		return false, nil
+	}
+	defer func() { commitStateFunc = savedFn }()
+
+	callHandoff(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+		"task_id": taskID,
+	})
+
+	if capturedRoot != "." {
+		t.Errorf("commitStateFunc called with repoRoot=%q, want \".\"", capturedRoot)
 	}
 }

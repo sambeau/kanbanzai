@@ -1,0 +1,91 @@
+id: eval-010
+name: Review Passes on First Attempt
+description: >
+  A feature is in reviewing status with all tasks completed and no rework
+  feedback pending. The agent verifies all tasks are done, consults the
+  specification acceptance criteria, and transitions the feature directly
+  to done without entering any rework cycle.
+category: review-rework-loop
+
+starting_state:
+  feature_status: reviewing
+  documents:
+    - type: specification
+      status: approved
+      title: Search Autocomplete Specification
+      id: DOC-010-spec
+      owner: FEAT-010
+    - type: dev-plan
+      status: approved
+      title: Search Autocomplete Dev Plan
+      id: DOC-010-devplan
+      owner: FEAT-010
+  tasks:
+    - id: TASK-010-a
+      title: Implement autocomplete API endpoint
+      status: done
+    - id: TASK-010-b
+      title: Add frontend autocomplete component
+      status: done
+    - id: TASK-010-c
+      title: Write integration tests for autocomplete
+      status: done
+  notes: >
+    Feature FEAT-010 is in reviewing status. All three tasks are in done
+    status. No tasks are in needs-rework. The agent should recognise the
+    clean review state and advance the feature directly to done without
+    initiating any rework cycle.
+
+expected_pattern:
+  - stage: check-feature-and-task-status
+    tools:
+      - status
+    input:
+      id: FEAT-010
+    output:
+      feature_status: reviewing
+      all_tasks_done: true
+      needs_rework_count: 0
+    notes: >
+      Agent queries the feature dashboard and confirms all three tasks are
+      in done status and none are in needs-rework. No rework action is needed.
+
+  - stage: verify-acceptance-criteria
+    tools:
+      - doc_intel
+    input:
+      action: find
+      entity_id: FEAT-010
+      role: requirement
+    output:
+      spec_document_found: true
+      acceptance_criteria_present: true
+    notes: >
+      Agent optionally consults the specification via doc_intel to confirm
+      the implemented tasks satisfy the acceptance criteria documented in
+      the approved spec before advancing.
+
+  - stage: transition-feature-to-done
+    tools:
+      - entity
+    input:
+      action: transition
+      id: FEAT-010
+      status: done
+    output:
+      feature_status: done
+    notes: >
+      Agent transitions FEAT-010 directly from reviewing to done. No
+      intermediate rework steps occur.
+
+success_criteria:
+  - handoff is NOT called at any point during this scenario
+  - No task status changes to needs-rework or active during this scenario
+  - No new tasks are created
+  - status tool is called to confirm all tasks are done before advancing the feature
+  - entity transition moves FEAT-010 from reviewing to done in a single step
+  - Feature FEAT-010 reaches done status by the end of the scenario
+  - Agent does not create a checkpoint or pause unnecessarily before advancing
+  - The scenario completes without any rework-related tool calls
+  - Agent does not call next or handoff in an attempt to find more work before transitioning
+  - TASK-010-a, TASK-010-b, and TASK-010-c all remain in done status throughout

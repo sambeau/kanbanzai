@@ -57,12 +57,12 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 		mcp.WithDescription(
 			"Manage document records: register, approve, query, supersede, refresh, chain, validate, and import. "+
 				"Use action: get or action: list to query document status — do not read .kbz/state/documents/ files directly. "+
-				"Actions: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import. "+
+				"Actions: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit. "+
 				"approve and supersede report entity lifecycle cascade side effects.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),
-			mcp.Description("Action: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import"),
+			mcp.Description("Action: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit"),
 		),
 		// Common identifier fields.
 		mcp.WithString("id", mcp.Description("Document record ID (approve, get, content, validate, supersede, refresh, chain)")),
@@ -83,6 +83,9 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 		// import fields.
 		mcp.WithString("glob", mcp.Description("File pattern filter (import)")),
 		mcp.WithString("default_type", mcp.Description("Fallback document type when no path pattern matches (import)")),
+		mcp.WithBoolean("dry_run", mcp.Description("Preview what would be registered without writing to the store (import)")),
+		// audit fields.
+		mcp.WithBoolean("include_registered", mcp.Description("Include full registered file list in response (audit)")),
 		// Identity.
 		mcp.WithString("created_by", mcp.Description("Who is performing the operation. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 	)
@@ -100,6 +103,7 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 			"refresh":   docRefreshAction(docSvc),
 			"chain":     docChainAction(docSvc),
 			"import":    docImportAction(docSvc),
+			"audit":     docAuditAction(docSvc),
 		})
 	})
 
@@ -526,21 +530,38 @@ func docChainAction(docSvc *service.DocumentService) ActionHandler {
 
 func docImportAction(docSvc *service.DocumentService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
-		SignalMutation(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 		path := docArgStr(args, "path")
 		if path == "" {
 			return nil, fmt.Errorf("path is required for import")
 		}
 
+		cfg := config.LoadOrDefault()
+		importSvc := service.NewBatchImportService(docSvc)
+
+		// Dry-run mode: run the full inference pipeline without writing to the store.
+		dryRun, _ := args["dry_run"].(bool)
+		if dryRun {
+			result, err := importSvc.ImportDryRun(cfg, service.BatchImportInput{
+				Path:        path,
+				DefaultType: docArgStr(args, "default_type"),
+				Owner:       docArgStr(args, "owner"),
+				Glob:        docArgStr(args, "glob"),
+			})
+			if err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+
+		// Live import path (unchanged).
+		SignalMutation(ctx)
+
 		createdByRaw := docArgStr(args, "created_by")
 		createdBy, err := config.ResolveIdentity(createdByRaw)
 		if err != nil {
 			return nil, err
 		}
-
-		cfg := config.LoadOrDefault()
-		importSvc := service.NewBatchImportService(docSvc)
 
 		result, err := importSvc.Import(cfg, service.BatchImportInput{
 			Path:        path,
@@ -568,6 +589,81 @@ func docImportAction(docSvc *service.DocumentService) ActionHandler {
 			"errors":   errors,
 		}, nil
 	}
+}
+
+// ─── audit ────────────────────────────────────────────────────────────────────
+
+// docAuditAction implements doc(action: "audit"). It is read-only: it walks
+// document directories and compares against the store without modifying either.
+func docAuditAction(docSvc *service.DocumentService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		args, _ := req.Params.Arguments.(map[string]any)
+
+		includeRegistered, _ := args["include_registered"].(bool)
+
+		// Determine which directories to scan.
+		var dirs []string
+		if p := docArgStr(args, "path"); p != "" {
+			dirs = []string{p}
+		}
+
+		result, err := service.AuditDocuments(ctx, docSvc, docSvc.RepoRoot(), dirs, includeRegistered)
+		if err != nil {
+			return nil, err
+		}
+
+		// Build the response map.
+		resp := map[string]any{
+			"unregistered": auditUnregisteredToMaps(result.Unregistered),
+			"missing":      auditMissingToMaps(result.Missing),
+			"summary": map[string]any{
+				"total_on_disk": result.Summary.TotalOnDisk,
+				"registered":    result.Summary.Registered,
+				"unregistered":  result.Summary.Unregistered,
+				"missing":       result.Summary.Missing,
+			},
+		}
+
+		// Include the registered list only when the flag was set (REQ-16).
+		if includeRegistered {
+			resp["registered"] = auditRegisteredToMaps(result.Registered)
+		}
+
+		return resp, nil
+	}
+}
+
+func auditUnregisteredToMaps(files []service.UnregisteredFile) []map[string]any {
+	out := make([]map[string]any, len(files))
+	for i, f := range files {
+		out[i] = map[string]any{
+			"path":          f.Path,
+			"inferred_type": f.InferredType,
+		}
+	}
+	return out
+}
+
+func auditMissingToMaps(records []service.MissingRecord) []map[string]any {
+	out := make([]map[string]any, len(records))
+	for i, r := range records {
+		out[i] = map[string]any{
+			"path":   r.Path,
+			"doc_id": r.DocID,
+		}
+	}
+	return out
+}
+
+func auditRegisteredToMaps(files []service.RegisteredFile) []map[string]any {
+	out := make([]map[string]any, len(files))
+	for i, f := range files {
+		out[i] = map[string]any{
+			"path":   f.Path,
+			"doc_id": f.DocID,
+		}
+	}
+	return out
 }
 
 // ─── helpers ──────────────────────────────────────────────────────────────────

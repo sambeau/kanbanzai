@@ -1,0 +1,85 @@
+id: eval-004
+name: Missing Design Document Gate — Failure and Recovery
+description: >
+  Agent attempts to advance a feature from designing to specifying, but no design
+  document has been registered. The gate blocks the transition. Agent identifies the
+  missing prerequisite using doc gaps, registers and approves a design document, then
+  retries the transition successfully.
+category: gate-failure-and-recovery
+
+starting_state:
+  feature_status: designing
+  documents: []
+  tasks: []
+  notes: >
+    Feature FEAT-004 exists in designing status. No documents have been registered
+    for this feature. The gate from designing to specifying requires an approved
+    design document (type=design) to be present.
+
+expected_pattern:
+  - stage: attempt-advance-to-specifying
+    tools:
+      - entity
+    output: >
+      Agent calls entity with action=transition and status=specifying.
+      The system returns a gate-failure error indicating that an approved
+      design document is required before the feature can leave designing status.
+    tool_args_must_include:
+      - action: transition
+        status: specifying
+
+  - stage: identify-missing-prerequisites
+    tools:
+      - doc
+    output: >
+      Agent calls doc with action=gaps and feature_id=FEAT-004 to surface
+      exactly which document prerequisites are unmet. Response confirms that
+      no approved design document (type=design) is registered for this feature.
+    tool_args_must_include:
+      - action: gaps
+        feature_id: FEAT-004
+
+  - stage: register-design-document
+    tools:
+      - doc
+    output: >
+      Agent calls doc with action=register, supplying a path to the design
+      document file, type=design, and owner=FEAT-004. The document record is
+      created with status=draft and assigned a DOC-... ID.
+    tool_args_must_include:
+      - action: register
+        type: design
+        owner: FEAT-004
+
+  - stage: approve-design-document
+    tools:
+      - doc
+    output: >
+      Agent calls doc with action=approve on the newly registered design
+      document ID. Document status transitions from draft to approved.
+      The designing gate prerequisite is now satisfied.
+    tool_args_must_include:
+      - action: approve
+
+  - stage: retry-advance-to-specifying
+    tools:
+      - entity
+    output: >
+      Agent retries entity with action=transition and status=specifying.
+      This time the gate check passes because an approved design document
+      exists. Feature status transitions from designing to specifying.
+    tool_args_must_include:
+      - action: transition
+        status: specifying
+
+success_criteria:
+  - First entity transition call to status=specifying returns a gate-failure (not a successful transition)
+  - Agent calls doc action=gaps after the failure to diagnose the missing prerequisite — not before
+  - doc action=gaps is called with a reference to FEAT-004 (not a generic list call)
+  - doc action=register is called with type=design and owner=FEAT-004
+  - doc action=approve is called on the document registered in the previous step — not on a pre-existing document
+  - Second entity transition call to status=specifying succeeds
+  - Feature ends in specifying status
+  - No specification document (type=specification) is created during this scenario — only a design document
+  - Recovery sequence is strictly: entity(fail) → doc gaps → doc register → doc approve → entity(success)
+  - Agent does not attempt any workaround such as skipping the gate or using entity action=update to force the status

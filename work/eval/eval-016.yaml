@@ -1,0 +1,110 @@
+id: eval-016
+name: "Doc import batch registration and approval"
+description: >
+  Agent discovers a directory containing 5 or more unregistered markdown
+  documents, uses the doc import action to register all of them in a single
+  call, verifies the registered count matches expectations, then approves
+  every imported document individually.
+category: edge-case
+
+starting_state:
+  feature_status: designing
+  documents: []
+  tasks: []
+  notes: >
+    A feature (FEAT-016) exists in designing status. The directory
+    work/docs/feat-016/ contains 6 markdown files: overview.md,
+    requirements.md, api-contract.md, data-model.md, ui-flows.md, and
+    glossary.md. None have been registered in the doc index yet.
+
+expected_pattern:
+  - stage: discover_files
+    tools:
+      - name: doc
+        action: list
+        args:
+          owner: FEAT-016
+        purpose: >
+          Confirm that no documents are yet registered under FEAT-016 before
+          beginning the import.
+    output:
+      type: list
+      assertions:
+        - "result is an empty list or contains zero entries for FEAT-016"
+
+  - stage: batch_import
+    tools:
+      - name: doc
+        action: import
+        args:
+          path: work/docs/feat-016
+          owner: FEAT-016
+          glob: "*.md"
+          default_type: design
+        purpose: >
+          Register all markdown files in the directory in a single import call
+          rather than making individual doc register calls for each file.
+    output:
+      type: import_result
+      assertions:
+        - "imported count is >= 5"
+        - "all 6 expected filenames appear in the import result"
+        - "all imported documents have status: draft"
+
+  - stage: verify_count
+    tools:
+      - name: doc
+        action: list
+        args:
+          owner: FEAT-016
+          status: draft
+        purpose: >
+          Verify that the number of registered documents matches the number of
+          files present in the directory before proceeding to approval.
+    output:
+      type: list
+      assertions:
+        - "list length equals 6"
+        - "every entry has status: draft"
+        - "overview.md, requirements.md, api-contract.md, data-model.md, ui-flows.md, glossary.md all present"
+
+  - stage: batch_approve
+    tools:
+      - name: doc
+        action: approve
+        args:
+          ids: "[all draft document IDs from previous step]"
+        purpose: >
+          Approve all imported documents using the batch ids parameter in a
+          single approve call rather than approving each document one-by-one.
+    output:
+      type: approve_result
+      assertions:
+        - "all 6 documents transition to status: approved"
+        - "no documents remain in draft status"
+
+  - stage: final_verify
+    tools:
+      - name: doc
+        action: list
+        args:
+          owner: FEAT-016
+          status: approved
+        purpose: >
+          Confirm post-approval that all documents are in approved status and
+          the count is correct.
+    output:
+      type: list
+      assertions:
+        - "list length equals 6"
+        - "all entries have status: approved"
+
+success_criteria:
+  - "Agent uses doc import (not repeated doc register calls) to onboard the directory of files in a single operation"
+  - "Agent does NOT call doc register individually for each markdown file"
+  - "Imported document count is verified to be >= 5 before proceeding to approval"
+  - "Agent uses batch ids approval (doc approve with ids array) rather than 6 sequential single-id approve calls"
+  - "All 6 documents end with status: approved"
+  - "No doc register, entity create, or other non-doc tool is used for the document registration step"
+  - "Agent performs a list verification step after import and again after approval to assert counts"
+  - "Feature FEAT-016 remains in designing status throughout — no erroneous status transitions are triggered"

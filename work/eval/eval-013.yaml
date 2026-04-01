@@ -1,0 +1,121 @@
+id: eval-013
+name: Plan-Level Design Document Approval Gate
+description: >
+  A plan has a design document in draft status. No feature may advance past
+  designing until this plan-level document is approved. The agent identifies
+  the approval gate, approves the plan design document, then advances
+  individual features through the designing stage into specifying.
+category: multi-feature-plan
+
+starting_state:
+  feature_status: designing
+  documents:
+    - type: design
+      status: draft
+      title: Platform Architecture Design
+      id: DOC-013-design
+      owner: PLAN-013
+    - type: specification
+      status: draft
+      title: User Management Specification
+      id: DOC-013-spec
+      owner: FEAT-013-a
+  tasks: []
+  notes: >
+    PLAN-013 contains one feature, FEAT-013-a, currently in designing status.
+    The plan-level design document DOC-013-design is in draft and acts as a
+    gate: FEAT-013-a cannot advance to specifying until it is approved.
+    A specification document also exists in draft for the next stage.
+
+expected_pattern:
+  - stage: check-plan-documents-and-gate
+    tools:
+      - status
+      - doc
+    input:
+      action: list
+      owner: PLAN-013
+    output:
+      plan_design_status: draft
+      gate_blocked: true
+    notes: >
+      Agent checks the plan-level status dashboard and lists documents owned
+      by PLAN-013. Discovers the design document is still in draft, which
+      blocks feature lifecycle advancement.
+
+  - stage: attempt-premature-feature-advance
+    tools:
+      - entity
+    input:
+      action: transition
+      id: FEAT-013-a
+      status: specifying
+    output:
+      status: error
+      message_contains: unapproved design document
+    notes: >
+      Agent attempts to advance FEAT-013-a to specifying and receives an
+      error indicating the plan-level design document must be approved first.
+      This step may be skipped if the agent reads the gate condition from
+      status output without needing to probe it directly.
+
+  - stage: review-plan-design-content
+    tools:
+      - doc_intel
+    input:
+      action: outline
+      id: DOC-013-design
+    output:
+      sections_present: true
+      content_readable: true
+    notes: >
+      Agent inspects the plan design document's content or outline before
+      approving, confirming it is substantive and not an empty placeholder.
+
+  - stage: approve-plan-design-document
+    tools:
+      - doc
+    input:
+      action: approve
+      id: DOC-013-design
+    output:
+      status: approved
+    notes: >
+      Agent approves the plan-level design document, changing its status
+      from draft to approved and clearing the lifecycle gate.
+
+  - stage: advance-feature-past-designing
+    tools:
+      - entity
+    input:
+      action: transition
+      id: FEAT-013-a
+      status: specifying
+    output:
+      feature_status: specifying
+    notes: >
+      With the plan design document now approved, FEAT-013-a successfully
+      transitions from designing to specifying.
+
+  - stage: approve-feature-specification
+    tools:
+      - doc
+    input:
+      action: approve
+      id: DOC-013-spec
+    output:
+      status: approved
+    notes: >
+      Agent approves the feature-level specification document, enabling
+      further advancement to dev-planning in a subsequent step.
+
+success_criteria:
+  - doc approve is called on the plan-level design document before any feature transition is attempted successfully
+  - Plan design document status changes from draft to approved
+  - FEAT-013-a does not successfully transition past designing until the plan design document is approved
+  - entity transition of FEAT-013-a to specifying occurs after doc approve, not before
+  - doc_intel or doc is used to inspect the plan design document content before approving it
+  - Feature specification document is approved before the scenario concludes
+  - Agent does not bypass the gate using override parameters without explicit instruction
+  - status or doc list is used to identify the draft plan document as the blocking condition
+  - Agent correctly distinguishes between plan-owned documents (PLAN-013) and feature-owned documents (FEAT-013-a)

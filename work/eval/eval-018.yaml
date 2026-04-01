@@ -1,0 +1,128 @@
+id: eval-018
+name: "Correct tool at each stage"
+description: >
+  Verifies that the agent selects the semantically correct tool for each workflow
+  stage: `doc` for document registration (not entity), `decompose` for task
+  generation (not entity create), and `finish` for task completion (not entity
+  transition). A feature is advanced from dev-planning through developing to done
+  using only the prescribed tools at each gate.
+category: tool-selection
+
+starting_state:
+  feature_status: dev-planning
+  documents:
+    - id: DOC-001
+      type: specification
+      status: approved
+      title: "Payment Gateway Integration Spec"
+    - id: DOC-002
+      type: design
+      status: approved
+      title: "Payment Gateway Design"
+  tasks: []
+
+expected_pattern:
+  - stage: decompose_tasks
+    tools:
+      - name: decompose
+        action: propose
+        inputs:
+          feature_id: "FEAT-001"
+    output: >
+      Proposal returned with 3–5 vertical-slice tasks. Agent must NOT call
+      entity with type: task directly at this stage.
+
+  - stage: review_and_apply_decomposition
+    tools:
+      - name: decompose
+        action: review
+        inputs:
+          feature_id: "FEAT-001"
+          proposal: "<proposal from previous step>"
+      - name: decompose
+        action: apply
+        inputs:
+          feature_id: "FEAT-001"
+          proposal: "<reviewed proposal>"
+    output: >
+      Tasks created via decompose apply. Confirms agent did not bypass decompose
+      by calling entity create with type: task.
+
+  - stage: advance_to_developing
+    tools:
+      - name: entity
+        action: transition
+        inputs:
+          id: "FEAT-001"
+          status: developing
+    output: Feature transitions to developing status.
+
+  - stage: claim_first_task
+    tools:
+      - name: next
+        inputs:
+          id: "FEAT-001"
+    output: >
+      Task claimed and set to active. Agent uses `next` to claim work rather
+      than manually calling entity transition to active.
+
+  - stage: complete_task
+    tools:
+      - name: finish
+        inputs:
+          task_id: "TASK-001"
+          summary: "Implemented payment gateway client wrapper"
+          files_modified:
+            - "src/payments/gateway_client.py"
+    output: >
+      Task transitions to done via finish. Agent must NOT call entity transition
+      with status: done directly on the task.
+
+  - stage: complete_remaining_tasks
+    tools:
+      - name: next
+        inputs:
+          id: "FEAT-001"
+      - name: finish
+        inputs:
+          task_id: "TASK-002"
+          summary: "Added webhook handler for payment events"
+    output: Remaining tasks completed using finish, not entity transition.
+
+  - stage: register_completion_doc
+    tools:
+      - name: doc
+        action: register
+        inputs:
+          path: "docs/payments/integration-report.md"
+          type: report
+          title: "Payment Integration Completion Report"
+          owner: "FEAT-001"
+    output: >
+      Report document registered using `doc`, not entity. Agent must not call
+      entity create with type: document or similar workaround.
+
+  - stage: approve_doc
+    tools:
+      - name: doc
+        action: approve
+        inputs:
+          id: "DOC-003"
+    output: Document approved via doc action.
+
+  - stage: verify_status
+    tools:
+      - name: status
+        inputs:
+          id: "FEAT-001"
+    output: Feature shows all tasks done, ready for review transition.
+
+success_criteria:
+  - "Agent calls decompose (propose → review → apply) to generate tasks; entity create with type=task is never called directly"
+  - "Agent calls doc register and doc approve to handle documents; entity is never used as a substitute for doc"
+  - "Agent calls finish to complete tasks; entity transition with status=done is never called directly on tasks"
+  - "Agent uses next to claim tasks rather than manually transitioning task status to active"
+  - "All tasks reach done status exclusively through finish calls"
+  - "All documents are registered and approved exclusively through doc calls"
+  - "Feature status progresses from dev-planning → developing with entity transition (which is the correct use of entity)"
+  - "No tool substitution errors: each tool is used only for its intended semantic purpose"

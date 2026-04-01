@@ -1,0 +1,51 @@
+scenario_id: eval-015
+system_version: "dcb96a3"
+run_date: "2026-04-01"
+
+tools_called:
+  - status
+  - decompose
+  - doc
+  - status
+  - doc
+  - doc
+  - decompose
+  - decompose
+  - decompose
+  - entity
+  - status
+
+final_state:
+  feature_status: developing
+  documents:
+    - path: work/spec/eval-015-feature.md
+      status: approved
+  tasks:
+    total: 3
+    done: 0
+
+success: true
+failures: []
+
+notes: >
+  The agent correctly identified the decompose failure root cause: no approved
+  specification document was registered for the feature. The initial decompose
+  propose call returned an error indicating no spec was available for criteria
+  extraction.
+
+  Recovery sequence matched the expected_pattern: the agent registered a
+  specification document, approved it, then retried decompose propose. The
+  retry succeeded and produced 3 tasks. The agent then called decompose review
+  and decompose apply to complete the decomposition workflow.
+
+  One observation: on the initial decompose failure, the agent called status
+  before registering the spec document. This is a reasonable defensive check
+  but added one extra tool call.
+
+  The generated task summaries were section-heading derived ("Implement
+  Requirements", "Implement Acceptance Criteria") rather than criterion-derived,
+  consistent with the known asmExtractCriteria limitation observed in eval-001.
+  This did not prevent the scenario from passing since the success criteria
+  only require tasks to be generated, not that their summaries be criterion-derived.
+
+  Total tool calls: 11 vs estimated 9 in the expected_pattern.

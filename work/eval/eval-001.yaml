@@ -1,0 +1,217 @@
+id: eval-001
+name: Full Feature Lifecycle — Happy Path
+description: >
+  A feature starting in proposed status is driven through the complete lifecycle
+  to done. The agent registers and approves design and specification documents at
+  the appropriate gates, decomposes work into tasks via the decompose workflow,
+  claims a task and assembles a sub-agent handoff, completes all tasks, and
+  advances the feature through reviewing to done. Covers every major lifecycle
+  gate in a single uninterrupted happy-path run.
+category: happy-path
+
+starting_state:
+  feature_status: proposed
+  documents: []
+  tasks: []
+  notes: >
+    Feature FEAT-001 exists in proposed status with no documents, no tasks,
+    and no prior history. The agent must drive the full lifecycle from scratch.
+
+expected_pattern:
+  - stage: inspect-feature
+    tools:
+      - status
+      - entity
+    output: >
+      Agent retrieves project overview via status and then fetches FEAT-001
+      detail via entity action=get. Confirms proposed status, empty document
+      list, and no tasks before beginning lifecycle advancement.
+    tool_args_must_include:
+      - action: get
+
+  - stage: advance-to-designing
+    tools:
+      - entity
+    output: >
+      Agent calls entity action=transition on FEAT-001 with status=designing.
+      No gate prerequisites exist for this transition; it succeeds immediately.
+      Feature status becomes designing.
+    tool_args_must_include:
+      - action: transition
+        status: designing
+
+  - stage: register-design-document
+    tools:
+      - doc
+    output: >
+      Agent registers a design document with type=design and owner=FEAT-001.
+      Document is created in draft status and assigned a DOC-... ID.
+    tool_args_must_include:
+      - action: register
+        type: design
+        owner: FEAT-001
+
+  - stage: approve-design-document
+    tools:
+      - doc
+    output: >
+      Agent approves the design document registered in the previous stage.
+      Document status transitions from draft to approved. The designing gate
+      prerequisite for the specifying transition is now satisfied.
+    tool_args_must_include:
+      - action: approve
+
+  - stage: advance-to-specifying
+    tools:
+      - entity
+    output: >
+      Agent calls entity action=transition on FEAT-001 with status=specifying.
+      Gate check passes because an approved design document exists. Feature
+      status becomes specifying.
+    tool_args_must_include:
+      - action: transition
+        status: specifying
+
+  - stage: register-specification-document
+    tools:
+      - doc
+    output: >
+      Agent registers a specification document with type=specification and
+      owner=FEAT-001. Document is created in draft status.
+    tool_args_must_include:
+      - action: register
+        type: specification
+        owner: FEAT-001
+
+  - stage: approve-specification-document
+    tools:
+      - doc
+    output: >
+      Agent approves the specification document. Status transitions to approved.
+      The specifying gate prerequisite for the dev-planning transition is now
+      satisfied.
+    tool_args_must_include:
+      - action: approve
+
+  - stage: advance-to-dev-planning
+    tools:
+      - entity
+    output: >
+      Agent calls entity action=transition on FEAT-001 with status=dev-planning.
+      Gate check passes because an approved specification document exists.
+      Feature status becomes dev-planning.
+    tool_args_must_include:
+      - action: transition
+        status: dev-planning
+
+  - stage: propose-task-decomposition
+    tools:
+      - decompose
+    output: >
+      Agent calls decompose action=propose for FEAT-001. A task breakdown
+      proposal is generated from the approved specification document, containing
+      at least two vertical slices with titles, summaries, and estimates.
+    tool_args_must_include:
+      - action: propose
+        feature_id: FEAT-001
+
+  - stage: review-decomposition-proposal
+    tools:
+      - decompose
+    output: >
+      Agent calls decompose action=review with the proposal object returned
+      by the propose stage. Review completes without requesting changes;
+      proposal is confirmed as ready to apply.
+    tool_args_must_include:
+      - action: review
+        feature_id: FEAT-001
+
+  - stage: apply-decomposition
+    tools:
+      - decompose
+    output: >
+      Agent calls decompose action=apply with the reviewed proposal. Tasks
+      are created under FEAT-001 and assigned TASK-... IDs. All newly created
+      tasks start in ready status.
+    tool_args_must_include:
+      - action: apply
+        feature_id: FEAT-001
+
+  - stage: advance-to-developing
+    tools:
+      - entity
+    output: >
+      Agent calls entity action=transition on FEAT-001 with status=developing.
+      Gate check passes because at least one task exists under the feature.
+      Feature status becomes developing.
+    tool_args_must_include:
+      - action: transition
+        status: developing
+
+  - stage: claim-next-ready-task
+    tools:
+      - next
+    output: >
+      Agent calls next with the FEAT-001 ID to claim the highest-priority ready
+      task. Returns the task ID, assembled spec context, relevant knowledge
+      entries, and file path hints for the sub-agent.
+    tool_args_must_include:
+      - id: FEAT-001
+
+  - stage: hand-off-task-to-sub-agent
+    tools:
+      - handoff
+    output: >
+      Agent calls handoff with the task ID returned by next. A structured
+      sub-agent prompt is returned containing role conventions, spec sections,
+      knowledge constraints, and acceptance criteria. Task status is active.
+    tool_args_must_include:
+      - task_id: TASK
+
+  - stage: complete-all-tasks
+    tools:
+      - finish
+    output: >
+      Agent calls finish for each task created by decompose, providing a
+      summary of work accomplished and files modified. All tasks transition
+      to done status.
+    tool_args_must_include:
+      - to_status: done
+
+  - stage: advance-to-reviewing
+    tools:
+      - entity
+    output: >
+      Agent calls entity action=transition on FEAT-001 with status=reviewing.
+      Gate check passes because all tasks are in done status. Feature status
+      becomes reviewing.
+    tool_args_must_include:
+      - action: transition
+        status: reviewing
+
+  - stage: advance-to-done
+    tools:
+      - entity
+    output: >
+      Agent calls entity action=transition on FEAT-001 with status=done.
+      Gate check passes. Feature status becomes done. Lifecycle is complete.
+    tool_args_must_include:
+      - action: transition
+        status: done
+
+success_criteria:
+  - "Feature FEAT-001 status is done at the end of the scenario"
+  - "A document with type=design and status=approved is registered for FEAT-001"
+  - "A document with type=specification and status=approved is registered for FEAT-001"
+  - "decompose is called exactly three times: action=propose, action=review, action=apply — in that order"
+  - "decompose apply creates at least two tasks under FEAT-001"
+  - "next is called with FEAT-001 to claim a task before handoff is invoked"
+  - "handoff is called with the task ID returned by next (not a hardcoded or invented ID)"
+  - "finish is called for every task created by decompose apply"
+  - "All tasks under FEAT-001 have status=done before the feature is advanced to reviewing"
+  - "entity action=transition is used for every lifecycle gate — advance: true bulk-advance is not used"
+  - "Feature passes through designing → specifying → dev-planning → developing → reviewing → done in order"
+  - "The design document is registered and approved before the designing→specifying transition"
+  - "The specification document is registered and approved before the specifying→dev-planning transition"
+  - "No tasks are created via entity action=create — decompose apply is the only task creation mechanism"
+  - "Agent does not skip any lifecycle stage or transition more than one stage at a time"

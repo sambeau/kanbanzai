@@ -1,0 +1,134 @@
+document_id: FEAT-01KN4ZPG44T5B/specification-sub-agent-state-isolation
+document_path: work/spec/sub-agent-state-isolation.md
+content_hash: 5c462a164d986b9c4369216b3c2f135e1258f2ca7d2de42e615ed5471aea9e35
+indexed_at: 2026-04-01T17:00:04.751049Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Sub-Agent State Isolation'
+      byte_offset: 0
+      byte_count: 5611
+      word_count: 742
+      content_hash: 5c462a164d986b9c4369216b3c2f135e1258f2ca7d2de42e615ed5471aea9e35
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 625
+          byte_count: 371
+          word_count: 52
+          content_hash: f7f27c17d1eb74b86e43e5d5bfd3fe83b8ec8a7f3e255a864ed6bb9a7caa7031
+        - path: "1.2"
+          level: 2
+          title: 2. Goals
+          byte_offset: 996
+          byte_count: 530
+          word_count: 81
+          content_hash: 677dbb3dd68964f5488021526b7058b290a2b90cf2d8881f3ea39c1dba5b8a1a
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1526
+          byte_count: 732
+          word_count: 105
+          content_hash: 3a8173d8b2f79dd6060cb8b8a6e83a921dc3aa2c3b303792835f8b7f969a8bae
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 In Scope
+              byte_offset: 1539
+              byte_count: 269
+              word_count: 39
+              content_hash: 0df9afd2272767ea9faa8f3d744de6cfb47b44c9aea7a00d5b71fcdb5aa222dc
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Out of Scope
+              byte_offset: 1808
+              byte_count: 450
+              word_count: 63
+              content_hash: 0af965b805df8792b6ae8c078b7d51e8bb9667f136652f1326961b89b94845df
+        - path: "1.4"
+          level: 2
+          title: 4. Requirements
+          byte_offset: 2258
+          byte_count: 1322
+          word_count: 183
+          content_hash: 37d9dca75d64b5f3e962c0ff0bb3f113b0e6c39505e6e94ce69dfaeae308c051
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Pre-Dispatch State Commit
+              byte_offset: 2278
+              byte_count: 693
+              word_count: 92
+              content_hash: 1be27ae23cc0506151967e7422c5a7acf70a84b6e87cb9fc79ac5ac940579e3c
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Failure Handling
+              byte_offset: 2971
+              byte_count: 357
+              word_count: 49
+              content_hash: a1e566a6a1abeb7021b2f565173e571aa373537e1acf07e648078be23bb65cd3
+            - path: 1.4.3
+              level: 3
+              title: 4.3 No Behavioural Change to Context Assembly
+              byte_offset: 3328
+              byte_count: 252
+              word_count: 39
+              content_hash: 488a2f158699bf2ed4d4bee54f34b73224c2f31dfeaf9fd0ffd4a8a019b52dfe
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 3580
+          byte_count: 514
+          word_count: 71
+          content_hash: 73b7a2df6dce0ffda892421c3fbcdda9737b7942310edb30431d786e1b5e4b79
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 4094
+          byte_count: 662
+          word_count: 101
+          content_hash: 5365a7675e853fad433f3e3427eafd07b099bb2e7c66e5ec8113dcba9e1ea33d
+        - path: "1.7"
+          level: 2
+          title: 7. Verification
+          byte_offset: 4756
+          byte_count: 855
+          word_count: 110
+          content_hash: ae2deda7fb16c22bb81e167e47a69ab5f4a04c69e5048a3d359772d684bcf076
+entity_refs:
+    - entity_id: FEAT-01KN4ZPG44T5B
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 467
+cross_doc_links:
+    - target_path: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      link_text: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: 1.4.3
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+classified: false

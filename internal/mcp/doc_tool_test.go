@@ -1090,3 +1090,393 @@ func TestDocChain_EmptyID(t *testing.T) {
 		t.Errorf("expected error for missing id, got: %v", resp)
 	}
 }
+
+// ─── doc audit tests (AC-16 through AC-20) ────────────────────────────────────
+
+// AC-16: doc(action:"audit") returns unregistered files found under default
+// document directories. When path is provided, only that directory is scanned.
+func TestDocAudit_UnregisteredFiles(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	// Create two unregistered .md files in a spec directory.
+	writeDocFile(t, env.repoRoot, "work/spec/feature-a.md", "# Feature A\n")
+	writeDocFile(t, env.repoRoot, "work/spec/feature-b.md", "# Feature B\n")
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "audit",
+		"path":   filepath.Join(env.repoRoot, "work/spec"),
+	})
+
+	unregistered, ok := resp["unregistered"].([]any)
+	if !ok {
+		t.Fatalf("unregistered field missing or wrong type; response: %v", resp)
+	}
+	if len(unregistered) != 2 {
+		t.Errorf("len(unregistered) = %d, want 2", len(unregistered))
+	}
+
+	// Each entry must have path and inferred_type fields.
+	for i, entry := range unregistered {
+		m, ok := entry.(map[string]any)
+		if !ok {
+			t.Fatalf("unregistered[%d] is not a map", i)
+		}
+		if _, hasPath := m["path"]; !hasPath {
+			t.Errorf("unregistered[%d] missing path field", i)
+		}
+		if _, hasType := m["inferred_type"]; !hasType {
+			t.Errorf("unregistered[%d] missing inferred_type field", i)
+		}
+	}
+}
+
+// AC-17: doc(action:"audit") returns missing records whose files no longer
+// exist on disk.
+func TestDocAudit_MissingRecords(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	// Register a doc whose file we will then delete.
+	relPath := "work/spec/will-be-deleted.md"
+	writeDocFile(t, env.repoRoot, relPath, "# Will Be Deleted\n")
+	registerDoc(t, env, relPath, "specification", "Will Be Deleted")
+
+	// Remove the file from disk.
+	if err := os.Remove(filepath.Join(env.repoRoot, relPath)); err != nil {
+		t.Fatalf("remove file: %v", err)
+	}
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "audit",
+		"path":   filepath.Join(env.repoRoot, "work/spec"),
+	})
+
+	missing, ok := resp["missing"].([]any)
+	if !ok {
+		t.Fatalf("missing field missing or wrong type; response: %v", resp)
+	}
+	if len(missing) != 1 {
+		t.Errorf("len(missing) = %d, want 1", len(missing))
+	}
+	m, ok := missing[0].(map[string]any)
+	if !ok {
+		t.Fatal("missing[0] is not a map")
+	}
+	if _, hasPath := m["path"]; !hasPath {
+		t.Error("missing[0] missing path field")
+	}
+	if _, hasDocID := m["doc_id"]; !hasDocID {
+		t.Error("missing[0] missing doc_id field")
+	}
+}
+
+// AC-18: Each unregistered file entry includes an inferred_type based on its
+// directory path.
+func TestDocAudit_InferredType(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	writeDocFile(t, env.repoRoot, "work/spec/inferred.md", "# Inferred\n")
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "audit",
+		"path":   filepath.Join(env.repoRoot, "work/spec"),
+	})
+
+	unregistered, _ := resp["unregistered"].([]any)
+	if len(unregistered) == 0 {
+		t.Fatal("expected at least one unregistered file")
+	}
+	entry, _ := unregistered[0].(map[string]any)
+	inferredType, _ := entry["inferred_type"].(string)
+	if inferredType == "" {
+		t.Errorf("inferred_type is empty for work/spec file; want non-empty (e.g. 'specification')")
+	}
+}
+
+// AC-19: The path parameter scopes the scan to the specified directory;
+// files outside that directory are not reported.
+func TestDocAudit_PathScopesResults(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	// Create files in two different directories.
+	writeDocFile(t, env.repoRoot, "work/spec/in-scope.md", "# In Scope\n")
+	writeDocFile(t, env.repoRoot, "work/design/out-of-scope.md", "# Out Of Scope\n")
+
+	// Audit only the spec directory.
+	resp := callDoc(t, env, map[string]any{
+		"action": "audit",
+		"path":   filepath.Join(env.repoRoot, "work/spec"),
+	})
+
+	unregistered, _ := resp["unregistered"].([]any)
+	if len(unregistered) != 1 {
+		t.Errorf("len(unregistered) = %d, want 1 (only spec dir scanned)", len(unregistered))
+	}
+	if len(unregistered) == 1 {
+		entry, _ := unregistered[0].(map[string]any)
+		path, _ := entry["path"].(string)
+		if strings.Contains(path, "design") {
+			t.Errorf("audit returned a file from 'design' dir; want only 'spec' dir: %s", path)
+		}
+	}
+}
+
+// AC-20: Files that are already registered are counted in summary.registered
+// but not individually listed when include_registered is false.
+func TestDocAudit_RegisteredCountedNotListed(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	// Register one file, leave one unregistered.
+	writeDocFile(t, env.repoRoot, "work/spec/registered.md", "# Registered\n")
+	registerDoc(t, env, "work/spec/registered.md", "specification", "Registered")
+	writeDocFile(t, env.repoRoot, "work/spec/unregistered.md", "# Unregistered\n")
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "audit",
+		"path":   filepath.Join(env.repoRoot, "work/spec"),
+	})
+
+	// summary.registered must be 1.
+	summary, _ := resp["summary"].(map[string]any)
+	if summary == nil {
+		t.Fatal("summary field missing from audit response")
+	}
+	registered, _ := summary["registered"].(float64)
+	if registered != 1 {
+		t.Errorf("summary.registered = %v, want 1", registered)
+	}
+
+	// The top-level "registered" array must be absent when include_registered is false.
+	if _, hasRegistered := resp["registered"]; hasRegistered {
+		t.Error("'registered' array must be absent when include_registered is false/omitted")
+	}
+
+	// When include_registered is true, the array must be present.
+	resp2 := callDoc(t, env, map[string]any{
+		"action":             "audit",
+		"path":               filepath.Join(env.repoRoot, "work/spec"),
+		"include_registered": true,
+	})
+	if _, hasRegistered := resp2["registered"]; !hasRegistered {
+		t.Error("'registered' array must be present when include_registered is true")
+	}
+}
+
+// Invariant: summary.registered + summary.unregistered == summary.total_on_disk.
+func TestDocAudit_SummaryInvariant(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	writeDocFile(t, env.repoRoot, "work/spec/reg.md", "# Registered\n")
+	registerDoc(t, env, "work/spec/reg.md", "specification", "Registered")
+	writeDocFile(t, env.repoRoot, "work/spec/unreg1.md", "# Unregistered 1\n")
+	writeDocFile(t, env.repoRoot, "work/spec/unreg2.md", "# Unregistered 2\n")
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "audit",
+		"path":   filepath.Join(env.repoRoot, "work/spec"),
+	})
+
+	summary, _ := resp["summary"].(map[string]any)
+	if summary == nil {
+		t.Fatal("summary missing")
+	}
+	total, _ := summary["total_on_disk"].(float64)
+	reg, _ := summary["registered"].(float64)
+	unreg, _ := summary["unregistered"].(float64)
+	if int(reg)+int(unreg) != int(total) {
+		t.Errorf("invariant violated: registered(%v) + unregistered(%v) != total_on_disk(%v)", reg, unreg, total)
+	}
+	if total != 3 {
+		t.Errorf("total_on_disk = %v, want 3", total)
+	}
+}
+
+// ─── doc import dry-run tests (AC-21 through AC-25) ──────────────────────────
+
+// AC-21 + AC-23: dry_run returns files that would be imported with inferred metadata.
+func TestDocImport_DryRun_ReturnsWouldImport(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	writeDocFile(t, env.repoRoot, "work/spec/dry-a.md", "# Dry A\n")
+	writeDocFile(t, env.repoRoot, "work/spec/dry-b.md", "# Dry B\n")
+
+	resp := callDoc(t, env, map[string]any{
+		"action":  "import",
+		"path":    filepath.Join(env.repoRoot, "work/spec"),
+		"dry_run": true,
+	})
+
+	wouldImport, ok := resp["would_import"].([]any)
+	if !ok {
+		t.Fatalf("would_import field missing or wrong type; response: %v", resp)
+	}
+	if len(wouldImport) != 2 {
+		t.Errorf("len(would_import) = %d, want 2", len(wouldImport))
+	}
+
+	// AC-23: each entry must include type, title, owner.
+	for i, entry := range wouldImport {
+		m, ok := entry.(map[string]any)
+		if !ok {
+			t.Fatalf("would_import[%d] is not a map", i)
+		}
+		if _, hasPath := m["path"]; !hasPath {
+			t.Errorf("would_import[%d] missing path", i)
+		}
+		if _, hasType := m["type"]; !hasType {
+			t.Errorf("would_import[%d] missing type", i)
+		}
+		if _, hasTitle := m["title"]; !hasTitle {
+			t.Errorf("would_import[%d] missing title", i)
+		}
+		if _, hasOwner := m["owner"]; !hasOwner {
+			t.Errorf("would_import[%d] missing owner", i)
+		}
+	}
+}
+
+// AC-22: In dry-run mode, no document records are created in the store.
+func TestDocImport_DryRun_NoStoreRecordsCreated(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	writeDocFile(t, env.repoRoot, "work/spec/no-store.md", "# No Store\n")
+
+	callDoc(t, env, map[string]any{
+		"action":  "import",
+		"path":    filepath.Join(env.repoRoot, "work/spec"),
+		"dry_run": true,
+	})
+
+	// Query the store — must be empty.
+	resp := callDoc(t, env, map[string]any{
+		"action": "list",
+	})
+	docs, _ := resp["documents"].([]any)
+	if len(docs) != 0 {
+		t.Errorf("store has %d records after dry-run import, want 0", len(docs))
+	}
+}
+
+// AC-24: Files that would be skipped (already registered) are listed in
+// would_skip with reason "already registered".
+func TestDocImport_DryRun_AlreadyRegisteredSkipped(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	// Register one file, leave one unregistered.
+	writeDocFile(t, env.repoRoot, "work/spec/already-reg.md", "# Already Registered\n")
+	registerDoc(t, env, "work/spec/already-reg.md", "specification", "Already Registered")
+	writeDocFile(t, env.repoRoot, "work/spec/not-reg.md", "# Not Registered\n")
+
+	resp := callDoc(t, env, map[string]any{
+		"action":  "import",
+		"path":    filepath.Join(env.repoRoot, "work/spec"),
+		"dry_run": true,
+	})
+
+	wouldSkip, ok := resp["would_skip"].([]any)
+	if !ok {
+		t.Fatalf("would_skip field missing or wrong type; response: %v", resp)
+	}
+	if len(wouldSkip) != 1 {
+		t.Errorf("len(would_skip) = %d, want 1", len(wouldSkip))
+	}
+	entry, _ := wouldSkip[0].(map[string]any)
+	reason, _ := entry["reason"].(string)
+	if reason != "already registered" {
+		t.Errorf("would_skip[0].reason = %q, want \"already registered\"", reason)
+	}
+
+	// The unregistered file should appear in would_import.
+	wouldImport, _ := resp["would_import"].([]any)
+	if len(wouldImport) != 1 {
+		t.Errorf("len(would_import) = %d, want 1", len(wouldImport))
+	}
+}
+
+// AC-25: When dry_run is false, behaviour is unchanged (live import runs).
+func TestDocImport_DryRunFalse_LiveBehaviourUnchanged(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	writeDocFile(t, env.repoRoot, "work/spec/live.md", "# Live Import\n")
+
+	resp := callDoc(t, env, map[string]any{
+		"action":  "import",
+		"path":    filepath.Join(env.repoRoot, "work/spec"),
+		"dry_run": false,
+	})
+
+	// Live import response must have "imported" field, not "would_import".
+	if _, hasImported := resp["imported"]; !hasImported {
+		t.Errorf("expected 'imported' field for live import (dry_run=false), got: %v", resp)
+	}
+	if _, hasWouldImport := resp["would_import"]; hasWouldImport {
+		t.Error("'would_import' must not be present for live import (dry_run=false)")
+	}
+
+	// Verify the record was actually created in the store.
+	listResp := callDoc(t, env, map[string]any{"action": "list"})
+	docs, _ := listResp["documents"].([]any)
+	if len(docs) == 0 {
+		t.Error("expected at least one document record after live import")
+	}
+}
+
+// AC-25: When dry_run is absent, behaviour is unchanged (live import runs).
+func TestDocImport_NoDryRun_LiveBehaviourUnchanged(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	writeDocFile(t, env.repoRoot, "work/spec/live2.md", "# Live Import 2\n")
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "import",
+		"path":   filepath.Join(env.repoRoot, "work/spec"),
+		// dry_run absent
+	})
+
+	if _, hasImported := resp["imported"]; !hasImported {
+		t.Errorf("expected 'imported' field when dry_run absent, got: %v", resp)
+	}
+}
+
+// Dry-run summary counts must equal array lengths.
+func TestDocImport_DryRun_SummaryCounts(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	writeDocFile(t, env.repoRoot, "work/spec/s1.md", "# S1\n")
+	writeDocFile(t, env.repoRoot, "work/spec/s2.md", "# S2\n")
+	registerDoc(t, env, "work/spec/s1.md", "specification", "S1")
+
+	resp := callDoc(t, env, map[string]any{
+		"action":  "import",
+		"path":    filepath.Join(env.repoRoot, "work/spec"),
+		"dry_run": true,
+	})
+
+	summary, _ := resp["summary"].(map[string]any)
+	if summary == nil {
+		t.Fatal("summary missing from dry-run response")
+	}
+	wouldImportCount, _ := summary["would_import"].(float64)
+	wouldSkipCount, _ := summary["would_skip"].(float64)
+
+	wouldImport, _ := resp["would_import"].([]any)
+	wouldSkip, _ := resp["would_skip"].([]any)
+
+	if int(wouldImportCount) != len(wouldImport) {
+		t.Errorf("summary.would_import=%v != len(would_import)=%d", wouldImportCount, len(wouldImport))
+	}
+	if int(wouldSkipCount) != len(wouldSkip) {
+		t.Errorf("summary.would_skip=%v != len(would_skip)=%d", wouldSkipCount, len(wouldSkip))
+	}
+}
