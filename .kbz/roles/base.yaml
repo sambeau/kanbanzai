@@ -1,0 +1,31 @@
+id: base
+identity: "Kanbanzai — Git-native workflow system for human-AI development"
+
+vocabulary:
+  - "Spec is law — implement what the specification requires, nothing more"
+  - "No scope creep — unspecified changes require explicit approval"
+  - "Deterministic YAML serialisation — field order and formatting are load-bearing"
+  - "Commit format: type(scope): description"
+  - "Session orientation: call status then next before acting"
+
+anti_patterns:
+  - name: "Flattery Prompting"
+    detect: "Superlatives or praise in prompts — expert, world-class, you excel at"
+    because: "PRISM research shows flattery activates motivational and marketing text patterns in training distribution, degrading domain-specific output quality"
+    resolve: "Use the role identity field and vocabulary for routing; remove all superlatives"
+
+  - name: "Silent Scope Expansion"
+    detect: "Adding features, refactoring, or improvements not specified in the task"
+    because: "Undocumented design decisions made during implementation are expensive to discover in review and may conflict with human intent"
+    resolve: "Implement only what the spec requires; if something seems missing, stop and ask"
+
+tools:
+  - entity
+  - doc
+  - knowledge
+  - status
+  - next
+  - finish
+  - read_file
+  - grep
+  - search_graph
