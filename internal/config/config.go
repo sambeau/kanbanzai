@@ -142,6 +142,14 @@ type MCPConfig struct {
 	Groups map[string]bool `yaml:"groups,omitempty"`
 }
 
+// QualityEvaluationConfig holds settings for the quality evaluation approval gate.
+type QualityEvaluationConfig struct {
+	// RequireForApproval gates document approval on the presence of a passing evaluation.
+	RequireForApproval bool    `yaml:"require_quality_evaluation"`
+	// Threshold is the minimum overall_score required when RequireForApproval is true.
+	Threshold float64 `yaml:"quality_evaluation_threshold"`
+}
+
 // Config is the project configuration structure stored in .kbz/config.yaml.
 type Config struct {
 	// Version is the configuration schema version.
@@ -170,6 +178,8 @@ type Config struct {
 	Merge MergeConfig `yaml:"merge,omitempty"`
 	// MCP holds settings for the MCP tool surface (Kanbanzai 2.0 feature groups).
 	MCP MCPConfig `yaml:"mcp,omitempty"`
+	// QualityEvaluation holds settings for the quality evaluation approval gate.
+	QualityEvaluation QualityEvaluationConfig `yaml:"quality_evaluation,omitempty"`
 }
 
 // DefaultConfig returns a new Config with sensible defaults.
