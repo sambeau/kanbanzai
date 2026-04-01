@@ -285,6 +285,16 @@ func (e Epic) GetSlug() string {
 	return e.Slug
 }
 
+// OverrideRecord captures a single gate override performed on a feature
+// transition. It is appended to Feature.Overrides each time a gate is
+// bypassed via the override mechanism (FR-014, FR-016).
+type OverrideRecord struct {
+	FromStatus string    `yaml:"from_status"`
+	ToStatus   string    `yaml:"to_status"`
+	Reason     string    `yaml:"reason"`
+	Timestamp  time.Time `yaml:"timestamp"`
+}
+
 // Feature is the canonical representation of a Feature.
 // In Phase 2, Feature lifecycle is driven by document approvals.
 type Feature struct {
@@ -311,11 +321,12 @@ type Feature struct {
 	Epic string `yaml:"epic,omitempty"` // Deprecated: use Parent
 	Plan string `yaml:"plan,omitempty"` // Deprecated: use DevPlan
 
-	Tasks        []string `yaml:"tasks,omitempty"`
-	Decisions    []string `yaml:"decisions,omitempty"`
-	Branch       string   `yaml:"branch,omitempty"`
-	Supersedes   string   `yaml:"supersedes,omitempty"`
-	SupersededBy string   `yaml:"superseded_by,omitempty"`
+	Tasks        []string         `yaml:"tasks,omitempty"`
+	Decisions    []string         `yaml:"decisions,omitempty"`
+	Branch       string           `yaml:"branch,omitempty"`
+	Supersedes   string           `yaml:"supersedes,omitempty"`
+	SupersededBy string           `yaml:"superseded_by,omitempty"`
+	Overrides    []OverrideRecord `yaml:"overrides,omitempty"`
 }
 
 // GetKind returns the entity kind.

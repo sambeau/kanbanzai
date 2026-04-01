@@ -1065,7 +1065,55 @@ func featureFields(e model.Feature) map[string]any {
 	if e.SupersededBy != "" {
 		fields["superseded_by"] = e.SupersededBy
 	}
+	if len(e.Overrides) > 0 {
+		overrides := make([]any, len(e.Overrides))
+		for i, o := range e.Overrides {
+			overrides[i] = map[string]any{
+				"from_status": o.FromStatus,
+				"to_status":   o.ToStatus,
+				"reason":      o.Reason,
+				"timestamp":   o.Timestamp.Format(time.RFC3339),
+			}
+		}
+		fields["overrides"] = overrides
+	}
 	return fields
+}
+
+// PersistFeatureOverrides writes the given override records to the feature entity
+// on disk, replacing any previously stored overrides. Called after each gate
+// bypass to ensure override history is durable (FR-014).
+func (s *EntityService) PersistFeatureOverrides(featureID, slug string, overrides []model.OverrideRecord) error {
+	if slug == "" {
+		_, resolvedSlug, err := s.ResolvePrefix("feature", featureID)
+		if err != nil {
+			return err
+		}
+		slug = resolvedSlug
+	}
+
+	record, err := s.store.Load("feature", featureID, slug)
+	if err != nil {
+		return err
+	}
+
+	if len(overrides) == 0 {
+		delete(record.Fields, "overrides")
+	} else {
+		overrideList := make([]any, len(overrides))
+		for i, o := range overrides {
+			overrideList[i] = map[string]any{
+				"from_status": o.FromStatus,
+				"to_status":   o.ToStatus,
+				"reason":      o.Reason,
+				"timestamp":   o.Timestamp.Format(time.RFC3339),
+			}
+		}
+		record.Fields["overrides"] = overrideList
+	}
+
+	_, err = s.store.Write(record)
+	return err
 }
 
 func taskFields(e model.Task) map[string]any {
