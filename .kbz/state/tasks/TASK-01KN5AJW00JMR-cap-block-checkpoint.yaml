@@ -2,7 +2,19 @@ id: TASK-01KN5AJW00JMR
 parent_feature: FEAT-01KN58J2606B0
 slug: cap-block-checkpoint
 summary: "When review_cycle reaches the cap and a reviewing->needs-rework transition is requested, block the transition, set blocked_reason, and auto-create a human checkpoint."
-status: queued
+status: done
 depends_on:
   - TASK-01KN5AJVYYBSX
   - TASK-01KN5AJVZG8AG
+files_planned:
+  - internal/service/review_rework.go
+  - internal/service/entities.go
+  - internal/service/prereq.go
+  - internal/mcp/entity_tool.go
+completed: "2026-04-01T22:44:54Z"
+claimed_at: "2026-04-01T22:38:23Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-01T22:38:23Z"
+dispatched_by: sambeau
+completion_summary: "Added PersistFeatureBlockedReason and Root() to service layer. GateResult gains ReviewCapReached bool. reviewing→needs-rework gate now blocks at DefaultMaxReviewCycles with ReviewCapReached=true. entityTransitionAction handles this: persists blocked_reason and auto-creates a checkpoint via checkpoint.NewStore(entitySvc.Root()), returning structured error with checkpoint_id."
+verification: go build ./... and go test ./internal/service/... ./internal/checkpoint/... pass

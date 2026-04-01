@@ -2,6 +2,15 @@ id: TASK-01KN5AJW0F7WP
 parent_feature: FEAT-01KN58J2606B0
 slug: status-review-output
 summary: "Surface review_cycle and blocked_reason in the status tool feature detail and entity get responses, with an attention item when blocked."
-status: ready
+status: done
 depends_on:
   - TASK-01KN5AJVYYBSX
+files_planned:
+  - internal/mcp/status_tool.go
+completed: "2026-04-01T22:38:10Z"
+claimed_at: "2026-04-01T22:34:19Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-01T22:34:19Z"
+dispatched_by: sambeau
+completion_summary: "status_tool.go: featureInfo struct gains ReviewCycle and BlockedReason fields (omitempty). synthesiseFeature reads both from feat.State and populates featureInfo. When blocked_reason is non-empty, a BLOCKED attention item is prepended to the attention list."
+verification: go build ./... and go test ./internal/mcp/... -run TestStatus pass

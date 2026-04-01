@@ -2,6 +2,17 @@ id: TASK-01KN5AJVZG8AG
 parent_feature: FEAT-01KN58J2606B0
 slug: cycle-increment-cap
 summary: Increment review_cycle by 1 each time a feature transitions into reviewing status. Define DefaultMaxReviewCycles = 3 constant.
-status: ready
+status: done
 depends_on:
   - TASK-01KN5AJVYYBSX
+files_planned:
+  - internal/service/review_rework.go
+  - internal/service/advance.go
+  - internal/mcp/entity_tool.go
+completed: "2026-04-01T22:38:10Z"
+claimed_at: "2026-04-01T22:34:18Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-01T22:34:18Z"
+dispatched_by: sambeau
+completion_summary: Added DefaultMaxReviewCycles = 3 constant and IncrementFeatureReviewCycle method in new service/review_rework.go. advance.go calls IncrementFeatureReviewCycle after each successful →reviewing transition and keeps in-memory ReviewCycle in sync. entity_tool.go calls IncrementFeatureReviewCycle after single-step feature→reviewing transitions.
+verification: go build ./... and go test ./internal/service/... pass

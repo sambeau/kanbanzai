@@ -2,7 +2,16 @@ id: TASK-01KN5AJW0ZEY6
 parent_feature: FEAT-01KN58J2606B0
 slug: rereview-signal
 summary: "When a feature is in reviewing with review_cycle >= 2, inject a re-review guidance section into the handoff prompt narrowing focus to rework changes."
-status: queued
+status: done
 depends_on:
   - TASK-01KN5AJVYYBSX
   - TASK-01KN5AJVZG8AG
+files_planned:
+  - internal/mcp/handoff_tool.go
+completed: "2026-04-01T22:44:54Z"
+claimed_at: "2026-04-01T22:38:23Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-01T22:38:23Z"
+dispatched_by: sambeau
+completion_summary: "After parentFeature is resolved, the handler loads the parent feature and checks if status==reviewing && review_cycle>=2. If so, a Markdown re-review guidance section (citing cycle N of DefaultMaxReviewCycles) is prepended to instructions before both the pipeline and legacy assembly paths."
+verification: go build ./... and go test ./internal/mcp/... -run TestHandoff pass
