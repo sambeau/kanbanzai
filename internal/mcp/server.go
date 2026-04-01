@@ -1,6 +1,7 @@
 package mcp
 
 import (
+	"fmt"
 	"log"
 	"path/filepath"
 
@@ -13,6 +14,7 @@ import (
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/core"
 	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/knowledge"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/skill"
 	"github.com/sambeau/kanbanzai/internal/validate"
@@ -77,14 +79,27 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 
 	// 3.0 context assembly pipeline: constructed if a stage-bindings.yaml exists.
 	// When nil, handoff falls back to the legacy 2.0 assembly path (NFR-003).
+	var capTracker *knowledge.CapTracker
 	var pipeline *kbzctx.Pipeline
 	bindingPath := filepath.Join(core.InstanceRootDir, "stage-bindings.yaml")
 	if bf, errs := binding.LoadBindingFile(bindingPath); bf != nil && len(errs) == 0 {
+		capTracker = knowledge.NewCapTracker(cacheDir)
+		entryLoader := func() ([]map[string]any, error) {
+			records, err := knowledgeSvc.List(service.KnowledgeFilters{})
+			if err != nil {
+				return nil, err
+			}
+			fields := make([]map[string]any, len(records))
+			for i, r := range records {
+				fields[i] = r.Fields
+			}
+			return fields, nil
+		}
 		pipeline = &kbzctx.Pipeline{
 			Roles:     &kbzctx.RoleStoreAdapter{Store: roleStore},
 			Skills:    &kbzctx.SkillStoreAdapter{Store: skillStore},
 			Bindings:  &kbzctx.BindingFileAdapter{File: bf},
-			Knowledge: kbzctx.NoOpSurfacer{},
+			Knowledge: kbzctx.NewSurfacer(entryLoader, capTracker, nil),
 		}
 		log.Printf("[server] 3.0 context assembly pipeline loaded with %d stage bindings", len(bf.StageBindings))
 	}
@@ -199,6 +214,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
 			Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
 			DocCurrencyHealthChecker(toolNames, repoRoot, entitySvc, docRecordSvc),
+			capSaturationHealthChecker(capTracker),
 		)...)
 	}
 
@@ -275,5 +291,34 @@ func profileHealthChecker(profileStore *kbzctx.ProfileStore) AdditionalHealthChe
 			return err
 		}
 		return validate.CheckProfileHealth(loadAll, resolveProfile)
+	}
+}
+
+// capSaturationHealthChecker returns an AdditionalHealthChecker that flags
+// scopes where the knowledge auto-surfacing cap (10 entries) is routinely
+// exceeded (3+ consecutive assemblies). Recommends knowledge compaction.
+func capSaturationHealthChecker(tracker *knowledge.CapTracker) AdditionalHealthChecker {
+	return func() (*validate.HealthReport, error) {
+		report := &validate.HealthReport{
+			Summary: validate.HealthSummary{
+				EntitiesByType: make(map[string]int),
+			},
+		}
+		if tracker == nil {
+			return report, nil
+		}
+		scopes := tracker.ScopesNeedingCompaction()
+		for _, sc := range scopes {
+			report.Warnings = append(report.Warnings, validate.ValidationWarning{
+				EntityType: "knowledge",
+				Field:      "cap_saturation",
+				Message: fmt.Sprintf(
+					"scope %q exceeded the 10-entry auto-surfacing cap on %d consecutive assemblies; consider running knowledge compact for this scope",
+					sc.Scope, sc.ConsecutiveHits,
+				),
+			})
+		}
+		report.Summary.WarningCount = len(report.Warnings)
+		return report, nil
 	}
 }

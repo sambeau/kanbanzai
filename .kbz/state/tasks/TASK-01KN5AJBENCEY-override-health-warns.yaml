@@ -2,6 +2,14 @@ id: TASK-01KN5AJBENCEY
 parent_feature: FEAT-01KN58J24S2XW
 slug: override-health-warns
 summary: "Add a health check category that flags features with gate overrides as warnings, producing one warning per override record with the feature ID, transition, and reason."
-status: ready
+status: done
 depends_on:
   - TASK-01KN5AJBC2072
+files_planned:
+  - internal/health/gate_overrides.go
+  - internal/health/gate_overrides_test.go
+  - internal/health/check.go
+  - internal/mcp/health_tool.go
+  - internal/mcp/server.go
+completed: "2026-04-01T21:16:24Z"
+completion_summary: "Created CheckGateOverrides in gate_overrides.go that produces one Warning per override record across all features. Created gate_overrides_test.go with 8 tests covering no features, no overrides, single override, multiple overrides, multiple features, message format, missing ID, and malformed entries. Wired into RunHealthCheck via check.go (gated on len(opts.Features) > 0). Added GateOverrideHealthChecker AdditionalHealthChecker in health_tool.go and registered it in server.go HealthTool call."

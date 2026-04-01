@@ -2,9 +2,14 @@ id: TASK-01KN5AJBE5SR8
 parent_feature: FEAT-01KN58J24S2XW
 slug: wire-gate-enforcement
 summary: "Wire gate enforcement into the MCP entityTransitionAction handler, connecting gate checks, error formatting, override persistence, and advance updates into the tool layer."
-status: ready
+status: done
 depends_on:
   - TASK-01KN5AJBC2072
   - TASK-01KN5AJBCNCFV
   - TASK-01KN5AJBD5NHZ
   - TASK-01KN5AJBDPQNG
+files_planned:
+  - internal/mcp/entity_tool.go
+  - internal/mcp/entity_transition_gate_test.go
+completed: "2026-04-01T21:13:46Z"
+completion_summary: "Added override/override_reason params to entity tool schema. Wired CheckTransitionGate into entityTransitionAction for Phase 2 feature transitions with gate failure response, override-requires-reason validation, and OverrideRecord persistence. Updated entityAdvanceFeature to pass override params. Added featureFromState Overrides population, overridesFromState, isPhase2Transition, nonTerminalTasksForFeature helpers. Created 20 integration tests covering all gate scenarios, override mechanics, terminal/ungated/Phase1 transitions, and advance consistency."
