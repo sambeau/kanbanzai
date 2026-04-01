@@ -346,6 +346,7 @@ func fieldOrderForEntityType(entityType string) []string {
 			"created",
 			"created_by",
 			"updated",
+			"quality_evaluation",
 		}
 	case string(model.EntityKindKnowledgeEntry):
 		return []string{

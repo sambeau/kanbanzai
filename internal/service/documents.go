@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 
+	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/core"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/storage"
@@ -75,22 +77,23 @@ type DocEntityTransition struct {
 }
 
 type DocumentResult struct {
-	ID           string
-	Path         string
-	RecordPath   string
-	Type         string
-	Title        string
-	Status       string
-	Owner        string
-	ContentHash  string
-	Drift        bool   // True if content has changed since recorded
-	CurrentHash  string // Current hash if drift detected
-	Created      time.Time
-	Updated      time.Time
-	ApprovedBy   string
-	ApprovedAt   *time.Time
-	Supersedes   string
-	SupersededBy string
+	ID                string
+	Path              string
+	RecordPath        string
+	Type              string
+	Title             string
+	Status            string
+	Owner             string
+	ContentHash       string
+	Drift             bool   // True if content has changed since recorded
+	CurrentHash       string // Current hash if drift detected
+	Created           time.Time
+	Updated           time.Time
+	ApprovedBy        string
+	ApprovedAt        *time.Time
+	Supersedes        string
+	SupersededBy      string
+	QualityEvaluation *model.QualityEvaluation
 	// EntityTransition is set when this operation triggered a lifecycle
 	// transition on the owning entity. Nil when no transition occurred.
 	// Read by 2.0 tools (Track I) to push status_transition side effects.
@@ -325,6 +328,39 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 		return DocumentResult{}, fmt.Errorf("document file has changed since it was registered. Run doc_record_refresh to update the stored hash, then retry doc_record_approve")
 	}
 
+	// Quality evaluation gate: check if RequireForApproval is enabled.
+	cfg := config.LoadOrDefault()
+	if cfg.QualityEvaluation.RequireForApproval {
+		threshold := cfg.QualityEvaluation.Threshold
+		if threshold == 0 {
+			threshold = 0.7
+		}
+		if doc.QualityEvaluation == nil {
+			return DocumentResult{}, fmt.Errorf(
+				"Cannot approve document %s: quality evaluation required but no quality evaluation found.\n\nTo resolve:\n1. Run the quality evaluation skill on the document.\n2. Attach the result: doc(action: \"evaluate\", id: \"%s\", evaluation: {...})\n3. Retry approval: doc(action: \"approve\", id: \"%s\")",
+				input.ID, input.ID, input.ID)
+		}
+		if !doc.QualityEvaluation.Pass {
+			var sb strings.Builder
+			fmt.Fprintf(&sb, "Cannot approve document %s: quality evaluation did not pass (pass=false, overall_score=%g).\n\nDimension scores:\n", input.ID, doc.QualityEvaluation.OverallScore)
+			dimKeys := make([]string, 0, len(doc.QualityEvaluation.Dimensions))
+			for k := range doc.QualityEvaluation.Dimensions {
+				dimKeys = append(dimKeys, k)
+			}
+			sort.Strings(dimKeys)
+			for _, k := range dimKeys {
+				fmt.Fprintf(&sb, "  - %s: %g\n", k, doc.QualityEvaluation.Dimensions[k])
+			}
+			fmt.Fprintf(&sb, "\nTo improve scores, re-evaluate and re-attach: doc(action: \"evaluate\", id: \"%s\", evaluation: {...})", input.ID)
+			return DocumentResult{}, fmt.Errorf("%s", sb.String())
+		}
+		if doc.QualityEvaluation.OverallScore < threshold {
+			return DocumentResult{}, fmt.Errorf(
+				"Cannot approve document %s: quality score %g is below threshold %g.\n\nTo resolve, re-evaluate and re-attach: doc(action: \"evaluate\", id: \"%s\", evaluation: {...})",
+				input.ID, doc.QualityEvaluation.OverallScore, threshold, input.ID)
+		}
+	}
+
 	// Update status
 	now := s.now()
 	doc.Status = model.DocumentStatusApproved
@@ -504,20 +540,21 @@ func (s *DocumentService) GetDocument(id string, checkDrift bool) (DocumentResul
 	doc := storage.RecordToDocument(record)
 
 	result := DocumentResult{
-		ID:           doc.ID,
-		Path:         doc.Path,
-		RecordPath:   s.store.GetFilePath(id),
-		Type:         string(doc.Type),
-		Title:        doc.Title,
-		Status:       string(doc.Status),
-		Owner:        doc.Owner,
-		ContentHash:  doc.ContentHash,
-		Created:      doc.Created,
-		Updated:      doc.Updated,
-		ApprovedBy:   doc.ApprovedBy,
-		ApprovedAt:   doc.ApprovedAt,
-		Supersedes:   doc.Supersedes,
-		SupersededBy: doc.SupersededBy,
+		ID:                doc.ID,
+		Path:              doc.Path,
+		RecordPath:        s.store.GetFilePath(id),
+		Type:              string(doc.Type),
+		Title:             doc.Title,
+		Status:            string(doc.Status),
+		Owner:             doc.Owner,
+		ContentHash:       doc.ContentHash,
+		Created:           doc.Created,
+		Updated:           doc.Updated,
+		ApprovedBy:        doc.ApprovedBy,
+		ApprovedAt:        doc.ApprovedAt,
+		Supersedes:        doc.Supersedes,
+		SupersededBy:      doc.SupersededBy,
+		QualityEvaluation: doc.QualityEvaluation,
 	}
 
 	// Check for content drift if requested
@@ -944,4 +981,75 @@ func isValidEntityID(id string) bool {
 	}
 
 	return false
+}
+
+// AttachEvaluationInput contains the parameters for attaching a quality evaluation.
+type AttachEvaluationInput struct {
+	ID         string
+	Evaluation model.QualityEvaluation
+}
+
+// AttachQualityEvaluation validates and attaches a quality evaluation to a document record.
+// Works on both draft and approved documents. Replaces any existing evaluation.
+func (s *DocumentService) AttachQualityEvaluation(input AttachEvaluationInput) (DocumentResult, error) {
+	if err := validateRequired(field("id", input.ID)); err != nil {
+		return DocumentResult{}, err
+	}
+
+	eval := input.Evaluation
+	if eval.Evaluator == "" {
+		return DocumentResult{}, fmt.Errorf("evaluator is required")
+	}
+	if len(eval.Dimensions) == 0 {
+		return DocumentResult{}, fmt.Errorf("dimensions must not be empty")
+	}
+	if eval.EvaluatedAt.IsZero() {
+		return DocumentResult{}, fmt.Errorf("evaluated_at is required")
+	}
+	if eval.OverallScore < 0.0 || eval.OverallScore > 1.0 {
+		return DocumentResult{}, fmt.Errorf("overall_score must be in [0.0, 1.0], got %g", eval.OverallScore)
+	}
+	for dim, score := range eval.Dimensions {
+		if score < 0.0 || score > 1.0 {
+			return DocumentResult{}, fmt.Errorf("dimension %q score must be in [0.0, 1.0], got %g", dim, score)
+		}
+	}
+
+	record, err := s.store.Load(input.ID)
+	if err != nil {
+		return DocumentResult{}, err
+	}
+
+	doc := storage.RecordToDocument(record)
+	if doc.Status == model.DocumentStatusSuperseded {
+		return DocumentResult{}, fmt.Errorf("cannot attach evaluation to superseded document %q", input.ID)
+	}
+
+	now := s.now()
+	doc.QualityEvaluation = &eval
+	doc.Updated = now
+
+	updatedRecord := storage.DocumentToRecord(doc, record.FileHash)
+	recordPath, err := s.store.Write(updatedRecord)
+	if err != nil {
+		return DocumentResult{}, fmt.Errorf("write document record: %w", err)
+	}
+
+	return DocumentResult{
+		ID:                record.ID,
+		Path:              doc.Path,
+		RecordPath:        recordPath,
+		Type:              string(doc.Type),
+		Title:             doc.Title,
+		Status:            string(doc.Status),
+		Owner:             doc.Owner,
+		ContentHash:       doc.ContentHash,
+		Created:           doc.Created,
+		Updated:           doc.Updated,
+		ApprovedBy:        doc.ApprovedBy,
+		ApprovedAt:        doc.ApprovedAt,
+		Supersedes:        doc.Supersedes,
+		SupersededBy:      doc.SupersededBy,
+		QualityEvaluation: doc.QualityEvaluation,
+	}, nil
 }

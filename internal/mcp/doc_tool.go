@@ -28,11 +28,14 @@ package mcp
 import (
 	"context"
 	"fmt"
+	"strconv"
+	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
 	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
 )
 
@@ -57,12 +60,12 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 		mcp.WithDescription(
 			"Manage document records: register, approve, query, supersede, refresh, chain, validate, and import. "+
 				"Use action: get or action: list to query document status — do not read .kbz/state/documents/ files directly. "+
-				"Actions: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit. "+
+				"Actions: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate. "+
 				"approve and supersede report entity lifecycle cascade side effects.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),
-			mcp.Description("Action: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit"),
+			mcp.Description("Action: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate"),
 		),
 		// Common identifier fields.
 		mcp.WithString("id", mcp.Description("Document record ID (approve, get, content, validate, supersede, refresh, chain)")),
@@ -88,6 +91,8 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 		mcp.WithBoolean("include_registered", mcp.Description("Include full registered file list in response (audit)")),
 		// Identity.
 		mcp.WithString("created_by", mcp.Description("Who is performing the operation. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
+		// evaluate fields.
+		mcp.WithObject("evaluation", mcp.Description("Quality evaluation object for evaluate action: {overall_score, pass, evaluated_at, evaluator, dimensions}")),
 	)
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
@@ -104,6 +109,7 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 			"chain":     docChainAction(docSvc),
 			"import":    docImportAction(docSvc),
 			"audit":     docAuditAction(docSvc),
+			"evaluate":  docEvaluateAction(docSvc),
 		})
 	})
 
@@ -694,6 +700,20 @@ func docRecordToMap(r service.DocumentResult) map[string]any {
 	if r.SupersededBy != "" {
 		m["superseded_by"] = r.SupersededBy
 	}
+	if r.QualityEvaluation != nil {
+		qe := r.QualityEvaluation
+		dims := make(map[string]any, len(qe.Dimensions))
+		for k, v := range qe.Dimensions {
+			dims[k] = v
+		}
+		m["quality_evaluation"] = map[string]any{
+			"overall_score": qe.OverallScore,
+			"pass":          qe.Pass,
+			"evaluated_at":  qe.EvaluatedAt,
+			"evaluator":     qe.Evaluator,
+			"dimensions":    dims,
+		}
+	}
 	return m
 }
 
@@ -701,4 +721,100 @@ func docRecordToMap(r service.DocumentResult) map[string]any {
 func docArgStr(args map[string]any, key string) string {
 	v, _ := args[key].(string)
 	return v
+}
+
+// ─── evaluate ─────────────────────────────────────────────────────────────────
+
+func docEvaluateAction(docSvc *service.DocumentService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+		args, _ := req.Params.Arguments.(map[string]any)
+
+		docID := docArgStr(args, "id")
+		if docID == "" {
+			return nil, fmt.Errorf("id is required for evaluate")
+		}
+
+		evalRaw, ok := args["evaluation"].(map[string]any)
+		if !ok || evalRaw == nil {
+			return nil, fmt.Errorf("evaluation is required for evaluate")
+		}
+
+		eval, err := parseEvaluationMap(evalRaw)
+		if err != nil {
+			return nil, fmt.Errorf("parse evaluation: %w", err)
+		}
+
+		result, err := docSvc.AttachQualityEvaluation(service.AttachEvaluationInput{
+			ID:         docID,
+			Evaluation: eval,
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		return map[string]any{"document": docRecordToMap(result)}, nil
+	}
+}
+
+// parseEvaluationMap converts a map[string]any from the MCP call into a
+// model.QualityEvaluation, performing type coercions for numeric fields.
+func parseEvaluationMap(m map[string]any) (model.QualityEvaluation, error) {
+	var eval model.QualityEvaluation
+
+	// overall_score
+	switch v := m["overall_score"].(type) {
+	case float64:
+		eval.OverallScore = v
+	case int:
+		eval.OverallScore = float64(v)
+	case string:
+		f, err := strconv.ParseFloat(v, 64)
+		if err != nil {
+			return eval, fmt.Errorf("overall_score: %w", err)
+		}
+		eval.OverallScore = f
+	default:
+		return eval, fmt.Errorf("overall_score is required")
+	}
+
+	// pass
+	if v, ok := m["pass"].(bool); ok {
+		eval.Pass = v
+	}
+
+	// evaluator
+	eval.Evaluator, _ = m["evaluator"].(string)
+
+	// evaluated_at
+	if v, ok := m["evaluated_at"].(string); ok {
+		t, err := time.Parse(time.RFC3339, v)
+		if err != nil {
+			return eval, fmt.Errorf("evaluated_at must be RFC3339: %w", err)
+		}
+		eval.EvaluatedAt = t
+	} else {
+		return eval, fmt.Errorf("evaluated_at is required (RFC3339 format)")
+	}
+
+	// dimensions
+	if dimsRaw, ok := m["dimensions"].(map[string]any); ok && len(dimsRaw) > 0 {
+		eval.Dimensions = make(map[string]float64, len(dimsRaw))
+		for k, dv := range dimsRaw {
+			switch tv := dv.(type) {
+			case float64:
+				eval.Dimensions[k] = tv
+			case int:
+				eval.Dimensions[k] = float64(tv)
+			case string:
+				f, err := strconv.ParseFloat(tv, 64)
+				if err != nil {
+					return eval, fmt.Errorf("dimension %q: %w", k, err)
+				}
+				eval.Dimensions[k] = f
+			}
+		}
+	}
+
+	return eval, nil
 }

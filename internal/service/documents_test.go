@@ -1306,3 +1306,177 @@ func TestSubmitDocument_NewDocumentTypes(t *testing.T) {
 		})
 	}
 }
+
+func TestAttachQualityEvaluation_Success(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/design/test.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# Test\n\nContent."), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "design",
+		Title:     "Test Design",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	eval := model.QualityEvaluation{
+		OverallScore: 0.85,
+		Pass:         true,
+		EvaluatedAt:  time.Now().UTC(),
+		Evaluator:    "claude-sonnet-4.5",
+		Dimensions: map[string]float64{
+			"clarity":     0.9,
+			"completeness": 0.8,
+		},
+	}
+
+	result, err := svc.AttachQualityEvaluation(AttachEvaluationInput{
+		ID:         submitted.ID,
+		Evaluation: eval,
+	})
+	if err != nil {
+		t.Fatalf("AttachQualityEvaluation: %v", err)
+	}
+
+	if result.QualityEvaluation == nil {
+		t.Fatal("QualityEvaluation should not be nil")
+	}
+	if result.QualityEvaluation.OverallScore != 0.85 {
+		t.Errorf("OverallScore = %g, want 0.85", result.QualityEvaluation.OverallScore)
+	}
+	if !result.QualityEvaluation.Pass {
+		t.Error("Pass = false, want true")
+	}
+	if result.QualityEvaluation.Evaluator != "claude-sonnet-4.5" {
+		t.Errorf("Evaluator = %q, want claude-sonnet-4.5", result.QualityEvaluation.Evaluator)
+	}
+}
+
+func TestAttachQualityEvaluation_ValidationErrors(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/design/test.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# Test"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path: docPath, Type: "design", Title: "T", CreatedBy: "u",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	base := model.QualityEvaluation{
+		OverallScore: 0.8,
+		Pass:         true,
+		EvaluatedAt:  time.Now().UTC(),
+		Evaluator:    "model",
+		Dimensions:   map[string]float64{"clarity": 0.8},
+	}
+
+	tests := []struct {
+		name   string
+		mutate func(*model.QualityEvaluation)
+	}{
+		{"missing id", nil}, // handled separately
+		{"empty evaluator", func(e *model.QualityEvaluation) { e.Evaluator = "" }},
+		{"empty dimensions", func(e *model.QualityEvaluation) { e.Dimensions = nil }},
+		{"zero evaluated_at", func(e *model.QualityEvaluation) { e.EvaluatedAt = time.Time{} }},
+		{"score too high", func(e *model.QualityEvaluation) { e.OverallScore = 1.1 }},
+		{"score negative", func(e *model.QualityEvaluation) { e.OverallScore = -0.1 }},
+		{"dim score invalid", func(e *model.QualityEvaluation) { e.Dimensions["clarity"] = 1.5 }},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			if tc.name == "missing id" {
+				_, err := svc.AttachQualityEvaluation(AttachEvaluationInput{
+					ID:         "",
+					Evaluation: base,
+				})
+				if err == nil {
+					t.Error("expected error for missing id")
+				}
+				return
+			}
+			eval := base
+			tc.mutate(&eval)
+			_, err := svc.AttachQualityEvaluation(AttachEvaluationInput{
+				ID:         submitted.ID,
+				Evaluation: eval,
+			})
+			if err == nil {
+				t.Errorf("test %q: expected error", tc.name)
+			}
+		})
+	}
+}
+
+func TestAttachQualityEvaluation_Persistence(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/design/test.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# Test"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path: docPath, Type: "design", Title: "T", CreatedBy: "u",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	eval := model.QualityEvaluation{
+		OverallScore: 0.75,
+		Pass:         true,
+		EvaluatedAt:  time.Now().UTC(),
+		Evaluator:    "test-model",
+		Dimensions:   map[string]float64{"a": 0.7, "b": 0.8},
+	}
+	if _, err := svc.AttachQualityEvaluation(AttachEvaluationInput{ID: submitted.ID, Evaluation: eval}); err != nil {
+		t.Fatalf("AttachQualityEvaluation: %v", err)
+	}
+
+	// Re-fetch via GetDocument
+	got, err := svc.GetDocument(submitted.ID, false)
+	if err != nil {
+		t.Fatalf("GetDocument: %v", err)
+	}
+	if got.QualityEvaluation == nil {
+		t.Fatal("GetDocument: QualityEvaluation is nil after persist")
+	}
+	if got.QualityEvaluation.OverallScore != 0.75 {
+		t.Errorf("OverallScore = %g, want 0.75", got.QualityEvaluation.OverallScore)
+	}
+}

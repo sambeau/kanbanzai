@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 
@@ -310,6 +311,21 @@ func DocumentToRecord(doc model.DocumentRecord, fileHash string) DocumentRecord 
 	fields["created_by"] = doc.CreatedBy
 	fields["updated"] = doc.Updated.Format(time.RFC3339)
 
+	if doc.QualityEvaluation != nil {
+		qe := doc.QualityEvaluation
+		dims := make(map[string]any, len(qe.Dimensions))
+		for k, v := range qe.Dimensions {
+			dims[k] = v
+		}
+		fields["quality_evaluation"] = map[string]any{
+			"overall_score": qe.OverallScore,
+			"pass":          qe.Pass,
+			"evaluated_at":  qe.EvaluatedAt.Format(time.RFC3339),
+			"evaluator":     qe.Evaluator,
+			"dimensions":    dims,
+		}
+	}
+
 	return DocumentRecord{
 		ID:       doc.ID,
 		Fields:   fields,
@@ -367,6 +383,48 @@ func RecordToDocument(record DocumentRecord) model.DocumentRecord {
 		if t, err := time.Parse(time.RFC3339, v); err == nil {
 			doc.Updated = t
 		}
+	}
+	if qeMap, ok := record.Fields["quality_evaluation"].(map[string]any); ok {
+		qe := model.QualityEvaluation{}
+		if v, ok := qeMap["overall_score"]; ok {
+			switch tv := v.(type) {
+			case float64:
+				qe.OverallScore = tv
+			case int:
+				qe.OverallScore = float64(tv)
+			case string:
+				if f, err := strconv.ParseFloat(tv, 64); err == nil {
+					qe.OverallScore = f
+				}
+			}
+		}
+		if v, ok := qeMap["pass"].(bool); ok {
+			qe.Pass = v
+		}
+		if v, ok := qeMap["evaluated_at"].(string); ok {
+			if t, err := time.Parse(time.RFC3339, v); err == nil {
+				qe.EvaluatedAt = t
+			}
+		}
+		if v, ok := qeMap["evaluator"].(string); ok {
+			qe.Evaluator = v
+		}
+		if dimsRaw, ok := qeMap["dimensions"].(map[string]any); ok {
+			qe.Dimensions = make(map[string]float64, len(dimsRaw))
+			for k, dv := range dimsRaw {
+				switch tv := dv.(type) {
+				case float64:
+					qe.Dimensions[k] = tv
+				case int:
+					qe.Dimensions[k] = float64(tv)
+				case string:
+					if f, err := strconv.ParseFloat(tv, 64); err == nil {
+						qe.Dimensions[k] = f
+					}
+				}
+			}
+		}
+		doc.QualityEvaluation = &qe
 	}
 
 	return doc

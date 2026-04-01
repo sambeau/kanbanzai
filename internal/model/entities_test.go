@@ -762,3 +762,96 @@ func TestEntity_GetKind(t *testing.T) {
 		})
 	}
 }
+
+func TestQualityEvaluation_YAMLRoundTrip(t *testing.T) {
+	t.Parallel()
+
+	ts := time.Date(2026, 1, 15, 12, 0, 0, 0, time.UTC)
+
+	original := model.QualityEvaluation{
+		OverallScore: 0.85,
+		Pass:         true,
+		EvaluatedAt:  ts,
+		Evaluator:    "claude-sonnet",
+		Dimensions: map[string]float64{
+			"clarity":      0.9,
+			"completeness": 0.8,
+		},
+	}
+
+	data, err := yaml.Marshal(original)
+	if err != nil {
+		t.Fatalf("yaml.Marshal: %v", err)
+	}
+
+	var got model.QualityEvaluation
+	if err := yaml.Unmarshal(data, &got); err != nil {
+		t.Fatalf("yaml.Unmarshal: %v", err)
+	}
+
+	if got.OverallScore != original.OverallScore {
+		t.Errorf("OverallScore = %g, want %g", got.OverallScore, original.OverallScore)
+	}
+	if got.Pass != original.Pass {
+		t.Errorf("Pass = %v, want %v", got.Pass, original.Pass)
+	}
+	if got.Evaluator != original.Evaluator {
+		t.Errorf("Evaluator = %q, want %q", got.Evaluator, original.Evaluator)
+	}
+	if !got.EvaluatedAt.Equal(original.EvaluatedAt) {
+		t.Errorf("EvaluatedAt = %v, want %v", got.EvaluatedAt, original.EvaluatedAt)
+	}
+	if len(got.Dimensions) != len(original.Dimensions) {
+		t.Errorf("len(Dimensions) = %d, want %d", len(got.Dimensions), len(original.Dimensions))
+	}
+	for k, v := range original.Dimensions {
+		if got.Dimensions[k] != v {
+			t.Errorf("Dimensions[%q] = %g, want %g", k, got.Dimensions[k], v)
+		}
+	}
+}
+
+func TestDocumentRecord_WithQualityEvaluation_YAMLRoundTrip(t *testing.T) {
+	t.Parallel()
+
+	ts := time.Date(2026, 1, 15, 12, 0, 0, 0, time.UTC)
+
+	original := model.DocumentRecord{
+		ID:          "FEAT-abc/my-design",
+		Path:        "work/design/my-design.md",
+		Type:        model.DocumentTypeDesign,
+		Title:       "My Design",
+		Status:      model.DocumentStatusDraft,
+		ContentHash: "abc123",
+		Created:     ts,
+		CreatedBy:   "tester",
+		Updated:     ts,
+		QualityEvaluation: &model.QualityEvaluation{
+			OverallScore: 0.75,
+			Pass:         true,
+			EvaluatedAt:  ts,
+			Evaluator:    "model-v1",
+			Dimensions:   map[string]float64{"clarity": 0.8},
+		},
+	}
+
+	data, err := yaml.Marshal(original)
+	if err != nil {
+		t.Fatalf("yaml.Marshal: %v", err)
+	}
+
+	var got model.DocumentRecord
+	if err := yaml.Unmarshal(data, &got); err != nil {
+		t.Fatalf("yaml.Unmarshal: %v", err)
+	}
+
+	if got.QualityEvaluation == nil {
+		t.Fatal("QualityEvaluation is nil after round-trip")
+	}
+	if got.QualityEvaluation.OverallScore != 0.75 {
+		t.Errorf("OverallScore = %g, want 0.75", got.QualityEvaluation.OverallScore)
+	}
+	if got.QualityEvaluation.Evaluator != "model-v1" {
+		t.Errorf("Evaluator = %q, want model-v1", got.QualityEvaluation.Evaluator)
+	}
+}
