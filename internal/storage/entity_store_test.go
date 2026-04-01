@@ -1635,32 +1635,3 @@ func TestNameFieldOrder(t *testing.T) {
 		t.Errorf("name should appear before parent: nameIdx=%d parentIdx=%d", nameIdx, parentIdx)
 	}
 }
-
-func TestBackwardCompat_TitleField(t *testing.T) {
-	t.Parallel()
-
-	root := t.TempDir()
-	store := NewEntityStore(root)
-
-	// Write a plan YAML manually with title: (no name:), simulating a pre-backfill entity.
-	planDir := filepath.Join(root, "plans")
-	if err := os.MkdirAll(planDir, 0o755); err != nil {
-		t.Fatalf("MkdirAll() error = %v", err)
-	}
-	yamlContent := "id: P1-old-plan\nslug: old-plan\ntitle: Some Plan\nstatus: proposed\n"
-	if err := os.WriteFile(filepath.Join(planDir, "P1-old-plan.yaml"), []byte(yamlContent), 0o644); err != nil {
-		t.Fatalf("WriteFile() error = %v", err)
-	}
-
-	got, err := store.Load("plan", "P1-old-plan", "old-plan")
-	if err != nil {
-		t.Fatalf("Load() error = %v", err)
-	}
-
-	if got.Fields["name"] != "Some Plan" {
-		t.Errorf("name = %q, want %q", got.Fields["name"], "Some Plan")
-	}
-	if _, hasTitle := got.Fields["title"]; hasTitle {
-		t.Errorf("title should be migrated to name, but title key still present: %v", got.Fields["title"])
-	}
-}

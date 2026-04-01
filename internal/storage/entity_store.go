@@ -5,7 +5,6 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"sort"
@@ -98,20 +97,6 @@ func (s *EntityStore) Load(entityType, id, slug string) (EntityRecord, error) {
 	fields, err := UnmarshalCanonicalYAML(string(data))
 	if err != nil {
 		return record, fmt.Errorf("unmarshal canonical yaml: %w", err)
-	}
-
-	// TODO: remove after backfill verified (FEAT-01KN48ET59G8R)
-	// Migrate title→name for entities not yet backfilled.
-	et := strings.ToLower(strings.TrimSpace(entityType))
-	if et != string(model.EntityKindDocument) && et != "document_record" && et != string(model.EntityKindKnowledgeEntry) {
-		if _, hasName := fields["name"]; !hasName {
-			if title, hasTitle := fields["title"]; hasTitle {
-				fields["name"] = title
-				delete(fields, "title")
-			} else {
-				log.Printf("storage: entity %s (%s) has neither name nor title", id, entityType)
-			}
-		}
 	}
 
 	record.Fields = fields
