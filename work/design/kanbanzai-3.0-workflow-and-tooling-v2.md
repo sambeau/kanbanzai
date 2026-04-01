@@ -3,12 +3,13 @@
 | Field | Value |
 |-------|-------|
 | Date | 2025-07-30 |
-| Status | Draft |
-| Author | Design Agent |
+| Status | Approved |
+| Approved | 2025-07-30 |
+| Author | Design Agent, with human review |
 | Based on | `work/design/kanbanzai-3.0-workflow-and-tooling.md` (pre-alignment version) |
 | Informed by | `work/design/orchestration-recommendations.md`, `work/research/agent-orchestration-research.md` |
 | Related | `work/design/skills-system-redesign-v2.md`, `work/design/Kanbanzai-3.0-proposal.txt`, `work/design/smart-lifecycle-transitions.md` |
-| Alignment | Changes from `work/reviews/3.0-design-cross-document-alignment.md` to be applied to this copy |
+| Alignment | Changes from `work/reviews/3.0-design-cross-document-alignment.md` applied |
 
 ---
 
@@ -146,6 +147,15 @@ entity(action: "transition", id: "FEAT-001", status: "dev-planning",
 ```
 
 Override transitions are logged with the reason. The `health` tool should flag features that advanced via override as attention items.
+
+**Override policy tiers.** Not all gates carry equal risk. Each stage's prerequisites block in the binding registry includes an `override_policy` field that determines the override mechanism:
+
+| Policy | Behaviour | Use when |
+|---|---|---|
+| `agent` | Agent can override with a reason. Override is logged and flagged by `health`. | Low-to-medium risk gates (spec, dev-plan, task completeness) |
+| `checkpoint` | Override creates a human checkpoint. Feature blocks until human responds. | High-risk gates (review → done, any gate the project wants human sign-off on) |
+
+For 3.0, all gates default to `agent` (current behaviour). Gates are promoted to `checkpoint` based on observed override patterns via action pattern logging (§12). See §16.1, Q6 for the full resolution and rationale.
 
 ### 3.5 Binding Registry as Gate Source
 
@@ -534,11 +544,13 @@ A pass/fail grade is derived from the scores (e.g., all dimensions ≥ 0.6 and a
 **How this fits in the workflow:**
 
 1. An agent produces a document (specification, design, dev-plan).
-2. Before the document is approved (`doc(action: "approve")`), the system runs the LLM-as-judge evaluation.
+2. Before the document is approved, the orchestrator invokes the quality evaluation skill, which makes the LLM-as-judge call and records the result.
 3. If the document fails, the evaluation returns specific dimension scores and feedback, guiding the agent to improve specific sections.
-4. If the document passes, approval proceeds normally.
+4. If the document passes, the orchestrator proceeds to call `doc(action: "approve")`.
 
-This is a **medium-term** addition — it requires an LLM call within the MCP server, which is an architectural decision (the server currently makes no LLM calls). For 3.0, this should be designed and prototyped; full integration depends on whether the LLM-call-from-server pattern is accepted. An alternative is to implement it as a review skill that the orchestrator invokes explicitly, keeping the LLM call in the agent layer.
+**Architectural decision: agent-side evaluation.** The MCP server does not make LLM calls — this is a fundamental architectural boundary. Kanbanzai is an agent-driven system; all LLM reasoning stays in the agent layer. Adding an LLM client to the server would change the server's dependency profile, cost model, and operational requirements, and would require a separate design effort if ever reconsidered.
+
+Quality evaluation is implemented as a review skill that the orchestrator invokes explicitly. To provide enforceability without an LLM in the server, a structural hook is added: the server gate for document approval can require that a `quality_evaluation` record is attached to the document (a score and timestamp set by the agent after running the evaluation). The server checks "evaluation exists and score ≥ threshold" as a structural gate — no LLM call needed. See §16.1, Q3 for the full resolution and rationale.
 
 ---
 
@@ -675,7 +687,7 @@ For 3.0, this is reinforced through context assembly, not through MCP tool chang
 | Mandatory stage gates on all transitions (not just advance) | Enforcement upgrade | **High** | §3 |
 | Task-completeness gate for `developing → reviewing` | New gate | **High** | §3.3 |
 | Review-report gate for `reviewing → done` | New gate | **High** | §3.3 |
-| Gate override with reason logging | Safety mechanism | **Medium** | §3.4 |
+| Gate override with tiered policy (agent or checkpoint) | Safety mechanism | **Medium** | §3.4 |
 | Binding registry as gate definition source | Architecture | **Medium** | §3.5 |
 | Automated structural checks on documents at stage gates | Gate enhancement | **Medium** | §10.4 |
 | Review cycle counter on feature entity | Entity model change | **Medium** | §4.2 |
@@ -709,7 +721,7 @@ For 3.0, this is reinforced through context assembly, not through MCP tool chang
 | Action pattern logging to `.kbz/logs/` | New capability | **Low** | §12 |
 | Stage-level workflow metrics | New capability | **Low** | §12.3 |
 | Small-sample evaluation suite (15–20 scenarios) | Evaluation methodology | **Low** | §12.5 |
-| LLM-as-judge document quality evaluation | New capability (medium-term) | **Medium** | §10.5 |
+| LLM-as-judge document quality evaluation (agent-side, with structural hook) | Agent skill + server gate | **Medium** | §10.5 |
 
 ---
 
@@ -766,21 +778,132 @@ Recommended implementation order, from highest impact to lowest:
 
 ---
 
-## 16. Open Questions
+## 16. Open Questions — Resolutions and Recommendations
 
-1. **Gate granularity for the `reviewing → done` transition.** Should "no blocking findings" be checked automatically (parsing the review report), or should it be a manual assertion (the orchestrator calls a "review passed" tool)?
+Questions are categorised by who is best placed to resolve them. Within each category, questions carry a **resolution status**: *resolved* (decision made), or *recommendation* (initial proposal for the developer/agent to finalise during specification or dev-planning).
 
-2. **Structural check rollout strategy.** Structural checks (§10.4) start as warnings. What criteria determine when they are promoted to hard gates? (e.g., after N features pass through with zero false positives from the parser.)
+### 16.1 Human Designer Decisions
 
-3. **LLM-as-judge architecture.** The MCP server currently makes no LLM calls. Should document quality evaluation (§10.5) be a server-side capability (requiring an LLM client in the server), or an agent-side capability (a review skill the orchestrator invokes explicitly)? The agent-side approach is simpler but less enforceable.
+These affect the overall architecture, the human-AI trust boundary, or system identity. Resolved by human decision.
 
-4. **Log retention policy.** How long should action pattern logs (§12) be retained? Should they be committed or stay local-only?
+#### Q3. LLM-as-judge architecture — RESOLVED
 
-5. **Binding registry read frequency.** Should the MCP server read the binding registry once at startup, or re-read it on every tool call? The latter enables hot-reloading but adds I/O.
+**Decision: Agent-side for 3.0, with a structural hook for future server-side enforcement.**
 
-6. **Override audit.** Should gate overrides require a specific permission level, or should any agent with human delegation be able to override? The current design allows any override with a reason — is that sufficient?
+The MCP server will not make LLM calls. Document quality evaluation (§10.5) is a review skill that the orchestrator invokes explicitly before calling `doc(action: "approve")`. The server remains a deterministic state machine.
 
-7. **Evaluation suite maintenance.** Who maintains the 15–20 workflow scenarios (§12.5)? Should they be committed to the repository and versioned alongside the orchestration logic they test?
+To provide enforceability without an LLM client in the server, a structural hook is added: the server gate for document approval can require that a `quality_evaluation` record is attached to the document (a score and timestamp set by the agent after running the evaluation skill). The server checks "evaluation exists and score ≥ threshold" as a structural gate — no LLM call needed. The agent is responsible for producing the evaluation honestly.
+
+**Rationale:**
+- Protects the server's architectural simplicity. The LLM-in-server precedent is a one-way door — once the server makes one LLM call, every future feature will ask "should this also be server-side?"
+- The enforceability concern is addressed by the structural hook: the server verifies the evaluation *exists*, the skill ensures it's *meaningful*.
+- Cost and latency stay in the agent session, where the LLM client already lives. The orchestrator can choose when to invoke evaluation (skip for trivial amendments, run multiple times for important documents).
+- Rubric evolution requires updating a skill document, not a server deployment. Faster iteration.
+- If real-world usage shows agents routinely skipping quality evaluation (observable through action pattern logging §12), that is evidence the soft approach isn't working, and server-side enforcement can be reconsidered.
+
+#### Q6. Override audit — RESOLVED
+
+**Decision: Gate-specific override policies via the binding registry, defaulting to `agent` for 3.0.**
+
+Not all gates carry equal risk. Overriding "specification must exist before dev-planning" is low-stakes — the worst case is a poorly planned feature caught at review. Overriding "review must pass before done" is high-stakes — the worst case is unreviewed code merged to main. A uniform policy either over-constrains the safe cases or under-constrains the dangerous ones.
+
+Each stage's prerequisites block in the binding registry includes an `override_policy` field with two levels:
+
+| Policy | Behaviour | Use when |
+|---|---|---|
+| `agent` | Agent can override with a reason. Override is logged and flagged by `health`. | Low-to-medium risk gates (spec, dev-plan, task completeness) |
+| `checkpoint` | Override creates a human checkpoint. Feature blocks until human responds. | High-risk gates (review → done, any gate the project wants human sign-off on) |
+
+Example binding registry entry:
+
+```
+prerequisites:
+  documents:
+    - type: specification
+      status: approved
+  override_policy: agent
+
+# vs. for the reviewing → done gate:
+prerequisites:
+  review_report: required
+  no_blocking_findings: true
+  override_policy: checkpoint
+```
+
+**Rollout:** Default all gates to `agent` for 3.0 (current behaviour). Use action pattern logging (§12) to identify which gates are overridden frequently or inappropriately. Promote those to `checkpoint` based on data rather than speculation.
+
+**Rationale:**
+- Maps cleanly to existing infrastructure: `agent` override = current behaviour (log + health flag); `checkpoint` override = existing checkpoint system from Phase 4a.
+- The binding registry (§3.5) is already the planned home for gate prerequisites, so adding `override_policy` is a natural extension — no new permission system needed.
+- Data-driven promotion avoids over-engineering permission hierarchies before real usage patterns are known.
+
+### 16.2 AI Agent Interface Decisions
+
+These concern how agents experience gates and enforcement. An agent that uses these tools daily is best placed to judge what's effective. Initial recommendations are provided; the implementing agent should finalise during specification.
+
+#### Q1. Gate granularity for `reviewing → done` — RECOMMENDATION
+
+**Recommendation: Automated parsing of the review report, with fallback to manual assertion.**
+
+The server should attempt to parse the review report document for a verdict (pass/fail) and blocking finding count. If the report follows the structured review template (§10), this is a straightforward structural check — no LLM needed. If parsing fails (unstructured report, non-standard format), the system falls back to requiring an explicit orchestrator assertion via a "review passed" action.
+
+This two-tier approach means:
+- Well-formed review reports (the common case with templates) get automatic gate checking — no extra orchestrator step.
+- Edge cases (imported reviews, non-standard formats) aren't blocked — the orchestrator can assert manually.
+
+The implementing agent should determine the specific parsing heuristics during specification: what constitutes a "blocking finding" in the template, and what the fallback assertion API looks like (e.g., a `review_verdict` field on the entity transition, or a dedicated tool action).
+
+#### Q2. Structural check rollout strategy — RECOMMENDATION
+
+**Recommendation: Promote to hard gates after 5 consecutive features pass with zero false positives from the structural parser, per check type.**
+
+Criteria for promotion from warning to hard gate:
+- Track each structural check independently (section presence, cross-reference validity, acceptance criteria).
+- For each check, maintain a rolling counter of consecutive features that pass without a false positive (i.e., the parser flagged no issues, or flagged real issues — not cases where the parser incorrectly rejected a valid document).
+- When the counter reaches 5, promote the check to a hard gate. If a false positive is subsequently detected, demote back to warning and reset the counter.
+
+The threshold of 5 is deliberately low — these are structural checks (section headings, cross-references), not subjective evaluations. False positives should be rare if the templates and parser are correct. The implementing agent should validate this threshold against the actual template designs during specification and adjust if needed.
+
+Promotion state should be tracked in the binding registry or a local config file so it survives server restarts.
+
+### 16.3 Implementation Decisions
+
+These are technical choices resolvable by the developer during specification or dev-planning. Initial recommendations are provided.
+
+#### Q4. Log retention policy — RECOMMENDATION
+
+**Recommendation: Local-only, 30-day rolling retention, date-based rotation.**
+
+Action pattern logs (§12) should:
+- Be written to `.kbz/logs/` as JSON lines files, one file per day (e.g., `actions-2026-07-15.jsonl`).
+- Stay local-only (`.kbz/logs/` is already excluded from Git). These are behavioural diagnostics, not project artefacts.
+- Be retained for 30 days with automatic cleanup of older files. This gives enough history for retrospective analysis and metric derivation without unbounded growth.
+- Stage-level metrics (§12.3) derived from logs can be persisted separately if needed — they're small summary data, not raw logs.
+
+The 30-day window is sufficient because: retrospective synthesis (the `retro` tool) captures durable signals at task completion, so the raw logs are a short-term diagnostic resource, not a long-term record. The developer should confirm the rotation mechanism during implementation (a simple age check at server startup is sufficient — no external log rotation tooling needed).
+
+#### Q5. Binding registry read frequency — RECOMMENDATION
+
+**Recommendation: Read at startup with file-mtime-based cache invalidation.**
+
+The MCP server should:
+- Read and parse the binding registry at startup, caching the result in memory.
+- On each tool call that consults the registry (gate checks, context assembly), check the file's mtime against the cached mtime. If changed, re-read and re-parse.
+- This gives hot-reload behaviour (edits to the binding registry take effect on the next tool call) without the I/O cost of reading and parsing on every call (mtime stat is cheap).
+
+This is the standard pattern for config-file-backed services and avoids both staleness (read-once) and unnecessary I/O (read-every-call). The developer should confirm whether the binding registry is a single file or a directory of files, and adjust the invalidation accordingly.
+
+#### Q7. Evaluation suite maintenance — RECOMMENDATION
+
+**Recommendation: Committed to the repository, versioned alongside the orchestration logic, maintained by the developer implementing observability (§12).**
+
+The 15–20 workflow scenarios (§12.5) should:
+- Live in a dedicated directory (e.g., `work/evaluation/` or `tests/evaluation/`).
+- Be committed and versioned — they're a project artefact that tracks how the workflow is expected to behave, analogous to integration test fixtures.
+- Be maintained by whoever changes the workflow logic. When a gate is added or a tool description changes, the relevant scenarios should be updated in the same commit. This is the same discipline as updating tests when changing code.
+- Not be CI-gated (they require actual LLM agents to run), but should have a clear invocation method documented in the evaluation directory's README.
+
+The developer implementing the observability phase (Phase E in §15) should create the initial scenario set and the runner/invocation documentation as part of that work.
 
 ---
 

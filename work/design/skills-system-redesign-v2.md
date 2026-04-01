@@ -3,8 +3,9 @@
 | Field | Value |
 |-------|-------|
 | Date | 2025-07-30 |
-| Status | Draft |
-| Author | Design Agent |
+| Status | Approved |
+| Approved | 2025-07-30 |
+| Author | Design Agent, with human review |
 | Based on | `work/design/skills-system-redesign.md` (v1, now superseded) |
 | Informed by | `work/research/ai-agent-best-practices-research.md`, `work/research/agent-skills-research.md`, `work/research/agent-orchestration-research.md` |
 | Supersedes | Current `.skills/` system and `.kbz/context/roles/` profiles |
@@ -1419,23 +1420,108 @@ Based on the cited research:
 
 ---
 
-## 12. Open Questions
+## 12. Open Questions — Resolutions and Recommendations
 
-1. **Should vocabulary payloads be curated per-project or shipped as defaults?** The current design assumes vocabulary is project-specific (e.g., `implementer-go` for this project). Should Kanbanzai ship default vocabulary payloads for common languages and domains, with project-level overrides?
+Questions are categorised by who is best placed to resolve them. Within each category, questions carry a **resolution status**: *resolved* (decision made, with rationale), *recommendation* (initial proposal for the developer/agent to finalise during specification or dev-planning), or *deferred* (explicitly out of scope for 3.0).
 
-2. **~~How should the system handle roles that don't exist yet?~~** **Resolved.** If a stage binding references a role that doesn't exist (e.g., `reviewer-security` not yet created), the system falls back to the parent role (e.g., `reviewer`) and logs a warning. It does not refuse to proceed. Rationale: hard gates block *incorrect* transitions; missing context is a soft concern to be flagged, not blocked. The `health` tool reports the missing role so it can be created. *(Resolved via orchestration recommendations review — Masters et al. hard/soft constraint alignment.)*
+Previously resolved questions (Q2, Q4, Q6) are retained with their original resolutions for traceability.
 
-3. **Should skills carry their own test fixtures?** The `references/` directory could include test inputs and expected outputs for the skill, enabling automated quality assurance of skill output. Is this worth the added complexity?
+### 12.1 Human Designer Decisions
 
-4. **~~How does this interact with the `decompose` tool's task creation?~~** **Resolved.** When `decompose` creates tasks, it should tag each task with the expected stage and role so that `handoff` can resolve the binding automatically. Additionally, `decompose` should validate decomposition quality: tasks have clear descriptions, dependencies are declared, tasks are sized for single-agent completion, and there are no obvious gaps (e.g., missing test tasks). Decomposition quality is the single strongest predictor of workflow success (Masters et al.). *(Resolved via orchestration recommendations §5.5.)*
+These affect the product adoption model and how humans experience the system. Resolved by human decision.
 
-5. **Should vocabulary payloads have expiry dates?** Domain vocabulary evolves. "OWASP Top 10 (2021)" will eventually be superseded. Should vocabulary terms carry freshness metadata, like knowledge entries do?
+#### Q1. Vocabulary payloads: per-project or shipped defaults? — RESOLVED
 
-6. **~~What is the right granularity for reviewer specialisation?~~** **Resolved.** Four specialists (conformance, quality, security, testing) is the right granularity. Documentation currency remains a cross-cutting concern within conformance review — it doesn't warrant its own vocabulary payload for most changes. The adaptive composition approach (§5.4) allows the orchestrator to dispatch fewer reviewers when the change doesn't warrant all four. *(Resolved via orchestration research — Google's finding that the optimal architecture depends on task properties, not a fixed team structure.)*
+**Decision: Per-project vocabulary, with a discovery-assisted scaffolding tool as an onboarding aid.**
 
-7. **How should skills be versioned and tracked?** If skills follow the evaluation-driven development loop (§9), should test scenarios and evaluation results be stored alongside the skill (in `references/` or a `tests/` directory)? Should skill changes be tracked with the same lifecycle discipline as entity changes?
+Role vocabulary remains per-project — no shipped defaults, no override/merge complexity. This is the right architecture because vocabulary is the primary routing mechanism (DP-1), and routing needs to be tuned to the specific project's tech stack and domain concerns, not to a generic common denominator.
 
-8. **Should we adopt a skill-creator meta-skill?** The Anthropic skill-creator (§9 of the research report) demonstrates a comprehensive meta-skill for creating, testing, and iterating on skills. At our current scale (~10 skills), the full tooling is overkill. But if the skill catalog grows significantly, a Kanbanzai-adapted skill-creator could enforce the quality gate and development loop automatically.
+To address onboarding friction, the system provides a **scaffolding tool** (e.g., `kanbanzai scaffold-roles`) that uses codebase analysis (via codebase-memory-mcp's `get_architecture`) to bootstrap starter role files:
+
+1. **Codebase analysis** — Run `get_architecture` on the project to surface languages, frameworks, packages, route patterns, and structural clusters.
+2. **Tech-stack-to-vocabulary mapping** — From the detected stack, generate vocabulary suggestions using a deterministic lookup table (not an LLM call). "React detected → suggest hook composition, component lifecycle, virtual DOM reconciliation, prop drilling, context propagation." "Rust detected → suggest ownership model, lifetime annotation, borrow checker, unsafe block audit, Send + Sync bounds."
+3. **Human review** — The generated vocabulary is a starting point, not a finished product. The human reviews, trims irrelevant terms, adds expertise vocabulary (OWASP, STRIDE, etc. — terms that reflect what a reviewer should *know about*, not what's *in the codebase*), and saves the result as the project's role files.
+
+This approach provides:
+- **Fast onboarding** — scaffold from the codebase, review, done. No cold-start problem.
+- **Project specificity** — vocabulary is grounded in what's actually in the project, not in generic defaults.
+- **No override/merge complexity** — scaffolded files are starting points, not layered defaults. The role files are owned entirely by the project. No two-axis composition (inheritance + defaults) to reason about.
+- **Expertise vocabulary comes from documented examples** — Kanbanzai's docs include example role files for common stacks (Go, React+TS, Rust, Python) with commentary explaining why each term was chosen. The scaffolding tool can point the human to the relevant example.
+
+**Key limitation acknowledged:** Codebase analysis discovers *implementation vocabulary* (technologies, patterns, idioms present in the code) but cannot discover *expertise vocabulary* (domain knowledge a specialist reviewer needs that isn't represented in source files). Security vocabulary, architectural principles, and quality heuristics require human curation. Discovery gets roughly 60% of the vocabulary; the human fills in the rest.
+
+**Rationale:**
+- Validated against a second project (React+TypeScript+Rust app in a Rust shell), which would need at least three implementer roles (`implementer-react`, `implementer-ts`, `implementer-rust`) plus adjusted reviewer roles with web security vocabulary for the frontend and IPC/process security vocabulary for the shell. Discovery would surface the two domains; the human curates the expertise terms.
+- Shipped defaults would risk noise (web security terms for a CLI project, Go idioms for a Rust project) and create a maintenance commitment for every default payload across language/framework versions.
+- The scaffolding tool can evolve — if it proves valuable, it could gain vocabulary freshness checks (re-run when the codebase structure changes significantly) without architectural changes.
+
+### 12.2 Previously Resolved Questions
+
+These were resolved during earlier design iterations. Retained for traceability.
+
+#### Q2. How should the system handle roles that don't exist yet? — RESOLVED (earlier)
+
+If a stage binding references a role that doesn't exist (e.g., `reviewer-security` not yet created), the system falls back to the parent role (e.g., `reviewer`) and logs a warning. It does not refuse to proceed. Rationale: hard gates block *incorrect* transitions; missing context is a soft concern to be flagged, not blocked. The `health` tool reports the missing role so it can be created. *(Resolved via orchestration recommendations review — Masters et al. hard/soft constraint alignment.)*
+
+#### Q4. How does this interact with the `decompose` tool's task creation? — RESOLVED (earlier)
+
+When `decompose` creates tasks, it should tag each task with the expected stage and role so that `handoff` can resolve the binding automatically. Additionally, `decompose` should validate decomposition quality: tasks have clear descriptions, dependencies are declared, tasks are sized for single-agent completion, and there are no obvious gaps (e.g., missing test tasks). Decomposition quality is the single strongest predictor of workflow success (Masters et al.). *(Resolved via orchestration recommendations §5.5.)*
+
+#### Q6. What is the right granularity for reviewer specialisation? — RESOLVED (earlier)
+
+Four specialists (conformance, quality, security, testing) is the right granularity. Documentation currency remains a cross-cutting concern within conformance review — it doesn't warrant its own vocabulary payload for most changes. The adaptive composition approach (§5.4) allows the orchestrator to dispatch fewer reviewers when the change doesn't warrant all four. *(Resolved via orchestration research — Google's finding that the optimal architecture depends on task properties, not a fixed team structure.)*
+
+### 12.3 AI Agent Interface Decisions
+
+These concern agent-facing tooling. An agent that uses the system daily is best placed to judge effectiveness. Initial recommendation provided; the implementing agent should finalise during specification.
+
+#### Q8. Should we adopt a skill-creator meta-skill? — RECOMMENDATION (deferred for 3.0)
+
+**Recommendation: Not for 3.0. Revisit when the skill catalog exceeds ~20 skills or when an agent reports significant friction in the skill development loop.**
+
+At the current scale (~10 skills), the evaluation-driven development loop (§9) is sufficient. The skill quality gate (§9.2) already enforces standards. A meta-skill adds tooling overhead without clear benefit at this scale.
+
+The implementing agent should monitor skill development friction through retrospective signals. If skill creation becomes a recurring workflow bottleneck — multiple iterations to get vocabulary right, repeated structural mistakes in SKILL.md layout, inconsistent evaluation criteria quality — that is evidence a meta-skill would help. Until then, the documented development loop and quality gate are the right level of tooling.
+
+### 12.4 Implementation Decisions
+
+These are technical choices resolvable by the developer during specification or dev-planning. Initial recommendations provided.
+
+#### Q3. Should skills carry their own test fixtures? — RECOMMENDATION
+
+**Recommendation: Yes — store test fixtures in `references/test-fixtures/` within each skill directory.**
+
+The skill directory structure (§3.2) already includes a `references/` directory for overflow content. Test fixtures (input scenarios and expected output patterns) are a natural fit for a `references/test-fixtures/` subdirectory. This keeps fixtures co-located with the skill they test, versioned alongside it, and discoverable without a separate directory convention.
+
+The developer should determine during dev-planning:
+- The fixture format (YAML scenario definitions with input/expected-output pairs, or freeform markdown examples).
+- Whether fixtures are loaded automatically during `scaffold-roles` or only invoked explicitly during the skill quality gate (§9.2).
+- The one-level-deep reference constraint (§3.2) applies — fixtures must link directly from SKILL.md, not from each other.
+
+This aligns with the workflow doc's evaluation suite decision (Q7 in `work/design/kanbanzai-3.0-workflow-and-tooling-v2.md` §16.3), which recommends committed + versioned evaluation scenarios.
+
+#### Q5. Should vocabulary payloads have expiry dates? — RECOMMENDATION (deferred for 3.0)
+
+**Recommendation: Not for 3.0. Defer until vocabulary staleness is observed as an actual problem.**
+
+At the current scale (one project with ~10 roles, a second project onboarding), vocabulary staleness is trivially noticed during normal workflow — a reviewer encountering an outdated OWASP reference will flag it naturally. Adding freshness metadata (timestamps, expiry dates, staleness checks) to vocabulary terms adds schema complexity without clear benefit at this scale.
+
+If the scaffolding tool (Q1 resolution) gains a "re-scaffold and diff" capability — re-running codebase analysis and comparing against current vocabulary to surface potential updates — that would address the freshness concern more naturally than per-term expiry dates.
+
+The developer should revisit this if: (a) vocabulary staleness causes a real review quality issue, or (b) the number of vocabulary terms per project exceeds a threshold where manual staleness detection becomes unreliable.
+
+#### Q7. How should skills be versioned and tracked? — RECOMMENDATION
+
+**Recommendation: Track skills with the same commit discipline as other project artefacts. No separate versioning system for 3.0.**
+
+Skills are YAML/Markdown files in `.kbz/skills/`. They are already tracked by Git. Changes to skills should follow the same commit discipline as other design artefacts:
+- A new skill → commit when it passes the quality gate (§9.2).
+- A skill update → commit as a coherent change with a descriptive message.
+- Evaluation results from the development loop (§9.1) → store in `references/` within the skill directory and commit alongside the skill change they informed.
+
+A dedicated versioning system (version numbers in frontmatter, changelog per skill, lifecycle states) is not warranted at the current scale. Git history provides full version tracking. The `health` tool could optionally report skills that haven't been updated in a configurable period, but this is a low-priority enhancement.
+
+The developer should confirm during dev-planning whether evaluation results (§9.1 test scenarios and scores) are stored as committed fixtures or as local-only diagnostics. The recommendation is committed — they're small, they inform future skill changes, and they serve as regression baselines.
 
 ---
 
@@ -1452,4 +1538,4 @@ Based on the cited research:
 | `work/design/document-centric-interface.md` | Document-led workflow model this design integrates with |
 | `work/spec/phase-2b-specification.md` | The context profile system this design supersedes |
 | `work/research/agent-skills-research.md` | Anthropic documentation research — pragmatic additions (§8, §9) drawn from this report |
-| *(companion design needed)* | Observability infrastructure — structured handoff logging, review metrics, gate rejection monitoring, MAST detection (R8, R9, R14, R19 from research). Out of scope for this design; see §10.1 scope note. |
+| `work/design/kanbanzai-3.0-workflow-and-tooling-v2.md` | Companion design (approved) — workflow engine, MCP tooling, stage gate enforcement, context assembly, and observability infrastructure (§12: action pattern logging, stage-level metrics, evaluation suite). Covers the collection mechanisms for the metrics defined in §10.1 of this document. |
