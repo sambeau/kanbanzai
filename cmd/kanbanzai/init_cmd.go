@@ -22,6 +22,10 @@ Flags:
                                  work/research, work/report, work/review,
                                  work/retro (new projects)
 
+  --name <name>         Project name written to config.yaml. Suppresses the
+                        interactive name prompt. Required when combined with
+                        --non-interactive.
+
   --non-interactive     Use defaults and error instead of prompting.
                         Requires --docs-path if an existing project has no
                         config.yaml.
@@ -54,6 +58,7 @@ Flags:
 
 Example:
   kanbanzai init
+  kanbanzai init --name "My Project" --non-interactive
   kanbanzai init --docs-path work/docs --non-interactive
   kanbanzai init --skip-skills
   kanbanzai init --update-skills
@@ -73,6 +78,12 @@ func runInit(args []string, deps dependencies) error {
 			}
 			i++
 			opts.DocsPath = append(opts.DocsPath, args[i])
+		case "--name":
+			if i+1 >= len(args) {
+				return fmt.Errorf("--name requires a value\n\n%s", initUsageText)
+			}
+			i++
+			opts.Name = args[i]
 		case "--non-interactive":
 			opts.NonInteractive = true
 		case "--update-skills":

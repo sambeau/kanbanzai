@@ -32,6 +32,9 @@ type Options struct {
 	UpdateSkills bool
 	// NonInteractive disables all prompts; errors instead of asking.
 	NonInteractive bool
+	// Name is the project name supplied via --name flag. If empty, the user
+	// is prompted interactively (or the working directory name is used as default).
+	Name string
 	// SkipWorkDirs suppresses creation of work/ placeholder directories.
 	SkipWorkDirs bool
 	// SkipMCP suppresses writing .mcp.json and .zed/settings.json.
@@ -160,6 +163,12 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 	roots := DefaultDocumentRoots()
 	baseDir := filepath.Dir(kbzDir)
 
+	// Resolve the project name before creating any directories.
+	name, err := i.resolveProjectName(opts)
+	if err != nil {
+		return err
+	}
+
 	// Write config to a temporary directory first.
 	tmpDir, err := os.MkdirTemp(baseDir, ".kbz-tmp-*")
 	if err != nil {
@@ -176,7 +185,7 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 		}
 	}()
 
-	if err := WriteInitConfig(tmpDir, roots); err != nil {
+	if err := WriteInitConfig(tmpDir, name, roots); err != nil {
 		return err
 	}
 
@@ -277,7 +286,11 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 		}
 		workRoots = roots
 
-		if err := WriteInitConfig(kbzDir, roots); err != nil {
+		name, err := i.resolveProjectName(opts)
+		if err != nil {
+			return err
+		}
+		if err := WriteInitConfig(kbzDir, name, roots); err != nil {
 			return err
 		}
 		fmt.Fprintf(i.stdout, "Created %s\n", configPath)
@@ -377,6 +390,13 @@ func (i *Initializer) validateExistingConfig(opts Options, kbzDir, configPath st
 func (i *Initializer) handleInvalidConfig(opts Options, kbzDir, configPath, reason string) error {
 	msg := fmt.Sprintf("'%s' is not a valid Kanbanzai config file: %s.", configPath, reason)
 
+	// Use the provided name or fall back to the working directory basename.
+	// We do not prompt here — the user is already being asked about overwriting.
+	name := opts.Name
+	if name == "" {
+		name = filepath.Base(i.workDir)
+	}
+
 	if opts.NonInteractive {
 		// Overwrite silently in non-interactive mode.
 		fmt.Fprintln(i.stdout, msg)
@@ -385,7 +405,7 @@ func (i *Initializer) handleInvalidConfig(opts Options, kbzDir, configPath, reas
 		if len(opts.DocsPath) > 0 {
 			roots = docPathsToRoots(opts.DocsPath)
 		}
-		return WriteInitConfig(kbzDir, roots)
+		return WriteInitConfig(kbzDir, name, roots)
 	}
 
 	// Interactive: ask the user.
@@ -406,7 +426,7 @@ func (i *Initializer) handleInvalidConfig(opts Options, kbzDir, configPath, reas
 	if len(opts.DocsPath) > 0 {
 		roots = docPathsToRoots(opts.DocsPath)
 	}
-	return WriteInitConfig(kbzDir, roots)
+	return WriteInitConfig(kbzDir, name, roots)
 }
 
 // resolveDocumentRoots determines the document roots for an existing project
@@ -444,6 +464,30 @@ func (i *Initializer) resolveDocumentRoots(opts Options) ([]DocumentRoot, error)
 
 // createWorkDirs creates the work/ placeholder directories with .gitkeep files.
 // baseDir is typically the git root. It skips directories that already exist.
+// resolveProjectName returns the project name to use when writing config.yaml.
+// Priority: explicit opt > interactive prompt (with default = workDir basename).
+// Returns an error in non-interactive mode when no name is supplied.
+func (i *Initializer) resolveProjectName(opts Options) (string, error) {
+	if opts.Name != "" {
+		return opts.Name, nil
+	}
+	defaultName := filepath.Base(i.workDir)
+	if opts.NonInteractive {
+		return "", fmt.Errorf("--name is required in non-interactive mode")
+	}
+	fmt.Fprintf(i.stdout, "Project name [%s]: ", defaultName)
+	scanner := bufio.NewScanner(i.stdin)
+	if scanner.Scan() {
+		if name := strings.TrimSpace(scanner.Text()); name != "" {
+			return name, nil
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return "", fmt.Errorf("reading project name: %w", err)
+	}
+	return defaultName, nil
+}
+
 func (i *Initializer) createWorkDirs(baseDir string, roots []DocumentRoot) error {
 	for _, root := range roots {
 		dir := filepath.Join(baseDir, root.Path)

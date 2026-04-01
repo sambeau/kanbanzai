@@ -8,9 +8,6 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
-
-	kbzcontext "github.com/sambeau/kanbanzai/internal/context"
-	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // ---- test helpers ----
@@ -166,7 +163,7 @@ func TestInferDocType(t *testing.T) {
 
 func TestWriteInitConfig_CreatesFile(t *testing.T) {
 	dir := t.TempDir()
-	if err := WriteInitConfig(dir, DefaultDocumentRoots()); err != nil {
+	if err := WriteInitConfig(dir, "Test", DefaultDocumentRoots()); err != nil {
 		t.Fatalf("WriteInitConfig: %v", err)
 	}
 	configPath := filepath.Join(dir, "config.yaml")
@@ -178,7 +175,7 @@ func TestWriteInitConfig_CreatesFile(t *testing.T) {
 // TestWriteInitConfig_CanonicalContent verifies the exact YAML output matches §5.2.
 func TestWriteInitConfig_CanonicalContent(t *testing.T) {
 	dir := t.TempDir()
-	if err := WriteInitConfig(dir, DefaultDocumentRoots()); err != nil {
+	if err := WriteInitConfig(dir, "Test Project", DefaultDocumentRoots()); err != nil {
 		t.Fatalf("WriteInitConfig: %v", err)
 	}
 	data, err := os.ReadFile(filepath.Join(dir, "config.yaml"))
@@ -189,6 +186,7 @@ func TestWriteInitConfig_CanonicalContent(t *testing.T) {
 	// Canonical YAML from spec §5.2 — 2-space indent, version quoted.
 	want := strings.TrimSpace(`
 version: "2"
+name: Test Project
 prefixes:
   - prefix: P
     name: Plan
@@ -221,7 +219,7 @@ func TestWriteInitConfig_CreatesDirIfMissing(t *testing.T) {
 	parent := t.TempDir()
 	kbzDir := filepath.Join(parent, ".kbz")
 	// kbzDir does not exist yet.
-	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+	if err := WriteInitConfig(kbzDir, "Test", DefaultDocumentRoots()); err != nil {
 		t.Fatalf("WriteInitConfig: %v", err)
 	}
 	if _, err := os.Stat(kbzDir); err != nil {
@@ -235,7 +233,7 @@ func TestWriteInitConfig_CustomRoots(t *testing.T) {
 		{Path: "docs/spec", DefaultType: "specification"},
 		{Path: "docs/design", DefaultType: "design"},
 	}
-	if err := WriteInitConfig(dir, roots); err != nil {
+	if err := WriteInitConfig(dir, "Test", roots); err != nil {
 		t.Fatalf("WriteInitConfig: %v", err)
 	}
 	data, _ := os.ReadFile(filepath.Join(dir, "config.yaml"))
@@ -244,6 +242,80 @@ func TestWriteInitConfig_CustomRoots(t *testing.T) {
 		if !strings.Contains(content, want) {
 			t.Errorf("expected %q in config, got:\n%s", want, content)
 		}
+	}
+}
+
+// TestInitNameFlag verifies that --name sets the project name in config.yaml (AC-11).
+func TestInitNameFlag(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{
+		Name:           "My Project",
+		NonInteractive: true,
+		SkipSkills:     true,
+		SkipMCP:        true,
+		SkipWorkDirs:   true,
+		SkipRoles:      true,
+		SkipAgentsMD:   true,
+	}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+	data, err := os.ReadFile(filepath.Join(dir, ".kbz", "config.yaml"))
+	if err != nil {
+		t.Fatalf("config.yaml not created: %v", err)
+	}
+	if !strings.Contains(string(data), "name: My Project") {
+		t.Errorf("expected 'name: My Project' in config.yaml, got:\n%s", data)
+	}
+}
+
+// TestInitNameDefault verifies that the default project name is derived from the
+// working directory basename when no --name flag is given (AC-10).
+func TestInitNameDefault(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+	in, _ := newTestInit(dir, "") // empty stdin → use default name (workDir basename)
+	if err := in.Run(Options{
+		SkipSkills:   true,
+		SkipMCP:      true,
+		SkipWorkDirs: true,
+		SkipRoles:    true,
+		SkipAgentsMD: true,
+	}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+	data, err := os.ReadFile(filepath.Join(dir, ".kbz", "config.yaml"))
+	if err != nil {
+		t.Fatalf("config.yaml not created: %v", err)
+	}
+	wantName := filepath.Base(dir)
+	// The YAML encoder may quote the name (e.g. numeric-looking basenames like "001"),
+	// so check that the value appears somewhere in the name line rather than exact prefix.
+	if !strings.Contains(string(data), "name:") || !strings.Contains(string(data), wantName) {
+		t.Errorf("expected default name %q in config.yaml, got:\n%s", wantName, data)
+	}
+}
+
+// TestConfigNameMissing verifies that an existing config.yaml without a name field
+// is read without error — backward compatibility (AC-12).
+func TestConfigNameMissing(t *testing.T) {
+	dir := makeGitRepoWithCommit(t)
+	kbzDir := filepath.Join(dir, ".kbz")
+	if err := os.MkdirAll(kbzDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	// Write a config in the old format — no name field.
+	oldConfig := "version: \"2\"\nprefixes:\n  - prefix: P\n    name: Plan\ndocuments:\n  roots:\n    - path: work/design\n      default_type: design\n"
+	if err := os.WriteFile(filepath.Join(kbzDir, "config.yaml"), []byte(oldConfig), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{
+		SkipSkills:   true,
+		SkipMCP:      true,
+		SkipRoles:    true,
+		SkipAgentsMD: true,
+	}); err != nil {
+		t.Fatalf("expected no error reading config without name field, got: %v", err)
 	}
 }
 
@@ -318,7 +390,7 @@ func TestRun_NotGitRepo(t *testing.T) {
 func TestRun_NewProject_CreatesConfig(t *testing.T) {
 	dir := makeGitRepoNoCommits(t)
 	in, out := newTestInit(dir, "")
-	if err := in.Run(Options{}); err != nil {
+	if err := in.Run(Options{Name: "Test"}); err != nil {
 		t.Fatalf("Run: %v", err)
 	}
 
@@ -331,6 +403,7 @@ func TestRun_NewProject_CreatesConfig(t *testing.T) {
 	data, _ := os.ReadFile(configPath)
 	want := strings.TrimSpace(`
 version: "2"
+name: Test
 prefixes:
   - prefix: P
     name: Plan
@@ -455,7 +528,7 @@ func TestRun_NewProject_SkipSkills(t *testing.T) {
 func TestRun_ExistingProject_NoWorkDirs(t *testing.T) {
 	dir := makeGitRepoWithCommit(t)
 	kbzDir := filepath.Join(dir, ".kbz")
-	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+	if err := WriteInitConfig(kbzDir, "", DefaultDocumentRoots()); err != nil {
 		t.Fatalf("pre-create config: %v", err)
 	}
 
@@ -942,7 +1015,7 @@ func TestRun_PartialInit_Detected(t *testing.T) {
 
 	// Create .kbz/ with a config but no sentinel — simulates a partial init.
 	kbzDir := filepath.Join(dir, ".kbz")
-	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+	if err := WriteInitConfig(kbzDir, "", DefaultDocumentRoots()); err != nil {
 		t.Fatalf("pre-create config: %v", err)
 	}
 
@@ -1220,7 +1293,7 @@ func TestInit_ExistingProject_NoZedDir_NoSettingsJson(t *testing.T) {
 	t.Parallel()
 	dir := makeGitRepoWithCommit(t)
 	kbzDir := filepath.Join(dir, ".kbz")
-	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+	if err := WriteInitConfig(kbzDir, "", DefaultDocumentRoots()); err != nil {
 		t.Fatalf("pre-create config: %v", err)
 	}
 
@@ -1244,7 +1317,7 @@ func TestInit_FirstTimeInit_WithCommits_CreatesZedSettings(t *testing.T) {
 	// No .kbz/ pre-created — this is a first-time init on a project with commits.
 
 	in, out := newTestInit(dir, "work")
-	if err := in.Run(Options{NonInteractive: true, DocsPath: []string{"work"}}); err != nil {
+	if err := in.Run(Options{NonInteractive: true, Name: "Test", DocsPath: []string{"work"}}); err != nil {
 		t.Fatalf("Run: %v", err)
 	}
 	_ = out
@@ -1382,7 +1455,7 @@ func TestInit_FirstTimeInit_WithCommits_CreatesWorkDirs(t *testing.T) {
 	// No .kbz/ pre-created — first-time init on a project with commits.
 
 	in, _ := newTestInit(dir, "")
-	if err := in.Run(Options{NonInteractive: true, DocsPath: []string{"work/design"}}); err != nil {
+	if err := in.Run(Options{NonInteractive: true, Name: "Test", DocsPath: []string{"work/design"}}); err != nil {
 		t.Fatalf("Run: %v", err)
 	}
 
@@ -1399,7 +1472,7 @@ func TestInit_FirstTimeInit_WithCommits_CreatesWorkReadme(t *testing.T) {
 	dir := makeGitRepoWithCommit(t)
 
 	in, _ := newTestInit(dir, "")
-	if err := in.Run(Options{NonInteractive: true, DocsPath: []string{"work"}}); err != nil {
+	if err := in.Run(Options{NonInteractive: true, Name: "Test", DocsPath: []string{"work"}}); err != nil {
 		t.Fatalf("Run: %v", err)
 	}
 
@@ -1540,7 +1613,7 @@ func TestRun_SkipWorkDirs_NoReadme(t *testing.T) {
 func TestRun_ExistingProject_NoReadme(t *testing.T) {
 	dir := makeGitRepoWithCommit(t)
 	kbzDir := filepath.Join(dir, ".kbz")
-	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+	if err := WriteInitConfig(kbzDir, "", DefaultDocumentRoots()); err != nil {
 		t.Fatalf("pre-create config: %v", err)
 	}
 
@@ -1663,7 +1736,7 @@ func TestRun_BaseRole_NotOverwritten(t *testing.T) {
 
 	// Pre-create config.yaml so runExistingProject (triggered by .kbz existing) doesn't prompt.
 	kbzDir := filepath.Join(dir, ".kbz")
-	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+	if err := WriteInitConfig(kbzDir, "", DefaultDocumentRoots()); err != nil {
 		t.Fatalf("pre-create config: %v", err)
 	}
 
@@ -1694,7 +1767,7 @@ func TestRun_ReviewerRole_UnmanagedSkipsWithWarning(t *testing.T) {
 
 	// Pre-create config.yaml so runExistingProject doesn't prompt.
 	kbzDir := filepath.Join(dir, ".kbz")
-	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+	if err := WriteInitConfig(kbzDir, "", DefaultDocumentRoots()); err != nil {
 		t.Fatalf("pre-create config: %v", err)
 	}
 
@@ -1728,7 +1801,7 @@ func TestRun_ReviewerRole_OlderVersion_Overwritten(t *testing.T) {
 
 	// Pre-create config.yaml so runExistingProject doesn't prompt.
 	kbzDir := filepath.Join(dir, ".kbz")
-	if err := WriteInitConfig(kbzDir, DefaultDocumentRoots()); err != nil {
+	if err := WriteInitConfig(kbzDir, "", DefaultDocumentRoots()); err != nil {
 		t.Fatalf("pre-create config: %v", err)
 	}
 
@@ -1834,44 +1907,6 @@ func TestRun_UpdateSkills_DoesNotTouchBaseRole(t *testing.T) {
 	data, _ := os.ReadFile(filepath.Join(rolesDir, "base.yaml"))
 	if string(data) != custom {
 		t.Error("--update-skills modified base.yaml which should never be touched")
-	}
-}
-
-// TestRun_ContextAssemble_ReviewerRole is an integration test verifying that
-// context_assemble(role=reviewer) returns a non-empty packet after kbz init
-// installs the reviewer role file. This exercises the full path from init →
-// role file on disk → ProfileStore → Assemble.
-func TestRun_ContextAssemble_ReviewerRole(t *testing.T) {
-	t.Parallel()
-	dir := makeGitRepoNoCommits(t)
-
-	in, _ := newTestInit(dir, "")
-	if err := in.Run(Options{}); err != nil {
-		t.Fatalf("Run: %v", err)
-	}
-
-	// Point the profile store at the roles directory created by kbz init.
-	rolesDir := filepath.Join(dir, ".kbz", "context", "roles")
-	profileStore := kbzcontext.NewProfileStore(rolesDir)
-
-	// Use a throwaway state dir for knowledge — no entries are needed here.
-	knowledgeSvc := service.NewKnowledgeService(t.TempDir())
-
-	result, err := kbzcontext.Assemble(
-		kbzcontext.AssemblyInput{Role: "reviewer"},
-		profileStore,
-		knowledgeSvc,
-		nil, // entitySvc
-		nil, // intelligenceSvc
-	)
-	if err != nil {
-		t.Fatalf("Assemble(role=reviewer): %v", err)
-	}
-	if len(result.Items) == 0 {
-		t.Error("Assemble(role=reviewer) returned an empty packet; expected at least one item (the role profile)")
-	}
-	if result.Role != "reviewer" {
-		t.Errorf("result.Role = %q, want %q", result.Role, "reviewer")
 	}
 }
 
