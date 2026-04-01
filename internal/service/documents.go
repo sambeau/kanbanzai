@@ -91,6 +91,7 @@ type DocumentResult struct {
 	ApprovedAt   *time.Time
 	Supersedes   string
 	SupersededBy string
+	QualityEvaluation *model.QualityEvaluation
 	// EntityTransition is set when this operation triggered a lifecycle
 	// transition on the owning entity. Nil when no transition occurred.
 	// Read by 2.0 tools (Track I) to push status_transition side effects.
@@ -518,6 +519,7 @@ func (s *DocumentService) GetDocument(id string, checkDrift bool) (DocumentResul
 		ApprovedAt:   doc.ApprovedAt,
 		Supersedes:   doc.Supersedes,
 		SupersededBy: doc.SupersededBy,
+		QualityEvaluation: doc.QualityEvaluation,
 	}
 
 	// Check for content drift if requested
@@ -944,4 +946,75 @@ func isValidEntityID(id string) bool {
 	}
 
 	return false
+}
+
+// AttachEvaluationInput contains the parameters for attaching a quality evaluation.
+type AttachEvaluationInput struct {
+	ID         string
+	Evaluation model.QualityEvaluation
+}
+
+// AttachQualityEvaluation validates and attaches a quality evaluation to a document record.
+// Works on both draft and approved documents. Replaces any existing evaluation.
+func (s *DocumentService) AttachQualityEvaluation(input AttachEvaluationInput) (DocumentResult, error) {
+	if err := validateRequired(field("id", input.ID)); err != nil {
+		return DocumentResult{}, err
+	}
+
+	eval := input.Evaluation
+	if eval.Evaluator == "" {
+		return DocumentResult{}, fmt.Errorf("evaluator is required")
+	}
+	if len(eval.Dimensions) == 0 {
+		return DocumentResult{}, fmt.Errorf("dimensions must not be empty")
+	}
+	if eval.EvaluatedAt.IsZero() {
+		return DocumentResult{}, fmt.Errorf("evaluated_at is required")
+	}
+	if eval.OverallScore < 0.0 || eval.OverallScore > 1.0 {
+		return DocumentResult{}, fmt.Errorf("overall_score must be in [0.0, 1.0], got %g", eval.OverallScore)
+	}
+	for dim, score := range eval.Dimensions {
+		if score < 0.0 || score > 1.0 {
+			return DocumentResult{}, fmt.Errorf("dimension %q score must be in [0.0, 1.0], got %g", dim, score)
+		}
+	}
+
+	record, err := s.store.Load(input.ID)
+	if err != nil {
+		return DocumentResult{}, err
+	}
+
+	doc := storage.RecordToDocument(record)
+	if doc.Status == model.DocumentStatusSuperseded {
+		return DocumentResult{}, fmt.Errorf("cannot attach evaluation to superseded document %q", input.ID)
+	}
+
+	now := s.now()
+	doc.QualityEvaluation = &eval
+	doc.Updated = now
+
+	updatedRecord := storage.DocumentToRecord(doc, record.FileHash)
+	recordPath, err := s.store.Write(updatedRecord)
+	if err != nil {
+		return DocumentResult{}, fmt.Errorf("write document record: %w", err)
+	}
+
+	return DocumentResult{
+		ID:                record.ID,
+		Path:              doc.Path,
+		RecordPath:        recordPath,
+		Type:              string(doc.Type),
+		Title:             doc.Title,
+		Status:            string(doc.Status),
+		Owner:             doc.Owner,
+		ContentHash:       doc.ContentHash,
+		Created:           doc.Created,
+		Updated:           doc.Updated,
+		ApprovedBy:        doc.ApprovedBy,
+		ApprovedAt:        doc.ApprovedAt,
+		Supersedes:        doc.Supersedes,
+		SupersededBy:      doc.SupersededBy,
+		QualityEvaluation: doc.QualityEvaluation,
+	}, nil
 }

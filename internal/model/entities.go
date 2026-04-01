@@ -448,6 +448,15 @@ func (d Decision) GetSlug() string {
 	return d.Slug
 }
 
+// QualityEvaluation holds the result of an agent-provided quality evaluation for a document.
+type QualityEvaluation struct {
+	OverallScore float64            `yaml:"overall_score"`
+	Pass         bool               `yaml:"pass"`
+	EvaluatedAt  time.Time          `yaml:"evaluated_at"`
+	Evaluator    string             `yaml:"evaluator"`
+	Dimensions   map[string]float64 `yaml:"dimensions"`
+}
+
 // DocumentRecord is the metadata record for a tracked document.
 // The document content stays at its canonical path; this record
 // contains metadata only and is stored in .kbz/state/documents/.
@@ -466,6 +475,7 @@ type DocumentRecord struct {
 	Created      time.Time      `yaml:"created"`
 	CreatedBy    string         `yaml:"created_by"`
 	Updated      time.Time      `yaml:"updated"`
+	QualityEvaluation *QualityEvaluation `yaml:"quality_evaluation,omitempty"`
 }
 
 // GetKind returns the entity kind.
