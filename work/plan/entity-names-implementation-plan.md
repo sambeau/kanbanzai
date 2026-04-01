@@ -2,7 +2,7 @@
 
 | Document | Entity Names Implementation Plan                         |
 |----------|----------------------------------------------------------|
-| Status   | Draft                                                    |
+| Status   | Done                                                     |
 | Created  | 2026-06-17                                               |
 | Spec     | `work/spec/entity-names.md`                              |
 | Design   | `work/design/entity-names.md`                            |

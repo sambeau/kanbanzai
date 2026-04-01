@@ -1,6 +1,6 @@
 # Design: Entity Names
 
-- Status: proposal
+- Status: implemented
 - Date: 2026-06-17
 - Author: orchestrator
 - Related: `work/design/human-friendly-ids.md`
