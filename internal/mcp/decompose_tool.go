@@ -157,6 +157,7 @@ func decomposeApply(entitySvc *service.EntityService) ActionHandler {
 			result, err := entitySvc.CreateTask(service.CreateTaskInput{
 				ParentFeature: featureID,
 				Slug:          pt.Slug,
+				Name:          pt.Name,
 				Summary:       pt.Summary,
 			})
 			if err != nil {

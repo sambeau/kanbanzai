@@ -10,6 +10,8 @@ import (
 	"strings"
 
 	"gopkg.in/yaml.v3"
+
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // initCompleteFile is the sentinel file written as the final step of a
@@ -469,7 +471,11 @@ func (i *Initializer) resolveDocumentRoots(opts Options) ([]DocumentRoot, error)
 // Returns an error in non-interactive mode when no name is supplied.
 func (i *Initializer) resolveProjectName(opts Options) (string, error) {
 	if opts.Name != "" {
-		return opts.Name, nil
+		name, err := validate.ValidateName(opts.Name)
+		if err != nil {
+			return "", err
+		}
+		return name, nil
 	}
 	defaultName := filepath.Base(i.workDir)
 	if opts.NonInteractive {
@@ -478,14 +484,22 @@ func (i *Initializer) resolveProjectName(opts Options) (string, error) {
 	fmt.Fprintf(i.stdout, "Project name [%s]: ", defaultName)
 	scanner := bufio.NewScanner(i.stdin)
 	if scanner.Scan() {
-		if name := strings.TrimSpace(scanner.Text()); name != "" {
+		if input := strings.TrimSpace(scanner.Text()); input != "" {
+			name, err := validate.ValidateName(input)
+			if err != nil {
+				return "", err
+			}
 			return name, nil
 		}
 	}
 	if err := scanner.Err(); err != nil {
 		return "", fmt.Errorf("reading project name: %w", err)
 	}
-	return defaultName, nil
+	name, err := validate.ValidateName(defaultName)
+	if err != nil {
+		return "", err
+	}
+	return name, nil
 }
 
 func (i *Initializer) createWorkDirs(baseDir string, roots []DocumentRoot) error {

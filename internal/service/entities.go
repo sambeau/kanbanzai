@@ -253,13 +253,9 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		return CreateResult{}, err
 	}
 
-	var featureName string
-	if input.Name != "" {
-		var nameErr error
-		featureName, nameErr = validate.ValidateName(input.Name)
-		if nameErr != nil {
-			return CreateResult{}, nameErr
-		}
+	featureName, nameErr := validate.ValidateName(input.Name)
+	if nameErr != nil {
+		return CreateResult{}, nameErr
 	}
 
 	entity := model.Feature{
@@ -306,13 +302,9 @@ func (s *EntityService) CreateTask(input CreateTaskInput) (CreateResult, error) 
 		return CreateResult{}, err
 	}
 
-	var taskName string
-	if input.Name != "" {
-		var nameErr error
-		taskName, nameErr = validate.ValidateName(input.Name)
-		if nameErr != nil {
-			return CreateResult{}, nameErr
-		}
+	taskName, nameErr := validate.ValidateName(input.Name)
+	if nameErr != nil {
+		return CreateResult{}, nameErr
 	}
 
 	entity := model.Task{
@@ -413,13 +405,9 @@ func (s *EntityService) CreateDecision(input CreateDecisionInput) (CreateResult,
 		return CreateResult{}, err
 	}
 
-	var decisionName string
-	if input.Name != "" {
-		var nameErr error
-		decisionName, nameErr = validate.ValidateName(input.Name)
-		if nameErr != nil {
-			return CreateResult{}, nameErr
-		}
+	decisionName, nameErr := validate.ValidateName(input.Name)
+	if nameErr != nil {
+		return CreateResult{}, nameErr
 	}
 
 	entity := model.Decision{
@@ -1097,9 +1085,7 @@ func featureFields(e model.Feature) map[string]any {
 	if len(e.Decisions) > 0 {
 		fields["decisions"] = append([]string(nil), e.Decisions...)
 	}
-	if e.Name != "" {
-		fields["name"] = e.Name
-	}
+	fields["name"] = e.Name
 	if len(e.Tags) > 0 {
 		fields["tags"] = append([]string(nil), e.Tags...)
 	}
@@ -1174,9 +1160,7 @@ func taskFields(e model.Task) map[string]any {
 	if e.Estimate != nil {
 		fields["estimate"] = *e.Estimate
 	}
-	if e.Name != "" {
-		fields["name"] = e.Name
-	}
+	fields["name"] = e.Name
 	if e.Assignee != "" {
 		fields["assignee"] = e.Assignee
 	}
@@ -1348,9 +1332,7 @@ func decisionFields(e model.Decision) map[string]any {
 		"date":       e.Date.Format(time.RFC3339),
 		"status":     string(e.Status),
 	}
-	if e.Name != "" {
-		fields["name"] = e.Name
-	}
+	fields["name"] = e.Name
 	if len(e.Affects) > 0 {
 		fields["affects"] = append([]string(nil), e.Affects...)
 	}

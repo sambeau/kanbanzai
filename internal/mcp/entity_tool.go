@@ -523,6 +523,11 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 				}
 			}
 		}
+		if nameVal, hasName := fields["name"]; hasName {
+			if _, err := validate.ValidateName(nameVal); err != nil {
+				return nil, fmt.Errorf("invalid name: %w", err)
+			}
+		}
 
 		// List-valued fields (e.g. depends_on for tasks).
 		var listFields map[string][]string

@@ -161,6 +161,8 @@ type QualityEvaluationConfig struct {
 type Config struct {
 	// Version is the configuration schema version.
 	Version string `yaml:"version"`
+	// Name is the human-readable project name.
+	Name string `yaml:"name,omitempty"`
 	// SchemaVersion is the public schema version in MAJOR.MINOR.PATCH format.
 	// It is independent of Version and only increments when the committed file
 	// format changes. See the public schema interface specification §6.
