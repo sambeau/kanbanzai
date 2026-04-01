@@ -1,0 +1,191 @@
+document_id: PROJECT/design-consistent-front-matter
+document_path: work/design/consistent-front-matter.md
+content_hash: ca62fed7f25a2ed50c638f5d5eae8a51fc1e590f624e327287d8cad19b5ba3dd
+indexed_at: 2026-04-01T15:29:29.86523Z
+sections:
+    - path: "1"
+      level: 1
+      title: Consistent Front Matter
+      byte_offset: 0
+      byte_count: 12410
+      word_count: 1849
+      content_hash: ca62fed7f25a2ed50c638f5d5eae8a51fc1e590f624e327287d8cad19b5ba3dd
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Problem
+          byte_offset: 120
+          byte_count: 1201
+          word_count: 176
+          content_hash: 37576b57449ca791c8635eea6fe3ac32c8a61b25b2ace13b2101db7fbdf953a3
+        - path: "1.2"
+          level: 2
+          title: 2. Design Principle
+          byte_offset: 1321
+          byte_count: 578
+          word_count: 90
+          content_hash: 645e3d9742a51977b002e617730b53deffd31b072c429d5491772e149dc01472
+        - path: "1.3"
+          level: 2
+          title: 3. What Stays in the File
+          byte_offset: 1899
+          byte_count: 1181
+          word_count: 164
+          content_hash: e9daeda814769582f345d7b1cc6be0205ac47bebc47bf9c22d0cbf7535a99078
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Cross-references
+              byte_offset: 2387
+              byte_count: 693
+              word_count: 84
+              content_hash: 63c25d69119651d4ac9a4b1645c8f8caf161c62ed4a3ad90497d05457163dec7
+        - path: "1.4"
+          level: 2
+          title: 4. What Lives Only in the Store
+          byte_offset: 3080
+          byte_count: 975
+          word_count: 167
+          content_hash: 5aac33106f50ac8d22f5b9f58e1360ee348733c7d11a7b1481dbbb5b5c57aaed
+        - path: "1.5"
+          level: 2
+          title: 5. Standard Template
+          byte_offset: 4055
+          byte_count: 722
+          word_count: 105
+          content_hash: 84c676d547d928d5c0a3535849c8382d8ffc425f902ac6b4e04f270750221d0b
+          children:
+            - path: 1.5.1
+              level: 3
+              title: New document (pipe-table format)
+              byte_offset: 4080
+              byte_count: 208
+              word_count: 32
+              content_hash: ba7c72720b6f03263013dcc0150db35ad5948a1ce420f7dabe5a136307da2553
+            - path: 1.5.2
+              level: 3
+              title: New document with cross-references
+              byte_offset: 4288
+              byte_count: 489
+              word_count: 69
+              content_hash: 198e68bd848a4f8814a0afd4002eb831a04738ee2baa673980b1d530a13abb17
+        - path: "1.6"
+          level: 2
+          title: 6. Unmanaged Documents
+          byte_offset: 4777
+          byte_count: 920
+          word_count: 145
+          content_hash: 6ffebfcc9243aa9a90228a9931e55126868a046110a3da27162d6f1a07026364
+        - path: "1.7"
+          level: 2
+          title: 7. Health Check Integration
+          byte_offset: 5697
+          byte_count: 2915
+          word_count: 430
+          content_hash: 0d615b44022f1c7c07e4207a2dddb35b2f0702d3e82ab205b5013f9e992315f1
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Proposed checks
+              byte_offset: 5995
+              byte_count: 624
+              word_count: 100
+              content_hash: 074efc0eeefdc7591309a8b1fe6d4224ba86baa262c43eac4becea0080935399
+            - path: 1.7.2
+              level: 3
+              title: Implementation approach
+              byte_offset: 6619
+              byte_count: 919
+              word_count: 132
+              content_hash: f6985cd01750ff9c7e237b9f015122fff82bf82ea41a705498e8380a31fc54f0
+            - path: 1.7.3
+              level: 3
+              title: Check logic (pseudocode)
+              byte_offset: 7538
+              byte_count: 826
+              word_count: 126
+              content_hash: e9d9aed4c7312627e1e6d44f0e11dd850f022529f312a9102cf25c8fd5c3072a
+            - path: 1.7.4
+              level: 3
+              title: Reporting
+              byte_offset: 8364
+              byte_count: 248
+              word_count: 37
+              content_hash: bd3fd6599738a7325bda0da1681bc226f64d541d82bf0e8757eb236d117fad5f
+        - path: "1.8"
+          level: 2
+          title: 8. Docint Parser Implications
+          byte_offset: 8612
+          byte_count: 1155
+          word_count: 156
+          content_hash: 373625a976b0b95a6650281e2ff124bae35257ce3462e0a2b5e468e5c7b1e88a
+        - path: "1.9"
+          level: 2
+          title: 9. Migration
+          byte_offset: 9767
+          byte_count: 1227
+          word_count: 182
+          content_hash: 13a6193ddf9ae1f1966dbaa7aaa78104240e18b15c7b04d584ff1da0a5a72a9a
+          children:
+            - path: 1.9.1
+              level: 3
+              title: Phase 1 — New documents (immediate)
+              byte_offset: 9784
+              byte_count: 189
+              word_count: 31
+              content_hash: 6c8329e0ab1597e781d9073b9cb8a5e3571b542e97e26bf31f04d58f3f668828
+            - path: 1.9.2
+              level: 3
+              title: Phase 2 — Strip stale fields from managed documents (single commit)
+              byte_offset: 9973
+              byte_count: 759
+              word_count: 109
+              content_hash: dc76bce80c6d25d3456eb368dbd428c89a551722229efe04e65ce7299dbcfc7a
+            - path: 1.9.3
+              level: 3
+              title: Phase 3 — Health check enforcement (ongoing)
+              byte_offset: 10732
+              byte_count: 262
+              word_count: 39
+              content_hash: e3df9b7b6f6eac3869d33163a26614adc0b83b2ff9fbda33c07690d5db030162
+        - path: "1.10"
+          level: 2
+          title: 10. Document Creator Skill
+          byte_offset: 10994
+          byte_count: 683
+          word_count: 100
+          content_hash: 16388649409463abe5774d29d868a57a6c033d28f9f9dcfe4607e1d12f27761a
+        - path: "1.11"
+          level: 2
+          title: 11. Scope and Non-Goals
+          byte_offset: 11677
+          byte_count: 733
+          word_count: 112
+          content_hash: 432c0fd060bf5e70cd501c827c1cf95ae96be3a4c4e15ecb090893abc3f5c210
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: 1.3.1
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: 1.3.1
+    - target_path: work/design/document-intelligence-design.md
+      link_text: work/design/document-intelligence-design.md
+      section_path: 1.3.1
+    - target_path: work/design/some-design.md
+      link_text: work/design/some-design.md
+      section_path: 1.5.2
+    - target_path: work/spec/some-spec.md
+      link_text: work/spec/some-spec.md
+      section_path: 1.5.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.11"
+    - target_path: README.md
+      link_text: README.md
+      section_path: "1.11"
+conventional_roles:
+    - section_path: "1.11"
+      role: constraint
+      confidence: high
+classified: false

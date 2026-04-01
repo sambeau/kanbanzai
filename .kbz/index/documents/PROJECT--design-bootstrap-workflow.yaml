@@ -1,0 +1,274 @@
+document_id: PROJECT/design-bootstrap-workflow
+document_path: work/bootstrap/bootstrap-workflow.md
+content_hash: 04e11910ef609ba44404a953591410d8bf6446d728185678095f169edc7c2e70
+indexed_at: 2026-04-01T15:29:31.974425Z
+sections:
+    - path: "1"
+      level: 1
+      title: Bootstrap Workflow
+      byte_offset: 0
+      byte_count: 17241
+      word_count: 2420
+      content_hash: 04e11910ef609ba44404a953591410d8bf6446d728185678095f169edc7c2e70
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. What This Document Is
+          byte_offset: 376
+          byte_count: 806
+          word_count: 120
+          content_hash: a3b0a0c89e0a59a35619c06103ce793f91f0ee68fd4fac48bbd7adad5dd4cc46
+        - path: "1.2"
+          level: 2
+          title: 2. Why the Distinction Matters
+          byte_offset: 1182
+          byte_count: 606
+          word_count: 84
+          content_hash: eadd1b07d0cb4c773b6118334eb810cdb8c86239e98502f52185cfb50e769c38
+        - path: "1.3"
+          level: 2
+          title: 3. What We Track Today
+          byte_offset: 1788
+          byte_count: 947
+          word_count: 145
+          content_hash: 0fe2a61123a03ad0e121870548bac2f963a8179991b2376454c5639fe485f9bd
+        - path: "1.4"
+          level: 2
+          title: 4. Which Policies Apply Now
+          byte_offset: 2735
+          byte_count: 2954
+          word_count: 414
+          content_hash: 0d3706f771d6d4e8e5a60b365acdd65634cf5262da7e1460706378b1ab7b20ea
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Fully applicable during bootstrap
+              byte_offset: 2767
+              byte_count: 1315
+              word_count: 164
+              content_hash: 26bea5add5d33809c691d17dd7981d985bfef4b9d0e0d4fc682534dbe7b890bb
+            - path: 1.4.2
+              level: 3
+              title: Partially applicable — follow the intent, not the mechanism
+              byte_offset: 4082
+              byte_count: 440
+              word_count: 61
+              content_hash: 28dd8787614fe7216873cfcafd5685b1912a6862b4a21e909397377105942b03
+            - path: 1.4.3
+              level: 3
+              title: Now available via the tool
+              byte_offset: 4522
+              byte_count: 1020
+              word_count: 161
+              content_hash: a0b7d8f6123b5d7988c5a8e23eebe327821ddee09c468f40dc6ed10de1c48251
+            - path: 1.4.4
+              level: 3
+              title: Still deferred
+              byte_offset: 5542
+              byte_count: 147
+              word_count: 22
+              content_hash: 1a50021e845b6d3509a946d98f6cf71204ab2b1fb835864cad1c19ab1164620d
+        - path: "1.5"
+          level: 2
+          title: 5. Bootstrap Conventions
+          byte_offset: 5689
+          byte_count: 5368
+          word_count: 722
+          content_hash: 93e39eb0664bfd4105420ef9f7363a66f6c96d31e26af590491989bcfa5f0fd4
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Document-centric working
+              byte_offset: 5718
+              byte_count: 652
+              word_count: 86
+              content_hash: ad8c0c8ebecba839a91a1eb935bcdda083d793e88025ccdba9cff26a6d991f5b
+            - path: 1.5.2
+              level: 3
+              title: Decision records
+              byte_offset: 6370
+              byte_count: 409
+              word_count: 61
+              content_hash: 4fc0e1c9b7ef462bac0acd7bb930629068d81417fff866a9d83f3589cbb3ac54
+            - path: 1.5.3
+              level: 3
+              title: Document types during bootstrap
+              byte_offset: 6779
+              byte_count: 731
+              word_count: 106
+              content_hash: 1f26352d0284d72864ca5094c1458e58304d53c6a6c10c45a7985894f4509b61
+            - path: 1.5.4
+              level: 3
+              title: Document placement
+              byte_offset: 7510
+              byte_count: 871
+              word_count: 116
+              content_hash: 9c87d5b9d59dd6f486d8bb7a62593b3773ce5b741bfa55e3d5ac05362747d307
+            - path: 1.5.5
+              level: 3
+              title: Document registration
+              byte_offset: 8381
+              byte_count: 2091
+              word_count: 265
+              content_hash: 3d65df096395d8c91bd9b3d75286b32c6c73c7955cb814ce596c934bfce9b674
+            - path: 1.5.6
+              level: 3
+              title: Commits during bootstrap
+              byte_offset: 10472
+              byte_count: 304
+              word_count: 39
+              content_hash: f333f08b54351afd83521c2b5169db684be192f898a4bc0f05f4ed3d82556113
+            - path: 1.5.7
+              level: 3
+              title: Review during bootstrap
+              byte_offset: 10776
+              byte_count: 281
+              word_count: 45
+              content_hash: a9d35d6601e4677bb81f0101d4aa9699b3980857e3f2053c90babadc4adcf2dd
+        - path: "1.6"
+          level: 2
+          title: 6. Workflow Stage Gates
+          byte_offset: 11057
+          byte_count: 4553
+          word_count: 648
+          content_hash: b1baab741063a1fe0340bdade32ab39291023185ab3c8773862c395abf0c0089
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Stage 1: Planning (Human-Led)'
+              byte_offset: 11295
+              byte_count: 338
+              word_count: 47
+              content_hash: b41cc53414b94808c31b6446f7dfcae44524666ebf55175a4dc7c7023c318841
+            - path: 1.6.2
+              level: 3
+              title: 'Stage 2: Design (Human-Led, Agent-Assisted)'
+              byte_offset: 11633
+              byte_count: 1099
+              word_count: 163
+              content_hash: 357fc8201cad00ecc981359dfd6601aa329c35830e0bcf398143786c51940485
+            - path: 1.6.3
+              level: 3
+              title: 'Stage 3: Features (Agent-Assisted)'
+              byte_offset: 12732
+              byte_count: 627
+              word_count: 87
+              content_hash: d52c89a3fbe21487057d8e07a88bfe11756311b67a4320b292c2d2e6e19e4a7e
+            - path: 1.6.4
+              level: 3
+              title: 'Stage 4: Specification (Human-Led, Agent-Assisted)'
+              byte_offset: 13359
+              byte_count: 433
+              word_count: 53
+              content_hash: 66aaafd6f496b2a0caf2f47507d6ce471955b4dd0ccf31312115ac4f814e7c7e
+            - path: 1.6.5
+              level: 3
+              title: 'Stage 5: Dev Plan & Tasks (Agent-Assisted)'
+              byte_offset: 13792
+              byte_count: 426
+              word_count: 58
+              content_hash: 3606f038c63461c8eb8c0829d11fe3a8545cac0dccfc1b55c7d3a94730d66bb5
+            - path: 1.6.6
+              level: 3
+              title: 'Stage 6: Implementation and Review (Agent-Driven)'
+              byte_offset: 14218
+              byte_count: 813
+              word_count: 110
+              content_hash: 4eee1c1e210adbc800161f91317477453c280b2fab19dafe2999b48eecdd9b4a
+            - path: 1.6.7
+              level: 3
+              title: Emergency Brake
+              byte_offset: 15031
+              byte_count: 579
+              word_count: 91
+              content_hash: 85e78e4983130142b7d83629566075e34200959be2dc1b82b0dacea3fab3baa3
+        - path: "1.7"
+          level: 2
+          title: 7. What Bootstrap-Workflow Is Not
+          byte_offset: 15610
+          byte_count: 569
+          word_count: 98
+          content_hash: 4578b3bc8fe9a4f752b236ac4fc185fd71dd54ba90a13610036e0e54e58d56e6
+        - path: "1.8"
+          level: 2
+          title: 8. Migration Path
+          byte_offset: 16179
+          byte_count: 1062
+          word_count: 151
+          content_hash: 77f4568fe92ccc38979fd9d3123ea3013f11d15f1d6dd26598ff8dd3a0de42c2
+front_matter:
+    status: active
+    date: "2026-03-18"
+    related:
+        - work/design/product-instance-boundary.md
+        - work/design/document-centric-interface.md
+        - work/spec/phase-1-specification.md` §22
+        - work/plan/phase-1-decision-log.md` P1-DEC-005, P1-DEC-015
+    extra:
+        Purpose: define the simplified workflow process used to build Kanbanzai before the tool exists
+entity_refs:
+    - entity_id: DEC-005
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 350
+    - entity_id: DEC-015
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 362
+    - entity_id: DEC-009
+      entity_type: decision
+      section_path: 1.5.6
+      byte_offset: 10628
+    - entity_id: DEC-015
+      entity_type: decision
+      section_path: "1.8"
+      byte_offset: 16255
+    - entity_id: P10-review-and-doc-currency-plan
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 7740
+cross_doc_links:
+    - target_path: work/design/product-instance-boundary.md
+      link_text: work/design/product-instance-boundary.md
+      section_path: "1"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: "1"
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: "1.3"
+    - target_path: work/design/git-commit-policy.md
+      link_text: work/design/git-commit-policy.md
+      section_path: 1.4.1
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: 1.4.1
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: 1.4.1
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: 1.5.1
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: 1.5.2
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: 1.5.3
+    - target_path: P10-review-and-doc-currency-plan.md
+      link_text: P10-review-and-doc-currency-plan.md
+      section_path: 1.5.4
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.6.6
+conventional_roles:
+    - section_path: 1.5.2
+      role: decision
+      confidence: high
+classified: false

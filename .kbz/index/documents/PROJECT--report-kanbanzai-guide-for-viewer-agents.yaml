@@ -1,0 +1,652 @@
+document_id: PROJECT/report-kanbanzai-guide-for-viewer-agents
+document_path: docs/kanbanzai-guide-for-viewer-agents.md
+content_hash: 94cee69b89f3c00dbfb267b55d385b5ae99d1d402fef2dd788519dba6da0f4d4
+indexed_at: 2026-04-01T15:29:31.751254Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Kanbanzai: Guide for Viewer Agents'
+      byte_offset: 0
+      byte_count: 32649
+      word_count: 4542
+      content_hash: 94cee69b89f3c00dbfb267b55d385b5ae99d1d402fef2dd788519dba6da0f4d4
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. What Kanbanzai Is
+          byte_offset: 305
+          byte_count: 969
+          word_count: 142
+          content_hash: eae4c1054a8c164a5e81f2b54369c84fb7397f90fb09c1fa11cdfca6628071ec
+        - path: "1.2"
+          level: 2
+          title: 2. Technology Stack
+          byte_offset: 1274
+          byte_count: 1199
+          word_count: 181
+          content_hash: bcb351c25eee28a6dd200a0289c54560531733e8ff3e82a546d42a0081263a95
+        - path: "1.3"
+          level: 2
+          title: 3. The `.kbz` Directory Layout
+          byte_offset: 2473
+          byte_count: 1604
+          word_count: 189
+          content_hash: 274acac0631dc35d5ab2b94831acec841987d308a58e2ae22e6ab458bb2a9114
+        - path: "1.4"
+          level: 2
+          title: 4. The Public Schema Boundary
+          byte_offset: 4077
+          byte_count: 2107
+          word_count: 333
+          content_hash: 4ef5588f8b1da538decaa92f8d74e70f2cea06c6c9d31137c305313c87280610
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Part of the public schema (safe and stable to read)
+              byte_offset: 4233
+              byte_count: 711
+              word_count: 101
+              content_hash: 214690ee15acf36cd626fc61584993c63622dc5e528eabe9dfbc14e4b3ce7dc9
+            - path: 1.4.2
+              level: 3
+              title: NOT part of the public schema (do not read or rely on)
+              byte_offset: 4944
+              byte_count: 440
+              word_count: 73
+              content_hash: db965f2c9a737ee8f3235a2d8c14e6fcaa00a81ab0e0f6bb2832b2e28119fafa
+            - path: 1.4.3
+              level: 3
+              title: Committed but not formally covered by the public schema spec
+              byte_offset: 5384
+              byte_count: 429
+              word_count: 71
+              content_hash: 819d4a0a0276eaffc1bead1c2134398a4394d23e372ed8573eab00fa15e64e5d
+            - path: 1.4.4
+              level: 3
+              title: Rule of thumb
+              byte_offset: 5813
+              byte_count: 371
+              word_count: 61
+              content_hash: efcecb8ef0a939d05a689c75def313b382ad9389b411dfbf259a227476772bf7
+        - path: "1.5"
+          level: 2
+          title: 5. Entity Types at a Glance
+          byte_offset: 6184
+          byte_count: 2794
+          word_count: 369
+          content_hash: 4cbf194e2c24ba92f3243c281b3be6756e0879fe2c3a72cfedfa24d4f6a7ab98
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 The Entity Hierarchy
+              byte_offset: 6216
+              byte_count: 545
+              word_count: 66
+              content_hash: c68207a0df51ed863275dfa534528e9f797587ed46ffa22b273fb4f62eebcd19
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Entity Summary Table
+              byte_offset: 6761
+              byte_count: 1590
+              word_count: 190
+              content_hash: 5b1e4e99ab75fd526752aef0dfeb57c8017c1c06524b594b10816ecef78f13c7
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Filename Lookup
+              byte_offset: 8351
+              byte_count: 627
+              word_count: 106
+              content_hash: e1c308627dac0b8f3150b05458420df88e1136369345bf188672a39fd9e9de26
+        - path: "1.6"
+          level: 2
+          title: 6. Lifecycle State Machines
+          byte_offset: 8978
+          byte_count: 2026
+          word_count: 268
+          content_hash: 94cefafb51ed8d8bb8388e6d9ba638c853d15c45b21c6d21da999042d585e2cc
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Plan
+              byte_offset: 9292
+              byte_count: 121
+              word_count: 19
+              content_hash: 291e8b91747544f45c5a8b20892982d7740c38a009c4d0f0cce828380aecda4a
+            - path: 1.6.2
+              level: 3
+              title: Feature (document-driven)
+              byte_offset: 9413
+              byte_count: 369
+              word_count: 51
+              content_hash: 927a359eb807b27e7a9a862e1285126f76cb7b3199fb2eb11d1737075e28d690
+            - path: 1.6.3
+              level: 3
+              title: Task
+              byte_offset: 9782
+              byte_count: 388
+              word_count: 44
+              content_hash: 3241f6ea01abb656190e656ee0755745f91c2cbb79ca9e456b4676839fa4a7ee
+            - path: 1.6.4
+              level: 3
+              title: Bug
+              byte_offset: 10170
+              byte_count: 254
+              word_count: 33
+              content_hash: 4d8b8f12aad22885a2914d088094da9c65bbc2c75010ebc9f9695300df9ecbb2
+            - path: 1.6.5
+              level: 3
+              title: Decision
+              byte_offset: 10424
+              byte_count: 83
+              word_count: 11
+              content_hash: 22a7c220a7491523138731f5eddab01527b0e511b8c9c6f967c66f88fe1b6e22
+            - path: 1.6.6
+              level: 3
+              title: Incident
+              byte_offset: 10507
+              byte_count: 213
+              word_count: 24
+              content_hash: 689e9bff619d37b574ce649eb664a3db973da6e0a6d54c16d4ebd33e2c8bf94f
+            - path: 1.6.7
+              level: 3
+              title: Document Record
+              byte_offset: 10720
+              byte_count: 63
+              word_count: 10
+              content_hash: 1e2bd2c98a0ded087f6860edf359a144d19867d223f35e9160911ea037ba3cad
+            - path: 1.6.8
+              level: 3
+              title: Knowledge Entry
+              byte_offset: 10783
+              byte_count: 221
+              word_count: 31
+              content_hash: 834f3a5b1c755d2ef431fdec954bec6f66ed9ca75fab86573f55686da4eaa3be
+        - path: "1.7"
+          level: 2
+          title: 7. YAML Serialisation Rules
+          byte_offset: 11004
+          byte_count: 1747
+          word_count: 276
+          content_hash: a096907bf34b5e80b1ac22f6acfe5092b3d89148396c021397bfb92cdd078aa4
+          children:
+            - path: 1.7.1
+              level: 3
+              title: What this means for a viewer
+              byte_offset: 12220
+              byte_count: 531
+              word_count: 90
+              content_hash: e8769e637e22b620af70874dd7674de12cd938519c01b449114be096c8ecfb2d
+        - path: "1.8"
+          level: 2
+          title: 8. The `kbzschema` Go Package
+          byte_offset: 12751
+          byte_count: 3147
+          word_count: 403
+          content_hash: 1f2bc3221eeb3a8b713e5ed43dc2e8a62cd22f76fd03f997b0c51fa940d975dc
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Type Layer
+              byte_offset: 13022
+              byte_count: 481
+              word_count: 47
+              content_hash: 507da4fa76dd1d8c89463ccc90708caed032d8a237faef96c9fd565c42dc2137
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Query Layer (Reader)
+              byte_offset: 13503
+              byte_count: 791
+              word_count: 73
+              content_hash: ad2e6665420b2ffd324090de79e76b7824588e3c5df14f35dfaef6c6c2fcac10
+            - path: 1.8.3
+              level: 3
+              title: 8.3 JSON Schema Generation
+              byte_offset: 14294
+              byte_count: 291
+              word_count: 47
+              content_hash: a6a447eae63dbecb299475e7175abfad1395221153624024238ec57dbff336a9
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Current Coverage Gaps
+              byte_offset: 14585
+              byte_count: 788
+              word_count: 112
+              content_hash: 96e0a50531136e8785a96f6e1d9a6bb9e8a755694d810d481104648223c1d5dc
+            - path: 1.8.5
+              level: 3
+              title: 8.5 If You're Not Using Go
+              byte_offset: 15373
+              byte_count: 525
+              word_count: 84
+              content_hash: b0314d65e4ba13b0bb5d2f9860e9ae8c0a43a0554a026143aaef40ada792506d
+        - path: "1.9"
+          level: 2
+          title: 9. Referential Integrity and Cross-References
+          byte_offset: 15898
+          byte_count: 1540
+          word_count: 218
+          content_hash: 7a5c3b562c47d62a56fa3eeb16291de01716efef271867579b75678fd35a8cdb
+          children:
+            - path: 1.9.1
+              level: 3
+              title: Parent hierarchy
+              byte_offset: 16054
+              byte_count: 206
+              word_count: 34
+              content_hash: 81aa6435b247f42d49f4c72c2cef404c6f5b3a5e39a96f4b37d788159818107a
+            - path: 1.9.2
+              level: 3
+              title: Document linkage
+              byte_offset: 16260
+              byte_count: 303
+              word_count: 41
+              content_hash: 93fd2844e6a7a492e71c970495fd4703379fc88717511cf4747202b0361efc46
+            - path: 1.9.3
+              level: 3
+              title: Bug linkage
+              byte_offset: 16563
+              byte_count: 125
+              word_count: 18
+              content_hash: ee26dbad1cac2962e63ad61f8bbd33bf48cfeec301199ae0b6356f86eaef89fc
+            - path: 1.9.4
+              level: 3
+              title: Incident linkage
+              byte_offset: 16688
+              byte_count: 185
+              word_count: 20
+              content_hash: 4f1b25f76f4879c7da773a677c04875de26491b23488f3a994fd36e5e0430b8c
+            - path: 1.9.5
+              level: 3
+              title: Decision linkage
+              byte_offset: 16873
+              byte_count: 91
+              word_count: 13
+              content_hash: 681349e2ec65947918434f91384968ea0a23fdaa128163b68371b6da9cdeb10d
+            - path: 1.9.6
+              level: 3
+              title: Supersession chains
+              byte_offset: 16964
+              byte_count: 144
+              word_count: 18
+              content_hash: 8bbd4a590a6bde39f84e4001ee20e8b6e5a2669531d30e9aac31f3edc8b857bf
+            - path: 1.9.7
+              level: 3
+              title: 'Important: references can be broken'
+              byte_offset: 17108
+              byte_count: 330
+              word_count: 51
+              content_hash: 2b60b9e90bb99ae7f8af5992f3d658929c0de7d092ff824c580e80195949b608
+        - path: "1.10"
+          level: 2
+          title: 10. Deriving Progress and Metrics
+          byte_offset: 17438
+          byte_count: 1140
+          word_count: 171
+          content_hash: e2bdc52ff8d50671d19fb781de07e2f52ff4d6e27d7551ba10b76982a5621126
+          children:
+            - path: 1.10.1
+              level: 3
+              title: Task completion by feature
+              byte_offset: 17549
+              byte_count: 273
+              word_count: 40
+              content_hash: b146fbf15d8e4fdf34ddc4d98c2ff62b39a11459423cd43d4fd33c0f18e91a3d
+            - path: 1.10.2
+              level: 3
+              title: Feature completion by plan
+              byte_offset: 17822
+              byte_count: 145
+              word_count: 19
+              content_hash: 9699f1566db6a4c15ca9317cf29c483022217db4b4e047e335efa61674bfa75c
+            - path: 1.10.3
+              level: 3
+              title: Story point rollup
+              byte_offset: 17967
+              byte_count: 212
+              word_count: 36
+              content_hash: 5dacf7fb4caca592982afbcdb552fac0d0a91257265da17ec58f869353406857
+            - path: 1.10.4
+              level: 3
+              title: Blocked work
+              byte_offset: 18179
+              byte_count: 126
+              word_count: 18
+              content_hash: 965ee02b9e9eabe0c956c551d986619cfd307a3b2be2dcde8984217672ef5fdf
+            - path: 1.10.5
+              level: 3
+              title: Active work
+              byte_offset: 18305
+              byte_count: 150
+              word_count: 24
+              content_hash: 96fb7172be131e2fcdbf64bb2b70e8cf90a2ea753a753ee1fc10cfa9128b37f0
+            - path: 1.10.6
+              level: 3
+              title: Pending human decisions
+              byte_offset: 18455
+              byte_count: 123
+              word_count: 17
+              content_hash: 7f0c83e0f5e63b760a4ab2d9de001b254184dbfd72be74c77c8f0cc3d2512a4e
+        - path: "1.11"
+          level: 2
+          title: 11. Reading Documents (Markdown Files)
+          byte_offset: 18578
+          byte_count: 3239
+          word_count: 438
+          content_hash: b64ce947f2d59f355a5eb720dd010edb769bdd15b2ab2d6fbafd8f7f412be926
+          children:
+            - path: 1.11.1
+              level: 3
+              title: Following the path
+              byte_offset: 18779
+              byte_count: 453
+              word_count: 44
+              content_hash: c769e02f7aa613d3d96daa8fbf179a5926d4b61c5b4d7df5c7973692952da7b8
+            - path: 1.11.2
+              level: 3
+              title: Drift detection
+              byte_offset: 19232
+              byte_count: 493
+              word_count: 77
+              content_hash: 7a321511070a3e525a2b6e0a281c65bc9672d6a0e10ffbd01eefe74c60b43327
+            - path: 1.11.3
+              level: 3
+              title: Markdown conventions
+              byte_offset: 19725
+              byte_count: 1174
+              word_count: 157
+              content_hash: 02aa1d7fc3d45557727aedc3dd6ca1c5a6d434a6ccaca1a949babad786f1d184
+            - path: 1.11.4
+              level: 3
+              title: Document types and their directories
+              byte_offset: 20899
+              byte_count: 918
+              word_count: 132
+              content_hash: 71c453e176e38171c6defb0fdfa1b5aefb11bd3da8ed328b6cad8b3ca0a93e81
+        - path: "1.12"
+          level: 2
+          title: 12. Concurrency and Safe Reading
+          byte_offset: 21817
+          byte_count: 1356
+          word_count: 220
+          content_hash: a416374567493906f76f44d116983461cc0174e9520fd01d3a5684cf2488a295
+          children:
+            - path: 1.12.1
+              level: 3
+              title: Can I read while Kanbanzai is writing?
+              byte_offset: 21854
+              byte_count: 560
+              word_count: 95
+              content_hash: 610702799426ffd2df918ad2a64c50756258be8f95549c27fa471a425c66b642
+            - path: 1.12.2
+              level: 3
+              title: 'The recommended model: your own Git clone'
+              byte_offset: 22414
+              byte_count: 431
+              word_count: 70
+              content_hash: b5f5b7b803be3a97fa50c6d890d1623a8c00f9613bd0af967ee2b4678bff172f
+            - path: 1.12.3
+              level: 3
+              title: Freshness strategies
+              byte_offset: 22845
+              byte_count: 328
+              word_count: 49
+              content_hash: 3bbe1c1208a47f7712a25590fb9c989c0d9e2a0354a17a7d8453e0f4bade5b1c
+        - path: "1.13"
+          level: 2
+          title: 13. Schema Versioning
+          byte_offset: 23173
+          byte_count: 1443
+          word_count: 206
+          content_hash: a8c00967ec99cec82d00be84106ac10c2d57dab7eea7c5cc8d6ee26d6e13d33d
+          children:
+            - path: 1.13.1
+              level: 3
+              title: The `schema_version` field
+              byte_offset: 23199
+              byte_count: 743
+              word_count: 98
+              content_hash: 8a966cfeae024cb146925dc83686ee3a276588db7633e58694880f2f243090b2
+            - path: 1.13.2
+              level: 3
+              title: Compatibility guarantees
+              byte_offset: 23942
+              byte_count: 446
+              word_count: 66
+              content_hash: c6a9bda404ad0bd252b2ccc466667235707aad5895095c22b4e1295d5addbee5
+            - path: 1.13.3
+              level: 3
+              title: The golden rule
+              byte_offset: 24388
+              byte_count: 228
+              word_count: 38
+              content_hash: efcc1cd59bd3f61ed9eeefd52f3eda62067a910d6c3136073e146dfa0606b824
+        - path: "1.14"
+          level: 2
+          title: 14. What You Can Safely Assume
+          byte_offset: 24616
+          byte_count: 746
+          word_count: 127
+          content_hash: 7508c06d681797e5f68c1e1edf4d01f0edb829b8fb416daa222469603b1ffb91
+        - path: "1.15"
+          level: 2
+          title: 15. What You Cannot Safely Assume
+          byte_offset: 25362
+          byte_count: 1134
+          word_count: 177
+          content_hash: 19c5ad533b512bf5154f654be7707e30305aa1d122f15e963ebbe7464aa8972e
+        - path: "1.16"
+          level: 2
+          title: 16. Practical Tips
+          byte_offset: 26496
+          byte_count: 2198
+          word_count: 324
+          content_hash: 9e3293ea4c4f4a68ff66acbf70dfee66b78f097fa8a3c4241d6356e72e67e762
+          children:
+            - path: 1.16.1
+              level: 3
+              title: Building a tree view
+              byte_offset: 26519
+              byte_count: 651
+              word_count: 92
+              content_hash: 8f3f1fa0b8e56b8719e0a5c48c2fae294d6dd7f58d09f6c636e88f7005dbda40
+            - path: 1.16.2
+              level: 3
+              title: Sorting
+              byte_offset: 27170
+              byte_count: 326
+              word_count: 49
+              content_hash: 3b9071c2e75f8e84403f8362aabd57f34ad0e58f1977e02dbb433e414f6d8073
+            - path: 1.16.3
+              level: 3
+              title: Colouring by status
+              byte_offset: 27496
+              byte_count: 530
+              word_count: 75
+              content_hash: 5cc83a995e5137c94d67328e455e4cd23dd36c71be3166566cbf6ee1669f354c
+            - path: 1.16.4
+              level: 3
+              title: Document Record → Markdown rendering
+              byte_offset: 28026
+              byte_count: 375
+              word_count: 54
+              content_hash: b70f14b99e3b961b76c59def908a3a2547d7378af8151b25a3ec05a2d19d012a
+            - path: 1.16.5
+              level: 3
+              title: Estimation display
+              byte_offset: 28401
+              byte_count: 293
+              word_count: 50
+              content_hash: 1975aaa3c908ecada55200a3aa6f4c0fb88aab58aebc8fa856dcf63547d46bd8
+        - path: "1.17"
+          level: 2
+          title: 17. Example Entity YAML
+          byte_offset: 28694
+          byte_count: 2068
+          word_count: 197
+          content_hash: 0eda60ca3fac937d83035ca57174b70b6d477787680bd09dfd9707cd3044c009
+          children:
+            - path: 1.17.1
+              level: 3
+              title: Plan
+              byte_offset: 28722
+              byte_count: 300
+              word_count: 32
+              content_hash: dc8cd5e8e4765e82a41d79312cc0b2398510948c36b603eab80e9529e796036a
+            - path: 1.17.2
+              level: 3
+              title: Feature
+              byte_offset: 29022
+              byte_count: 353
+              word_count: 27
+              content_hash: c45ecd332ca0816964ad76cf885645cd3422ab7c1b69dd2653ce1755e1eda364
+            - path: 1.17.3
+              level: 3
+              title: Task
+              byte_offset: 29375
+              byte_count: 591
+              word_count: 56
+              content_hash: 3ab729ac549f68870d5d156e8efd2cb260c6e332fd1c0a0e6026d74ad0f70247
+            - path: 1.17.4
+              level: 3
+              title: Document Record
+              byte_offset: 29966
+              byte_count: 424
+              word_count: 32
+              content_hash: 6bbba09c7fd19a045d84e8f9b7dfdef393dbd467f1305af95895c8649ad6fc2a
+            - path: 1.17.5
+              level: 3
+              title: Human Checkpoint
+              byte_offset: 30390
+              byte_count: 372
+              word_count: 45
+              content_hash: 646723044c4a3dce8025d5477eddddcdea73d5027bffac9d6816f1b9eca47921
+        - path: "1.18"
+          level: 2
+          title: 18. Key Reference Documents
+          byte_offset: 30762
+          byte_count: 802
+          word_count: 98
+          content_hash: 404a09ad710562456184f1921dac65dee421654f2977112ccf50ea51515d14a9
+        - path: "1.19"
+          level: 2
+          title: 19. Quick-Start Checklist for a Viewer Project
+          byte_offset: 31564
+          byte_count: 1085
+          word_count: 154
+          content_hash: 04e23ec8ef710a7c25bf6a4b90ad0b3a710f6102d0e2522dd2cbdc79baa7d976
+entity_refs:
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 7800
+    - entity_id: FEAT-01ABC
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 8248
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.8.2
+      byte_offset: 13899
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.11.1
+      byte_offset: 18839
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.17.2
+      byte_offset: 29047
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.17.3
+      byte_offset: 29432
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.17.4
+      byte_offset: 29999
+    - entity_id: FEAT-01KMXYZ
+      entity_type: feature
+      section_path: 1.17.5
+      byte_offset: 30647
+    - entity_id: TASK-01KMNA39KTWW4
+      entity_type: task
+      section_path: 1.8.2
+      byte_offset: 13837
+    - entity_id: TASK-01KMNA39KTWW4
+      entity_type: task
+      section_path: 1.17.3
+      byte_offset: 29397
+    - entity_id: BUG-01KMKA1KEFYX0
+      entity_type: bug
+      section_path: 1.8.2
+      byte_offset: 13947
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.5.2
+      byte_offset: 6947
+    - entity_id: P3-kanbanzai-1
+      entity_type: plan
+      section_path: 1.5.2
+      byte_offset: 8186
+    - entity_id: P3-kanbanzai-1
+      entity_type: plan
+      section_path: 1.8.2
+      byte_offset: 13726
+    - entity_id: P3-kanbanzai-1
+      entity_type: plan
+      section_path: 1.17.1
+      byte_offset: 28744
+    - entity_id: P3-kanbanzai-1
+      entity_type: plan
+      section_path: 1.17.2
+      byte_offset: 29093
+cross_doc_links:
+    - target_path: docs/schema-reference.md
+      link_text: docs/schema-reference.md
+      section_path: 1.5.2
+    - target_path: docs/schema-reference.md
+      link_text: docs/schema-reference.md
+      section_path: 1.8.4
+    - target_path: docs/schema-reference.md
+      link_text: docs/schema-reference.md
+      section_path: 1.8.5
+    - target_path: .agents/skills/*/SKILL.md
+      link_text: .agents/skills/*/SKILL.md
+      section_path: 1.11.3
+    - target_path: docs/schema-reference.md
+      link_text: docs/schema-reference.md
+      section_path: "1.18"
+    - target_path: work/design/public-schema-interface.md
+      link_text: work/design/public-schema-interface.md
+      section_path: "1.18"
+    - target_path: work/spec/public-schema-interface.md
+      link_text: work/spec/public-schema-interface.md
+      section_path: "1.18"
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: "1.18"
+    - target_path: docs/configuration-reference.md
+      link_text: docs/configuration-reference.md
+      section_path: "1.18"
+    - target_path: docs/workflow-overview.md
+      link_text: docs/workflow-overview.md
+      section_path: "1.18"
+    - target_path: docs/schema-reference.md
+      link_text: docs/schema-reference.md
+      section_path: "1.19"
+conventional_roles:
+    - section_path: 1.5.2
+      role: narrative
+      confidence: high
+    - section_path: 1.6.5
+      role: decision
+      confidence: high
+    - section_path: 1.9.5
+      role: decision
+      confidence: high
+    - section_path: 1.10.6
+      role: decision
+      confidence: high
+    - section_path: "1.17"
+      role: example
+      confidence: high
+classified: false

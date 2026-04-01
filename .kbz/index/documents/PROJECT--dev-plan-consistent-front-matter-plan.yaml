@@ -1,0 +1,271 @@
+document_id: PROJECT/dev-plan-consistent-front-matter-plan
+document_path: work/plan/consistent-front-matter-plan.md
+content_hash: 3e3b8612ee0ab86a8ca2f433742d287debeaaac1164d5be41708bf0f67adde2c
+indexed_at: 2026-04-01T15:29:30.173499Z
+sections:
+    - path: "1"
+      level: 1
+      title: Consistent Front Matter Implementation Plan
+      byte_offset: 0
+      byte_count: 17637
+      word_count: 2436
+      content_hash: 3e3b8612ee0ab86a8ca2f433742d287debeaaac1164d5be41708bf0f67adde2c
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 444
+          byte_count: 860
+          word_count: 135
+          content_hash: d5a687391e52dfd1aba5375ec4d1a9cc02aef9e02ea754708d50643742438e4c
+        - path: "1.2"
+          level: 2
+          title: 2. Dependency Graph
+          byte_offset: 1304
+          byte_count: 698
+          word_count: 99
+          content_hash: 5f573d84272c66840d42f1105a6d3d0adb573b321b8c3b869381fc2d1bd89f29
+        - path: "1.3"
+          level: 2
+          title: 3. Interface Contract
+          byte_offset: 2002
+          byte_count: 1786
+          word_count: 228
+          content_hash: 6cdefecd6cac735f9f263d878cd2cac7ced1606898c3dee696f74dcaa9091577
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Function signature (unchanged)
+              byte_offset: 2112
+              byte_count: 209
+              word_count: 27
+              content_hash: 5ffa7752c207df95a024d59ccd869082edf05c54d1228f2411302fa5b97801f3
+            - path: 1.3.2
+              level: 3
+              title: FrontMatter struct (unchanged — spec §5.6)
+              byte_offset: 2321
+              byte_count: 366
+              word_count: 29
+              content_hash: e7ecd0290d7136765b12114be86f3de24a3423c211208ae3b1e4ff41ed002d9f
+            - path: 1.3.3
+              level: 3
+              title: Field mapping contract for pipe-table format (spec §5.4)
+              byte_offset: 2687
+              byte_count: 547
+              word_count: 83
+              content_hash: 77a993cff25487e551d8d9abf5166631a8d276a3827e0e90c7479ff0198c593f
+            - path: 1.3.4
+              level: 3
+              title: Prohibited field names (used by T2 and T3)
+              byte_offset: 3234
+              byte_count: 554
+              word_count: 72
+              content_hash: 14ab51aa490d624c9f0b9c0897647fc50a67dcb6c1122717d6a37b20aea7e07a
+        - path: "1.4"
+          level: 2
+          title: '4. Task T1: Pipe-Table Parser'
+          byte_offset: 3788
+          byte_count: 2973
+          word_count: 367
+          content_hash: 123a48842a89a0628de3cdf3b40448053558fa66e365d5633003a050e718da8c
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Objective
+              byte_offset: 3822
+              byte_count: 193
+              word_count: 21
+              content_hash: 0fb8ef8704cd1ad0eceb2e581bd3593659623323f960ff67238c67112bf9acce
+            - path: 1.4.2
+              level: 3
+              title: Specification references
+              byte_offset: 4015
+              byte_count: 280
+              word_count: 37
+              content_hash: 6e659353e4319d18c3ce80a3e43153a4aa4980afe51d881cf9310371eff9c5a6
+            - path: 1.4.3
+              level: 3
+              title: Input context
+              byte_offset: 4295
+              byte_count: 914
+              word_count: 99
+              content_hash: 83228465fe45c1ef33e94757c8eaf53a96badca6e37e2e297b89e0bfe2cf6d45
+            - path: 1.4.4
+              level: 3
+              title: Output artifacts
+              byte_offset: 5209
+              byte_count: 1369
+              word_count: 179
+              content_hash: 66299f298cc20d3228b299ea98983d19bc2d33db561b615ab10aec0623a3785c
+            - path: 1.4.5
+              level: 3
+              title: Dependencies
+              byte_offset: 6578
+              byte_count: 25
+              word_count: 3
+              content_hash: 11d860acbe2898d047cdff3d7f4909ffae838b4b31eb871a9727f5d678d18b15
+            - path: 1.4.6
+              level: 3
+              title: Verification
+              byte_offset: 6603
+              byte_count: 158
+              word_count: 22
+              content_hash: 254d427af0a378bdfed5232bb1be16c675782e1f4edb858c11e5f121747153e3
+        - path: "1.5"
+          level: 2
+          title: '5. Task T2: Health Checks'
+          byte_offset: 6761
+          byte_count: 4231
+          word_count: 544
+          content_hash: 7d1fd4ea4b3de87f0cc13a549db3e79dcd88dfc224dda884813382ffc948644c
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Objective
+              byte_offset: 6791
+              byte_count: 206
+              word_count: 24
+              content_hash: 04112eab1bb9b153acb74c8233cfbfd6fcd345d3570270f997a6953b7dd21b88
+            - path: 1.5.2
+              level: 3
+              title: Specification references
+              byte_offset: 6997
+              byte_count: 430
+              word_count: 62
+              content_hash: aa189e3f855666881213cb9e1bda69742f2e8a060b9050048d22f1b6e30d1420
+            - path: 1.5.3
+              level: 3
+              title: Input context
+              byte_offset: 7427
+              byte_count: 813
+              word_count: 95
+              content_hash: a62a822fdf9f62c748b23af9afc2519ecc011c20ce7929f59ff65114ff3f2c27
+            - path: 1.5.4
+              level: 3
+              title: Output artifacts
+              byte_offset: 8240
+              byte_count: 2346
+              word_count: 304
+              content_hash: 723172e9e3c6708e6929efc2e6b074d47aa39714f8c886efc04cff884074bace
+            - path: 1.5.5
+              level: 3
+              title: Dependencies
+              byte_offset: 10586
+              byte_count: 178
+              word_count: 24
+              content_hash: 0503c8a3a55f9493e84523cfd756adffefab50a74db23d05da3d7ef4d0427c64
+            - path: 1.5.6
+              level: 3
+              title: Verification
+              byte_offset: 10764
+              byte_count: 228
+              word_count: 29
+              content_hash: c1752f472606c675669f624453350df9dad38b852080b1f8a88f1b31217ec01b
+        - path: "1.6"
+          level: 2
+          title: '6. Task T3: Document Migration'
+          byte_offset: 10992
+          byte_count: 3935
+          word_count: 570
+          content_hash: 00c5ff0470ad964643ab6ae1a45eed096fe059cad4a712f1253a444b5f157b07
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Objective
+              byte_offset: 11027
+              byte_count: 227
+              word_count: 32
+              content_hash: 54cb8f03527b90365014f6971e0706b3fafd5c51cbab674042f08cd92b7a5215
+            - path: 1.6.2
+              level: 3
+              title: Specification references
+              byte_offset: 11254
+              byte_count: 234
+              word_count: 34
+              content_hash: bec7277bfa7d005ca6e83a3570e4c09563e2d2dd756025bb84cbd290605d5a5a
+            - path: 1.6.3
+              level: 3
+              title: Input context
+              byte_offset: 11488
+              byte_count: 562
+              word_count: 82
+              content_hash: 3fd14d2fd17b225cec6ed07d43cce4363e5b9e8debadc1f969c83e827cc1f165
+            - path: 1.6.4
+              level: 3
+              title: Migration procedure
+              byte_offset: 12050
+              byte_count: 1737
+              word_count: 253
+              content_hash: 74422f265527f9544f7bae5eb0621f695bbfc20c896a6b9d76588046d0967b81
+            - path: 1.6.5
+              level: 3
+              title: Output artifacts
+              byte_offset: 13787
+              byte_count: 231
+              word_count: 32
+              content_hash: 9fd0ffe0043a7313de25385971ffcf7d804a83fe9592d7ace6615ff27f5ef241
+            - path: 1.6.6
+              level: 3
+              title: Dependencies
+              byte_offset: 14018
+              byte_count: 354
+              word_count: 52
+              content_hash: cc97a6a6e31c1290c1910e7bbc5555c34778fd4a96246b5bad761987ca1e559a
+            - path: 1.6.7
+              level: 3
+              title: Verification
+              byte_offset: 14372
+              byte_count: 555
+              word_count: 79
+              content_hash: 547d370d88cefbeb2600c6d9b6f88cae2a610a8e33263d8dcb0e49d508ada903
+        - path: "1.7"
+          level: 2
+          title: 7. Execution Summary
+          byte_offset: 14927
+          byte_count: 835
+          word_count: 116
+          content_hash: 3f274ec72f62e875ba3734322c5fcf6427b252b7de0c09a7a2d704de1bbb9fdd
+        - path: "1.8"
+          level: 2
+          title: 8. Traceability Matrix
+          byte_offset: 15762
+          byte_count: 1424
+          word_count: 258
+          content_hash: 414930e13cca221abccbc43a77cd5d006ba4d657b1168f8a6c131fe61c2fcab0
+        - path: "1.9"
+          level: 2
+          title: 9. Scope Boundaries
+          byte_offset: 17186
+          byte_count: 451
+          word_count: 75
+          content_hash: 1ac823a9a1d49a94107f866c4153bec075c67b883fd2ae6ffdbed6537acf9d6c
+cross_doc_links:
+    - target_path: work/spec/consistent-front-matter.md
+      link_text: work/spec/consistent-front-matter.md
+      section_path: "1"
+    - target_path: work/design/consistent-front-matter.md
+      link_text: work/design/consistent-front-matter.md
+      section_path: "1"
+    - target_path: work/**/*.md
+      link_text: work/**/*.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.3
+      role: narrative
+      confidence: high
+    - section_path: 1.5.3
+      role: narrative
+      confidence: high
+    - section_path: 1.6.3
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+    - section_path: "1.9"
+      role: constraint
+      confidence: high
+classified: false

@@ -1,0 +1,260 @@
+document_id: PROJECT/report-project-timeline
+document_path: docs/project-timeline.md
+content_hash: 018efc86d9682549a5dd2b475ecf6b49e8697f728c254062a3e285b7918e5236
+indexed_at: 2026-04-01T15:29:31.86185Z
+sections:
+    - path: "1"
+      level: 1
+      title: Project Timeline
+      byte_offset: 0
+      byte_count: 13909
+      word_count: 1695
+      content_hash: 018efc86d9682549a5dd2b475ecf6b49e8697f728c254062a3e285b7918e5236
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Phase 1: Workflow Kernel'
+          byte_offset: 186
+          byte_count: 362
+          word_count: 45
+          content_hash: e0aabe2af0ecb5db8a57a8ce7cd3a9c7825b98383b2b3c7395322b65631b884d
+        - path: "1.2"
+          level: 2
+          title: 'Phase 2a: Entity Model Evolution'
+          byte_offset: 548
+          byte_count: 297
+          word_count: 30
+          content_hash: 14b25c4851464b5ceecc2cf468d6d852caa5d849b7abe217769ad9a7f665f534
+        - path: "1.3"
+          level: 2
+          title: 'Phase 2b: Context Profiles and Knowledge Management'
+          byte_offset: 845
+          byte_count: 316
+          word_count: 32
+          content_hash: daec3924ec3de0cb8c7f80b6f3fd53ece9932ea49b18bc2bd7618e6242841b7e
+        - path: "1.4"
+          level: 2
+          title: 'Phase 3: Git Integration'
+          byte_offset: 1161
+          byte_count: 401
+          word_count: 45
+          content_hash: 8f71bf7a5bfcd1e5b2ce56bd4fe17862908e5f6d1f440c77e8e6c92c04368cd6
+        - path: "1.5"
+          level: 2
+          title: 'Phase 4a: Orchestration Foundation'
+          byte_offset: 1562
+          byte_count: 342
+          word_count: 40
+          content_hash: 2ee75ee308d8e14f3aab79f57881d60c62ba5885b9268542c3bf77e48db65444
+        - path: "1.6"
+          level: 2
+          title: 'Phase 4b: Feature Decomposition and Review'
+          byte_offset: 1904
+          byte_count: 497
+          word_count: 62
+          content_hash: 7717144b615efdd68f5657e854beb0b9c782fecca1dbc42023e278efde50bc4a
+        - path: "1.7"
+          level: 2
+          title: 'Kanbanzai 2.0: MCP Tool Surface Redesign'
+          byte_offset: 2401
+          byte_count: 1209
+          word_count: 153
+          content_hash: 01348856271c052dad6eb2216ecb74c813a0c8e26b67f6cd559c50dd08ef46f0
+        - path: "1.8"
+          level: 2
+          title: 'P6: Workflow Quality & Code Review'
+          byte_offset: 3610
+          byte_count: 1662
+          word_count: 205
+          content_hash: 988d19771f4fec073f345011b11e827913eacf22b93add06abfdcd297cf93670
+        - path: "1.9"
+          level: 2
+          title: 'P7: Developer Experience'
+          byte_offset: 5272
+          byte_count: 919
+          word_count: 99
+          content_hash: bb65c3bdf3a503becd4d1ba3c6621b8bb6258fe1bf925b55ee4f7bb8b1bc3145
+        - path: "1.10"
+          level: 2
+          title: 'P8: decompose Reliability'
+          byte_offset: 6191
+          byte_count: 713
+          word_count: 82
+          content_hash: e4c6b5fbc5bd9b94440af0041c56f35929057cd45697cc22fafcf99215aa529a
+        - path: "1.11"
+          level: 2
+          title: 'P9: MCP Discoverability and Reliability'
+          byte_offset: 6904
+          byte_count: 1397
+          word_count: 187
+          content_hash: 57574219e815e36cf2f91855da32c26a8dd63094fb776f52e0dfc132b3124bab
+        - path: "1.12"
+          level: 2
+          title: 'P11: Fresh Install Experience'
+          byte_offset: 8301
+          byte_count: 2616
+          word_count: 315
+          content_hash: 680fc3ad09fb7505123badf69c0e3363dea2782e64507692b2dfb9e911eaf005
+        - path: "1.13"
+          level: 2
+          title: 'P10: Review Workflow and Documentation Currency'
+          byte_offset: 10917
+          byte_count: 1232
+          word_count: 148
+          content_hash: a679eb207669b742c5f877d09fc01f394cebca3117c89369f3949ac68491a811
+        - path: "1.14"
+          level: 2
+          title: 'P12: Agent Onboarding and Skill Discovery'
+          byte_offset: 12149
+          byte_count: 1760
+          word_count: 224
+          content_hash: a3f039f0d7d0e43a59cc2761de056cfcf3bb91cd2c6d4ee73b2ca07270753ad9
+entity_refs:
+    - entity_id: FEAT-01J3K
+      entity_type: feature
+      section_path: "1.9"
+      byte_offset: 5686
+    - entity_id: P4-kanbanzai-2
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 3563
+    - entity_id: P6-workflow-quality-and-review-plan
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 5226
+    - entity_id: P10-review-and-doc-currency-plan
+      entity_type: plan
+      section_path: "1.13"
+      byte_offset: 12014
+cross_doc_links:
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1.1"
+    - target_path: work/spec/phase-2-specification.md
+      link_text: work/spec/phase-2-specification.md
+      section_path: "1.2"
+    - target_path: work/plan/phase-2a-progress.md
+      link_text: work/plan/phase-2a-progress.md
+      section_path: "1.2"
+    - target_path: work/spec/phase-2b-specification.md
+      link_text: work/spec/phase-2b-specification.md
+      section_path: "1.3"
+    - target_path: work/plan/phase-2b-progress.md
+      link_text: work/plan/phase-2b-progress.md
+      section_path: "1.3"
+    - target_path: work/spec/phase-3-specification.md
+      link_text: work/spec/phase-3-specification.md
+      section_path: "1.4"
+    - target_path: work/plan/phase-3-progress.md
+      link_text: work/plan/phase-3-progress.md
+      section_path: "1.4"
+    - target_path: work/spec/phase-4a-specification.md
+      link_text: work/spec/phase-4a-specification.md
+      section_path: "1.5"
+    - target_path: work/spec/phase-4b-specification.md
+      link_text: work/spec/phase-4b-specification.md
+      section_path: "1.6"
+    - target_path: work/spec/kanbanzai-2.0-specification.md
+      link_text: work/spec/kanbanzai-2.0-specification.md
+      section_path: "1.7"
+    - target_path: work/plan/P4-kanbanzai-2.0-implementation-plan.md
+      link_text: work/plan/P4-kanbanzai-2.0-implementation-plan.md
+      section_path: "1.7"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.8"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.8"
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: "1.8"
+    - target_path: work/design/smart-lifecycle-transitions.md
+      link_text: work/design/smart-lifecycle-transitions.md
+      section_path: "1.8"
+    - target_path: work/plan/P6-workflow-quality-and-review-plan.md
+      link_text: work/plan/P6-workflow-quality-and-review-plan.md
+      section_path: "1.8"
+    - target_path: review-{plan-or-feature}-{slug}.md
+      link_text: review-{plan-or-feature}-{slug}.md
+      section_path: "1.9"
+    - target_path: bootstrap-workflow.md
+      link_text: bootstrap-workflow.md
+      section_path: "1.9"
+    - target_path: work/spec/server-info-tool.md
+      link_text: work/spec/server-info-tool.md
+      section_path: "1.9"
+    - target_path: work/spec/human-friendly-id-display.md
+      link_text: work/spec/human-friendly-id-display.md
+      section_path: "1.9"
+    - target_path: work/spec/review-naming-and-folder-conventions.md
+      link_text: work/spec/review-naming-and-folder-conventions.md
+      section_path: "1.9"
+    - target_path: work/design/decompose-reliability.md
+      link_text: work/design/decompose-reliability.md
+      section_path: "1.10"
+    - target_path: work/spec/agents-md-decompose-rule.md
+      link_text: work/spec/agents-md-decompose-rule.md
+      section_path: "1.10"
+    - target_path: work/spec/decompose-precondition-gates.md
+      link_text: work/spec/decompose-precondition-gates.md
+      section_path: "1.10"
+    - target_path: work/design/mcp-discoverability-and-reliability.md
+      link_text: work/design/mcp-discoverability-and-reliability.md
+      section_path: "1.11"
+    - target_path: work/spec/mcp-discoverability-and-reliability.md
+      link_text: work/spec/mcp-discoverability-and-reliability.md
+      section_path: "1.11"
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: "1.12"
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: "1.12"
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: "1.12"
+    - target_path: work/design/fresh-install-experience.md
+      link_text: work/design/fresh-install-experience.md
+      section_path: "1.12"
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: "1.13"
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: "1.13"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.13"
+    - target_path: bootstrap-workflow.md
+      link_text: bootstrap-workflow.md
+      section_path: "1.13"
+    - target_path: work/plan/P10-review-and-doc-currency-plan.md
+      link_text: work/plan/P10-review-and-doc-currency-plan.md
+      section_path: "1.13"
+    - target_path: work/spec/plan-review-lifecycle.md
+      link_text: work/spec/plan-review-lifecycle.md
+      section_path: "1.13"
+    - target_path: work/spec/doc-currency-health-check.md
+      link_text: work/spec/doc-currency-health-check.md
+      section_path: "1.13"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.14"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.14"
+    - target_path: work/spec/agent-onboarding.md
+      link_text: work/spec/agent-onboarding.md
+      section_path: "1.14"
+    - target_path: work/reviews/review-p12-agent-onboarding.md
+      link_text: work/reviews/review-p12-agent-onboarding.md
+      section_path: "1.14"
+conventional_roles:
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+classified: false

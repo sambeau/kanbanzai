@@ -1,0 +1,372 @@
+document_id: PROJECT/research-agent-orchestration-research
+document_path: work/research/agent-orchestration-research.md
+content_hash: 71a0805f01cdaf35f3117c9e969a50fe9b6b1fe8d860b5666e14562be297cf07
+indexed_at: 2026-04-01T15:29:30.577284Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Research Report: AI Agent Orchestration for Kanbanzai 3.0'
+      byte_offset: 0
+      byte_count: 48613
+      word_count: 6411
+      content_hash: 71a0805f01cdaf35f3117c9e969a50fe9b6b1fe8d860b5666e14562be297cf07
+      children:
+        - path: "1.1"
+          level: 2
+          title: Executive Summary
+          byte_offset: 248
+          byte_count: 2602
+          word_count: 336
+          content_hash: 0f256e2ae712b18d9a13d65cdc7b222c9961a6ff94335062b086e5c3a2ca7401
+        - path: "1.2"
+          level: 2
+          title: Table of Contents
+          byte_offset: 2850
+          byte_count: 368
+          word_count: 27
+          content_hash: f909072d6596427710c20ae4b9f9b2811160097b6bf3889c49cdaeaf461524cb
+        - path: "1.3"
+          level: 2
+          title: 1. Sources Reviewed
+          byte_offset: 3218
+          byte_count: 15448
+          word_count: 1974
+          content_hash: 24788538ecc8758fc545dbc8a27cace5ecbddf2681ca38711eb5c7901f593728
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 1.1 Primary Sources (High Relevance)
+              byte_offset: 3242
+              byte_count: 10176
+              word_count: 1321
+              content_hash: 91744d8a0d5363fa572a1aaedafeeefc143a720342ee544cce3c2ae1ec53fbd8
+              children:
+                - path: 1.3.1.1
+                  level: 4
+                  title: Anthropic — "Building Effective Agents" (Dec 2024)
+                  byte_offset: 3376
+                  byte_count: 1414
+                  word_count: 187
+                  content_hash: 31f0c6584aae8f64ba6ffd208c4a9a3897c9d30151e6eeca77eb6973ff6de327
+                - path: 1.3.1.2
+                  level: 4
+                  title: Anthropic — "How We Built Our Multi-Agent Research System" (Jun 2025)
+                  byte_offset: 4790
+                  byte_count: 2073
+                  word_count: 286
+                  content_hash: 17a83d0202a708af36b3004da27387f9d3fc447d7b8a0cc0a3ac37e8b46983b6
+                - path: 1.3.1.3
+                  level: 4
+                  title: Google Research — "Towards a Science of Scaling Agent Systems" (Jan 2026)
+                  byte_offset: 6863
+                  byte_count: 1811
+                  word_count: 215
+                  content_hash: e3e60b38cd9f603cc1c2d013a9e58472f0cfd874edafdc996f187b01966ce160
+                - path: 1.3.1.4
+                  level: 4
+                  title: 'Masters et al. — "Orchestrating Human-AI Teams: The Manager Agent as a Unifying Research Challenge" (Oct 2025)'
+                  byte_offset: 8674
+                  byte_count: 2259
+                  word_count: 286
+                  content_hash: 851d46a98b2db2743aa3ae238b24721808c485583cc97e69b939079cc5235e22
+                - path: 1.3.1.5
+                  level: 4
+                  title: MetaGPT — "Meta Programming for Multi-Agent Collaborative Framework" (Aug 2023)
+                  byte_offset: 10933
+                  byte_count: 1333
+                  word_count: 173
+                  content_hash: 12c37ee3ad0d62108de109fdfe016ba684770277329a85ae81006060615a338f
+                - path: 1.3.1.6
+                  level: 4
+                  title: SWE-agent — "Agent-Computer Interfaces Enable Automated Software Engineering" (May 2024)
+                  byte_offset: 12266
+                  byte_count: 1152
+                  word_count: 156
+                  content_hash: d60c61545605196d91b0164bbf48164f01328ceb917cac23983453376d2cbb1a
+            - path: 1.3.2
+              level: 3
+              title: 1.2 Supporting Sources (Moderate Relevance)
+              byte_offset: 13418
+              byte_count: 3919
+              word_count: 491
+              content_hash: 151fc8c451ccc1ae588dc1a72b97e92ab11c882ad1256200a265e864b84cf387
+              children:
+                - path: 1.3.2.1
+                  level: 4
+                  title: Microsoft — "AI Agent Orchestration Patterns" (Feb 2026)
+                  byte_offset: 13564
+                  byte_count: 1565
+                  word_count: 197
+                  content_hash: de72b07108f82032efa08d619e9f7cad3752dcea5b812360d808ffba1825fc00
+                - path: 1.3.2.2
+                  level: 4
+                  title: AutoCodeRover — "Autonomous Program Improvement" (Apr 2024)
+                  byte_offset: 15129
+                  byte_count: 877
+                  word_count: 113
+                  content_hash: fa553fe611a8d7057ce9e05964d948064c377d50cf88556e9a2f05a3089cf745
+                - path: 1.3.2.3
+                  level: 4
+                  title: 'Guo et al. — "LLM-based Multi-Agents: A Survey of Progress and Challenges" (Jan 2024)'
+                  byte_offset: 16006
+                  byte_count: 849
+                  word_count: 103
+                  content_hash: c837928f76b12eb90195506918098723496733bff6ef2a57b042f0a0fe230f6e
+                - path: 1.3.2.4
+                  level: 4
+                  title: SWE-bench — "Can Language Models Resolve Real-World GitHub Issues?" (Oct 2023)
+                  byte_offset: 16855
+                  byte_count: 482
+                  word_count: 59
+                  content_hash: a45d31c32f519418557422d9d977d006047b12115ca136cc675dd3cae6d2cebd
+            - path: 1.3.3
+              level: 3
+              title: 1.3 Contextual Sources (Lower Relevance)
+              byte_offset: 17337
+              byte_count: 1049
+              word_count: 120
+              content_hash: 3ff2b3a1d60925d82e7b1d0237c282cc1d0ed9708ab60f320cd84d2db7ee4079
+              children:
+                - path: 1.3.3.1
+                  level: 4
+                  title: IBM — "What is AI Agent Orchestration?"
+                  byte_offset: 17383
+                  byte_count: 469
+                  word_count: 50
+                  content_hash: 45ae5fe3ce657d2cb48ec1da6ddb98bb79c6ccc616ec31071eb126a93637d050
+                - path: 1.3.3.2
+                  level: 4
+                  title: Orchestral AI — "A Framework for Agent Orchestration" (Jan 2026)
+                  byte_offset: 17852
+                  byte_count: 534
+                  word_count: 64
+                  content_hash: 141f3b1b6bb84d550dac68e35402dc573408b39e21648e0e73b56b947c7be995
+            - path: 1.3.4
+              level: 3
+              title: 1.4 Inaccessible Sources
+              byte_offset: 18386
+              byte_count: 280
+              word_count: 38
+              content_hash: 2d3d1af47e55ae71a14c9afedafe5134c97777e1784763e8c2f6b8bb4eec3fa5
+        - path: "1.4"
+          level: 2
+          title: 2. Cross-Cutting Findings
+          byte_offset: 18666
+          byte_count: 7278
+          word_count: 1005
+          content_hash: 2c4847766210fc573bfc4c739ab3b0dc0f301b59121605ca6d625d956e1b343e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 2.1 Agent-Computer Interface Design Is a First-Class Concern
+              byte_offset: 18749
+              byte_count: 1830
+              word_count: 268
+              content_hash: b9cd60600d32ce0c08f096c7bb69f40527cd41bbcf5236e9b7137f5147e84286
+            - path: 1.4.2
+              level: 3
+              title: 2.2 Enforceable Constraints Beat Advisory Instructions
+              byte_offset: 20579
+              byte_count: 1533
+              word_count: 207
+              content_hash: bcc784e10e61c8ecc6945cfa13ddaa7890e16a48f14d03f6464b227add32dccf
+            - path: 1.4.3
+              level: 3
+              title: 2.3 Decomposition Quality Is the Critical Path
+              byte_offset: 22112
+              byte_count: 1290
+              word_count: 176
+              content_hash: 8f238b7c8ecf1662b95332c0351d27270e924b385386b610bbaf8938cd1b19c0
+            - path: 1.4.4
+              level: 3
+              title: 2.4 Architecture Must Match Task Structure
+              byte_offset: 23402
+              byte_count: 1176
+              word_count: 145
+              content_hash: 79f423b3e60bb9825a0e92705e000bf852261c9163522077492c61619a73471f
+            - path: 1.4.5
+              level: 3
+              title: 2.5 Proactive Orchestration vs Reactive Communication
+              byte_offset: 24578
+              byte_count: 1366
+              word_count: 198
+              content_hash: eb22a8d84e8eddad2a36f92253abd9e0c65a308fa881b477fa0aff3d809c82a6
+        - path: "1.5"
+          level: 2
+          title: 3. Mapping to Kanbanzai's Problems
+          byte_offset: 25944
+          byte_count: 11426
+          word_count: 1566
+          content_hash: c41a37d4ea45b7afa148943bd168f1c0d8d75b603d741216995b7e915a57e18b
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 3.1 "Agents don't discover the system / forget to use it"
+              byte_offset: 26107
+              byte_count: 2142
+              word_count: 318
+              content_hash: 70c70dead150d25e5fb19194eeef57b617f3f52ffe01e04c4fbe65afb388b47d
+            - path: 1.5.2
+              level: 3
+              title: 3.2 "Agents skip steps in the workflow"
+              byte_offset: 28249
+              byte_count: 1887
+              word_count: 253
+              content_hash: 80621b5d61d1a7eed557aec78461b40e5eb86a860050bc0fd6a4d27c8db372d8
+            - path: 1.5.3
+              level: 3
+              title: 3.3 "Agents are too keen to get to implementation"
+              byte_offset: 30136
+              byte_count: 2556
+              word_count: 336
+              content_hash: 97bd1ef4e66dd0331956edbe729032cbce9de93aaa347b1bd7ba7910f84a70dc
+            - path: 1.5.4
+              level: 3
+              title: 3.4 "Inconsistent specifications and plans"
+              byte_offset: 32692
+              byte_count: 2260
+              word_count: 306
+              content_hash: 8ccbedd61a6a01324c0a91df22ef472bec7e5729a72f7ec158e9f972f48a49dd
+            - path: 1.5.5
+              level: 3
+              title: 3.5 "Agents don't appear to understand the workflow system"
+              byte_offset: 34952
+              byte_count: 2418
+              word_count: 329
+              content_hash: 7340626de1f50e472ab1c7674122716b3bd0faa7576bdf2e286ff0e1e8990cdf
+        - path: "1.6"
+          level: 2
+          title: 4. Recommendations for Kanbanzai 3.0
+          byte_offset: 37370
+          byte_count: 6753
+          word_count: 912
+          content_hash: 2732551d7d7de69e5db0ea759dc2e72320a74c290b29dd35a916766be6875ec0
+          children:
+            - path: 1.6.1
+              level: 3
+              title: '4.1 High-Impact: Enforce Lifecycle Gates at the Tool Level'
+              byte_offset: 37506
+              byte_count: 940
+              word_count: 130
+              content_hash: ad9ddfc67b45087259e09e02dd897844cffafd574db37eeb033967cec5d642ef
+            - path: 1.6.2
+              level: 3
+              title: '4.2 High-Impact: Redesign Tool Descriptions as ACIs'
+              byte_offset: 38446
+              byte_count: 771
+              word_count: 115
+              content_hash: b6e9c1be44b388dec853dde139677bcf14d1915c076aae7c8d33f4e1cf2818b5
+            - path: 1.6.3
+              level: 3
+              title: '4.3 High-Impact: Structured Output Templates for Specifications and Plans'
+              byte_offset: 39217
+              byte_count: 741
+              word_count: 90
+              content_hash: fffc55d32f4dd93ce137116c210ad0c396e7d92a8d3e51803941d4b4384f46a2
+            - path: 1.6.4
+              level: 3
+              title: '4.4 Medium-Impact: Effort Budgets per Workflow Stage'
+              byte_offset: 39958
+              byte_count: 784
+              word_count: 103
+              content_hash: d233cc443a471cd8e19cae338867621c65e409990c6d4cd8c94f8730090ce232
+            - path: 1.6.5
+              level: 3
+              title: '4.5 Medium-Impact: Maker-Checker Review Automation'
+              byte_offset: 40742
+              byte_count: 736
+              word_count: 85
+              content_hash: 840d0fd7bfb209db5187b75e77a57a251e7ae57059c0f60d49a83775b3ba0b11
+            - path: 1.6.6
+              level: 3
+              title: '4.6 Medium-Impact: Match Orchestration Pattern to Task Type'
+              byte_offset: 41478
+              byte_count: 945
+              word_count: 146
+              content_hash: 5acd3091086e7e6e6524611fa1756be17032e09baa6b4559979be666ab29f896
+            - path: 1.6.7
+              level: 3
+              title: '4.7 Lower-Impact: Observability and Evaluation Infrastructure'
+              byte_offset: 42423
+              byte_count: 842
+              word_count: 109
+              content_hash: ca5a88e6bf3cc82cd8a109f8f9e0f48e2989e4ecb8901b0e20d22c68229e19fd
+            - path: 1.6.8
+              level: 3
+              title: '4.8 Lower-Impact: Context Compaction Between Agent Sessions'
+              byte_offset: 43265
+              byte_count: 858
+              word_count: 115
+              content_hash: c7c4ed52f51125873afecf7493b095dc52c55dce6d36cca19614fabb3e181e15
+        - path: "1.7"
+          level: 2
+          title: 5. Further Research Avenues
+          byte_offset: 44123
+          byte_count: 2422
+          word_count: 309
+          content_hash: e5e4167b047f006fa7c3e5cb5d61a31365019dd42ce065a0cf69ecdeb14baf68
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 5.1 Academic Sources
+              byte_offset: 44155
+              byte_count: 1056
+              word_count: 144
+              content_hash: 7ce2a76d6920e3c4ec04706dbb074649ce0eb7d2f53db1408e70535e738e4676
+            - path: 1.7.2
+              level: 3
+              title: 5.2 Industry Sources
+              byte_offset: 45211
+              byte_count: 569
+              word_count: 64
+              content_hash: 6dccb728a8427c14c37d91ed9f398ddfffaf96647a8da3d498062d6a1d8229f6
+            - path: 1.7.3
+              level: 3
+              title: 5.3 Adjacent Research
+              byte_offset: 45780
+              byte_count: 765
+              word_count: 96
+              content_hash: eed68fe618744a5af43b42d1d865c0df968ad0fd97c48e635b5b427fa2a59b65
+        - path: "1.8"
+          level: 2
+          title: 6. Bibliography
+          byte_offset: 46545
+          byte_count: 2068
+          word_count: 245
+          content_hash: acdf3f999d863618d709d7a6bac971680f05aa61e620ef461c5c5c68e28b4348
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Academic Papers
+              byte_offset: 46565
+              byte_count: 1243
+              word_count: 175
+              content_hash: 94343fd43e6e232cce9cef429146b01a0bcdb66856e27c87927ebb0432224b16
+            - path: 1.8.2
+              level: 3
+              title: Industry Sources
+              byte_offset: 47808
+              byte_count: 805
+              word_count: 67
+              content_hash: 36c4ee46f30f844a218604e32e6a9cb8b2cba125773873bacb21a6820e03b734
+cross_doc_links:
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.5.1
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.7.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.3
+      role: narrative
+      confidence: high
+    - section_path: 1.4.2
+      role: constraint
+      confidence: high
+    - section_path: 1.6.8
+      role: narrative
+      confidence: high
+classified: false

@@ -1,0 +1,537 @@
+document_id: PROJECT/research-agent-skills-research
+document_path: work/research/agent-skills-research.md
+content_hash: 225a3c587b826f72fea79cbaafa9e4b37c7beac12e746adcc7eb2615b3945ac4
+indexed_at: 2026-04-01T15:29:30.686821Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Research Report: Agent Skills Architecture for Kanbanzai 3.0'
+      byte_offset: 0
+      byte_count: 49741
+      word_count: 6947
+      content_hash: 225a3c587b826f72fea79cbaafa9e4b37c7beac12e746adcc7eb2615b3945ac4
+      children:
+        - path: "1.1"
+          level: 2
+          title: Executive Summary
+          byte_offset: 521
+          byte_count: 2330
+          word_count: 317
+          content_hash: ba22aeee9d259624730f307bbfc7bfd778edbe765f38d9511e642860ed81aa7c
+        - path: "1.2"
+          level: 2
+          title: Table of Contents
+          byte_offset: 2851
+          byte_count: 795
+          word_count: 54
+          content_hash: 97962bf54b8e5748173769e2f2033f2d0336d87215ddd68a6eda7288c8cf663e
+        - path: "1.3"
+          level: 2
+          title: '1. Source Analysis: Agent Skills Overview'
+          byte_offset: 3646
+          byte_count: 3238
+          word_count: 446
+          content_hash: e437aedaec232d4a61bda4d526dfc56ccc4d4276c51b186c9bc7e5ee11885334
+          children:
+            - path: 1.3.1
+              level: 3
+              title: What the document says
+              byte_offset: 3780
+              byte_count: 1408
+              word_count: 199
+              content_hash: 2254147b4f65a827f791429896731222d8679bf829608dd03b0ff6176c6b5ce3
+            - path: 1.3.2
+              level: 3
+              title: Application to Kanbanzai
+              byte_offset: 5188
+              byte_count: 1696
+              word_count: 238
+              content_hash: 3cdd7e479d02e0591aa91eef58c5bdb794078bfdef115a8b1da737267342676d
+        - path: "1.4"
+          level: 2
+          title: '2. Source Analysis: Skills Quickstart'
+          byte_offset: 6884
+          byte_count: 1728
+          word_count: 239
+          content_hash: 69c2471e4e79d8203a3bd48e7f6a703964642c49cd34986e8e12d76764c05460
+          children:
+            - path: 1.4.1
+              level: 3
+              title: What the document says
+              byte_offset: 7016
+              byte_count: 721
+              word_count: 102
+              content_hash: 71803f9f5eb9d9b2b5f2737be1a5047a16ccec95bc859bbda211245a9f6fcb1c
+            - path: 1.4.2
+              level: 3
+              title: Application to Kanbanzai
+              byte_offset: 7737
+              byte_count: 875
+              word_count: 129
+              content_hash: 9355244874a4c0f709aefe3f4bd8858f879136c9c5ddfa26a4495ebb9584b87c
+        - path: "1.5"
+          level: 2
+          title: '3. Source Analysis: Skill Authoring Best Practices'
+          byte_offset: 8612
+          byte_count: 11031
+          word_count: 1568
+          content_hash: 8e33f9b41ed0d05b8eae970fa03e172216c1c1da24ebb2e1f4252caf80ac9bd4
+          children:
+            - path: 1.5.1
+              level: 3
+              title: '3.1 Core Principle: Conciseness'
+              byte_offset: 8866
+              byte_count: 908
+              word_count: 135
+              content_hash: a7e61b716604e604efb6064e5a0c00ae2eab7856e6d923f607cb8b5dcba95100
+            - path: 1.5.2
+              level: 3
+              title: 3.2 Degrees of Freedom
+              byte_offset: 9774
+              byte_count: 1376
+              word_count: 210
+              content_hash: 857e09b3aac35532b762b3ebfbabc8b617ad9c6ae6ca05dd5a7067889c4ba61d
+            - path: 1.5.3
+              level: 3
+              title: 3.3 Naming Conventions
+              byte_offset: 11150
+              byte_count: 1034
+              word_count: 130
+              content_hash: 995972303bb1a82758854ebed294ab55564c6c727233fe10f19986f809b8a357
+            - path: 1.5.4
+              level: 3
+              title: 3.4 Writing Effective Descriptions
+              byte_offset: 12184
+              byte_count: 1005
+              word_count: 145
+              content_hash: f4962b1f465e7199d6504cebb6d6f164155e293a38899d179bc75a7fb5657656
+            - path: 1.5.5
+              level: 3
+              title: 3.5 Progressive Disclosure Patterns
+              byte_offset: 13189
+              byte_count: 1535
+              word_count: 194
+              content_hash: e6292edc78037eb05b16f60c1ec24d607a3d335a5666e893cd0f96aad640f368
+            - path: 1.5.6
+              level: 3
+              title: 3.6 Workflows and Feedback Loops
+              byte_offset: 14724
+              byte_count: 1218
+              word_count: 195
+              content_hash: bc5af45147403500324950475dc008387306e75d04a001c1e42da6a94ca5dabc
+            - path: 1.5.7
+              level: 3
+              title: 3.7 Content Guidelines
+              byte_offset: 15942
+              byte_count: 673
+              word_count: 90
+              content_hash: 3682c4cf738849bbfcfd71d1fb241dc8212f48b638e49a6da0aa75de4d397b33
+            - path: 1.5.8
+              level: 3
+              title: 3.8 Template and Examples Patterns
+              byte_offset: 16615
+              byte_count: 676
+              word_count: 85
+              content_hash: 2316957332c384b1c22659b01181c530c2f1da9f900384982df7dbfc3298d396
+            - path: 1.5.9
+              level: 3
+              title: 3.9 Evaluation and Iteration
+              byte_offset: 17291
+              byte_count: 694
+              word_count: 98
+              content_hash: 9408a2a864cb940141d51ae41f2e3d61296b65001c9ff8d35d0ffbc3171bb946
+            - path: 1.5.10
+              level: 3
+              title: 3.10 Anti-Patterns
+              byte_offset: 17985
+              byte_count: 720
+              word_count: 99
+              content_hash: a57f92ef08c6aed3d93955f38adb28707d08c96a916721d1050cfeecb2c65f49
+            - path: 1.5.11
+              level: 3
+              title: 3.11 The Best Practices Checklist
+              byte_offset: 18705
+              byte_count: 938
+              word_count: 162
+              content_hash: a167809c2a5b2c351866787585c09c0b4c2309667ddbd411c42b7e2a3f68b3b9
+        - path: "1.6"
+          level: 2
+          title: '4. Source Analysis: Increase Output Consistency'
+          byte_offset: 19643
+          byte_count: 3096
+          word_count: 407
+          content_hash: e5e56a230366f0d653a0588eab1bade34b1f88eb8810e92b61e33ecd7f56c112
+          children:
+            - path: 1.6.1
+              level: 3
+              title: What the document says
+              byte_offset: 19805
+              byte_count: 849
+              word_count: 116
+              content_hash: 7264e2ffd8254ced953f251283d522bfaa8830d7715b519c69e583fcfdaff05b
+            - path: 1.6.2
+              level: 3
+              title: Application to Kanbanzai
+              byte_offset: 20654
+              byte_count: 2085
+              word_count: 282
+              content_hash: 75a8a72be445774243d839396a2a81d5ce16c9ce1f0784a815484c83b02db7f7
+        - path: "1.7"
+          level: 2
+          title: '5. Source Analysis: Reduce Hallucinations'
+          byte_offset: 22739
+          byte_count: 2641
+          word_count: 365
+          content_hash: 813a678d893675ce6e3b4cd9dc8dbc6947f0c56129fc04612891a1e8687fbb60
+          children:
+            - path: 1.7.1
+              level: 3
+              title: What the document says
+              byte_offset: 22896
+              byte_count: 920
+              word_count: 127
+              content_hash: ad42822ff3ad09c67e15af01961585cdd6c5be0689b8335bb83466aac936f370
+            - path: 1.7.2
+              level: 3
+              title: Application to Kanbanzai
+              byte_offset: 23816
+              byte_count: 1564
+              word_count: 230
+              content_hash: f17309c279f8eb7ba4e2e0b813531d7147da700ab72ef9493a3dc051a823712f
+        - path: "1.8"
+          level: 2
+          title: '6. Source Analysis: The Skill-Creator Meta-Skill'
+          byte_offset: 25380
+          byte_count: 7562
+          word_count: 1148
+          content_hash: e49f671114ff6e2d872b4b954fa623ec4b6c8def32d69bf75c4238db91f797f5
+          children:
+            - path: 1.8.1
+              level: 3
+              title: What the document says
+              byte_offset: 25514
+              byte_count: 226
+              word_count: 32
+              content_hash: afebdc013c70355a3f865f1428fafd9c5b1154c23ce6f248518502987150de27
+            - path: 1.8.2
+              level: 3
+              title: 6.1 The Create → Test → Review → Improve Loop
+              byte_offset: 25740
+              byte_count: 1053
+              word_count: 158
+              content_hash: 169c4631b1b07177ed562ba90f33c1445e7dc1aa4beb2176a198c0b692d9978a
+            - path: 1.8.3
+              level: 3
+              title: 6.2 Description Optimization
+              byte_offset: 26793
+              byte_count: 1470
+              word_count: 232
+              content_hash: 5caedaaabe1c5893ce8ae199cb3b71ce5d5e64aa7b702bce6644c9595cda2682
+            - path: 1.8.4
+              level: 3
+              title: 6.3 Writing Style Philosophy
+              byte_offset: 28263
+              byte_count: 1157
+              word_count: 178
+              content_hash: e1e62dce844535dce642b65eb6af7c01ad5264343eb45b520ef167fed1b4cebe
+            - path: 1.8.5
+              level: 3
+              title: 6.4 The Improvement Philosophy
+              byte_offset: 29420
+              byte_count: 1374
+              word_count: 214
+              content_hash: 22fa066537a8ec6728358911c67874da4abe6d55619a1f793d28f24087a961d8
+            - path: 1.8.6
+              level: 3
+              title: 6.5 Evaluation Architecture
+              byte_offset: 30794
+              byte_count: 978
+              word_count: 145
+              content_hash: eb8ee165e999b7f23a67b65ff1319e631f7377a5a5536efc1c2be4240f7aa5a0
+            - path: 1.8.7
+              level: 3
+              title: 6.6 Should We Adopt the Skill-Creator?
+              byte_offset: 31772
+              byte_count: 1170
+              word_count: 180
+              content_hash: b6e625587a167fb972f66f416916b6580c04b9cae5eb839fc0d58dfbcc4f7352
+        - path: "1.9"
+          level: 2
+          title: 7. Cross-Cutting Themes
+          byte_offset: 32942
+          byte_count: 2544
+          word_count: 374
+          content_hash: 221c868a0dfe2ef587f0000e2770d92c680621b8803ee53e29ebba8236a1c8b5
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 'Theme 1: The Context Window Is a Shared Resource'
+              byte_offset: 33011
+              byte_count: 574
+              word_count: 87
+              content_hash: fd68782fdb1f5d23f1b16b499e0e05a3ee50af0ecd104c032ad2ee4cf76eb522
+            - path: 1.9.2
+              level: 3
+              title: 'Theme 2: Description Quality Determines Discovery'
+              byte_offset: 33585
+              byte_count: 436
+              word_count: 68
+              content_hash: 928fd33a2ab03575ae08f0b8d09efa0ea203e14cd6c3aca73e469ff2650cb1ed
+            - path: 1.9.3
+              level: 3
+              title: 'Theme 3: Match Constraint Level to Task Risk'
+              byte_offset: 34021
+              byte_count: 288
+              word_count: 39
+              content_hash: 286869a54049976255fcf30baf77afa78056e29672056d6e4559fa518f650792
+            - path: 1.9.4
+              level: 3
+              title: 'Theme 4: Examples Beat Rules'
+              byte_offset: 34309
+              byte_count: 304
+              word_count: 44
+              content_hash: 2fe9005cee306fa22be079494fe08fcd743fef2b8eae735923d22cd651769468
+            - path: 1.9.5
+              level: 3
+              title: 'Theme 5: Feedback Loops Prevent Skipping'
+              byte_offset: 34613
+              byte_count: 199
+              word_count: 28
+              content_hash: f36dcf8130f19f71704288d31b8464e798369d564b1cb95a431a7e99c089775a
+            - path: 1.9.6
+              level: 3
+              title: 'Theme 6: Evaluation Must Precede Documentation'
+              byte_offset: 34812
+              byte_count: 266
+              word_count: 34
+              content_hash: 137d51dde8ce376c72d8d148dfbc8d282c2b55bd635537edb68538ee56152392
+            - path: 1.9.7
+              level: 3
+              title: 'Theme 7: Explain Why, Not Just What'
+              byte_offset: 35078
+              byte_count: 408
+              word_count: 64
+              content_hash: c06fd443efa57d1d091589ea1fb120df68a9a518e516a6acd2d15578ad574911
+        - path: "1.10"
+          level: 2
+          title: '8. Gap Analysis: Current Kanbanzai Skills vs. Best Practices'
+          byte_offset: 35486
+          byte_count: 3376
+          word_count: 469
+          content_hash: 53b962b3292bd15ad1ede7ec8f5d306f6094044976a5d8ccf74c8589ffddb2d0
+          children:
+            - path: 1.10.1
+              level: 3
+              title: Current State
+              byte_offset: 35551
+              byte_count: 882
+              word_count: 98
+              content_hash: 8e020b67ee6e99f32e3b1a63bcb2d1cbde5594c5627f2dd8c17506ab2e96cbc2
+            - path: 1.10.2
+              level: 3
+              title: Gap Table
+              byte_offset: 36433
+              byte_count: 1935
+              word_count: 298
+              content_hash: c032531b9516a81e284cd80b0f663d1ed18790872b83c1e9134b2f8e031ad76f
+            - path: 1.10.3
+              level: 3
+              title: Dual-System Confusion
+              byte_offset: 38368
+              byte_count: 494
+              word_count: 63
+              content_hash: eb91c0972adbb8386b18d8648c28128944b2e05a71e0a187535f41500b80b61c
+        - path: "1.11"
+          level: 2
+          title: 9. Recommendations
+          byte_offset: 38862
+          byte_count: 5954
+          word_count: 846
+          content_hash: 64f4218e0619ef2d793b3958fce3549f5c51ef91376066b29f3d99f9e59dc8c4
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 9.1 High Impact, Low Effort
+              byte_offset: 38937
+              byte_count: 1265
+              word_count: 199
+              content_hash: 86d1ed4ea6c8af394e0c6f9f376fdcb6e174fc4245eef69335c1ea48eef6d225
+            - path: 1.11.2
+              level: 3
+              title: 9.2 High Impact, Medium Effort
+              byte_offset: 40202
+              byte_count: 1443
+              word_count: 190
+              content_hash: 90d0936be280063fccd216b14d35da930c8d4d28c4f7969d40535e7286a34442
+            - path: 1.11.3
+              level: 3
+              title: 9.3 Medium Impact, Medium Effort
+              byte_offset: 41645
+              byte_count: 1078
+              word_count: 147
+              content_hash: d70ca42088aafc399359e674344c1f6af4ca6f821e722713a28e8ec63e8e185d
+            - path: 1.11.4
+              level: 3
+              title: 9.4 Medium Impact, Higher Effort
+              byte_offset: 42723
+              byte_count: 980
+              word_count: 143
+              content_hash: 8a181a5866a1a88850acacace6558f85c78dc549560409e25e208f52c618192c
+            - path: 1.11.5
+              level: 3
+              title: 9.5 Lower Priority / Future
+              byte_offset: 43703
+              byte_count: 1113
+              word_count: 157
+              content_hash: 9a8243412417d19193d05e78411a1da303ddb4c85d963ad791b8d350bd6027a2
+        - path: "1.12"
+          level: 2
+          title: 'Appendix A: Key Quotes from Sources'
+          byte_offset: 44816
+          byte_count: 1995
+          word_count: 305
+          content_hash: eb399b0102a5001474fd92ecf9023ec9d88debf27f0b2339c4ed363831b44e86
+          children:
+            - path: 1.12.1
+              level: 3
+              title: From the Skills Overview
+              byte_offset: 44856
+              byte_count: 274
+              word_count: 40
+              content_hash: 836a441c1be5f2052402706d8477569e70e9cb8258784dc3ee4aa377980ba4c6
+            - path: 1.12.2
+              level: 3
+              title: From the Best Practices Guide
+              byte_offset: 45130
+              byte_count: 494
+              word_count: 81
+              content_hash: d2bb83a32a869bc261696edcfb000406a08e56d634d524285f2979d777752aaa
+            - path: 1.12.3
+              level: 3
+              title: From the Skill-Creator
+              byte_offset: 45624
+              byte_count: 600
+              word_count: 98
+              content_hash: 3e2b409aeef4d02994df55897adc8f34c166eaf99cbc155c02a489341b34ff41
+            - path: 1.12.4
+              level: 3
+              title: From the Consistency Guide
+              byte_offset: 46224
+              byte_count: 311
+              word_count: 41
+              content_hash: 357e4056f8bb2312ce54b16810b9c2b946af949842e33d1033fa9d8b3bf5c581
+            - path: 1.12.5
+              level: 3
+              title: From the Hallucinations Guide
+              byte_offset: 46535
+              byte_count: 276
+              word_count: 38
+              content_hash: d55910a98fd2bcd7f063a8eed3636b6d5b119d4020a0792576206c61f6800a28
+        - path: "1.13"
+          level: 2
+          title: 'Appendix B: Comparison — Kanbanzai Skills vs. Anthropic Recommended Structure'
+          byte_offset: 46811
+          byte_count: 1684
+          word_count: 203
+          content_hash: 6928cb2b0218eb5bbb9f876b2b38f63e7ed3c353aacc383b8cb0f1bc012c93ca
+          children:
+            - path: 1.13.1
+              level: 3
+              title: Anthropic recommended structure
+              byte_offset: 46895
+              byte_count: 815
+              word_count: 101
+              content_hash: 55c213fe813a045d088206e008e677d4aa5ba454610893b2f1cbfc64ef7c2b1e
+            - path: 1.13.2
+              level: 3
+              title: Current Kanbanzai structure
+              byte_offset: 47710
+              byte_count: 243
+              word_count: 28
+              content_hash: 36dd66cf9bc799063c3e4ba03b06d1fa083ace488bcdb53c6da305426c68709e
+            - path: 1.13.3
+              level: 3
+              title: Proposed Kanbanzai 3.0 structure
+              byte_offset: 47953
+              byte_count: 542
+              word_count: 63
+              content_hash: 299a4930927258fc4cdd4aede2d0e93f8662b39bd3cc36e7053c6dca76a73ae7
+        - path: "1.14"
+          level: 2
+          title: 'Appendix C: Sources Referenced'
+          byte_offset: 48495
+          byte_count: 1246
+          word_count: 136
+          content_hash: 7c4d460b7f5dc7a4efdced8c8f6347244c4bc19080cca9469d3a3d540180529a
+cross_doc_links:
+    - target_path: FORMS.md
+      link_text: FORMS.md
+      section_path: 1.5.5
+    - target_path: REFERENCE.md
+      link_text: REFERENCE.md
+      section_path: 1.5.5
+    - target_path: DOCX-JS.md
+      link_text: DOCX-JS.md
+      section_path: 1.5.5
+    - target_path: REDLINING.md
+      link_text: REDLINING.md
+      section_path: 1.5.5
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.3.1
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.3.2
+    - target_path: code-review.md
+      link_text: code-review.md
+      section_path: 1.10.1
+    - target_path: document-creation.md
+      link_text: document-creation.md
+      section_path: 1.10.1
+    - target_path: plan-review.md
+      link_text: plan-review.md
+      section_path: 1.10.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.10.1
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.10.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.10.3
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.11.2
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.11.3
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.11.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+    - section_path: 1.5.8
+      role: example
+      confidence: high
+    - section_path: 1.9.1
+      role: narrative
+      confidence: high
+    - section_path: 1.9.3
+      role: constraint
+      confidence: high
+    - section_path: 1.9.4
+      role: example
+      confidence: high
+    - section_path: 1.12.1
+      role: narrative
+      confidence: high
+classified: false

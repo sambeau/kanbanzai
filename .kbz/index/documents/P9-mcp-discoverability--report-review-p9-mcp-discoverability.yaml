@@ -1,0 +1,182 @@
+document_id: P9-mcp-discoverability/report-review-p9-mcp-discoverability
+document_path: work/reviews/review-P9-mcp-discoverability.md
+content_hash: 481e4a85f46b98366d6a7fbcbdb699455fe9a8ebf0d4a3242851854020aeeaf5
+indexed_at: 2026-04-01T15:29:31.325506Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: P9 — MCP Discoverability and Reliability'
+      byte_offset: 0
+      byte_count: 10042
+      word_count: 1416
+      content_hash: 481e4a85f46b98366d6a7fbcbdb699455fe9a8ebf0d4a3242851854020aeeaf5
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 300
+          byte_count: 247
+          word_count: 39
+          content_hash: cd56c0f737cdc88e3e00d27ead8f7fde31ab1f049e81c2d8b399f5fde3782c36
+        - path: "1.2"
+          level: 2
+          title: Scope Reviewed
+          byte_offset: 547
+          byte_count: 628
+          word_count: 107
+          content_hash: 26e19bdd75719f8a207d2543d9e44a5fd13223737198b47829d585123d50c107
+        - path: "1.3"
+          level: 2
+          title: Feature-by-Feature Findings
+          byte_offset: 1175
+          byte_count: 5709
+          word_count: 787
+          content_hash: 1b7ac3afd52962613dd14f1d9e789fef68861aa2a254565493d3d6a0509562d5
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Feature A: Tool Annotations'
+              byte_offset: 1207
+              byte_count: 976
+              word_count: 115
+              content_hash: af46057232b59853a7cec4721b3cfc169d129bfb17f32dc07f519d0aacfa1e1a
+            - path: 1.3.2
+              level: 3
+              title: 'Feature B: Tool Titles'
+              byte_offset: 2183
+              byte_count: 247
+              word_count: 40
+              content_hash: 982b1c0dae817608ab4c1689ea7abf2e694e72684dd26c5166844e6c5eb64553
+            - path: 1.3.3
+              level: 3
+              title: 'Feature C: Improved Tool Descriptions'
+              byte_offset: 2430
+              byte_count: 450
+              word_count: 63
+              content_hash: 798d12688ffaae34c53d01ade7a38ae1d6df86fc7d5258e438726d27cfb98662
+            - path: 1.3.4
+              level: 3
+              title: 'Feature D: Response Nudges'
+              byte_offset: 2880
+              byte_count: 2109
+              word_count: 303
+              content_hash: 68bec9430e98e608e443f4adca88eba131494f39926d672f7524776a789b1fe2
+            - path: 1.3.5
+              level: 3
+              title: 'Feature E: `doc(action: refresh)`'
+              byte_offset: 4989
+              byte_count: 1304
+              word_count: 183
+              content_hash: 0d72daf3272e609b816139699ab3a381e513f5b193fb650c00ed0f370db6ce58
+            - path: 1.3.6
+              level: 3
+              title: 'Feature F: `doc(action: chain)`'
+              byte_offset: 6293
+              byte_count: 591
+              word_count: 80
+              content_hash: 593c712f8e424835b3a98ae0107f42d12911333822589d80efcfd9e366064694
+        - path: "1.4"
+          level: 2
+          title: Cross-Cutting Requirements
+          byte_offset: 6884
+          byte_count: 431
+          word_count: 62
+          content_hash: 4c3995f93654d89a12c8f51ed8fe01ebe02a76e99e5826f2c5e46ef1d3cb336c
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Tool Count (§9.2)
+              byte_offset: 6915
+              byte_count: 115
+              word_count: 13
+              content_hash: 3dfb0737f01d3e0a5951c7bcfbc4810bf75502e8e58299745afa3e8d30d3ac06
+            - path: 1.4.2
+              level: 3
+              title: Schema Compatibility (§9.3)
+              byte_offset: 7030
+              byte_count: 198
+              word_count: 32
+              content_hash: 3b7c444e36a5387fb81ee5430ca8dda5e04e10245a4b69f133f4e516cb52114a
+            - path: 1.4.3
+              level: 3
+              title: Race Detector (§9.1)
+              byte_offset: 7228
+              byte_count: 87
+              word_count: 14
+              content_hash: 432672a4d72cc0ca440689d1079a49f196a9e24d32aa01fcb42c52cc57a9c13f
+        - path: "1.5"
+          level: 2
+          title: Test Coverage Assessment
+          byte_offset: 7315
+          byte_count: 595
+          word_count: 66
+          content_hash: 99e5fa6d6754efa8a9e2106eb70d1bf6ae197ad2ef97ce28f6705d095c39cf11
+        - path: "1.6"
+          level: 2
+          title: Documentation Review
+          byte_offset: 7910
+          byte_count: 1321
+          word_count: 197
+          content_hash: 6ba6d1f89d7be35168b54d3862fa70e3e0a88a642932da76552f3b31099210b5
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Code Documentation
+              byte_offset: 7935
+              byte_count: 401
+              word_count: 58
+              content_hash: ade65eaceebe689584f54da73d402e16022608f68a4937b741443270517e0b63
+            - path: 1.6.2
+              level: 3
+              title: Workflow Documents
+              byte_offset: 8336
+              byte_count: 354
+              word_count: 56
+              content_hash: 0f9e0996dc8999011e3bdfefb6e5873489abe4ffd164f060c2abdbb29fa47508
+            - path: 1.6.3
+              level: 3
+              title: Agent Interface Documentation
+              byte_offset: 8690
+              byte_count: 541
+              word_count: 80
+              content_hash: 612229b82a22b21de73a0b683399beed29d945070b0ba6d2db6da126219cef6c
+        - path: "1.7"
+          level: 2
+          title: Issues Fixed During Review
+          byte_offset: 9231
+          byte_count: 585
+          word_count: 88
+          content_hash: 4ebe5150f929b1312d515d06d36ec143c383a4be6218d5f06d703a4fa217c52c
+        - path: "1.8"
+          level: 2
+          title: Verdict
+          byte_offset: 9816
+          byte_count: 226
+          word_count: 31
+          content_hash: 7f091c0759491f3f8dc6c2f5a664ec5c2f8a53c0c3094b5979667dfb766fafd9
+entity_refs:
+    - entity_id: P9-mcp-discoverability
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 227
+cross_doc_links:
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.6.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.7"
+    - target_path: work/spec/mcp-discoverability-and-reliability.md
+      link_text: work/spec/mcp-discoverability-and-reliability.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

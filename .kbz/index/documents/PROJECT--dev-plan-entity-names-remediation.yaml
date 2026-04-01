@@ -1,0 +1,143 @@
+document_id: PROJECT/dev-plan-entity-names-remediation
+document_path: work/plan/entity-names-remediation.md
+content_hash: 7d9fe299313593bbbd8a670e41f3d62411a71a229f5c311c09ebed89d0bc06d8
+indexed_at: 2026-04-01T15:29:30.271271Z
+sections:
+    - path: "1"
+      level: 1
+      title: Entity Names — Review Remediation Handoff
+      byte_offset: 0
+      byte_count: 8610
+      word_count: 1120
+      content_hash: 7d9fe299313593bbbd8a670e41f3d62411a71a229f5c311c09ebed89d0bc06d8
+      children:
+        - path: "1.1"
+          level: 2
+          title: Context
+          byte_offset: 657
+          byte_count: 239
+          word_count: 38
+          content_hash: 66ab62d3fb7a3757ecf6dbdec22ca7c3e6e57b33ece9b6c8b8fe524153fc4b48
+        - path: "1.2"
+          level: 2
+          title: Required fixes (defects — must fix before merge)
+          byte_offset: 896
+          byte_count: 4492
+          word_count: 616
+          content_hash: 7209196dfaa772c4c67c743fda83c7f3f5b04cca06c140faac50e9e861019c12
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Fix 1 — Add `Name` to the runtime `Config` struct (F-01 / AC-07)
+              byte_offset: 951
+              byte_count: 688
+              word_count: 105
+              content_hash: 20320b7bd4a1346c88eacca824f25a7b1bba82f6839c6792dce040b7cc4ca5d0
+            - path: 1.2.2
+              level: 3
+              title: Fix 2 — Validate the project name in `kbz init` (F-02 / AC-18)
+              byte_offset: 1639
+              byte_count: 619
+              word_count: 83
+              content_hash: ff292a37e0b3a5357ea268fcaa161cf6cdc173b85fc5ed3fd5cd56f59c2b65ed
+            - path: 1.2.3
+              level: 3
+              title: Fix 3 — Write `name` unconditionally in Feature, Task, Decision field functions (F-03 / AC-28)
+              byte_offset: 2258
+              byte_count: 876
+              word_count: 135
+              content_hash: ec535b635afe6425cd5685ccb60fffb8cd02e8dd2a1152811dcf7fb47c86766b
+            - path: 1.2.4
+              level: 3
+              title: Fix 4 — Enforce name as required in the service for Feature, Task, Decision (F-05 / AC-02)
+              byte_offset: 3134
+              byte_count: 923
+              word_count: 137
+              content_hash: c36875541192b0b2b96ceeb686b80d6f20bd2d4aa50f0d5dd435aa1198c84322
+            - path: 1.2.5
+              level: 3
+              title: Fix 5 — Pass `Name` from CLI flags for Feature, Task, Decision (F-04 / AC-19, AC-21)
+              byte_offset: 4057
+              byte_count: 1331
+              word_count: 147
+              content_hash: 2ae3e189d2aaca4b499e999e5433cb470116bb4c263a6354eefe89d5bc6018c4
+        - path: "1.3"
+          level: 2
+          title: Secondary fixes (gaps — address in same pass)
+          byte_offset: 5388
+          byte_count: 583
+          word_count: 91
+          content_hash: 21d44f9feecd007b86546e001f48fef802bf19d5a3ffdf3dd2e675ed6002b826
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Fix 6 — Validate name on update in the MCP tool (F-14 / AC-20)
+              byte_offset: 5440
+              byte_count: 531
+              word_count: 82
+              content_hash: cf03d00fa5fcb0b8db91d21c085663582b779968510f15956b8db10657901d88
+        - path: "1.4"
+          level: 2
+          title: Test gaps (secondary — address in same pass)
+          byte_offset: 5971
+          byte_count: 1357
+          word_count: 164
+          content_hash: d8e80497256b40a5664930f8d72afcf69a8a9ba66205e8829c8808d2f143085f
+        - path: "1.5"
+          level: 2
+          title: Verification
+          byte_offset: 7328
+          byte_count: 504
+          word_count: 68
+          content_hash: be625f8d7f6fd66bb7ecdad08ec55251eb0623e1811025c28280663413a69fd3
+        - path: "1.6"
+          level: 2
+          title: Commit guidance
+          byte_offset: 7832
+          byte_count: 303
+          word_count: 39
+          content_hash: 4b410f0dc000c610b3a800e834a56082c5f35a3564ffb78a154791508498b3c2
+        - path: "1.7"
+          level: 2
+          title: Workflow currency (after fixes land)
+          byte_offset: 8135
+          byte_count: 475
+          word_count: 56
+          content_hash: 641ef19ddb2a4f0f866ed6ad54a42dff1ff64f728f50d24f149a826fa57031c0
+entity_refs:
+    - entity_id: FEAT-01KN48ET59G8R
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 288
+    - entity_id: FEAT-01KN48ET59G8R
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 7895
+    - entity_id: FEAT-01KN48ET59G8R
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 8528
+cross_doc_links:
+    - target_path: work/spec/entity-names.md
+      link_text: work/spec/entity-names.md
+      section_path: "1.7"
+    - target_path: work/design/entity-names.md
+      link_text: work/design/entity-names.md
+      section_path: "1.7"
+    - target_path: work/plan/entity-names-implementation-plan.md
+      link_text: work/plan/entity-names-implementation-plan.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.3
+      role: decision
+      confidence: high
+    - section_path: 1.2.4
+      role: decision
+      confidence: high
+    - section_path: 1.2.5
+      role: decision
+      confidence: high
+classified: false

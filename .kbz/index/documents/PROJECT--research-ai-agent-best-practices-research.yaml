@@ -1,0 +1,455 @@
+document_id: PROJECT/research-ai-agent-best-practices-research
+document_path: work/research/ai-agent-best-practices-research.md
+content_hash: a54ca7531c852295dd14e5e494808cc407109251d7de110f37c7d9d9b35b332e
+indexed_at: 2026-04-01T15:29:30.797123Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Research Report: AI Agent Best Practices for Kanbanzai 3.0'
+      byte_offset: 0
+      byte_count: 55319
+      word_count: 7839
+      content_hash: a54ca7531c852295dd14e5e494808cc407109251d7de110f37c7d9d9b35b332e
+      children:
+        - path: "1.1"
+          level: 2
+          title: Executive Summary
+          byte_offset: 313
+          byte_count: 2081
+          word_count: 279
+          content_hash: 03c3efcc02bef99f00a19ca5c60f21065ad923383f1501abe66b8c3e4cea644b
+        - path: "1.2"
+          level: 2
+          title: Research Sources
+          byte_offset: 2394
+          byte_count: 2137
+          word_count: 360
+          content_hash: 392cf450933e7e036b86881c8fdcfca2304256f7c4724d6ce6ef03eb0511aafc
+        - path: "1.3"
+          level: 2
+          title: Principle-by-Principle Analysis
+          byte_offset: 4531
+          byte_count: 38090
+          word_count: 5328
+          content_hash: e69b86542099c0f3d98213c44e517fc873427aef90d6c8631c9e7685766630da
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Principle 1: The Hardening Principle'
+              byte_offset: 4572
+              byte_count: 3135
+              word_count: 443
+              content_hash: 0b15be8b06bc3495dd5bd5d556e6820fe7d6dac81a9dbcf6ea82aab28c56e1fd
+              children:
+                - path: 1.3.1.1
+                  level: 4
+                  title: Key Research Findings
+                  byte_offset: 4733
+                  byte_count: 488
+                  word_count: 76
+                  content_hash: 874e4c2aa141bb252a13a7f69a6d6ec9323a752c2aeaf953db4caa7ae924e41e
+                - path: 1.3.1.2
+                  level: 4
+                  title: What Kanbanzai Already Does Well
+                  byte_offset: 5221
+                  byte_count: 1269
+                  word_count: 175
+                  content_hash: b868db84d2c7f25d0be3f20d18cff14983edf0621974c4f30d219186ae439ab9
+                - path: 1.3.1.3
+                  level: 4
+                  title: Actionable Improvements for Kanbanzai 3.0
+                  byte_offset: 6490
+                  byte_count: 1217
+                  word_count: 167
+                  content_hash: ad5d8cd73a41d4226db3796cee0dc469ada6b6513b0b1e5e760a6ce240bbeb23
+            - path: 1.3.2
+              level: 3
+              title: 'Principle 2: The Context Hygiene Principle'
+              byte_offset: 7707
+              byte_count: 4378
+              word_count: 591
+              content_hash: 66ce7d30cfe90eaa919410adc598851d49389742b4b4bb04b09a4628ef0f0e2e
+              children:
+                - path: 1.3.2.1
+                  level: 4
+                  title: Key Research Findings
+                  byte_offset: 7867
+                  byte_count: 897
+                  word_count: 115
+                  content_hash: 782742c1852e2f712b40ba80e277199dbe52a9704d6e696f22638e669b87aaa3
+                - path: 1.3.2.2
+                  level: 4
+                  title: What Kanbanzai Already Does Well
+                  byte_offset: 8764
+                  byte_count: 1340
+                  word_count: 171
+                  content_hash: 2712f6672920816b6fa4ffa2e1837e1046a5a9a1ef30679c92c14d358403610e
+                - path: 1.3.2.3
+                  level: 4
+                  title: Actionable Improvements for Kanbanzai 3.0
+                  byte_offset: 10104
+                  byte_count: 1981
+                  word_count: 278
+                  content_hash: cb57d65ca5d45804729a998cd21c26f33991d9dee9d99e828385d04e2465d761
+            - path: 1.3.3
+              level: 3
+              title: 'Principle 3: The Living Documentation Principle'
+              byte_offset: 12085
+              byte_count: 3586
+              word_count: 489
+              content_hash: 26fdd3f7f5bf6f186fad110540d3ff7d5dce65f7ec77811b178d7cdcca488274
+              children:
+                - path: 1.3.3.1
+                  level: 4
+                  title: Key Research Findings
+                  byte_offset: 12210
+                  byte_count: 719
+                  word_count: 102
+                  content_hash: e3405a851ba4d41ffee1c1ef4d67a69b5d96a59e31afc22a8b49222f04ce5470
+                - path: 1.3.3.2
+                  level: 4
+                  title: What Kanbanzai Already Does Well
+                  byte_offset: 12929
+                  byte_count: 1141
+                  word_count: 151
+                  content_hash: 37c394db5c7f4bb96844feb803bf71ee7a84463596d9f62ec4a873aec3cd5477
+                - path: 1.3.3.3
+                  level: 4
+                  title: Actionable Improvements for Kanbanzai 3.0
+                  byte_offset: 14070
+                  byte_count: 1601
+                  word_count: 220
+                  content_hash: 989b32759722cfaa090dd54e52ddf4f9e1406a40f7134f5a9d05ed90bc64e7f8
+            - path: 1.3.4
+              level: 3
+              title: 'Principle 4: The Disposable Blueprint Principle'
+              byte_offset: 15671
+              byte_count: 3181
+              word_count: 480
+              content_hash: f229e7dcc8751c1369f7c754d4c9573ba67207c87899bcac188e4e884a13e788
+              children:
+                - path: 1.3.4.1
+                  level: 4
+                  title: Key Research Findings
+                  byte_offset: 15820
+                  byte_count: 588
+                  word_count: 90
+                  content_hash: 5d5e2299dfc44b41142ed1bfec31ffdbc05e77b017454585e22fd0169aa35529
+                - path: 1.3.4.2
+                  level: 4
+                  title: What Kanbanzai Already Does Well
+                  byte_offset: 16408
+                  byte_count: 1109
+                  word_count: 161
+                  content_hash: 651d21cbaca7d12fb2121e5a6f2f4bf14f373481f0a955c8326f39169d86d937
+                - path: 1.3.4.3
+                  level: 4
+                  title: Actionable Improvements for Kanbanzai 3.0
+                  byte_offset: 17517
+                  byte_count: 1335
+                  word_count: 206
+                  content_hash: cb1af740d7751444f800a6392449db0aaaa250e67c3c71ef5299203ef7c87048
+            - path: 1.3.5
+              level: 3
+              title: 'Principle 5: The Institutional Memory Principle'
+              byte_offset: 18852
+              byte_count: 4105
+              word_count: 562
+              content_hash: 6d8809e956b64509de4ea0d39d3f4269ef59debe2c27e01f82aea2088fa88feb
+              children:
+                - path: 1.3.5.1
+                  level: 4
+                  title: Key Research Findings
+                  byte_offset: 18986
+                  byte_count: 709
+                  word_count: 106
+                  content_hash: 8979aa91a41567629e61dbe56f2bf51d372f08b74c95d3d99978f197aca7e441
+                - path: 1.3.5.2
+                  level: 4
+                  title: What Kanbanzai Already Does Well
+                  byte_offset: 19695
+                  byte_count: 1041
+                  word_count: 136
+                  content_hash: 3424e6a05caa68b7dd9416746d8c866cea860cc9f0705094d1791f4785cfdab0
+                - path: 1.3.5.3
+                  level: 4
+                  title: Actionable Improvements for Kanbanzai 3.0
+                  byte_offset: 20736
+                  byte_count: 2221
+                  word_count: 298
+                  content_hash: 5737a9529a77336c5e58ff17271d77f99e561806543db39252f4e07c8f23b5c4
+            - path: 1.3.6
+              level: 3
+              title: 'Principle 6: The Specialized Review Principle'
+              byte_offset: 22957
+              byte_count: 4338
+              word_count: 585
+              content_hash: 67f785c72fbf587a82af5c45dba1ca51eb58e4904c74fde56848b88c32d38669
+              children:
+                - path: 1.3.6.1
+                  level: 4
+                  title: Key Research Findings
+                  byte_offset: 23102
+                  byte_count: 887
+                  word_count: 125
+                  content_hash: aafaef0ab5416cdd54159d958b06de4e0456e40430c80c3369d1f083ddd5d62a
+                - path: 1.3.6.2
+                  level: 4
+                  title: What Kanbanzai Already Does Well
+                  byte_offset: 23989
+                  byte_count: 817
+                  word_count: 113
+                  content_hash: 020836b197167cf238168b1a59462b41a48e2d3d1edcb7884e800ef20b8cf973
+                - path: 1.3.6.3
+                  level: 4
+                  title: Actionable Improvements for Kanbanzai 3.0
+                  byte_offset: 24806
+                  byte_count: 2489
+                  word_count: 327
+                  content_hash: efad668317ae9bbc66706ef790f57bf665cd0237430dbee76ce5896e94777c8f
+            - path: 1.3.7
+              level: 3
+              title: 'Principle 7: The Observability Imperative'
+              byte_offset: 27295
+              byte_count: 4096
+              word_count: 567
+              content_hash: 696c698be205052054c9383dab6d0e947736da544244b17d4fcbb2fcdb203332
+              children:
+                - path: 1.3.7.1
+                  level: 4
+                  title: Key Research Findings
+                  byte_offset: 27415
+                  byte_count: 900
+                  word_count: 111
+                  content_hash: aa5072f7c50b9ecb5ec4e6c07105aa7b31a44d4fe669218a0745b90e9f20cfd3
+                - path: 1.3.7.2
+                  level: 4
+                  title: What Kanbanzai Already Does Well
+                  byte_offset: 28315
+                  byte_count: 723
+                  word_count: 101
+                  content_hash: 35557ade70f51d399affeb1c84130fde0dab71ad60aaff72c1913192c8464c72
+                - path: 1.3.7.3
+                  level: 4
+                  title: Actionable Improvements for Kanbanzai 3.0
+                  byte_offset: 29038
+                  byte_count: 2353
+                  word_count: 336
+                  content_hash: 4031c4a84bcafbf8ec0b6f179ea5a4282a6afddef1d896ed0db24a0475e13da9
+            - path: 1.3.8
+              level: 3
+              title: 'Principle 8: The Strategic Human Gate Principle'
+              byte_offset: 31391
+              byte_count: 3595
+              word_count: 514
+              content_hash: 7ad0dfde4cc9b33f1dc860fa800d038d847f7e48002bc74f9e809df21dc331a5
+              children:
+                - path: 1.3.8.1
+                  level: 4
+                  title: Key Research Findings
+                  byte_offset: 31537
+                  byte_count: 809
+                  word_count: 112
+                  content_hash: f73e970e36bb019c318e991fd18d975e86187d6e50f774f52d60b2d0a3ee848d
+                - path: 1.3.8.2
+                  level: 4
+                  title: What Kanbanzai Already Does Well
+                  byte_offset: 32346
+                  byte_count: 966
+                  word_count: 133
+                  content_hash: 9a0f0bf9595a9f9358b1aa3fb74d2cae067c9d0d16549196f92cc1ca95b480a4
+                - path: 1.3.8.3
+                  level: 4
+                  title: Actionable Improvements for Kanbanzai 3.0
+                  byte_offset: 33312
+                  byte_count: 1674
+                  word_count: 248
+                  content_hash: 1fdd3ad03c8a4c4eec64abdc84cdecbd879ebb205bf035c75d343749af770103
+            - path: 1.3.9
+              level: 3
+              title: 'Principle 9: The Token Economy Principle'
+              byte_offset: 34986
+              byte_count: 3545
+              word_count: 533
+              content_hash: a013d38f9fc460d392864bc0ae43e8ce4757ed410ca6433041f28f57e3c243bd
+              children:
+                - path: 1.3.9.1
+                  level: 4
+                  title: Key Research Findings
+                  byte_offset: 35083
+                  byte_count: 919
+                  word_count: 141
+                  content_hash: aed9447cf4bdd88320e022d48a3fe3b8f24a8a47016d76698e3b99dad08d9eb9
+                - path: 1.3.9.2
+                  level: 4
+                  title: What Kanbanzai Already Does Well
+                  byte_offset: 36002
+                  byte_count: 700
+                  word_count: 103
+                  content_hash: 32efa28e650afef73d901e30e54ba861a56e8bdc0e4eb7fcb2030be84e21276e
+                - path: 1.3.9.3
+                  level: 4
+                  title: Actionable Improvements for Kanbanzai 3.0
+                  byte_offset: 36702
+                  byte_count: 1829
+                  word_count: 273
+                  content_hash: caa0230646cba0957ef0da714df91ab020c71fec0be05ad3e265345cdbd41e52
+            - path: 1.3.10
+              level: 3
+              title: 'Principle 10: The Toolkit Principle'
+              byte_offset: 38531
+              byte_count: 4090
+              word_count: 560
+              content_hash: d3ad906bd8490ffc99793a495f87c746b9ff9b6847941c74d6e9eaa25df36b58
+              children:
+                - path: 1.3.10.1
+                  level: 4
+                  title: Key Research Findings
+                  byte_offset: 38681
+                  byte_count: 1209
+                  word_count: 160
+                  content_hash: 6285ede978673cb27c2e3be4cbaa272c9bd4c7854aed865ca00b4a4684c74bf4
+                - path: 1.3.10.2
+                  level: 4
+                  title: What Kanbanzai Already Does Well
+                  byte_offset: 39890
+                  byte_count: 493
+                  word_count: 71
+                  content_hash: edc9be894b1417af0c3a13e9d74ae82137ed03d7fc4d8394b83f961a5d3c4d13
+                - path: 1.3.10.3
+                  level: 4
+                  title: Actionable Improvements for Kanbanzai 3.0
+                  byte_offset: 40383
+                  byte_count: 2238
+                  word_count: 309
+                  content_hash: 205d138ea935548919ab56706c655d3a22b91c47441c35945f856cf3c6f6f581
+        - path: "1.4"
+          level: 2
+          title: Cross-Cutting Themes
+          byte_offset: 42621
+          byte_count: 3238
+          word_count: 464
+          content_hash: d959499028ecbe09693bbcbfb2cb6bde84c3cf80e9e1ed2f4cc5cc80e0f5c0ac
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Theme 1: Vocabulary Routing Is the Primary Quality Lever'
+              byte_offset: 42646
+              byte_count: 683
+              word_count: 100
+              content_hash: 2cf1ec2d3350a9729035bcbeb5fbc0cfc8a7d2d373728ed236333190107e2d0c
+            - path: 1.4.2
+              level: 3
+              title: 'Theme 2: Position and Structure Matter as Much as Content'
+              byte_offset: 43329
+              byte_count: 649
+              word_count: 99
+              content_hash: a89c6fb570b83abe3c68749626c72a93c897104b52b065c0bf2f16622dc2f39f
+            - path: 1.4.3
+              level: 3
+              title: 'Theme 3: Make the Invisible Visible'
+              byte_offset: 43978
+              byte_count: 623
+              word_count: 84
+              content_hash: 8a6864cb09854f447f622bf9060ffe66be3f95989853f3dd7596eb4afe96edde
+            - path: 1.4.4
+              level: 3
+              title: 'Theme 4: Less Is More — But Structured Less'
+              byte_offset: 44601
+              byte_count: 602
+              word_count: 90
+              content_hash: 01a895582455d3f55eaca8672fb64db18f60fc0b6be153b157acf9c7d3edc3cd
+            - path: 1.4.5
+              level: 3
+              title: 'Theme 5: Harden What Repeats, Keep Fuzzy What Varies'
+              byte_offset: 45203
+              byte_count: 656
+              word_count: 88
+              content_hash: cf648b2fcd5eaabbf9495d580cb1311a47a3da8e774434bee7f80be3e2caa45d
+        - path: "1.5"
+          level: 2
+          title: Consolidated Recommendations for Kanbanzai 3.0
+          byte_offset: 45859
+          byte_count: 3669
+          word_count: 562
+          content_hash: c70ce6f00402187c3cebeb9535567846eda502d158f8e462e86ea44b9be835e2
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Priority 1: High Impact, Strong Research Backing'
+              byte_offset: 45910
+              byte_count: 1381
+              word_count: 202
+              content_hash: 35e10f7d1213112265577378451836ff22ca8d3a296d32995d42046ef8dd94b7
+            - path: 1.5.2
+              level: 3
+              title: 'Priority 2: Valuable, Moderate Effort'
+              byte_offset: 47291
+              byte_count: 1250
+              word_count: 195
+              content_hash: 1f5dd5e19cfebe514899b58e63db1dcb817670edd920cd57db550cb81ffc2fc2
+            - path: 1.5.3
+              level: 3
+              title: 'Priority 3: Incremental Improvements'
+              byte_offset: 48541
+              byte_count: 987
+              word_count: 159
+              content_hash: 4bfda2cd391e48bb444ab6dd8e336933fad03b70f2996cffb945c58e6483bfe9
+        - path: "1.6"
+          level: 2
+          title: What We Are Already Doing Right
+          byte_offset: 49528
+          byte_count: 1740
+          word_count: 274
+          content_hash: 9025182b8a41da924d16f6d6c4c7f057c1b522483bb6a96a23bfd24af0806d41
+        - path: "1.7"
+          level: 2
+          title: Conclusion
+          byte_offset: 51268
+          byte_count: 1172
+          word_count: 162
+          content_hash: aa0567403a11ae47bffe3849c1505c951149994b451db31cb795f5c2e425cad7
+        - path: "1.8"
+          level: 2
+          title: 'Appendix: MAST Failure Taxonomy Quick Reference'
+          byte_offset: 52440
+          byte_count: 1679
+          word_count: 218
+          content_hash: 170b1809ef91d2eba758fc2086690b38276871130d6a8a9fa9fb55afdea6c6a7
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Communication Failures
+              byte_offset: 52561
+              byte_count: 453
+              word_count: 60
+              content_hash: efcc6de730d2bd023bf8a6a29beb863db68a3979a24cc71e92956e6ef2f02541
+            - path: 1.8.2
+              level: 3
+              title: Coordination Failures
+              byte_offset: 53014
+              byte_count: 547
+              word_count: 71
+              content_hash: 409dbb5166bb16b0fc5c8ccabc5a61e5a96a940ad45f44737478a108ec1fbe3e
+            - path: 1.8.3
+              level: 3
+              title: Quality Failures
+              byte_offset: 53561
+              byte_count: 558
+              word_count: 71
+              content_hash: 695a31e79cb25772dd44cdcb48f8a2f931f20cd394050e584566eb0af71722cd
+        - path: "1.9"
+          level: 2
+          title: 'Appendix: Recommended Skill Architecture Template'
+          byte_offset: 54119
+          byte_count: 1200
+          word_count: 142
+          content_hash: 3cbc50b3d8093253b86efa687b960b704f4d35ee4d79fc1ad9652fad668933a2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.2
+      role: narrative
+      confidence: high
+classified: false

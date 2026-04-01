@@ -1,0 +1,725 @@
+document_id: PROJECT/design-kanbanzai-30-workflow-and-tooling
+document_path: work/design/kanbanzai-3.0-workflow-and-tooling.md
+content_hash: 5c3ba0b89068d0d2d1f5a26f717bb73db660752d05a5ec25143629be5cc44155
+indexed_at: 2026-04-01T15:29:29.967748Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Kanbanzai 3.0 Workflow Engine and MCP Tooling'
+      byte_offset: 0
+      byte_count: 47324
+      word_count: 6958
+      content_hash: 5c3ba0b89068d0d2d1f5a26f717bb73db660752d05a5ec25143629be5cc44155
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 422
+          byte_count: 2963
+          word_count: 428
+          content_hash: afb2b826615a999f3fabe452bb56d44267e29e9ce432a293a1ad45d32b6f0b82
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 1.1 Scope Boundary with Skills Redesign
+              byte_offset: 1151
+              byte_count: 1298
+              word_count: 194
+              content_hash: f750fe0340326298ce3158b07a26fc6e2321da3013271ca71a0d7522c92a37f2
+            - path: 1.1.2
+              level: 3
+              title: 1.2 Relationship to Existing Work
+              byte_offset: 2449
+              byte_count: 936
+              word_count: 121
+              content_hash: 1d7e97deede1beb13cd675c9bf6e59164915b9b283d2840f1e457e44f586d0dc
+        - path: "1.2"
+          level: 2
+          title: 2. Design Principles
+          byte_offset: 3385
+          byte_count: 2847
+          word_count: 420
+          content_hash: b6bbf430a440056b931dde839fd0ba389392103add752540c468751790d7dd8d
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'WP-1: The System Prevents Skipped Steps; Skills Prevent Bad Steps'
+              byte_offset: 3539
+              byte_count: 548
+              word_count: 79
+              content_hash: 6567180786d40c95fa95ffca029c6d216d3b8e8b1f147c9d60d63d48c4ae3e43
+            - path: 1.2.2
+              level: 3
+              title: 'WP-2: Tools Are Interfaces for Agents, Not APIs for Developers'
+              byte_offset: 4087
+              byte_count: 533
+              word_count: 78
+              content_hash: 112ff4812d6a4f3ffcad61d52530cf2ed32af84f3741f90d4c827332d306f1ab
+            - path: 1.2.3
+              level: 3
+              title: 'WP-3: Errors Are Instructions, Not Diagnostics'
+              byte_offset: 4620
+              byte_count: 586
+              word_count: 86
+              content_hash: 39a8a5118ed6bdd46dac645114001abdbd882af2635850208891e6380fab6bc7
+            - path: 1.2.4
+              level: 3
+              title: 'WP-4: Context Assembly Is Stage-Aware'
+              byte_offset: 5206
+              byte_count: 501
+              word_count: 74
+              content_hash: 1a7f713c102684dda3a0ffbe2788bf5ca52c1ebca6a20f88274a36853c416665
+            - path: 1.2.5
+              level: 3
+              title: 'WP-5: The Binding Registry Is the Decision Table'
+              byte_offset: 5707
+              byte_count: 525
+              word_count: 81
+              content_hash: b17c0122dad393238986aff85c74b5e591d9cc035e81bbeb5537fa37e65e772c
+        - path: "1.3"
+          level: 2
+          title: 3. Stage Gate Enforcement
+          byte_offset: 6232
+          byte_count: 3910
+          word_count: 574
+          content_hash: 3f3bc141bbda607066819bb5df1273283eb8312c27eb266e7eb286e4e61db7d6
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Current State
+              byte_offset: 6262
+              byte_count: 694
+              word_count: 97
+              content_hash: 39326306e8899ad16f0088345dcb3628bcd697839c401d4a8e587db06a5fd984
+            - path: 1.3.2
+              level: 3
+              title: 3.2 What Changes
+              byte_offset: 6956
+              byte_count: 679
+              word_count: 105
+              content_hash: 55512ca8e21f4f1d3305613bc23ad2f740300e4ea9f7476cddc263e296189d54
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Gate Prerequisite Table (Complete)
+              byte_offset: 7635
+              byte_count: 779
+              word_count: 128
+              content_hash: 496e59d3a0ebbd2dc4cf7b1153a3c24a8d6049983df4fcde986476d571395b7a
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Gate Override
+              byte_offset: 8414
+              byte_count: 454
+              word_count: 64
+              content_hash: e696f20da6679fa488987a49ee863c42748d48a87e06dd6bea8d73bb23b9553a
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Binding Registry as Gate Source
+              byte_offset: 8868
+              byte_count: 684
+              word_count: 97
+              content_hash: b63ea0521c8c32eeedff4767e0c8649c35fd2f7f1f4b3c257225613321278616
+            - path: 1.3.6
+              level: 3
+              title: 3.6 Error Messages for Gate Failures
+              byte_offset: 9552
+              byte_count: 590
+              word_count: 78
+              content_hash: 4e5b89a075fd977483c76f0cc7e1b63b9a6f01089da37390b91b9ab64f930bd5
+        - path: "1.4"
+          level: 2
+          title: 4. Review-Rework Loop Formalisation
+          byte_offset: 10142
+          byte_count: 2038
+          word_count: 311
+          content_hash: 05fdd84383ef5ecfe9b395f97973415a50450a873779ee886567b933adba1c90
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Problem
+              byte_offset: 10182
+              byte_count: 255
+              word_count: 41
+              content_hash: 29d894f4de6d6d5c16d2a8402291cc151bcc40f290f2cb15b212d67aa07d05ac
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Review Cycle Tracking
+              byte_offset: 10437
+              byte_count: 443
+              word_count: 72
+              content_hash: 6a4a45b7030a9cab503f6bc514acddcff0ea7e9bceb81bc9975c475c9149739f
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Iteration Cap
+              byte_offset: 10880
+              byte_count: 785
+              word_count: 114
+              content_hash: a67e99103056121f18218adac5854451b06ca5ba31f56f7ae4608f5a9ec13778
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Focused Re-Review
+              byte_offset: 11665
+              byte_count: 515
+              word_count: 79
+              content_hash: 7a72c36c56ea017a83efbd6bdb7078e5ada2693256a1a98c255a54e71dd55422
+        - path: "1.5"
+          level: 2
+          title: 5. MCP Tool Description Audit (ACI Redesign)
+          byte_offset: 12180
+          byte_count: 3884
+          word_count: 582
+          content_hash: 433aadc1bf30f98126cb510a1fc41310e456d473a82d7746c25405b022b37cc0
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Problem
+              byte_offset: 12229
+              byte_count: 605
+              word_count: 91
+              content_hash: 2e9453789cc02aabf4b9d454f91f7f4436a0746f1ffc5c73d01cf64eb954be95
+            - path: 1.5.2
+              level: 3
+              title: 5.2 ACI Description Principles
+              byte_offset: 12834
+              byte_count: 604
+              word_count: 91
+              content_hash: c1d66179272e694fe7ea129fd6310d2e16dd01e40785408aa784c5760c6bcbfd
+            - path: 1.5.3
+              level: 3
+              title: '5.3 Example: `entity` Tool'
+              byte_offset: 13438
+              byte_count: 708
+              word_count: 102
+              content_hash: 68682935a1de6e5ae6f1d50fe3fa00cb8dd8e7a59fe0bb9e77a3f5bb5b8c425f
+            - path: 1.5.4
+              level: 3
+              title: '5.4 Example: `handoff` Tool'
+              byte_offset: 14146
+              byte_count: 518
+              word_count: 73
+              content_hash: 6b95c393a4987e6c495803e8df1cd67e79911f0661ad0352c5c4f1a5781e30f7
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Audit Scope
+              byte_offset: 14664
+              byte_count: 535
+              word_count: 82
+              content_hash: 202796399e63ace07d8a273c3519d8aae0bd7a167a7a5afc85f079342c7e1f73
+            - path: 1.5.6
+              level: 3
+              title: '5.6 Audit Methodology: Agent-Driven Testing'
+              byte_offset: 15199
+              byte_count: 865
+              word_count: 135
+              content_hash: 06df3effa38f279e2c390009f75e8cef6c36efe1ab6bfe724a9ed9cc113ca4aa
+        - path: "1.6"
+          level: 2
+          title: 6. Actionable Error Messages
+          byte_offset: 16064
+          byte_count: 1776
+          word_count: 249
+          content_hash: 8e4545f0b8bd4600300813b6e8c18e0dc40627aea4e0b1fa8b2006b8855bf244
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Principle
+              byte_offset: 16097
+              byte_count: 348
+              word_count: 59
+              content_hash: c17b4843e2027e9ead7c3dd4be5d193e0581e0edc4044843f6a667cf9d54aa4d
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Error Template
+              byte_offset: 16445
+              byte_count: 122
+              word_count: 14
+              content_hash: 03d9b44d3deb3ce6d38b0aacd2497f411edd54a7f96f3cc36d4b7fe175ad5895
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Examples
+              byte_offset: 16567
+              byte_count: 770
+              word_count: 101
+              content_hash: 9f14e764784521a9b26bfd70a32df21696733bffcb8dae9065051835eac98e0f
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Audit Scope
+              byte_offset: 17337
+              byte_count: 503
+              word_count: 70
+              content_hash: 9df8b68b7def25bd62e3001a0afa00a12df5f601102db5ec5f9c0742e26581ff
+        - path: "1.7"
+          level: 2
+          title: 7. Lifecycle-Aware Context Assembly
+          byte_offset: 17840
+          byte_count: 4444
+          word_count: 639
+          content_hash: f1cb079954474eae7ccabad96058fa719dca7b2a22499e1223881e35f0446f2e
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Problem
+              byte_offset: 17880
+              byte_count: 265
+              word_count: 37
+              content_hash: 9e353173021f7b635659c348cece37c30b1ddd9cd3861ca6b700f4b8efcd23bd
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Lifecycle State Validation
+              byte_offset: 18145
+              byte_count: 1283
+              word_count: 195
+              content_hash: 70c7aa83195505054daf7ba693628faf016965fefa77ca8d8006e919ed5f8115
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Stage-Specific Assembly Strategy
+              byte_offset: 19428
+              byte_count: 1333
+              word_count: 178
+              content_hash: dbe122868c86d51a4184f748ca5b85962f54222d9e33eb7f87440e71a02c40ce
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Orchestration Pattern Signalling
+              byte_offset: 20761
+              byte_count: 716
+              word_count: 98
+              content_hash: 2ff507b21de787f34ff8d2d282975ac9a74024f955a7c202b1bdbbf039549c99
+            - path: 1.7.5
+              level: 3
+              title: 7.5 Implementation Approach
+              byte_offset: 21477
+              byte_count: 807
+              word_count: 126
+              content_hash: 44b70ae1aa17aa8ee36b99fddd3046c71af7ec602a7b3f7391af54473ea14fd6
+        - path: "1.8"
+          level: 2
+          title: 8. Effort Budgets in Context Assembly
+          byte_offset: 22284
+          byte_count: 2072
+          word_count: 311
+          content_hash: acf3517b8c2c41f3b5b8e3e0af167cbf5f161ada1d8ccb15720daf89871f3e23
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Problem
+              byte_offset: 22326
+              byte_count: 354
+              word_count: 54
+              content_hash: 7e9ae6adfd1823a613c6c7482aa9743dbbe72223289db588709678f5e6a7c25b
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Design
+              byte_offset: 22680
+              byte_count: 643
+              word_count: 90
+              content_hash: 33fcbcc3140a9859654da62cb61f16fa081cb9de79e4f84a6dfdef2dc934067a
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Effort Budget Reference
+              byte_offset: 23323
+              byte_count: 633
+              word_count: 100
+              content_hash: 74002f139beb5ef15e678fd91dbd12876fb533fe648c0fa409d18bc54d8d0000
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Position in Assembled Context
+              byte_offset: 23956
+              byte_count: 400
+              word_count: 60
+              content_hash: 9ed2c1f5fef0bf225f0415570ff9b698f2d36eb8cb3d54a32d968fc2cc618056
+        - path: "1.9"
+          level: 2
+          title: 9. Role-Scoped Tool Subsets
+          byte_offset: 24356
+          byte_count: 2368
+          word_count: 349
+          content_hash: 817683928ddf371ff6c2f9715ae5541262ea209d6a2e50e97866a3c7f342de82
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Problem
+              byte_offset: 24388
+              byte_count: 268
+              word_count: 40
+              content_hash: 383723c73e8f7f7c3bf2ba2d951947ab718b8237d970dadb36ab87ee088b61a1
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Soft Filtering (3.0 Approach)
+              byte_offset: 24656
+              byte_count: 695
+              word_count: 101
+              content_hash: f60f3876c67cb0b41d622fd040611b059a91a566732c3f07b036e3203d1f6fff
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Why Not Hard Filtering
+              byte_offset: 25351
+              byte_count: 776
+              word_count: 112
+              content_hash: 1962abbced9ca3bacf028f94be1300ba3956e5ee61c981bac17423b4d81ec86f
+            - path: 1.9.4
+              level: 3
+              title: 9.4 Tool Subsets by Stage
+              byte_offset: 26127
+              byte_count: 597
+              word_count: 91
+              content_hash: 361d892ef16892dd90c66ae4aeb6e3f4719ffe70156789787af9aeffb354e10e
+        - path: "1.10"
+          level: 2
+          title: 10. Structured Document Templates
+          byte_offset: 26724
+          byte_count: 5520
+          word_count: 796
+          content_hash: 0789fcf0a66833f2dbe3f101c92f532c38f27dbee1edd1ac795dca77d7a469d3
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Problem
+              byte_offset: 26762
+              byte_count: 279
+              word_count: 39
+              content_hash: cf22a1f626d09b1dfc4213e2fefc81d4e9674fe4878ec7ce5124c97915317677
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Document Templates
+              byte_offset: 27041
+              byte_count: 1506
+              word_count: 216
+              content_hash: e583ae3d37e1c6c1ca535e2810cf65bf8d6759061690ca263def7297a5fbff99
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Template Delivery
+              byte_offset: 28547
+              byte_count: 306
+              word_count: 48
+              content_hash: 912b412b5cfc02cc545e6ad0284bad501dd1b9843aeaca632db9724aa3bc1c4b
+            - path: 1.10.4
+              level: 3
+              title: 10.4 Automated Structural Checks at Stage Gates
+              byte_offset: 28853
+              byte_count: 1525
+              word_count: 211
+              content_hash: da4309fcffcea5f476fdd09afd56c8b89ee72a5b22ddfe5b8656d42979929adf
+            - path: 1.10.5
+              level: 3
+              title: 10.5 LLM-as-Judge Quality Evaluation
+              byte_offset: 30378
+              byte_count: 1866
+              word_count: 277
+              content_hash: c61b6f19e329812790f959044950aebf00ac235c14cf2852716fb85aa0c1b6cd
+        - path: "1.11"
+          level: 2
+          title: 11. Decomposition Quality Validation
+          byte_offset: 32244
+          byte_count: 1351
+          word_count: 202
+          content_hash: 0418ec9079dfc18c839cdb767f0a3e62bcdc4c37f3198e042b594220cafb601e
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Problem
+              byte_offset: 32285
+              byte_count: 300
+              word_count: 43
+              content_hash: f84f653fba2048b283019dc745d385c0b77e8354b30cc01175af41259963e514
+            - path: 1.11.2
+              level: 3
+              title: 11.2 Validation Checks
+              byte_offset: 32585
+              byte_count: 753
+              word_count: 118
+              content_hash: 480bb123058bafe39b269dd0be3cd45a9d881745dc7eda51330cf1a6add21f74
+            - path: 1.11.3
+              level: 3
+              title: 11.3 Implementation
+              byte_offset: 33338
+              byte_count: 257
+              word_count: 36
+              content_hash: e76d1e0411a278ed34e1d22ef4ced46b5f161c1b58c58403fedc2689809c7e79
+        - path: "1.12"
+          level: 2
+          title: '12. Observability: Action Pattern Logging'
+          byte_offset: 33595
+          byte_count: 4315
+          word_count: 651
+          content_hash: e5111612439bc6d13a73c03e2bf02a58f9ba05ed05bc4124009e346050619573
+          children:
+            - path: 1.12.1
+              level: 3
+              title: 12.1 Problem
+              byte_offset: 33641
+              byte_count: 306
+              word_count: 43
+              content_hash: f1a74e93ec2484db1112098789e9b241055fef477b21b4511815add969ed67b8
+            - path: 1.12.2
+              level: 3
+              title: 12.2 What to Log
+              byte_offset: 33947
+              byte_count: 495
+              word_count: 86
+              content_hash: 7c835a943edcc0aa0c5d53d725785767890e8f56a8838924aea8c1d586d5a299
+            - path: 1.12.3
+              level: 3
+              title: 12.3 Stage-Level Workflow Metrics
+              byte_offset: 34442
+              byte_count: 1031
+              word_count: 159
+              content_hash: 16b227499df45c02ec625ae84039d9abb0e086769f0c99a146eafefbf0ce3e1a
+            - path: 1.12.4
+              level: 3
+              title: 12.4 What to Detect
+              byte_offset: 35473
+              byte_count: 589
+              word_count: 85
+              content_hash: f0e31ec6c6a3a888d1489ad1585cd6657561c60c8b1dd5850ba9de0d0a4a1c1c
+            - path: 1.12.5
+              level: 3
+              title: 12.5 Small-Sample Evaluation Suite
+              byte_offset: 36062
+              byte_count: 1203
+              word_count: 176
+              content_hash: 32642ddb03fcff58532e0732e68bf267d385606b8543ff129a671bc47dfcf61d
+            - path: 1.12.6
+              level: 3
+              title: 12.6 Implementation
+              byte_offset: 37265
+              byte_count: 645
+              word_count: 96
+              content_hash: 46c68faffbee40d4e55bdc3e61c6c524f3748eca590afde67b1d09b85329c563
+        - path: "1.13"
+          level: 2
+          title: 13. Filesystem-Output Convention
+          byte_offset: 37910
+          byte_count: 1247
+          word_count: 165
+          content_hash: 96afc59e15b55388097a9c13043d4328ae86cccedf4fbf1c01a4802e58a232f2
+          children:
+            - path: 1.13.1
+              level: 3
+              title: 13.1 Problem
+              byte_offset: 37947
+              byte_count: 249
+              word_count: 31
+              content_hash: ec637537e345009a37f58293c156f7a49cdb466f36e559f8fbe8d13a9144f813
+            - path: 1.13.2
+              level: 3
+              title: 13.2 Convention
+              byte_offset: 38196
+              byte_count: 493
+              word_count: 64
+              content_hash: 84eba2a6c8feabc94ce254e992ec8bc9c7d09efbcb2c212fed6abde8406cfd30
+            - path: 1.13.3
+              level: 3
+              title: 13.3 Enforcement
+              byte_offset: 38689
+              byte_count: 468
+              word_count: 66
+              content_hash: 28b51fdf22c46ea034802b3d0055da81baa0e71158488b30c9539eece74dfc20
+        - path: "1.14"
+          level: 2
+          title: 14. Summary of Changes
+          byte_offset: 39157
+          byte_count: 2395
+          word_count: 402
+          content_hash: effe3eb03cb7764334afa4800cbc9f402bbeebf5784edd9167f4bad1c0b9613d
+          children:
+            - path: 1.14.1
+              level: 3
+              title: Workflow Engine Changes
+              byte_offset: 39184
+              byte_count: 860
+              word_count: 152
+              content_hash: 511b30da92c5de4a1f4d2eb30e17b57c3155e0ec483c239bc3fb3e64f6f6e6a1
+            - path: 1.14.2
+              level: 3
+              title: MCP Tool Surface Changes
+              byte_offset: 40044
+              byte_count: 352
+              word_count: 58
+              content_hash: 9a316c3b0329e357276c0896e1b7b3b14a6e0657b525c885c34ec239a22afa17
+            - path: 1.14.3
+              level: 3
+              title: Context Assembly Changes
+              byte_offset: 40396
+              byte_count: 726
+              word_count: 119
+              content_hash: 950915ea6dfc3b725754d78394ade580cb19534d8d56e6a6b74f7fc89eec24b9
+            - path: 1.14.4
+              level: 3
+              title: Observability Changes
+              byte_offset: 41122
+              byte_count: 430
+              word_count: 68
+              content_hash: 65f8098eedb4585b77eca09e8d12bc76846baa7b3799bb457b78a03e19418d4b
+        - path: "1.15"
+          level: 2
+          title: 15. Implementation Priority
+          byte_offset: 41552
+          byte_count: 2381
+          word_count: 333
+          content_hash: ac410f8b5d5d5fb7f8b69be9150966192d4f036d0003c6ad37996a0f6e619194
+          children:
+            - path: 1.15.1
+              level: 3
+              title: 'Phase A: Gate Enforcement (Highest Impact)'
+              byte_offset: 41650
+              byte_count: 630
+              word_count: 92
+              content_hash: 1e06e0072a3f682c362fe39f0925407749095f680058e5bec24319789194b3f1
+            - path: 1.15.2
+              level: 3
+              title: 'Phase B: Tool Description Audit (High Impact, Low Risk)'
+              byte_offset: 42280
+              byte_count: 373
+              word_count: 54
+              content_hash: 3e030aa76b6b36bd72a8e79a0e9fb6a3f7f423df814f3adc16a74700615d4330
+            - path: 1.15.3
+              level: 3
+              title: 'Phase C: Context Assembly Intelligence'
+              byte_offset: 42653
+              byte_count: 412
+              word_count: 59
+              content_hash: d6ade5dbe8ca418408a93e67121e13624a5c7804fe65b2bee9b933671197c761
+            - path: 1.15.4
+              level: 3
+              title: 'Phase D: Review Loop and Decomposition'
+              byte_offset: 43065
+              byte_count: 382
+              word_count: 54
+              content_hash: f3055f6c83590b4bb4a41f135021663aee17721fbfc8a25e1f6bd1de16b7a9a9
+            - path: 1.15.5
+              level: 3
+              title: 'Phase E: Observability and Conventions'
+              byte_offset: 43447
+              byte_count: 486
+              word_count: 62
+              content_hash: e5361c09ce40b909fba6d34a8753fbaa9857957304bf01bc220c6e524318c48d
+        - path: "1.16"
+          level: 2
+          title: 16. Open Questions
+          byte_offset: 43933
+          byte_count: 1562
+          word_count: 230
+          content_hash: be8642b338147685d28ac1504d6afa2bab1a9fd9474764712d404f01312d46ba
+        - path: "1.17"
+          level: 2
+          title: 17. Research Traceability
+          byte_offset: 45495
+          byte_count: 1829
+          word_count: 270
+          content_hash: d5400c44b59c77ff672b6f587e0b875a74b6c06405e4d366448d8a146e3b0b0b
+entity_refs:
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 5021
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 6875
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.3.4
+      byte_offset: 8602
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.3.6
+      byte_offset: 9684
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 16639
+    - entity_id: FEAT-003
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 17140
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.7.2
+      byte_offset: 18907
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.10.4
+      byte_offset: 29844
+    - entity_id: TASK-042
+      entity_type: task
+      section_path: 1.6.3
+      byte_offset: 16921
+    - entity_id: DOC-042
+      entity_type: document
+      section_path: 1.10.4
+      byte_offset: 29895
+cross_doc_links:
+    - target_path: work/design/orchestration-recommendations.md
+      link_text: work/design/orchestration-recommendations.md
+      section_path: "1"
+    - target_path: work/research/agent-orchestration-research.md
+      link_text: work/research/agent-orchestration-research.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign.md
+      link_text: work/design/skills-system-redesign.md
+      section_path: "1"
+    - target_path: work/design/smart-lifecycle-transitions.md
+      link_text: work/design/smart-lifecycle-transitions.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign.md
+      link_text: work/design/skills-system-redesign.md
+      section_path: "1.1"
+    - target_path: work/design/smart-lifecycle-transitions.md
+      link_text: work/design/smart-lifecycle-transitions.md
+      section_path: 1.1.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.1.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.4
+      role: narrative
+      confidence: high
+    - section_path: 1.2.5
+      role: decision
+      confidence: high
+    - section_path: 1.5.3
+      role: example
+      confidence: high
+    - section_path: 1.5.4
+      role: example
+      confidence: high
+    - section_path: 1.5.5
+      role: constraint
+      confidence: high
+    - section_path: 1.6.3
+      role: example
+      confidence: high
+    - section_path: 1.6.4
+      role: constraint
+      confidence: high
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+    - section_path: "1.8"
+      role: narrative
+      confidence: high
+    - section_path: 1.8.4
+      role: narrative
+      confidence: high
+    - section_path: "1.9"
+      role: constraint
+      confidence: high
+    - section_path: "1.14"
+      role: narrative
+      confidence: high
+    - section_path: 1.14.3
+      role: narrative
+      confidence: high
+    - section_path: 1.15.2
+      role: risk
+      confidence: high
+    - section_path: 1.15.3
+      role: narrative
+      confidence: high
+    - section_path: "1.16"
+      role: question
+      confidence: high
+classified: false

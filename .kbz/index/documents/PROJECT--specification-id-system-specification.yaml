@@ -1,0 +1,599 @@
+document_id: PROJECT/specification-id-system-specification
+document_path: work/spec/id-system-specification.md
+content_hash: 0892f75832e7c0ec26a17f1e866bc111c8fd32bda7a2eacacbad02d23ed4f82c
+indexed_at: 2026-04-01T15:29:31.534715Z
+sections:
+    - path: "1"
+      level: 1
+      title: ID System Specification
+      byte_offset: 0
+      byte_count: 18192
+      word_count: 2750
+      content_hash: 0892f75832e7c0ec26a17f1e866bc111c8fd32bda7a2eacacbad02d23ed4f82c
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 314
+          byte_count: 508
+          word_count: 70
+          content_hash: 4e7bafde094fabace05a9236c7c95a9ebe1350b33f06ed885ade471447ec8724
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 822
+          byte_count: 437
+          word_count: 69
+          content_hash: 5751cc271813e7c944f9e0a3403712768083b46c030ac34dad96806d16a78586
+        - path: "1.3"
+          level: 2
+          title: 3. Entity ID Formats
+          byte_offset: 1259
+          byte_count: 1438
+          word_count: 214
+          content_hash: 34759ba1c4d0ac5ade4f58f8c600870c6552ead78e60df261133a7e1eff87966
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Epics
+              byte_offset: 1284
+              byte_count: 239
+              word_count: 43
+              content_hash: 90cb8eb952294f0573288be9fecd7d2b81594c6804e731eb7e76d95381a88c76
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Features
+              byte_offset: 1523
+              byte_count: 95
+              word_count: 14
+              content_hash: 68c2d0c0b3ccaf4bea44aff928fc9db62811c60bbc4a2c25f57992269faf18ca
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Bugs
+              byte_offset: 1618
+              byte_count: 90
+              word_count: 14
+              content_hash: 9007246bba0c382d4b6ab2c6df610ba2b74e34b7d21a126bb2b62da22ede1b08
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Decisions
+              byte_offset: 1708
+              byte_count: 95
+              word_count: 14
+              content_hash: 1e12a9fff49a1109f4c8038bd44d30ae094fd841e752dab300020d4b0bba6249
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Tasks
+              byte_offset: 1803
+              byte_count: 233
+              word_count: 35
+              content_hash: ba80d9c0318fdb596fe586ce06f2f1c78950e1f333f990f0721c70d263b23e04
+            - path: 1.3.6
+              level: 3
+              title: 3.6 Documents
+              byte_offset: 2036
+              byte_count: 95
+              word_count: 14
+              content_hash: 56670bc644112924c52193656e310829ca07da3bae601c64082dcb19a331472f
+            - path: 1.3.7
+              level: 3
+              title: 3.7 Format summary
+              byte_offset: 2131
+              byte_count: 566
+              word_count: 75
+              content_hash: 1c06fa6f78c5e7e23281d9a1119cbe0ad06357bafcbf53aa631f8df736d61497
+        - path: "1.4"
+          level: 2
+          title: 4. Required Properties
+          byte_offset: 2697
+          byte_count: 661
+          word_count: 103
+          content_hash: a6d8b5bcaffd63d68f4e0047f59c445d975df822db18a7a60e7404060050b2ff
+        - path: "1.5"
+          level: 2
+          title: 5. TSID13 Encoding
+          byte_offset: 3358
+          byte_count: 1639
+          word_count: 248
+          content_hash: 66af8a85024d338deeb489f6323904ba688a56fbaf131d3d5d5de595c7b3656e
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Structure
+              byte_offset: 3381
+              byte_count: 397
+              word_count: 63
+              content_hash: 4397753a005fce8bb6ea0f05b511912e1a634e9b99dd30cbe5f724987eb47bd4
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Encoding alphabet
+              byte_offset: 3778
+              byte_count: 179
+              word_count: 25
+              content_hash: 2f59332bf37a627cd3b111c342154db53e13b760f8055d8c79f96ca68be24986
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Canonical case
+              byte_offset: 3957
+              byte_count: 215
+              word_count: 33
+              content_hash: 3ca3c194fe691dd8bccc68e99d640b47532be5574a05316be2df57956dd16f29
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Timestamp
+              byte_offset: 4172
+              byte_count: 292
+              word_count: 47
+              content_hash: caa074a5259f7fa2950fd2f25d69135010734a63b13bad25e27434e7376084fa
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Random component
+              byte_offset: 4464
+              byte_count: 255
+              word_count: 37
+              content_hash: 66885358134cc3b9742b102dcfd6395dc79b33b5d9e8f4f42d9d5cbba801c625
+            - path: 1.5.6
+              level: 3
+              title: 5.6 Sortability
+              byte_offset: 4719
+              byte_count: 278
+              word_count: 39
+              content_hash: 8741e63a4b14983298284bd66683e4a3f7b62b50f0db8aea09b529506dd38916
+        - path: "1.6"
+          level: 2
+          title: 6. Collision Handling
+          byte_offset: 4997
+          byte_count: 1053
+          word_count: 164
+          content_hash: 29784dddbf620145de86ef8f23b6dc17705e76d38ab3c58e5f3836212cd226d6
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Collision model
+              byte_offset: 5023
+              byte_count: 245
+              word_count: 37
+              content_hash: e7c4f43baab94b50ff1e56b7348ebddf2aa39f824c9666a42973e03090545fa9
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Local collision check
+              byte_offset: 5268
+              byte_count: 370
+              word_count: 61
+              content_hash: 354897c3eaea909786707a1c5cce1ddad5ea90ff81cc05c833866e8d0146541f
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Cross-worktree collisions
+              byte_offset: 5638
+              byte_count: 412
+              word_count: 62
+              content_hash: 5c86c49dbe03332c4886ea9d18f7d15ae2b58c76b62c31ae682de675a2f3af5b
+        - path: "1.7"
+          level: 2
+          title: 7. Canonical Form
+          byte_offset: 6050
+          byte_count: 926
+          word_count: 132
+          content_hash: 171fa1f2304ca9e23cb80b8fc1413d87585013a54c7f9c1959c5dd80b1a19e1b
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Definition
+              byte_offset: 6072
+              byte_count: 359
+              word_count: 50
+              content_hash: fd4cf2bacfe94822645e3106150bddb6d227fcd2fad8260f278003d4577b39a3
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Where canonical form is required
+              byte_offset: 6431
+              byte_count: 355
+              word_count: 48
+              content_hash: cb0ba66479cf990929b5fa60934c2cfe6cc4a63a91c7a793c178f87a637b5b4d
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Case normalisation
+              byte_offset: 6786
+              byte_count: 190
+              word_count: 30
+              content_hash: 3742d59275562cffaeeeeac3393bce584ebd579c658e8d84dbd81fcd21f5f631
+        - path: "1.8"
+          level: 2
+          title: 8. Epic Slug Rules
+          byte_offset: 6976
+          byte_count: 589
+          word_count: 93
+          content_hash: f68ff2cc520dc5dc88432dc0af2050bfb404823f2ffd3392821bea20bbb7c9b3
+        - path: "1.9"
+          level: 2
+          title: 9. Display Conventions
+          byte_offset: 7565
+          byte_count: 1220
+          word_count: 195
+          content_hash: e88b94aa33292819900c43ae9f48960f07eaf95060151ad47bab75504ae837b6
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Three forms
+              byte_offset: 7592
+              byte_count: 432
+              word_count: 64
+              content_hash: 083f506edaca460274276e0469cf9306d8781687b7e57b3749090bbb4b3d1535
+            - path: 1.9.2
+              level: 3
+              title: 9.2 The break hyphen
+              byte_offset: 8024
+              byte_count: 379
+              word_count: 62
+              content_hash: 118ef3dcd09ffa53581898809dd8965ecd04bfefec1004c1356de0da14c4a2e1
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Short display length
+              byte_offset: 8403
+              byte_count: 382
+              word_count: 65
+              content_hash: 9cd0b9d1e6cf957acc6bc4af545dc20033ab32d39c26fe476db42f187f0a5e3b
+        - path: "1.10"
+          level: 2
+          title: 10. Prefix Matching
+          byte_offset: 8785
+          byte_count: 898
+          word_count: 152
+          content_hash: c1e78e918ccdf4bd96a1017fdddac599048b90a6c9abd6b6f8547a4e41428353
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Required behavior
+              byte_offset: 8809
+              byte_count: 137
+              word_count: 25
+              content_hash: 8316aa59451cac5f23c77c7e4bc7e0c2bf73c2b9df00a4715a597d0d42dbf6c2
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Resolution rules
+              byte_offset: 8946
+              byte_count: 468
+              word_count: 79
+              content_hash: fa06d5a28dfffb5e57e23621220d42216b625b82f7318bf85d2ba3d2d6c99b37
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Type prefix is required
+              byte_offset: 9414
+              byte_count: 269
+              word_count: 44
+              content_hash: 5546db57651d300d085256a61bb83704ab74411684231c96675771ad29bf3ce8
+        - path: "1.11"
+          level: 2
+          title: 11. Filename Format
+          byte_offset: 9683
+          byte_count: 1001
+          word_count: 152
+          content_hash: 0ff4b5c93bc75b45cd214be9f7b25a341b034cb2588a64a5980349ff22c45ace
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Entity files
+              byte_offset: 9707
+              byte_count: 238
+              word_count: 20
+              content_hash: f814adb7c38272a5580a219625165fbb3dbd15416c806612c16e596b3dffcae3
+            - path: 1.11.2
+              level: 3
+              title: 11.2 Parsing rules
+              byte_offset: 9945
+              byte_count: 522
+              word_count: 90
+              content_hash: 4a0e4cf3a1ce31584af73bb878e4a6f725038ef2019c13e2838c5d95ec2478a8
+            - path: 1.11.3
+              level: 3
+              title: 11.3 Slug in filenames
+              byte_offset: 10467
+              byte_count: 217
+              word_count: 38
+              content_hash: 5bb02f5e31129c40d1670da2d3c2268ddcab6ca4ae7c28b41fc9eafb5a3f1ac2
+        - path: "1.12"
+          level: 2
+          title: 12. Provenance
+          byte_offset: 10684
+          byte_count: 250
+          word_count: 36
+          content_hash: 6e6426d0ffd07db84b8c10b8ce04083b04031366143f7f2aa563452ca6c876bd
+        - path: "1.13"
+          level: 2
+          title: 13. Migration
+          byte_offset: 10934
+          byte_count: 3641
+          word_count: 506
+          content_hash: a3cf1df4228561f778e541dbd2aaf6280979eca8029969170c2d0a89ce95cff9
+          children:
+            - path: 1.13.1
+              level: 3
+              title: 13.1 From sequential IDs
+              byte_offset: 10952
+              byte_count: 126
+              word_count: 18
+              content_hash: 4c759f78f521d0a699a4aa89739068736dd1fb248670c66dd299e5989fbb5063
+            - path: 1.13.2
+              level: 3
+              title: 13.2 Code changes required
+              byte_offset: 11078
+              byte_count: 954
+              word_count: 118
+              content_hash: 11c264c75d8f79166ef820bfdc442122e35f9e6b72da354458d9321b26f63a29
+            - path: 1.13.3
+              level: 3
+              title: 13.3 Unified allocator interface
+              byte_offset: 12032
+              byte_count: 655
+              word_count: 96
+              content_hash: c47e002e19102a16c9784f4db017eb10831767efa7a1d148a2cee4399f50322c
+            - path: 1.13.4
+              level: 3
+              title: 13.4 Task field rename
+              byte_offset: 12687
+              byte_count: 908
+              word_count: 126
+              content_hash: c584f3094f83ac930b75d76a3fea3ecf866314139828e694f7356059329223d3
+            - path: 1.13.5
+              level: 3
+              title: 13.5 Test fixture migration
+              byte_offset: 13595
+              byte_count: 670
+              word_count: 99
+              content_hash: f579526b91d27b971b690070e1ed10b72f915d5b528da54264b76a81f91ce68b
+            - path: 1.13.6
+              level: 3
+              title: 13.6 Legacy ID recognition
+              byte_offset: 14265
+              byte_count: 192
+              word_count: 28
+              content_hash: 38b2d0f946719d869a95528cd3ed05cb20335f9fa35269ce5de8df7969385bb4
+            - path: 1.13.7
+              level: 3
+              title: 13.7 Timing
+              byte_offset: 14457
+              byte_count: 118
+              word_count: 18
+              content_hash: a222f8eb5c6949f7088f1f1f7fbb8d42ded70ba08768a6fa0a021ef3421a429a
+        - path: "1.14"
+          level: 2
+          title: 14. Acceptance Criteria
+          byte_offset: 14575
+          byte_count: 3093
+          word_count: 500
+          content_hash: 0ae482480ebb4ac7907350d5d614d1dff5c13ebb3a3bf22cbe59d96dd01e609c
+          children:
+            - path: 1.14.1
+              level: 3
+              title: 14.1 ID generation
+              byte_offset: 14686
+              byte_count: 184
+              word_count: 32
+              content_hash: 0a00a1aab3a7e569c2ed051e6405c3948049462008f65a9531d2ebe245e5531e
+            - path: 1.14.2
+              level: 3
+              title: 14.2 TSID13 correctness
+              byte_offset: 14870
+              byte_count: 258
+              word_count: 39
+              content_hash: f32bbcc2141c9656a09172711ba4f2c22c283664999ff5188fe9e70697e73b2f
+            - path: 1.14.3
+              level: 3
+              title: 14.3 Uniqueness
+              byte_offset: 15128
+              byte_count: 105
+              word_count: 18
+              content_hash: a3a6f01c2a23da0abc168294bb83bb25018b60a0ee844a998ac9249d4db47f67
+            - path: 1.14.4
+              level: 3
+              title: 14.4 Collision check
+              byte_offset: 15233
+              byte_count: 203
+              word_count: 36
+              content_hash: 23900fa32744e06098e1e171c88132ea8cb66a365c7a9dcbd12526cac5e331b0
+            - path: 1.14.5
+              level: 3
+              title: 14.5 Epic slug validation
+              byte_offset: 15436
+              byte_count: 368
+              word_count: 54
+              content_hash: 1015fa4e3bb5c9bc657ca7c8524e47b199ea770d8877abbc78c6565624f58d4c
+            - path: 1.14.6
+              level: 3
+              title: 14.6 Canonical storage
+              byte_offset: 15804
+              byte_count: 151
+              word_count: 23
+              content_hash: b53e9fbfb1b256761688198102cb9185961703ba6168c599cb90e3b830513338
+            - path: 1.14.7
+              level: 3
+              title: 14.7 Prefix matching
+              byte_offset: 15955
+              byte_count: 302
+              word_count: 51
+              content_hash: 3601986d0bb1d955afa6db803582d062b92c203836147efdbf2889337df00f75
+            - path: 1.14.8
+              level: 3
+              title: 14.8 Display conventions
+              byte_offset: 16257
+              byte_count: 290
+              word_count: 50
+              content_hash: 4f040e1e4a54556a306c48989fe3fd4c489955a6763feae0f24814898eb676ad
+            - path: 1.14.9
+              level: 3
+              title: 14.9 Filename format
+              byte_offset: 16547
+              byte_count: 185
+              word_count: 27
+              content_hash: f2666bde2cd7d34e593438b98eed54de42b7b88f5b204b0655f2543a8a3d68c5
+            - path: 1.14.10
+              level: 3
+              title: 14.10 Round-trip integrity
+              byte_offset: 16732
+              byte_count: 174
+              word_count: 27
+              content_hash: c635eb45bcd4762bc4cbf15485ed82232bea8d54a29b490f9329db201ae136ec
+            - path: 1.14.11
+              level: 3
+              title: 14.11 Time sortability
+              byte_offset: 16906
+              byte_count: 196
+              word_count: 32
+              content_hash: d52d9e99a56efbb563a0b5e83cb30e2f3786be43e5963aed2b362131155f6e88
+            - path: 1.14.12
+              level: 3
+              title: 14.12 Unified allocator routing
+              byte_offset: 17102
+              byte_count: 288
+              word_count: 51
+              content_hash: bfbc8517b66c0d0420ce7f580719b10a14371343d45c9b14cda0d1217cbeef38
+            - path: 1.14.13
+              level: 3
+              title: 14.13 Test fixture consistency
+              byte_offset: 17390
+              byte_count: 278
+              word_count: 42
+              content_hash: 5dd1fd9a09ccb18f76b1a5f425ffc613b1cb2ccc7c84046126566e90b1428b46
+        - path: "1.15"
+          level: 2
+          title: 15. Out-of-Scope Clarifications
+          byte_offset: 17668
+          byte_count: 524
+          word_count: 79
+          content_hash: 45f48f7a384668537afe5bb8e3661e60b27e6bafa08f22dfe12ffd8cb21514ca
+front_matter:
+    status: specification draft
+    date: "2026-07-24"
+    extra:
+        Based on: work/design/id-system-design.md; work/spec/phase-1-specification.md` §13 (identity requirements)
+        Purpose: define the required behavior, constraints, and acceptance criteria for the Kanbanzai identity system
+entity_refs:
+    - entity_id: FEAT-01J3K7MXP3RT5
+      entity_type: feature
+      section_path: 1.3.7
+      byte_offset: 2388
+    - entity_id: FEAT-01J3K7MXP3RT5
+      entity_type: feature
+      section_path: 1.7.1
+      byte_offset: 6365
+    - entity_id: FEAT-01J3K7MXP3RT5
+      entity_type: feature
+      section_path: 1.9.1
+      byte_offset: 7775
+    - entity_id: FEAT-01J3K
+      entity_type: feature
+      section_path: 1.9.1
+      byte_offset: 7852
+    - entity_id: FEAT-01J3K7MXP3RT5
+      entity_type: feature
+      section_path: 1.11.1
+      byte_offset: 9852
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.13.1
+      byte_offset: 11012
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.13.5
+      byte_offset: 13788
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.13.6
+      byte_offset: 14361
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.14.13
+      byte_offset: 17622
+    - entity_id: TASK-01J3KZZZBB4KF
+      entity_type: task
+      section_path: 1.3.7
+      byte_offset: 2589
+    - entity_id: TASK-01J3KZZZBB4KF
+      entity_type: task
+      section_path: 1.7.1
+      byte_offset: 6410
+    - entity_id: TASK-01J3KZZZBB4KF
+      entity_type: task
+      section_path: 1.11.1
+      byte_offset: 9896
+    - entity_id: TASK-001
+      entity_type: task
+      section_path: 1.13.5
+      byte_offset: 13811
+    - entity_id: BUG-01J4AR7WHN4F2
+      entity_type: bug
+      section_path: 1.3.7
+      byte_offset: 2455
+    - entity_id: BUG-01J4AR7WHN4F2
+      entity_type: bug
+      section_path: 1.7.1
+      byte_offset: 6388
+    - entity_id: BUG-002
+      entity_type: bug
+      section_path: 1.13.1
+      byte_offset: 11024
+    - entity_id: BUG-002
+      entity_type: bug
+      section_path: 1.13.5
+      byte_offset: 13800
+    - entity_id: BUG-002
+      entity_type: bug
+      section_path: 1.13.6
+      byte_offset: 14373
+    - entity_id: DEC-01J3KABCDE7MX
+      entity_type: decision
+      section_path: 1.3.7
+      byte_offset: 2522
+    - entity_id: DEC-009
+      entity_type: decision
+      section_path: 1.13.4
+      byte_offset: 13324
+    - entity_id: EPIC-IDS
+      entity_type: epic
+      section_path: 1.3.7
+      byte_offset: 2321
+    - entity_id: EPIC-IDS
+      entity_type: epic
+      section_path: 1.7.1
+      byte_offset: 6352
+    - entity_id: EPIC-IDS
+      entity_type: epic
+      section_path: 1.11.1
+      byte_offset: 9815
+    - entity_id: DOC-01J3K7MXP3RT5
+      entity_type: document
+      section_path: 1.3.7
+      byte_offset: 2656
+cross_doc_links:
+    - target_path: work/design/id-system-design.md
+      link_text: work/design/id-system-design.md
+      section_path: "1"
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/design/id-system-design.md
+      link_text: work/design/id-system-design.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.4
+      role: decision
+      confidence: high
+    - section_path: 1.3.7
+      role: narrative
+      confidence: high
+    - section_path: 1.7.1
+      role: definition
+      confidence: high
+    - section_path: "1.14"
+      role: requirement
+      confidence: high
+    - section_path: "1.15"
+      role: constraint
+      confidence: high
+classified: false

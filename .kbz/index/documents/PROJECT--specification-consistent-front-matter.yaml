@@ -1,0 +1,372 @@
+document_id: PROJECT/specification-consistent-front-matter
+document_path: work/spec/consistent-front-matter.md
+content_hash: c9901188a96e1f38144d3058269ce0eb674737de7bbb3a1ff179ac17bd12347b
+indexed_at: 2026-04-01T15:29:31.641768Z
+sections:
+    - path: "1"
+      level: 1
+      title: Consistent Front Matter Specification
+      byte_offset: 0
+      byte_count: 19522
+      word_count: 2897
+      content_hash: c9901188a96e1f38144d3058269ce0eb674737de7bbb3a1ff179ac17bd12347b
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 379
+          byte_count: 710
+          word_count: 101
+          content_hash: 94d68836722687312cbac424788b16ada9330854c31d86501a9137058f087a92
+        - path: "1.2"
+          level: 2
+          title: 2. Supersession
+          byte_offset: 1089
+          byte_count: 124
+          word_count: 16
+          content_hash: f4cdc0020d31513b8179648362ec9e2cb7414dbea7b03a5add053e87f31b8932
+        - path: "1.3"
+          level: 2
+          title: 3. Definitions
+          byte_offset: 1213
+          byte_count: 996
+          word_count: 162
+          content_hash: 3b702c5b39f47f3636a0c38fae7d40e455415019b89b10086b5123d903e0c4ff
+        - path: "1.4"
+          level: 2
+          title: '4. Feature A: Front Matter Standard'
+          byte_offset: 2209
+          byte_count: 4044
+          word_count: 607
+          content_hash: c0fb50dc45c52d186f5bd64abce4e3535ac0216f876e13b4e03d38de76c36ea2
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Permitted front matter fields
+              byte_offset: 2249
+              byte_count: 562
+              word_count: 90
+              content_hash: f17e8f6bf16a3d3a19c6e72fa6a44aa7c90bc303e4cacc5888a94d0bdfcae08f
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Prohibited front matter fields
+              byte_offset: 2811
+              byte_count: 614
+              word_count: 92
+              content_hash: 382e9baf309bd1ad77e07f066eaabdb23f60425807ad2669193fdbbe43ae1a56
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Cross-references
+              byte_offset: 3425
+              byte_count: 609
+              word_count: 84
+              content_hash: 9d4644e8099e2122846a76a6fb7ccdf3fb9dd6aba4a13c2272786339137a0e11
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Standard template format
+              byte_offset: 4034
+              byte_count: 437
+              word_count: 73
+              content_hash: 45458190ba409ab0b5fc995d7ac7fb40a4b197b39ab9822316cf0745b6e93622
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Bullet-list backward compatibility
+              byte_offset: 4471
+              byte_count: 257
+              word_count: 38
+              content_hash: ab51f343dc21f9f38b58af1f0093aabf0fb43eb89173306a85b0ea33eade3c98
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Unmanaged documents
+              byte_offset: 4728
+              byte_count: 439
+              word_count: 63
+              content_hash: 217c7a482fafc72ed4ddb4d6a9c2dbd1b57b01ed6e791afb4c1e9e1ae23e08f8
+            - path: 1.4.7
+              level: 3
+              title: 4.7 Non-metadata prose fields
+              byte_offset: 5167
+              byte_count: 232
+              word_count: 37
+              content_hash: f3ded73edb3550ef2db7357c184c68c4fc122d82a5b576ebbd9e8148f4af9272
+            - path: 1.4.8
+              level: 3
+              title: 4.8 Registration tooling is read-only
+              byte_offset: 5399
+              byte_count: 293
+              word_count: 44
+              content_hash: b07ef4fa0ac81bd793a1612a5975004a53975c61a44641c404dea871462e9252
+            - path: 1.4.9
+              level: 3
+              title: 4.9 Acceptance criteria
+              byte_offset: 5692
+              byte_count: 561
+              word_count: 79
+              content_hash: 0aac1e18a64b97b6104925ce616be8bfa55b32532e63c88d7ec941ad2b8fef24
+        - path: "1.5"
+          level: 2
+          title: '5. Feature B: Pipe-Table Parser'
+          byte_offset: 6253
+          byte_count: 3121
+          word_count: 456
+          content_hash: 501ec9add9f0918102aad47d279588843fb2fbcea03c53619ca6a6ad7b87eef5
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Current state
+              byte_offset: 6289
+              byte_count: 298
+              word_count: 38
+              content_hash: 516d127a070fae33d01ad2a287b103dfe659c8ba3f0b992fa7ba5e493728ffd3
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Pipe-table detection
+              byte_offset: 6587
+              byte_count: 377
+              word_count: 63
+              content_hash: 861b75d27346d0f29345b3ce67d2dbf882b44a81bc3067bcfe8630e851f1f462
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Pipe-table parsing rules
+              byte_offset: 6964
+              byte_count: 549
+              word_count: 90
+              content_hash: 82fa5ef3584175d143d8d782f8e708dabc8943e5435c9ec02457de2eb677183f
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Field mapping
+              byte_offset: 7513
+              byte_count: 499
+              word_count: 71
+              content_hash: dc71dcfe9b04c45c4fc9997066034ba0835c1d1c69f1c714fe0fa59d93d72480
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Related list extraction
+              byte_offset: 8012
+              byte_count: 242
+              word_count: 35
+              content_hash: 2a4635ebc62a20b6ed60983c83642aba252fc7b3c6d9f424ad0580cbb5ecc284
+            - path: 1.5.6
+              level: 3
+              title: 5.6 FrontMatter struct
+              byte_offset: 8254
+              byte_count: 218
+              word_count: 26
+              content_hash: 32086f3fe22ad4100ebcdf4656771fe7f55e318cc4a25a4f92dadd0e76eb949c
+            - path: 1.5.7
+              level: 3
+              title: 5.7 Backward compatibility
+              byte_offset: 8472
+              byte_count: 177
+              word_count: 22
+              content_hash: 618ef7d0ad6ddce9336dd5fd40983cc9a20de642f0f44da1a34a26912a1548cd
+            - path: 1.5.8
+              level: 3
+              title: 5.8 Acceptance criteria
+              byte_offset: 8649
+              byte_count: 725
+              word_count: 105
+              content_hash: 48197d040825e6d3234cd2b4723a6c4d257e56de876fa42d85d27c5d7c2933b5
+        - path: "1.6"
+          level: 2
+          title: '6. Feature C: Health Checks'
+          byte_offset: 9374
+          byte_count: 4289
+          word_count: 652
+          content_hash: f78f1c410e60e922a0c779c1d045ecd01fea6d35068dd3fa1d532532fadccd1f
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Scope
+              byte_offset: 9406
+              byte_count: 254
+              word_count: 36
+              content_hash: 2e7432640ed178554b014a9c10e01de7e375e3f7f017dc6c271b0d5d67dafab7
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Front matter parsing approach
+              byte_offset: 9660
+              byte_count: 389
+              word_count: 59
+              content_hash: 6665a22abeb34c7c5aeaf53447c2a3c219a8d22e43da66725f64062932ca10bb
+            - path: 1.6.3
+              level: 3
+              title: '6.3 Check: Prohibited field in managed document'
+              byte_offset: 10049
+              byte_count: 665
+              word_count: 102
+              content_hash: c9fcf5d5a57a020ee6f18c0dda52a1b74b3058d46fdf57469e0648c3d83dfdbf
+            - path: 1.6.4
+              level: 3
+              title: '6.4 Check: Stale status echo'
+              byte_offset: 10714
+              byte_count: 621
+              word_count: 93
+              content_hash: 3878bdf2274467fa890c7859b9d7f1d0291980c6597c2d81ff0e5a35aef56230
+            - path: 1.6.5
+              level: 3
+              title: '6.5 Check: Missing provenance'
+              byte_offset: 11335
+              byte_count: 543
+              word_count: 85
+              content_hash: 82c160595c46613c4a594b4bcf62cd5c5ba543baccc0f39a8dbd9253dc726b06
+            - path: 1.6.6
+              level: 3
+              title: 6.6 No front matter is not an error
+              byte_offset: 11878
+              byte_count: 298
+              word_count: 53
+              content_hash: 6a7a458a269a1a447c1392784d68e4e19246c8f133cb571b55a5ad3865fc1d3b
+            - path: 1.6.7
+              level: 3
+              title: 6.7 Acceptance criteria
+              byte_offset: 12176
+              byte_count: 1487
+              word_count: 218
+              content_hash: e203a50479f858ef7100d6a755b56da623d9335d43a1103211c1692f2b26442b
+        - path: "1.7"
+          level: 2
+          title: '7. Feature D: Document Migration'
+          byte_offset: 13663
+          byte_count: 1950
+          word_count: 303
+          content_hash: a499ce8dc1625bcf411395f87bee3e000b7c647a5f4df593528e0fb65c600b26
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Scope
+              byte_offset: 13700
+              byte_count: 166
+              word_count: 27
+              content_hash: 798860be9ab1bb59eb44262b277f5ee0644eb87fc0d6e50fa6b586e6833b4e3f
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Migration actions per document
+              byte_offset: 13866
+              byte_count: 694
+              word_count: 111
+              content_hash: 856c9137d56569d0a79fcc22de8f15512e90bb5424d9a170899a3bebb555036e
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Commit discipline
+              byte_offset: 14560
+              byte_count: 159
+              word_count: 25
+              content_hash: 5fc248d98882974839df1de15cadcdfb4fe51461f39c4931dc06bed84c7d55ee
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Content hash refresh
+              byte_offset: 14719
+              byte_count: 290
+              word_count: 44
+              content_hash: f38cf2a4f813bb0926c629aeb006a34bf573a7282e2893b251f607f0dee11376
+            - path: 1.7.5
+              level: 3
+              title: 7.5 Acceptance criteria
+              byte_offset: 15009
+              byte_count: 604
+              word_count: 90
+              content_hash: cc269835d35b88b107d84a890edf4c292d5f5aa34753d4504b2bd6301133df30
+        - path: "1.8"
+          level: 2
+          title: 8. Dependencies and Assumptions
+          byte_offset: 15613
+          byte_count: 807
+          word_count: 121
+          content_hash: b0e3cbe4add3a6a464ba1f278482698e7f86365599f285d91f5398eb7736083d
+        - path: "1.9"
+          level: 2
+          title: 9. Out of Scope
+          byte_offset: 16420
+          byte_count: 723
+          word_count: 107
+          content_hash: b377a8776104710cbea544fc92a54f4eaa1f0bfe7b62b44a23634e04aa4143ce
+        - path: "1.10"
+          level: 2
+          title: 10. Verification Approach
+          byte_offset: 17143
+          byte_count: 2379
+          word_count: 331
+          content_hash: f5103d8cf8e243c5495b42af990e0fe15a5e4168511ced1abfe57dceff35d060
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Unit tests — Feature B (parser)
+              byte_offset: 17173
+              byte_count: 767
+              word_count: 109
+              content_hash: 614655cb328edc389f00495934c0204aab23b3f29c8cf2f97618d38254f06884
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Unit tests — Feature C (health checks)
+              byte_offset: 17940
+              byte_count: 1137
+              word_count: 158
+              content_hash: 9bfb00f66f378568353bba2c59988bee198fcb2480eb427f42a2c915a0c810a3
+            - path: 1.10.3
+              level: 3
+              title: 10.3 Integration verification — Feature D (migration)
+              byte_offset: 19077
+              byte_count: 445
+              word_count: 60
+              content_hash: aae9d9c4dcc5575801c3d57acc36f95f540ea214a3ea623429e516451fc859cc
+cross_doc_links:
+    - target_path: work/design/consistent-front-matter.md
+      link_text: work/design/consistent-front-matter.md
+      section_path: "1"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1"
+    - target_path: work/design/document-intelligence-design.md
+      link_text: work/design/document-intelligence-design.md
+      section_path: "1"
+    - target_path: work/design/consistent-front-matter.md
+      link_text: work/design/consistent-front-matter.md
+      section_path: "1.1"
+    - target_path: work/design/some-design.md
+      link_text: work/design/some-design.md
+      section_path: 1.4.3
+    - target_path: work/spec/some-spec.md
+      link_text: work/spec/some-spec.md
+      section_path: 1.4.3
+    - target_path: path/to/document.md
+      link_text: path/to/document.md
+      section_path: 1.4.4
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.9"
+    - target_path: README.md
+      link_text: README.md
+      section_path: "1.9"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: definition
+      confidence: high
+    - section_path: 1.4.9
+      role: requirement
+      confidence: high
+    - section_path: 1.5.8
+      role: requirement
+      confidence: high
+    - section_path: 1.6.1
+      role: constraint
+      confidence: high
+    - section_path: 1.6.7
+      role: requirement
+      confidence: high
+    - section_path: 1.7.1
+      role: constraint
+      confidence: high
+    - section_path: 1.7.5
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: assumption
+      confidence: high
+    - section_path: "1.9"
+      role: constraint
+      confidence: high
+classified: false

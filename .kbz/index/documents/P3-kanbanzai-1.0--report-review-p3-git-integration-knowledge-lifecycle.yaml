@@ -1,0 +1,164 @@
+document_id: P3-kanbanzai-1.0/report-review-p3-git-integration-knowledge-lifecycle
+document_path: work/reviews/review-P3-git-integration-knowledge-lifecycle.md
+content_hash: d4b15e3cc52eb4de013fbede960edbee156b7d347d6a0319368905d0ac277ebd
+indexed_at: 2026-04-01T15:29:31.22059Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: P3 — Git Integration and Knowledge Lifecycle'
+      byte_offset: 0
+      byte_count: 17518
+      word_count: 2272
+      content_hash: d4b15e3cc52eb4de013fbede960edbee156b7d347d6a0319368905d0ac277ebd
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 463
+          byte_count: 764
+          word_count: 113
+          content_hash: 2b7ec20adcddde8db833158f690e3e61af24d2fb61734e64bb6c79a2fe1934ee
+        - path: "1.2"
+          level: 2
+          title: Track Status
+          byte_offset: 1227
+          byte_count: 1060
+          word_count: 142
+          content_hash: 592d4e5982f2c56b82ecdcd3893c7e4e65be59391874530897d9f75582315037
+        - path: "1.3"
+          level: 2
+          title: Findings
+          byte_offset: 2287
+          byte_count: 11731
+          word_count: 1532
+          content_hash: d0fc0980a7d7502a99f8a775f84f827cb3eb1ba5b5efd94f873dd1abf4687dad
+          children:
+            - path: 1.3.1
+              level: 3
+              title: "\U0001F534 Finding 1 — Override Events Not Logged (R2 Not Implemented)"
+              byte_offset: 2456
+              byte_count: 1733
+              word_count: 230
+              content_hash: d6162be748111be20b6d2fc799f14646ac3fbaf9a3e9a7a694b55e513ec4e1f1
+            - path: 1.3.2
+              level: 3
+              title: "\U0001F534 Finding 2 — `FormatGateResults` Not Used (R17 Not Implemented)"
+              byte_offset: 4189
+              byte_count: 1247
+              word_count: 153
+              content_hash: e0f56b63de3a574274a490f2e66e397a87d1c7cfd78b68eb04761939e89b650d
+            - path: 1.3.3
+              level: 3
+              title: "\U0001F7E0 Finding 3 — Default Branch Hardcoded in `executeMerge`"
+              byte_offset: 5436
+              byte_count: 1285
+              word_count: 184
+              content_hash: d0b827774bdadfce5b976d53078273883fe308445472cbdc8969409c3f0d4f48
+            - path: 1.3.4
+              level: 3
+              title: "\U0001F7E0 Finding 4 — `entity_done` Gate Not in Spec"
+              byte_offset: 6721
+              byte_count: 940
+              word_count: 139
+              content_hash: 7f0564cbbd62fede93f6e33d8f2ff53065867e817ec691f9d433e600a43a445f
+            - path: 1.3.5
+              level: 3
+              title: "\U0001F7E0 Finding 5 — Worktree Update Failure Silently Swallowed"
+              byte_offset: 7661
+              byte_count: 840
+              word_count: 124
+              content_hash: 3c03894373d184bdf67958658c344213922f36d96b20955c1ebe1421aaf6374c
+            - path: 1.3.6
+              level: 3
+              title: "\U0001F7E1 Finding 6 — `checkEntryStaleness` Duplicates `git.CheckEntryStaleness`"
+              byte_offset: 8501
+              byte_count: 1132
+              word_count: 129
+              content_hash: 216c5b66062c5b30f8a3ed1f33906d9a8979f9519e580315911a92fc511e04fc
+            - path: 1.3.7
+              level: 3
+              title: "\U0001F7E1 Finding 7 — `knowledgeStalenessAction` Uses Hardcoded `repoPath = \".\"`"
+              byte_offset: 9633
+              byte_count: 622
+              word_count: 82
+              content_hash: 6658b907ca53569227aea882e9127acfb53eeae7d1889efeebde410675cd8ea6
+            - path: 1.3.8
+              level: 3
+              title: "\U0001F7E1 Finding 8 — `mergePhase3Defaults` Does Not Handle `MaxMissCount`"
+              byte_offset: 10255
+              byte_count: 965
+              word_count: 107
+              content_hash: 58076b8830478f36ee112fa9f27df1b49b349d45af3d7dcdc132cf99e98405a1
+            - path: 1.3.9
+              level: 3
+              title: "\U0001F7E1 Finding 9 — Dead Clause in `isBranchNotFoundError`"
+              byte_offset: 11220
+              byte_count: 614
+              word_count: 72
+              content_hash: b142fcf2b393344a61b78a84edcba7d0dd69c5a7663579bd856da06ce0e3a8d5
+            - path: 1.3.10
+              level: 3
+              title: "\U0001F7E1 Finding 10 — `MergeEntries` Uses `time.Now()` Directly"
+              byte_offset: 11834
+              byte_count: 609
+              word_count: 68
+              content_hash: 9ed1b271770954d733f2b90d03cd18b5a35719232f860b7fcc43819ce7af56a0
+            - path: 1.3.11
+              level: 3
+              title: "\U0001F7E2 Finding 11 — `worktreeRemoveAction` Deletes Without Status Transition"
+              byte_offset: 12443
+              byte_count: 735
+              word_count: 98
+              content_hash: 92bc2997c738aafaafa71acd6ca17c4911f556f65a268df19fb794c022c4ac34
+            - path: 1.3.12
+              level: 3
+              title: "\U0001F7E2 Finding 12 — `HealthCheckCleanGate` Always Passes Without Warning"
+              byte_offset: 13178
+              byte_count: 840
+              word_count: 116
+              content_hash: de823c37761256a00e5f13cb3e01a69c194f559324e1536b9497bf08577372b7
+        - path: "1.4"
+          level: 2
+          title: Test Coverage Assessment
+          byte_offset: 14018
+          byte_count: 1634
+          word_count: 207
+          content_hash: b543adf59755ef42c3e16b0d42c2d41c418bb681a5308adc0eb125f448e93f5c
+        - path: "1.5"
+          level: 2
+          title: Documentation Assessment
+          byte_offset: 15652
+          byte_count: 912
+          word_count: 92
+          content_hash: cfba2a4e7ae0a92edf101ac3ffbea087c3869a42d1588a5577e43063207d713c
+        - path: "1.6"
+          level: 2
+          title: Verdict
+          byte_offset: 16564
+          byte_count: 954
+          word_count: 137
+          content_hash: 7202907e8b23ab1c8028cb187d1cfe903dcf7bec99d25ec48a0e2d015b316c87
+cross_doc_links:
+    - target_path: work/plan/phase-3-progress.md
+      link_text: work/plan/phase-3-progress.md
+      section_path: "1.1"
+    - target_path: work/spec/phase-3-specification.md
+      link_text: work/spec/phase-3-specification.md
+      section_path: "1.5"
+    - target_path: work/plan/phase-3-progress.md
+      link_text: work/plan/phase-3-progress.md
+      section_path: "1.5"
+    - target_path: work/plan/phase-3-decision-log.md
+      link_text: work/plan/phase-3-decision-log.md
+      section_path: "1.5"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+    - target_path: work/plan/phase-3-progress.md
+      link_text: work/plan/phase-3-progress.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

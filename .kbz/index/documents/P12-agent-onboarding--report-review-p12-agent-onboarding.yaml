@@ -1,0 +1,161 @@
+document_id: P12-agent-onboarding/report-review-p12-agent-onboarding
+document_path: work/reviews/review-p12-agent-onboarding.md
+content_hash: d8ddd5d86dc06333a8bd5d449164fa873882d6066f2775cd0e4cf0ba02f1598a
+indexed_at: 2026-04-01T15:29:31.113517Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: P12 — Agent Onboarding and Skill Discovery'
+      byte_offset: 0
+      byte_count: 12216
+      word_count: 1663
+      content_hash: d8ddd5d86dc06333a8bd5d449164fa873882d6066f2775cd0e4cf0ba02f1598a
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 454
+          byte_count: 538
+          word_count: 72
+          content_hash: c07553c033a6fce5435d95007ac562330af550088fd5a0483abfb4b9f607f957
+        - path: "1.2"
+          level: 2
+          title: Feature Status
+          byte_offset: 992
+          byte_count: 617
+          word_count: 80
+          content_hash: 25aa7621d4b85d204d8258ee8b4cbe7a7cc46f0d23bc0418f36231e1c17dbfe5
+        - path: "1.3"
+          level: 2
+          title: Spec Conformance Detail
+          byte_offset: 1609
+          byte_count: 8872
+          word_count: 1205
+          content_hash: a005d34c02af3c544af296eb71aa79cf29ea27bfc8e941322ce6c31df9459de8
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Feature A: AGENTS.md Generation'
+              byte_offset: 1637
+              byte_count: 1898
+              word_count: 258
+              content_hash: 4b5279a88444c034b19e503eb572b637e59fd6b96a78a5bef69bfe2bb10aacf8
+            - path: 1.3.2
+              level: 3
+              title: 'Feature B: Copilot Instructions Generation'
+              byte_offset: 3535
+              byte_count: 1380
+              word_count: 168
+              content_hash: 2c99e9b5812a3773e1aeaf3080b00cc4f26afbda4da3743ecba1525c2a18a6df
+            - path: 1.3.3
+              level: 3
+              title: 'Feature C: Skill Content Updates'
+              byte_offset: 4915
+              byte_count: 1203
+              word_count: 186
+              content_hash: 0660a27aff3e52293d3b31183edfb993b99723f48d0ec63f9a206748b1201357
+            - path: 1.3.4
+              level: 3
+              title: 'Feature D: Specification Skill'
+              byte_offset: 6118
+              byte_count: 1917
+              word_count: 272
+              content_hash: d30bf36764ce6965c676b1f0c05272500282b7cba76dfe07109a7edf40d10c4d
+            - path: 1.3.5
+              level: 3
+              title: 'Feature E: MCP Orientation Breadcrumbs'
+              byte_offset: 8035
+              byte_count: 1342
+              word_count: 160
+              content_hash: 1ff7d9b50af21396b679d0366d55f6ad79419e61a16f5ea1c912bf1f3bc18c64
+            - path: 1.3.6
+              level: 3
+              title: Integration Acceptance Criteria
+              byte_offset: 9377
+              byte_count: 1104
+              word_count: 157
+              content_hash: a466e73af4e6bff01749e80021944b1e357094a07a50294a8e89f4b8ab9355d4
+        - path: "1.4"
+          level: 2
+          title: Test Coverage
+          byte_offset: 10481
+          byte_count: 487
+          word_count: 94
+          content_hash: 1e52c7daf472741115e8766e0e2e070fbefc489a1e01bd0317e53ea67aca994f
+        - path: "1.5"
+          level: 2
+          title: Findings
+          byte_offset: 10968
+          byte_count: 907
+          word_count: 128
+          content_hash: b52427ff6facae448f8c9ec96bad1a8e1436951a52ded3629bbc0a68cfc36cd2
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Blocking
+              byte_offset: 10981
+              byte_count: 21
+              word_count: 3
+              content_hash: 49e4d21b91bc8c1b14b4a64bc376147f55e3c7968d6949cf78f3de72b4cd17f7
+            - path: 1.5.2
+              level: 3
+              title: Non-blocking
+              byte_offset: 11002
+              byte_count: 873
+              word_count: 123
+              content_hash: 76a254e63ed590823a3615587ba68dd8c71cc6be013f7d5b858db239113c129b
+        - path: "1.6"
+          level: 2
+          title: Verdict
+          byte_offset: 11875
+          byte_count: 341
+          word_count: 46
+          content_hash: 7845619bd8877aa770566299aa540ba57ac7763c9aef33ccc68ad9d21450906d
+entity_refs:
+    - entity_id: FEAT-01KMZ
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1107
+    - entity_id: P12-agent-onboarding
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 201
+cross_doc_links:
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.1
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.3.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.2
+    - target_path: internal/kbzinit/skills/specification/SKILL.md
+      link_text: internal/kbzinit/skills/specification/SKILL.md
+      section_path: 1.3.4
+    - target_path: work/spec/init-command.md
+      link_text: work/spec/init-command.md
+      section_path: 1.5.2
+    - target_path: work/spec/agent-onboarding.md
+      link_text: work/spec/agent-onboarding.md
+      section_path: 1.5.2
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.5.2
+    - target_path: docs/mcp-tool-reference.md
+      link_text: docs/mcp-tool-reference.md
+      section_path: 1.5.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.6
+      role: requirement
+      confidence: high
+classified: false

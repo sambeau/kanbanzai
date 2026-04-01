@@ -1,0 +1,307 @@
+document_id: P3-kanbanzai-1.0/report-p3-handoff-2026-03-28
+document_path: work/plan/p3-handoff-2026-03-28.md
+content_hash: 4b885df84511809477781c4e47ed9798994c65638284e97b0a27103bd59c3546
+indexed_at: 2026-04-01T15:29:30.372228Z
+sections:
+    - path: "1"
+      level: 1
+      title: P3 Handoff Summary — 2026-03-28T18:09Z
+      byte_offset: 0
+      byte_count: 8392
+      word_count: 1106
+      content_hash: 4b885df84511809477781c4e47ed9798994c65638284e97b0a27103bd59c3546
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Goal
+          byte_offset: 319
+          byte_count: 259
+          word_count: 43
+          content_hash: 641e5db4b022435d8a0db77f9112abee12529329e244fd8f489f21651500e385
+        - path: "1.2"
+          level: 2
+          title: 2. What Was Done This Session
+          byte_offset: 578
+          byte_count: 1211
+          word_count: 145
+          content_hash: 32a5f83ea53b48056c93bb1427e8154e6268c23e4f1ac438417eab6d7dc0e76a
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Research and triage
+              byte_offset: 612
+              byte_count: 444
+              word_count: 50
+              content_hash: cec86b9e4d64e4cceaf76ce7cc78c8848552926d70ce818e8efaee51e8bf6597
+            - path: 1.2.2
+              level: 3
+              title: Bug fix
+              byte_offset: 1056
+              byte_count: 267
+              word_count: 35
+              content_hash: 2a275db926b658d0c09b137250dede7595e7d68550914060efc57ceb291d891f
+            - path: 1.2.3
+              level: 3
+              title: New features created
+              byte_offset: 1323
+              byte_count: 372
+              word_count: 43
+              content_hash: c48ecbf4c31d79524fce460ea8df8f39eddfef58a5e63dc3b866f8c3098b6e19
+            - path: 1.2.4
+              level: 3
+              title: Key decision recorded
+              byte_offset: 1695
+              byte_count: 94
+              word_count: 10
+              content_hash: 099da374e71a6c67db23ecd9605749cee61cc1767fc1bb2e25f36c1c087c347c
+        - path: "1.3"
+          level: 2
+          title: 3. P3 Feature Status
+          byte_offset: 1789
+          byte_count: 2220
+          word_count: 280
+          content_hash: b65f3e649e6ff6d15faf60dfa015c741d60090228fd9333da361b309a9d4126b
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Track A: Independent (no blockers)'
+              byte_offset: 1814
+              byte_count: 690
+              word_count: 85
+              content_hash: f0e526eee0df94f2eb090d17fecbcfa7292708868655e54b540af1096496835e
+            - path: 1.3.2
+              level: 3
+              title: 'Track B: Dependency chain (skills-content is critical path)'
+              byte_offset: 2504
+              byte_count: 1505
+              word_count: 190
+              content_hash: 99fa280a3d08fb13feca21a3dc2c845875a4ece6f52005626404e6659130d98d
+        - path: "1.4"
+          level: 2
+          title: 4. Task Breakdown
+          byte_offset: 4009
+          byte_count: 664
+          word_count: 97
+          content_hash: 72424a5fee73aac060dd300d738af153bd117a79ea23f72670acd24e0e8fcd99
+          children:
+            - path: 1.4.1
+              level: 3
+              title: agents-md-cleanup tasks
+              byte_offset: 4031
+              byte_count: 348
+              word_count: 52
+              content_hash: 45b8aad9e77066278cfa54838518ed12784b3073922518af38907e78d33c4dbc
+            - path: 1.4.2
+              level: 3
+              title: release-infrastructure tasks
+              byte_offset: 4379
+              byte_count: 294
+              word_count: 41
+              content_hash: 7124c790c75b3bd5f6ff555bb7bcc4925b24fbbd5a87849afa5ed3386aeead88
+        - path: "1.5"
+          level: 2
+          title: 5. Recommended Execution Order
+          byte_offset: 4673
+          byte_count: 1667
+          word_count: 227
+          content_hash: 29384b8c8ddcbb99d3bde20ad509275de0d1ab6b55f2e9d3079b29b48576e5f1
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Phase 1: Parallel quick wins'
+              byte_offset: 4708
+              byte_count: 636
+              word_count: 84
+              content_hash: cd15c2b79cdfdfa3d529aa1ce337e6aec79b07f95370db3ea054046286372b1e
+            - path: 1.5.2
+              level: 3
+              title: 'Phase 2: AGENTS.md cleanup (parallel with Phase 1)'
+              byte_offset: 5344
+              byte_count: 187
+              word_count: 26
+              content_hash: d28409e62b37307fff280866e049b00bc393b58048dfccd743ae90076b191286
+            - path: 1.5.3
+              level: 3
+              title: 'Phase 3: Skills-content fix (critical path)'
+              byte_offset: 5531
+              byte_count: 375
+              word_count: 46
+              content_hash: e82cad49e4335e736a904978eedb4394c334d355de757841be3109f547b23f37
+            - path: 1.5.4
+              level: 3
+              title: 'Phase 4: Merge the chain'
+              byte_offset: 5906
+              byte_count: 277
+              word_count: 39
+              content_hash: 2f6ac9eabfcc2ebc3fec7ee6613fa80e9b2269f388be1580aad61e0853c5533d
+            - path: 1.5.5
+              level: 3
+              title: 'Phase 5: Final'
+              byte_offset: 6183
+              byte_count: 157
+              word_count: 27
+              content_hash: d9cc83372e3a0af6ccdcc571658efc7deef9b08a64891e5b32f6956980d2a9ae
+        - path: "1.6"
+          level: 2
+          title: 6. Key Files and Locations
+          byte_offset: 6340
+          byte_count: 678
+          word_count: 79
+          content_hash: 24ea00c03126214a2a63db8a3c702cb3a35441979660f3ba9f26c499a390caff
+        - path: "1.7"
+          level: 2
+          title: 7. Decisions Made
+          byte_offset: 7018
+          byte_count: 358
+          word_count: 63
+          content_hash: ea9e9ac36d0604c0589670228903bae62185fd7c9de492bdc93a35ae1e8c2934
+        - path: "1.8"
+          level: 2
+          title: 8. Open Questions for Human
+          byte_offset: 7376
+          byte_count: 564
+          word_count: 86
+          content_hash: 9382942a5b93b96c9c94dfe2913f93019d854bdd63c12fd3addcd5ee8cc2de4c
+        - path: "1.9"
+          level: 2
+          title: 9. Commits Made This Session
+          byte_offset: 7940
+          byte_count: 452
+          word_count: 51
+          content_hash: b154cd787fad80a455511d5f818d7b8ccbb3049fc5f0903fe463daea82c8ee74
+entity_refs:
+    - entity_id: FEAT-01KMTSPAV34HR
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 1352
+    - entity_id: FEAT-01KMTSPEE6BXS
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 1510
+    - entity_id: FEAT-01KMKRQV025FA
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 1938
+    - entity_id: FEAT-01KMKRQVKBPRX
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2133
+    - entity_id: FEAT-01KMTSPAV34HR
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2279
+    - entity_id: FEAT-01KMTSPEE6BXS
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2404
+    - entity_id: FEAT-01KMKRQSD1TKK
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 2965
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 3368
+    - entity_id: FEAT-01KMKRQWF0FCH
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 3582
+    - entity_id: FEAT-01KMKRQT9QCPR
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 3756
+    - entity_id: FEAT-01KMKRQSD1TKK
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 6722
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: "1.9"
+      byte_offset: 8052
+    - entity_id: TASK-01KMTT3VY4R5C
+      entity_type: task
+      section_path: 1.4.1
+      byte_offset: 4144
+    - entity_id: TASK-01KMTT3VYM1AA
+      entity_type: task
+      section_path: 1.4.1
+      byte_offset: 4205
+    - entity_id: TASK-01KMTT3VZ2ZXQ
+      entity_type: task
+      section_path: 1.4.1
+      byte_offset: 4273
+    - entity_id: TASK-01KMTT3VZFXT8
+      entity_type: task
+      section_path: 1.4.1
+      byte_offset: 4332
+    - entity_id: TASK-01KMTT47PA5P5
+      entity_type: task
+      section_path: 1.4.2
+      byte_offset: 4490
+    - entity_id: TASK-01KMTT47PSTBS
+      entity_type: task
+      section_path: 1.4.2
+      byte_offset: 4554
+    - entity_id: TASK-01KMTT47Q719Y
+      entity_type: task
+      section_path: 1.4.2
+      byte_offset: 4619
+    - entity_id: P3-kanbanzai-1
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 165
+    - entity_id: P3-kanbanzai-1
+      entity_type: plan
+      section_path: "1.9"
+      byte_offset: 8141
+cross_doc_links:
+    - target_path: work/research/release-readiness-assessment.md
+      link_text: work/research/release-readiness-assessment.md
+      section_path: 1.2.1
+    - target_path: work/spec/agents-md-cleanup.md
+      link_text: work/spec/agents-md-cleanup.md
+      section_path: 1.3.1
+    - target_path: work/spec/release-infrastructure.md
+      link_text: work/spec/release-infrastructure.md
+      section_path: 1.3.1
+    - target_path: references/lifecycle.md
+      link_text: references/lifecycle.md
+      section_path: 1.3.2
+    - target_path: work/reviews/review-FEAT-01KMKRQSD1TKK-skills-content.md
+      link_text: work/reviews/review-FEAT-01KMKRQSD1TKK-skills-content.md
+      section_path: 1.3.2
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "1.6"
+    - target_path: work/research/release-readiness-assessment.md
+      link_text: work/research/release-readiness-assessment.md
+      section_path: "1.6"
+    - target_path: work/spec/agents-md-cleanup.md
+      link_text: work/spec/agents-md-cleanup.md
+      section_path: "1.6"
+    - target_path: work/spec/release-infrastructure.md
+      link_text: work/spec/release-infrastructure.md
+      section_path: "1.6"
+    - target_path: work/reviews/review-FEAT-01KMKRQSD1TKK-skills-content.md
+      link_text: work/reviews/review-FEAT-01KMKRQSD1TKK-skills-content.md
+      section_path: "1.6"
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: "1.6"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.4
+      role: decision
+      confidence: high
+    - section_path: "1.7"
+      role: decision
+      confidence: high
+    - section_path: "1.8"
+      role: question
+      confidence: high
+classified: false

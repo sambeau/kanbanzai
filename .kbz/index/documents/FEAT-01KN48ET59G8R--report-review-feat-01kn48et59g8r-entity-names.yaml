@@ -1,0 +1,204 @@
+document_id: FEAT-01KN48ET59G8R/report-review-feat-01kn48et59g8r-entity-names
+document_path: work/reviews/review-FEAT-01KN48ET59G8R-entity-names.md
+content_hash: 990b59d76421b9ce13fed438d96821949d0d3a03863091a9ecbb966ab36331e3
+indexed_at: 2026-04-01T15:29:31.008936Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: Entity Names (FEAT-01KN48ET59G8R)'
+      byte_offset: 0
+      byte_count: 22968
+      word_count: 3188
+      content_hash: 990b59d76421b9ce13fed438d96821949d0d3a03863091a9ecbb966ab36331e3
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Spec Conformance
+          byte_offset: 472
+          byte_count: 10406
+          word_count: 1434
+          content_hash: 745755be0a72b941d1e066ffd69864f20321af208178a2c51c6db8a9f4e44b72
+          children:
+            - path: 1.1.1
+              level: 3
+              title: §4.1 Model — Name field
+              byte_offset: 496
+              byte_count: 1757
+              word_count: 256
+              content_hash: 2d14f1ea8a4998ea903519188ac117edfcb075a86406def3770c54403192767b
+            - path: 1.1.2
+              level: 3
+              title: §4.2 Config — Project name
+              byte_offset: 2253
+              byte_count: 1378
+              word_count: 185
+              content_hash: 3a392c71fbd870818cb2e5958e2f4ddcadf0f28d9e49dcedffb3ec672604fcff
+            - path: 1.1.3
+              level: 3
+              title: §4.3 Validation
+              byte_offset: 3631
+              byte_count: 1318
+              word_count: 169
+              content_hash: bddfc87cb016c1ea59e7fbd7e791d4dad9cd399c9541909e136a4b665e9fce7b
+            - path: 1.1.4
+              level: 3
+              title: §4.4 MCP tools — Entity create and update
+              byte_offset: 4949
+              byte_count: 1215
+              word_count: 186
+              content_hash: 04d9c5437578ea2a63653240c0c9e46ede75b8c949d4ba6723a6639c82ab3aee
+            - path: 1.1.5
+              level: 3
+              title: §4.5 MCP tools — List and status display
+              byte_offset: 6164
+              byte_count: 885
+              word_count: 123
+              content_hash: 2d8598667e78e93d10ec9acaae691185eed00cdbb13bc71aae9039982861a4e9
+            - path: 1.1.6
+              level: 3
+              title: §4.6 Storage and serialisation
+              byte_offset: 7049
+              byte_count: 2088
+              word_count: 269
+              content_hash: 981903e794574c6923b0ef5a9a3a5d18f6137488cc3b70fd472ec872754052c2
+            - path: 1.1.7
+              level: 3
+              title: §4.7 Skill files
+              byte_offset: 9137
+              byte_count: 771
+              word_count: 110
+              content_hash: 2346e8b3d235f65ab07090e939fa17804e7e868a7804762e0c9c3666d0fd45c5
+            - path: 1.1.8
+              level: 3
+              title: §4.8 Backfill
+              byte_offset: 9908
+              byte_count: 970
+              word_count: 132
+              content_hash: d2652e5d516778a50001ac2a750aaadcca547788d30573d2a87afb26fc689621
+        - path: "1.2"
+          level: 2
+          title: 2. Code Quality
+          byte_offset: 10878
+          byte_count: 2655
+          word_count: 356
+          content_hash: 703b1f435cbb989ce6b2cd116edd0450835d313a1befb6d4a03666940952fbb5
+        - path: "1.3"
+          level: 2
+          title: 3. Test Coverage
+          byte_offset: 13533
+          byte_count: 3167
+          word_count: 432
+          content_hash: bfcc9ee67e7d7cff04e006b9dfef541637a5fb6aa513045e7675aae078935dd0
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Named tests from spec §5 — implementation status
+              byte_offset: 13554
+              byte_count: 2592
+              word_count: 353
+              content_hash: f4a95c2c0c47f29bfeaad694c2daabd590c61caad4ea3be5ea920d5a303e2d2e
+            - path: 1.3.2
+              level: 3
+              title: Additional observations
+              byte_offset: 16146
+              byte_count: 554
+              word_count: 75
+              content_hash: d39a06f21fb548c918ce73ee41cca96b9c1c36f4173bf5494441aec176a9e2e4
+        - path: "1.4"
+          level: 2
+          title: 4. Documentation
+          byte_offset: 16700
+          byte_count: 1379
+          word_count: 170
+          content_hash: 8551b00cd68494d15d0cb253f286e8c09be18c0aa09e5ce780ba75a7658df2ac
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Internal documentation
+              byte_offset: 16721
+              byte_count: 342
+              word_count: 51
+              content_hash: 2704e33777b6b33e1e13e833b9d314933abf996004fb10cd9badfe9492aabc2d
+            - path: 1.4.2
+              level: 3
+              title: User-facing documentation
+              byte_offset: 17063
+              byte_count: 476
+              word_count: 57
+              content_hash: 5ce17be7da7d91d1ce2eec25d00b120d2758e6a286a5762ee343a8bfbdde775e
+            - path: 1.4.3
+              level: 3
+              title: Agent-facing documentation
+              byte_offset: 17539
+              byte_count: 540
+              word_count: 59
+              content_hash: 52e179d17a7d0764d34d48097b0cb668d03c3ec73e3b3751142ddb563eb3b018
+        - path: "1.5"
+          level: 2
+          title: 5. Workflow Currency
+          byte_offset: 18079
+          byte_count: 633
+          word_count: 92
+          content_hash: 2aaea62f7e2d991065ddbe528e2c708702d12048c59a7836af287835453c67c4
+        - path: "1.6"
+          level: 2
+          title: 6. Findings Summary
+          byte_offset: 18712
+          byte_count: 2261
+          word_count: 355
+          content_hash: 10c839f146d471894ba4f17709b50faccc6086a8507db383ab657a7555c11a32
+        - path: "1.7"
+          level: 2
+          title: 7. Verdict
+          byte_offset: 20973
+          byte_count: 1995
+          word_count: 282
+          content_hash: 813c5c47a4dd8bf8e60ed9dcbc6e3e44aa87ffd1e5669ad35bba5887e0e50077
+entity_refs:
+    - entity_id: FEAT-01KN48ET59G8R
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 24
+    - entity_id: FEAT-01KN48ET59G8R
+      entity_type: feature
+      section_path: 1.1.6
+      byte_offset: 7571
+cross_doc_links:
+    - target_path: internal/kbzinit/skills/agents/SKILL.md
+      link_text: internal/kbzinit/skills/agents/SKILL.md
+      section_path: 1.1.7
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.1.7
+    - target_path: internal/kbzinit/skills/agents/SKILL.md
+      link_text: internal/kbzinit/skills/agents/SKILL.md
+      section_path: 1.4.3
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.4.3
+    - target_path: internal/kbzinit/skills/plan-review/SKILL.md
+      link_text: internal/kbzinit/skills/plan-review/SKILL.md
+      section_path: 1.4.3
+    - target_path: .agents/skills/kanbanzai-plan-review/SKILL.md
+      link_text: .agents/skills/kanbanzai-plan-review/SKILL.md
+      section_path: 1.4.3
+    - target_path: work/spec/entity-names.md
+      link_text: work/spec/entity-names.md
+      section_path: "1.5"
+    - target_path: work/design/entity-names.md
+      link_text: work/design/entity-names.md
+      section_path: "1.5"
+    - target_path: work/plan/entity-names-implementation-plan.md
+      link_text: work/plan/entity-names-implementation-plan.md
+      section_path: "1.5"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+    - target_path: work/spec/entity-names.md
+      link_text: work/spec/entity-names.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+classified: false

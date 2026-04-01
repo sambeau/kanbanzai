@@ -1,0 +1,151 @@
+document_id: PROJECT/specification-bootstrap-specification
+document_path: work/spec/bootstrap-specification.md
+content_hash: f39e05fda507c4f84f6d3cdac0f92e6163a8d5e492e671f572b2df63d5502cc0
+indexed_at: 2026-04-01T15:29:31.427258Z
+sections:
+    - path: "1"
+      level: 1
+      title: Bootstrap Self-Hosting Specification
+      byte_offset: 0
+      byte_count: 6434
+      word_count: 959
+      content_hash: f39e05fda507c4f84f6d3cdac0f92e6163a8d5e492e671f572b2df63d5502cc0
+      children:
+        - path: "1.1"
+          level: 2
+          title: §1 Purpose
+          byte_offset: 395
+          byte_count: 544
+          word_count: 86
+          content_hash: 4fdbeaf9e38198e9069648d5c35d4c59fa0fb551506f3a163db72e2a1caed1a2
+        - path: "1.2"
+          level: 2
+          title: §2 Scope
+          byte_offset: 939
+          byte_count: 550
+          word_count: 78
+          content_hash: e041c3a9793ec8a83ac65ead7dd4c4ab59b7d9acc5babd7d9d89122f4ae86799
+        - path: "1.3"
+          level: 2
+          title: §3 Prerequisites
+          byte_offset: 1489
+          byte_count: 603
+          word_count: 91
+          content_hash: 241083aea248d287eb4d9d91dedbd247b29247b543e122c407349ce12ce4d8af
+        - path: "1.4"
+          level: 2
+          title: §4 Initial Records
+          byte_offset: 2092
+          byte_count: 1096
+          word_count: 168
+          content_hash: ebaf470b5cb6118cc26e974a04ba805a55f85f4379ce48eb9e00e2606b960845
+          children:
+            - path: 1.4.1
+              level: 3
+              title: §4.1 Epic
+              byte_offset: 2239
+              byte_count: 139
+              word_count: 23
+              content_hash: 17cc2491a216365d7a7e6f2e374b7523ac18f220fea562b2eac51fe406ab9f81
+            - path: 1.4.2
+              level: 3
+              title: §4.2 Features
+              byte_offset: 2378
+              byte_count: 238
+              word_count: 40
+              content_hash: 249bacd5f3b06ac6cf36cd8abf2ac6836229c44404d7acb84c72b8e66fd35af1
+            - path: 1.4.3
+              level: 3
+              title: §4.3 Documents
+              byte_offset: 2616
+              byte_count: 371
+              word_count: 51
+              content_hash: b6d04d1ffab927d0cbf1691b6b373e52eb9375db3530d490afa54de28e2996e0
+            - path: 1.4.4
+              level: 3
+              title: §4.4 Tasks, Bugs, Decisions
+              byte_offset: 2987
+              byte_count: 201
+              word_count: 30
+              content_hash: 4c666a6d442d40627316cdb1c68ee9171cda695305b3ab265b7f515dc94418cf
+        - path: "1.5"
+          level: 2
+          title: §5 State Integrity
+          byte_offset: 3188
+          byte_count: 372
+          word_count: 55
+          content_hash: d88e6ce88359ec085ed203445cda9b866a3dbba490196373e1c82e713f680fc1
+        - path: "1.6"
+          level: 2
+          title: §6 Committed State
+          byte_offset: 3560
+          byte_count: 198
+          word_count: 29
+          content_hash: 29a88bd46c026a6f084a9b8f2c88854cffb7283feacbcac7619e406c214aa46d
+        - path: "1.7"
+          level: 2
+          title: §7 Coexistence with Bootstrap Workflow
+          byte_offset: 3758
+          byte_count: 517
+          word_count: 71
+          content_hash: 9dc4915b40fc2fc0db1d9d36497d96d76d6e8ecfdb094d9bfb1254efbf7adf9f
+        - path: "1.8"
+          level: 2
+          title: §8 Retirement Criteria
+          byte_offset: 4275
+          byte_count: 770
+          word_count: 134
+          content_hash: f9062e44feed91a576861fe56f0a1fec14d5bb6e55fc1447e7caa558bea22715
+        - path: "1.9"
+          level: 2
+          title: §9 Acceptance Criteria
+          byte_offset: 5045
+          byte_count: 994
+          word_count: 146
+          content_hash: df90625873bd0cb76d7bbf168743c3b188110007d3cb0036f0050f97df97e4bc
+        - path: "1.10"
+          level: 2
+          title: §10 Out-of-Scope Clarifications
+          byte_offset: 6039
+          byte_count: 395
+          word_count: 53
+          content_hash: d3d193aa1698029970670f55ffce0152ec6a311a3c9556f8fa6513f418a5116c
+front_matter:
+    status: specification draft
+    date: "2026-07-25"
+    extra:
+        Based on: work/spec/phase-1-specification.md` §22, §24.10; P1-DEC-005 (Phase 1 must support limited bootstrap self-use); P1-DEC-015 (Bootstrap introduction strategy)
+        Purpose: define concrete requirements and acceptance criteria for bootstrap self-hosting of the Kanbanzai workflow kernel
+entity_refs:
+    - entity_id: DEC-005
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 287
+    - entity_id: DEC-015
+      entity_type: decision
+      section_path: "1"
+      byte_offset: 352
+cross_doc_links:
+    - target_path: work/spec/phase-1-specification.md
+      link_text: work/spec/phase-1-specification.md
+      section_path: "1"
+    - target_path: work/bootstrap/bootstrap-workflow.md
+      link_text: work/bootstrap/bootstrap-workflow.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.4.4
+      role: decision
+      confidence: high
+    - section_path: "1.9"
+      role: requirement
+      confidence: high
+    - section_path: "1.10"
+      role: constraint
+      confidence: high
+classified: false

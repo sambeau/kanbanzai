@@ -1,0 +1,340 @@
+document_id: PROJECT/design-orchestration-recommendations
+document_path: work/design/orchestration-recommendations.md
+content_hash: cc3b6e1fca11d8fc295d5c7f208a37b18633e6feae047a3e702ab32c826e4e7d
+indexed_at: 2026-04-01T15:29:30.069976Z
+sections:
+    - path: "1"
+      level: 1
+      title: Orchestration Recommendations for Kanbanzai 3.0
+      byte_offset: 0
+      byte_count: 36675
+      word_count: 5088
+      content_hash: cc3b6e1fca11d8fc295d5c7f208a37b18633e6feae047a3e702ab32c826e4e7d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Purpose
+          byte_offset: 325
+          byte_count: 1102
+          word_count: 154
+          content_hash: 38069cdee584540fe9d67ebc9f5aa4eaab97bb9b0c0c594e80c75788cb134398
+        - path: "1.2"
+          level: 2
+          title: Table of Contents
+          byte_offset: 1427
+          byte_count: 490
+          word_count: 36
+          content_hash: 9d94229d5b847cd423755114acd1dc59272aa0ff1228de1263173903c8e776a1
+        - path: "1.3"
+          level: 2
+          title: 1. What We're Already Getting Right
+          byte_offset: 1917
+          byte_count: 4862
+          word_count: 648
+          content_hash: a809256df0207162fe018bfdc042d33d43d3afdeab2e27ad94819e812a309d46
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 1.1 Centralised Orchestration with a Single Coordinator
+              byte_offset: 2081
+              byte_count: 658
+              word_count: 81
+              content_hash: 1de3607a9241a9fad1f8357b37a91da6c6d7c1d32e25d5fd708b57c08ba2b8eb
+            - path: 1.3.2
+              level: 3
+              title: 1.2 Structured Workflow State as the Source of Truth
+              byte_offset: 2739
+              byte_count: 645
+              word_count: 92
+              content_hash: ccff1c50bbf2af3eadc02e76cfd267cb0d882889894c67ee24d3a84365992d6d
+            - path: 1.3.3
+              level: 3
+              title: 1.3 The Lifecycle State Machine
+              byte_offset: 3384
+              byte_count: 630
+              word_count: 85
+              content_hash: bdd5980146d032552e0041f1edcd54259b762e56cbddd7a15cf395672b4ba4af
+            - path: 1.3.4
+              level: 3
+              title: 1.4 Context Assembly via `handoff` / `next`
+              byte_offset: 4014
+              byte_count: 718
+              word_count: 105
+              content_hash: 51537709e7e8fee4a6304ab81165846c87682f940e0cc8f11dc9f7dd970a7334
+            - path: 1.3.5
+              level: 3
+              title: 1.5 The Knowledge System as Long-Term Memory
+              byte_offset: 4732
+              byte_count: 614
+              word_count: 79
+              content_hash: 82bd85f31ee52ccc6d88b7383d150133f4751c1f908982efd55faa081b42d73c
+            - path: 1.3.6
+              level: 3
+              title: 1.6 Document Intelligence for Structured Search
+              byte_offset: 5346
+              byte_count: 696
+              word_count: 91
+              content_hash: 66883f1bc8f60d877cedfe4cb0d90c0895251d43e9fa531b642d728245c7c92d
+            - path: 1.3.7
+              level: 3
+              title: 1.7 Maker-Checker Review Architecture
+              byte_offset: 6042
+              byte_count: 737
+              word_count: 92
+              content_hash: cf7d4c3f2ec255a38bc286b090bbfdaa770331698e66770176b7553f103d43f9
+        - path: "1.4"
+          level: 2
+          title: 2. Workflow Recommendations
+          byte_offset: 6779
+          byte_count: 6434
+          word_count: 878
+          content_hash: 0c2df91efad9ca3759f2b22d8d7852c00545099d11b247fcfabd2a73bd1ad814
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 2.1 Add Enforceable Stage Gates Between Lifecycle Stages
+              byte_offset: 6811
+              byte_count: 2035
+              word_count: 279
+              content_hash: fccf8368035841763b0f85f23f69f5bbf45851b0237086aa8c40ff4dfe62cadd
+            - path: 1.4.2
+              level: 3
+              title: 2.2 Formalise the "Reviewing" Stage as Multi-Phase
+              byte_offset: 8846
+              byte_count: 1647
+              word_count: 227
+              content_hash: 18b87a2248d67c4c33f126deab94fa249e18c284b23c0d6ec4c3483899210c39
+            - path: 1.4.3
+              level: 3
+              title: 2.3 Match Orchestration Pattern to Workflow Stage
+              byte_offset: 10493
+              byte_count: 1917
+              word_count: 265
+              content_hash: 7c0675b557841240e14b7d45e18af65679216646652acc29959fe694a2366573
+            - path: 1.4.4
+              level: 3
+              title: 2.4 No New Lifecycle Stages
+              byte_offset: 12410
+              byte_count: 803
+              word_count: 103
+              content_hash: 71146346968b07d15259240bb48ddbb824a8cb88b388901f50fc871939472e4f
+        - path: "1.5"
+          level: 2
+          title: 3. MCP Server and Tool Recommendations
+          byte_offset: 13213
+          byte_count: 8507
+          word_count: 1188
+          content_hash: eb051e44b61e6c49780601ba70800c16bb33b13995015cea526d303cedd76ccf
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 3.1 Enforce Lifecycle Prerequisites in Transition Tools
+              byte_offset: 13256
+              byte_count: 1013
+              word_count: 137
+              content_hash: fb3a6bc88f03beda792aa3823d7dc5829bada6864c707b49d0b9973b6ffb5916
+            - path: 1.5.2
+              level: 3
+              title: 3.2 Redesign Tool Descriptions as Agent-Computer Interfaces (ACIs)
+              byte_offset: 14269
+              byte_count: 2096
+              word_count: 299
+              content_hash: b9fc7cbdf0777dd794c732dd20e40307b9e3698611c6f303c6cb2b9e642b36b3
+            - path: 1.5.3
+              level: 3
+              title: 3.3 Role-Scoped Tool Subsets
+              byte_offset: 16365
+              byte_count: 1530
+              word_count: 221
+              content_hash: 48950972f7146bc584438b201db324c11324eb4ed77b169d2ddd326a035e92f7
+            - path: 1.5.4
+              level: 3
+              title: 3.4 Lifecycle-Aware Context Assembly in `handoff` / `next`
+              byte_offset: 17895
+              byte_count: 1648
+              word_count: 220
+              content_hash: f37843abdb5845781b26325bdd3a99d8255631634254bf17d33cedea73bf9516
+            - path: 1.5.5
+              level: 3
+              title: 3.5 Actionable Error Messages from All Tools
+              byte_offset: 19543
+              byte_count: 948
+              word_count: 146
+              content_hash: aa430d98fde6cbe16d15518f7db28c25dfd73747cf7bbedd625d065db8915e87
+            - path: 1.5.6
+              level: 3
+              title: 3.6 Subagent Output to Filesystem, Not Conversation
+              byte_offset: 20491
+              byte_count: 1229
+              word_count: 158
+              content_hash: 8fc1153b2638a48a7ac3d0e16a927c9940c9bf07e5c6119460a6041198a3610e
+        - path: "1.6"
+          level: 2
+          title: 4. SKILL and Role Integration Recommendations
+          byte_offset: 21720
+          byte_count: 4646
+          word_count: 642
+          content_hash: 6d598b54a1ece591a72d2e3dc4be6e14c6eb902c0d602bcc2fb6c27b90f24c57
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 4.1 The Binding Registry Drives Orchestration Decisions
+              byte_offset: 21971
+              byte_count: 1193
+              word_count: 176
+              content_hash: 661f77eb4eaaa7b81d86726e1f8003bbb0fc117a078f0412015176a150305dce
+            - path: 1.6.2
+              level: 3
+              title: 4.2 Orchestrator Role Gets Explicit Workflow Vocabulary
+              byte_offset: 23164
+              byte_count: 1205
+              word_count: 148
+              content_hash: 86f27df93c8974876635c4a0093cf98f6ec06460b1c9467c9fd5479618af3e84
+            - path: 1.6.3
+              level: 3
+              title: 4.3 Constraint Levels Should Align with Stage Gates
+              byte_offset: 24369
+              byte_count: 1089
+              word_count: 151
+              content_hash: ec00e067af0e2de9226556c9817463a0a45aabdd5eecfadb4b3982068f4a0eb1
+            - path: 1.6.4
+              level: 3
+              title: 4.4 Review Sub-Agent Topology Is Declared, Not Decided
+              byte_offset: 25458
+              byte_count: 908
+              word_count: 134
+              content_hash: 0d64c2685f4a538af443803b3bb49a2cadfae10b3bdb26dbf853e6bcd4f0eb69
+        - path: "1.7"
+          level: 2
+          title: 5. Other Recommendations
+          byte_offset: 26366
+          byte_count: 6902
+          word_count: 961
+          content_hash: 0f0cef75e575b49e497621ea6cb6e4003efcede1713eed1f3263d9c39ea70c8c
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 5.1 Effort Budgets in Context Assembly
+              byte_offset: 26395
+              byte_count: 1466
+              word_count: 218
+              content_hash: e173e354f309b8e3e0d1899417870252e1dd711130fd574e06033dce09ea791d
+            - path: 1.7.2
+              level: 3
+              title: 5.2 Structured Output Templates for Document Stages
+              byte_offset: 27861
+              byte_count: 1493
+              word_count: 206
+              content_hash: beb1394de207ee881b863fdf4b4418c331c0d1c824e987e33fdc620f2a32a5dd
+            - path: 1.7.3
+              level: 3
+              title: '5.3 Observability: Action Pattern Logging'
+              byte_offset: 29354
+              byte_count: 1254
+              word_count: 176
+              content_hash: 364dcf15ed9cdd06cfeb4864aa26f05b4b4163c89381dddd815b4175e42c56e0
+            - path: 1.7.4
+              level: 3
+              title: 5.4 Context Compaction Between Agent Sessions
+              byte_offset: 30608
+              byte_count: 1371
+              word_count: 187
+              content_hash: 70885082ed3457ee46e19e1fcceac00ffd865625e35dd9d0f682e877329faa80
+            - path: 1.7.5
+              level: 3
+              title: 5.5 Decomposition Quality Investment
+              byte_offset: 31979
+              byte_count: 1289
+              word_count: 170
+              content_hash: e0598bd9ba0dd4216ed6c4edd7b34d280134d9632d622804658f6db93e8668d5
+        - path: "1.8"
+          level: 2
+          title: 6. Summary of Changes
+          byte_offset: 33268
+          byte_count: 2098
+          word_count: 351
+          content_hash: 6ade93c36ce92b8bfcea8a9168a2e65efdab0ec8075590d8927c0799dcfc5142
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Workflow Changes
+              byte_offset: 33294
+              byte_count: 433
+              word_count: 73
+              content_hash: 2c0dcffb5fdc1dac3f9fe9c4d44b1c7a66727b33105f6bba830c10f236e77b5c
+            - path: 1.8.2
+              level: 3
+              title: MCP Server and Tool Changes
+              byte_offset: 33727
+              byte_count: 668
+              word_count: 111
+              content_hash: 2d761c6b328a959eaa3b4905c4e48ff2b910ed440b1d4a15e68e5f02963fd01a
+            - path: 1.8.3
+              level: 3
+              title: SKILL and Role Integration Changes
+              byte_offset: 34395
+              byte_count: 480
+              word_count: 77
+              content_hash: 52b8f1e391f3b12d5d1b15ec688b78787cb74f1c5c705988dc741c5550ce0817
+            - path: 1.8.4
+              level: 3
+              title: Other Changes
+              byte_offset: 34875
+              byte_count: 491
+              word_count: 85
+              content_hash: 1f2391f865f9a68e3db2ce4fa214189703fcd4417e8e5087dec957bee8b2205f
+        - path: "1.9"
+          level: 2
+          title: 7. Research Traceability
+          byte_offset: 35366
+          byte_count: 1309
+          word_count: 189
+          content_hash: 865054893cb120581bbbc9399cee24201b27cdf486412e9778762af431d2de84
+entity_refs:
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.5.1
+      byte_offset: 13670
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.5.5
+      byte_offset: 19915
+cross_doc_links:
+    - target_path: work/research/agent-orchestration-research.md
+      link_text: work/research/agent-orchestration-research.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign.md
+      link_text: work/design/skills-system-redesign.md
+      section_path: "1"
+    - target_path: work/research/agent-orchestration-research.md
+      link_text: work/research/agent-orchestration-research.md
+      section_path: "1.9"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.4
+      role: narrative
+      confidence: high
+    - section_path: 1.5.3
+      role: constraint
+      confidence: high
+    - section_path: 1.5.4
+      role: narrative
+      confidence: high
+    - section_path: 1.6.1
+      role: decision
+      confidence: high
+    - section_path: 1.6.3
+      role: constraint
+      confidence: high
+    - section_path: 1.7.1
+      role: narrative
+      confidence: high
+    - section_path: 1.7.4
+      role: narrative
+      confidence: high
+    - section_path: "1.8"
+      role: narrative
+      confidence: high
+classified: false
