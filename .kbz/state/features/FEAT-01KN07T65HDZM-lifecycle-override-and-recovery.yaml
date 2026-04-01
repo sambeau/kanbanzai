@@ -1,0 +1,7 @@
+id: FEAT-01KN07T65HDZM
+slug: lifecycle-override-and-recovery
+parent: P13-workflow-flexibility
+status: proposed
+summary: "Add override + override_reason to entity transition (parity with merge execute) so lifecycle gates can be bypassed with a recorded reason. Also add active → ready transition for crash recovery / unclaim — when an agent crashes mid-task, the task is stuck in active with no clean escape except needs-rework."
+created: "2026-03-30T20:43:53Z"
+created_by: sambeau

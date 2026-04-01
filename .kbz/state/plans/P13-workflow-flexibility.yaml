@@ -1,0 +1,8 @@
+id: P13-workflow-flexibility
+slug: workflow-flexibility
+title: Workflow Flexibility — User Feedback Round 1
+status: proposed
+summary: "Address friction points and feature requests from the first real-project test of Kanbanzai (viewer app v1). Covers lifecycle override support, task unclaim, decompose flexibility, feature-level workflow improvements, and document inheritance. Driven by concrete usage patterns: catching up existing work, crash recovery, parallel agent delegation, and health signal accuracy."
+created: "2026-03-30T20:43:30Z"
+created_by: sambeau
+updated: "2026-03-30T20:43:30Z"

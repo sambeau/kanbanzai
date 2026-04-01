@@ -1,0 +1,7 @@
+id: FEAT-01KN07T674DZM
+slug: main-branch-workflow
+parent: P13-workflow-flexibility
+status: proposed
+summary: "When implementation is committed directly to the default branch (no worktrees, no PRs), the merge step is conceptually a no-op but the lifecycle still expects it. Design and implement a path for main-branch-only workflows where there is nothing to merge — either skip the merge gate or provide a 'direct commit' workflow variant."
+created: "2026-03-30T20:43:53Z"
+created_by: sambeau

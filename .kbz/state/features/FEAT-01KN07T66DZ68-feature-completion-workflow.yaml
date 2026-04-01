@@ -1,0 +1,7 @@
+id: FEAT-01KN07T66DZ68
+slug: feature-completion-workflow
+parent: P13-workflow-flexibility
+status: proposed
+summary: "Auto-surface an attention item in status when all child tasks of a feature are done (e.g. 'FEAT-xxx has 10/10 tasks done — ready to close?'). Also add a feature-level handoff variant that assembles spec + dev plan + all task IDs + merge instructions into one prompt block, instead of requiring single-task-at-a-time handoff."
+created: "2026-03-30T20:43:53Z"
+created_by: sambeau
