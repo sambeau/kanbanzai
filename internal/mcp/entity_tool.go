@@ -69,7 +69,7 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		// Common entity fields (type-specific, all optional at top level).
 		mcp.WithString("slug", mcp.Description("URL-friendly identifier")),
 		mcp.WithString("summary", mcp.Description("Brief summary")),
-		mcp.WithString("title", mcp.Description("Human-readable title (plan, epic, bug)")),
+		mcp.WithString("name", mcp.Description("Human-readable display name (required on create, ~4 words, no colon, no phase prefix).")),
 		mcp.WithString("prefix", mcp.Description("Single-character Plan ID prefix (plan create only)")),
 		mcp.WithString("parent_feature", mcp.Description("Parent feature ID (task create only)")),
 		mcp.WithString("rationale", mcp.Description("Decision rationale (decision create only)")),
@@ -82,7 +82,6 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		mcp.WithString("created_by", mcp.Description("Who created it. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 		mcp.WithString("design", mcp.Description("Design document reference (feature or plan)")),
 		mcp.WithArray("depends_on", mcp.Description("Task IDs this task depends on (task update only). Each must be a valid TASK-... ID.")),
-		mcp.WithString("label", mcp.Description("Short label for feature/task (max 24 chars). Set on create/update; empty string clears. Exact-match filter on list.")),
 		mcp.WithString("created_after", mcp.Description("Created-after filter, RFC3339 (list only)")),
 		mcp.WithString("created_before", mcp.Description("Created-before filter, RFC3339 (list only)")),
 		mcp.WithBoolean("advance", mcp.Description(
@@ -157,13 +156,19 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 
 	var result service.CreateResult
 
+	nameRaw := entityArgStr(args, "name")
+	name, nameErr := validate.ValidateName(nameRaw)
+	if nameErr != nil {
+		return mcp.NewToolResultError(fmt.Sprintf("invalid name: %s", nameErr)), nil
+	}
+
 	switch entityType {
 	case "task":
 		result, err = entitySvc.CreateTask(service.CreateTaskInput{
 			ParentFeature: entityArgStr(args, "parent_feature"),
 			Slug:          entityArgStr(args, "slug"),
 			Summary:       entityArgStr(args, "summary"),
-			Label:         entityArgStr(args, "label"),
+			Name:          name,
 		})
 
 	case "feature":
@@ -174,14 +179,14 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 			Design:    entityArgStr(args, "design"),
 			Tags:      entityArgStringSlice(args, "tags"),
 			CreatedBy: createdBy,
-			Label:     entityArgStr(args, "label"),
+			Name:      name,
 		})
 
 	case "plan":
 		result, err = entitySvc.CreatePlan(service.CreatePlanInput{
 			Prefix:    entityArgStr(args, "prefix"),
 			Slug:      entityArgStr(args, "slug"),
-			Title:     entityArgStr(args, "title"),
+			Name:      name,
 			Summary:   entityArgStr(args, "summary"),
 			Tags:      entityArgStringSlice(args, "tags"),
 			CreatedBy: createdBy,
@@ -190,7 +195,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 	case "bug":
 		result, err = entitySvc.CreateBug(service.CreateBugInput{
 			Slug:       entityArgStr(args, "slug"),
-			Title:      entityArgStr(args, "title"),
+			Name:       name,
 			ReportedBy: entityArgStr(args, "reported_by"),
 			Observed:   entityArgStr(args, "observed"),
 			Expected:   entityArgStr(args, "expected"),
@@ -202,7 +207,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 	case "epic":
 		result, err = entitySvc.CreateEpic(service.CreateEpicInput{
 			Slug:      entityArgStr(args, "slug"),
-			Title:     entityArgStr(args, "title"),
+			Name:      name,
 			Summary:   entityArgStr(args, "summary"),
 			CreatedBy: createdBy,
 		})
@@ -210,6 +215,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 	case "decision":
 		result, err = entitySvc.CreateDecision(service.CreateDecisionInput{
 			Slug:      entityArgStr(args, "slug"),
+			Name:      name,
 			Summary:   entityArgStr(args, "summary"),
 			Rationale: entityArgStr(args, "rationale"),
 			DecidedBy: createdBy,
@@ -224,17 +230,15 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 	}
 
 	displayID := id.FormatFullDisplay(result.ID)
-	label := entityStateStr(result.State, "label")
+	entityName := entityStateStr(result.State, "name")
 	entityOut := map[string]any{
 		"display_id": displayID,
 		"id":         result.ID,
 		"type":       result.Type,
 		"slug":       result.Slug,
+		"name":       entityName,
 		"status":     entityStateStr(result.State, "status"),
-		"entity_ref": id.FormatEntityRef(displayID, result.Slug, label),
-	}
-	if label != "" {
-		entityOut["label"] = label
+		"entity_ref": id.FormatEntityRef(displayID, result.Slug, entityName),
 	}
 	out := map[string]any{
 		"entity": entityOut,
@@ -250,7 +254,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 // entityDuplicateAdvisory runs an advisory (non-blocking) similarity check against
 // pre-existing entities. Returns nil when no duplicates are found or the check fails.
 func entityDuplicateAdvisory(entityType string, args map[string]any, entitySvc *service.EntityService) []map[string]any {
-	title := entityArgStr(args, "title")
+	title := entityArgStr(args, "name")
 	if title == "" {
 		title = entityArgStr(args, "slug")
 	}
@@ -265,7 +269,7 @@ func entityDuplicateAdvisory(entityType string, args map[string]any, entitySvc *
 		plans, err := entitySvc.ListPlans(service.PlanFilters{})
 		if err == nil {
 			for _, p := range plans {
-				t, _ := p.State["title"].(string)
+				t, _ := p.State["name"].(string)
 				s, _ := p.State["summary"].(string)
 				existing = append(existing, knowledge.ExistingEntity{
 					ID:      p.ID,
@@ -279,7 +283,7 @@ func entityDuplicateAdvisory(entityType string, args map[string]any, entitySvc *
 		results, err := entitySvc.List(entityType)
 		if err == nil {
 			for _, r := range results {
-				t, _ := r.State["title"].(string)
+				t, _ := r.State["name"].(string)
 				if t == "" {
 					t, _ = r.State["slug"].(string)
 				}
@@ -359,7 +363,6 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 		statusFilter := entityArgStr(args, "status")
 		parentFilter := entityArgStr(args, "parent")
 		tagsFilter := entityArgStringSlice(args, "tags")
-		labelFilter := entityArgStr(args, "label")
 
 		var createdAfter, createdBefore *time.Time
 		if caStr := entityArgStr(args, "created_after"); caStr != "" {
@@ -395,7 +398,6 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 			Status:        statusFilter,
 			Parent:        parentFilter,
 			Tags:          tagsFilter,
-			Label:         labelFilter,
 			CreatedAfter:  createdAfter,
 			CreatedBefore: createdBefore,
 		})
@@ -421,23 +423,18 @@ func entitySummaries(results []service.ListResult) []map[string]any {
 	out := make([]map[string]any, 0, len(results))
 	for _, r := range results {
 		summary, _ := r.State["summary"].(string)
-		if summary == "" {
-			summary, _ = r.State["title"].(string)
-		}
+		entityName, _ := r.State["name"].(string)
 		status, _ := r.State["status"].(string)
-		label, _ := r.State["label"].(string)
 		displayID := id.FormatFullDisplay(r.ID)
 		item := map[string]any{
 			"display_id": displayID,
 			"id":         r.ID,
 			"type":       r.Type,
 			"slug":       r.Slug,
+			"name":       entityName,
 			"status":     status,
 			"summary":    summary,
-			"entity_ref": id.FormatEntityRef(displayID, r.Slug, label),
-		}
-		if label != "" {
-			item["label"] = label
+			"entity_ref": id.FormatEntityRef(displayID, r.Slug, entityName),
 		}
 		out = append(out, item)
 	}
@@ -486,16 +483,16 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 			return nil, fmt.Errorf("Cannot update entity %q: unrecognised ID format.\n\nTo resolve:\n  Use a prefixed ID such as FEAT-..., TASK-..., T-..., BUG-..., or a plan ID like P1-slug.", entityID)
 		}
 
-		// Plans use their own update path (supports title, summary, design, tags).
+		// Plans use their own update path (supports name, summary, design, tags).
 		if entityType == "plan" {
 			_, _, slug := model.ParsePlanID(entityID)
 			input := service.UpdatePlanInput{
 				ID:   entityID,
 				Slug: slug,
 			}
-			if _, has := args["title"]; has {
-				v := entityArgStr(args, "title")
-				input.Title = &v
+			if _, has := args["name"]; has {
+				v := entityArgStr(args, "name")
+				input.Name = &v
 			}
 			if _, has := args["summary"]; has {
 				v := entityArgStr(args, "summary")
@@ -519,18 +516,11 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 
 		// Regular entities: collect string-valued fields to update.
 		fields := make(map[string]string)
-		for _, key := range []string{"slug", "summary", "title", "design", "rationale", "observed", "expected", "severity", "priority"} {
+		for _, key := range []string{"slug", "summary", "name", "design", "rationale", "observed", "expected", "severity", "priority"} {
 			if v, exists := args[key]; exists {
 				if s, ok := v.(string); ok && strings.TrimSpace(s) != "" {
 					fields[key] = strings.TrimSpace(s)
 				}
-			}
-		}
-
-		// Label: non-empty sets, empty string "" clears.
-		if v, exists := args["label"]; exists {
-			if s, ok := v.(string); ok {
-				fields["label"] = strings.TrimSpace(s)
 			}
 		}
 
@@ -1199,11 +1189,11 @@ func entityFullRecord(entityID, entityType, slug string, state map[string]any) m
 		out[k] = v
 	}
 	displayID := id.FormatFullDisplay(entityID)
-	label, _ := state["label"].(string)
+	entityName, _ := state["name"].(string)
 	out["display_id"] = displayID
 	out["id"] = entityID
 	out["type"] = entityType
 	out["slug"] = slug
-	out["entity_ref"] = id.FormatEntityRef(displayID, slug, label)
+	out["entity_ref"] = id.FormatEntityRef(displayID, slug, entityName)
 	return out
 }

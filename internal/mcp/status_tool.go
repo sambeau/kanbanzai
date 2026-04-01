@@ -245,7 +245,7 @@ type planSummary struct {
 	DisplayID string `json:"display_id"`
 	ID        string `json:"id"`
 	Slug      string `json:"slug"`
-	Title     string `json:"title,omitempty"`
+	Name      string `json:"name,omitempty"`
 	Status    string `json:"status"`
 	Features  int    `json:"features"`
 	Tasks     struct {
@@ -303,7 +303,7 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 
 	for _, p := range plans {
 		status, _ := p.State["status"].(string)
-		title, _ := p.State["title"].(string)
+		name, _ := p.State["name"].(string)
 
 		features := featuresByPlan[p.ID]
 		agg.Features += len(features)
@@ -325,7 +325,7 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 			DisplayID: id.FormatFullDisplay(p.ID),
 			ID:        p.ID,
 			Slug:      p.Slug,
-			Title:     title,
+			Name:      name,
 			Status:    status,
 			Features:  len(features),
 		}
@@ -359,7 +359,6 @@ type planDashboard struct {
 	Scope       string               `json:"scope"`
 	Plan        planHeader           `json:"plan"`
 	Features    []featureSummary     `json:"features"`
-	HasLabels   bool                 `json:"has_labels,omitempty"`
 	DocGaps     []string             `json:"doc_gaps,omitempty"`
 	Health      *statusHealthSummary `json:"health,omitempty"`
 	Attention   []string             `json:"attention,omitempty"`
@@ -370,7 +369,7 @@ type planHeader struct {
 	DisplayID string `json:"display_id"`
 	ID        string `json:"id"`
 	Slug      string `json:"slug"`
-	Title     string `json:"title,omitempty"`
+	Name      string `json:"name,omitempty"`
 	Status    string `json:"status"`
 }
 
@@ -380,7 +379,7 @@ type featureSummary struct {
 	Slug      string `json:"slug"`
 	Summary   string `json:"summary,omitempty"`
 	Status    string `json:"status"`
-	Label     string `json:"label,omitempty"`
+	Name      string `json:"name,omitempty"`
 	Tasks     struct {
 		Queued int `json:"queued"`
 		Ready  int `json:"ready"`
@@ -458,7 +457,7 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 		hasSpec := hasDocType(docs, "specification")
 		hasDevPlan := hasDocType(docs, "dev-plan")
 
-		flabel, _ := f.State["label"].(string)
+		fname, _ := f.State["name"].(string)
 
 		fs := featureSummary{
 			DisplayID:  id.FormatFullDisplay(f.ID),
@@ -466,7 +465,7 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 			Slug:       f.Slug,
 			Summary:    fsummary,
 			Status:     fstatus,
-			Label:      flabel,
+			Name:       fname,
 			HasSpec:    hasSpec,
 			HasDevPlan: hasDevPlan,
 		}
@@ -484,17 +483,8 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 		}
 	}
 
-	title, _ := plan.State["title"].(string)
+	planName, _ := plan.State["name"].(string)
 	planStatus, _ := plan.State["status"].(string)
-
-	// Detect whether any feature has a label set.
-	hasLabels := false
-	for _, fs := range featureSummaries {
-		if fs.Label != "" {
-			hasLabels = true
-			break
-		}
-	}
 
 	attention := generatePlanAttention(featureSummaries, docGaps)
 	health := buildHealthSummary(entitySvc)
@@ -505,11 +495,10 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 			DisplayID: id.FormatFullDisplay(plan.ID),
 			ID:        plan.ID,
 			Slug:      plan.Slug,
-			Title:     title,
+			Name:      planName,
 			Status:    planStatus,
 		},
 		Features:    featureSummaries,
-		HasLabels:   hasLabels,
 		DocGaps:     docGaps,
 		Health:      health,
 		Attention:   attention,
@@ -523,7 +512,6 @@ type featureDetail struct {
 	Scope       string      `json:"scope"`
 	Feature     featureInfo `json:"feature"`
 	Tasks       []taskInfo  `json:"tasks"`
-	HasLabels   bool        `json:"has_labels,omitempty"`
 	TaskSummary struct {
 		Queued int `json:"queued"`
 		Ready  int `json:"ready"`
@@ -544,7 +532,7 @@ type taskInfo struct {
 	Slug      string   `json:"slug"`
 	Summary   string   `json:"summary,omitempty"`
 	Status    string   `json:"status"`
-	Label     string   `json:"label,omitempty"`
+	Name      string   `json:"name,omitempty"`
 	Estimate  *float64 `json:"estimate,omitempty"`
 }
 
@@ -595,14 +583,14 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 				est = &ef
 			}
 		}
-		tlabel, _ := t.State["label"].(string)
+		tname, _ := t.State["name"].(string)
 		tasks = append(tasks, taskInfo{
 			DisplayID: id.FormatFullDisplay(t.ID),
 			ID:        t.ID,
 			Slug:      t.Slug,
 			Summary:   summary,
 			Status:    status,
-			Label:     tlabel,
+			Name:      tname,
 			Estimate:  est,
 		})
 	}
@@ -648,15 +636,6 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 		}
 	}
 
-	// Detect whether any task has a label set.
-	hasLabels := false
-	for _, ti := range tasks {
-		if ti.Label != "" {
-			hasLabels = true
-			break
-		}
-	}
-
 	attention := generateFeatureAttention(tasks, docs, taskSummary.total)
 	if fblockedReason != "" {
 		attention = append([]string{"BLOCKED: " + fblockedReason}, attention...)
@@ -675,7 +654,6 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 			BlockedReason: fblockedReason,
 		},
 		Tasks:       tasks,
-		HasLabels:   hasLabels,
 		Documents:   docs,
 		Estimate:    est,
 		Worktree:    wt,
@@ -825,7 +803,7 @@ type bugInfo struct {
 	DisplayID string `json:"display_id"`
 	ID        string `json:"id"`
 	Slug      string `json:"slug"`
-	Title     string `json:"title,omitempty"`
+	Name      string `json:"name,omitempty"`
 	Status    string `json:"status"`
 	Severity  string `json:"severity,omitempty"`
 	Priority  string `json:"priority,omitempty"`
@@ -838,7 +816,7 @@ func synthesiseBug(bugID string, entitySvc *service.EntityService) (*bugDetail, 
 	}
 
 	bstatus, _ := bug.State["status"].(string)
-	btitle, _ := bug.State["title"].(string)
+	bname, _ := bug.State["name"].(string)
 	bseverity, _ := bug.State["severity"].(string)
 	bpriority, _ := bug.State["priority"].(string)
 
@@ -856,7 +834,7 @@ func synthesiseBug(bugID string, entitySvc *service.EntityService) (*bugDetail, 
 			DisplayID: id.FormatFullDisplay(bug.ID),
 			ID:        bug.ID,
 			Slug:      bug.Slug,
-			Title:     btitle,
+			Name:      bname,
 			Status:    bstatus,
 			Severity:  bseverity,
 			Priority:  bpriority,

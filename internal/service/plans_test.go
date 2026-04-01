@@ -16,7 +16,7 @@ func TestCreatePlan_Success(t *testing.T) {
 	result, err := svc.CreatePlan(CreatePlanInput{
 		Prefix:    "P",
 		Slug:      "test-plan",
-		Title:     "Test Plan",
+		Name:      "Test Plan",
 		Summary:   "A test plan for unit testing",
 		CreatedBy: "tester",
 	})
@@ -45,7 +45,7 @@ func TestCreatePlan_WithTags(t *testing.T) {
 	result, err := svc.CreatePlan(CreatePlanInput{
 		Prefix:    "P",
 		Slug:      "tagged-plan",
-		Title:     "Tagged Plan",
+		Name:      "Tagged Plan",
 		Summary:   "A test plan with tags",
 		CreatedBy: "tester",
 		Tags:      []string{"test", "phase:2"},
@@ -76,7 +76,7 @@ func TestCreatePlan_UndeclaredPrefix(t *testing.T) {
 	_, err := svc.CreatePlan(CreatePlanInput{
 		Prefix:    "Z",
 		Slug:      "test-plan",
-		Title:     "Test Plan",
+		Name:      "Test Plan",
 		Summary:   "A test plan",
 		CreatedBy: "tester",
 	})
@@ -103,7 +103,7 @@ func TestCreatePlan_MissingRequiredFields(t *testing.T) {
 			name: "missing prefix",
 			input: CreatePlanInput{
 				Slug:      "test",
-				Title:     "Test",
+				Name:      "Test",
 				Summary:   "Summary",
 				CreatedBy: "tester",
 			},
@@ -113,28 +113,28 @@ func TestCreatePlan_MissingRequiredFields(t *testing.T) {
 			name: "missing slug",
 			input: CreatePlanInput{
 				Prefix:    "P",
-				Title:     "Test",
+				Name:      "Test",
 				Summary:   "Summary",
 				CreatedBy: "tester",
 			},
 			want: "slug is required",
 		},
 		{
-			name: "missing title",
+			name: "missing name",
 			input: CreatePlanInput{
 				Prefix:    "P",
 				Slug:      "test",
 				Summary:   "Summary",
 				CreatedBy: "tester",
 			},
-			want: "title is required",
+			want: "name is required",
 		},
 		{
 			name: "missing summary",
 			input: CreatePlanInput{
 				Prefix:    "P",
 				Slug:      "test",
-				Title:     "Test",
+				Name:      "Test",
 				CreatedBy: "tester",
 			},
 			want: "summary is required",
@@ -144,7 +144,7 @@ func TestCreatePlan_MissingRequiredFields(t *testing.T) {
 			input: CreatePlanInput{
 				Prefix:  "P",
 				Slug:    "test",
-				Title:   "Test",
+				Name:    "Test",
 				Summary: "Summary",
 			},
 			want: "created_by is required",
