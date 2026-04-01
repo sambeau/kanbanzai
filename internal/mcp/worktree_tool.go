@@ -91,9 +91,9 @@ func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityServic
 		entity, err := entitySvc.Get(entityType, entityID, "")
 		if err != nil {
 			if errors.Is(err, service.ErrNotFound) {
-				return inlineErr("entity_not_found", fmt.Sprintf("entity %s not found", entityID))
+				return inlineErr("entity_not_found", fmt.Sprintf("Cannot create worktree for %s: entity not found.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, entityID))
 			}
-			return nil, fmt.Errorf("get entity: %w", err)
+			return nil, fmt.Errorf("Cannot create worktree for %s: failed to retrieve entity: %w.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, err, entityID)
 		}
 
 		// Check if a worktree already exists for this entity.
@@ -146,7 +146,7 @@ func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityServic
 		if err != nil {
 			// Best-effort cleanup of the git worktree.
 			_ = gitOps.RemoveWorktree(wtPath, true)
-			return nil, fmt.Errorf("create worktree record: %w", err)
+			return nil, fmt.Errorf("Cannot create worktree for %s: failed to save worktree record: %w.\n\nTo resolve:\n  Check file permissions in .kbz/state/worktrees/ and retry", entityID, err)
 		}
 
 		return map[string]any{
@@ -170,7 +170,7 @@ func worktreeGetAction(store *worktree.Store) ActionHandler {
 				return inlineErr("no_worktree",
 					fmt.Sprintf("no worktree found for entity %s", entityID))
 			}
-			return nil, fmt.Errorf("get worktree: %w", err)
+			return nil, fmt.Errorf("Cannot get worktree for %s: storage read failed: %w.\n\nTo resolve:\n  Check file permissions in .kbz/state/worktrees/ and retry", entityID, err)
 		}
 
 		return map[string]any{
@@ -188,7 +188,7 @@ func worktreeListAction(store *worktree.Store) ActionHandler {
 
 		records, err := store.List()
 		if err != nil {
-			return nil, fmt.Errorf("list worktrees: %w", err)
+			return nil, fmt.Errorf("Cannot list worktrees: storage read failed: %w.\n\nTo resolve:\n  Check file permissions in .kbz/state/worktrees/ and retry", err)
 		}
 
 		var filtered []worktree.Record
@@ -232,7 +232,7 @@ func worktreeRemoveAction(store *worktree.Store, gitOps *worktree.Git) ActionHan
 				return inlineErr("no_worktree",
 					fmt.Sprintf("no worktree found for entity %s", entityID))
 			}
-			return nil, fmt.Errorf("get worktree: %w", err)
+			return nil, fmt.Errorf("Cannot remove worktree for %s: storage read failed: %w.\n\nTo resolve:\n  Check file permissions in .kbz/state/worktrees/ and retry", entityID, err)
 		}
 
 		// Remove the git worktree.
@@ -249,7 +249,7 @@ func worktreeRemoveAction(store *worktree.Store, gitOps *worktree.Git) ActionHan
 
 		// Delete the worktree record.
 		if err := store.Delete(record.ID); err != nil {
-			return nil, fmt.Errorf("delete worktree record: %w", err)
+			return nil, fmt.Errorf("Cannot remove worktree %s: failed to delete worktree record: %w.\n\nTo resolve:\n  Check file permissions in .kbz/state/worktrees/ and retry", record.ID, err)
 		}
 
 		return map[string]any{
@@ -301,7 +301,7 @@ func worktreeRecordToMap(r worktree.Record) map[string]any {
 func worktreeMapJSON(v map[string]any) (*mcp.CallToolResult, error) {
 	data, err := json.MarshalIndent(v, "", "  ")
 	if err != nil {
-		return mcp.NewToolResultError("marshal result: " + err.Error()), nil
+		return mcp.NewToolResultError("Cannot format worktree result: JSON serialization failed: " + err.Error() + ".\n\nTo resolve:\n  Report this as a bug — worktree data may contain unexpected types"), nil
 	}
 	return mcp.NewToolResultText(string(data)), nil
 }

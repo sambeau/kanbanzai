@@ -108,23 +108,23 @@ func incidentCreateAction(svc *service.EntityService) ActionHandler {
 
 		slug, err := req.RequireString("slug")
 		if err != nil {
-			return nil, fmt.Errorf("slug is required for create action")
+			return nil, fmt.Errorf("Cannot create incident: slug is missing.\n\nTo resolve:\n  Provide slug: incident(action: \"create\", slug: \"my-incident\", ...)")
 		}
 		title, err := req.RequireString("title")
 		if err != nil {
-			return nil, fmt.Errorf("title is required for create action")
+			return nil, fmt.Errorf("Cannot create incident: title is missing.\n\nTo resolve:\n  Provide title: incident(action: \"create\", title: \"...\", ...)")
 		}
 		severity, err := req.RequireString("severity")
 		if err != nil {
-			return nil, fmt.Errorf("severity is required for create action")
+			return nil, fmt.Errorf("Cannot create incident: severity is missing.\n\nTo resolve:\n  Provide severity (critical, high, medium, or low): incident(action: \"create\", severity: \"high\", ...)")
 		}
 		summary, err := req.RequireString("summary")
 		if err != nil {
-			return nil, fmt.Errorf("summary is required for create action")
+			return nil, fmt.Errorf("Cannot create incident: summary is missing.\n\nTo resolve:\n  Provide summary: incident(action: \"create\", summary: \"...\", ...)")
 		}
 		reportedByRaw, err := req.RequireString("reported_by")
 		if err != nil {
-			return nil, fmt.Errorf("reported_by is required for create action")
+			return nil, fmt.Errorf("Cannot create incident: reported_by is missing.\n\nTo resolve:\n  Provide reported_by: incident(action: \"create\", reported_by: \"...\", ...)")
 		}
 		reportedBy, err := config.ResolveIdentity(reportedByRaw)
 		if err != nil {
@@ -141,7 +141,7 @@ func incidentCreateAction(svc *service.EntityService) ActionHandler {
 			DetectedAt: detectedAt,
 		})
 		if err != nil {
-			return nil, fmt.Errorf("create incident: %w", err)
+			return nil, fmt.Errorf("Cannot create incident: %w.\n\nTo resolve:\n  Check that slug, title, severity, and summary are valid and try again", err)
 		}
 
 		return createResultWithDisplay(result), nil
@@ -156,7 +156,7 @@ func incidentUpdateAction(svc *service.EntityService) ActionHandler {
 
 		incidentID, err := req.RequireString("incident_id")
 		if err != nil {
-			return nil, fmt.Errorf("incident_id is required for update action")
+			return nil, fmt.Errorf("Cannot update incident: incident_id is missing.\n\nTo resolve:\n  Provide incident_id: incident(action: \"update\", incident_id: \"INC-...\", ...)")
 		}
 
 		input := service.UpdateIncidentInput{
@@ -185,7 +185,7 @@ func incidentUpdateAction(svc *service.EntityService) ActionHandler {
 
 		result, err := svc.UpdateIncident(input)
 		if err != nil {
-			return nil, fmt.Errorf("update incident: %w", err)
+			return nil, fmt.Errorf("Cannot update incident %s: %w.\n\nTo resolve:\n  Verify the incident ID exists using incident(action: \"list\") and check the field values", incidentID, err)
 		}
 
 		return result, nil
@@ -201,17 +201,17 @@ func incidentListAction(svc *service.EntityService) ActionHandler {
 
 		results, err := svc.ListIncidents(statusFilter, severityFilter)
 		if err != nil {
-			return nil, fmt.Errorf("list incidents: %w", err)
+			return nil, fmt.Errorf("Cannot list incidents: %w.\n\nTo resolve:\n  Check that status_filter and severity_filter values are valid, or omit them to list all", err)
 		}
 
 		// Re-encode results as a generic value for the side-effect wrapper.
 		data, err := json.Marshal(results)
 		if err != nil {
-			return nil, fmt.Errorf("marshal incident list: %w", err)
+			return nil, fmt.Errorf("Cannot list incidents: result serialization failed: %w.\n\nTo resolve:\n  Retry the request", err)
 		}
 		var out any
 		if err := json.Unmarshal(data, &out); err != nil {
-			return nil, fmt.Errorf("unmarshal incident list: %w", err)
+			return nil, fmt.Errorf("Cannot list incidents: result processing failed: %w.\n\nTo resolve:\n  Retry the request", err)
 		}
 		return out, nil
 	}
@@ -238,11 +238,11 @@ func incidentLinkBugAction(svc *service.EntityService) ActionHandler {
 
 		incidentID, err := req.RequireString("incident_id")
 		if err != nil {
-			return nil, fmt.Errorf("incident_id is required for link_bug action")
+			return nil, fmt.Errorf("Cannot link bug to incident: incident_id is missing.\n\nTo resolve:\n  Provide incident_id: incident(action: \"link_bug\", incident_id: \"INC-...\", bug_id: \"BUG-...\")")
 		}
 		bugID, err := req.RequireString("bug_id")
 		if err != nil {
-			return nil, fmt.Errorf("bug_id is required for link_bug action")
+			return nil, fmt.Errorf("Cannot link bug to incident: bug_id is missing.\n\nTo resolve:\n  Provide bug_id: incident(action: \"link_bug\", incident_id: \"INC-...\", bug_id: \"BUG-...\")")
 		}
 
 		result, err := svc.LinkBug(service.LinkBugInput{
@@ -250,7 +250,7 @@ func incidentLinkBugAction(svc *service.EntityService) ActionHandler {
 			BugID:      bugID,
 		})
 		if err != nil {
-			return nil, fmt.Errorf("link bug: %w", err)
+			return nil, fmt.Errorf("Cannot link bug %s to incident %s: %w.\n\nTo resolve:\n  Verify both IDs exist using incident(action: \"list\") and entity(action: \"get\", id: \"BUG-...\")", bugID, incidentID, err)
 		}
 
 		return result, nil

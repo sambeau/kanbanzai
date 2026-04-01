@@ -16,7 +16,7 @@ import (
 func resolveEntityType(entitySvc *service.EntityService, entityID string) (string, service.GetResult, error) {
 	entityType, ok := entityInferType(entityID)
 	if !ok {
-		return "", service.GetResult{}, fmt.Errorf("cannot infer entity type from ID %q", entityID)
+		return "", service.GetResult{}, fmt.Errorf("Cannot resolve entity %q: unrecognised ID prefix.\n\nTo resolve:\n  Provide an ID with a valid prefix (e.g. FEAT-xxx, TASK-xxx, BUG-xxx)", entityID)
 	}
 	result, err := entitySvc.Get(entityType, entityID, "")
 	if err != nil {
@@ -97,11 +97,11 @@ func estimateSetAction(entitySvc *service.EntityService, knowledgeSvc *service.K
 			return ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
 				m, ok := item.(map[string]any)
 				if !ok {
-					return "", nil, fmt.Errorf("each item must be an object with entity_id and points")
+					return "", nil, fmt.Errorf("Cannot set estimate in batch: each item must be an object with entity_id and points.\n\nTo resolve:\n  Provide entities as [{\"entity_id\": \"...\", \"points\": N}, ...]")
 				}
 				entityID, _ := m["entity_id"].(string)
 				if entityID == "" {
-					return "", nil, fmt.Errorf("entity_id is required")
+					return "", nil, fmt.Errorf("Cannot set estimate in batch: entity_id is missing from item.\n\nTo resolve:\n  Include entity_id in each batch item: {\"entity_id\": \"TASK-xxx\", \"points\": N}")
 				}
 				points, err := estimateParsePoints(m["points"])
 				if err != nil {
@@ -115,10 +115,10 @@ func estimateSetAction(entitySvc *service.EntityService, knowledgeSvc *service.K
 		// Single mode: entity_id + points are required.
 		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return nil, fmt.Errorf("entity_id is required for set (single mode)")
+			return nil, fmt.Errorf("Cannot set estimate: entity_id is missing.\n\nTo resolve:\n  Provide entity_id: estimate(action: \"set\", entity_id: \"...\", points: N)")
 		}
 		if _, ok := args["points"]; !ok {
-			return nil, fmt.Errorf("points is required for set (single mode)")
+			return nil, fmt.Errorf("Cannot set estimate: points is missing.\n\nTo resolve:\n  Provide points from the Modified Fibonacci scale: estimate(action: \"set\", entity_id: \"...\", points: N)")
 		}
 		points := req.GetFloat("points", 0)
 
@@ -137,7 +137,7 @@ func estimateParsePoints(v any) (float64, error) {
 	case int64:
 		return float64(p), nil
 	default:
-		return 0, fmt.Errorf("points must be a number")
+		return 0, fmt.Errorf("Cannot set estimate: points value is not a number.\n\nTo resolve:\n  Provide a numeric value from the Modified Fibonacci scale: 0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100")
 	}
 }
 
@@ -149,12 +149,12 @@ func estimateSetOne(
 ) (map[string]any, error) {
 	entityType, _, err := resolveEntityType(entitySvc, entityID)
 	if err != nil {
-		return nil, fmt.Errorf("entity not found: %s", entityID)
+		return nil, fmt.Errorf("Cannot set estimate for %s: entity not found.\n\nTo resolve:\n  Verify the entity ID exists with entity(action: \"get\", id: \"%s\")", entityID, entityID)
 	}
 
 	fields, warning, err := entitySvc.SetEstimate(entityType, entityID, points)
 	if err != nil {
-		return nil, fmt.Errorf("set estimate: %w", err)
+		return nil, fmt.Errorf("Cannot set estimate for %s: %w.\n\nTo resolve:\n  Check that the points value is on the Modified Fibonacci scale: 0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100", entityID, err)
 	}
 
 	// Gather calibration references for context (best-effort).
@@ -196,12 +196,12 @@ func estimateQueryAction(entitySvc *service.EntityService) ActionHandler {
 		// Read-only: no SignalMutation.
 		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return nil, fmt.Errorf("entity_id is required for query action")
+			return nil, fmt.Errorf("Cannot query estimate: entity_id is missing.\n\nTo resolve:\n  Provide entity_id: estimate(action: \"query\", entity_id: \"...\")")
 		}
 
 		entityType, result, err := resolveEntityType(entitySvc, entityID)
 		if err != nil {
-			return nil, fmt.Errorf("entity not found: %s", entityID)
+			return nil, fmt.Errorf("Cannot query estimate for %s: entity not found.\n\nTo resolve:\n  Verify the entity ID exists with entity(action: \"get\", id: \"%s\")", entityID, entityID)
 		}
 
 		ownEstimate := service.GetEstimateFromFields(result.State)
@@ -222,7 +222,7 @@ func estimateQueryAction(entitySvc *service.EntityService) ActionHandler {
 		case "feature":
 			rollup, err := entitySvc.ComputeFeatureRollup(result.ID)
 			if err != nil {
-				return nil, fmt.Errorf("compute feature rollup: %w", err)
+				return nil, fmt.Errorf("Cannot query estimate for feature %s: rollup computation failed: %w.\n\nTo resolve:\n  Check that the feature's child tasks are in a valid state", result.ID, err)
 			}
 
 			var delta any
@@ -248,7 +248,7 @@ func estimateQueryAction(entitySvc *service.EntityService) ActionHandler {
 		case "epic", "plan":
 			rollup, err := entitySvc.ComputeEpicRollup(result.ID)
 			if err != nil {
-				return nil, fmt.Errorf("compute epic rollup: %w", err)
+				return nil, fmt.Errorf("Cannot query estimate for %s %s: rollup computation failed: %w.\n\nTo resolve:\n  Check that the child features are in a valid state", entityType, result.ID, err)
 			}
 
 			var delta any
@@ -283,11 +283,11 @@ func estimateAddReferenceAction(knowledgeSvc *service.KnowledgeService) ActionHa
 
 		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return nil, fmt.Errorf("entity_id is required for add_reference action")
+			return nil, fmt.Errorf("Cannot add estimation reference: entity_id is missing.\n\nTo resolve:\n  Provide entity_id: estimate(action: \"add_reference\", entity_id: \"...\", content: \"...\")")
 		}
 		content, err := req.RequireString("content")
 		if err != nil {
-			return nil, fmt.Errorf("content is required for add_reference action")
+			return nil, fmt.Errorf("Cannot add estimation reference for %s: content is missing.\n\nTo resolve:\n  Provide content describing the work and its complexity: estimate(action: \"add_reference\", entity_id: \"%s\", content: \"...\")", entityID, entityID)
 		}
 
 		createdByRaw := req.GetString("created_by", "")
@@ -298,7 +298,7 @@ func estimateAddReferenceAction(knowledgeSvc *service.KnowledgeService) ActionHa
 
 		record, err := knowledgeSvc.AddEstimationReference(entityID, content, createdBy)
 		if err != nil {
-			return nil, fmt.Errorf("add estimation reference: %w", err)
+			return nil, fmt.Errorf("Cannot add estimation reference for %s: %w.\n\nTo resolve:\n  Verify the entity exists and the content is non-empty", entityID, err)
 		}
 
 		topic, _ := record.Fields["topic"].(string)
@@ -320,12 +320,12 @@ func estimateRemoveReferenceAction(knowledgeSvc *service.KnowledgeService) Actio
 
 		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return nil, fmt.Errorf("entity_id is required for remove_reference action")
+			return nil, fmt.Errorf("Cannot remove estimation reference: entity_id is missing.\n\nTo resolve:\n  Provide entity_id: estimate(action: \"remove_reference\", entity_id: \"...\")")
 		}
 
 		entryID, err := knowledgeSvc.RemoveEstimationReference(entityID)
 		if err != nil {
-			return nil, fmt.Errorf("remove estimation reference: %w", err)
+			return nil, fmt.Errorf("Cannot remove estimation reference for %s: %w.\n\nTo resolve:\n  Verify a calibration reference exists for this entity with estimate(action: \"query\", entity_id: \"%s\")", entityID, err, entityID)
 		}
 
 		return map[string]any{

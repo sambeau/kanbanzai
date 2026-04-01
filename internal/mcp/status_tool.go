@@ -97,22 +97,27 @@ func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 			result, err = synthesiseBug(id, entitySvc)
 		default:
 			return ActionError("unknown_id_format",
-				fmt.Sprintf("Cannot determine entity type from ID %q. "+
-					"Use a plan ID (e.g. P1-slug), FEAT-..., TASK-..., T-..., or BUG-...", id),
+				fmt.Sprintf("Cannot show status for ID %q: unrecognised ID format.\n\n"+
+					"To resolve:\n  Use a plan ID (e.g. P1-slug), FEAT-..., TASK-..., T-..., or BUG-...", id),
 				nil), nil
 		}
 
 		if err != nil {
 			if isNotFound(err) {
 				return ActionError("not_found",
-					fmt.Sprintf("Entity %q not found", id), nil), nil
+					fmt.Sprintf("Cannot show status for %q: entity not found.\n\n"+
+						"To resolve:\n  Check the ID is correct with entity(action: \"list\", type: \"...\") or use status() with no ID for a project overview.", id), nil), nil
 			}
-			return ActionError("status_error", err.Error(), nil), nil
+			return ActionError("status_error",
+				fmt.Sprintf("Cannot synthesise status for %q: %v.\n\n"+
+					"To resolve:\n  Retry the request. If the error persists, check project health with the health tool.", id, err), nil), nil
 		}
 
 		b, jsonErr := json.Marshal(result)
 		if jsonErr != nil {
-			return ActionError("serialisation_error", jsonErr.Error(), nil), nil
+			return ActionError("serialisation_error",
+				fmt.Sprintf("Cannot serialise status response for %q: JSON marshalling failed.\n\n"+
+					"To resolve:\n  Retry the request. If the error persists, report this as a bug.", id), nil), nil
 		}
 		return mcp.NewToolResultText(string(b)), nil
 	}
@@ -254,16 +259,16 @@ type planSummary struct {
 func synthesiseProject(entitySvc *service.EntityService, docSvc *service.DocumentService) (*projectOverview, error) {
 	plans, err := entitySvc.ListPlans(service.PlanFilters{})
 	if err != nil {
-		return nil, fmt.Errorf("list plans: %w", err)
+		return nil, fmt.Errorf("Cannot synthesise project overview: failed to list plans: %w.\n\nTo resolve:\n  Check that the .kbz/state/ directory exists and is readable.", err)
 	}
 
 	allFeatures, err := entitySvc.List("feature")
 	if err != nil {
-		return nil, fmt.Errorf("list features: %w", err)
+		return nil, fmt.Errorf("Cannot synthesise project overview: failed to list features: %w.\n\nTo resolve:\n  Check that the .kbz/state/ directory exists and is readable.", err)
 	}
 	allTasks, err := entitySvc.List("task")
 	if err != nil {
-		return nil, fmt.Errorf("list tasks: %w", err)
+		return nil, fmt.Errorf("Cannot synthesise project overview: failed to list tasks: %w.\n\nTo resolve:\n  Check that the .kbz/state/ directory exists and is readable.", err)
 	}
 
 	// Index features by their plan (stored as "parent" field on feature records).
@@ -390,16 +395,16 @@ type featureSummary struct {
 func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *service.DocumentService) (*planDashboard, error) {
 	plan, err := entitySvc.GetPlan(planID)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Cannot show status for plan %s: plan not found or unreadable: %w.\n\nTo resolve:\n  Verify the plan ID with status() (no arguments) to list all plans.", planID, err)
 	}
 
 	allFeatures, err := entitySvc.List("feature")
 	if err != nil {
-		return nil, fmt.Errorf("list features: %w", err)
+		return nil, fmt.Errorf("Cannot show status for plan %s: failed to list features: %w.\n\nTo resolve:\n  Check that the .kbz/state/ directory exists and is readable.", planID, err)
 	}
 	allTasks, err := entitySvc.List("task")
 	if err != nil {
-		return nil, fmt.Errorf("list tasks: %w", err)
+		return nil, fmt.Errorf("Cannot show status for plan %s: failed to list tasks: %w.\n\nTo resolve:\n  Check that the .kbz/state/ directory exists and is readable.", planID, err)
 	}
 
 	// Filter features owned by this plan (stored as "parent" field on feature records).
@@ -555,12 +560,12 @@ type docInfo struct {
 func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store) (*featureDetail, error) {
 	feat, err := entitySvc.Get("feature", featID, "")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Cannot show status for feature %s: feature not found or unreadable: %w.\n\nTo resolve:\n  Verify the feature ID with entity(action: \"list\", type: \"feature\").", featID, err)
 	}
 
 	allTasks, err := entitySvc.List("task")
 	if err != nil {
-		return nil, fmt.Errorf("list tasks: %w", err)
+		return nil, fmt.Errorf("Cannot show status for feature %s: failed to list tasks: %w.\n\nTo resolve:\n  Check that the .kbz/state/ directory exists and is readable.", featID, err)
 	}
 
 	// Filter tasks for this feature.
@@ -720,7 +725,7 @@ type depInfo struct {
 func synthesiseTask(taskID string, entitySvc *service.EntityService) (*taskDetail, error) {
 	task, err := entitySvc.Get("task", taskID, "")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Cannot show status for task %s: task not found or unreadable: %w.\n\nTo resolve:\n  Verify the task ID with entity(action: \"list\", type: \"task\").", taskID, err)
 	}
 
 	tstatus, _ := task.State["status"].(string)
@@ -829,7 +834,7 @@ type bugInfo struct {
 func synthesiseBug(bugID string, entitySvc *service.EntityService) (*bugDetail, error) {
 	bug, err := entitySvc.Get("bug", bugID, "")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Cannot show status for bug %s: bug not found or unreadable: %w.\n\nTo resolve:\n  Verify the bug ID with entity(action: \"list\", type: \"bug\").", bugID, err)
 	}
 
 	bstatus, _ := bug.State["status"].(string)

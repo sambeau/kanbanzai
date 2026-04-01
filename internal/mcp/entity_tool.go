@@ -317,18 +317,18 @@ func entityGetAction(entitySvc *service.EntityService) ActionHandler {
 		args, _ := req.Params.Arguments.(map[string]any)
 		entityID := id.NormalizeID(entityArgStr(args, "id"))
 		if entityID == "" {
-			return nil, fmt.Errorf("id is required for get")
+			return nil, fmt.Errorf("Cannot get entity: no ID provided.\n\nTo resolve:\n  Pass id with a prefixed entity ID (e.g. FEAT-001, TASK-042, BUG-003, P1-my-plan).")
 		}
 
 		entityType, ok := entityInferType(entityID)
 		if !ok {
-			return nil, fmt.Errorf("cannot infer entity type from ID %q; use a prefixed ID (FEAT-..., TASK-..., BUG-..., etc.)", entityID)
+			return nil, fmt.Errorf("Cannot get entity %q: unrecognised ID format.\n\nTo resolve:\n  Use a prefixed ID such as FEAT-..., TASK-..., T-..., BUG-..., or a plan ID like P1-slug.", entityID)
 		}
 
 		if entityType == "plan" {
 			result, err := entitySvc.GetPlan(entityID)
 			if err != nil {
-				return nil, fmt.Errorf("get plan %s: %w", entityID, err)
+				return nil, fmt.Errorf("Cannot get plan %s: %w.\n\nTo resolve:\n  Verify the plan ID exists with entity(action: \"list\", type: \"plan\").", entityID, err)
 			}
 			return map[string]any{
 				"entity": entityFullRecord(result.ID, result.Type, result.Slug, result.State),
@@ -337,7 +337,7 @@ func entityGetAction(entitySvc *service.EntityService) ActionHandler {
 
 		result, err := entitySvc.Get(entityType, entityID, "")
 		if err != nil {
-			return nil, fmt.Errorf("get %s %s: %w", entityType, entityID, err)
+			return nil, fmt.Errorf("Cannot get %s %s: %w.\n\nTo resolve:\n  Verify the ID exists with entity(action: \"list\", type: %q).", entityType, entityID, err, entityType)
 		}
 		return map[string]any{
 			"entity": entityFullRecord(result.ID, result.Type, result.Slug, result.State),
@@ -352,7 +352,7 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 		args, _ := req.Params.Arguments.(map[string]any)
 		entityType := strings.ToLower(entityArgStr(args, "type"))
 		if entityType == "" {
-			return nil, fmt.Errorf("type is required for list")
+			return nil, fmt.Errorf("Cannot list entities: no type provided.\n\nTo resolve:\n  Pass type with one of: plan, feature, task, bug, epic, decision.")
 		}
 
 		statusFilter := entityArgStr(args, "status")
@@ -364,14 +364,14 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 		if caStr := entityArgStr(args, "created_after"); caStr != "" {
 			t, err := time.Parse(time.RFC3339, caStr)
 			if err != nil {
-				return nil, fmt.Errorf("invalid created_after: %w", err)
+				return nil, fmt.Errorf("Cannot list entities: invalid created_after value.\n\nTo resolve:\n  Use RFC 3339 format, e.g. \"2024-01-15T00:00:00Z\".")
 			}
 			createdAfter = &t
 		}
 		if cbStr := entityArgStr(args, "created_before"); cbStr != "" {
 			t, err := time.Parse(time.RFC3339, cbStr)
 			if err != nil {
-				return nil, fmt.Errorf("invalid created_before: %w", err)
+				return nil, fmt.Errorf("Cannot list entities: invalid created_before value.\n\nTo resolve:\n  Use RFC 3339 format, e.g. \"2024-12-31T23:59:59Z\".")
 			}
 			createdBefore = &t
 		}
@@ -383,7 +383,7 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 				Tags:   tagsFilter,
 			})
 			if err != nil {
-				return nil, fmt.Errorf("list plans: %w", err)
+				return nil, fmt.Errorf("Cannot list plans: %w.\n\nTo resolve:\n  Check project health with the health tool and verify .kbz/state/ is intact.", err)
 			}
 			return entityListResponse(entityType, entitySummaries(plans)), nil
 		}
@@ -399,7 +399,7 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 			CreatedBefore: createdBefore,
 		})
 		if err != nil {
-			return nil, fmt.Errorf("list %s: %w", entityType, err)
+			return nil, fmt.Errorf("Cannot list %s entities: %w.\n\nTo resolve:\n  Check that %q is a valid entity type (plan, feature, task, bug, epic, decision).", entityType, err, entityType)
 		}
 		return entityListResponse(entityType, entitySummaries(results)), nil
 	}
@@ -477,12 +477,12 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 		args, _ := req.Params.Arguments.(map[string]any)
 		entityID := id.NormalizeID(entityArgStr(args, "id"))
 		if entityID == "" {
-			return nil, fmt.Errorf("id is required for update")
+			return nil, fmt.Errorf("Cannot update entity: no ID provided.\n\nTo resolve:\n  Pass id with a prefixed entity ID (e.g. FEAT-001, TASK-042, BUG-003, P1-my-plan).")
 		}
 
 		entityType, ok := entityInferType(entityID)
 		if !ok {
-			return nil, fmt.Errorf("cannot infer entity type from ID %q", entityID)
+			return nil, fmt.Errorf("Cannot update entity %q: unrecognised ID format.\n\nTo resolve:\n  Use a prefixed ID such as FEAT-..., TASK-..., T-..., BUG-..., or a plan ID like P1-slug.", entityID)
 		}
 
 		// Plans use their own update path (supports title, summary, design, tags).
@@ -509,7 +509,7 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 			}
 			result, err := entitySvc.UpdatePlan(input)
 			if err != nil {
-				return nil, fmt.Errorf("update plan %s: %w", entityID, err)
+				return nil, fmt.Errorf("Cannot update plan %s: %w.\n\nTo resolve:\n  Verify the plan exists with entity(action: \"get\", id: %q) and check the field values.", entityID, err, entityID)
 			}
 			return map[string]any{
 				"entity": entityFullRecord(result.ID, result.Type, result.Slug, result.State),
@@ -537,11 +537,11 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 		var listFields map[string][]string
 		if deps := entityArgStringSlice(args, "depends_on"); len(deps) > 0 {
 			if entityType != "task" {
-				return nil, fmt.Errorf("depends_on is only valid for task entities, not %s", entityType)
+				return nil, fmt.Errorf("Cannot update %s %s: depends_on is only valid for task entities.\n\nTo resolve:\n  Remove the depends_on parameter, or target a TASK-... entity instead.", entityType, entityID)
 			}
 			for _, dep := range deps {
 				if !strings.HasPrefix(dep, "TASK-") {
-					return nil, fmt.Errorf("invalid depends_on entry %q: must be a TASK-... ID", dep)
+					return nil, fmt.Errorf("Cannot update task %s: invalid depends_on entry %q.\n\nTo resolve:\n  Each depends_on value must be a TASK-... ID (e.g. TASK-001).", entityID, dep)
 				}
 			}
 			listFields = map[string][]string{"depends_on": deps}
@@ -554,7 +554,7 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 			ListFields: listFields,
 		})
 		if err != nil {
-			return nil, fmt.Errorf("update %s %s: %w", entityType, entityID, err)
+			return nil, fmt.Errorf("Cannot update %s %s: %w.\n\nTo resolve:\n  Verify the entity exists with entity(action: \"get\", id: %q) and check the field values.", entityType, entityID, err, entityID)
 		}
 		return map[string]any{
 			"entity": entityFullRecord(result.ID, result.Type, result.Slug, result.State),

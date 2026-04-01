@@ -106,12 +106,12 @@ func docIntelOutlineAction(svc *service.IntelligenceService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		id, err := req.RequireString("id")
 		if err != nil {
-			return inlineErr("missing_parameter", "id is required for outline action")
+			return inlineErr("missing_parameter", "Cannot get outline: id is missing.\n\nTo resolve:\n  Provide id: doc_intel(action: \"outline\", id: \"DOC-...\")")
 		}
 
 		sections, err := svc.GetOutline(id)
 		if err != nil {
-			return nil, fmt.Errorf("get outline: %w", err)
+			return nil, fmt.Errorf("Cannot get outline for document %s: %w.\n\nTo resolve:\n  Verify the document ID is valid and the document has been indexed", id, err)
 		}
 
 		return map[string]any{
@@ -127,16 +127,16 @@ func docIntelSectionAction(svc *service.IntelligenceService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		id, err := req.RequireString("id")
 		if err != nil {
-			return inlineErr("missing_parameter", "id is required for section action")
+			return inlineErr("missing_parameter", "Cannot get section: id is missing.\n\nTo resolve:\n  Provide id: doc_intel(action: \"section\", id: \"DOC-...\", section_path: \"1.2\")")
 		}
 		sectionPath, err := req.RequireString("section_path")
 		if err != nil {
-			return inlineErr("missing_parameter", "section_path is required for section action")
+			return inlineErr("missing_parameter", "Cannot get section: section_path is missing.\n\nTo resolve:\n  Provide section_path: doc_intel(action: \"section\", id: \"DOC-...\", section_path: \"1.2\")")
 		}
 
 		section, content, err := svc.GetSection(id, sectionPath)
 		if err != nil {
-			return nil, fmt.Errorf("get section: %w", err)
+			return nil, fmt.Errorf("Cannot get section %s of document %s: %w.\n\nTo resolve:\n  Verify the document ID and section path are correct using doc_intel(action: \"outline\", id: \"...\")", sectionPath, id, err)
 		}
 
 		return map[string]any{
@@ -161,28 +161,28 @@ func docIntelClassifyAction(svc *service.IntelligenceService) ActionHandler {
 
 		id, err := req.RequireString("id")
 		if err != nil {
-			return inlineErr("missing_parameter", "id is required for classify action")
+			return inlineErr("missing_parameter", "Cannot classify document: id is missing.\n\nTo resolve:\n  Provide id: doc_intel(action: \"classify\", id: \"DOC-...\", ...)")
 		}
 		contentHash, err := req.RequireString("content_hash")
 		if err != nil {
-			return inlineErr("missing_parameter", "content_hash is required for classify action")
+			return inlineErr("missing_parameter", "Cannot classify document: content_hash is missing.\n\nTo resolve:\n  Provide content_hash from doc_intel(action: \"guide\", id: \"DOC-...\") to get the current hash")
 		}
 		modelName, err := req.RequireString("model_name")
 		if err != nil {
-			return inlineErr("missing_parameter", "model_name is required for classify action")
+			return inlineErr("missing_parameter", "Cannot classify document: model_name is missing.\n\nTo resolve:\n  Provide model_name: doc_intel(action: \"classify\", model_name: \"...\", ...)")
 		}
 		modelVersion, err := req.RequireString("model_version")
 		if err != nil {
-			return inlineErr("missing_parameter", "model_version is required for classify action")
+			return inlineErr("missing_parameter", "Cannot classify document: model_version is missing.\n\nTo resolve:\n  Provide model_version: doc_intel(action: \"classify\", model_version: \"...\", ...)")
 		}
 		classificationsJSON, err := req.RequireString("classifications")
 		if err != nil {
-			return inlineErr("missing_parameter", "classifications is required for classify action")
+			return inlineErr("missing_parameter", "Cannot classify document: classifications is missing.\n\nTo resolve:\n  Provide classifications as a JSON array: doc_intel(action: \"classify\", classifications: \"[{...}]\", ...)")
 		}
 
 		var classifications []docint.Classification
 		if jsonErr := json.Unmarshal([]byte(classificationsJSON), &classifications); jsonErr != nil {
-			return inlineErr("invalid_parameter", "invalid classifications JSON: "+jsonErr.Error())
+			return inlineErr("invalid_parameter", "Cannot classify document: classifications JSON is invalid: "+jsonErr.Error()+".\n\nTo resolve:\n  Provide a valid JSON array of objects with section_path, role, and confidence fields")
 		}
 
 		submission := docint.ClassificationSubmission{
@@ -195,7 +195,7 @@ func docIntelClassifyAction(svc *service.IntelligenceService) ActionHandler {
 		}
 
 		if err := svc.ClassifyDocument(submission); err != nil {
-			return nil, fmt.Errorf("classify document: %w", err)
+			return nil, fmt.Errorf("Cannot classify document %s: %w.\n\nTo resolve:\n  Verify the content_hash matches the current document index using doc_intel(action: \"guide\", id: \"...\")", id, err)
 		}
 
 		return map[string]any{
@@ -219,7 +219,7 @@ func docIntelFindAction(svc *service.IntelligenceService) ActionHandler {
 		if concept, ok := args["concept"].(string); ok && concept != "" {
 			matches, err := svc.FindByConcept(concept)
 			if err != nil {
-				return nil, fmt.Errorf("find by concept: %w", err)
+				return nil, fmt.Errorf("Cannot find by concept %q: %w.\n\nTo resolve:\n  Check the concept name and try a broader search term", concept, err)
 			}
 			return map[string]any{
 				"search_type": "concept",
@@ -232,7 +232,7 @@ func docIntelFindAction(svc *service.IntelligenceService) ActionHandler {
 		if entityID, ok := args["entity_id"].(string); ok && entityID != "" {
 			matches, err := svc.FindByEntity(entityID)
 			if err != nil {
-				return nil, fmt.Errorf("find by entity: %w", err)
+				return nil, fmt.Errorf("Cannot find by entity %s: %w.\n\nTo resolve:\n  Verify the entity ID is valid using entity(action: \"get\", id: \"...\")", entityID, err)
 			}
 			return map[string]any{
 				"search_type": "entity_id",
@@ -246,7 +246,7 @@ func docIntelFindAction(svc *service.IntelligenceService) ActionHandler {
 			scope := req.GetString("scope", "")
 			matches, err := svc.FindByRole(role, scope)
 			if err != nil {
-				return nil, fmt.Errorf("find by role: %w", err)
+				return nil, fmt.Errorf("Cannot find by role %q: %w.\n\nTo resolve:\n  Verify the role name is valid (e.g. requirement, decision, rationale)", role, err)
 			}
 			result := map[string]any{
 				"search_type": "role",
@@ -261,7 +261,7 @@ func docIntelFindAction(svc *service.IntelligenceService) ActionHandler {
 		}
 
 		return inlineErr("missing_parameter",
-			"find action requires exactly one of: concept, entity_id, or role")
+			"Cannot find document fragments: no search parameter provided.\n\nTo resolve:\n  Provide exactly one of concept, entity_id, or role: doc_intel(action: \"find\", concept: \"...\")")
 	}
 }
 
@@ -271,12 +271,12 @@ func docIntelTraceAction(svc *service.IntelligenceService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return inlineErr("missing_parameter", "entity_id is required for trace action")
+			return inlineErr("missing_parameter", "Cannot trace entity: entity_id is missing.\n\nTo resolve:\n  Provide entity_id: doc_intel(action: \"trace\", entity_id: \"FEAT-...\")")
 		}
 
 		matches, err := svc.TraceEntity(entityID)
 		if err != nil {
-			return nil, fmt.Errorf("trace entity: %w", err)
+			return nil, fmt.Errorf("Cannot trace entity %s: %w.\n\nTo resolve:\n  Verify the entity ID is valid using entity(action: \"get\", id: \"...\")", entityID, err)
 		}
 
 		return map[string]any{
@@ -293,12 +293,12 @@ func docIntelImpactAction(svc *service.IntelligenceService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		sectionID, err := req.RequireString("section_id")
 		if err != nil {
-			return inlineErr("missing_parameter", "section_id is required for impact action")
+			return inlineErr("missing_parameter", "Cannot assess impact: section_id is missing.\n\nTo resolve:\n  Provide section_id in format 'DOC-...#sectionPath': doc_intel(action: \"impact\", section_id: \"DOC-...#1.2\")")
 		}
 
 		edges, err := svc.GetImpact(sectionID)
 		if err != nil {
-			return nil, fmt.Errorf("get impact: %w", err)
+			return nil, fmt.Errorf("Cannot assess impact for section %s: %w.\n\nTo resolve:\n  Verify the section ID format is 'DOC-...#sectionPath' using doc_intel(action: \"outline\", id: \"...\")", sectionID, err)
 		}
 
 		edgeMaps := make([]map[string]any, len(edges))
@@ -326,12 +326,12 @@ func docIntelGuideAction(svc *service.IntelligenceService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		documentID, err := req.RequireString("id")
 		if err != nil {
-			return inlineErr("missing_parameter", "id is required for guide action")
+			return inlineErr("missing_parameter", "Cannot generate extraction guide: id is missing.\n\nTo resolve:\n  Provide id: doc_intel(action: \"guide\", id: \"DOC-...\")")
 		}
 
 		index, err := svc.GetDocumentIndex(documentID)
 		if err != nil {
-			return nil, fmt.Errorf("get document index: %w", err)
+			return nil, fmt.Errorf("Cannot generate extraction guide for document %s: %w.\n\nTo resolve:\n  Verify the document ID is valid and the document has been indexed", documentID, err)
 		}
 
 		outline := flattenSections(index.Sections, buildClassifiedRoleMap(index))
@@ -369,7 +369,7 @@ func docIntelPendingAction(svc *service.IntelligenceService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		pending, err := svc.GetPendingClassification()
 		if err != nil {
-			return nil, fmt.Errorf("get pending classification: %w", err)
+			return nil, fmt.Errorf("Cannot list pending classifications: %w.\n\nTo resolve:\n  Check that the document index is intact and re-index if necessary", err)
 		}
 
 		return map[string]any{

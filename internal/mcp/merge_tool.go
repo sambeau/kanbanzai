@@ -94,7 +94,7 @@ func mergeCheckAction(
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return nil, fmt.Errorf("entity_id is required for check action")
+			return nil, fmt.Errorf("Cannot check merge readiness: entity_id is missing.\n\nTo resolve:\n  Provide entity_id: merge(action: \"check\", entity_id: \"FEAT-...\")")
 		}
 
 		result, err := checkMergeReadiness(ctx, worktreeStore, entitySvc, repoPath, thresholds, localConfig, entityID)
@@ -120,7 +120,7 @@ func mergeExecuteAction(
 
 		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return nil, fmt.Errorf("entity_id is required for execute action")
+			return nil, fmt.Errorf("Cannot execute merge: entity_id is missing.\n\nTo resolve:\n  Provide entity_id: merge(action: \"execute\", entity_id: \"FEAT-...\")")
 		}
 
 		override := req.GetBool("override", false)
@@ -166,7 +166,7 @@ func checkMergeReadiness(
 	wt, err := worktreeStore.GetByEntityID(entityID)
 	if err != nil {
 		if errors.Is(err, worktree.ErrNotFound) {
-			return nil, fmt.Errorf("NO_WORKTREE: no worktree found for entity %s", entityID)
+			return nil, fmt.Errorf("Cannot check merge readiness for %s: no worktree exists for this entity.\n\nTo resolve:\n  Create a worktree first: worktree(action: \"create\", entity_id: \"%s\")", entityID, entityID)
 		}
 		return nil, err
 	}
@@ -174,11 +174,11 @@ func checkMergeReadiness(
 	// Get the entity
 	entityType := entityTypeFromID(entityID)
 	if entityType == "" {
-		return nil, fmt.Errorf("invalid entity ID: must start with FEAT- or BUG-")
+		return nil, fmt.Errorf("Cannot check merge readiness: entity ID %q is not a feature or bug.\n\nTo resolve:\n  Provide an entity ID starting with FEAT- or BUG-", entityID)
 	}
 	entity, err := entitySvc.Get(entityType, entityID, "")
 	if err != nil {
-		return nil, fmt.Errorf("get entity: %w", err)
+		return nil, fmt.Errorf("Cannot check merge readiness for %s: failed to retrieve entity: %w.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, err, entityID)
 	}
 
 	// Get child tasks if this is a feature
@@ -240,7 +240,7 @@ func executeMerge(
 	wt, err := worktreeStore.GetByEntityID(entityID)
 	if err != nil {
 		if errors.Is(err, worktree.ErrNotFound) {
-			return nil, fmt.Errorf("NO_WORKTREE: no worktree found for entity %s", entityID)
+			return nil, fmt.Errorf("Cannot execute merge for %s: no worktree exists for this entity.\n\nTo resolve:\n  Create a worktree first: worktree(action: \"create\", entity_id: \"%s\")", entityID, entityID)
 		}
 		return nil, err
 	}
@@ -248,11 +248,11 @@ func executeMerge(
 	// Get the entity
 	entityType := entityTypeFromID(entityID)
 	if entityType == "" {
-		return nil, fmt.Errorf("invalid entity ID: must start with FEAT- or BUG-")
+		return nil, fmt.Errorf("Cannot execute merge: entity ID %q is not a feature or bug.\n\nTo resolve:\n  Provide an entity ID starting with FEAT- or BUG-", entityID)
 	}
 	entity, err := entitySvc.Get(entityType, entityID, "")
 	if err != nil {
-		return nil, fmt.Errorf("get entity: %w", err)
+		return nil, fmt.Errorf("Cannot execute merge for %s: failed to retrieve entity: %w.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, err, entityID)
 	}
 
 	// Get child tasks if this is a feature
@@ -289,22 +289,22 @@ func executeMerge(
 		for _, f := range failures {
 			msgs = append(msgs, f.Message)
 		}
-		return nil, fmt.Errorf("GATES_FAILED: %v", msgs)
+		return nil, fmt.Errorf("Cannot merge %s: blocking merge gates failed: %v.\n\nTo resolve:\n  Fix the failing gates shown above, or use override: true with an override_reason to bypass", entityID, msgs)
 	}
 
 	// Determine default branch once and use it throughout.
 	defaultBranch, err := git.GetDefaultBranch(repoPath)
 	if err != nil {
-		return nil, fmt.Errorf("determine default branch: %w", err)
+		return nil, fmt.Errorf("Cannot merge %s: failed to determine default branch: %w.\n\nTo resolve:\n  Ensure the repository has a valid default branch (main or master)", entityID, err)
 	}
 
 	// Check for merge conflicts explicitly before touching the working tree.
 	hasConflicts, err := git.HasMergeConflicts(repoPath, wt.Branch, defaultBranch)
 	if err != nil {
-		return nil, fmt.Errorf("check merge conflicts: %w", err)
+		return nil, fmt.Errorf("Cannot merge %s: failed to check for merge conflicts: %w.\n\nTo resolve:\n  Ensure the branch %s and default branch are both valid refs", entityID, err, wt.Branch)
 	}
 	if hasConflicts {
-		return nil, fmt.Errorf("MERGE_CONFLICT: branch %s has merge conflicts with %s", wt.Branch, defaultBranch)
+		return nil, fmt.Errorf("Cannot merge %s: branch %s has merge conflicts with %s.\n\nTo resolve:\n  Rebase or merge %s into %s and resolve conflicts before retrying", entityID, wt.Branch, defaultBranch, defaultBranch, wt.Branch)
 	}
 
 	// Perform the merge
@@ -312,7 +312,7 @@ func executeMerge(
 
 	// Checkout the default base branch.
 	if err := gitOps.CheckoutBranch(defaultBranch); err != nil {
-		return nil, fmt.Errorf("checkout base branch %s: %w", defaultBranch, err)
+		return nil, fmt.Errorf("Cannot merge %s: failed to checkout base branch %s: %w.\n\nTo resolve:\n  Ensure the working tree is clean and the branch %s exists locally", entityID, defaultBranch, err, defaultBranch)
 	}
 
 	// Build merge message
@@ -328,7 +328,7 @@ func executeMerge(
 	// Execute merge
 	mergeResult, err := gitOps.MergeBranch(wt.Branch, strategy, mergeMessage)
 	if err != nil {
-		return nil, fmt.Errorf("merge branch: %w", err)
+		return nil, fmt.Errorf("Cannot merge %s: merge of branch %s failed: %w.\n\nTo resolve:\n  Check for conflicts or uncommitted changes, then retry", entityID, wt.Branch, err)
 	}
 
 	mergedAt := time.Now().UTC()
@@ -405,7 +405,7 @@ func executeMerge(
 func getPRStatus(ctx context.Context, repoPath, branch string, localConfig *config.LocalConfig) (map[string]any, error) {
 	token := localConfig.GetGitHubToken()
 	if token == "" {
-		return nil, fmt.Errorf("no GitHub token configured")
+		return nil, fmt.Errorf("Cannot fetch PR status: no GitHub token configured.\n\nTo resolve:\n  Add a GitHub token to .kbz/local.yaml: github_token: \"ghp_...\"")
 	}
 
 	client := github.NewClient(token)
@@ -445,7 +445,7 @@ func parseMergeStrategy(s string) (worktree.MergeStrategy, error) {
 	case "rebase":
 		return worktree.MergeStrategyRebase, nil
 	default:
-		return "", fmt.Errorf("invalid merge_strategy: %s (must be squash, merge, or rebase)", s)
+		return "", fmt.Errorf("Cannot execute merge: invalid merge_strategy %q.\n\nTo resolve:\n  Use one of: squash, merge, or rebase", s)
 	}
 }
 

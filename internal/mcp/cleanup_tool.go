@@ -71,7 +71,7 @@ func cleanupListAction(store *worktree.Store) ActionHandler {
 
 		records, err := store.List()
 		if err != nil {
-			return nil, fmt.Errorf("list worktrees: %w", err)
+			return nil, fmt.Errorf("Cannot list cleanup candidates: storage read failed: %w.\n\nTo resolve:\n  Check file permissions in .kbz/state/worktrees/ and retry", err)
 		}
 
 		now := time.Now()
@@ -136,7 +136,7 @@ func cleanupExecuteAction(store *worktree.Store, git *worktree.Git, cfg *config.
 		if worktreeID != "" {
 			record, err := store.Get(worktreeID)
 			if err != nil {
-				return nil, fmt.Errorf("get worktree %s: %w", worktreeID, err)
+				return nil, fmt.Errorf("Cannot clean up worktree %s: worktree not found: %w.\n\nTo resolve:\n  Verify the worktree ID with cleanup(action: \"list\") and retry", worktreeID, err)
 			}
 
 			now := time.Now()

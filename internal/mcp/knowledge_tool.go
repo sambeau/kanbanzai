@@ -142,7 +142,7 @@ func knowledgeListAction(svc *service.KnowledgeService) ActionHandler {
 
 		records, err := svc.List(filters)
 		if err != nil {
-			return nil, fmt.Errorf("list knowledge entries: %w", err)
+			return nil, fmt.Errorf("Cannot list knowledge entries: query failed: %w.\n\nTo resolve:\n  Check filter parameters and retry with broader criteria", err)
 		}
 
 		entries := make([]map[string]any, 0, len(records))
@@ -163,12 +163,12 @@ func knowledgeGetAction(svc *service.KnowledgeService, repoPath string) ActionHa
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		id, err := req.RequireString("id")
 		if err != nil {
-			return nil, fmt.Errorf("id is required for get action")
+			return nil, fmt.Errorf("Cannot get knowledge entry: id is missing.\n\nTo resolve:\n  Provide id: knowledge(action: \"get\", id: \"KE-...\")")
 		}
 
 		record, err := svc.Get(id)
 		if err != nil {
-			return nil, fmt.Errorf("get knowledge entry: %w", err)
+			return nil, fmt.Errorf("Cannot get knowledge entry %q: lookup failed: %w.\n\nTo resolve:\n  Verify the entry ID exists with knowledge(action: \"list\")", id, err)
 		}
 
 		resp := map[string]any{
@@ -192,15 +192,15 @@ func knowledgeContributeAction(svc *service.KnowledgeService) ActionHandler {
 
 		topic, err := req.RequireString("topic")
 		if err != nil {
-			return nil, fmt.Errorf("topic is required for contribute action")
+			return nil, fmt.Errorf("Cannot contribute knowledge entry: topic is missing.\n\nTo resolve:\n  Provide topic: knowledge(action: \"contribute\", topic: \"...\", content: \"...\", scope: \"...\")")
 		}
 		content, err := req.RequireString("content")
 		if err != nil {
-			return nil, fmt.Errorf("content is required for contribute action")
+			return nil, fmt.Errorf("Cannot contribute knowledge entry: content is missing.\n\nTo resolve:\n  Provide content: knowledge(action: \"contribute\", topic: \"...\", content: \"...\", scope: \"...\")")
 		}
 		scope, err := req.RequireString("scope")
 		if err != nil {
-			return nil, fmt.Errorf("scope is required for contribute action")
+			return nil, fmt.Errorf("Cannot contribute knowledge entry: scope is missing.\n\nTo resolve:\n  Provide scope: knowledge(action: \"contribute\", topic: \"...\", content: \"...\", scope: \"...\")")
 		}
 
 		tier := int(req.GetFloat("tier", 3))
@@ -232,7 +232,7 @@ func knowledgeContributeAction(svc *service.KnowledgeService) ActionHandler {
 					"existing":  duplicate.Fields,
 				}, nil
 			}
-			return nil, fmt.Errorf("contribute knowledge entry: %w", err)
+			return nil, fmt.Errorf("Cannot contribute knowledge entry: save failed: %w.\n\nTo resolve:\n  Check the entry content and retry", err)
 		}
 
 		return map[string]any{
@@ -251,12 +251,12 @@ func knowledgeConfirmAction(svc *service.KnowledgeService) ActionHandler {
 
 		id, err := req.RequireString("id")
 		if err != nil {
-			return nil, fmt.Errorf("id is required for confirm action")
+			return nil, fmt.Errorf("Cannot confirm knowledge entry: id is missing.\n\nTo resolve:\n  Provide id: knowledge(action: \"confirm\", id: \"KE-...\")")
 		}
 
 		record, err := svc.Confirm(id)
 		if err != nil {
-			return nil, fmt.Errorf("confirm knowledge entry: %w", err)
+			return nil, fmt.Errorf("Cannot confirm knowledge entry %q: transition failed: %w.\n\nTo resolve:\n  Verify the entry exists and is in a confirmable status with knowledge(action: \"get\", id: %q)", id, err, id)
 		}
 
 		return map[string]any{
@@ -274,16 +274,16 @@ func knowledgeFlagAction(svc *service.KnowledgeService) ActionHandler {
 
 		id, err := req.RequireString("id")
 		if err != nil {
-			return nil, fmt.Errorf("id is required for flag action")
+			return nil, fmt.Errorf("Cannot flag knowledge entry: id is missing.\n\nTo resolve:\n  Provide id: knowledge(action: \"flag\", id: \"KE-...\", reason: \"...\")")
 		}
 		reason := req.GetString("reason", "")
 		if reason == "" {
-			return inlineErr("missing_parameter", "reason is required for flag action")
+			return inlineErr("missing_parameter", "Cannot flag knowledge entry: reason is missing.\n\nTo resolve:\n  Provide reason: knowledge(action: \"flag\", id: \"KE-...\", reason: \"...\")")
 		}
 
 		record, err := svc.Flag(id, reason)
 		if err != nil {
-			return nil, fmt.Errorf("flag knowledge entry: %w", err)
+			return nil, fmt.Errorf("Cannot flag knowledge entry %q: transition failed: %w.\n\nTo resolve:\n  Verify the entry exists and is in a flaggable status with knowledge(action: \"get\", id: %q)", id, err, id)
 		}
 
 		return map[string]any{
@@ -301,16 +301,16 @@ func knowledgeRetireAction(svc *service.KnowledgeService) ActionHandler {
 
 		id, err := req.RequireString("id")
 		if err != nil {
-			return nil, fmt.Errorf("id is required for retire action")
+			return nil, fmt.Errorf("Cannot retire knowledge entry: id is missing.\n\nTo resolve:\n  Provide id: knowledge(action: \"retire\", id: \"KE-...\", reason: \"...\")")
 		}
 		reason := req.GetString("reason", "")
 		if reason == "" {
-			return inlineErr("missing_parameter", "reason is required for retire action")
+			return inlineErr("missing_parameter", "Cannot retire knowledge entry: reason is missing.\n\nTo resolve:\n  Provide reason: knowledge(action: \"retire\", id: \"KE-...\", reason: \"...\")")
 		}
 
 		record, err := svc.Retire(id, reason)
 		if err != nil {
-			return nil, fmt.Errorf("retire knowledge entry: %w", err)
+			return nil, fmt.Errorf("Cannot retire knowledge entry %q: transition failed: %w.\n\nTo resolve:\n  Verify the entry exists and is in a retirable status with knowledge(action: \"get\", id: %q)", id, err, id)
 		}
 
 		return map[string]any{
@@ -328,16 +328,16 @@ func knowledgeUpdateAction(svc *service.KnowledgeService) ActionHandler {
 
 		id, err := req.RequireString("id")
 		if err != nil {
-			return nil, fmt.Errorf("id is required for update action")
+			return nil, fmt.Errorf("Cannot update knowledge entry: id is missing.\n\nTo resolve:\n  Provide id: knowledge(action: \"update\", id: \"KE-...\", content: \"...\")")
 		}
 		content, err := req.RequireString("content")
 		if err != nil {
-			return nil, fmt.Errorf("content is required for update action")
+			return nil, fmt.Errorf("Cannot update knowledge entry: content is missing.\n\nTo resolve:\n  Provide content: knowledge(action: \"update\", id: \"KE-...\", content: \"...\")")
 		}
 
 		record, err := svc.Update(id, content)
 		if err != nil {
-			return nil, fmt.Errorf("update knowledge entry: %w", err)
+			return nil, fmt.Errorf("Cannot update knowledge entry %q: save failed: %w.\n\nTo resolve:\n  Verify the entry exists with knowledge(action: \"get\", id: %q)", id, err, id)
 		}
 
 		return map[string]any{
@@ -355,12 +355,12 @@ func knowledgePromoteAction(svc *service.KnowledgeService) ActionHandler {
 
 		id, err := req.RequireString("id")
 		if err != nil {
-			return nil, fmt.Errorf("id is required for promote action")
+			return nil, fmt.Errorf("Cannot promote knowledge entry: id is missing.\n\nTo resolve:\n  Provide id: knowledge(action: \"promote\", id: \"KE-...\")")
 		}
 
 		record, err := svc.Promote(id)
 		if err != nil {
-			return nil, fmt.Errorf("promote knowledge entry: %w", err)
+			return nil, fmt.Errorf("Cannot promote knowledge entry %q: transition failed: %w.\n\nTo resolve:\n  Verify the entry exists and is tier 3 with knowledge(action: \"get\", id: %q)", id, err, id)
 		}
 
 		return map[string]any{
@@ -383,7 +383,7 @@ func knowledgeCompactAction(svc *service.KnowledgeService) ActionHandler {
 
 		entries, err := svc.LoadAllRaw()
 		if err != nil {
-			return nil, fmt.Errorf("load knowledge entries: %w", err)
+			return nil, fmt.Errorf("Cannot compact knowledge entries: failed to load entries: %w.\n\nTo resolve:\n  Check that the knowledge store is accessible and retry", err)
 		}
 
 		fieldMaps := make([]map[string]any, len(entries))
@@ -469,7 +469,7 @@ func knowledgePruneAction(svc *service.KnowledgeService) ActionHandler {
 
 		entries, err := svc.LoadAllRaw()
 		if err != nil {
-			return nil, fmt.Errorf("load knowledge entries: %w", err)
+			return nil, fmt.Errorf("Cannot prune knowledge entries: failed to load entries: %w.\n\nTo resolve:\n  Check that the knowledge store is accessible and retry", err)
 		}
 
 		fieldMaps := make([]map[string]any, len(entries))
@@ -522,21 +522,21 @@ func knowledgeResolveAction(svc *service.KnowledgeService) ActionHandler {
 
 		keepID, err := req.RequireString("keep")
 		if err != nil {
-			return nil, fmt.Errorf("keep is required for resolve action")
+			return nil, fmt.Errorf("Cannot resolve knowledge conflict: keep is missing.\n\nTo resolve:\n  Provide keep: knowledge(action: \"resolve\", keep: \"KE-...\", retire_id: \"KE-...\")")
 		}
 		retireID, err := req.RequireString("retire_id")
 		if err != nil {
-			return nil, fmt.Errorf("retire_id is required for resolve action")
+			return nil, fmt.Errorf("Cannot resolve knowledge conflict: retire_id is missing.\n\nTo resolve:\n  Provide retire_id: knowledge(action: \"resolve\", keep: \"KE-...\", retire_id: \"KE-...\")")
 		}
 		mergeContent := req.GetBool("merge_content", false)
 
 		keepRec, err := svc.Get(keepID)
 		if err != nil {
-			return nil, fmt.Errorf("get keep entry: %w", err)
+			return nil, fmt.Errorf("Cannot resolve knowledge conflict: keep entry %q not found: %w.\n\nTo resolve:\n  Verify the entry ID exists with knowledge(action: \"list\")", keepID, err)
 		}
 		retireRec, err := svc.Get(retireID)
 		if err != nil {
-			return nil, fmt.Errorf("get retire entry: %w", err)
+			return nil, fmt.Errorf("Cannot resolve knowledge conflict: retire entry %q not found: %w.\n\nTo resolve:\n  Verify the entry ID exists with knowledge(action: \"list\")", retireID, err)
 		}
 
 		if mergeContent {
@@ -567,12 +567,12 @@ func knowledgeResolveAction(svc *service.KnowledgeService) ActionHandler {
 			}
 
 			if _, err := svc.UpdateFields(keepID, mergedFields); err != nil {
-				return nil, fmt.Errorf("update kept entry with merged data: %w", err)
+				return nil, fmt.Errorf("Cannot resolve knowledge conflict: failed to merge data into %q: %w.\n\nTo resolve:\n  Retry the resolve action, or resolve manually by updating the entries separately", keepID, err)
 			}
 		}
 
 		if _, err := svc.Retire(retireID, "resolved conflict: merged into "+keepID); err != nil {
-			return nil, fmt.Errorf("retire entry: %w", err)
+			return nil, fmt.Errorf("Cannot resolve knowledge conflict: failed to retire %q: %w.\n\nTo resolve:\n  Retire the entry manually with knowledge(action: \"retire\", id: %q, reason: \"...\")", retireID, err, retireID)
 		}
 
 		keepStatus, _ := keepRec.Fields["status"].(string)
@@ -603,13 +603,13 @@ func knowledgeStalenessAction(svc *service.KnowledgeService, repoPath string) Ac
 		if entryID != "" {
 			record, gerr := svc.Get(entryID)
 			if gerr != nil {
-				return nil, fmt.Errorf("get knowledge entry: %w", gerr)
+				return nil, fmt.Errorf("Cannot check staleness for entry %q: lookup failed: %w.\n\nTo resolve:\n  Verify the entry ID exists with knowledge(action: \"list\")", entryID, gerr)
 			}
 			entries = []storage.KnowledgeRecord{record}
 		} else {
 			entries, err = svc.LoadAllRaw()
 			if err != nil {
-				return nil, fmt.Errorf("load knowledge entries: %w", err)
+				return nil, fmt.Errorf("Cannot check staleness: failed to load knowledge entries: %w.\n\nTo resolve:\n  Check that the knowledge store is accessible and retry", err)
 			}
 		}
 

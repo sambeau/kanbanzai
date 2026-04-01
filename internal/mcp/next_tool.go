@@ -107,7 +107,7 @@ func nextQueueMode(ctx context.Context, role string, conflictCheck bool, entityS
 		ConflictCheck: conflictCheck,
 	})
 	if err != nil {
-		return nil, fmt.Errorf("work queue: %w", err)
+		return nil, fmt.Errorf("Cannot load work queue: %w.\n\nTo resolve:\n  Check project health with status() and verify .kbz/state/ is intact", err)
 	}
 
 	// Report each task promoted in this call as a side effect.
@@ -188,7 +188,7 @@ func nextClaimMode(
 	// Load the task to check its current status.
 	task, err := entitySvc.Get("task", taskID, "")
 	if err != nil {
-		return nil, fmt.Errorf("task %s not found", taskID)
+		return nil, fmt.Errorf("Cannot claim task %s: task not found.\n\nTo resolve:\n  Verify the task ID with entity(action: \"list\", type: \"task\") or inspect the queue with next()", taskID)
 	}
 
 	status, _ := task.State["status"].(string)
@@ -201,13 +201,13 @@ func nextClaimMode(
 		claimedAt, _ := task.State["claimed_at"].(string)
 		dispBy, _ := task.State["dispatched_by"].(string)
 		return nil, fmt.Errorf(
-			"task %s is already claimed (dispatched to %q at %s by %s)",
-			taskID, dispTo, claimedAt, dispBy,
+			"Cannot claim task %s: already dispatched to %q at %s by %s.\n\nTo resolve:\n  Use handoff(task_id: %q) to generate a prompt for this active task, or pick another task from next()",
+			taskID, dispTo, claimedAt, dispBy, taskID,
 		)
 	default:
 		return nil, fmt.Errorf(
-			"task %s is in status %q, expected \"ready\"",
-			taskID, status,
+			"Cannot claim task %s: status is %q, but only \"ready\" tasks can be claimed.\n\nTo resolve:\n  Check task details with status(id: %q) and ensure prerequisites are met",
+			taskID, status, taskID,
 		)
 	}
 
@@ -228,7 +228,7 @@ func nextClaimMode(
 		DispatchedBy: callerIdentity,
 	})
 	if err != nil {
-		return nil, fmt.Errorf("claim task: %w", err)
+		return nil, fmt.Errorf("Cannot claim task %s: dispatch failed: %w.\n\nTo resolve:\n  Check task status with status(id: %q) and retry", taskID, err, taskID)
 	}
 
 	// Report status transition as a side effect.
@@ -244,7 +244,7 @@ func nextClaimMode(
 	// Reload the task to get updated dispatch fields.
 	task, err = entitySvc.Get("task", taskID, "")
 	if err != nil {
-		return nil, fmt.Errorf("reload task after claim: %w", err)
+		return nil, fmt.Errorf("Cannot reload task %s after claim: %w.\n\nTo resolve:\n  The task was claimed successfully — use entity(action: \"get\", id: %q) to retrieve it", taskID, err, taskID)
 	}
 
 	// Build parent feature info.
@@ -372,17 +372,17 @@ func nextResolveTaskID(id string, entitySvc *service.EntityService) (string, err
 	case "feature":
 		task, err := nextFindTopReadyTask(id, entitySvc)
 		if err != nil {
-			return "", fmt.Errorf("find ready task in feature %s: %w", id, err)
+			return "", fmt.Errorf("Cannot find ready task in feature %s: %w.\n\nTo resolve:\n  Check feature status with status(id: %q)", id, err, id)
 		}
 		if task == nil {
-			return "", fmt.Errorf("no ready tasks in feature %s", id)
+			return "", fmt.Errorf("Cannot claim from feature %s: no tasks in ready status.\n\nTo resolve:\n  Check feature progress with status(id: %q) — tasks may be queued, active, or done", id, id)
 		}
 		return task.ID, nil
 
 	case "plan":
 		tasks, err := entitySvc.CrossEntityQuery(id)
 		if err != nil {
-			return "", fmt.Errorf("query tasks for plan %s: %w", id, err)
+			return "", fmt.Errorf("Cannot query tasks for plan %s: %w.\n\nTo resolve:\n  Check plan status with status(id: %q)", id, err, id)
 		}
 		var ready []service.ListResult
 		for _, t := range tasks {
@@ -391,13 +391,13 @@ func nextResolveTaskID(id string, entitySvc *service.EntityService) (string, err
 			}
 		}
 		if len(ready) == 0 {
-			return "", fmt.Errorf("no ready tasks in plan %s", id)
+			return "", fmt.Errorf("Cannot claim from plan %s: no tasks in ready status.\n\nTo resolve:\n  Check plan progress with status(id: %q) — tasks may be queued, active, or done", id, id)
 		}
 		nextSortByQueueOrder(ready)
 		return ready[0].ID, nil
 
 	default:
-		return "", fmt.Errorf("entity %s not found or has unrecognised ID format", id)
+		return "", fmt.Errorf("Cannot resolve ID %q: unrecognised ID format.\n\nTo resolve:\n  Use a prefixed ID: TASK-..., FEAT-..., or a plan ID (e.g. P1-slug)", id)
 	}
 }
 

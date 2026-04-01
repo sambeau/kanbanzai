@@ -72,13 +72,13 @@ func healthTool(entitySvc *service.EntityService, additionalCheckers ...Addition
 	handler := func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		report, err := entitySvc.HealthCheck()
 		if err != nil {
-			return mcp.NewToolResultErrorFromErr("health check failed", err), nil
+			return mcp.NewToolResultErrorFromErr("Cannot run health check: entity validation failed", err), nil
 		}
 
 		for _, checker := range additionalCheckers {
 			additional, err := checker()
 			if err != nil {
-				return mcp.NewToolResultErrorFromErr("health check failed", err), nil
+				return mcp.NewToolResultErrorFromErr("Cannot run health check: additional checker failed", err), nil
 			}
 			if additional != nil {
 				mergeHealthReports(report, additional)
@@ -227,7 +227,7 @@ func coalesce(values ...string) string {
 func jsonResult(v any) (*mcp.CallToolResult, error) {
 	data, err := json.Marshal(v)
 	if err != nil {
-		return mcp.NewToolResultErrorFromErr("failed to marshal result", err), nil
+		return mcp.NewToolResultErrorFromErr("Cannot format health check result: JSON serialisation failed.\n\nTo resolve:\n  Report this as a bug — the health check data could not be serialised", err), nil
 	}
 	return mcp.NewToolResultText(string(data)), nil
 }

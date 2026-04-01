@@ -87,7 +87,7 @@ func prCreateAction(
 
 		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return nil, fmt.Errorf("entity_id is required for create action")
+			return nil, fmt.Errorf("Cannot create PR: entity_id is missing.\n\nTo resolve:\n  Provide entity_id: pr(action: \"create\", entity_id: \"FEAT-...\")")
 		}
 		draft := req.GetBool("draft", false)
 
@@ -110,7 +110,7 @@ func prStatusAction(
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return nil, fmt.Errorf("entity_id is required for status action")
+			return nil, fmt.Errorf("Cannot get PR status: entity_id is missing.\n\nTo resolve:\n  Provide entity_id: pr(action: \"status\", entity_id: \"FEAT-...\")")
 		}
 
 		result, err := getPRStatusForEntity(ctx, worktreeStore, repoPath, localConfig, entityID)
@@ -136,7 +136,7 @@ func prUpdateAction(
 
 		entityID, err := req.RequireString("entity_id")
 		if err != nil {
-			return nil, fmt.Errorf("entity_id is required for update action")
+			return nil, fmt.Errorf("Cannot update PR: entity_id is missing.\n\nTo resolve:\n  Provide entity_id: pr(action: \"update\", entity_id: \"FEAT-...\")")
 		}
 
 		result, err := updatePR(ctx, worktreeStore, entitySvc, repoPath, thresholds, localConfig, entityID)
@@ -160,14 +160,14 @@ func createPR(
 ) (map[string]any, error) {
 	// Check GitHub configuration
 	if localConfig == nil || localConfig.GetGitHubToken() == "" {
-		return nil, fmt.Errorf("GITHUB_NOT_CONFIGURED: GitHub token not configured in .kbz/local.yaml")
+		return nil, fmt.Errorf("Cannot create PR for %s: GitHub token is not configured.\n\nTo resolve:\n  Add a GitHub token to .kbz/local.yaml: github_token: \"ghp_...\"", entityID)
 	}
 
 	// Get the worktree for this entity
 	wt, err := worktreeStore.GetByEntityID(entityID)
 	if err != nil {
 		if errors.Is(err, worktree.ErrNotFound) {
-			return nil, fmt.Errorf("NO_WORKTREE: no worktree found for entity %s", entityID)
+			return nil, fmt.Errorf("Cannot create PR for %s: no worktree exists for this entity.\n\nTo resolve:\n  Create a worktree first: worktree(action: \"create\", entity_id: \"%s\")", entityID, entityID)
 		}
 		return nil, err
 	}
@@ -175,11 +175,11 @@ func createPR(
 	// Get the entity
 	entityType := entityTypeFromID(entityID)
 	if entityType == "" {
-		return nil, fmt.Errorf("invalid entity ID: must start with FEAT- or BUG-")
+		return nil, fmt.Errorf("Cannot create PR: entity ID %q is not a feature or bug.\n\nTo resolve:\n  Provide an entity ID starting with FEAT- or BUG-", entityID)
 	}
 	entity, err := entitySvc.Get(entityType, entityID, "")
 	if err != nil {
-		return nil, fmt.Errorf("get entity: %w", err)
+		return nil, fmt.Errorf("Cannot create PR for %s: failed to retrieve entity: %w.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, err, entityID)
 	}
 
 	client := github.NewClient(localConfig.GetGitHubToken())
@@ -187,16 +187,16 @@ func createPR(
 	// Detect repository info
 	repoInfo, err := github.DetectRepo(repoPath, localConfig)
 	if err != nil {
-		return nil, fmt.Errorf("detect repository: %w", err)
+		return nil, fmt.Errorf("Cannot create PR for %s: failed to detect repository info: %w.\n\nTo resolve:\n  Ensure the repository has a valid GitHub remote and .kbz/local.yaml has correct repo settings", entityID, err)
 	}
 
 	// Check if PR already exists
 	existingPR, err := client.GetPRByBranch(ctx, repoInfo, wt.Branch)
 	if err == nil && existingPR != nil {
-		return nil, fmt.Errorf("PR_EXISTS: PR already exists for branch %s: %s", wt.Branch, existingPR.URL)
+		return nil, fmt.Errorf("Cannot create PR for %s: a PR already exists for branch %s.\n\nTo resolve:\n  Use the existing PR at %s, or pr(action: \"update\", entity_id: \"%s\") to refresh it", entityID, wt.Branch, existingPR.URL, entityID)
 	}
 	if err != nil && !errors.Is(err, github.ErrPRNotFound) {
-		return nil, fmt.Errorf("check existing PR: %w", err)
+		return nil, fmt.Errorf("Cannot create PR for %s: failed to check for existing PRs: %w.\n\nTo resolve:\n  Verify your GitHub token has repo access and the remote is reachable", entityID, err)
 	}
 
 	// Build PR title and body
@@ -250,7 +250,7 @@ func createPR(
 	}
 	pr, err := client.CreatePR(ctx, repoInfo, wt.Branch, baseBranch, prTitle, prBody, draft)
 	if err != nil {
-		return nil, fmt.Errorf("create PR: %w", err)
+		return nil, fmt.Errorf("Cannot create PR for %s: GitHub API call failed: %w.\n\nTo resolve:\n  Ensure branch %s is pushed to the remote and your token has write access", entityID, err, wt.Branch)
 	}
 
 	// Set initial labels
@@ -288,14 +288,14 @@ func updatePR(
 ) (map[string]any, error) {
 	// Check GitHub configuration
 	if localConfig == nil || localConfig.GetGitHubToken() == "" {
-		return nil, fmt.Errorf("GITHUB_NOT_CONFIGURED: GitHub token not configured in .kbz/local.yaml")
+		return nil, fmt.Errorf("Cannot update PR for %s: GitHub token is not configured.\n\nTo resolve:\n  Add a GitHub token to .kbz/local.yaml: github_token: \"ghp_...\"", entityID)
 	}
 
 	// Get the worktree for this entity
 	wt, err := worktreeStore.GetByEntityID(entityID)
 	if err != nil {
 		if errors.Is(err, worktree.ErrNotFound) {
-			return nil, fmt.Errorf("NO_WORKTREE: no worktree found for entity %s", entityID)
+			return nil, fmt.Errorf("Cannot update PR for %s: no worktree exists for this entity.\n\nTo resolve:\n  Create a worktree first: worktree(action: \"create\", entity_id: \"%s\")", entityID, entityID)
 		}
 		return nil, err
 	}
@@ -303,11 +303,11 @@ func updatePR(
 	// Get the entity
 	entityType := entityTypeFromID(entityID)
 	if entityType == "" {
-		return nil, fmt.Errorf("invalid entity ID: must start with FEAT- or BUG-")
+		return nil, fmt.Errorf("Cannot update PR: entity ID %q is not a feature or bug.\n\nTo resolve:\n  Provide an entity ID starting with FEAT- or BUG-", entityID)
 	}
 	entity, err := entitySvc.Get(entityType, entityID, "")
 	if err != nil {
-		return nil, fmt.Errorf("get entity: %w", err)
+		return nil, fmt.Errorf("Cannot update PR for %s: failed to retrieve entity: %w.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, err, entityID)
 	}
 
 	client := github.NewClient(localConfig.GetGitHubToken())
@@ -315,16 +315,16 @@ func updatePR(
 	// Detect repository info
 	repoInfo, err := github.DetectRepo(repoPath, localConfig)
 	if err != nil {
-		return nil, fmt.Errorf("detect repository: %w", err)
+		return nil, fmt.Errorf("Cannot update PR for %s: failed to detect repository info: %w.\n\nTo resolve:\n  Ensure the repository has a valid GitHub remote and .kbz/local.yaml has correct repo settings", entityID, err)
 	}
 
 	// Get existing PR
 	pr, err := client.GetPRByBranch(ctx, repoInfo, wt.Branch)
 	if err != nil {
 		if errors.Is(err, github.ErrPRNotFound) {
-			return nil, fmt.Errorf("NO_PR: no PR found for branch %s", wt.Branch)
+			return nil, fmt.Errorf("Cannot update PR for %s: no PR found for branch %s.\n\nTo resolve:\n  Create a PR first: pr(action: \"create\", entity_id: \"%s\")", entityID, wt.Branch, entityID)
 		}
-		return nil, fmt.Errorf("get PR: %w", err)
+		return nil, fmt.Errorf("Cannot update PR for %s: failed to fetch PR from GitHub: %w.\n\nTo resolve:\n  Verify your GitHub token has repo access and the remote is reachable", entityID, err)
 	}
 
 	// Build updated title and body
@@ -379,7 +379,7 @@ func updatePR(
 	// Update PR
 	_, err = client.UpdatePR(ctx, repoInfo, pr.Number, prTitle, prBody)
 	if err != nil {
-		return nil, fmt.Errorf("update PR: %w", err)
+		return nil, fmt.Errorf("Cannot update PR #%d for %s: GitHub API call failed: %w.\n\nTo resolve:\n  Verify your GitHub token has write access to the repository", pr.Number, entityID, err)
 	}
 	changes = append(changes, "Updated description")
 
@@ -436,14 +436,14 @@ func getPRStatusForEntity(
 ) (map[string]any, error) {
 	// Check GitHub configuration
 	if localConfig == nil || localConfig.GetGitHubToken() == "" {
-		return nil, fmt.Errorf("GITHUB_NOT_CONFIGURED: GitHub token not configured in .kbz/local.yaml")
+		return nil, fmt.Errorf("Cannot get PR status for %s: GitHub token is not configured.\n\nTo resolve:\n  Add a GitHub token to .kbz/local.yaml: github_token: \"ghp_...\"", entityID)
 	}
 
 	// Get the worktree for this entity
 	wt, err := worktreeStore.GetByEntityID(entityID)
 	if err != nil {
 		if errors.Is(err, worktree.ErrNotFound) {
-			return nil, fmt.Errorf("NO_WORKTREE: no worktree found for entity %s", entityID)
+			return nil, fmt.Errorf("Cannot get PR status for %s: no worktree exists for this entity.\n\nTo resolve:\n  Create a worktree first: worktree(action: \"create\", entity_id: \"%s\")", entityID, entityID)
 		}
 		return nil, err
 	}
@@ -453,16 +453,16 @@ func getPRStatusForEntity(
 	// Detect repository info
 	repoInfo, err := github.DetectRepo(repoPath, localConfig)
 	if err != nil {
-		return nil, fmt.Errorf("detect repository: %w", err)
+		return nil, fmt.Errorf("Cannot get PR status for %s: failed to detect repository info: %w.\n\nTo resolve:\n  Ensure the repository has a valid GitHub remote and .kbz/local.yaml has correct repo settings", entityID, err)
 	}
 
 	// Get PR by branch
 	pr, err := client.GetPRByBranch(ctx, repoInfo, wt.Branch)
 	if err != nil {
 		if errors.Is(err, github.ErrPRNotFound) {
-			return nil, fmt.Errorf("NO_PR: no PR found for branch %s", wt.Branch)
+			return nil, fmt.Errorf("Cannot get PR status for %s: no PR found for branch %s.\n\nTo resolve:\n  Create a PR first: pr(action: \"create\", entity_id: \"%s\")", entityID, wt.Branch, entityID)
 		}
-		return nil, fmt.Errorf("get PR: %w", err)
+		return nil, fmt.Errorf("Cannot get PR status for %s: failed to fetch PR from GitHub: %w.\n\nTo resolve:\n  Verify your GitHub token has repo access and the remote is reachable", entityID, err)
 	}
 
 	// Build reviews list

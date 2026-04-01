@@ -97,7 +97,8 @@ func handoffTool(
 	handler := func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		taskID, err := req.RequireString("task_id")
 		if err != nil {
-			return mcp.NewToolResultError(err.Error()), nil
+			return mcp.NewToolResultError(fmt.Sprintf(
+				"Cannot generate handoff prompt: task_id is required.\n\nTo resolve:\n  Provide a task_id parameter (e.g. TASK-xxx) for the task to hand off.")), nil
 		}
 		role := strings.TrimSpace(req.GetString("role", ""))
 		instructions := strings.TrimSpace(req.GetString("instructions", ""))
@@ -106,7 +107,7 @@ func handoffTool(
 		task, err := entitySvc.Get("task", taskID, "")
 		if err != nil {
 			return mcp.NewToolResultText(handoffErrorJSON("not_found",
-				fmt.Sprintf("Task %s not found", taskID))), nil
+				fmt.Sprintf("Cannot generate handoff for task %s: task not found.\n\nTo resolve:\n  Verify the task ID exists with entity(action: \"get\", id: %q) or list tasks with entity(action: \"list\", type: \"task\").", taskID, taskID))), nil
 		}
 
 		// Validate status.
@@ -117,12 +118,12 @@ func handoffTool(
 		default:
 			if isTerminalStatus(status) {
 				return mcp.NewToolResultText(handoffErrorJSON("terminal_status", fmt.Sprintf(
-					"Task %s is in status %q (terminal). Handoff is only meaningful for active or ready tasks.",
+					"Cannot generate handoff for task %s: status is %q (terminal).\n\nTo resolve:\n  Handoff is only valid for active, ready, or needs-rework tasks. Create a new task if further work is needed.",
 					task.ID, status))), nil
 			}
 			return mcp.NewToolResultText(handoffErrorJSON("invalid_status", fmt.Sprintf(
-				"Task %s is in status %q. Handoff requires active, ready, or needs-rework.",
-				task.ID, status))), nil
+				"Cannot generate handoff for task %s: status is %q.\n\nTo resolve:\n  Transition the task to ready or active first, or claim it with next(id: %q).",
+				task.ID, status, task.ID))), nil
 		}
 
 		// Pre-dispatch state commit: persist any uncommitted .kbz/state/ changes
@@ -180,7 +181,8 @@ func handoffTool(
 		if pipelineResult, used := tryPipeline(pipeline, entitySvc, task.State, parentFeature, role, instructions); used {
 			if pipelineResult.err != nil {
 				return mcp.NewToolResultText(handoffErrorJSON("pipeline_error",
-					pipelineResult.err.Error())), nil
+					fmt.Sprintf("Cannot assemble handoff for task %s: pipeline error: %v.\n\nTo resolve:\n  Check that the role profile exists and skill files are present. Review the feature's stage binding configuration.",
+						task.ID, pipelineResult.err))), nil
 			}
 			return buildPipelineResponse(task, pipelineResult.result)
 		}
@@ -299,7 +301,7 @@ func buildPipelineResponse(task service.GetResult, result *kbzctx.PipelineResult
 
 	data, err := json.MarshalIndent(resp, "", "  ")
 	if err != nil {
-		return mcp.NewToolResultError(fmt.Sprintf("marshal result: %s", err)), nil
+		return mcp.NewToolResultError(fmt.Sprintf("Cannot serialise handoff response for task %s: %s.\n\nTo resolve:\n  This is an internal error — report it as a bug with the task ID.", task.ID, err)), nil
 	}
 	return mcp.NewToolResultText(string(data)), nil
 }
@@ -335,7 +337,7 @@ func buildLegacyResponse(task service.GetResult, actx assembledContext, prompt s
 
 	data, err := json.MarshalIndent(resp, "", "  ")
 	if err != nil {
-		return mcp.NewToolResultError(fmt.Sprintf("marshal result: %s", err)), nil
+		return mcp.NewToolResultError(fmt.Sprintf("Cannot serialise handoff response for task %s: %s.\n\nTo resolve:\n  This is an internal error — report it as a bug with the task ID.", task.ID, err)), nil
 	}
 	return mcp.NewToolResultText(string(data)), nil
 }

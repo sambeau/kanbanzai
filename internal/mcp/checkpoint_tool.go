@@ -85,19 +85,19 @@ func checkpointCreateAction(store *chk.Store) ActionHandler {
 
 		question, err := req.RequireString("question")
 		if err != nil {
-			return inlineErr("missing_parameter", "question is required for create action")
+			return inlineErr("missing_parameter", "Cannot create checkpoint: question is missing.\n\nTo resolve:\n  Provide question: checkpoint(action: \"create\", question: \"...\", context: \"...\", orchestration_summary: \"...\", created_by: \"...\")")
 		}
 		contextStr, err := req.RequireString("context")
 		if err != nil {
-			return inlineErr("missing_parameter", "context is required for create action")
+			return inlineErr("missing_parameter", "Cannot create checkpoint: context is missing.\n\nTo resolve:\n  Provide context: checkpoint(action: \"create\", question: \"...\", context: \"...\", orchestration_summary: \"...\", created_by: \"...\")")
 		}
 		orchSummary, err := req.RequireString("orchestration_summary")
 		if err != nil {
-			return inlineErr("missing_parameter", "orchestration_summary is required for create action")
+			return inlineErr("missing_parameter", "Cannot create checkpoint: orchestration_summary is missing.\n\nTo resolve:\n  Provide orchestration_summary: checkpoint(action: \"create\", question: \"...\", context: \"...\", orchestration_summary: \"...\", created_by: \"...\")")
 		}
 		createdBy, err := req.RequireString("created_by")
 		if err != nil {
-			return inlineErr("missing_parameter", "created_by is required for create action")
+			return inlineErr("missing_parameter", "Cannot create checkpoint: created_by is missing.\n\nTo resolve:\n  Provide created_by: checkpoint(action: \"create\", question: \"...\", context: \"...\", orchestration_summary: \"...\", created_by: \"agent-name\")")
 		}
 
 		record := chk.Record{
@@ -111,7 +111,7 @@ func checkpointCreateAction(store *chk.Store) ActionHandler {
 
 		created, err := store.Create(record)
 		if err != nil {
-			return nil, fmt.Errorf("create checkpoint: %w", err)
+			return nil, fmt.Errorf("Cannot create checkpoint: %w.\n\nTo resolve:\n  Check that the checkpoint store is accessible and retry", err)
 		}
 
 		return map[string]any{
@@ -129,12 +129,12 @@ func checkpointGetAction(store *chk.Store) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		checkpointID, err := req.RequireString("checkpoint_id")
 		if err != nil {
-			return inlineErr("missing_parameter", "checkpoint_id is required for get action")
+			return inlineErr("missing_parameter", "Cannot get checkpoint: checkpoint_id is missing.\n\nTo resolve:\n  Provide checkpoint_id: checkpoint(action: \"get\", checkpoint_id: \"CHK-...\")")
 		}
 
 		record, err := store.Get(checkpointID)
 		if err != nil {
-			return nil, fmt.Errorf("get checkpoint: %w", err)
+			return nil, fmt.Errorf("Cannot get checkpoint %s: %w.\n\nTo resolve:\n  Verify the checkpoint ID using checkpoint(action: \"list\")", checkpointID, err)
 		}
 
 		return checkpointRecordToMap(record), nil
@@ -149,21 +149,21 @@ func checkpointRespondAction(store *chk.Store) ActionHandler {
 
 		checkpointID, err := req.RequireString("checkpoint_id")
 		if err != nil {
-			return inlineErr("missing_parameter", "checkpoint_id is required for respond action")
+			return inlineErr("missing_parameter", "Cannot respond to checkpoint: checkpoint_id is missing.\n\nTo resolve:\n  Provide checkpoint_id: checkpoint(action: \"respond\", checkpoint_id: \"CHK-...\", response: \"...\")")
 		}
 		response, err := req.RequireString("response")
 		if err != nil {
-			return inlineErr("missing_parameter", "response is required for respond action")
+			return inlineErr("missing_parameter", "Cannot respond to checkpoint: response is missing.\n\nTo resolve:\n  Provide response: checkpoint(action: \"respond\", checkpoint_id: \"CHK-...\", response: \"...\")")
 		}
 
 		record, err := store.Get(checkpointID)
 		if err != nil {
-			return nil, fmt.Errorf("get checkpoint: %w", err)
+			return nil, fmt.Errorf("Cannot respond to checkpoint %s: lookup failed: %w.\n\nTo resolve:\n  Verify the checkpoint ID using checkpoint(action: \"list\")", checkpointID, err)
 		}
 
 		if record.Status == chk.StatusResponded {
 			return inlineErr("already_responded",
-				fmt.Sprintf("checkpoint %s is already responded", checkpointID))
+				fmt.Sprintf("Cannot respond to checkpoint %s: checkpoint already has a response.\n\nTo resolve:\n  Use checkpoint(action: \"get\", checkpoint_id: \"%s\") to view the existing response", checkpointID, checkpointID))
 		}
 
 		now := time.Now().UTC()
@@ -173,7 +173,7 @@ func checkpointRespondAction(store *chk.Store) ActionHandler {
 
 		updated, err := store.Update(record)
 		if err != nil {
-			return nil, fmt.Errorf("update checkpoint: %w", err)
+			return nil, fmt.Errorf("Cannot respond to checkpoint %s: update failed: %w.\n\nTo resolve:\n  Verify the checkpoint status and retry", checkpointID, err)
 		}
 
 		resp := map[string]any{
@@ -196,7 +196,7 @@ func checkpointListAction(store *chk.Store) ActionHandler {
 
 		records, err := store.List(statusFilter)
 		if err != nil {
-			return nil, fmt.Errorf("list checkpoints: %w", err)
+			return nil, fmt.Errorf("Cannot list checkpoints: %w.\n\nTo resolve:\n  Check the status filter value (valid: pending, responded) or omit it to list all", err)
 		}
 
 		// Count pending checkpoints across all records for accurate reporting.

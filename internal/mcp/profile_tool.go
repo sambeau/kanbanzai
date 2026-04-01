@@ -230,7 +230,7 @@ func roleRefreshAction(roleStore *kbzctx.RoleStore, req mcp.CallToolRequest) (*m
 func profileToolMapJSON(v map[string]any) (*mcp.CallToolResult, error) {
 	data, err := json.MarshalIndent(v, "", "  ")
 	if err != nil {
-		return mcp.NewToolResultError("marshal result: " + err.Error()), nil
+		return mcp.NewToolResultError("Cannot format profile response: JSON serialisation failed.\n\nTo resolve:\n  Retry the action. If this persists, report it as a bug."), nil
 	}
 	return mcp.NewToolResultText(string(data)), nil
 }
