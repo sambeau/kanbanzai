@@ -73,6 +73,13 @@ starting_state:
       status: queued
       summary: "Implement the core handler"
 
+  # Optional prose annotation describing any additional context about the
+  # starting state that is not captured by the structured fields above.
+  # Free-text; not machine-evaluated.
+  notes: >
+    The feature already has a partially-written design doc that needs to be
+    approved before specifying can begin.
+
 # Ordered list of workflow stages the agent is expected to traverse.
 expected_pattern:
   - stage: "Advance to specifying"
@@ -80,6 +87,9 @@ expected_pattern:
       - entity
       - doc
     output: "Feature transitions to specifying status; spec document registered"
+    tool_args_must_include:
+      - tool: entity
+        args: {action: transition, status: specifying}
 
   - stage: "Write and approve specification"
     tools:
@@ -109,15 +119,42 @@ success_criteria:
 | `name`                         | string   | yes      | Concise human-readable label                                      |
 | `description`                  | string   | yes      | Prose description of what the scenario tests                      |
 | `category`                     | string   | yes      | One of the six allowed category values (see below)                |
-| `starting_state`               | mapping  | yes      | System state at scenario start                                    |
-| `starting_state.feature_status`| string   | yes      | Lifecycle status of the feature: proposed, designing, specifying, etc. |
-| `starting_state.documents`     | sequence | yes      | Pre-existing documents (may be empty list)                        |
-| `starting_state.tasks`         | sequence | yes      | Pre-existing tasks (may be empty list)                            |
-| `expected_pattern`             | sequence | yes      | Ordered stages with expected tools and outputs                    |
-| `expected_pattern[].stage`     | string   | yes      | Label describing the workflow stage                               |
-| `expected_pattern[].tools`     | sequence | yes      | MCP tool names the agent is expected to call at this stage        |
-| `expected_pattern[].output`    | string   | yes      | Description of the artefact or state change expected at stage end |
+| `starting_state`                              | mapping  | yes      | System state at scenario start                                                                  |
+| `starting_state.feature_status`               | string   | yes      | Lifecycle status of the feature: proposed, designing, specifying, etc.                          |
+| `starting_state.documents`                    | sequence | yes      | Pre-existing documents (may be empty list)                                                      |
+| `starting_state.tasks`                        | sequence | yes      | Pre-existing tasks (may be empty list)                                                          |
+| `starting_state.notes`                        | string   | no       | Free-text annotation about starting state context not captured by structured fields             |
+| `expected_pattern`                            | sequence | yes      | Ordered stages with expected tools and outputs                                                  |
+| `expected_pattern[].stage`                    | string   | yes      | Label describing the workflow stage                                                             |
+| `expected_pattern[].tools`                    | sequence | yes      | MCP tool names the agent is expected to call at this stage                                      |
+| `expected_pattern[].output`                   | string   | yes      | Description of the artefact or state change expected at stage end                               |
+| `expected_pattern[].tool_args_must_include`   | sequence | no       | Testable assertions about tool call arguments (see below); absent means no argument constraints |
 | `success_criteria`             | sequence | yes      | Testable assertion strings defining a passing run                 |
+
+### `tool_args_must_include` Schema
+
+Each entry in `tool_args_must_include` is a mapping with the following fields:
+
+| Field  | Type    | Required | Description                                                              |
+|--------|---------|----------|--------------------------------------------------------------------------|
+| `tool` | string  | yes      | The MCP tool name that must be called with the specified arguments        |
+| `args` | mapping | yes      | Key-value pairs that must appear in the tool's arguments at this stage   |
+
+**Example:**
+
+```yaml
+tool_args_must_include:
+  - tool: entity
+    args: {action: transition, status: designing}
+  - tool: doc
+    args: {action: approve}
+```
+
+A V3.0 evaluation runner that parses this field can assert that the agent called
+`entity(action: "transition", status: "designing")` and `doc(action: "approve")`
+at this stage, providing stronger verification than the plain-text `output` field.
+Runners that do not implement argument checking MUST ignore this field and still
+evaluate the run using `success_criteria`.
 
 ### Allowed Category Values
 

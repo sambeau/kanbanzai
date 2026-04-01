@@ -92,8 +92,8 @@ func TestBatchImport_Idempotent(t *testing.T) {
 	if len(result2.Skipped) != 1 {
 		t.Errorf("second run: len(Skipped) = %d, want 1", len(result2.Skipped))
 	}
-	if result2.Skipped[0].Reason != "already imported" {
-		t.Errorf("Skipped[0].Reason = %q, want %q", result2.Skipped[0].Reason, "already imported")
+	if result2.Skipped[0].Reason != "already registered" {
+		t.Errorf("Skipped[0].Reason = %q, want %q", result2.Skipped[0].Reason, "already registered")
 	}
 }
 
@@ -477,5 +477,190 @@ func TestExtractGlobSegment(t *testing.T) {
 				t.Errorf("extractGlobSegment(%q) = %q, want %q", tc.glob, got, tc.want)
 			}
 		})
+	}
+}
+
+// ---------------------------------------------------------------------------
+// F-05: Service-level unit tests for ImportDryRun
+// ---------------------------------------------------------------------------
+
+func TestImportDryRun_HappyPath(t *testing.T) {
+	t.Parallel()
+
+	importSvc, _, repoRoot, cfg := newTestImportSetup(t)
+
+	writeTestFile(t, repoRoot, "work/design/my-design.md", "# My Design\n\nContent.")
+	writeTestFile(t, repoRoot, "work/spec/my-spec.md", "# My Spec\n\nContent.")
+
+	result, err := importSvc.ImportDryRun(cfg, BatchImportInput{
+		Path:      filepath.Join(repoRoot, "work"),
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("ImportDryRun() error = %v", err)
+	}
+
+	if len(result.WouldImport) != 2 {
+		t.Errorf("WouldImport = %d, want 2", len(result.WouldImport))
+	}
+	if len(result.WouldSkip) != 0 {
+		t.Errorf("WouldSkip = %v, want empty", result.WouldSkip)
+	}
+	if result.Summary.WouldImport != 2 {
+		t.Errorf("Summary.WouldImport = %d, want 2", result.Summary.WouldImport)
+	}
+	if result.Summary.WouldSkip != 0 {
+		t.Errorf("Summary.WouldSkip = %d, want 0", result.Summary.WouldSkip)
+	}
+}
+
+func TestImportDryRun_DoesNotWriteToStore(t *testing.T) {
+	t.Parallel()
+
+	importSvc, docSvc, repoRoot, cfg := newTestImportSetup(t)
+
+	writeTestFile(t, repoRoot, "work/design/my-design.md", "# My Design\n\nContent.")
+
+	_, err := importSvc.ImportDryRun(cfg, BatchImportInput{
+		Path:      filepath.Join(repoRoot, "work"),
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("ImportDryRun() error = %v", err)
+	}
+
+	// Store must remain empty — dry-run must not write anything.
+	docs, err := docSvc.ListDocuments(DocumentFilters{})
+	if err != nil {
+		t.Fatalf("ListDocuments() error = %v", err)
+	}
+	if len(docs) != 0 {
+		t.Errorf("store has %d documents after dry-run, want 0", len(docs))
+	}
+}
+
+func TestImportDryRun_AlreadyRegisteredFilesGoToWouldSkip(t *testing.T) {
+	t.Parallel()
+
+	importSvc, _, repoRoot, cfg := newTestImportSetup(t)
+
+	writeTestFile(t, repoRoot, "work/design/existing.md", "# Existing\n\nContent.")
+	writeTestFile(t, repoRoot, "work/design/new-doc.md", "# New\n\nContent.")
+
+	// Register one file via a live import first.
+	_, err := importSvc.Import(cfg, BatchImportInput{
+		Path:      filepath.Join(repoRoot, "work/design"),
+		CreatedBy: "tester",
+		Glob:      "existing.md",
+	})
+	if err != nil {
+		t.Fatalf("Import() error = %v", err)
+	}
+
+	// Dry-run over both files: existing should be in WouldSkip.
+	result, err := importSvc.ImportDryRun(cfg, BatchImportInput{
+		Path:      filepath.Join(repoRoot, "work"),
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("ImportDryRun() error = %v", err)
+	}
+
+	if len(result.WouldImport) != 1 {
+		t.Errorf("WouldImport = %d, want 1", len(result.WouldImport))
+	}
+	if len(result.WouldSkip) != 1 {
+		t.Fatalf("WouldSkip = %d, want 1", len(result.WouldSkip))
+	}
+	if result.WouldSkip[0].Reason != "already registered" {
+		t.Errorf("WouldSkip[0].Reason = %q, want %q", result.WouldSkip[0].Reason, "already registered")
+	}
+}
+
+func TestImportDryRun_ConsistencyWithLiveImport(t *testing.T) {
+	// REQ-13: WouldImport must match the set that a live import would register.
+	t.Parallel()
+
+	importSvc, _, repoRoot, cfg := newTestImportSetup(t)
+
+	writeTestFile(t, repoRoot, "work/design/doc-a.md", "# Doc A\n\nContent.")
+	writeTestFile(t, repoRoot, "work/spec/doc-b.md", "# Doc B\n\nContent.")
+	writeTestFile(t, repoRoot, "work/unknown/no-type.md", "# No Type\n\nContent.")
+
+	scanPath := filepath.Join(repoRoot, "work")
+
+	dryResult, err := importSvc.ImportDryRun(cfg, BatchImportInput{
+		Path:      scanPath,
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("ImportDryRun() error = %v", err)
+	}
+
+	liveResult, err := importSvc.Import(cfg, BatchImportInput{
+		Path:      scanPath,
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("Import() error = %v", err)
+	}
+
+	// WouldImport count must match actual imported count.
+	if len(dryResult.WouldImport) != liveResult.Imported {
+		t.Errorf("WouldImport = %d, live Imported = %d — dry-run and live import are inconsistent",
+			len(dryResult.WouldImport), liveResult.Imported)
+	}
+
+	// WouldSkip count (no-type files) must match skipped count.
+	if len(dryResult.WouldSkip) != len(liveResult.Skipped) {
+		t.Errorf("WouldSkip = %d, live Skipped = %d — dry-run and live import are inconsistent",
+			len(dryResult.WouldSkip), len(liveResult.Skipped))
+	}
+}
+
+func TestImportDryRun_NonExistentDirectoryReturnsError(t *testing.T) {
+	t.Parallel()
+
+	importSvc, _, _, cfg := newTestImportSetup(t)
+
+	_, err := importSvc.ImportDryRun(cfg, BatchImportInput{
+		Path:      "/nonexistent/directory/that/does/not/exist",
+		CreatedBy: "tester",
+	})
+	if err == nil {
+		t.Error("ImportDryRun() should return error for nonexistent directory")
+	}
+}
+
+func TestImportDryRun_SummaryCountsMatchSliceLengths(t *testing.T) {
+	t.Parallel()
+
+	importSvc, _, repoRoot, cfg := newTestImportSetup(t)
+
+	writeTestFile(t, repoRoot, "work/design/a.md", "# A\n\nContent.")
+	writeTestFile(t, repoRoot, "work/design/b.md", "# B\n\nContent.")
+
+	// Pre-register one file so we get a mix of would-import and would-skip.
+	_, _ = importSvc.Import(cfg, BatchImportInput{
+		Path:      filepath.Join(repoRoot, "work/design"),
+		CreatedBy: "tester",
+		Glob:      "a.md",
+	})
+
+	result, err := importSvc.ImportDryRun(cfg, BatchImportInput{
+		Path:      filepath.Join(repoRoot, "work"),
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("ImportDryRun() error = %v", err)
+	}
+
+	if result.Summary.WouldImport != len(result.WouldImport) {
+		t.Errorf("Summary.WouldImport = %d, len(WouldImport) = %d — mismatch",
+			result.Summary.WouldImport, len(result.WouldImport))
+	}
+	if result.Summary.WouldSkip != len(result.WouldSkip) {
+		t.Errorf("Summary.WouldSkip = %d, len(WouldSkip) = %d — mismatch",
+			result.Summary.WouldSkip, len(result.WouldSkip))
 	}
 }

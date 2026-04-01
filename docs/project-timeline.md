@@ -211,5 +211,43 @@ Five features making kanbanzai self-orienting for AI agents arriving at a fresh 
 - **(D) Specification skill** — new `kanbanzai-specification` skill (136 lines) covering the specification stage: roles, iterative process, AC quality bar (with explicit "it works correctly is not an AC" rule), the Approved Specification Invariant, relationship to design, and gotchas; added to `skillNames` and installed by `kbz init`
 - **(E) MCP orientation breadcrumbs** — `orientation` field added to `status` project-overview response (always present) and `next` empty-queue response (present only when queue is empty); field is `{message, skills_path}` pointing agents to `kanbanzai-getting-started`
 
-**Spec:** `work/spec/agent-onboarding.md`  
+**Spec:** `work/spec/agent-onboarding.md`
 **Review:** `work/reviews/review-p12-agent-onboarding.md`
+
+---
+
+## P13: Workflow Flexibility — User Feedback Round 1
+
+**Status:** Proposed (not yet started)
+
+Address friction points and feature requests from the first real-project test of Kanbanzai. Covers lifecycle override support, task unclaim, decompose flexibility, feature-level workflow improvements, and document inheritance. Driven by concrete usage patterns: catching up existing work, crash recovery, parallel agent delegation, and health signal accuracy.
+
+**Plan entity:** `P13-workflow-flexibility`
+
+---
+
+## P14: Entity Names
+
+**Status:** Proposed (not yet started)
+
+Consistent entity naming: rename `title` → `name` across all entity types, add `name` to Feature/Task/Decision, retire `label`, add project name to `config.yaml` and `kbz init`. Includes validation rules, skill guidance, and backfill of existing state files.
+
+**Plan entity:** `P14-entity-names`
+
+---
+
+## P15: Kanbanzai 2.5 — Infrastructure Hardening
+
+**Status:** Complete
+
+Six targeted fixes and enhancements before the V3.0 redesign:
+
+- **(A) docint AC pattern recognition** — `asmExtractCriteria` and `parseSpecStructure` updated to recognise bold-identifier lines (`**AC-NN.**`) as acceptance criteria, enabling `decompose propose` to produce criterion-derived task summaries from specs that use this format instead of checkbox lists
+- **(B) Sub-agent state isolation** — `handoff` tool now commits any dirty `.kbz/state/` changes before dispatching a sub-agent, preventing context drift when multiple agents operate concurrently
+- **(C) Batch handler false-positive fix** — `ExecuteBatch` now detects tool-result error payloads returned as `(data, nil)` (the Kanbanzai inline-error convention) and counts them as failures rather than successes, eliminating inflated batch success counts
+- **(D) `doc(action: "audit")`** — new read-only audit action walks configured document directories, compares found `.md` files against the store, and returns unregistered files, missing records, and aggregate counts
+- **(E) `doc(action: "import", dry_run: true)`** — dry-run mode for batch import that previews what a live import would register and skip without writing to the store
+- **(F) Evaluation baseline** — 20 representative scenario files (`work/eval/eval-NNN.yaml`) and five pre-V3.0 baseline measurement records capturing current agent behaviour, enabling objective before/after comparison after the V3.0 redesign
+
+**Design:** `work/design/kanbanzai-2.5-infrastructure-hardening.md`
+**Review:** `work/reviews/review-P15-kanbanzai-25-infrastructure-hardening.md`

@@ -177,11 +177,11 @@ func (s *BatchImportService) Import(cfg *config.Config, input BatchImportInput) 
 			relPath = absPath
 		}
 
-		// Skip already-imported files (compare by relative path).
+		// Skip already-registered files (compare by relative path).
 		if existingPaths[relPath] {
 			result.Skipped = append(result.Skipped, BatchImportSkip{
 				Path:   relPath,
-				Reason: "already imported",
+				Reason: "already registered",
 			})
 			return nil
 		}

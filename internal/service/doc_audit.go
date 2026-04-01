@@ -15,6 +15,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -103,6 +104,11 @@ type AuditResult struct {
 // each directory path before walking. Stored document record paths are treated
 // as relative to repoRoot.
 //
+// When dirs is non-empty (explicit path provided by the caller), each
+// directory must exist; a non-existent explicit path is returned as an error
+// (REQ-02). When dirs is empty (default-directory mode), missing directories
+// are silently skipped.
+//
 // When includeRegistered is true, the Registered field of the returned
 // AuditResult is populated with registered files.
 //
@@ -125,8 +131,11 @@ func AuditDocuments(
 	}
 
 	// Determine which directories to scan.
+	// Track whether the caller supplied an explicit path so we can enforce
+	// REQ-02: an explicit path that does not exist is an error.
+	explicitPath := len(dirs) > 0
 	scanDirs := dirs
-	if len(scanDirs) == 0 {
+	if !explicitPath {
 		scanDirs = defaultAuditDirs
 	}
 
@@ -166,8 +175,13 @@ func AuditDocuments(
 			absDir = filepath.Join(repoRoot, dir)
 		}
 
-		// Skip directories that don't exist; not an error.
+		// When the caller supplied an explicit path, a missing directory is an
+		// error (REQ-02). In default-directory mode, silently skip directories
+		// that do not exist (a fresh project may not have all standard dirs).
 		if _, statErr := os.Stat(absDir); os.IsNotExist(statErr) {
+			if explicitPath {
+				return nil, fmt.Errorf("audit path does not exist: %s", dir)
+			}
 			continue
 		}
 

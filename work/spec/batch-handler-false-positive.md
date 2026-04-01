@@ -55,8 +55,10 @@ successes and undercounts failures.
   a `map[string]any` with an `"error"` key as a genuine (non-error) success
   payload. If any handler does, it must be updated before this fix ships.
 - **ASM-01.** The `ItemResult` struct has a `Status` field that accepts at least
-  `"success"` and `"error"` values, and an `Error` field that accepts a string
-  message.
+  `"ok"` (success) and `"error"` values, and an **Error field of type
+  `*ErrorDetail`** — a struct with `Code` and `Message` string fields. The error
+  message is conveyed via `ErrorDetail.Message`; `ErrorDetail.Code` carries a
+  short machine-readable code.
 
 ---
 

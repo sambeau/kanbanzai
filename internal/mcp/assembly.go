@@ -28,11 +28,11 @@ import (
 var boldIdentifierRe = regexp.MustCompile(`^\*\*([A-Z]+)-(\d+)\.\*\*\s+(.+)$`)
 
 // hasRFC2119Keyword reports whether text contains at least one RFC 2119 keyword
-// (case-insensitive). Used for context-sensitive bold-identifier extraction (REQ-05).
+// (case-sensitive, per ASM-02). Used for context-sensitive bold-identifier and
+// list-item extraction outside acceptance-criteria sections (REQ-05).
 func hasRFC2119Keyword(text string) bool {
-	upper := strings.ToUpper(text)
-	// Pad with spaces to simplify boundary matching.
-	padded := " " + upper + " "
+	// Pad with spaces to simplify boundary matching without allocating a regex.
+	padded := " " + text + " "
 	for _, kw := range []string{
 		" MUST NOT ", " SHALL NOT ", " SHOULD NOT ",
 		" MUST ", " SHALL ", " SHOULD ", " MAY ",
@@ -357,13 +357,8 @@ func asmExtractCriteria(sections []asmSpecSection) []string {
 
 			if isAcceptanceSection {
 				addCriterion(text)
-			} else {
-				upper := strings.ToUpper(text)
-				if strings.Contains(upper, " MUST ") || strings.HasSuffix(upper, " MUST") ||
-					strings.Contains(upper, " SHALL ") || strings.HasSuffix(upper, " SHALL") ||
-					strings.Contains(upper, " MUST NOT ") || strings.Contains(upper, " SHALL NOT ") {
-					addCriterion(text)
-				}
+			} else if hasRFC2119Keyword(text) {
+				addCriterion(text)
 			}
 		}
 	}
