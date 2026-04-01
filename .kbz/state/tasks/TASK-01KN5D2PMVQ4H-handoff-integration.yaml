@@ -2,8 +2,16 @@ id: TASK-01KN5D2PMVQ4H
 parent_feature: FEAT-01KN588PE43M6
 slug: handoff-integration
 summary: "Wire the 10-step pipeline into the existing handoff MCP tool. When a stage binding exists, use new pipeline; otherwise fall back to current assembleContext(). Add KnowledgeSurfacer stub for step 7. Preserve backward compatibility with existing handoff calls. FR-001, FR-011, NFR-003, NFR-004, NFR-005."
-status: active
+status: done
+files_planned:
+  - internal/mcp/handoff_tool.go
+  - internal/mcp/server.go
+  - internal/mcp/handoff_tool_test.go
+  - internal/mcp/integration_test.go
+completed: "2026-04-01T21:03:49Z"
 claimed_at: "2026-04-01T20:58:53Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-01T20:58:53Z"
 dispatched_by: sambeau
+completion_summary: "Wired 10-step pipeline into handoff MCP tool. tryPipeline() loads parent feature, checks for stage binding, runs pipeline on match. Falls back to legacy assembleContext() when no pipeline/binding exists (NFR-003). Added assembly_path metadata field ('pipeline-3.0' or 'legacy-2.0'). Updated server.go to construct SkillStore, load BindingFile, and build Pipeline at startup. All 23 test packages pass."
+verification: "go test ./... -count=1 — all 23 test packages pass including handoff, integration, and context pipeline tests."
