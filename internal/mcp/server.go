@@ -224,6 +224,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
 			DocCurrencyHealthChecker(toolNames, repoRoot, entitySvc, docRecordSvc),
 			capSaturationHealthChecker(capTracker),
+			GateOverrideHealthChecker(entitySvc),
 		)...)
 	}
 

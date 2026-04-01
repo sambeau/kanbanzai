@@ -84,6 +84,14 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 			"When true, advance a feature through multiple lifecycle states toward the target, "+
 				"checking document prerequisites at each gate. Only supported for feature entities (transition only, default: false).",
 		)),
+		mcp.WithBoolean("override", mcp.Description(
+			"When true, bypass a failing stage gate prerequisite. Requires override_reason to be set. "+
+				"The bypass is logged as an override record on the feature entity (FR-011, FR-017).",
+		)),
+		mcp.WithString("override_reason", mcp.Description(
+			"Required when override is true. Explains why the gate prerequisite is being bypassed. "+
+				"Stored permanently on the feature as an override record (FR-012, FR-014).",
+		)),
 	)
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
@@ -572,6 +580,9 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			return nil, fmt.Errorf("cannot infer entity type from ID %q", entityID)
 		}
 
+		override, _ := args["override"].(bool)
+		overrideReason := entityArgStr(args, "override_reason")
+
 		advance, _ := args["advance"].(bool)
 
 		// Advance mode: walk a feature through multiple states toward the target.
@@ -579,10 +590,10 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			if entityType != "feature" {
 				return nil, fmt.Errorf("advance is only supported for feature entities")
 			}
-			return entityAdvanceFeature(ctx, entitySvc, docSvc, entityID, newStatus)
+			return entityAdvanceFeature(ctx, entitySvc, docSvc, entityID, newStatus, override, overrideReason)
 		}
 
-		// Plans use their own status update path.
+		// Plans use their own status update path (no gate enforcement).
 		if entityType == "plan" {
 			_, _, slug := model.ParsePlanID(entityID)
 			result, err := entitySvc.UpdatePlanStatus(entityID, slug, newStatus)
@@ -592,6 +603,51 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			return map[string]any{
 				"entity": entityFullRecord(result.ID, result.Type, result.Slug, result.State),
 			}, nil
+		}
+
+		// Feature entities on Phase 2 transitions: evaluate the stage gate (FR-001).
+		if entityType == "feature" {
+			getResult, err := entitySvc.Get("feature", entityID, "")
+			if err != nil {
+				return entityTransitionError(entitySvc, entityType, entityID, newStatus, err), nil
+			}
+			feature := featureFromState(getResult.ID, getResult.Slug, getResult.State)
+			currentStatus := string(feature.Status)
+
+			if isPhase2Transition(currentStatus, newStatus) {
+				gateResult := service.CheckTransitionGate(currentStatus, newStatus, feature, docSvc, entitySvc)
+				if !gateResult.Satisfied {
+					if !override {
+						// Gate failed with no override: return structured gate failure response (FR-026).
+						var nonTerminal []service.TaskStatusPair
+						if (currentStatus == "developing" && newStatus == "reviewing") ||
+							(currentStatus == "needs-rework" && newStatus == "reviewing") {
+							nonTerminal = nonTerminalTasksForFeature(entityID, entitySvc)
+						}
+						return service.GateFailureResponse(entityID, currentStatus, newStatus, gateResult, nonTerminal), nil
+					}
+					// override=true but no reason: reject with validation error (FR-012).
+					if strings.TrimSpace(overrideReason) == "" {
+						return map[string]any{
+							"error": fmt.Sprintf(
+								"override_reason is required when override is true; cannot bypass gate on %s→%s without a reason",
+								currentStatus, newStatus,
+							),
+						}, nil
+					}
+					// Override with reason: log the bypass record before transitioning (FR-014).
+					or := model.OverrideRecord{
+						FromStatus: currentStatus,
+						ToStatus:   newStatus,
+						Reason:     overrideReason,
+						Timestamp:  time.Now(),
+					}
+					feature.Overrides = append(feature.Overrides, or)
+					if err := entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides); err != nil {
+						return nil, fmt.Errorf("persisting override record: %w", err)
+					}
+				}
+			}
 		}
 
 		result, err := entitySvc.UpdateStatus(service.UpdateStatusInput{
@@ -637,7 +693,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 
 // entityAdvanceFeature loads a feature and calls AdvanceFeatureStatus, returning
 // a structured response with the stages advanced through and any stop reason.
-func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService, docSvc *service.DocumentService, entityID, targetStatus string) (any, error) {
+func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService, docSvc *service.DocumentService, entityID, targetStatus string, override bool, overrideReason string) (any, error) {
 	// Load the feature entity to get the model struct needed by AdvanceFeatureStatus.
 	getResult, err := entitySvc.Get("feature", entityID, "")
 	if err != nil {
@@ -647,7 +703,7 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 	feature := featureFromState(getResult.ID, getResult.Slug, getResult.State)
 	startStatus := string(feature.Status)
 
-	advResult, err := service.AdvanceFeatureStatus(feature, targetStatus, entitySvc, docSvc)
+	advResult, err := service.AdvanceFeatureStatus(feature, targetStatus, entitySvc, docSvc, override, overrideReason)
 	if err != nil {
 		return nil, fmt.Errorf("advance feature %s: %w", entityID, err)
 	}
@@ -656,6 +712,10 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 	resp := map[string]any{
 		"status":           advResult.FinalStatus,
 		"advanced_through": advResult.AdvancedThrough,
+	}
+
+	if len(advResult.OverriddenGates) > 0 {
+		resp["overridden_gates"] = advResult.OverriddenGates
 	}
 
 	if advResult.StoppedReason != "" {
@@ -683,14 +743,85 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 // featureFromState constructs a model.Feature from an entity state map.
 func featureFromState(entityID, slug string, state map[string]any) *model.Feature {
 	return &model.Feature{
-		ID:      entityID,
-		Slug:    slug,
-		Parent:  entityStateStr(state, "parent"),
-		Status:  model.FeatureStatus(entityStateStr(state, "status")),
-		Design:  entityStateStr(state, "design"),
-		Spec:    entityStateStr(state, "spec"),
-		DevPlan: entityStateStr(state, "dev_plan"),
+		ID:        entityID,
+		Slug:      slug,
+		Parent:    entityStateStr(state, "parent"),
+		Status:    model.FeatureStatus(entityStateStr(state, "status")),
+		Design:    entityStateStr(state, "design"),
+		Spec:      entityStateStr(state, "spec"),
+		DevPlan:   entityStateStr(state, "dev_plan"),
+		Overrides: overridesFromState(state),
 	}
+}
+
+// overridesFromState parses the "overrides" list from a feature entity state map.
+func overridesFromState(state map[string]any) []model.OverrideRecord {
+	rawSlice, ok := state["overrides"].([]any)
+	if !ok || len(rawSlice) == 0 {
+		return nil
+	}
+	result := make([]model.OverrideRecord, 0, len(rawSlice))
+	for _, item := range rawSlice {
+		m, ok := item.(map[string]any)
+		if !ok {
+			continue
+		}
+		fromStatus, _ := m["from_status"].(string)
+		toStatus, _ := m["to_status"].(string)
+		reason, _ := m["reason"].(string)
+		tsStr, _ := m["timestamp"].(string)
+		ts, _ := time.Parse(time.RFC3339, tsStr)
+		result = append(result, model.OverrideRecord{
+			FromStatus: fromStatus,
+			ToStatus:   toStatus,
+			Reason:     reason,
+			Timestamp:  ts,
+		})
+	}
+	return result
+}
+
+// phase2Statuses is the set of Phase 2 feature lifecycle states subject to
+// mandatory gate enforcement (NFR-002).
+var phase2Statuses = map[string]bool{
+	"proposed":     true,
+	"designing":    true,
+	"specifying":   true,
+	"dev-planning": true,
+	"developing":   true,
+	"reviewing":    true,
+	"needs-rework": true,
+	"done":         true,
+}
+
+// isPhase2Transition reports whether a feature transition between two statuses
+// is in the Phase 2 document-driven lifecycle, and therefore subject to gate
+// enforcement (NFR-002). Phase 1 statuses (draft, in-review, approved,
+// in-progress, review) are excluded.
+func isPhase2Transition(from, to string) bool {
+	return phase2Statuses[from] && phase2Statuses[to]
+}
+
+// nonTerminalTasksForFeature returns the list of child tasks for a feature
+// that are not in a terminal state. Used to enrich gate failure messages for
+// task-completeness gates (FR-022, FR-025).
+func nonTerminalTasksForFeature(featureID string, entitySvc *service.EntityService) []service.TaskStatusPair {
+	tasks, err := entitySvc.List("task")
+	if err != nil {
+		return nil
+	}
+	var result []service.TaskStatusPair
+	for _, t := range tasks {
+		parentFeature, _ := t.State["parent_feature"].(string)
+		if parentFeature != featureID {
+			continue
+		}
+		status, _ := t.State["status"].(string)
+		if !validate.IsTaskDependencySatisfied(status) {
+			result = append(result, service.TaskStatusPair{ID: t.ID, Status: status})
+		}
+	}
+	return result
 }
 
 // ─── Transition error enrichment ─────────────────────────────────────────────

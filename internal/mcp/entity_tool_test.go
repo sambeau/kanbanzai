@@ -1131,7 +1131,8 @@ func TestEntity_Transition_AdvanceFeature_StopsAtGate(t *testing.T) {
 	planID := createEntityTestPlan(t, entitySvc, "adv-stop")
 	featID := createEntityTestFeature(t, entitySvc, planID, "feat-adv-stop")
 
-	// No documents approved — advance should stop at the first gate (designing).
+	// No documents approved — proposed→designing is ungated so advance enters
+	// designing, then stops at designing→specifying (requires design doc).
 	result := callEntityToolWithDocSvcJSON(t, entitySvc, docSvc, map[string]any{
 		"action":  "transition",
 		"id":      featID,
@@ -1140,8 +1141,8 @@ func TestEntity_Transition_AdvanceFeature_StopsAtGate(t *testing.T) {
 	})
 
 	status, _ := result["status"].(string)
-	if status != "proposed" {
-		t.Errorf("status = %q, want proposed (should not advance without docs)", status)
+	if status != "designing" {
+		t.Errorf("status = %q, want designing (stops after entering designing, no spec doc)", status)
 	}
 
 	stoppedReason, _ := result["stopped_reason"].(string)

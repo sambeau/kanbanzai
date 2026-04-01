@@ -544,3 +544,334 @@ func TestCheckFeatureGate_Developing_AnyTaskStatus(t *testing.T) {
 		})
 	}
 }
+
+// ─── CheckTransitionGate tests ───────────────────────────────────────────────
+
+func TestCheckTransitionGate_UngatedTransitions(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+	feature := &model.Feature{ID: "FEAT-01CCCCCCCCCC01", Parent: "P1-test"}
+
+	ungated := []struct{ from, to string }{
+		{"proposed", "designing"},
+		{"reviewing", "needs-rework"},
+		{"proposed", "superseded"},
+		{"designing", "superseded"},
+		{"specifying", "cancelled"},
+		{"developing", "cancelled"},
+		// Phase 1 transitions are ungated
+		{"draft", "in-review"},
+		{"in-review", "approved"},
+		{"approved", "in-progress"},
+	}
+
+	for _, tc := range ungated {
+		tc := tc
+		t.Run(tc.from+"→"+tc.to, func(t *testing.T) {
+			t.Parallel()
+			result := CheckTransitionGate(tc.from, tc.to, feature, docSvc, entitySvc)
+			if !result.Satisfied {
+				t.Errorf("expected ungated transition %s→%s to be satisfied, reason: %s", tc.from, tc.to, result.Reason)
+			}
+		})
+	}
+}
+
+func TestCheckTransitionGate_DesigningToSpecifying_Satisfied(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01CCCCCCCCCC02"
+	docID := submitAndApproveDoc(t, docSvc, repoRoot, "work/design/d2s.md", "design", featureID, true)
+
+	feature := &model.Feature{ID: featureID, Design: docID, Parent: "P1-test"}
+	result := CheckTransitionGate("designing", "specifying", feature, docSvc, entitySvc)
+	if !result.Satisfied {
+		t.Fatalf("expected designing→specifying satisfied, reason: %s", result.Reason)
+	}
+}
+
+func TestCheckTransitionGate_DesigningToSpecifying_Unsatisfied(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	feature := &model.Feature{ID: "FEAT-01CCCCCCCCCC03", Parent: "P1-test"}
+	result := CheckTransitionGate("designing", "specifying", feature, docSvc, entitySvc)
+	if result.Satisfied {
+		t.Fatal("expected designing→specifying unsatisfied with no design doc")
+	}
+}
+
+func TestCheckTransitionGate_SpecifyingToDevPlanning_Satisfied(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01CCCCCCCCCC04"
+	docID := submitAndApproveDoc(t, docSvc, repoRoot, "work/spec/s2d.md", "specification", featureID, true)
+
+	feature := &model.Feature{ID: featureID, Spec: docID}
+	result := CheckTransitionGate("specifying", "dev-planning", feature, docSvc, entitySvc)
+	if !result.Satisfied {
+		t.Fatalf("expected specifying→dev-planning satisfied, reason: %s", result.Reason)
+	}
+}
+
+func TestCheckTransitionGate_SpecifyingToDevPlanning_Unsatisfied(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	feature := &model.Feature{ID: "FEAT-01CCCCCCCCCC05", Parent: "P1-test"}
+	result := CheckTransitionGate("specifying", "dev-planning", feature, docSvc, entitySvc)
+	if result.Satisfied {
+		t.Fatal("expected specifying→dev-planning unsatisfied with no spec doc")
+	}
+}
+
+func TestCheckTransitionGate_DevPlanningToDeveloping_Satisfied(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01CCCCCCCCCC06"
+	docID := submitAndApproveDoc(t, docSvc, repoRoot, "work/plan/dp2dev.md", "dev-plan", featureID, true)
+	writeTestEntity(t, stateRoot, "task", "T-01CCCCCCCCCC01", "dp-task",
+		makeTaskFields("T-01CCCCCCCCCC01", "dp-task", featureID, "queued", nil))
+
+	feature := &model.Feature{ID: featureID, DevPlan: docID}
+	result := CheckTransitionGate("dev-planning", "developing", feature, docSvc, entitySvc)
+	if !result.Satisfied {
+		t.Fatalf("expected dev-planning→developing satisfied, reason: %s", result.Reason)
+	}
+}
+
+func TestCheckTransitionGate_DevPlanningToDeveloping_NoDoc(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01CCCCCCCCCC07"
+	writeTestEntity(t, stateRoot, "task", "T-01CCCCCCCCCC02", "nodoc-task",
+		makeTaskFields("T-01CCCCCCCCCC02", "nodoc-task", featureID, "queued", nil))
+
+	feature := &model.Feature{ID: featureID}
+	result := CheckTransitionGate("dev-planning", "developing", feature, docSvc, entitySvc)
+	if result.Satisfied {
+		t.Fatal("expected dev-planning→developing unsatisfied when dev-plan doc is missing")
+	}
+}
+
+func TestCheckTransitionGate_DevPlanningToDeveloping_NoTasks(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01CCCCCCCCCC08"
+	docID := submitAndApproveDoc(t, docSvc, repoRoot, "work/plan/notask.md", "dev-plan", featureID, true)
+
+	feature := &model.Feature{ID: featureID, DevPlan: docID}
+	result := CheckTransitionGate("dev-planning", "developing", feature, docSvc, entitySvc)
+	if result.Satisfied {
+		t.Fatal("expected dev-planning→developing unsatisfied when no child tasks exist")
+	}
+}
+
+func TestCheckTransitionGate_DevelopingToReviewing_AllTerminal(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01CCCCCCCCCC09"
+	writeTestEntity(t, stateRoot, "task", "T-01CCCCCCCCCC03", "done-task",
+		makeTaskFields("T-01CCCCCCCCCC03", "done-task", featureID, "done", nil))
+	writeTestEntity(t, stateRoot, "task", "T-01CCCCCCCCCC04", "np-task",
+		makeTaskFields("T-01CCCCCCCCCC04", "np-task", featureID, "not-planned", nil))
+
+	feature := &model.Feature{ID: featureID}
+	result := CheckTransitionGate("developing", "reviewing", feature, docSvc, entitySvc)
+	if !result.Satisfied {
+		t.Fatalf("expected developing→reviewing satisfied with all tasks terminal, reason: %s", result.Reason)
+	}
+}
+
+func TestCheckTransitionGate_DevelopingToReviewing_NonTerminalTask(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01CCCCCCCCCC10"
+	writeTestEntity(t, stateRoot, "task", "T-01CCCCCCCCCC05", "active-task",
+		makeTaskFields("T-01CCCCCCCCCC05", "active-task", featureID, "active", nil))
+	writeTestEntity(t, stateRoot, "task", "T-01CCCCCCCCCC06", "done-task2",
+		makeTaskFields("T-01CCCCCCCCCC06", "done-task2", featureID, "done", nil))
+
+	feature := &model.Feature{ID: featureID}
+	result := CheckTransitionGate("developing", "reviewing", feature, docSvc, entitySvc)
+	if result.Satisfied {
+		t.Fatal("expected developing→reviewing unsatisfied with non-terminal task")
+	}
+	if result.Reason == "" {
+		t.Fatal("expected non-empty reason identifying the non-terminal task")
+	}
+}
+
+func TestCheckTransitionGate_DevelopingToReviewing_NoTasks(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	feature := &model.Feature{ID: "FEAT-01CCCCCCCCCC11"}
+	result := CheckTransitionGate("developing", "reviewing", feature, docSvc, entitySvc)
+	if !result.Satisfied {
+		t.Fatalf("expected developing→reviewing satisfied with no tasks (vacuously), reason: %s", result.Reason)
+	}
+}
+
+func TestCheckTransitionGate_ReviewingToDone_ReportExists(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01CCCCCCCCCC12"
+	// Register report but do NOT approve — the gate only requires existence.
+	submitAndApproveDoc(t, docSvc, repoRoot, "work/reports/review.md", "report", featureID, false)
+
+	feature := &model.Feature{ID: featureID}
+	result := CheckTransitionGate("reviewing", "done", feature, docSvc, entitySvc)
+	if !result.Satisfied {
+		t.Fatalf("expected reviewing→done satisfied with registered report, reason: %s", result.Reason)
+	}
+}
+
+func TestCheckTransitionGate_ReviewingToDone_NoReport(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	feature := &model.Feature{ID: "FEAT-01CCCCCCCCCC13"}
+	result := CheckTransitionGate("reviewing", "done", feature, docSvc, entitySvc)
+	if result.Satisfied {
+		t.Fatal("expected reviewing→done unsatisfied with no report document")
+	}
+}
+
+func TestCheckTransitionGate_NeedsReworkToDeveloping_HasNonTerminalTask(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01CCCCCCCCCC14"
+	writeTestEntity(t, stateRoot, "task", "T-01CCCCCCCCCC07", "rework-task",
+		makeTaskFields("T-01CCCCCCCCCC07", "rework-task", featureID, "ready", nil))
+
+	feature := &model.Feature{ID: featureID}
+	result := CheckTransitionGate("needs-rework", "developing", feature, docSvc, entitySvc)
+	if !result.Satisfied {
+		t.Fatalf("expected needs-rework→developing satisfied with non-terminal task, reason: %s", result.Reason)
+	}
+}
+
+func TestCheckTransitionGate_NeedsReworkToDeveloping_AllTerminal(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01CCCCCCCCCC15"
+	writeTestEntity(t, stateRoot, "task", "T-01CCCCCCCCCC08", "done-rework",
+		makeTaskFields("T-01CCCCCCCCCC08", "done-rework", featureID, "done", nil))
+
+	feature := &model.Feature{ID: featureID}
+	result := CheckTransitionGate("needs-rework", "developing", feature, docSvc, entitySvc)
+	if result.Satisfied {
+		t.Fatal("expected needs-rework→developing unsatisfied when all tasks are terminal")
+	}
+}
+
+func TestCheckTransitionGate_NeedsReworkToReviewing_AllTerminal(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01CCCCCCCCCC16"
+	writeTestEntity(t, stateRoot, "task", "T-01CCCCCCCCCC09", "done-nr",
+		makeTaskFields("T-01CCCCCCCCCC09", "done-nr", featureID, "done", nil))
+	writeTestEntity(t, stateRoot, "task", "T-01CCCCCCCCCC10", "dup-nr",
+		makeTaskFields("T-01CCCCCCCCCC10", "dup-nr", featureID, "duplicate", nil))
+
+	feature := &model.Feature{ID: featureID}
+	result := CheckTransitionGate("needs-rework", "reviewing", feature, docSvc, entitySvc)
+	if !result.Satisfied {
+		t.Fatalf("expected needs-rework→reviewing satisfied with all tasks terminal, reason: %s", result.Reason)
+	}
+}
+
+func TestCheckTransitionGate_NeedsReworkToReviewing_NonTerminalTask(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01CCCCCCCCCC17"
+	writeTestEntity(t, stateRoot, "task", "T-01CCCCCCCCCC11", "active-nr",
+		makeTaskFields("T-01CCCCCCCCCC11", "active-nr", featureID, "active", nil))
+
+	feature := &model.Feature{ID: featureID}
+	result := CheckTransitionGate("needs-rework", "reviewing", feature, docSvc, entitySvc)
+	if result.Satisfied {
+		t.Fatal("expected needs-rework→reviewing unsatisfied with non-terminal task")
+	}
+}
