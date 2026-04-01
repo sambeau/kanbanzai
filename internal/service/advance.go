@@ -148,6 +148,14 @@ func AdvanceFeatureStatus(
 		feature.Status = model.FeatureStatus(nextState)
 		advancedThrough = append(advancedThrough, nextState)
 
+		// Increment review_cycle each time the feature enters reviewing (FR-002).
+		if nextState == string(model.FeatureStatusReviewing) {
+			if err := entitySvc.IncrementFeatureReviewCycle(feature.ID, feature.Slug); err != nil {
+				return AdvanceResult{}, fmt.Errorf("incrementing review_cycle for %s: %w", feature.ID, err)
+			}
+			feature.ReviewCycle++
+		}
+
 		// Halt after entering a stop state (unless it was the explicit target).
 		if advanceStopStates[nextState] && !isTarget {
 			return AdvanceResult{

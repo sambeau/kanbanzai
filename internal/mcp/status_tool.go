@@ -196,12 +196,14 @@ type dispatchInfo struct {
 // featureInfo is a compact feature record used in feature detail and task parent context.
 // plan_id holds the parent plan ID (e.g. "P1-my-plan").
 type featureInfo struct {
-	DisplayID string `json:"display_id"`
-	ID        string `json:"id"`
-	Slug      string `json:"slug"`
-	Summary   string `json:"summary,omitempty"`
-	Status    string `json:"status"`
-	PlanID    string `json:"plan_id,omitempty"`
+	DisplayID     string `json:"display_id"`
+	ID            string `json:"id"`
+	Slug          string `json:"slug"`
+	Summary       string `json:"summary,omitempty"`
+	Status        string `json:"status"`
+	PlanID        string `json:"plan_id,omitempty"`
+	ReviewCycle   int    `json:"review_cycle,omitempty"`
+	BlockedReason string `json:"blocked_reason,omitempty"`
 }
 
 // ─── Project overview synthesis ───────────────────────────────────────────────
@@ -629,6 +631,8 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 	fstatus, _ := feat.State["status"].(string)
 	fsummary, _ := feat.State["summary"].(string)
 	fplanID, _ := feat.State["parent"].(string) // "parent" is the plan ID field on feature records
+	freviewCycle, _ := feat.State["review_cycle"].(int)
+	fblockedReason, _ := feat.State["blocked_reason"].(string)
 
 	var est *float64
 	if ev, ok := feat.State["estimate"]; ok && ev != nil {
@@ -647,16 +651,21 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 	}
 
 	attention := generateFeatureAttention(tasks, docs, taskSummary.total)
+	if fblockedReason != "" {
+		attention = append([]string{"BLOCKED: " + fblockedReason}, attention...)
+	}
 
 	d := &featureDetail{
 		Scope: "feature",
 		Feature: featureInfo{
-			DisplayID: id.FormatFullDisplay(feat.ID),
-			ID:        feat.ID,
-			Slug:      feat.Slug,
-			Summary:   fsummary,
-			Status:    fstatus,
-			PlanID:    fplanID,
+			DisplayID:     id.FormatFullDisplay(feat.ID),
+			ID:            feat.ID,
+			Slug:          feat.Slug,
+			Summary:       fsummary,
+			Status:        fstatus,
+			PlanID:        fplanID,
+			ReviewCycle:   freviewCycle,
+			BlockedReason: fblockedReason,
 		},
 		Tasks:       tasks,
 		HasLabels:   hasLabels,

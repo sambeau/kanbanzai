@@ -692,6 +692,13 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			}
 		}
 
+		// Increment review_cycle when a feature transitions into reviewing (FR-002).
+		if entityType == "feature" && newStatus == string(model.FeatureStatusReviewing) {
+			if err := entitySvc.IncrementFeatureReviewCycle(entityID, ""); err != nil {
+				return nil, fmt.Errorf("incrementing review_cycle: %w", err)
+			}
+		}
+
 		resp := map[string]any{
 			"entity": entityFullRecord(result.ID, result.Type, result.Slug, result.State),
 		}
