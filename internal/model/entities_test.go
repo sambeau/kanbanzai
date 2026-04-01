@@ -27,7 +27,7 @@ func TestEpic_YAMLRoundTrip(t *testing.T) {
 	original := model.Epic{
 		ID:        testutil.TestEpicID,
 		Slug:      "phase-1-kernel",
-		Title:     "Phase 1 Kernel",
+		Name:      "Phase 1 Kernel",
 		Status:    model.EpicStatusActive,
 		Summary:   "Build the initial workflow kernel",
 		Created:   ts,
@@ -51,8 +51,8 @@ func TestEpic_YAMLRoundTrip(t *testing.T) {
 	if decoded.Slug != original.Slug {
 		t.Errorf("Slug = %q, want %q", decoded.Slug, original.Slug)
 	}
-	if decoded.Title != original.Title {
-		t.Errorf("Title = %q, want %q", decoded.Title, original.Title)
+	if decoded.Name != original.Name {
+		t.Errorf("Name = %q, want %q", decoded.Name, original.Name)
 	}
 	if decoded.Status != original.Status {
 		t.Errorf("Status = %q, want %q", decoded.Status, original.Status)
@@ -356,7 +356,7 @@ func TestBug_YAMLRoundTrip(t *testing.T) {
 	original := model.Bug{
 		ID:            testutil.TestBugID,
 		Slug:          "yaml-output-unstable",
-		Title:         "Writer produces unstable YAML",
+		Name:          "YAML output unstable",
 		Status:        model.BugStatusTriaged,
 		Severity:      model.BugSeverityHigh,
 		Priority:      model.BugPriorityCritical,
@@ -392,8 +392,8 @@ func TestBug_YAMLRoundTrip(t *testing.T) {
 	if decoded.Slug != original.Slug {
 		t.Errorf("Slug = %q, want %q", decoded.Slug, original.Slug)
 	}
-	if decoded.Title != original.Title {
-		t.Errorf("Title = %q, want %q", decoded.Title, original.Title)
+	if decoded.Name != original.Name {
+		t.Errorf("Name = %q, want %q", decoded.Name, original.Name)
 	}
 	if decoded.Status != original.Status {
 		t.Errorf("Status = %q, want %q", decoded.Status, original.Status)
