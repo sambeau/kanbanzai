@@ -253,6 +253,8 @@ func fieldOrderForEntityType(entityType string) []string {
 			"label",
 			"parent",
 			"status",
+			"review_cycle",
+			"blocked_reason",
 			"estimate",
 			"summary",
 			"design",

@@ -5,14 +5,16 @@ import (
 	"time"
 
 	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/structural"
 )
 
 // AdvanceResult describes the outcome of an advance operation.
 type AdvanceResult struct {
-	FinalStatus     string   // where the feature ended up
-	AdvancedThrough []string // intermediate states passed through
-	StoppedReason   string   // empty if target reached, explanation if stopped early
-	OverriddenGates []string // transitions where a gate was bypassed via override (FR-016)
+	FinalStatus      string                   // where the feature ended up
+	AdvancedThrough  []string                 // intermediate states passed through
+	StoppedReason    string                   // empty if target reached, explanation if stopped early
+	OverriddenGates  []string                 // transitions where a gate was bypassed via override (FR-016)
+	StructuralChecks []structural.CheckResult // accumulated from all gate checks
 }
 
 // featureForwardPath is the sequential forward path for Phase 2 features.
@@ -94,6 +96,7 @@ func AdvanceFeatureStatus(
 
 	var advancedThrough []string
 	var overriddenGates []string
+	var structuralChecks []structural.CheckResult
 
 	for i, nextState := range path {
 		isTarget := i == len(path)-1
@@ -101,14 +104,17 @@ func AdvanceFeatureStatus(
 
 		// Evaluate the gate for this transition on every step (FR-001).
 		gateResult := CheckTransitionGate(fromState, nextState, feature, docSvc, entitySvc)
+		// Collect structural checks regardless of gate outcome.
+		structuralChecks = append(structuralChecks, gateResult.StructuralChecks...)
 		if !gateResult.Satisfied {
 			if !override {
 				// Gate failed with no override: halt here, before transitioning.
 				return AdvanceResult{
-					FinalStatus:     fromState,
-					AdvancedThrough: advancedThrough,
-					OverriddenGates: overriddenGates,
-					StoppedReason:   fmt.Sprintf("stopped before %s: %s", nextState, gateResult.Reason),
+					FinalStatus:      fromState,
+					AdvancedThrough:  advancedThrough,
+					OverriddenGates:  overriddenGates,
+					StoppedReason:    fmt.Sprintf("stopped before %s: %s", nextState, gateResult.Reason),
+					StructuralChecks: structuralChecks,
 				}, nil
 			}
 
@@ -145,17 +151,19 @@ func AdvanceFeatureStatus(
 		// Halt after entering a stop state (unless it was the explicit target).
 		if advanceStopStates[nextState] && !isTarget {
 			return AdvanceResult{
-				FinalStatus:     nextState,
-				AdvancedThrough: advancedThrough,
-				OverriddenGates: overriddenGates,
-				StoppedReason:   fmt.Sprintf("stopped at %s: review is a mandatory gate that cannot be auto-advanced", nextState),
+				FinalStatus:      nextState,
+				AdvancedThrough:  advancedThrough,
+				OverriddenGates:  overriddenGates,
+				StoppedReason:    fmt.Sprintf("stopped at %s: review is a mandatory gate that cannot be auto-advanced", nextState),
+				StructuralChecks: structuralChecks,
 			}, nil
 		}
 	}
 
 	return AdvanceResult{
-		FinalStatus:     string(feature.Status),
-		AdvancedThrough: advancedThrough,
-		OverriddenGates: overriddenGates,
+		FinalStatus:      string(feature.Status),
+		AdvancedThrough:  advancedThrough,
+		OverriddenGates:  overriddenGates,
+		StructuralChecks: structuralChecks,
 	}, nil
 }

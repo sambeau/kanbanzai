@@ -5,14 +5,16 @@ import (
 	"strings"
 
 	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/structural"
 	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // GateResult describes whether a stage gate prerequisite is satisfied.
 type GateResult struct {
-	Stage     string // the lifecycle stage being checked
-	Satisfied bool
-	Reason    string // human-readable explanation
+	Stage            string // the lifecycle stage being checked
+	Satisfied        bool
+	Reason           string                   // human-readable explanation
+	StructuralChecks []structural.CheckResult // populated when structural checks ran
 }
 
 // stageDocMapping maps feature lifecycle stages to their required document types.
@@ -171,11 +173,31 @@ func CheckTransitionGate(from, to string, feature *model.Feature, docSvc *Docume
 
 	case string(model.FeatureStatusDesigning) + "→" + string(model.FeatureStatusSpecifying):
 		// designing→specifying: requires approved design document (FR-004)
-		return checkDocumentGate(string(model.FeatureStatusDesigning), string(model.DocumentTypeDesign), feature, docSvc)
+		docResult := checkDocumentGate(string(model.FeatureStatusDesigning), string(model.DocumentTypeDesign), feature, docSvc)
+		if !docResult.Satisfied {
+			return docResult
+		}
+		structChecks, hardFail := runStructuralChecksForGate(from, to, feature, docSvc)
+		docResult.StructuralChecks = structChecks
+		if hardFail {
+			docResult.Satisfied = false
+			docResult.Reason = buildStructuralFailureReason(structChecks)
+		}
+		return docResult
 
 	case string(model.FeatureStatusSpecifying) + "→" + string(model.FeatureStatusDevPlanning):
 		// specifying→dev-planning: requires approved specification document (FR-005)
-		return checkDocumentGate(string(model.FeatureStatusSpecifying), string(model.DocumentTypeSpecification), feature, docSvc)
+		docResult := checkDocumentGate(string(model.FeatureStatusSpecifying), string(model.DocumentTypeSpecification), feature, docSvc)
+		if !docResult.Satisfied {
+			return docResult
+		}
+		structChecks, hardFail := runStructuralChecksForGate(from, to, feature, docSvc)
+		docResult.StructuralChecks = structChecks
+		if hardFail {
+			docResult.Satisfied = false
+			docResult.Reason = buildStructuralFailureReason(structChecks)
+		}
+		return docResult
 
 	case string(model.FeatureStatusDevPlanning) + "→" + string(model.FeatureStatusDeveloping):
 		// dev-planning→developing: requires approved dev-plan AND at least one child task (FR-006)
@@ -183,7 +205,18 @@ func CheckTransitionGate(from, to string, feature *model.Feature, docSvc *Docume
 		if !docResult.Satisfied {
 			return docResult
 		}
-		return checkDevelopingGate(feature, entitySvc)
+		structChecks, hardFail := runStructuralChecksForGate(from, to, feature, docSvc)
+		docResult.StructuralChecks = structChecks
+		if hardFail {
+			docResult.Satisfied = false
+			docResult.Reason = buildStructuralFailureReason(structChecks)
+			return docResult
+		}
+		taskResult := checkDevelopingGate(feature, entitySvc)
+		if !taskResult.Satisfied {
+			return taskResult
+		}
+		return docResult
 
 	case string(model.FeatureStatusDeveloping) + "→" + string(model.FeatureStatusReviewing):
 		// developing→reviewing: all child tasks must be in terminal state (FR-007)
@@ -209,6 +242,24 @@ func CheckTransitionGate(from, to string, feature *model.Feature, docSvc *Docume
 		// All other transitions (Phase 1, backward, unknown) are ungated.
 		return GateResult{Stage: to, Satisfied: true}
 	}
+}
+
+// buildStructuralFailureReason builds a gate failure reason from hard_gate structural check failures.
+func buildStructuralFailureReason(checks []structural.CheckResult) string {
+	var msgs []string
+	for _, c := range checks {
+		if !c.Passed && c.Mode == "hard_gate" {
+			msg := fmt.Sprintf("%s check failed for %s", c.CheckType, c.DocumentType)
+			if len(c.Details) > 0 {
+				msg += ": " + strings.Join(c.Details, "; ")
+			}
+			msgs = append(msgs, msg)
+		}
+	}
+	if len(msgs) == 0 {
+		return "structural check failed"
+	}
+	return strings.Join(msgs, "; ")
 }
 
 // checkAllTasksTerminal verifies that all child tasks of the feature are in a

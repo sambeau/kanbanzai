@@ -605,6 +605,10 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			}, nil
 		}
 
+		// structuralChecks holds any structural check results from the gate evaluation,
+		// to be included in the response when the transition succeeds.
+		var structuralChecks interface{}
+
 		// Feature entities on Phase 2 transitions: evaluate the stage gate (FR-001).
 		if entityType == "feature" {
 			getResult, err := entitySvc.Get("feature", entityID, "")
@@ -616,6 +620,9 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 
 			if isPhase2Transition(currentStatus, newStatus) {
 				gateResult := service.CheckTransitionGate(currentStatus, newStatus, feature, docSvc, entitySvc)
+				if len(gateResult.StructuralChecks) > 0 {
+					structuralChecks = gateResult.StructuralChecks
+				}
 				if !gateResult.Satisfied {
 					if !override {
 						// Gate failed with no override: return structured gate failure response (FR-026).
@@ -685,9 +692,13 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			}
 		}
 
-		return map[string]any{
+		resp := map[string]any{
 			"entity": entityFullRecord(result.ID, result.Type, result.Slug, result.State),
-		}, nil
+		}
+		if structuralChecks != nil {
+			resp["structural_checks"] = structuralChecks
+		}
+		return resp, nil
 	}
 }
 
@@ -717,6 +728,9 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 	if len(advResult.OverriddenGates) > 0 {
 		resp["overridden_gates"] = advResult.OverriddenGates
 	}
+	if len(advResult.StructuralChecks) > 0 {
+		resp["structural_checks"] = advResult.StructuralChecks
+	}
 
 	if advResult.StoppedReason != "" {
 		resp["stopped_reason"] = advResult.StoppedReason
@@ -742,15 +756,19 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 
 // featureFromState constructs a model.Feature from an entity state map.
 func featureFromState(entityID, slug string, state map[string]any) *model.Feature {
+	rc, _ := state["review_cycle"].(int)
+	blockedReason, _ := state["blocked_reason"].(string)
 	return &model.Feature{
-		ID:        entityID,
-		Slug:      slug,
-		Parent:    entityStateStr(state, "parent"),
-		Status:    model.FeatureStatus(entityStateStr(state, "status")),
-		Design:    entityStateStr(state, "design"),
-		Spec:      entityStateStr(state, "spec"),
-		DevPlan:   entityStateStr(state, "dev_plan"),
-		Overrides: overridesFromState(state),
+		ID:            entityID,
+		Slug:          slug,
+		Parent:        entityStateStr(state, "parent"),
+		Status:        model.FeatureStatus(entityStateStr(state, "status")),
+		ReviewCycle:   rc,
+		BlockedReason: blockedReason,
+		Design:        entityStateStr(state, "design"),
+		Spec:          entityStateStr(state, "spec"),
+		DevPlan:       entityStateStr(state, "dev_plan"),
+		Overrides:     overridesFromState(state),
 	}
 }
 

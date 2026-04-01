@@ -298,16 +298,18 @@ type OverrideRecord struct {
 // Feature is the canonical representation of a Feature.
 // In Phase 2, Feature lifecycle is driven by document approvals.
 type Feature struct {
-	ID        string        `yaml:"id"`
-	Slug      string        `yaml:"slug"`
-	Label     string        `yaml:"label,omitempty"`
-	Parent    string        `yaml:"parent,omitempty"` // Parent Plan ID (renamed from epic)
-	Status    FeatureStatus `yaml:"status"`
-	Estimate  *float64      `yaml:"estimate,omitempty"`
-	Summary   string        `yaml:"summary"`
-	Created   time.Time     `yaml:"created"`
-	CreatedBy string        `yaml:"created_by"`
-	Updated   time.Time     `yaml:"updated,omitempty"`
+	ID            string        `yaml:"id"`
+	Slug          string        `yaml:"slug"`
+	Label         string        `yaml:"label,omitempty"`
+	Parent        string        `yaml:"parent,omitempty"` // Parent Plan ID (renamed from epic)
+	Status        FeatureStatus `yaml:"status"`
+	ReviewCycle   int           `yaml:"review_cycle,omitempty"`
+	BlockedReason string        `yaml:"blocked_reason,omitempty"`
+	Estimate      *float64      `yaml:"estimate,omitempty"`
+	Summary       string        `yaml:"summary"`
+	Created       time.Time     `yaml:"created"`
+	CreatedBy     string        `yaml:"created_by"`
+	Updated       time.Time     `yaml:"updated,omitempty"`
 
 	// Document references (Phase 2)
 	Design  string `yaml:"design,omitempty"`   // Reference to design document record
@@ -472,20 +474,20 @@ type QualityEvaluation struct {
 // The document content stays at its canonical path; this record
 // contains metadata only and is stored in .kbz/state/documents/.
 type DocumentRecord struct {
-	ID           string         `yaml:"id"`              // Format: {owner-id}/{slug}
-	Path         string         `yaml:"path"`            // Relative path to the document file
-	Type         DocumentType   `yaml:"type"`            // One of: design, specification, dev-plan, research, report, policy
-	Title        string         `yaml:"title"`           // Human-readable title
-	Status       DocumentStatus `yaml:"status"`          // One of: draft, approved, superseded
-	Owner        string         `yaml:"owner,omitempty"` // Parent Plan or Feature ID
-	ApprovedBy   string         `yaml:"approved_by,omitempty"`
-	ApprovedAt   *time.Time     `yaml:"approved_at,omitempty"`
-	ContentHash  string         `yaml:"content_hash"` // SHA-256 hash of file content
-	Supersedes   string         `yaml:"supersedes,omitempty"`
-	SupersededBy string         `yaml:"superseded_by,omitempty"`
-	Created      time.Time      `yaml:"created"`
-	CreatedBy    string         `yaml:"created_by"`
-	Updated      time.Time      `yaml:"updated"`
+	ID                string             `yaml:"id"`              // Format: {owner-id}/{slug}
+	Path              string             `yaml:"path"`            // Relative path to the document file
+	Type              DocumentType       `yaml:"type"`            // One of: design, specification, dev-plan, research, report, policy
+	Title             string             `yaml:"title"`           // Human-readable title
+	Status            DocumentStatus     `yaml:"status"`          // One of: draft, approved, superseded
+	Owner             string             `yaml:"owner,omitempty"` // Parent Plan or Feature ID
+	ApprovedBy        string             `yaml:"approved_by,omitempty"`
+	ApprovedAt        *time.Time         `yaml:"approved_at,omitempty"`
+	ContentHash       string             `yaml:"content_hash"` // SHA-256 hash of file content
+	Supersedes        string             `yaml:"supersedes,omitempty"`
+	SupersededBy      string             `yaml:"superseded_by,omitempty"`
+	Created           time.Time          `yaml:"created"`
+	CreatedBy         string             `yaml:"created_by"`
+	Updated           time.Time          `yaml:"updated"`
 	QualityEvaluation *QualityEvaluation `yaml:"quality_evaluation,omitempty"`
 }
 
