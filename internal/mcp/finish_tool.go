@@ -174,16 +174,16 @@ func finishOne(
 	dispatchSvc *service.DispatchService,
 ) (any, error) {
 	if strings.TrimSpace(input.TaskID) == "" {
-		return nil, fmt.Errorf("task_id is required")
+		return nil, fmt.Errorf("Cannot complete task: task_id is missing.\n\nTo resolve:\n  Provide task_id: finish(task_id: \"TASK-...\", summary: \"...\")")
 	}
 	if strings.TrimSpace(input.Summary) == "" {
-		return nil, fmt.Errorf("summary is required")
+		return nil, fmt.Errorf("Cannot complete task %s: summary is missing.\n\nTo resolve:\n  Provide a brief description: finish(task_id: %q, summary: \"what was accomplished\")", input.TaskID, input.TaskID)
 	}
 
 	// Load the task to inspect its current status.
 	task, err := entitySvc.Get("task", input.TaskID, "")
 	if err != nil {
-		return nil, fmt.Errorf("task %s not found", input.TaskID)
+		return nil, fmt.Errorf("Cannot complete task %s: task not found.\n\nTo resolve:\n  Verify the task ID exists: entity(action: \"get\", id: %q)", input.TaskID, input.TaskID)
 	}
 
 	status, _ := task.State["status"].(string)
@@ -200,7 +200,7 @@ func finishOne(
 			Status: "active",
 		})
 		if err != nil {
-			return nil, fmt.Errorf("auto-transition to active: %w", err)
+			return nil, fmt.Errorf("Cannot complete task %s: failed to auto-transition from ready to active: %w.\n\nTo resolve:\n  Check the task state: entity(action: \"get\", id: %q)", task.ID, err, task.ID)
 		}
 		// Report worktree creation as a side effect if the hook fired.
 		if wt := activeResult.WorktreeHookResult; wt != nil && wt.Created {
@@ -221,8 +221,8 @@ func finishOne(
 
 	default:
 		return nil, fmt.Errorf(
-			"task %s is in status %q, expected \"ready\" or \"active\"",
-			task.ID, status,
+			"Cannot complete task %s: task is in status %q (expected \"ready\" or \"active\").\n\nTo resolve:\n  Check task status: entity(action: \"get\", id: %q). Only ready or active tasks can be finished.",
+			task.ID, status, task.ID,
 		)
 	}
 

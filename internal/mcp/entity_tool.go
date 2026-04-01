@@ -119,7 +119,7 @@ func entityCreateAction(entitySvc *service.EntityService) ActionHandler {
 
 		entityType := strings.ToLower(entityArgStr(args, "type"))
 		if entityType == "" {
-			return nil, fmt.Errorf("type is required for create")
+			return nil, fmt.Errorf("Cannot create entity: type is missing.\n\nTo resolve:\n  Provide the entity type: entity(action: \"create\", type: \"task|feature|plan|bug|epic|decision\", ...)")
 		}
 
 		// Signal mutation so side_effects: [] is always present in both
@@ -132,7 +132,7 @@ func entityCreateAction(entitySvc *service.EntityService) ActionHandler {
 			return ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
 				m, ok := item.(map[string]any)
 				if !ok {
-					return "", nil, fmt.Errorf("each entity must be an object")
+					return "", nil, fmt.Errorf("Cannot create entity in batch: each item in the entities array must be a JSON object with the entity fields.\n\nTo resolve:\n  Ensure entities is an array of objects: [{slug: \"...\", summary: \"...\"}, ...]")
 				}
 				result, err := entityCreateOne(entityType, m, entitySvc)
 				return entityArgStr(m, "slug"), result, err
@@ -148,7 +148,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 	createdByRaw := entityArgStr(args, "created_by")
 	createdBy, err := config.ResolveIdentity(createdByRaw)
 	if err != nil {
-		return nil, fmt.Errorf("resolve identity: %w", err)
+		return nil, fmt.Errorf("Cannot create %s: failed to resolve identity.\n\nTo resolve:\n  Set created_by explicitly, or configure identity in .kbz/local.yaml", entityType)
 	}
 
 	// Advisory duplicate check runs before creation so it checks pre-existing entities only.
@@ -215,7 +215,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 		})
 
 	default:
-		return nil, fmt.Errorf("unknown entity type %q; valid: plan, feature, task, bug, epic, decision", entityType)
+		return nil, fmt.Errorf("Cannot create entity: unknown type %q.\n\nTo resolve:\n  Use one of: plan, feature, task, bug, epic, decision", entityType)
 	}
 
 	if err != nil {

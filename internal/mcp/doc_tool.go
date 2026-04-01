@@ -135,7 +135,7 @@ func docRegisterAction(docSvc *service.DocumentService) ActionHandler {
 			return ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
 				doc, ok := item.(map[string]any)
 				if !ok {
-					return "", nil, fmt.Errorf("each item in documents must be an object with path, type, and title")
+					return "", nil, fmt.Errorf("Cannot register document: each item in the documents array must be an object with path, type, and title.\n\nTo resolve:\n  Provide documents as [{\"path\": \"...\", \"type\": \"...\", \"title\": \"...\"}]")
 				}
 				// Inherit top-level created_by when not set per item.
 				if _, has := doc["created_by"]; !has && topCreatedBy != "" {
@@ -147,7 +147,7 @@ func docRegisterAction(docSvc *service.DocumentService) ActionHandler {
 
 		// Single path.
 		if docArgStr(args, "path") == "" {
-			return nil, fmt.Errorf("path is required for register")
+			return nil, fmt.Errorf("Cannot register document: path is missing.\n\nTo resolve:\n  Provide path: doc(action: \"register\", path: \"work/spec/foo.md\", type: \"...\", title: \"...\")")
 		}
 		_, result, err := docRegisterOne(docSvc, args)
 		return result, err
@@ -162,13 +162,13 @@ func docRegisterOne(docSvc *service.DocumentService, args map[string]any) (strin
 	createdByRaw := docArgStr(args, "created_by")
 
 	if path == "" {
-		return path, nil, fmt.Errorf("path is required")
+		return path, nil, fmt.Errorf("Cannot register document: path is missing.\n\nTo resolve:\n  Provide path: doc(action: \"register\", path: \"work/spec/foo.md\", type: \"...\", title: \"...\")")
 	}
 	if docType == "" {
-		return path, nil, fmt.Errorf("type is required")
+		return path, nil, fmt.Errorf("Cannot register document %q: type is missing.\n\nTo resolve:\n  Add the type parameter (design, specification, dev-plan, research, report, policy).", path)
 	}
 	if title == "" {
-		return path, nil, fmt.Errorf("title is required")
+		return path, nil, fmt.Errorf("Cannot register document %q: title is missing.\n\nTo resolve:\n  Add a human-readable title parameter.", path)
 	}
 
 	createdBy, err := config.ResolveIdentity(createdByRaw)
@@ -210,7 +210,7 @@ func docApproveAction(docSvc *service.DocumentService) ActionHandler {
 		// Single path.
 		docID := docArgStr(args, "id")
 		if docID == "" {
-			return nil, fmt.Errorf("id is required for approve")
+			return nil, fmt.Errorf("Cannot approve document: id is missing.\n\nTo resolve:\n  Provide the document record ID: doc(action: \"approve\", id: \"DOC-...\")")
 		}
 		_, result, err := docApproveOne(ctx, docSvc, docID, approvedByRaw)
 		return result, err
@@ -255,14 +255,14 @@ func docGetAction(docSvc *service.DocumentService) ActionHandler {
 		path := docArgStr(args, "path")
 
 		if docID == "" && path == "" {
-			return nil, fmt.Errorf("either id or path is required for get")
+			return nil, fmt.Errorf("Cannot get document: neither id nor path was provided.\n\nTo resolve:\n  Provide id or path: doc(action: \"get\", id: \"DOC-...\") or doc(action: \"get\", path: \"work/...\")")
 		}
 
 		// Path-based lookup: scan all records for one whose path matches.
 		if docID == "" {
 			all, err := docSvc.ListDocuments(service.DocumentFilters{})
 			if err != nil {
-				return nil, fmt.Errorf("resolve path: %w", err)
+				return nil, fmt.Errorf("Cannot get document by path %q: document listing failed.\n\nTo resolve:\n  Verify the path is correct, or use id instead: doc(action: \"get\", id: \"DOC-...\")\n\nCause: %w", path, err)
 			}
 			for _, d := range all {
 				if d.Path == path {
@@ -271,7 +271,7 @@ func docGetAction(docSvc *service.DocumentService) ActionHandler {
 				}
 			}
 			if docID == "" {
-				return nil, fmt.Errorf("no document found at path %q", path)
+				return nil, fmt.Errorf("Cannot get document: no document found at path %q.\n\nTo resolve:\n  Check the path is correct, or register it first: doc(action: \"register\", path: \"...\", type: \"...\", title: \"...\")", path)
 			}
 		}
 
@@ -297,7 +297,7 @@ func docContentAction(docSvc *service.DocumentService) ActionHandler {
 		args, _ := req.Params.Arguments.(map[string]any)
 		docID := docArgStr(args, "id")
 		if docID == "" {
-			return nil, fmt.Errorf("id is required for content")
+			return nil, fmt.Errorf("Cannot retrieve document content: id is missing.\n\nTo resolve:\n  Provide the document record ID: doc(action: \"content\", id: \"DOC-...\")")
 		}
 
 		content, result, err := docSvc.GetDocumentContent(docID)
@@ -365,12 +365,12 @@ func docGapsAction(docSvc *service.DocumentService) ActionHandler {
 		args, _ := req.Params.Arguments.(map[string]any)
 		featureID := docArgStr(args, "feature_id")
 		if featureID == "" {
-			return nil, fmt.Errorf("feature_id is required for gaps")
+			return nil, fmt.Errorf("Cannot analyse document gaps: feature_id is missing.\n\nTo resolve:\n  Provide the feature ID: doc(action: \"gaps\", feature_id: \"FEAT-...\")")
 		}
 
 		owned, err := docSvc.ListDocumentsByOwner(featureID)
 		if err != nil {
-			return nil, fmt.Errorf("list documents for %s: %w", featureID, err)
+			return nil, fmt.Errorf("Cannot analyse document gaps for %s: failed to list owned documents.\n\nTo resolve:\n  Verify the feature ID exists and is correct.\n\nCause: %w", featureID, err)
 		}
 
 		// Build lookup: type → best record (approved beats draft).
@@ -424,7 +424,7 @@ func docValidateAction(docSvc *service.DocumentService) ActionHandler {
 		args, _ := req.Params.Arguments.(map[string]any)
 		docID := docArgStr(args, "id")
 		if docID == "" {
-			return nil, fmt.Errorf("id is required for validate")
+			return nil, fmt.Errorf("Cannot validate document: id is missing.\n\nTo resolve:\n  Provide the document record ID: doc(action: \"validate\", id: \"DOC-...\")")
 		}
 
 		issues, err := docSvc.ValidateDocument(docID)
@@ -452,10 +452,10 @@ func docSupersedeAction(docSvc *service.DocumentService) ActionHandler {
 		docID := docArgStr(args, "id")
 		supersededBy := docArgStr(args, "superseded_by")
 		if docID == "" {
-			return nil, fmt.Errorf("id is required for supersede")
+			return nil, fmt.Errorf("Cannot supersede document: id is missing.\n\nTo resolve:\n  Provide the original document record ID: doc(action: \"supersede\", id: \"DOC-...\", superseded_by: \"DOC-...\")")
 		}
 		if supersededBy == "" {
-			return nil, fmt.Errorf("superseded_by is required for supersede")
+			return nil, fmt.Errorf("Cannot supersede document %q: superseded_by is missing.\n\nTo resolve:\n  Provide the replacement document record ID: doc(action: \"supersede\", id: \"...\", superseded_by: \"DOC-...\")", docID)
 		}
 
 		result, err := docSvc.SupersedeDocument(service.SupersedeDocumentInput{
@@ -513,7 +513,7 @@ func docChainAction(docSvc *service.DocumentService) ActionHandler {
 		args, _ := req.Params.Arguments.(map[string]any)
 		id := docArgStr(args, "id")
 		if id == "" {
-			return nil, fmt.Errorf("id is required for action: chain")
+			return nil, fmt.Errorf("Cannot retrieve supersession chain: id is missing.\n\nTo resolve:\n  Provide the document record ID: doc(action: \"chain\", id: \"DOC-...\")")
 		}
 		chain, err := docSvc.SupersessionChain(id)
 		if err != nil {
@@ -544,7 +544,7 @@ func docImportAction(docSvc *service.DocumentService) ActionHandler {
 		args, _ := req.Params.Arguments.(map[string]any)
 		path := docArgStr(args, "path")
 		if path == "" {
-			return nil, fmt.Errorf("path is required for import")
+			return nil, fmt.Errorf("Cannot import documents: path is missing.\n\nTo resolve:\n  Provide the directory to scan: doc(action: \"import\", path: \"work/\")")
 		}
 
 		cfg := config.LoadOrDefault()
@@ -737,17 +737,17 @@ func docEvaluateAction(docSvc *service.DocumentService) ActionHandler {
 
 		docID := docArgStr(args, "id")
 		if docID == "" {
-			return nil, fmt.Errorf("id is required for evaluate")
+			return nil, fmt.Errorf("Cannot evaluate document: id is missing.\n\nTo resolve:\n  Provide the document record ID: doc(action: \"evaluate\", id: \"DOC-...\", evaluation: {...})")
 		}
 
 		evalRaw, ok := args["evaluation"].(map[string]any)
 		if !ok || evalRaw == nil {
-			return nil, fmt.Errorf("evaluation is required for evaluate")
+			return nil, fmt.Errorf("Cannot evaluate document %q: evaluation object is missing.\n\nTo resolve:\n  Provide the evaluation: doc(action: \"evaluate\", id: \"...\", evaluation: {\"overall_score\": 7.5, \"pass\": true, \"evaluated_at\": \"...\", \"evaluator\": \"...\"})", docID)
 		}
 
 		eval, err := parseEvaluationMap(evalRaw)
 		if err != nil {
-			return nil, fmt.Errorf("parse evaluation: %w", err)
+			return nil, fmt.Errorf("Cannot evaluate document %q: evaluation object is invalid.\n\nTo resolve:\n  Check the evaluation fields (overall_score, pass, evaluated_at, evaluator, dimensions).\n\nCause: %w", docID, err)
 		}
 
 		result, err := docSvc.AttachQualityEvaluation(service.AttachEvaluationInput{
@@ -776,11 +776,11 @@ func parseEvaluationMap(m map[string]any) (model.QualityEvaluation, error) {
 	case string:
 		f, err := strconv.ParseFloat(v, 64)
 		if err != nil {
-			return eval, fmt.Errorf("overall_score: %w", err)
+			return eval, fmt.Errorf("Cannot parse overall_score: value is not a valid number.\n\nTo resolve:\n  Provide overall_score as a number (e.g., 7.5).\n\nCause: %w", err)
 		}
 		eval.OverallScore = f
 	default:
-		return eval, fmt.Errorf("overall_score is required")
+		return eval, fmt.Errorf("Cannot parse evaluation: overall_score is missing or has an invalid type.\n\nTo resolve:\n  Provide overall_score as a number (e.g., 7.5).")
 	}
 
 	// pass
@@ -795,11 +795,11 @@ func parseEvaluationMap(m map[string]any) (model.QualityEvaluation, error) {
 	if v, ok := m["evaluated_at"].(string); ok {
 		t, err := time.Parse(time.RFC3339, v)
 		if err != nil {
-			return eval, fmt.Errorf("evaluated_at must be RFC3339: %w", err)
+			return eval, fmt.Errorf("Cannot parse evaluation: evaluated_at is not valid RFC3339.\n\nTo resolve:\n  Provide evaluated_at in RFC3339 format (e.g., \"2025-01-15T10:30:00Z\").\n\nCause: %w", err)
 		}
 		eval.EvaluatedAt = t
 	} else {
-		return eval, fmt.Errorf("evaluated_at is required (RFC3339 format)")
+		return eval, fmt.Errorf("Cannot parse evaluation: evaluated_at is missing.\n\nTo resolve:\n  Provide evaluated_at in RFC3339 format (e.g., \"2025-01-15T10:30:00Z\").")
 	}
 
 	// dimensions
@@ -814,7 +814,7 @@ func parseEvaluationMap(m map[string]any) (model.QualityEvaluation, error) {
 			case string:
 				f, err := strconv.ParseFloat(tv, 64)
 				if err != nil {
-					return eval, fmt.Errorf("dimension %q: %w", k, err)
+					return eval, fmt.Errorf("Cannot parse evaluation: dimension %q has an invalid value.\n\nTo resolve:\n  Provide dimension scores as numbers (e.g., \"clarity\": 8.0).\n\nCause: %w", k, err)
 				}
 				eval.Dimensions[k] = f
 			}
