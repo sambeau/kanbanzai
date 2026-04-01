@@ -56,6 +56,7 @@ type CreateBugInput struct {
 
 type CreateDecisionInput struct {
 	Slug      string
+	Name      string
 	Summary   string
 	Rationale string
 	DecidedBy string
@@ -412,9 +413,19 @@ func (s *EntityService) CreateDecision(input CreateDecisionInput) (CreateResult,
 		return CreateResult{}, err
 	}
 
+	var decisionName string
+	if input.Name != "" {
+		var nameErr error
+		decisionName, nameErr = validate.ValidateName(input.Name)
+		if nameErr != nil {
+			return CreateResult{}, nameErr
+		}
+	}
+
 	entity := model.Decision{
 		ID:        idValue,
 		Slug:      normalizeSlug(input.Slug),
+		Name:      decisionName,
 		Summary:   strings.TrimSpace(input.Summary),
 		Rationale: strings.TrimSpace(input.Rationale),
 		DecidedBy: strings.TrimSpace(input.DecidedBy),
@@ -1336,6 +1347,9 @@ func decisionFields(e model.Decision) map[string]any {
 		"decided_by": e.DecidedBy,
 		"date":       e.Date.Format(time.RFC3339),
 		"status":     string(e.Status),
+	}
+	if e.Name != "" {
+		fields["name"] = e.Name
 	}
 	if len(e.Affects) > 0 {
 		fields["affects"] = append([]string(nil), e.Affects...)

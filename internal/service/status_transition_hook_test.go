@@ -290,7 +290,7 @@ func TestUpdateStatus_HookCalledForBugTransition(t *testing.T) {
 
 	bug, err := svc.CreateBug(CreateBugInput{
 		Slug:       "test-bug",
-		Title:      "A test bug",
+		Name:      "A test bug",
 		ReportedBy: "tester",
 		Observed:   "Something broke",
 		Expected:   "Should not break",
@@ -620,7 +620,7 @@ func TestWorktreeTransitionHook_BugToInProgress_CreatesWorktreeForBug(t *testing
 
 	bug, err := svc.CreateBug(CreateBugInput{
 		Slug:       "auto-wt-bug",
-		Title:      "Bug for auto worktree",
+		Name:      "Bug for auto worktree",
 		ReportedBy: "tester",
 		Observed:   "Something broke",
 		Expected:   "Should not break",
@@ -685,7 +685,7 @@ func TestWorktreeTransitionHook_BugToInProgress_IdempotentWhenWorktreeExists(t *
 
 	bug, err := svc.CreateBug(CreateBugInput{
 		Slug:       "idempotent-bug",
-		Title:      "Bug for idempotent test",
+		Name:      "Bug for idempotent test",
 		ReportedBy: "tester",
 		Observed:   "Broken",
 		Expected:   "Not broken",
@@ -741,7 +741,7 @@ func TestWorktreeTransitionHook_CaseInsensitiveEntityType(t *testing.T) {
 
 	bug, err := svc.CreateBug(CreateBugInput{
 		Slug:       "case-test-bug",
-		Title:      "Case test bug",
+		Name:      "Case test bug",
 		ReportedBy: "tester",
 		Observed:   "Broken",
 		Expected:   "Works",
@@ -880,7 +880,7 @@ func TestUpdateStatus_EndToEnd_BugInProgressCreatesWorktree(t *testing.T) {
 
 	bug, err := svc.CreateBug(CreateBugInput{
 		Slug:       "e2e-bug",
-		Title:      "E2E bug",
+		Name:      "E2E bug",
 		ReportedBy: "tester",
 		Observed:   "Broken",
 		Expected:   "Works",

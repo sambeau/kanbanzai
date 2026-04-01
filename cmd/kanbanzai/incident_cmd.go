@@ -113,7 +113,7 @@ func runIncidentCreate(args []string, deps dependencies) error {
 	svc := service.NewEntityService(core.StatePath())
 	result, err := svc.CreateIncident(service.CreateIncidentInput{
 		Slug:       slug,
-		Title:      title,
+		Name:       title,
 		Severity:   severity,
 		Summary:    summary,
 		ReportedBy: reportedBy,

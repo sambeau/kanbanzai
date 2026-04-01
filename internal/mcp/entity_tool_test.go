@@ -33,7 +33,7 @@ func createEntityTestPlan(t *testing.T, entitySvc *service.EntityService, slug s
 		Fields: map[string]any{
 			"id":         planID,
 			"slug":       slug,
-			"title":      "Test plan " + slug,
+			"name":       "Test plan " + slug,
 			"status":     "proposed",
 			"summary":    "Test plan summary",
 			"created":    now,
@@ -53,6 +53,7 @@ func createEntityTestFeature(t *testing.T, entitySvc *service.EntityService, pla
 	result, err := entitySvc.CreateFeature(service.CreateFeatureInput{
 		Slug:      slug,
 		Parent:    planID,
+		Name:      "Test feature " + slug,
 		Summary:   "Test feature " + slug,
 		CreatedBy: "tester",
 	})
@@ -68,6 +69,7 @@ func createEntityTestTask(t *testing.T, entitySvc *service.EntityService, featID
 	result, err := entitySvc.CreateTask(service.CreateTaskInput{
 		ParentFeature: featID,
 		Slug:          slug,
+		Name:          "Test task " + slug,
 		Summary:       "Test task " + slug,
 	})
 	if err != nil {
@@ -136,6 +138,7 @@ func TestEntity_Create_Task(t *testing.T) {
 		"type":           "task",
 		"parent_feature": featID,
 		"slug":           "new-task",
+		"name":           "New Task",
 		"summary":        "A new task",
 	})
 
@@ -170,6 +173,7 @@ func TestEntity_Create_Feature(t *testing.T) {
 		"action":  "create",
 		"type":    "feature",
 		"slug":    "new-feature",
+		"name":    "New Feature",
 		"parent":  planID,
 		"summary": "A new feature",
 	})
@@ -194,7 +198,7 @@ func TestEntity_Create_Bug(t *testing.T) {
 		"action":      "create",
 		"type":        "bug",
 		"slug":        "crash-on-login",
-		"title":       "App crashes on login",
+		"name":        "App crashes on login",
 		"reported_by": "user@example.com",
 		"observed":    "App crashes",
 		"expected":    "Should log in",
@@ -220,7 +224,7 @@ func TestEntity_Create_Epic(t *testing.T) {
 		"action":  "create",
 		"type":    "epic",
 		"slug":    "big-initiative",
-		"title":   "Big Initiative",
+		"name":    "Big Initiative",
 		"summary": "A large-scale effort",
 	})
 
@@ -241,6 +245,7 @@ func TestEntity_Create_Decision(t *testing.T) {
 		"action":    "create",
 		"type":      "decision",
 		"slug":      "use-postgres",
+		"name":      "Use PostgreSQL",
 		"summary":   "Use PostgreSQL for primary storage",
 		"rationale": "Better support for complex queries and ACID compliance",
 	})
@@ -277,6 +282,7 @@ func TestEntity_Create_UnknownType(t *testing.T) {
 		"action":  "create",
 		"type":    "wombat",
 		"slug":    "something",
+		"name":    "Something",
 		"summary": "Something",
 	})
 
@@ -1295,7 +1301,7 @@ func TestEntity_Create_Plan(t *testing.T) {
 		"type":    "plan",
 		"prefix":  testPrefix,
 		"slug":    "entity-tool-test-plan",
-		"title":   "Entity Tool Test Plan",
+		"name":    "Entity Tool Test Plan",
 		"summary": "A plan created via the entity tool to verify routing",
 	})
 

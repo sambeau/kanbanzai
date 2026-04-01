@@ -61,7 +61,7 @@ func runEntityCreate(args []string, deps dependencies) error {
 		result, err := svc.CreatePlan(service.CreatePlanInput{
 			Prefix:    values["prefix"],
 			Slug:      values["slug"],
-			Title:     values["title"],
+			Name:      values["name"],
 			Summary:   values["summary"],
 			CreatedBy: values["created_by"],
 		})
@@ -105,7 +105,7 @@ func runEntityCreate(args []string, deps dependencies) error {
 		}
 		result, err := svc.CreateBug(service.CreateBugInput{
 			Slug:       values["slug"],
-			Title:      values["title"],
+			Name:       values["name"],
 			ReportedBy: values["reported_by"],
 			Observed:   values["observed"],
 			Expected:   values["expected"],

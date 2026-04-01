@@ -541,7 +541,7 @@ func TestTrackJ_Incident_Create_AndList(t *testing.T) {
 	createResp := ts.call(t, "incident", map[string]any{
 		"action":      "create",
 		"slug":        "test-incident",
-		"title":       "Test Incident",
+		"name":        "Test Incident",
 		"severity":    "high",
 		"summary":     "A test incident for unit tests",
 		"reported_by": "tester",
@@ -1283,7 +1283,7 @@ func writePlanForTest(t *testing.T, svc *service.EntityService, planID, slug str
 		Fields: map[string]any{
 			"id":         planID,
 			"slug":       slug,
-			"title":      "Test Plan",
+			"name":        "Test Plan",
 			"status":     "active",
 			"summary":    "Plan for testing",
 			"created":    now,
