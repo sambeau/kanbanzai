@@ -227,7 +227,7 @@ type Entity interface {
 type Plan struct {
 	ID        string     `yaml:"id"`
 	Slug      string     `yaml:"slug"`
-	Title     string     `yaml:"title"`
+	Name      string     `yaml:"name"`
 	Status    PlanStatus `yaml:"status"`
 	Summary   string     `yaml:"summary"`
 	Design    string     `yaml:"design,omitempty"`
@@ -260,7 +260,7 @@ func (p Plan) GetSlug() string {
 type Epic struct {
 	ID        string     `yaml:"id"`
 	Slug      string     `yaml:"slug"`
-	Title     string     `yaml:"title"`
+	Name      string     `yaml:"name"`
 	Status    EpicStatus `yaml:"status"`
 	Estimate  *float64   `yaml:"estimate,omitempty"`
 	Summary   string     `yaml:"summary"`
@@ -301,7 +301,7 @@ type OverrideRecord struct {
 type Feature struct {
 	ID            string        `yaml:"id"`
 	Slug          string        `yaml:"slug"`
-	Label         string        `yaml:"label,omitempty"`
+	Name          string        `yaml:"name"`
 	Parent        string        `yaml:"parent,omitempty"` // Parent Plan ID (renamed from epic)
 	Status        FeatureStatus `yaml:"status"`
 	ReviewCycle   int           `yaml:"review_cycle,omitempty"`
@@ -352,7 +352,7 @@ type Task struct {
 	ID            string     `yaml:"id"`
 	ParentFeature string     `yaml:"parent_feature"`
 	Slug          string     `yaml:"slug"`
-	Label         string     `yaml:"label,omitempty"`
+	Name          string     `yaml:"name"`
 	Summary       string     `yaml:"summary"`
 	Status        TaskStatus `yaml:"status"`
 	Estimate      *float64   `yaml:"estimate,omitempty"`
@@ -393,7 +393,7 @@ func (t Task) GetSlug() string {
 type Bug struct {
 	ID         string      `yaml:"id"`
 	Slug       string      `yaml:"slug"`
-	Title      string      `yaml:"title"`
+	Name       string      `yaml:"name"`
 	Status     BugStatus   `yaml:"status"`
 	Estimate   *float64    `yaml:"estimate,omitempty"`
 	Severity   BugSeverity `yaml:"severity"`
@@ -435,6 +435,7 @@ func (b Bug) GetSlug() string {
 type Decision struct {
 	ID        string         `yaml:"id"`
 	Slug      string         `yaml:"slug"`
+	Name      string         `yaml:"name"`
 	Summary   string         `yaml:"summary"`
 	Rationale string         `yaml:"rationale"`
 	DecidedBy string         `yaml:"decided_by"`
@@ -517,7 +518,7 @@ func (d DocumentRecord) GetSlug() string {
 type Incident struct {
 	ID               string           `yaml:"id"`
 	Slug             string           `yaml:"slug"`
-	Title            string           `yaml:"title"`
+	Name             string           `yaml:"name"`
 	Status           IncidentStatus   `yaml:"status"`
 	Severity         IncidentSeverity `yaml:"severity"`
 	ReportedBy       string           `yaml:"reported_by"`
