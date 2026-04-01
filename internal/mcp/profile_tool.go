@@ -13,11 +13,12 @@ import (
 
 // ProfileTool returns the 2.0 profile consolidated tool.
 // It consolidates profile_list and profile_get into a single tool (spec §18.2).
-func ProfileTool(store *kbzctx.ProfileStore) []server.ServerTool {
-	return []server.ServerTool{profileTool(store)}
+// Updated for 3.0 to use RoleStore with new role schema fields.
+func ProfileTool(roleStore *kbzctx.RoleStore) []server.ServerTool {
+	return []server.ServerTool{profileTool(roleStore)}
 }
 
-func profileTool(store *kbzctx.ProfileStore) server.ServerTool {
+func profileTool(roleStore *kbzctx.RoleStore) server.ServerTool {
 	tool := mcp.NewTool("profile",
 		mcp.WithReadOnlyHintAnnotation(true),
 		mcp.WithDestructiveHintAnnotation(false),
@@ -51,9 +52,9 @@ func profileTool(store *kbzctx.ProfileStore) server.ServerTool {
 
 		switch action {
 		case "list":
-			return profileListAction(store)
+			return roleListAction(roleStore)
 		case "get":
-			return profileGetAction(store, req)
+			return roleGetAction(roleStore, req)
 		default:
 			return ActionError("unknown_action", fmt.Sprintf("unknown action %q; valid actions: get, list", action), nil), nil
 		}
@@ -64,32 +65,34 @@ func profileTool(store *kbzctx.ProfileStore) server.ServerTool {
 
 // ─── list ─────────────────────────────────────────────────────────────────────
 
-func profileListAction(store *kbzctx.ProfileStore) (*mcp.CallToolResult, error) {
-	profiles, err := store.LoadAll()
+func roleListAction(store *kbzctx.RoleStore) (*mcp.CallToolResult, error) {
+	roles, err := store.LoadAll()
 	if err != nil {
 		return ActionError("list_failed", "profile list failed: "+err.Error(), nil), nil
 	}
 
-	items := make([]map[string]any, 0, len(profiles))
-	for _, p := range profiles {
+	items := make([]map[string]any, 0, len(roles))
+	for _, r := range roles {
 		item := map[string]any{
-			"id":          p.ID,
-			"inherits":    p.Inherits,
-			"description": p.Description,
+			"id":       r.ID,
+			"identity": r.Identity,
+		}
+		if r.Inherits != "" {
+			item["inherits"] = r.Inherits
 		}
 		items = append(items, item)
 	}
 
 	return profileToolMapJSON(map[string]any{
 		"success":  true,
-		"count":    len(profiles),
+		"count":    len(roles),
 		"profiles": items,
 	})
 }
 
 // ─── get ──────────────────────────────────────────────────────────────────────
 
-func profileGetAction(store *kbzctx.ProfileStore, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+func roleGetAction(store *kbzctx.RoleStore, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 	id := req.GetString("id", "")
 	if id == "" {
 		return ActionError("missing_parameter", "id is required for get action", nil), nil
@@ -98,26 +101,24 @@ func profileGetAction(store *kbzctx.ProfileStore, req mcp.CallToolRequest) (*mcp
 	resolved := req.GetBool("resolved", true)
 
 	if resolved {
-		rp, err := kbzctx.ResolveProfile(store, id)
+		rr, err := kbzctx.ResolveRole(store, id)
 		if err != nil {
 			return ActionError("get_failed", "profile_get failed: "+err.Error(), nil), nil
 		}
 
 		profileMap := map[string]any{
-			"id":       rp.ID,
+			"id":       rr.ID,
 			"resolved": true,
+			"identity": rr.Identity,
 		}
-		if rp.Description != "" {
-			profileMap["description"] = rp.Description
+		if len(rr.Vocabulary) > 0 {
+			profileMap["vocabulary"] = rr.Vocabulary
 		}
-		if rp.Packages != nil {
-			profileMap["packages"] = rp.Packages
+		if len(rr.AntiPatterns) > 0 {
+			profileMap["anti_patterns"] = antiPatternsToSlice(rr.AntiPatterns)
 		}
-		if rp.Conventions != nil {
-			profileMap["conventions"] = rp.Conventions
-		}
-		if rp.Architecture != nil {
-			profileMap["architecture"] = architectureToMap(rp.Architecture)
+		if len(rr.Tools) > 0 {
+			profileMap["tools"] = rr.Tools
 		}
 
 		return profileToolMapJSON(map[string]any{
@@ -126,36 +127,49 @@ func profileGetAction(store *kbzctx.ProfileStore, req mcp.CallToolRequest) (*mcp
 		})
 	}
 
-	// resolved=false: return raw profile as stored on disk.
-	p, err := store.Load(id)
+	// resolved=false: return raw role as stored on disk.
+	r, err := store.Load(id)
 	if err != nil {
 		return ActionError("get_failed", "profile_get failed: "+err.Error(), nil), nil
 	}
 
 	profileMap := map[string]any{
-		"id":       p.ID,
+		"id":       r.ID,
 		"resolved": false,
+		"identity": r.Identity,
 	}
-	if p.Inherits != "" {
-		profileMap["inherits"] = p.Inherits
+	if r.Inherits != "" {
+		profileMap["inherits"] = r.Inherits
 	}
-	if p.Description != "" {
-		profileMap["description"] = p.Description
+	if len(r.Vocabulary) > 0 {
+		profileMap["vocabulary"] = r.Vocabulary
 	}
-	if p.Packages != nil {
-		profileMap["packages"] = p.Packages
+	if len(r.AntiPatterns) > 0 {
+		profileMap["anti_patterns"] = antiPatternsToSlice(r.AntiPatterns)
 	}
-	if p.Conventions != nil {
-		profileMap["conventions"] = p.Conventions
-	}
-	if p.Architecture != nil {
-		profileMap["architecture"] = architectureToMap(p.Architecture)
+	if len(r.Tools) > 0 {
+		profileMap["tools"] = r.Tools
 	}
 
 	return profileToolMapJSON(map[string]any{
 		"success": true,
 		"profile": profileMap,
 	})
+}
+
+// antiPatternsToSlice converts a slice of AntiPattern structs to a slice of maps
+// for JSON serialisation in tool responses.
+func antiPatternsToSlice(aps []kbzctx.AntiPattern) []map[string]any {
+	result := make([]map[string]any, len(aps))
+	for i, ap := range aps {
+		result[i] = map[string]any{
+			"name":    ap.Name,
+			"detect":  ap.Detect,
+			"because": ap.Because,
+			"resolve": ap.Resolve,
+		}
+	}
+	return result
 }
 
 // profileToolMapJSON marshals a map to JSON and returns it as a tool result.
@@ -165,18 +179,4 @@ func profileToolMapJSON(v map[string]any) (*mcp.CallToolResult, error) {
 		return mcp.NewToolResultError("marshal result: " + err.Error()), nil
 	}
 	return mcp.NewToolResultText(string(data)), nil
-}
-
-func architectureToMap(a *kbzctx.Architecture) map[string]any {
-	if a == nil {
-		return nil
-	}
-	m := map[string]any{}
-	if a.Summary != "" {
-		m["summary"] = a.Summary
-	}
-	if a.KeyInterfaces != nil {
-		m["key_interfaces"] = a.KeyInterfaces
-	}
-	return m
 }

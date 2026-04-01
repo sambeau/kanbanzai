@@ -63,6 +63,11 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	profileRoot := filepath.Join(core.InstanceRootDir, "context", "roles")
 	profileStore := kbzctx.NewProfileStore(profileRoot)
 
+	// 3.0 role store: checks .kbz/roles/ first, falls back to .kbz/context/roles/.
+	roleNewRoot := filepath.Join(core.InstanceRootDir, "roles")
+	roleLegacyRoot := profileRoot
+	roleStore := kbzctx.NewRoleStore(roleNewRoot, roleLegacyRoot)
+
 	mcpServer := server.NewMCPServer(
 		ServerName,
 		ServerVersion,
@@ -133,7 +138,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	// GroupKnowledge: knowledge, profile.
 	if groups[config.GroupKnowledge] {
 		mcpServer.AddTools(KnowledgeTool(knowledgeSvc, repoRoot)...)
-		mcpServer.AddTools(ProfileTool(profileStore)...)
+		mcpServer.AddTools(ProfileTool(roleStore)...)
 	}
 
 	// GroupGit: worktree, merge, pr, branch, cleanup.
