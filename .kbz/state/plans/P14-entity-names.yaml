@@ -1,6 +1,6 @@
 id: P14-entity-names
 slug: entity-names
-title: Entity Names
+name: Entity names
 status: proposed
 summary: "Consistent entity naming: rename title→name across all entity types, add name to Feature/Task/Decision, retire label, add project name to config.yaml. Includes validation rules, skill guidance, and backfill of existing state."
 created: "2026-04-01T10:12:00Z"

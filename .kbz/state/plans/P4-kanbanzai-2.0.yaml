@@ -1,6 +1,6 @@
 id: P4-kanbanzai-2.0
 slug: kanbanzai-2.0
-title: "Kanbanzai 2.0: MCP Tool Surface Redesign"
+name: Kanbanzai 2.0
 status: active
 summary: "Complete the 2.0 MCP tool surface redesign: code review of implemented tracks (C, D, E, F, J, K) and final acceptance. All 11 implementation tracks are implemented and tests pass; this plan covers review and sign-off."
 created: "2026-03-27T18:25:08Z"

@@ -1,5 +1,6 @@
 id: DEC-01KMTTMTHH7SS
 slug: skills-content-needs-spec
+name: Skills content spec requirement
 summary: "Skills-content rework requires a specification document before rework begins, per the review workflow expectations."
 rationale: "User preference: the review workflow expects a spec doc. Fixing review findings alone is insufficient — a spec should be written first so the review cycle has a proper baseline."
 decided_by: sambeau

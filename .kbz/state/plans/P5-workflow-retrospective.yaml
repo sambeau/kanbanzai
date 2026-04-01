@@ -1,6 +1,6 @@
 id: P5-workflow-retrospective
 slug: workflow-retrospective
-title: Workflow Retrospective
+name: Workflow retrospective
 status: active
 summary: "Add retrospective feedback to the development cycle: structured signal collection at task completion, periodic synthesis into actionable themes, and experiment tracking to measure whether workflow changes helped. Phased: signal collection first, then synthesis tooling, then experiment tracking."
 design: PROJECT/design-workflow-retrospective

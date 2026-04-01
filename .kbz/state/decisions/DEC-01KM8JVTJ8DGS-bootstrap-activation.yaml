@@ -1,5 +1,6 @@
 id: DEC-01KM8JVTJ8DGS
 slug: bootstrap-activation
+name: Bootstrap self-hosting activation
 summary: Activate bootstrap self-hosting
 rationale: All prerequisites met per bootstrap spec §3
 decided_by: human
