@@ -1,0 +1,8 @@
+id: FEAT-01KN4ZPCMJ1FP
+slug: docint-ac-pattern-recognition
+parent: P15-kanbanzai-25-infrastructure-hardening
+status: specifying
+summary: "Fix asmExtractCriteria to recognise **AC-NN.** and **REQ-NN.** bold-identifier patterns used in Kanbanzai specifications."
+spec: FEAT-01KN4ZPCMJ1FP/specification-docint-ac-pattern-recognition
+created: "2026-04-01T16:58:12Z"
+created_by: sambeau
