@@ -7,7 +7,9 @@ description: >
   big?", "should we split this?", "how ambitious should we be?", "what would
   a great team do here?", or any question about prioritisation, roadmap, or
   scope. Use even when the user doesn't explicitly say "planning" — any
-  discussion about what to build next is a planning conversation.
+  discussion about what to build next is a planning conversation. Use even
+  for seemingly small changes — unplanned work accumulates into incoherent
+  systems.
 metadata:
   kanbanzai-managed: "true"
   version: "0.2.0"
@@ -185,6 +187,32 @@ Planning is done when:
 The agent then creates the appropriate entities (Plan and/or Feature) and the
 workflow moves to the design stage. Entity creation requires the scope to be
 clear but does not require a design document to exist yet.
+
+---
+
+## Templates for Planning Outputs
+
+When planning produces decisions to create specifications or implementation plans:
+- **Specifications:** `work/templates/specification-prompt-template.md`
+- **Implementation plans:** `work/templates/implementation-plan-prompt-template.md`
+
+These templates define the expected structure and quality bar for each document type.
+
+---
+
+## Examples
+
+**Good planning question sequence:**
+1. "What problem are we solving?" → establishes scope
+2. "Is this one feature or multiple?" → sizing decision
+3. "What's the most ambitious version of this?" → prevents premature simplification
+4. "What would we cut if we had to ship in half the time?" → reveals priorities
+5. "Are there any dependencies on other work?" → surfaces blockers early
+
+**Planning output that's ready to proceed:**
+> **Scope:** Add lifecycle gate validation to the `finish` tool.
+> **Structure:** Single feature — the scope is well-defined and can be specified, planned, and implemented as one unit.
+> **Agreement:** Human confirmed scope. Proceed to design.
 
 ---
 

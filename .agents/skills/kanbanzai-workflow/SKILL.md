@@ -3,12 +3,10 @@ name: kanbanzai-workflow
 description: >
   Use when deciding what workflow stage work belongs to, whether to proceed
   to the next stage, whether a state transition is valid, or when to stop
-  and ask the human. Activates for any question about lifecycle, stage gates,
-  entity status, approval requirements, or uncertainty about whether to
-  proceed — including "can I create a feature now?", "is this ready for
-  spec?", "who needs to approve this?", or "should I stop and ask?". Use
-  even when the agent is confident about the next step — workflow errors are
-  expensive to undo.
+  and ask the human. Activates for lifecycle, stage gates, entity status,
+  approval requirements, or uncertainty about proceeding. Use even when the
+  agent is confident — workflow gates exist precisely for the cases where
+  confidence is misplaced.
 metadata:
   kanbanzai-managed: "true"
   version: "0.2.0"
@@ -51,6 +49,36 @@ specifications unless the fix involves a significant architectural change.
 
 Work can move backwards — a design can be revisited after specification if a
 flaw is discovered. Moving backwards is normal. Skipping forward is not.
+
+---
+
+## Stage Gate Checklists
+
+Copy the relevant checklist before advancing work through a stage gate.
+
+### Before creating features (Planning → Design complete)
+- [ ] Design document exists and is registered (`doc action: get`)
+- [ ] Design document is approved (status: `approved`)
+- [ ] All open questions in the design are resolved
+- [ ] Human has confirmed scope and agreed to proceed
+
+### Before starting specification
+- [ ] Feature entity exists and is in `designing` or later status
+- [ ] Design document covers this feature's scope
+- [ ] No unresolved design questions blocking this feature
+
+### Before starting implementation
+- [ ] Specification document exists and is approved
+- [ ] Dev plan exists and is approved
+- [ ] All tasks are created under the feature (`entity action: list, parent: FEAT-xxx`)
+- [ ] Feature is in `implementing` status
+- [ ] Dependencies between tasks are recorded
+
+### Before completing a feature
+- [ ] All tasks under the feature are `done`
+- [ ] Review has been performed (code review skill)
+- [ ] All blocking findings are resolved
+- [ ] Documentation is current with implementation
 
 ---
 
@@ -133,6 +161,25 @@ transition is needed that does not appear, ask the human.
 
 ---
 
+## Anti-Patterns
+
+**Skipping specification for "simple" features.** Features that seem simple
+often have hidden complexity. The specification stage surfaces this before
+implementation begins. Without a spec, agents make undocumented design
+decisions that are expensive to discover during review.
+
+**Advancing status without checking prerequisites.** Calling
+`entity(action: transition)` without first verifying the stage gate
+requirements leads to features in states they shouldn't be in. Always run
+the checklist above before transitioning.
+
+**Treating verbal approval as formal approval.** When a human says "looks
+good" in chat, that is not the same as document approval. Formal approval
+means `doc(action: approve)` has been called on the relevant document. If
+in doubt, ask: "Should I formally approve this document?"
+
+---
+
 ## Gotchas
 
 - If a Kanbanzai tool call fails (e.g., `entity` action: `transition`
@@ -144,6 +191,25 @@ transition is needed that does not appear, ask the human.
 - Verbal approval ("LGTM", "Approved", "Let's move on") is sufficient to
   pass a gate. Record it with the appropriate tool call
   (`doc` action: `approve`) immediately so the system state matches reality.
+
+---
+
+## Examples
+
+**Correct stage gate check before implementation:**
+1. `doc(action: get, path: "work/spec/feature-x-specification.md")` → verify status is `approved`
+2. `doc(action: get, path: "work/plan/feature-x-plan.md")` → verify status is `approved`
+3. `entity(action: list, type: task, parent: "FEAT-xxx")` → verify tasks exist
+4. `entity(action: transition, id: "FEAT-xxx", status: "implementing")` → advance feature
+
+**Incorrect — skipping the check:**
+1. `entity(action: transition, id: "FEAT-xxx", status: "implementing")` → might succeed even without spec!
+2. Start coding immediately → undocumented decisions, inconsistent with design
+
+**Correct handling of verbal approval:**
+1. Human says "LGTM, let's proceed"
+2. Agent calls `doc(action: approve, id: "DOC-xxx")` to record formal approval
+3. Agent proceeds to the next stage with the gate satisfied
 
 ---
 

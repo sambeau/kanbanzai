@@ -40,6 +40,26 @@
 - Reference the specific specification requirement or quality criterion each
   finding relates to
 
+**Example finding format:**
+
+> **[defect] Specification requirement FR-003 not implemented**
+> Location: `internal/service/task_service.go`, lines 145-160
+> The `finish` function does not check the parent feature's lifecycle
+> status before completing a task. FR-003 requires this validation.
+> Severity: defect — functional requirement is unmet.
+>
+> **[improvement] Test coverage for edge case**
+> Location: `internal/service/task_service_test.go`
+> No test covers the case where `finish` is called on a task with
+> no parent feature. While the spec doesn't require this, defensive
+> handling would improve robustness.
+> Severity: improvement — not a spec violation but strengthens the code.
+
+**Note:** For comprehensive multi-agent code review with orchestration,
+sub-agent dispatch, and structured review dimensions, see the
+`kanbanzai-code-review` skill in `.agents/skills/`. This template is
+for simpler, single-pass reviews.
+
 **Decision authority:**
 
 - **Implementation decisions** (how to fix, refactor, or improve code) — you may

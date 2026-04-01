@@ -1,11 +1,12 @@
 ---
 name: kanbanzai-getting-started
 description: >
-  Use at the start of any agent session in a Kanbanzai-managed project, even
-  if the task seems straightforward. Activates when the agent has just opened
-  a repository, does not yet know what work to do, needs to orient itself,
-  or is beginning any new session. Also activates for "where do I start?",
-  "what should I work on?", or "what's the current state of this project?".
+  Use at the start of every agent session, even if the task seems obvious and
+  you think you already know what to do. Activates when the agent has just
+  opened a repository, doesn't know what to do, needs to orient itself, or is
+  beginning any new session. Also activates for "where do I start?", "what
+  should I work on?", "what's the current state?". Skipping orientation leads
+  to wasted effort and missed context.
 metadata:
   kanbanzai-managed: "true"
   version: "0.2.0"
@@ -25,33 +26,41 @@ Orient an agent at the start of a session in a Kanbanzai-managed project.
 
 ---
 
-## Session Start
+## Session Start Checklist
 
-### 1. Clean slate
+Copy this checklist at the beginning of every session:
+
+- [ ] **Clean slate** — Run `git status`. Commit coherent changes, stash incomplete work, or proceed if clean.
+- [ ] **Read project context** — Read `AGENTS.md` if you haven't this session.
+- [ ] **Check the work queue** — Call `next()` to see what's ready.
+- [ ] **Claim your task** — Call `next(id: "TASK-xxx")` to get full context for your chosen task.
+- [ ] **Understand the workflow** — If unsure about the current stage, check the `kanbanzai-workflow` skill.
+
+### Clean slate
 
 Run `git status`. If there are uncommitted changes from previous work, commit
 or stash them before starting anything new. Never start new work on top of
 uncommitted changes from a different task.
 
-### 2. Read the project context
+### Read the project context
 
 Check whether an `AGENTS.md` exists in the repository root. If it does, read
 it — it contains project-specific conventions, structure, and decisions. If it
 does not, these Kanbanzai skills are your primary orientation.
 
-### 3. Check the work queue
+### Check the work queue
 
 Call `next` (without an ID) to see what tasks are ready. If the queue is
 empty, call `status` or `entity` action: `list` to understand the current
 project state — active features, open bugs, what stage things are in.
 
-### 4. Before starting a task
+### Claim your task
 
 Call `next` with a task ID to claim it and get your instructions and
 context. See `kanbanzai-agents` for the full dispatch-and-complete
 protocol.
 
-### 5. Understand the workflow
+### Understand the workflow
 
 Kanbanzai has stage gates that require human approval at specific points.
 See `kanbanzai-workflow` for the rules, the human/agent ownership boundary,

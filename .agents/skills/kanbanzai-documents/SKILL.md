@@ -6,7 +6,8 @@ description: >
   registration with doc action register, approval workflow, content drift,
   doc action refresh, or any question about document status, ownership,
   or lifecycle. Use whenever any markdown file is created or modified in a
-  configured document root, even if the user does not mention registration.
+  configured document root — even if the edit seems minor, registration
+  and refresh rules still apply.
 metadata:
   kanbanzai-managed: "true"
   version: "0.2.0"
@@ -26,6 +27,18 @@ and the approval workflow that makes them authoritative.
 - When approving a document or checking whether it is ready for approval
 - When editing a document that has already been registered
 - When unsure which document type or directory to use
+
+---
+
+## Document Creation Checklist
+
+Copy this checklist when creating any new document:
+
+- [ ] Determined the correct document type (design, specification, dev-plan, research, report, policy)
+- [ ] Placed the file in the correct directory for its type
+- [ ] Registered the document with `doc(action: register, path: "...", type: "...", title: "...", owner: "...")`
+- [ ] Verified registration with `doc(action: get, path: "...")`
+- [ ] Committed both the document file and the registration record together
 
 ---
 
@@ -145,6 +158,16 @@ no longer authoritative.
 
 ---
 
+## Anti-Patterns
+
+**Creating documents without registering them.** An unregistered document is invisible to the workflow system — it won't appear in document gap analysis, won't be tracked for staleness, and won't participate in lifecycle gates. Every document in a configured document root must be registered.
+
+**Editing an approved document without refreshing.** When you edit a document that has `approved` status, its content hash changes but the approval status doesn't automatically update. Call `doc(action: refresh)` after significant edits so the system detects the drift and demotes the document back to `draft` for re-approval.
+
+**Registering with the wrong type.** A specification registered as `design` won't be found when the system checks for specification prerequisites. Check the Document Types table — the type determines how the system treats the document in lifecycle gates.
+
+---
+
 ## Gotchas
 
 - **Forgot to register.** If you create a file in `work/` and forget to call
@@ -182,6 +205,16 @@ When batch-importing, commit the new records:
 git add .kbz/state/documents/
 git commit -m "workflow(PROJECT): register new documents with system"
 ```
+
+---
+
+## Output Templates
+
+When producing specific document types, use these templates as structural guides:
+
+- **Specifications:** See `work/templates/specification-prompt-template.md` for required sections and example requirements
+- **Implementation plans:** See `work/templates/implementation-plan-prompt-template.md` for task breakdown structure
+- **Reviews:** See `work/templates/review-prompt-template.md` for finding format and severity levels
 
 ---
 

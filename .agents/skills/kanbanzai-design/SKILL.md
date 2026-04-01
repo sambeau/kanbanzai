@@ -2,13 +2,11 @@
 name: kanbanzai-design
 description: >
   Use when designing a feature, reviewing or drafting a design document,
-  deciding between design alternatives, assessing design quality, or
-  determining whether a design is ready for specification. Also activates
-  for design questions including trade-offs, alternatives, quality bar,
-  approval status, risk assessment, splitting a design, or evaluating
-  whether an approach is good enough. Use even when the agent feels
-  confident about the design — design review catches problems that
-  confidence does not.
+  deciding between alternatives, assessing quality, or determining readiness
+  for specification. Also activates for trade-offs, alternatives, quality bar,
+  approval status, risk, or splitting a design. Use even for small features —
+  skipping design leads to undocumented decisions that are expensive to
+  reverse.
 metadata:
   kanbanzai-managed: "true"
   version: "0.2.0"
@@ -219,6 +217,31 @@ systems that are easy to understand, easy to trust, and easy to extend.
 - **Tool call failures.** If `doc` action: `approve` fails, it usually means
   the content hash has drifted (the file was edited since registration).
   Call `doc` action: `refresh` first, then re-approve.
+
+---
+
+## Next Steps After Design
+
+When the design is approved and ready for specification:
+- Use the specification template at `work/templates/specification-prompt-template.md`
+- The specification transforms the approved design into verifiable requirements
+- See the `kanbanzai-documents` skill for registration procedure
+
+---
+
+## Examples
+
+**Good design document structure:**
+A design document that follows the approved design invariant:
+1. Clearly defined scope — "This design covers X. It does not cover Y."
+2. A single chosen approach with rationale — "We chose approach B because..."
+3. Documented alternatives — "We considered A, B, and C. A was rejected because..."
+4. No unresolved questions — all open questions have answers or are explicitly deferred to implementation
+
+**When to stop and ask the human:**
+- You've identified two approaches and can't determine which is better → present both with trade-offs, recommend one, ask for decision
+- The scope seems larger than expected → "This looks like it might need to split into two features. Should we step back to planning?"
+- A design decision contradicts an existing decision record → surface the conflict, don't resolve it unilaterally
 
 ---
 

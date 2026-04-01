@@ -3,10 +3,10 @@ name: kanbanzai-agents
 description: >
   Use when implementing tasks, dispatching work, completing tasks, writing
   commits, contributing knowledge entries, assembling context, or spawning
-  sub-agents. Activates for questions about the agent interaction protocol,
-  commit message format, knowledge management, context packets, or how to
-  hand off work between agents. Use even when the task seems simple — the
-  dispatch-and-complete protocol applies to all implementation work.
+  sub-agents. Activates for agent interaction protocol, commit message
+  format, knowledge management, context packets, or hand-off between
+  agents. Use this skill for every task — it defines how agents interact
+  with the workflow system.
 metadata:
   kanbanzai-managed: "true"
   version: "0.2.0"
@@ -27,6 +27,21 @@ and spawning sub-agents.
 - When writing commit messages
 - When contributing knowledge entries after completing work
 - When spawning sub-agents for parallel or delegated work
+
+---
+
+## Task Lifecycle Checklist
+
+Copy this checklist when starting any task:
+
+- [ ] Claimed the task with `next(id: "TASK-xxx")` — context assembled
+- [ ] Read the assembled context (spec sections, knowledge entries, file paths)
+- [ ] Confirmed the parent feature is in the correct lifecycle state
+- [ ] Implemented the changes
+- [ ] Ran tests (`go test ./...`) and they pass
+- [ ] Committed with a properly formatted message (see Commit Message Format below)
+- [ ] Completed the task with `finish(task_id: "TASK-xxx", summary: "...", verification: "...")`
+- [ ] Included retrospective observations if any friction was encountered
 
 ---
 
@@ -109,6 +124,20 @@ Add `!` after the type for breaking changes: `feat(FEAT-001)!: description`
 - `workflow(TASK-152.3): mark upload task complete after verification`
 - `decision(DEC-041): record no-client-side-cropping choice`
 
+### Bad vs. Good Commit Messages
+
+**Bad:** `fix: update code`
+- No scope, no description of what changed or why
+
+**Good:** `fix(validate): reject task finish when parent feature is in draft status`
+- Scoped to the package, describes the behavior change
+
+**Bad:** `feat: add new feature`
+- Meaningless — every feature commit "adds a new feature"
+
+**Good:** `feat(mcp): add context budget estimation to handoff tool`
+- Scoped, specific, describes the actual capability added
+
 ### Commit discipline
 
 - Commit at logical checkpoints — after completing a coherent change, before
@@ -179,6 +208,32 @@ When delegating work to a sub-agent:
 3. **MCP delivery** — `next` and `handoff` automatically include relevant
    skill content in the context packet for sub-agents running through MCP.
    This is the primary skill delivery mechanism for sub-agents.
+
+---
+
+## Anti-Patterns
+
+**Starting implementation without claiming the task.** Jumping straight to
+coding without calling `next(id: ...)` means you miss assembled context —
+spec sections, relevant knowledge entries, and file paths that the system
+curated for this specific task. You'll waste time re-discovering what the
+system already knows.
+
+**Empty or vague finish summaries.** `finish(summary: "done")` tells the
+next agent nothing. The summary is institutional memory — it should say what
+was accomplished, what approach was taken, and any decisions made. Future
+agents and humans read these summaries to understand what happened.
+
+**Forgetting to include retrospective signals.** When you encounter
+friction — a confusing spec, a missing test utility, an ambiguous design
+decision — recording it via `finish(retrospective: [...])` feeds the retro
+system. Without these signals, the same friction repeats across every future
+task.
+
+**Committing without running tests.** Always run `go test ./...` before
+committing. A commit that breaks tests blocks every subsequent task and
+requires rework. The cost of running tests is always less than the cost of
+fixing a broken build.
 
 ---
 

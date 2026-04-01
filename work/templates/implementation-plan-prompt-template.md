@@ -29,6 +29,31 @@
   the same contract
 - A dependency graph or execution order that identifies which tasks can
   run in parallel and which must be serialised
+
+**Example of a well-formed task in the plan:**
+
+> ### Task 3: Implement lifecycle gate validation
+>
+> **Objective:** Add validation to the `finish` tool that checks parent
+> feature status before allowing task completion.
+>
+> **Specification references:** FR-003, FR-004
+>
+> **Input context:**
+> - `internal/service/task_service.go` — current finish implementation
+> - `internal/validate/lifecycle.go` — existing validation logic
+> - Feature lifecycle state machine (spec §3.2)
+>
+> **Output artifacts:**
+> - Modified `internal/service/task_service.go` with gate check
+> - New test file `internal/service/task_finish_gate_test.go`
+> - Updated `internal/validate/lifecycle.go` if new validation needed
+>
+> **Dependencies:** Task 1 (entity model changes) must complete first
+>
+> **Interface contract with Task 4:** The validation function must have
+> signature `func ValidateTaskFinish(taskID, featureID string) error`
+> so Task 4 (MCP tool wiring) can call it without modification.
 - Scope boundaries carried forward from the specification
 
 **What to exclude:**
