@@ -209,19 +209,6 @@ If you think something outside current scope is needed, stop and ask. Do not add
 
 The implementation plan (`work/plan/phase-1-implementation-plan.md` §9) defines additional constraints: no silent scope expansion, no conflation of product and project state, no reliance on future orchestration, no destructive workflows by default.
 
-## YAML Serialisation Rules
-
-Entity state and documents are stored as YAML. Deterministic, canonical serialisation is a core requirement — not a nice-to-have. The accepted decision P1-DEC-008 in the decision log defines the exact rules:
-
-- Block style for mappings and sequences (no flow style)
-- Double-quoted strings only when required by YAML syntax
-- Deterministic field order (defined per entity type)
-- UTF-8, LF line endings, trailing newline
-- No YAML tags, anchors, or aliases
-- No multi-document streams
-
-Do not rely on Go's default YAML marshaller to produce correct output. The serialisation must be explicit and tested with round-trip tests (write → read → write → compare).
-
 ## Build and Test Commands
 
 ```
@@ -234,164 +221,16 @@ goimports -w .          # organise imports
 go mod tidy             # clean up dependencies
 ```
 
-## Go Code Style
+## Go Code Style and Testing
 
-### Formatting
-- Write idiomatic Go
-- Run `go fmt` before committing
-- Use `goimports` for import organisation
-- Maximum line length: 100 characters (soft limit)
+See [`refs/go-style.md`](refs/go-style.md) for full conventions: formatting, naming, error handling, interfaces, concurrency, package design, file organisation, dependencies, and YAML serialisation rules.
 
-### Naming
-- Use camelCase for unexported identifiers
-- Use PascalCase for exported identifiers
-- Acronyms should be consistent case: `URL`, `HTTP`, `ID` (not `Url`, `Http`, `Id`)
-- Package names: lowercase, single word, no underscores
-
-### Error Handling
-- Always check errors; never use `_` to ignore them
-- Wrap errors with context: `fmt.Errorf("doing X: %w", err)`
-- Return errors, don't panic (except for truly unrecoverable situations)
-- Define sentinel errors with `errors.New` for errors that callers need to check
-
-### Comments
-- Exported functions must have doc comments
-- Doc comments start with the function name: `// FunctionName does...`
-- Use `// TODO:` for planned improvements
-- Use `// FIXME:` for known issues
-
-### Interfaces
-- Accept interfaces, return structs
-- Define interfaces at the consumer, not the provider
-- Keep interfaces small — one or two methods is ideal
-- Do not define interfaces preemptively; extract them when a second implementation or a test double is needed
-
-### Concurrency
-- Do not use goroutines unless there is a demonstrated need
-- Phase 1 is a request-response system — no concurrent workflows
-- If goroutines are needed later, pass `context.Context` and use it for cancellation
-
-### Package Design
-- Keep packages small and focused on a single responsibility
-- No circular imports — if two packages need each other, extract shared types into a third
-- The `internal/` directory is not importable from outside this module
-- No `init()` functions — they create hidden coupling and make testing harder
-
-## File Organisation
-```
-cmd/kanbanzai/    # binary entry point
-internal/         # all private packages (core logic, MCP server, CLI)
-```
-
-This is not a library. There is no `pkg/` directory.
-
-## Dependencies
-- Prefer the standard library when reasonable
-- Run `go mod tidy` after adding/removing dependencies
-- Commit `go.sum` with `go.mod`
-
-## Testing
-
-### Conventions
-- Test files: `*_test.go` in the same package
-- Test functions: `TestFunctionName_Scenario`
-- Use table-driven tests for multiple cases
-- Aim for meaningful coverage, not 100%
-
-### Test isolation
-- Tests must not depend on external services or network calls
-- Use `t.TempDir()` for filesystem tests — never write to the working directory
-- Test fixtures live in `testdata/` directories alongside the test files
-- Test helpers must call `t.Helper()` so failures report the caller's line number
-
-### What to test
-- Core validation logic (field validation, lifecycle transitions, referential integrity)
-- Serialisation and deterministic formatting (round-trip: write → read → compare)
-- ID allocation edge cases
-- Document validation (valid and invalid cases)
-- MCP operations (integration tests where practical)
-- CLI behaviour (integration tests where practical)
-
-### What not to test
-- Do not test the standard library
-- Do not write tests that only assert that a mock was called — test behaviour, not wiring
-- Do not test unexported functions directly unless they contain complex logic worth isolating
+See [`refs/testing.md`](refs/testing.md) for test conventions, isolation rules, and what to test.
 
 ## Codebase Knowledge Graph (`codebase-memory-mcp`)
 
-This project is indexed in `codebase-memory-mcp` under the project name **`Users-samphillips-Dev-kanbanzai`** with root path `/Users/samphillips/Dev/kanbanzai`.
-
-The graph is the preferred way to explore code structure. Use it **instead of** `grep` or `find_path` whenever you need to understand definitions, relationships, callers, callees, dependencies, or architecture.
-
-### When to use graph tools (preferred)
-
-| Question | Tool | Example |
-|----------|------|---------|
-| What does a function/type look like? | `get_code_snippet` | `get_code_snippet(qualified_name="EntityService.Get")` |
-| Who calls this function? | `trace_call_path` | `trace_call_path(function_name="ResolvePrefix", direction="inbound")` |
-| What does this function call? | `trace_call_path` | `trace_call_path(function_name="Get", direction="outbound")` |
-| Find a function/class/type by name | `search_graph` | `search_graph(name_pattern="Allocat")` |
-| Understand package structure | `get_architecture` | `get_architecture(project="Users-samphillips-Dev-kanbanzai")` |
-| Complex cross-package queries | `query_graph` | Cypher queries for multi-hop analysis |
-
-### When to use text search (fallback)
-
-Use `grep` only for content that is not structural:
-
-- String literals and error messages
-- Config values and magic constants
-- YAML field names in test fixtures
-- Comments and documentation text
-- Broad "does this string appear anywhere?" sweeps
-
-Use `find_path` only when searching by filename pattern, not by code content.
-
-### Keeping the graph current
-
-The graph auto-syncs after the initial index. If results seem stale or the project is missing from `list_projects`, force a refresh:
-
-```
-index_repository(repo_path="/Users/samphillips/Dev/kanbanzai")
-```
-
-### Fallback policy
-
-1. Use graph queries first for structural questions.
-2. Use `search_graph` to discover exact qualified names before `trace_call_path` or `get_code_snippet`.
-3. Fall back to `grep` only for non-structural content searches.
-4. Fall back to `read_file` only when you need to see exact file content that the graph doesn't cover (e.g., full test bodies, YAML fixtures).
-
----
+This project is indexed under **`Users-samphillips-Dev-kanbanzai`**. Use graph tools **instead of** `grep` or `find_path` for all structural questions — definitions, callers, callees, dependencies, architecture. See [`refs/knowledge-graph.md`](refs/knowledge-graph.md) for the full tool reference and fallback policy.
 
 ## Delegating to Sub-Agents
 
-When you spawn sub-agents (via `spawn_agent`), those agents do **not** see this file. They only know what you tell them. This means critical project context — tool preferences, conventions, the knowledge graph — is lost unless you explicitly propagate it.
-
-### Required context for every sub-agent
-
-Include the following in every `spawn_agent` message:
-
-1. **Codebase knowledge graph availability:**
-
-   > This project is indexed in `codebase-memory-mcp` as project `Users-samphillips-Dev-kanbanzai`. Prefer graph tools over grep/find for structural code questions:
-   > - `search_graph(name_pattern="...", project="Users-samphillips-Dev-kanbanzai")` to find functions, types, classes
-   > - `get_code_snippet(qualified_name="...", project="Users-samphillips-Dev-kanbanzai")` to read a specific symbol
-   > - `trace_call_path(function_name="...", project="Users-samphillips-Dev-kanbanzai")` to find callers/callees
-   > - `get_architecture(project="Users-samphillips-Dev-kanbanzai")` for package structure
-   > Use `grep` only for string literals, error messages, and non-structural content.
-
-2. **File scope boundaries** — which files the agent should and should not modify (to avoid conflicts with parallel agents).
-
-3. **Any relevant project conventions** — e.g., commit message format, test conventions, Go style rules — if the agent will be committing or writing tests.
-
-### Propagation rule
-
-If a sub-agent may itself spawn further sub-agents, include this instruction:
-
-> When you delegate work to sub-agents, include the codebase-memory-mcp context (project name, tool preferences) in your delegation message. Sub-agents do not see project instructions automatically.
-
-This ensures the context propagates through any depth of delegation, not just one level.
-
-### Why this matters
-
-Without this context, sub-agents will default to `grep` and `read_file` for everything — scanning files line by line instead of using the indexed graph. This is slower, noisier, and misses structural relationships that the graph captures directly.
+Sub-agents do **not** see this file — all context must be explicitly propagated in every `spawn_agent` call. See [`refs/sub-agents.md`](refs/sub-agents.md) for the required context template and propagation rule.
