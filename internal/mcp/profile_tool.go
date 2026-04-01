@@ -4,11 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"path/filepath"
+	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
+	"github.com/sambeau/kanbanzai/internal/core"
 )
 
 // ProfileTool returns the 2.0 profile consolidated tool.
@@ -20,7 +23,7 @@ func ProfileTool(roleStore *kbzctx.RoleStore) []server.ServerTool {
 
 func profileTool(roleStore *kbzctx.RoleStore) server.ServerTool {
 	tool := mcp.NewTool("profile",
-		mcp.WithReadOnlyHintAnnotation(true),
+		mcp.WithReadOnlyHintAnnotation(false),
 		mcp.WithDestructiveHintAnnotation(false),
 		mcp.WithIdempotentHintAnnotation(true),
 		mcp.WithOpenWorldHintAnnotation(false),
@@ -28,17 +31,21 @@ func profileTool(roleStore *kbzctx.RoleStore) server.ServerTool {
 		mcp.WithDescription(
 			"List and retrieve context role profiles. "+
 				"Consolidates profile_list and profile_get. "+
-				"Actions: list (list all profiles), get (get a profile by ID, resolved or raw).",
+				"Actions: list (list all profiles), get (get a profile by ID, resolved or raw), "+
+				"refresh (update last_verified timestamp on a role or skill).",
 		),
 		mcp.WithString("action",
 			mcp.Required(),
-			mcp.Description("Action: list, get"),
+			mcp.Description("Action: list, get, refresh"),
 		),
 		mcp.WithString("id",
 			mcp.Description("Profile ID (filename without .yaml extension) — required for get"),
 		),
 		mcp.WithBoolean("resolved",
 			mcp.Description("Whether to apply inheritance resolution (default: true) — get only"),
+		),
+		mcp.WithString("skill",
+			mcp.Description("Skill name for refresh action"),
 		),
 	)
 
@@ -55,8 +62,10 @@ func profileTool(roleStore *kbzctx.RoleStore) server.ServerTool {
 			return roleListAction(roleStore)
 		case "get":
 			return roleGetAction(roleStore, req)
+		case "refresh":
+			return roleRefreshAction(roleStore, req)
 		default:
-			return ActionError("unknown_action", fmt.Sprintf("unknown action %q; valid actions: get, list", action), nil), nil
+			return ActionError("unknown_action", fmt.Sprintf("unknown action %q; valid actions: get, list, refresh", action), nil), nil
 		}
 	}
 
@@ -170,6 +179,51 @@ func antiPatternsToSlice(aps []kbzctx.AntiPattern) []map[string]any {
 		}
 	}
 	return result
+}
+
+// ─── refresh ──────────────────────────────────────────────────────────────────
+
+func roleRefreshAction(roleStore *kbzctx.RoleStore, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+	id := req.GetString("id", "")
+	skillName := req.GetString("skill", "")
+
+	if id == "" && skillName == "" {
+		return ActionError("missing_parameter", "either 'id' (role name) or 'skill' (skill name) is required for refresh", nil), nil
+	}
+	if id != "" && skillName != "" {
+		return ActionError("invalid_parameter", "specify either 'id' or 'skill', not both", nil), nil
+	}
+
+	now := time.Now()
+
+	if id != "" {
+		path, err := roleStore.RolePath(id)
+		if err != nil {
+			return ActionError("refresh_failed", fmt.Sprintf("refresh role %q: %s", id, err), nil), nil
+		}
+		if err := kbzctx.RefreshRoleLastVerified(path, now); err != nil {
+			return ActionError("refresh_failed", fmt.Sprintf("refresh role %q: %s", id, err), nil), nil
+		}
+		return profileToolMapJSON(map[string]any{
+			"action":        "refresh",
+			"type":          "role",
+			"id":            id,
+			"last_verified": now.UTC().Format(time.RFC3339),
+			"message":       "Content reviewed and confirmed current.",
+		})
+	}
+
+	skillDir := filepath.Join(core.InstanceRootDir, "skills", skillName)
+	if err := kbzctx.RefreshSkillLastVerified(skillDir, now); err != nil {
+		return ActionError("refresh_failed", fmt.Sprintf("refresh skill %q: %s", skillName, err), nil), nil
+	}
+	return profileToolMapJSON(map[string]any{
+		"action":        "refresh",
+		"type":          "skill",
+		"skill":         skillName,
+		"last_verified": now.UTC().Format(time.RFC3339),
+		"message":       "Content reviewed and confirmed current.",
+	})
 }
 
 // profileToolMapJSON marshals a map to JSON and returns it as a tool result.

@@ -12,8 +12,10 @@ package context
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/sambeau/kanbanzai/internal/binding"
+	"github.com/sambeau/kanbanzai/internal/health"
 	"github.com/sambeau/kanbanzai/internal/skill"
 )
 
@@ -141,19 +143,20 @@ type InclusionStrategy struct {
 
 // PipelineState accumulates results as the pipeline steps execute.
 type PipelineState struct {
-	Input         PipelineInput
-	Stage         string                // from step 1
-	Binding       *binding.StageBinding // from step 2
-	Inclusion     InclusionStrategy     // from step 3
-	Orchestration OrchestrationMeta     // from step 4
-	Role          *ResolvedRole         // from step 5
-	Skill         *skill.Skill          // from step 6
-	MergedVocab   []string              // from steps 5+6
-	MergedAnti    []AntiPatternEntry    // from steps 5+6
-	Knowledge     []SurfacedEntry       // from step 7
-	ToolGuidance  string                // from step 8
-	Sections      []PipelineSection     // accumulated by step 10
-	TokenEstimate int                   // from step 9
+	Input             PipelineInput
+	Stage             string                // from step 1
+	Binding           *binding.StageBinding // from step 2
+	Inclusion         InclusionStrategy     // from step 3
+	Orchestration     OrchestrationMeta     // from step 4
+	Role              *ResolvedRole         // from step 5
+	Skill             *skill.Skill          // from step 6
+	MergedVocab       []string              // from steps 5+6
+	MergedAnti        []AntiPatternEntry    // from steps 5+6
+	Knowledge         []SurfacedEntry       // from step 7
+	ToolGuidance      string                // from step 8
+	Sections          []PipelineSection     // accumulated by step 10
+	TokenEstimate     int                   // from step 9
+	StalenessWarnings []string              // from freshness check after steps 5+6
 }
 
 // AntiPatternEntry is a flattened anti-pattern for rendering.
@@ -169,11 +172,20 @@ type AntiPatternEntry struct {
 
 // Pipeline orchestrates the 10-step context assembly.
 type Pipeline struct {
-	Roles      RoleResolver
-	Skills     SkillResolver
-	Bindings   BindingResolver
-	Knowledge  KnowledgeSurfacer
-	WindowSize int // context window in tokens; 0 means DefaultContextWindowTokens
+	Roles               RoleResolver
+	Skills              SkillResolver
+	Bindings            BindingResolver
+	Knowledge           KnowledgeSurfacer
+	WindowSize          int // context window in tokens; 0 means DefaultContextWindowTokens
+	StalenessWindowDays int // 0 means 30 (default)
+}
+
+// stalenessWindow returns the effective staleness window in days.
+func (p *Pipeline) stalenessWindow() int {
+	if p.StalenessWindowDays > 0 {
+		return p.StalenessWindowDays
+	}
+	return 30
 }
 
 // windowTokens returns the effective context window size.
@@ -220,6 +232,9 @@ func (p *Pipeline) Run(input PipelineInput) (*PipelineResult, error) {
 	if err := p.stepLoadSkill(state); err != nil {
 		return nil, err
 	}
+
+	// Freshness check: warn if role or skill is stale or never-verified.
+	p.stepCheckFreshness(state)
 
 	// Step 7: Knowledge entry integration.
 	p.stepSurfaceKnowledge(state)
@@ -631,11 +646,63 @@ func (p *Pipeline) stepTokenBudget(state *PipelineState) error {
 	return nil
 }
 
+// stepCheckFreshness checks whether the resolved role and skill are stale
+// or never-verified, and populates StalenessWarnings on the state.
+// Stale content is NOT blocked — assembly proceeds with warnings (FR-009).
+func (p *Pipeline) stepCheckFreshness(state *PipelineState) {
+	window := p.stalenessWindow()
+	now := time.Now()
+
+	if state.Role != nil {
+		lv := state.Role.LastVerified
+		lvTime, isZero := parseLastVerified(lv)
+		detail := health.ClassifyFreshness(lvTime, isZero, window, now)
+		switch detail.Status {
+		case health.StatusStale:
+			state.StalenessWarnings = append(state.StalenessWarnings,
+				fmt.Sprintf("role %q last verified %s (%d days overdue)",
+					state.Role.ID, lv, detail.DaysOverdue))
+		case health.StatusNeverVerified:
+			state.StalenessWarnings = append(state.StalenessWarnings,
+				fmt.Sprintf("role %q has never been verified", state.Role.ID))
+		}
+	}
+
+	if state.Skill != nil {
+		lv := state.Skill.Frontmatter.LastVerified
+		lvTime, isZero := parseLastVerified(lv)
+		detail := health.ClassifyFreshness(lvTime, isZero, window, now)
+		switch detail.Status {
+		case health.StatusStale:
+			state.StalenessWarnings = append(state.StalenessWarnings,
+				fmt.Sprintf("skill %q last verified %s (%d days overdue)",
+					state.Skill.Frontmatter.Name, lv, detail.DaysOverdue))
+		case health.StatusNeverVerified:
+			state.StalenessWarnings = append(state.StalenessWarnings,
+				fmt.Sprintf("skill %q has never been verified", state.Skill.Frontmatter.Name))
+		}
+	}
+}
+
+// parseLastVerified parses a last_verified string into a time.
+// Returns (zero time, true) if the string is empty (never verified).
+func parseLastVerified(lv string) (time.Time, bool) {
+	if lv == "" {
+		return time.Time{}, true
+	}
+	t, err := time.Parse(time.RFC3339, lv)
+	if err != nil {
+		return time.Time{}, true // treat unparseable as never-verified
+	}
+	return t, false
+}
+
 // stepBuildResult produces the final PipelineResult (step 10).
 func (p *Pipeline) stepBuildResult(state *PipelineState) *PipelineResult {
 	result := &PipelineResult{
-		Sections:    state.Sections, // already ordered by Position during assembly
-		TotalTokens: state.TokenEstimate,
+		Sections:         state.Sections, // already ordered by Position during assembly
+		TotalTokens:      state.TokenEstimate,
+		MetadataWarnings: state.StalenessWarnings,
 	}
 
 	// Check warning threshold.

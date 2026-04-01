@@ -38,7 +38,7 @@ func TestToolAnnotationTiers(t *testing.T) {
 
 	tier1 := map[string]bool{
 		"status": true, "health": true, "handoff": true,
-		"conflict": true, "profile": true, "server_info": true,
+		"conflict": true, "server_info": true,
 	}
 	tier3 := map[string]bool{
 		"cleanup": true, "merge": true, "pr": true, "worktree": true,

@@ -86,6 +86,13 @@ func (s *RoleStore) LoadAll() ([]*Role, error) {
 	return roles, nil
 }
 
+// RolePath returns the filesystem path for a role by ID.
+// It checks the new location first, then falls back to the legacy location.
+// Returns an error if the role is not found.
+func (s *RoleStore) RolePath(id string) (string, error) {
+	return s.resolve(id)
+}
+
 // Exists returns true if a role file exists for the given ID in either location.
 func (s *RoleStore) Exists(id string) bool {
 	if !idRegexp.MatchString(id) {

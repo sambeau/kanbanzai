@@ -109,6 +109,13 @@ type DecompositionConfig struct {
 	MaxTasksPerFeature int `yaml:"max_tasks_per_feature"`
 }
 
+// FreshnessConfig holds settings for role/skill freshness tracking.
+type FreshnessConfig struct {
+	// StalenessWindowDays is the number of days after which a role or skill
+	// is considered stale if not verified. Default: 30.
+	StalenessWindowDays int `yaml:"staleness_window_days,omitempty"`
+}
+
 // IncidentsConfig holds settings for incident management.
 type IncidentsConfig struct {
 	// RCALinkWarnAfterDays is the number of days after resolution before warning
@@ -176,6 +183,8 @@ type Config struct {
 	Decomposition DecompositionConfig `yaml:"decomposition,omitempty"`
 	// Merge holds settings for merge operations.
 	Merge MergeConfig `yaml:"merge,omitempty"`
+	// Freshness holds settings for role/skill freshness tracking.
+	Freshness FreshnessConfig `yaml:"freshness,omitempty"`
 	// MCP holds settings for the MCP tool surface (Kanbanzai 2.0 feature groups).
 	MCP MCPConfig `yaml:"mcp,omitempty"`
 	// QualityEvaluation holds settings for the quality evaluation approval gate.
@@ -200,6 +209,7 @@ func DefaultConfig() Config {
 		Dispatch:       DefaultDispatchConfig(),
 		Incidents:      DefaultIncidentsConfig(),
 		Decomposition:  DefaultDecompositionConfig(),
+		Freshness:      DefaultFreshnessConfig(),
 	}
 }
 
@@ -207,6 +217,13 @@ func DefaultConfig() Config {
 func DefaultDecompositionConfig() DecompositionConfig {
 	return DecompositionConfig{
 		MaxTasksPerFeature: 20,
+	}
+}
+
+// DefaultFreshnessConfig returns default freshness tracking settings.
+func DefaultFreshnessConfig() FreshnessConfig {
+	return FreshnessConfig{
+		StalenessWindowDays: 30,
 	}
 }
 

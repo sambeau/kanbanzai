@@ -16,6 +16,7 @@ import (
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/core"
 	"github.com/sambeau/kanbanzai/internal/git"
+	"github.com/sambeau/kanbanzai/internal/health"
 	"github.com/sambeau/kanbanzai/internal/knowledge"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/skill"
@@ -100,10 +101,11 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			return fields, nil
 		}
 		pipeline = &kbzctx.Pipeline{
-			Roles:     &kbzctx.RoleStoreAdapter{Store: roleStore},
-			Skills:    &kbzctx.SkillStoreAdapter{Store: skillStore},
-			Bindings:  &kbzctx.BindingFileAdapter{File: bf},
-			Knowledge: kbzctx.NewSurfacer(entryLoader, capTracker, nil),
+			Roles:               &kbzctx.RoleStoreAdapter{Store: roleStore},
+			Skills:              &kbzctx.SkillStoreAdapter{Store: skillStore},
+			Bindings:            &kbzctx.BindingFileAdapter{File: bf},
+			Knowledge:           kbzctx.NewSurfacer(entryLoader, capTracker, nil),
+			StalenessWindowDays: cfg.Freshness.StalenessWindowDays,
 		}
 		log.Printf("[server] 3.0 context assembly pipeline loaded with %d stage bindings", len(bf.StageBindings))
 	}
@@ -224,6 +226,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
 			DocCurrencyHealthChecker(toolNames, repoRoot, entitySvc, docRecordSvc),
 			capSaturationHealthChecker(capTracker),
+			freshnessHealthChecker(cfg),
 			GateOverrideHealthChecker(entitySvc),
 		)...)
 	}
@@ -307,6 +310,48 @@ func profileHealthChecker(profileStore *kbzctx.ProfileStore) AdditionalHealthChe
 			return err
 		}
 		return validate.CheckProfileHealth(loadAll, resolveProfile)
+	}
+}
+
+// freshnessHealthChecker returns an AdditionalHealthChecker that detects
+// stale and never-verified role and skill files.
+func freshnessHealthChecker(cfg *config.Config) AdditionalHealthChecker {
+	return func() (*validate.HealthReport, error) {
+		report := &validate.HealthReport{
+			Summary: validate.HealthSummary{
+				EntitiesByType: make(map[string]int),
+			},
+		}
+		window := cfg.Freshness.StalenessWindowDays
+		if window <= 0 {
+			window = 30
+		}
+		now := time.Now()
+
+		rolesDir := filepath.Join(core.InstanceRootDir, "roles")
+		roleResult := health.CheckRoleFreshness(rolesDir, window, now)
+		for _, issue := range roleResult.Issues {
+			report.Warnings = append(report.Warnings, validate.ValidationWarning{
+				EntityType: "role",
+				EntityID:   issue.EntityID,
+				Field:      "last_verified",
+				Message:    issue.Message,
+			})
+		}
+
+		skillsDir := filepath.Join(core.InstanceRootDir, "skills")
+		skillResult := health.CheckSkillFreshness(skillsDir, window, now)
+		for _, issue := range skillResult.Issues {
+			report.Warnings = append(report.Warnings, validate.ValidationWarning{
+				EntityType: "skill",
+				EntityID:   issue.EntityID,
+				Field:      "last_verified",
+				Message:    issue.Message,
+			})
+		}
+
+		report.Summary.WarningCount = len(report.Warnings)
+		return report, nil
 	}
 }
 

@@ -1287,3 +1287,245 @@ func TestJoinNonEmpty(t *testing.T) {
 		t.Errorf("got %q, want %q", result, "hello\n\nworld")
 	}
 }
+
+// ─── Freshness / staleness warning tests (FR-008, FR-009) ─────────────────────
+
+func newFreshnessPipeline(role *ResolvedRole, sk *skill.Skill, windowDays int) *Pipeline {
+	return &Pipeline{
+		Roles: &mockRoleResolver{roles: map[string]*ResolvedRole{role.ID: role}},
+		Skills: &mockSkillResolver{skills: map[string]*skill.Skill{
+			sk.Frontmatter.Name: sk,
+		}},
+		Bindings: &mockBindingResolver{bindings: map[string]*binding.StageBinding{
+			"developing": {
+				Roles:  []string{role.ID},
+				Skills: []string{sk.Frontmatter.Name},
+			},
+		}},
+		Knowledge:           NoOpSurfacer{},
+		StalenessWindowDays: windowDays,
+	}
+}
+
+func freshnessInput() PipelineInput {
+	return PipelineInput{
+		TaskID: "TASK-FRESH-001",
+		TaskState: map[string]any{
+			"status":         "active",
+			"parent_feature": "FEAT-FRESH-001",
+		},
+		FeatureState: map[string]any{
+			"status": "developing",
+		},
+	}
+}
+
+func TestPipeline_Freshness_StaleRole(t *testing.T) {
+	t.Parallel()
+
+	role := &ResolvedRole{
+		ID:           "implementer",
+		Identity:     "A Go implementation specialist",
+		Vocabulary:   []string{"Go"},
+		LastVerified: "2025-01-01T00:00:00Z", // very old
+	}
+	sk := &skill.Skill{
+		Frontmatter: skill.SkillFrontmatter{
+			Name:         "implement-task",
+			LastVerified: "2099-01-01T00:00:00Z", // far future = fresh
+		},
+	}
+
+	p := newFreshnessPipeline(role, sk, 30)
+	result, err := p.Run(freshnessInput())
+	if err != nil {
+		t.Fatalf("Run() error = %v", err)
+	}
+
+	// FR-008: metadata warning for stale role.
+	found := false
+	for _, w := range result.MetadataWarnings {
+		if strings.Contains(w, "role") && strings.Contains(w, "implementer") && strings.Contains(w, "overdue") {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Errorf("expected staleness warning for stale role; got warnings: %v", result.MetadataWarnings)
+	}
+
+	// FR-009: stale files do not block assembly — result has sections.
+	if len(result.Sections) == 0 {
+		t.Error("expected assembled sections even with stale role")
+	}
+}
+
+func TestPipeline_Freshness_NeverVerifiedSkill(t *testing.T) {
+	t.Parallel()
+
+	role := &ResolvedRole{
+		ID:           "implementer",
+		Identity:     "A Go implementation specialist",
+		Vocabulary:   []string{"Go"},
+		LastVerified: "2099-01-01T00:00:00Z",
+	}
+	sk := &skill.Skill{
+		Frontmatter: skill.SkillFrontmatter{
+			Name: "implement-task",
+			// LastVerified intentionally empty → never verified
+		},
+	}
+
+	p := newFreshnessPipeline(role, sk, 30)
+	result, err := p.Run(freshnessInput())
+	if err != nil {
+		t.Fatalf("Run() error = %v", err)
+	}
+
+	found := false
+	for _, w := range result.MetadataWarnings {
+		if strings.Contains(w, "skill") && strings.Contains(w, "implement-task") && strings.Contains(w, "never") {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Errorf("expected never-verified warning for skill; got warnings: %v", result.MetadataWarnings)
+	}
+
+	// FR-009: assembly still succeeds.
+	if len(result.Sections) == 0 {
+		t.Error("expected assembled sections even with never-verified skill")
+	}
+}
+
+func TestPipeline_Freshness_AllFresh_NoWarnings(t *testing.T) {
+	t.Parallel()
+
+	role := &ResolvedRole{
+		ID:           "implementer",
+		Identity:     "A Go implementation specialist",
+		Vocabulary:   []string{"Go"},
+		LastVerified: "2099-01-01T00:00:00Z",
+	}
+	sk := &skill.Skill{
+		Frontmatter: skill.SkillFrontmatter{
+			Name:         "implement-task",
+			LastVerified: "2099-01-01T00:00:00Z",
+		},
+	}
+
+	p := newFreshnessPipeline(role, sk, 30)
+	result, err := p.Run(freshnessInput())
+	if err != nil {
+		t.Fatalf("Run() error = %v", err)
+	}
+
+	if len(result.MetadataWarnings) != 0 {
+		t.Errorf("expected no warnings for fresh role+skill; got: %v", result.MetadataWarnings)
+	}
+}
+
+func TestPipeline_Freshness_BothStale(t *testing.T) {
+	t.Parallel()
+
+	role := &ResolvedRole{
+		ID:           "implementer",
+		Identity:     "A Go implementation specialist",
+		Vocabulary:   []string{"Go"},
+		LastVerified: "2020-01-01T00:00:00Z",
+	}
+	sk := &skill.Skill{
+		Frontmatter: skill.SkillFrontmatter{
+			Name:         "implement-task",
+			LastVerified: "2020-01-01T00:00:00Z",
+		},
+	}
+
+	p := newFreshnessPipeline(role, sk, 30)
+	result, err := p.Run(freshnessInput())
+	if err != nil {
+		t.Fatalf("Run() error = %v", err)
+	}
+
+	if len(result.MetadataWarnings) != 2 {
+		t.Errorf("expected 2 warnings (stale role + stale skill); got %d: %v",
+			len(result.MetadataWarnings), result.MetadataWarnings)
+	}
+}
+
+func TestPipeline_Freshness_StaleRoleFreshSkill(t *testing.T) {
+	t.Parallel()
+
+	role := &ResolvedRole{
+		ID:           "implementer",
+		Identity:     "A Go implementation specialist",
+		Vocabulary:   []string{"Go"},
+		LastVerified: "2020-01-01T00:00:00Z",
+	}
+	sk := &skill.Skill{
+		Frontmatter: skill.SkillFrontmatter{
+			Name:         "implement-task",
+			LastVerified: "2099-01-01T00:00:00Z",
+		},
+	}
+
+	p := newFreshnessPipeline(role, sk, 30)
+	result, err := p.Run(freshnessInput())
+	if err != nil {
+		t.Fatalf("Run() error = %v", err)
+	}
+
+	// Exactly 1 warning, for the role only.
+	if len(result.MetadataWarnings) != 1 {
+		t.Fatalf("expected 1 warning; got %d: %v", len(result.MetadataWarnings), result.MetadataWarnings)
+	}
+	if !strings.Contains(result.MetadataWarnings[0], "role") {
+		t.Errorf("warning should mention role; got: %s", result.MetadataWarnings[0])
+	}
+}
+
+func TestPipeline_Freshness_ContentUnchangedByStaleness(t *testing.T) {
+	t.Parallel()
+
+	makeRole := func(lv string) *ResolvedRole {
+		return &ResolvedRole{
+			ID:           "implementer",
+			Identity:     "A Go implementation specialist",
+			Vocabulary:   []string{"Go"},
+			LastVerified: lv,
+		}
+	}
+	sk := &skill.Skill{
+		Frontmatter: skill.SkillFrontmatter{
+			Name:         "implement-task",
+			LastVerified: "2099-01-01T00:00:00Z",
+		},
+	}
+
+	// Run with fresh role.
+	freshP := newFreshnessPipeline(makeRole("2099-01-01T00:00:00Z"), sk, 30)
+	freshResult, err := freshP.Run(freshnessInput())
+	if err != nil {
+		t.Fatalf("fresh Run() error = %v", err)
+	}
+
+	// Run with stale role.
+	staleP := newFreshnessPipeline(makeRole("2020-01-01T00:00:00Z"), sk, 30)
+	staleResult, err := staleP.Run(freshnessInput())
+	if err != nil {
+		t.Fatalf("stale Run() error = %v", err)
+	}
+
+	// FR-009: section count and labels must be identical.
+	if len(freshResult.Sections) != len(staleResult.Sections) {
+		t.Fatalf("section count differs: fresh=%d, stale=%d",
+			len(freshResult.Sections), len(staleResult.Sections))
+	}
+	for i := range freshResult.Sections {
+		if freshResult.Sections[i].Label != staleResult.Sections[i].Label {
+			t.Errorf("section %d label differs: fresh=%q, stale=%q",
+				i, freshResult.Sections[i].Label, staleResult.Sections[i].Label)
+		}
+	}
+}

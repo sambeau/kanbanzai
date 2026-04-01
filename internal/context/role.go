@@ -22,6 +22,7 @@ type Role struct {
 	Vocabulary   []string      `yaml:"vocabulary"`
 	AntiPatterns []AntiPattern `yaml:"anti_patterns,omitempty"`
 	Tools        []string      `yaml:"tools,omitempty"`
+	LastVerified string        `yaml:"last_verified,omitempty"`
 }
 
 // ResolvedRole is the result of walking the inheritance chain.
@@ -31,6 +32,7 @@ type ResolvedRole struct {
 	Vocabulary   []string      // parent ++ child concatenation (FR-010)
 	AntiPatterns []AntiPattern // parent ++ child concatenation (FR-010)
 	Tools        []string      // union, no duplicates (FR-010)
+	LastVerified string        // from leaf role; empty if never verified
 }
 
 // validateRole checks all field-level invariants and accumulates errors.

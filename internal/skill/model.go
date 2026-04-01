@@ -43,6 +43,7 @@ type SkillFrontmatter struct {
 	Roles           []string         `yaml:"roles"`
 	Stage           string           `yaml:"stage"`
 	ConstraintLevel string           `yaml:"constraint_level"`
+	LastVerified    string           `yaml:"last_verified,omitempty"`
 }
 
 // BodySection represents a parsed ## section from the SKILL.md body.

@@ -62,10 +62,11 @@ func ResolveRole(store *RoleStore, id string) (*ResolvedRole, error) {
 		resolved.Tools = mergeToolsUnion(resolved.Tools, r.Tools)
 	}
 
-	// id and identity always come from the leaf (last element in chain).
+	// id, identity, and last_verified always come from the leaf (last element in chain).
 	leaf := chain[len(chain)-1]
 	resolved.ID = leaf.ID
 	resolved.Identity = leaf.Identity
+	resolved.LastVerified = leaf.LastVerified
 
 	return resolved, nil
 }
