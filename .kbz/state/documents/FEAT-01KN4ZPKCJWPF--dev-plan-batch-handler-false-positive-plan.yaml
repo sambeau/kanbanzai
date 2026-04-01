@@ -1,0 +1,12 @@
+id: FEAT-01KN4ZPKCJWPF/dev-plan-batch-handler-false-positive-plan
+path: work/plan/batch-handler-false-positive-plan.md
+type: dev-plan
+title: "Implementation Plan: Batch Handler False-Positive Fix"
+status: approved
+owner: FEAT-01KN4ZPKCJWPF
+approved_by: sambeau
+approved_at: "2026-04-01T17:06:31Z"
+content_hash: 51518a63d79a8a74faee189e404c14981ca4c253cfbe47bff058c13769ee77e0
+created: "2026-04-01T17:05:21Z"
+created_by: sambeau
+updated: "2026-04-01T17:06:31Z"

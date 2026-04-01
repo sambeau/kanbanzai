@@ -1,8 +1,9 @@
 id: FEAT-01KN4ZPKCJWPF
 slug: batch-handler-false-positive
 parent: P15-kanbanzai-25-infrastructure-hardening
-status: specifying
+status: developing
 summary: "Fix ExecuteBatch to detect tool-result errors returned as (data, nil) and count them as failures rather than successes."
 spec: FEAT-01KN4ZPKCJWPF/specification-batch-handler-false-positive
+dev_plan: FEAT-01KN4ZPKCJWPF/dev-plan-batch-handler-false-positive-plan
 created: "2026-04-01T16:58:19Z"
 created_by: sambeau

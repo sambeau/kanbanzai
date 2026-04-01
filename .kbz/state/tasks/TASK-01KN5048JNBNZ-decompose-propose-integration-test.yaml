@@ -1,0 +1,7 @@
+id: TASK-01KN5048JNBNZ
+parent_feature: FEAT-01KN4ZPCMJ1FP
+slug: decompose-propose-integration-test
+summary: "Write integration test confirming decompose propose on a bold-AC spec produces criterion-derived task summaries, not section headings."
+status: queued
+depends_on:
+  - TASK-01KN503RX67H0

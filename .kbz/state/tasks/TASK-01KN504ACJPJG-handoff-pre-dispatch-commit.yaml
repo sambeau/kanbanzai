@@ -1,0 +1,7 @@
+id: TASK-01KN504ACJPJG
+parent_feature: FEAT-01KN4ZPG44T5B
+slug: handoff-pre-dispatch-commit
+summary: "Integrate CommitStateIfDirty into handoff_tool.go pre-dispatch, add failure-path logging, and write AC-07 through AC-11 tests."
+status: queued
+depends_on:
+  - TASK-01KN503TRSPV6

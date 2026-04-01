@@ -1,0 +1,5 @@
+id: TASK-01KN503WNSEZC
+parent_feature: FEAT-01KN4ZPKCJWPF
+slug: fix-execute-batch-tool-error-detection
+summary: "Add tool-result error detection to ExecuteBatch so (data, nil) returns with an error map are classified as failed, not succeeded."
+status: queued

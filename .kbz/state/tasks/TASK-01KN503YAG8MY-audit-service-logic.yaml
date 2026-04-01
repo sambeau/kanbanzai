@@ -1,0 +1,5 @@
+id: TASK-01KN503YAG8MY
+parent_feature: FEAT-01KN4ZPQFQN1C
+slug: audit-service-logic
+summary: "Implement AuditDocuments service function: walk directories, compare against document store, return unregistered/missing/summary."
+status: queued

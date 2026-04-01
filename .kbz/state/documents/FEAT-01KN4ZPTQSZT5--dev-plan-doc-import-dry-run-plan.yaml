@@ -1,0 +1,12 @@
+id: FEAT-01KN4ZPTQSZT5/dev-plan-doc-import-dry-run-plan
+path: work/plan/doc-import-dry-run-plan.md
+type: dev-plan
+title: "Implementation Plan: doc import Dry-Run Mode"
+status: approved
+owner: FEAT-01KN4ZPTQSZT5
+approved_by: sambeau
+approved_at: "2026-04-01T17:06:31Z"
+content_hash: ce203ce4d04c73491d4bb9e60dd79127a7b8c60c525e54fd99a000f32a34efba
+created: "2026-04-01T17:05:23Z"
+created_by: sambeau
+updated: "2026-04-01T17:06:31Z"

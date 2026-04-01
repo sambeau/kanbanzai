@@ -1,0 +1,7 @@
+id: TASK-01KN504BZCZFJ
+parent_feature: FEAT-01KN4ZPKCJWPF
+slug: batch-false-positive-unit-tests
+summary: "Write unit tests covering AC-12 through AC-15: tool-error payload counted as failed, genuine success unchanged, Go error unchanged."
+status: queued
+depends_on:
+  - TASK-01KN503WNSEZC

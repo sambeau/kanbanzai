@@ -1,8 +1,9 @@
 id: FEAT-01KN4ZPTQSZT5
 slug: doc-import-dry-run
 parent: P15-kanbanzai-25-infrastructure-hardening
-status: specifying
+status: developing
 summary: Add a dry_run parameter to doc import that shows what would be registered without writing to the store.
 spec: FEAT-01KN4ZPTQSZT5/specification-doc-import-dry-run
+dev_plan: FEAT-01KN4ZPTQSZT5/dev-plan-doc-import-dry-run-plan
 created: "2026-04-01T16:58:26Z"
 created_by: sambeau

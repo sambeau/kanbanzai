@@ -2,9 +2,11 @@ id: FEAT-01KN4ZPQFQN1C/specification-doc-audit
 path: work/spec/doc-audit.md
 type: specification
 title: "Specification: doc audit Action"
-status: draft
+status: approved
 owner: FEAT-01KN4ZPQFQN1C
+approved_by: sambeau
+approved_at: "2026-04-01T17:02:30Z"
 content_hash: 6c080bf1e26e1235e745bd22da7cfb31608d59f602e462d16f23ddbfe70ea8bc
 created: "2026-04-01T17:00:07Z"
 created_by: sambeau
-updated: "2026-04-01T17:00:07Z"
+updated: "2026-04-01T17:02:30Z"

@@ -1,0 +1,8 @@
+id: TASK-01KN504P96YXG
+parent_feature: FEAT-01KN4ZPQFQN1C
+slug: doc-audit-integration-tests
+summary: "Write integration tests for doc audit covering AC-16 through AC-20: unregistered files, missing records, path scoping, include_registered flag."
+status: queued
+depends_on:
+  - TASK-01KN503YAG8MY
+  - TASK-01KN504DNFGBG

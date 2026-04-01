@@ -1,0 +1,5 @@
+id: TASK-01KN5041NAGBH
+parent_feature: FEAT-01KN4ZPXXEG1F
+slug: eval-readme-and-schema
+summary: "Create work/eval/README.md with scenario YAML schema, measurement record schema, and manual run instructions."
+status: queued

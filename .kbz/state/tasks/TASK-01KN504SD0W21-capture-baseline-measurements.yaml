@@ -1,0 +1,7 @@
+id: TASK-01KN504SD0W21
+parent_feature: FEAT-01KN4ZPXXEG1F
+slug: capture-baseline-measurements
+summary: Run at least 5 scenarios against the current system and record YAML measurement files in work/eval/ covering diverse tool paths.
+status: queued
+depends_on:
+  - TASK-01KN504H8S0YQ
