@@ -396,7 +396,7 @@ func TestReviewProposal_Pass(t *testing.T) {
 			{
 				Slug:      "login",
 				Summary:   "Implement user login with email and password",
-				Rationale: "Covers acceptance criterion: users can log in",
+				Rationale: "Covers acceptance criterion: users can log in. Verified by testing.",
 			},
 			{
 				Slug:      "logout",
@@ -461,6 +461,9 @@ func TestReviewProposal_GapFinding(t *testing.T) {
 	for _, f := range result.Findings {
 		if f.Type == "gap" {
 			gapCount++
+			if f.Severity != "error" {
+				t.Errorf("gap finding severity = %q, want %q", f.Severity, "error")
+			}
 		}
 	}
 	if gapCount < 2 {
@@ -506,6 +509,9 @@ func TestReviewProposal_OversizedFinding(t *testing.T) {
 			oversizedCount++
 			if f.TaskSlug != "big-task" {
 				t.Errorf("oversized finding task_slug = %q, want %q", f.TaskSlug, "big-task")
+			}
+			if f.Severity != "warning" {
+				t.Errorf("oversized finding severity = %q, want %q", f.Severity, "warning")
 			}
 		}
 	}
@@ -565,6 +571,9 @@ func TestReviewProposal_CycleFinding(t *testing.T) {
 	for _, f := range result.Findings {
 		if f.Type == "cycle" {
 			cycleCount++
+			if f.Severity != "error" {
+				t.Errorf("cycle finding severity = %q, want %q", f.Severity, "error")
+			}
 		}
 	}
 	if cycleCount == 0 {
@@ -675,6 +684,9 @@ func TestReviewProposal_AmbiguousSummary(t *testing.T) {
 	for _, f := range result.Findings {
 		if f.Type == "ambiguous" {
 			ambiguousCount++
+			if f.Severity != "warning" {
+				t.Errorf("ambiguous finding severity = %q, want %q", f.Severity, "warning")
+			}
 		}
 	}
 	if ambiguousCount == 0 {
@@ -1321,5 +1333,261 @@ func TestParseSpecStructure_BoldIdent_MixedWithCheckbox(t *testing.T) {
 	if len(spec.acceptanceCriteria) != 3 {
 		t.Fatalf("len(acceptanceCriteria) = %d, want 3; criteria: %v",
 			len(spec.acceptanceCriteria), spec.acceptanceCriteria)
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Integration tests (Task 5): full ReviewProposal path with new checks
+// ---------------------------------------------------------------------------
+
+func TestReviewProposal_EmptyDescription_Fail(t *testing.T) {
+	t.Parallel()
+
+	specContent := `# Spec
+- [ ] Feature is implemented
+`
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+
+	proposal := Proposal{
+		Tasks: []ProposedTask{
+			{
+				Slug:      "main-task",
+				Summary:   "",
+				Rationale: "Covers: feature is implemented. Testing: verified by coverage.",
+			},
+		},
+		TotalTasks: 1,
+	}
+
+	result, err := svc.ReviewProposal(DecomposeReviewInput{
+		FeatureID: featureID,
+		Proposal:  proposal,
+	})
+	if err != nil {
+		t.Fatalf("ReviewProposal() error = %v", err)
+	}
+
+	if result.Status != "fail" {
+		t.Errorf("Status = %q, want fail (empty-description is blocking)", result.Status)
+	}
+	if result.BlockingCount < 1 {
+		t.Errorf("BlockingCount = %d, want >= 1", result.BlockingCount)
+	}
+
+	emptyDescCount := 0
+	for _, f := range result.Findings {
+		if f.Type == "empty-description" {
+			emptyDescCount++
+			if f.Severity != "error" {
+				t.Errorf("empty-description Severity = %q, want error", f.Severity)
+			}
+		}
+	}
+	if emptyDescCount == 0 {
+		t.Error("expected at least one empty-description finding, got none")
+	}
+}
+
+func TestReviewProposal_WarningsOnly_Warn(t *testing.T) {
+	t.Parallel()
+
+	specContent := `# Spec
+- [ ] Feature is implemented
+`
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+
+	bigEstimate := 10.0
+	proposal := Proposal{
+		Tasks: []ProposedTask{
+			{
+				Slug:      "main-task",
+				Summary:   "Implement the main feature that is implemented correctly",
+				Estimate:  &bigEstimate,
+				Rationale: "Covers: feature is implemented",
+			},
+		},
+		TotalTasks: 1,
+	}
+
+	result, err := svc.ReviewProposal(DecomposeReviewInput{
+		FeatureID: featureID,
+		Proposal:  proposal,
+	})
+	if err != nil {
+		t.Fatalf("ReviewProposal() error = %v", err)
+	}
+
+	if result.Status != "warn" {
+		t.Errorf("Status = %q, want warn (oversized+missing-test-coverage are warnings only)", result.Status)
+	}
+	if result.BlockingCount != 0 {
+		t.Errorf("BlockingCount = %d, want 0", result.BlockingCount)
+	}
+	if result.TotalFindings == 0 {
+		t.Error("TotalFindings = 0, want > 0")
+	}
+}
+
+func TestReviewProposal_MixedOldAndNew(t *testing.T) {
+	t.Parallel()
+
+	specContent := `# Spec
+- [ ] Alpha feature is working
+- [ ] Beta feature is working
+- [ ] Gamma service is available
+`
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+
+	// alpha and beta covered; gamma is NOT — creates a gap (error).
+	// delta has no deps while alpha->beta chain exists — creates an orphan (warning).
+	proposal := Proposal{
+		Tasks: []ProposedTask{
+			{
+				Slug:      "alpha",
+				Summary:   "Implement alpha feature that is working",
+				DependsOn: []string{"beta"},
+				Rationale: "Covers alpha. Test coverage verified.",
+			},
+			{
+				Slug:      "beta",
+				Summary:   "Implement beta feature that is working",
+				Rationale: "Covers beta feature.",
+			},
+			{
+				Slug:      "delta",
+				Summary:   "Implement delta standalone component",
+				Rationale: "Extra delta task.",
+			},
+		},
+		TotalTasks: 3,
+	}
+
+	result, err := svc.ReviewProposal(DecomposeReviewInput{
+		FeatureID: featureID,
+		Proposal:  proposal,
+	})
+	if err != nil {
+		t.Fatalf("ReviewProposal() error = %v", err)
+	}
+
+	if result.Status != "fail" {
+		t.Errorf("Status = %q, want fail (gap is blocking)", result.Status)
+	}
+
+	var hasGap, hasOrphan bool
+	for _, f := range result.Findings {
+		if f.Type == "gap" {
+			hasGap = true
+		}
+		if f.Type == "orphan-task" {
+			hasOrphan = true
+		}
+	}
+	if !hasGap {
+		t.Error("expected a gap finding, got none")
+	}
+	if !hasOrphan {
+		t.Error("expected an orphan-task finding, got none")
+	}
+}
+
+func TestReviewProposal_AllChecksClear_Pass(t *testing.T) {
+	t.Parallel()
+
+	specContent := `# Spec
+- [ ] Users can log in
+- [ ] Users can log out
+`
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+
+	proposal := Proposal{
+		Tasks: []ProposedTask{
+			{
+				Slug:      "login",
+				Summary:   "Implement user authentication for login",
+				Rationale: "Covers: users can log in. Verified by integration testing.",
+			},
+			{
+				Slug:      "logout",
+				Summary:   "Implement session cleanup for logout",
+				Rationale: "Covers: users can log out.",
+			},
+		},
+		TotalTasks: 2,
+	}
+
+	result, err := svc.ReviewProposal(DecomposeReviewInput{
+		FeatureID: featureID,
+		Proposal:  proposal,
+	})
+	if err != nil {
+		t.Fatalf("ReviewProposal() error = %v", err)
+	}
+
+	if result.Status != "pass" {
+		t.Errorf("Status = %q, want pass; findings: %v", result.Status, result.Findings)
+	}
+	if result.TotalFindings != 0 {
+		t.Errorf("TotalFindings = %d, want 0; findings: %v", result.TotalFindings, result.Findings)
+	}
+}
+
+func TestReviewProposal_ErrorAndWarningCombined(t *testing.T) {
+	t.Parallel()
+
+	specContent := `# Spec
+- [ ] Feature is implemented
+`
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+
+	// Empty summary triggers empty-description (error).
+	// No testing keyword triggers missing-test-coverage (warning).
+	proposal := Proposal{
+		Tasks: []ProposedTask{
+			{
+				Slug:      "main-task",
+				Summary:   "",
+				Rationale: "Covers: feature is implemented",
+			},
+		},
+		TotalTasks: 1,
+	}
+
+	result, err := svc.ReviewProposal(DecomposeReviewInput{
+		FeatureID: featureID,
+		Proposal:  proposal,
+	})
+	if err != nil {
+		t.Fatalf("ReviewProposal() error = %v", err)
+	}
+
+	if result.Status != "fail" {
+		t.Errorf("Status = %q, want fail", result.Status)
+	}
+
+	// BlockingCount must equal the number of error-severity findings only.
+	errorCount := 0
+	warningCount := 0
+	for _, f := range result.Findings {
+		switch f.Severity {
+		case "error":
+			errorCount++
+		case "warning":
+			warningCount++
+		default:
+			t.Errorf("finding %q has unexpected Severity %q", f.Type, f.Severity)
+		}
+		if f.Severity == "" {
+			t.Errorf("finding %q has empty Severity", f.Type)
+		}
+	}
+	if result.BlockingCount != errorCount {
+		t.Errorf("BlockingCount = %d, want %d (count of error findings)", result.BlockingCount, errorCount)
+	}
+	if result.TotalFindings != len(result.Findings) {
+		t.Errorf("TotalFindings = %d, want %d", result.TotalFindings, len(result.Findings))
+	}
+	if warningCount == 0 {
+		t.Error("expected at least one warning finding (missing-test-coverage), got none")
 	}
 }
