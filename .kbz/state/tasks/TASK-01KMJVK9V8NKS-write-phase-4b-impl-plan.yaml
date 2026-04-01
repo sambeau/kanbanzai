@@ -1,6 +1,7 @@
 id: TASK-01KMJVK9V8NKS
 parent_feature: FEAT-01KMJVK9V84TZ
 slug: write-phase-4b-impl-plan
+name: Write phase 4b impl plan
 summary: "Write the Phase 4b implementation plan (work/plan/phase-4b-implementation-plan.md) based on the completed Phase 4b specification. Define implementation tracks, build order within each track, test strategy, and acceptance criteria mapping."
 status: done
 estimate: 3

@@ -1,5 +1,6 @@
 id: FEAT-01KMZA2PPSFK9
 slug: agents-md-generation
+name: Agents md generation
 parent: P12-agent-onboarding
 status: done
 summary: "Generate AGENTS.md on kbz init with essential workflow rules, skill pointers, and version-aware conflict logic. Includes --skip-agents-md flag."

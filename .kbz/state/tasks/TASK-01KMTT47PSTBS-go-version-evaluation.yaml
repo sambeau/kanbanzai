@@ -1,6 +1,7 @@
 id: TASK-01KMTT47PSTBS
 parent_feature: FEAT-01KMTSPEE6BXS
 slug: go-version-evaluation
+name: Go version evaluation
 summary: "Evaluate whether Go 1.25.0 features are actually used in the codebase. If not, lower the version in go.mod to the latest stable release (1.24.x or 1.23.x). Document which features, if any, require 1.25.0. Verify go build and go test pass at the chosen version. Covers AC-6, AC-7."
 status: done
 completed: "2026-03-28T18:23:42Z"

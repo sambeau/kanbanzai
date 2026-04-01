@@ -1,5 +1,6 @@
 id: FEAT-01KN48ET59G8R
 slug: entity-names
+name: Entity names
 parent: P14-entity-names
 status: proposed
 summary: "Rename title→name on all entity types, add name to Feature/Task/Decision, retire label from Feature/Task, add project name to config.yaml and kbz init, enforce validation rules in code and skill guidance, backfill all existing state files."

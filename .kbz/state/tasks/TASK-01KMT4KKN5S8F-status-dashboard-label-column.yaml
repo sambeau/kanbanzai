@@ -1,6 +1,7 @@
 id: TASK-01KMT4KKN5S8F
 parent_feature: FEAT-01KMT40KKZZR5
 slug: status-dashboard-label-column
+name: Status dashboard label column
 summary: "Add conditional label column to status dashboard feature table: present when any feature in the scoped plan has a non-empty label, absent otherwise. Same conditional logic for task table within a feature view. Covers AC-28 to AC-30."
 status: done
 depends_on:

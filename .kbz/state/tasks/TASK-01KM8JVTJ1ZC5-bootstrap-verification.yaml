@@ -1,5 +1,6 @@
 id: TASK-01KM8JVTJ1ZC5
 parent_feature: FEAT-01KM8JTF0MK91
 slug: bootstrap-verification
+name: Bootstrap verification
 summary: Verify bootstrap acceptance criteria
 status: ready

@@ -1,6 +1,7 @@
 id: TASK-01KMNA5WQAVNW
 parent_feature: FEAT-01KMKRQV025FA
 slug: json-schema-generation
+name: JSON schema generation
 summary: "Implement JSON Schema generation from the Go public type layer (cmd/schemagen/ or go generate directive). Schema must cover all entity types with correct field types, required/optional classification, enum arrays, and schema_version encoded in $id or metadata. Output to schema/kanbanzai.schema.json. Add CI check that fails if committed schema diverges from generated output. Wire into GoReleaser as a release artefact."
 status: done
 files_planned:

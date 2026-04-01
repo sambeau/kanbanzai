@@ -1,6 +1,7 @@
 id: TASK-01KMTT3VZ2ZXQ
 parent_feature: FEAT-01KMTSPAV34HR
 slug: move-principles-to-skills
+name: Move principles to skills
 summary: "Add the Communicating With Humans principle (reference documents by name, not decision IDs) and the Documentation Accuracy principle (code is truth, spec is intent) to the appropriate kanbanzai skill files in .agents/skills/. Remove these sections from AGENTS.md after confirming the content is in the skills. Only modify .agents/skills/kanbanzai-*/SKILL.md files, not .skills/. Covers AC-5, AC-6, AC-7, AC-13."
 status: done
 files_planned:

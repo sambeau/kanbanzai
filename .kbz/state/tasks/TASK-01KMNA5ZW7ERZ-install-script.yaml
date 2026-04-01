@@ -1,6 +1,7 @@
 id: TASK-01KMNA5ZW7ERZ
 parent_feature: FEAT-01KMKRQT9QCPR
 slug: install-script
+name: Install script
 summary: "Write install.sh at the repository root. Must: detect host OS (uname -s) and architecture (uname -m), map to GoReleaser archive naming, download the correct archive from GitHub Releases, download and validate checksums.txt before extracting (abort with clear error if fails), install binary to /usr/local/bin (fallback to ~/.local/bin), be idempotent. Store at repository root for curl | sh usage."
 status: done
 files_planned:

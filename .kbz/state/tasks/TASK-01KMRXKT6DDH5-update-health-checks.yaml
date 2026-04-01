@@ -1,6 +1,7 @@
 id: TASK-01KMRXKT6DDH5
 parent_feature: FEAT-01KMRX1F47Z94
 slug: update-health-checks
+name: Update health checks
 summary: "'Update health check logic so reviewing and needs-rework are treated as non-terminal feature states (a feature in reviewing or needs-rework is not \"stuck\" and should not fire the \"all-terminal children but early-state feature\" warning). Verify merge gate integration: done is still required before merge, and reviewing/needs-rework do not unblock it. Covers spec AC-19 through AC-22.'"
 status: done
 depends_on:

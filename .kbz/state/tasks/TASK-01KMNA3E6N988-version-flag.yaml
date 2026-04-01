@@ -1,6 +1,7 @@
 id: TASK-01KMNA3E6N988
 parent_feature: FEAT-01KMKRQT9QCPR
 slug: version-flag
+name: Version flag
 summary: "Implement kanbanzai --version flag. The version string is injected at link time via go build -ldflags. GoReleaser sets it via {{ .Version }}. Exits with status 0 and prints \"kanbanzai <version>\"."
 status: done
 files_planned:

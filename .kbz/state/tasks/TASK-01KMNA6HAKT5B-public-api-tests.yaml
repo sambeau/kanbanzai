@@ -1,6 +1,7 @@
 id: TASK-01KMNA6HAKT5B
 parent_feature: FEAT-01KMKRQV025FA
 slug: public-api-tests
+name: Public api tests
 summary: "Write tests for the public schema interface: round-trip (write via internal types, parse via public types), unknown enum value handling (returned without error), drift detection (GetDocumentContent returns warning when file modified after hash recorded), and external-compilation verification via a _testexternal/ module that imports only public/ — must compile with no internal/ dependencies. Verify AC-1 (committed boundary paths), AC-2 (excluded paths)."
 status: done
 files_planned:

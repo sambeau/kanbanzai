@@ -1,6 +1,7 @@
 id: TASK-01KMNA4JKT3B9
 parent_feature: FEAT-01KMKRQV025FA
 slug: schema-version-field
+name: Schema version field
 summary: "Add schema_version field (MAJOR.MINOR.PATCH) to config.yaml output and parsing. Implement: format validation (reject malformed values); binary refusal when major version is newer than supported; migration prompt when schema is older; pre-1.0 detection (absent field) with prompt to run kanbanzai migrate."
 status: done
 files_planned:

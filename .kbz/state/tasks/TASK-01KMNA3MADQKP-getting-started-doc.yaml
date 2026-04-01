@@ -1,6 +1,7 @@
 id: TASK-01KMNA3MADQKP
 parent_feature: FEAT-01KMKRQVKBPRX
 slug: getting-started-doc
+name: Getting started doc
 summary: "Write docs/getting-started.md covering in order: installation (from source + prebuilt binaries), what Kanbanzai is (2-3 paragraphs), editor integration (Zed, Claude Desktop, VS Code, Cursor — each with copy-pasteable config snippet and verification step), kanbanzai init walkthrough, and first-plan tutorial (plan→feature→task→work queue). Register with doc_record_submit."
 status: done
 files_planned:

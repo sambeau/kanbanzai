@@ -1,6 +1,7 @@
 id: TASK-01KMZAHG5NFWK
 parent_feature: FEAT-01KMZA31HYW6A
 slug: skill-content-updates
+name: Skill content updates
 summary: "Add 'use MCP tools, don't write files directly' rule to getting-started skill and direct-write condition to workflow skill's emergency brake list. Additions only. Spec §5."
 status: done
 estimate: "1"

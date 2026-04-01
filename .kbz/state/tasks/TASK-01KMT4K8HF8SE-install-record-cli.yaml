@@ -1,6 +1,7 @@
 id: TASK-01KMT4K8HF8SE
 parent_feature: FEAT-01KMT40GZSMHB
 slug: install-record-cli
+name: Install record cli
 summary: "Add kbz install-record write [--by <source>] CLI subcommand. Writes install record using current git rev-parse HEAD SHA, os.Executable() path, and --by value (default: manual). Exits non-zero with diagnostic outside a kanbanzai-initialised directory. Covers AC-14 to AC-17."
 status: done
 depends_on:

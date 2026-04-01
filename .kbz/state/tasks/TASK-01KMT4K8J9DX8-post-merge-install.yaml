@@ -1,6 +1,7 @@
 id: TASK-01KMT4K8J9DX8
 parent_feature: FEAT-01KMT40GZSMHB
 slug: post-merge-install
+name: Post merge install
 summary: "Add post-merge install step to merge execute. Auto-triggers when cmd/kanbanzai/main.go exists at repo root. Opt-out via merge.post_merge_install: false in config. On success: appends install_complete side_effect with git_sha_short, binary_path, and restart message. On build failure: merge still succeeds; appends install_failed warning with error message. Covers AC-26 to AC-31."
 status: done
 depends_on:

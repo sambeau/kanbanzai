@@ -1,6 +1,7 @@
 id: TASK-01KMWJW306CZ9
 parent_feature: FEAT-01KMWJ3ZQZF5R
 slug: skip-roles-flag-update-skills
+name: Skip roles flag update skills
 summary: "Add SkipRoles bool to kbzinit.Options; parse --skip-roles in init_cmd.go; gate installRoles behind SkipRoles. Extend --update-skills path in init.go to call updateManagedRoles: updates reviewer.yaml if managed+older version, no-op if current, skips base.yaml entirely. Update --update-skills help text to mention role files."
 status: done
 depends_on:

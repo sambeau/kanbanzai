@@ -1,5 +1,6 @@
 id: FEAT-01KMRSMYB1ED7
 slug: entity-state-consistency
+name: Entity state consistency
 parent: P6-workflow-quality-and-review
 status: done
 summary: "Add health check rules that detect parent-child state inconsistencies: feature done with non-terminal children, all children terminal but feature in early state, worktree active but branch merged. Optionally surface warnings on get_entity responses."

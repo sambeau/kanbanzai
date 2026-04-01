@@ -1,6 +1,7 @@
 id: TASK-01KMT4KKNJZQ8
 parent_feature: FEAT-01KMT40KKZZR5
 slug: snapshot-test-updates
+name: Snapshot test updates
 summary: "Update all snapshot/golden tests that assert on entity response shape to reflect display_id promotion (first field) and presence of label field. Confirm all tests pass under go test -race ./.... Covers AC-32, AC-33."
 status: done
 depends_on:

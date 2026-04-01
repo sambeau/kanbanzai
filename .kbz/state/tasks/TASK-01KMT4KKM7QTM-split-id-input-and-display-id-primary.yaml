@@ -1,6 +1,7 @@
 id: TASK-01KMT4KKM7QTM
 parent_feature: FEAT-01KMT40KKZZR5
 slug: split-id-input-and-display-id-primary
+name: Split ID input and display ID primary
 summary: "Accept hyphenated display_id form (e.g. FEAT-01KMR-X1SEQV49) as equivalent to unsplit form in all entity lookup paths (get, update, transition, handoff, finish, etc.). Promote display_id as the first ID field in all tool responses. Show slug in parentheses after display_id everywhere (status, next, handoff, finish, entity list, entity get, side_effects). Covers AC-09 to AC-21."
 status: done
 files_planned:

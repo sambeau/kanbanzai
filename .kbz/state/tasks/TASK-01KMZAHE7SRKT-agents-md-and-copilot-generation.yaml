@@ -1,6 +1,7 @@
 id: TASK-01KMZAHE7SRKT
 parent_feature: FEAT-01KMZA2PPSFK9
 slug: agents-md-and-copilot-generation
+name: Agents md and copilot generation
 summary: "Create agents_md.go with AGENTS.md and copilot-instructions.md generation: templates, markdown managed-marker writer, version-aware conflict logic, --skip-agents-md flag, init integration, and tests. Spec §3 and §4."
 status: done
 estimate: "5"

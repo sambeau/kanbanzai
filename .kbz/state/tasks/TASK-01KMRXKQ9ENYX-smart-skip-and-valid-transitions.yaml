@@ -1,6 +1,7 @@
 id: TASK-01KMRXKQ9ENYX
 parent_feature: FEAT-01KMRX1F47Z94
 slug: smart-skip-and-valid-transitions
+name: Smart skip and valid transitions
 summary: "Update the smart-skip (advance: true) logic so it stops at reviewing and never jumps directly to done. Ensure ValidNextStates returns reviewing and needs-rework in the correct positions. Update all lifecycle transition error messages to include the list of valid next states. Covers spec AC-11 through AC-18."
 status: done
 depends_on:

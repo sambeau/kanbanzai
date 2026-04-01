@@ -1,6 +1,7 @@
 id: TASK-01KMNA3BK78CM
 parent_feature: FEAT-01KMKRQV025FA
 slug: public-go-types
+name: Public go types
 summary: "Create a public/ package exporting Go struct types for all committed entity types (Plan, Feature, Task, Bug, Decision, KnowledgeEntry, DocumentRecord, HumanCheckpoint) with YAML tags matching on-disk field names and exported constants for all enumerated values. The package must not import any internal/ package."
 status: done
 files_planned:

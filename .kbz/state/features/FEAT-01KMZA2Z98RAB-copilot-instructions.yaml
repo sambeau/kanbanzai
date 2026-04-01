@@ -1,5 +1,6 @@
 id: FEAT-01KMZA2Z98RAB
 slug: copilot-instructions
+name: Copilot instructions
 parent: P12-agent-onboarding
 status: done
 summary: Generate .github/copilot-instructions.md on kbz init as a thin pointer to AGENTS.md. Same managed-marker pattern.

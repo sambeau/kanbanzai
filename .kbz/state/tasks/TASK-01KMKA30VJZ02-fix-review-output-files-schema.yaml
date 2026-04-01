@@ -1,6 +1,7 @@
 id: TASK-01KMKA30VJZ02
 parent_feature: FEAT-01KMKA278DFNV
 slug: fix-review-output-files-schema
+name: Fix review output files schema
 summary: Change mcp.WithObject to mcp.WithArray for output_files in review_task_output tool declaration (fixes R4B-3)
 status: done
 files_planned:

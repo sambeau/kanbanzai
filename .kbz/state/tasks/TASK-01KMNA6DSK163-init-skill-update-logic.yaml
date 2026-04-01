@@ -1,5 +1,6 @@
 id: TASK-01KMNA6DSK163
 parent_feature: FEAT-01KMKRQRRX3CC
 slug: init-skill-update-logic
+name: Init skill update logic
 summary: "Implement skill update logic: read kanbanzai-version from existing skill file frontmatter; no-op (do not modify file or change mtime) if version matches current binary; overwrite and update version comment if installed version is older. --update-skills flag: update managed skills only, skip config and work/ directory steps. Conflicting unmanaged skill (kanbanzai-* path without managed marker): exit non-zero, name the file, do not modify it."
 status: not-planned

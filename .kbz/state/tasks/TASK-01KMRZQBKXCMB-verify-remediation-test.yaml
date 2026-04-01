@@ -1,5 +1,6 @@
 id: TASK-01KMRZQBKXCMB
 parent_feature: FEAT-01KMRX1F47Z94
 slug: verify-remediation-test
+name: Verify remediation test
 summary: "Tool chain verification: test remediation task created as a child of FEAT-01KMRX1F47Z94 to verify AC-F-12. This task should be not-planned after verification."
 status: not-planned

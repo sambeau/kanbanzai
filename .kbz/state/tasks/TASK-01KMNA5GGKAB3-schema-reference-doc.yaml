@@ -1,6 +1,7 @@
 id: TASK-01KMNA5GGKAB3
 parent_feature: FEAT-01KMKRQVKBPRX
 slug: schema-reference-doc
+name: Schema reference doc
 summary: "Write docs/schema-reference.md covering: annotated .kbz/ directory tree, YAML serialisation rules, per-entity-type field tables with required/optional and valid enum values plus example YAML, lifecycle state machine tables for all entities with a status field, ULID-based ID format, Plan ID format and prefix registry, and referential integrity rules. Register with doc_record_submit."
 status: done
 files_planned:

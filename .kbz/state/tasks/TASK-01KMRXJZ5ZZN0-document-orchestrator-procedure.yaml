@@ -1,6 +1,7 @@
 id: TASK-01KMRXJZ5ZZN0
 parent_feature: FEAT-01KMRX1QPN3CB
 slug: document-orchestrator-procedure
+name: Document orchestrator procedure
 summary: "Extend .skills/code-review.md with an orchestration section covering: two-phase structure (analysis/remediation), full step sequence for each phase (steps 1–10 from design §5), context budget strategy (orchestrator works at metadata level, sub-agents at review unit level), tool chain reference table (which tools at each step), and human checkpoint integration points. Does NOT create a new MCP tool. Covers spec AC-F-01 through AC-F-06."
 status: done
 depends_on:

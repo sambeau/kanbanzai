@@ -1,6 +1,7 @@
 id: TASK-01KMWJVRGF5QN
 parent_feature: FEAT-01KMWJ3ZQKK7C
 slug: update-doc-currency-checker
+name: Update doc currency checker
 summary: "Update internal/mcp/doc_currency_health.go: in collectTier1Files(), replace .skills/*.md scan with .agents/skills/kanbanzai-*/SKILL.md scan using filepath.Glob or ReadDir. Update internal/mcp/doc_currency_health_test.go: change writeSkillFile helper to write to .agents/skills/kanbanzai-test/SKILL.md, update all path string assertions and test expectations. All existing tests must pass with the new scan target."
 status: done
 files_planned:

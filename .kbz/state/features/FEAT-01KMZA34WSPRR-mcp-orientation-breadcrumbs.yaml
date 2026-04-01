@@ -1,5 +1,6 @@
 id: FEAT-01KMZA34WSPRR
 slug: mcp-orientation-breadcrumbs
+name: MCP orientation breadcrumbs
 parent: P12-agent-onboarding
 status: done
 summary: Add orientation field to status (project overview) and next (empty queue) responses pointing agents to the getting-started skill.

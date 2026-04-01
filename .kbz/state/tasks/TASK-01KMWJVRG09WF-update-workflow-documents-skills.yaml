@@ -1,6 +1,7 @@
 id: TASK-01KMWJVRG09WF
 parent_feature: FEAT-01KMWJ3ZQKK7C
 slug: update-workflow-documents-skills
+name: Update workflow documents skills
 summary: "Update internal/kbzinit/skills/workflow/SKILL.md: add reviewing and needs-rework to the Stage Gates table, describe what each state means and how to enter/exit, link to kanbanzai-review for the review procedure. Update internal/kbzinit/skills/documents/SKILL.md: replace 5-row type/directory table with 8-row table including plan and retrospective types; update description frontmatter to list all 8 document roots. Neither file should reference .skills/ anywhere."
 status: done
 depends_on:

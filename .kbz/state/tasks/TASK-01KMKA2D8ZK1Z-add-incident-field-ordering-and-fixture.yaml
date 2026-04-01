@@ -1,6 +1,7 @@
 id: TASK-01KMKA2D8ZK1Z
 parent_feature: FEAT-01KMKA278DFNV
 slug: add-incident-field-ordering-and-fixture
+name: Add incident field ordering and fixture
 summary: Add incident field ordering to fieldOrderForEntityType; add testdata/entities/incident.yaml fixture; add to TestCanonicalYAML_FixturesRoundTrip (fixes R4B-1 and R4B-5)
 status: done
 files_planned:
