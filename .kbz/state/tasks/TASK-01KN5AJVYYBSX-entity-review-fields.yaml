@@ -2,4 +2,11 @@ id: TASK-01KN5AJVYYBSX
 parent_feature: FEAT-01KN58J2606B0
 slug: entity-review-fields
 summary: "Add review_cycle (int, default 0) and blocked_reason (string) fields to the Feature entity model and YAML storage with backward compatibility."
-status: ready
+status: done
+files_planned:
+  - internal/model/entities.go
+  - internal/storage/entity_store.go
+  - internal/mcp/entity_tool.go
+completed: "2026-04-01T21:47:06Z"
+completion_summary: "Added review_cycle (int, omitempty) and blocked_reason (string, omitempty) to Feature struct in internal/model/entities.go, inserted them into canonical field order in internal/storage/entity_store.go (after status, before estimate), and updated featureFromState in entity_tool.go to read both fields."
+verification: go build ./... and go test ./internal/model/... ./internal/storage/... ./internal/service/... ./internal/structural/... all pass

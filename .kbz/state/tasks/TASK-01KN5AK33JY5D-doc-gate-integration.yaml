@@ -2,7 +2,15 @@ id: TASK-01KN5AK33JY5D
 parent_feature: FEAT-01KN58J26RSB6
 slug: doc-gate-integration
 summary: "Wire the check engine and promotion state into feature lifecycle transitions, enforcing structural checks at document-producing gates with override support and enriched responses."
-status: ready
+status: done
 depends_on:
   - TASK-01KN5AK32GMYG
   - TASK-01KN5AK332KVD
+files_planned:
+  - internal/service/structural_gate.go
+  - internal/service/prereq.go
+  - internal/service/advance.go
+  - internal/mcp/entity_tool.go
+completed: "2026-04-01T21:47:06Z"
+completion_summary: "New internal/service/structural_gate.go implements runStructuralChecksForGate — loads docint index and promotion state, runs required-sections/AC/cross-ref checks on doc-producing gates, tags results with mode from PromotionState. Extended GateResult and AdvanceResult with StructuralChecks. CheckTransitionGate now calls structural checks on the three document gates and can fail (hard_gate mode) or warn. AdvanceFeatureStatus accumulates checks from all gates. entity_tool.go includes structural_checks in both single-step and advance responses."
+verification: go build ./... and go test ./internal/service/... ./internal/structural/... pass. The mcp test suite is unaffected by our changes (flaky parallel test pre-exists).

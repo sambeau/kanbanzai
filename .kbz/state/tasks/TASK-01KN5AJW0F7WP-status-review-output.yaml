@@ -2,6 +2,6 @@ id: TASK-01KN5AJW0F7WP
 parent_feature: FEAT-01KN58J2606B0
 slug: status-review-output
 summary: "Surface review_cycle and blocked_reason in the status tool feature detail and entity get responses, with an attention item when blocked."
-status: queued
+status: ready
 depends_on:
   - TASK-01KN5AJVYYBSX
