@@ -4,9 +4,12 @@
 // needs-rework) task. The prompt is designed for direct use in
 // spawn_agent(message=...). The tool is read-only: it does not modify task status.
 //
-// Context assembly uses the shared pipeline in assembly.go (spec §11.5,
-// implementation plan §3.4). The difference from next is output format:
-// handoff renders a Markdown prompt; next returns structured data.
+// Context assembly uses two paths:
+//  1. New 10-step pipeline (3.0): when a stage binding exists for the task's parent
+//     feature lifecycle stage, the pipeline assembles attention-curve-ordered context
+//     with roles, skills, vocabulary, anti-patterns, and token budget management.
+//  2. Legacy assembly (2.0): when no stage binding exists or the pipeline is not
+//     configured, falls back to the shared assembleContext() in assembly.go.
 //
 // Accepted statuses: active, ready, needs-rework.
 // Terminal statuses (done, not-planned, duplicate) return an error.
@@ -38,14 +41,21 @@ var commitStateFunc = func(repoRoot string) (bool, error) {
 }
 
 // HandoffTools returns the `handoff` MCP tool registered in the core group.
+//
+// The pipeline parameter is optional. When non-nil, the handler attempts the
+// 10-step assembly pipeline for tasks whose parent feature has a stage binding.
+// When nil (or when no binding exists for the stage), the handler falls back to
+// the legacy assembleContext() path, preserving full backward compatibility
+// (NFR-003).
 func HandoffTools(
 	entitySvc *service.EntityService,
 	profileStore *kbzctx.ProfileStore,
 	knowledgeSvc *service.KnowledgeService,
 	intelligenceSvc *service.IntelligenceService,
 	docRecordSvc *service.DocumentService,
+	pipeline *kbzctx.Pipeline,
 ) []server.ServerTool {
-	return []server.ServerTool{handoffTool(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc)}
+	return []server.ServerTool{handoffTool(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, pipeline)}
 }
 
 func handoffTool(
@@ -54,6 +64,7 @@ func handoffTool(
 	knowledgeSvc *service.KnowledgeService,
 	intelligenceSvc *service.IntelligenceService,
 	docRecordSvc *service.DocumentService,
+	pipeline *kbzctx.Pipeline,
 ) server.ServerTool {
 	tool := mcp.NewTool("handoff",
 		mcp.WithReadOnlyHintAnnotation(true),
@@ -125,8 +136,30 @@ func handoffTool(
 			log.Printf("[handoff] pre-dispatch state commit created for task %s", taskID)
 		}
 
-		// Assemble context using the shared pipeline (assembly.go).
+		// ── Attempt 3.0 pipeline assembly ──────────────────────────────────
+		//
+		// The pipeline is used when:
+		//   1. A *Pipeline is configured (non-nil).
+		//   2. The task has a parent feature.
+		//   3. The parent feature's lifecycle stage has a binding in the registry.
+		//
+		// If any of these conditions fail, we fall back to the legacy 2.0 path.
+		// Pipeline errors (missing role, missing skill, token budget exceeded)
+		// are returned as tool errors — they indicate misconfiguration that the
+		// user should fix, not something to silently degrade through.
+
 		parentFeature, _ := task.State["parent_feature"].(string)
+
+		if pipelineResult, used := tryPipeline(pipeline, entitySvc, task.State, parentFeature, role, instructions); used {
+			if pipelineResult.err != nil {
+				return mcp.NewToolResultText(handoffErrorJSON("pipeline_error",
+					pipelineResult.err.Error())), nil
+			}
+			return buildPipelineResponse(task, pipelineResult.result)
+		}
+
+		// ── Legacy 2.0 assembly fallback ───────────────────────────────────
+
 		actx := assembleContext(asmInput{
 			taskState:       task.State,
 			parentFeature:   parentFeature,
@@ -138,46 +171,149 @@ func handoffTool(
 			entitySvc:       entitySvc,
 		})
 
-		// Render the Markdown prompt.
 		prompt := renderHandoffPrompt(task.State, actx, instructions)
-
-		trimmedOut := make([]map[string]any, len(actx.trimmed))
-		for i, te := range actx.trimmed {
-			trimmedOut[i] = map[string]any{
-				"type":       te.entryType,
-				"topic":      te.topic,
-				"size_bytes": te.sizeBytes,
-			}
-		}
-
-		displayID := id.FormatFullDisplay(task.ID)
-		slug, _ := task.State["slug"].(string)
-		label, _ := task.State["label"].(string)
-		resp := map[string]any{
-			"task_id":    task.ID,
-			"display_id": displayID,
-			"entity_ref": id.FormatEntityRef(displayID, slug, label),
-			"prompt":     prompt,
-			"context_metadata": map[string]any{
-				"spec_sections_included":     len(actx.specSections),
-				"knowledge_entries_included": len(actx.knowledge),
-				"byte_usage":                 actx.byteUsage,
-				"byte_budget":                actx.byteBudget,
-				"trimmed":                    trimmedOut,
-			},
-		}
-
-		data, err := json.MarshalIndent(resp, "", "  ")
-		if err != nil {
-			return mcp.NewToolResultError(fmt.Sprintf("marshal result: %s", err)), nil
-		}
-		return mcp.NewToolResultText(string(data)), nil
+		return buildLegacyResponse(task, actx, prompt)
 	}
 
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
 
-// ─── Prompt rendering ─────────────────────────────────────────────────────────
+// ─── Pipeline integration ─────────────────────────────────────────────────────
+
+// pipelineAttempt holds the result of trying the 3.0 pipeline.
+type pipelineAttempt struct {
+	result *kbzctx.PipelineResult
+	err    error
+}
+
+// tryPipeline attempts to use the 3.0 pipeline for context assembly.
+// Returns (result, true) if the pipeline was used (success or error).
+// Returns (nil, false) if the pipeline should not be used and the caller
+// should fall back to legacy assembly.
+func tryPipeline(
+	pipeline *kbzctx.Pipeline,
+	entitySvc *service.EntityService,
+	taskState map[string]any,
+	parentFeature string,
+	role string,
+	instructions string,
+) (pipelineAttempt, bool) {
+	if pipeline == nil {
+		return pipelineAttempt{}, false
+	}
+	if parentFeature == "" {
+		return pipelineAttempt{}, false
+	}
+
+	// Load the parent feature to get its lifecycle status.
+	feat, err := entitySvc.Get("feature", parentFeature, "")
+	if err != nil {
+		// Can't resolve feature — fall back to legacy.
+		log.Printf("[handoff] pipeline: cannot load feature %s, falling back to legacy: %v", parentFeature, err)
+		return pipelineAttempt{}, false
+	}
+
+	featureStatus, _ := feat.State["status"].(string)
+
+	// Check whether a binding exists for this stage before committing to the
+	// pipeline. If no binding exists, we fall back to legacy gracefully.
+	if pipeline.Bindings != nil {
+		if _, bindErr := pipeline.Bindings.Lookup(featureStatus); bindErr != nil {
+			// No binding for this stage — fall back to legacy.
+			log.Printf("[handoff] pipeline: no binding for stage %q, falling back to legacy", featureStatus)
+			return pipelineAttempt{}, false
+		}
+	} else {
+		// No binding resolver at all — fall back to legacy.
+		return pipelineAttempt{}, false
+	}
+
+	// Pipeline is applicable — run it. From this point, errors are returned
+	// to the caller rather than triggering a fallback, because they indicate
+	// real problems (missing role file, missing skill, budget exceeded).
+	input := kbzctx.PipelineInput{
+		TaskID:       taskState["id"].(string),
+		TaskState:    taskState,
+		FeatureState: feat.State,
+		Role:         role,
+		Instructions: instructions,
+	}
+
+	result, runErr := pipeline.Run(input)
+	return pipelineAttempt{result: result, err: runErr}, true
+}
+
+// buildPipelineResponse constructs the MCP tool response from a pipeline result.
+func buildPipelineResponse(task service.GetResult, result *kbzctx.PipelineResult) (*mcp.CallToolResult, error) {
+	prompt := kbzctx.RenderPrompt(result)
+
+	displayID := id.FormatFullDisplay(task.ID)
+	slug, _ := task.State["slug"].(string)
+	label, _ := task.State["label"].(string)
+
+	sectionLabels := make([]string, len(result.Sections))
+	for i, s := range result.Sections {
+		sectionLabels[i] = s.Label
+	}
+
+	resp := map[string]any{
+		"task_id":    task.ID,
+		"display_id": displayID,
+		"entity_ref": id.FormatEntityRef(displayID, slug, label),
+		"prompt":     prompt,
+		"context_metadata": map[string]any{
+			"assembly_path":     "pipeline-3.0",
+			"sections":          sectionLabels,
+			"total_tokens":      result.TotalTokens,
+			"token_warning":     result.TokenWarning,
+			"metadata_warnings": result.MetadataWarnings,
+		},
+	}
+
+	data, err := json.MarshalIndent(resp, "", "  ")
+	if err != nil {
+		return mcp.NewToolResultError(fmt.Sprintf("marshal result: %s", err)), nil
+	}
+	return mcp.NewToolResultText(string(data)), nil
+}
+
+// buildLegacyResponse constructs the MCP tool response from legacy assembly.
+func buildLegacyResponse(task service.GetResult, actx assembledContext, prompt string) (*mcp.CallToolResult, error) {
+	trimmedOut := make([]map[string]any, len(actx.trimmed))
+	for i, te := range actx.trimmed {
+		trimmedOut[i] = map[string]any{
+			"type":       te.entryType,
+			"topic":      te.topic,
+			"size_bytes": te.sizeBytes,
+		}
+	}
+
+	displayID := id.FormatFullDisplay(task.ID)
+	slug, _ := task.State["slug"].(string)
+	label, _ := task.State["label"].(string)
+	resp := map[string]any{
+		"task_id":    task.ID,
+		"display_id": displayID,
+		"entity_ref": id.FormatEntityRef(displayID, slug, label),
+		"prompt":     prompt,
+		"context_metadata": map[string]any{
+			"assembly_path":              "legacy-2.0",
+			"spec_sections_included":     len(actx.specSections),
+			"knowledge_entries_included": len(actx.knowledge),
+			"byte_usage":                 actx.byteUsage,
+			"byte_budget":                actx.byteBudget,
+			"trimmed":                    trimmedOut,
+		},
+	}
+
+	data, err := json.MarshalIndent(resp, "", "  ")
+	if err != nil {
+		return mcp.NewToolResultError(fmt.Sprintf("marshal result: %s", err)), nil
+	}
+	return mcp.NewToolResultText(string(data)), nil
+}
+
+// ─── Prompt rendering (legacy 2.0 path) ───────────────────────────────────────
 
 // renderHandoffPrompt builds the Markdown prompt string from assembled context.
 func renderHandoffPrompt(taskState map[string]any, actx assembledContext, instructions string) string {

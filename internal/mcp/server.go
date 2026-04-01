@@ -1,10 +1,12 @@
 package mcp
 
 import (
+	"log"
 	"path/filepath"
 
 	"github.com/mark3labs/mcp-go/server"
 
+	"github.com/sambeau/kanbanzai/internal/binding"
 	"github.com/sambeau/kanbanzai/internal/cache"
 	"github.com/sambeau/kanbanzai/internal/checkpoint"
 	"github.com/sambeau/kanbanzai/internal/config"
@@ -12,6 +14,7 @@ import (
 	"github.com/sambeau/kanbanzai/internal/core"
 	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/skill"
 	"github.com/sambeau/kanbanzai/internal/validate"
 	"github.com/sambeau/kanbanzai/internal/worktree"
 )
@@ -68,6 +71,24 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	roleLegacyRoot := profileRoot
 	roleStore := kbzctx.NewRoleStore(roleNewRoot, roleLegacyRoot)
 
+	// 3.0 skill store: reads from .kbz/skills/.
+	skillRoot := filepath.Join(core.InstanceRootDir, "skills")
+	skillStore := skill.NewSkillStore(skillRoot)
+
+	// 3.0 context assembly pipeline: constructed if a stage-bindings.yaml exists.
+	// When nil, handoff falls back to the legacy 2.0 assembly path (NFR-003).
+	var pipeline *kbzctx.Pipeline
+	bindingPath := filepath.Join(core.InstanceRootDir, "stage-bindings.yaml")
+	if bf, errs := binding.LoadBindingFile(bindingPath); bf != nil && len(errs) == 0 {
+		pipeline = &kbzctx.Pipeline{
+			Roles:     &kbzctx.RoleStoreAdapter{Store: roleStore},
+			Skills:    &kbzctx.SkillStoreAdapter{Store: skillStore},
+			Bindings:  &kbzctx.BindingFileAdapter{File: bf},
+			Knowledge: kbzctx.NoOpSurfacer{},
+		}
+		log.Printf("[server] 3.0 context assembly pipeline loaded with %d stage bindings", len(bf.StageBindings))
+	}
+
 	mcpServer := server.NewMCPServer(
 		ServerName,
 		ServerVersion,
@@ -117,8 +138,8 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		mcpServer.AddTools(FinishTools(entitySvc, dispatchSvc)...)
 		// Track F: next — work queue inspection and task claiming
 		mcpServer.AddTools(NextTools(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc)...)
-		// Track G: handoff — sub-agent prompt generation
-		mcpServer.AddTools(HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc)...)
+		// Track G: handoff — sub-agent prompt generation (3.0 pipeline + legacy fallback)
+		mcpServer.AddTools(HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, pipeline)...)
 		// Track H: entity — consolidated entity CRUD
 		mcpServer.AddTools(EntityTool(entitySvc, docRecordSvc)...)
 		// Track I: doc — consolidated document operations

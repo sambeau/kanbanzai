@@ -1,0 +1,11 @@
+id: TASK-01KN5D2PMBW4H
+parent_feature: FEAT-01KN588PE43M6
+slug: pipeline-steps-8-10-output
+summary: "Implement pipeline steps 8-10: tool subset guidance generation (step 8), token budget estimation with 40% warning and 60% refusal (step 9), progressive disclosure layers (FR-018), attention-curve output ordering (step 10). FR-012 through FR-018, NFR-001, NFR-002."
+status: done
+files_planned:
+  - internal/context/pipeline.go
+  - internal/context/pipeline_test.go
+completed: "2026-04-01T20:58:44Z"
+completion_summary: "Steps 8-10 implemented as Pipeline methods in pipeline.go during Task 1. stepToolGuidance (soft filtering), stepTokenBudget (40% warn, 60% refuse), stepAssembleSections (10-position attention-curve ordering), stepBuildResult, RenderPrompt. Progressive disclosure layers assigned. 15 dedicated tests including budget thresholds, layer assignment, determinism."
+verification: "Tests: TestStepToolGuidance_*, TestStepTokenBudget_*, TestStepBuildResult_*, TestLayerAssignment, TestPipelineRun_Deterministic — all pass"

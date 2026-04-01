@@ -2,4 +2,11 @@ id: TASK-01KN5AK7ZD7PV
 parent_feature: FEAT-01KN58J275BWJ
 slug: eval-suite-framework
 summary: "Create the evaluation suite directory structure, scenario YAML schema validation, and 15-20 scenario files covering all five evaluation categories."
-status: active
+status: done
+files_planned:
+  - internal/actionlog/scenario.go
+  - internal/actionlog/scenario_test.go
+  - work/evaluation/README.md
+  - work/evaluation/scenarios/
+completed: "2026-04-01T21:01:14Z"
+completion_summary: "Created scenario.go with Scenario struct, validCategories map, and LoadScenario with full validation. 20 scenario YAML files across all 5 categories (5 happy-path, 4 gate-failure-recovery, 3 review-rework-loop, 3 multi-feature-orchestration, 3 edge-case... actually 5+4+3+2+3+3=20). work/evaluation/README.md explains purpose, how to run, interpret results, and maintenance discipline. All scenario files parse and validate correctly."

@@ -1,0 +1,16 @@
+id: TASK-01KN5D2PJTMWZ
+parent_feature: FEAT-01KN588PE43M6
+slug: pipeline-data-types
+summary: "Define core data types and step interfaces for the 10-step assembly pipeline. PipelineInput, PipelineResult, PipelineSection, PipelineState types. Interfaces for RoleLoader, SkillLoader, BindingLookup, KnowledgeSurfacer. Pipeline orchestrator that runs steps in sequence. FR-001, FR-016, FR-018, NFR-005."
+status: done
+files_planned:
+  - internal/context/pipeline.go
+  - internal/context/pipeline_adapters.go
+  - internal/context/pipeline_test.go
+completed: "2026-04-01T20:58:16Z"
+claimed_at: "2026-04-01T20:52:18Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-01T20:52:18Z"
+dispatched_by: sambeau
+completion_summary: "Created pipeline data types, interfaces, production adapters, and orchestrator in 3 files (2,135 lines). Defined PipelineInput/Result/Section/State types, RoleResolver/SkillResolver/BindingResolver/KnowledgeSurfacer interfaces, and Pipeline.Run() orchestrator executing all 10 steps. 52 passing tests cover all steps, merge ordering, determinism, error paths, adapters, and rendering."
+verification: go test ./internal/context/... -count=1 — all 52 new tests pass. go test ./... — all 22 packages pass.

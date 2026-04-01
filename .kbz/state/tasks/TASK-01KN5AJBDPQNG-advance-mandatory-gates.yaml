@@ -2,7 +2,14 @@ id: TASK-01KN5AJBDPQNG
 parent_feature: FEAT-01KN58J24S2XW
 slug: advance-mandatory-gates
 summary: "Update AdvanceFeatureStatus to enforce gates on every step, accept override+reason parameters, and log each overridden gate as an OverrideRecord on the feature."
-status: ready
+status: done
 depends_on:
   - TASK-01KN5AJBC2072
   - TASK-01KN5AJBCNCFV
+files_planned:
+  - internal/service/advance.go
+  - internal/service/advance_test.go
+  - internal/mcp/entity_tool.go
+  - internal/mcp/entity_tool_test.go
+completed: "2026-04-01T21:02:56Z"
+completion_summary: "Updated AdvanceFeatureStatus with override bool/overrideReason params, OverriddenGates field on AdvanceResult, and CheckTransitionGate at every step including the target. Updated advance_test.go to reflect new gate semantics (proposed→designing now ungated), added 7 override tests. Fixed entity_tool.go call signature. Fixed entity_tool_test.go expectation for StopsAtGate test."

@@ -151,7 +151,7 @@ func callHandoff(
 	args map[string]any,
 ) string {
 	t.Helper()
-	tool := handoffTool(entitySvc, profileStore, knowledgeSvc, nil, nil)
+	tool := handoffTool(entitySvc, profileStore, knowledgeSvc, nil, nil, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
