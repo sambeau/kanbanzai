@@ -1,0 +1,17 @@
+name: Edge case - worktree auto-created on task active
+description: Tests that when a task transitions to active, a Git worktree is
+  automatically created as a side effect, and the side_effects array reports it.
+category: edge-case
+starting_state:
+  feature_stage: developing
+  tasks:
+    - status: ready
+      slug: implement-feature
+expected_pattern:
+  tool_sequence:
+    - entity (transition task to active)
+  key_transitions: [active]
+success_criteria:
+  - entity transition returns side_effects containing a worktree_created entry
+  - worktree directory exists at the reported path
+  - Branch name follows the expected naming convention

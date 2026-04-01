@@ -1,0 +1,20 @@
+name: Gate failure recovery - missing specification document
+description: Tests recovery when an agent tries to advance from specifying to
+  dev-planning without an approved specification document.
+category: gate-failure-recovery
+starting_state:
+  feature_stage: specifying
+  documents:
+    - type: design
+      status: approved
+expected_pattern:
+  tool_sequence:
+    - entity (transition to dev-planning - FAILS: no approved spec)
+    - doc (register specification)
+    - doc (approve specification)
+    - entity (transition to dev-planning - succeeds)
+  key_transitions: [dev-planning]
+success_criteria:
+  - Transition to dev-planning fails with gate error on first attempt
+  - Agent creates and approves a specification document
+  - Feature reaches dev-planning after recovery

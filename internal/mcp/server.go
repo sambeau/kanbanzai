@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"path/filepath"
+	"strings"
+	"time"
 
 	"github.com/mark3labs/mcp-go/server"
 
@@ -19,6 +21,8 @@ import (
 	"github.com/sambeau/kanbanzai/internal/skill"
 	"github.com/sambeau/kanbanzai/internal/validate"
 	"github.com/sambeau/kanbanzai/internal/worktree"
+
+	"github.com/sambeau/kanbanzai/internal/actionlog"
 )
 
 const (
@@ -126,6 +130,11 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		),
 	)
 
+	// Action-pattern logging: create writer and hook.
+	// Writer appends JSONL to .kbz/logs/; hook wraps every tool handler.
+	logWriter := actionlog.NewWriter(actionlog.LogsDir())
+	logHook := actionlog.NewHook(logWriter, &entityStageLookup{svc: entitySvc})
+
 	// Load local config for GitHub token (best-effort).
 	localConfig, _ := config.LoadLocalConfig()
 
@@ -218,11 +227,17 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		)...)
 	}
 
+	// Wrap all registered tool handlers with the action-pattern logging hook.
+	wrapAllTools(mcpServer, logHook)
+
 	return mcpServer
 }
 
 // Serve starts the MCP server on stdio transport.
 func Serve() error {
+	// Best-effort log cleanup — remove log files older than 30 days.
+	_ = actionlog.Cleanup(actionlog.LogsDir(), time.Now().UTC())
+
 	mcpServer := NewServer("")
 	return server.ServeStdio(mcpServer)
 }
@@ -321,4 +336,72 @@ func capSaturationHealthChecker(tracker *knowledge.CapTracker) AdditionalHealthC
 		report.Summary.WarningCount = len(report.Warnings)
 		return report, nil
 	}
+}
+
+// ─── Action-log integration ───────────────────────────────────────────────────
+
+// entityStageLookup adapts *service.EntityService to actionlog.StageLookup.
+type entityStageLookup struct {
+	svc *service.EntityService
+}
+
+// GetEntityKindAndParent returns the entity kind and parent feature ID for entityID.
+// Kind is inferred from the ID prefix; parent_feature is read from the entity record.
+func (l *entityStageLookup) GetEntityKindAndParent(entityID string) (kind, parentFeatureID string, err error) {
+	entityType := entityTypeFromPrefix(entityID)
+	if entityType == "" {
+		return "", "", fmt.Errorf("unknown entity ID prefix: %s", entityID)
+	}
+	result, err := l.svc.Get(entityType, entityID, "")
+	if err != nil {
+		return "", "", err
+	}
+	parent, _ := result.State["parent_feature"].(string)
+	return entityType, parent, nil
+}
+
+// GetFeatureStage returns the lifecycle status for featureID.
+func (l *entityStageLookup) GetFeatureStage(featureID string) (string, error) {
+	result, err := l.svc.Get("feature", featureID, "")
+	if err != nil {
+		return "", err
+	}
+	stage, _ := result.State["status"].(string)
+	return stage, nil
+}
+
+// entityTypeFromPrefix determines an entity's service type from its ID prefix.
+func entityTypeFromPrefix(id string) string {
+	switch {
+	case strings.HasPrefix(id, "FEAT-"):
+		return "feature"
+	case strings.HasPrefix(id, "TASK-"):
+		return "task"
+	case strings.HasPrefix(id, "BUG-"):
+		return "bug"
+	case strings.HasPrefix(id, "DEC-"):
+		return "decision"
+	case strings.HasPrefix(id, "INC-"):
+		return "incident"
+	default:
+		return ""
+	}
+}
+
+// wrapAllTools wraps every tool handler registered in mcpServer with the
+// action-pattern logging hook. It uses ListTools + SetTools to apply the
+// wrapping after all tools have been registered.
+func wrapAllTools(mcpServer *server.MCPServer, hook *actionlog.Hook) {
+	if hook == nil {
+		return
+	}
+	toolMap := mcpServer.ListTools()
+	wrapped := make([]server.ServerTool, 0, len(toolMap))
+	for _, t := range toolMap {
+		inner := t.Handler
+		name := t.Tool.Name
+		t.Handler = server.ToolHandlerFunc(hook.Wrap(name, actionlog.HandlerFunc(inner)))
+		wrapped = append(wrapped, *t)
+	}
+	mcpServer.SetTools(wrapped...)
 }

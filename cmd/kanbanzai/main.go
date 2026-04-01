@@ -141,6 +141,8 @@ func run(args []string, deps dependencies) error {
 		return runCheckpoint(args[1:], deps)
 	case "task":
 		return runTask(args[1:], deps)
+	case "metrics":
+		return runMetrics(args[1:], deps)
 
 	// ── Utility commands ─────────────────────────────────────────────────
 	case "validate":
@@ -332,6 +334,7 @@ Feature group commands:
   incident <action> [opts]   Create, list, and show incidents
   checkpoint <action> [opts] Create or respond to human checkpoints
   task review <id>           Review completed task output
+  metrics [opts]             Show action-pattern metrics
 
 Utility commands:
   validate [flags]           Validate a candidate entity

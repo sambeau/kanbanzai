@@ -1,0 +1,24 @@
+name: Review rework loop - specification refresh required
+description: Tests that an agent handles a review finding requiring a specification
+  update - returns to developing, refreshes and re-approves the spec, then re-reviews.
+category: review-rework-loop
+starting_state:
+  feature_stage: reviewing
+  documents:
+    - type: design
+      status: approved
+    - type: specification
+      status: approved
+    - type: dev-plan
+      status: approved
+expected_pattern:
+  tool_sequence:
+    - entity (transition back to developing)
+    - doc (refresh specification - marks as draft)
+    - doc (approve refreshed specification)
+    - entity (transition to reviewing)
+  key_transitions: [developing, reviewing]
+success_criteria:
+  - Feature returns to developing from reviewing
+  - Specification document is refreshed and re-approved
+  - Feature reaches reviewing again with updated documents

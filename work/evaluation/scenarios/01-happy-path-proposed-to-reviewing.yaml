@@ -1,0 +1,31 @@
+name: Happy path - feature from proposed to reviewing
+description: Tests that an agent correctly guides a new feature through all lifecycle
+  stages from proposed to reviewing, satisfying every stage-gate prerequisite.
+category: happy-path
+starting_state:
+  feature_stage: proposed
+  documents: []
+  tasks: []
+expected_pattern:
+  tool_sequence:
+    - entity (transition to designing)
+    - doc (register design document)
+    - doc (approve design document)
+    - entity (transition to specifying)
+    - doc (register specification)
+    - doc (approve specification)
+    - entity (transition to dev-planning)
+    - doc (register dev-plan)
+    - doc (approve dev-plan)
+    - decompose (propose)
+    - decompose (apply)
+    - entity (transition to developing)
+    - finish (complete all tasks)
+    - entity (transition to reviewing)
+  key_transitions: [designing, specifying, dev-planning, developing, reviewing]
+success_criteria:
+  - Feature reaches reviewing stage
+  - At least one approved design document exists
+  - At least one approved specification document exists
+  - At least one approved dev-plan document exists
+  - All child tasks are in a terminal state before transition to reviewing

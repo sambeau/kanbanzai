@@ -1,0 +1,20 @@
+name: Happy path - human checkpoint creation and response
+description: Tests that an agent correctly creates a human checkpoint when a decision
+  requires human input, then reads the response and continues the workflow.
+category: happy-path
+starting_state:
+  feature_stage: developing
+  tasks:
+    - status: active
+      slug: ambiguous-implementation
+expected_pattern:
+  tool_sequence:
+    - checkpoint (create with question for human)
+    - checkpoint (get - poll until responded)
+    - entity (continue based on human response)
+  key_transitions: []
+success_criteria:
+  - Agent creates a checkpoint with a clear question
+  - Agent polls checkpoint status before proceeding
+  - Agent acts on the human response, not a guess
+  - Workflow continues correctly after response is received

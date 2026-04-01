@@ -1,0 +1,27 @@
+name: Review rework loop - multiple review cycles
+description: Tests that an agent correctly handles a feature that is returned from
+  reviewing twice before finally being approved, tracking the review cycle count.
+category: review-rework-loop
+starting_state:
+  feature_stage: reviewing
+  documents:
+    - type: design
+      status: approved
+    - type: specification
+      status: approved
+    - type: dev-plan
+      status: approved
+expected_pattern:
+  tool_sequence:
+    - entity (transition back to developing - cycle 1)
+    - finish (complete rework tasks - cycle 1)
+    - entity (transition to reviewing - cycle 1)
+    - entity (transition back to developing - cycle 2)
+    - finish (complete rework tasks - cycle 2)
+    - entity (transition to reviewing - cycle 2)
+  key_transitions: [developing, reviewing, developing, reviewing]
+success_criteria:
+  - Feature completes at least two review cycles
+  - review_cycles field reflects actual cycle count
+  - Feature eventually remains in reviewing stage
+  - Agent does not infinite-loop or give up prematurely

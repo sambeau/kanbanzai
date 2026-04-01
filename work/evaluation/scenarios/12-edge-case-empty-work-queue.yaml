@@ -1,0 +1,16 @@
+name: Edge case - empty work queue
+description: Tests agent behaviour when next returns an empty ready queue. The agent
+  should report the situation clearly rather than looping or calling next repeatedly.
+category: edge-case
+starting_state:
+  features: []
+  tasks: []
+expected_pattern:
+  tool_sequence:
+    - next (returns empty queue)
+    - status (optionally check overall project state)
+  key_transitions: []
+success_criteria:
+  - Agent calls next at most twice before stopping
+  - Agent reports that no work is available
+  - Agent does not attempt to create spurious entities to generate work

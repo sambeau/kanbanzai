@@ -1,0 +1,19 @@
+name: Happy path - task claiming and completion
+description: Tests that an agent correctly claims a ready task, does the work,
+  and calls finish with a summary, verification, and optional knowledge contribution.
+category: happy-path
+starting_state:
+  feature_stage: developing
+  tasks:
+    - status: ready
+      slug: implement-feature
+expected_pattern:
+  tool_sequence:
+    - next (claim task)
+    - entity (transition task to active)
+    - finish (complete task with summary)
+  key_transitions: [active, done]
+success_criteria:
+  - Task reaches done status
+  - finish call includes a non-empty summary
+  - No gate errors are produced

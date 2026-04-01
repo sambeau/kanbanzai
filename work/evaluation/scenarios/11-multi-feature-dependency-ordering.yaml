@@ -1,0 +1,26 @@
+name: Multi-feature orchestration - dependency ordering
+description: Tests that an agent respects declared task dependencies, only claiming
+  a task after its declared dependencies are in a terminal state.
+category: multi-feature-orchestration
+starting_state:
+  feature_stage: developing
+  tasks:
+    - id: TASK-A
+      status: ready
+      slug: foundation-work
+      depends_on: []
+    - id: TASK-B
+      status: queued
+      slug: dependent-work
+      depends_on: [TASK-A]
+expected_pattern:
+  tool_sequence:
+    - next (only TASK-A in ready queue)
+    - finish (complete TASK-A)
+    - next (TASK-B now unblocked and ready)
+    - finish (complete TASK-B)
+  key_transitions: []
+success_criteria:
+  - TASK-B does not appear in ready queue until TASK-A is done
+  - Agent completes TASK-A before attempting TASK-B
+  - TASK-B unblocking is reported as a side effect of finishing TASK-A

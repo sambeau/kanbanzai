@@ -1,0 +1,21 @@
+name: Gate failure recovery - missing design document
+description: Tests that an agent attempting to advance a feature past designing without
+  an approved design document receives a gate failure, then correctly creates and approves
+  the required document before retrying the transition.
+category: gate-failure-recovery
+starting_state:
+  feature_stage: proposed
+  documents: []
+expected_pattern:
+  tool_sequence:
+    - entity (transition to designing - succeeds)
+    - entity (transition to specifying - FAILS: no approved design doc)
+    - doc (register design document)
+    - doc (approve design document)
+    - entity (transition to specifying - succeeds)
+  key_transitions: [designing, specifying]
+success_criteria:
+  - Initial transition to specifying fails with a gate error
+  - Agent does not retry the same failing call more than twice
+  - Agent registers and approves a design document after the failure
+  - Feature eventually reaches specifying stage

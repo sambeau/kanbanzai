@@ -51,6 +51,7 @@ Desktop.ini
 
 # Kanbanzai instance: commit state and docs, exclude derived cache and temp files
 .kbz/cache/
+.kbz/logs/
 .kbz/local.yaml
 .kbz/last-install.yaml
 .kbz-tmp-*

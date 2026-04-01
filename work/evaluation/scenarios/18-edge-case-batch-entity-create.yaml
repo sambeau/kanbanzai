@@ -1,0 +1,22 @@
+name: Edge case - batch entity creation
+description: Tests that an agent can create multiple tasks in a single batch call
+  using the entities array parameter, and that all tasks are created correctly.
+category: edge-case
+starting_state:
+  feature_stage: dev-planning
+  documents:
+    - type: design
+      status: approved
+    - type: specification
+      status: approved
+    - type: dev-plan
+      status: approved
+expected_pattern:
+  tool_sequence:
+    - entity (create multiple tasks via entities array)
+    - entity (list tasks - verify all created)
+  key_transitions: []
+success_criteria:
+  - All tasks from the batch call are created
+  - Each task has the correct parent_feature set
+  - entity list returns the expected number of new tasks
