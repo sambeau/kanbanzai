@@ -89,7 +89,7 @@ func validEpicFields() map[string]any {
 	return map[string]any{
 		"id":         "EPIC-TESTEPIC",
 		"slug":       "my-epic",
-		"title":      "My Epic",
+		"name":       "My Epic",
 		"status":     "proposed",
 		"summary":    "A summary of the epic",
 		"created":    "2024-01-15",
@@ -101,6 +101,7 @@ func validFeatureFields() map[string]any {
 	return map[string]any{
 		"id":         "FEAT-01J3K7MXP3RT5",
 		"slug":       "my-feature",
+		"name":       "My Feature",
 		"parent":     "P1-my-plan",
 		"status":     "proposed",
 		"summary":    "A summary of the feature",
@@ -114,6 +115,7 @@ func validTaskFields() map[string]any {
 		"id":             "TASK-01J3KZZZBB4KF",
 		"parent_feature": "FEAT-01J3K7MXP3RT5",
 		"slug":           "my-task",
+		"name":           "My Task",
 		"summary":        "A summary of the task",
 		"status":         "queued",
 	}
@@ -123,7 +125,7 @@ func validBugFields() map[string]any {
 	return map[string]any{
 		"id":          "BUG-01J4AR7WHN4F2",
 		"slug":        "my-bug",
-		"title":       "My Bug",
+		"name":        "My Bug",
 		"status":      "reported",
 		"severity":    "high",
 		"priority":    "medium",
@@ -139,6 +141,7 @@ func validDecisionFields() map[string]any {
 	return map[string]any{
 		"id":         "DEC-01J3KABCDE7MX",
 		"slug":       "my-decision",
+		"name":       "My Decision",
 		"summary":    "We decided something",
 		"rationale":  "Because reasons",
 		"decided_by": "alice",
@@ -208,6 +211,70 @@ func TestValidateSlug(t *testing.T) {
 	}
 }
 
+func TestValidateName(t *testing.T) {
+	t.Parallel()
+
+	name60 := strings.Repeat("a", 60)
+	name61 := strings.Repeat("a", 61)
+
+	tests := []struct {
+		name        string
+		input       string
+		wantErr     bool
+		wantTrimmed string
+	}{
+		{name: "empty string", input: "", wantErr: true},
+		{name: "whitespace only", input: "   ", wantErr: true},
+		{name: "valid short name", input: "Server info tool", wantErr: false, wantTrimmed: "Server info tool"},
+		{name: "exactly 60 chars", input: name60, wantErr: false, wantTrimmed: name60},
+		{name: "61 chars exceeds limit", input: name61, wantErr: true},
+		{name: "contains colon", input: "Entity names: spec", wantErr: true},
+		{name: "phase prefix single digit space", input: "P4 something", wantErr: true},
+		{name: "phase prefix with em-dash", input: "P8 \u2014 decompose", wantErr: true},
+		{name: "two-letter prefix not rejected", input: "AC-01 something", wantErr: false, wantTrimmed: "AC-01 something"},
+		{name: "single uppercase no digit", input: "G policy docs", wantErr: false, wantTrimmed: "G policy docs"},
+		{name: "leading and trailing whitespace trimmed", input: "  Server info tool  ", wantErr: false, wantTrimmed: "Server info tool"},
+		{name: "multi-digit phase prefix rejected", input: "P11 fresh install", wantErr: true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got, err := ValidateName(tt.input)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ValidateName(%q) error = %v, wantErr %v", tt.input, err, tt.wantErr)
+				return
+			}
+			if !tt.wantErr && got != tt.wantTrimmed {
+				t.Errorf("ValidateName(%q) = %q, want %q", tt.input, got, tt.wantTrimmed)
+			}
+		})
+	}
+}
+
+func TestNamePhasePrefixBoundary(t *testing.T) {
+	t.Parallel()
+
+	// These names begin with an uppercase letter but must NOT be rejected —
+	// they lack the digit(s) that would make them a phase/version prefix.
+	cases := []string{
+		"Public API endpoints",
+		"Go server rebuild",
+		"Human-friendly ID display",
+	}
+
+	for _, name := range cases {
+		name := name
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			_, err := ValidateName(name)
+			if err != nil {
+				t.Errorf("ValidateName(%q) returned unexpected error: %v", name, err)
+			}
+		})
+	}
+}
+
 func TestValidateRecord_MissingRequiredFields(t *testing.T) {
 	t.Parallel()
 
@@ -217,7 +284,7 @@ func TestValidateRecord_MissingRequiredFields(t *testing.T) {
 		baseFields   func() map[string]any
 		missingField string
 	}{
-		{name: "epic missing title", entityType: "epic", baseFields: validEpicFields, missingField: "title"},
+		{name: "epic missing name", entityType: "epic", baseFields: validEpicFields, missingField: "name"},
 		{name: "epic missing slug", entityType: "epic", baseFields: validEpicFields, missingField: "slug"},
 		{name: "epic missing status", entityType: "epic", baseFields: validEpicFields, missingField: "status"},
 		{name: "epic missing summary", entityType: "epic", baseFields: validEpicFields, missingField: "summary"},
@@ -268,7 +335,7 @@ func TestValidateRecord_EmptyRequiredField(t *testing.T) {
 		baseFields func() map[string]any
 		emptyField string
 	}{
-		{name: "epic empty title", entityType: "epic", baseFields: validEpicFields, emptyField: "title"},
+		{name: "epic empty name", entityType: "epic", baseFields: validEpicFields, emptyField: "name"},
 		{name: "feature empty summary", entityType: "feature", baseFields: validFeatureFields, emptyField: "summary"},
 		{name: "task empty slug", entityType: "task", baseFields: validTaskFields, emptyField: "slug"},
 		{name: "bug empty observed", entityType: "bug", baseFields: validBugFields, emptyField: "observed"},
@@ -403,105 +470,6 @@ func TestValidateEntityExists_NotExists(t *testing.T) {
 	}
 }
 
-func TestValidateLabel(t *testing.T) {
-	t.Parallel()
-
-	tests := []struct {
-		name    string
-		label   string
-		wantErr bool
-	}{
-		{name: "empty is valid", label: "", wantErr: false},
-		{name: "short label", label: "G", wantErr: false},
-		{name: "typical label", label: "G policy-docs", wantErr: false},
-		{name: "exactly 24 chars", label: "123456789012345678901234", wantErr: false},
-		{name: "25 chars exceeds limit", label: "1234567890123456789012345", wantErr: true},
-		{name: "very long label", label: "this label is way too long to be valid here", wantErr: true},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
-			err := ValidateLabel(tt.label)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ValidateLabel(%q) error = %v, wantErr %v", tt.label, err, tt.wantErr)
-			}
-		})
-	}
-}
-
-func TestLabelMaxLength(t *testing.T) {
-	t.Parallel()
-
-	t.Run("feature label too long", func(t *testing.T) {
-		t.Parallel()
-		fields := validFeatureFields()
-		fields["label"] = "this-label-exceeds-the-twenty-four-char-limit"
-
-		errs := ValidateRecord("feature", fields)
-		found := false
-		for _, e := range errs {
-			if e.Field == "label" {
-				found = true
-				if !strings.Contains(e.Message, "exceeds maximum length") {
-					t.Errorf("expected error message to mention max length, got %q", e.Message)
-				}
-				break
-			}
-		}
-		if !found {
-			t.Errorf("expected label validation error, got errors: %v", errs)
-		}
-	})
-
-	t.Run("task label too long", func(t *testing.T) {
-		t.Parallel()
-		fields := validTaskFields()
-		fields["label"] = "this-label-exceeds-the-twenty-four-char-limit"
-
-		errs := ValidateRecord("task", fields)
-		found := false
-		for _, e := range errs {
-			if e.Field == "label" {
-				found = true
-				if !strings.Contains(e.Message, "exceeds maximum length") {
-					t.Errorf("expected error message to mention max length, got %q", e.Message)
-				}
-				break
-			}
-		}
-		if !found {
-			t.Errorf("expected label validation error, got errors: %v", errs)
-		}
-	})
-
-	t.Run("feature valid label no error", func(t *testing.T) {
-		t.Parallel()
-		fields := validFeatureFields()
-		fields["label"] = "G policy-docs"
-
-		errs := ValidateRecord("feature", fields)
-		for _, e := range errs {
-			if e.Field == "label" {
-				t.Errorf("unexpected label validation error: %v", e)
-			}
-		}
-	})
-
-	t.Run("bug label ignored", func(t *testing.T) {
-		t.Parallel()
-		fields := validBugFields()
-		fields["label"] = "this-label-exceeds-the-twenty-four-char-limit"
-
-		errs := ValidateRecord("bug", fields)
-		for _, e := range errs {
-			if e.Field == "label" {
-				t.Errorf("label validation should not apply to bugs, got error: %v", e)
-			}
-		}
-	})
-}
-
 func TestValidationError_Error(t *testing.T) {
 	t.Parallel()
 
@@ -511,11 +479,11 @@ func TestValidationError_Error(t *testing.T) {
 		e := ValidationError{
 			EntityType: "epic",
 			EntityID:   "EPIC-001",
-			Field:      "title",
+			Field:      "name",
 			Message:    "required field is missing",
 		}
 		got := e.Error()
-		want := "epic EPIC-001: title: required field is missing"
+		want := "epic EPIC-001: name: required field is missing"
 		if got != want {
 			t.Errorf("Error() = %q, want %q", got, want)
 		}

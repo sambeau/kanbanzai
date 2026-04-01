@@ -54,8 +54,10 @@ var validBugTypes = map[string]struct{}{
 
 var slugPattern = regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)
 
-// maxLabelLength is the maximum allowed length for an entity label.
-const maxLabelLength = 24
+// phasePrefixPattern matches names that begin with a phase/version prefix:
+// a single uppercase ASCII letter immediately followed by one or more digits,
+// then a space, hyphen, or em-dash. Examples: "P4 ", "P8-", "P11 ", "P8 — ".
+var phasePrefixPattern = regexp.MustCompile(`^[A-Z]\d+[\s\-—]`)
 
 // ValidateBugSeverity returns an error if value is not a valid bug severity.
 func ValidateBugSeverity(value string) error {
@@ -89,13 +91,27 @@ func ValidateIncidentSeverity(value string) error {
 	return nil
 }
 
-// ValidateLabel returns an error if label exceeds the maximum length (24 characters).
-// An empty label is valid (labels are optional).
-func ValidateLabel(label string) error {
-	if len(label) > maxLabelLength {
-		return fmt.Errorf("label %q exceeds maximum length of %d characters (got %d)", label, maxLabelLength, len(label))
+// ValidateName returns the trimmed name and an error if name violates any rule:
+// non-empty, max 60 characters, no colon, no phase/version prefix.
+func ValidateName(name string) (string, error) {
+	trimmed := strings.TrimSpace(name)
+	// Rule 1: non-empty
+	if trimmed == "" {
+		return "", fmt.Errorf("name must not be empty")
 	}
-	return nil
+	// Rule 2: max 60 characters
+	if len(trimmed) > 60 {
+		return "", fmt.Errorf("name %q exceeds maximum length of 60 characters (got %d)", trimmed, len(trimmed))
+	}
+	// Rule 3: no colon
+	if strings.Contains(trimmed, ":") {
+		return "", fmt.Errorf("name %q must not contain a colon", trimmed)
+	}
+	// Rule 4: no phase/version prefix (single uppercase letter + digits + space/hyphen/em-dash)
+	if phasePrefixPattern.MatchString(trimmed) {
+		return "", fmt.Errorf("name %q must not begin with a phase or version prefix (e.g. \"P4 ...\", \"P8 — ...\")", trimmed)
+	}
+	return trimmed, nil
 }
 
 // ValidateSlug returns an error if slug is not a non-empty lowercase kebab-case value.
@@ -117,19 +133,20 @@ func ValidateSlug(slug string) error {
 }
 
 var requiredFields = map[EntityKind][]string{
-	EntityPlan:     {"id", "slug", "title", "status", "summary", "created", "created_by"},
-	EntityEpic:     {"id", "slug", "title", "status", "summary", "created", "created_by"},
-	EntityFeature:  {"id", "slug", "parent", "status", "summary", "created", "created_by"},
-	EntityTask:     {"id", "parent_feature", "slug", "summary", "status"},
-	EntityBug:      {"id", "slug", "title", "status", "severity", "priority", "type", "reported_by", "reported", "observed", "expected"},
-	EntityDecision: {"id", "slug", "summary", "rationale", "decided_by", "date", "status"},
-	EntityIncident: {"id", "slug", "title", "status", "severity", "reported_by", "detected_at", "summary", "created", "created_by"},
+	EntityPlan:     {"id", "slug", "name", "status", "summary", "created", "created_by"},
+	EntityEpic:     {"id", "slug", "name", "status", "summary", "created", "created_by"},
+	EntityFeature:  {"id", "slug", "name", "parent", "status", "summary", "created", "created_by"},
+	EntityTask:     {"id", "parent_feature", "slug", "name", "summary", "status"},
+	EntityBug:      {"id", "slug", "name", "status", "severity", "priority", "type", "reported_by", "reported", "observed", "expected"},
+	EntityDecision: {"id", "slug", "name", "summary", "rationale", "decided_by", "date", "status"},
+	EntityIncident: {"id", "slug", "name", "status", "severity", "reported_by", "detected_at", "summary", "created", "created_by"},
 }
 
 // ValidateRecord checks an entity record's fields for correctness.
 // It validates:
 //   - required fields are present and non-empty
 //   - slug format is valid
+//   - name format is valid (length, colon, phase prefix)
 //   - enum fields contain valid values
 //   - status is a known lifecycle state
 //   - ID format is valid for the entity type
@@ -176,6 +193,17 @@ func ValidateRecord(entityType string, fields map[string]any) []ValidationError 
 				EntityType: entityType,
 				EntityID:   entityID,
 				Field:      "slug",
+				Message:    err.Error(),
+			})
+		}
+	}
+
+	if name, ok := stringField(fields, "name"); ok && name != "" {
+		if _, err := ValidateName(name); err != nil {
+			errs = append(errs, ValidationError{
+				EntityType: entityType,
+				EntityID:   entityID,
+				Field:      "name",
 				Message:    err.Error(),
 			})
 		}
@@ -231,19 +259,6 @@ func ValidateRecord(entityType string, fields map[string]any) []ValidationError 
 					EntityType: entityType,
 					EntityID:   entityID,
 					Field:      "type",
-					Message:    err.Error(),
-				})
-			}
-		}
-	}
-
-	if kind == EntityFeature || kind == EntityTask {
-		if label, ok := stringField(fields, "label"); ok && label != "" {
-			if err := ValidateLabel(label); err != nil {
-				errs = append(errs, ValidationError{
-					EntityType: entityType,
-					EntityID:   entityID,
-					Field:      "label",
 					Message:    err.Error(),
 				})
 			}

@@ -296,9 +296,9 @@ func TestCheckHealth_DecisionSupersessionWarning(t *testing.T) {
 func TestCheckHealth_InvalidRecord(t *testing.T) {
 	t.Parallel()
 
-	// Epic missing required "title" field.
+	// Epic missing required "name" field.
 	fields := epicFields("EPIC-TESTEPIC", "test")
-	delete(fields, "title")
+	delete(fields, "name")
 
 	epic := EntityInfo{Type: string(EntityEpic), ID: "EPIC-TESTEPIC", Fields: fields}
 
@@ -309,8 +309,8 @@ func TestCheckHealth_InvalidRecord(t *testing.T) {
 	if err != nil {
 		t.Fatalf("CheckHealth returned error: %v", err)
 	}
-	if !hasErrorWithField(report.Errors, "title") {
-		t.Fatalf("expected validation error on field 'title', got errors: %v", report.Errors)
+	if !hasErrorWithField(report.Errors, "name") {
+		t.Fatalf("expected validation error on field 'name', got errors: %v", report.Errors)
 	}
 }
 
