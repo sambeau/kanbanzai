@@ -2,6 +2,7 @@ package service
 
 import (
 	"testing"
+	"time"
 
 	"github.com/sambeau/kanbanzai/internal/model"
 )
@@ -40,6 +41,13 @@ func writeFeatureEntity(t *testing.T, stateRoot, id, slug, parent, status string
 	writeTestEntity(t, stateRoot, "feature", id, slug, fields)
 }
 
+// TestAdvanceFeatureStatus_FullAdvance verifies that a feature can be advanced
+// from proposed all the way to developing when all gate prerequisites are met.
+// With the new gate semantics, every transition is gate-checked:
+//   - proposed→designing: no gate
+//   - designing→specifying: design doc required
+//   - specifying→dev-planning: spec doc required
+//   - dev-planning→developing: dev-plan doc + child task required
 func TestAdvanceFeatureStatus_FullAdvance(t *testing.T) {
 	t.Parallel()
 	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
@@ -48,15 +56,11 @@ func TestAdvanceFeatureStatus_FullAdvance(t *testing.T) {
 	slug := "full-advance"
 	parent := "P1-test-plan"
 
-	// Write the feature entity on disk.
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
 
-	// Create approved documents for all document gates.
 	designDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/design/full.md", "design", featureID, true)
 	specDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/spec/full.md", "specification", featureID, true)
 	devPlanDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/plan/full.md", "dev-plan", featureID, true)
-
-	// Create a child task for the developing gate.
 	writeTestEntity(t, stateRoot, "task", "T-01AAAAAAAAA01", "full-task",
 		makeTaskFields("T-01AAAAAAAAA01", "full-task", featureID, "queued", nil))
 
@@ -65,7 +69,7 @@ func TestAdvanceFeatureStatus_FullAdvance(t *testing.T) {
 	feature.Spec = specDocID
 	feature.DevPlan = devPlanDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -75,6 +79,9 @@ func TestAdvanceFeatureStatus_FullAdvance(t *testing.T) {
 	}
 	if result.StoppedReason != "" {
 		t.Errorf("StoppedReason = %q, want empty", result.StoppedReason)
+	}
+	if len(result.OverriddenGates) != 0 {
+		t.Errorf("OverriddenGates = %v, want empty", result.OverriddenGates)
 	}
 
 	wantThrough := []string{"designing", "specifying", "dev-planning", "developing"}
@@ -87,7 +94,6 @@ func TestAdvanceFeatureStatus_FullAdvance(t *testing.T) {
 		}
 	}
 
-	// Verify the on-disk state is developing.
 	got, err := entitySvc.Get("feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
@@ -97,6 +103,15 @@ func TestAdvanceFeatureStatus_FullAdvance(t *testing.T) {
 	}
 }
 
+// TestAdvanceFeatureStatus_PartialAdvance_StopsAtSpecifying verifies that
+// advance stops at specifying when only a design doc is present (no spec doc).
+//
+// With new gate semantics:
+//   - proposed→designing: no gate → enters designing
+//   - designing→specifying: design doc required → passes (doc present)
+//   - specifying→dev-planning: spec doc required → FAILS (no spec doc)
+//
+// So the feature reaches specifying before stopping.
 func TestAdvanceFeatureStatus_PartialAdvance_StopsAtSpecifying(t *testing.T) {
 	t.Parallel()
 	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
@@ -107,39 +122,41 @@ func TestAdvanceFeatureStatus_PartialAdvance_StopsAtSpecifying(t *testing.T) {
 
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
 
-	// Only provide a design doc — no spec.
+	// Only a design doc — no spec doc.
 	designDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/design/partial.md", "design", featureID, true)
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 	feature.Design = designDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	if result.FinalStatus != "designing" {
-		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "designing")
+	// Reaches specifying (design doc gate passes), stops there (no spec doc).
+	if result.FinalStatus != "specifying" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "specifying")
 	}
 	if result.StoppedReason == "" {
 		t.Error("expected non-empty StoppedReason")
 	}
 
-	wantThrough := []string{"designing"}
+	wantThrough := []string{"designing", "specifying"}
 	if len(result.AdvancedThrough) != len(wantThrough) {
 		t.Fatalf("AdvancedThrough = %v, want %v", result.AdvancedThrough, wantThrough)
 	}
-	if result.AdvancedThrough[0] != "designing" {
-		t.Errorf("AdvancedThrough[0] = %q, want %q", result.AdvancedThrough[0], "designing")
+	for i, s := range wantThrough {
+		if result.AdvancedThrough[i] != s {
+			t.Errorf("AdvancedThrough[%d] = %q, want %q", i, result.AdvancedThrough[i], s)
+		}
 	}
 
-	// Verify the on-disk state is designing.
 	got, err := entitySvc.Get("feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
-	if s := stringFromState(got.State, "status"); s != "designing" {
-		t.Errorf("persisted status = %q, want %q", s, "designing")
+	if s := stringFromState(got.State, "status"); s != "specifying" {
+		t.Errorf("persisted status = %q, want %q", s, "specifying")
 	}
 }
 
@@ -155,7 +172,7 @@ func TestAdvanceFeatureStatus_TargetAlreadyReached(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "designing")
 
-	result, err := AdvanceFeatureStatus(feature, "designing", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "designing", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -183,12 +200,15 @@ func TestAdvanceFeatureStatus_TargetBehindCurrent(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "specifying")
 
-	_, err := AdvanceFeatureStatus(feature, "proposed", entitySvc, docSvc)
+	_, err := AdvanceFeatureStatus(feature, "proposed", entitySvc, docSvc, false, "")
 	if err == nil {
 		t.Fatal("expected error for backward advance, got nil")
 	}
 }
 
+// TestAdvanceFeatureStatus_AdvanceToDone_StopsAtReviewing verifies that advance
+// stops at reviewing (a mandatory halt state) even when targeting done.
+// The task is in terminal state so developing→reviewing passes.
 func TestAdvanceFeatureStatus_AdvanceToDone_StopsAtReviewing(t *testing.T) {
 	t.Parallel()
 	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
@@ -199,29 +219,29 @@ func TestAdvanceFeatureStatus_AdvanceToDone_StopsAtReviewing(t *testing.T) {
 
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
 
-	// Provide all documents and a task.
 	designDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/design/done.md", "design", featureID, true)
 	specDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/spec/done.md", "specification", featureID, true)
 	devPlanDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/plan/done.md", "dev-plan", featureID, true)
+	// Task must be in a terminal state so the developing→reviewing gate passes.
 	writeTestEntity(t, stateRoot, "task", "T-01AAAAAAAAA05", "done-task",
-		makeTaskFields("T-01AAAAAAAAA05", "done-task", featureID, "queued", nil))
+		makeTaskFields("T-01AAAAAAAAA05", "done-task", featureID, "done", nil))
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 	feature.Design = designDocID
 	feature.Spec = specDocID
 	feature.DevPlan = devPlanDocID
 
-	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	// Should stop at reviewing — it is a mandatory gate that advance never skips.
+	// Should stop at reviewing — mandatory halt state, never auto-advanced past.
 	if result.FinalStatus != "reviewing" {
 		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "reviewing")
 	}
 	if result.StoppedReason == "" {
-		t.Error("expected non-empty StoppedReason for review gate")
+		t.Error("expected non-empty StoppedReason for review halt")
 	}
 
 	wantThrough := []string{"designing", "specifying", "dev-planning", "developing", "reviewing"}
@@ -234,7 +254,6 @@ func TestAdvanceFeatureStatus_AdvanceToDone_StopsAtReviewing(t *testing.T) {
 		}
 	}
 
-	// Verify it persisted at reviewing, not done.
 	got, err := entitySvc.Get("feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
@@ -244,9 +263,11 @@ func TestAdvanceFeatureStatus_AdvanceToDone_StopsAtReviewing(t *testing.T) {
 	}
 }
 
+// TestAdvanceFeatureStatus_SingleStep verifies a one-step advance from proposed
+// to designing. proposed→designing has no gate, so the design doc is not needed.
 func TestAdvanceFeatureStatus_SingleStep(t *testing.T) {
 	t.Parallel()
-	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
+	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
 
 	featureID := "FEAT-01AAAAAAAAA06"
 	slug := "single-step"
@@ -254,12 +275,9 @@ func TestAdvanceFeatureStatus_SingleStep(t *testing.T) {
 
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
 
-	designDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/design/single.md", "design", featureID, true)
-
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
-	feature.Design = designDocID
 
-	result, err := AdvanceFeatureStatus(feature, "designing", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "designing", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -275,6 +293,9 @@ func TestAdvanceFeatureStatus_SingleStep(t *testing.T) {
 	}
 }
 
+// TestAdvanceFeatureStatus_AllGatesUnsatisfied verifies that with no documents,
+// advance from proposed to developing enters designing (no gate) but then stops
+// because designing→specifying requires a design document.
 func TestAdvanceFeatureStatus_AllGatesUnsatisfied(t *testing.T) {
 	t.Parallel()
 	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
@@ -285,35 +306,37 @@ func TestAdvanceFeatureStatus_AllGatesUnsatisfied(t *testing.T) {
 
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
 
-	// No documents, no tasks — all gates will be unsatisfied.
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	// Should stay at proposed — the first gate (designing) is unsatisfied.
-	if result.FinalStatus != "proposed" {
-		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "proposed")
+	// proposed→designing has no gate, so we enter designing.
+	// designing→specifying requires a design doc which is absent, so we stop.
+	if result.FinalStatus != "designing" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "designing")
 	}
 	if result.StoppedReason == "" {
 		t.Error("expected non-empty StoppedReason")
 	}
-	if len(result.AdvancedThrough) != 0 {
-		t.Errorf("AdvancedThrough = %v, want empty", result.AdvancedThrough)
+	if len(result.AdvancedThrough) != 1 || result.AdvancedThrough[0] != "designing" {
+		t.Errorf("AdvancedThrough = %v, want [designing]", result.AdvancedThrough)
 	}
 
-	// Verify it stayed at proposed on disk.
 	got, err := entitySvc.Get("feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
-	if s := stringFromState(got.State, "status"); s != "proposed" {
-		t.Errorf("persisted status = %q, want %q", s, "proposed")
+	if s := stringFromState(got.State, "status"); s != "designing" {
+		t.Errorf("persisted status = %q, want %q", s, "designing")
 	}
 }
 
+// TestAdvanceFeatureStatus_AdvanceFromDeveloping_ToDone_StopsAtReviewing
+// verifies that advance from developing to done stops at reviewing even without
+// tasks (zero tasks → developing→reviewing gate passes vacuously).
 func TestAdvanceFeatureStatus_AdvanceFromDeveloping_ToDone_StopsAtReviewing(t *testing.T) {
 	t.Parallel()
 	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
@@ -326,23 +349,23 @@ func TestAdvanceFeatureStatus_AdvanceFromDeveloping_ToDone_StopsAtReviewing(t *t
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "developing")
 
-	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	// Advance enters reviewing (the mandatory gate) and stops there.
+	// developing→reviewing: no tasks → vacuously terminal → gate passes.
+	// reviewing is the mandatory halt state, so advance stops there.
 	if result.FinalStatus != "reviewing" {
 		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "reviewing")
 	}
 	if result.StoppedReason == "" {
-		t.Error("expected non-empty StoppedReason for review gate")
+		t.Error("expected non-empty StoppedReason for review halt")
 	}
 	if len(result.AdvancedThrough) != 1 || result.AdvancedThrough[0] != "reviewing" {
 		t.Errorf("AdvancedThrough = %v, want [reviewing]", result.AdvancedThrough)
 	}
 
-	// Verify it persisted at reviewing.
 	got, err := entitySvc.Get("feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
@@ -353,7 +376,8 @@ func TestAdvanceFeatureStatus_AdvanceFromDeveloping_ToDone_StopsAtReviewing(t *t
 }
 
 // TestAdvanceFeatureStatus_AdvanceToReviewing_IsTarget verifies that when
-// reviewing is the explicit target, advance transitions to it normally (AC-17).
+// reviewing is the explicit target, advance transitions to it normally with
+// no StoppedReason (the stop-state halt only fires when advancing past it).
 func TestAdvanceFeatureStatus_AdvanceToReviewing_IsTarget(t *testing.T) {
 	t.Parallel()
 	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
@@ -366,12 +390,12 @@ func TestAdvanceFeatureStatus_AdvanceToReviewing_IsTarget(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "developing")
 
-	result, err := AdvanceFeatureStatus(feature, "reviewing", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "reviewing", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	// Reviewing is the target — advance reaches it and stops normally (no StoppedReason).
+	// developing→reviewing: no tasks → vacuously passes. Reviewing is target → no StoppedReason.
 	if result.FinalStatus != "reviewing" {
 		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "reviewing")
 	}
@@ -383,12 +407,11 @@ func TestAdvanceFeatureStatus_AdvanceToReviewing_IsTarget(t *testing.T) {
 	}
 }
 
-// TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone verifies AC-17:
-// when a feature is already in reviewing status and advance targets done,
-// the advance succeeds in a single step (reviewing → done) with no stop.
+// TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone verifies that a feature
+// in reviewing can be advanced to done when a review report document exists.
 func TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone(t *testing.T) {
 	t.Parallel()
-	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
+	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
 
 	featureID := "FEAT-01AAAAAAAAA20"
 	slug := "rev-to-done"
@@ -396,9 +419,12 @@ func TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone(t *testing.T) {
 
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "reviewing", nil)
 
+	// reviewing→done requires a review report document.
+	submitAndApproveDoc(t, docSvc, repoRoot, "work/reports/review.md", "report", featureID, false)
+
 	feature := makeFeatureForAdvance(featureID, slug, parent, "reviewing")
 
-	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -413,7 +439,6 @@ func TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone(t *testing.T) {
 		t.Errorf("AdvancedThrough = %v, want [done]", result.AdvancedThrough)
 	}
 
-	// Verify it persisted at done.
 	got, err := entitySvc.Get("feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
@@ -423,9 +448,40 @@ func TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone(t *testing.T) {
 	}
 }
 
-// TestAdvanceFeatureStatus_NeverAutoTransitionsThroughReviewing verifies AC-18:
-// advance never auto-transitions through reviewing to reach done, even when
-// starting from an early state with all prerequisites satisfied.
+// TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone_NoReport verifies that
+// reviewing→done is gated: without a review report the advance stops.
+func TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone_NoReport(t *testing.T) {
+	t.Parallel()
+	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01AAAAAAAAA21"
+	slug := "rev-no-report"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "reviewing", nil)
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "reviewing")
+
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	// reviewing→done gate fails without a review report.
+	if result.FinalStatus != "reviewing" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "reviewing")
+	}
+	if result.StoppedReason == "" {
+		t.Error("expected non-empty StoppedReason (missing review report)")
+	}
+	if len(result.AdvancedThrough) != 0 {
+		t.Errorf("AdvancedThrough = %v, want empty", result.AdvancedThrough)
+	}
+}
+
+// TestAdvanceFeatureStatus_NeverAutoTransitionsThroughReviewing verifies that
+// advance never auto-transitions through reviewing to reach done, even with all
+// prerequisites satisfied. Tasks must be terminal for developing→reviewing.
 func TestAdvanceFeatureStatus_NeverAutoTransitionsThroughReviewing(t *testing.T) {
 	t.Parallel()
 	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
@@ -436,19 +492,19 @@ func TestAdvanceFeatureStatus_NeverAutoTransitionsThroughReviewing(t *testing.T)
 
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
 
-	// Provide ALL documents and a task — every prerequisite is met.
 	designDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/design/noskip.md", "design", featureID, true)
 	specDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/spec/noskip.md", "specification", featureID, true)
 	devPlanDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/plan/noskip.md", "dev-plan", featureID, true)
+	// Task must be terminal so developing→reviewing gate passes.
 	writeTestEntity(t, stateRoot, "task", "T-01AAAAAAAAA19", "noskip-task",
-		makeTaskFields("T-01AAAAAAAAA19", "noskip-task", featureID, "queued", nil))
+		makeTaskFields("T-01AAAAAAAAA19", "noskip-task", featureID, "done", nil))
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 	feature.Design = designDocID
 	feature.Spec = specDocID
 	feature.DevPlan = devPlanDocID
 
-	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -461,7 +517,7 @@ func TestAdvanceFeatureStatus_NeverAutoTransitionsThroughReviewing(t *testing.T)
 		t.Fatal("advance must never auto-transition through reviewing to done")
 	}
 	if result.StoppedReason == "" {
-		t.Error("expected non-empty StoppedReason for mandatory review gate")
+		t.Error("expected non-empty StoppedReason for mandatory review halt")
 	}
 
 	wantThrough := []string{"designing", "specifying", "dev-planning", "developing", "reviewing"}
@@ -479,11 +535,11 @@ func TestAdvanceFeatureStatus_InvalidCurrentStatus(t *testing.T) {
 	t.Parallel()
 	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
 
-	_ = stateRoot // no entity needed, error happens before disk access
+	_ = stateRoot
 
 	feature := makeFeatureForAdvance("FEAT-01AAAAAAAAA09", "invalid-current", "", "draft")
 
-	_, err := AdvanceFeatureStatus(feature, "designing", entitySvc, docSvc)
+	_, err := AdvanceFeatureStatus(feature, "designing", entitySvc, docSvc, false, "")
 	if err == nil {
 		t.Fatal("expected error for non-forward-path current status, got nil")
 	}
@@ -497,12 +553,20 @@ func TestAdvanceFeatureStatus_InvalidTargetStatus(t *testing.T) {
 
 	feature := makeFeatureForAdvance("FEAT-01AAAAAAAAA10", "invalid-target", "", "proposed")
 
-	_, err := AdvanceFeatureStatus(feature, "in-progress", entitySvc, docSvc)
+	_, err := AdvanceFeatureStatus(feature, "in-progress", entitySvc, docSvc, false, "")
 	if err == nil {
 		t.Fatal("expected error for non-forward-path target status, got nil")
 	}
 }
 
+// TestAdvanceFeatureStatus_PartialAdvance_StopsAtDevPlanning verifies that with
+// design and spec docs but no dev-plan, advance stops at dev-planning.
+//
+// New gate semantics:
+//   - proposed→designing: no gate → enters designing
+//   - designing→specifying: design doc → passes → enters specifying
+//   - specifying→dev-planning: spec doc → passes → enters dev-planning
+//   - dev-planning→developing: dev-plan doc required → FAILS (no dev-plan)
 func TestAdvanceFeatureStatus_PartialAdvance_StopsAtDevPlanning(t *testing.T) {
 	t.Parallel()
 	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
@@ -513,7 +577,6 @@ func TestAdvanceFeatureStatus_PartialAdvance_StopsAtDevPlanning(t *testing.T) {
 
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
 
-	// Provide design and spec but no dev plan.
 	designDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/design/devplan.md", "design", featureID, true)
 	specDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/spec/devplan.md", "specification", featureID, true)
 
@@ -521,19 +584,20 @@ func TestAdvanceFeatureStatus_PartialAdvance_StopsAtDevPlanning(t *testing.T) {
 	feature.Design = designDocID
 	feature.Spec = specDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	if result.FinalStatus != "specifying" {
-		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "specifying")
+	// Enters designing, specifying, dev-planning; fails at dev-planning→developing.
+	if result.FinalStatus != "dev-planning" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "dev-planning")
 	}
 	if result.StoppedReason == "" {
 		t.Error("expected non-empty StoppedReason")
 	}
 
-	wantThrough := []string{"designing", "specifying"}
+	wantThrough := []string{"designing", "specifying", "dev-planning"}
 	if len(result.AdvancedThrough) != len(wantThrough) {
 		t.Fatalf("AdvancedThrough = %v, want %v", result.AdvancedThrough, wantThrough)
 	}
@@ -544,6 +608,9 @@ func TestAdvanceFeatureStatus_PartialAdvance_StopsAtDevPlanning(t *testing.T) {
 	}
 }
 
+// TestAdvanceFeatureStatus_PartialAdvance_StopsAtDeveloping verifies that with
+// all documents but no child tasks, the dev-planning→developing gate fails
+// because it requires both an approved dev-plan AND at least one child task.
 func TestAdvanceFeatureStatus_PartialAdvance_StopsAtDeveloping(t *testing.T) {
 	t.Parallel()
 	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
@@ -554,7 +621,7 @@ func TestAdvanceFeatureStatus_PartialAdvance_StopsAtDeveloping(t *testing.T) {
 
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
 
-	// Provide all documents but no tasks.
+	// All documents present, but no child tasks.
 	designDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/design/notasks.md", "design", featureID, true)
 	specDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/spec/notasks.md", "specification", featureID, true)
 	devPlanDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/plan/notasks.md", "dev-plan", featureID, true)
@@ -564,27 +631,28 @@ func TestAdvanceFeatureStatus_PartialAdvance_StopsAtDeveloping(t *testing.T) {
 	feature.Spec = specDocID
 	feature.DevPlan = devPlanDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	// developing is the target, so it is not gate-checked — it should succeed
-	// by passing through designing, specifying, dev-planning (all intermediate,
-	// all gate-checked and satisfied).
-	if result.FinalStatus != "developing" {
-		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "developing")
+	// dev-planning→developing requires dev-plan doc (✓) + child task (✗) → stops at dev-planning.
+	if result.FinalStatus != "dev-planning" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "dev-planning")
 	}
-	if result.StoppedReason != "" {
-		t.Errorf("StoppedReason = %q, want empty", result.StoppedReason)
+	if result.StoppedReason == "" {
+		t.Errorf("expected non-empty StoppedReason (no tasks)")
 	}
 
-	wantThrough := []string{"designing", "specifying", "dev-planning", "developing"}
+	wantThrough := []string{"designing", "specifying", "dev-planning"}
 	if len(result.AdvancedThrough) != len(wantThrough) {
 		t.Fatalf("AdvancedThrough = %v, want %v", result.AdvancedThrough, wantThrough)
 	}
 }
 
+// TestAdvanceFeatureStatus_EachStepPersisted verifies that each state is
+// persisted to disk as advance proceeds. Uses design+spec (no dev-plan) so
+// advance stops at dev-planning after persisting designing and specifying.
 func TestAdvanceFeatureStatus_EachStepPersisted(t *testing.T) {
 	t.Parallel()
 	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
@@ -595,7 +663,6 @@ func TestAdvanceFeatureStatus_EachStepPersisted(t *testing.T) {
 
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
 
-	// Only provide a design and spec — advance will stop at specifying.
 	designDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/design/each.md", "design", featureID, true)
 	specDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/spec/each.md", "specification", featureID, true)
 
@@ -603,29 +670,28 @@ func TestAdvanceFeatureStatus_EachStepPersisted(t *testing.T) {
 	feature.Design = designDocID
 	feature.Spec = specDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	// It should have advanced through designing and specifying, then stopped
-	// at dev-planning gate.
-	if result.FinalStatus != "specifying" {
-		t.Fatalf("FinalStatus = %q, want %q", result.FinalStatus, "specifying")
+	// Enters designing, specifying, dev-planning; fails at dev-planning→developing.
+	if result.FinalStatus != "dev-planning" {
+		t.Fatalf("FinalStatus = %q, want %q", result.FinalStatus, "dev-planning")
 	}
 
-	// Verify each intermediate state was persisted by checking the final on-disk
-	// state matches the reported final status. (UpdateStatus validates each
-	// transition, so if we got here the intermediate persists were valid.)
 	got, err := entitySvc.Get("feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
-	if s := stringFromState(got.State, "status"); s != "specifying" {
-		t.Errorf("persisted status = %q, want %q", s, "specifying")
+	if s := stringFromState(got.State, "status"); s != "dev-planning" {
+		t.Errorf("persisted status = %q, want %q", s, "dev-planning")
 	}
 }
 
+// TestAdvanceFeatureStatus_MidPathStart verifies that advance works correctly
+// when starting from a mid-path state (specifying).
+// Requires spec doc (for specifying→dev-planning) and dev-plan+task (for dev-planning→developing).
 func TestAdvanceFeatureStatus_MidPathStart(t *testing.T) {
 	t.Parallel()
 	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
@@ -634,17 +700,18 @@ func TestAdvanceFeatureStatus_MidPathStart(t *testing.T) {
 	slug := "mid-start"
 	parent := "P1-test-plan"
 
-	// Start from specifying.
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "specifying", nil)
 
+	specDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/spec/mid.md", "specification", featureID, true)
 	devPlanDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/plan/mid.md", "dev-plan", featureID, true)
 	writeTestEntity(t, stateRoot, "task", "T-01AAAAAAAAA14", "mid-task",
 		makeTaskFields("T-01AAAAAAAAA14", "mid-task", featureID, "queued", nil))
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "specifying")
+	feature.Spec = specDocID
 	feature.DevPlan = devPlanDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -664,6 +731,9 @@ func TestAdvanceFeatureStatus_MidPathStart(t *testing.T) {
 	}
 }
 
+// TestAdvanceFeatureStatus_ParentPlanDocs verifies that document gates are
+// satisfied by documents owned by the parent plan.
+// Gate: designing→specifying requires a design doc; it is owned by the parent plan.
 func TestAdvanceFeatureStatus_ParentPlanDocs(t *testing.T) {
 	t.Parallel()
 	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
@@ -674,18 +744,17 @@ func TestAdvanceFeatureStatus_ParentPlanDocs(t *testing.T) {
 
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
 
-	// Provide documents at the plan level, not the feature level.
+	// Design doc owned by the parent plan — satisfies designing→specifying gate.
 	submitAndApproveDoc(t, docSvc, repoRoot, "work/design/parent.md", "design", parent, true)
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 
-	result, err := AdvanceFeatureStatus(feature, "specifying", entitySvc, docSvc)
+	result, err := AdvanceFeatureStatus(feature, "specifying", entitySvc, docSvc, false, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	// designing is the only intermediate — gate-checked and satisfied via parent doc.
-	// specifying is the target — not gate-checked. So we should reach specifying.
+	// proposed→designing: no gate. designing→specifying: design doc (parent) → passes.
 	if result.FinalStatus != "specifying" {
 		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "specifying")
 	}
@@ -701,5 +770,243 @@ func TestAdvanceFeatureStatus_ParentPlanDocs(t *testing.T) {
 		if result.AdvancedThrough[i] != s {
 			t.Errorf("AdvancedThrough[%d] = %q, want %q", i, result.AdvancedThrough[i], s)
 		}
+	}
+}
+
+// ─── Override tests ───────────────────────────────────────────────────────────
+
+// TestAdvanceFeatureStatus_Override_BypassesAllGates verifies that advance with
+// override=true and a non-empty reason bypasses all failing gates (FR-016).
+func TestAdvanceFeatureStatus_Override_BypassesAllGates(t *testing.T) {
+	t.Parallel()
+	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01BBBBBBBBBB01"
+	slug := "override-all"
+	parent := "P1-test-plan"
+
+	// No documents, no tasks — all gates will fail without override.
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
+
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, true, "fast-track for demo")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	// With override, all gates are bypassed — advance reaches the target.
+	if result.FinalStatus != "developing" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "developing")
+	}
+	if result.StoppedReason != "" {
+		t.Errorf("StoppedReason = %q, want empty (override bypasses gates)", result.StoppedReason)
+	}
+
+	wantThrough := []string{"designing", "specifying", "dev-planning", "developing"}
+	if len(result.AdvancedThrough) != len(wantThrough) {
+		t.Fatalf("AdvancedThrough = %v, want %v", result.AdvancedThrough, wantThrough)
+	}
+}
+
+// TestAdvanceFeatureStatus_Override_LogsOverrideRecords verifies that each
+// bypassed gate produces a separate OverrideRecord on the feature (FR-016).
+func TestAdvanceFeatureStatus_Override_LogsOverrideRecords(t *testing.T) {
+	t.Parallel()
+	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01BBBBBBBBBB02"
+	slug := "override-log"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
+	reason := "skipping for integration test"
+
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, true, reason)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	// proposed→designing: no gate (not overridden)
+	// designing→specifying: OVERRIDDEN
+	// specifying→dev-planning: OVERRIDDEN
+	// dev-planning→developing: OVERRIDDEN
+	wantOverridden := []string{
+		"designing→specifying",
+		"specifying→dev-planning",
+		"dev-planning→developing",
+	}
+	if len(result.OverriddenGates) != len(wantOverridden) {
+		t.Fatalf("OverriddenGates = %v, want %v", result.OverriddenGates, wantOverridden)
+	}
+	for i, want := range wantOverridden {
+		if result.OverriddenGates[i] != want {
+			t.Errorf("OverriddenGates[%d] = %q, want %q", i, result.OverriddenGates[i], want)
+		}
+	}
+
+	// The feature struct should have override records appended.
+	if len(feature.Overrides) != len(wantOverridden) {
+		t.Fatalf("feature.Overrides len = %d, want %d", len(feature.Overrides), len(wantOverridden))
+	}
+	for i, o := range feature.Overrides {
+		if o.Reason != reason {
+			t.Errorf("Overrides[%d].Reason = %q, want %q", i, o.Reason, reason)
+		}
+		if o.Timestamp.IsZero() {
+			t.Errorf("Overrides[%d].Timestamp is zero", i)
+		}
+	}
+}
+
+// TestAdvanceFeatureStatus_Override_PersistedOnDisk verifies that override
+// records are written to the feature entity on disk (FR-014).
+func TestAdvanceFeatureStatus_Override_PersistedOnDisk(t *testing.T) {
+	t.Parallel()
+	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01BBBBBBBBBB03"
+	slug := "override-persist"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "designing", nil)
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "designing")
+
+	_, err := AdvanceFeatureStatus(feature, "specifying", entitySvc, docSvc, true, "external spec exists")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	// Read the entity back from disk and verify the overrides field is present.
+	got, err := entitySvc.Get("feature", featureID, slug)
+	if err != nil {
+		t.Fatalf("Get after advance: %v", err)
+	}
+
+	overridesRaw, ok := got.State["overrides"]
+	if !ok {
+		t.Fatal("expected 'overrides' field in persisted feature state")
+	}
+	overrides, ok := overridesRaw.([]any)
+	if !ok || len(overrides) == 0 {
+		t.Fatalf("expected non-empty overrides slice in persisted state, got %T %v", overridesRaw, overridesRaw)
+	}
+
+	override, ok := overrides[0].(map[string]any)
+	if !ok {
+		t.Fatalf("expected override[0] to be map[string]any, got %T", overrides[0])
+	}
+	if override["from_status"] != "designing" {
+		t.Errorf("override.from_status = %q, want %q", override["from_status"], "designing")
+	}
+	if override["to_status"] != "specifying" {
+		t.Errorf("override.to_status = %q, want %q", override["to_status"], "specifying")
+	}
+	if override["reason"] != "external spec exists" {
+		t.Errorf("override.reason = %q, want %q", override["reason"], "external spec exists")
+	}
+}
+
+// TestAdvanceFeatureStatus_Override_StopStatePreserved verifies that the
+// reviewing stop state is preserved even with override=true (NFR-005).
+func TestAdvanceFeatureStatus_Override_StopStatePreserved(t *testing.T) {
+	t.Parallel()
+	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01BBBBBBBBBB04"
+	slug := "override-stop"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
+
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, true, "override all gates")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	// Override bypasses gate failures but reviewing is a mandatory halt — never skipped.
+	if result.FinalStatus != "reviewing" {
+		t.Errorf("FinalStatus = %q, want %q (stop state preserved with override)", result.FinalStatus, "reviewing")
+	}
+	if result.FinalStatus == "done" {
+		t.Fatal("override must not skip the reviewing stop state")
+	}
+	if result.StoppedReason == "" {
+		t.Error("expected StoppedReason for reviewing halt")
+	}
+}
+
+// TestAdvanceFeatureStatus_Override_NoOverriddenGatesWhenGatesPassed verifies
+// that OverriddenGates is empty when all gates are satisfied without override.
+func TestAdvanceFeatureStatus_Override_NoOverriddenGatesWhenGatesPassed(t *testing.T) {
+	t.Parallel()
+	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01BBBBBBBBBB05"
+	slug := "no-override-needed"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "proposed", nil)
+
+	designDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/design/clean.md", "design", featureID, true)
+	specDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/spec/clean.md", "specification", featureID, true)
+	devPlanDocID := submitAndApproveDoc(t, docSvc, repoRoot, "work/plan/clean.md", "dev-plan", featureID, true)
+	writeTestEntity(t, stateRoot, "task", "T-01BBBBBBBBBB05", "clean-task",
+		makeTaskFields("T-01BBBBBBBBBB05", "clean-task", featureID, "queued", nil))
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
+	feature.Design = designDocID
+	feature.Spec = specDocID
+	feature.DevPlan = devPlanDocID
+
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, true, "just in case")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if result.FinalStatus != "developing" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "developing")
+	}
+	// All gates were satisfied — no overrides logged.
+	if len(result.OverriddenGates) != 0 {
+		t.Errorf("OverriddenGates = %v, want empty (all gates satisfied)", result.OverriddenGates)
+	}
+	if len(feature.Overrides) != 0 {
+		t.Errorf("feature.Overrides = %v, want empty (no gates bypassed)", feature.Overrides)
+	}
+}
+
+// TestAdvanceFeatureStatus_Override_TimestampSetOnRecord verifies that override
+// records have a non-zero timestamp close to now.
+func TestAdvanceFeatureStatus_Override_TimestampSetOnRecord(t *testing.T) {
+	t.Parallel()
+	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01BBBBBBBBBB06"
+	slug := "override-ts"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "designing", nil)
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "designing")
+
+	before := time.Now()
+	_, err := AdvanceFeatureStatus(feature, "specifying", entitySvc, docSvc, true, "ts test")
+	after := time.Now()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if len(feature.Overrides) == 0 {
+		t.Fatal("expected at least one override record")
+	}
+	ts := feature.Overrides[0].Timestamp
+	if ts.Before(before) || ts.After(after) {
+		t.Errorf("override timestamp %v outside expected range [%v, %v]", ts, before, after)
 	}
 }

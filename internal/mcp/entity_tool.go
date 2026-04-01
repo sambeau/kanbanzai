@@ -647,7 +647,7 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 	feature := featureFromState(getResult.ID, getResult.Slug, getResult.State)
 	startStatus := string(feature.Status)
 
-	advResult, err := service.AdvanceFeatureStatus(feature, targetStatus, entitySvc, docSvc)
+	advResult, err := service.AdvanceFeatureStatus(feature, targetStatus, entitySvc, docSvc, false, "")
 	if err != nil {
 		return nil, fmt.Errorf("advance feature %s: %w", entityID, err)
 	}

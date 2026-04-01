@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/sambeau/kanbanzai/internal/model"
 )
@@ -11,6 +12,7 @@ type AdvanceResult struct {
 	FinalStatus     string   // where the feature ended up
 	AdvancedThrough []string // intermediate states passed through
 	StoppedReason   string   // empty if target reached, explanation if stopped early
+	OverriddenGates []string // transitions where a gate was bypassed via override (FR-016)
 }
 
 // featureForwardPath is the sequential forward path for Phase 2 features.
@@ -43,18 +45,17 @@ func featurePathIndex(status string) int {
 }
 
 // AdvanceFeatureStatus walks a feature through multiple lifecycle states toward
-// a target status, checking document prerequisites at each intermediate gate.
+// a target status, enforcing gate prerequisites at every step via
+// CheckTransitionGate — including the target state itself (FR-001).
 //
-// For each intermediate state between the feature's current status and the
-// target, CheckFeatureGate is called to determine whether the prerequisite is
-// satisfied. If satisfied, the feature is transitioned through that state
-// (persisted at each step). If not satisfied, the advance stops and returns a
-// partial result explaining why.
+// When override is true and overrideReason is a non-empty string, any failing
+// gate is bypassed: an OverrideRecord is appended to the feature, persisted to
+// disk immediately, and the advance continues (FR-016). Each bypassed gate is
+// recorded as a separate entry.
 //
-// The target state itself is not gate-checked — only intermediate states are.
-// States in advanceStopStates (e.g. "reviewing") are mandatory gates: advance
-// transitions into them but never auto-transitions through them. This ensures
-// human/orchestrator review cannot be skipped.
+// States in advanceStopStates (e.g. "reviewing") are mandatory halt points:
+// advance transitions into them and then stops, even if the target lies beyond.
+// This behaviour is preserved regardless of gate override (NFR-005).
 //
 // Backward transitions are not supported and return an error.
 func AdvanceFeatureStatus(
@@ -62,6 +63,8 @@ func AdvanceFeatureStatus(
 	targetStatus string,
 	entitySvc *EntityService,
 	docSvc *DocumentService,
+	override bool,
+	overrideReason string,
 ) (AdvanceResult, error) {
 	currentStatus := string(feature.Status)
 
@@ -90,33 +93,37 @@ func AdvanceFeatureStatus(
 	path := featureForwardPath[currentIdx+1 : targetIdx+1]
 
 	var advancedThrough []string
+	var overriddenGates []string
 
 	for i, nextState := range path {
 		isTarget := i == len(path)-1
-		isStopState := advanceStopStates[nextState]
+		fromState := string(feature.Status)
 
-		// Stop states (e.g. reviewing) are mandatory gates: we transition
-		// into them without a prerequisite check, then halt. Non-stop
-		// intermediate states are gate-checked before entry.
-		if !isStopState {
-			var shouldCheck bool
-			var gate string
-
-			if !isTarget {
-				shouldCheck = true
-				gate = nextState
+		// Evaluate the gate for this transition on every step (FR-001).
+		gateResult := CheckTransitionGate(fromState, nextState, feature, docSvc, entitySvc)
+		if !gateResult.Satisfied {
+			if !override {
+				// Gate failed with no override: halt here, before transitioning.
+				return AdvanceResult{
+					FinalStatus:     fromState,
+					AdvancedThrough: advancedThrough,
+					OverriddenGates: overriddenGates,
+					StoppedReason:   fmt.Sprintf("stopped before %s: %s", nextState, gateResult.Reason),
+				}, nil
 			}
 
-			if shouldCheck {
-				result := CheckFeatureGate(gate, feature, docSvc, entitySvc)
-				if !result.Satisfied {
-					return AdvanceResult{
-						FinalStatus:     string(feature.Status),
-						AdvancedThrough: advancedThrough,
-						StoppedReason:   fmt.Sprintf("stopped before %s: %s", nextState, result.Reason),
-					}, nil
-				}
+			// Gate failed with override: record the bypass and continue (FR-016).
+			or := model.OverrideRecord{
+				FromStatus: fromState,
+				ToStatus:   nextState,
+				Reason:     overrideReason,
+				Timestamp:  time.Now(),
 			}
+			feature.Overrides = append(feature.Overrides, or)
+			if err := entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides); err != nil {
+				return AdvanceResult{}, fmt.Errorf("persisting override record for %s→%s: %w", fromState, nextState, err)
+			}
+			overriddenGates = append(overriddenGates, fromState+"→"+nextState)
 		}
 
 		// Persist the state change via UpdateStatus, which validates the
@@ -135,11 +142,12 @@ func AdvanceFeatureStatus(
 		feature.Status = model.FeatureStatus(nextState)
 		advancedThrough = append(advancedThrough, nextState)
 
-		// Halt after entering a stop state (unless it was the target).
-		if isStopState && !isTarget {
+		// Halt after entering a stop state (unless it was the explicit target).
+		if advanceStopStates[nextState] && !isTarget {
 			return AdvanceResult{
 				FinalStatus:     nextState,
 				AdvancedThrough: advancedThrough,
+				OverriddenGates: overriddenGates,
 				StoppedReason:   fmt.Sprintf("stopped at %s: review is a mandatory gate that cannot be auto-advanced", nextState),
 			}, nil
 		}
@@ -148,5 +156,6 @@ func AdvanceFeatureStatus(
 	return AdvanceResult{
 		FinalStatus:     string(feature.Status),
 		AdvancedThrough: advancedThrough,
+		OverriddenGates: overriddenGates,
 	}, nil
 }
