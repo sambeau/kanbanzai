@@ -2,8 +2,10 @@ package service
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // GateResult describes whether a stage gate prerequisite is satisfied.
@@ -146,6 +148,155 @@ func checkDocumentGate(stage, docType string, feature *model.Feature, docSvc *Do
 		Stage:     stage,
 		Satisfied: false,
 		Reason:    fmt.Sprintf("no approved %s document found", docType),
+	}
+}
+
+// CheckTransitionGate checks the gate prerequisite for a specific (from, to)
+// feature lifecycle transition. It returns a satisfied GateResult for ungated
+// transitions (terminal targets, Phase 1 transitions, proposed→designing,
+// reviewing→needs-rework) and an unsatisfied GateResult when prerequisites
+// are not met. This is the primary entry point for mandatory gate enforcement
+// (FR-001 through FR-010).
+func CheckTransitionGate(from, to string, feature *model.Feature, docSvc *DocumentService, entitySvc *EntityService) GateResult {
+	// Terminal state transitions are always ungated (FR-002).
+	if to == string(model.FeatureStatusSuperseded) || to == string(model.FeatureStatusCancelled) {
+		return GateResult{Stage: to, Satisfied: true}
+	}
+
+	transition := from + "→" + to
+	switch transition {
+	case string(model.FeatureStatusProposed) + "→" + string(model.FeatureStatusDesigning):
+		// proposed→designing: ungated by design (FR-003)
+		return GateResult{Stage: to, Satisfied: true}
+
+	case string(model.FeatureStatusDesigning) + "→" + string(model.FeatureStatusSpecifying):
+		// designing→specifying: requires approved design document (FR-004)
+		return checkDocumentGate(string(model.FeatureStatusDesigning), string(model.DocumentTypeDesign), feature, docSvc)
+
+	case string(model.FeatureStatusSpecifying) + "→" + string(model.FeatureStatusDevPlanning):
+		// specifying→dev-planning: requires approved specification document (FR-005)
+		return checkDocumentGate(string(model.FeatureStatusSpecifying), string(model.DocumentTypeSpecification), feature, docSvc)
+
+	case string(model.FeatureStatusDevPlanning) + "→" + string(model.FeatureStatusDeveloping):
+		// dev-planning→developing: requires approved dev-plan AND at least one child task (FR-006)
+		docResult := checkDocumentGate(string(model.FeatureStatusDevPlanning), string(model.DocumentTypeDevPlan), feature, docSvc)
+		if !docResult.Satisfied {
+			return docResult
+		}
+		return checkDevelopingGate(feature, entitySvc)
+
+	case string(model.FeatureStatusDeveloping) + "→" + string(model.FeatureStatusReviewing):
+		// developing→reviewing: all child tasks must be in terminal state (FR-007)
+		return checkAllTasksTerminal(feature, entitySvc)
+
+	case string(model.FeatureStatusReviewing) + "→" + string(model.FeatureStatusDone):
+		// reviewing→done: a review report document must be registered (FR-008)
+		return checkReviewReportExists(feature, docSvc)
+
+	case string(model.FeatureStatusReviewing) + "→" + string(model.FeatureStatusNeedsRework):
+		// reviewing→needs-rework: ungated by design (FR-003)
+		return GateResult{Stage: to, Satisfied: true}
+
+	case string(model.FeatureStatusNeedsRework) + "→" + string(model.FeatureStatusDeveloping):
+		// needs-rework→developing: at least one non-terminal child task must exist (FR-009)
+		return checkReworkTaskExists(feature, entitySvc)
+
+	case string(model.FeatureStatusNeedsRework) + "→" + string(model.FeatureStatusReviewing):
+		// needs-rework→reviewing: all child tasks must be in terminal state (FR-010)
+		return checkAllTasksTerminal(feature, entitySvc)
+
+	default:
+		// All other transitions (Phase 1, backward, unknown) are ungated.
+		return GateResult{Stage: to, Satisfied: true}
+	}
+}
+
+// checkAllTasksTerminal verifies that all child tasks of the feature are in a
+// terminal state (done, not-planned, or duplicate). Used by developing→reviewing
+// (FR-007) and needs-rework→reviewing (FR-010).
+func checkAllTasksTerminal(feature *model.Feature, entitySvc *EntityService) GateResult {
+	tasks, err := entitySvc.List("task")
+	if err != nil {
+		return GateResult{
+			Satisfied: false,
+			Reason:    fmt.Sprintf("error listing tasks: %v", err),
+		}
+	}
+
+	termStates := validate.DependencyTerminalStates()
+	var nonTerminal []string
+	for _, t := range tasks {
+		if stringFromState(t.State, "parent_feature") != feature.ID {
+			continue
+		}
+		status := stringFromState(t.State, "status")
+		if _, ok := termStates[status]; !ok {
+			nonTerminal = append(nonTerminal, fmt.Sprintf("%s (%s)", t.ID, status))
+		}
+	}
+
+	if len(nonTerminal) == 0 {
+		return GateResult{
+			Satisfied: true,
+			Reason:    "all child tasks are in terminal state",
+		}
+	}
+
+	return GateResult{
+		Satisfied: false,
+		Reason:    fmt.Sprintf("non-terminal child tasks: %s", strings.Join(nonTerminal, ", ")),
+	}
+}
+
+// checkReviewReportExists verifies that at least one report document is
+// registered and owned by the feature. The report need not be approved.
+// Used by reviewing→done (FR-008).
+func checkReviewReportExists(feature *model.Feature, docSvc *DocumentService) GateResult {
+	docs, err := docSvc.ListDocuments(DocumentFilters{
+		Owner: feature.ID,
+		Type:  string(model.DocumentTypeReport),
+	})
+	if err == nil && len(docs) > 0 {
+		return GateResult{
+			Satisfied: true,
+			Reason:    fmt.Sprintf("review report document found: %s", docs[0].ID),
+		}
+	}
+
+	return GateResult{
+		Satisfied: false,
+		Reason:    "no review report document registered for this feature",
+	}
+}
+
+// checkReworkTaskExists verifies that at least one non-terminal child task
+// exists for the feature. Used by needs-rework→developing (FR-009).
+func checkReworkTaskExists(feature *model.Feature, entitySvc *EntityService) GateResult {
+	tasks, err := entitySvc.List("task")
+	if err != nil {
+		return GateResult{
+			Satisfied: false,
+			Reason:    fmt.Sprintf("error listing tasks: %v", err),
+		}
+	}
+
+	termStates := validate.DependencyTerminalStates()
+	for _, t := range tasks {
+		if stringFromState(t.State, "parent_feature") != feature.ID {
+			continue
+		}
+		status := stringFromState(t.State, "status")
+		if _, ok := termStates[status]; !ok {
+			return GateResult{
+				Satisfied: true,
+				Reason:    fmt.Sprintf("non-terminal rework task found: %s (%s)", t.ID, status),
+			}
+		}
+	}
+
+	return GateResult{
+		Satisfied: false,
+		Reason:    "no non-terminal rework tasks found; create a rework task before resuming development",
 	}
 }
 
