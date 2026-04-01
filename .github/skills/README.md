@@ -4,6 +4,10 @@ This directory contains skill documents that provide guidance to AI agents
 working on this project. Each subdirectory contains a `SKILL.md` file with
 structured instructions for a specific domain.
 
+> **Note:** Kanbanzai workflow skills live in `.agents/skills/kanbanzai-*/SKILL.md`,
+> not in this directory. See `.github/copilot-instructions.md` for a complete
+> skill index across both locations.
+
 ## Skills
 
 | Skill | Provenance | Purpose |
