@@ -18,15 +18,13 @@ Use these terms consistently. They refer to different things.
 |---|---|
 | **Kanbanzai** (or "the Kanbanzai System") | The system/methodology, used in prose the way people say "Scrum" or "Kanban" |
 | **`kanbanzai`** | The tool binary and MCP server name (used in `.mcp.json` config, `kanbanzai serve`) |
-| **`kbz`** | The CLI shorthand — a symlink or invocation alias to the same binary, for human use in the terminal |
 | **`.kbz/`** | The instance root directory (project-local workflow state) |
 
-The binary is `kanbanzai`. When invoked as `kbz` or with a CLI subcommand, it runs in CLI mode. When invoked with `kanbanzai serve`, it runs as the MCP server. Both modes share the same core logic.
+The binary is `kanbanzai`. When invoked with `kanbanzai serve`, it runs as the MCP server. Both modes share the same core logic.
 
 Examples:
 - "We're adopting Kanbanzai for our workflow." (the system)
 - `kanbanzai serve` (MCP server, launched by MCP client)
-- `kbz status` (CLI, typed by a human)
 - `.kbz/state/` (instance directory on disk)
 
 ## Self-Managed Development
@@ -85,11 +83,19 @@ kanbanzai/
     └── cache/             ← derived local cache (not committed)
 ```
 
-## Before Any Task
+## Before Every Task — Required Checklist
 
-1. Run `git status` — if there are uncommitted changes from previous work, commit or stash before starting new work.
-2. Read this file (`AGENTS.md`).
-3. If the task involves understanding the system design, follow the reading order below.
+**Copy this checklist. Complete every item before writing any code or documents.**
+
+- [ ] Run `git status`. Act on what you find:
+  - Changes from previous work are coherent and complete → **commit them now**, then proceed
+  - Changes are incomplete or belong to a different task → **stash them** and inform the human
+  - Working tree is clean → proceed
+- [ ] Confirm you are on the correct branch for this task (or `main` if starting fresh)
+- [ ] Read this file (`AGENTS.md`) if you haven't already this session
+- [ ] If the task involves design decisions, read the relevant spec or design document before touching any file
+
+**Why this matters:** Uncommitted changes from a previous task bleed into your new work. This makes commits meaningless (one commit covers two unrelated tasks), makes `git bisect` impossible, and makes code review confusing. One task = one clean commit history. This step is not optional.
 
 ## Document Reading Order
 
@@ -150,9 +156,6 @@ Then refer to these as needed:
 
 
 ## Decision-Making Rules
-</thinking>
-</text>
-
 
 When making a non-trivial change to any document or code:
 
@@ -164,7 +167,9 @@ When making a non-trivial change to any document or code:
 6. Check whether the design basis or specification says something different from what you intend.
 7. If there is a conflict or ambiguity, surface it to the human rather than guessing.
 
-## Git Rules
+## Git Discipline
+
+### Branch and merge roles
 
 - AI commits to feature/bug branches.
 - AI merges to main.
@@ -172,15 +177,6 @@ When making a non-trivial change to any document or code:
 - Human creates release tags.
 
 For commit message format, types, and examples, see the `kanbanzai-agents` skill.
-
-## Preserving Work Through Commits
-
-### Before starting new work
-
-Run `git status`. If there are uncommitted changes from previous work:
-- If the changes are coherent and complete → commit with an appropriate message.
-- If the changes are incomplete or risky → stash and inform the human.
-- Never start new work on top of uncommitted changes from a different task.
 
 ### During work
 
@@ -190,10 +186,8 @@ Run `git status`. If there are uncommitted changes from previous work:
 
 ### Commit granularity for documents
 
-During the current design/planning phase, most work produces document changes. Commit these the same way you would commit code:
-
 - A new or updated decision record → commit when the decision is complete.
-- A new document (e.g., bootstrap-workflow.md) → commit when it's coherent and reviewed.
+- A new document → commit when it's coherent and reviewed.
 - A cross-cutting rename or terminology change → commit as a single coherent change covering all affected files.
 - Multiple unrelated document changes in one session → split into separate commits by topic.
 
