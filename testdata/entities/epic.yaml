@@ -1,6 +1,6 @@
 id: EPIC-PHASE1KERNEL
 slug: phase-1-kernel
-title: Phase 1 Kernel
+name: Phase 1 Kernel
 status: proposed
 summary: Build the initial workflow kernel
 created: "2026-03-19T12:00:00Z"
