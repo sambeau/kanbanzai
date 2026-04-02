@@ -265,6 +265,8 @@ func executeMerge(
 	if err != nil {
 		if errors.Is(err, worktree.ErrNotFound) {
 			// Direct-to-main workflow: no worktree means work was committed directly.
+			// Returns {status, reason} without a recommendation field — unlike merge
+			// check, execute has no follow-up action for the caller when skipped.
 			return map[string]any{
 				"status": "skipped",
 				"reason": "no worktree exists — work was committed directly to the default branch",

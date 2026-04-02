@@ -6,6 +6,22 @@
 
 ---
 
+## Overview
+
+This plan implements `work/spec/lifecycle-integrity.md`
+(FEAT-01KN83QN0VAFG/specification-lifecycle-integrity) across seven tasks in three
+pillars. Pillar A adds child-state gates to prevent premature closure of features and
+plans. Pillar B adds synchronous auto-advance so features move to `reviewing` and plans
+move to `done` when their children complete. Pillar C upgrades the `status` tool's
+`attention` field from `[]string` to a typed `[]AttentionItem` structure, adds stale
+reviewing and critical bug detection, and injects health findings into project-level
+status responses.
+
+The two independent foundation tasks (T1, T5) can be built in parallel before the
+dependent implementation tasks begin.
+
+---
+
 ## Scope
 
 This plan implements the requirements defined in `work/spec/lifecycle-integrity.md`
@@ -386,6 +402,104 @@ T7: Health findings injection          → depends on T5
 **Critical path:** T1 → T3 → T4 (3 tasks, approximately medium + medium + small)
 
 **Maximum parallelism:** 4 agents in round 2
+
+---
+
+## Interface Contracts
+
+### Contract 1: Child-state query helpers (T1 → T2, T3, T4)
+
+Defined in `internal/service/entities.go` (or `internal/service/entity_children.go`).
+All four functions are unexported methods on `*EntityService`:
+
+```
+func (s *EntityService) countNonTerminalTasks(featureID string) (int, error)
+func (s *EntityService) countNonTerminalFeatures(planID string) (int, error)
+func (s *EntityService) checkAllTasksTerminal(featureID string) (bool, bool, error)
+  // returns: allTerminal, hasOneDone, err
+func (s *EntityService) checkAllFeaturesTerminal(planID string) (bool, bool, error)
+  // returns: allTerminal, hasOneDone, err
+```
+
+T2 uses `countNonTerminalTasks` and `countNonTerminalFeatures` for gate checks.
+T3 uses `checkAllTasksTerminal` for the feature auto-advance guard.
+T4 uses `checkAllFeaturesTerminal` for the plan auto-advance guard.
+
+### Contract 2: Auto-advance helpers (T3 → T4)
+
+T4 follows the same function shape as T3:
+
+```
+func (s *EntityService) maybeAutoAdvanceFeature(featureID string) (advanced bool, err error)
+func (s *EntityService) maybeAutoAdvancePlan(planID string) (advanced bool, err error)
+```
+
+Both are unexported. T4 may be authored independently once T3's function is defined,
+as T4 only needs the plan-level mirror — it does not call `maybeAutoAdvanceFeature`.
+
+### Contract 3: AttentionItem struct (T5 → T6, T7)
+
+Defined in `internal/mcp/status_tool.go` by T5:
+
+```go
+type AttentionItem struct {
+    Type      string `json:"type"`
+    Severity  string `json:"severity"`
+    EntityID  string `json:"entity_id,omitempty"`
+    DisplayID string `json:"display_id,omitempty"`
+    Message   string `json:"message"`
+}
+```
+
+T6 and T7 construct `[]AttentionItem` slices using this struct. No other shared
+interface is required between T6 and T7 — they write to different parts of
+`status_tool.go` and can work concurrently.
+
+### Contract 4: Internal auto-advance bypass of the gate (T2 ↔ T4)
+
+Plan auto-advance (T4) calls an internal transition on the plan. The lifecycle gate
+(T2) fires on external `entity(transition)` calls. T4's internal auto-advance MUST NOT
+route through the gated external path — it must call the underlying transition directly
+(or use an internal flag equivalent to `override: true`) to avoid the gate blocking its
+own advance. T2 must ensure the gate is injected at the external handler layer only,
+not in the internal transition primitive.
+
+---
+
+## Traceability Matrix
+
+| Requirement | Task |
+|-------------|------|
+| REQ-001 | T1, T2 |
+| REQ-002 | T2 |
+| REQ-003 | T1, T2 |
+| REQ-004 | T2 |
+| REQ-005 | T2 |
+| REQ-006 | T2 |
+| REQ-007 | T2 |
+| REQ-008 | T1, T3 |
+| REQ-009 | T3 |
+| REQ-010 | T3 |
+| REQ-011 | T3 |
+| REQ-012 | T3 |
+| REQ-013 | T1, T4 |
+| REQ-014 | T4 |
+| REQ-015 | T4 |
+| REQ-016 | T4 |
+| REQ-017 | T5 |
+| REQ-018 | T5 |
+| REQ-019 | T5 |
+| REQ-020 | T7 |
+| REQ-021 | T7 |
+| REQ-022 | T6 |
+| REQ-023 | T6 |
+| REQ-024 | T6 |
+| REQ-025 | T6 |
+| REQ-026 | T6 |
+| REQ-027 | T6 |
+| REQ-NF-001 | T1, T2 |
+| REQ-NF-002 | T5 |
+| REQ-NF-003 | T3, T4 |
 
 ---
 

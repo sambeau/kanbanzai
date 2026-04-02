@@ -1826,3 +1826,82 @@ func TestDocTool_Gaps_NoParentPlan_NoInheritance(t *testing.T) {
 		t.Errorf("expected 0 present for orphan feature, got %d; present: %v", len(present), present)
 	}
 }
+
+// TestDocTool_Gaps_FeatureDraftDocBlocksPlanInheritance verifies AC-3 of the
+// document-inheritance spec: a feature's own draft document takes precedence
+// over the parent plan's approved document. The feature's draft appears in
+// gaps; the plan's approved doc is NOT inherited.
+func TestDocTool_Gaps_FeatureDraftDocBlocksPlanInheritance(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, featureID := setupPlanFeature(t, entitySvc)
+
+	// Register and approve a specification for the plan.
+	writeDocFile(t, env.repoRoot, "work/spec/plan-spec.md", "# Plan Spec\n\nContent.")
+	planRegResp := callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/spec/plan-spec.md",
+		"type":   "specification",
+		"title":  "Plan Specification",
+		"owner":  planID,
+	})
+	planSpecDoc, _ := planRegResp["document"].(map[string]any)
+	planSpecID, _ := planSpecDoc["id"].(string)
+	if planSpecID == "" {
+		t.Fatalf("register plan spec failed; response: %v", planRegResp)
+	}
+	callDoc(t, env, map[string]any{"action": "approve", "id": planSpecID})
+
+	// Register (but do NOT approve) a specification for the feature — it stays draft.
+	writeDocFile(t, env.repoRoot, "work/spec/feat-spec.md", "# Feature Spec Draft\n\nContent.")
+	featRegResp := callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/spec/feat-spec.md",
+		"type":   "specification",
+		"title":  "Feature Specification Draft",
+		"owner":  featureID,
+	})
+	featSpecDoc, _ := featRegResp["document"].(map[string]any)
+	featSpecID, _ := featSpecDoc["id"].(string)
+	if featSpecID == "" {
+		t.Fatalf("register feature spec failed; response: %v", featRegResp)
+	}
+	// Intentionally not approving — feature spec remains draft.
+
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action":     "gaps",
+		"feature_id": featureID,
+	})
+
+	// The feature's draft spec must appear in gaps (not present), with the
+	// feature's own doc ID — the plan's approved spec must NOT be inherited.
+	gaps, _ := resp["gaps"].([]any)
+	foundSpecGap := false
+	for _, g := range gaps {
+		gm, _ := g.(map[string]any)
+		if gm["type"] == "specification" {
+			foundSpecGap = true
+			// The gap entry must reference the feature's own draft doc.
+			if id, _ := gm["id"].(string); id != featSpecID {
+				t.Errorf("gap spec id = %q, want feature's own draft doc %q", id, featSpecID)
+			}
+		}
+	}
+	if !foundSpecGap {
+		t.Errorf("expected feature's draft spec in gaps; gaps: %v, present: %v", gaps, resp["present"])
+	}
+
+	// The plan's approved spec must NOT appear as inherited in present.
+	present, _ := resp["present"].([]any)
+	for _, p := range present {
+		pm, _ := p.(map[string]any)
+		if pm["type"] == "specification" {
+			inherited, _ := pm["inherited"].(bool)
+			if inherited {
+				t.Errorf("plan's approved spec should not be inherited when feature has its own draft; present: %v", present)
+			}
+		}
+	}
+}

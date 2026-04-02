@@ -325,6 +325,55 @@ func TestRoleStoreLoadAll(t *testing.T) {
 			wantCount: 1,
 			wantIDs:   []string{"base"},
 		},
+		{
+			// Regression test for the ProfileStore coexistence bug: the legacy
+			// directory (.kbz/context/roles/) is shared with ProfileStore which
+			// writes old-format YAML (description/conventions/architecture fields
+			// not present in Role). When a new-location counterpart exists the
+			// old-format file must be skipped without returning an error.
+			name: "old-format legacy file superseded by new-location file is skipped without error",
+			setupNew: func(t *testing.T, dir string) {
+				writeRoleFile(t, dir, "base", validRoleYAML("base"))
+			},
+			setupLegacy: func(t *testing.T, dir string) {
+				oldFormat := "id: base\ndescription: \"Project conventions\"\nconventions: []\narchitecture:\n  summary: \"arch\"\n"
+				writeRoleFile(t, dir, "base", oldFormat)
+			},
+			wantCount: 1,
+			wantIDs:   []string{"base"},
+		},
+		{
+			// Old-format legacy file with no new-location counterpart (e.g. the
+			// legacy "developer" role that has no .kbz/roles/ equivalent). It must
+			// be silently skipped rather than crashing LoadAll.
+			name: "old-format legacy file with no new-location counterpart is silently skipped",
+			setupLegacy: func(t *testing.T, dir string) {
+				oldFormat := "id: developer\ninherits: base\ndescription: \"Developer conventions\"\npackages:\n  - internal/\nconventions: []\n"
+				writeRoleFile(t, dir, "developer", oldFormat)
+			},
+			wantCount: 0,
+		},
+		{
+			// A new-format role file placed in the legacy directory (the intended
+			// backward-compat path for roles not yet migrated to .kbz/roles/) must
+			// still be loaded successfully.
+			name: "new-format role in legacy directory only is loaded successfully",
+			setupLegacy: func(t *testing.T, dir string) {
+				writeRoleFile(t, dir, "custom", validRoleYAML("custom"))
+			},
+			wantCount: 1,
+			wantIDs:   []string{"custom"},
+		},
+		{
+			// Invalid new-format role in the legacy directory (missing required
+			// fields) must be silently skipped in lenient mode, not hard-fail.
+			name: "invalid new-format role in legacy directory is silently skipped",
+			setupLegacy: func(t *testing.T, dir string) {
+				// Valid YAML but missing identity and vocabulary.
+				writeRoleFile(t, dir, "incomplete", "id: incomplete\n")
+			},
+			wantCount: 0,
+		},
 	}
 
 	for _, tt := range tests {

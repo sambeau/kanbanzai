@@ -44,6 +44,7 @@ import (
 	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
 	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
@@ -1007,8 +1008,7 @@ func generateProjectAttention(plans []planSummary, allTasks []service.ListResult
 		// Only flag if no recent git activity on the worktree branch.
 		parentFeature, _ := t.State["parent_feature"].(string)
 		branch := worktreeBranches[parentFeature]
-		hasActivity := health.CheckGitActivity(repoPath, branch, dispatchedAt)
-		if !hasActivity {
+		if health.IsTaskStuck(dispatchedAt, 24*time.Hour, repoPath, branch) {
 			items = append(items, fmt.Sprintf("%s has been active for >24h with no recent commits — may need unclaim", taskID))
 		}
 	}
@@ -1081,7 +1081,7 @@ func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int, 
 	if totalTasks > 0 && (featureStatus == "developing" || featureStatus == "needs-rework") {
 		allTerminal := true
 		for _, t := range tasks {
-			if !isTerminalStatus(t.Status) {
+			if !validate.IsTerminalState(model.EntityKindTask, t.Status) {
 				allTerminal = false
 				break
 			}
@@ -1090,6 +1090,11 @@ func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int, 
 			msg := fmt.Sprintf("%s has %d/%d tasks done — ready to advance to reviewing", featureDisplayID, totalTasks, totalTasks)
 			// Prefix with stale warning if the feature has been developing for >48h.
 			// Only applies to "developing", not "needs-rework" (entering rework resets staleness).
+			// Note: the !featureUpdated.IsZero() guard intentionally skips the stale
+			// prefix for entities whose updated field was never populated (e.g. entities
+			// created before timestamp backfilling). A zero updated field is treated as
+			// "unknown age" rather than "infinitely old", accepting that genuinely stale
+			// pre-field entities will not show the ⚠️ STALE prefix.
 			if featureStatus == "developing" && !featureUpdated.IsZero() && time.Since(featureUpdated) > 48*time.Hour {
 				msg = "⚠️ STALE: " + msg
 			}
@@ -1191,7 +1196,7 @@ func resolveDependencies(taskState map[string]any, entitySvc *service.EntityServ
 			continue
 		}
 		depStatus, _ := dep.State["status"].(string)
-		blocking := !isTerminalStatus(depStatus)
+		blocking := !validate.IsTerminalState(model.EntityKindTask, depStatus)
 		result = append(result, depInfo{
 			DisplayID: id.FormatFullDisplay(dep.ID),
 			TaskID:    dep.ID,
@@ -1201,13 +1206,4 @@ func resolveDependencies(taskState map[string]any, entitySvc *service.EntityServ
 		})
 	}
 	return result
-}
-
-// isTerminalStatus returns true for statuses that satisfy a dependency.
-func isTerminalStatus(status string) bool {
-	switch status {
-	case "done", "not-planned", "duplicate":
-		return true
-	}
-	return false
 }

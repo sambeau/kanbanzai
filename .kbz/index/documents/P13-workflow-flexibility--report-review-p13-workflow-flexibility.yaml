@@ -1,0 +1,217 @@
+document_id: P13-workflow-flexibility/report-review-p13-workflow-flexibility
+document_path: work/reviews/review-P13-workflow-flexibility.md
+content_hash: 7367d8a24f42e98ac065f53ef89605169a39f95a2f18236b727a084a1eb9e342
+indexed_at: 2026-04-02T20:01:16.224941Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: P13 Workflow Flexibility'
+      byte_offset: 0
+      byte_count: 13412
+      word_count: 1760
+      content_hash: 7367d8a24f42e98ac065f53ef89605169a39f95a2f18236b727a084a1eb9e342
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 1450
+          byte_count: 404
+          word_count: 66
+          content_hash: bf330c5e8333280a775d118661e342a655251d6042f49ec689bb8de9c11a4953
+        - path: "1.2"
+          level: 2
+          title: Findings
+          byte_offset: 1854
+          byte_count: 7629
+          word_count: 1017
+          content_hash: 26ffdd99bd46b2c56e71a1cd863ad789372f79ae7032b63fe0ebbed1d1a45c39
+          children:
+            - path: 1.2.1
+              level: 3
+              title: '[gap] FEAT-01KN07T66SAH3 AC-3 not covered by any test'
+              byte_offset: 1872
+              byte_count: 1146
+              word_count: 177
+              content_hash: 76ddb84b8b1d7c2c271a7497d0b59790d0f5f87d4c184694994552d09bc22c30
+            - path: 1.2.2
+              level: 3
+              title: '[improvement] `generateProjectAttention` has no direct unit tests'
+              byte_offset: 3018
+              byte_count: 1131
+              word_count: 136
+              content_hash: 5b28572e2ce5a49356418b77276960c2c89cd66b2a306f255dcdb7c899761680
+            - path: 1.2.3
+              level: 3
+              title: '[improvement] Two independent stuck-task detection implementations'
+              byte_offset: 4149
+              byte_count: 1045
+              word_count: 123
+              content_hash: 8da18dcca7a1a8150e7aa6552d74ea6e7c8237c5f9be9ef14ceb7d3d0fff22c6
+            - path: 1.2.4
+              level: 3
+              title: '[nit] Private `isTerminalStatus` duplicates `validate.IsTerminalState`'
+              byte_offset: 5194
+              byte_count: 753
+              word_count: 92
+              content_hash: 3eec1791de64f38e90ae811038bd8f881cce700283991c14cd97d1e31bf17c04
+            - path: 1.2.5
+              level: 3
+              title: '[nit] Grouped task `Summary` and `Rationale` format not asserted in tests'
+              byte_offset: 5947
+              byte_count: 699
+              word_count: 96
+              content_hash: 4f1db50287a71e0b5cf751dcf9cf422ff70c3d76b947e45143e9353834202370
+            - path: 1.2.6
+              level: 3
+              title: '[nit] `merge execute` and `pr` no-worktree responses omit `recommendation` field'
+              byte_offset: 6646
+              byte_count: 935
+              word_count: 120
+              content_hash: 8e1ee5e16ead3a930c2ce98ef2fe7c646c8e8282c8c76c162e29b24fc4c5df41
+            - path: 1.2.7
+              level: 3
+              title: '[nit] `inTableData` flag not reset on section header transition'
+              byte_offset: 7581
+              byte_count: 984
+              word_count: 147
+              content_hash: a4f6986fda8f15cad02d4496c20e1479d04df7e0f18fa9c581953f57ba4456b2
+            - path: 1.2.8
+              level: 3
+              title: '[nit] Zero-timestamp guard silently suppresses stale prefix on old entities'
+              byte_offset: 8565
+              byte_count: 918
+              word_count: 123
+              content_hash: df55140eb7570c360616258555638c284dd8e209dfca22be8fb525667fa3da56
+        - path: "1.3"
+          level: 2
+          title: Specification Completeness
+          byte_offset: 9483
+          byte_count: 1184
+          word_count: 157
+          content_hash: 2a6430c9cf332cd7bd2df05172693b2163ba83b6bedeae50a4626f015affc5e4
+        - path: "1.4"
+          level: 2
+          title: Test Coverage
+          byte_offset: 10667
+          byte_count: 1300
+          word_count: 205
+          content_hash: 25387606df82a6ceb104267f8ff74a26ed85242773c997b6eab8b193856a75f5
+        - path: "1.5"
+          level: 2
+          title: Workflow Document Currency
+          byte_offset: 11967
+          byte_count: 528
+          word_count: 70
+          content_hash: f6cf4a204a36b500dbbcbdf1e43cc0a8c91df90e94419f7e7ddb9c5d1e2d9482
+        - path: "1.6"
+          level: 2
+          title: Findings Summary
+          byte_offset: 12495
+          byte_count: 917
+          word_count: 138
+          content_hash: b4edbaf25a4f561b0c4c1ff6bdbd5e1fc22d95336f6920a5ac5c2982239dc4be
+entity_refs:
+    - entity_id: FEAT-01KN07T66DZ68
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 446
+    - entity_id: FEAT-01KN07T674DZM
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 510
+    - entity_id: FEAT-01KN07T66SAH3
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 571
+    - entity_id: FEAT-01KN07T65HDZM
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 631
+    - entity_id: FEAT-01KN07T660VVM
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 694
+    - entity_id: FEAT-01KN07T66SAH3
+      entity_type: feature
+      section_path: 1.2.1
+      byte_offset: 1882
+    - entity_id: FEAT-01KN07T65HDZM
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 3289
+    - entity_id: FEAT-01KN07T65HDZM
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 4376
+    - entity_id: FEAT-01KN07T66DZ68
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 9717
+    - entity_id: FEAT-01KN07T674DZM
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 9803
+    - entity_id: FEAT-01KN07T66SAH3
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 9871
+    - entity_id: FEAT-01KN07T65HDZM
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 9937
+    - entity_id: FEAT-01KN07T660VVM
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 10006
+    - entity_id: P13-workflow-flexibility
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 46
+cross_doc_links:
+    - target_path: work/spec/completion-detection.md
+      link_text: work/spec/completion-detection.md
+      section_path: "1"
+    - target_path: work/spec/direct-to-main-workflow.md
+      link_text: work/spec/direct-to-main-workflow.md
+      section_path: "1"
+    - target_path: work/spec/document-inheritance.md
+      link_text: work/spec/document-inheritance.md
+      section_path: "1"
+    - target_path: work/spec/task-crash-recovery.md
+      link_text: work/spec/task-crash-recovery.md
+      section_path: "1"
+    - target_path: work/spec/decomposition-grouping.md
+      link_text: work/spec/decomposition-grouping.md
+      section_path: "1"
+    - target_path: work/design/workflow-completeness.md
+      link_text: work/design/workflow-completeness.md
+      section_path: "1"
+    - target_path: work/dev-plan/p13-workflow-flexibility.md
+      link_text: work/dev-plan/p13-workflow-flexibility.md
+      section_path: "1"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: "1"
+    - target_path: work/design/workflow-completeness.md
+      link_text: work/design/workflow-completeness.md
+      section_path: "1.5"
+    - target_path: work/dev-plan/p13-workflow-flexibility.md
+      link_text: work/dev-plan/p13-workflow-flexibility.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.5
+      role: rationale
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+classified: false

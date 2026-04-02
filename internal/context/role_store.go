@@ -58,12 +58,20 @@ func (s *RoleStore) Load(id string) (*Role, error) {
 // LoadAll reads and validates all roles from both locations.
 // Roles in the new location take precedence over legacy roles with the same ID.
 // If neither directory exists, it returns an empty slice without error.
+//
+// The legacy directory (.kbz/context/roles/) is shared with ProfileStore, which
+// writes old-format YAML files that do not match the Role struct. LoadAll handles
+// this by loading the legacy directory leniently: files whose IDs are already
+// present in the new location are skipped without parsing, and files that fail
+// to parse or validate are silently skipped rather than hard-failing. Only the
+// new location (.kbz/roles/) is loaded strictly.
 func (s *RoleStore) LoadAll() ([]*Role, error) {
 	seen := make(map[string]bool)
 	var roles []*Role
 
-	// Load from new location first (takes precedence).
-	newRoles, err := s.loadDir(s.newRoot)
+	// Load from new location first (takes precedence). Strict mode: any parse
+	// or validation error in the new location is surfaced immediately.
+	newRoles, err := s.loadDir(s.newRoot, nil, false)
 	if err != nil {
 		return nil, err
 	}
@@ -72,16 +80,14 @@ func (s *RoleStore) LoadAll() ([]*Role, error) {
 		roles = append(roles, r)
 	}
 
-	// Load from legacy location, skipping roles already found in new location.
-	legacyRoles, err := s.loadDir(s.legacyRoot)
+	// Load from legacy location leniently. Pass seen so that superseded IDs are
+	// skipped before parsing. Old-format files (written by ProfileStore / kbz init)
+	// that fail strict parsing are silently skipped rather than crashing the caller.
+	legacyRoles, err := s.loadDir(s.legacyRoot, seen, true)
 	if err != nil {
 		return nil, err
 	}
-	for _, r := range legacyRoles {
-		if !seen[r.ID] {
-			roles = append(roles, r)
-		}
-	}
+	roles = append(roles, legacyRoles...)
 
 	return roles, nil
 }
@@ -122,7 +128,16 @@ func (s *RoleStore) resolve(id string) (string, error) {
 
 // loadDir reads and validates all role YAML files from the given directory.
 // Returns an empty slice without error if the directory does not exist.
-func (s *RoleStore) loadDir(dir string) ([]*Role, error) {
+//
+// skip is an optional set of role IDs to skip before parsing (may be nil).
+// Files whose stem matches a key in skip are ignored without reading or parsing.
+//
+// lenient controls error handling for individual files. When false (strict mode),
+// any parse or validation failure returns an error immediately. When true (lenient
+// mode), files that fail to parse or validate are silently skipped — this is
+// appropriate for the legacy directory where old-format ProfileStore files may
+// coexist alongside new-format Role files.
+func (s *RoleStore) loadDir(dir string, skip map[string]bool, lenient bool) ([]*Role, error) {
 	entries, err := os.ReadDir(dir)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -142,8 +157,16 @@ func (s *RoleStore) loadDir(dir string) ([]*Role, error) {
 		}
 		id := strings.TrimSuffix(name, ".yaml")
 
+		// Skip IDs already loaded from a higher-priority location.
+		if skip[id] {
+			continue
+		}
+
 		data, err := os.ReadFile(filepath.Join(dir, name))
 		if err != nil {
+			if lenient {
+				continue
+			}
 			return nil, fmt.Errorf("read role file %q: %w", name, err)
 		}
 
@@ -151,10 +174,18 @@ func (s *RoleStore) loadDir(dir string) ([]*Role, error) {
 		dec := yaml.NewDecoder(bytes.NewReader(data))
 		dec.KnownFields(true)
 		if err := dec.Decode(&role); err != nil {
+			if lenient {
+				// Old-format files (e.g. ProfileStore files with description/conventions)
+				// coexist in the legacy directory. Silently skip rather than hard-fail.
+				continue
+			}
 			return nil, fmt.Errorf("parse role %q: %w", id, err)
 		}
 
 		if err := validateRole(&role, id); err != nil {
+			if lenient {
+				continue
+			}
 			return nil, err
 		}
 

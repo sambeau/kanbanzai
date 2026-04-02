@@ -176,6 +176,8 @@ func createPR(
 	wt, err := worktreeStore.GetByEntityID(entityID)
 	if err != nil {
 		if errors.Is(err, worktree.ErrNotFound) {
+			// Direct-to-main workflow: no worktree exists. Returns {status, reason}
+			// without a recommendation field — no PR action is applicable.
 			return map[string]any{
 				"status": "not_applicable",
 				"reason": "no worktree exists — work was committed directly to the default branch",

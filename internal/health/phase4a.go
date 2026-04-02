@@ -85,7 +85,6 @@ func CheckStalledDispatches(tasks []map[string]any, worktreeBranches map[string]
 		return result // disabled
 	}
 
-	now := time.Now()
 	threshold := time.Duration(stallThresholdDays) * 24 * time.Hour
 
 	for _, t := range tasks {
@@ -105,20 +104,11 @@ func CheckStalledDispatches(tasks []map[string]any, worktreeBranches map[string]
 			continue
 		}
 
-		age := now.Sub(dispatchedAt)
-		if age < threshold {
-			continue
-		}
-
-		// Check git activity on the worktree branch (best-effort).
+		// Delegate to IsTaskStuck which combines the age check and git activity
+		// check into a single testable predicate.
 		parentFeature, _ := t["parent_feature"].(string)
-
-		hasGitActivity := false
-		if branch, ok := worktreeBranches[parentFeature]; ok && branch != "" {
-			hasGitActivity = checkGitActivitySince(repoPath, branch, dispatchedAt)
-		}
-
-		if !hasGitActivity {
+		branch := worktreeBranches[parentFeature]
+		if IsTaskStuck(dispatchedAt, threshold, repoPath, branch) {
 			result.AddIssue(Issue{
 				Severity: SeverityWarning,
 				EntityID: taskID,
@@ -215,6 +205,17 @@ func extractStringSlice(m map[string]any, key string) []string {
 // Returns false on any error (best-effort, non-blocking).
 func CheckGitActivity(repoPath, branch string, since time.Time) bool {
 	return checkGitActivitySince(repoPath, branch, since)
+}
+
+// IsTaskStuck reports whether a task is considered stuck: it has been active
+// longer than threshold since dispatchedAt, and has no recent git activity on
+// the worktree branch. Returns false immediately if the threshold has not
+// elapsed. Best-effort — git errors are suppressed via checkGitActivitySince.
+func IsTaskStuck(dispatchedAt time.Time, threshold time.Duration, repoPath, branch string) bool {
+	if time.Since(dispatchedAt) < threshold {
+		return false
+	}
+	return !checkGitActivitySince(repoPath, branch, dispatchedAt)
 }
 
 // checkGitActivitySince checks if there's any git activity on a branch since the given time.

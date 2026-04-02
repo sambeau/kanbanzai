@@ -1,0 +1,174 @@
+document_id: FEAT-01KN83QN0VAFG/dev-plan-lifecycle-integrity-plan
+document_path: work/plan/lifecycle-integrity-plan.md
+content_hash: 3407448d0f53b565626ce7e2a55cefd43696f91ab6c66a385dafd52932473202
+indexed_at: 2026-04-02T22:17:58.200842Z
+sections:
+    - path: "1"
+      level: 1
+      title: Lifecycle Integrity and Proactive Status — Implementation Plan
+      byte_offset: 0
+      byte_count: 24683
+      word_count: 3165
+      content_hash: 3407448d0f53b565626ce7e2a55cefd43696f91ab6c66a385dafd52932473202
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 289
+          byte_count: 692
+          word_count: 86
+          content_hash: ddaa03ab435c7f841ac36d75d657729ad73a24f14603cf2d8ea52e23b862049d
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 981
+          byte_count: 16896
+          word_count: 2143
+          content_hash: 407ecb40a451fab7d7400689dcb4f99cf0583fa4867d40ea2bd888f4459205cf
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Child-state query helpers'
+              byte_offset: 1000
+              byte_count: 2751
+              word_count: 342
+              content_hash: daba8144a87878d1cfb359da14b881f8fa739404de390ebb3511b34788fe37c0
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Lifecycle gates on terminal transitions'
+              byte_offset: 3751
+              byte_count: 2294
+              word_count: 312
+              content_hash: bcf99dfb5ce381a2bce7d1998f0d9739630ac2764a5f07d2fa03af0b044e6aa3
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Feature auto-advance'
+              byte_offset: 6045
+              byte_count: 2907
+              word_count: 383
+              content_hash: 0b9e50cc7b67af4fe315dce57a18d929d3cd08b5709bc5dbbc9b0abe44710c26
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Plan auto-advance'
+              byte_offset: 8952
+              byte_count: 1311
+              word_count: 176
+              content_hash: 98772c9be1e543dd5ee21cf31b71ee032c2f2f3ce41613d48d6078a334d0aa25
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: AttentionItem struct and schema migration'
+              byte_offset: 10263
+              byte_count: 2828
+              word_count: 351
+              content_hash: 65f02000b1c031f039fe48bb93edea7991732c00c05ea5968782ab5fa498ddbe
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: Stale reviewing detection and bug warnings'
+              byte_offset: 13091
+              byte_count: 2939
+              word_count: 358
+              content_hash: f85e69736426b5f3653e10ca887b30b7c55367d0f3392121312ca1343c635b2a
+            - path: 1.2.7
+              level: 3
+              title: 'Task 7: Health findings injection into project-level status'
+              byte_offset: 16030
+              byte_count: 1847
+              word_count: 218
+              content_hash: 58cc7a355d60c1a8bc04f0d010b17a24c0af7610d70dd7997a507ced4a2262f0
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 17877
+          byte_count: 838
+          word_count: 127
+          content_hash: 764a27cefa2c4e6e52636072c466aabfa1339ef58d79c306aa9ccc12029fadfd
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 18715
+          byte_count: 2507
+          word_count: 360
+          content_hash: 1895555244884278080670dc855f90b4ea3cf61b6a8638da9573324da08d76af
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: Entity service file size'
+              byte_offset: 18735
+              byte_count: 429
+              word_count: 60
+              content_hash: 4e89cb51290c1fd870b630697486f74deda8768fd15745e3055b0d5b3c5e2258
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: `finish` side effect ordering'
+              byte_offset: 19164
+              byte_count: 568
+              word_count: 81
+              content_hash: 435c7d8d261e40642e703682dbc15c79fd7eec4c3c36c5018e85d359962f7758
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Plan auto-advance firing on plan state the gate prevents writing'
+              byte_offset: 19732
+              byte_count: 652
+              word_count: 99
+              content_hash: 4c182c5ffb2c3a99ee065a0a9c65b8a1db05a9954b1bcbb386f20a5788ea7c50
+            - path: 1.4.4
+              level: 3
+              title: 'Risk: `generateFeatureAttention` signature change breaks callers'
+              byte_offset: 20384
+              byte_count: 415
+              word_count: 56
+              content_hash: 9acdb8f6fc62809437f433bf1516042675d3ee861b897c367b1c194e1728c93e
+            - path: 1.4.5
+              level: 3
+              title: 'Risk: Health check latency at project-level status'
+              byte_offset: 20799
+              byte_count: 423
+              word_count: 61
+              content_hash: 3631cdbe8591f0450684b81d13c4a0aa296c8d1c3bd472dfc67d8f534f846b1f
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 21222
+          byte_count: 3461
+          word_count: 427
+          content_hash: 95327690ec873511858a7ad868e1feb61a200c043fdcf1b9001ad32616ee57e6
+entity_refs:
+    - entity_id: FEAT-01KN83QN0VAFG
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 79
+    - entity_id: FEAT-01KN83QN0VAFG
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 384
+    - entity_id: P19-workflow-lifecycle-integrity
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 145
+cross_doc_links:
+    - target_path: work/spec/lifecycle-integrity.md
+      link_text: work/spec/lifecycle-integrity.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+    - section_path: 1.4.4
+      role: risk
+      confidence: high
+    - section_path: 1.4.5
+      role: risk
+      confidence: high
+classified: false

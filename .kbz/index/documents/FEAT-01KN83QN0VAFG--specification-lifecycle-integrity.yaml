@@ -1,0 +1,141 @@
+document_id: FEAT-01KN83QN0VAFG/specification-lifecycle-integrity
+document_path: work/spec/lifecycle-integrity.md
+content_hash: 14ea455a2566e977c800811b77d228066de8d4a82831b1713b70024e66b71933
+indexed_at: 2026-04-02T22:12:29.662233Z
+sections:
+    - path: "1"
+      level: 1
+      title: Lifecycle Integrity and Proactive Status — Specification
+      byte_offset: 0
+      byte_count: 22810
+      word_count: 3213
+      content_hash: 14ea455a2566e977c800811b77d228066de8d4a82831b1713b70024e66b71933
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 232
+          byte_count: 1381
+          word_count: 195
+          content_hash: 69015ce33148a553327330c868f8b3b887e948ae66a8acd257d0b2b2b89a5644
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 1613
+          byte_count: 8519
+          word_count: 1250
+          content_hash: 80e76bc6fcae7848507a4dcac33aaafa9f038312b0c38a1bc6d6b15cb3a90ebd
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 1630
+              byte_count: 7850
+              word_count: 1159
+              content_hash: 571c77270512ee3a16bb500a025c3f2b0a5886c9c5a96074ba51ba3b5d8a7153
+              children:
+                - path: 1.2.1.1
+                  level: 4
+                  title: Pillar A — Lifecycle Gates
+                  byte_offset: 1659
+                  byte_count: 1701
+                  word_count: 244
+                  content_hash: b81e76544db261755477977f0af0c81955da2ac5b20fda40274997e13fdfe976
+                - path: 1.2.1.2
+                  level: 4
+                  title: Pillar B — Auto-Advance
+                  byte_offset: 3360
+                  byte_count: 2188
+                  word_count: 337
+                  content_hash: d60007a35ab5ef943f39bcd9c045101d032eb534575ed6056b34191feef875ce
+                - path: 1.2.1.3
+                  level: 4
+                  title: Pillar C — Proactive Status
+                  byte_offset: 5548
+                  byte_count: 3932
+                  word_count: 575
+                  content_hash: 1655f9b9f3d0dcae0362d07910ebbca899548cb44545f7c53f06a3b44babe02e
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 9480
+              byte_count: 652
+              word_count: 89
+              content_hash: 2c38fb399023da42a651aac51567e8b38f95eaf41dc11d7647650e48d4e1b1d0
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 10132
+          byte_count: 899
+          word_count: 125
+          content_hash: c113b86bd69ee6558b4bfe04daa6d5b0ea32046512028f3443c833ca859a14ef
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 11031
+          byte_count: 7659
+          word_count: 1091
+          content_hash: 04261fd9a84b23ecf6c7b63cac8026f39fce3e415eb6f5229fd03936f1735840
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Pillar A — Lifecycle Gates
+              byte_offset: 11055
+              byte_count: 2255
+              word_count: 327
+              content_hash: ecda3de513fa56e70a37e1096607fdf3f17e4b2814dd8a2a83251191814eaf2e
+            - path: 1.4.2
+              level: 3
+              title: Pillar B — Auto-Advance
+              byte_offset: 13310
+              byte_count: 2097
+              word_count: 306
+              content_hash: 39f2951fe7b09db63a100fe74a2d7786ecb2ca21784a60e27c31261cc3f43ceb
+            - path: 1.4.3
+              level: 3
+              title: Pillar C — Proactive Status
+              byte_offset: 15407
+              byte_count: 3283
+              word_count: 455
+              content_hash: 3cd270fc6ce4360daa330dc3a48937a6197ba5fd276a2900def3bdf9702f1622
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 18690
+          byte_count: 4120
+          word_count: 532
+          content_hash: c7a40c62fcc099cfdf76719aa222cd49aef1a4909c9089711d8ea4b9be51ae7a
+entity_refs:
+    - entity_id: FEAT-01KN83QN0VAFG
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 82
+    - entity_id: FEAT-01KN8
+      entity_type: feature
+      section_path: 1.2.1.3
+      byte_offset: 6196
+    - entity_id: P19-workflow-lifecycle-integrity
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 148
+cross_doc_links:
+    - target_path: work/design/lifecycle-integrity.md
+      link_text: work/design/lifecycle-integrity.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

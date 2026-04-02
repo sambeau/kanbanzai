@@ -5,6 +5,47 @@
 
 ---
 
+## Overview
+
+This design addresses two classes of entity lifecycle inconsistency in Kanbanzai —
+premature closure (a parent marked terminal while children are still active) and
+stranded completion (all children terminal but parent never advanced) — and a
+structural gap in the `status` tool that makes health anomalies invisible unless
+a separate `health` call is made. Three coordinated pillars are proposed: lifecycle
+gates that block invalid closures, auto-advance that moves parents forward when
+children complete, and structured attention items that surface health findings
+directly in `status` responses.
+
+---
+
+## Goals and Non-Goals
+
+### Goals
+
+- Prevent features and plans from being marked terminal while child entities are
+  still in active states
+- Automatically advance features from `developing`/`needs-rework` to `reviewing`
+  when all tasks complete, eliminating manual last-mile advancement
+- Automatically advance plans to `done` when all features finish
+- Surface health check findings as actionable structured items within `status`,
+  so a single `status` call gives a complete picture
+- Make `attention` items machine-readable with a typed, linkable structure that
+  supports external tooling (e.g. dashboards)
+- Detect features stuck in `reviewing` for longer than a configurable threshold
+- Warn when open critical/high severity bugs exist against active features
+
+### Non-Goals
+
+- Auto-advancing features past `reviewing` to `done` (review remains a mandatory
+  human gate)
+- Reopening closed features or plans when bugs are filed against them
+- Blocking feature transitions based on open bugs (bug warnings are advisory only)
+- Propagating `not-planned` state to downstream task dependencies
+- Background or event-driven processing (all transitions remain synchronous)
+- Changes to the `health` tool itself
+
+---
+
 ## Problem and Motivation
 
 Kanbanzai tracks workflow state as a hierarchy: Plans contain Features, Features
@@ -309,3 +350,26 @@ features. Making open critical bugs a hard gate on feature advancement would req
 system to determine whether a bug is actually blocking — a product judgement that
 involves severity, workarounds, and release strategy. The system surfaces the information
 as an attention item; the human decides whether to act.
+
+---
+
+## Dependencies
+
+- **Entity service** (`internal/service/entities.go`) — the lifecycle gate and
+  auto-advance logic is added to the feature and plan transition handlers in this
+  service. No new external dependencies.
+- **`finish` and `complete_task` tools** — must call the auto-advance check after
+  writing task terminal state, consistent with how they currently fire side effects
+  such as task unblocking.
+- **`status` tool** (`internal/mcp/status_tool.go`) — the `attention` field type
+  change and health finding injection are contained within this file and its
+  synthesis functions.
+- **`config.yaml` schema** — a new optional key `lifecycle.stale_reviewing_days`
+  (integer, default 7) is added. The config package must be extended to read this
+  field and supply the default.
+- **Existing health check infrastructure** (`internal/health/`) — reused as-is for
+  injecting findings into `status`. No changes to the health package are required.
+- **`CheckFeatureChildConsistency`** (`internal/health/entity_consistency.go`) —
+  the existing detection logic is complementary and remains in place. The new gate
+  operates at write time (prevention); the health check operates at read time
+  (detection). Both are needed.

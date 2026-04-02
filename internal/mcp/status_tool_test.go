@@ -160,24 +160,6 @@ func TestInferIDType_Unknown(t *testing.T) {
 	}
 }
 
-// ─── isTerminalStatus tests ───────────────────────────────────────────────────
-
-func TestIsTerminalStatus(t *testing.T) {
-	t.Parallel()
-	terminal := []string{"done", "not-planned", "duplicate"}
-	for _, s := range terminal {
-		if !isTerminalStatus(s) {
-			t.Errorf("isTerminalStatus(%q) = false, want true", s)
-		}
-	}
-	nonTerminal := []string{"queued", "ready", "active", "needs-review", "needs-rework", ""}
-	for _, s := range nonTerminal {
-		if isTerminalStatus(s) {
-			t.Errorf("isTerminalStatus(%q) = true, want false", s)
-		}
-	}
-}
-
 // ─── hasDocType tests ─────────────────────────────────────────────────────────
 
 func TestHasDocType(t *testing.T) {
@@ -1343,5 +1325,106 @@ func TestPlanAttention_ZeroFeatures_NoItem(t *testing.T) {
 		if strings.Contains(item, "ready to close") {
 			t.Errorf("unexpected completion item for zero features: %s", item)
 		}
+	}
+}
+
+// --- generateProjectAttention unit tests ---
+
+func TestProjectAttention_PlanAllFeaturesDone_NotClosed_Fires(t *testing.T) {
+	t.Parallel()
+	plans := []planSummary{
+		{DisplayID: "P99-test", Status: "reviewing", Features: 3, AllFeaturesFinished: true},
+	}
+	items := generateProjectAttention(plans, nil, nil, "")
+	found := false
+	for _, item := range items {
+		if strings.Contains(item, "P99-test") && strings.Contains(item, "ready to close") {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("expected 'ready to close' item for P99-test; got: %v", items)
+	}
+}
+
+func TestProjectAttention_PlanAlreadyDone_NoCloseItem(t *testing.T) {
+	t.Parallel()
+	plans := []planSummary{
+		{DisplayID: "P99-done", Status: "done", Features: 3, AllFeaturesFinished: true},
+	}
+	items := generateProjectAttention(plans, nil, nil, "")
+	for _, item := range items {
+		if strings.Contains(item, "ready to close") {
+			t.Errorf("plan already done should not produce 'ready to close'; got: %v", items)
+		}
+	}
+}
+
+func TestProjectAttention_PlanNotAllFeaturesDone_NoCloseItem(t *testing.T) {
+	t.Parallel()
+	plans := []planSummary{
+		{DisplayID: "P99-partial", Status: "active", Features: 3, AllFeaturesFinished: false},
+	}
+	items := generateProjectAttention(plans, nil, nil, "")
+	for _, item := range items {
+		if strings.Contains(item, "P99-partial") && strings.Contains(item, "ready to close") {
+			t.Errorf("plan with unfinished features should not produce 'ready to close'; got: %v", items)
+		}
+	}
+}
+
+func TestProjectAttention_StuckTask_NoDispatchedAt_NotFlagged(t *testing.T) {
+	t.Parallel()
+	tasks := []service.ListResult{
+		{State: map[string]any{"status": "active", "id": "TASK-NODISPATCH"}},
+	}
+	items := generateProjectAttention(nil, tasks, nil, "")
+	for _, item := range items {
+		if strings.Contains(item, "TASK-NODISPATCH") {
+			t.Errorf("task without dispatched_at should not be flagged; got: %v", items)
+		}
+	}
+}
+
+func TestProjectAttention_StuckTask_RecentDispatch_NotFlagged(t *testing.T) {
+	t.Parallel()
+	recentDispatch := time.Now().UTC().Add(-1 * time.Hour).Format(time.RFC3339)
+	tasks := []service.ListResult{
+		{State: map[string]any{
+			"status":        "active",
+			"id":            "TASK-RECENT",
+			"dispatched_at": recentDispatch,
+		}},
+	}
+	items := generateProjectAttention(nil, tasks, nil, "")
+	for _, item := range items {
+		if strings.Contains(item, "TASK-RECENT") {
+			t.Errorf("task dispatched 1h ago should not be flagged as stuck; got: %v", items)
+		}
+	}
+}
+
+func TestProjectAttention_StuckTask_OldDispatch_NoGitBranch_Flagged(t *testing.T) {
+	t.Parallel()
+	// Dispatch 25 hours ago with no worktree branch — IsTaskStuck returns true.
+	oldDispatch := time.Now().UTC().Add(-25 * time.Hour).Format(time.RFC3339)
+	tasks := []service.ListResult{
+		{State: map[string]any{
+			"status":         "active",
+			"id":             "TASK-STUCK01",
+			"dispatched_at":  oldDispatch,
+			"parent_feature": "FEAT-NOSTUB",
+		}},
+	}
+	// Empty worktreeBranches — branch resolves to ""; checkGitActivitySince returns false.
+	items := generateProjectAttention(nil, tasks, map[string]string{}, "")
+	found := false
+	for _, item := range items {
+		if strings.Contains(item, "TASK-STUCK01") {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("expected stuck-task attention item for TASK-STUCK01; got: %v", items)
 	}
 }

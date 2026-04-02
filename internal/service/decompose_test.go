@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/sambeau/kanbanzai/internal/model"
@@ -1759,6 +1760,19 @@ func TestGrouping_MixedSections(t *testing.T) {
 	}
 	if len(sectionATask.Covers) != 3 {
 		t.Errorf("Section A grouped task Covers length = %d, want 3", len(sectionATask.Covers))
+	}
+
+	// AC-13: grouped task summary format.
+	wantSummary := "Implement Section A (3 criteria)"
+	if sectionATask.Summary != wantSummary {
+		t.Errorf("Section A grouped task Summary = %q, want %q", sectionATask.Summary, wantSummary)
+	}
+
+	// AC-14: grouped task rationale lists all AC texts.
+	for _, acText := range []string{"section-a criterion 1", "section-a criterion 2", "section-a criterion 3"} {
+		if !strings.Contains(sectionATask.Rationale, acText) {
+			t.Errorf("Section A grouped task Rationale missing %q; Rationale: %q", acText, sectionATask.Rationale)
+		}
 	}
 
 	// Section B tasks should each have exactly 1 Covers entry.

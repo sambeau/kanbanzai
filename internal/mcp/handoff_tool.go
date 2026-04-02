@@ -29,8 +29,10 @@ import (
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/stage"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // commitStateFunc is the function called by the handoff handler to commit any
@@ -117,7 +119,7 @@ func handoffTool(
 		case "active", "ready", "needs-rework":
 			// Accepted — proceed.
 		default:
-			if isTerminalStatus(status) {
+			if validate.IsTerminalState(model.EntityKindTask, status) {
 				return mcp.NewToolResultText(handoffErrorJSON("terminal_status", fmt.Sprintf(
 					"Cannot generate handoff for task %s: status is %q (terminal).\n\nTo resolve:\n  Handoff is only valid for active, ready, or needs-rework tasks. Create a new task if further work is needed.",
 					task.ID, status))), nil

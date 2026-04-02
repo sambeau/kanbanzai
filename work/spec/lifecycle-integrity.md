@@ -6,7 +6,7 @@
 
 ---
 
-## Problem Statement
+## Overview
 
 This specification implements the design described in
 `work/design/lifecycle-integrity.md`.
@@ -26,6 +26,19 @@ This specification covers three coordinated pillars:
 - **Pillar B** — Auto-advance that moves features and plans forward when all children complete
 - **Pillar C** — Structured attention items and proactive surface of health findings in `status`
 
+---
+
+## Scope
+
+**In scope:**
+- Lifecycle gate on `entity(transition)` for features and plans transitioning to terminal states
+- Feature auto-advance from `developing`/`needs-rework` to `reviewing` when all tasks complete
+- Plan auto-advance to `done` when all features finish
+- Structured `AttentionItem` schema replacing `[]string` in all `status` response objects
+- Health finding injection into `status` attention items
+- Stale reviewing detection via configurable threshold in `config.yaml`
+- Open critical/high bug warnings on active feature status responses
+
 **Explicitly out of scope:**
 - Reopening closed features or plans automatically when bugs are filed
 - Auto-advancing features past `reviewing` to `done`
@@ -37,9 +50,9 @@ This specification covers three coordinated pillars:
 
 ## Requirements
 
-### Functional Requirements
+## Functional Requirements
 
-#### Pillar A — Lifecycle Gates
+### Pillar A — Lifecycle Gates
 
 **REQ-001:** The `entity(action: transition)` handler MUST reject a transition
 of a feature to `done`, `superseded`, or `cancelled` if one or more of that
@@ -73,7 +86,7 @@ transition MUST be permitted (best-effort). The failure MUST be surfaced as a
 warning in the transition response. The gate MUST NOT block legitimate lifecycle
 advancement due to infrastructure errors.
 
-#### Pillar B — Auto-Advance
+### Pillar B — Auto-Advance
 
 **REQ-008:** When a task transition causes all tasks belonging to a feature to
 be in terminal state (`done`, `not-planned`, or `duplicate`), AND the feature is
@@ -114,7 +127,7 @@ using the same mechanism as REQ-011.
 **REQ-016:** If the plan auto-advance fails, the triggering feature transition
 MUST still succeed. The failure MUST be surfaced as a warning, not an error.
 
-#### Pillar C — Proactive Status
+### Pillar C — Proactive Status
 
 **REQ-017:** The `attention` field in all `status` response objects
 (`projectOverview`, `planDashboard`, `featureDetail`, `taskDetail`, `bugDetail`)
@@ -187,7 +200,7 @@ gate or block any feature lifecycle transition.
 
 ---
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 **REQ-NF-001:** The child-entity query introduced by the lifecycle gate (REQ-001,
 REQ-003) MUST NOT increase the p99 latency of an `entity(transition)` call by
@@ -219,6 +232,7 @@ processing is introduced.
   `lifecycle.stale_reviewing_days` key is a new `config.yaml` entry only.
 - All transitions remain synchronous. No background goroutines, file-system
   watchers, or polling loops are introduced.
+
 
 ---
 
