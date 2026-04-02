@@ -2,6 +2,6 @@ id: FEAT-01KN07T660VVM
 slug: decompose-flexibility
 parent: P13-workflow-flexibility
 status: proposed
-summary: "Let decompose parse acceptance criteria from any structured format — tables, numbered lists, Given/When/Then blocks — not just - [ ] checkboxes. Also address decomposition granularity: one-AC-per-task produces too many tasks for tightly coupled criteria. Explore task grouping or smarter merging of related ACs into implementation units."
+summary: "Add section-based AC grouping to decompose — when ACs under the same spec section are tightly coupled, propose a single task covering all of them instead of one-per-AC. Add a covers field to ProposedTask for traceability. Optionally add table-row format parsing. NOTE: Three of five originally-requested formats (checkboxes, numbered lists, bold-identifiers) are already supported. Given/When/Then is deferred."
 created: "2026-03-30T20:43:53Z"
 created_by: sambeau

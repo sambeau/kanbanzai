@@ -2,6 +2,6 @@ id: FEAT-01KN07T66SAH3
 slug: document-inheritance-and-freshness
 parent: P13-workflow-flexibility
 status: proposed
-summary: "Plan-level documents should satisfy feature-level doc gap checks — a feature belonging to a plan with an approved spec should not show as missing a spec. Reduces false-positive health warnings that degrade the health signal. Also clarify the relationship between registered doc records and filesystem content: auto-refresh on access, or surface a warning when content hashes are stale."
+summary: "Add plan-level document inheritance for gap checks — a feature belonging to a plan with an approved spec should not show as missing a spec. Affects docGapsAction, synthesisePlan, synthesiseFeature, and generateFeatureAttention. Read-only inheritance: query-time fallback, no implicit document record creation. NOTE: doc refresh action was implemented in P9. Content hash staleness surfacing in health is a follow-up concern."
 created: "2026-03-30T20:43:53Z"
 created_by: sambeau

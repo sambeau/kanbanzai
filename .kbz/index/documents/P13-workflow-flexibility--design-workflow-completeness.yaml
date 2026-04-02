@@ -1,0 +1,223 @@
+document_id: P13-workflow-flexibility/design-workflow-completeness
+document_path: work/design/workflow-completeness.md
+content_hash: bb0cf1134101e1d2a776d41d2c7d98f7a35f2302d7ccd04d3c3600a6175b6bfc
+indexed_at: 2026-04-02T18:52:04.292045Z
+sections:
+    - path: "1"
+      level: 1
+      title: Workflow Completeness — Design
+      byte_offset: 0
+      byte_count: 20234
+      word_count: 2947
+      content_hash: bb0cf1134101e1d2a776d41d2c7d98f7a35f2302d7ccd04d3c3600a6175b6bfc
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 622
+          byte_count: 4085
+          word_count: 629
+          content_hash: 8acb30b694db456fe2ebc36d0d31be11db86a95e142e6b58ad1ade1e0cd76b01
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 1. No detection of "all tasks done"
+              byte_offset: 1711
+              byte_count: 512
+              word_count: 78
+              content_hash: cc67cac659f42d1e717cd473065511af4fe203bcbaec338c645b30ebea2a3401
+            - path: 1.1.2
+              level: 3
+              title: 2. No close-out procedure in any skill
+              byte_offset: 2223
+              byte_count: 617
+              word_count: 93
+              content_hash: 785f20bc6573ea9b0691afca7d1553afe8fc27706f72db2e1c490bd143dba0cf
+            - path: 1.1.3
+              level: 3
+              title: 3. The merge/PR path is unusable for direct-to-main workflows
+              byte_offset: 2840
+              byte_count: 543
+              word_count: 86
+              content_hash: 4e904160e5801f7da87396b4f2379af66464647ca3546df60842ad8ccf5d6b56
+            - path: 1.1.4
+              level: 3
+              title: 4. Document gap checks produce false positives
+              byte_offset: 3383
+              byte_count: 461
+              word_count: 69
+              content_hash: b0d86dd0d5a5338d6e84c80187869779a7dc3e79ed194b2de658a1c5ea5d73ca
+            - path: 1.1.5
+              level: 3
+              title: 5. Stuck tasks after agent crashes
+              byte_offset: 3844
+              byte_count: 375
+              word_count: 63
+              content_hash: 1f6e356cd8d2bfdc7bfffeb7e46ffcf89005c988d4802b0e54a0e916df827e73
+            - path: 1.1.6
+              level: 3
+              title: 6. Decomposition granularity
+              byte_offset: 4219
+              byte_count: 488
+              word_count: 69
+              content_hash: 5ce33261216fd390c3b68490ef353033e0a53311273ffe196a7c55be1c97cedd
+        - path: "1.2"
+          level: 2
+          title: Design
+          byte_offset: 4707
+          byte_count: 6890
+          word_count: 973
+          content_hash: 1b3a41cbeace979e66716b637e9518d487d8d72dd04e6f5842f98bee54c2aec0
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Feature 1: Completion Detection and Attention Items'
+              byte_offset: 4922
+              byte_count: 1242
+              word_count: 185
+              content_hash: cf0ad639e726ba04079be1c1b2eaa02148a0fbffcc90d032a418c4e4450b9215
+            - path: 1.2.2
+              level: 3
+              title: 'Feature 2: Close-Out Procedure in Skills'
+              byte_offset: 6164
+              byte_count: 1284
+              word_count: 158
+              content_hash: 91014ffb0fcc99889ae089df333f6572fe9735f585613a2e7d41a197777dfe49
+            - path: 1.2.3
+              level: 3
+              title: 'Feature 3: Direct-to-Main Workflow'
+              byte_offset: 7448
+              byte_count: 1191
+              word_count: 171
+              content_hash: 46760d187b65da2b19b444ffecf4a65c9d0748b356be15cb56a8cee3e27a474a
+            - path: 1.2.4
+              level: 3
+              title: 'Feature 4: Document Inheritance for Gap Checks'
+              byte_offset: 8639
+              byte_count: 945
+              word_count: 127
+              content_hash: 7a8dc71891a67bfdcf2f1fdcb9474850a505c2e65fbaf3677a73d58b5dbf01d7
+            - path: 1.2.5
+              level: 3
+              title: 'Feature 5: Task Crash Recovery'
+              byte_offset: 9584
+              byte_count: 839
+              word_count: 134
+              content_hash: 074161c128efd53e02eae8df5ab8ea865cfe12acf373f50b8adb977b0cf7eb49
+            - path: 1.2.6
+              level: 3
+              title: 'Feature 6: Decomposition Grouping'
+              byte_offset: 10423
+              byte_count: 1174
+              word_count: 166
+              content_hash: 7f5c5ccb5c2a6070fba44fd734ad22f679505cf3a895be29444c0345bb72bdb0
+        - path: "1.3"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 11597
+          byte_count: 3695
+          word_count: 560
+          content_hash: 17728cd2266ab84eabc334c7b43efdcbcbee47f190db1455d006a1853a462afb
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Alternative 1: Auto-advance features on last task completion'
+              byte_offset: 11625
+              byte_count: 1131
+              word_count: 162
+              content_hash: 81016fc286910431e39d275a1e7c5bc3f94dfcfafbb2cf9b6298de2e267a68b7
+            - path: 1.3.2
+              level: 3
+              title: 'Alternative 2: Feature-level `finish()` tool'
+              byte_offset: 12756
+              byte_count: 954
+              word_count: 149
+              content_hash: 8659f54bdd39075e7f01d99be790d964e5ffce1d7d91c72f2f109535a6fbd359
+            - path: 1.3.3
+              level: 3
+              title: 'Alternative 3: Do nothing — rely on periodic human audits'
+              byte_offset: 13710
+              byte_count: 831
+              word_count: 130
+              content_hash: e3bb2b14032cf07441601bbadb5d95b578aab216005ff305e0177ef0f7532e79
+            - path: 1.3.4
+              level: 3
+              title: 'Alternative 4: Mandatory worktrees for all features'
+              byte_offset: 14541
+              byte_count: 751
+              word_count: 116
+              content_hash: 77e08694d6d62a2abe24b42625738d07d82eedad12c874c89d81ab7ddfde1c06
+        - path: "1.4"
+          level: 2
+          title: Decisions
+          byte_offset: 15292
+          byte_count: 3467
+          word_count: 495
+          content_hash: 5ed3aa0176b98373169282da91268abb3876aaf7995fbaa4979fb350066f237e
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 18759
+          byte_count: 679
+          word_count: 99
+          content_hash: 4c8459ef0f81ff282b8dd8298eab0e31c50c4ba5bc173fad593b5c0b4673b2d1
+        - path: "1.6"
+          level: 2
+          title: Migration and Backward Compatibility
+          byte_offset: 19438
+          byte_count: 796
+          word_count: 126
+          content_hash: 154c261977e5b72125a55aadc0d3ae00b5f2290c8595c3d94e675e7a0bd400f7
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.1.3
+      byte_offset: 2995
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.2.1
+      byte_offset: 5295
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.2.5
+      byte_offset: 10210
+    - entity_id: P13-workflow-flexibility
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 64
+cross_doc_links:
+    - target_path: ../reports/v3-feedback-gap-analysis.md
+      link_text: V3.0 Feedback and Gap Analysis
+      section_path: "1"
+    - target_path: ../research/post-p9-feedback-analysis.md
+      link_text: Post-P9 Feedback Analysis
+      section_path: "1"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.2.2
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.2
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.2.2
+conventional_roles:
+    - section_path: "1.3"
+      role: alternative
+      confidence: high
+    - section_path: 1.3.1
+      role: alternative
+      confidence: high
+    - section_path: 1.3.2
+      role: alternative
+      confidence: high
+    - section_path: 1.3.3
+      role: alternative
+      confidence: high
+    - section_path: 1.3.4
+      role: alternative
+      confidence: high
+    - section_path: "1.4"
+      role: decision
+      confidence: high
+classified: false
