@@ -15,9 +15,11 @@ import (
 	"github.com/sambeau/kanbanzai/internal/config"
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/gate"
 	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/health"
 	"github.com/sambeau/kanbanzai/internal/knowledge"
+	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/skill"
 	"github.com/sambeau/kanbanzai/internal/validate"
@@ -144,6 +146,19 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	checkpointStore := checkpoint.NewStore(stateRoot)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 
+	// Gate router: registry-driven gate evaluation with hardcoded fallback.
+	registryCache := gate.NewRegistryCache(bindingPath)
+	gateRouter := gate.NewGateRouter(registryCache, func(from, to string, feature *model.Feature, _ gate.DocumentService, _ gate.EntityService) gate.GateResult {
+		// Hardcoded fallback: call service.CheckTransitionGate directly with
+		// the concrete service types (captured in this closure).
+		svcResult := service.CheckTransitionGate(from, to, feature, docRecordSvc, entitySvc)
+		return gate.GateResult{
+			Stage:     svcResult.Stage,
+			Satisfied: svcResult.Satisfied,
+			Reason:    svcResult.Reason,
+		}
+	})
+
 	// Shared services used by both GroupPlanning and GroupGit.
 	decomposeSvc := service.NewDecomposeService(entitySvc, docRecordSvc)
 	conflictSvc := service.NewConflictService(entitySvc, newWorktreeBranchLookup(worktreeStore, repoRoot), repoRoot)
@@ -167,7 +182,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		// Track G: handoff — sub-agent prompt generation (3.0 pipeline + legacy fallback)
 		mcpServer.AddTools(HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, pipeline)...)
 		// Track H: entity — consolidated entity CRUD
-		mcpServer.AddTools(EntityTool(entitySvc, docRecordSvc)...)
+		mcpServer.AddTools(EntityTool(entitySvc, docRecordSvc, gateRouter, checkpointStore)...)
 		// Track I: doc — consolidated document operations
 		mcpServer.AddTools(DocTool(docRecordSvc, intelligenceSvc)...)
 

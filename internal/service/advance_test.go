@@ -69,7 +69,7 @@ func TestAdvanceFeatureStatus_FullAdvance(t *testing.T) {
 	feature.Spec = specDocID
 	feature.DevPlan = devPlanDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -128,7 +128,7 @@ func TestAdvanceFeatureStatus_PartialAdvance_StopsAtSpecifying(t *testing.T) {
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 	feature.Design = designDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -172,7 +172,7 @@ func TestAdvanceFeatureStatus_TargetAlreadyReached(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "designing")
 
-	result, err := AdvanceFeatureStatus(feature, "designing", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "designing", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -200,7 +200,7 @@ func TestAdvanceFeatureStatus_TargetBehindCurrent(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "specifying")
 
-	_, err := AdvanceFeatureStatus(feature, "proposed", entitySvc, docSvc, false, "")
+	_, err := AdvanceFeatureStatus(feature, "proposed", entitySvc, docSvc, false, "", nil)
 	if err == nil {
 		t.Fatal("expected error for backward advance, got nil")
 	}
@@ -231,7 +231,7 @@ func TestAdvanceFeatureStatus_AdvanceToDone_StopsAtReviewing(t *testing.T) {
 	feature.Spec = specDocID
 	feature.DevPlan = devPlanDocID
 
-	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -277,7 +277,7 @@ func TestAdvanceFeatureStatus_SingleStep(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 
-	result, err := AdvanceFeatureStatus(feature, "designing", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "designing", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -308,7 +308,7 @@ func TestAdvanceFeatureStatus_AllGatesUnsatisfied(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -349,7 +349,7 @@ func TestAdvanceFeatureStatus_AdvanceFromDeveloping_ToDone_StopsAtReviewing(t *t
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "developing")
 
-	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -390,7 +390,7 @@ func TestAdvanceFeatureStatus_AdvanceToReviewing_IsTarget(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "developing")
 
-	result, err := AdvanceFeatureStatus(feature, "reviewing", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "reviewing", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -424,7 +424,7 @@ func TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "reviewing")
 
-	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -462,7 +462,7 @@ func TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone_NoReport(t *testing.T)
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "reviewing")
 
-	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -504,7 +504,7 @@ func TestAdvanceFeatureStatus_NeverAutoTransitionsThroughReviewing(t *testing.T)
 	feature.Spec = specDocID
 	feature.DevPlan = devPlanDocID
 
-	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -539,7 +539,7 @@ func TestAdvanceFeatureStatus_InvalidCurrentStatus(t *testing.T) {
 
 	feature := makeFeatureForAdvance("FEAT-01AAAAAAAAA09", "invalid-current", "", "draft")
 
-	_, err := AdvanceFeatureStatus(feature, "designing", entitySvc, docSvc, false, "")
+	_, err := AdvanceFeatureStatus(feature, "designing", entitySvc, docSvc, false, "", nil)
 	if err == nil {
 		t.Fatal("expected error for non-forward-path current status, got nil")
 	}
@@ -553,7 +553,7 @@ func TestAdvanceFeatureStatus_InvalidTargetStatus(t *testing.T) {
 
 	feature := makeFeatureForAdvance("FEAT-01AAAAAAAAA10", "invalid-target", "", "proposed")
 
-	_, err := AdvanceFeatureStatus(feature, "in-progress", entitySvc, docSvc, false, "")
+	_, err := AdvanceFeatureStatus(feature, "in-progress", entitySvc, docSvc, false, "", nil)
 	if err == nil {
 		t.Fatal("expected error for non-forward-path target status, got nil")
 	}
@@ -584,7 +584,7 @@ func TestAdvanceFeatureStatus_PartialAdvance_StopsAtDevPlanning(t *testing.T) {
 	feature.Design = designDocID
 	feature.Spec = specDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -631,7 +631,7 @@ func TestAdvanceFeatureStatus_PartialAdvance_StopsAtDeveloping(t *testing.T) {
 	feature.Spec = specDocID
 	feature.DevPlan = devPlanDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -670,7 +670,7 @@ func TestAdvanceFeatureStatus_EachStepPersisted(t *testing.T) {
 	feature.Design = designDocID
 	feature.Spec = specDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -711,7 +711,7 @@ func TestAdvanceFeatureStatus_MidPathStart(t *testing.T) {
 	feature.Spec = specDocID
 	feature.DevPlan = devPlanDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -749,7 +749,7 @@ func TestAdvanceFeatureStatus_ParentPlanDocs(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 
-	result, err := AdvanceFeatureStatus(feature, "specifying", entitySvc, docSvc, false, "")
+	result, err := AdvanceFeatureStatus(feature, "specifying", entitySvc, docSvc, false, "", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -790,7 +790,7 @@ func TestAdvanceFeatureStatus_Override_BypassesAllGates(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, true, "fast-track for demo")
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, true, "fast-track for demo", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -824,7 +824,7 @@ func TestAdvanceFeatureStatus_Override_LogsOverrideRecords(t *testing.T) {
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 	reason := "skipping for integration test"
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, true, reason)
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, true, reason, nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -875,7 +875,7 @@ func TestAdvanceFeatureStatus_Override_PersistedOnDisk(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "designing")
 
-	_, err := AdvanceFeatureStatus(feature, "specifying", entitySvc, docSvc, true, "external spec exists")
+	_, err := AdvanceFeatureStatus(feature, "specifying", entitySvc, docSvc, true, "external spec exists", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -924,7 +924,7 @@ func TestAdvanceFeatureStatus_Override_StopStatePreserved(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 
-	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, true, "override all gates")
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, true, "override all gates", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -964,7 +964,7 @@ func TestAdvanceFeatureStatus_Override_NoOverriddenGatesWhenGatesPassed(t *testi
 	feature.Spec = specDocID
 	feature.DevPlan = devPlanDocID
 
-	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, true, "just in case")
+	result, err := AdvanceFeatureStatus(feature, "developing", entitySvc, docSvc, true, "just in case", nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -996,7 +996,7 @@ func TestAdvanceFeatureStatus_Override_TimestampSetOnRecord(t *testing.T) {
 	feature := makeFeatureForAdvance(featureID, slug, parent, "designing")
 
 	before := time.Now()
-	_, err := AdvanceFeatureStatus(feature, "specifying", entitySvc, docSvc, true, "ts test")
+	_, err := AdvanceFeatureStatus(feature, "specifying", entitySvc, docSvc, true, "ts test", nil)
 	after := time.Now()
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)

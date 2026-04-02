@@ -25,6 +25,7 @@ import (
 
 	"github.com/sambeau/kanbanzai/internal/checkpoint"
 	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/gate"
 	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/knowledge"
 	"github.com/sambeau/kanbanzai/internal/model"
@@ -33,11 +34,11 @@ import (
 )
 
 // EntityTool returns the consolidated `entity` MCP tool registered in the core group.
-func EntityTool(entitySvc *service.EntityService, docSvc *service.DocumentService) []server.ServerTool {
-	return []server.ServerTool{entityTool(entitySvc, docSvc)}
+func EntityTool(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store) []server.ServerTool {
+	return []server.ServerTool{entityTool(entitySvc, docSvc, gateRouter, checkpointStore)}
 }
 
-func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentService) server.ServerTool {
+func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store) server.ServerTool {
 	tool := mcp.NewTool("entity",
 		mcp.WithReadOnlyHintAnnotation(false),
 		mcp.WithDestructiveHintAnnotation(false),
@@ -104,7 +105,7 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 			"get":        entityGetAction(entitySvc),
 			"list":       entityListAction(entitySvc),
 			"update":     entityUpdateAction(entitySvc),
-			"transition": entityTransitionAction(entitySvc, docSvc),
+			"transition": entityTransitionAction(entitySvc, docSvc, gateRouter, checkpointStore),
 		})
 	})
 
@@ -564,7 +565,7 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 
 // ─── transition ───────────────────────────────────────────────────────────────
 
-func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.DocumentService) ActionHandler {
+func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		// Signal mutation so side_effects: [] is always present in the response (spec §8.4).
 		SignalMutation(ctx)
@@ -594,7 +595,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			if entityType != "feature" {
 				return nil, fmt.Errorf("advance is only supported for feature entities")
 			}
-			return entityAdvanceFeature(ctx, entitySvc, docSvc, entityID, newStatus, override, overrideReason)
+			return entityAdvanceFeature(ctx, entitySvc, docSvc, entityID, newStatus, override, overrideReason, gateRouter, checkpointStore)
 		}
 
 		// Plans use their own status update path (no gate enforcement).
@@ -623,7 +624,30 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			currentStatus := string(feature.Status)
 
 			if isPhase2Transition(currentStatus, newStatus) {
-				gateResult := service.CheckTransitionGate(currentStatus, newStatus, feature, docSvc, entitySvc)
+				// Evaluate gate through the router (registry → hardcoded fallback).
+				var gateResult service.GateResult
+				overridePolicy := "agent"
+				if gateRouter != nil {
+					routerCtx := buildGateEvalContext(feature, docSvc, entitySvc)
+					routerResult := gateRouter.CheckGate(currentStatus, newStatus, routerCtx)
+					overridePolicy = gateRouter.OverridePolicy(newStatus)
+
+					if routerResult.Source == "registry" {
+						// Registry provided prerequisites — use the router result.
+						gateResult = service.GateResult{
+							Stage:     routerResult.Stage,
+							Satisfied: routerResult.Satisfied,
+							Reason:    routerResult.Reason,
+						}
+					} else {
+						// Hardcoded fallback — call CheckTransitionGate directly
+						// to preserve StructuralChecks and ReviewCapReached.
+						gateResult = service.CheckTransitionGate(currentStatus, newStatus, feature, docSvc, entitySvc)
+					}
+				} else {
+					gateResult = service.CheckTransitionGate(currentStatus, newStatus, feature, docSvc, entitySvc)
+				}
+
 				if len(gateResult.StructuralChecks) > 0 {
 					structuralChecks = gateResult.StructuralChecks
 				}
@@ -631,9 +655,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 					// Handle review iteration cap (FR-005, FR-006, FR-007).
 					if gateResult.ReviewCapReached {
 						blockedReason := gateResult.Reason
-						// Persist blocked_reason on the feature.
 						_ = entitySvc.PersistFeatureBlockedReason(entityID, "", blockedReason)
-						// Auto-create a human checkpoint.
 						chkStore := checkpoint.NewStore(entitySvc.Root())
 						chk, chkErr := chkStore.Create(checkpoint.Record{
 							Question:  fmt.Sprintf("Feature %s has reached the review iteration cap (%d/%d). What should happen next?", entityID, feature.ReviewCycle, service.DefaultMaxReviewCycles),
@@ -653,7 +675,6 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 						return resp, nil
 					}
 					if !override {
-						// Gate failed with no override: return structured gate failure response (FR-026).
 						var nonTerminal []service.TaskStatusPair
 						if (currentStatus == "developing" && newStatus == "reviewing") ||
 							(currentStatus == "needs-rework" && newStatus == "reviewing") {
@@ -661,7 +682,6 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 						}
 						return service.GateFailureResponse(entityID, currentStatus, newStatus, gateResult, nonTerminal), nil
 					}
-					// override=true but no reason: reject with validation error (FR-012).
 					if strings.TrimSpace(overrideReason) == "" {
 						return map[string]any{
 							"error": fmt.Sprintf(
@@ -670,7 +690,39 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 							),
 						}, nil
 					}
-					// Override with reason: log the bypass record before transitioning (FR-014).
+					// Branch on override policy (FR-010 through FR-014).
+					if overridePolicy == "checkpoint" && checkpointStore != nil {
+						chkResult, chkErr := gate.HandleCheckpointOverride(gate.CheckpointOverrideParams{
+							FeatureID:       entityID,
+							FromStatus:      currentStatus,
+							ToStatus:        newStatus,
+							GateDescription: gateResult.Reason,
+							OverrideReason:  overrideReason,
+							AgentIdentity:   "agent",
+							CheckpointStore: checkpointStore,
+						})
+						if chkErr != nil {
+							return nil, fmt.Errorf("creating checkpoint override: %w", chkErr)
+						}
+						or := model.OverrideRecord{
+							FromStatus:   currentStatus,
+							ToStatus:     newStatus,
+							Reason:       overrideReason,
+							Timestamp:    time.Now(),
+							CheckpointID: chkResult.CheckpointID,
+						}
+						feature.Overrides = append(feature.Overrides, or)
+						if err := entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides); err != nil {
+							return nil, fmt.Errorf("persisting override record: %w", err)
+						}
+						return map[string]any{
+							"checkpoint_created": true,
+							"checkpoint_id":      chkResult.CheckpointID,
+							"message":            chkResult.Message,
+							"feature_id":         entityID,
+						}, nil
+					}
+					// Agent policy: log the bypass and continue (FR-014).
 					or := model.OverrideRecord{
 						FromStatus: currentStatus,
 						ToStatus:   newStatus,
@@ -739,7 +791,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 
 // entityAdvanceFeature loads a feature and calls AdvanceFeatureStatus, returning
 // a structured response with the stages advanced through and any stop reason.
-func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService, docSvc *service.DocumentService, entityID, targetStatus string, override bool, overrideReason string) (any, error) {
+func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService, docSvc *service.DocumentService, entityID, targetStatus string, override bool, overrideReason string, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store) (any, error) {
 	// Load the feature entity to get the model struct needed by AdvanceFeatureStatus.
 	getResult, err := entitySvc.Get("feature", entityID, "")
 	if err != nil {
@@ -749,7 +801,44 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 	feature := featureFromState(getResult.ID, getResult.Slug, getResult.State)
 	startStatus := string(feature.Status)
 
-	advResult, err := service.AdvanceFeatureStatus(feature, targetStatus, entitySvc, docSvc, override, overrideReason)
+	var advCfg *service.AdvanceConfig
+	if gateRouter != nil {
+		advCfg = &service.AdvanceConfig{
+			CheckGate: func(from, to string, f *model.Feature, ds *service.DocumentService, es *service.EntityService) service.GateResult {
+				routerCtx := buildGateEvalContext(f, ds, es)
+				routerResult := gateRouter.CheckGate(from, to, routerCtx)
+				if routerResult.Source == "registry" {
+					return service.GateResult{
+						Stage:     routerResult.Stage,
+						Satisfied: routerResult.Satisfied,
+						Reason:    routerResult.Reason,
+					}
+				}
+				return service.CheckTransitionGate(from, to, f, ds, es)
+			},
+			OverridePolicy: func(to string) string {
+				return gateRouter.OverridePolicy(to)
+			},
+		}
+		if checkpointStore != nil {
+			advCfg.OnCheckpoint = func(featureID, fromStatus, toStatus, gateReason, overrideReason string) (string, error) {
+				result, err := gate.HandleCheckpointOverride(gate.CheckpointOverrideParams{
+					FeatureID:       featureID,
+					FromStatus:      fromStatus,
+					ToStatus:        toStatus,
+					GateDescription: gateReason,
+					OverrideReason:  overrideReason,
+					AgentIdentity:   "agent",
+					CheckpointStore: checkpointStore,
+				})
+				if err != nil {
+					return "", err
+				}
+				return result.CheckpointID, nil
+			}
+		}
+	}
+	advResult, err := service.AdvanceFeatureStatus(feature, targetStatus, entitySvc, docSvc, override, overrideReason, advCfg)
 	if err != nil {
 		return nil, fmt.Errorf("advance feature %s: %w", entityID, err)
 	}
@@ -765,6 +854,11 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 	}
 	if len(advResult.StructuralChecks) > 0 {
 		resp["structural_checks"] = advResult.StructuralChecks
+	}
+	if advResult.CheckpointID != "" {
+		resp["checkpoint_created"] = true
+		resp["checkpoint_id"] = advResult.CheckpointID
+		resp["checkpoint_gate"] = advResult.CheckpointGate
 	}
 
 	if advResult.StoppedReason != "" {
@@ -832,6 +926,75 @@ func overridesFromState(state map[string]any) []model.OverrideRecord {
 		})
 	}
 	return result
+}
+
+// buildGateEvalContext creates a gate.PrereqEvalContext from service types,
+// bridging the service layer to the gate evaluator interfaces.
+func buildGateEvalContext(feature *model.Feature, docSvc *service.DocumentService, entitySvc *service.EntityService) gate.PrereqEvalContext {
+	return gate.PrereqEvalContext{
+		Feature:   feature,
+		DocSvc:    &gateDocAdapter{svc: docSvc},
+		EntitySvc: &gateEntityAdapter{svc: entitySvc},
+	}
+}
+
+// gateDocAdapter wraps *service.DocumentService to implement gate.DocumentService.
+type gateDocAdapter struct {
+	svc *service.DocumentService
+}
+
+func (a *gateDocAdapter) GetDocument(id string, loadContent bool) (*gate.DocumentRecord, error) {
+	result, err := a.svc.GetDocument(id, loadContent)
+	if err != nil {
+		return nil, err
+	}
+	return &gate.DocumentRecord{
+		ID:     result.ID,
+		Status: result.Status,
+		Type:   result.Type,
+		Owner:  result.Owner,
+	}, nil
+}
+
+func (a *gateDocAdapter) ListDocuments(filters gate.DocumentFilters) ([]*gate.DocumentRecord, error) {
+	results, err := a.svc.ListDocuments(service.DocumentFilters{
+		Owner:  filters.Owner,
+		Type:   filters.Type,
+		Status: filters.Status,
+	})
+	if err != nil {
+		return nil, err
+	}
+	records := make([]*gate.DocumentRecord, len(results))
+	for i, r := range results {
+		records[i] = &gate.DocumentRecord{
+			ID:     r.ID,
+			Status: r.Status,
+			Type:   r.Type,
+			Owner:  r.Owner,
+		}
+	}
+	return records, nil
+}
+
+// gateEntityAdapter wraps *service.EntityService to implement gate.EntityService.
+type gateEntityAdapter struct {
+	svc *service.EntityService
+}
+
+func (a *gateEntityAdapter) List(entityType string) ([]gate.EntityResult, error) {
+	results, err := a.svc.List(entityType)
+	if err != nil {
+		return nil, err
+	}
+	gateResults := make([]gate.EntityResult, len(results))
+	for i, r := range results {
+		gateResults[i] = gate.EntityResult{
+			ID:    r.ID,
+			State: r.State,
+		}
+	}
+	return gateResults, nil
 }
 
 // phase2Statuses is the set of Phase 2 feature lifecycle states subject to

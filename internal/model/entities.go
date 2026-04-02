@@ -289,10 +289,11 @@ func (e Epic) GetSlug() string {
 // transition. It is appended to Feature.Overrides each time a gate is
 // bypassed via the override mechanism (FR-014, FR-016).
 type OverrideRecord struct {
-	FromStatus string    `yaml:"from_status"`
-	ToStatus   string    `yaml:"to_status"`
-	Reason     string    `yaml:"reason"`
-	Timestamp  time.Time `yaml:"timestamp"`
+	FromStatus   string    `yaml:"from_status"`
+	ToStatus     string    `yaml:"to_status"`
+	Reason       string    `yaml:"reason"`
+	Timestamp    time.Time `yaml:"timestamp"`
+	CheckpointID string    `yaml:"checkpoint_id,omitempty"`
 }
 
 // Feature is the canonical representation of a Feature.
