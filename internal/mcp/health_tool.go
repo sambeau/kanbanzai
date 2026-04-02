@@ -63,9 +63,12 @@ func healthTool(entitySvc *service.EntityService, additionalCheckers ...Addition
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("System Health Check"),
 		mcp.WithDescription(
-			"Run a comprehensive health check across all entities, knowledge entries, "+
-				"and context profiles. Returns a structured report of errors and warnings "+
-				"with category breakdowns. Replaces the 1.0 health_check tool.",
+			"A comprehensive health check across all entities, knowledge entries, worktrees, "+
+				"branches, and context profiles — call periodically or when diagnosing unexpected "+
+				"workflow errors. Returns a structured report of errors and warnings with category "+
+				"breakdowns. Use INSTEAD OF manually inspecting individual entities for consistency "+
+				"issues. Do NOT use for entity-specific queries — use status for dashboards or "+
+				"entity(action: \"get\") for individual lookups. No parameters required.",
 		),
 	)
 

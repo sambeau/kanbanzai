@@ -28,10 +28,13 @@ func incidentTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Incident Tracker"),
 		mcp.WithDescription(
-			"Manage incidents. Consolidates incident_create, incident_update, incident_list, "+
-				"and incident_link_bug. "+
-				"Actions: create (new incident in reported status), update (change status/severity/summary), "+
-				"list (filter by status/severity), link_bug (associate a bug with an incident).",
+			"Track production incidents through their lifecycle from detection to resolution. "+
+				"Use when a user-facing issue needs structured tracking beyond a single bug report — "+
+				"incidents can link multiple bugs and affected features. "+
+				"Do NOT use for code defects that aren't user-facing — use entity(type: bug) for those. "+
+				"Actions: create (slug, title, severity, summary, reported_by required), "+
+				"update (incident_id required), list (optional status_filter, severity_filter), "+
+				"link_bug (incident_id and bug_id required).",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

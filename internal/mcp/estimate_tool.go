@@ -40,11 +40,13 @@ func estimateTool(entitySvc *service.EntityService, knowledgeSvc *service.Knowle
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Story Point Estimates"),
 		mcp.WithDescription(
-			"Set and query story point estimates on entities. "+
-				"Consolidates estimate_set, estimate_query, estimate_reference_add, and estimate_reference_remove. "+
-				"Actions: set (single entity_id+points, or batch via entities array), query (rollup stats), "+
-				"add_reference (add calibration example), remove_reference (remove calibration example). "+
-				"Uses the Modified Fibonacci scale: 0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100.",
+			"Story point estimates on entities using the Modified Fibonacci scale "+
+				"(0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100). Use during planning to size work "+
+				"and during review to compare estimates against actuals. Do NOT set estimates on "+
+				"done tasks — estimate before work begins. action: set requires entity_id + points "+
+				"(single) or entities array (batch). action: query returns rollup stats including "+
+				"child-entity totals. Use INSTEAD OF manually tracking sizing in documents. "+
+				"Actions: set, query, add_reference (calibration example), remove_reference.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

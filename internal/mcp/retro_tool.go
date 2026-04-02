@@ -34,11 +34,13 @@ func retroTool(retroSvc *service.RetroService) server.ServerTool {
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Retrospective Synthesis"),
 		mcp.WithDescription(
-			"Synthesise retrospective signals into themed clusters. "+
-				"Before writing any retrospective or review document, call action: synthesise first "+
+			"Before writing any retrospective or review document, call action: synthesise first "+
 				"— it surfaces signals from across the project that may not be in your session context. "+
-				"Actions: synthesise (read signals, cluster, rank), report (generate and register a "+
-				"markdown report document).",
+				"Do NOT write retrospective documents from memory alone; always synthesise first to avoid "+
+				"missing signals. Use finish(retrospective: [...]) to record individual signals — use this "+
+				"tool to analyse them. action: report requires output_path; generates a markdown file and "+
+				"registers it as a document record. "+
+				"Actions: synthesise (default — cluster and rank), report.",
 		),
 		mcp.WithString("action",
 			mcp.Description("Action: synthesise (default) or report"),

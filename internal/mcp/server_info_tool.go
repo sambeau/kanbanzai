@@ -27,10 +27,11 @@ func serverInfoTool() server.ServerTool {
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Server Build Information"),
 		mcp.WithDescription(
-			"Get server build and installation metadata. "+
-				"Returns version, git SHA, build time, Go version, binary path, "+
-				"install record, and whether the running binary matches the install record. "+
-				"No input arguments.",
+			"Diagnose stale-binary and version-mismatch issues by inspecting server build metadata and install records. "+
+				"Returns version, git SHA, build time, Go version, binary path, and whether the running binary matches the install record (in_sync). "+
+				"Use INSTEAD OF manually checking binary paths or comparing git SHAs. "+
+				"Do NOT use for project health — use status for that. "+
+				"No input parameters required.",
 		),
 	)
 

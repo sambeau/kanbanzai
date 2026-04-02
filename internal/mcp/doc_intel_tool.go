@@ -29,12 +29,13 @@ func docIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *se
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Document Intelligence"),
 		mcp.WithDescription(
-			"Document intelligence operations: explore, classify, and query the document graph. "+
-				"Consolidates doc_outline, doc_section, doc_classify, doc_find_by_concept, "+
-				"doc_find_by_entity, doc_find_by_role, doc_trace, doc_impact, "+
-				"doc_extraction_guide, and doc_pending. "+
-				"Actions: outline, section, classify, find, trace, impact, guide, pending. "+
-				"The find action routes by parameter: concept, entity_id, or role.",
+			"Explore, classify, and query the document graph — use for understanding document structure, "+
+				"finding content by concept/entity/role, and assessing change impact on sections. "+
+				"Do NOT use for document record management (register, approve, supersede) — use doc instead. "+
+				"Call guide before manually extracting information from a document. "+
+				"The find action routes by parameter: provide exactly one of concept, entity_id, or role. "+
+				"id is required for outline, section, classify, and guide. "+
+				"Actions: outline, section, classify, find, trace, impact, guide, pending.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

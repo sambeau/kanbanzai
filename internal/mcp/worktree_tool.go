@@ -31,9 +31,13 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Git Worktree Manager"),
 		mcp.WithDescription(
-			"Manage Git worktrees for feature and bug entities. "+
-				"Consolidates worktree_create, worktree_get, worktree_list, and worktree_remove. "+
-				"Actions: create, get, list, remove.",
+			"Isolate parallel development by creating dedicated Git worktrees for feature and bug entities — "+
+				"each worktree provides its own branch and working directory so multiple tasks proceed without interfering. "+
+				"Use INSTEAD OF manual `git worktree` commands; this tool tracks worktree records alongside entity lifecycle. "+
+				"Call AFTER entity(action: create) establishes the feature or bug. "+
+				"Do NOT use for branch health checks — use branch for that. "+
+				"Actions: create, get, list, remove. "+
+				"entity_id is required for create, get, and remove; optional filter for list.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

@@ -30,11 +30,12 @@ func knowledgeTool(svc *service.KnowledgeService, repoPath string) server.Server
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Knowledge Base"),
 		mcp.WithDescription(
-			"Query and manage the project knowledge base. "+
-				"Use action: list to find knowledge entries by topic, tag, or status — "+
-				"this surfaces information that may not be in your context window. "+
-				"Routine contribution happens via finish; use this tool for direct management: "+
-				"confirming entries, resolving conflicts, checking staleness, pruning. "+
+			"The project knowledge base — use action: list to find entries by topic, tag, or status "+
+				"that may not be in your context window. Routine contribution happens via finish; "+
+				"use this tool for direct management: confirming entries, resolving conflicts, "+
+				"checking staleness, pruning. Do NOT read .kbz/state/knowledge/ files directly. "+
+				"For task-completion knowledge contributions, use finish instead — use contribute here "+
+				"only for standalone knowledge outside a task flow. "+
 				"Actions: list, get, contribute, confirm, flag, retire, update, promote, "+
 				"compact, prune, resolve, staleness.",
 		),

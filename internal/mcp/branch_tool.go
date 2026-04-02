@@ -26,10 +26,12 @@ func branchTool(store *worktree.Store, repoPath string, thresholds git.BranchThr
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Branch Health Monitor"),
 		mcp.WithDescription(
-			"Get branch health metrics for an entity's worktree branch. "+
-				"Reports staleness, drift from main, and merge conflicts. "+
-				"Consolidates branch_status. "+
-				"Actions: status.",
+			"Check whether an entity's worktree branch is healthy before merging or resuming work — "+
+				"reports staleness, drift from main, and merge conflicts. "+
+				"Call AFTER worktree(action: create) sets up the branch. "+
+				"Use INSTEAD OF manual git log/diff comparisons for branch divergence. "+
+				"Do NOT use to create or remove branches — use worktree for that. "+
+				"Actions: status. Both action and entity_id are required.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

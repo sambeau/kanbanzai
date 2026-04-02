@@ -27,10 +27,12 @@ func cleanupTool(store *worktree.Store, git *worktree.Git, cfg *config.CleanupCo
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Worktree Cleanup"),
 		mcp.WithDescription(
-			"Manage worktree cleanup. Lists worktrees pending cleanup and executes cleanup operations. "+
-				"Consolidates cleanup_list and cleanup_execute. "+
-				"Actions: list (show worktrees pending cleanup), execute (remove worktree directories, "+
-				"delete branches, and remove tracking records).",
+			"Reclaim disk space and tidy tracking state by removing merged or abandoned worktrees. "+
+				"Call AFTER a feature or bug has been merged and its worktree is no longer needed. "+
+				"Use INSTEAD OF manually deleting worktree directories — this tool also removes branches and tracking records. "+
+				"Do NOT use to remove active worktrees — use worktree(action: remove) for that. "+
+				"Actions: list (show pending/scheduled cleanup items), "+
+				"execute (perform cleanup; worktree_id targets a specific item, dry_run previews without changes).",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

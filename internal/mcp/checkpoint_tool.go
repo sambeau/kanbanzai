@@ -26,13 +26,13 @@ func checkpointTool(store *chk.Store) server.ServerTool {
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Human Decision Checkpoints"),
 		mcp.WithDescription(
-			"Manage human decision checkpoints. "+
-				"Consolidates human_checkpoint, human_checkpoint_get, human_checkpoint_respond, "+
-				"and human_checkpoint_list. "+
-				"Actions: create (record a decision point requiring human input), "+
-				"get (poll checkpoint state), respond (record human response), "+
-				"list (list checkpoints with optional status filter). "+
-				"After create, stop dispatching new tasks until get returns status: responded.",
+			"Pause automated orchestration when a decision requires human input. "+
+				"Use the create → get (poll) → respond workflow: after create, "+
+				"stop dispatching new tasks and poll with get until status changes to 'responded'. "+
+				"Do NOT use for information-only messages — checkpoints block work until a human responds. "+
+				"Actions: create (question, context, orchestration_summary, created_by required), "+
+				"get (checkpoint_id required), respond (checkpoint_id and response required), "+
+				"list (optional status filter: pending or responded).",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

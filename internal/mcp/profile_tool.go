@@ -29,10 +29,11 @@ func profileTool(roleStore *kbzctx.RoleStore) server.ServerTool {
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Context Role Profiles"),
 		mcp.WithDescription(
-			"List and retrieve context role profiles. "+
-				"Consolidates profile_list and profile_get. "+
-				"Actions: list (list all profiles), get (get a profile by ID, resolved or raw), "+
-				"refresh (update last_verified timestamp on a role or skill).",
+			"Context role profiles define identity, vocabulary, anti-patterns, and tool preferences for each agent role "+
+				"— use to inspect available roles before task dispatch or to verify role configuration. "+
+				"Do NOT modify roles through this tool — edit .kbz/roles/*.yaml files directly instead. "+
+				"Actions: list (all profiles), get (by ID; requires id), "+
+				"refresh (update last_verified; requires id or skill, not both).",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

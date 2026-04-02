@@ -24,11 +24,12 @@ func conflictTool(conflictSvc *service.ConflictService) server.ServerTool {
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Conflict Risk Analysis"),
 		mcp.WithDescription(
-			"Analyse conflict risk between two or more tasks that might run in parallel. "+
-				"Checks file overlap (planned and git-history), dependency ordering, and "+
-				"architectural boundary crossing. Returns per-pair risk assessment and "+
-				"recommendation (safe_to_parallelise, serialise, or checkpoint_required). "+
-				"Actions: check.",
+			"Before dispatching tasks in parallel, check whether they risk conflicting on "+
+				"shared files, dependencies, or architectural boundaries. Returns per-pair risk "+
+				"assessment and recommendation (safe_to_parallelise, serialise, or checkpoint_required). "+
+				"Use INSTEAD OF manually inspecting file lists to decide parallelism. "+
+				"For actual merge conflict detection on branches, use branch(action: \"status\") instead. "+
+				"Requires task_ids array with two or more TASK-... IDs. Actions: check.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),
