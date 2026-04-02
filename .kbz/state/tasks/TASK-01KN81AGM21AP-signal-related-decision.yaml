@@ -3,4 +3,7 @@ parent_feature: FEAT-01KN8132Y8NX8
 slug: signal-related-decision
 name: Signal related decision
 summary: "Add optional `related_decision` field to the retrospective signal structure. When present, append \"Related: {decision_id}\" to the content string per spec §5.5. Accept the field in `finish`'s `retrospective` parameter. A related_decision referencing an unknown decision ID is accepted without error (no lookup at collection time). A signal without related_decision is stored with no Related: clause. Acceptance criteria: P5-3.1, P5-3.2, P5-3.3."
-status: ready
+status: done
+completed: "2026-04-02T21:28:33Z"
+completion_summary: "Already implemented: RelatedDecision field on RetroSignalInput, encoded by EncodeRetroContent, parsed by parseRelatedDecision, wired through finish_tool.go. All P5-3.1/3.2/3.3 acceptance criteria covered by tests in retro_test.go."
+verification: "grep confirms RelatedDecision field, EncodeRetroContent encoding, parseRelatedDecision parsing, and finish_tool.go wiring. Test stubs in retro_synthesis_test.go reference the retro_test.go tests by name."

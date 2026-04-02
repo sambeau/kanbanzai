@@ -3,4 +3,7 @@ parent_feature: FEAT-01KN8132Y8NX8
 slug: retro-experiments-section
 name: Retro experiments section
 summary: "Extend `retro` synthesis to produce an `experiments` section. Parse \"Related: {decision_id}\" from signal content during synthesis. Fetch all decision entities tagged workflow-experiment. For each referenced decision ID, count positive signals (worked-well category) and negative signals (all other categories). Produce an experiments array with: decision_id, title (decision summary), positive_signals, negative_signals, net_assessment (informational string), recommendation (keep/revise/revert heuristic). The experiments section is absent (not empty array) when no signals reference any decision. Include experiments in report-mode markdown output. Acceptance criteria: P5-3.4, P5-3.5, P5-3.6, P5-3.7."
-status: ready
+status: done
+completed: "2026-04-02T21:28:33Z"
+completion_summary: "Already implemented: buildExperiments in retro_synthesis.go parses Related: from content, fetches workflow-experiment decisions, counts positive/negative signals, produces keep/revise/revert recommendations. renderRetroMarkdown includes Experiments section. All P5-3.4/3.5/3.6/3.7 acceptance criteria covered by tests in retro_synthesis_test.go."
+verification: "grep confirms buildExperiments, RetroSynthesisResult.Experiments field, renderRetroMarkdown Experiments section. Dedicated tests for keep/revise/revert recommendations and absent-when-no-references case all present."
