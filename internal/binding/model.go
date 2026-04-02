@@ -23,8 +23,9 @@ type StageBinding struct {
 
 // Prerequisites declares what must be true before entering the stage.
 type Prerequisites struct {
-	Documents []DocumentPrereq `yaml:"documents,omitempty"`
-	Tasks     *TaskPrereq      `yaml:"tasks,omitempty"`
+	Documents      []DocumentPrereq `yaml:"documents,omitempty"`
+	Tasks          *TaskPrereq      `yaml:"tasks,omitempty"`
+	OverridePolicy string           `yaml:"override_policy,omitempty"` // "agent" (default) or "checkpoint"
 }
 
 // DocumentPrereq is a single document prerequisite declaration.
@@ -143,6 +144,15 @@ func ValidateBinding(b *StageBinding, stageName string) []error {
 		}
 		if hasMin && *tp.MinCount < 1 {
 			errs = append(errs, fmt.Errorf("%s: prerequisites.tasks.min_count must be >= 1", stageName))
+		}
+	}
+
+	if b.Prerequisites != nil && b.Prerequisites.OverridePolicy != "" {
+		switch b.Prerequisites.OverridePolicy {
+		case "agent", "checkpoint":
+			// valid
+		default:
+			errs = append(errs, fmt.Errorf("%s: prerequisites.override_policy must be \"agent\" or \"checkpoint\", got %q", stageName, b.Prerequisites.OverridePolicy))
 		}
 	}
 
