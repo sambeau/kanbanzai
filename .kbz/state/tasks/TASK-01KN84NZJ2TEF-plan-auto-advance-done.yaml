@@ -1,0 +1,6 @@
+id: TASK-01KN84NZJ2TEF
+parent_feature: FEAT-01KN83QN0VAFG
+slug: plan-auto-advance-done
+name: Plan auto-advance to done
+summary: "Mirror of T3 at plan level. After a feature transitions to terminal state, check if all sibling features are terminal with at least one done. If so, and plan is active, auto-advance plan to done. Side effect recorded in response."
+status: queued
