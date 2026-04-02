@@ -2,9 +2,11 @@ id: FEAT-01KN85HMQP2CX/specification-remove-epic-entity
 path: work/spec/remove-epic-entity.md
 type: specification
 title: Remove Epic Entity
-status: draft
+status: approved
 owner: FEAT-01KN85HMQP2CX
+approved_by: sambeau
+approved_at: "2026-04-02T22:42:55Z"
 content_hash: d3e6d38e996295b00c95bcc13b07c0a733650be13d4b3082c6ac033027ca52a6
 created: "2026-04-02T22:42:51Z"
 created_by: sambeau
-updated: "2026-04-02T22:42:51Z"
+updated: "2026-04-02T22:42:55Z"
