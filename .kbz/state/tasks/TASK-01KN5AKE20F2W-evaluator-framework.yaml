@@ -2,6 +2,11 @@ id: TASK-01KN5AKE20F2W
 parent_feature: FEAT-01KN58J27H83N
 slug: evaluator-framework
 summary: Create the evaluator framework that dispatches prerequisite evaluation by type key. Unknown type keys fail with an actionable error naming the unrecognised type.
-status: queued
+status: done
 depends_on:
   - TASK-01KN5AKE1FMBW
+files_planned:
+  - internal/gate/evaluator.go
+  - internal/gate/evaluator_test.go
+completed: "2026-04-02T01:32:11Z"
+completion_summary: "Implemented in internal/gate/evaluator.go. Type-dispatched evaluator framework with GateResult, service interfaces, and registration."

@@ -2,6 +2,13 @@ id: TASK-01KN5AKE2H4VD
 parent_feature: FEAT-01KN58J27H83N
 slug: doc-task-evaluators
 summary: Implement the documents and tasks prerequisite evaluators and register them with the evaluator framework. Document evaluator reuses three-level lookup; task evaluator supports min_count and all_terminal.
-status: queued
+status: done
 depends_on:
   - TASK-01KN5AKE20F2W
+files_planned:
+  - internal/gate/eval_documents.go
+  - internal/gate/eval_documents_test.go
+  - internal/gate/eval_tasks.go
+  - internal/gate/eval_tasks_test.go
+completed: "2026-04-02T01:32:11Z"
+completion_summary: "Implemented in internal/gate/eval_documents.go and eval_tasks.go. Three-level document lookup, min_count and all_terminal task modes."

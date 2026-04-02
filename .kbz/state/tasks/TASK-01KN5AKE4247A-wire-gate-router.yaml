@@ -2,7 +2,15 @@ id: TASK-01KN5AKE4247A
 parent_feature: FEAT-01KN58J27H83N
 slug: wire-gate-router
 summary: "Replace hardcoded gate call sites in MCP entity transition handler and AdvanceFeatureStatus with the gate router. Override handling branches on policy: agent proceeds, checkpoint halts."
-status: queued
+status: done
 depends_on:
   - TASK-01KN5AKE316PX
   - TASK-01KN5AKE3HG55
+files_planned:
+  - internal/mcp/server.go
+  - internal/mcp/entity_tool.go
+  - internal/service/advance.go
+  - internal/model/entities.go
+  - internal/binding/model.go
+completed: "2026-04-02T01:32:11Z"
+completion_summary: "Wired gate router into entity_tool.go, advance.go, server.go. Added AdvanceConfig, adapter types, checkpoint policy branching."
