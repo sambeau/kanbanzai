@@ -1,0 +1,182 @@
+document_id: P16-skills-and-roles-3.0/report-review-p16-skills-and-roles-30
+document_path: work/reviews/review-P16-skills-and-roles-3.0.md
+content_hash: a654a14cb7bdc78eb8e3472b7924aa755d4fd653aa36211988378f715ba487be
+indexed_at: 2026-04-02T02:06:39.128119Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: P16 — Skills and Roles 3.0'
+      byte_offset: 0
+      byte_count: 16438
+      word_count: 2420
+      content_hash: a654a14cb7bdc78eb8e3472b7924aa755d4fd653aa36211988378f715ba487be
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 394
+          byte_count: 884
+          word_count: 116
+          content_hash: fec8577a47f22a885af17c5bf4f7505e079201177dff5ad51d6a6c2d0a03f5e8
+        - path: "1.2"
+          level: 2
+          title: Feature Status
+          byte_offset: 1278
+          byte_count: 1579
+          word_count: 223
+          content_hash: 3107830a26f3e39b8abda926210544685413bd47553983649c847cd7d7687f18
+        - path: "1.3"
+          level: 2
+          title: Spec Conformance Detail
+          byte_offset: 2857
+          byte_count: 6991
+          word_count: 1095
+          content_hash: 5293b0e9eda51be12ce05c244fc6e1c9ffd99a7cd973f91aadc82e7b25d8d058
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Feature: role-system'
+              byte_offset: 2885
+              byte_count: 745
+              word_count: 122
+              content_hash: 1beaf3d72d64cae39d398b3251482649726f7bfa02bc396cf40a37a4ad8b9a56
+            - path: 1.3.2
+              level: 3
+              title: 'Feature: skill-system'
+              byte_offset: 3630
+              byte_count: 712
+              word_count: 105
+              content_hash: 978b0b8ae54c320ade079f21cb3ea6e2041bfab97a49a8a993aa727f799e9467
+            - path: 1.3.3
+              level: 3
+              title: 'Feature: binding-registry'
+              byte_offset: 4342
+              byte_count: 577
+              word_count: 88
+              content_hash: a05681c9d1d9bfcc58eb8ed733a419d5738d32178a89a3cdf7968ce691a2806a
+            - path: 1.3.4
+              level: 3
+              title: 'Feature: context-assembly-pipeline'
+              byte_offset: 4919
+              byte_count: 772
+              word_count: 130
+              content_hash: 43bb9417e4a8755b7d796e4b616be5ad041f56f0cb0755c69ae4225830295fc1
+            - path: 1.3.5
+              level: 3
+              title: 'Feature: knowledge-auto-surfacing'
+              byte_offset: 5691
+              byte_count: 794
+              word_count: 135
+              content_hash: 5a0b4be51cdabb8cd7035fcf647ae5420efe2aff07c4a7f0a0b5213274025172
+            - path: 1.3.6
+              level: 3
+              title: 'Feature: freshness-tracking'
+              byte_offset: 6485
+              byte_count: 621
+              word_count: 98
+              content_hash: ef57732be8bbc28a607656f224b08c244f3c46b8dfe1726699cf7741f94c1f86
+            - path: 1.3.7
+              level: 3
+              title: 'Feature: base-and-authoring-role-content'
+              byte_offset: 7106
+              byte_count: 545
+              word_count: 82
+              content_hash: 348a048245e64e30e20f7e1d22ab90c39419cb4be7f643b50c5b6fd03f811994
+            - path: 1.3.8
+              level: 3
+              title: 'Feature: review-role-content'
+              byte_offset: 7651
+              byte_count: 467
+              word_count: 71
+              content_hash: b76b5f1015f69263923a45d4c9ee853d486417ab2d2e5e39947b538c9e5b170c
+            - path: 1.3.9
+              level: 3
+              title: 'Feature: document-authoring-skill-content'
+              byte_offset: 8118
+              byte_count: 528
+              word_count: 80
+              content_hash: a7c6ac6b2775d31aa25f0e83fced4143d23ce009e8a262c351651f5bf18dc24f
+            - path: 1.3.10
+              level: 3
+              title: 'Feature: implementation-skill-content / review-skill-content'
+              byte_offset: 8646
+              byte_count: 468
+              word_count: 60
+              content_hash: c38df713c1c6fda2aa20417c10ed56086987559e350f086d5ff7c0715d688868
+            - path: 1.3.11
+              level: 3
+              title: 'Feature: migration-and-backward-compat'
+              byte_offset: 9114
+              byte_count: 734
+              word_count: 120
+              content_hash: 2e77b5a149007d4dc675e664ea77cbef0428cbceaf9152dc9c415685ae595b5c
+        - path: "1.4"
+          level: 2
+          title: Documentation Currency
+          byte_offset: 9848
+          byte_count: 414
+          word_count: 69
+          content_hash: 03ba1a57248cb113ec8682184cbeaf6f8e8e19b7eb9c626db5bf5bb902063ab6
+        - path: "1.5"
+          level: 2
+          title: Cross-Cutting Checks
+          byte_offset: 10262
+          byte_count: 736
+          word_count: 109
+          content_hash: 16cbece82e24c0389dd2b60c5b050b0ce8898365695d8b7500e04426d4186597
+        - path: "1.6"
+          level: 2
+          title: Findings
+          byte_offset: 10998
+          byte_count: 3955
+          word_count: 556
+          content_hash: 9661639157476f680a8ba657ab7beb374e6191c38d14a1c5018ab59efa8c0b03
+        - path: "1.7"
+          level: 2
+          title: Verdict
+          byte_offset: 14953
+          byte_count: 1485
+          word_count: 213
+          content_hash: e4ba29030a3aa3c2bb0f50baf08fcd8e634bf36765f4a7f8f67a6aa4dc42dc4f
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1392
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 14366
+    - entity_id: TASK-01KN5AJKNBEE2
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 10553
+    - entity_id: TASK-01JX
+      entity_type: task
+      section_path: "1.6"
+      byte_offset: 11339
+    - entity_id: P16-skills-and-roles-3
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 169
+cross_doc_links:
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: 1.3.2
+    - target_path: .kbz/skills/write-spec/SKILL.md
+      link_text: .kbz/skills/write-spec/SKILL.md
+      section_path: "1.6"
+    - target_path: work/spec/3.0-*.md
+      link_text: work/spec/3.0-*.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.4
+      role: narrative
+      confidence: high
+classified: false

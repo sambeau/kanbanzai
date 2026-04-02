@@ -1,0 +1,292 @@
+document_id: P17-workflow-and-tooling-3.0/report-review-p17-workflow-and-tooling-30
+document_path: work/reviews/review-P17-workflow-and-tooling-3.0.md
+content_hash: 8e43d37f58316f7d7dd152fb029d79c014dd36730d816846e8092828653aab98
+indexed_at: 2026-04-02T01:54:29.730268Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Plan Review: P17 — Workflow and Tooling 3.0'
+      byte_offset: 0
+      byte_count: 21361
+      word_count: 2605
+      content_hash: 8e43d37f58316f7d7dd152fb029d79c014dd36730d816846e8092828653aab98
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary Verdict
+          byte_offset: 221
+          byte_count: 965
+          word_count: 119
+          content_hash: 669bcdbe5da3fc01b063715472f3213180859453b242b699fbff0f4b88d1890a
+        - path: "1.2"
+          level: 2
+          title: Per-Feature Verdicts
+          byte_offset: 1186
+          byte_count: 812
+          word_count: 113
+          content_hash: 3e2e577b539ae4338df0a41e0dabfd3f831f5f01dcbc566d3204d6b88d0e5a23
+        - path: "1.3"
+          level: 2
+          title: Per-Dimension Verdicts (Plan-Level)
+          byte_offset: 1998
+          byte_count: 609
+          word_count: 87
+          content_hash: db13c628bc5ed1e5d7576ca7adb8b944149213d145209fd37f5371ac4e34db92
+        - path: "1.4"
+          level: 2
+          title: Blocking Findings
+          byte_offset: 2607
+          byte_count: 11826
+          word_count: 1410
+          content_hash: fc29a85a75e673286124f0dfb4c240ffec6ef9adaa13fab9bb2042bf2bf30875
+          children:
+            - path: 1.4.1
+              level: 3
+              title: FEAT-01KN58J24S2XW — mandatory-stage-gates
+              byte_offset: 2629
+              byte_count: 1209
+              word_count: 157
+              content_hash: ee99abe0ebc705af1e50dc6f4cf40e6c0c8a1c2586aaf87059813f46430cf65f
+            - path: 1.4.2
+              level: 3
+              title: FEAT-01KN58J257X02 — tool-description-audit
+              byte_offset: 3838
+              byte_count: 1877
+              word_count: 230
+              content_hash: 3426a5bb2178cd5b5574b61288c47f25f660c63b0e5d7807bdbc7282b34aec32
+            - path: 1.4.3
+              level: 3
+              title: FEAT-01KN58J25K4QD — stage-aware-context-assembly
+              byte_offset: 5715
+              byte_count: 1844
+              word_count: 221
+              content_hash: 615bac101484490c99677d68230cc59f16c6d9b739f8a3a38c00afba1720d0f6
+            - path: 1.4.4
+              level: 3
+              title: FEAT-01KN58J2606B0 — review-rework-loop
+              byte_offset: 7559
+              byte_count: 2192
+              word_count: 248
+              content_hash: 0a20829ccfb5c3c68aee65e46e5003ddb12fb088e640d153becfbaf0ce72791a
+            - path: 1.4.5
+              level: 3
+              title: FEAT-01KN58J26RSB6 — document-structural-checks
+              byte_offset: 9751
+              byte_count: 2261
+              word_count: 254
+              content_hash: 8c2ba9e4a0e38421c540a785fed57a4e2e5bd6cef9e9bcf6fd0f44b4a5576199
+            - path: 1.4.6
+              level: 3
+              title: FEAT-01KN58J275BWJ — action-pattern-logging
+              byte_offset: 12012
+              byte_count: 1566
+              word_count: 196
+              content_hash: 21d97fe6373543a3d478192eda04100a9867914be6107a9cf370be5556e25a97
+            - path: 1.4.7
+              level: 3
+              title: FEAT-01KN58J27H83N — binding-registry-gate-integration
+              byte_offset: 13578
+              byte_count: 855
+              word_count: 101
+              content_hash: 640d47d12bb102ae19ca5457ed1fe37261f557f10957eaa7f17227cb971bea55
+        - path: "1.5"
+          level: 2
+          title: Non-Blocking Findings (Selected)
+          byte_offset: 14433
+          byte_count: 4248
+          word_count: 530
+          content_hash: 78ea8c72d6439cd59a7832e2eb6c93d7c5d4b3764558e345b7187f30b6273796
+          children:
+            - path: 1.5.1
+              level: 3
+              title: mandatory-stage-gates
+              byte_offset: 14590
+              byte_count: 399
+              word_count: 45
+              content_hash: ba44512ef8a4a91c6f5432b9ca8639c108e3a049e1e8c72001f0febe1572cc7b
+            - path: 1.5.2
+              level: 3
+              title: tool-description-audit
+              byte_offset: 14989
+              byte_count: 456
+              word_count: 58
+              content_hash: 054ddb7e66abc8692ef454628ee27620af143b75d2b2ba8a148d0cbe73c60a71
+            - path: 1.5.3
+              level: 3
+              title: stage-aware-context-assembly
+              byte_offset: 15445
+              byte_count: 471
+              word_count: 58
+              content_hash: fd034781190a86dbfbfbb6ed5ab8ef5a1f3851a3dc645d293b8e98434501483d
+            - path: 1.5.4
+              level: 3
+              title: review-rework-loop
+              byte_offset: 15916
+              byte_count: 539
+              word_count: 63
+              content_hash: 2f93830a8482d965879336e0dafbc69c36a4dd6d8b42d02cea20ff5e25ef0e23
+            - path: 1.5.5
+              level: 3
+              title: decomposition-quality-validation
+              byte_offset: 16455
+              byte_count: 519
+              word_count: 66
+              content_hash: 82972cbd38853f70700222ba2d23130d9875082407caff94856dc3e2481ba38b
+            - path: 1.5.6
+              level: 3
+              title: document-structural-checks
+              byte_offset: 16974
+              byte_count: 507
+              word_count: 65
+              content_hash: fa952fc01c1c2461f8b5eb57eb7f28d033acfa3de65b153df9a69d7e42db7718
+            - path: 1.5.7
+              level: 3
+              title: action-pattern-logging
+              byte_offset: 17481
+              byte_count: 443
+              word_count: 55
+              content_hash: 666ca8fef3d91fbb7c857653cf479bcaa8f12cf4fd296014a98fd4d92c381ca1
+            - path: 1.5.8
+              level: 3
+              title: binding-registry-gate-integration
+              byte_offset: 17924
+              byte_count: 757
+              word_count: 98
+              content_hash: e6a1a450fded5353742f16de4169a16939bd37f1425ef6fdc82876482ae0fedd
+        - path: "1.6"
+          level: 2
+          title: Reviewer Unit Breakdown
+          byte_offset: 18681
+          byte_count: 977
+          word_count: 116
+          content_hash: b6acbe2fe37e78ff8adcc120552eb7de719edd7e781d60cd15312a860d451ac8
+        - path: "1.7"
+          level: 2
+          title: Remediation Priorities
+          byte_offset: 19658
+          byte_count: 1703
+          word_count: 203
+          content_hash: f03cdd1a133c42bff96acaf6f5c17a78103eca1f82a81cbcbc2c90b42706e659
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Must fix before any feature transitions to `done`
+              byte_offset: 19685
+              byte_count: 1492
+              word_count: 180
+              content_hash: 1d6c435001a5fa9d3bb580f6a45a64f46ee69bd76a936f7ce15363fed73ff3cd
+            - path: 1.7.2
+              level: 3
+              title: FEAT-01KN58J26CH63 (decomposition-quality-validation)
+              byte_offset: 21177
+              byte_count: 184
+              word_count: 20
+              content_hash: 003dfa43b6e6e7488a5100685d01adabee717ced7ca5676e48d0d0e3664bd26c
+entity_refs:
+    - entity_id: FEAT-01KN58J24S2XW
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1323
+    - entity_id: FEAT-01KN58J257X02
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1397
+    - entity_id: FEAT-01KN58J25K4QD
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1472
+    - entity_id: FEAT-01KN58J2606B0
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1554
+    - entity_id: FEAT-01KN58J26CH63
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1625
+    - entity_id: FEAT-01KN58J26RSB6
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1717
+    - entity_id: FEAT-01KN58J275BWJ
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1796
+    - entity_id: FEAT-01KN58J27H83N
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1871
+    - entity_id: FEAT-01KN58J24S2XW
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 2633
+    - entity_id: FEAT-01KN58J257X02
+      entity_type: feature
+      section_path: 1.4.2
+      byte_offset: 3842
+    - entity_id: FEAT-01KN58J25K4QD
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 5719
+    - entity_id: FEAT-01KN58J2606B0
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 7563
+    - entity_id: FEAT-01KN58J26RSB6
+      entity_type: feature
+      section_path: 1.4.5
+      byte_offset: 9755
+    - entity_id: FEAT-01KN58J275BWJ
+      entity_type: feature
+      section_path: 1.4.6
+      byte_offset: 12016
+    - entity_id: FEAT-01KN58J27H83N
+      entity_type: feature
+      section_path: 1.4.7
+      byte_offset: 13582
+    - entity_id: FEAT-01KN58J26CH63
+      entity_type: feature
+      section_path: 1.7.2
+      byte_offset: 21181
+    - entity_id: P17-workflow-and-tooling-3
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 59
+cross_doc_links:
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.4.2
+    - target_path: work/spec/3.0-mandatory-stage-gates.md
+      link_text: work/spec/3.0-mandatory-stage-gates.md
+      section_path: "1.6"
+    - target_path: work/spec/3.0-tool-description-audit.md
+      link_text: work/spec/3.0-tool-description-audit.md
+      section_path: "1.6"
+    - target_path: work/spec/3.0-stage-aware-context-assembly.md
+      link_text: work/spec/3.0-stage-aware-context-assembly.md
+      section_path: "1.6"
+    - target_path: work/spec/3.0-review-rework-loop.md
+      link_text: work/spec/3.0-review-rework-loop.md
+      section_path: "1.6"
+    - target_path: work/spec/3.0-decomposition-quality-validation.md
+      link_text: work/spec/3.0-decomposition-quality-validation.md
+      section_path: "1.6"
+    - target_path: work/spec/3.0-document-structural-checks.md
+      link_text: work/spec/3.0-document-structural-checks.md
+      section_path: "1.6"
+    - target_path: work/spec/3.0-action-pattern-logging.md
+      link_text: work/spec/3.0-action-pattern-logging.md
+      section_path: "1.6"
+    - target_path: work/spec/3.0-binding-registry-gate-integration.md
+      link_text: work/spec/3.0-binding-registry-gate-integration.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.3
+      role: narrative
+      confidence: high
+    - section_path: 1.5.3
+      role: narrative
+      confidence: high
+classified: false

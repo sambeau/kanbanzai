@@ -1,10 +1,17 @@
 id: FEAT-01KN588PGXATW
 slug: migration-and-backward-compat
 parent: P16-skills-and-roles-3.0
-status: developing
+status: done
+review_cycle: 1
 summary: "File restructuring from current locations (.skills/, .kbz/context/roles/) to new (.kbz/skills/, .kbz/roles/). Backward compatibility during transition. Profile and handoff tool extensions to support both paths. Design §7."
 design: work/design/skills-system-redesign-v2.md
-spec: FEAT-01KN588PGXATW/specification-30-migration
+spec: FEAT-01KN5-88PGXATW/specification-30-migration
 dev_plan: FEAT-01KN588PGXATW/dev-plan-30-migration
 created: "2026-04-01T19:28:01Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "P16 plan review (review-P16-skills-and-roles-3.0.md) served as the aggregate review for all P16 features. Verdict: Pass with findings. All required findings addressed."
+    timestamp: "2026-04-02T03:14:51+01:00"
+    to_status: done

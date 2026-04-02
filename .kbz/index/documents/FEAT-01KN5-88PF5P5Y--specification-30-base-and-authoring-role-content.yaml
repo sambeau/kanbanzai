@@ -1,0 +1,309 @@
+document_id: FEAT-01KN5-88PF5P5Y/specification-30-base-and-authoring-role-content
+document_path: work/spec/3.0-base-and-authoring-role-content.md
+content_hash: 9faf115b9294c6773d96bc35e8790492d1ae97152876207cac50e43e4a26101c
+indexed_at: 2026-04-02T02:12:51.258721Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Base and Authoring Role Content'
+      byte_offset: 0
+      byte_count: 21611
+      word_count: 2950
+      content_hash: 9faf115b9294c6773d96bc35e8790492d1ae97152876207cac50e43e4a26101c
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 261
+          byte_count: 722
+          word_count: 93
+          content_hash: 70bbce6f778adb52ecc518546d2e3b4f31955fbacb3e15b8225e184c2cb10d3f
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 983
+          byte_count: 1205
+          word_count: 163
+          content_hash: 38c63892a69766ff6799e0aa070c4bbaa7022ff8f7fe5ab5a2e6efe66dfff40e
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In Scope
+              byte_offset: 993
+              byte_count: 593
+              word_count: 80
+              content_hash: f9b23a16cba39d8e79e5c0800c9daa620babad75017e93a0498777d4a93a0cdc
+            - path: 1.2.2
+              level: 3
+              title: Explicitly Excluded
+              byte_offset: 1586
+              byte_count: 602
+              word_count: 81
+              content_hash: 99e156a51d7e39ad660e6bc1bef8d7b7f16882a758c3bf7ff64ea71c7ef2530a
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2188
+          byte_count: 13721
+          word_count: 1851
+          content_hash: 83e65d1b655d0a424fb957b8dfa63fb40df402c0388a80a9ae7dac16e0b05d03
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: Common Role Schema'
+              byte_offset: 2216
+              byte_count: 440
+              word_count: 72
+              content_hash: 286e2d0b5fbc2ec154e02cdf78338d93ad858fe180c6a3e1eb1dc1d54e0077ab
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: Base Role — Project Identity'
+              byte_offset: 2656
+              byte_count: 635
+              word_count: 91
+              content_hash: 0db744fe36e63fa9bad10e7fc4add39baa7f68e9b5defaf9232a6c4ba89292af
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: Base Role — Orientation Convention'
+              byte_offset: 3291
+              byte_count: 579
+              word_count: 85
+              content_hash: b6a055a5a8e6ca096002161b41ed3f752171da16e8a31cf212953f3f42463141
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: Base Role — Project-Wide Anti-Patterns'
+              byte_offset: 3870
+              byte_count: 969
+              word_count: 130
+              content_hash: 389a3ed105b6870ef872204d7ac4c31bcefba75265b8d5800f4043fc4e0018b8
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: Base Role — Token Budget'
+              byte_offset: 4839
+              byte_count: 499
+              word_count: 72
+              content_hash: 9e8e9b42b7d37a23f4c60667be280d133e7c9a11566f25bbe3a317428403015d
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: Identity Field Constraints'
+              byte_offset: 5338
+              byte_count: 576
+              word_count: 83
+              content_hash: 9c53cb13f3d1655a727f344d3e2eeae33f25b77d42568a5be80ede8f32905798
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: Vocabulary Field Constraints'
+              byte_offset: 5914
+              byte_count: 657
+              word_count: 104
+              content_hash: 5994137f70e73d88e3846b631cb2ee50133d66c666e0f37adbcb21f068077ec8
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008: Anti-Pattern Field Structure'
+              byte_offset: 6571
+              byte_count: 785
+              word_count: 116
+              content_hash: c98ba8beaf5daad60493119c2f362fcdb6e677e6ba94ab0295253ce0714a57d1
+            - path: 1.3.9
+              level: 3
+              title: 'FR-009: Architect Role Content'
+              byte_offset: 7356
+              byte_count: 1003
+              word_count: 126
+              content_hash: aec5f6c17eb057ce8ba18effb1eaab2f88bf13ffcae8326d0dc948417362a935
+            - path: 1.3.10
+              level: 3
+              title: 'FR-010: Spec-Author Role Content'
+              byte_offset: 8359
+              byte_count: 894
+              word_count: 111
+              content_hash: bd960a0fb4ec857a82c7c28a8ec1534e7d5bb4283733c08bce65ea098088a16c
+            - path: 1.3.11
+              level: 3
+              title: 'FR-011: Implementer and Implementer-Go Role Content'
+              byte_offset: 9253
+              byte_count: 1255
+              word_count: 163
+              content_hash: 194caaac3ddc725b86485d43e3e8a13594670d079d977fde662402525c410b28
+            - path: 1.3.12
+              level: 3
+              title: 'FR-012: Researcher Role Content'
+              byte_offset: 10508
+              byte_count: 784
+              word_count: 103
+              content_hash: 4b3b9c27fad321d1966a0d332ed1d8c4234bbaae81d20704b46ce76d8ff22491
+            - path: 1.3.13
+              level: 3
+              title: 'FR-013: Documenter Role Content'
+              byte_offset: 11292
+              byte_count: 837
+              word_count: 108
+              content_hash: dbb4137a455ae6a0e720e0ab095702647d579b68afebb065d2dbd29ab819e069
+            - path: 1.3.14
+              level: 3
+              title: 'FR-014: Orchestrator Role Content'
+              byte_offset: 12129
+              byte_count: 1260
+              word_count: 162
+              content_hash: 35ddb6264e598ab42179f98bf4fc6f23f78baf164e1891791050c0e360bc5c10
+            - path: 1.3.15
+              level: 3
+              title: 'FR-015: Orchestrator Anti-Patterns'
+              byte_offset: 13389
+              byte_count: 1151
+              word_count: 135
+              content_hash: 7e02e4e360da02930de509d8ea9b5346c4387903d356527efd50bdd4b4c95efd
+            - path: 1.3.16
+              level: 3
+              title: 'FR-016: Orchestrator Hard Constraints'
+              byte_offset: 14540
+              byte_count: 805
+              word_count: 116
+              content_hash: 465aad44d90c763c5d92d0cec23cf86981ad027f354aa7e00463fd60e8fe93ca
+            - path: 1.3.17
+              level: 3
+              title: 'FR-017: Orchestrator Stage Associations'
+              byte_offset: 15345
+              byte_count: 564
+              word_count: 71
+              content_hash: 55fa90729e857bea0fe313f06b112a550fc95125f3edfe9a4bbebe9309fd5ab9
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 15909
+          byte_count: 2712
+          word_count: 396
+          content_hash: ff8675e9f852d9b1909202252e2a91fa04035de23e4e1db7eb6bdff7e525f149
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: Novelty Test Compliance'
+              byte_offset: 15941
+              byte_count: 584
+              word_count: 86
+              content_hash: e4cfc7d21567f2b9b42c77ca2328a3d1bd5f59df424abde56c4c5e6f498e486e
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: Tone and Explanatory Style'
+              byte_offset: 16525
+              byte_count: 470
+              word_count: 67
+              content_hash: 2d8dce5b142d59b0a466f154cf9948c5520b91271879cc1a475696b8f7c187c2
+            - path: 1.4.3
+              level: 3
+              title: 'NFR-003: Terminology Consistency'
+              byte_offset: 16995
+              byte_count: 538
+              word_count: 81
+              content_hash: e677ce965955665a322769b12267d736c7ce72779c1dc8640992bd73c112a494
+            - path: 1.4.4
+              level: 3
+              title: 'NFR-004: Lean Content'
+              byte_offset: 17533
+              byte_count: 572
+              word_count: 86
+              content_hash: ef238b92e14a339af272b479de007c3d9912d8ebb1a060df5698dc5b88238f89
+            - path: 1.4.5
+              level: 3
+              title: 'NFR-005: No Implementation Leakage'
+              byte_offset: 18105
+              byte_count: 516
+              word_count: 73
+              content_hash: e73d981d958cd61d3e6cb86af9c5b0f6208af05ed58aec39eb942655a5ba41df
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 18621
+          byte_count: 1106
+          word_count: 157
+          content_hash: 1a141778d7c16896e3625c0baeeee12518f61696434120cb337f70b866b0be12
+        - path: "1.6"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 19727
+          byte_count: 1884
+          word_count: 258
+          content_hash: 50ca8262313b6b060bc57c018dfb1f4d0264e74d4ae450eb667d9cefbae4cf3a
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 19760
+              byte_count: 826
+              word_count: 103
+              content_hash: 45cce9079dfe971a10a06a05c502c92d1e339c6e8a67a2692666a080172c2d6b
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 20586
+              byte_count: 1025
+              word_count: 151
+              content_hash: cd712d66d85bd8249cfc0d126a569ad24adfb9cb8fa87d71aac70a953265d778
+entity_refs:
+    - entity_id: FEAT-01KN588PF5P5Y
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 102
+    - entity_id: FEAT-01KN588PCVN4Y
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 1699
+    - entity_id: FEAT-01KN588PE43M6
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 1831
+    - entity_id: FEAT-01KN588PDPE8V
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 2080
+    - entity_id: FEAT-01KN588PCVN4Y
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 19803
+    - entity_id: FEAT-01KN588PDPE8V
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 20113
+    - entity_id: FEAT-01KN588PE43M6
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 20328
+cross_doc_links:
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.6
+      role: constraint
+      confidence: high
+    - section_path: 1.3.7
+      role: constraint
+      confidence: high
+    - section_path: 1.3.16
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

@@ -1,0 +1,331 @@
+document_id: FEAT-01KN5-88PGXATW/specification-30-migration
+document_path: work/spec/3.0-migration.md
+content_hash: 4b28f42a75fbf8664574c26788389c9f5eb87654c6003397e94c2cdea6916449
+indexed_at: 2026-04-02T02:12:51.938265Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Migration and Backward Compatibility'
+      byte_offset: 0
+      byte_count: 23540
+      word_count: 3143
+      content_hash: 4b28f42a75fbf8664574c26788389c9f5eb87654c6003397e94c2cdea6916449
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 466
+          byte_count: 707
+          word_count: 93
+          content_hash: 5a7e5879522eb7cab5745ad76cee36fa9bb5b507912872ffa502100df4cdad55
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 1173
+          byte_count: 1692
+          word_count: 208
+          content_hash: 5f02025bc75254b3b190090b0841f3693f4beb377ce2fea7a779acd9a6faa4c5
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 In Scope
+              byte_offset: 1186
+              byte_count: 916
+              word_count: 99
+              content_hash: 047c0f34cf125c7f92885e69f9e726f2637ff02537cb3dff28ab0b0c0bce497f
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Explicitly Excluded
+              byte_offset: 2102
+              byte_count: 763
+              word_count: 106
+              content_hash: e578d5047ab776e56fbddc7963bea8e0f0403666b6d6b32aef48141eca1f7ae8
+        - path: "1.3"
+          level: 2
+          title: 3. Functional Requirements
+          byte_offset: 2865
+          byte_count: 14326
+          word_count: 1928
+          content_hash: 6d849b840737ddf3c87d825628f2bcbbf32e25992f82f90e6f85425835522eed
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: Role Directory Relocation'
+              byte_offset: 2896
+              byte_count: 587
+              word_count: 84
+              content_hash: da0bfe845ce84e71636d1e0ef660a37a6f9773fe6f5e543cb6a6a6eb025f6f6e
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: Base Role Restructuring'
+              byte_offset: 3483
+              byte_count: 1009
+              word_count: 144
+              content_hash: 6d0f5f903c640cd762d592510040ec9123fb61aa8de511990a772b14d769bd25
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: Developer Role Rename and Restructure'
+              byte_offset: 4492
+              byte_count: 907
+              word_count: 111
+              content_hash: 284fd0bbf233c3c04f1a4396b7a9ace46d6776bbf46c053c97bc2d05b1c9d5af
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: Reviewer Role Split'
+              byte_offset: 5399
+              byte_count: 1162
+              word_count: 134
+              content_hash: 8797eb40462573624682635d305ece860705182c020845ea37fa9acc3a0935b0
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: Code Review Skill Split'
+              byte_offset: 6561
+              byte_count: 1167
+              word_count: 136
+              content_hash: ac5f1db300d20823707149de312e25d4d7ac2bb1374162ee4c59618ad173e8d0
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: Plan Review Skill Restructure'
+              byte_offset: 7728
+              byte_count: 921
+              word_count: 114
+              content_hash: 0dc2a6a66cb0f78f0c4f08c70b5895ef866e11ad3296fb64f6a9111e023a9721
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: Document Creation Skill Split by Type'
+              byte_offset: 8649
+              byte_count: 947
+              word_count: 117
+              content_hash: c56cc6bd9b425e10396223246a0cc7bc05d7400e9f746bcc15bcf6d6ffdffadb
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008: New File — Stage Bindings'
+              byte_offset: 9596
+              byte_count: 786
+              word_count: 107
+              content_hash: 8b04f8ad6758afd3e5a611e55825fd80d893c6b64fdefd95cb7ac066ebe3d753
+            - path: 1.3.9
+              level: 3
+              title: 'FR-009: New Content — Vocabulary Fields'
+              byte_offset: 10382
+              byte_count: 781
+              word_count: 125
+              content_hash: 8969f60d7adceafa6d0de0d2c28a5ad7df0f0e7e334524604389a168c8556ab0
+            - path: 1.3.10
+              level: 3
+              title: 'FR-010: New Content — Anti-Pattern Sections'
+              byte_offset: 11163
+              byte_count: 936
+              word_count: 134
+              content_hash: cdfc31ad6ae23dcfe5ef3e70373d4470781c878e0192d461425b2275b08c4c59
+            - path: 1.3.11
+              level: 3
+              title: 'FR-011: Backward Compatibility — Old Skills Directory Retention'
+              byte_offset: 12099
+              byte_count: 830
+              word_count: 108
+              content_hash: c3cd4717af5965988f2bc8936b9d5f05c94947b6cac408bcaf9e6b06b33a4823
+            - path: 1.3.12
+              level: 3
+              title: 'FR-012: Backward Compatibility — Profile Tool Extension'
+              byte_offset: 12929
+              byte_count: 954
+              word_count: 137
+              content_hash: 2d5c26812ebfaea16489f5de8011ca23c290e385eb6d36ab2d74406f45eb61ec
+            - path: 1.3.13
+              level: 3
+              title: 'FR-013: Backward Compatibility — Handoff Tool Extension'
+              byte_offset: 13883
+              byte_count: 844
+              word_count: 127
+              content_hash: 99e47e59b128ce50422d9624050cb9dbe0dd4097b830f02efe2a8ab04e69b37e
+            - path: 1.3.14
+              level: 3
+              title: 'FR-014: Unchanged Subsystems'
+              byte_offset: 14727
+              byte_count: 1466
+              word_count: 201
+              content_hash: 4a93de40796c8f7c54c925a561c2c791956eb76ec69087b0ebc14bdcabf315a2
+            - path: 1.3.15
+              level: 3
+              title: 'FR-015: Retirement of Old Files'
+              byte_offset: 16193
+              byte_count: 998
+              word_count: 145
+              content_hash: c2bf5fe63c316669ff69ae252d824eab7395490ec2666182a0070450afd39506
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Functional Requirements
+          byte_offset: 17191
+          byte_count: 2491
+          word_count: 353
+          content_hash: 001a5a3fc7a0d5a78229cbcbad322364bde31b98a1dfde99ce61f9ee368af982
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 19682
+          byte_count: 1253
+          word_count: 165
+          content_hash: 84dd1c1635fe529966d32311ca759eeaa7eea8caefb32ee44e7df98f381161f8
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 20935
+          byte_count: 2605
+          word_count: 365
+          content_hash: bbf6d6e3ec442ddd82e5780ba34234064c011162ce53f4332893644f3047089e
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 20971
+              byte_count: 1269
+              word_count: 185
+              content_hash: 79c23d7364dac6dc2afef0f62a4c816606cf27299e03fc2122fae7ee601d283f
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 22240
+              byte_count: 1300
+              word_count: 175
+              content_hash: f1c7ef5db2faef086f61ee4746f763bf9361046d2f8ff13cb94d6728924a32e2
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 310
+cross_doc_links:
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.2.1
+    - target_path: review-code/SKILL.md
+      link_text: review-code/SKILL.md
+      section_path: 1.2.1
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.2.1
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.2.1
+    - target_path: review-plan/SKILL.md
+      link_text: review-plan/SKILL.md
+      section_path: 1.2.1
+    - target_path: .skills/document-creation.md
+      link_text: .skills/document-creation.md
+      section_path: 1.2.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.3.5
+    - target_path: .kbz/skills/review-code/SKILL.md
+      link_text: .kbz/skills/review-code/SKILL.md
+      section_path: 1.3.5
+    - target_path: .kbz/skills/orchestrate-review/SKILL.md
+      link_text: .kbz/skills/orchestrate-review/SKILL.md
+      section_path: 1.3.5
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.3.6
+    - target_path: .kbz/skills/review-plan/SKILL.md
+      link_text: .kbz/skills/review-plan/SKILL.md
+      section_path: 1.3.6
+    - target_path: .skills/document-creation.md
+      link_text: .skills/document-creation.md
+      section_path: 1.3.7
+    - target_path: write-design/SKILL.md
+      link_text: write-design/SKILL.md
+      section_path: 1.3.7
+    - target_path: write-spec/SKILL.md
+      link_text: write-spec/SKILL.md
+      section_path: 1.3.7
+    - target_path: write-dev-plan/SKILL.md
+      link_text: write-dev-plan/SKILL.md
+      section_path: 1.3.7
+    - target_path: write-research/SKILL.md
+      link_text: write-research/SKILL.md
+      section_path: 1.3.7
+    - target_path: update-docs/SKILL.md
+      link_text: update-docs/SKILL.md
+      section_path: 1.3.7
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.3.7
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.3.9
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.3.10
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.3.11
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.3.11
+    - target_path: .skills/document-creation.md
+      link_text: .skills/document-creation.md
+      section_path: 1.3.11
+    - target_path: code-review.md
+      link_text: code-review.md
+      section_path: 1.3.15
+    - target_path: plan-review.md
+      link_text: plan-review.md
+      section_path: 1.3.15
+    - target_path: document-creation.md
+      link_text: document-creation.md
+      section_path: 1.3.15
+    - target_path: .skills/README.md
+      link_text: .skills/README.md
+      section_path: 1.3.15
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.4"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.4"
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: "1.4"
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: "1.5"
+    - target_path: code-review.md
+      link_text: code-review.md
+      section_path: 1.6.2
+    - target_path: plan-review.md
+      link_text: plan-review.md
+      section_path: 1.6.2
+    - target_path: document-creation.md
+      link_text: document-creation.md
+      section_path: 1.6.2
+    - target_path: .skills/README.md
+      link_text: .skills/README.md
+      section_path: 1.6.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

@@ -1,0 +1,198 @@
+document_id: FEAT-01KN5-8J27H83N/dev-plan-30-binding-registry-gate-integration
+document_path: work/plan/3.0-binding-registry-gate-integration.md
+content_hash: c50563100ca2d589c4f41207b26e6cae17a170512593e2aeed025c1c015ea600
+indexed_at: 2026-04-02T01:30:14.002524Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Binding Registry Gate Integration'
+      byte_offset: 0
+      byte_count: 34304
+      word_count: 4399
+      content_hash: c50563100ca2d589c4f41207b26e6cae17a170512593e2aeed025c1c015ea600
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 317
+          byte_count: 2004
+          word_count: 235
+          content_hash: 4fa033437465362c5d8e236e0841d55f229ab2631402735c3d2bbd5662e6ebd1
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Scope boundaries (from specification)
+              byte_offset: 912
+              byte_count: 593
+              word_count: 68
+              content_hash: 58f6737d1062008d8e9e159f0cffab2d4f57ac88e477a990504bdc8a96489275
+            - path: 1.1.2
+              level: 3
+              title: Dependencies
+              byte_offset: 1505
+              byte_count: 816
+              word_count: 89
+              content_hash: bc059a881d6f673e59b2a6de0a8c66090cb3275c62c929a170384094b4ddb593
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 2321
+          byte_count: 25258
+          word_count: 3147
+          content_hash: f9c6868546e34a3b1f4bd97742d6adcfbd61cc5f2e7cd54379a347b0cef0371c
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Registry cache with mtime-based invalidation'
+              byte_offset: 2340
+              byte_count: 4169
+              word_count: 585
+              content_hash: 5496651ea3ce2892665e7a0dcf6ddd0df645af3fc810824aef3e789fafd5aa67
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Prerequisite evaluator framework with type dispatch'
+              byte_offset: 6509
+              byte_count: 3116
+              word_count: 392
+              content_hash: 3e36f303c3ce93f1a0f7377167d75636cec76e195ab4a62b37027e007e05169c
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Document and task prerequisite evaluators'
+              byte_offset: 9625
+              byte_count: 3311
+              word_count: 388
+              content_hash: 1bd4b91fb47b50147f4aad4de9cced9da5c98167e4c66a7a52eb8fd9785826d8
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Gate source router with hardcoded fallback'
+              byte_offset: 12936
+              byte_count: 4078
+              word_count: 531
+              content_hash: 845fc5efd46eb3a97d9e1cab165772bd37879715c2e74b22bddfa824151d76a1
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Checkpoint override policy integration'
+              byte_offset: 17014
+              byte_count: 4030
+              word_count: 460
+              content_hash: 54d79fa8b6abfe5b691c38bad70978ce0fd6be1b4fc8ce67df4557e251a51abe
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: Wire gate router into transition handler and advance mode'
+              byte_offset: 21044
+              byte_count: 4374
+              word_count: 516
+              content_hash: 44cdb946ba71739552678fe1302687e974925f2c9cdbd74e9a909cfcb33888d3
+            - path: 1.2.7
+              level: 3
+              title: 'Task 7: Health reporting and end-to-end integration tests'
+              byte_offset: 25418
+              byte_count: 2161
+              word_count: 272
+              content_hash: 36dd20c63ffeca320e0866a5c1afecfd25bda06a9862be31ca58f852827a68b1
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 27579
+          byte_count: 1789
+          word_count: 268
+          content_hash: 99a5e7d1dabdabd9d7353d4e2353cec7ebe402ad97aadb958788e2f57616a152
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 29368
+          byte_count: 3039
+          word_count: 406
+          content_hash: 5ceb6691caab60122bfa3a486ff6aca346b025761225e514384e3b96b57c47d4
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Contract A: Registry cache API (Task 1 → Tasks 2, 4, 6)'
+              byte_offset: 29392
+              byte_count: 355
+              word_count: 52
+              content_hash: 007d0f07cbd80909724f9c4ca2ce986e5af62e002fc12657ecda750c7727b7df
+            - path: 1.4.2
+              level: 3
+              title: 'Contract B: Evaluator framework (Task 2 → Tasks 3, 4)'
+              byte_offset: 29747
+              byte_count: 285
+              word_count: 40
+              content_hash: c57313096bd2df81c4ff0d1588b34274af4e8161525488c46b66d0be2d847b98
+            - path: 1.4.3
+              level: 3
+              title: 'Contract C: Gate router API (Task 4 → Tasks 5, 6, 7)'
+              byte_offset: 30032
+              byte_count: 331
+              word_count: 52
+              content_hash: 28e2ba0af9200c18531b9fe2e89af2aab2a9e929a1a1655627b083b5f1e4613a
+            - path: 1.4.4
+              level: 3
+              title: 'Contract D: Checkpoint override API (Task 5 → Task 6)'
+              byte_offset: 30363
+              byte_count: 291
+              word_count: 39
+              content_hash: ceb0ba4bf4cde3a257e9c89ba6ac55a82643c219689a242ee92b9c657b796226
+            - path: 1.4.5
+              level: 3
+              title: 'Contract E: Gate checker function types (Task 6 → service layer)'
+              byte_offset: 30654
+              byte_count: 412
+              word_count: 56
+              content_hash: 3f47fec5dadfe48ace83ca102c4bb5ff84964e4d44f30931f6dd58a45bd4bb71
+            - path: 1.4.6
+              level: 3
+              title: 'Cross-feature contract: GateResult'
+              byte_offset: 31066
+              byte_count: 383
+              word_count: 54
+              content_hash: 87db9daf8c8a5f9a254bc6856db82fa65cdb3f6f1d0e498a886aab74e67e0cf1
+            - path: 1.4.7
+              level: 3
+              title: 'Cross-feature contract: OverrideRecord'
+              byte_offset: 31449
+              byte_count: 278
+              word_count: 33
+              content_hash: 9da568cff6bd54f20c4f2cc3745e9d197d98cb7d8c77533ff671231acc43f03b
+            - path: 1.4.8
+              level: 3
+              title: 'Cross-feature contract: Prerequisites schema'
+              byte_offset: 31727
+              byte_count: 680
+              word_count: 77
+              content_hash: c59974c0bd96e02fe3a50bed9d281994f108ebb40f7d741947fd2404802c1f43
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 32407
+          byte_count: 1897
+          word_count: 321
+          content_hash: 6a63d75c07b45644e2517e314a1cea6dd5357d714a46883e9607ebeb809331ee
+entity_refs:
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 71
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: 1.1.1
+      byte_offset: 1319
+    - entity_id: FEAT-01KN5
+      entity_type: feature
+      section_path: 1.1.2
+      byte_offset: 1545
+cross_doc_links:
+    - target_path: work/spec/3.0-binding-registry-gate-integration.md
+      link_text: work/spec/3.0-binding-registry-gate-integration.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.1.1
+      role: constraint
+      confidence: high
+classified: false

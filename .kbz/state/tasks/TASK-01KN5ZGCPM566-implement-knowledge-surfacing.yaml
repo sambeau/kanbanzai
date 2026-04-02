@@ -1,0 +1,8 @@
+id: TASK-01KN5ZGCPM566
+parent_feature: FEAT-01KN588PEF817
+slug: implement-knowledge-surfacing
+summary: "Implement knowledge auto-surfacing: surfacer.go (file path, tag, always matching), cap_tracker.go, and pipeline position 8 wiring. Work was completed under tasks from adjacent features during P16 development."
+status: done
+completed: "2026-04-02T02:14:27Z"
+completion_summary: "Retroactive task closure: implementation of knowledge auto-surfacing (surfacer.go, cap_tracker.go, pipeline wiring at position 8) was completed during P16 development under other features' tasks. All implementation verified as correct by the P16 plan review."
+verification: "P16 plan review confirmed: surfacer.go matchesFilePath/matchesTags/matchesAlways correct; cap_tracker.go CapTracker+capSaturationHealthChecker working; position 8 in assembled context verified; 10-entry cap enforced."

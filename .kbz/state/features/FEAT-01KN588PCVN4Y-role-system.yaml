@@ -1,10 +1,17 @@
 id: FEAT-01KN588PCVN4Y
 slug: role-system
 parent: P16-skills-and-roles-3.0
-status: developing
+status: done
+review_cycle: 1
 summary: "YAML schema for roles with vocabulary, anti_patterns, tools, identity, and inherits fields. Extend inheritance resolution to merge vocabulary and anti-pattern lists. Storage in .kbz/roles/. Extends internal/context/ package. Design §3.1, §4."
 design: work/design/skills-system-redesign-v2.md
-spec: FEAT-01KN588PCVN4Y/specification-30-role-system
+spec: FEAT-01KN5-88PCVN4Y/specification-30-role-system
 dev_plan: FEAT-01KN588PCVN4Y/dev-plan-30-role-system
 created: "2026-04-01T19:28:00Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "P16 plan review (review-P16-skills-and-roles-3.0.md) served as the aggregate review for all P16 features. Verdict: Pass with findings. All required findings addressed."
+    timestamp: "2026-04-02T03:14:38+01:00"
+    to_status: done

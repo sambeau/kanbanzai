@@ -1,10 +1,17 @@
 id: FEAT-01KN588PDBW85
 slug: skill-system
 parent: P16-skills-and-roles-3.0
-status: developing
+status: done
+review_cycle: 1
 summary: "SKILL.md format with attention-curve section ordering. Frontmatter schema (name, description.expert/natural, triggers, roles, stage, constraint_level). Directory structure .kbz/skills/*/SKILL.md with references/ and scripts/ subdirectories. Skill loader. Design §3.2, §5."
 design: work/design/skills-system-redesign-v2.md
-spec: FEAT-01KN588PDBW85/specification-30-skill-system
+spec: FEAT-01KN5-88PDBW85/specification-30-skill-system
 dev_plan: FEAT-01KN588PDBW85/dev-plan-30-skill-system
 created: "2026-04-01T19:28:00Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "P16 plan review (review-P16-skills-and-roles-3.0.md) served as the aggregate review for all P16 features. Verdict: Pass with findings. All required findings addressed."
+    timestamp: "2026-04-02T03:14:39+01:00"
+    to_status: done
