@@ -14,12 +14,14 @@
 package mcp
 
 import (
+	"fmt"
 	"regexp"
 	"sort"
 	"strings"
 
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/stage"
 )
 
 // boldIdentifierRe matches lines of the form **XX-NN.** <text>
@@ -98,6 +100,12 @@ type assembledContext struct {
 	byteUsage          int
 	byteBudget         int
 	trimmed            []asmTrimmedEntry
+	stageAware           bool   // true when stage-aware assembly succeeded
+	featureStage         string // the resolved stage
+	orchestrationText    string // rendered orchestration section (FR-006)
+	effortBudgetText     string // rendered effort budget section (FR-007)
+	toolSubsetText       string // rendered tool subset section (FR-008)
+	outputConventionText string // rendered output convention (FR-009), empty for single-agent
 	// experimentNudge lists active workflow-experiment decisions for agents to
 	// reference when they encounter friction or success related to an experiment.
 	// Not a knowledge entry; does not count against tier-3 budget (spec §8.4).
@@ -120,6 +128,7 @@ type asmInput struct {
 	intelligenceSvc *service.IntelligenceService
 	docRecordSvc    *service.DocumentService
 	entitySvc       *service.EntityService
+	featureStage    string // resolved feature lifecycle stage; empty = non-stage-aware
 }
 
 // assembleContext gathers spec sections, acceptance criteria, knowledge,
@@ -131,6 +140,35 @@ type asmInput struct {
 func assembleContext(input asmInput) assembledContext {
 	var actx assembledContext
 	actx.byteBudget = assemblyDefaultBudget
+
+	// Stage-aware context assembly (3.0).
+	if input.featureStage != "" {
+		if cfg, ok := stage.ForStage(input.featureStage); ok {
+			actx.stageAware = true
+			actx.featureStage = input.featureStage
+
+			// Orchestration pattern (FR-006).
+			if cfg.Orchestration == stage.SingleAgent {
+				actx.orchestrationText = "## Orchestration\n\nThis is a **single-agent** task. Complete it directly \u2014 do not delegate to sub-agents."
+			} else {
+				actx.orchestrationText = "## Orchestration\n\nThis is a **multi-agent** task. Dispatch independent sub-tasks to sub-agents\nin parallel using handoff + spawn_agent."
+			}
+
+			// Effort expectations (FR-007).
+			actx.effortBudgetText = fmt.Sprintf("## Effort Expectations\n\nThis is a **%s** task.\nExpected effort: %s\n\n%s",
+				input.featureStage, cfg.EffortBudget.Text, cfg.EffortBudget.Warning)
+
+			// Tool subset guidance (FR-008).
+			actx.toolSubsetText = fmt.Sprintf("## Tools for This Task\n\nPrimary tools: %s\nDo NOT use: %s (these are for other stages)",
+				strings.Join(cfg.PrimaryTools, ", "), strings.Join(cfg.ExcludedTools, ", "))
+
+			// Output convention (FR-009) — only for orchestrator-workers stages.
+			if cfg.OutputConvention {
+				actx.outputConventionText = "## Output Convention\n\nSub-agents write outputs to documents and task records. Read their status via\n`entity(action: \"get\")` and `doc(action: \"get\")`. Do not retain sub-agent\nconversation output in your context \u2014 use references (document IDs, task IDs,\nstatus summaries) instead of contents."
+			}
+		}
+	}
+
 
 	// Role profile conventions.
 	if input.profileStore != nil && input.role != "" {

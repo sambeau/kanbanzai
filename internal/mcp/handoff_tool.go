@@ -30,6 +30,7 @@ import (
 	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/stage"
 )
 
 // commitStateFunc is the function called by the handoff handler to commit any
@@ -189,9 +190,18 @@ func handoffTool(
 
 		// ── Legacy 2.0 assembly fallback ───────────────────────────────────
 
+
+		// Stage-aware lifecycle validation (FR-001).
+		featureStage, valErr := ValidateFeatureStage(parentFeature, entitySvc)
+		if valErr != nil {
+			return mcp.NewToolResultText(handoffErrorJSON("stage_validation",
+				fmt.Sprintf("Cannot assemble context for task %s: %v", task.ID, valErr))), nil
+		}
+
 		actx := assembleContext(asmInput{
 			taskState:       task.State,
 			parentFeature:   parentFeature,
+			featureStage:    featureStage,
 			role:            role,
 			profileStore:    profileStore,
 			knowledgeSvc:    knowledgeSvc,
@@ -327,6 +337,8 @@ func buildLegacyResponse(task service.GetResult, actx assembledContext, prompt s
 		"prompt":     prompt,
 		"context_metadata": map[string]any{
 			"assembly_path":              "legacy-2.0",
+			"stage_aware":    actx.stageAware,
+			"feature_stage":  actx.featureStage,
 			"spec_sections_included":     len(actx.specSections),
 			"knowledge_entries_included": len(actx.knowledge),
 			"byte_usage":                 actx.byteUsage,
@@ -350,11 +362,39 @@ func renderHandoffPrompt(taskState map[string]any, actx assembledContext, instru
 	taskID, _ := taskState["id"].(string)
 	summary, _ := taskState["summary"].(string)
 
-	// Title and summary.
+	// 1. Conventions (role profile + commit format) — high attention zone.
+	sb.WriteString("### Conventions\n\n")
+	for _, c := range actx.constraints {
+		fmt.Fprintf(&sb, "- %s\n", c)
+	}
+	if taskID != "" {
+		fmt.Fprintf(&sb, "- Commit format: feat(%s): <description>\n", taskID)
+	}
+	sb.WriteString("\n")
+
+	// 2. Stage-aware sections (FR-006, FR-007, FR-008, FR-009).
+	if actx.orchestrationText != "" {
+		sb.WriteString(actx.orchestrationText)
+		sb.WriteString("\n\n")
+	}
+	if actx.effortBudgetText != "" {
+		sb.WriteString(actx.effortBudgetText)
+		sb.WriteString("\n\n")
+	}
+	if actx.toolSubsetText != "" {
+		sb.WriteString(actx.toolSubsetText)
+		sb.WriteString("\n\n")
+	}
+	if actx.outputConventionText != "" {
+		sb.WriteString(actx.outputConventionText)
+		sb.WriteString("\n\n")
+	}
+
+	// 3. Title and summary.
 	fmt.Fprintf(&sb, "## Task: %s\n\n", summary)
 	fmt.Fprintf(&sb, "### Summary\n\n%s\n\n", summary)
 
-	// Specification sections from doc intelligence.
+	// 4. Specification sections from doc intelligence.
 	for _, s := range actx.specSections {
 		ref := s.document
 		if s.section != "" {
@@ -369,9 +409,7 @@ func renderHandoffPrompt(taskState map[string]any, actx assembledContext, instru
 		fmt.Fprintf(&sb, "### Specification\n\nRefer to: %s\n\n", actx.specFallbackPath)
 	}
 
-	// Acceptance criteria extracted from spec sections (spec §13.5, G.2).
-	// Populated by asmExtractCriteria from sections whose title contains
-	// "acceptance"/"criteria"/"requirement", or whose items contain MUST/SHALL.
+	// 5. Acceptance criteria.
 	if len(actx.acceptanceCriteria) > 0 {
 		sb.WriteString("### Acceptance Criteria\n\n")
 		for _, ac := range actx.acceptanceCriteria {
@@ -380,7 +418,7 @@ func renderHandoffPrompt(taskState map[string]any, actx assembledContext, instru
 		sb.WriteString("\n")
 	}
 
-	// Knowledge constraints.
+	// 6. Knowledge constraints.
 	if len(actx.knowledge) > 0 {
 		sb.WriteString("### Known Constraints (from knowledge base)\n\n")
 		for _, ke := range actx.knowledge {
@@ -389,30 +427,24 @@ func renderHandoffPrompt(taskState map[string]any, actx assembledContext, instru
 		sb.WriteString("\n")
 	}
 
-	// File paths.
-	filePaths := make([]string, 0, len(actx.filesContext))
-	for _, f := range actx.filesContext {
-		filePaths = append(filePaths, f.path)
-	}
-	if len(filePaths) > 0 {
-		sb.WriteString("### Files\n\n")
-		for _, f := range filePaths {
-			fmt.Fprintf(&sb, "- %s\n", f)
+	// 7. File paths — excluded for designing/specifying stages per FR-005.
+	if len(actx.filesContext) > 0 {
+		includeFiles := true
+		if actx.stageAware {
+			if cfg, ok := stage.ForStage(actx.featureStage); ok && !cfg.IncludeFilePaths {
+				includeFiles = false
+			}
 		}
-		sb.WriteString("\n")
+		if includeFiles {
+			sb.WriteString("### Files\n\n")
+			for _, f := range actx.filesContext {
+				fmt.Fprintf(&sb, "- %s\n", f.path)
+			}
+			sb.WriteString("\n")
+		}
 	}
 
-	// Conventions (role profile + always-present commit format).
-	sb.WriteString("### Conventions\n\n")
-	for _, c := range actx.constraints {
-		fmt.Fprintf(&sb, "- %s\n", c)
-	}
-	if taskID != "" {
-		fmt.Fprintf(&sb, "- Commit format: feat(%s): <description>\n", taskID)
-	}
-	sb.WriteString("\n")
-
-	// Active workflow experiments (Phase 3 context nudge, spec §8.4).
+	// 8. Active workflow experiments.
 	if len(actx.experimentNudge) > 0 {
 		sb.WriteString("### Active Workflow Experiments\n\n")
 		sb.WriteString("The following workflow experiments are active. If you encounter friction or success related to any of these, reference the decision ID in your retrospective signal's `related_decision` field.\n\n")
@@ -422,7 +454,7 @@ func renderHandoffPrompt(taskState map[string]any, actx assembledContext, instru
 		sb.WriteString("\n")
 	}
 
-	// Additional orchestrator instructions.
+	// 9. Additional orchestrator instructions.
 	if instructions != "" {
 		fmt.Fprintf(&sb, "### Additional Instructions\n\n%s\n\n", instructions)
 	}

@@ -53,6 +53,15 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 		t.Fatalf("CreateFeature: %v", err)
 	}
 
+	// Advance feature to a working state so stage validation passes.
+	for _, fStatus := range []string{"designing", "specifying", "dev-planning", "developing"} {
+		if _, err := entitySvc.UpdateStatus(service.UpdateStatusInput{
+			Type: "feature", ID: feat.ID, Slug: "e2e-feature", Status: fStatus,
+		}); err != nil {
+			t.Fatalf("advance feature to %s: %v", fStatus, err)
+		}
+	}
+
 	taskResult, err := entitySvc.CreateTask(service.CreateTaskInput{
 		ParentFeature: feat.ID,
 		Slug:          "e2e-task",
