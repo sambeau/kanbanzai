@@ -44,15 +44,3 @@ anti_patterns:
     detect: "Reviewing only the changed code without examining the trust boundary it crosses"
     because: "Most vulnerabilities live at boundaries (user→server, service→service, internal→external) not in interior logic"
     resolve: "Trace each input from its trust boundary through to its final use"
-
-tools:
-  - entity
-  - doc_intel
-  - knowledge
-  - status
-  - read_file
-  - grep
-  - search_graph
-  - get_code_snippet
-  - trace_call_path
-  - query_graph

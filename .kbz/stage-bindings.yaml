@@ -24,6 +24,7 @@ stage_bindings:
     human_gate: true
     document_type: specification
     effort_budget: "5-15 tool calls"
+    notes: "Human gate enforces that the spec author's requirements are reviewed and approved before implementation begins. A spec-author role (not architect) is used to keep the language precise and acceptance-criteria focused."
     prerequisites:
       documents:
         - type: design
@@ -45,6 +46,7 @@ stage_bindings:
     human_gate: true
     document_type: dev-plan
     effort_budget: "5-10 tool calls"
+    notes: "Human gate ensures the task decomposition and dependency graph are reviewed before parallel implementation work begins. Architect role owns the plan because it requires systems-level judgment about interface contracts and sequencing."
     prerequisites:
       documents:
         - type: specification
@@ -89,7 +91,13 @@ stage_bindings:
       tasks:
         all_terminal: true
     sub_agents:
-      roles: [reviewer-conformance, reviewer-quality, reviewer-security, reviewer-testing]
+      roles:
+        [
+          reviewer-conformance,
+          reviewer-quality,
+          reviewer-security,
+          reviewer-testing,
+        ]
       skills: [review-code]
       topology: parallel
       max_agents: 4
@@ -103,6 +111,7 @@ stage_bindings:
     human_gate: true
     document_type: report
     effort_budget: "5-10 tool calls"
+    notes: "Conformance reviewer is authoritative on spec-to-implementation mapping at the plan level. Human gate ensures the aggregate delivery review is approved before the plan is closed."
 
   researching:
     description: "Producing a research report or analysis"
@@ -112,6 +121,7 @@ stage_bindings:
     human_gate: false
     document_type: research
     effort_budget: "10-30 tool calls"
+    notes: "No human gate — research outputs are informational and feed into design and spec decisions, which carry their own gates. Higher effort budget reflects open-ended investigation scope."
 
   documenting:
     description: "Updating project documentation for currency"
@@ -120,3 +130,4 @@ stage_bindings:
     skills: [update-docs]
     human_gate: false
     effort_budget: "5-15 tool calls"
+    notes: "No human gate — documentation updates are low-risk currency fixes verified by the author. Any structural documentation changes that affect workflow behaviour should go through a design or spec stage instead."
