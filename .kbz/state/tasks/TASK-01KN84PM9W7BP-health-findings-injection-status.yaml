@@ -3,4 +3,4 @@ parent_feature: FEAT-01KN83QN0VAFG
 slug: health-findings-injection-status
 name: Health findings injection into project status
 summary: "In synthesiseProject, run entity health check and inject findings as AttentionItem entries. Map health findings to health_error/health_warning items with entity_id. Retain health summary field alongside injected items. Graceful on health check failure."
-status: queued
+status: ready
