@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -17,6 +18,13 @@ import (
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/worktree"
 )
+
+// mergeCommitFunc is the function called after merge execute to commit
+// the worktree state update. Package-level variable for test injection.
+// Production value delegates to git.CommitStateWithMessage (FR-A09).
+var mergeCommitFunc = func(repoRoot, message string) (bool, error) {
+	return git.CommitStateWithMessage(repoRoot, message)
+}
 
 // MergeTool returns the 2.0 consolidated merge tool.
 // It consolidates merge_readiness_check and merge_execute (spec §19.2).
@@ -359,6 +367,13 @@ func executeMerge(
 		if cfg.Cleanup.AutoDeleteRemoteBranch {
 			_ = gitOps.DeleteRemoteBranch("origin", wt.Branch)
 		}
+	}
+
+	// Auto-commit the worktree record update after merge and branch cleanup (FR-A09).
+	// Best-effort: commit failure is logged but does not prevent the merge result.
+	mergeStateMsg := fmt.Sprintf("workflow(%s): mark worktree merged", entityID)
+	if _, commitErr := mergeCommitFunc(repoPath, mergeStateMsg); commitErr != nil {
+		log.Printf("[merge] WARNING: auto-commit after merge of %s failed: %v", entityID, commitErr)
 	}
 
 	// Record override events when blocking gates were bypassed.

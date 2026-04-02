@@ -103,6 +103,7 @@ kanbanzai/
   - Changes from previous work are coherent and complete → **commit them now**, then proceed
   - Changes are incomplete or belong to a different task → inform the human, **do not stash** or discard
   - Working tree is clean → proceed
+    > Note: MCP tools (entity, doc, finish, decompose, merge) now auto-commit state changes. Orphaned `.kbz/state/` files should be rare but are still worth checking.
 - [ ] Confirm you are on the correct branch for this task (or `main` if starting fresh)
 
 One task = one clean commit history. Uncommitted changes from a previous task make commits meaningless and code review confusing.

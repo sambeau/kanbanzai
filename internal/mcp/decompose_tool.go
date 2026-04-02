@@ -4,12 +4,21 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/service"
 )
+
+// decomposeCommitFunc is the function called after decompose apply to commit
+// the created task files atomically. Package-level variable for test injection.
+// Production value delegates to git.CommitStateWithMessage (FR-A08).
+var decomposeCommitFunc = func(repoRoot, message string) (bool, error) {
+	return git.CommitStateWithMessage(repoRoot, message)
+}
 
 // DecomposeTool returns the 2.0 decompose consolidated tool.
 // It wraps DecomposeService (propose/review/slice) and EntityService (apply).
@@ -225,6 +234,13 @@ func decomposeApply(entitySvc *service.EntityService) ActionHandler {
 				Status:    ct.Status,
 				DependsOn: resolvedIDs,
 			})
+		}
+
+		// Auto-commit all task files after both passes complete (FR-A08).
+		// Best-effort: commit failure is logged but does not block the result.
+		commitMsg := fmt.Sprintf("workflow(%s): decompose into %d tasks", featureID, len(tasksOut))
+		if _, commitErr := decomposeCommitFunc(".", commitMsg); commitErr != nil {
+			log.Printf("[decompose] WARNING: auto-commit after apply for %s failed: %v", featureID, commitErr)
 		}
 
 		return map[string]any{

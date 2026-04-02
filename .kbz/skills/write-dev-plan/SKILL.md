@@ -127,8 +127,15 @@ constraint_level: high
 ### Step 7: Register and Present
 
 1. Register the document with `doc(action: register, type: "dev-plan")`.
+   - For agent-authored dev-plans, registration and approval can be combined in one call:
+     `doc(action: "register", type: "dev-plan", auto_approve: true, ...)` — the `auto_approve`
+     flag is whitelisted for `dev-plan`, `research`, and `report` document types.
 2. Present the plan to the human reviewer.
 3. Be prepared to adjust task granularity, reorder priorities, or restructure dependencies based on feedback.
+
+> **Note:** Approving a dev-plan does **not** automatically transition the feature to `developing`.
+> After approval, explicitly call `entity(action: transition, id: "FEAT-xxx", status: "developing")`
+> to advance the feature lifecycle before dispatching tasks.
 
 ## Output Format
 

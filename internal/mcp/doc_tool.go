@@ -28,6 +28,7 @@ package mcp
 import (
 	"context"
 	"fmt"
+	"log"
 	"strconv"
 	"time"
 
@@ -35,10 +36,25 @@ import (
 	"github.com/mark3labs/mcp-go/server"
 
 	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/structural"
 )
+
+// docCommitFunc is the function called after doc register and approve to commit
+// state changes with a custom message. Package-level variable for test injection.
+// Production value delegates to git.CommitStateWithMessage (FR-A12, FR-B01).
+var docCommitFunc = func(repoRoot, message string) (bool, error) {
+	return git.CommitStateWithMessage(repoRoot, message)
+}
+
+// docCommitPathsFunc is the function called by doc register, move, and delete
+// to commit state changes plus extra file paths atomically.
+// Package-level variable for test injection. (FR-B01, FR-B13, FR-B19).
+var docCommitPathsFunc = func(repoRoot, message string, extraPaths ...string) (bool, error) {
+	return git.CommitStateAndPaths(repoRoot, message, extraPaths...)
+}
 
 // DocTool returns the consolidated `doc` MCP tool registered in the core group.
 //
@@ -72,7 +88,7 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 		),
 		mcp.WithString("action",
 			mcp.Required(),
-			mcp.Description("Action: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate, record_false_positive"),
+			mcp.Description("Action: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate, record_false_positive, move, delete"),
 		),
 		// Common identifier fields.
 		mcp.WithString("id", mcp.Description("Document record ID (approve, get, content, validate, supersede, refresh, chain)")),
@@ -83,6 +99,11 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 		mcp.WithString("title", mcp.Description("Human-readable title (register)")),
 		mcp.WithString("owner", mcp.Description("Parent Plan or Feature ID (register, list, import)")),
 		mcp.WithArray("documents", mcp.Description("Batch register: array of {path, type, title, owner?} objects")),
+		mcp.WithBoolean("auto_approve", mcp.Description("When true, registers and approves the document in one call. Permitted for: dev-plan, research, report (register only)")),
+		// move fields.
+		mcp.WithString("new_path", mcp.Description("New relative file path for the document (move only)")),
+		// delete fields.
+		mcp.WithBoolean("force", mcp.Description("When true, allows deletion of approved documents (delete only)")),
 		// supersede fields.
 		mcp.WithString("superseded_by", mcp.Description("Replacement document record ID (supersede)")),
 		// list fields.
@@ -109,6 +130,8 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 		return DispatchAction(ctx, req, map[string]ActionHandler{
 			"register":              docRegisterAction(docSvc),
 			"approve":               docApproveAction(docSvc),
+			"move":                  docMoveAction(docSvc),
+			"delete":                docDeleteAction(docSvc),
 			"get":                   docGetAction(docSvc),
 			"content":               docContentAction(docSvc),
 			"list":                  docListAction(docSvc),
@@ -182,18 +205,33 @@ func docRegisterOne(docSvc *service.DocumentService, args map[string]any) (strin
 		return path, nil, err
 	}
 
+	autoApprove, _ := args["auto_approve"].(bool)
+
 	result, err := docSvc.SubmitDocument(service.SubmitDocumentInput{
-		Path:      path,
-		Type:      docType,
-		Title:     title,
-		Owner:     owner,
-		CreatedBy: createdBy,
+		Path:        path,
+		Type:        docType,
+		Title:       title,
+		Owner:       owner,
+		CreatedBy:   createdBy,
+		AutoApprove: autoApprove,
 	})
 	if err != nil {
 		return path, nil, err
 	}
 
-	return result.ID, map[string]any{"document": docRecordToMap(result)}, nil
+	// Auto-commit: stage both the state record and the document file atomically (FR-B01).
+	// Best-effort: commit failure is logged but does not prevent the result.
+	repoRoot := docSvc.RepoRoot()
+	registerMsg := fmt.Sprintf("workflow(%s): register %s", result.ID, result.Type)
+	if _, commitErr := docCommitPathsFunc(repoRoot, registerMsg, path); commitErr != nil {
+		log.Printf("[doc] WARNING: auto-commit after register %s failed: %v", result.ID, commitErr)
+	}
+
+	out := map[string]any{"document": docRecordToMap(result)}
+	if len(result.Warnings) > 0 {
+		out["warnings"] = result.Warnings
+	}
+	return result.ID, out, nil
 }
 
 // ─── approve ──────────────────────────────────────────────────────────────────
@@ -249,7 +287,103 @@ func docApproveOne(ctx context.Context, docSvc *service.DocumentService, docID, 
 		})
 	}
 
+	// Auto-commit the approved document's state record (FR-A12). Best-effort.
+	repoRoot := docSvc.RepoRoot()
+	approveMsg := fmt.Sprintf("workflow(%s): approve %s", result.ID, result.Type)
+	if _, commitErr := docCommitFunc(repoRoot, approveMsg); commitErr != nil {
+		log.Printf("[doc] WARNING: auto-commit after approve %s failed: %v", result.ID, commitErr)
+	}
+
 	return result.ID, map[string]any{"document": docRecordToMap(result)}, nil
+}
+
+// ─── move ─────────────────────────────────────────────────────────────────────
+
+func docMoveAction(docSvc *service.DocumentService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+		args, _ := req.Params.Arguments.(map[string]any)
+
+		docID := docArgStr(args, "id")
+		if docID == "" {
+			return nil, fmt.Errorf("Cannot move document: id is missing.\n\nTo resolve:\n  Provide the document record ID: doc(action: \"move\", id: \"DOC-...\", new_path: \"work/...\")")
+		}
+		newPath := docArgStr(args, "new_path")
+		if newPath == "" {
+			return nil, fmt.Errorf("Cannot move document %s: new_path is missing.\n\nTo resolve:\n  Provide the destination path: doc(action: \"move\", id: \"%s\", new_path: \"work/...\")", docID, docID)
+		}
+
+		// Load the old path before moving so we can include it in the commit.
+		oldDoc, err := docSvc.GetDocument(docID, false)
+		if err != nil {
+			return nil, fmt.Errorf("Cannot move document %s: %w", docID, err)
+		}
+		oldPath := oldDoc.Path
+
+		result, err := docSvc.MoveDocument(service.MoveDocumentInput{
+			ID:      docID,
+			NewPath: newPath,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("Cannot move document %s: %w", docID, err)
+		}
+
+		// Commit state record + old path (deletion) + new path (addition) atomically (FR-B13).
+		repoRoot := docSvc.RepoRoot()
+		moveMsg := fmt.Sprintf("workflow(%s): move document to %s", docID, newPath)
+		if _, commitErr := docCommitPathsFunc(repoRoot, moveMsg, oldPath, newPath); commitErr != nil {
+			log.Printf("[doc] WARNING: auto-commit after move %s failed: %v", docID, commitErr)
+		}
+
+		return map[string]any{"document": docRecordToMap(result)}, nil
+	}
+}
+
+// ─── delete ───────────────────────────────────────────────────────────────────
+
+func docDeleteAction(docSvc *service.DocumentService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+		args, _ := req.Params.Arguments.(map[string]any)
+
+		docID := docArgStr(args, "id")
+		if docID == "" {
+			return nil, fmt.Errorf("Cannot delete document: id is missing.\n\nTo resolve:\n  Provide the document record ID: doc(action: \"delete\", id: \"DOC-...\")")
+		}
+		force, _ := args["force"].(bool)
+
+		// Load the document path before deletion so we can include it in the commit.
+		oldDoc, err := docSvc.GetDocument(docID, false)
+		if err != nil {
+			return nil, fmt.Errorf("Cannot delete document %s: %w", docID, err)
+		}
+		filePath := oldDoc.Path
+
+		result, err := docSvc.DeleteDocument(service.DeleteDocumentInput{
+			ID:    docID,
+			Force: force,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("Cannot delete document %s: %w", docID, err)
+		}
+
+		// Commit state record removal + document file removal atomically (FR-B19).
+		repoRoot := docSvc.RepoRoot()
+		deleteMsg := fmt.Sprintf("workflow(%s): delete %s document", docID, result.Type)
+		if _, commitErr := docCommitPathsFunc(repoRoot, deleteMsg, filePath); commitErr != nil {
+			log.Printf("[doc] WARNING: auto-commit after delete %s failed: %v", docID, commitErr)
+		}
+
+		return map[string]any{
+			"deleted": map[string]any{
+				"id":    result.ID,
+				"path":  result.Path,
+				"type":  result.Type,
+				"title": result.Title,
+				"owner": result.Owner,
+			},
+		}, nil
+	}
 }
 
 // ─── get ──────────────────────────────────────────────────────────────────────

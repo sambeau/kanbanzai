@@ -125,6 +125,9 @@ IF integration or test tasks are missing → add them with appropriate dependenc
 
 ### Phase 4: Apply the Decomposition
 
+> **Note:** Decomposition occurs during the `dev-planning` stage. The feature does **not** need
+> to be in `developing` status first — decompose while the feature is still in `dev-planning`.
+
 1. Once all five checks pass, use the `decompose` tool with action `apply` to create the tasks.
 2. Verify the created tasks match your validated proposal — correct descriptions, correct dependencies.
 

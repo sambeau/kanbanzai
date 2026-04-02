@@ -62,6 +62,29 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	docRecordSvc.SetEntityHook(service.NewEntityLifecycleHook(entitySvc))
 	docRecordSvc.SetIntelligenceService(intelligenceSvc)
 
+	// Section validation provider: read required sections per document type from
+	// stage-bindings.yaml (FR-D07). The binding file is loaded once at startup;
+	// changes take effect on server restart. Maps document_type → stage name, then
+	// looks up document_template.required_sections for that stage.
+	bindingPathForSections := filepath.Join(core.InstanceRootDir, "stage-bindings.yaml")
+	if bf, errs := binding.LoadBindingFile(bindingPathForSections); bf != nil && len(errs) == 0 {
+		// Build a map from document type string → required section names.
+		// The stage-bindings.yaml declares document_type per stage; we invert that.
+		docTypeToSections := make(map[string][]string)
+		for _, sb := range bf.StageBindings {
+			if sb.DocumentTemplate == nil || len(sb.DocumentTemplate.RequiredSections) == 0 {
+				continue
+			}
+			if sb.DocumentType == nil {
+				continue
+			}
+			docTypeToSections[*sb.DocumentType] = sb.DocumentTemplate.RequiredSections
+		}
+		docRecordSvc.SetSectionProvider(func(docType string) []string {
+			return docTypeToSections[docType]
+		})
+	}
+
 	// Open the local derived cache best-effort. If it fails, the service
 	// operates without cache acceleration — all queries fall back to
 	// filesystem reads.

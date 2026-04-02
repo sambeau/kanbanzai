@@ -15,14 +15,24 @@ package mcp
 import (
 	"context"
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/service"
 )
+
+// finishCommitFunc is the function called by the finish handler to commit any
+// pending .kbz/state/ changes after a task completes. It is a package-level
+// variable so tests can inject a stub without changing public APIs.
+// The production value delegates to git.CommitStateWithMessage (FR-A06, FR-A07).
+var finishCommitFunc = func(repoRoot, message string) (bool, error) {
+	return git.CommitStateWithMessage(repoRoot, message)
+}
 
 // nudgeNoRetroSignals is shown when a feature completes with no retro signals recorded for any task.
 const nudgeNoRetroSignals = "No retrospective signals were recorded for any task in this feature. " +
@@ -93,12 +103,19 @@ func finishTool(entitySvc *service.EntityService, dispatchSvc *service.DispatchS
 		// Batch mode: tasks array provided.
 		if IsBatchInput(args, "tasks") {
 			items, _ := args["tasks"].([]any)
-			return ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
+			batchResult, batchErr := ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
 				input := parseFinishItem(item)
 				input.Batch = true
 				result, err := finishOne(ctx, input, entitySvc, dispatchSvc)
 				return input.TaskID, result, err
 			})
+			// Best-effort commit after all batch tasks complete (FR-A07).
+			// A single commit covers all N task state files in one operation.
+			batchCommitMsg := fmt.Sprintf("workflow: complete %d tasks", len(items))
+			if _, commitErr := finishCommitFunc(".", batchCommitMsg); commitErr != nil {
+				log.Printf("[finish] WARNING: batch auto-commit failed: %v", commitErr)
+			}
+			return batchResult, batchErr
 		}
 
 		// Single mode.
@@ -173,6 +190,8 @@ func finishOne(
 	entitySvc *service.EntityService,
 	dispatchSvc *service.DispatchService,
 ) (any, error) {
+	// repoRoot is the current working directory (same convention as handoff_tool.go).
+	const repoRoot = "."
 	if strings.TrimSpace(input.TaskID) == "" {
 		return nil, fmt.Errorf("Cannot complete task: task_id is missing.\n\nTo resolve:\n  Provide task_id: finish(task_id: \"TASK-...\", summary: \"...\")")
 	}
@@ -245,6 +264,21 @@ func finishOne(
 	})
 	if err != nil {
 		return nil, err
+	}
+
+	// Auto-commit state changes after task completion (FR-A06). Best-effort:
+	// commit failure is logged but does not prevent the result from returning.
+	// Batch mode defers the commit to the caller (finishBatch) so all tasks
+	// are included in a single commit (FR-A07).
+	if !input.Batch {
+		summaryTrunc := input.Summary
+		if len(summaryTrunc) > 50 {
+			summaryTrunc = summaryTrunc[:50]
+		}
+		commitMsg := fmt.Sprintf("workflow(%s): complete \u2013 %s", input.TaskID, summaryTrunc)
+		if _, commitErr := finishCommitFunc(repoRoot, commitMsg); commitErr != nil {
+			log.Printf("[finish] WARNING: auto-commit after task %s failed: %v", input.TaskID, commitErr)
+		}
 	}
 
 	// Push task_unblocked side effects for any tasks freed by this completion.

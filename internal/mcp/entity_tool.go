@@ -16,6 +16,7 @@ package mcp
 import (
 	"context"
 	"fmt"
+	"log"
 	"sort"
 	"strings"
 	"time"
@@ -26,12 +27,21 @@ import (
 	"github.com/sambeau/kanbanzai/internal/checkpoint"
 	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/gate"
+	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/knowledge"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/validate"
 )
+
+// entityCommitFunc is the function called by entity create and transition
+// handlers to commit state changes atomically. Package-level variable for
+// test injection. Production value delegates to git.CommitStateWithMessage
+// (FR-A10, FR-A11).
+var entityCommitFunc = func(repoRoot, message string) (bool, error) {
+	return git.CommitStateWithMessage(repoRoot, message)
+}
 
 // EntityTool returns the consolidated `entity` MCP tool registered in the core group.
 func EntityTool(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store) []server.ServerTool {
@@ -129,7 +139,7 @@ func entityCreateAction(entitySvc *service.EntityService) ActionHandler {
 		// Batch mode: entities array provided.
 		if IsBatchInput(args, "entities") {
 			items, _ := args["entities"].([]any)
-			return ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
+			batchResult, batchErr := ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
 				m, ok := item.(map[string]any)
 				if !ok {
 					return "", nil, fmt.Errorf("Cannot create entity in batch: each item in the entities array must be a JSON object with the entity fields.\n\nTo resolve:\n  Ensure entities is an array of objects: [{slug: \"...\", summary: \"...\"}, ...]")
@@ -137,6 +147,12 @@ func entityCreateAction(entitySvc *service.EntityService) ActionHandler {
 				result, err := entityCreateOne(entityType, m, entitySvc)
 				return entityArgStr(m, "slug"), result, err
 			})
+			// Best-effort commit after all batch entities are created (FR-A10).
+			batchCommitMsg := fmt.Sprintf("workflow: create %d %s entities", len(items), entityType)
+			if _, commitErr := entityCommitFunc(".", batchCommitMsg); commitErr != nil {
+				log.Printf("[entity] WARNING: batch auto-commit after create failed: %v", commitErr)
+			}
+			return batchResult, batchErr
 		}
 
 		// Single mode.
@@ -246,6 +262,12 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 
 	if len(advisory) > 0 {
 		out["duplicate_advisory"] = advisory
+	}
+
+	// Auto-commit the new entity's state file (FR-A10). Best-effort.
+	commitMsg := fmt.Sprintf("workflow(%s): create %s", result.ID, result.Type)
+	if _, commitErr := entityCommitFunc(".", commitMsg); commitErr != nil {
+		log.Printf("[entity] WARNING: auto-commit after create %s failed: %v", result.ID, commitErr)
 	}
 
 	return out, nil
@@ -601,9 +623,19 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 		// Plans use their own status update path (no gate enforcement).
 		if entityType == "plan" {
 			_, _, slug := model.ParsePlanID(entityID)
+			// Load current status before transition for commit message (FR-A11).
+			var planFromStatus string
+			if preResult, preErr := entitySvc.Get("plan", entityID, ""); preErr == nil {
+				planFromStatus, _ = preResult.State["status"].(string)
+			}
 			result, err := entitySvc.UpdatePlanStatus(entityID, slug, newStatus)
 			if err != nil {
 				return entityTransitionError(entitySvc, "plan", entityID, newStatus, err), nil
+			}
+			// Auto-commit state change (FR-A11). Best-effort.
+			planCommitMsg := fmt.Sprintf("workflow(%s): transition %s \u2192 %s", entityID, planFromStatus, newStatus)
+			if _, commitErr := entityCommitFunc(".", planCommitMsg); commitErr != nil {
+				log.Printf("[entity] WARNING: auto-commit after plan transition %s failed: %v", entityID, commitErr)
 			}
 			return map[string]any{
 				"entity": entityFullRecord(result.ID, result.Type, result.Slug, result.State),
@@ -737,6 +769,12 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			}
 		}
 
+		// Capture current status before transition for commit message (FR-A11).
+		var fromStatusBeforeTransition string
+		if preResult, preErr := entitySvc.Get(entityType, entityID, ""); preErr == nil {
+			fromStatusBeforeTransition, _ = preResult.State["status"].(string)
+		}
+
 		result, err := entitySvc.UpdateStatus(service.UpdateStatusInput{
 			Type:   entityType,
 			ID:     entityID,
@@ -785,6 +823,13 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 		if structuralChecks != nil {
 			resp["structural_checks"] = structuralChecks
 		}
+
+		// Auto-commit the entity's state file after transition (FR-A11). Best-effort.
+		transitionCommitMsg := fmt.Sprintf("workflow(%s): transition %s \u2192 %s", entityID, fromStatusBeforeTransition, newStatus)
+		if _, commitErr := entityCommitFunc(".", transitionCommitMsg); commitErr != nil {
+			log.Printf("[entity] WARNING: auto-commit after transition %s failed: %v", entityID, commitErr)
+		}
+
 		return resp, nil
 	}
 }

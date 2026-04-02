@@ -81,6 +81,7 @@ flaw is discovered. Moving backwards is normal. Skipping forward is not.
 - [ ] Specification document exists and is approved
 - [ ] Dev plan exists and is approved
 - [ ] All tasks are created under the feature (`entity action: list, parent: FEAT-xxx`)
+- [ ] Call `entity(action: transition, id: "FEAT-xxx", status: "developing")` to explicitly move the feature to developing (dev-plan approval does NOT auto-transition the feature)
 - [ ] Feature is in `implementing` status
 - [ ] Dependencies between tasks are recorded
 

@@ -139,6 +139,20 @@ Documents follow a three-status lifecycle: **draft → approved → superseded**
 
 A draft document is a working document. An approved document is a contract.
 
+### Auto-Approve for Agent-Authored Documents
+
+For agent-authored documents of types `dev-plan`, `research`, and `report`,
+registration and approval can be combined in a single call:
+
+```
+doc(action: "register", type: "dev-plan", auto_approve: true, path: "...", title: "...", owner: "...")
+```
+
+This registers the document and immediately approves it. The `auto_approve`
+flag is only honoured for types in the whitelist (`dev-plan`, `research`,
+`report`). Design documents and specifications always require explicit human
+approval.
+
 ---
 
 ## Drift and Refresh
@@ -147,16 +161,15 @@ When a document is registered, the system records a content hash. If the
 file is edited after registration, the hash becomes stale — this is called
 **drift**.
 
-- **Approving a drifted document will fail.** The system requires the
-  content hash to match.
-- **After editing a registered document**, call `doc` action: `refresh` to
-  update the hash before requesting approval.
+- **`doc approve` auto-refreshes on hash mismatch.** If the file has drifted
+  since registration, `doc` action: `approve` automatically updates the hash
+  before approving — it no longer fails on mismatch.
+- **`doc refresh` is still available** for checking or correcting drift
+  outside the approval path (e.g. to detect whether a document has changed
+  since it was last registered).
 - **If an approved document is edited**, the approval is effectively void.
   The content no longer matches what was approved. Notify the human and
   re-approve after review.
-
-The drift mechanism exists to ensure that what was reviewed is what gets
-approved. Do not bypass it.
 
 ---
 
@@ -170,6 +183,30 @@ When a document is replaced by a newer version:
 
 Superseded documents remain in the repository as historical records. They are
 no longer authoritative.
+
+---
+
+## Moving Documents
+
+To move a document file to a new path:
+
+1. Call `doc(action: "move", id: "DOC-xxx", new_path: "work/new-location/file.md")`
+2. The system moves the file, updates the record's path, recomputes the content hash, and commits atomically.
+3. If the new path implies a different document type, the type is updated automatically.
+
+**Note:** Approval status, owner, and cross-references are preserved across moves.
+
+---
+
+## Deleting Documents
+
+To delete a document:
+
+1. Call `doc(action: "delete", id: "DOC-xxx")` for draft documents.
+2. For approved documents, add `force: true`: `doc(action: "delete", id: "DOC-xxx", force: true)`
+3. The system removes the file, clears the entity's document reference, and commits atomically.
+
+**Note:** This operation is irreversible. Consider supersession instead if historical preservation matters.
 
 ---
 
@@ -187,11 +224,13 @@ no longer authoritative.
 
 ### Stale Content Hash
 
-- **Detect:** `doc(action: "approve")` fails with a content hash mismatch.
+- **Detect:** A registered document's file contents no longer match its stored
+  content hash (visible via `doc(action: "refresh")`).
 - **BECAUSE:** The file was edited after registration, so the stored hash no
-  longer matches disk. Approval binds to a specific content version.
-- **Resolve:** Call `doc(action: "refresh")` to update the hash, then
-  re-approve.
+  longer matches disk.
+- **Note:** `doc(action: "approve")` now auto-refreshes the hash before
+  approving, so this no longer blocks approval. Use `doc(action: "refresh")`
+  explicitly if you need to check or update drift outside the approval path.
 
 ### Silent Supersession
 
@@ -225,20 +264,13 @@ no longer authoritative.
 
 ## Commit Discipline
 
-When creating a new document, commit both the file and its registration
-record together:
+Document registration and approval are automatically committed by the MCP
+tools. Manual commits for document files are no longer required.
 
-```
-git add work/design/my-document.md .kbz/state/documents/
-git commit -m "docs(my-document): create design document for feature X"
-```
-
-When batch-importing, commit the new records:
-
-```
-git add .kbz/state/documents/
-git commit -m "workflow(PROJECT): register new documents with system"
-```
+If you create or edit a document file outside of an MCP tool (e.g. writing
+content directly to disk), commit the file itself using the standard commit
+format — the registration record will be handled by the tool when you call
+`doc(action: "register")`.
 
 ---
 

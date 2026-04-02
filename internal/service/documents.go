@@ -27,6 +27,25 @@ type SubmitDocumentInput struct {
 	Owner string
 	// CreatedBy identifies who created the document.
 	CreatedBy string
+	// AutoApprove, when true, registers and approves the document in one call.
+	// Only permitted for document types: dev-plan, research, report (FR-B04).
+	AutoApprove bool
+}
+
+// MoveDocumentInput contains the parameters for the doc move operation.
+type MoveDocumentInput struct {
+	// ID is the document record ID to move.
+	ID string
+	// NewPath is the new relative path for the document file.
+	NewPath string
+}
+
+// DeleteDocumentInput contains the parameters for the doc delete operation.
+type DeleteDocumentInput struct {
+	// ID is the document record ID to delete.
+	ID string
+	// Force, when true, allows deletion of approved documents.
+	Force bool
 }
 
 // ApproveDocumentInput contains the fields needed to approve a document.
@@ -98,6 +117,9 @@ type DocumentResult struct {
 	// transition on the owning entity. Nil when no transition occurred.
 	// Read by 2.0 tools (Track I) to push status_transition side effects.
 	EntityTransition *DocEntityTransition
+	// Warnings contains non-blocking advisory messages (e.g. missing sections
+	// on registration). Empty when there are no warnings.
+	Warnings []string
 }
 
 // DocumentFilters contains optional filters for listing documents.
@@ -132,6 +154,9 @@ type DocumentService struct {
 	configProvider  func() *config.Config // optional; defaults to config.LoadOrDefault
 	entityHook      EntityLifecycleHook   // optional, for lifecycle transitions
 	intelligenceSvc *IntelligenceService  // optional, for auto-ingest on submit
+	// sectionProvider returns the required section names for a given document
+	// type string. Returns nil when no required sections are declared (FR-D06).
+	sectionProvider func(docType string) []string
 }
 
 // RepoRoot returns the repository root path used by this service.
@@ -154,6 +179,13 @@ func (s *DocumentService) SetEntityHook(hook EntityLifecycleHook) {
 // automatically ingests documents (Layers 1-2) when they are submitted.
 func (s *DocumentService) SetIntelligenceService(svc *IntelligenceService) {
 	s.intelligenceSvc = svc
+}
+
+// SetSectionProvider attaches a function that returns required section names
+// for a given document type string. Called during section validation on
+// register (warnings) and approve (hard error). FR-D07.
+func (s *DocumentService) SetSectionProvider(fn func(docType string) []string) {
+	s.sectionProvider = fn
 }
 
 // SetConfigProvider overrides the configuration loader used by the service.
@@ -269,6 +301,48 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 		Updated:     doc.Updated,
 	}
 
+	// Section validation (FR-D04): validate required sections and return
+	// any missing sections as warnings. Registration proceeds regardless.
+	if s.sectionProvider != nil {
+		requiredSections := s.sectionProvider(string(docType))
+		if len(requiredSections) > 0 {
+			validation, valErr := ValidateSections(fullPath, requiredSections)
+			if valErr == nil && len(validation.Missing) > 0 {
+				for _, ms := range validation.Missing {
+					result.Warnings = append(result.Warnings, fmt.Sprintf("missing required section: %q", ms))
+				}
+			}
+		}
+	}
+
+	// Auto-approve: if requested and type is whitelisted, approve immediately (FR-B02–FR-B05).
+	if input.AutoApprove {
+		autoApproveWhitelist := map[model.DocumentType]bool{
+			model.DocumentTypeDevPlan:  true,
+			model.DocumentTypeResearch: true,
+			model.DocumentTypeReport:   true,
+		}
+		if !autoApproveWhitelist[docType] {
+			// Clean up the just-written draft record so we don't leave orphans.
+			_ = s.store.Delete(doc.ID)
+			return DocumentResult{}, fmt.Errorf("auto_approve is not permitted for %s documents", string(docType))
+		}
+		approvedNow := s.now()
+		doc.Status = model.DocumentStatusApproved
+		doc.ApprovedBy = strings.TrimSpace(input.CreatedBy)
+		doc.ApprovedAt = &approvedNow
+		doc.Updated = approvedNow
+		approvedRecord := storage.DocumentToRecord(doc, "")
+		approvedRecordPath, approveErr := s.store.Write(approvedRecord)
+		if approveErr != nil {
+			return DocumentResult{}, fmt.Errorf("write approved document record: %w", approveErr)
+		}
+		result.Status = string(doc.Status)
+		result.ApprovedBy = doc.ApprovedBy
+		result.ApprovedAt = doc.ApprovedAt
+		result.RecordPath = approvedRecordPath
+	}
+
 	// Trigger entity lifecycle hooks on submission
 	if s.entityHook != nil && owner != "" {
 		// Set document reference on the owning entity
@@ -329,15 +403,20 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 		return DocumentResult{}, fmt.Errorf("cannot approve a document with status %q — only draft documents can be approved. If the document was previously approved, use doc_record_get to check its current status", doc.Status)
 	}
 
-	// Verify content hash matches current file
+	// Verify file exists and auto-refresh hash if it has changed (FR-B06, FR-B07).
 	fullPath := filepath.Join(s.repoRoot, doc.Path)
 	currentHash, err := storage.ComputeContentHash(fullPath)
 	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return DocumentResult{}, fmt.Errorf("document file not found at %q — the file must exist on disk to be approved", doc.Path)
+		}
 		return DocumentResult{}, fmt.Errorf("compute content hash: %w", err)
 	}
 
+	// If the hash has changed since registration, update it before approving.
+	// This eliminates the need for a separate doc refresh step (FR-B06).
 	if currentHash != doc.ContentHash {
-		return DocumentResult{}, fmt.Errorf("document file has changed since it was registered. Run doc_record_refresh to update the stored hash, then retry doc_record_approve")
+		doc.ContentHash = currentHash
 	}
 
 	// Quality evaluation gate: check if RequireForApproval is enabled.
@@ -375,6 +454,25 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 			return DocumentResult{}, fmt.Errorf(
 				"Cannot approve document %s: quality score %g is below threshold %g.\n\nTo resolve, re-evaluate and re-attach: doc(action: \"evaluate\", id: \"%s\", evaluation: {...})",
 				input.ID, doc.QualityEvaluation.OverallScore, threshold, input.ID)
+		}
+	}
+
+	// Section validation gate (FR-D05): reject approval if required sections
+	// are missing. Must run before status update so we don't write a partially
+	// approved record. FR-D06: types with no declared sections always pass.
+	if s.sectionProvider != nil {
+		requiredSections := s.sectionProvider(string(doc.Type))
+		if len(requiredSections) > 0 {
+			validation, valErr := ValidateSections(fullPath, requiredSections)
+			if valErr != nil {
+				return DocumentResult{}, fmt.Errorf("validate document sections: %w", valErr)
+			}
+			if !validation.Valid {
+				return DocumentResult{}, fmt.Errorf(
+					"cannot approve document %s: missing required sections: %s",
+					input.ID, strings.Join(validation.Missing, ", "),
+				)
+			}
 		}
 	}
 
@@ -420,8 +518,9 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 				targetStatus = "specifying"
 			case entityType == "feature" && doc.Type == model.DocumentTypeSpecification:
 				targetStatus = "dev-planning"
-			case entityType == "feature" && doc.Type == model.DocumentTypeDevPlan:
-				targetStatus = "developing"
+				// FR-C01: dev-plan approval does NOT cascade the feature to developing.
+				// The transition from dev-planning → developing requires an explicit
+				// entity(action: transition, status: "developing") call.
 			}
 			if targetStatus != "" && currentStatus != targetStatus {
 				if err := s.entityHook.TransitionStatus(doc.Owner, targetStatus); err == nil {
@@ -1069,4 +1168,178 @@ func (s *DocumentService) AttachQualityEvaluation(input AttachEvaluationInput) (
 		SupersededBy:      doc.SupersededBy,
 		QualityEvaluation: doc.QualityEvaluation,
 	}, nil
+}
+
+// MoveDocument moves a document file to a new path, updates the record, and
+// recomputes the content hash. The document ID, approval status, owner, and
+// cross-references are preserved (FR-B09 through FR-B15).
+func (s *DocumentService) MoveDocument(input MoveDocumentInput) (DocumentResult, error) {
+	if err := validateRequired(
+		field("id", input.ID),
+		field("new_path", input.NewPath),
+	); err != nil {
+		return DocumentResult{}, err
+	}
+
+	record, err := s.store.Load(input.ID)
+	if err != nil {
+		return DocumentResult{}, err
+	}
+
+	doc := storage.RecordToDocument(record)
+	oldPath := doc.Path
+
+	oldFullPath := filepath.Join(s.repoRoot, oldPath)
+	newFullPath := filepath.Join(s.repoRoot, input.NewPath)
+
+	// Verify source file exists (FR-B14).
+	if _, statErr := os.Stat(oldFullPath); statErr != nil {
+		if os.IsNotExist(statErr) {
+			return DocumentResult{}, fmt.Errorf("document file not found at %q — cannot move a file that does not exist", oldPath)
+		}
+		return DocumentResult{}, fmt.Errorf("stat source file: %w", statErr)
+	}
+
+	// Ensure destination directory exists.
+	if mkdirErr := os.MkdirAll(filepath.Dir(newFullPath), 0o755); mkdirErr != nil {
+		return DocumentResult{}, fmt.Errorf("create destination directory: %w", mkdirErr)
+	}
+
+	// Move the file on disk.
+	if renameErr := os.Rename(oldFullPath, newFullPath); renameErr != nil {
+		return DocumentResult{}, fmt.Errorf("move document file: %w", renameErr)
+	}
+
+	// Update path and recompute hash.
+	doc.Path = input.NewPath
+	newHash, hashErr := storage.ComputeContentHash(newFullPath)
+	if hashErr != nil {
+		// Roll back the rename on hash failure.
+		_ = os.Rename(newFullPath, oldFullPath)
+		return DocumentResult{}, fmt.Errorf("compute content hash after move: %w", hashErr)
+	}
+	doc.ContentHash = newHash
+
+	// Update type if the new path implies a different document type (FR-B11).
+	if inferredType := inferDocTypeFromPath(input.NewPath); inferredType != "" && inferredType != string(doc.Type) {
+		doc.Type = model.DocumentType(inferredType)
+	}
+
+	doc.Updated = s.now()
+
+	updatedRecord := storage.DocumentToRecord(doc, record.FileHash)
+	recordPath, writeErr := s.store.Write(updatedRecord)
+	if writeErr != nil {
+		return DocumentResult{}, fmt.Errorf("write document record: %w", writeErr)
+	}
+
+	return DocumentResult{
+		ID:           doc.ID,
+		Path:         doc.Path,
+		RecordPath:   recordPath,
+		Type:         string(doc.Type),
+		Title:        doc.Title,
+		Status:       string(doc.Status),
+		Owner:        doc.Owner,
+		ContentHash:  doc.ContentHash,
+		Created:      doc.Created,
+		Updated:      doc.Updated,
+		ApprovedBy:   doc.ApprovedBy,
+		ApprovedAt:   doc.ApprovedAt,
+		Supersedes:   doc.Supersedes,
+		SupersededBy: doc.SupersededBy,
+		// OldPath is returned so callers can pass both old and new paths to
+		// CommitStateAndPaths for the atomic commit (FR-B13).
+	}, nil
+}
+
+// OldPath is not a field of DocumentResult — callers of MoveDocument use the
+// input.ID's original path (load before calling) alongside the returned Path.
+
+// DeleteDocument removes a document file, clears entity references, and
+// removes the state and index records (FR-B16 through FR-B21).
+func (s *DocumentService) DeleteDocument(input DeleteDocumentInput) (DocumentResult, error) {
+	if err := validateRequired(field("id", input.ID)); err != nil {
+		return DocumentResult{}, err
+	}
+
+	record, err := s.store.Load(input.ID)
+	if err != nil {
+		return DocumentResult{}, err
+	}
+
+	doc := storage.RecordToDocument(record)
+
+	// Guard approved documents unless force is set (FR-B17).
+	if doc.Status == model.DocumentStatusApproved && !input.Force {
+		return DocumentResult{}, fmt.Errorf(
+			"cannot delete approved document %q without force: set force: true to confirm deletion of an approved document",
+			input.ID,
+		)
+	}
+
+	// Remove the file from disk; ignore "not exists" (FR-B20).
+	fullPath := filepath.Join(s.repoRoot, doc.Path)
+	if removeErr := os.Remove(fullPath); removeErr != nil && !errors.Is(removeErr, os.ErrNotExist) {
+		return DocumentResult{}, fmt.Errorf("remove document file: %w", removeErr)
+	}
+
+	// Clear the entity's document reference field (FR-B18 item 2).
+	if s.entityHook != nil && doc.Owner != "" {
+		var docField string
+		switch doc.Type {
+		case model.DocumentTypeDesign:
+			docField = "design"
+		case model.DocumentTypeSpecification:
+			docField = "spec"
+		case model.DocumentTypeDevPlan:
+			docField = "dev_plan"
+		}
+		if docField != "" {
+			_ = s.entityHook.SetDocumentRef(doc.Owner, docField, "")
+		}
+	}
+
+	// Remove the state record (FR-B18 item 3).
+	if deleteErr := s.store.Delete(input.ID); deleteErr != nil {
+		return DocumentResult{}, fmt.Errorf("delete document record: %w", deleteErr)
+	}
+
+	// Remove any corresponding index file best-effort (FR-B18 item 4).
+	// Index files live at .kbz/index/documents/<safe-id>.yaml
+	instanceRoot := filepath.Dir(s.stateRoot)
+	safeID := strings.ReplaceAll(input.ID, "/", "--")
+	indexFilePath := filepath.Join(instanceRoot, "index", "documents", safeID+".yaml")
+	_ = os.Remove(indexFilePath) // best-effort; index may not exist
+
+	return DocumentResult{
+		ID:    doc.ID,
+		Path:  doc.Path,
+		Type:  string(doc.Type),
+		Title: doc.Title,
+		Owner: doc.Owner,
+	}, nil
+}
+
+// inferDocTypeFromPath infers the document type from the path's directory
+// component. Returns an empty string if no type can be inferred, in which
+// case the caller should keep the existing type.
+func inferDocTypeFromPath(path string) string {
+	lower := strings.ToLower(filepath.ToSlash(path))
+	switch {
+	case strings.Contains(lower, "/design/"):
+		return string(model.DocumentTypeDesign)
+	case strings.Contains(lower, "/spec/"):
+		return string(model.DocumentTypeSpecification)
+	case strings.Contains(lower, "/plan/"):
+		return string(model.DocumentTypeDevPlan)
+	case strings.Contains(lower, "/research/"):
+		return string(model.DocumentTypeResearch)
+	case strings.Contains(lower, "/reports/"), strings.Contains(lower, "/reviews/"):
+		return string(model.DocumentTypeReport)
+	case strings.Contains(lower, "/policy/"):
+		return string(model.DocumentTypePolicy)
+	default:
+		return ""
+	}
 }

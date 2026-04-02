@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 func TestSubmitDocument_Success(t *testing.T) {
@@ -264,14 +265,17 @@ func TestApproveDocument_NotDraft(t *testing.T) {
 	}
 }
 
-func TestApproveDocument_ContentHashMismatch(t *testing.T) {
+// TestApproveDocument_AutoRefreshHashOnApproval verifies that approving a
+// document whose file has changed since registration succeeds and updates the
+// stored content hash (FR-B06, FR-B07, AC-B08, AC-B09).
+func TestApproveDocument_AutoRefreshHashOnApproval(t *testing.T) {
 	t.Parallel()
 
 	stateRoot := t.TempDir()
 	repoRoot := t.TempDir()
 	svc := NewDocumentService(stateRoot, repoRoot)
 
-	// Create and submit a document
+	// Create and submit a document.
 	docPath := "test.md"
 	fullPath := filepath.Join(repoRoot, docPath)
 	if err := os.WriteFile(fullPath, []byte("original content"), 0o644); err != nil {
@@ -287,22 +291,81 @@ func TestApproveDocument_ContentHashMismatch(t *testing.T) {
 	if err != nil {
 		t.Fatalf("SubmitDocument() error = %v", err)
 	}
+	originalHash := submitResult.ContentHash
 
-	// Modify the file after submission
-	if err := os.WriteFile(fullPath, []byte("modified content"), 0o644); err != nil {
+	// Modify the file after submission (simulates editing before approval).
+	if err := os.WriteFile(fullPath, []byte("modified content after review"), 0o644); err != nil {
 		t.Fatalf("failed to modify document: %v", err)
 	}
 
-	// Try to approve - should fail due to hash mismatch
+	// Approve — should succeed and auto-refresh the hash (FR-B06, AC-B08).
+	approveResult, err := svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitResult.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err != nil {
+		t.Fatalf("ApproveDocument() error = %v; want success (hash should be auto-refreshed)", err)
+	}
+
+	// Status must be approved.
+	if approveResult.Status != "approved" {
+		t.Errorf("status = %q, want %q", approveResult.Status, "approved")
+	}
+
+	// Stored hash must now match the modified file content (AC-B09).
+	if approveResult.ContentHash == originalHash {
+		t.Error("content hash was not updated; want hash to reflect modified file")
+	}
+	// Verify against the actual file hash.
+	currentHash, hashErr := storage.ComputeContentHash(fullPath)
+	if hashErr != nil {
+		t.Fatalf("compute current hash: %v", hashErr)
+	}
+	if approveResult.ContentHash != currentHash {
+		t.Errorf("approved content hash = %q, want %q (current file hash)", approveResult.ContentHash, currentHash)
+	}
+}
+
+// TestApproveDocument_FileMissing verifies that approving a document whose
+// file is missing on disk returns an error (FR-B07, AC-B10).
+func TestApproveDocument_FileMissing(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	// Create and submit a document.
+	docPath := "test.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.WriteFile(fullPath, []byte("content"), 0o644); err != nil {
+		t.Fatalf("failed to create document: %v", err)
+	}
+	submitResult, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "design",
+		Title:     "Test",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	// Remove the file before approval.
+	if err := os.Remove(fullPath); err != nil {
+		t.Fatalf("remove file: %v", err)
+	}
+
+	// Approve — should fail because the file is missing.
 	_, err = svc.ApproveDocument(ApproveDocumentInput{
 		ID:         submitResult.ID,
 		ApprovedBy: "reviewer",
 	})
 	if err == nil {
-		t.Fatal("expected error for content hash mismatch")
+		t.Fatal("expected error when file is missing, got nil")
 	}
-	if !strings.Contains(err.Error(), "changed since it was registered") {
-		t.Errorf("error = %q, want to contain 'changed since it was registered'", err.Error())
+	if !strings.Contains(err.Error(), "not found") {
+		t.Errorf("error = %q, want to contain 'not found'", err.Error())
 	}
 }
 
@@ -1339,7 +1402,7 @@ func TestAttachQualityEvaluation_Success(t *testing.T) {
 		EvaluatedAt:  time.Now().UTC(),
 		Evaluator:    "claude-sonnet-4.5",
 		Dimensions: map[string]float64{
-			"clarity":     0.9,
+			"clarity":      0.9,
 			"completeness": 0.8,
 		},
 	}

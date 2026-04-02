@@ -253,3 +253,199 @@ func TestCommitStateIfDirty_NonExistentRepo_ReturnsError(t *testing.T) {
 		t.Error("expected error for non-existent repo path, got nil")
 	}
 }
+
+// ─── CommitStateWithMessage tests ────────────────────────────────────────────
+
+// AC-A01: CommitStateWithMessage creates a commit with the supplied message.
+func TestCommitStateWithMessage_CustomMessage(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	initTestRepo(t, dir)
+
+	writeFile(t, dir, ".kbz/state/tasks/TASK-001.yaml", "id: TASK-001\nstatus: done\n")
+
+	committed, err := CommitStateWithMessage(dir, "workflow(TASK-001): complete – do the thing")
+	if err != nil {
+		t.Fatalf("CommitStateWithMessage: unexpected error: %v", err)
+	}
+	if !committed {
+		t.Error("committed = false, want true")
+	}
+
+	messages := gitLogMessages(t, dir)
+	if len(messages) == 0 {
+		t.Fatal("no commits found")
+	}
+	wantMsg := "workflow(TASK-001): complete – do the thing"
+	if messages[0] != wantMsg {
+		t.Errorf("commit message = %q, want %q", messages[0], wantMsg)
+	}
+}
+
+// AC-A02: CommitStateWithMessage returns (false, nil) when .kbz/state/ is clean.
+func TestCommitStateWithMessage_Clean_NothingCommitted(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	initTestRepo(t, dir)
+
+	before := countCommits(t, dir)
+
+	committed, err := CommitStateWithMessage(dir, "workflow: some message")
+	if err != nil {
+		t.Fatalf("CommitStateWithMessage: unexpected error: %v", err)
+	}
+	if committed {
+		t.Error("committed = true, want false (nothing in .kbz/state/ to commit)")
+	}
+
+	after := countCommits(t, dir)
+	if after != before {
+		t.Errorf("commit count changed: %d → %d", before, after)
+	}
+}
+
+// CommitStateIfDirty must continue to use the fixed message after the refactor (regression).
+func TestCommitStateIfDirty_StillUsesFixedMessage(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	initTestRepo(t, dir)
+
+	writeFile(t, dir, ".kbz/state/tasks/TASK-002.yaml", "id: TASK-002\nstatus: active\n")
+
+	committed, err := CommitStateIfDirty(dir)
+	if err != nil {
+		t.Fatalf("CommitStateIfDirty: %v", err)
+	}
+	if !committed {
+		t.Error("committed = false, want true")
+	}
+
+	messages := gitLogMessages(t, dir)
+	wantMsg := "chore(kbz): persist workflow state before sub-agent dispatch"
+	if len(messages) == 0 || messages[0] != wantMsg {
+		t.Errorf("commit message = %q, want %q", messages[0], wantMsg)
+	}
+}
+
+// ─── CommitStateAndPaths tests ────────────────────────────────────────────────
+
+// AC-A03: CommitStateAndPaths creates a single commit containing both
+// .kbz/state/ files and the extra paths.
+func TestCommitStateAndPaths_StagesStateAndExtraPath(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	initTestRepo(t, dir)
+
+	writeFile(t, dir, ".kbz/state/documents/DOC-001.yaml", "id: DOC-001\n")
+	writeFile(t, dir, "work/spec/my-spec.md", "# My Spec\n")
+
+	committed, err := CommitStateAndPaths(dir, "workflow(DOC-001): register specification", "work/spec/my-spec.md")
+	if err != nil {
+		t.Fatalf("CommitStateAndPaths: unexpected error: %v", err)
+	}
+	if !committed {
+		t.Error("committed = false, want true")
+	}
+
+	committedFiles := gitShowFiles(t, dir)
+	hasState := false
+	hasExtra := false
+	for _, f := range committedFiles {
+		if strings.HasPrefix(f, ".kbz/state/") {
+			hasState = true
+		}
+		if f == "work/spec/my-spec.md" {
+			hasExtra = true
+		}
+	}
+	if !hasState {
+		t.Error("commit does not contain any .kbz/state/ file")
+	}
+	if !hasExtra {
+		t.Error("commit does not contain work/spec/my-spec.md")
+	}
+
+	// Verify it was a single commit (count increased by exactly 1).
+	if countCommits(t, dir) != 2 {
+		t.Errorf("expected 2 total commits, got %d", countCommits(t, dir))
+	}
+}
+
+// AC-A04: CommitStateAndPaths does not stage files outside .kbz/state/ and
+// the explicit extraPaths.
+func TestCommitStateAndPaths_DoesNotStageOtherFiles(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	initTestRepo(t, dir)
+
+	writeFile(t, dir, ".kbz/state/documents/DOC-002.yaml", "id: DOC-002\n")
+	writeFile(t, dir, "work/spec/my-spec.md", "# My Spec\n")
+	writeFile(t, dir, "work/design/other.md", "# Other\n") // NOT in extraPaths
+
+	committed, err := CommitStateAndPaths(dir, "workflow(DOC-002): register specification", "work/spec/my-spec.md")
+	if err != nil {
+		t.Fatalf("CommitStateAndPaths: %v", err)
+	}
+	if !committed {
+		t.Error("committed = false, want true")
+	}
+
+	committedFiles := gitShowFiles(t, dir)
+	for _, f := range committedFiles {
+		if f == "work/design/other.md" {
+			t.Errorf("file %q should not have been committed (not in extraPaths)", f)
+		}
+	}
+}
+
+// CommitStateAndPaths with no dirty files returns (false, nil).
+func TestCommitStateAndPaths_Clean_NothingCommitted(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	initTestRepo(t, dir)
+
+	before := countCommits(t, dir)
+
+	committed, err := CommitStateAndPaths(dir, "workflow: test", "work/spec/nonexistent.md")
+	if err != nil {
+		t.Fatalf("CommitStateAndPaths: unexpected error: %v", err)
+	}
+	if committed {
+		t.Error("committed = true, want false (nothing dirty)")
+	}
+
+	after := countCommits(t, dir)
+	if after != before {
+		t.Errorf("commit count changed: %d → %d", before, after)
+	}
+}
+
+// CommitStateAndPaths with only an extra path dirty (no state changes) commits
+// just the extra path.
+func TestCommitStateAndPaths_OnlyExtraPathDirty(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	initTestRepo(t, dir)
+
+	// Only the extra path is dirty; .kbz/state/ is clean.
+	writeFile(t, dir, "work/spec/my-spec.md", "# New Spec\n")
+
+	committed, err := CommitStateAndPaths(dir, "workflow(DOC-003): register specification", "work/spec/my-spec.md")
+	if err != nil {
+		t.Fatalf("CommitStateAndPaths: %v", err)
+	}
+	if !committed {
+		t.Error("committed = false, want true (extra path is dirty)")
+	}
+
+	committedFiles := gitShowFiles(t, dir)
+	hasExtra := false
+	for _, f := range committedFiles {
+		if f == "work/spec/my-spec.md" {
+			hasExtra = true
+		}
+	}
+	if !hasExtra {
+		t.Error("commit does not contain work/spec/my-spec.md")
+	}
+}

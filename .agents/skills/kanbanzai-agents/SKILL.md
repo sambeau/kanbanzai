@@ -146,9 +146,14 @@ Add `!` after the type for breaking changes: `feat(FEAT-001)!: description`
 - Commit at logical checkpoints — after completing a coherent change, before
   starting a risky edit.
 - Do not commit directly to `main`. Work on feature or bug branches.
-- **`.kbz/state/` files are versioned project state, not ephemeral cache.**
-  Commit them alongside the work that produced them. Never leave `.kbz/`
-  files uncommitted at the end of a task.
+- **MCP tools now auto-commit `.kbz/state/` changes** after each operation
+  (`entity`, `doc`, `finish`, `decompose`, `merge`, etc.). Manual commits for
+  state files are no longer required.
+- **Manual commits are still needed** for work files — Go code, markdown docs
+  not managed by `doc register`, and any other non-state changes.
+- The `git status` check at session start remains a safety net: orphaned
+  `.kbz/state/` files from interrupted sessions are rare but still worth
+  committing before starting new work.
 
 ---
 
