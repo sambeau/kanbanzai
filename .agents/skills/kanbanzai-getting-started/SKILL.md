@@ -31,6 +31,7 @@ Orient an agent at the start of a session in a Kanbanzai-managed project.
 Copy this checklist at the beginning of every session:
 
 - [ ] **Clean slate** — Run `git status`. Commit coherent changes, stash incomplete work, or proceed if clean.
+- [ ] **Store check** — If `git status` shows uncommitted `.kbz/` files, commit them now. These are versioned project state, not ephemeral cache. Do not stash, discard, or `.gitignore` them.
 - [ ] **Read project context** — Read `AGENTS.md` if you haven't this session.
 - [ ] **Check the work queue** — Call `next()` to see what's ready.
 - [ ] **Claim your task** — Call `next(id: "TASK-xxx")` to get full context for your chosen task.

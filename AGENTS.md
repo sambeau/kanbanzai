@@ -151,6 +151,14 @@ For commit message format, types, and examples, see the `kanbanzai-agents` skill
 
 Do not let document changes accumulate uncommitted across long sessions.
 
+### Store discipline
+
+`.kbz/state/` files are versioned project state, not ephemeral cache. They record entity lifecycle, document metadata, and knowledge entries that other agents depend on. Treat them as code changes:
+
+- Commit `.kbz/state/` changes alongside the work that produced them.
+- Never stash, discard, or `.gitignore` `.kbz/` files.
+- If `git status` shows orphaned `.kbz/` files at the start of a task, commit them before proceeding.
+
 ## Scope Guard
 
 Phases 1–15 and Kanbanzai 2.0/2.5 are complete. There is no current in-progress phase. For detailed delivery history, see `docs/project-timeline.md`.

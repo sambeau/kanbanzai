@@ -166,6 +166,72 @@ Before producing final output, validate your findings:
 IF any validation check fails → fix the problem → re-validate from step 1.
 Repeat until all checks pass. Only then produce the structured output.
 
+## Edge Cases
+
+### Missing Spec
+
+The review unit has no linked spec or the spec reference resolves to nothing.
+
+1. Set the `spec_conformance` per-dimension outcome to `not_applicable`.
+2. Record a non-blocking finding under `spec_conformance` stating that
+   conformance cannot be assessed because no spec is linked.
+3. Continue evaluating all other dimensions normally — implementation quality,
+   test adequacy, documentation currency, and workflow integrity do not require
+   a spec to assess.
+4. In the overall verdict rationale, note that spec conformance was skipped due
+   to missing spec. The verdict is derived from the remaining dimensions only.
+
+### Partial Implementation
+
+The implementation contains stubs, TODOs, placeholder returns, or missing code
+paths that indicate incomplete work.
+
+1. Record a blocking finding under `implementation_quality` describing exactly
+   what is missing — cite the stub location and what the code path should do.
+2. Set `spec_conformance` to `concern` for any acceptance criteria that depend
+   on the incomplete code, and evaluate remaining criteria normally.
+3. If the incomplete code lacks corresponding tests, record a blocking finding
+   under `test_adequacy` for each untested stub or placeholder path.
+4. Set the overall verdict to `needs_remediation`.
+5. Do not infer what the finished implementation would look like. Evaluate only
+   what exists. Speculation about intent is not evidence.
+
+### Ambiguous Conformance
+
+The implementation differs from the spec, but the difference may be intentional
+(e.g., an improved algorithm, a reordered sequence that preserves semantics).
+
+1. Record the deviation as a finding under `spec_conformance` with per-dimension
+   outcome `concern` — not `fail`. Reserve `fail` for clear contradictions.
+2. Describe precisely what the spec says (cite the spec anchor) versus what the
+   implementation does (cite the code location). Do not editorialize.
+3. Classify the finding:
+   - **Non-blocking** if the implementation appears intentionally better or
+     equivalent and does not omit or contradict any stated requirement.
+   - **Blocking** if the deviation omits a requirement or contradicts a spec
+     constraint, even if the alternative seems reasonable.
+4. If the deviation improves on the spec without omitting requirements, attach a
+   note recommending that the spec be updated to reflect the implementation.
+5. Name the ambiguity explicitly (e.g., "AC-3 requires X; implementation does Y
+   instead") so the orchestrator or human reviewer can resolve it with full
+   context.
+
+### Missing Context
+
+Required inputs are absent — files are inaccessible, the context packet is
+incomplete, or the review profile references artifacts that cannot be found.
+
+1. Record specifically what is missing: which files, which spec sections, or
+   which context packet fields are absent.
+2. Set the overall verdict to `blocked`.
+3. For each affected dimension, record a blocking finding listing the missing
+   input that prevents evaluation.
+4. Set each affected dimension's per-dimension outcome to `not_applicable` with
+   a note identifying the missing dependency.
+5. Do not produce a partial review presented as complete. A blocked verdict with
+   an explicit list of missing inputs is more useful than a review that silently
+   omits dimensions.
+
 ## Output Format
 
 ```

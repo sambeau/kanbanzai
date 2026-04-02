@@ -2,4 +2,4 @@ id: TASK-01KN70AANS9HT
 parent_feature: FEAT-01KN6ZA4NYJ25
 slug: migrate-write-design
 summary: "Port design stance, risk escalation, quality lens reference, and operational guidance from kanbanzai-design into write-design SKILL.md (FR-013 to FR-016)"
-status: queued
+status: ready

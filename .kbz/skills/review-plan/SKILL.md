@@ -87,6 +87,22 @@ constraint_level: low
   mark cancelled/superseded features with their actual status and note whether the
   scope change was intentional
 
+## Prerequisites
+
+Before starting a plan review, verify these inputs are available:
+
+1. **Plan ID** — the plan to review (e.g., `P10-review-and-doc-currency`).
+2. **Plan document** — the implementation plan that defines features, acceptance
+   criteria, and sequencing.
+3. **Specification document(s)** — the binding contracts for each feature. May be
+   a single spec covering the whole plan or per-feature specs.
+4. **All features in terminal state** — features must be in done, cancelled, or
+   superseded state. If any feature is still active, the plan is not ready for
+   delivery verification.
+
+IF any of these are missing or unclear → STOP. Ask before proceeding. Do not
+begin a plan review with incomplete inputs.
+
 ## Checklist
 
 ```
@@ -96,9 +112,12 @@ Copy this checklist and track your progress:
 - [ ] Verified each feature is in a terminal state
 - [ ] Verified all tasks under each feature are in terminal state
 - [ ] Checked specification approval status for each feature
+- [ ] Verified each acceptance criterion against the implementation (spec conformance)
 - [ ] Checked documentation currency (AGENTS.md, scope guard, SKILL files)
+- [ ] Ran cross-cutting checks (go test, health, git status)
+- [ ] Contributed retrospective observations
 - [ ] Recorded all conformance gaps
-- [ ] Produced structured review output
+- [ ] Wrote review report and registered as document record
 ```
 
 ## Procedure
@@ -125,17 +144,30 @@ For each feature in the census:
 4. For cancelled or superseded features, note the scope reduction explicitly.
    Do not silently omit them from the census.
 
-### Step 3: Audit specification approval
+### Step 3: Verify spec conformance
 
 For each feature that reached done:
 
 1. Locate the specification document via the plan document or
    `doc(action: "list", owner: "<plan-id>")`.
-2. Confirm the spec is in approved status.
-3. IF any spec is in draft status → record a conformance gap.
-4. IF a feature has no associated spec (e.g., documentation-only work where
-   the plan's acceptance criteria served as the spec), note this explicitly
-   and verify against the plan document's criteria instead.
+2. Confirm the spec is in approved status. IF any spec is in draft status →
+   record a conformance gap.
+3. Read the acceptance criteria from the spec document. Use
+   `doc(action: "content", id: "<spec-doc-id>")` or read the file directly.
+4. Verify each criterion against the actual implementation. For code changes,
+   read the relevant source files. For documentation changes, check that the
+   files exist and contain what the spec requires. Do not treat approval
+   status alone as proof of conformance — check the work itself.
+5. Record pass/fail per criterion using the conformance table:
+
+   | # | Criterion | Result | Notes |
+   |---|-----------|--------|-------|
+   | 1 | ...       | ✅     |       |
+   | 2 | ...       | ⚠️     | ...   |
+
+6. IF a feature has no associated spec (e.g., documentation-only work where
+   the plan's acceptance criteria served as the spec), verify against the
+   plan document's criteria instead and note this explicitly.
 
 ### Step 4: Check documentation currency
 
@@ -149,14 +181,46 @@ For each feature that reached done:
 2. IF documentation does not reflect the delivered work → record a
    conformance gap with the specific document and section that needs updating.
 
-### Step 5: Assess and report
+### Step 5: Cross-cutting checks
+
+Run three specific cross-cutting checks:
+
+1. **Test suite** — run `go test -race ./...`. All tests must pass. Record
+   any failures as conformance gaps.
+2. **System health** — call `health()`. Check for new errors or warnings:
+   entity consistency issues, knowledge staleness, worktree cleanup items.
+   New warnings introduced by the plan's work are conformance gaps.
+3. **Clean working tree** — run `git status`. There should be no uncommitted
+   changes from the plan's work. Uncommitted changes indicate incomplete
+   delivery.
+
+### Step 6: Retrospective contribution
+
+Before writing the review report, contribute observations about the plan:
+
+- What worked well? (spec quality, test coverage, smooth tooling)
+- What caused friction? (unclear specs, stale docs, tooling gaps,
+  documentation drift)
+- What would you change for next time?
+
+Contribute signals using `finish(retrospective: [...])` when completing a
+review task, or `knowledge(action: "contribute", tags: ["retrospective"])`
+for standalone observations.
+
+Do not skip this step. Retrospective signals captured at review time are
+the primary input for process improvement.
+
+### Step 7: Write and register review report
 
 1. IF any conformance gaps were recorded → the plan verdict is fail or
    pass with findings, depending on severity.
 2. IF the plan state is contradictory (e.g., features reference specs that
    don't exist, or the dashboard shows inconsistencies) → STOP. Report the
    contradiction. Do not produce a verdict on contradictory data.
-3. Produce the structured review output.
+3. Write findings to `work/reviews/review-<plan-slug>.md` using the output
+   format below.
+4. Register the document:
+   `doc(action: "register", path: "work/reviews/review-<plan-slug>.md", type: "report", title: "Review: <Plan Title>")`
 
 ## Output Format
 
@@ -186,6 +250,17 @@ For each feature that reached done:
 | FEAT-...  | work/spec/...          | draft ❌    |
 | FEAT-...  | (plan criteria used)   | N/A      |
 
+## Spec Conformance Detail
+
+### Feature: <slug>
+
+| # | Criterion | Result | Notes |
+|---|-----------|--------|-------|
+| 1 | ...       | ✅     |       |
+| 2 | ...       | ⚠️     | ...   |
+
+<Repeat per feature>
+
 ## Documentation Currency
 
 | Check                      | Result    | Notes |
@@ -195,6 +270,14 @@ For each feature that reached done:
 | Spec documents approved    | ✅ / ❌  |       |
 | SKILL files current        | ✅ / ❌ / N/A |  |
 | Bootstrap workflow current | ✅ / ❌ / N/A |  |
+
+## Cross-Cutting Checks
+
+| Check | Result |
+|-------|--------|
+| `go test -race ./...` | ✅ Pass / ❌ Failures |
+| `health()` | ✅ Clean / ⚠️ Warnings |
+| `git status` clean | ✅ / ❌ |
 
 ## Conformance Gaps
 
@@ -290,22 +373,34 @@ claim by claim. Conformance-focused — no code quality commentary.
    Weight: required.
 3. Does the review check specification approval status for each feature?
    Weight: required.
-4. Does the review check documentation currency?
+4. Does the review verify each acceptance criterion against the implementation
+   (not just approval status)? Weight: required.
+5. Does the review check documentation currency?
    Weight: high.
-5. Are cancelled or superseded features explicitly acknowledged with reasons?
+6. Does the review include cross-cutting checks (tests, health, git status)?
    Weight: high.
-6. Does the review stay conformance-focused without scope creep into code quality?
+7. Are cancelled or superseded features explicitly acknowledged with reasons?
    Weight: high.
-7. Can a reader verify each claim in the review without re-running the checks?
+8. Does the review stay conformance-focused without scope creep into code quality?
+   Weight: high.
+9. Does the review include retrospective observations?
    Weight: medium.
+10. Is the review report registered as a document record?
+    Weight: medium.
+11. Can a reader verify each claim in the review without re-running the checks?
+    Weight: medium.
 
 ## Questions This Skill Answers
 
 - How do I review a plan for completion?
 - What should I check before closing a plan?
 - How do I verify all specs in a plan are approved?
+- How do I check spec conformance criterion by criterion?
 - What is the difference between plan review and code review?
 - How do I handle cancelled features in a plan review?
 - What documentation should I check during plan review?
 - What does a conformance gap look like in a plan review?
 - When should I stop a plan review because of contradictory state?
+- What cross-cutting checks should I run during plan review?
+- How do I contribute retrospective observations during review?
+- Where do I write and register the review report?

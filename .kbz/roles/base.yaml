@@ -19,6 +19,11 @@ anti_patterns:
     because: "Undocumented design decisions made during implementation are expensive to discover in review and may conflict with human intent"
     resolve: "Implement only what the spec requires; if something seems missing, stop and ask"
 
+  - name: "Store Neglect"
+    detect: "Uncommitted .kbz/state/ files visible in git status at task start or end, or .kbz/ paths added to .gitignore"
+    because: "Store files are versioned project state that parallel agents depend on — uncommitted store changes cause store drift, race conditions when multiple agents read stale entity state, and silent data loss when work is discarded or overwritten"
+    resolve: "Commit .kbz/state/ changes alongside the work that produced them. At task start, if git status shows orphaned .kbz/ files, commit them immediately before proceeding. Never stash, discard, or .gitignore .kbz/ files"
+
 tools:
   - entity
   - doc

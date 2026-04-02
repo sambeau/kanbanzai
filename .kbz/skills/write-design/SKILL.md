@@ -40,6 +40,14 @@ constraint_level: high
 - **backward compatibility** — the guarantee that existing consumers continue to work when a component evolves
 - **separation of concerns** — organising a system so each part addresses a distinct aspect, minimising cross-cutting dependencies
 
+## Design Stance
+
+**Design with ambition.** Always present the ambitious version of a design first. If there are genuine reasons to simplify — scope constraints, timeline pressure, missing infrastructure — enumerate them explicitly and let the human decide. Difficulty alone is not a reason to choose the weaker design alternative. The expedient version is a fallback, not a default.
+
+**Human/agent role contract.** The human is the Design Manager — they own design decisions, make the final call, and approve. The agent is the Senior Designer — proposes designs, drafts documents, conducts research, presents design alternatives, and makes recommendations. The agent cannot make final design decisions or approve its own work. When the agent disagrees with a decision, it states its design rationale clearly, once. If the human decides otherwise, the agent documents the decision and moves on.
+
+**Design is iterative.** There is no single right path. Stages can be revisited. A design that seemed complete can turn out to need revision after new design constraints surface or trade-off analysis reveals a better approach. That is normal and not a failure.
+
 ## Anti-Patterns
 
 ### Missing Alternatives
@@ -77,6 +85,16 @@ constraint_level: high
 - **BECAUSE:** A design that only works when everything goes right is incomplete — failure modes discovered during implementation are more expensive to address than those anticipated during design
 - **Resolve:** For each component boundary and external interaction, identify at least one failure mode and describe its handling strategy
 
+## Risk Escalation
+
+Three tiers for surfacing technical risk during design:
+
+- **Minor concern** — mention once in discussion; note in the design document if relevant to a design decision. No further action required.
+- **Significant risk** — raise clearly with explicit trade-off analysis. If the human moves on without acknowledging, repeat the concern. A significant risk that is silently ignored is a design gap.
+- **Security or data-integrity risk** — do not proceed without explicit acknowledgment from the human. Repeat until acknowledged. These risks affect system invariants and cannot be accepted implicitly.
+
+If the human acknowledges a risk and decides to proceed anyway, accept the decision. Document the risk, the decision, and the design rationale in the Decisions section so the trade-off is visible to future readers.
+
 ## Procedure
 
 ### Step 1: Establish Context
@@ -106,7 +124,8 @@ constraint_level: high
 1. Run the validation script: `.kbz/skills/write-design/scripts/validate-design-structure.sh <path>`
 2. Verify that every decision has a design rationale.
 3. Verify that Alternatives Considered contains at least two design alternatives.
-4. IF validation fails → fix the structural issue → re-validate.
+4. Hold the design against six qualities: simplicity, minimalism, completeness, composability, honesty, and durability. See [references/design-quality.md](references/design-quality.md) for full definitions.
+5. IF validation fails → fix the structural issue → re-validate.
 
 ### Step 5: Present for Review
 
@@ -230,6 +249,21 @@ Each decision entry:
 > code changes are needed.
 
 **WHY GOOD:** Problem statement quantifies the issue (p95 latency, growth rate, call volume) and states the consequence of inaction. Design describes components and boundaries without implementation detail. Three design alternatives with explicit trade-offs and clear accept/reject reasoning. Failure mode is identified with a recovery strategy. Decision entry has full context, design rationale, and consequences — a future reader can evaluate whether the reasoning still holds.
+
+## Operational Guidance
+
+**Draft lifecycle.** During design, documents are in draft status. Drafts may contain design alternatives and open questions. Keep the document as an honest, up-to-date reflection of where the design has reached — do not present a draft as more settled than it is.
+
+**Design splitting.** If scope is larger than a single feature, flag it and step back to planning. Signs that splitting is needed: different sections feel like separate products, parts could be implemented independently with no interface contract between them, or the resulting specification would be unmanageably large.
+
+**Gotchas.**
+
+- Register the document after creation — call `doc(action: "register")` immediately. An unregistered design document is invisible to the workflow.
+- Do not approve a design document with unresolved design-level questions. Implementation-level questions may remain open.
+- Do not edit an approved document — supersede it with `doc(action: "supersede")` instead. Approved documents are immutable records.
+- If `doc(action: "approve")` fails due to content hash drift, call `doc(action: "refresh")` first to re-sync.
+
+**Next steps after design.** Use `work/templates/specification-prompt-template.md` for the specification. See the `kanbanzai-documents` skill for the full registration and approval procedure.
 
 ## Evaluation Criteria
 

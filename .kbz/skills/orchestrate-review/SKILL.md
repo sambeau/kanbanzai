@@ -115,6 +115,9 @@ Copy this checklist and track your progress:
 - [ ] Classified aggregate findings (blocking vs non-blocking)
 - [ ] Produced aggregate verdict with routing decision
 - [ ] Routed blocking findings to remediation OR routed to approval
+- [ ] Wrote review document and registered with doc()
+- [ ] Created human checkpoint for ambiguous or high-stakes findings (if applicable)
+- [ ] Managed remediation cycle within iteration cap (if rejected)
 ```
 
 ## Procedure
@@ -200,6 +203,74 @@ They each produce a structured review output in the `review-code` format.
 3. IF this is a re-review (review cycle count > 1), verify that previously
    blocking findings have been resolved. Do not approve if prior blocking
    findings were not addressed.
+
+### Step 7: Write review document
+
+1. Write collated findings to `work/reviews/review-{unsplit-id}-{slug}.md`
+   where `{unsplit-id}` is the full entity ID (e.g., `FEAT-01KMRX1SEQV49`)
+   and `{slug}` is the feature slug. The naming convention is:
+   `review-{id}-{slug}.md`.
+2. The document must contain: summary verdict, per-dimension verdicts,
+   blocking findings with locations, non-blocking findings, and review
+   unit breakdown showing the dispatch scope for each sub-agent.
+3. Register the document:
+   `doc(action: "register", owner: "<feature-id>", path: "<report-path>", type: "report", title: "Review: <feature-slug>")`
+
+### Remediation Phase (when verdict is rejected)
+
+Enter this phase only when the aggregate verdict is `rejected`.
+
+1. Transition the feature to `needs-rework`:
+   `entity(action: "transition", id: "<feature-id>", status: "needs-rework")`
+2. Create remediation tasks as children of the feature — one per blocking
+   finding or logical group of related findings:
+   `entity(action: "create", type: "task", parent_feature: "<feature-id>")`
+3. Before dispatching tasks in parallel, check for file overlap:
+   `conflict(action: "check", task_ids: [...])`
+4. Dispatch tasks through the normal workflow:
+   `next(id: "<task-id>")` to claim and activate.
+5. After remediation tasks complete, re-review ONLY affected sections — not
+   the entire feature. Spawn sub-agents for affected review units only.
+6. If re-review passes: transition feature to `done`. If new blocking
+   findings: repeat from step 1 of this phase.
+7. **Iteration cap:** Maximum 3 remediation-re-review cycles. If issues
+   persist after 3 cycles, escalate to human via
+   `checkpoint(action: "create")`.
+
+### Human Checkpoint Integration
+
+Create a human checkpoint (`checkpoint(action: "create")`) when:
+
+1. **Ambiguous findings** — findings that are not clearly blocking or
+   non-blocking; the orchestrator cannot make a confident routing decision.
+2. **High-stakes features** — when the feature is critical and final
+   approval should be explicit. Pass the review document summary in the
+   checkpoint context.
+3. **Dimension disagreement** — when review dimensions produce conflicting
+   signals (e.g., spec conformance passes but implementation quality fails).
+
+For each scenario, include in the checkpoint context:
+- The aggregate verdict and per-dimension verdicts
+- A summary of the contentious findings
+- The recommended action and why the orchestrator is uncertain
+
+Wait for the human response before proceeding. Do not dispatch remediation
+or transition feature state while a checkpoint is pending.
+
+### Context Budget Strategy
+
+The orchestrator and sub-agents have deliberately different context profiles:
+
+**Orchestrator** works at metadata level only (~6–14 KB total): feature
+entity state, spec outline, task list with file paths, skill document,
+collated findings. The orchestrator never reads source code.
+
+**Sub-agents** hold their review unit's context (~12–30 KB per agent):
+reviewer profile, skill document, spec section(s), source files, output
+template.
+
+This means: orchestrator context cost is constant regardless of codebase
+size; sub-agent context scales with review unit size, not feature size.
 
 ## Output Format
 
@@ -374,3 +445,7 @@ correctly reflects the pass_with_notes from the quality reviewer.
 - How do I decide between remediation routing and approval?
 - What does the aggregate review report look like?
 - How do I handle a re-review after remediation?
+- Where do I write the review document and how do I register it?
+- When should I create a human checkpoint during review?
+- What is the context budget strategy for orchestrator vs sub-agents?
+- How do I manage the remediation cycle when findings are blocking?

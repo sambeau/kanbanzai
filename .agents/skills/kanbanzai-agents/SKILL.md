@@ -144,6 +144,11 @@ Add `!` after the type for breaking changes: `feat(FEAT-001)!: description`
   starting a risky edit.
 - Do not commit directly to `main`. Work on feature or bug branches.
 - Document changes follow the same commit discipline as code changes.
+- **`.kbz/state/` files are versioned project state, not ephemeral cache.**
+  They record entity lifecycle, document metadata, and knowledge entries that
+  other agents depend on. Treat `.kbz/state/` changes as code changes —
+  commit them alongside the work that produced them. Never leave `.kbz/`
+  files uncommitted at the end of a task.
 
 ---
 
