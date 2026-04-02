@@ -28,6 +28,7 @@ import (
 	idpkg "github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/stage"
 )
 
 // NextTools returns the `next` MCP tool registered in the core group.
@@ -211,6 +212,13 @@ func nextClaimMode(
 		)
 	}
 
+	// Stage-aware lifecycle validation (FR-002).
+	parentFeatureForValidation, _ := task.State["parent_feature"].(string)
+	featureStage, valErr := ValidateFeatureStage(parentFeatureForValidation, entitySvc)
+	if valErr != nil {
+		return nil, fmt.Errorf("Cannot claim task %s: %v", taskID, valErr)
+	}
+
 	// Determine dispatched_to and dispatched_by.
 	dispatchedTo := role
 	if dispatchedTo == "" {
@@ -279,6 +287,7 @@ func nextClaimMode(
 		taskState:       task.State,
 		parentFeature:   parentFeature,
 		role:            role,
+		featureStage:    featureStage,
 		profileStore:    profileStore,
 		knowledgeSvc:    knowledgeSvc,
 		intelligenceSvc: intelligenceSvc,
@@ -357,6 +366,28 @@ func nextContextToMap(actx assembledContext) map[string]any {
 			}
 		}
 		out["active_experiments"] = nudges
+	}
+	// Stage-aware fields (FR-013).
+	if actx.stageAware {
+		out["stage_aware"] = true
+		out["feature_stage"] = actx.featureStage
+		if cfg, ok := stage.ForStage(actx.featureStage); ok {
+			out["orchestration_pattern"] = string(cfg.Orchestration)
+			out["effort_budget"] = map[string]any{
+				"stage":   actx.featureStage,
+				"text":    cfg.EffortBudget.Text,
+				"warning": cfg.EffortBudget.Warning,
+			}
+			out["tool_subset"] = map[string]any{
+				"primary":  cfg.PrimaryTools,
+				"excluded": cfg.ExcludedTools,
+			}
+			if cfg.OutputConvention {
+				out["output_convention"] = "Sub-agents write outputs to documents and task records. Read their status via entity(action: \"get\") and doc(action: \"get\"). Do not retain sub-agent conversation output in your context \u2014 use references (document IDs, task IDs, status summaries) instead of contents."
+			}
+		}
+	} else {
+		out["stage_aware"] = false
 	}
 	return out
 }
