@@ -1,0 +1,7 @@
+id: TASK-01KN78V62CHTM
+parent_feature: FEAT-01KN73BFK4M4Z
+slug: t9-doc-delete
+summary: "New doc delete action — remove file, clear entity references, remove state and index records, CommitStateAndPaths"
+status: queued
+depends_on:
+  - TASK-01KN78T6CFGX3

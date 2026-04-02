@@ -1,0 +1,5 @@
+id: TASK-01KN78V60WTSX
+parent_feature: FEAT-01KN73BFK4M4Z
+slug: t6-auto-refresh-hash-approve
+summary: Auto-refresh content hash on doc approve — recompute hash from disk before approving; error if file missing
+status: queued

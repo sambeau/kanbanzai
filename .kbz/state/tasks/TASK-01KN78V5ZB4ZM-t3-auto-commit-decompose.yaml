@@ -1,0 +1,7 @@
+id: TASK-01KN78V5ZB4ZM
+parent_feature: FEAT-01KN73BFK4M4Z
+slug: t3-auto-commit-decompose
+summary: Auto-commit in decompose apply handler — call CommitStateWithMessage after both passes complete
+status: queued
+depends_on:
+  - TASK-01KN78T6CFGX3

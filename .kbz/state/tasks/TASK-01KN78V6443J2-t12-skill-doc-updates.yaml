@@ -1,0 +1,8 @@
+id: TASK-01KN78V6443J2
+parent_feature: FEAT-01KN73BFK4M4Z
+slug: t12-skill-doc-updates
+summary: "Skill and documentation updates — update SKILL.md files and AGENTS.md to reflect decoupled dev-plan approval, auto-commit, auto-approve, new doc actions"
+status: queued
+depends_on:
+  - TASK-01KN78V61CMJR
+  - TASK-01KN78V62VG7W
