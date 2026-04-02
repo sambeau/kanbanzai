@@ -1,0 +1,8 @@
+id: TASK-01KN7SXHV0HKB
+parent_feature: FEAT-01KN07T66DZ68
+slug: completion-detection-tests
+summary: Write unit tests for completion detection attention items and health checks
+status: done
+completed: "2026-04-02T19:51:46Z"
+completion_summary: "Wrote 14 unit tests for generateFeatureAttention (completion, stale, inheritance) and generatePlanAttention (plan completion)."
+verification: All tests pass

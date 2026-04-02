@@ -2,9 +2,11 @@ id: FEAT-01KN07T660VVM/specification-decomposition-grouping
 path: work/spec/decomposition-grouping.md
 type: specification
 title: Decomposition Grouping Specification
-status: draft
+status: approved
 owner: FEAT-01KN07T660VVM
+approved_by: sambeau
+approved_at: "2026-04-02T19:14:34Z"
 content_hash: 0750417cc4b3dfbb0fce7fedbf596914a280714a46374612f1ee87a0fb51d156
 created: "2026-04-02T18:58:00Z"
 created_by: sambeau
-updated: "2026-04-02T18:58:00Z"
+updated: "2026-04-02T19:14:34Z"

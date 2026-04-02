@@ -1,8 +1,15 @@
 id: FEAT-01KN07T674DZM
 slug: main-branch-workflow
 parent: P13-workflow-flexibility
-status: specifying
+status: done
+review_cycle: 1
 summary: "Support direct-to-main workflows where no worktree/branch exists. When merge(action: 'check') or merge(action: 'execute') is called for an entity with no worktree, return an informational 'not_applicable' / 'skipped' result instead of erroring. Same for pr tool. Enables the close-out skill procedure to work identically for both worktree and direct-commit workflows."
 spec: FEAT-01KN07T674DZM/specification-direct-to-main-workflow
 created: "2026-03-30T20:43:53Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "Plan-level review document covers all P13 features: work/reviews/review-P13-workflow-flexibility.md (P13-workflow-flexibility/report-review-p13-workflow-flexibility, approved). All findings were resolved before closing."
+    timestamp: "2026-04-02T21:20:21+01:00"
+    to_status: done

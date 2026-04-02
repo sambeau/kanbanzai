@@ -2,9 +2,11 @@ id: FEAT-01KN07T66DZ68/specification-completion-detection
 path: work/spec/completion-detection.md
 type: specification
 title: Completion Detection and Close-Out Procedures Specification
-status: draft
+status: approved
 owner: FEAT-01KN07T66DZ68
+approved_by: sambeau
+approved_at: "2026-04-02T19:14:33Z"
 content_hash: c21adb6f34a49e58d2e2a45a97ec9d1fd3d109e237ea3c00bac3033089167fa1
 created: "2026-04-02T18:57:56Z"
 created_by: sambeau
-updated: "2026-04-02T18:57:56Z"
+updated: "2026-04-02T19:14:33Z"

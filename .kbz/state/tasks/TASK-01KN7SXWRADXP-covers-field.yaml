@@ -1,0 +1,8 @@
+id: TASK-01KN7SXWRADXP
+parent_feature: FEAT-01KN07T660VVM
+slug: covers-field
+summary: Add Covers field to ProposedTask in decompose.go
+status: done
+completed: "2026-04-02T19:51:48Z"
+completion_summary: "Added Covers []string field to ProposedTask with omitempty JSON serialization."
+verification: JSON omitempty test passes

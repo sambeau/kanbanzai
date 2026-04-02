@@ -1,0 +1,8 @@
+id: TASK-01KN7SXS7X3WT
+parent_feature: FEAT-01KN07T65HDZM
+slug: active-to-ready-transition
+summary: Add active-to-ready transition to lifecycle map in lifecycle.go
+status: done
+completed: "2026-04-02T19:51:47Z"
+completion_summary: Added active→ready transition to task lifecycle allowedTransitions map; crash recovery/unclaim now supported.
+verification: TestTaskLifecycle_ActiveToReadyAllowed passes

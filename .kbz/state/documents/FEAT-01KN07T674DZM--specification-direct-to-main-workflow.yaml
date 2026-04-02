@@ -2,9 +2,11 @@ id: FEAT-01KN07T674DZM/specification-direct-to-main-workflow
 path: work/spec/direct-to-main-workflow.md
 type: specification
 title: Direct-to-Main Workflow Specification
-status: draft
+status: approved
 owner: FEAT-01KN07T674DZM
+approved_by: sambeau
+approved_at: "2026-04-02T19:14:33Z"
 content_hash: d448f1b7f58e8e52e895d8247acbf91358a299bc210fb5c650394b82c2c320ca
 created: "2026-04-02T18:57:57Z"
 created_by: sambeau
-updated: "2026-04-02T18:57:57Z"
+updated: "2026-04-02T19:14:33Z"

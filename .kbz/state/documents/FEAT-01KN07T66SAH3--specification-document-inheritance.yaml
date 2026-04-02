@@ -2,9 +2,11 @@ id: FEAT-01KN07T66SAH3/specification-document-inheritance
 path: work/spec/document-inheritance.md
 type: specification
 title: Document Inheritance for Gap Checks Specification
-status: draft
+status: approved
 owner: FEAT-01KN07T66SAH3
+approved_by: sambeau
+approved_at: "2026-04-02T19:14:33Z"
 content_hash: 0fc8a8e1012ce7a70adf51a910b1f4784208d84b83bec33a50a0ae6561055a6f
 created: "2026-04-02T18:57:58Z"
 created_by: sambeau
-updated: "2026-04-02T18:57:58Z"
+updated: "2026-04-02T19:14:33Z"

@@ -1,8 +1,15 @@
 id: FEAT-01KN07T66SAH3
 slug: document-inheritance-and-freshness
 parent: P13-workflow-flexibility
-status: specifying
+status: done
+review_cycle: 1
 summary: "Add plan-level document inheritance for gap checks — a feature belonging to a plan with an approved spec should not show as missing a spec. Affects docGapsAction, synthesisePlan, synthesiseFeature, and generateFeatureAttention. Read-only inheritance: query-time fallback, no implicit document record creation. NOTE: doc refresh action was implemented in P9. Content hash staleness surfacing in health is a follow-up concern."
 spec: FEAT-01KN07T66SAH3/specification-document-inheritance
 created: "2026-03-30T20:43:53Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "Plan-level review document covers all P13 features: work/reviews/review-P13-workflow-flexibility.md (P13-workflow-flexibility/report-review-p13-workflow-flexibility, approved). All findings were resolved before closing."
+    timestamp: "2026-04-02T21:20:21+01:00"
+    to_status: done

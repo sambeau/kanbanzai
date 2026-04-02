@@ -1,9 +1,9 @@
 id: P13-workflow-flexibility
 slug: workflow-flexibility
 title: Workflow Flexibility — User Feedback Round 1
-status: active
+status: done
 summary: "Close the 'last mile' gap in workflow lifecycle: detect when features and plans are complete but not closed, document close-out procedures in skills, support direct-to-main workflows, reduce false-positive doc gap noise, add crash recovery for stuck tasks, and improve decomposition granularity. Driven by empirical evidence of 8 stale plans, 2 unmerged feature branches, and 44 orphaned worktrees found in a single audit."
 design: P13-workflow-flexibility/design-workflow-completeness
 created: "2026-03-30T20:43:30Z"
 created_by: sambeau
-updated: "2026-04-02T18:54:08Z"
+updated: "2026-04-02T20:20:25Z"

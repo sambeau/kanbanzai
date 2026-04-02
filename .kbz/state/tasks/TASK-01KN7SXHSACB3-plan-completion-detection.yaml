@@ -1,0 +1,8 @@
+id: TASK-01KN7SXHSACB3
+parent_feature: FEAT-01KN07T66DZ68
+slug: plan-completion-detection
+summary: Add plan completion detection to synthesisePlan in status_tool.go
+status: done
+completed: "2026-04-02T19:51:46Z"
+completion_summary: Added plan completion detection to synthesisePlan and generatePlanAttention; plan-level and project-level ready-to-close items.
+verification: Unit tests pass

@@ -1,0 +1,8 @@
+id: TASK-01KN7SXP40WYN
+parent_feature: FEAT-01KN07T66SAH3
+slug: doc-inheritance-helper
+summary: Add document inheritance helper and update docGapsAction in doc_tool.go
+status: done
+completed: "2026-04-02T19:51:46Z"
+completion_summary: "Added plan doc inheritance to docGapsAction; missing types fall back to approved plan-level docs; inherited:true marker in present array."
+verification: 4 doc_tool tests pass

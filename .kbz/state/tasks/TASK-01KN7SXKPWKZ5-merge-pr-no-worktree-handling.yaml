@@ -1,0 +1,8 @@
+id: TASK-01KN7SXKPWKZ5
+parent_feature: FEAT-01KN07T674DZM
+slug: merge-pr-no-worktree-handling
+summary: Add no-worktree graceful handling to merge_tool.go and pr_tool.go
+status: done
+completed: "2026-04-02T19:51:46Z"
+completion_summary: "Added no-worktree graceful handling to checkMergeReadiness, executeMerge, createPR, updatePR, getPRStatusForEntity; entity type validated before worktree lookup."
+verification: Unit tests covering ErrNotFound paths pass

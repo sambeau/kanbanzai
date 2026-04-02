@@ -1,0 +1,8 @@
+id: TASK-01KN7SXWSHJ87
+parent_feature: FEAT-01KN07T660VVM
+slug: checkgaps-covers-matching
+summary: Update checkGaps to use exact Covers matching
+status: done
+completed: "2026-04-02T19:51:48Z"
+completion_summary: "Updated isACCovered for exact Covers matching, falling back to keyword heuristic when Covers is empty."
+verification: checkGaps exact match tests pass

@@ -1,0 +1,8 @@
+id: TASK-01KN7SXWT22TB
+parent_feature: FEAT-01KN07T660VVM
+slug: table-row-extraction
+summary: Add markdown table row extraction to parseSpecStructure
+status: done
+completed: "2026-04-02T19:51:48Z"
+completion_summary: "Added markdown table row extraction to parseSpecStructure; separator detection, data row parsing, cell joining."
+verification: Table parsing tests pass

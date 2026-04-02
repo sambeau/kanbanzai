@@ -1,0 +1,8 @@
+id: TASK-01KN7SXS9NAH7
+parent_feature: FEAT-01KN07T65HDZM
+slug: crash-recovery-tests
+summary: Write unit and integration tests for task crash recovery
+status: done
+completed: "2026-04-02T19:51:47Z"
+completion_summary: "Wrote tests for crash recovery: active→ready lifecycle, active→queued rejection, stalled dispatch detection."
+verification: All health and validate tests pass
