@@ -1,0 +1,729 @@
+document_id: PROJECT/research-agent-instructions-review
+document_path: work/research/agent-instructions-review.md
+content_hash: 49b31d72d13c598611cd9fc6f454ffeb5755fa013b4b6aadc21bf3d37b5b3b97
+indexed_at: 2026-04-02T10:46:24.969955Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Agent Instructions & Knowledge Quality'
+      byte_offset: 0
+      byte_count: 54660
+      word_count: 7720
+      content_hash: 49b31d72d13c598611cd9fc6f454ffeb5755fa013b4b6aadc21bf3d37b5b3b97
+      children:
+        - path: "1.1"
+          level: 2
+          title: Executive Summary
+          byte_offset: 444
+          byte_count: 2242
+          word_count: 282
+          content_hash: 29cd64dd0e65ef81f2f4cc50cf0987ed125adfdfaf4647ac653ca5186ceb5463
+        - path: "1.2"
+          level: 2
+          title: Table of Contents
+          byte_offset: 2686
+          byte_count: 826
+          word_count: 64
+          content_hash: 87ec8161a431513eb70caa60e51d8934b99bfc4d5f3c2bdb17a85916bb8f51aa
+        - path: "1.3"
+          level: 2
+          title: 1. Overall Assessment Against Research Principles
+          byte_offset: 3512
+          byte_count: 3102
+          word_count: 475
+          content_hash: d93fbce09063de87a787df998984c76bcbdabc08bdca24332aa3ee5d8721fd90
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Best Practices Research (10 Principles)
+              byte_offset: 3566
+              byte_count: 1413
+              word_count: 213
+              content_hash: 7f88bab0a04cf62fef4edd034bba85e84677070aadc5ec1c0a82133674d50776
+            - path: 1.3.2
+              level: 3
+              title: Orchestration Research
+              byte_offset: 4979
+              byte_count: 676
+              word_count: 101
+              content_hash: 2352d397cf855298362dd19d0a4b48e3119778312dd425f26c2f0eb4254ed946
+            - path: 1.3.3
+              level: 3
+              title: Skills Research
+              byte_offset: 5655
+              byte_count: 959
+              word_count: 154
+              content_hash: 2ae23720d91ece44bd2b1a0b3ceb3bea4de46178571e59c29039ff0e1c58b202
+        - path: "1.4"
+          level: 2
+          title: 2. What Meets or Exceeds the Research
+          byte_offset: 6614
+          byte_count: 6005
+          word_count: 803
+          content_hash: c59ae4e657c29b7a8d97e9a2ea11d8662ee955c87a0fab1bb646c1b3a5ae452a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 2.1 Vocabulary Routing
+              byte_offset: 6656
+              byte_count: 825
+              word_count: 110
+              content_hash: 1ae021e0196be62be865268547100c25b257df3b6fa842deeddd194225e08ff5
+            - path: 1.4.2
+              level: 3
+              title: 2.2 Attention-Optimised Section Ordering
+              byte_offset: 7481
+              byte_count: 732
+              word_count: 97
+              content_hash: 0f546d3d0f778ca35425134f09b69712f9cae7fbe7737e48ffce73e225ba8b54
+            - path: 1.4.3
+              level: 3
+              title: 2.3 Named Anti-Patterns with BECAUSE Clauses
+              byte_offset: 8213
+              byte_count: 879
+              word_count: 124
+              content_hash: 55707a0ea30c3213afc91f395984094403d53105cff79661df70386080d5a13e
+            - path: 1.4.4
+              level: 3
+              title: 2.4 Domain-Specific Reviewer Profiles
+              byte_offset: 9092
+              byte_count: 1389
+              word_count: 180
+              content_hash: bc8ddf814e71127314ca226f9bc3e1c564b4d08472686eb94ae310918d5a9843
+            - path: 1.4.5
+              level: 3
+              title: 2.5 Copy-Paste Checklists
+              byte_offset: 10481
+              byte_count: 305
+              word_count: 42
+              content_hash: d7c2f7292dff45067d8228543197f27b2c1ce09f18c00f9ab088692e02c954c1
+            - path: 1.4.6
+              level: 3
+              title: 2.6 BAD/GOOD Examples with Explanations
+              byte_offset: 10786
+              byte_count: 400
+              word_count: 55
+              content_hash: 3bb6f1b6fe7b112dfd14448bcb61051fca4a28c431fdd288055da609a58ec568
+            - path: 1.4.7
+              level: 3
+              title: 2.7 Role/Skill Separation
+              byte_offset: 11186
+              byte_count: 351
+              word_count: 45
+              content_hash: 38cc57f0cd75fbf39d66ea1d1733bb9a2912e066db50c565fed0c6ab7a264c22
+            - path: 1.4.8
+              level: 3
+              title: 2.8 Tool Scoping per Role
+              byte_offset: 11537
+              byte_count: 269
+              word_count: 41
+              content_hash: 80a9322f6efdd6144425ce58787eefbdaf2b6a0f013c0afaa4987924b7efd6c9
+            - path: 1.4.9
+              level: 3
+              title: 2.9 Stage Bindings as Single Source of Truth
+              byte_offset: 11806
+              byte_count: 323
+              word_count: 42
+              content_hash: ae9b76bfe7e311b980d50902ae8808eaf58b869709216cdbc4f7ba436f715ea8
+            - path: 1.4.10
+              level: 3
+              title: 2.10 Evaluation Criteria
+              byte_offset: 12129
+              byte_count: 264
+              word_count: 31
+              content_hash: b9c07626bb3fba51cbafbd4b93b695a41efdc3287c0485afcc097abbc0a15ddb
+            - path: 1.4.11
+              level: 3
+              title: 2.11 Uncertainty Protocol
+              byte_offset: 12393
+              byte_count: 226
+              word_count: 28
+              content_hash: 65a62787d11eedc485c2b2ddff315e3a124ed34f4bea6e66204d196e926c0895
+        - path: "1.5"
+          level: 2
+          title: 3. Gaps and Improvement Opportunities
+          byte_offset: 12619
+          byte_count: 3457
+          word_count: 473
+          content_hash: ca1fae118f9424b4c408e8d472d25b2633d18660e88ed0eb63618caf88d83b72
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 3.1 System Skills Lack the New Architecture — ⚠️ Medium-High
+              byte_offset: 12661
+              byte_count: 1015
+              word_count: 150
+              content_hash: 5236e99de4a275b5c07403dcc4f90f541a621c0e33f725d34aec59bf2cab784b
+            - path: 1.5.2
+              level: 3
+              title: 3.2 No Progressive Disclosure in Task-Execution Skills — ⚠️ Medium
+              byte_offset: 13676
+              byte_count: 624
+              word_count: 81
+              content_hash: 40b9c3faccd76468e2f8729b74b3342c6b171bc2838a36842aba1c4a8a9cda65
+            - path: 1.5.3
+              level: 3
+              title: 3.3 No Evaluation Framework — ⚠️ High
+              byte_offset: 14300
+              byte_count: 568
+              word_count: 80
+              content_hash: 063c6a7a17460adcf4b5caca887227cfa2a6b5b25b75604a78b474c9c9690977
+            - path: 1.5.4
+              level: 3
+              title: 3.4 `kanbanzai-code-review` at 708 Lines — ⚠️ Low-Medium
+              byte_offset: 14868
+              byte_count: 319
+              word_count: 44
+              content_hash: 5832cd0b040018c9e62241de97d772faf3053df47a64ce95812ac66f861afa5a
+            - path: 1.5.5
+              level: 3
+              title: 3.5 Effort Budget Enforcement — ⚠️ Low
+              byte_offset: 15187
+              byte_count: 380
+              word_count: 52
+              content_hash: 248b806b973787412324ffcc26d70986263db5335495d256dd41a4df16b14cae
+            - path: 1.5.6
+              level: 3
+              title: 3.6 Position-Aware Context Assembly — ⚠️ Medium
+              byte_offset: 15567
+              byte_count: 509
+              word_count: 60
+              content_hash: 0bd72fea3b403c2796b11441cb507910f71da786254265b64bc382aa2ed7baa1
+        - path: "1.6"
+          level: 2
+          title: '4. Overlap Analysis: `.agents/skills/` vs `.kbz/skills/`'
+          byte_offset: 16076
+          byte_count: 6153
+          word_count: 866
+          content_hash: ff3da0794ac2c09c31c8f7efd72ccb06e47b6ac68dd178937365b55389493708
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 4.1 Summary
+              byte_offset: 16137
+              byte_count: 994
+              word_count: 150
+              content_hash: 56eb5eeb3ca04a8bd536c0c2696d5897ec3f4cce94845304ace6b5461db01bac
+            - path: 1.6.2
+              level: 3
+              title: 4.2 The Five That Should Stay
+              byte_offset: 17131
+              byte_count: 1685
+              word_count: 214
+              content_hash: 58597eb105ae95e857db8d0a6f2651bcebbac477cd7a2d9517575e8eff7fcf8c
+            - path: 1.6.3
+              level: 3
+              title: 4.3 The Three That Should Be Retired After Migration
+              byte_offset: 18816
+              byte_count: 3413
+              word_count: 495
+              content_hash: 1bec4cebf7e0f25129e1e0c3a0160dccb5b9fa930dc936067c74d66032b8e0db
+              children:
+                - path: 1.6.3.1
+                  level: 4
+                  title: '`kanbanzai-code-review` → `review-code` + `orchestrate-review`'
+                  byte_offset: 18874
+                  byte_count: 1353
+                  word_count: 189
+                  content_hash: 37685b8601d77fe2963c508848db2c899b180e6cd58482536cd71d18ebfe6590
+                - path: 1.6.3.2
+                  level: 4
+                  title: '`kanbanzai-plan-review` → `review-plan`'
+                  byte_offset: 20227
+                  byte_count: 917
+                  word_count: 140
+                  content_hash: fdd0682cf767ed3a12c971d6ad828d0878f31c0e6d8c882d744d658adffcdeb2
+                - path: 1.6.3.3
+                  level: 4
+                  title: '`kanbanzai-design` → `write-design`'
+                  byte_offset: 21144
+                  byte_count: 1085
+                  word_count: 156
+                  content_hash: 1a9956b2a69e3fec36c98c88487f2920f531f3a1491e08bcec37d585ab2a5641
+        - path: "1.7"
+          level: 2
+          title: 5. AGENTS.md Review
+          byte_offset: 22229
+          byte_count: 5179
+          word_count: 731
+          content_hash: 72f293fa42ca86ddfdc99c5ffd513fe40af44fded1c0a2d5d77223591e51aa3b
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 5.1 Section-by-Section Overlap Analysis
+              byte_offset: 22253
+              byte_count: 1530
+              word_count: 231
+              content_hash: ce311decdad813c0e51d4d41f2562b4cd0cc13489c0ec7a52809c8911a1f39a2
+            - path: 1.7.2
+              level: 3
+              title: 5.2 What AGENTS.md Does Well
+              byte_offset: 23783
+              byte_count: 992
+              word_count: 132
+              content_hash: a412cfa20fe2f5931ac5be1bc19f554e383a28630f7143b7cecf12b514142e61
+            - path: 1.7.3
+              level: 3
+              title: 5.3 Quality Issues
+              byte_offset: 24775
+              byte_count: 2633
+              word_count: 364
+              content_hash: 951fa8f500457550c1ce90715eb9cf2ca29a6b949f3c26cf5baf87a4fd0aec81
+        - path: "1.8"
+          level: 2
+          title: 6. Cross-System Coherence and Discovery Path
+          byte_offset: 27408
+          byte_count: 2063
+          word_count: 275
+          content_hash: 7284725e10837182636bbf55d21ff6472029adbe95b967d7cb9bd5054ad1dd15
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 6.1 How an Agent Discovers Instructions Today
+              byte_offset: 27457
+              byte_count: 881
+              word_count: 125
+              content_hash: edb98958e9cf6a1e81cbc80f340c7cd543a01db8c652a401cbd67813df84e07e
+            - path: 1.8.2
+              level: 3
+              title: 6.2 Discovery Failure Points
+              byte_offset: 28338
+              byte_count: 1133
+              word_count: 143
+              content_hash: 3f1b714485d46be776e07fbf3c2ff95b43f44fae18071d3a56314a930b1f4dc6
+        - path: "1.9"
+          level: 2
+          title: 7. Cross-Platform Agent Discovery Guide
+          byte_offset: 29471
+          byte_count: 10325
+          word_count: 1463
+          content_hash: 62521d581eeb5105f5e1a126e63a3ffea9903cd3bddc4f37be14dc83422bc820
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 7.1 Platform Reference
+              byte_offset: 29670
+              byte_count: 7267
+              word_count: 1008
+              content_hash: 19f83d7874ff0b70a8840d312f80d49143cda6fb2d6e7d54947eed331c7ceaf6
+              children:
+                - path: 1.9.1.1
+                  level: 4
+                  title: Claude Code (Anthropic CLI)
+                  byte_offset: 29698
+                  byte_count: 999
+                  word_count: 144
+                  content_hash: a05c2c626f787c0ac518ce71686c1ace74e23b79d23ccdcc78c8455d75ede0e4
+                - path: 1.9.1.2
+                  level: 4
+                  title: GitHub Copilot (VS Code, JetBrains, GitHub.com)
+                  byte_offset: 30697
+                  byte_count: 1061
+                  word_count: 137
+                  content_hash: c04c8aa6cd2120d31f5d3e067a8b768fd2d39e47dd35d45bd481c8657ed3495f
+                - path: 1.9.1.3
+                  level: 4
+                  title: Cursor
+                  byte_offset: 31758
+                  byte_count: 1343
+                  word_count: 175
+                  content_hash: a486e6ad0e9556669b7cf4184385f191e2cb33b3cd321f3710e5c23a70315a3f
+                - path: 1.9.1.4
+                  level: 4
+                  title: Windsurf (Codeium)
+                  byte_offset: 33101
+                  byte_count: 730
+                  word_count: 94
+                  content_hash: 12318a01436c45f78d3c4e123b2c9bee89827a0a4d60f9cc6fd533ff9c57d755
+                - path: 1.9.1.5
+                  level: 4
+                  title: Cline (VS Code extension)
+                  byte_offset: 33831
+                  byte_count: 737
+                  word_count: 104
+                  content_hash: c20bf74e21acbb2a9b5bffa8b6a8c88c21df8d8a6544301022c7b6faa5857abc
+                - path: 1.9.1.6
+                  level: 4
+                  title: Aider
+                  byte_offset: 34568
+                  byte_count: 892
+                  word_count: 131
+                  content_hash: 83ada1ef6b7f73accc3cead48c158b6a77ca2fc77ee960b535a59839be94cbbe
+                - path: 1.9.1.7
+                  level: 4
+                  title: Amazon Q Developer
+                  byte_offset: 35460
+                  byte_count: 458
+                  word_count: 70
+                  content_hash: b6454fa249f5c984aad181c0314572d7bca2ca1cec687462554c598acb79a659
+                - path: 1.9.1.8
+                  level: 4
+                  title: Google Gemini Code Assist / Jules
+                  byte_offset: 35918
+                  byte_count: 575
+                  word_count: 87
+                  content_hash: a63028eb398c6bc4b0199680f32baae884e1f208204db99e261d3420b73225a5
+                - path: 1.9.1.9
+                  level: 4
+                  title: JetBrains AI Assistant
+                  byte_offset: 36493
+                  byte_count: 444
+                  word_count: 62
+                  content_hash: f2dd732e031fa8ea7a7b3315302881ee25f120f49f4ea5364c1348c25081ecb9
+            - path: 1.9.2
+              level: 3
+              title: 7.2 Cross-Platform Summary
+              byte_offset: 36937
+              byte_count: 971
+              word_count: 156
+              content_hash: 32c189f4a364e743303cf7d591a71133fb54c5e9fd0a222c4d6bbd49f06f7783
+            - path: 1.9.3
+              level: 3
+              title: 7.3 Implications for Kanbanzai
+              byte_offset: 37908
+              byte_count: 1888
+              word_count: 271
+              content_hash: bca9b3c671959c0acf5eb1ad6d6ebc8feb56a4e0012067b42c80e6121ffa1ae7
+        - path: "1.10"
+          level: 2
+          title: 8. Consolidated Recommendations
+          byte_offset: 39796
+          byte_count: 5308
+          word_count: 700
+          content_hash: 35c221d830d47e64581107ba2226ead62f54df4bd3fe1fd65ff7be33307df6fe
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 'Priority 1: Migrate and Retire Overlapping Skills'
+              byte_offset: 39965
+              byte_count: 1256
+              word_count: 131
+              content_hash: 0bd5a49b01c28a90c4928cb649e3cbb772f9483fdf2a1fbf25797e466013ba8e
+            - path: 1.10.2
+              level: 3
+              title: 'Priority 2: Upgrade Retained System Skills'
+              byte_offset: 41221
+              byte_count: 738
+              word_count: 109
+              content_hash: a789d4b305274177669b08bc573d298f447e7e4dda1caba2c6ba60c71f08bed1
+            - path: 1.10.3
+              level: 3
+              title: 'Priority 3: Fix AGENTS.md'
+              byte_offset: 41959
+              byte_count: 1503
+              word_count: 218
+              content_hash: 8d6851db9841b607dd70fcacac72d2248edea40bea2b13e0754ee7a4f6245dc9
+            - path: 1.10.4
+              level: 3
+              title: 'Priority 4: Fix Discovery and Stale Pointers'
+              byte_offset: 43462
+              byte_count: 846
+              word_count: 111
+              content_hash: 8cae89bdd24eeb8275b1f62bf9915dd5b6324b3e2a6813bc01c8bbccd55c5d8a
+            - path: 1.10.5
+              level: 3
+              title: 'Priority 5: Build Evaluation Infrastructure'
+              byte_offset: 44308
+              byte_count: 796
+              word_count: 109
+              content_hash: 7ab16fcf1c7aa3204fad2993cb47c5ec9f926f94d214fe26649a7d77202d9ac0
+        - path: "1.11"
+          level: 2
+          title: 'Appendix A: File Inventory'
+          byte_offset: 45104
+          byte_count: 3996
+          word_count: 751
+          content_hash: 9c284f36119627814909c9a2de2ba146ca48cdfb22bf8c45d16661af195a073b
+          children:
+            - path: 1.11.1
+              level: 3
+              title: Roles (`.kbz/roles/`)
+              byte_offset: 45135
+              byte_count: 1211
+              word_count: 228
+              content_hash: 7bcf08761391c55ad5683e885429103fa747ef0f87baf054ac48bf0ea7a59891
+            - path: 1.11.2
+              level: 3
+              title: Task-Execution Skills (`.kbz/skills/`)
+              byte_offset: 46346
+              byte_count: 998
+              word_count: 205
+              content_hash: 8553476579dca0a5093f24c04947a8f9be16e284a3f6a21a32f1b7ff2be524ae
+            - path: 1.11.3
+              level: 3
+              title: System Skills (`.agents/skills/`)
+              byte_offset: 47344
+              byte_count: 870
+              word_count: 173
+              content_hash: 78a4237fad35f9b116ff6f5e4056b7ec2c3258581ef2ea656e76fb980d5a49b5
+            - path: 1.11.4
+              level: 3
+              title: Other Instruction Files
+              byte_offset: 48214
+              byte_count: 886
+              word_count: 140
+              content_hash: 32bae0020659a7e6d65d8720ac02be5b271b34b29e666496403c36f77c669ce3
+        - path: "1.12"
+          level: 2
+          title: 'Appendix B: Migration Checklists'
+          byte_offset: 49100
+          byte_count: 5560
+          word_count: 784
+          content_hash: 09633a18c9b9c30c2e3d746ceb8c7fd2c4af80e31e2f544cb2c2ba5691185679
+          children:
+            - path: 1.12.1
+              level: 3
+              title: B.1 `kanbanzai-code-review` → `review-code` + `orchestrate-review`
+              byte_offset: 49137
+              byte_count: 1956
+              word_count: 267
+              content_hash: 7ca27a72a2785722d511d898e6baf728b127dc7249db60ef7b27564ee1b552ce
+            - path: 1.12.2
+              level: 3
+              title: B.2 `kanbanzai-plan-review` → `review-plan`
+              byte_offset: 51093
+              byte_count: 1092
+              word_count: 156
+              content_hash: 40055017030d534f38d6210ccb051ea0725e3b1483647b095ffb609c638cc4b9
+            - path: 1.12.3
+              level: 3
+              title: B.3 `kanbanzai-design` → `write-design`
+              byte_offset: 52185
+              byte_count: 1368
+              word_count: 193
+              content_hash: d86e959083e61ccc7d145d6bb6754ff0b33b018979525bf1b1e258d54b8e8b1b
+            - path: 1.12.4
+              level: 3
+              title: B.4 AGENTS.md Fixes
+              byte_offset: 53553
+              byte_count: 1107
+              word_count: 163
+              content_hash: d876bc547c849df06ba6d22b230f8f172101c414e2face6c2b80c4d177938b3c
+cross_doc_links:
+    - target_path: work/research/ai-agent-best-practices-research.md
+      link_text: work/research/ai-agent-best-practices-research.md
+      section_path: "1"
+    - target_path: work/research/agent-orchestration-research.md
+      link_text: work/research/agent-orchestration-research.md
+      section_path: "1"
+    - target_path: work/research/agent-skills-research.md
+      link_text: work/research/agent-skills-research.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: "1.1"
+    - target_path: CONVENTIONS.md
+      link_text: CONVENTIONS.md
+      section_path: 1.4.1
+    - target_path: CONVENTIONS.md
+      link_text: CONVENTIONS.md
+      section_path: 1.4.2
+    - target_path: CONVENTIONS.md
+      link_text: CONVENTIONS.md
+      section_path: 1.4.3
+    - target_path: CONVENTIONS.md
+      link_text: CONVENTIONS.md
+      section_path: 1.4.6
+    - target_path: CONVENTIONS.md
+      link_text: CONVENTIONS.md
+      section_path: 1.5.1
+    - target_path: lifecycle.md
+      link_text: lifecycle.md
+      section_path: 1.5.2
+    - target_path: design-quality.md
+      link_text: design-quality.md
+      section_path: 1.5.2
+    - target_path: references/design-quality.md
+      link_text: references/design-quality.md
+      section_path: 1.6.3.3
+    - target_path: .kbz/skills/write-design/references/design-quality.md
+      link_text: .kbz/skills/write-design/references/design-quality.md
+      section_path: 1.6.3.3
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.7.1
+    - target_path: refs/go-style.md
+      link_text: refs/go-style.md
+      section_path: 1.7.2
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.7.3
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.8.1
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.8.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.8.1
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.8.2
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.8.2
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.8.2
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.9.1.1
+    - target_path: ~/.claude/CLAUDE.md
+      link_text: ~/.claude/CLAUDE.md
+      section_path: 1.9.1.1
+    - target_path: .claude/commands/*.md
+      link_text: .claude/commands/*.md
+      section_path: 1.9.1.1
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.9.1.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.9.1.1
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.9.1.2
+    - target_path: .github/instructions/*.md
+      link_text: .github/instructions/*.md
+      section_path: 1.9.1.2
+    - target_path: .github/prompts/*.md
+      link_text: .github/prompts/*.md
+      section_path: 1.9.1.2
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.9.1.2
+    - target_path: instructions/*.md
+      link_text: instructions/*.md
+      section_path: 1.9.1.2
+    - target_path: prompts/*.md
+      link_text: prompts/*.md
+      section_path: 1.9.1.2
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.9.1.3
+    - target_path: .windsurf/rules/*.md
+      link_text: .windsurf/rules/*.md
+      section_path: 1.9.1.4
+    - target_path: .windsurf/rules/kanbanzai.md
+      link_text: .windsurf/rules/kanbanzai.md
+      section_path: 1.9.1.4
+    - target_path: CONVENTIONS.md
+      link_text: CONVENTIONS.md
+      section_path: 1.9.1.6
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.9.1.7
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.9.1.8
+    - target_path: GEMINI.md
+      link_text: GEMINI.md
+      section_path: 1.9.1.8
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.9.2
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.9.2
+    - target_path: CONVENTIONS.md
+      link_text: CONVENTIONS.md
+      section_path: 1.9.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.9.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.9.3
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.9.3
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.9.3
+    - target_path: references/design-quality.md
+      link_text: references/design-quality.md
+      section_path: 1.10.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.10.3
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.10.3
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.10.4
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.10.4
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.10.4
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.10.4
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.11.4
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.11.4
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: 1.11.4
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.11.4
+    - target_path: refs/sub-agents.md
+      link_text: refs/sub-agents.md
+      section_path: 1.11.4
+    - target_path: refs/go-style.md
+      link_text: refs/go-style.md
+      section_path: 1.11.4
+    - target_path: refs/testing.md
+      link_text: refs/testing.md
+      section_path: 1.11.4
+    - target_path: refs/knowledge-graph.md
+      link_text: refs/knowledge-graph.md
+      section_path: 1.11.4
+    - target_path: review-{id}-{slug}.md
+      link_text: review-{id}-{slug}.md
+      section_path: 1.12.1
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.12.1
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.12.2
+    - target_path: references/design-quality.md
+      link_text: references/design-quality.md
+      section_path: 1.12.3
+    - target_path: .kbz/skills/write-design/references/design-quality.md
+      link_text: .kbz/skills/write-design/references/design-quality.md
+      section_path: 1.12.3
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.12.4
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.12.4
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.6
+      role: example
+      confidence: high
+    - section_path: 1.5.6
+      role: narrative
+      confidence: high
+    - section_path: 1.6.1
+      role: narrative
+      confidence: high
+    - section_path: 1.9.2
+      role: narrative
+      confidence: high
+classified: false
