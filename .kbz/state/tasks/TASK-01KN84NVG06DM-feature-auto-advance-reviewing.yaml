@@ -1,0 +1,6 @@
+id: TASK-01KN84NVG06DM
+parent_feature: FEAT-01KN83QN0VAFG
+slug: feature-auto-advance-reviewing
+name: Feature auto-advance to reviewing
+summary: "After any operation that moves a task to terminal state, check if all sibling tasks are terminal with at least one done. If so, and parent feature is in developing or needs-rework, auto-advance feature to reviewing. Trigger from entity transition, finish, and complete_task."
+status: queued
