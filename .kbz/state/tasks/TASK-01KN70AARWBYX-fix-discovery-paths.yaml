@@ -2,13 +2,15 @@ id: TASK-01KN70AARWBYX
 parent_feature: FEAT-01KN6ZA4NYJ25
 slug: fix-discovery-paths
 summary: "Update refs/document-map.md with correct skill pointers and add stage bindings discovery to kanbanzai-getting-started (FR-034, FR-035)"
-status: active
+status: done
 depends_on:
   - TASK-01KN70AAMAEPJ
   - TASK-01KN70AANA5Q8
   - TASK-01KN70AAP9WRG
   - TASK-01KN70AAQ8YE2
+completed: "2026-04-02T12:42:50Z"
 claimed_at: "2026-04-02T12:40:53Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-02T12:40:53Z"
 dispatched_by: sambeau
+completion_summary: "Updated refs/document-map.md to replace stale skill pointers: kanbanzai-code-review → review-code + orchestrate-review, kanbanzai-plan-review → review-plan. Added stage bindings and .kbz/skills/ discovery to kanbanzai-getting-started."
