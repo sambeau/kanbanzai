@@ -108,39 +108,91 @@ The existing `handoff` call site can continue using its fixed message.
 
 ---
 
-### 2. Atomic document + state commits
+### 2. Atomic document file operations (Create, Move, Delete)
 
 **Category:** Atomicity
 **Complexity:** Medium
 **Risk:** Low
 
-#### Problem
+Every document has two representations: a file on disk (`work/**/*.md`) and a metadata
+record in `.kbz/state/documents/`. Today, every file operation that touches a registered
+document requires multiple manual steps with no transactional guarantee. This
+recommendation covers the full CRUD surface — Create, Move, Delete — as a unified
+pattern. (Read is already safe; Update is addressed by Recommendation 4.)
 
-When an agent creates a document, three things must happen:
-
-1. Write the `.md` file to `work/{type}/`
-2. Call `doc(action: register)` which writes `.kbz/state/documents/`
-3. Commit both the file and the state record
-
-Today, step 3 must be done manually, and the agent must remember to `git add` both paths.
-If only the state record is committed (via `CommitStateIfDirty`), the document file is
-missing from git. If only the file is committed, the registration is invisible.
-
-#### Recommendation
+#### Foundation: `CommitStateAndPaths`
 
 Introduce a `CommitStateAndPaths(repoRoot, message string, extraPaths ...string)` function
-that stages `.kbz/state/` **plus** specified additional paths in a single commit. The `doc
-register` action should call this automatically, passing the document file path.
+that stages `.kbz/state/` **plus** specified additional paths in a single commit. All three
+operations below use this primitive.
 
-Similarly, `doc approve` should commit the state changes (document record + any cascaded
-entity transitions) in a single atomic commit.
+#### 2a. Atomic Create (`doc register`)
 
-#### Safety argument
+**Problem.** Creating a document requires: write file → `doc(register)` → manually `git add`
+both paths → `git commit`. If only the state record is committed (via `CommitStateIfDirty`),
+the document file is missing from git. If only the file is committed, the registration is
+invisible.
+
+**Recommendation.** `doc(action: register)` should call `CommitStateAndPaths` automatically,
+passing the document file path. The commit message identifies the operation:
+
+```
+workflow(DOC-xxx): register {type} document
+```
+
+#### 2b. Atomic Move (`doc move`) — see also Recommendation 9
+
+**Problem.** Moving a registered document requires four manual steps: move the file,
+register a new record, handle the orphaned old record, stage and commit both paths. The old
+draft record cannot be superseded (supersede requires `approved` status), so it lingers as a
+ghost record.
+
+**Recommendation.** Add `doc(action: move, id: "DOC-xxx", new_path: "work/reports/foo.md")`:
+
+1. Move the file on disk
+2. Update the existing record's `path` field in-place (preserving ID and approval status)
+3. Optionally update `type` if the new path implies a different document type
+4. Recompute the content hash
+5. Commit via `CommitStateAndPaths` with the old path (deletion), new path, and state record
+
+#### 2c. Atomic Delete (`doc delete`)
+
+**Problem.** There is no `doc` action for removing a document. Today, deleting a registered
+document requires: manually delete the file → manually retire the record (if it's even
+possible — `retire` may not exist) → stage the deletion and state change → commit. If the
+agent deletes the file but forgets the record, `health` reports a dangling reference. If the
+record is removed but the file remains, the document becomes invisible to the workflow system
+but still exists in the repository.
+
+**Recommendation.** Add `doc(action: delete, id: "DOC-xxx")` that:
+
+1. Verifies the document is not `approved` (or requires a `force: true` flag if it is, to
+   prevent accidental deletion of documents that downstream entities depend on)
+2. Removes the file from disk
+3. Removes the state record from `.kbz/state/documents/`
+4. Commits the file deletion and record removal atomically via `CommitStateAndPaths`
+
+The commit message identifies the operation:
+
+```
+workflow(DOC-xxx): delete {type} document
+```
+
+If the document is owned by an entity, the entity's document reference field should be
+cleared as part of the same transaction.
+
+#### Safety argument (all three operations)
 
 - The extra paths are explicitly provided by the tool, not discovered by glob — no risk
   of accidentally staging unrelated files.
-- The document path is already known to the `register` action (it is a required parameter).
-- If the commit fails, both the file and the record remain uncommitted — consistent state.
+- The document path is already known to each action (required parameter or stored on the
+  record) — no path guessing.
+- If the commit fails, all changes remain uncommitted but consistent on disk — the agent
+  can retry or commit manually.
+- Delete requires the document to be non-approved by default, preventing accidental removal
+  of documents that gate downstream transitions.
+- Move preserves document identity (ID, approval status, cross-references), avoiding the
+  register-new / supersede-old dance.
 
 ---
 
@@ -373,50 +425,10 @@ if required sections are missing.
 
 ---
 
-### 9. Atomic document move
+### 9. [Consolidated into Recommendation 2b — Atomic document move]
 
-**Category:** Atomicity
-**Complexity:** Low
-**Risk:** Very Low
-
-#### Problem
-
-Moving a registered document from one path to another requires four manual steps:
-
-1. Move the file on disk
-2. Register a new document record at the new path (possibly with a new type)
-3. Handle the old record (supersede if approved, or leave orphaned if draft)
-4. Stage both the file move and all state record changes, then commit
-
-These steps have no transactional guarantee. If the agent moves the file but forgets to
-re-register, the old record points at a missing file and the new file is invisible to the
-workflow system. If only some state files are committed, the document graph is inconsistent.
-The old draft record cannot be superseded (supersede requires `approved` status), so it
-lingers as a ghost record referencing a deleted path.
-
-This is not hypothetical — the move of this very report from `work/research/` to
-`work/reports/` required manual orchestration of all four steps.
-
-#### Recommendation
-
-Add a `doc(action: move, id: "DOC-xxx", new_path: "work/reports/foo.md")` action that:
-
-1. Moves the file on disk
-2. Updates the existing document record's `path` field in-place (no new record needed)
-3. Optionally updates `type` if the new path implies a different document type
-4. Recomputes the content hash (the file content hasn't changed, but the path has)
-5. Commits the file move and state record update atomically
-
-This avoids the register-new / supersede-old dance entirely. The document ID is stable —
-only the path changes.
-
-#### Safety argument
-
-- The file move is a rename, not a destructive operation — git tracks it as such.
-- Updating the path field on an existing record preserves document identity, approval
-  status, and all cross-references (owner links, entity refs).
-- The content hash recomputation confirms the file arrived intact at its new path.
-- A single atomic commit ensures the file and its record are always consistent.
+See **Recommendation 2b** above. Originally a standalone recommendation; now part of the
+unified document file operations family.
 
 ---
 
@@ -475,9 +487,8 @@ Ordered by value-to-effort ratio:
 | 4 | 6 | Post-decompose state commit | Very Low | Medium |
 | 5 | 1 | Auto-commit at all terminal operations | Low | High |
 | 6 | 3 | Auto-approve implementation documents | Low | Medium |
-| 7 | 9 | Atomic document move | Low | Medium |
-| 8 | 2 | Atomic document + state commits | Medium | High |
-| 9 | 8 | Validate document required sections | Medium | Medium |
+| 7 | 2 | Atomic document file ops (create, move, delete) | Medium | High |
+| 8 | 8 | Validate document required sections | Medium | Medium |
 
 Recommendations 1–4 share a common implementation pattern (call `CommitStateIfDirty` or
 its parameterised variant at the end of a handler). They could be implemented together as
