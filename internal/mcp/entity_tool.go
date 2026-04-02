@@ -595,6 +595,11 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			if entityType != "feature" {
 				return nil, fmt.Errorf("advance is only supported for feature entities")
 			}
+			if override && strings.TrimSpace(overrideReason) == "" {
+				return map[string]any{
+					"error": "override_reason is required when override is true; cannot bypass gate without a reason",
+				}, nil
+			}
 			return entityAdvanceFeature(ctx, entitySvc, docSvc, entityID, newStatus, override, overrideReason, gateRouter, checkpointStore)
 		}
 

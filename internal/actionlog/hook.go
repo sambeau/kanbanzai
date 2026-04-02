@@ -25,8 +25,6 @@ func NewHook(writer *Writer, lookup StageLookup) *Hook {
 // Log errors are swallowed — they must not affect the tool response.
 func (h *Hook) Wrap(toolName string, inner HandlerFunc) HandlerFunc {
 	return func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		result, err := inner(ctx, req)
-
 		args, _ := req.Params.Arguments.(map[string]any)
 
 		// Extract action parameter.
@@ -35,11 +33,13 @@ func (h *Hook) Wrap(toolName string, inner HandlerFunc) HandlerFunc {
 			action = &a
 		}
 
-		// Extract entity ID.
+		// Extract entity ID and resolve stage BEFORE calling the inner handler,
+		// so the logged stage reflects the state before any transition the call
+		// may perform (FR-005 AC bullet 4).
 		entityID := ExtractEntityID(args)
-
-		// Resolve stage (never blocks or fails the handler).
 		stage := ResolveStage(entityID, h.lookup)
+
+		result, err := inner(ctx, req)
 
 		// Determine success and error type.
 		success := err == nil && !isErrorResult(result)

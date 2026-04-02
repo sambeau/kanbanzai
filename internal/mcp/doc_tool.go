@@ -37,6 +37,7 @@ import (
 	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/structural"
 )
 
 // DocTool returns the consolidated `doc` MCP tool registered in the core group.
@@ -58,19 +59,20 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Document Records"),
 		mcp.WithDescription(
-			"Use when you need to register, approve, query, or manage document records that track specs, "+
-				"designs, and plans through their approval lifecycle. Use INSTEAD OF reading .kbz/state/documents/ "+
-				"files directly — action: get and action: list return structured metadata with approval status. "+
-				"Do NOT use for document content analysis — use doc_intel instead. "+
-				"Actions: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate. "+
+			"Use when you need to register, approve, query, or manage document records tracking specs, "+
+				"designs, and plans. Use INSTEAD OF reading .kbz/state/documents/ files directly — "+
+				"get and list return structured metadata with approval status. "+
+				"Do NOT use for content analysis — use doc_intel instead. "+
+				"Actions: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate, record_false_positive. "+
 				"For register: path, type, title required. For approve/get/content/validate/supersede/refresh/chain: "+
 				"id required (or ids for batch approve). "+
-				"Call register after writing a document, approve before advancing a feature past its stage gate. "+
-				"approve and supersede report entity lifecycle cascade side effects.",
+				"Call register after writing a document, approve before advancing past a stage gate. "+
+				"approve and supersede report entity lifecycle cascade side effects. "+
+				"For record_false_positive: id and description required.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),
-			mcp.Description("Action: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate"),
+			mcp.Description("Action: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate, record_false_positive"),
 		),
 		// Common identifier fields.
 		mcp.WithString("id", mcp.Description("Document record ID (approve, get, content, validate, supersede, refresh, chain)")),
@@ -98,23 +100,27 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 		mcp.WithString("created_by", mcp.Description("Who is performing the operation. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 		// evaluate fields.
 		mcp.WithObject("evaluation", mcp.Description("Quality evaluation object for evaluate action: {overall_score, pass, evaluated_at, evaluator, dimensions}")),
+		// record_false_positive fields.
+		mcp.WithString("description", mcp.Description("False positive description for record_false_positive action")),
+		mcp.WithString("check_type", mcp.Description("Specific check type for record_false_positive (optional; omit to apply to all check types)")),
 	)
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		return DispatchAction(ctx, req, map[string]ActionHandler{
-			"register":  docRegisterAction(docSvc),
-			"approve":   docApproveAction(docSvc),
-			"get":       docGetAction(docSvc),
-			"content":   docContentAction(docSvc),
-			"list":      docListAction(docSvc),
-			"gaps":      docGapsAction(docSvc),
-			"validate":  docValidateAction(docSvc),
-			"supersede": docSupersedeAction(docSvc),
-			"refresh":   docRefreshAction(docSvc),
-			"chain":     docChainAction(docSvc),
-			"import":    docImportAction(docSvc),
-			"audit":     docAuditAction(docSvc),
-			"evaluate":  docEvaluateAction(docSvc),
+			"register":              docRegisterAction(docSvc),
+			"approve":               docApproveAction(docSvc),
+			"get":                   docGetAction(docSvc),
+			"content":               docContentAction(docSvc),
+			"list":                  docListAction(docSvc),
+			"gaps":                  docGapsAction(docSvc),
+			"validate":              docValidateAction(docSvc),
+			"supersede":             docSupersedeAction(docSvc),
+			"refresh":               docRefreshAction(docSvc),
+			"chain":                 docChainAction(docSvc),
+			"import":                docImportAction(docSvc),
+			"audit":                 docAuditAction(docSvc),
+			"evaluate":              docEvaluateAction(docSvc),
+			"record_false_positive": docRecordFalsePositiveAction(docSvc),
 		})
 	})
 
@@ -439,6 +445,61 @@ func docValidateAction(docSvc *service.DocumentService) ActionHandler {
 			"document_id": docID,
 			"valid":       len(issues) == 0,
 			"issues":      issues,
+		}, nil
+	}
+}
+
+// ─── record_false_positive ────────────────────────────────────────────────────
+
+func docRecordFalsePositiveAction(docSvc *service.DocumentService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+		args, _ := req.Params.Arguments.(map[string]any)
+		docID := docArgStr(args, "id")
+		description := docArgStr(args, "description")
+		checkType := docArgStr(args, "check_type")
+
+		if docID == "" {
+			return nil, fmt.Errorf("Cannot record false positive: id is missing.\n\nTo resolve:\n  Provide the document record ID: doc(action: \"record_false_positive\", id: \"DOC-...\", description: \"...\")")
+		}
+		if description == "" {
+			return nil, fmt.Errorf("Cannot record false positive: description is missing.\n\nTo resolve:\n  Provide a description explaining the false positive: doc(action: \"record_false_positive\", id: \"DOC-...\", description: \"...\")")
+		}
+
+		doc, err := docSvc.GetDocument(docID, false)
+		if err != nil {
+			return nil, fmt.Errorf("Cannot record false positive: document %q not found.\n\nTo resolve:\n  Verify the document ID with doc(action: \"get\", id: \"DOC-...\")", docID)
+		}
+
+		ps, err := structural.LoadPromotionState(docSvc.StateRoot())
+		if err != nil {
+			return nil, fmt.Errorf("Cannot record false positive: failed to load promotion state.\n\nTo resolve:\n  Check the state root directory is accessible: %v", err)
+		}
+
+		knownCheckTypes := []string{"required_sections", "cross_reference", "acceptance_criteria"}
+		var targets []string
+		if checkType != "" {
+			targets = []string{checkType}
+		} else {
+			targets = knownCheckTypes
+		}
+
+		var affected []string
+		for _, ct := range targets {
+			key := structural.CheckKey{CheckType: ct, DocumentType: doc.Type}
+			ps.RecordFalsePositive(key, description)
+			affected = append(affected, ct+"/"+doc.Type)
+		}
+
+		if err := ps.Save(); err != nil {
+			return nil, fmt.Errorf("Cannot record false positive: failed to save promotion state.\n\nTo resolve:\n  Check the state root directory is writable: %v", err)
+		}
+
+		return map[string]any{
+			"document_id":   docID,
+			"document_type": doc.Type,
+			"description":   description,
+			"affected_keys": affected,
 		}, nil
 	}
 }

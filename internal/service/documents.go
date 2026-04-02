@@ -129,13 +129,19 @@ type DocumentService struct {
 	repoRoot        string
 	store           *storage.DocumentStore
 	now             func() time.Time
-	entityHook      EntityLifecycleHook  // optional, for lifecycle transitions
-	intelligenceSvc *IntelligenceService // optional, for auto-ingest on submit
+	configProvider  func() *config.Config // optional; defaults to config.LoadOrDefault
+	entityHook      EntityLifecycleHook   // optional, for lifecycle transitions
+	intelligenceSvc *IntelligenceService  // optional, for auto-ingest on submit
 }
 
 // RepoRoot returns the repository root path used by this service.
 func (s *DocumentService) RepoRoot() string {
 	return s.repoRoot
+}
+
+// StateRoot returns the state root path used by this service.
+func (s *DocumentService) StateRoot() string {
+	return s.stateRoot
 }
 
 // SetEntityHook attaches an optional lifecycle hook that triggers entity
@@ -148,6 +154,12 @@ func (s *DocumentService) SetEntityHook(hook EntityLifecycleHook) {
 // automatically ingests documents (Layers 1-2) when they are submitted.
 func (s *DocumentService) SetIntelligenceService(svc *IntelligenceService) {
 	s.intelligenceSvc = svc
+}
+
+// SetConfigProvider overrides the configuration loader used by the service.
+// Intended for testing; production code should leave this at the default.
+func (s *DocumentService) SetConfigProvider(fn func() *config.Config) {
+	s.configProvider = fn
 }
 
 // NewDocumentService creates a new DocumentService.
@@ -329,7 +341,12 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 	}
 
 	// Quality evaluation gate: check if RequireForApproval is enabled.
-	cfg := config.LoadOrDefault()
+	var cfg *config.Config
+	if s.configProvider != nil {
+		cfg = s.configProvider()
+	} else {
+		cfg = config.LoadOrDefault()
+	}
 	if cfg.QualityEvaluation.RequireForApproval {
 		threshold := cfg.QualityEvaluation.Threshold
 		if threshold == 0 {

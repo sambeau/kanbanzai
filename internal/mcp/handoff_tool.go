@@ -190,7 +190,6 @@ func handoffTool(
 
 		// ── Legacy 2.0 assembly fallback ───────────────────────────────────
 
-
 		// Stage-aware lifecycle validation (FR-001).
 		featureStage, valErr := ValidateFeatureStage(parentFeature, entitySvc)
 		if valErr != nil {
@@ -337,8 +336,8 @@ func buildLegacyResponse(task service.GetResult, actx assembledContext, prompt s
 		"prompt":     prompt,
 		"context_metadata": map[string]any{
 			"assembly_path":              "legacy-2.0",
-			"stage_aware":    actx.stageAware,
-			"feature_stage":  actx.featureStage,
+			"stage_aware":                actx.stageAware,
+			"feature_stage":              actx.featureStage,
 			"spec_sections_included":     len(actx.specSections),
 			"knowledge_entries_included": len(actx.knowledge),
 			"byte_usage":                 actx.byteUsage,
@@ -387,6 +386,22 @@ func renderHandoffPrompt(taskState map[string]any, actx assembledContext, instru
 	}
 	if actx.outputConventionText != "" {
 		sb.WriteString(actx.outputConventionText)
+		sb.WriteString("\n\n")
+	}
+	if actx.reviewRubricText != "" {
+		sb.WriteString(actx.reviewRubricText)
+		sb.WriteString("\n\n")
+	}
+	if actx.testExpectText != "" {
+		sb.WriteString(actx.testExpectText)
+		sb.WriteString("\n\n")
+	}
+	if actx.implGuidanceText != "" {
+		sb.WriteString(actx.implGuidanceText)
+		sb.WriteString("\n\n")
+	}
+	if actx.planGuidanceText != "" {
+		sb.WriteString(actx.planGuidanceText)
 		sb.WriteString("\n\n")
 	}
 

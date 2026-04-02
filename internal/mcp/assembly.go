@@ -49,6 +49,17 @@ func hasRFC2119Keyword(text string) bool {
 
 const assemblyDefaultBudget = 30720
 
+// Stage content guidance text constants (B-07).
+const (
+	asmReviewRubricText = "## Review Rubric\n\nRecord findings using severity levels: **blocking** (must fix before done) or **non-blocking** (should fix, follow-up acceptable).\n\nVerdict options: `approved`, `approved_with_followups`, or `changes_required`.\nUse `changes_required` if any blocking finding exists. Use `approved_with_followups` only when all findings are non-blocking."
+
+	asmTestExpectText = "## Test Expectations\n\nEvery code change must include tests. Run `go test ./...` before marking a task done.\nNew behaviour must be covered at the unit or integration level. Do not mark a task done if tests are failing."
+
+	asmImplGuidanceText = "## Implementation Guidance\n\nRead the specification sections and acceptance criteria before writing code.\nImplement the minimum code required by the task. Follow existing patterns in the codebase.\nCheck diagnostics after edits. Commit with `type(scope): description` format."
+
+	asmPlanGuidanceText = "## Plan Guidance\n\nDo not skip to implementation. Produce the required document artifact for this stage before advancing.\nCheck that all required sections are present and that the document is registered and approved."
+)
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 // asmExperimentNudge represents an active workflow experiment included in
@@ -91,21 +102,25 @@ type asmTrimmedEntry struct {
 // Both next (structured JSON) and handoff (Markdown prompt) consume this
 // intermediate representation.
 type assembledContext struct {
-	specSections       []asmSpecSection
-	acceptanceCriteria []string
-	knowledge          []asmKnowledgeEntry
-	filesContext       []asmFileEntry
-	constraints        []string
-	roleProfile        string
-	byteUsage          int
-	byteBudget         int
-	trimmed            []asmTrimmedEntry
+	specSections         []asmSpecSection
+	acceptanceCriteria   []string
+	knowledge            []asmKnowledgeEntry
+	filesContext         []asmFileEntry
+	constraints          []string
+	roleProfile          string
+	byteUsage            int
+	byteBudget           int
+	trimmed              []asmTrimmedEntry
 	stageAware           bool   // true when stage-aware assembly succeeded
 	featureStage         string // the resolved stage
 	orchestrationText    string // rendered orchestration section (FR-006)
 	effortBudgetText     string // rendered effort budget section (FR-007)
 	toolSubsetText       string // rendered tool subset section (FR-008)
 	outputConventionText string // rendered output convention (FR-009), empty for single-agent
+	reviewRubricText     string // review rubric guidance for reviewing stage (B-07)
+	testExpectText       string // test expectations for developing/reviewing/needs-rework (B-07)
+	implGuidanceText     string // implementation guidance for developing/needs-rework (B-07)
+	planGuidanceText     string // plan guidance for designing/specifying/dev-planning (B-07)
 	// experimentNudge lists active workflow-experiment decisions for agents to
 	// reference when they encounter friction or success related to an experiment.
 	// Not a knowledge entry; does not count against tier-3 budget (spec §8.4).
@@ -141,6 +156,9 @@ func assembleContext(input asmInput) assembledContext {
 	var actx assembledContext
 	actx.byteBudget = assemblyDefaultBudget
 
+	// specMode controls spec section filtering in asmExtractSpecSections (B-08).
+	specMode := ""
+
 	// Stage-aware context assembly (3.0).
 	if input.featureStage != "" {
 		if cfg, ok := stage.ForStage(input.featureStage); ok {
@@ -166,9 +184,25 @@ func assembleContext(input asmInput) assembledContext {
 			if cfg.OutputConvention {
 				actx.outputConventionText = "## Output Convention\n\nSub-agents write outputs to documents and task records. Read their status via\n`entity(action: \"get\")` and `doc(action: \"get\")`. Do not retain sub-agent\nconversation output in your context \u2014 use references (document IDs, task IDs,\nstatus summaries) instead of contents."
 			}
+
+			// Spec mode for section filtering (B-08).
+			specMode = cfg.SpecMode
+
+			// Stage content guidance flags (B-07).
+			if cfg.IncludeReviewRubric {
+				actx.reviewRubricText = asmReviewRubricText
+			}
+			if cfg.IncludeTestExpect {
+				actx.testExpectText = asmTestExpectText
+			}
+			if cfg.IncludeImplGuidance {
+				actx.implGuidanceText = asmImplGuidanceText
+			}
+			if cfg.IncludePlanGuidance {
+				actx.planGuidanceText = asmPlanGuidanceText
+			}
 		}
 	}
-
 
 	// Role profile conventions.
 	if input.profileStore != nil && input.role != "" {
@@ -181,7 +215,7 @@ func assembleContext(input asmInput) assembledContext {
 	// Spec/design sections from document intelligence, with automatic
 	// Layer 1–2 parsing and graceful degradation.
 	actx.specSections, actx.specFallbackPath = asmExtractSpecSections(
-		input.parentFeature, input.intelligenceSvc, input.docRecordSvc,
+		input.parentFeature, input.intelligenceSvc, input.docRecordSvc, specMode,
 	)
 
 	// Extract acceptance criteria from spec sections.
@@ -234,16 +268,45 @@ func asmExtractSpecSections(
 	parentFeature string,
 	intelligenceSvc *service.IntelligenceService,
 	docRecordSvc *service.DocumentService,
+	specMode string,
 ) (sections []asmSpecSection, fallbackPath string) {
 	if parentFeature == "" {
 		return nil, ""
+	}
+
+	// Build design doc ID set for relevant-sections filtering (B-08).
+	// Only populated when specMode == "relevant-sections" to avoid unnecessary calls.
+	designDocIDs := map[string]bool{}
+	if specMode == "relevant-sections" && docRecordSvc != nil {
+		designDocs, _ := docRecordSvc.ListDocuments(service.DocumentFilters{
+			Owner: parentFeature,
+			Type:  "design",
+		})
+		for _, d := range designDocs {
+			designDocIDs[d.ID] = true
+		}
+	}
+
+	// filterSections applies relevant-sections mode filtering (B-08):
+	// keeps sections that contain an RFC 2119 keyword or come from a design doc.
+	filterSections := func(ss []asmSpecSection) []asmSpecSection {
+		if specMode != "relevant-sections" || len(ss) == 0 {
+			return ss
+		}
+		var out []asmSpecSection
+		for _, s := range ss {
+			if hasRFC2119Keyword(s.content) || designDocIDs[s.document] {
+				out = append(out, s)
+			}
+		}
+		return out
 	}
 
 	// Try document intelligence first.
 	if intelligenceSvc != nil {
 		sections = asmTraceEntitySections(parentFeature, intelligenceSvc)
 		if len(sections) > 0 {
-			return sections, ""
+			return filterSections(sections), ""
 		}
 	}
 
@@ -277,7 +340,7 @@ func asmExtractSpecSections(
 		// Retry extraction after indexing.
 		sections = asmTraceEntitySections(parentFeature, intelligenceSvc)
 		if len(sections) > 0 {
-			return sections, ""
+			return filterSections(sections), ""
 		}
 
 		// Graceful degradation (§24.3): return the document path so the

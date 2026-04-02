@@ -3,6 +3,8 @@ package binding
 import (
 	"fmt"
 	"regexp"
+
+	"gopkg.in/yaml.v3"
 )
 
 // StageBinding represents a single stage's binding configuration.
@@ -26,6 +28,44 @@ type Prerequisites struct {
 	Documents      []DocumentPrereq `yaml:"documents,omitempty"`
 	Tasks          *TaskPrereq      `yaml:"tasks,omitempty"`
 	OverridePolicy string           `yaml:"override_policy,omitempty"` // "agent" (default) or "checkpoint"
+
+	// Extensions holds any prerequisite type keys not natively understood by the
+	// binding loader. Each key is passed to the registered evaluator dispatcher,
+	// which returns "unknown prerequisite type" if no evaluator is registered.
+	Extensions map[string]yaml.Node `yaml:"-"`
+}
+
+// UnmarshalYAML implements yaml.Unmarshaler so that unknown keys in a
+// prerequisites block are captured in Extensions rather than causing a decode
+// error. Known keys (documents, tasks, override_policy) are decoded into their
+// typed fields as normal.
+func (p *Prerequisites) UnmarshalYAML(value *yaml.Node) error {
+	if value.Kind != yaml.MappingNode {
+		return fmt.Errorf("prerequisites must be a mapping")
+	}
+	for i := 0; i+1 < len(value.Content); i += 2 {
+		k := value.Content[i].Value
+		v := value.Content[i+1]
+		switch k {
+		case "documents":
+			if err := v.Decode(&p.Documents); err != nil {
+				return fmt.Errorf("prerequisites.documents: %w", err)
+			}
+		case "tasks":
+			p.Tasks = new(TaskPrereq)
+			if err := v.Decode(p.Tasks); err != nil {
+				return fmt.Errorf("prerequisites.tasks: %w", err)
+			}
+		case "override_policy":
+			p.OverridePolicy = v.Value
+		default:
+			if p.Extensions == nil {
+				p.Extensions = make(map[string]yaml.Node)
+			}
+			p.Extensions[k] = *v
+		}
+	}
+	return nil
 }
 
 // DocumentPrereq is a single document prerequisite declaration.

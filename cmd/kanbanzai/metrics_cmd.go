@@ -5,12 +5,61 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"os"
 	"text/tabwriter"
 	"time"
 
 	"github.com/sambeau/kanbanzai/internal/actionlog"
 )
+
+// entityFeatureLookup implements actionlog.StageFeatureLookup using the entity service.
+type entityFeatureLookup struct {
+	svc entityService
+}
+
+// ListFeaturesInRange returns feature metrics data filtered by time range and optional feature ID.
+func (l *entityFeatureLookup) ListFeaturesInRange(since, until time.Time, featureID string) ([]actionlog.FeatureMetricsData, error) {
+	results, err := l.svc.List("feature")
+	if err != nil {
+		return nil, fmt.Errorf("list features: %w", err)
+	}
+
+	var features []actionlog.FeatureMetricsData
+	for _, r := range results {
+		if featureID != "" && r.ID != featureID {
+			continue
+		}
+
+		ts := featureTimestamp(r.State)
+		if !ts.IsZero() {
+			if (!since.IsZero() && ts.Before(since)) || (!until.IsZero() && ts.After(until)) {
+				continue
+			}
+		}
+
+		rc, _ := r.State["review_cycle"].(int)
+		features = append(features, actionlog.FeatureMetricsData{
+			FeatureID:    r.ID,
+			DisplayID:    r.ID,
+			ReviewCycles: rc,
+			Transitions:  nil,
+		})
+	}
+
+	return features, nil
+}
+
+// featureTimestamp returns the most recent timestamp available in a feature state map.
+// It prefers "updated" over "created".
+func featureTimestamp(state map[string]any) time.Time {
+	for _, key := range []string{"updated", "created"} {
+		if s, _ := state[key].(string); s != "" {
+			if t, err := time.Parse(time.RFC3339, s); err == nil {
+				return t
+			}
+		}
+	}
+	return time.Time{}
+}
 
 // runMetrics implements the kbz metrics command.
 func runMetrics(args []string, deps dependencies) error {
@@ -59,14 +108,15 @@ func runMetrics(args []string, deps dependencies) error {
 		FeatureID: *featureID,
 	}
 
-	result, err := actionlog.ComputeMetrics(input, nil)
+	lookup := &entityFeatureLookup{svc: deps.newEntityService("")}
+	result, err := actionlog.ComputeMetrics(input, lookup)
 	if err != nil {
 		return fmt.Errorf("compute metrics: %w", err)
 	}
 
 	if result.GateFailureRate.Total == 0 && len(result.TimePerStage) == 0 {
 		fmt.Fprintln(deps.stdout, "no data found for the specified time range")
-		os.Exit(1)
+		return nil
 	}
 
 	if *jsonOut {

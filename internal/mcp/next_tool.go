@@ -383,11 +383,23 @@ func nextContextToMap(actx assembledContext) map[string]any {
 				"excluded": cfg.ExcludedTools,
 			}
 			if cfg.OutputConvention {
-				out["output_convention"] = "Sub-agents write outputs to documents and task records. Read their status via entity(action: \"get\") and doc(action: \"get\"). Do not retain sub-agent conversation output in your context \u2014 use references (document IDs, task IDs, status summaries) instead of contents."
+				out["output_convention"] = "Sub-agents write outputs to documents and task records. Read their status via entity(action: \"get\") and doc(action: \"get\"). Do not retain sub-agent conversation output in your context — use references (document IDs, task IDs, status summaries) instead of contents."
 			}
 		}
 	} else {
 		out["stage_aware"] = false
+	}
+	if actx.reviewRubricText != "" {
+		out["review_rubric"] = actx.reviewRubricText
+	}
+	if actx.testExpectText != "" {
+		out["test_expectations"] = actx.testExpectText
+	}
+	if actx.implGuidanceText != "" {
+		out["impl_guidance"] = actx.implGuidanceText
+	}
+	if actx.planGuidanceText != "" {
+		out["plan_guidance"] = actx.planGuidanceText
 	}
 	return out
 }

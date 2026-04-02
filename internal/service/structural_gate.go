@@ -77,19 +77,51 @@ func runStructuralChecksForGate(
 	// Required sections (all document types).
 	appendCheck(structural.CheckRequiredSections(idx.Sections, info.docType, docID, gate))
 
-	// Spec-specific: acceptance criteria + cross-reference.
-	if info.docType == "specification" {
-		appendCheck(structural.CheckAcceptanceCriteria(idx.Sections, idx.ConventionalRoles, docID, gate))
+	// At dev-planning→developing: also check the approved specification for
+	// acceptance criteria and cross-reference (FR-001). B-17 fix.
+	// Note: these spec-specific checks do NOT run at specifying→dev-planning. B-16 fix.
+	if gate == "dev-planning→developing" && feature.Spec != "" {
+		specIdx, err := indexStore.LoadDocumentIndex(feature.Spec)
+		if err == nil {
+			const specDocType = "specification"
 
-		var designPaths, designIDs []string
-		if feature.Design != "" {
-			designIDs = append(designIDs, feature.Design)
-			if doc, err := docSvc.GetDocument(feature.Design, false); err == nil {
-				designPaths = append(designPaths, doc.Path)
+			appendSpecCheck := func(r structural.CheckResult) {
+				key := structural.CheckKey{CheckType: r.CheckType, DocumentType: specDocType}
+				r.Mode = ps.GetMode(key)
+				results = append(results, r)
+				if r.Passed {
+					ps.RecordPass(key)
+				}
+				if !r.Passed && r.Mode == "hard_gate" {
+					anyHardFail = true
+				}
 			}
+
+			appendSpecCheck(structural.CheckAcceptanceCriteria(specIdx.Sections, specIdx.ConventionalRoles, feature.Spec, gate))
+
+			// Build design paths/IDs from feature.Design and from the parent
+			// plan's design documents (FR-005). B-18 fix.
+			var designPaths, designIDs []string
+			if feature.Design != "" {
+				designIDs = append(designIDs, feature.Design)
+				if doc, err := docSvc.GetDocument(feature.Design, false); err == nil {
+					designPaths = append(designPaths, doc.Path)
+				}
+			}
+			if feature.Parent != "" {
+				if planDocs, err := docSvc.ListDocuments(DocumentFilters{Owner: feature.Parent, Type: "design"}); err == nil {
+					for _, d := range planDocs {
+						if d.ID != feature.Design {
+							designIDs = append(designIDs, d.ID)
+							designPaths = append(designPaths, d.Path)
+						}
+					}
+				}
+			}
+
+			er := docint.ExtractResult{CrossDocLinks: specIdx.CrossDocLinks, EntityRefs: specIdx.EntityRefs}
+			appendSpecCheck(structural.CheckCrossReference(er, designPaths, designIDs, feature.Spec, gate))
 		}
-		er := docint.ExtractResult{CrossDocLinks: idx.CrossDocLinks, EntityRefs: idx.EntityRefs}
-		appendCheck(structural.CheckCrossReference(er, designPaths, designIDs, docID, gate))
 	}
 
 	_ = ps.Save() // best-effort persist

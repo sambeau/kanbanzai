@@ -81,6 +81,10 @@ func EvaluatePrerequisites(prereqs *binding.Prerequisites, stage string, ctx Pre
 		results = append(results, dispatch("tasks", prereqs, stage, ctx)...)
 	}
 
+	for typeKey := range prereqs.Extensions {
+		results = append(results, dispatch(typeKey, prereqs, stage, ctx)...)
+	}
+
 	return results
 }
 
