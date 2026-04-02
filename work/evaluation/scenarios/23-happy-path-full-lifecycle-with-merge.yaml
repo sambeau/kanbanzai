@@ -1,0 +1,45 @@
+name: Happy path - full lifecycle with status, handoff, pr, and merge
+description: Tests that an agent correctly navigates the complete P1+P2 tool set —
+  using status to check the queue, handoff to delegate implementation, pr to open a
+  pull request, and merge to land the feature branch.
+category: happy-path
+starting_state:
+  feature_stage: developing
+  documents:
+    - type: design
+      status: approved
+    - type: specification
+      status: approved
+    - type: dev-plan
+      status: approved
+  tasks:
+    - status: ready
+      slug: implement-core-logic
+    - status: ready
+      slug: implement-tests
+expected_pattern:
+  tool_sequence:
+    - status (check project overview and ready task queue)
+    - next (claim implement-core-logic task)
+    - handoff (generate sub-agent prompt for implement-core-logic)
+    - finish (complete implement-core-logic task)
+    - next (claim implement-tests task)
+    - handoff (generate sub-agent prompt for implement-tests)
+    - finish (complete implement-tests task)
+    - status (confirm all tasks done, feature ready to advance)
+    - entity (transition feature to reviewing)
+    - entity (transition feature to done)
+    - merge (check - evaluate merge gates)
+    - pr (create pull request for feature)
+    - pr (status - confirm CI passes and review approved)
+    - merge (execute - merge feature branch)
+  key_transitions: [active, done, reviewing, done]
+success_criteria:
+  - status is called at the start to orient the orchestrator before any task work
+  - handoff is called for each task rather than implementing directly
+  - All tasks reach done status before the feature transitions out of developing
+  - status is called after all tasks complete to confirm readiness before transition
+  - merge check is called before pr create to verify gate prerequisites
+  - pr create succeeds and references the correct feature entity
+  - merge execute completes without using the override flag
+  - Feature branch is merged into the default branch

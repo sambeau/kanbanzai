@@ -875,3 +875,90 @@ func TestCheckTransitionGate_NeedsReworkToReviewing_NonTerminalTask(t *testing.T
 		t.Fatal("expected needs-rework→reviewing unsatisfied with non-terminal task")
 	}
 }
+
+// ─── B-12: reviewing→needs-rework cap-check branch ───────────────────────────
+
+// TestCheckTransitionGate_ReviewingToNeedsRework_CapReached verifies that when
+// a feature's review_cycle equals DefaultMaxReviewCycles the gate returns
+// Satisfied=false and ReviewCapReached=true.
+func TestCheckTransitionGate_ReviewingToNeedsRework_CapReached(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	// Feature at the iteration cap (review_cycle == DefaultMaxReviewCycles == 3).
+	feature := &model.Feature{
+		ID:          "FEAT-01DDDDDDDDDD01",
+		ReviewCycle: DefaultMaxReviewCycles,
+	}
+	result := CheckTransitionGate("reviewing", "needs-rework", feature, docSvc, entitySvc)
+
+	if result.Satisfied {
+		t.Fatal("expected reviewing→needs-rework unsatisfied when cap is reached")
+	}
+	if !result.ReviewCapReached {
+		t.Errorf("expected ReviewCapReached=true at cap, got false")
+	}
+	if result.Reason == "" {
+		t.Error("expected non-empty Reason when cap is reached")
+	}
+}
+
+// TestCheckTransitionGate_ReviewingToNeedsRework_BelowCap verifies that when
+// a feature's review_cycle is one below DefaultMaxReviewCycles the gate is
+// satisfied and ReviewCapReached remains false.
+func TestCheckTransitionGate_ReviewingToNeedsRework_BelowCap(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	// Feature one below the cap (review_cycle == DefaultMaxReviewCycles-1 == 2).
+	feature := &model.Feature{
+		ID:          "FEAT-01DDDDDDDDDD02",
+		ReviewCycle: DefaultMaxReviewCycles - 1,
+	}
+	result := CheckTransitionGate("reviewing", "needs-rework", feature, docSvc, entitySvc)
+
+	if !result.Satisfied {
+		t.Fatalf("expected reviewing→needs-rework satisfied below cap, reason: %s", result.Reason)
+	}
+	if result.ReviewCapReached {
+		t.Error("expected ReviewCapReached=false below cap")
+	}
+}
+
+// TestCheckTransitionGate_ReviewingToDone_AtCap_Allowed verifies that a
+// reviewing→done transition (pass verdict) is unaffected by the review cap —
+// the done gate only checks for a report document, not the cycle count.
+func TestCheckTransitionGate_ReviewingToDone_AtCap_Allowed(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01DDDDDDDDDD03"
+	// A review report is required for reviewing→done; register one (unapproved is fine).
+	submitAndApproveDoc(t, docSvc, repoRoot, "work/reports/cap-done.md", "report", featureID, false)
+
+	// Feature at the cap — the done transition must still be allowed.
+	feature := &model.Feature{
+		ID:          featureID,
+		ReviewCycle: DefaultMaxReviewCycles,
+	}
+	result := CheckTransitionGate("reviewing", "done", feature, docSvc, entitySvc)
+
+	if !result.Satisfied {
+		t.Fatalf("expected reviewing→done satisfied at cap (pass verdict always allowed), reason: %s", result.Reason)
+	}
+	if result.ReviewCapReached {
+		t.Errorf("expected ReviewCapReached=false for reviewing→done transition")
+	}
+}

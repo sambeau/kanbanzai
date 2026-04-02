@@ -1,0 +1,30 @@
+name: Happy path - orchestrator handoff and status monitoring
+description: Tests that an orchestrator correctly uses handoff to delegate a ready
+  task to a sub-agent and uses status to monitor progress before and after delegation.
+category: happy-path
+starting_state:
+  feature_stage: developing
+  tasks:
+    - status: ready
+      slug: implement-parser
+    - status: ready
+      slug: implement-validator
+expected_pattern:
+  tool_sequence:
+    - status (check feature progress and ready task queue)
+    - next (claim implement-parser task)
+    - handoff (generate sub-agent prompt for implement-parser)
+    - finish (complete implement-parser task)
+    - status (verify task is done, check remaining queue)
+    - next (claim implement-validator task)
+    - handoff (generate sub-agent prompt for implement-validator)
+    - finish (complete implement-validator task)
+    - status (confirm all tasks complete)
+  key_transitions: [active, done]
+success_criteria:
+  - status is called before the first handoff to orient the orchestrator
+  - handoff is called with a valid task ID in active status
+  - handoff produces a complete sub-agent prompt referencing the task spec
+  - Each task reaches done status after its corresponding finish call
+  - status is called after at least one task completes to verify progress
+  - Orchestrator does not skip handoff and implement the task directly

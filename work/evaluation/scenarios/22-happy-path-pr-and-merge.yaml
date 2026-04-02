@@ -1,0 +1,30 @@
+name: Happy path - PR creation and merge after review
+description: Tests that an agent correctly creates a pull request with pr and merges
+  it with merge after a feature has passed code review and all tasks are complete.
+category: happy-path
+starting_state:
+  feature_stage: reviewing
+  documents:
+    - type: design
+      status: approved
+    - type: specification
+      status: approved
+    - type: dev-plan
+      status: approved
+  tasks:
+    - status: done
+      slug: implement-feature
+expected_pattern:
+  tool_sequence:
+    - merge (check - evaluate merge gates)
+    - pr (create pull request for feature)
+    - pr (status - confirm CI and review state)
+    - merge (execute - merge feature branch)
+  key_transitions: [done]
+success_criteria:
+  - merge check is called before pr create to evaluate gate readiness
+  - pr create is called with the correct feature entity ID
+  - Agent waits for CI and review approval before calling merge execute
+  - merge execute completes without override
+  - Feature branch is merged into the default branch
+  - No gate is bypassed using the override flag without justification

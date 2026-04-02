@@ -1319,3 +1319,113 @@ func TestEntity_Create_Plan(t *testing.T) {
 		t.Errorf("expected empty side_effects, got %v", arr)
 	}
 }
+
+// ─── B-14: review-iteration-cap end-to-end tests ─────────────────────────────
+
+// TestEntity_Transition_ReviewCap_BlocksNeedsRework verifies the end-to-end
+// cap-block path: when a feature's review_cycle equals DefaultMaxReviewCycles
+// and a reviewing→needs-rework transition is attempted, the response contains
+// both blocked_reason and checkpoint_id, and the blocked_reason is persisted
+// on the feature entity.
+func TestEntity_Transition_ReviewCap_BlocksNeedsRework(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	// Write a feature already at reviewing status with review_cycle at the cap.
+	featID, featSlug := "FEAT-01CAPBLOCK001", "feat-cap-bl-1"
+	if _, err := entitySvc.Store().Write(storage.EntityRecord{
+		Type: "feature",
+		ID:   featID,
+		Slug: featSlug,
+		Fields: map[string]any{
+			"id":           featID,
+			"slug":         featSlug,
+			"status":       "reviewing",
+			"review_cycle": service.DefaultMaxReviewCycles,
+			"summary":      "cap block test",
+			"created":      "2026-01-01T00:00:00Z",
+			"created_by":   "tester",
+		},
+	}); err != nil {
+		t.Fatalf("write feature: %v", err)
+	}
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action": "transition",
+		"id":     featID,
+		"status": "needs-rework",
+	})
+
+	// Response must contain blocked_reason and checkpoint_id.
+	if _, ok := result["blocked_reason"]; !ok {
+		t.Errorf("expected blocked_reason in response, got: %v", result)
+	}
+	if _, ok := result["checkpoint_id"]; !ok {
+		t.Errorf("expected checkpoint_id in response, got: %v", result)
+	}
+
+	// blocked_reason must be persisted on the feature entity itself.
+	feat, err := entitySvc.Get("feature", featID, "")
+	if err != nil {
+		t.Fatalf("get feature after cap block: %v", err)
+	}
+	if br, _ := feat.State["blocked_reason"].(string); br == "" {
+		t.Error("expected blocked_reason to be persisted on the feature entity")
+	}
+}
+
+// TestEntity_Transition_ReviewCap_SubsequentAttemptAlsoRejected verifies that
+// a second reviewing→needs-rework attempt after the cap has been reached is
+// also rejected (the feature remains in reviewing status and blocked_reason is
+// returned again).
+func TestEntity_Transition_ReviewCap_SubsequentAttemptAlsoRejected(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	featID, featSlug := "FEAT-01CAPBLOCK002", "feat-cap-bl-2"
+	if _, err := entitySvc.Store().Write(storage.EntityRecord{
+		Type: "feature",
+		ID:   featID,
+		Slug: featSlug,
+		Fields: map[string]any{
+			"id":           featID,
+			"slug":         featSlug,
+			"status":       "reviewing",
+			"review_cycle": service.DefaultMaxReviewCycles,
+			"summary":      "subsequent rejection test",
+			"created":      "2026-01-01T00:00:00Z",
+			"created_by":   "tester",
+		},
+	}); err != nil {
+		t.Fatalf("write feature: %v", err)
+	}
+
+	// First attempt — must be blocked at cap.
+	first := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action": "transition",
+		"id":     featID,
+		"status": "needs-rework",
+	})
+	if _, ok := first["blocked_reason"]; !ok {
+		t.Fatalf("first attempt: expected blocked_reason, got: %v", first)
+	}
+
+	// Feature must still be in reviewing (transition did not occur).
+	feat, err := entitySvc.Get("feature", featID, "")
+	if err != nil {
+		t.Fatalf("get feature after first attempt: %v", err)
+	}
+	if status, _ := feat.State["status"].(string); status != "reviewing" {
+		t.Errorf("feature status = %q after first blocked attempt, want reviewing", status)
+	}
+
+	// Second attempt — must also be blocked.
+	second := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action": "transition",
+		"id":     featID,
+		"status": "needs-rework",
+	})
+	if _, ok := second["blocked_reason"]; !ok {
+		t.Errorf("second attempt: expected blocked_reason, got: %v", second)
+	}
+}

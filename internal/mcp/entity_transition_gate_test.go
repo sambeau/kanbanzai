@@ -655,6 +655,41 @@ func TestGate_Consistency_SingleStepVsAdvance(t *testing.T) {
 	assertFeatureStatus(t, entitySvc, featB, "designing")
 }
 
+// ─── Advance override_reason validation ──────────────────────────────────────
+
+// TestGate_Advance_OverrideRequiresReason verifies that advance=true combined
+// with override=true but an empty override_reason is rejected with an error
+// response — no panic, no nil error, and the feature remains unchanged (B-02).
+func TestGate_Advance_OverrideRequiresReason(t *testing.T) {
+	t.Parallel()
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	entitySvc := service.NewEntityService(stateRoot)
+	docSvc := service.NewDocumentService(stateRoot, repoRoot)
+
+	planID := createEntityTestPlan(t, entitySvc, "gate-adv-noreason")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-adv-noreason")
+
+	result := callEntityToolWithDocSvcJSON(t, entitySvc, docSvc, map[string]any{
+		"action":   "transition",
+		"id":       featID,
+		"status":   "developing",
+		"advance":  true,
+		"override": true,
+		// override_reason intentionally omitted — must be rejected.
+	})
+
+	errMsg, _ := result["error"].(string)
+	if errMsg == "" {
+		t.Fatal("expected error when advance=true, override=true but override_reason is missing")
+	}
+	if !strings.Contains(strings.ToLower(errMsg), "override_reason") {
+		t.Errorf("error message should mention override_reason requirement: %s", errMsg)
+	}
+	// Feature must remain at proposed — the advance was rejected before it started.
+	assertFeatureStatus(t, entitySvc, featID, "proposed")
+}
+
 // ─── Test helpers ─────────────────────────────────────────────────────────────
 
 // createEntityTestFeatureWithStatus creates a feature and transitions it to

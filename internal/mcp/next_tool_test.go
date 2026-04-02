@@ -198,7 +198,8 @@ func callNextFull(
 
 // advanceNextFeatureTo transitions a feature through the lifecycle to reach
 // the given target status. The forward chain is:
-//   proposed -> designing -> specifying -> dev-planning -> developing -> reviewing
+//
+//	proposed -> designing -> specifying -> dev-planning -> developing -> reviewing
 func advanceNextFeatureTo(t *testing.T, entitySvc *service.EntityService, featID, target string) {
 	t.Helper()
 	chain := []string{"designing", "specifying", "dev-planning", "developing", "reviewing"}
@@ -1079,5 +1080,42 @@ func TestNext_ClaimMode_NoOrientation(t *testing.T) {
 	// Should have task and context fields instead.
 	if _, ok := parsed["task"]; !ok {
 		t.Errorf("task field missing from claim-mode response")
+	}
+}
+
+// ─── Stage validation (FR-002) ────────────────────────────────────────────────
+
+// TestNext_ClaimByTaskID_ProposedFeatureRejected verifies that claiming a task
+// whose parent feature is in "proposed" (a non-working state) returns an error
+// and leaves the task in "ready" status — the claim must not succeed (B-10).
+func TestNext_ClaimByTaskID_ProposedFeatureRejected(t *testing.T) {
+	t.Parallel()
+	entitySvc, dispatchSvc := setupNextTest(t)
+
+	planID := createNextTestPlan(t, entitySvc, "next-proposed-feat")
+	featID := createNextTestFeature(t, entitySvc, planID, "feat-proposed")
+	// Feature is deliberately left in "proposed" — do NOT call advanceNextFeatureTo.
+
+	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "task-proposed")
+	setNextTaskReady(t, entitySvc, taskID, taskSlug)
+
+	raw := callNext(t, entitySvc, dispatchSvc, map[string]any{"id": taskID})
+	var result map[string]any
+	if err := json.Unmarshal([]byte(raw), &result); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, raw)
+	}
+
+	// An error must be present.
+	if _, hasErr := result["error"]; !hasErr {
+		t.Fatalf("expected error for task with proposed parent feature, got: %s", raw)
+	}
+
+	// Task must remain in "ready" — it was not claimed.
+	task, err := entitySvc.Get("task", taskID, "")
+	if err != nil {
+		t.Fatalf("get task after rejected claim: %v", err)
+	}
+	if task.State["status"] != "ready" {
+		t.Errorf("task.status = %v after rejected claim, want \"ready\"", task.State["status"])
 	}
 }

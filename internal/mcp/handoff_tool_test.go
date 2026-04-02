@@ -1041,3 +1041,148 @@ func TestHandoff_PreDispatchCommit_UsesRepoRootDot(t *testing.T) {
 		t.Errorf("commitStateFunc called with repoRoot=%q, want \".\"", capturedRoot)
 	}
 }
+
+// ─── B-15: re-review guidance injection ──────────────────────────────────────
+
+// TestHandoff_ReReviewGuidance_NotInjectedAtCycleOne verifies that no
+// re-review guidance appears in the prompt when the parent feature's
+// review_cycle is 1 (below the injection threshold of >= 2).
+func TestHandoff_ReReviewGuidance_NotInjectedAtCycleOne(t *testing.T) {
+	t.Parallel()
+	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+
+	planID := createHandoffPlan(t, entitySvc, "rerev-c1")
+	featID := createHandoffFeature(t, entitySvc, planID, "rerev-feat-c1")
+	advanceHandoffFeatureTo(t, entitySvc, featID, "reviewing")
+	// Increment review_cycle once → cycle 1 (below the >= 2 threshold).
+	if err := entitySvc.IncrementFeatureReviewCycle(featID, ""); err != nil {
+		t.Fatalf("IncrementFeatureReviewCycle: %v", err)
+	}
+
+	taskID, taskSlug := createHandoffTask(t, entitySvc, featID, "rerev-task-c1")
+	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
+
+	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+		"task_id": taskID,
+	})
+
+	prompt := resp["prompt"].(string)
+	if strings.Contains(prompt, "Re-Review Guidance") {
+		t.Errorf("expected no re-review guidance for review_cycle=1; found in prompt:\n%s", prompt)
+	}
+}
+
+// TestHandoff_ReReviewGuidance_InjectedAtCycleTwo verifies that the re-review
+// guidance section appears when the parent feature's review_cycle is 2 (at the
+// injection threshold of >= 2), and that it contains the cycle number.
+func TestHandoff_ReReviewGuidance_InjectedAtCycleTwo(t *testing.T) {
+	t.Parallel()
+	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+
+	planID := createHandoffPlan(t, entitySvc, "rerev-c2")
+	featID := createHandoffFeature(t, entitySvc, planID, "rerev-feat-c2")
+	advanceHandoffFeatureTo(t, entitySvc, featID, "reviewing")
+	// Increment review_cycle twice → cycle 2 (at the threshold).
+	for i := 0; i < 2; i++ {
+		if err := entitySvc.IncrementFeatureReviewCycle(featID, ""); err != nil {
+			t.Fatalf("IncrementFeatureReviewCycle #%d: %v", i+1, err)
+		}
+	}
+
+	taskID, taskSlug := createHandoffTask(t, entitySvc, featID, "rerev-task-c2")
+	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
+
+	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+		"task_id": taskID,
+	})
+
+	prompt := resp["prompt"].(string)
+	if !strings.Contains(prompt, "Re-Review Guidance") {
+		t.Errorf("expected re-review guidance for review_cycle=2; not found in prompt:\n%s", prompt)
+	}
+	if !strings.Contains(prompt, "Cycle 2") {
+		t.Errorf("expected cycle number 2 in guidance; not found in prompt:\n%s", prompt)
+	}
+}
+
+// TestHandoff_ReReviewGuidance_PrependsExistingInstructions verifies that when
+// both re-review guidance (review_cycle >= 2) and caller-supplied instructions
+// are present, the guidance is prepended before the instructions so neither
+// is lost.
+func TestHandoff_ReReviewGuidance_PrependsExistingInstructions(t *testing.T) {
+	t.Parallel()
+	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+
+	planID := createHandoffPlan(t, entitySvc, "rerev-pre")
+	featID := createHandoffFeature(t, entitySvc, planID, "rerev-feat-pre")
+	advanceHandoffFeatureTo(t, entitySvc, featID, "reviewing")
+	for i := 0; i < 2; i++ {
+		if err := entitySvc.IncrementFeatureReviewCycle(featID, ""); err != nil {
+			t.Fatalf("IncrementFeatureReviewCycle #%d: %v", i+1, err)
+		}
+	}
+
+	taskID, taskSlug := createHandoffTask(t, entitySvc, featID, "rerev-task-pre")
+	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
+
+	const extraInstructions = "Focus on security boundaries only."
+	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+		"task_id":      taskID,
+		"instructions": extraInstructions,
+	})
+
+	prompt := resp["prompt"].(string)
+
+	// Both guidance and caller instructions must appear.
+	if !strings.Contains(prompt, "Re-Review Guidance") {
+		t.Errorf("expected re-review guidance in prompt; not found:\n%s", prompt)
+	}
+	if !strings.Contains(prompt, extraInstructions) {
+		t.Errorf("expected caller instructions %q in prompt; not found:\n%s", extraInstructions, prompt)
+	}
+
+	// Guidance must come before the caller instructions.
+	guidanceIdx := strings.Index(prompt, "Re-Review Guidance")
+	instrIdx := strings.Index(prompt, extraInstructions)
+	if guidanceIdx >= instrIdx {
+		t.Errorf("re-review guidance (at %d) must appear before caller instructions (at %d)", guidanceIdx, instrIdx)
+	}
+}
+
+// ─── Stage validation (FR-001) ────────────────────────────────────────────────
+
+// TestHandoff_ProposedFeature_StageValidationError verifies that calling
+// handoff for a task whose parent feature is in "proposed" status (a
+// non-working state) returns an error response with code "stage_validation"
+// (FR-001 / B-09).
+//
+// The task is advanced to "ready" so the handler passes the task-status check
+// and reaches the feature-stage validation path.
+func TestHandoff_ProposedFeature_StageValidationError(t *testing.T) {
+	t.Parallel()
+	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+
+	// Build plan → feature (stays in "proposed") → task.
+	planID := createHandoffPlan(t, entitySvc, "proposed-feat-plan")
+	featID := createHandoffFeature(t, entitySvc, planID, "proposed-feat")
+	// Feature deliberately left in "proposed" — do NOT call advanceHandoffFeatureTo.
+
+	taskID, taskSlug := createHandoffTask(t, entitySvc, featID, "proposed-feat-task")
+	// Advance the task to "ready" so the status gate passes.
+	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "ready")
+
+	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+		"task_id": taskID,
+	})
+
+	errObj, ok := resp["error"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected error object for proposed-feature task, got: %v", resp)
+	}
+	if code, _ := errObj["code"].(string); code != "stage_validation" {
+		t.Errorf("error code = %q, want \"stage_validation\"", code)
+	}
+	if msg, _ := errObj["message"].(string); msg == "" {
+		t.Error("expected non-empty error message")
+	}
+}
