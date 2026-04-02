@@ -1,0 +1,6 @@
+id: TASK-01KN84NHH46EE
+parent_feature: FEAT-01KN83QN0VAFG
+slug: lifecycle-gates-terminal-transitions
+name: Lifecycle gates on terminal transitions
+summary: Add child-state precondition checks to feature and plan transition handlers. Block terminal transitions (done/superseded/cancelled) when non-terminal children exist. Honor existing override mechanism. Best-effort on storage errors.
+status: queued
