@@ -1,0 +1,6 @@
+id: TASK-01KN84PDFXZ3N
+parent_feature: FEAT-01KN83QN0VAFG
+slug: stale-reviewing-bug-warnings
+name: Stale reviewing detection and bug warnings
+summary: Add stale_reviewing attention item when feature in reviewing exceeds configurable threshold (default 7 days). Add open_critical_bug attention items for open critical/high bugs against active features. Add lifecycle.stale_reviewing_days to config.yaml.
+status: queued
