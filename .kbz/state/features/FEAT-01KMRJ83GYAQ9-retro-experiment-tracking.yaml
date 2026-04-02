@@ -9,3 +9,9 @@ tags:
   - "phase:3"
 created: "2026-03-27T21:12:19Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: done
+    reason: "Feature was marked done prematurely. Three implementation tasks (signal-related-decision, retro-experiments-section, retro-context-nudge) were never completed. Reopening to developing to reflect actual state."
+    timestamp: "2026-04-02T22:19:20+01:00"
+    to_status: developing
