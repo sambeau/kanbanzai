@@ -1,0 +1,425 @@
+document_id: PROJECT/report-automation-opportunities-analysis
+document_path: work/reports/automation-opportunities-analysis.md
+content_hash: bf41e5a2e83e7cf4b22bfefee10d3c1c827f62287bdf6da26d4a72a54ddb1dfc
+indexed_at: 2026-04-02T12:19:24.040657Z
+sections:
+    - path: "1"
+      level: 1
+      title: Automation Opportunities Analysis
+      byte_offset: 0
+      byte_count: 19278
+      word_count: 2721
+      content_hash: bf41e5a2e83e7cf4b22bfefee10d3c1c827f62287bdf6da26d4a72a54ddb1dfc
+      children:
+        - path: "1.1"
+          level: 2
+          title: Executive Summary
+          byte_offset: 174
+          byte_count: 839
+          word_count: 112
+          content_hash: 5b68bd27f1976684d70631e788aa0a519411f419fbd5de8b7a6f2def699f116f
+        - path: "1.2"
+          level: 2
+          title: 'Current Architecture: How State Flows Today'
+          byte_offset: 1013
+          byte_count: 1467
+          word_count: 200
+          content_hash: b21d23cf0309812c1561f26c52aa6b6eeb08a1dab20889929528f6c606504ea8
+          children:
+            - path: 1.2.1
+              level: 3
+              title: The single commit point
+              byte_offset: 1147
+              byte_count: 692
+              word_count: 96
+              content_hash: 38ff01d9cb29dacd30c61d5919548482c3c17e0d667dad052b9cf055ea3bf3d5
+            - path: 1.2.2
+              level: 3
+              title: The document–state split
+              byte_offset: 1839
+              byte_count: 316
+              word_count: 42
+              content_hash: 175337e32c54924c3043289ef412dc29f8781be683ebcd463c9d3c9b3fa8ca04
+            - path: 1.2.3
+              level: 3
+              title: The cascade gap
+              byte_offset: 2155
+              byte_count: 325
+              word_count: 45
+              content_hash: bdd1686d8dc23fc770bb159d606c759b5a934f0e8a2fc53ae3c20d1c1e68476a
+        - path: "1.3"
+          level: 2
+          title: Recommendations
+          byte_offset: 2480
+          byte_count: 12337
+          word_count: 1780
+          content_hash: b8359651acc7424640c6bea8fd9cd67e06c6754b8771ee9427e8666f41af05a2
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 1. Auto-commit after terminal workflow operations
+              byte_offset: 2500
+              byte_count: 2126
+              word_count: 298
+              content_hash: bc2552ac5ff530c20bcef1d28b586c89bc707aee77b24eea00ec3cb6c59b52cc
+              children:
+                - path: 1.3.1.1
+                  level: 4
+                  title: Problem
+                  byte_offset: 2638
+                  byte_count: 488
+                  word_count: 72
+                  content_hash: 0a4e60eceea28445f8c00314192b597cd78a4e4fd759c3f283078b7d615375d6
+                - path: 1.3.1.2
+                  level: 4
+                  title: Recommendation
+                  byte_offset: 3126
+                  byte_count: 807
+                  word_count: 115
+                  content_hash: dca78215cf0433d91741b4c50f38091617d8f3f30a67214815a9df798fb6283d
+                - path: 1.3.1.3
+                  level: 4
+                  title: Safety argument
+                  byte_offset: 3933
+                  byte_count: 404
+                  word_count: 58
+                  content_hash: 616f59ff7f5ab29f4eb181f2a4df2172b2bb7c43b9dd00963bcf761704dc3dd3
+                - path: 1.3.1.4
+                  level: 4
+                  title: Design consideration
+                  byte_offset: 4337
+                  byte_count: 289
+                  word_count: 36
+                  content_hash: 19edc24067955c2059809faa05b39e9482a0add4cd9902bdb11b82cd977fc596
+            - path: 1.3.2
+              level: 3
+              title: 2. Atomic document + state commits
+              byte_offset: 4626
+              byte_count: 1360
+              word_count: 203
+              content_hash: 555ac7845fa6405df2725780ccbf5e3d791c8912b8d97089066a6ac94abec5fa
+              children:
+                - path: 1.3.2.1
+                  level: 4
+                  title: Problem
+                  byte_offset: 4728
+                  byte_count: 490
+                  word_count: 78
+                  content_hash: c565e7ad40cbba777a5f964ade57b3b3cd287d193eb5581277e7df4d7cba7e85
+                - path: 1.3.2.2
+                  level: 4
+                  title: Recommendation
+                  byte_offset: 5218
+                  byte_count: 422
+                  word_count: 54
+                  content_hash: 3b6ec4a2e3dbf94055a692148f83b35a5d86c1080911949bd7584a2ea936e655
+                - path: 1.3.2.3
+                  level: 4
+                  title: Safety argument
+                  byte_offset: 5640
+                  byte_count: 346
+                  word_count: 58
+                  content_hash: ae8bd527f053999012b92a85560a4faabd15b2d3edf0e9b24941b4f716f45dbd
+            - path: 1.3.3
+              level: 3
+              title: 3. Auto-approve implementation documents (dev-plans)
+              byte_offset: 5986
+              byte_count: 2326
+              word_count: 318
+              content_hash: b5d18119ee92ee3ef28ffd5d3193ff2e5dc42ce966ff9a9712b1d02836859821
+              children:
+                - path: 1.3.3.1
+                  level: 4
+                  title: Problem
+                  byte_offset: 6110
+                  byte_count: 622
+                  word_count: 84
+                  content_hash: ac20ca5675cb2a74855893cf2bde109ce1c6a476c6b8794538d49702a9f02f40
+                - path: 1.3.3.2
+                  level: 4
+                  title: Recommendation
+                  byte_offset: 6732
+                  byte_count: 1045
+                  word_count: 152
+                  content_hash: 1249b772b8f470ac5fb621da15de62f329b376bb4dd2c30d092305f10a8e36c8
+                - path: 1.3.3.3
+                  level: 4
+                  title: Safety argument
+                  byte_offset: 7777
+                  byte_count: 535
+                  word_count: 69
+                  content_hash: 8421d1fff72b05cbe816ce07f2a7dd4d037287ce193de1d5535dc207d35e829b
+            - path: 1.3.4
+              level: 3
+              title: 4. Auto-refresh content hash on document approval
+              byte_offset: 8312
+              byte_count: 1590
+              word_count: 235
+              content_hash: a73fbdd1241aeb8d257af2b9dd10b6c79b29cc382b5975d9127a6b3d58595ac1
+              children:
+                - path: 1.3.4.1
+                  level: 4
+                  title: Problem
+                  byte_offset: 8443
+                  byte_count: 570
+                  word_count: 86
+                  content_hash: 48e5eeeb6427103829ab10682757abddf62e755c3420a91a4b4ef7168805a92d
+                - path: 1.3.4.2
+                  level: 4
+                  title: Recommendation
+                  byte_offset: 9013
+                  byte_count: 552
+                  word_count: 76
+                  content_hash: ff861645a0502064c292d7108a574f0e738f229b2a4a5be2ab1f2ce422948662
+                - path: 1.3.4.3
+                  level: 4
+                  title: Safety argument
+                  byte_offset: 9565
+                  byte_count: 337
+                  word_count: 56
+                  content_hash: 1bde2f1fb6e930ec2ab5061b1037bfcad4bb3831a203034528b478f1f7218dd2
+            - path: 1.3.5
+              level: 3
+              title: 5. Post-finish state commit with structured message
+              byte_offset: 9902
+              byte_count: 1656
+              word_count: 258
+              content_hash: 615cc1c5ae9c7a1c2cf413d39143ebf685c68e195c637a06cdd5fd9bbd7aaac4
+              children:
+                - path: 1.3.5.1
+                  level: 4
+                  title: Problem
+                  byte_offset: 10042
+                  byte_count: 491
+                  word_count: 80
+                  content_hash: ff5090157d5ba01f9cc3aa6faf74efd5c81c0e072896d69a26534103429cbc2b
+                - path: 1.3.5.2
+                  level: 4
+                  title: Recommendation
+                  byte_offset: 10533
+                  byte_count: 597
+                  word_count: 88
+                  content_hash: 03d4b80814d0dcd7cd117fceb17c3c0c8a4d0f1ea9e292dd81c5da83d933fdd5
+                - path: 1.3.5.3
+                  level: 4
+                  title: Safety argument
+                  byte_offset: 11130
+                  byte_count: 428
+                  word_count: 72
+                  content_hash: aea3f4a1a1f3f9c278c4b9ee92696f176e24980fd26c130b8d26080614db1a60
+            - path: 1.3.6
+              level: 3
+              title: 6. Post-decompose-apply state commit
+              byte_offset: 11558
+              byte_count: 905
+              word_count: 129
+              content_hash: 43c64fa6866895eff143a02ac6fead18b0755379266d8fdb20cefcaa74bc3cc3
+              children:
+                - path: 1.3.6.1
+                  level: 4
+                  title: Problem
+                  byte_offset: 11669
+                  byte_count: 269
+                  word_count: 41
+                  content_hash: 1ac96ea9715c0d14981ebf3c97d01ac9c17714a0bc8db0c07003b3d77b2e5ccc
+                - path: 1.3.6.2
+                  level: 4
+                  title: Recommendation
+                  byte_offset: 11938
+                  byte_count: 168
+                  word_count: 22
+                  content_hash: 7920e26415c736e789168fde2a28f82a9b621dfba3fdb1f1977218c61bed0d28
+                - path: 1.3.6.3
+                  level: 4
+                  title: Safety argument
+                  byte_offset: 12106
+                  byte_count: 357
+                  word_count: 53
+                  content_hash: 19522870d95ad36c11f270e55b78840ca7d326385175aaee4f7f1123f5a62a2c
+            - path: 1.3.7
+              level: 3
+              title: 7. Post-merge worktree state commit
+              byte_offset: 12463
+              byte_count: 851
+              word_count: 127
+              content_hash: b7c6901f25ec85c3ab046fb3a1f7596a067d0da9e42714265491cee204831795
+              children:
+                - path: 1.3.7.1
+                  level: 4
+                  title: Problem
+                  byte_offset: 12573
+                  byte_count: 324
+                  word_count: 51
+                  content_hash: f837d3aa27dd2a3351cc8cd25cd2f4fbe2adfa8c712e6884a19a84d80af3cc51
+                - path: 1.3.7.2
+                  level: 4
+                  title: Recommendation
+                  byte_offset: 12897
+                  byte_count: 156
+                  word_count: 20
+                  content_hash: 384cf86ed6c591f3dc23865cd16b8a2ca68e1a97d6f53cb32826e65ba371b407
+                - path: 1.3.7.3
+                  level: 4
+                  title: Safety argument
+                  byte_offset: 13053
+                  byte_count: 261
+                  word_count: 42
+                  content_hash: 3e83a5eb48a750c65004ca4f570343ec0020d8d830f37f9fb0f27ffd45dda26e
+            - path: 1.3.8
+              level: 3
+              title: 8. Validate document required sections on registration
+              byte_offset: 13314
+              byte_count: 1503
+              word_count: 210
+              content_hash: 819e01f6b1ac8420486df5b4f4d72873250b7fc88dfeefc947e76ac3277a73ed
+              children:
+                - path: 1.3.8.1
+                  level: 4
+                  title: Problem
+                  byte_offset: 13443
+                  byte_count: 373
+                  word_count: 48
+                  content_hash: 108ed31d3b334f460c8e1b66efcf2dd525c13b5aa6acacdbedadcbce745b7adb
+                - path: 1.3.8.2
+                  level: 4
+                  title: Recommendation
+                  byte_offset: 13816
+                  byte_count: 669
+                  word_count: 98
+                  content_hash: d5a1b7947c8c413233b94e5c0540526ce2ddd111439818d248ca8fa76e4a568f
+                - path: 1.3.8.3
+                  level: 4
+                  title: Safety argument
+                  byte_offset: 14485
+                  byte_count: 332
+                  word_count: 49
+                  content_hash: 15d740393ce745731a349ff21cd20be0b0154de88d8a8391b0b6cb82620a6976
+        - path: "1.4"
+          level: 2
+          title: Recommendations NOT Made
+          byte_offset: 14817
+          byte_count: 1817
+          word_count: 239
+          content_hash: eb4e9426a805fc1819bb285f7b30ca5811db464ec362539a31c2f18283cb5c70
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Auto-approve designs or specifications
+              byte_offset: 14903
+              byte_count: 314
+              word_count: 38
+              content_hash: 8ab472853beb531624a91cb7e9be0342a72eb8ae80465f15333d28be07410b55
+            - path: 1.4.2
+              level: 3
+              title: Auto-transition features through multiple stages
+              byte_offset: 15217
+              byte_count: 332
+              word_count: 44
+              content_hash: 6640cb357de3b4737a0996bcf134a8657a2df989d4b5db08a3bd9940e784ac73
+            - path: 1.4.3
+              level: 3
+              title: Enforce commit message format via pre-commit hook
+              byte_offset: 15549
+              byte_count: 311
+              word_count: 44
+              content_hash: 3226b2dd23a75abe434e873330f595560ce3dd51590c21d09b4f3966fed7b04f
+            - path: 1.4.4
+              level: 3
+              title: Auto-detect document edits and trigger refresh
+              byte_offset: 15860
+              byte_count: 262
+              word_count: 33
+              content_hash: 4b39205989684556580a40f6720d9ba6a1bf66afec2d8f95774ceed9bf16b44b
+            - path: 1.4.5
+              level: 3
+              title: Enforce effort budgets
+              byte_offset: 16122
+              byte_count: 245
+              word_count: 34
+              content_hash: eedf4f471650eb04830aeafa8c738c829380a696ea18c2e61fe5b49cc4191c84
+            - path: 1.4.6
+              level: 3
+              title: Auto-assign tasks from the work queue
+              byte_offset: 16367
+              byte_count: 267
+              word_count: 35
+              content_hash: 1d70cd5148ea0360e04ad23f335ecf0bdf3db62bff361c5994bfaef4803e0a17
+        - path: "1.5"
+          level: 2
+          title: Implementation Priority
+          byte_offset: 16634
+          byte_count: 956
+          word_count: 175
+          content_hash: 224553880941017a8e1048e085b04c6c32459de0258f3409228f7afa150c2759
+        - path: "1.6"
+          level: 2
+          title: 'Appendix: Current Commit Topology'
+          byte_offset: 17590
+          byte_count: 1688
+          word_count: 192
+          content_hash: b5b2ecfd28556566070dcc70fa0e7e570713f1987f2146ddcc9ca827653099a1
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Proposed commit topology
+              byte_offset: 18434
+              byte_count: 844
+              word_count: 100
+              content_hash: 8b872c9830e47db2fea46380d10026660dfc4faff7fa9bbca6729cb73a9cd7bb
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.3.1.2
+      byte_offset: 3452
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.3.6.2
+      byte_offset: 12067
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.3.7.2
+      byte_offset: 13016
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 17712
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 18549
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.3.1.2
+      byte_offset: 3390
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.3.5.2
+      byte_offset: 10734
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.6.1
+      byte_offset: 19087
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.3.1.2
+      byte_offset: 3530
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: "1.6"
+      byte_offset: 17804
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.6.1
+      byte_offset: 18639
+cross_doc_links:
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.1
+    - target_path: work/**/*.md
+      link_text: work/**/*.md
+      section_path: 1.2.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false
