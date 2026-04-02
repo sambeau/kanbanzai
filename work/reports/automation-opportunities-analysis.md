@@ -196,63 +196,99 @@ cleared as part of the same transaction.
 
 ---
 
-### 3. Auto-approve agent-authored informational documents
+### 3. Auto-approve agent-authored documents and decouple dev-plan approval from implementation trigger
 
-**Category:** Rule Enforcement
-**Complexity:** Low
+**Category:** Rule Enforcement + Atomicity
+**Complexity:** Low–Medium
 **Risk:** Low
 
-#### Problem
+#### Problem: two concerns are conflated
 
-Certain document types are authored entirely by agents and have no downstream human gate
-that depends on their approval status. For these documents, the agent writes the content,
-registers it, and then must remember to call `doc(action: approve)` as a separate step.
-The manual approval adds friction without adding safety — no human review is expected or
-required for these types.
+Today, approving a dev-plan document does two things at once:
 
-#### Important: human gates are exit gates
+1. Marks the document as approved (quality judgement on the plan)
+2. Cascades the feature from `dev-planning` → `developing` (triggers implementation)
 
-The `human_gate` flag in `stage-bindings.yaml` is an **exit gate** — it governs the
-transition *out* of a stage, not entry into it. For `dev-planning`, this means:
+These are separate concerns with different ownership:
 
-- **Entry** into dev-planning is automated (triggered by spec approval cascade)
-- **Exit** from dev-planning requires human approval of the dev-plan before the feature
-  advances to `developing`
+- **Plan quality** — an implementation decision. Agents author dev-plans; agents can
+  assess whether a plan is well-structured, traceable to the spec, and has a sound
+  dependency graph. No human design or product manager input is needed.
+- **Implementation trigger** — a scheduling decision. Humans may need to consider timing,
+  resource availability, priorities across features, or dependencies on external work
+  before parallel implementation begins.
 
-The stage-bindings note is explicit: *"Human gate ensures the task decomposition and
-dependency graph are reviewed before parallel implementation work begins."* Auto-approving
-dev-plans would bypass this intentional checkpoint. Dev-plans are therefore **excluded**
-from this recommendation.
+The current coupling means either: (a) agents cannot approve their own plans without
+accidentally starting implementation, or (b) humans must review implementation details
+they don't need to own just to control scheduling.
 
-#### Recommendation
+#### Recommendation: decouple approval from transition
+
+**3a. Allow agent approval of dev-plans without cascading.**
+
+Remove the automatic `dev-planning → developing` cascade from `doc(action: approve)` when
+the document type is `dev-plan`. Instead, dev-plan approval should:
+
+1. Mark the document as `approved`
+2. **Not** trigger the entity lifecycle cascade
+
+This allows the agent to approve its own plan and proceed with decomposition (creating
+tasks, wiring dependencies) while the feature remains in `dev-planning`.
+
+The cascade currently lives in `documents.go` L424:
+
+```
+case entityType == "feature" && doc.Type == model.DocumentTypeDevPlan:
+    targetStatus = "developing"
+```
+
+This line should be removed or gated behind a flag. The transition to `developing` becomes
+an explicit human-triggered action (see 3b).
+
+**3b. Require explicit human signal to begin implementation.**
+
+The transition from `dev-planning` → `developing` should require an explicit
+`entity(action: transition, id: "FEAT-xxx", status: "developing")` call, which is the
+natural place for the human gate. The `developing` stage's prerequisites already require
+an approved dev-plan and at least one child task — these checks remain enforced. The human
+simply says "go" when scheduling permits, and the agent records the transition.
+
+This preserves the `human_gate: true` intent from `stage-bindings.yaml` while moving the
+gate to the right operation: the *transition*, not the *document approval*.
+
+**3c. Auto-approve agent-authored documents via `auto_approve` flag.**
 
 Add an `auto_approve` option to `doc(action: register)`. When `auto_approve: true`:
 
 1. Register the document (write state record)
-2. Immediately approve it (set status to `approved`, fire entity cascade)
-3. Commit the combined state atomically
+2. Immediately approve it (set status to `approved`)
+3. Fire entity cascade only for document types where cascading is safe
+4. Commit the combined state atomically
 
-This should be **opt-in per call**, not a blanket policy. Scope to document types where
-no human gate governs the stage exit and the document is purely agent-authored:
+Scope:
 
-| Document Type | Auto-approve safe? | Rationale |
-|---------------|-------------------|-----------|
-| `research` | ✅ Yes | Informational; no downstream gate depends on approval; `researching` stage has `human_gate: false` |
-| `report` | ✅ Yes | Review output, agent-authored; consumed by the reviewing stage's human gate (which reviews the *findings*, not the report's approval status) |
-| `dev-plan` | ❌ No | `dev-planning` has `human_gate: true`; approval cascades the feature to `developing` and unlocks parallel implementation — human must review the decomposition first |
-| `design` | ❌ No | Requires human architectural judgement |
-| `specification` | ❌ No | Requires human product-owner approval |
+| Document Type | Auto-approve safe? | Cascade on approval? | Rationale |
+|---------------|-------------------|---------------------|-----------|
+| `dev-plan` | ✅ Yes | ❌ No (decoupled per 3a) | Implementation detail, agent-authored; human gate moves to the transition |
+| `research` | ✅ Yes | N/A (no cascade defined) | Informational; `researching` stage has `human_gate: false` |
+| `report` | ✅ Yes | N/A (no cascade defined) | Review output, agent-authored |
+| `design` | ❌ No | ✅ Yes | Requires human architectural judgement |
+| `specification` | ❌ No | ✅ Yes | Requires human product-owner approval |
 
 #### Safety argument
 
-- Research and report documents do not gate downstream entity transitions that unlock
-  parallel work. Their approval is bookkeeping, not a quality checkpoint.
-- The `auto_approve` flag is opt-in per call — agents and orchestrator skills decide when
-  to use it based on the document type and stage context.
-- The existing content-hash verification in `approve` ensures integrity (trivially
-  satisfied when registration and approval happen in the same call).
-- Documents with `human_gate: true` stages are explicitly excluded, preserving all
-  intentional human review checkpoints.
+- **Decoupling is strictly safer than the status quo.** Today, an agent that calls
+  `doc(approve)` on a dev-plan inadvertently triggers implementation. After decoupling,
+  approving a plan is a low-stakes quality signal; starting implementation is a separate,
+  intentional act.
+- The `developing` stage prerequisites (approved dev-plan + child tasks) remain enforced
+  on the transition — decoupling does not weaken the gate, it moves it.
+- Decomposition can occur during `dev-planning` without requiring `developing` status.
+  The `decompose` tool reads the feature's spec, not its lifecycle state. Tasks created
+  during `dev-planning` are ready to execute the moment the feature transitions.
+- The `auto_approve` flag is opt-in per call. Agents and orchestrator skills decide when
+  to use it based on document type and stage context.
+- Documents requiring human judgement (`design`, `specification`) remain excluded.
 
 ---
 
@@ -494,7 +530,7 @@ Ordered by value-to-effort ratio:
 | 3 | 7 | Post-merge worktree state commit | Very Low | Medium |
 | 4 | 6 | Post-decompose state commit | Very Low | Medium |
 | 5 | 1 | Auto-commit at all terminal operations | Low | High |
-| 6 | 3 | Auto-approve informational documents | Low | Medium |
+| 6 | 3 | Decouple dev-plan approval + auto-approve agent docs | Low–Med | High |
 | 7 | 2 | Atomic document file ops (create, move, delete) | Medium | High |
 | 8 | 8 | Validate document required sections | Medium | Medium |
 
