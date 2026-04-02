@@ -29,6 +29,9 @@ type CheckOptions struct {
 
 	// Tasks is a slice of task entity field maps for entity consistency checks.
 	Tasks []map[string]any
+
+	// Plans is a slice of plan entity field maps for entity consistency checks.
+	Plans []map[string]any
 }
 
 // DefaultCheckOptions returns default options with sensible defaults.
@@ -92,6 +95,12 @@ func RunHealthCheck(
 	featureChildResult := CheckFeatureChildConsistency(opts.Features, opts.Tasks)
 	if opts.IncludeOK || featureChildResult.Status != SeverityOK {
 		categories["feature_child_consistency"] = featureChildResult
+	}
+
+	// Run plan-child state consistency checks
+	planChildResult := CheckPlanChildConsistency(opts.Plans, opts.Features)
+	if opts.IncludeOK || planChildResult.Status != SeverityOK {
+		categories["plan_child_consistency"] = planChildResult
 	}
 
 	// Run worktree-branch merged checks (best-effort, requires git)

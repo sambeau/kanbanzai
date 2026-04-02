@@ -959,7 +959,7 @@ func TestValidNextStates(t *testing.T) {
 			name:       "task active has many transitions",
 			kind:       EntityTask,
 			from:       string(model.TaskStatusActive),
-			wantStates: []string{"blocked", "done", "duplicate", "needs-review", "needs-rework", "not-planned"},
+			wantStates: []string{"blocked", "done", "duplicate", "needs-review", "needs-rework", "not-planned", "ready"},
 		},
 		{
 			name:       "task blocked only goes to active",
@@ -1255,5 +1255,29 @@ func TestPlanLifecycle_FullLifecyclePath(t *testing.T) {
 		if err := ValidateTransition(EntityPlan, from, to); err != nil {
 			t.Errorf("ValidateTransition(plan, %q, %q) = %v; want nil", from, to, err)
 		}
+	}
+}
+
+func TestTaskLifecycle_ActiveToReadyAllowed(t *testing.T) {
+	t.Parallel()
+
+	// active→ready is the unclaim / crash-recovery path (P13).
+	if err := ValidateTransition(EntityTask, "active", "ready"); err != nil {
+		t.Errorf("ValidateTransition(task, active, ready) = %v; want nil", err)
+	}
+	if !CanTransition(EntityTask, "active", "ready") {
+		t.Error("CanTransition(task, active, ready) = false; want true")
+	}
+}
+
+func TestTaskLifecycle_ActiveToQueuedRejected(t *testing.T) {
+	t.Parallel()
+
+	// active→queued is not a valid transition; only active→ready is the unclaim path.
+	if err := ValidateTransition(EntityTask, "active", "queued"); err == nil {
+		t.Error("ValidateTransition(task, active, queued) = nil; want error")
+	}
+	if CanTransition(EntityTask, "active", "queued") {
+		t.Error("CanTransition(task, active, queued) = true; want false")
 	}
 }

@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/sambeau/kanbanzai/internal/config"
@@ -24,6 +25,7 @@ type ProposedTask struct {
 	Estimate  *float64 `json:"estimate,omitempty"`
 	DependsOn []string `json:"depends_on,omitempty"`
 	Rationale string   `json:"rationale"`
+	Covers    []string `json:"covers,omitempty"` // AC texts this task covers
 }
 
 // Proposal is the complete decomposition proposal for a feature.
@@ -315,6 +317,7 @@ func parseSpecStructure(content string) specStructure {
 	currentSection := ""
 	currentL2 := ""
 	inACSection := false
+	inTableData := false
 
 	for _, line := range lines {
 		trimmed := strings.TrimSpace(line)
@@ -328,6 +331,7 @@ func parseSpecStructure(content string) specStructure {
 				currentL2 = title
 			}
 			inACSection = isAcceptanceCriteriaSection(title)
+			inTableData = false
 			continue
 		}
 
@@ -341,6 +345,32 @@ func parseSpecStructure(content string) specStructure {
 		}
 
 		if inACSection {
+			// Table handling within AC sections.
+			if strings.Contains(trimmed, "|") {
+				if isTableSeparatorRow(trimmed) {
+					inTableData = true
+					continue
+				}
+				if inTableData {
+					cells := parseTableRow(trimmed)
+					if len(cells) > 0 {
+						text := strings.Join(cells, " — ")
+						spec.acceptanceCriteria = append(spec.acceptanceCriteria, acceptanceCriterion{
+							text:     text,
+							section:  currentSection,
+							parentL2: currentL2,
+						})
+					}
+					continue
+				}
+				// Table header row (before separator) — skip it.
+				if strings.HasPrefix(trimmed, "|") {
+					continue
+				}
+			} else {
+				inTableData = false
+			}
+
 			// Bold-identifier pattern: **XX-NN.** text
 			// Extracted as "XX-NN: text" to preserve the identifier prefix.
 			if m := reBoldIdent.FindStringSubmatch(trimmed); m != nil {
@@ -404,19 +434,80 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 	}
 
 	if len(spec.acceptanceCriteria) > 0 {
-		// One task per acceptance criterion (guidance rule 2).
-		appliedGuidance = append(appliedGuidance, "one-ac-per-task")
-		for i, ac := range spec.acceptanceCriteria {
-			slug := buildTaskSlug(featureSlug, ac.text, i)
-			task := ProposedTask{
-				Slug:    slug,
-				Summary: ac.text,
-				Rationale: fmt.Sprintf(
-					"Covers acceptance criterion: %q (section: %s)",
-					ac.text, sectionOrDefault(ac.section),
-				),
+		// Group ACs by parentL2 section for section-based grouping (guidance rule 2).
+		type acGroup struct {
+			parentL2 string
+			acs      []acceptanceCriterion
+		}
+		seen := make(map[string]int) // parentL2 → index in groups
+		var groups []acGroup
+		for _, ac := range spec.acceptanceCriteria {
+			if idx, ok := seen[ac.parentL2]; ok {
+				groups[idx].acs = append(groups[idx].acs, ac)
+			} else {
+				seen[ac.parentL2] = len(groups)
+				groups = append(groups, acGroup{parentL2: ac.parentL2, acs: []acceptanceCriterion{ac}})
 			}
-			tasks = append(tasks, task)
+		}
+
+		// Determine whether any group produces a merged task (2-4 ACs).
+		anyGrouped := false
+		for _, g := range groups {
+			if len(g.acs) >= 2 && len(g.acs) <= 4 {
+				anyGrouped = true
+				break
+			}
+		}
+		if anyGrouped {
+			appliedGuidance = append(appliedGuidance, "group-by-section")
+		} else {
+			appliedGuidance = append(appliedGuidance, "one-ac-per-task")
+		}
+
+		taskIndex := 0
+		for groupIndex, g := range groups {
+			n := len(g.acs)
+			sectionTitle := g.parentL2
+
+			if n >= 2 && n <= 4 {
+				// Grouped task: 2-4 ACs in one section → one task covering all.
+				var slug string
+				var summary string
+				if sectionTitle == "" {
+					slug = featureSlug + "-group-" + strconv.Itoa(groupIndex)
+					summary = "Implement grouped criteria (" + strconv.Itoa(n) + " criteria)"
+				} else {
+					slug = featureSlug + "-" + slugify(sectionTitle)
+					summary = "Implement " + sectionTitle + " (" + strconv.Itoa(n) + " criteria)"
+				}
+				var covers []string
+				var rationaleLines []string
+				for _, ac := range g.acs {
+					covers = append(covers, ac.text)
+					rationaleLines = append(rationaleLines, "- "+ac.text)
+				}
+				tasks = append(tasks, ProposedTask{
+					Slug:      slug,
+					Summary:   summary,
+					Rationale: "Covers " + strconv.Itoa(n) + " acceptance criteria:\n" + strings.Join(rationaleLines, "\n"),
+					Covers:    covers,
+				})
+			} else {
+				// Individual tasks: 1 AC or 5+ ACs per section.
+				for i, ac := range g.acs {
+					slug := buildTaskSlug(featureSlug, ac.text, taskIndex+i)
+					tasks = append(tasks, ProposedTask{
+						Slug:    slug,
+						Summary: ac.text,
+						Rationale: fmt.Sprintf(
+							"Covers acceptance criterion: %q (section: %s)",
+							ac.text, sectionOrDefault(ac.section),
+						),
+						Covers: []string{ac.text},
+					})
+				}
+			}
+			taskIndex += n
 		}
 	}
 
@@ -701,13 +792,25 @@ func checkGaps(spec specStructure, proposal Proposal) []Finding {
 }
 
 // isACCovered returns true if any proposed task appears to cover the given
-// acceptance criterion, using keyword overlap as a heuristic.
+// acceptance criterion. When a task has a non-empty Covers slice, exact string
+// match is used; otherwise keyword overlap is used as a fallback heuristic.
 func isACCovered(ac acceptanceCriterion, tasks []ProposedTask) bool {
 	acWords := significantWords(ac.text)
 	if len(acWords) == 0 {
 		return true // vacuous criterion
 	}
 	for _, task := range tasks {
+		// Exact match via Covers field (populated by section-based grouping).
+		if len(task.Covers) > 0 {
+			for _, covered := range task.Covers {
+				if covered == ac.text {
+					return true
+				}
+			}
+			// Has Covers but this AC didn't match; don't fall back to heuristic.
+			continue
+		}
+		// Legacy fallback: keyword overlap heuristic.
 		combined := strings.ToLower(task.Summary + " " + task.Rationale)
 		matched := 0
 		for _, w := range acWords {
@@ -721,6 +824,58 @@ func isACCovered(ac acceptanceCriterion, tasks []ProposedTask) bool {
 		}
 	}
 	return false
+}
+
+// isTableSeparatorRow returns true if the line is a markdown table separator
+// row (e.g. "| --- | --- |" or "| :--- | ---: |").
+func isTableSeparatorRow(line string) bool {
+	if !strings.Contains(line, "|") {
+		return false
+	}
+	cells := strings.Split(line, "|")
+	sepCount := 0
+	for _, cell := range cells {
+		trimmed := strings.TrimSpace(cell)
+		if trimmed == "" {
+			continue
+		}
+		// Cell must be only hyphens with optional leading/trailing colons.
+		cleaned := strings.Trim(trimmed, ":")
+		if cleaned == "" {
+			continue
+		}
+		allHyphens := true
+		for _, r := range cleaned {
+			if r != '-' {
+				allHyphens = false
+				break
+			}
+		}
+		if allHyphens && len(cleaned) >= 1 {
+			sepCount++
+		}
+	}
+	return sepCount > 0
+}
+
+// parseTableRow extracts non-empty cell values from a markdown table data row.
+func parseTableRow(line string) []string {
+	line = strings.TrimSpace(line)
+	if strings.HasPrefix(line, "|") {
+		line = line[1:]
+	}
+	if strings.HasSuffix(line, "|") {
+		line = line[:len(line)-1]
+	}
+	parts := strings.Split(line, "|")
+	var cells []string
+	for _, p := range parts {
+		cell := strings.TrimSpace(p)
+		if cell != "" {
+			cells = append(cells, cell)
+		}
+	}
+	return cells
 }
 
 // significantWords extracts lowercase words of 4+ characters, skipping

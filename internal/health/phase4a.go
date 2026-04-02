@@ -2,6 +2,8 @@ package health
 
 import (
 	"fmt"
+	"os/exec"
+	"strings"
 	"time"
 )
 
@@ -110,7 +112,6 @@ func CheckStalledDispatches(tasks []map[string]any, worktreeBranches map[string]
 
 		// Check git activity on the worktree branch (best-effort).
 		parentFeature, _ := t["parent_feature"].(string)
-		dispatchedTo, _ := t["dispatched_to"].(string)
 
 		hasGitActivity := false
 		if branch, ok := worktreeBranches[parentFeature]; ok && branch != "" {
@@ -118,13 +119,12 @@ func CheckStalledDispatches(tasks []map[string]any, worktreeBranches map[string]
 		}
 
 		if !hasGitActivity {
-			dayCount := int(age.Hours() / 24)
 			result.AddIssue(Issue{
 				Severity: SeverityWarning,
 				EntityID: taskID,
 				Message: fmt.Sprintf(
-					"%s has been active for %d day(s) with no git activity since dispatch (dispatched to: %s)",
-					taskID, dayCount, dispatchedTo,
+					"%s has been active for >24h with no recent commits — may need unclaim",
+					taskID,
 				),
 			})
 		}
@@ -210,11 +210,25 @@ func extractStringSlice(m map[string]any, key string) []string {
 	return nil
 }
 
+// CheckGitActivity is the exported API for git activity detection.
+// Used by the status tool for stuck-task attention items.
+// Returns false on any error (best-effort, non-blocking).
+func CheckGitActivity(repoPath, branch string, since time.Time) bool {
+	return checkGitActivitySince(repoPath, branch, since)
+}
+
 // checkGitActivitySince checks if there's any git activity on a branch since the given time.
-// Returns false on any error (best-effort). Full git log integration is a future enhancement.
+// Returns false on any error (best-effort, non-blocking).
 func checkGitActivitySince(repoPath, branch string, since time.Time) bool {
-	_ = repoPath
-	_ = branch
-	_ = since
-	return false // always false means time-only check applies
+	if repoPath == "" || branch == "" {
+		return false
+	}
+	cmd := exec.Command("git", "-C", repoPath, "log", branch,
+		"--after="+since.Format(time.RFC3339),
+		"--oneline", "--max-count=1")
+	out, err := cmd.Output()
+	if err != nil {
+		return false
+	}
+	return len(strings.TrimSpace(string(out))) > 0
 }

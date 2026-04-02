@@ -199,6 +199,7 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 			string(model.TaskStatusDuplicate):  {},
 		},
 		string(model.TaskStatusActive): {
+			string(model.TaskStatusReady):       {}, // unclaim / crash recovery
 			string(model.TaskStatusBlocked):     {},
 			string(model.TaskStatusNeedsReview): {},
 			string(model.TaskStatusNeedsRework): {}, // review_task_output fail from active

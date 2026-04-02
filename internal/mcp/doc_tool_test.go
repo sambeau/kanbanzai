@@ -47,7 +47,7 @@ func writeDocFile(t *testing.T, repoRoot, relPath, content string) {
 // callDoc invokes the doc tool with the given args and returns the parsed JSON map.
 func callDoc(t *testing.T, env *docToolEnv, args map[string]any) map[string]any {
 	t.Helper()
-	tool := docTool(env.docSvc)
+	tool := docTool(env.docSvc, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -1605,5 +1605,224 @@ func TestDocTool_Approve_AutoCommit_FailureDoesNotBlockResult(t *testing.T) {
 	}
 	if doc["status"] != "approved" {
 		t.Errorf("document status = %q, want approved", doc["status"])
+	}
+}
+
+// ─── gaps: plan-level document inheritance ────────────────────────────────────
+
+// callDocWithEntitySvc invokes the doc tool with an entitySvc wired in (for
+// inheritance tests) and returns the parsed JSON map.
+func callDocWithEntitySvc(t *testing.T, env *docToolEnv, entitySvc *service.EntityService, args map[string]any) map[string]any {
+	t.Helper()
+	tool := docTool(env.docSvc, entitySvc)
+	req := makeRequest(args)
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("doc handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("unmarshal response: %v\nraw: %s", err, text)
+	}
+	return parsed
+}
+
+// setupPlanFeature creates a plan record and a feature under it, returning
+// the plan ID and feature ID. The feature's State["parent"] will point to the plan.
+// Uses createEntityTestPlan and createEntityTestFeature from entity_tool_test.go
+// (same package), which handle the storage layer directly.
+func setupPlanFeature(t *testing.T, entitySvc *service.EntityService) (planID, featureID string) {
+	t.Helper()
+	planID = createEntityTestPlan(t, entitySvc, "gap-test-plan")
+	featureID = createEntityTestFeature(t, entitySvc, planID, "gap-test-feature")
+	return planID, featureID
+}
+
+func TestDocTool_Gaps_PlanDocInherited(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, featureID := setupPlanFeature(t, entitySvc)
+
+	// Register and approve a specification doc owned by the plan.
+	writeDocFile(t, env.repoRoot, "work/spec/plan-spec.md", "# Plan Spec\n\nContent.")
+	regResp := callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/spec/plan-spec.md",
+		"type":   "specification",
+		"title":  "Plan Specification",
+		"owner":  planID,
+	})
+	specDoc, _ := regResp["document"].(map[string]any)
+	specID, _ := specDoc["id"].(string)
+	if specID == "" {
+		t.Fatalf("register plan spec failed; response: %v", regResp)
+	}
+	callDoc(t, env, map[string]any{"action": "approve", "id": specID})
+
+	// The feature has no spec of its own. Gaps action should inherit from plan.
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action":     "gaps",
+		"feature_id": featureID,
+	})
+
+	present, _ := resp["present"].([]any)
+	foundInherited := false
+	for _, p := range present {
+		pm, _ := p.(map[string]any)
+		if pm["type"] == "specification" && pm["status"] == "approved" {
+			inherited, _ := pm["inherited"].(bool)
+			if inherited {
+				foundInherited = true
+			}
+		}
+	}
+	if !foundInherited {
+		t.Errorf("expected inherited specification in present list; present: %v, gaps: %v", present, resp["gaps"])
+	}
+
+	// The inherited spec must NOT appear in gaps.
+	gaps, _ := resp["gaps"].([]any)
+	for _, g := range gaps {
+		gm, _ := g.(map[string]any)
+		if gm["type"] == "specification" {
+			t.Errorf("specification should not appear in gaps when inherited from plan; gaps: %v", gaps)
+		}
+	}
+}
+
+func TestDocTool_Gaps_DraftPlanDoc_NotInherited(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, featureID := setupPlanFeature(t, entitySvc)
+
+	// Register a design doc for the plan but leave it as DRAFT (not approved).
+	writeDocFile(t, env.repoRoot, "work/design/plan-design.md", "# Plan Design\n\nContent.")
+	regResp := callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/design/plan-design.md",
+		"type":   "design",
+		"title":  "Plan Design (draft)",
+		"owner":  planID,
+	})
+	designDoc, _ := regResp["document"].(map[string]any)
+	designID, _ := designDoc["id"].(string)
+	if designID == "" {
+		t.Fatalf("register plan design failed; response: %v", regResp)
+	}
+	// Do NOT approve — leave as draft.
+
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action":     "gaps",
+		"feature_id": featureID,
+	})
+
+	// Draft plan doc must NOT satisfy inheritance — design should still be a gap.
+	gaps, _ := resp["gaps"].([]any)
+	foundDesignGap := false
+	for _, g := range gaps {
+		gm, _ := g.(map[string]any)
+		if gm["type"] == "design" {
+			foundDesignGap = true
+		}
+	}
+	if !foundDesignGap {
+		t.Errorf("expected design to appear in gaps when plan doc is draft; gaps: %v", gaps)
+	}
+
+	// And it must NOT appear as inherited in present.
+	present, _ := resp["present"].([]any)
+	for _, p := range present {
+		pm, _ := p.(map[string]any)
+		if pm["type"] == "design" {
+			t.Errorf("design should not appear in present when plan doc is draft; present: %v", present)
+		}
+	}
+}
+
+func TestDocTool_Gaps_FeatureDocTakesPrecedenceOverPlan(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, featureID := setupPlanFeature(t, entitySvc)
+
+	// Register and approve a design for the plan.
+	writeDocFile(t, env.repoRoot, "work/design/plan-design.md", "# Plan Design\n")
+	planRegResp := callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/design/plan-design.md",
+		"type":   "design",
+		"title":  "Plan Design",
+		"owner":  planID,
+	})
+	planDesignDoc, _ := planRegResp["document"].(map[string]any)
+	planDesignID, _ := planDesignDoc["id"].(string)
+	callDoc(t, env, map[string]any{"action": "approve", "id": planDesignID})
+
+	// Register and approve a design for the feature itself.
+	writeDocFile(t, env.repoRoot, "work/design/feat-design.md", "# Feature Design\n")
+	featRegResp := callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/design/feat-design.md",
+		"type":   "design",
+		"title":  "Feature Design",
+		"owner":  featureID,
+	})
+	featDesignDoc, _ := featRegResp["document"].(map[string]any)
+	featDesignID, _ := featDesignDoc["id"].(string)
+	callDoc(t, env, map[string]any{"action": "approve", "id": featDesignID})
+
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action":     "gaps",
+		"feature_id": featureID,
+	})
+
+	present, _ := resp["present"].([]any)
+	var foundDesign map[string]any
+	for _, p := range present {
+		pm, _ := p.(map[string]any)
+		if pm["type"] == "design" {
+			foundDesign = pm
+		}
+	}
+	if foundDesign == nil {
+		t.Fatalf("expected design in present list; present: %v", present)
+	}
+	// Must use the feature's own doc, not the inherited one.
+	if id, _ := foundDesign["id"].(string); id != featDesignID {
+		t.Errorf("present design id = %q, want feature's own doc %q", id, featDesignID)
+	}
+	if inherited, _ := foundDesign["inherited"].(bool); inherited {
+		t.Errorf("feature's own approved doc should not be marked inherited")
+	}
+}
+
+func TestDocTool_Gaps_NoParentPlan_NoInheritance(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+
+	// Feature with no parent plan — entity lookup will return an error or empty parent.
+	const featureID = "FEAT-ORPHAN"
+
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action":     "gaps",
+		"feature_id": featureID,
+	})
+
+	// All three types should be missing gaps with no inheritance.
+	gaps, _ := resp["gaps"].([]any)
+	if len(gaps) != 3 {
+		t.Errorf("expected 3 gaps for orphan feature, got %d; gaps: %v", len(gaps), gaps)
+	}
+	present, _ := resp["present"].([]any)
+	if len(present) != 0 {
+		t.Errorf("expected 0 present for orphan feature, got %d; present: %v", len(present), present)
 	}
 }

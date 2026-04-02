@@ -174,20 +174,26 @@ func checkMergeReadiness(
 	localConfig *config.LocalConfig,
 	entityID string,
 ) (map[string]any, error) {
-	// Get the worktree for this entity
-	wt, err := worktreeStore.GetByEntityID(entityID)
-	if err != nil {
-		if errors.Is(err, worktree.ErrNotFound) {
-			return nil, fmt.Errorf("Cannot check merge readiness for %s: no worktree exists for this entity.\n\nTo resolve:\n  Create a worktree first: worktree(action: \"create\", entity_id: \"%s\")", entityID, entityID)
-		}
-		return nil, err
-	}
-
-	// Get the entity
+	// Validate entity type first — invalid IDs always error even with no worktree.
 	entityType := entityTypeFromID(entityID)
 	if entityType == "" {
 		return nil, fmt.Errorf("Cannot check merge readiness: entity ID %q is not a feature or bug.\n\nTo resolve:\n  Provide an entity ID starting with FEAT- or BUG-", entityID)
 	}
+
+	// Get the worktree for this entity.
+	wt, err := worktreeStore.GetByEntityID(entityID)
+	if err != nil {
+		if errors.Is(err, worktree.ErrNotFound) {
+			// Direct-to-main workflow: no worktree means work was committed directly.
+			return map[string]any{
+				"status":         "not_applicable",
+				"reason":         "no worktree exists — work was committed directly to the default branch",
+				"recommendation": "advance the feature lifecycle directly",
+			}, nil
+		}
+		return nil, err
+	}
+
 	entity, err := entitySvc.Get(entityType, entityID, "")
 	if err != nil {
 		return nil, fmt.Errorf("Cannot check merge readiness for %s: failed to retrieve entity: %w.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, err, entityID)
@@ -248,20 +254,25 @@ func executeMerge(
 	strategy worktree.MergeStrategy,
 	deleteBranch bool,
 ) (map[string]any, error) {
-	// Get the worktree for this entity
-	wt, err := worktreeStore.GetByEntityID(entityID)
-	if err != nil {
-		if errors.Is(err, worktree.ErrNotFound) {
-			return nil, fmt.Errorf("Cannot execute merge for %s: no worktree exists for this entity.\n\nTo resolve:\n  Create a worktree first: worktree(action: \"create\", entity_id: \"%s\")", entityID, entityID)
-		}
-		return nil, err
-	}
-
-	// Get the entity
+	// Validate entity type first — invalid IDs always error even with no worktree.
 	entityType := entityTypeFromID(entityID)
 	if entityType == "" {
 		return nil, fmt.Errorf("Cannot execute merge: entity ID %q is not a feature or bug.\n\nTo resolve:\n  Provide an entity ID starting with FEAT- or BUG-", entityID)
 	}
+
+	// Get the worktree for this entity.
+	wt, err := worktreeStore.GetByEntityID(entityID)
+	if err != nil {
+		if errors.Is(err, worktree.ErrNotFound) {
+			// Direct-to-main workflow: no worktree means work was committed directly.
+			return map[string]any{
+				"status": "skipped",
+				"reason": "no worktree exists — work was committed directly to the default branch",
+			}, nil
+		}
+		return nil, err
+	}
+
 	entity, err := entitySvc.Get(entityType, entityID, "")
 	if err != nil {
 		return nil, fmt.Errorf("Cannot execute merge for %s: failed to retrieve entity: %w.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, err, entityID)

@@ -56,7 +56,7 @@ func createTestPlan(t *testing.T, entitySvc *service.EntityService, slug, name s
 func createStatusTestFeature(t *testing.T, entitySvc *service.EntityService, parentPlanID, slug, summary string) string {
 	t.Helper()
 	result, err := entitySvc.CreateFeature(service.CreateFeatureInput{
-		Name: "test",
+		Name:      "test",
 		Slug:      slug,
 		Parent:    parentPlanID,
 		Summary:   summary,
@@ -72,7 +72,7 @@ func createStatusTestFeature(t *testing.T, entitySvc *service.EntityService, par
 func createStatusTestTask(t *testing.T, entitySvc *service.EntityService, parentFeatID, slug, summary string) string {
 	t.Helper()
 	result, err := entitySvc.CreateTask(service.CreateTaskInput{
-		Name: "test",
+		Name:          "test",
 		ParentFeature: parentFeatID,
 		Slug:          slug,
 		Summary:       summary,
@@ -87,7 +87,7 @@ func createStatusTestTask(t *testing.T, entitySvc *service.EntityService, parent
 // returns the parsed JSON response. Passes nil for the worktree store.
 func callStatus(t *testing.T, entitySvc *service.EntityService, docSvc *service.DocumentService, id string) map[string]any {
 	t.Helper()
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{"id": id})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -210,7 +210,7 @@ func TestSynthesiseProject_Empty(t *testing.T) {
 	t.Parallel()
 	// Verifies §30.4: status() returns project overview.
 	entitySvc, docSvc := setupStatusTest(t)
-	overview, err := synthesiseProject(entitySvc, docSvc)
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
 	if err != nil {
 		t.Fatalf("synthesiseProject error: %v", err)
 	}
@@ -238,7 +238,7 @@ func TestSynthesiseProject_WithPlans(t *testing.T) {
 
 	_ = createStatusTestFeature(t, entitySvc, planBID, "feat-b", "Feature B")
 
-	overview, err := synthesiseProject(entitySvc, docSvc)
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
 	if err != nil {
 		t.Fatalf("synthesiseProject error: %v", err)
 	}
@@ -263,7 +263,7 @@ func TestSynthesiseProject_HasHealthSummary(t *testing.T) {
 	entitySvc, docSvc := setupStatusTest(t)
 	createTestPlan(t, entitySvc, "health-plan", "Health Plan")
 
-	overview, err := synthesiseProject(entitySvc, docSvc)
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
 	if err != nil {
 		t.Fatalf("synthesiseProject error: %v", err)
 	}
@@ -369,7 +369,7 @@ func TestSynthesisePlan_HasHealthSummary(t *testing.T) {
 func TestSynthesiseFeature_NotFound(t *testing.T) {
 	t.Parallel()
 	entitySvc, docSvc := setupStatusTest(t)
-	_, err := synthesiseFeature("FEAT-01NOTEXIST1", entitySvc, docSvc, nil)
+	_, err := synthesiseFeature("FEAT-01NOTEXIST1", entitySvc, docSvc, nil, "")
 	if err == nil {
 		t.Fatal("synthesiseFeature: expected error for unknown feature, got nil")
 	}
@@ -386,7 +386,7 @@ func TestSynthesiseFeature_WithTasks(t *testing.T) {
 	_ = createStatusTestTask(t, entitySvc, featID, "task-two", "Task Two")
 	_ = createStatusTestTask(t, entitySvc, featID, "task-three", "Task Three")
 
-	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil)
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil, "")
 	if err != nil {
 		t.Fatalf("synthesiseFeature error: %v", err)
 	}
@@ -416,7 +416,7 @@ func TestSynthesiseFeature_PlanIDPopulated(t *testing.T) {
 	planID := createTestPlan(t, entitySvc, "plan-id-check", "Plan")
 	featID := createStatusTestFeature(t, entitySvc, planID, "plan-id-feat", "Feature")
 
-	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil)
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil, "")
 	if err != nil {
 		t.Fatalf("synthesiseFeature error: %v", err)
 	}
@@ -432,7 +432,7 @@ func TestSynthesiseFeature_AttentionIncludesMissingDocs(t *testing.T) {
 	planID := createTestPlan(t, entitySvc, "att-plan", "Plan")
 	featID := createStatusTestFeature(t, entitySvc, planID, "att-feat", "Attention Feature")
 
-	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil)
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil, "")
 	if err != nil {
 		t.Fatalf("synthesiseFeature error: %v", err)
 	}
@@ -479,7 +479,7 @@ func TestSynthesiseFeature_WithWorktree(t *testing.T) {
 		t.Fatalf("worktree.Create: %v", err)
 	}
 
-	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore)
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore, "")
 	if err != nil {
 		t.Fatalf("synthesiseFeature error: %v", err)
 	}
@@ -510,7 +510,7 @@ func TestSynthesiseFeature_NoWorktree(t *testing.T) {
 	stateRoot := t.TempDir()
 	wtStore := worktree.NewStore(stateRoot)
 
-	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore)
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore, "")
 	if err != nil {
 		t.Fatalf("synthesiseFeature error: %v", err)
 	}
@@ -691,7 +691,7 @@ func TestStatusTool_UnknownIDFormat(t *testing.T) {
 	t.Parallel()
 	// Verifies §30.4: unknown ID format returns clear error.
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 
 	req := makeRequest(map[string]any{"id": "TOTALLY-INVALID-ID-FORMAT"})
 	result, err := tool.Handler(context.Background(), req)
@@ -716,7 +716,7 @@ func TestStatusTool_EntityNotFound(t *testing.T) {
 	t.Parallel()
 	// Verifies §30.4: entity not found returns clear error.
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 
 	req := makeRequest(map[string]any{"id": "FEAT-01NOTEXIST1"})
 	result, err := tool.Handler(context.Background(), req)
@@ -744,7 +744,7 @@ func TestStatusTool_ProjectOverview(t *testing.T) {
 	entitySvc, docSvc := setupStatusTest(t)
 	createTestPlan(t, entitySvc, "p-one", "Plan One")
 
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -766,7 +766,7 @@ func TestStatusTool_PlanDashboard(t *testing.T) {
 	entitySvc, docSvc := setupStatusTest(t)
 	planID := createTestPlan(t, entitySvc, "dashboard-plan", "Dashboard Plan")
 
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{"id": planID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -795,7 +795,7 @@ func TestStatusTool_FeatureDetail(t *testing.T) {
 	planID := createTestPlan(t, entitySvc, "feat-detail-p", "Plan")
 	featID := createStatusTestFeature(t, entitySvc, planID, "detail-f", "Detail Feature")
 
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{"id": featID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -818,7 +818,7 @@ func TestStatusTool_TaskDetail(t *testing.T) {
 	featID := createStatusTestFeature(t, entitySvc, planID, "task-detail-f", "Feature")
 	taskID := createStatusTestTask(t, entitySvc, featID, "task-detail-t", "Task")
 
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{"id": taskID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -852,7 +852,7 @@ func TestStatusTool_AttentionItemsGenerated(t *testing.T) {
 		})
 	}
 
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{"id": planID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -873,7 +873,7 @@ func TestStatusTool_AttentionItemsGenerated(t *testing.T) {
 func TestStatusTool_ResponseHasGeneratedAt(t *testing.T) {
 	t.Parallel()
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -893,7 +893,7 @@ func TestStatusTool_NoSideEffects(t *testing.T) {
 	t.Parallel()
 	// Verifies status is read-only (no side_effects field).
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -909,7 +909,7 @@ func TestStatusTool_ProjectOverview_HasHealth(t *testing.T) {
 	t.Parallel()
 	// Verifies §30.4 criterion 8: health field present in project overview response.
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -938,7 +938,7 @@ func TestStatusTool_PlanDashboard_HasHealth(t *testing.T) {
 	entitySvc, docSvc := setupStatusTest(t)
 	planID := createTestPlan(t, entitySvc, "health-dash-plan", "Health Plan")
 
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{"id": planID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -983,7 +983,7 @@ func TestStatusTool_FeatureDetail_HasWorktreeWhenPresent(t *testing.T) {
 		t.Fatalf("worktree.Create: %v", err)
 	}
 
-	tool := statusTool(entitySvc, docSvc, wtStore)
+	tool := statusTool(entitySvc, docSvc, wtStore, "")
 	req := makeRequest(map[string]any{"id": featID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -1033,7 +1033,7 @@ func TestStatusTool_TaskDetail_HasDispatch(t *testing.T) {
 		t.Fatalf("write task record: %v", err)
 	}
 
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{"id": taskID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -1064,7 +1064,7 @@ func TestStatusTool_ProjectOverview_HasOrientation(t *testing.T) {
 	// AC-E2: orientation.message references getting-started skill path.
 	// AC-E3: orientation.skills_path is ".agents/skills/".
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -1104,7 +1104,7 @@ func TestStatusTool_ProjectOverview_OrientationDoesNotBreakExistingFields(t *tes
 	entitySvc, docSvc := setupStatusTest(t)
 	createTestPlan(t, entitySvc, "orient-plan", "Orient Plan")
 
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -1133,7 +1133,7 @@ func TestStatusTool_PlanDashboard_NoOrientation(t *testing.T) {
 	entitySvc, docSvc := setupStatusTest(t)
 	planID := createTestPlan(t, entitySvc, "no-orient-plan", "No Orient Plan")
 
-	tool := statusTool(entitySvc, docSvc, nil)
+	tool := statusTool(entitySvc, docSvc, nil, "")
 	req := makeRequest(map[string]any{"id": planID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -1146,5 +1146,202 @@ func TestStatusTool_PlanDashboard_NoOrientation(t *testing.T) {
 	}
 	if _, ok := parsed["orientation"]; ok {
 		t.Error("orientation field must not appear in plan dashboard response")
+	}
+}
+
+// ─── generateFeatureAttention tests ──────────────────────────────────────────
+
+// TestFeatureAttention_AllTasksDone_Developing verifies that when all tasks are
+// terminal and the feature is developing, a "ready to advance" item is emitted.
+func TestFeatureAttention_AllTasksDone_Developing(t *testing.T) {
+	tasks := []taskInfo{
+		{Status: "done"},
+		{Status: "done"},
+		{Status: "not-planned"},
+	}
+	items := generateFeatureAttention(tasks, nil, 3, "FEAT-01", "developing", time.Time{}, true, true)
+	found := false
+	for _, item := range items {
+		if strings.Contains(item, "FEAT-01") && strings.Contains(item, "3/3") && strings.Contains(item, "ready to advance") {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("expected 'ready to advance' attention item, got: %v", items)
+	}
+}
+
+// TestFeatureAttention_AllTasksDone_NeedsRework verifies needs-rework also triggers the item.
+func TestFeatureAttention_AllTasksDone_NeedsRework(t *testing.T) {
+	tasks := []taskInfo{{Status: "done"}, {Status: "done"}}
+	items := generateFeatureAttention(tasks, nil, 2, "FEAT-02", "needs-rework", time.Time{}, true, true)
+	found := false
+	for _, item := range items {
+		if strings.Contains(item, "FEAT-02") && strings.Contains(item, "2/2") {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("expected completion item for needs-rework, got: %v", items)
+	}
+}
+
+// TestFeatureAttention_AllTasksDone_Reviewing verifies that reviewing status
+// does NOT trigger the completion item.
+func TestFeatureAttention_AllTasksDone_Reviewing(t *testing.T) {
+	tasks := []taskInfo{{Status: "done"}, {Status: "done"}}
+	items := generateFeatureAttention(tasks, nil, 2, "FEAT-03", "reviewing", time.Time{}, true, true)
+	for _, item := range items {
+		if strings.Contains(item, "ready to advance") {
+			t.Errorf("unexpected 'ready to advance' item for reviewing status: %s", item)
+		}
+	}
+}
+
+// TestFeatureAttention_ZeroTasks_NoCompletionItem verifies that zero tasks
+// does NOT trigger the completion item.
+func TestFeatureAttention_ZeroTasks_NoCompletionItem(t *testing.T) {
+	items := generateFeatureAttention(nil, nil, 0, "FEAT-04", "developing", time.Time{}, true, true)
+	for _, item := range items {
+		if strings.Contains(item, "ready to advance") {
+			t.Errorf("unexpected completion item for zero tasks: %s", item)
+		}
+	}
+}
+
+// TestFeatureAttention_NonTerminalTask_NoCompletionItem verifies that a non-terminal
+// task blocks the completion item.
+func TestFeatureAttention_NonTerminalTask_NoCompletionItem(t *testing.T) {
+	tasks := []taskInfo{{Status: "done"}, {Status: "active"}}
+	items := generateFeatureAttention(tasks, nil, 2, "FEAT-05", "developing", time.Time{}, true, true)
+	for _, item := range items {
+		if strings.Contains(item, "ready to advance") {
+			t.Errorf("unexpected completion item when active task present: %s", item)
+		}
+	}
+}
+
+// TestFeatureAttention_StalePrefix_After48h verifies that the ⚠️ STALE prefix is
+// added for features in developing that have been updated >48h ago.
+func TestFeatureAttention_StalePrefix_After48h(t *testing.T) {
+	tasks := []taskInfo{{Status: "done"}}
+	staleTime := time.Now().Add(-49 * time.Hour)
+	items := generateFeatureAttention(tasks, nil, 1, "FEAT-06", "developing", staleTime, true, true)
+	found := false
+	for _, item := range items {
+		if strings.HasPrefix(item, "⚠️ STALE:") {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("expected STALE prefix for 49h-old developing feature, got: %v", items)
+	}
+}
+
+// TestFeatureAttention_NoStalePrefix_Recent verifies that a recently updated feature
+// does NOT get the STALE prefix.
+func TestFeatureAttention_NoStalePrefix_Recent(t *testing.T) {
+	tasks := []taskInfo{{Status: "done"}}
+	recentTime := time.Now().Add(-1 * time.Hour)
+	items := generateFeatureAttention(tasks, nil, 1, "FEAT-07", "developing", recentTime, true, true)
+	for _, item := range items {
+		if strings.HasPrefix(item, "⚠️ STALE:") {
+			t.Errorf("unexpected STALE prefix for recently updated feature: %s", item)
+		}
+	}
+}
+
+// TestFeatureAttention_NeedsRework_NoStalePrefix verifies that needs-rework does NOT
+// get the STALE prefix even if updated >48h ago.
+func TestFeatureAttention_NeedsRework_NoStalePrefix(t *testing.T) {
+	tasks := []taskInfo{{Status: "done"}}
+	staleTime := time.Now().Add(-72 * time.Hour)
+	items := generateFeatureAttention(tasks, nil, 1, "FEAT-08", "needs-rework", staleTime, true, true)
+	for _, item := range items {
+		if strings.HasPrefix(item, "⚠️ STALE:") {
+			t.Errorf("unexpected STALE prefix for needs-rework feature: %s", item)
+		}
+	}
+}
+
+// TestFeatureAttention_InheritedSpec_NoWarning verifies that when inheritedHasSpec=true,
+// the "Missing specification" attention item is NOT emitted.
+func TestFeatureAttention_InheritedSpec_NoWarning(t *testing.T) {
+	items := generateFeatureAttention(nil, nil, 0, "FEAT-09", "dev-planning", time.Time{}, true, true)
+	for _, item := range items {
+		if strings.Contains(item, "Missing specification") {
+			t.Errorf("unexpected Missing specification item when inherited: %s", item)
+		}
+	}
+}
+
+// TestFeatureAttention_NoInheritedSpec_Warning verifies that when inheritedHasSpec=false
+// and no feature-owned spec exists, the warning is emitted.
+func TestFeatureAttention_NoInheritedSpec_Warning(t *testing.T) {
+	items := generateFeatureAttention(nil, nil, 0, "FEAT-10", "specifying", time.Time{}, false, true)
+	found := false
+	for _, item := range items {
+		if strings.Contains(item, "Missing specification") {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("expected Missing specification warning, got: %v", items)
+	}
+}
+
+// ─── generatePlanAttention tests ─────────────────────────────────────────────
+
+// TestPlanAttention_AllFeaturesDone_Active verifies plan completion detection.
+func TestPlanAttention_AllFeaturesDone_Active(t *testing.T) {
+	features := []featureSummary{
+		{Status: "done"},
+		{Status: "cancelled"},
+		{Status: "done"},
+	}
+	items := generatePlanAttention(features, nil, "P13-workflow-flexibility", "active", true, 3)
+	found := false
+	for _, item := range items {
+		if strings.Contains(item, "P13-workflow-flexibility") && strings.Contains(item, "all 3 features done") && strings.Contains(item, "ready to close") {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("expected plan completion item, got: %v", items)
+	}
+}
+
+// TestPlanAttention_PlanAlreadyDone_NoItem verifies that a done plan doesn't get
+// the completion item.
+func TestPlanAttention_PlanAlreadyDone_NoItem(t *testing.T) {
+	features := []featureSummary{{Status: "done"}}
+	items := generatePlanAttention(features, nil, "P13", "done", true, 1)
+	for _, item := range items {
+		if strings.Contains(item, "ready to close") {
+			t.Errorf("unexpected completion item for already-done plan: %s", item)
+		}
+	}
+}
+
+// TestPlanAttention_NonFinishedFeature_NoItem verifies that a plan with non-finished
+// features doesn't get the completion item.
+func TestPlanAttention_NonFinishedFeature_NoItem(t *testing.T) {
+	features := []featureSummary{{Status: "done"}, {Status: "developing"}}
+	items := generatePlanAttention(features, nil, "P13", "active", false, 2)
+	for _, item := range items {
+		if strings.Contains(item, "ready to close") {
+			t.Errorf("unexpected completion item when features not finished: %s", item)
+		}
+	}
+}
+
+// TestPlanAttention_ZeroFeatures_NoItem verifies that zero features doesn't trigger
+// the completion item (even if allFeaturesFinished is somehow true).
+func TestPlanAttention_ZeroFeatures_NoItem(t *testing.T) {
+	items := generatePlanAttention(nil, nil, "P13", "active", true, 0)
+	for _, item := range items {
+		if strings.Contains(item, "ready to close") {
+			t.Errorf("unexpected completion item for zero features: %s", item)
+		}
 	}
 }

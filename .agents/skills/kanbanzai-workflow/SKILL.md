@@ -93,6 +93,12 @@ flaw is discovered. Moving backwards is normal. Skipping forward is not.
 
 ---
 
+## Feature Close-Out Trigger
+
+When `status` (with no ID or with a feature ID) shows the attention item `"FEAT-xxx has N/N tasks done — ready to advance to reviewing"`, the close-out checklist applies. Follow the procedure in `.kbz/skills/orchestrate-development/SKILL.md` Phase 6.
+
+---
+
 ## Human Ownership vs. Agent Ownership
 
 **Humans own:** intent, priorities, approvals, product direction, and scope

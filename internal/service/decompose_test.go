@@ -1,6 +1,8 @@
 package service
 
 import (
+	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
@@ -142,10 +144,11 @@ func TestDecomposeFeature_ProposalProduced(t *testing.T) {
 	}
 
 	// Proposal should contain tasks derived from the 5 acceptance criteria.
-	// Plus a test task added by the test-tasks-explicit guidance.
+	// With section-based grouping (3 ACs in Authentication, 2 in Authorization),
+	// we get 2 grouped tasks + 1 test task = 3 total.
 	proposal := result.Proposal
-	if proposal.TotalTasks < 5 {
-		t.Errorf("TotalTasks = %d, want at least 5 (one per acceptance criterion)", proposal.TotalTasks)
+	if proposal.TotalTasks < 2 {
+		t.Errorf("TotalTasks = %d, want at least 2 (grouped tasks from acceptance criteria)", proposal.TotalTasks)
 	}
 
 	// Each proposed task must have slug, summary, and rationale.
@@ -206,8 +209,9 @@ func TestDecomposeFeature_GuidanceApplied(t *testing.T) {
 		t.Fatal("GuidanceApplied is empty, want at least one rule")
 	}
 
+	// 2 ACs in one section → section-based grouping → "group-by-section" rule.
 	expectedRules := []string{
-		"one-ac-per-task",
+		"group-by-section",
 		"size-soft-limit-8",
 		"explicit-dependencies",
 		"role-assignment",
@@ -1166,6 +1170,8 @@ This feature tests the bold-identifier extraction path in decompose propose.
 **AC-03.** The response MUST include the request identifier in all cases.
 
 **AC-04.** The system MUST log all errors at WARNING level or above.
+
+**AC-05.** The handler MUST handle concurrent requests without data races.
 `
 
 	svc, featureID, _ := setupDecomposeTest(t, specContent)
@@ -1177,10 +1183,10 @@ This feature tests the bold-identifier extraction path in decompose propose.
 
 	proposal := result.Proposal
 
-	// REQ-13 / AC-06: The proposal must contain tasks derived from the 4 AC lines.
-	// (Plus a test task added by the test-tasks-explicit guidance rule.)
-	if proposal.TotalTasks < 4 {
-		t.Errorf("TotalTasks = %d, want at least 4 (one per bold-AC criterion)", proposal.TotalTasks)
+	// REQ-13 / AC-06: The proposal must contain tasks derived from the 5 AC lines.
+	// 5 ACs in one section → individual tasks (5+ threshold). Plus a test task.
+	if proposal.TotalTasks < 5 {
+		t.Errorf("TotalTasks = %d, want at least 5 (one per bold-AC criterion)", proposal.TotalTasks)
 	}
 
 	// Collect all task summaries for assertion.
@@ -1591,5 +1597,402 @@ func TestReviewProposal_ErrorAndWarningCombined(t *testing.T) {
 	}
 	if warningCount == 0 {
 		t.Error("expected at least one warning finding (missing-test-coverage), got none")
+	}
+}
+
+// ---------------------------------------------------------------------------
+// P13 Feature 5: Decomposition Grouping tests
+// ---------------------------------------------------------------------------
+
+// TestGrouping_Thresholds verifies the section-based grouping thresholds:
+//   - 1 AC  → 1 individual task, Covers has 1 element
+//   - 2–4 ACs → 1 grouped task, Covers has n elements
+//   - 5+ ACs → individual tasks, each with 1-element Covers
+func TestGrouping_Thresholds(t *testing.T) {
+	t.Parallel()
+
+	const featureSlug = "feat"
+	const section = "Auth"
+
+	makeSpec := func(n int) specStructure {
+		var acs []acceptanceCriterion
+		for i := 0; i < n; i++ {
+			acs = append(acs, acceptanceCriterion{
+				text:     fmt.Sprintf("criterion %d works correctly", i+1),
+				section:  section,
+				parentL2: section,
+			})
+		}
+		return specStructure{acceptanceCriteria: acs}
+	}
+
+	cases := []struct {
+		n           int
+		wantACTasks int
+		wantGrouped bool
+	}{
+		{1, 1, false},
+		{2, 1, true},
+		{3, 1, true},
+		{4, 1, true},
+		{5, 5, false},
+		{6, 6, false},
+	}
+
+	for _, tc := range cases {
+		tc := tc
+		t.Run(fmt.Sprintf("n=%d", tc.n), func(t *testing.T) {
+			t.Parallel()
+			spec := makeSpec(tc.n)
+			proposal, guidance := generateProposal(spec, featureSlug, "", 0)
+
+			// Count AC tasks (exclude the auto-added test-companion task).
+			var acTasks []ProposedTask
+			for _, task := range proposal.Tasks {
+				if task.Slug != featureSlug+"-tests" {
+					acTasks = append(acTasks, task)
+				}
+			}
+
+			if len(acTasks) != tc.wantACTasks {
+				t.Errorf("n=%d: AC task count = %d, want %d", tc.n, len(acTasks), tc.wantACTasks)
+			}
+
+			hasGroupBy := false
+			hasOneAC := false
+			for _, g := range guidance {
+				switch g {
+				case "group-by-section":
+					hasGroupBy = true
+				case "one-ac-per-task":
+					hasOneAC = true
+				}
+			}
+
+			if tc.wantGrouped {
+				if !hasGroupBy {
+					t.Errorf("n=%d: expected 'group-by-section' in guidance %v", tc.n, guidance)
+				}
+				if hasOneAC {
+					t.Errorf("n=%d: did not expect 'one-ac-per-task' in guidance when grouped: %v", tc.n, guidance)
+				}
+				// The single grouped task's Covers should have n elements.
+				if len(acTasks) > 0 && len(acTasks[0].Covers) != tc.n {
+					t.Errorf("n=%d: grouped task Covers length = %d, want %d", tc.n, len(acTasks[0].Covers), tc.n)
+				}
+			} else {
+				if !hasOneAC {
+					t.Errorf("n=%d: expected 'one-ac-per-task' in guidance %v", tc.n, guidance)
+				}
+				// Each individual task should have exactly 1 element in Covers.
+				for i, task := range acTasks {
+					if len(task.Covers) != 1 {
+						t.Errorf("n=%d: task[%d] Covers length = %d, want 1", tc.n, i, len(task.Covers))
+					}
+				}
+			}
+		})
+	}
+}
+
+// TestGrouping_MixedSections verifies that sections are grouped independently:
+// a section with 3 ACs produces 1 grouped task; a section with 7 ACs produces
+// 7 individual tasks.
+func TestGrouping_MixedSections(t *testing.T) {
+	t.Parallel()
+
+	const featureSlug = "feat"
+
+	var acs []acceptanceCriterion
+	// Section A: 3 ACs → grouped (2–4 range).
+	for i := 0; i < 3; i++ {
+		acs = append(acs, acceptanceCriterion{
+			text:     fmt.Sprintf("section-a criterion %d", i+1),
+			section:  "Section A",
+			parentL2: "Section A",
+		})
+	}
+	// Section B: 7 ACs → individual (5+ range).
+	for i := 0; i < 7; i++ {
+		acs = append(acs, acceptanceCriterion{
+			text:     fmt.Sprintf("section-b criterion %d", i+1),
+			section:  "Section B",
+			parentL2: "Section B",
+		})
+	}
+	spec := specStructure{acceptanceCriteria: acs}
+
+	proposal, guidance := generateProposal(spec, featureSlug, "", 0)
+
+	// Expect: 1 grouped (Section A) + 7 individual (Section B) = 8 AC tasks + test task.
+	acTaskCount := 0
+	for _, task := range proposal.Tasks {
+		if task.Slug != featureSlug+"-tests" {
+			acTaskCount++
+		}
+	}
+	if acTaskCount != 8 {
+		t.Errorf("AC task count = %d, want 8 (1 grouped + 7 individual)", acTaskCount)
+	}
+
+	// Guidance must contain "group-by-section" (Section A triggers it).
+	hasGroupBy := false
+	for _, g := range guidance {
+		if g == "group-by-section" {
+			hasGroupBy = true
+		}
+	}
+	if !hasGroupBy {
+		t.Errorf("expected 'group-by-section' in guidance %v", guidance)
+	}
+
+	// Find the Section A grouped task (slug = featureSlug + "-section-a").
+	var sectionATask *ProposedTask
+	for i := range proposal.Tasks {
+		if proposal.Tasks[i].Slug == featureSlug+"-section-a" {
+			sectionATask = &proposal.Tasks[i]
+			break
+		}
+	}
+	if sectionATask == nil {
+		t.Fatalf("expected task with slug %q; tasks: %v", featureSlug+"-section-a", proposal.Tasks)
+	}
+	if len(sectionATask.Covers) != 3 {
+		t.Errorf("Section A grouped task Covers length = %d, want 3", len(sectionATask.Covers))
+	}
+
+	// Section B tasks should each have exactly 1 Covers entry.
+	for _, task := range proposal.Tasks {
+		if task.Slug == featureSlug+"-tests" || task.Slug == featureSlug+"-section-a" {
+			continue
+		}
+		if len(task.Covers) != 1 {
+			t.Errorf("Section B task %q Covers length = %d, want 1", task.Slug, len(task.Covers))
+		}
+	}
+}
+
+// TestGrouping_TestCompanionHasNoCovers verifies that the automatically added
+// test-companion task has nil/empty Covers.
+func TestGrouping_TestCompanionHasNoCovers(t *testing.T) {
+	t.Parallel()
+
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "feature works correctly", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	for _, task := range proposal.Tasks {
+		if task.Slug == "feat-tests" {
+			if len(task.Covers) != 0 {
+				t.Errorf("test-companion task Covers = %v, want nil/empty", task.Covers)
+			}
+			return
+		}
+	}
+	t.Error("test-companion task 'feat-tests' not found in proposal")
+}
+
+// TestProposedTask_CoversOmittedFromJSON verifies that a nil Covers slice is
+// omitted from JSON encoding (json:"covers,omitempty"), and that a non-empty
+// Covers slice is included.
+func TestProposedTask_CoversOmittedFromJSON(t *testing.T) {
+	t.Parallel()
+
+	// Nil Covers — must NOT appear in JSON output.
+	task := ProposedTask{
+		Slug:      "my-task",
+		Summary:   "Do something",
+		Rationale: "Because",
+	}
+	data, err := json.Marshal(task)
+	if err != nil {
+		t.Fatalf("json.Marshal error = %v", err)
+	}
+	if contains(string(data), `"covers"`) {
+		t.Errorf("JSON contains 'covers' key for task with nil Covers; got: %s", data)
+	}
+
+	// Non-empty Covers — must appear in JSON output.
+	task.Covers = []string{"criterion one"}
+	data, err = json.Marshal(task)
+	if err != nil {
+		t.Fatalf("json.Marshal error = %v", err)
+	}
+	if !contains(string(data), `"covers"`) {
+		t.Errorf("JSON missing 'covers' key for task with non-empty Covers; got: %s", data)
+	}
+}
+
+// TestCheckGaps_ExactMatchViaCovers verifies the updated isACCovered logic:
+//  1. Task with Covers containing the AC text → exact match, covered.
+//  2. Task with Covers NOT containing the AC text → NOT covered, even if
+//     keywords in Summary/Rationale overlap (no heuristic fallback for that task).
+//  3. Task with nil Covers → keyword overlap heuristic applies.
+func TestCheckGaps_ExactMatchViaCovers(t *testing.T) {
+	t.Parallel()
+
+	acText := "validate that the authentication token is refreshed before expiry"
+	ac := acceptanceCriterion{text: acText, section: "S", parentL2: "S"}
+
+	// Task with exact Covers match → must cover the AC.
+	taskExact := ProposedTask{
+		Slug:      "exact",
+		Summary:   "unrelated summary",
+		Rationale: "unrelated rationale",
+		Covers:    []string{acText},
+	}
+	if !isACCovered(ac, []ProposedTask{taskExact}) {
+		t.Error("task with exact Covers match should cover the AC")
+	}
+
+	// Task with Covers NOT containing the AC, but whose Summary/Rationale carry
+	// enough keywords that the old heuristic would have matched. The new code
+	// must NOT fall back to keyword overlap for this task.
+	taskWrongCovers := ProposedTask{
+		Slug:      "wrong-covers",
+		Summary:   "validate authentication token refresh expiry",
+		Rationale: "authentication token refresh expiry before validation",
+		Covers:    []string{"some other unrelated criterion"},
+	}
+	if isACCovered(ac, []ProposedTask{taskWrongCovers}) {
+		t.Error("task whose Covers doesn't contain the AC should NOT cover it, even when keywords overlap")
+	}
+
+	// Task with nil Covers → keyword heuristic applies.
+	// Summary and Rationale contain enough AC keywords to exceed the 2/3 threshold.
+	taskKeyword := ProposedTask{
+		Slug:      "keyword",
+		Summary:   "validate authentication token refresh expiry logic",
+		Rationale: "authentication token refreshed before expiry deadline",
+	}
+	if !isACCovered(ac, []ProposedTask{taskKeyword}) {
+		t.Error("task without Covers but with sufficient keyword overlap should cover the AC")
+	}
+}
+
+// TestParseSpecStructure_TableRows verifies that markdown tables within
+// acceptance-criteria sections are extracted as acceptance criteria, with
+// cells joined by " — ".
+func TestParseSpecStructure_TableRows(t *testing.T) {
+	t.Parallel()
+
+	content := `# Spec
+
+## Acceptance Criteria
+
+| Criterion | Description |
+| --- | --- |
+| CR-1 | User can log in |
+| CR-2 | User can log out |
+| CR-3 | Session expires after timeout |
+`
+
+	spec := parseSpecStructure(content)
+
+	if len(spec.acceptanceCriteria) != 3 {
+		t.Fatalf("acceptance criteria count = %d, want 3 (3 data rows); got: %v",
+			len(spec.acceptanceCriteria), spec.acceptanceCriteria)
+	}
+
+	want := []string{
+		"CR-1 — User can log in",
+		"CR-2 — User can log out",
+		"CR-3 — Session expires after timeout",
+	}
+	for i, ac := range spec.acceptanceCriteria {
+		if ac.text != want[i] {
+			t.Errorf("ac[%d].text = %q, want %q", i, ac.text, want[i])
+		}
+		if ac.section != "Acceptance Criteria" {
+			t.Errorf("ac[%d].section = %q, want %q", i, ac.section, "Acceptance Criteria")
+		}
+	}
+}
+
+// TestParseSpecStructure_TableNotInACSection verifies that tables outside
+// acceptance-criteria sections are NOT parsed as criteria.
+func TestParseSpecStructure_TableNotInACSection(t *testing.T) {
+	t.Parallel()
+
+	content := `# Spec
+
+## Background
+
+| Column A | Column B |
+| --- | --- |
+| Row 1A | Row 1B |
+| Row 2A | Row 2B |
+
+## Acceptance Criteria
+
+- [ ] Single checkbox criterion
+`
+
+	spec := parseSpecStructure(content)
+
+	// Only the checkbox criterion should be extracted; Background table rows are ignored.
+	if len(spec.acceptanceCriteria) != 1 {
+		t.Fatalf("acceptance criteria count = %d, want 1; got: %v",
+			len(spec.acceptanceCriteria), spec.acceptanceCriteria)
+	}
+	if spec.acceptanceCriteria[0].text != "Single checkbox criterion" {
+		t.Errorf("ac[0].text = %q, want %q",
+			spec.acceptanceCriteria[0].text, "Single checkbox criterion")
+	}
+}
+
+// TestReviewProposal_BackwardCompatibility verifies that a Proposal deserialized
+// from JSON without a "covers" key (legacy format) has nil Covers on its tasks,
+// and that ReviewProposal falls back to keyword-overlap gap detection correctly.
+func TestReviewProposal_BackwardCompatibility(t *testing.T) {
+	t.Parallel()
+
+	// Simulate a legacy JSON proposal that predates the Covers field.
+	legacyJSON := `{
+		"tasks": [
+			{
+				"slug": "login",
+				"name": "",
+				"summary": "Implement user login with email and password",
+				"rationale": "Covers: users can log in"
+			}
+		],
+		"total_tasks": 1,
+		"slices": [],
+		"warnings": []
+	}`
+
+	var proposal Proposal
+	if err := json.Unmarshal([]byte(legacyJSON), &proposal); err != nil {
+		t.Fatalf("json.Unmarshal error = %v", err)
+	}
+
+	// Covers must be nil when the field is absent from JSON.
+	if proposal.Tasks[0].Covers != nil {
+		t.Errorf("Covers = %v, want nil for legacy JSON without 'covers' key",
+			proposal.Tasks[0].Covers)
+	}
+
+	// ReviewProposal must not report a gap for an AC that is keyword-covered.
+	specContent := `# Spec
+- [ ] Users can log in
+`
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+
+	result, err := svc.ReviewProposal(DecomposeReviewInput{
+		FeatureID: featureID,
+		Proposal:  proposal,
+	})
+	if err != nil {
+		t.Fatalf("ReviewProposal() error = %v", err)
+	}
+
+	for _, f := range result.Findings {
+		if f.Type == "gap" {
+			t.Errorf("unexpected gap finding for legacy proposal with keyword-matching rationale: %v", f)
+		}
 	}
 }

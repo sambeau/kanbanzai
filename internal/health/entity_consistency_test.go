@@ -315,8 +315,8 @@ func TestCheckFeatureChildConsistency_AllTaskTerminalStatuses(t *testing.T) {
 func TestCheckFeatureChildConsistency_DevelopingFeatureAllChildrenTerminal(t *testing.T) {
 	t.Parallel()
 
-	// "developing" is not an early state so should not be flagged even
-	// when all children are terminal.
+	// "developing" with all children terminal triggers Check 3 — the feature
+	// should be advanced rather than left stalled in developing state.
 	features := []map[string]any{
 		{"id": "FEAT-001", "status": "developing"},
 	}
@@ -326,23 +326,27 @@ func TestCheckFeatureChildConsistency_DevelopingFeatureAllChildrenTerminal(t *te
 
 	result := CheckFeatureChildConsistency(features, tasks)
 
-	if result.Status != SeverityOK {
-		t.Errorf("Status = %v, want %v", result.Status, SeverityOK)
+	if result.Status != SeverityWarning {
+		t.Errorf("Status = %v, want %v", result.Status, SeverityWarning)
 	}
-	if len(result.Issues) != 0 {
-		t.Errorf("len(Issues) = %d, want 0", len(result.Issues))
+	if len(result.Issues) != 1 {
+		t.Fatalf("len(Issues) = %d, want 1", len(result.Issues))
+	}
+	if !strings.Contains(result.Issues[0].Message, "developing") {
+		t.Errorf("Issue.Message = %q, want to contain %q", result.Issues[0].Message, "developing")
 	}
 }
 
 func TestCheckFeatureChildConsistency_ReviewingFeatureNoFalseWarnings(t *testing.T) {
 	t.Parallel()
 
+	// Only "reviewing" is tested here — "needs-rework" now belongs to
+	// featureDevelopingStatuses and is covered by dedicated warning tests.
 	tests := []struct {
 		name          string
 		featureStatus string
 	}{
 		{"reviewing", "reviewing"},
-		{"needs-rework", "needs-rework"},
 	}
 
 	for _, tt := range tests {
@@ -372,8 +376,8 @@ func TestCheckFeatureChildConsistency_ReviewingFeatureNoFalseWarnings(t *testing
 		t.Run(tt.name+"_with_all_terminal_children", func(t *testing.T) {
 			t.Parallel()
 
-			// Feature in reviewing/needs-rework with all children terminal is not
-			// an early-state warning — these are active review states, not early states.
+			// "reviewing" with all children terminal is not flagged — only
+			// featureDevelopingStatuses (developing, needs-rework) trigger Check 3.
 			features := []map[string]any{
 				{"id": "FEAT-001", "status": tt.featureStatus},
 			}
@@ -391,5 +395,209 @@ func TestCheckFeatureChildConsistency_ReviewingFeatureNoFalseWarnings(t *testing
 				t.Errorf("len(Issues) = %d, want 0", len(result.Issues))
 			}
 		})
+	}
+}
+
+func TestCheckFeatureChildConsistency_NeedsReworkAllTerminal_Warning(t *testing.T) {
+	t.Parallel()
+
+	features := []map[string]any{
+		{"id": "FEAT-001", "status": "needs-rework"},
+	}
+	tasks := []map[string]any{
+		{"id": "TASK-001", "parent_feature": "FEAT-001", "status": "done"},
+		{"id": "TASK-002", "parent_feature": "FEAT-001", "status": "not-planned"},
+	}
+
+	result := CheckFeatureChildConsistency(features, tasks)
+
+	if result.Status != SeverityWarning {
+		t.Errorf("Status = %v, want %v", result.Status, SeverityWarning)
+	}
+	if len(result.Issues) != 1 {
+		t.Fatalf("len(Issues) = %d, want 1", len(result.Issues))
+	}
+	if !strings.Contains(result.Issues[0].Message, "needs-rework") {
+		t.Errorf("Issue.Message = %q, want to contain %q", result.Issues[0].Message, "needs-rework")
+	}
+}
+
+func TestCheckFeatureChildConsistency_NeedsReworkNonTerminal_NoWarning(t *testing.T) {
+	t.Parallel()
+
+	features := []map[string]any{
+		{"id": "FEAT-001", "status": "needs-rework"},
+	}
+	tasks := []map[string]any{
+		{"id": "TASK-001", "parent_feature": "FEAT-001", "status": "active"},
+		{"id": "TASK-002", "parent_feature": "FEAT-001", "status": "done"},
+	}
+
+	result := CheckFeatureChildConsistency(features, tasks)
+
+	if result.Status != SeverityOK {
+		t.Errorf("Status = %v, want %v", result.Status, SeverityOK)
+	}
+	if len(result.Issues) != 0 {
+		t.Errorf("len(Issues) = %d, want 0", len(result.Issues))
+	}
+}
+
+func TestCheckFeatureChildConsistency_ReviewingAllTerminal_NoWarning(t *testing.T) {
+	t.Parallel()
+
+	features := []map[string]any{
+		{"id": "FEAT-001", "status": "reviewing"},
+	}
+	tasks := []map[string]any{
+		{"id": "TASK-001", "parent_feature": "FEAT-001", "status": "done"},
+		{"id": "TASK-002", "parent_feature": "FEAT-001", "status": "not-planned"},
+	}
+
+	result := CheckFeatureChildConsistency(features, tasks)
+
+	if result.Status != SeverityOK {
+		t.Errorf("Status = %v, want %v", result.Status, SeverityOK)
+	}
+	if len(result.Issues) != 0 {
+		t.Errorf("len(Issues) = %d, want 0", len(result.Issues))
+	}
+}
+
+func TestCheckFeatureChildConsistency_DevelopingWithActiveTask_NoWarning(t *testing.T) {
+	t.Parallel()
+
+	features := []map[string]any{
+		{"id": "FEAT-001", "status": "developing"},
+	}
+	tasks := []map[string]any{
+		{"id": "TASK-001", "parent_feature": "FEAT-001", "status": "active"},
+		{"id": "TASK-002", "parent_feature": "FEAT-001", "status": "done"},
+	}
+
+	result := CheckFeatureChildConsistency(features, tasks)
+
+	// Not all children are terminal, so Check 3 does not fire.
+	if result.Status != SeverityOK {
+		t.Errorf("Status = %v, want %v", result.Status, SeverityOK)
+	}
+	if len(result.Issues) != 0 {
+		t.Errorf("len(Issues) = %d, want 0", len(result.Issues))
+	}
+}
+
+func TestCheckPlanChildConsistency_AllFeaturesDonePlanActive_Warning(t *testing.T) {
+	t.Parallel()
+
+	plans := []map[string]any{
+		{"id": "P1-my-plan", "status": "active"},
+	}
+	features := []map[string]any{
+		{"id": "FEAT-001", "parent": "P1-my-plan", "status": "done"},
+		{"id": "FEAT-002", "parent": "P1-my-plan", "status": "superseded"},
+	}
+
+	result := CheckPlanChildConsistency(plans, features)
+
+	if result.Status != SeverityWarning {
+		t.Errorf("Status = %v, want %v", result.Status, SeverityWarning)
+	}
+	if len(result.Issues) != 1 {
+		t.Fatalf("len(Issues) = %d, want 1", len(result.Issues))
+	}
+	issue := result.Issues[0]
+	if issue.EntityID != "P1-my-plan" {
+		t.Errorf("EntityID = %q, want %q", issue.EntityID, "P1-my-plan")
+	}
+	if !strings.Contains(issue.Message, "all 2 child feature(s) in finished state") {
+		t.Errorf("Message = %q, want to contain %q", issue.Message, "all 2 child feature(s) in finished state")
+	}
+}
+
+func TestCheckPlanChildConsistency_ZeroFeatures_NoWarning(t *testing.T) {
+	t.Parallel()
+
+	plans := []map[string]any{
+		{"id": "P1-my-plan", "status": "active"},
+	}
+
+	result := CheckPlanChildConsistency(plans, nil)
+
+	if result.Status != SeverityOK {
+		t.Errorf("Status = %v, want %v", result.Status, SeverityOK)
+	}
+	if len(result.Issues) != 0 {
+		t.Errorf("len(Issues) = %d, want 0", len(result.Issues))
+	}
+}
+
+func TestCheckPlanChildConsistency_PlanDoneNonFinishedFeatures_Warning(t *testing.T) {
+	t.Parallel()
+
+	plans := []map[string]any{
+		{"id": "P1-my-plan", "status": "done"},
+	}
+	features := []map[string]any{
+		{"id": "FEAT-001", "parent": "P1-my-plan", "status": "done"},
+		{"id": "FEAT-002", "parent": "P1-my-plan", "status": "developing"},
+	}
+
+	result := CheckPlanChildConsistency(plans, features)
+
+	if result.Status != SeverityWarning {
+		t.Errorf("Status = %v, want %v", result.Status, SeverityWarning)
+	}
+	if len(result.Issues) != 1 {
+		t.Fatalf("len(Issues) = %d, want 1", len(result.Issues))
+	}
+	issue := result.Issues[0]
+	if issue.EntityID != "P1-my-plan" {
+		t.Errorf("EntityID = %q, want %q", issue.EntityID, "P1-my-plan")
+	}
+	if !strings.Contains(issue.Message, "1 non-finished child feature(s)") {
+		t.Errorf("Message = %q, want to contain %q", issue.Message, "1 non-finished child feature(s)")
+	}
+}
+
+func TestCheckPlanChildConsistency_PlanDoneAllFinished_NoWarning(t *testing.T) {
+	t.Parallel()
+
+	plans := []map[string]any{
+		{"id": "P1-my-plan", "status": "done"},
+	}
+	features := []map[string]any{
+		{"id": "FEAT-001", "parent": "P1-my-plan", "status": "done"},
+		{"id": "FEAT-002", "parent": "P1-my-plan", "status": "cancelled"},
+	}
+
+	result := CheckPlanChildConsistency(plans, features)
+
+	if result.Status != SeverityOK {
+		t.Errorf("Status = %v, want %v", result.Status, SeverityOK)
+	}
+	if len(result.Issues) != 0 {
+		t.Errorf("len(Issues) = %d, want 0", len(result.Issues))
+	}
+}
+
+func TestCheckPlanChildConsistency_MixedFinishedNonFinished_PlanActive_NoWarning(t *testing.T) {
+	t.Parallel()
+
+	plans := []map[string]any{
+		{"id": "P1-my-plan", "status": "active"},
+	}
+	features := []map[string]any{
+		{"id": "FEAT-001", "parent": "P1-my-plan", "status": "done"},
+		{"id": "FEAT-002", "parent": "P1-my-plan", "status": "developing"},
+	}
+
+	result := CheckPlanChildConsistency(plans, features)
+
+	// Mixed finished/non-finished with non-done plan is not a warning.
+	if result.Status != SeverityOK {
+		t.Errorf("Status = %v, want %v", result.Status, SeverityOK)
+	}
+	if len(result.Issues) != 0 {
+		t.Errorf("len(Issues) = %d, want 0", len(result.Issues))
 	}
 }

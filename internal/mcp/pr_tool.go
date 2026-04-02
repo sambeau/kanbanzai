@@ -166,19 +166,22 @@ func createPR(
 		return nil, fmt.Errorf("Cannot create PR for %s: GitHub token is not configured.\n\nTo resolve:\n  Add a GitHub token to .kbz/local.yaml: github_token: \"ghp_...\"", entityID)
 	}
 
-	// Get the worktree for this entity
-	wt, err := worktreeStore.GetByEntityID(entityID)
-	if err != nil {
-		if errors.Is(err, worktree.ErrNotFound) {
-			return nil, fmt.Errorf("Cannot create PR for %s: no worktree exists for this entity.\n\nTo resolve:\n  Create a worktree first: worktree(action: \"create\", entity_id: \"%s\")", entityID, entityID)
-		}
-		return nil, err
-	}
-
-	// Get the entity
+	// Validate entity type before worktree lookup — invalid IDs always error.
 	entityType := entityTypeFromID(entityID)
 	if entityType == "" {
 		return nil, fmt.Errorf("Cannot create PR: entity ID %q is not a feature or bug.\n\nTo resolve:\n  Provide an entity ID starting with FEAT- or BUG-", entityID)
+	}
+
+	// Get the worktree for this entity.
+	wt, err := worktreeStore.GetByEntityID(entityID)
+	if err != nil {
+		if errors.Is(err, worktree.ErrNotFound) {
+			return map[string]any{
+				"status": "not_applicable",
+				"reason": "no worktree exists — work was committed directly to the default branch",
+			}, nil
+		}
+		return nil, err
 	}
 	entity, err := entitySvc.Get(entityType, entityID, "")
 	if err != nil {
@@ -294,19 +297,22 @@ func updatePR(
 		return nil, fmt.Errorf("Cannot update PR for %s: GitHub token is not configured.\n\nTo resolve:\n  Add a GitHub token to .kbz/local.yaml: github_token: \"ghp_...\"", entityID)
 	}
 
-	// Get the worktree for this entity
-	wt, err := worktreeStore.GetByEntityID(entityID)
-	if err != nil {
-		if errors.Is(err, worktree.ErrNotFound) {
-			return nil, fmt.Errorf("Cannot update PR for %s: no worktree exists for this entity.\n\nTo resolve:\n  Create a worktree first: worktree(action: \"create\", entity_id: \"%s\")", entityID, entityID)
-		}
-		return nil, err
-	}
-
-	// Get the entity
+	// Validate entity type before worktree lookup — invalid IDs always error.
 	entityType := entityTypeFromID(entityID)
 	if entityType == "" {
 		return nil, fmt.Errorf("Cannot update PR: entity ID %q is not a feature or bug.\n\nTo resolve:\n  Provide an entity ID starting with FEAT- or BUG-", entityID)
+	}
+
+	// Get the worktree for this entity.
+	wt, err := worktreeStore.GetByEntityID(entityID)
+	if err != nil {
+		if errors.Is(err, worktree.ErrNotFound) {
+			return map[string]any{
+				"status": "not_applicable",
+				"reason": "no worktree exists — work was committed directly to the default branch",
+			}, nil
+		}
+		return nil, err
 	}
 	entity, err := entitySvc.Get(entityType, entityID, "")
 	if err != nil {
@@ -442,11 +448,19 @@ func getPRStatusForEntity(
 		return nil, fmt.Errorf("Cannot get PR status for %s: GitHub token is not configured.\n\nTo resolve:\n  Add a GitHub token to .kbz/local.yaml: github_token: \"ghp_...\"", entityID)
 	}
 
-	// Get the worktree for this entity
+	// Validate entity type before worktree lookup — invalid IDs always error.
+	if entityTypeFromID(entityID) == "" {
+		return nil, fmt.Errorf("Cannot get PR status: entity ID %q is not a feature or bug.\n\nTo resolve:\n  Provide an entity ID starting with FEAT- or BUG-", entityID)
+	}
+
+	// Get the worktree for this entity.
 	wt, err := worktreeStore.GetByEntityID(entityID)
 	if err != nil {
 		if errors.Is(err, worktree.ErrNotFound) {
-			return nil, fmt.Errorf("Cannot get PR status for %s: no worktree exists for this entity.\n\nTo resolve:\n  Create a worktree first: worktree(action: \"create\", entity_id: \"%s\")", entityID, entityID)
+			return map[string]any{
+				"status": "not_applicable",
+				"reason": "no worktree exists — work was committed directly to the default branch",
+			}, nil
 		}
 		return nil, err
 	}

@@ -99,6 +99,7 @@ Copy this checklist and track your progress:
 - [ ] Checked context utilisation — offloaded if approaching 60%
 - [ ] Repeated dispatch cycle until all tasks are done
 - [ ] Wrote feature completion summary
+- [ ] Feature advanced beyond developing
 ```
 
 ## Procedure
@@ -148,6 +149,20 @@ When accumulated conversation history approaches 60% of your context window, sto
 
 **Technique 3 — Single-Feature Scoping (session boundary rule):**
 Each orchestration session handles exactly one feature. When all tasks for a feature are complete, write a feature completion summary and end the session. Begin the next feature in a new session. Do not attempt to orchestrate multiple features in one session because each feature's dependency graph, file scopes, and spec context are independent — combining them doubles context load without improving throughput.
+
+### Phase 6: Close-Out
+
+After all tasks reach a terminal state, the feature must be explicitly advanced through the remaining lifecycle stages. This phase ensures the feature is not left in `developing` with all work done.
+
+1. **Verify all tasks are terminal.** Call `status(id: "FEAT-xxx")` and confirm all tasks show `done`, `not-planned`, or `duplicate`. If the attention item `"FEAT-xxx has N/N tasks done — ready to advance to reviewing"` is visible, all tasks are terminal.
+
+2. **Transition the feature.** Call `entity(action: "transition", id: "FEAT-xxx", status: "reviewing")`.
+
+3. **Create a PR if a worktree exists.** If the feature has a worktree, call `pr(action: "create", entity_id: "FEAT-xxx")` and then `merge(action: "check", entity_id: "FEAT-xxx")` followed by `merge(action: "execute", entity_id: "FEAT-xxx")`. If there is no worktree (work was committed directly to the main branch), `merge` and `pr` will return `not_applicable` — this is expected; skip these steps.
+
+4. **Record a completion summary.** Call `finish` (or leave a completion note in the task) summarising what was implemented and any relevant observations.
+
+5. **Clean up worktrees.** If a worktree was created, run `worktree(action: "remove", entity_id: "FEAT-xxx")` after merging.
 
 ## Output Format
 

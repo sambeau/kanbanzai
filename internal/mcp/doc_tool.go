@@ -61,13 +61,13 @@ var docCommitPathsFunc = func(repoRoot, message string, extraPaths ...string) (b
 // intelligenceSvc is retained in the signature so callers (server.go) do not
 // need to change when a future action makes use of it. Currently all actions
 // call into docSvc directly.
-func DocTool(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService) []server.ServerTool {
+func DocTool(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, entitySvc *service.EntityService) []server.ServerTool {
 	// intelligenceSvc is intentionally not forwarded to docTool; no current action needs it.
 	_ = intelligenceSvc
-	return []server.ServerTool{docTool(docSvc)}
+	return []server.ServerTool{docTool(docSvc, entitySvc)}
 }
 
-func docTool(docSvc *service.DocumentService) server.ServerTool {
+func docTool(docSvc *service.DocumentService, entitySvc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("doc",
 		mcp.WithReadOnlyHintAnnotation(false),
 		mcp.WithDestructiveHintAnnotation(false),
@@ -135,7 +135,7 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 			"get":                   docGetAction(docSvc),
 			"content":               docContentAction(docSvc),
 			"list":                  docListAction(docSvc),
-			"gaps":                  docGapsAction(docSvc),
+			"gaps":                  docGapsAction(docSvc, entitySvc),
 			"validate":              docValidateAction(docSvc),
 			"supersede":             docSupersedeAction(docSvc),
 			"refresh":               docRefreshAction(docSvc),
@@ -500,7 +500,7 @@ func docListAction(docSvc *service.DocumentService) ActionHandler {
 
 // ─── gaps ─────────────────────────────────────────────────────────────────────
 
-func docGapsAction(docSvc *service.DocumentService) ActionHandler {
+func docGapsAction(docSvc *service.DocumentService, entitySvc *service.EntityService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		args, _ := req.Params.Arguments.(map[string]any)
 		featureID := docArgStr(args, "feature_id")
@@ -522,6 +522,28 @@ func docGapsAction(docSvc *service.DocumentService) ActionHandler {
 			}
 		}
 
+		// Get parent plan ID for inheritance fallback.
+		var planID string
+		if entitySvc != nil {
+			if feat, err := entitySvc.Get("feature", featureID, ""); err == nil {
+				planID, _ = feat.State["parent"].(string)
+			}
+		}
+
+		// Load plan-level approved docs for fallback.
+		var planByType map[string]service.DocumentResult
+		if planID != "" && docSvc != nil {
+			planDocs, _ := docSvc.ListDocumentsByOwner(planID)
+			planByType = make(map[string]service.DocumentResult)
+			for _, d := range planDocs {
+				if d.Status == "approved" {
+					if _, exists := planByType[d.Type]; !exists {
+						planByType[d.Type] = d
+					}
+				}
+			}
+		}
+
 		expected := []string{"design", "specification", "dev-plan"}
 		gaps := make([]map[string]any, 0)
 		present := make([]map[string]any, 0)
@@ -529,10 +551,20 @@ func docGapsAction(docSvc *service.DocumentService) ActionHandler {
 		for _, docType := range expected {
 			d, found := byType[docType]
 			if !found {
-				gaps = append(gaps, map[string]any{
-					"type":   docType,
-					"status": "missing",
-				})
+				// Try inheritance from plan.
+				if pd, inherited := planByType[docType]; inherited {
+					present = append(present, map[string]any{
+						"type":      docType,
+						"status":    pd.Status,
+						"id":        pd.ID,
+						"inherited": true,
+					})
+				} else {
+					gaps = append(gaps, map[string]any{
+						"type":   docType,
+						"status": "missing",
+					})
+				}
 			} else if d.Status == "approved" {
 				present = append(present, map[string]any{
 					"type":   docType,

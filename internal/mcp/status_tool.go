@@ -40,6 +40,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"github.com/sambeau/kanbanzai/internal/health"
 	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
@@ -48,11 +49,12 @@ import (
 
 // StatusTools returns the status MCP tool registered in the core group.
 // worktreeStore may be nil; feature detail will omit the worktree field in that case.
-func StatusTools(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store) []server.ServerTool {
-	return []server.ServerTool{statusTool(entitySvc, docSvc, worktreeStore)}
+// repoPath is used for stuck-task git activity detection; pass the repository root.
+func StatusTools(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store, repoPath string) []server.ServerTool {
+	return []server.ServerTool{statusTool(entitySvc, docSvc, worktreeStore, repoPath)}
 }
 
-func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store) server.ServerTool {
+func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store, repoPath string) server.ServerTool {
 	tool := mcp.NewTool("status",
 		mcp.WithReadOnlyHintAnnotation(true),
 		mcp.WithDestructiveHintAnnotation(false),
@@ -86,11 +88,11 @@ func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 
 		switch inferIDType(id) {
 		case idTypeNone:
-			result, err = synthesiseProject(entitySvc, docSvc)
+			result, err = synthesiseProject(entitySvc, docSvc, worktreeStore, repoPath)
 		case idTypePlan:
 			result, err = synthesisePlan(id, entitySvc, docSvc)
 		case idTypeFeature:
-			result, err = synthesiseFeature(id, entitySvc, docSvc, worktreeStore)
+			result, err = synthesiseFeature(id, entitySvc, docSvc, worktreeStore, repoPath)
 		case idTypeTask:
 			result, err = synthesiseTask(id, entitySvc)
 		case idTypeBug:
@@ -242,13 +244,14 @@ type planAggregate struct {
 }
 
 type planSummary struct {
-	DisplayID string `json:"display_id"`
-	ID        string `json:"id"`
-	Slug      string `json:"slug"`
-	Name      string `json:"name,omitempty"`
-	Status    string `json:"status"`
-	Features  int    `json:"features"`
-	Tasks     struct {
+	DisplayID           string `json:"display_id"`
+	ID                  string `json:"id"`
+	Slug                string `json:"slug"`
+	Name                string `json:"name,omitempty"`
+	Status              string `json:"status"`
+	Features            int    `json:"features"`
+	AllFeaturesFinished bool   `json:"-"` // used for project-level attention only
+	Tasks               struct {
 		Ready  int `json:"ready"`
 		Active int `json:"active"`
 		Done   int `json:"done"`
@@ -256,7 +259,7 @@ type planSummary struct {
 	} `json:"tasks"`
 }
 
-func synthesiseProject(entitySvc *service.EntityService, docSvc *service.DocumentService) (*projectOverview, error) {
+func synthesiseProject(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store, repoPath string) (*projectOverview, error) {
 	plans, err := entitySvc.ListPlans(service.PlanFilters{})
 	if err != nil {
 		return nil, fmt.Errorf("Cannot synthesise project overview: failed to list plans: %w.\n\nTo resolve:\n  Check that the .kbz/state/ directory exists and is readable.", err)
@@ -297,6 +300,19 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 		tasksByFeature[pf] = tc
 	}
 
+	// Build worktree branch lookup for stuck-task git activity detection.
+	// Maps parent feature ID → worktree branch name (active worktrees only).
+	worktreeBranches := make(map[string]string)
+	if worktreeStore != nil {
+		if records, wtErr := worktreeStore.List(); wtErr == nil {
+			for _, wt := range records {
+				if string(wt.Status) == "active" {
+					worktreeBranches[wt.EntityID] = wt.Branch
+				}
+			}
+		}
+	}
+
 	summaries := make([]planSummary, 0, len(plans))
 	var agg planAggregate
 	agg.Plans = len(plans)
@@ -321,13 +337,24 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 		agg.Tasks.Done += planTasks.done
 		agg.Tasks.Total += planTasks.total
 
+		// Determine if all features are in a finished state (done/superseded/cancelled).
+		allFinished := len(features) > 0
+		for _, f := range features {
+			fstatus, _ := f.State["status"].(string)
+			if fstatus != "done" && fstatus != "superseded" && fstatus != "cancelled" {
+				allFinished = false
+				break
+			}
+		}
+
 		ps := planSummary{
-			DisplayID: id.FormatFullDisplay(p.ID),
-			ID:        p.ID,
-			Slug:      p.Slug,
-			Name:      name,
-			Status:    status,
-			Features:  len(features),
+			DisplayID:           id.FormatFullDisplay(p.ID),
+			ID:                  p.ID,
+			Slug:                p.Slug,
+			Name:                name,
+			Status:              status,
+			Features:            len(features),
+			AllFeaturesFinished: allFinished,
 		}
 		ps.Tasks.Ready = planTasks.ready
 		ps.Tasks.Active = planTasks.active
@@ -336,7 +363,7 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 		summaries = append(summaries, ps)
 	}
 
-	attention := generateProjectAttention(summaries, allTasks)
+	attention := generateProjectAttention(summaries, allTasks, worktreeBranches, repoPath)
 	health := buildHealthSummary(entitySvc)
 
 	return &projectOverview{
@@ -445,6 +472,33 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 		}
 	}
 
+	// Load plan-level approved docs for inheritance fallback.
+	// A feature with no spec/dev-plan of its own inherits from an approved plan-level doc.
+	var planApprovedSpec, planApprovedDevPlan bool
+	if docSvc != nil {
+		planDocs, _ := docSvc.ListDocumentsByOwner(planID)
+		for _, d := range planDocs {
+			if d.Status == "approved" {
+				switch d.Type {
+				case "specification":
+					planApprovedSpec = true
+				case "dev-plan":
+					planApprovedDevPlan = true
+				}
+			}
+		}
+	}
+
+	// Determine whether all features are in a finished state.
+	allFeaturesFinished := len(features) > 0
+	for _, f := range features {
+		fstatus, _ := f.State["status"].(string)
+		if fstatus != "done" && fstatus != "superseded" && fstatus != "cancelled" {
+			allFeaturesFinished = false
+			break
+		}
+	}
+
 	var docGaps []string
 	featureSummaries := make([]featureSummary, 0, len(features))
 
@@ -457,6 +511,11 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 		hasSpec := hasDocType(docs, "specification")
 		hasDevPlan := hasDocType(docs, "dev-plan")
 
+		// Apply plan-level inheritance: if the feature has no direct spec/dev-plan,
+		// a plan-level approved document satisfies the requirement.
+		effectiveHasSpec := hasSpec || planApprovedSpec
+		effectiveHasDevPlan := hasDevPlan || planApprovedDevPlan
+
 		fname, _ := f.State["name"].(string)
 
 		fs := featureSummary{
@@ -466,8 +525,8 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 			Summary:    fsummary,
 			Status:     fstatus,
 			Name:       fname,
-			HasSpec:    hasSpec,
-			HasDevPlan: hasDevPlan,
+			HasSpec:    effectiveHasSpec,
+			HasDevPlan: effectiveHasDevPlan,
 		}
 		fs.Tasks.Queued = tc.queued
 		fs.Tasks.Ready = tc.ready
@@ -477,22 +536,23 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 
 		featureSummaries = append(featureSummaries, fs)
 
-		// Document gap detection.
-		if !hasSpec {
+		// Document gap detection — only flag if not satisfied by inheritance.
+		if !effectiveHasSpec {
 			docGaps = append(docGaps, fmt.Sprintf("%s (%s): missing specification", f.ID, f.Slug))
 		}
 	}
 
 	planName, _ := plan.State["name"].(string)
 	planStatus, _ := plan.State["status"].(string)
+	planDisplayID := id.FormatFullDisplay(plan.ID)
 
-	attention := generatePlanAttention(featureSummaries, docGaps)
+	attention := generatePlanAttention(featureSummaries, docGaps, planDisplayID, planStatus, allFeaturesFinished, len(features))
 	health := buildHealthSummary(entitySvc)
 
 	return &planDashboard{
 		Scope: "plan",
 		Plan: planHeader{
-			DisplayID: id.FormatFullDisplay(plan.ID),
+			DisplayID: planDisplayID,
 			ID:        plan.ID,
 			Slug:      plan.Slug,
 			Name:      planName,
@@ -545,7 +605,7 @@ type docInfo struct {
 	Path      string `json:"path,omitempty"`
 }
 
-func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store) (*featureDetail, error) {
+func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store, repoPath string) (*featureDetail, error) {
 	feat, err := entitySvc.Get("feature", featID, "")
 	if err != nil {
 		return nil, fmt.Errorf("Cannot show status for feature %s: feature not found or unreadable: %w.\n\nTo resolve:\n  Verify the feature ID with entity(action: \"list\", type: \"feature\").", featID, err)
@@ -595,8 +655,21 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 		})
 	}
 
+	// Extract feature state fields needed for doc inheritance and attention generation.
+	fstatus, _ := feat.State["status"].(string)
+	fsummary, _ := feat.State["summary"].(string)
+	fplanID, _ := feat.State["parent"].(string) // "parent" is the plan ID field on feature records
+	freviewCycle, _ := feat.State["review_cycle"].(int)
+	fblockedReason, _ := feat.State["blocked_reason"].(string)
+	fupdatedStr, _ := feat.State["updated"].(string)
+	var fUpdated time.Time
+	if fupdatedStr != "" {
+		fUpdated, _ = time.Parse(time.RFC3339, fupdatedStr)
+	}
+
 	// Load documents for this feature.
 	var docs []docInfo
+	var featureHasSpec, featureHasDevPlan bool
 	if docSvc != nil {
 		ownerDocs, _ := docSvc.ListDocumentsByOwner(featID)
 		for _, d := range ownerDocs {
@@ -608,6 +681,34 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 				Status:    d.Status,
 				Path:      d.Path,
 			})
+			if d.Status != "superseded" {
+				switch d.Type {
+				case "specification":
+					featureHasSpec = true
+				case "dev-plan":
+					featureHasDevPlan = true
+				}
+			}
+		}
+	}
+
+	// Check plan-level inheritance for doc gap suppression in attention items.
+	// A feature with no direct spec/dev-plan inherits from an approved plan-level doc.
+	inheritedHasSpec := featureHasSpec
+	inheritedHasDevPlan := featureHasDevPlan
+	if docSvc != nil && fplanID != "" {
+		if !inheritedHasSpec || !inheritedHasDevPlan {
+			planDocs, _ := docSvc.ListDocumentsByOwner(fplanID)
+			for _, d := range planDocs {
+				if d.Status == "approved" {
+					switch d.Type {
+					case "specification":
+						inheritedHasSpec = true
+					case "dev-plan":
+						inheritedHasDevPlan = true
+					}
+				}
+			}
 		}
 	}
 
@@ -623,12 +724,6 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 		}
 	}
 
-	fstatus, _ := feat.State["status"].(string)
-	fsummary, _ := feat.State["summary"].(string)
-	fplanID, _ := feat.State["parent"].(string) // "parent" is the plan ID field on feature records
-	freviewCycle, _ := feat.State["review_cycle"].(int)
-	fblockedReason, _ := feat.State["blocked_reason"].(string)
-
 	var est *float64
 	if ev, ok := feat.State["estimate"]; ok && ev != nil {
 		if ef, ok := ev.(float64); ok {
@@ -636,7 +731,8 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 		}
 	}
 
-	attention := generateFeatureAttention(tasks, docs, taskSummary.total)
+	featDisplayID := id.FormatFullDisplay(feat.ID)
+	attention := generateFeatureAttention(tasks, docs, taskSummary.total, featDisplayID, fstatus, fUpdated, inheritedHasSpec, inheritedHasDevPlan)
 	if fblockedReason != "" {
 		attention = append([]string{"BLOCKED: " + fblockedReason}, attention...)
 	}
@@ -848,7 +944,7 @@ func synthesiseBug(bugID string, entitySvc *service.EntityService) (*bugDetail, 
 
 const maxAttentionItems = 5
 
-func generateProjectAttention(plans []planSummary, allTasks []service.ListResult) []string {
+func generateProjectAttention(plans []planSummary, allTasks []service.ListResult, worktreeBranches map[string]string, repoPath string) []string {
 	var items []string
 
 	// Count active plans.
@@ -871,7 +967,7 @@ func generateProjectAttention(plans []planSummary, allTasks []service.ListResult
 
 	// Find stalled active tasks (no update in >3 days).
 	stalledCount := 0
-	threshold := time.Now().UTC().Add(-3 * 24 * time.Hour)
+	staleThreshold := time.Now().UTC().Add(-3 * 24 * time.Hour)
 	for _, t := range allTasks {
 		status, _ := t.State["status"].(string)
 		if status != "active" {
@@ -879,7 +975,7 @@ func generateProjectAttention(plans []planSummary, allTasks []service.ListResult
 		}
 		if updatedStr, ok := t.State["updated"].(string); ok {
 			if updated, err := time.Parse(time.RFC3339, updatedStr); err == nil {
-				if updated.Before(threshold) {
+				if updated.Before(staleThreshold) {
 					stalledCount++
 				}
 			}
@@ -889,6 +985,44 @@ func generateProjectAttention(plans []planSummary, allTasks []service.ListResult
 		items = append(items, fmt.Sprintf("%d active task(s) stalled for >3 days — check progress", stalledCount))
 	}
 
+	// Detect stuck tasks: active for >24h with no recent git activity.
+	stuckThreshold := time.Now().UTC().Add(-24 * time.Hour)
+	for _, t := range allTasks {
+		if len(items) >= maxAttentionItems {
+			break
+		}
+		status, _ := t.State["status"].(string)
+		if status != "active" {
+			continue
+		}
+		taskID, _ := t.State["id"].(string)
+		dispatchedAtStr, _ := t.State["dispatched_at"].(string)
+		if dispatchedAtStr == "" {
+			continue
+		}
+		dispatchedAt, err := time.Parse(time.RFC3339, dispatchedAtStr)
+		if err != nil || dispatchedAt.After(stuckThreshold) {
+			continue
+		}
+		// Only flag if no recent git activity on the worktree branch.
+		parentFeature, _ := t.State["parent_feature"].(string)
+		branch := worktreeBranches[parentFeature]
+		hasActivity := health.CheckGitActivity(repoPath, branch, dispatchedAt)
+		if !hasActivity {
+			items = append(items, fmt.Sprintf("%s has been active for >24h with no recent commits — may need unclaim", taskID))
+		}
+	}
+
+	// Plans with all features finished but not yet closed.
+	for _, p := range plans {
+		if len(items) >= maxAttentionItems {
+			break
+		}
+		if p.AllFeaturesFinished && p.Status != "done" {
+			items = append(items, fmt.Sprintf("Plan %s has all %d features done — ready to close", p.DisplayID, p.Features))
+		}
+	}
+
 	if activePlans == 0 && len(plans) > 0 && len(items) < maxAttentionItems {
 		items = append(items, "No active plans — advance a plan from designing or proposed to active")
 	}
@@ -896,7 +1030,7 @@ func generateProjectAttention(plans []planSummary, allTasks []service.ListResult
 	return items
 }
 
-func generatePlanAttention(features []featureSummary, docGaps []string) []string {
+func generatePlanAttention(features []featureSummary, docGaps []string, planDisplayID string, planStatus string, allFeaturesFinished bool, featureCount int) []string {
 	var items []string
 
 	// Features with ready tasks.
@@ -921,10 +1055,15 @@ func generatePlanAttention(features []featureSummary, docGaps []string) []string
 		}
 	}
 
+	// Plan completion detection: all features finished but plan not yet closed.
+	if allFeaturesFinished && featureCount > 0 && planStatus != "done" && len(items) < maxAttentionItems {
+		items = append(items, fmt.Sprintf("Plan %s has all %d features done — ready to close", planDisplayID, featureCount))
+	}
+
 	return items
 }
 
-func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int) []string {
+func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int, featureDisplayID string, featureStatus string, featureUpdated time.Time, inheritedHasSpec bool, inheritedHasDevPlan bool) []string {
 	var items []string
 
 	// Ready tasks available.
@@ -938,10 +1077,35 @@ func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int) 
 		items = append(items, fmt.Sprintf("%d task(s) ready to claim", readyCount))
 	}
 
-	// Missing spec.
-	hasSpec := false
-	hasDevPlan := false
+	// Feature completion detection: all tasks terminal in developing/needs-rework.
+	if totalTasks > 0 && (featureStatus == "developing" || featureStatus == "needs-rework") {
+		allTerminal := true
+		for _, t := range tasks {
+			if !isTerminalStatus(t.Status) {
+				allTerminal = false
+				break
+			}
+		}
+		if allTerminal {
+			msg := fmt.Sprintf("%s has %d/%d tasks done — ready to advance to reviewing", featureDisplayID, totalTasks, totalTasks)
+			// Prefix with stale warning if the feature has been developing for >48h.
+			// Only applies to "developing", not "needs-rework" (entering rework resets staleness).
+			if featureStatus == "developing" && !featureUpdated.IsZero() && time.Since(featureUpdated) > 48*time.Hour {
+				msg = "⚠️ STALE: " + msg
+			}
+			if len(items) < maxAttentionItems {
+				items = append(items, msg)
+			}
+		}
+	}
+
+	// Missing spec — only warn if not satisfied by plan-level inheritance.
+	hasSpec := inheritedHasSpec
+	hasDevPlan := inheritedHasDevPlan
 	for _, d := range docs {
+		if d.Status == "superseded" {
+			continue
+		}
 		switch d.Type {
 		case "specification":
 			hasSpec = true
