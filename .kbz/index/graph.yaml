@@ -1,4 +1,4 @@
-updated_at: 2026-04-02T18:58:00.047393Z
+updated_at: 2026-04-02T19:05:06.540393Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -54858,5 +54858,365 @@ edges:
     - from: FEAT-01KN07T660VVM/specification-decomposition-grouping#1
       from_type: section
       to: work/design/workflow-completeness.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility
+      from_type: document
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.13
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.14
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.15
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.16
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.17
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.18
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.19
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1
+      from_type: section
+      to: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.1
+      from_type: section
+      to: FEAT-01KN07T66DZ68
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.1
+      from_type: section
+      to: FEAT-01KN07T674DZM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.1
+      from_type: section
+      to: FEAT-01KN07T66SAH3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.1
+      from_type: section
+      to: FEAT-01KN07T65HDZM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.1
+      from_type: section
+      to: FEAT-01KN07T660VVM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.1
+      from_type: section
+      to: FEAT-01KN07T66DZ68
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.2
+      from_type: section
+      to: FEAT-01KN07T66DZ68
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.3
+      from_type: section
+      to: FEAT-01KN07T66DZ68
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.4
+      from_type: section
+      to: FEAT-01KN07T66DZ68
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.5
+      from_type: section
+      to: FEAT-01KN07T66DZ68
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.6
+      from_type: section
+      to: FEAT-01KN07T674DZM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.7
+      from_type: section
+      to: FEAT-01KN07T674DZM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.8
+      from_type: section
+      to: FEAT-01KN07T66SAH3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.9
+      from_type: section
+      to: FEAT-01KN07T66SAH3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.10
+      from_type: section
+      to: FEAT-01KN07T66SAH3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.11
+      from_type: section
+      to: FEAT-01KN07T65HDZM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.12
+      from_type: section
+      to: FEAT-01KN07T65HDZM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.13
+      from_type: section
+      to: FEAT-01KN07T65HDZM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.14
+      from_type: section
+      to: FEAT-01KN07T65HDZM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.15
+      from_type: section
+      to: FEAT-01KN07T660VVM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.16
+      from_type: section
+      to: FEAT-01KN07T660VVM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.17
+      from_type: section
+      to: FEAT-01KN07T660VVM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.18
+      from_type: section
+      to: FEAT-01KN07T660VVM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.19
+      from_type: section
+      to: FEAT-01KN07T660VVM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.5
+      from_type: section
+      to: FEAT-01KN07T66DZ68
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.5
+      from_type: section
+      to: FEAT-01KN07T674DZM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.5
+      from_type: section
+      to: FEAT-01KN07T66SAH3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.5
+      from_type: section
+      to: FEAT-01KN07T65HDZM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.5
+      from_type: section
+      to: FEAT-01KN07T660VVM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.13
+      from_type: section
+      to: TASK-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1
+      from_type: section
+      to: P13-workflow-flexibility
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.1
+      from_type: section
+      to: P13-workflow-flexibility
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1
+      from_type: section
+      to: work/design/workflow-completeness.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.1
+      from_type: section
+      to: work/spec/completion-detection.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.1
+      from_type: section
+      to: work/spec/direct-to-main-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.1
+      from_type: section
+      to: work/spec/document-inheritance.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.1
+      from_type: section
+      to: work/spec/task-crash-recovery.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.1
+      from_type: section
+      to: work/spec/decomposition-grouping.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.4
+      from_type: section
+      to: .kbz/skills/orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.4
+      from_type: section
+      to: .agents/skills/kanbanzai-agents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility#1.2.4
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
       to_type: document
       edge_type: LINKS_TO

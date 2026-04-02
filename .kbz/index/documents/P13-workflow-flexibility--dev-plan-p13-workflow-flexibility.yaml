@@ -1,0 +1,408 @@
+document_id: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility
+document_path: work/dev-plan/p13-workflow-flexibility.md
+content_hash: 76a8f52eafc45b72cfef3ab4fb5bba6f3b070595873f838a0e2b6a40eb6afe1d
+indexed_at: 2026-04-02T19:05:06.540393Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: P13 Workflow Flexibility'
+      byte_offset: 0
+      byte_count: 24534
+      word_count: 3213
+      content_hash: 76a8f52eafc45b72cfef3ab4fb5bba6f3b070595873f838a0e2b6a40eb6afe1d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 218
+          byte_count: 1323
+          word_count: 147
+          content_hash: a2c48132128339ae1a4172dce47e268260f89a2009e246cc758ef817db1d9038
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1541
+          byte_count: 16425
+          word_count: 2067
+          content_hash: d6743905877dd946b4959f1a67e5cf05e04c6f600f23c17d8722516083ff17d8
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Feature completion attention items in `status_tool.go`'
+              byte_offset: 1560
+              byte_count: 745
+              word_count: 98
+              content_hash: 359faaa3ef89ac8a3e13699ed74255b4da0c3c17f084762e0d10ec8afa557267
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Plan completion detection in `status_tool.go`'
+              byte_offset: 2305
+              byte_count: 672
+              word_count: 91
+              content_hash: 319279adc562ce9b285fb672d802c794a3498a8ce03216a17376c3682363e1ea
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Health check extensions in `entity_consistency.go`'
+              byte_offset: 2977
+              byte_count: 937
+              word_count: 124
+              content_hash: 1854211ea23bf7d5a234f8f6851992207e97ea4e5d58622534ce817a7d9f26c9
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Close-out skill updates'
+              byte_offset: 3914
+              byte_count: 1008
+              word_count: 122
+              content_hash: 8632ad28be096f4a0c77a6c0960a8a58d02a024d5c7bcc0861039529b6a88364
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Tests for F1 — completion detection and health checks'
+              byte_offset: 4922
+              byte_count: 901
+              word_count: 95
+              content_hash: 00833b341288be23c0d93ef8e2a5a5c1bf00066e28189ace96528ea97a4b0eb7
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: No-worktree graceful handling in `merge_tool.go` and `pr_tool.go`'
+              byte_offset: 5823
+              byte_count: 974
+              word_count: 110
+              content_hash: 8b952bf05c8780bea43995e525ecba6a6d3d85cf702eac4a00de5f2280455fa3
+            - path: 1.2.7
+              level: 3
+              title: 'Task 7: Tests for F2 — direct-to-main workflow'
+              byte_offset: 6797
+              byte_count: 870
+              word_count: 70
+              content_hash: a9bad41ec3469beee71810e6179e715f2b01e94955661577a20857a433742956
+            - path: 1.2.8
+              level: 3
+              title: 'Task 8: Document inheritance helper and `docGapsAction` update'
+              byte_offset: 7667
+              byte_count: 992
+              word_count: 124
+              content_hash: 2dd0855d7ac4f396cb3f23d88e3fb6137b68b92961533f99f29000a49399cea5
+            - path: 1.2.9
+              level: 3
+              title: 'Task 9: Document inheritance in `status_tool.go`'
+              byte_offset: 8659
+              byte_count: 980
+              word_count: 126
+              content_hash: 2ddff79425237d0b3e7563133de164651c9c35f0a760c49cf4d820acf9fae31e
+            - path: 1.2.10
+              level: 3
+              title: 'Task 10: Tests for F3 — document inheritance'
+              byte_offset: 9639
+              byte_count: 863
+              word_count: 117
+              content_hash: 27df250e8a90d4d659e250dc81e1bbd015ba147ca1326500d78b3f0f4dc0b0fb
+            - path: 1.2.11
+              level: 3
+              title: 'Task 11: `active → ready` lifecycle transition'
+              byte_offset: 10502
+              byte_count: 585
+              word_count: 72
+              content_hash: cf9c887bb11f551e44246176bf9e0488e8f123206c2f7b55364cdcab35cf18ad
+            - path: 1.2.12
+              level: 3
+              title: 'Task 12: Implement `checkGitActivitySince`'
+              byte_offset: 11087
+              byte_count: 642
+              word_count: 81
+              content_hash: 190af73672ed918d7d675699daa7a72e53def7f08af3ef548105bf335a1942b4
+            - path: 1.2.13
+              level: 3
+              title: 'Task 13: Stuck-task attention item in `status_tool.go`'
+              byte_offset: 11729
+              byte_count: 781
+              word_count: 107
+              content_hash: 5377a4bfad776fc015eb103edd61bf1f13b5d0d5d134ad8d7725a917f3df824c
+            - path: 1.2.14
+              level: 3
+              title: 'Task 14: Tests for F4 — task crash recovery'
+              byte_offset: 12510
+              byte_count: 960
+              word_count: 130
+              content_hash: fec3e52247add2ec4b5cbb4dee51e7d105a269e7cd8ce5ac8b97e08ca5f4a781
+            - path: 1.2.15
+              level: 3
+              title: 'Task 15: `Covers` field on `ProposedTask`'
+              byte_offset: 13470
+              byte_count: 725
+              word_count: 93
+              content_hash: feaa05c0de7a34bd438efabc49380703b0653176126644cc2dcc0e3d08e8b4c6
+            - path: 1.2.16
+              level: 3
+              title: 'Task 16: Section-based AC grouping in `generateProposal`'
+              byte_offset: 14195
+              byte_count: 1013
+              word_count: 133
+              content_hash: 630ce54b23fccf1d114b38aa32324a4cbe4fe2944f5f5f8a34e62eccb6ef261e
+            - path: 1.2.17
+              level: 3
+              title: 'Task 17: Update `checkGaps` for exact `Covers` matching'
+              byte_offset: 15208
+              byte_count: 679
+              word_count: 88
+              content_hash: 126c0c314c2625032cf65a21b3ac6de7675e531ef00993fe717d0672f6675bee
+            - path: 1.2.18
+              level: 3
+              title: 'Task 18: Table row extraction in `parseSpecStructure`'
+              byte_offset: 15887
+              byte_count: 944
+              word_count: 126
+              content_hash: 54a30259f9196ab61f015460dc967d45aff097ac7962d112eaaa0bd17558e909
+            - path: 1.2.19
+              level: 3
+              title: 'Task 19: Tests for F5 — decomposition grouping'
+              byte_offset: 16831
+              byte_count: 1135
+              word_count: 157
+              content_hash: e3f7d42cf04bceb921358261556d76c209c4c9d5dc7662ee7f6c4a6810a2c88d
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 17966
+          byte_count: 1355
+          word_count: 240
+          content_hash: 66f316ba487f256699518ba144c1fcc72253ef7244d6e734efea16b04ccaa107
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 19321
+          byte_count: 2861
+          word_count: 412
+          content_hash: cfdb4a7c19095a61f0418c154096bd20cfaaaa8462b9bbdb11bd364b9add817a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: `status_tool.go` merge conflicts across features'
+              byte_offset: 19341
+              byte_count: 331
+              word_count: 51
+              content_hash: e8db22bb27933fb93841367fc134696ed0232d7d7b0577894f9d273a7409a523
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: `checkGitActivitySince` produces false negatives in CI'
+              byte_offset: 19672
+              byte_count: 470
+              word_count: 65
+              content_hash: 47ffd7c50f6687f521f5904d245afa8e288fb4d0185419964b69367f0830dddf
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Document inheritance introduces false negatives for features with real gaps'
+              byte_offset: 20142
+              byte_count: 518
+              word_count: 76
+              content_hash: b6e64a24c43b5f2cfcdd69e848ba0d47e254d9181fa88fbdaa933f1d6d5df2d7
+            - path: 1.4.4
+              level: 3
+              title: 'Risk: Grouping thresholds produce unexpected task counts for existing specs'
+              byte_offset: 20660
+              byte_count: 541
+              word_count: 73
+              content_hash: 9a469205ec6a09d334dcaf6b2bb1cec74fddb0c10fda3adb3b2d58ea72b89dde
+            - path: 1.4.5
+              level: 3
+              title: 'Risk: `active → ready` transition is misused as a general-purpose reset'
+              byte_offset: 21201
+              byte_count: 461
+              word_count: 68
+              content_hash: 377378f241bd3d7801eefc552164880cb470e9dbab76861474a2f37ed7b984e5
+            - path: 1.4.6
+              level: 3
+              title: 'Risk: Table row extraction in `parseSpecStructure` is fragile for irregular tables'
+              byte_offset: 21662
+              byte_count: 520
+              word_count: 76
+              content_hash: 34468a88a19fb32fc31b59bd3a5b54175352186206c5ecf51f52fd2977a85d66
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 22182
+          byte_count: 2352
+          word_count: 333
+          content_hash: 89e4938dfecf3eecc6330d597e973f9f5f8134f69b96eeaac77fbc6b323859e5
+entity_refs:
+    - entity_id: FEAT-01KN07T66DZ68
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 425
+    - entity_id: FEAT-01KN07T674DZM
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 516
+    - entity_id: FEAT-01KN07T66SAH3
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 603
+    - entity_id: FEAT-01KN07T65HDZM
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 701
+    - entity_id: FEAT-01KN07T660VVM
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 795
+    - entity_id: FEAT-01KN07T66DZ68
+      entity_type: feature
+      section_path: 1.2.1
+      byte_offset: 2241
+    - entity_id: FEAT-01KN07T66DZ68
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 2913
+    - entity_id: FEAT-01KN07T66DZ68
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 3850
+    - entity_id: FEAT-01KN07T66DZ68
+      entity_type: feature
+      section_path: 1.2.4
+      byte_offset: 4858
+    - entity_id: FEAT-01KN07T66DZ68
+      entity_type: feature
+      section_path: 1.2.5
+      byte_offset: 5780
+    - entity_id: FEAT-01KN07T674DZM
+      entity_type: feature
+      section_path: 1.2.6
+      byte_offset: 6742
+    - entity_id: FEAT-01KN07T674DZM
+      entity_type: feature
+      section_path: 1.2.7
+      byte_offset: 7624
+    - entity_id: FEAT-01KN07T66SAH3
+      entity_type: feature
+      section_path: 1.2.8
+      byte_offset: 8595
+    - entity_id: FEAT-01KN07T66SAH3
+      entity_type: feature
+      section_path: 1.2.9
+      byte_offset: 9579
+    - entity_id: FEAT-01KN07T66SAH3
+      entity_type: feature
+      section_path: 1.2.10
+      byte_offset: 10459
+    - entity_id: FEAT-01KN07T65HDZM
+      entity_type: feature
+      section_path: 1.2.11
+      byte_offset: 11022
+    - entity_id: FEAT-01KN07T65HDZM
+      entity_type: feature
+      section_path: 1.2.12
+      byte_offset: 11678
+    - entity_id: FEAT-01KN07T65HDZM
+      entity_type: feature
+      section_path: 1.2.13
+      byte_offset: 12459
+    - entity_id: FEAT-01KN07T65HDZM
+      entity_type: feature
+      section_path: 1.2.14
+      byte_offset: 13427
+    - entity_id: FEAT-01KN07T660VVM
+      entity_type: feature
+      section_path: 1.2.15
+      byte_offset: 14139
+    - entity_id: FEAT-01KN07T660VVM
+      entity_type: feature
+      section_path: 1.2.16
+      byte_offset: 15131
+    - entity_id: FEAT-01KN07T660VVM
+      entity_type: feature
+      section_path: 1.2.17
+      byte_offset: 15843
+    - entity_id: FEAT-01KN07T660VVM
+      entity_type: feature
+      section_path: 1.2.18
+      byte_offset: 16780
+    - entity_id: FEAT-01KN07T660VVM
+      entity_type: feature
+      section_path: 1.2.19
+      byte_offset: 17923
+    - entity_id: FEAT-01KN07T66DZ68
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 22338
+    - entity_id: FEAT-01KN07T674DZM
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 22771
+    - entity_id: FEAT-01KN07T66SAH3
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 23046
+    - entity_id: FEAT-01KN07T65HDZM
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 23399
+    - entity_id: FEAT-01KN07T660VVM
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 23777
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.2.13
+      byte_offset: 12094
+    - entity_id: P13-workflow-flexibility
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 59
+    - entity_id: P13-workflow-flexibility
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 281
+cross_doc_links:
+    - target_path: work/design/workflow-completeness.md
+      link_text: work/design/workflow-completeness.md
+      section_path: "1"
+    - target_path: work/spec/completion-detection.md
+      link_text: work/spec/completion-detection.md
+      section_path: "1.1"
+    - target_path: work/spec/direct-to-main-workflow.md
+      link_text: work/spec/direct-to-main-workflow.md
+      section_path: "1.1"
+    - target_path: work/spec/document-inheritance.md
+      link_text: work/spec/document-inheritance.md
+      section_path: "1.1"
+    - target_path: work/spec/task-crash-recovery.md
+      link_text: work/spec/task-crash-recovery.md
+      section_path: "1.1"
+    - target_path: work/spec/decomposition-grouping.md
+      link_text: work/spec/decomposition-grouping.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.2.4
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.4
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.2.4
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+    - section_path: 1.4.4
+      role: risk
+      confidence: high
+    - section_path: 1.4.5
+      role: narrative
+      confidence: high
+    - section_path: 1.4.6
+      role: risk
+      confidence: high
+classified: false
