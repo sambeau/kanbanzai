@@ -88,6 +88,11 @@ conventions, and tool usage. They complement the task-execution skills above.
 
 ## Codebase knowledge graph skills (`.github/skills/`)
 
+**Before using any graph tool (`search_graph`, `codebase_memory_mcp_search_code`, `query_graph`,
+`trace_call_path`, `get_code_snippet`, etc.), read the relevant SKILL.md file below.** These
+skills define correct tool sequences, query patterns, and anti-patterns. Do not rely on intuition
+or prior session context — read the skill file first.
+
 | Skill | Path | When to use |
 |-------|------|-------------|
 | **Exploring** | `.github/skills/codebase-memory-exploring/SKILL.md` | Codebase orientation, architecture understanding |
@@ -101,7 +106,7 @@ conventions, and tool usage. They complement the task-execution skills above.
 - **Check `git status` before every task.** Commit or stash previous work first.
 - **Read the stage binding, role, and skill before starting work.** They define your vocabulary, procedure, and constraints.
 - **Do not read `.kbz/state/` files directly.** Use MCP tools (`entity`, `doc`, `status`, `knowledge`, etc.). Role, skill, and stage-binding files in `.kbz/` are meant to be read directly.
-- **Use graph tools over grep** for structural code questions. Project: `Users-samphillips-Dev-kanbanzai`.
+- **Use graph tools over grep** for structural code questions. Project: `Users-samphillips-Dev-kanbanzai`. Read the relevant `.github/skills/codebase-memory-*/SKILL.md` before using any graph tool.
 - **Follow commit message format** from the `kanbanzai-agents` skill: `type(scope): description`.
 - **Do not skip workflow stages.** Check stage gate prerequisites before advancing features.
 
