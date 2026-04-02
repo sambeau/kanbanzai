@@ -3,4 +3,9 @@ parent_feature: FEAT-01KN83QN0VAFG
 slug: plan-auto-advance-done
 name: Plan auto-advance to done
 summary: "Mirror of T3 at plan level. After a feature transitions to terminal state, check if all sibling features are terminal with at least one done. If so, and plan is active, auto-advance plan to done. Side effect recorded in response."
-status: ready
+status: done
+files_planned:
+  - internal/service/entity_children.go
+  - internal/mcp/entity_tool.go
+completed: "2026-04-02T23:12:31Z"
+completion_summary: Added MaybeAutoAdvancePlan to entity_children.go. Chains active→reviewing→done atomically per REQ-013. Hooks in entity_tool.go after feature terminal transitions (task-path and direct-path). SideEffectPlanAutoAdvanced emitted. Tests added.

@@ -3,4 +3,11 @@ parent_feature: FEAT-01KN83QN0VAFG
 slug: stale-reviewing-bug-warnings
 name: Stale reviewing detection and bug warnings
 summary: Add stale_reviewing attention item when feature in reviewing exceeds configurable threshold (default 7 days). Add open_critical_bug attention items for open critical/high bugs against active features. Add lifecycle.stale_reviewing_days to config.yaml.
-status: ready
+status: done
+files_planned:
+  - internal/config/config.go
+  - internal/mcp/status_tool.go
+  - internal/mcp/server.go
+  - internal/mcp/status_tool_test.go
+completed: "2026-04-02T23:12:31Z"
+completion_summary: "Added LifecycleConfig{StaleReviewingDays:7} to config.go. Threaded staleReviewingDays through StatusTools→synthesiseFeature→generateFeatureAttention. Added stale_reviewing detection (REQ-022-024) and open_critical_bug warnings (REQ-025-027). Tests for AC-020 through AC-027 added."
