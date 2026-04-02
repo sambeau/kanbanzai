@@ -1,4 +1,4 @@
-updated_at: 2026-04-02T10:46:24.969955Z
+updated_at: 2026-04-02T10:51:02.512034Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -50236,6 +50236,701 @@ edges:
       to_type: document
       edge_type: LINKS_TO
     - from: PROJECT/research-agent-instructions-review#1.12.4
+      from_type: section
+      to: CLAUDE.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review
+      from_type: document
+      to: PROJECT/report-agent-instructions-review#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.3
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.3
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.3
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.4
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.4
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.4
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.4
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.4
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.4
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.4
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.4
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.4.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.4
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.4.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.4
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.4.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.4
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.4.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.5
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.5
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.5
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.5
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.5
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.5
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.5.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.6
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.6
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.6
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.6.3
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.6.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.6.3
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.6.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.6.3
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.6.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.7
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.7
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.7
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.8
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.8
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.9
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.9.1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.9.1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.9.1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.9.1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9.1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.9.1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9.1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.9.1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9.1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.9.1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9.1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.9.1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9.1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.9.1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9.1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.9
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.9
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.10
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.10.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.10
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.10.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.10
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.10.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.10
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.10.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.10
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.10.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.11
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.11.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.11
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.11.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.11
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.11.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.11
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.11.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.12
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.12.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.12
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.12.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.12
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.12.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1.12
+      from_type: section
+      to: PROJECT/report-agent-instructions-review#1.12.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: work/research/ai-agent-best-practices-research.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: work/research/agent-orchestration-research.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1
+      from_type: section
+      to: work/research/agent-skills-research.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.1
+      from_type: section
+      to: copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.4.1
+      from_type: section
+      to: CONVENTIONS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.4.2
+      from_type: section
+      to: CONVENTIONS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.4.3
+      from_type: section
+      to: CONVENTIONS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.4.6
+      from_type: section
+      to: CONVENTIONS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.5.1
+      from_type: section
+      to: CONVENTIONS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.5.2
+      from_type: section
+      to: lifecycle.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.5.2
+      from_type: section
+      to: design-quality.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.6.3.3
+      from_type: section
+      to: references/design-quality.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.6.3.3
+      from_type: section
+      to: .kbz/skills/write-design/references/design-quality.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.7.1
+      from_type: section
+      to: copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.7.2
+      from_type: section
+      to: refs/go-style.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.7.3
+      from_type: section
+      to: refs/document-map.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.8.1
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.8.1
+      from_type: section
+      to: CLAUDE.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.8.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.8.2
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.8.2
+      from_type: section
+      to: copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.8.2
+      from_type: section
+      to: CLAUDE.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.1
+      from_type: section
+      to: CLAUDE.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.1
+      from_type: section
+      to: ~/.claude/CLAUDE.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.1
+      from_type: section
+      to: .claude/commands/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.1
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.2
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.2
+      from_type: section
+      to: .github/instructions/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.2
+      from_type: section
+      to: .github/prompts/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.2
+      from_type: section
+      to: copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.2
+      from_type: section
+      to: instructions/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.2
+      from_type: section
+      to: prompts/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.3
+      from_type: section
+      to: copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.4
+      from_type: section
+      to: .windsurf/rules/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.4
+      from_type: section
+      to: .windsurf/rules/kanbanzai.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.6
+      from_type: section
+      to: CONVENTIONS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.7
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.8
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.1.8
+      from_type: section
+      to: GEMINI.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.2
+      from_type: section
+      to: CLAUDE.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.2
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.2
+      from_type: section
+      to: CONVENTIONS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.3
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.3
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.9.3
+      from_type: section
+      to: CLAUDE.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.10.1
+      from_type: section
+      to: references/design-quality.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.10.3
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.10.3
+      from_type: section
+      to: refs/document-map.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.10.4
+      from_type: section
+      to: refs/document-map.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.10.4
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.10.4
+      from_type: section
+      to: CLAUDE.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.10.4
+      from_type: section
+      to: copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.11.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.11.4
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.11.4
+      from_type: section
+      to: .kbz/skills/CONVENTIONS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.11.4
+      from_type: section
+      to: refs/document-map.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.11.4
+      from_type: section
+      to: refs/sub-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.11.4
+      from_type: section
+      to: refs/go-style.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.11.4
+      from_type: section
+      to: refs/testing.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.11.4
+      from_type: section
+      to: refs/knowledge-graph.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.12.1
+      from_type: section
+      to: review-{id}-{slug}.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.12.1
+      from_type: section
+      to: refs/document-map.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.12.2
+      from_type: section
+      to: refs/document-map.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.12.3
+      from_type: section
+      to: references/design-quality.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.12.3
+      from_type: section
+      to: .kbz/skills/write-design/references/design-quality.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.12.4
+      from_type: section
+      to: refs/document-map.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-agent-instructions-review#1.12.4
       from_type: section
       to: CLAUDE.md
       to_type: document
