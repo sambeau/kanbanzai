@@ -3,4 +3,9 @@ parent_feature: FEAT-01KN83QN0VAFG
 slug: child-state-query-helpers
 name: Child-state query helpers
 summary: "Extract shared child-state query logic into unexported helpers on EntityService: countNonTerminalTasks, countNonTerminalFeatures, checkAllTasksTerminal, checkAllFeaturesTerminal. Foundation for lifecycle gates (T2) and auto-advance (T3, T4)."
-status: ready
+status: done
+files_planned:
+  - internal/service/entity_children.go
+  - internal/service/entity_children_test.go
+completed: "2026-04-02T23:12:13Z"
+completion_summary: "Created internal/service/entity_children.go with four exported helpers: CountNonTerminalTasks, CountNonTerminalFeatures, CheckAllTasksTerminal, CheckAllFeaturesTerminal. Added comprehensive unit tests covering empty, mixed, all-terminal, all-not-planned cases."

@@ -3,4 +3,11 @@ parent_feature: FEAT-01KN83QN0VAFG
 slug: feature-auto-advance-reviewing
 name: Feature auto-advance to reviewing
 summary: "After any operation that moves a task to terminal state, check if all sibling tasks are terminal with at least one done. If so, and parent feature is in developing or needs-rework, auto-advance feature to reviewing. Trigger from entity transition, finish, and complete_task."
-status: ready
+status: done
+files_planned:
+  - internal/service/entity_children.go
+  - internal/mcp/entity_tool.go
+  - internal/mcp/finish_tool.go
+  - internal/mcp/sideeffect.go
+completed: "2026-04-02T23:12:13Z"
+completion_summary: Added MaybeAutoAdvanceFeature to entity_children.go. Hooks in entity_tool.go after task terminal transitions and in finish_tool.go after CompleteTask. SideEffectFeatureAutoAdvanced emitted on success or failure. Features in developing or needs-rework auto-advance to reviewing when all tasks terminal with at least one done.
