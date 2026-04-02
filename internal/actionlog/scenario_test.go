@@ -80,7 +80,7 @@ func TestLoadScenario_AllCategories(t *testing.T) {
 		cat := cat
 		t.Run(cat, func(t *testing.T) {
 			t.Parallel()
-			yaml := "name: Test\ndescription: Desc\ncategory: " + cat + "\nsuccess_criteria: [x]\n"
+			yaml := "name: Test\ndescription: Desc\ncategory: " + cat + "\nstarting_state:\n  feature_stage: proposed\nexpected_pattern:\n  tool_sequence: [entity]\nsuccess_criteria: [x]\n"
 			f := writeTempYAML(t, yaml)
 			s, err := LoadScenario(f)
 			if err != nil {

@@ -67,7 +67,7 @@ func decomposePropose(svc *service.DecomposeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		featureID, err := req.RequireString("feature_id")
 		if err != nil {
-			return inlineErr("missing_parameter", "feature_id is required for propose")
+			return inlineErr("missing_parameter", "Cannot propose task decomposition: feature_id is missing.\n\nTo resolve:\n  Provide the feature ID: decompose(action: \"propose\", feature_id: \"FEAT-...\")")
 		}
 
 		input := service.DecomposeInput{
@@ -90,18 +90,18 @@ func decomposeReview(svc *service.DecomposeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		featureID, err := req.RequireString("feature_id")
 		if err != nil {
-			return inlineErr("missing_parameter", "feature_id is required for review")
+			return inlineErr("missing_parameter", "Cannot review decomposition proposal: feature_id is missing.\n\nTo resolve:\n  Provide the feature ID: decompose(action: \"review\", feature_id: \"FEAT-...\", proposal: {...})")
 		}
 
 		args := req.GetArguments()
 		proposalRaw, ok := args["proposal"]
 		if !ok {
-			return inlineErr("missing_parameter", "proposal is required for review")
+			return inlineErr("missing_parameter", "Cannot review decomposition proposal: proposal is missing.\n\nTo resolve:\n  Run decompose(action: \"propose\", feature_id: \"FEAT-...\") first and pass the returned proposal object unmodified")
 		}
 
 		proposal, err := parseProposal(proposalRaw)
 		if err != nil {
-			return inlineErr("invalid_parameter", "invalid proposal: "+err.Error())
+			return inlineErr("invalid_parameter", err.Error())
 		}
 
 		result, err := svc.ReviewProposal(service.DecomposeReviewInput{
@@ -124,22 +124,22 @@ func decomposeApply(entitySvc *service.EntityService) ActionHandler {
 
 		featureID, err := req.RequireString("feature_id")
 		if err != nil {
-			return inlineErr("missing_parameter", "feature_id is required for apply")
+			return inlineErr("missing_parameter", "Cannot apply decomposition proposal: feature_id is missing.\n\nTo resolve:\n  Provide the feature ID: decompose(action: \"apply\", feature_id: \"FEAT-...\", proposal: {...})")
 		}
 
 		args := req.GetArguments()
 		proposalRaw, ok := args["proposal"]
 		if !ok {
-			return inlineErr("missing_parameter", "proposal is required for apply")
+			return inlineErr("missing_parameter", "Cannot apply decomposition proposal: proposal is missing.\n\nTo resolve:\n  Run decompose(action: \"propose\", feature_id: \"FEAT-...\") first and pass the returned proposal object unmodified")
 		}
 
 		proposal, err := parseProposal(proposalRaw)
 		if err != nil {
-			return inlineErr("invalid_parameter", "invalid proposal: "+err.Error())
+			return inlineErr("invalid_parameter", err.Error())
 		}
 
 		if len(proposal.Tasks) == 0 {
-			return inlineErr("invalid_parameter", "proposal contains no tasks to apply")
+			return inlineErr("invalid_parameter", "Cannot apply decomposition proposal: proposal contains no tasks.\n\nTo resolve:\n  Re-run decompose(action: \"propose\", feature_id: \"FEAT-...\") to generate a proposal with tasks")
 		}
 
 		// Pass 1: create all tasks; build slug→ID map for dependency resolution.
@@ -240,7 +240,7 @@ func decomposeSlice(svc *service.DecomposeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		featureID, err := req.RequireString("feature_id")
 		if err != nil {
-			return inlineErr("missing_parameter", "feature_id is required for slice")
+			return inlineErr("missing_parameter", "Cannot perform slice analysis: feature_id is missing.\n\nTo resolve:\n  Provide the feature ID: decompose(action: \"slice\", feature_id: \"FEAT-...\")")
 		}
 
 		result, err := svc.SliceAnalysis(service.SliceAnalysisInput{FeatureID: featureID})

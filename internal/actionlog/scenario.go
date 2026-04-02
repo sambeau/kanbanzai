@@ -62,5 +62,11 @@ func validateScenario(s *Scenario, path string) error {
 	if len(s.SuccessCriteria) == 0 {
 		return fmt.Errorf("scenario %s: success_criteria must not be empty", path)
 	}
+	if s.StartingState == nil {
+		return fmt.Errorf("scenario %s: starting_state is required", path)
+	}
+	if s.ExpectedPattern == nil {
+		return fmt.Errorf("scenario %s: expected_pattern is required", path)
+	}
 	return nil
 }
