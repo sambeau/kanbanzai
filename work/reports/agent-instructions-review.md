@@ -16,13 +16,15 @@ This report evaluates the quality of all agent-facing instructions in the Kanban
 
 **The headline finding is that the implementation is strong.** The new roles and task-execution skills directly implement the majority of high-priority research recommendations: vocabulary routing, attention-optimised section ordering, named anti-patterns with BECAUSE clauses, domain-specific reviewer panels, copy-paste checklists, BAD/GOOD examples, and stage-binding architecture. The system is architecturally well-aligned with the research across all three documents.
 
-**Three areas need attention:**
+**Four areas need attention:**
 
 1. **Quality gap between skill layers.** The `.kbz/skills/` task-execution skills are excellent. The `.agents/skills/` system skills are functional but structurally weaker — they lack vocabulary sections, structured anti-patterns, evaluation criteria, and retrieval anchors. Since system skills are the most frequently loaded (every session starts with `kanbanzai-getting-started`), this gap matters.
 
 2. **Three `.agents/skills/` files have heavy overlap with new `.kbz/skills/` counterparts** and contain significant unique content that hasn't been migrated. Until that content is ported, retiring them risks losing procedural depth. After migration, retiring them eliminates conflicting guidance and a 708-line file that exceeds the 500-line budget.
 
 3. **`AGENTS.md` has duplicated checklist items, stale-risk content, and a missing pointer** to the `.kbz/skills/` system. The fixes are incremental — the file is lean and well-scoped, but the highest-attention content is the most duplicated.
+
+4. **`.kbz/` store discipline is not enforced.** Agents do not treat `.kbz/state/` changes as code changes, leaving document records, entity transitions, and knowledge entries uncommitted. This causes store drift between parallel agents, corrupted state when new tasks begin, and silent data loss when agents stash or discard unfamiliar files. No skill or instruction file currently makes this obligation explicit.
 
 The report also includes a cross-platform discovery guide for agent instruction files, documenting how each major AI coding platform finds and loads project-level instructions. This serves both Kanbanzai's own setup and as reference material for users adopting Kanbanzai on different platforms.
 
@@ -213,6 +215,28 @@ This legacy skill exceeds the 500-line budget and overlaps heavily with `review-
 Skills follow attention-curve ordering internally, but there's no guarantee that `handoff` or `next` orders the parts of a multi-part context packet optimally (identity/constraints first, supporting material middle, instructions/anchors last). The implementation of `internal/context/assemble.go` would need verification.
 
 **Recommendation:** Audit `assemble.go` to confirm context packet ordering follows the attention curve. If not, reorder.
+
+### 3.7 `.kbz/` Store Discipline Not Enforced — ⚠️ High
+
+Since the new agent-facing instructions were added, agents have not been keeping the `.kbz/` store and git in sync. Three observed failure modes:
+
+**1. Store changes not committed.** Agents do not treat `.kbz/state/` changes as code changes. When a document is registered, an entity transitions, or a knowledge entry is contributed, the corresponding YAML file in `.kbz/state/` changes on disk — but agents leave these uncommitted. This causes store drift between parallel agents and means the store is often dirty when a new task starts.
+
+**2. Uncommitted store files discarded or stashed.** When agents encounter uncommitted `.kbz/` files at the start of a task (left by a previous agent or session), they sometimes stash or discard them rather than committing them. This silently loses workflow state — document records, entity transitions, knowledge entries — corrupting the store.
+
+**3. No instruction makes this obligation explicit.** The `kanbanzai-agents` skill says "commit at logical checkpoints" and the `kanbanzai-getting-started` checklist says "commit coherent changes", but neither explicitly states that `.kbz/state/` changes are real changes that must be committed. The pre-task checklist in `AGENTS.md` says to commit "changes from previous work" but does not call out `.kbz/` files specifically. Agents appear to treat `.kbz/` as an ephemeral cache rather than versioned project state.
+
+**Why this matters:** The `.kbz/` store is the source of truth for workflow state. It is tracked in git deliberately — so that parallel agents see the same state, so that `git bisect` works across workflow changes, and so that store corruption is recoverable. Uncommitted store changes are invisible to other agents, making parallel work unreliable and causing the exact coordination failures (MAST FM-2.2 race conditions, FM-2.5 resource contention) that the store was designed to prevent.
+
+**Recommendation:** Add explicit store-commit discipline to three places:
+
+1. **`kanbanzai-agents`** — Add to the commit discipline section: "Every `.kbz/state/` change is a code change. When you register a document, transition an entity, contribute knowledge, or perform any action that modifies `.kbz/`, commit the change immediately or include it in your next logical commit. Do not leave `.kbz/` files uncommitted at the end of a task."
+
+2. **`kanbanzai-getting-started`** — Add to the pre-task checklist: "If uncommitted `.kbz/` files exist from a previous session, commit them now. Do not stash, discard, or ignore them — they are workflow state, not temporary files."
+
+3. **`AGENTS.md`** — Add to the Git Discipline section: "`.kbz/state/` files are versioned project state, not ephemeral cache. Treat every store change as a code change. Never stash, discard, or `.gitignore` these files."
+
+4. **`base.yaml` role** — Add an anti-pattern: "Store Neglect — Detect: `.kbz/state/` files left uncommitted after a task or discarded/stashed at the start of a new task. BECAUSE: the `.kbz/` store is the source of truth for parallel agents; uncommitted state causes drift, race conditions, and silent data loss. Resolve: commit `.kbz/` changes alongside code changes; at task start, commit any orphaned `.kbz/` files before proceeding."
 
 ---
 
@@ -535,32 +559,33 @@ Ordered by priority. Each recommendation includes the specific action, the resea
 | **R5** | Convert prose anti-patterns to structured Detect/BECAUSE/Resolve format in the 5 retained system skills. | Same as R4 | P5, "Always/Never BECAUSE" format |
 | **R6** | Add evaluation criteria and "Questions This Skill Answers" retrieval anchors to the 5 retained system skills. | Same as R4 | Skills §3.9, §3.11; consistent quality across both layers |
 
-### Priority 3: Fix AGENTS.md
+### Priority 3: Fix Store Discipline and AGENTS.md
 
 | # | Action | Files | Research Basis |
 |---|---|---|---|
-| **R7** | Deduplicate the pre-task checklist. Keep project-specific items in AGENTS.md (git status, correct branch, check decision logs). Remove "read AGENTS.md" and "read design docs" — those are in `kanbanzai-getting-started`. | `AGENTS.md` | P2 "highest-attention position must be unique" |
-| **R8** | Replace the inline Document Reading Order with a pointer to `refs/document-map.md`. | `AGENTS.md` | P3 "stale documentation is poisoned context" |
-| **R9** | Remove phase labels from Repository Structure annotations. Replace "(Phase 3)" with nothing — the functional description already says what each package does. | `AGENTS.md` | Skills §3.7 "Avoid time-sensitive information" |
-| **R10** | Add a 5-term mini-vocabulary at the top of AGENTS.md: *stage binding*, *role*, *skill*, *lifecycle gate*, *context packet*. One line each. | `AGENTS.md` | P6 "vocabulary routing"; primes comprehension before skills are loaded |
-| **R11** | Add a pointer to `.kbz/skills/` and `.kbz/stage-bindings.yaml`. Currently AGENTS.md mentions `.agents/skills/` but not the task-execution skill system. | `AGENTS.md` | Discovery gap identified in §6.2 |
-| **R12** | Restructure Decision-Making Rules to be less phase-dependent. Replace "check 4 specific log files by phase number" with guidance to use the knowledge tool or consult `refs/document-map.md`. | `AGENTS.md` | Skills §3.7 "no time-sensitive information" |
+| **R7** | Add explicit `.kbz/` store-commit discipline to `kanbanzai-agents` (commit discipline section), `kanbanzai-getting-started` (pre-task checklist), `AGENTS.md` (Git Discipline section), and `base.yaml` (new "Store Neglect" anti-pattern). See §3.7 for exact wording. | `kanbanzai-agents`, `kanbanzai-getting-started`, `AGENTS.md`, `.kbz/roles/base.yaml` | P7 "Observability"; MAST FM-2.2, FM-2.5; P1 "Hardening" |
+| **R8** | Deduplicate the pre-task checklist. Keep project-specific items in AGENTS.md (git status, correct branch, check decision logs). Remove "read AGENTS.md" and "read design docs" — those are in `kanbanzai-getting-started`. | `AGENTS.md` | P2 "highest-attention position must be unique" |
+| **R9** | Replace the inline Document Reading Order with a pointer to `refs/document-map.md`. | `AGENTS.md` | P3 "stale documentation is poisoned context" |
+| **R10** | Remove phase labels from Repository Structure annotations. Replace "(Phase 3)" with nothing — the functional description already says what each package does. | `AGENTS.md` | Skills §3.7 "Avoid time-sensitive information" |
+| **R11** | Add a 5-term mini-vocabulary at the top of AGENTS.md: *stage binding*, *role*, *skill*, *lifecycle gate*, *context packet*. One line each. | `AGENTS.md` | P6 "vocabulary routing"; primes comprehension before skills are loaded |
+| **R12** | Add a pointer to `.kbz/skills/` and `.kbz/stage-bindings.yaml`. Currently AGENTS.md mentions `.agents/skills/` but not the task-execution skill system. | `AGENTS.md` | Discovery gap identified in §6.2 |
+| **R13** | Restructure Decision-Making Rules to be less phase-dependent. Replace "check 4 specific log files by phase number" with guidance to use the knowledge tool or consult `refs/document-map.md`. | `AGENTS.md` | Skills §3.7 "no time-sensitive information" |
 
 ### Priority 4: Fix Discovery and Stale Pointers
 
 | # | Action | Files | Research Basis |
 |---|---|---|---|
-| **R13** | Update `refs/document-map.md` to point to `.kbz/skills/review-code/` and `.kbz/skills/review-plan/` instead of the old `.agents/skills/` versions (after R1 and R2 are complete). | `refs/document-map.md` | P3 "stale documentation" |
-| **R14** | Add explicit `.kbz/skills/` and stage bindings discovery to `kanbanzai-getting-started`. Currently it says "check `kanbanzai-workflow`" but never mentions the role+skill system. | `.agents/skills/kanbanzai-getting-started/SKILL.md` | Discovery gap identified in §6.2 |
-| **R15** | Create a `CLAUDE.md` bootstrap file for Claude Code users. Content mirrors `copilot-instructions.md` but kept shorter (loaded every turn). | `CLAUDE.md` (new file) | Cross-platform discovery (§7) |
+| **R14** | Update `refs/document-map.md` to point to `.kbz/skills/review-code/` and `.kbz/skills/review-plan/` instead of the old `.agents/skills/` versions (after R1 and R2 are complete). | `refs/document-map.md` | P3 "stale documentation" |
+| **R15** | Add explicit `.kbz/skills/` and stage bindings discovery to `kanbanzai-getting-started`. Currently it says "check `kanbanzai-workflow`" but never mentions the role+skill system. | `.agents/skills/kanbanzai-getting-started/SKILL.md` | Discovery gap identified in §6.2 |
+| **R16** | Create a `CLAUDE.md` bootstrap file for Claude Code users. Content mirrors `copilot-instructions.md` but kept shorter (loaded every turn). | `CLAUDE.md` (new file) | Cross-platform discovery (§7) |
 
 ### Priority 5: Build Evaluation Infrastructure
 
 | # | Action | Files | Research Basis |
 |---|---|---|---|
-| **R16** | Build a minimal evaluation harness: 2–3 test scenarios per skill, before/after comparison using each skill's Evaluation Criteria section. | New evaluation infrastructure | Skills §3.9 "Evaluation Must Precede Documentation" |
-| **R17** | Verify that `internal/context/assemble.go` orders context packets following the attention curve (identity/constraints first, supporting material middle, instructions/anchors last). Fix if not. | `internal/context/assemble.go` | P2 "Position and Structure Matter" |
-| **R18** | Verify that `handoff` includes effort budgets from stage bindings in assembled context packets. Add if not. | `internal/context/` | P9 "Token Economy" |
+| **R17** | Build a minimal evaluation harness: 2–3 test scenarios per skill, before/after comparison using each skill's Evaluation Criteria section. | New evaluation infrastructure | Skills §3.9 "Evaluation Must Precede Documentation" |
+| **R18** | Verify that `internal/context/assemble.go` orders context packets following the attention curve (identity/constraints first, supporting material middle, instructions/anchors last). Fix if not. | `internal/context/assemble.go` | P2 "Position and Structure Matter" |
+| **R19** | Verify that `handoff` includes effort budgets from stage bindings in assembled context packets. Add if not. | `internal/context/` | P9 "Token Economy" |
 
 ---
 
@@ -681,5 +706,12 @@ Migration checklist — complete every item before retiring the old skill:
 - [ ] **Remove phase labels** (R9) — strip "(Phase 2b)", "(Phase 3)", etc. from Repository Structure.
 - [ ] **Restructure Decision-Making Rules** (R12) — replace phase-numbered log references with guidance to consult `refs/document-map.md` or the knowledge tool.
 - [ ] **Update `refs/document-map.md`** (R13) — fix stale skill pointers after migrations complete.
-- [ ] **Fix `kanbanzai-getting-started` discovery** (R14) — add mention of stage bindings and `.kbz/skills/`.
-- [ ] **Create `CLAUDE.md`** (R15) — bootstrap file for Claude Code users.
+- [ ] **Fix `kanbanzai-getting-started` discovery** (R15) — add mention of stage bindings and `.kbz/skills/`.
+- [ ] **Create `CLAUDE.md`** (R16) — bootstrap file for Claude Code users.
+
+### B.5 Store Discipline Fixes
+
+- [ ] **`kanbanzai-agents` commit discipline** (R7) — add to the Commit Discipline section: "Every `.kbz/state/` change is a code change. When you register a document, transition an entity, contribute knowledge, or perform any action that modifies `.kbz/`, commit the change immediately or include it in your next logical commit. Do not leave `.kbz/` files uncommitted at the end of a task."
+- [ ] **`kanbanzai-getting-started` pre-task checklist** (R7) — add item: "If uncommitted `.kbz/` files exist from a previous session, commit them now. Do not stash, discard, or ignore them — they are workflow state, not temporary files."
+- [ ] **`AGENTS.md` Git Discipline section** (R7) — add: "`.kbz/state/` files are versioned project state, not ephemeral cache. Treat every store change as a code change. Never stash, discard, or `.gitignore` these files."
+- [ ] **`base.yaml` role anti-pattern** (R7) — add "Store Neglect" anti-pattern with Detect/BECAUSE/Resolve: detect uncommitted or discarded `.kbz/state/` files; BECAUSE the store is the source of truth for parallel agents and uncommitted state causes drift, race conditions, and silent data loss; resolve by committing `.kbz/` changes alongside code changes and committing orphaned `.kbz/` files at task start.
