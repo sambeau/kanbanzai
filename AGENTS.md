@@ -89,7 +89,7 @@ kanbanzai/
 
 - [ ] Run `git status`. Act on what you find:
   - Changes from previous work are coherent and complete → **commit them now**, then proceed
-  - Changes are incomplete or belong to a different task → **stash them** and inform the human
+  - Changes are incomplete or belong to a different task → inform the human, **do not stash** or discard
   - Working tree is clean → proceed
 - [ ] Confirm you are on the correct branch for this task (or `main` if starting fresh)
 - [ ] Read this file (`AGENTS.md`) if you haven't already this session

@@ -1,7 +1,7 @@
 id: FEAT-01KN58J27H83N
 slug: binding-registry-gate-integration
 parent: P17-workflow-and-tooling-3.0
-status: developing
+status: needs-rework
 summary: Read gate prerequisites from the binding registry instead of hardcoding them. Implement file-mtime-based cache invalidation for hot-reload. Source per-gate override_policy (agent or checkpoint) from the binding registry. Enables the skills design to evolve prerequisites without MCP server code changes.
 spec: FEAT-01KN5-8J27H83N/specification-30-binding-registry-gate-integration
 dev_plan: FEAT-01KN5-8J27H83N/dev-plan-30-binding-registry-gate-integration
