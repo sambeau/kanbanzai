@@ -1,0 +1,5 @@
+id: TASK-01KN70AASWY0P
+parent_feature: FEAT-01KN6ZA4NYJ25
+slug: verify-context-assembly
+summary: "Verify assemble.go attention-curve ordering and handoff effort budget inclusion. Fix and test if needed (FR-037, FR-038)"
+status: queued
