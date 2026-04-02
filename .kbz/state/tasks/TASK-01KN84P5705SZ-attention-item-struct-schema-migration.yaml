@@ -3,4 +3,4 @@ parent_feature: FEAT-01KN83QN0VAFG
 slug: attention-item-struct-schema-migration
 name: AttentionItem struct and schema migration
 summary: "Define AttentionItem struct and migrate all attention fields in status response objects from []string to []AttentionItem. Update all generateXxxAttention functions. Preserve all existing message text verbatim. Assign type and severity from registry."
-status: queued
+status: ready
