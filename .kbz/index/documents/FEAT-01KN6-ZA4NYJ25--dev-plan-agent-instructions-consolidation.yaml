@@ -1,0 +1,318 @@
+document_id: FEAT-01KN6-ZA4NYJ25/dev-plan-agent-instructions-consolidation
+document_path: work/plan/agent-instructions-consolidation.md
+content_hash: 1a51af5896c99835442133023164f4b78c4ede7a6341ab88849b2a17cadd374b
+indexed_at: 2026-04-02T11:42:03.393204Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Agent Instructions Consolidation'
+      byte_offset: 0
+      byte_count: 22863
+      word_count: 2982
+      content_hash: 1a51af5896c99835442133023164f4b78c4ede7a6341ab88849b2a17cadd374b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 397
+          byte_count: 712
+          word_count: 98
+          content_hash: 20a838d0b68131b45c04bfc73c836f94fbf1c61e6be0e3cf94d9050f960702ed
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1109
+          byte_count: 13435
+          word_count: 1583
+          content_hash: 96e60ed87e057c4d07a1becd69121fd532eb38a8c8757eea3f9f327719511aa0
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Migrate Code Review Content — review-code'
+              byte_offset: 1128
+              byte_count: 1259
+              word_count: 156
+              content_hash: e508b0344565d3fa8137a3c4d8d9d0bb76b164b5a6f6b6f410851cc610ab0091
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Migrate Code Review Content — orchestrate-review'
+              byte_offset: 2387
+              byte_count: 1149
+              word_count: 130
+              content_hash: 612ea9198cde06485a6a25215768743121b958a8397193316ce35870c72bb9a4
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Retire kanbanzai-code-review'
+              byte_offset: 3536
+              byte_count: 649
+              word_count: 82
+              content_hash: c2dcf47bd75ab91bdb46fc69a90980cfcb807643017394cd9b35455408227362
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Migrate Plan Review Content — review-plan'
+              byte_offset: 4185
+              byte_count: 1035
+              word_count: 115
+              content_hash: c4c8cd22d504acf8d65e0ab693a45f1d567acc83aefeafa2ac9c6781931cc25a
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Retire kanbanzai-plan-review'
+              byte_offset: 5220
+              byte_count: 469
+              word_count: 52
+              content_hash: efd9b094485684bc06d8f4a81c19b569ce5321e191375ffacb831b31f8c9bfc7
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: Migrate Design Content — write-design'
+              byte_offset: 5689
+              byte_count: 1321
+              word_count: 144
+              content_hash: 863947646cb5c5542df869dbed61bda3b6382e0b26bcf03233b0af5e709a460f
+            - path: 1.2.7
+              level: 3
+              title: 'Task 7: Retire kanbanzai-design'
+              byte_offset: 7010
+              byte_count: 490
+              word_count: 56
+              content_hash: 6043f151bf437adaef2c4f1bea432fb9a9a4fa101080da55574085f97df5b5d7
+            - path: 1.2.8
+              level: 3
+              title: 'Task 8: Fix Store Discipline'
+              byte_offset: 7500
+              byte_count: 1029
+              word_count: 110
+              content_hash: e00f162c060fec5b8fc4b585c299ae77a9204f0696edf2ac0f49b697390ad2cc
+            - path: 1.2.9
+              level: 3
+              title: 'Task 9: Upgrade System Skills — Batch 1 (getting-started, workflow, planning)'
+              byte_offset: 8529
+              byte_count: 1341
+              word_count: 150
+              content_hash: b5ac7c87e60aa6d3b7e82f738f19eac76b0e1e65bdde721791919e217867c8e8
+            - path: 1.2.10
+              level: 3
+              title: 'Task 10: Upgrade System Skills — Batch 2 (agents, documents)'
+              byte_offset: 9870
+              byte_count: 729
+              word_count: 91
+              content_hash: b6c8479c6b414ab669753657cfac9aa480187d17d2a974ddf052cb24d4440318
+            - path: 1.2.11
+              level: 3
+              title: 'Task 11: Clean Up AGENTS.md'
+              byte_offset: 10599
+              byte_count: 1022
+              word_count: 128
+              content_hash: 942e090c6c7f257746a9b63706d25693368b597519952b28db875d6a7c97bfa4
+            - path: 1.2.12
+              level: 3
+              title: 'Task 12: Fix Discovery Paths and Stale Pointers'
+              byte_offset: 11621
+              byte_count: 1099
+              word_count: 121
+              content_hash: 035cbb7d16c773572286123fbef0c54daecfb05186b64e28aba9d0da5b1f6e36
+            - path: 1.2.13
+              level: 3
+              title: 'Task 13: Create CLAUDE.md'
+              byte_offset: 12720
+              byte_count: 835
+              word_count: 112
+              content_hash: 7082818cc48e67246252f20d84f42b97724742f002c69adb4dea07724a6ab7c1
+            - path: 1.2.14
+              level: 3
+              title: 'Task 14: Verify Context Assembly'
+              byte_offset: 13555
+              byte_count: 989
+              word_count: 133
+              content_hash: 3a26ace10c058b416a1cbeef406f37857bd1d4df8831c5badcad1152a87c08fb
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 14544
+          byte_count: 2551
+          word_count: 259
+          content_hash: 4ded68fc40ca6aab2a2d921552e61a4170d9fa4ef4398be7a835604d1d519187
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 17095
+          byte_count: 1062
+          word_count: 134
+          content_hash: 987beb5f40cae09425a0635aeac89044e9a247ffd4ce188116178c955d76c60d
+        - path: "1.5"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 18157
+          byte_count: 2151
+          word_count: 316
+          content_hash: 7fd39c8479512188105832364c89c48056d3a3f253d3384f612ace6c9c777b94
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Risk: Content Loss During Migration'
+              byte_offset: 18177
+              byte_count: 543
+              word_count: 83
+              content_hash: 1832339c28c70c6ecf3f367da282c1e043ed85b424c29b6a8e3d0704c4e1cd70
+            - path: 1.5.2
+              level: 3
+              title: 'Risk: System Skill Line Budget Exceeded'
+              byte_offset: 18720
+              byte_count: 583
+              word_count: 87
+              content_hash: a014e79df3899e63ba6c7482214034f2cfb378412dd3d9b05938828fcc075c5b
+            - path: 1.5.3
+              level: 3
+              title: 'Risk: Discovery Regression After Retirement'
+              byte_offset: 19303
+              byte_count: 541
+              word_count: 76
+              content_hash: d1c2b01553ef947d06ccec8e5ba40b5f8a27c702644758da7e89cefe6fd29b1b
+            - path: 1.5.4
+              level: 3
+              title: 'Risk: Context Assembly Already Correct (Wasted Effort)'
+              byte_offset: 19844
+              byte_count: 464
+              word_count: 67
+              content_hash: 0ae38195ed6f40227d500cae703a2927aa1a33a2848d730875106b1e71e1f63b
+        - path: "1.6"
+          level: 2
+          title: Verification Approach
+          byte_offset: 20308
+          byte_count: 1488
+          word_count: 257
+          content_hash: 5a142af845cc46210cf883afa5f7203cdf5e4ca21e0a9613b0b39c004d566302
+        - path: "1.7"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 21796
+          byte_count: 1067
+          word_count: 296
+          content_hash: 8409fe29c0d82f9f5c9cd5f54c0f556c43425a546a2b737d7d088cf0c6568813
+entity_refs:
+    - entity_id: FEAT-01KN6
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 109
+cross_doc_links:
+    - target_path: work/spec/agent-instructions-consolidation.md
+      link_text: work/spec/agent-instructions-consolidation.md
+      section_path: "1"
+    - target_path: work/design/agent-instructions-consolidation.md
+      link_text: work/design/agent-instructions-consolidation.md
+      section_path: "1"
+    - target_path: work/reports/agent-instructions-review.md
+      link_text: work/reports/agent-instructions-review.md
+      section_path: "1"
+    - target_path: work/spec/agent-instructions-consolidation.md
+      link_text: work/spec/agent-instructions-consolidation.md
+      section_path: "1.1"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/review-code/SKILL.md
+      link_text: .kbz/skills/review-code/SKILL.md
+      section_path: 1.2.1
+    - target_path: references/edge-cases.md
+      link_text: references/edge-cases.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/orchestrate-review/SKILL.md
+      link_text: .kbz/skills/orchestrate-review/SKILL.md
+      section_path: 1.2.2
+    - target_path: references/context-budget.md
+      link_text: references/context-budget.md
+      section_path: 1.2.2
+    - target_path: .kbz/skills/review-plan/SKILL.md
+      link_text: .kbz/skills/review-plan/SKILL.md
+      section_path: 1.2.4
+    - target_path: .kbz/skills/write-design/SKILL.md
+      link_text: .kbz/skills/write-design/SKILL.md
+      section_path: 1.2.6
+    - target_path: .kbz/skills/write-design/references/design-quality.md
+      link_text: .kbz/skills/write-design/references/design-quality.md
+      section_path: 1.2.6
+    - target_path: kanbanzai-design/references/design-quality.md
+      link_text: kanbanzai-design/references/design-quality.md
+      section_path: 1.2.6
+    - target_path: references/design-quality.md
+      link_text: references/design-quality.md
+      section_path: 1.2.6
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.8
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.8
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.8
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.9
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.2.9
+    - target_path: .agents/skills/kanbanzai-planning/SKILL.md
+      link_text: .agents/skills/kanbanzai-planning/SKILL.md
+      section_path: 1.2.9
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.10
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: 1.2.10
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.2.11
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.11
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.2.12
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.12
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.13
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.2.13
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.2.13
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: "1.4"
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.5.3
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.5.3
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.14
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: risk
+      confidence: high
+    - section_path: 1.5.1
+      role: risk
+      confidence: high
+    - section_path: 1.5.2
+      role: risk
+      confidence: high
+    - section_path: 1.5.3
+      role: risk
+      confidence: high
+    - section_path: 1.5.4
+      role: narrative
+      confidence: high
+classified: false

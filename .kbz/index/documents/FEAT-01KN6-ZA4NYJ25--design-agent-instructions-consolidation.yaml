@@ -1,0 +1,308 @@
+document_id: FEAT-01KN6-ZA4NYJ25/design-agent-instructions-consolidation
+document_path: work/design/agent-instructions-consolidation.md
+content_hash: 10519d74351e41dc719e1a2ee768cd6354c8f79f6dea6ddda76e58bb823f2c7e
+indexed_at: 2026-04-02T11:30:05.192812Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Agent Instructions Consolidation'
+      byte_offset: 0
+      byte_count: 19783
+      word_count: 2641
+      content_hash: 10519d74351e41dc719e1a2ee768cd6354c8f79f6dea6ddda76e58bb823f2c7e
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 515
+          byte_count: 953
+          word_count: 121
+          content_hash: 3309cc4c94556ba86eb7c860bc136521a3a708053f7e3efbd79a4875f21178da
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1468
+          byte_count: 1662
+          word_count: 243
+          content_hash: 917f7740726f44943691b91b06e4383b6b50a93d33deabebd48c3fb61df1c17e
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 1492
+              byte_count: 777
+              word_count: 108
+              content_hash: c6d369f41023ef535a1baed38416a7c4edf7e931fb48ab1ecb996288ca36ee50
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 2269
+              byte_count: 861
+              word_count: 131
+              content_hash: 88702f02ec85b6a546d092be42317050531bcb4489a3975d732704068e2ccb65
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 3130
+          byte_count: 10354
+          word_count: 1388
+          content_hash: 92c684848ee5e79fbad570b2deded6f3b448ee982b717bcf23429764295711ea
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Area 1: Migrate and Retire Overlapping Skills (R1, R2, R3)'
+              byte_offset: 3444
+              byte_count: 3536
+              word_count: 453
+              content_hash: 1b009554fd799dbf92bcc1e3dada38b344bba5225fa6c835ed72d2dbe2f4997b
+              children:
+                - path: 1.3.1.1
+                  level: 4
+                  title: 1.1 `kanbanzai-code-review` → `review-code` + `orchestrate-review`
+                  byte_offset: 3753
+                  byte_count: 1535
+                  word_count: 202
+                  content_hash: 7da7b11d0e3148e358ca9c1fe2a9c7f19af727cc1c3d5f4cc99efebca138cf91
+                - path: 1.3.1.2
+                  level: 4
+                  title: 1.2 `kanbanzai-plan-review` → `review-plan`
+                  byte_offset: 5288
+                  byte_count: 791
+                  word_count: 99
+                  content_hash: 1a438571f6db217cb6ae41dd0dd6638c8731c6d3191b47911648584c5c092400
+                - path: 1.3.1.3
+                  level: 4
+                  title: 1.3 `kanbanzai-design` → `write-design`
+                  byte_offset: 6079
+                  byte_count: 901
+                  word_count: 106
+                  content_hash: a2ba19d60bd5baa1ec8f660f5312b568497f3085cd3dc2feef1d19ebf0496b2f
+            - path: 1.3.2
+              level: 3
+              title: 'Area 2: Upgrade Retained System Skills (R4, R5, R6)'
+              byte_offset: 6980
+              byte_count: 2191
+              word_count: 287
+              content_hash: 0638acee44d947caa3da1ec4db836a3fdab2aecd0a2156aab04334d537a3838d
+            - path: 1.3.3
+              level: 3
+              title: 'Area 3: Fix Store Discipline (R7)'
+              byte_offset: 9171
+              byte_count: 1614
+              word_count: 239
+              content_hash: 23cd067c8be5d8ad1c20519583e1c87429fc726b134b4630540279d49f596894
+            - path: 1.3.4
+              level: 3
+              title: 'Area 4: Fix AGENTS.md and Discovery (R8–R16)'
+              byte_offset: 10785
+              byte_count: 1991
+              word_count: 260
+              content_hash: 2ca5cf58dc8bf80f38d79fcc6cd77395ea2e329b5d867246d59e7375e6adf0e6
+              children:
+                - path: 1.3.4.1
+                  level: 4
+                  title: 4.1 AGENTS.md Cleanup (R8–R13)
+                  byte_offset: 10837
+                  byte_count: 1064
+                  word_count: 135
+                  content_hash: 97829727ed64c7001ba1a2f4936c5b0f5ad8794e38491c0ea60742912add08bc
+                - path: 1.3.4.2
+                  level: 4
+                  title: 4.2 Fix Discovery Paths (R14, R15)
+                  byte_offset: 11901
+                  byte_count: 429
+                  word_count: 53
+                  content_hash: ac9e56d75393b50e3a98bcd396c8f95423fe4bffe32693b28fc59d269c09eb5a
+                - path: 1.3.4.3
+                  level: 4
+                  title: 4.3 Create CLAUDE.md (R16)
+                  byte_offset: 12330
+                  byte_count: 446
+                  word_count: 64
+                  content_hash: db85f230d834c02dce3d70921a188f436ddca789458bc3ae5e287a062ef73f3c
+            - path: 1.3.5
+              level: 3
+              title: 'Area 5: Verify Context Assembly (R18, R19)'
+              byte_offset: 12776
+              byte_count: 708
+              word_count: 99
+              content_hash: fc94e062f05c85837d706a3b14745d05cc98a932fd943e77661b6aad9ba86c54
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 13484
+          byte_count: 2874
+          word_count: 392
+          content_hash: 4802b204afcf6bf3a6a2b6ded5be3db2ac441d490a83c549fb74c96e3b90976a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Alternative 1: Retire All System Skills, Absorb into Task-Execution Skills'
+              byte_offset: 13512
+              byte_count: 728
+              word_count: 98
+              content_hash: e79f80acf90f9da4047d94f5f3c764d91b894ff64c1117f54e5b6225b8b4fd85
+            - path: 1.4.2
+              level: 3
+              title: 'Alternative 2: Build Evaluation Harness First'
+              byte_offset: 14240
+              byte_count: 737
+              word_count: 104
+              content_hash: 7867fdff1da3654b2f67c818bd149cb6e77c7a8d076141f6b0bd3d8132d410a2
+            - path: 1.4.3
+              level: 3
+              title: 'Alternative 3: Create Platform-Specific Bootstrap Files for All Platforms'
+              byte_offset: 14977
+              byte_count: 674
+              word_count: 93
+              content_hash: 2b85eed55a63aa4bb18ed31001cba38aff8fdd723b4b81d5a6018aff1ee15ca5
+            - path: 1.4.4
+              level: 3
+              title: 'Alternative 4: Full Rewrite of System Skills from Scratch'
+              byte_offset: 15651
+              byte_count: 707
+              word_count: 94
+              content_hash: 47919ffa8053122d6d598b8c8d5918504bdf8feae3eecd0b332a3bf4b8fddf3f
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 16358
+          byte_count: 464
+          word_count: 64
+          content_hash: b7b197b5fc1f8798fd11407be22327fad2603d0eba811e5a2f1728d723f3659b
+        - path: "1.6"
+          level: 2
+          title: Risks
+          byte_offset: 16822
+          byte_count: 1044
+          word_count: 140
+          content_hash: 5ba6c81f7a04acb1ad881d6afdee05c9ecc6ab2d1ebe9549bff3c13dfa99efa9
+        - path: "1.7"
+          level: 2
+          title: Task Structure
+          byte_offset: 17866
+          byte_count: 1917
+          word_count: 238
+          content_hash: 8b2cdc8f4b47bcafc6826a38ec1a7463a1330b11a8d534fd35af76bc4643d23e
+entity_refs:
+    - entity_id: P16-skills-and-roles-3
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 203
+cross_doc_links:
+    - target_path: work/reports/agent-instructions-review.md
+      link_text: work/reports/agent-instructions-review.md
+      section_path: "1"
+    - target_path: work/research/ai-agent-best-practices-research.md
+      link_text: work/research/ai-agent-best-practices-research.md
+      section_path: "1"
+    - target_path: work/research/agent-orchestration-research.md
+      link_text: work/research/agent-orchestration-research.md
+      section_path: "1"
+    - target_path: work/research/agent-skills-research.md
+      link_text: work/research/agent-skills-research.md
+      section_path: "1"
+    - target_path: work/research/skill-authoring-best-practices.md
+      link_text: work/research/skill-authoring-best-practices.md
+      section_path: "1"
+    - target_path: work/reports/agent-instructions-review.md
+      link_text: work/reports/agent-instructions-review.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.1
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.2.1
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.2.2
+    - target_path: review-{id}-{slug}.md
+      link_text: review-{id}-{slug}.md
+      section_path: 1.3.1.1
+    - target_path: references/design-quality.md
+      link_text: references/design-quality.md
+      section_path: 1.3.1.3
+    - target_path: .kbz/skills/write-design/references/design-quality.md
+      link_text: .kbz/skills/write-design/references/design-quality.md
+      section_path: 1.3.1.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.3
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.3.4.1
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.3.4.2
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.3.4.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.4.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.1
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.4.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.3
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.4.3
+    - target_path: CONVENTIONS.md
+      link_text: CONVENTIONS.md
+      section_path: 1.4.4
+    - target_path: work/reports/agent-instructions-review.md
+      link_text: work/reports/agent-instructions-review.md
+      section_path: "1.5"
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: "1.6"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.7"
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: "1.7"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: 1.3.5
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: alternative
+      confidence: high
+    - section_path: 1.4.2
+      role: alternative
+      confidence: high
+    - section_path: 1.4.3
+      role: alternative
+      confidence: high
+    - section_path: 1.4.4
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: risk
+      confidence: high
+classified: false
