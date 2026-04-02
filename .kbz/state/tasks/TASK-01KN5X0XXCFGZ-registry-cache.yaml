@@ -1,0 +1,10 @@
+id: TASK-01KN5X0XXCFGZ
+parent_feature: FEAT-01KN58J27H83N
+slug: registry-cache
+summary: "Registry cache with mtime-based invalidation — RegistryCache struct, NewRegistryCache, Get, LookupPrereqs, LookupOverridePolicy in internal/gate/registry_cache.go"
+status: done
+files_planned:
+  - internal/gate/registry_cache.go
+  - internal/gate/registry_cache_test.go
+completed: "2026-04-02T01:31:33Z"
+completion_summary: Implemented RegistryCache with mtime-based invalidation. Concurrency-safe via sync.RWMutex with double-checked locking. Handles missing/malformed files by returning nil for fallback.

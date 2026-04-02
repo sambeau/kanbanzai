@@ -2,7 +2,19 @@ id: TASK-01KN5AJRQ6F47
 parent_feature: FEAT-01KN58J25K4QD
 slug: handoff-integration
 summary: "Wire lifecycle validation into the handoff handler and extend the prompt renderer to include stage-aware sections (orchestration, effort budget, tool subset, output convention)."
-status: queued
+status: done
 depends_on:
   - TASK-01KN5AJRP33VW
   - TASK-01KN5AJRPNZ7G
+files_planned:
+  - internal/mcp/assembly.go
+  - internal/mcp/handoff_tool.go
+  - internal/mcp/handoff_tool_test.go
+  - internal/mcp/integration_test.go
+completed: "2026-04-02T00:37:21Z"
+claimed_at: "2026-04-02T00:24:47Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-02T00:24:47Z"
+dispatched_by: sambeau
+completion_summary: "Wired stage-aware context into handoff: added featureStage to asmInput, 6 fields to assembledContext, lifecycle validation in legacy path, reordered prompt rendering per FR-012, added stage_aware metadata. All 459 tests pass."
+verification: go test ./internal/mcp/ -count=1 — all 459 tests pass

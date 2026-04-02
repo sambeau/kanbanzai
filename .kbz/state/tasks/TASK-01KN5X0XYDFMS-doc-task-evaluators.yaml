@@ -1,0 +1,12 @@
+id: TASK-01KN5X0XYDFMS
+parent_feature: FEAT-01KN58J27H83N
+slug: doc-task-evaluators
+summary: "Document and task prerequisite evaluators — evalDocuments with three-level lookup, evalTasks with min_count and all_terminal in internal/gate/eval_documents.go and eval_tasks.go"
+status: done
+files_planned:
+  - internal/gate/eval_documents.go
+  - internal/gate/eval_documents_test.go
+  - internal/gate/eval_tasks.go
+  - internal/gate/eval_tasks_test.go
+completed: "2026-04-02T01:31:33Z"
+completion_summary: "Implemented document evaluator (three-level lookup) and task evaluator (min_count, all_terminal). Both registered via init()."

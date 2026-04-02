@@ -1,0 +1,17 @@
+id: KE-01KN5TFZZB7B9
+tier: 3
+topic: retro-task-01kn5ajrs26yw-2
+scope: project
+content: "[minor] tool-friction: Heredoc/HEREDOC syntax consistently fails in the terminal tool's sh shell. Workaround: use python3 or edit_file for file creation, or pipe to python3 stdin."
+learned_from: TASK-01KN5AJRS26YW
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - tool-friction
+created: "2026-04-02T00:46:34Z"
+created_by: unknown
+updated: "2026-04-02T00:46:34Z"

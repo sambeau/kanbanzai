@@ -1,0 +1,17 @@
+id: KE-01KN5R87D2TCE
+tier: 3
+topic: retro-task-01kn5ajkpdw6f-2
+scope: project
+content: "[minor] decomposition-issue: Task 4 (P3 descriptions) and Task 6 (P2+P3 testing) had a circular dependency that required manual intervention. The plan's dependency graph assumed partial task completion (P2 testing before P3 descriptions), which the entity model doesn't support."
+learned_from: TASK-01KN5AJKPDW6F
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - decomposition-issue
+created: "2026-04-02T00:07:22Z"
+created_by: unknown
+updated: "2026-04-02T00:07:22Z"

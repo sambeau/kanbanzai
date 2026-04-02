@@ -2,8 +2,18 @@ id: TASK-01KN5AJRQNRFV
 parent_feature: FEAT-01KN58J25K4QD
 slug: next-integration
 summary: "Wire lifecycle validation into the next claim-mode handler and add stage-aware structured fields (orchestration_pattern, effort_budget, tool_subset) to the claim response."
-status: queued
+status: done
 depends_on:
   - TASK-01KN5AJRP33VW
   - TASK-01KN5AJRPNZ7G
   - TASK-01KN5AJRQ6F47
+files_planned:
+  - internal/mcp/next_tool.go
+  - internal/mcp/next_tool_test.go
+completed: "2026-04-02T00:43:50Z"
+claimed_at: "2026-04-02T00:37:32Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-02T00:37:32Z"
+dispatched_by: sambeau
+completion_summary: "Wired lifecycle validation into next claim mode (before task claim), passed featureStage to assembleContext, added stage-aware fields to claim response (orchestration_pattern, effort_budget, tool_subset, output_convention, feature_stage). All tests pass."
+verification: go test ./internal/mcp/ -count=1 — all tests pass

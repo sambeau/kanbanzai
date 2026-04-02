@@ -1,0 +1,9 @@
+id: WT-01KN5RSNDJAWS
+entity_id: FEAT-01KN58J25K4QD
+branch: feature/FEAT-01KN58J25K4QD-stage-aware-context-assembly
+path: .worktrees/FEAT-01KN58J25K4QD-stage-aware-context-assembly
+status: merged
+created: "2026-04-02T00:16:54Z"
+created_by: sambeau
+merged_at: "2026-04-02T00:50:28Z"
+cleanup_after: "2026-04-09T00:50:28Z"

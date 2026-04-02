@@ -2,4 +2,13 @@ id: TASK-01KN5AJKKSJDN
 parent_feature: FEAT-01KN58J257X02
 slug: test-scenarios
 summary: "Create 5-10 representative task scenarios for agent-driven testing, covering all Priority 1 and Priority 2 tools and the five required workflow patterns."
-status: ready
+status: done
+files_planned:
+  - work/test/tool-description-scenarios.md
+completed: "2026-04-01T23:46:17Z"
+claimed_at: "2026-04-01T23:41:08Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-01T23:41:08Z"
+dispatched_by: sambeau
+completion_summary: "Created work/test/tool-description-scenarios.md with 8 representative task scenarios covering all 5 required workflow patterns (lifecycle advancement, claim-and-complete, decomposition, document registration, status queries) and all P1+P2 tools. Each scenario includes natural-language task description, expected tool sequence, and decision points."
+verification: "Verified all 5 workflow patterns are covered, all P1 and P2 tools appear in at least one scenario, no two scenarios share identical tool sequences, and each scenario has at least one decision point."

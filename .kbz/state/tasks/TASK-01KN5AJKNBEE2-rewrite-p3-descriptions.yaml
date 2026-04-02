@@ -2,7 +2,27 @@ id: TASK-01KN5AJKNBEE2
 parent_feature: FEAT-01KN58J257X02
 slug: rewrite-p3-descriptions
 summary: Rewrite descriptions for the thirteen query and support Priority 3 tools to satisfy all five ACI description principles.
-status: queued
+status: done
 depends_on:
   - TASK-01KN5AJKMW4F2
-  - TASK-01KN5AJKPDW6F
+files_planned:
+  - internal/mcp/knowledge_tool.go
+  - internal/mcp/doc_intel_tool.go
+  - internal/mcp/profile_tool.go
+  - internal/mcp/estimate_tool.go
+  - internal/mcp/conflict_tool.go
+  - internal/mcp/retro_tool.go
+  - internal/mcp/health_tool.go
+  - internal/mcp/worktree_tool.go
+  - internal/mcp/branch_tool.go
+  - internal/mcp/cleanup_tool.go
+  - internal/mcp/incident_tool.go
+  - internal/mcp/checkpoint_tool.go
+  - internal/mcp/server_info_tool.go
+completed: "2026-04-02T00:05:45Z"
+claimed_at: "2026-04-02T00:02:39Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-02T00:02:39Z"
+dispatched_by: sambeau
+completion_summary: "Rewrote mcp.WithDescription() strings for all 13 Priority 3 tools following ACI principles. All lead with when-to-use, include negative guidance, state workflow position, make parameter relationships explicit, and stay under 200 tokens (range: 97-142). This completes description rewrites for all 22 tools across all 3 priority tiers."
+verification: "go build ./... passes. go test ./internal/mcp/... passes. Token counts verified: knowledge ~142, doc_intel ~138, profile ~100, estimate ~134, conflict ~115, retro ~132, health ~117, worktree ~137, branch ~97, cleanup ~127, incident ~125, checkpoint ~128, server_info ~97 — all under 200."

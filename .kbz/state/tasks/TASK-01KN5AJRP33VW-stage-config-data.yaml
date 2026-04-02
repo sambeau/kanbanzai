@@ -2,4 +2,15 @@ id: TASK-01KN5AJRP33VW
 parent_feature: FEAT-01KN58J25K4QD
 slug: stage-config-data
 summary: "Create the internal/stage package with hardcoded stage configuration data — allowed states, orchestration patterns, effort budgets, tool subsets, and content inclusion flags."
-status: ready
+status: done
+files_planned:
+  - internal/stage/doc.go
+  - internal/stage/config.go
+  - internal/stage/config_test.go
+completed: "2026-04-02T00:21:19Z"
+claimed_at: "2026-04-02T00:16:53Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-02T00:16:53Z"
+dispatched_by: sambeau
+completion_summary: "Created internal/stage package with StageConfig, ForStage, IsWorkingState, AllStages. All 6 stages configured with orchestration patterns, effort budgets, tool subsets, content inclusion flags. 12 tests pass."
+verification: go build and go test -v ./internal/stage/ — all 12 tests pass

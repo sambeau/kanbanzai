@@ -2,7 +2,7 @@ id: TASK-01KN5AJRS26YW
 parent_feature: FEAT-01KN58J25K4QD
 slug: ctx-integration-tests
 summary: "Create end-to-end integration tests exercising the full handoff and next flows with stage-aware context, verifying validation, assembly, rendering, and backward compatibility."
-status: queued
+status: done
 depends_on:
   - TASK-01KN5AJRP33VW
   - TASK-01KN5AJRPNZ7G
@@ -10,3 +10,12 @@ depends_on:
   - TASK-01KN5AJRQNRFV
   - TASK-01KN5AJRR4YCC
   - TASK-01KN5AJRRKF7K
+files_planned:
+  - internal/mcp/stage_integration_test.go
+completed: "2026-04-02T00:46:34Z"
+claimed_at: "2026-04-02T00:43:58Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-02T00:43:58Z"
+dispatched_by: sambeau
+completion_summary: "Created 5 integration tests covering developing/specifying handoff flows, validation rejection, graceful degradation, and all-stages config verification. Full mcp suite passes with no regressions."
+verification: go test -v -run TestStageIntegration ./internal/mcp/ — all 5 tests pass; full suite passes

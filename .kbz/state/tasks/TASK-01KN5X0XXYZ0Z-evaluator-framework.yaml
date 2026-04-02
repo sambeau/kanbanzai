@@ -1,0 +1,10 @@
+id: TASK-01KN5X0XXYZ0Z
+parent_feature: FEAT-01KN58J27H83N
+slug: evaluator-framework
+summary: "Prerequisite evaluator framework with type dispatch — GateResult, PrereqEvalContext, EvaluatePrerequisites, evaluator registration in internal/gate/evaluator.go"
+status: done
+files_planned:
+  - internal/gate/evaluator.go
+  - internal/gate/evaluator_test.go
+completed: "2026-04-02T01:31:33Z"
+completion_summary: "Implemented prerequisite evaluator framework with type-dispatched registration, GateResult with Source field, service interfaces to avoid circular deps."

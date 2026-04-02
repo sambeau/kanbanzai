@@ -2,7 +2,17 @@ id: TASK-01KN5AJRRKF7K
 parent_feature: FEAT-01KN58J25K4QD
 slug: stage-content-filter
 summary: "Implement content inclusion/exclusion logic in assembleContext so assembled context varies by stage — excluding file paths for designing/specifying, review rubrics for developing, etc."
-status: queued
+status: done
 depends_on:
   - TASK-01KN5AJRP33VW
   - TASK-01KN5AJRQ6F47
+files_planned:
+  - internal/mcp/assembly.go
+  - internal/mcp/assembly_test.go
+completed: "2026-04-02T00:43:52Z"
+claimed_at: "2026-04-02T00:37:32Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-02T00:37:32Z"
+dispatched_by: sambeau
+completion_summary: "Added stage-aware content filtering in assembleContext: file paths excluded for designing/specifying stages via IncludeFilePaths check. Backward-compatible with empty featureStage. 5 new subtests pass."
+verification: go test -run TestAssembleContext_StageContentFilter ./internal/mcp/ — all 5 subtests pass

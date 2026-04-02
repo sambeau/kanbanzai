@@ -2,7 +2,30 @@ id: TASK-01KN5AJKQDQ38
 parent_feature: FEAT-01KN58J257X02
 slug: error-audit-remaining
 summary: Audit and rewrite all error messages in the remaining tool handlers to follow the three-part actionable error template.
-status: queued
+status: done
 depends_on:
   - TASK-01KN5AJKPX5EQ
   - TASK-01KN5AJKMC3NH
+files_planned:
+  - internal/mcp/entity_tool.go
+  - internal/mcp/status_tool.go
+  - internal/mcp/next_tool.go
+  - internal/mcp/handoff_tool.go
+  - internal/mcp/knowledge_tool.go
+  - internal/mcp/estimate_tool.go
+  - internal/mcp/profile_tool.go
+  - internal/mcp/health_tool.go
+  - internal/mcp/merge_tool.go
+  - internal/mcp/pr_tool.go
+  - internal/mcp/worktree_tool.go
+  - internal/mcp/cleanup_tool.go
+  - internal/mcp/doc_intel_tool.go
+  - internal/mcp/incident_tool.go
+  - internal/mcp/checkpoint_tool.go
+completed: "2026-04-02T00:00:00Z"
+claimed_at: "2026-04-01T23:51:59Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-01T23:51:59Z"
+dispatched_by: sambeau
+completion_summary: "Audited and rewrote error messages across all remaining 15 tool handlers (entity get/list/update, status, next, handoff, knowledge, estimate, profile, health, merge, pr, worktree, cleanup, doc_intel, incident, checkpoint). ~150 error paths rewritten to FR-008 three-part template. Fixed one build error in estimate_tool.go (%w format arg). Build and tests pass."
+verification: "go build ./... passes. go test ./internal/mcp/... passes. Spot-checked error messages across multiple files: all follow three-part template. Fixed fmt.Errorf %w arg mismatch in estimate_tool.go."

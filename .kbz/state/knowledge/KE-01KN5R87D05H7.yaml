@@ -1,0 +1,18 @@
+id: KE-01KN5R87D05H7
+tier: 3
+topic: aci-description-patterns
+scope: project
+content: "The most effective ACI description patterns for MCP tools are: (1) explicit negative guidance (INSTEAD OF / Do NOT) naming the specific wrong tool, (2) bidirectional cross-referencing between related tools (each pointing to the other), (3) workflow sequencing (Call AFTER X, BEFORE Y), (4) mode documentation (When id is provided... When id is omitted...). These patterns eliminated all ambiguity in agent-driven testing across all 22 tools."
+learned_from: TASK-01KN5AJKPDW6F
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - tool-descriptions
+  - aci
+  - agent-testing
+created: "2026-04-02T00:07:22Z"
+created_by: unknown
+updated: "2026-04-02T00:07:22Z"

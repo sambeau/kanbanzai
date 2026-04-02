@@ -2,4 +2,14 @@ id: TASK-01KN5AJRR4YCC
 parent_feature: FEAT-01KN58J25K4QD
 slug: finish-summary-limit
 summary: "Add a 500-character maximum length validation on the summary field in the finish tool, returning an actionable error stating the limit and actual length when exceeded."
-status: ready
+status: done
+files_planned:
+  - internal/mcp/finish_tool.go
+  - internal/mcp/finish_tool_test.go
+completed: "2026-04-02T00:28:03Z"
+claimed_at: "2026-04-02T00:24:47Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-02T00:24:47Z"
+dispatched_by: sambeau
+completion_summary: "Added 500-char summary limit in finishOne after existing empty check. 3 new test cases (499, 500, 501 chars) all pass alongside 32 existing tests."
+verification: go test -run TestFinish ./internal/mcp/ — all 35 tests pass
