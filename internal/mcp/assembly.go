@@ -193,7 +193,16 @@ func assembleContext(input asmInput) assembledContext {
 	}
 
 	// File context from task's files_planned.
-	actx.filesContext = asmExtractFiles(input.taskState)
+	// Stage-aware: skip file paths for stages that exclude them (FR-005).
+	includeFiles := true
+	if input.featureStage != "" {
+		if cfg, ok := stage.ForStage(input.featureStage); ok && !cfg.IncludeFilePaths {
+			includeFiles = false
+		}
+	}
+	if includeFiles {
+		actx.filesContext = asmExtractFiles(input.taskState)
+	}
 
 	// Active workflow experiments (Phase 3 context nudge, spec §8.4).
 	if input.entitySvc != nil {
