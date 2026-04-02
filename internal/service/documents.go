@@ -1253,9 +1253,6 @@ func (s *DocumentService) MoveDocument(input MoveDocumentInput) (DocumentResult,
 	}, nil
 }
 
-// OldPath is not a field of DocumentResult — callers of MoveDocument use the
-// input.ID's original path (load before calling) alongside the returned Path.
-
 // DeleteDocument removes a document file, clears entity references, and
 // removes the state and index records (FR-B16 through FR-B21).
 func (s *DocumentService) DeleteDocument(input DeleteDocumentInput) (DocumentResult, error) {

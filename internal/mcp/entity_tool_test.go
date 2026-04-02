@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"os"
 	"strings"
 	"testing"
@@ -1560,4 +1561,120 @@ func mapKeys(m map[string]any) []string {
 		keys = append(keys, k)
 	}
 	return keys
+}
+
+// --- Auto-commit injection tests (F03, AC-A10, AC-A11, AC-A13) ---------------
+
+// TestEntity_Create_AutoCommit_MessageFormat verifies that entityCommitFunc is
+// called with the correct "workflow(<id>): create <type>" format (AC-A10).
+func TestEntity_Create_AutoCommit_MessageFormat(t *testing.T) {
+	// Not parallel: modifies package-level entityCommitFunc.
+	entitySvc := setupEntityToolTest(t)
+	planID := createEntityTestPlan(t, entitySvc, "commit-fmt-plan")
+	featID := createEntityTestFeature(t, entitySvc, planID, "commit-fmt-feat")
+
+	var capturedMsg string
+	savedFn := entityCommitFunc
+	entityCommitFunc = func(repoRoot, message string) (bool, error) {
+		capturedMsg = message
+		return false, nil
+	}
+	defer func() { entityCommitFunc = savedFn }()
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":         "create",
+		"type":           "task",
+		"parent_feature": featID,
+		"slug":           "auto-commit-task",
+		"name":           "Auto-commit test task",
+		"summary":        "Test auto-commit message format",
+	})
+
+	entity, ok := result["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected entity in response, got: %v", result)
+	}
+	taskID, _ := entity["id"].(string)
+
+	// Message must match "workflow(TASK-xxx): create task"
+	if !strings.HasPrefix(capturedMsg, "workflow("+taskID+"): create task") {
+		t.Errorf("commit message = %q; want prefix %q", capturedMsg, "workflow("+taskID+"): create task")
+	}
+}
+
+// TestEntity_Create_AutoCommit_FailureDoesNotBlockResult verifies that a commit
+// failure after entity create does not prevent the result from being returned
+// (best-effort semantics, AC-A13).
+func TestEntity_Create_AutoCommit_FailureDoesNotBlockResult(t *testing.T) {
+	// Not parallel: modifies package-level entityCommitFunc.
+	entitySvc := setupEntityToolTest(t)
+	planID := createEntityTestPlan(t, entitySvc, "commit-fail-plan")
+	featID := createEntityTestFeature(t, entitySvc, planID, "commit-fail-feat")
+
+	savedFn := entityCommitFunc
+	entityCommitFunc = func(repoRoot, message string) (bool, error) {
+		return false, fmt.Errorf("simulated git commit failure")
+	}
+	defer func() { entityCommitFunc = savedFn }()
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":         "create",
+		"type":           "task",
+		"parent_feature": featID,
+		"slug":           "commit-fail-task",
+		"name":           "Commit fail test task",
+		"summary":        "Task where commit will fail",
+	})
+
+	// Must not contain a top-level error -- commit failure is non-blocking.
+	if _, hasErr := result["error"]; hasErr {
+		t.Errorf("create returned error after commit failure; should proceed normally: %v", result["error"])
+	}
+	entity, ok := result["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected entity field in response, got: %v", result)
+	}
+	if entity["type"] != "task" {
+		t.Errorf("entity type = %q, want task", entity["type"])
+	}
+}
+
+// TestEntity_Transition_AutoCommit_MessageFormat verifies that entityCommitFunc
+// is called with the correct "workflow(<id>): transition <from> -> <to>" format
+// (AC-A11).
+func TestEntity_Transition_AutoCommit_MessageFormat(t *testing.T) {
+	// Not parallel: modifies package-level entityCommitFunc.
+	entitySvc := setupEntityToolTest(t)
+	planID := createEntityTestPlan(t, entitySvc, "trans-commit-plan")
+	featID := createEntityTestFeature(t, entitySvc, planID, "trans-commit-feat")
+	taskID, taskSlug := createEntityTestTask(t, entitySvc, featID, "trans-commit-task")
+
+	// Advance to ready first.
+	if _, err := entitySvc.UpdateStatus(service.UpdateStatusInput{
+		Type: "task", ID: taskID, Slug: taskSlug, Status: "ready",
+	}); err != nil {
+		t.Fatalf("advance to ready: %v", err)
+	}
+
+	var capturedMsg string
+	savedFn := entityCommitFunc
+	entityCommitFunc = func(repoRoot, message string) (bool, error) {
+		capturedMsg = message
+		return false, nil
+	}
+	defer func() { entityCommitFunc = savedFn }()
+
+	callEntityTool(t, entitySvc, map[string]any{
+		"action": "transition",
+		"id":     taskID,
+		"status": "active",
+	})
+
+	// Message must match "workflow(TASK-xxx): transition ready -> active"
+	if !strings.HasPrefix(capturedMsg, "workflow("+taskID+"): transition") {
+		t.Errorf("commit message = %q; want prefix %q", capturedMsg, "workflow("+taskID+"): transition")
+	}
+	if !strings.Contains(capturedMsg, "ready") || !strings.Contains(capturedMsg, "active") {
+		t.Errorf("commit message = %q; want it to contain from/to statuses", capturedMsg)
+	}
 }

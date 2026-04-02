@@ -79,7 +79,7 @@ func docTool(docSvc *service.DocumentService) server.ServerTool {
 				"designs, and plans. Use INSTEAD OF reading .kbz/state/documents/ files directly — "+
 				"get and list return structured metadata with approval status. "+
 				"Do NOT use for content analysis — use doc_intel instead. "+
-				"Actions: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate, record_false_positive. "+
+				"Actions: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate, record_false_positive, move, delete. "+
 				"For register: path, type, title required. For approve/get/content/validate/supersede/refresh/chain: "+
 				"id required (or ids for batch approve). "+
 				"Call register after writing a document, approve before advancing past a stage gate. "+
@@ -330,7 +330,7 @@ func docMoveAction(docSvc *service.DocumentService) ActionHandler {
 
 		// Commit state record + old path (deletion) + new path (addition) atomically (FR-B13).
 		repoRoot := docSvc.RepoRoot()
-		moveMsg := fmt.Sprintf("workflow(%s): move document to %s", docID, newPath)
+		moveMsg := fmt.Sprintf("workflow(%s): move to %s", docID, newPath)
 		if _, commitErr := docCommitPathsFunc(repoRoot, moveMsg, oldPath, newPath); commitErr != nil {
 			log.Printf("[doc] WARNING: auto-commit after move %s failed: %v", docID, commitErr)
 		}
@@ -369,7 +369,7 @@ func docDeleteAction(docSvc *service.DocumentService) ActionHandler {
 
 		// Commit state record removal + document file removal atomically (FR-B19).
 		repoRoot := docSvc.RepoRoot()
-		deleteMsg := fmt.Sprintf("workflow(%s): delete %s document", docID, result.Type)
+		deleteMsg := fmt.Sprintf("workflow(%s): delete %s", docID, result.Type)
 		if _, commitErr := docCommitPathsFunc(repoRoot, deleteMsg, filePath); commitErr != nil {
 			log.Printf("[doc] WARNING: auto-commit after delete %s failed: %v", docID, commitErr)
 		}

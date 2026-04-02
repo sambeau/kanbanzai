@@ -1543,3 +1543,729 @@ func TestAttachQualityEvaluation_Persistence(t *testing.T) {
 		t.Errorf("OverallScore = %g, want 0.75", got.QualityEvaluation.OverallScore)
 	}
 }
+
+// ─── MoveDocument tests (F01, AC-B12 through AC-B18) ─────────────────────────
+
+func TestMoveDocument_Success(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/spec/original.md"
+	newPath := "work/spec/renamed.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/spec"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("# Spec\n\nContent."), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Test Spec",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	result, err := svc.MoveDocument(MoveDocumentInput{
+		ID:      submitted.ID,
+		NewPath: newPath,
+	})
+	if err != nil {
+		t.Fatalf("MoveDocument: %v", err)
+	}
+
+	if result.Path != newPath {
+		t.Errorf("Path = %q, want %q", result.Path, newPath)
+	}
+	if result.ID != submitted.ID {
+		t.Errorf("ID = %q, want %q", result.ID, submitted.ID)
+	}
+	if result.ContentHash == "" {
+		t.Error("ContentHash should be set after move")
+	}
+
+	// Source file must no longer exist.
+	if _, statErr := os.Stat(filepath.Join(repoRoot, docPath)); !os.IsNotExist(statErr) {
+		t.Error("original file should have been removed by move")
+	}
+	// Destination file must exist.
+	if _, statErr := os.Stat(filepath.Join(repoRoot, newPath)); statErr != nil {
+		t.Errorf("destination file not found: %v", statErr)
+	}
+}
+
+func TestMoveDocument_FileNotFound(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	// Register the document then delete the file to simulate a missing source.
+	docPath := "work/spec/missing.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/spec"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Missing Spec",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+	if err := os.Remove(filepath.Join(repoRoot, docPath)); err != nil {
+		t.Fatalf("remove file: %v", err)
+	}
+
+	_, err = svc.MoveDocument(MoveDocumentInput{
+		ID:      submitted.ID,
+		NewPath: "work/spec/new.md",
+	})
+	if err == nil {
+		t.Error("expected error when source file is missing, got nil")
+	}
+}
+
+func TestMoveDocument_MissingFields(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	tests := []struct {
+		name  string
+		input MoveDocumentInput
+	}{
+		{"missing id", MoveDocumentInput{NewPath: "work/spec/new.md"}},
+		{"missing new_path", MoveDocumentInput{ID: "FEAT-123/specification-test"}},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := svc.MoveDocument(tc.input)
+			if err == nil {
+				t.Errorf("%s: expected error, got nil", tc.name)
+			}
+		})
+	}
+}
+
+func TestMoveDocument_UpdatesTypeFromPath(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	// Register as research, then move to a design path to trigger type inference (FR-B11).
+	docPath := "work/research/original.md"
+	newPath := "work/design/moved.md"
+	for _, dir := range []string{"work/research", "work/design"} {
+		if err := os.MkdirAll(filepath.Join(repoRoot, dir), 0o755); err != nil {
+			t.Fatalf("mkdir %s: %v", dir, err)
+		}
+	}
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "research",
+		Title:     "Research Doc",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	result, err := svc.MoveDocument(MoveDocumentInput{
+		ID:      submitted.ID,
+		NewPath: newPath,
+	})
+	if err != nil {
+		t.Fatalf("MoveDocument: %v", err)
+	}
+
+	if result.Type != "design" {
+		t.Errorf("Type = %q after move to design path, want %q", result.Type, "design")
+	}
+}
+
+// ─── DeleteDocument tests (F01, AC-B19 through AC-B26) ───────────────────────
+
+func TestDeleteDocument_DraftDocument(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/spec/to-delete.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/spec"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "To Delete",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	result, err := svc.DeleteDocument(DeleteDocumentInput{ID: submitted.ID})
+	if err != nil {
+		t.Fatalf("DeleteDocument: %v", err)
+	}
+
+	if result.ID != submitted.ID {
+		t.Errorf("result.ID = %q, want %q", result.ID, submitted.ID)
+	}
+	if result.Path != docPath {
+		t.Errorf("result.Path = %q, want %q", result.Path, docPath)
+	}
+
+	// Record must be gone from the store.
+	if _, loadErr := svc.store.Load(submitted.ID); loadErr == nil {
+		t.Error("document record still exists after deletion")
+	}
+	// File must be gone from disk.
+	if _, statErr := os.Stat(filepath.Join(repoRoot, docPath)); !os.IsNotExist(statErr) {
+		t.Error("document file still exists after deletion")
+	}
+}
+
+func TestDeleteDocument_ApprovedWithoutForce(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/spec/approved.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/spec"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Approved Spec",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+	if _, err := svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitted.ID,
+		ApprovedBy: "reviewer",
+	}); err != nil {
+		t.Fatalf("ApproveDocument: %v", err)
+	}
+
+	_, err = svc.DeleteDocument(DeleteDocumentInput{ID: submitted.ID})
+	if err == nil {
+		t.Error("expected error when deleting approved document without force, got nil")
+	}
+	if !strings.Contains(err.Error(), "force") {
+		t.Errorf("error message should mention force, got: %v", err)
+	}
+}
+
+func TestDeleteDocument_ApprovedWithForce(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/spec/approved.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/spec"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Approved Spec",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+	if _, err := svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitted.ID,
+		ApprovedBy: "reviewer",
+	}); err != nil {
+		t.Fatalf("ApproveDocument: %v", err)
+	}
+
+	_, err = svc.DeleteDocument(DeleteDocumentInput{ID: submitted.ID, Force: true})
+	if err != nil {
+		t.Fatalf("DeleteDocument(force=true): %v", err)
+	}
+
+	if _, loadErr := svc.store.Load(submitted.ID); loadErr == nil {
+		t.Error("document record still exists after forced deletion of approved document")
+	}
+}
+
+func TestDeleteDocument_ClearsEntityRef(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	mock := &mockEntityHook{entityType: "feature", status: "dev-planning"}
+	svc.SetEntityHook(mock)
+
+	docPath := "work/spec/owned.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/spec"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Owned Spec",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	// Reset recorded docRefs before the operation under test.
+	mock.docRefs = nil
+
+	if _, err := svc.DeleteDocument(DeleteDocumentInput{ID: submitted.ID}); err != nil {
+		t.Fatalf("DeleteDocument: %v", err)
+	}
+
+	// Entity hook must have been called to clear the doc ref.
+	if len(mock.docRefs) != 1 {
+		t.Fatalf("expected 1 docRef call to clear reference, got %d", len(mock.docRefs))
+	}
+	if mock.docRefs[0].docField != "spec" {
+		t.Errorf("docField = %q, want spec", mock.docRefs[0].docField)
+	}
+	if mock.docRefs[0].docID != "" {
+		t.Errorf("docID = %q, want empty string (clear)", mock.docRefs[0].docID)
+	}
+}
+
+func TestDeleteDocument_FileMissing_StillDeletes(t *testing.T) {
+	// FR-B20: missing file on disk is tolerated — record deletion must still succeed.
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/spec/gone.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/spec"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("content"), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Gone Spec",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	// Remove the file before calling DeleteDocument.
+	if err := os.Remove(filepath.Join(repoRoot, docPath)); err != nil {
+		t.Fatalf("remove file: %v", err)
+	}
+
+	_, err = svc.DeleteDocument(DeleteDocumentInput{ID: submitted.ID})
+	if err != nil {
+		t.Errorf("DeleteDocument should succeed even when file is missing, got: %v", err)
+	}
+	// Record must still be gone.
+	if _, loadErr := svc.store.Load(submitted.ID); loadErr == nil {
+		t.Error("document record still exists after deletion")
+	}
+}
+
+func TestDeleteDocument_MissingID(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	_, err := svc.DeleteDocument(DeleteDocumentInput{})
+	if err == nil {
+		t.Error("expected error for missing id, got nil")
+	}
+}
+
+// ─── AutoApprove tests (F01, AC-B02 through AC-B07) ──────────────────────────
+
+func TestSubmitDocument_AutoApprove_DevPlan(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/dev-plan/plan.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/dev-plan"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("# Dev Plan\n\nContent."), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	result, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:        docPath,
+		Type:        "dev-plan",
+		Title:       "Feature Dev Plan",
+		Owner:       "FEAT-123",
+		CreatedBy:   "tester",
+		AutoApprove: true,
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument(AutoApprove=true): %v", err)
+	}
+
+	if result.Status != string(model.DocumentStatusApproved) {
+		t.Errorf("Status = %q, want %q", result.Status, model.DocumentStatusApproved)
+	}
+	if result.ApprovedBy != "tester" {
+		t.Errorf("ApprovedBy = %q, want %q", result.ApprovedBy, "tester")
+	}
+	if result.ApprovedAt == nil {
+		t.Error("ApprovedAt should be set for auto-approved document")
+	}
+}
+
+func TestSubmitDocument_AutoApprove_DisallowedType(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/design/design.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/design"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("# Design\n\nContent."), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	_, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:        docPath,
+		Type:        "design",
+		Title:       "Feature Design",
+		Owner:       "FEAT-123",
+		CreatedBy:   "tester",
+		AutoApprove: true,
+	})
+	if err == nil {
+		t.Fatal("expected error for auto_approve on disallowed type, got nil")
+	}
+
+	// Orphan prevention: the draft record must have been cleaned up.
+	docs, listErr := svc.ListDocuments(DocumentFilters{})
+	if listErr != nil {
+		t.Fatalf("ListDocuments: %v", listErr)
+	}
+	if len(docs) != 0 {
+		t.Errorf("expected 0 documents after failed auto_approve, got %d (orphan leak)", len(docs))
+	}
+}
+
+func TestSubmitDocument_AutoApprove_NoCascade(t *testing.T) {
+	// AC-C07: auto-approving a dev-plan must not cascade the feature to developing.
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	mock := &mockEntityHook{entityType: "feature", status: "dev-planning"}
+	svc.SetEntityHook(mock)
+
+	docPath := "work/dev-plan/plan.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/dev-plan"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("# Dev Plan\n\nContent."), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	_, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:        docPath,
+		Type:        "dev-plan",
+		Title:       "Dev Plan",
+		Owner:       "FEAT-123",
+		CreatedBy:   "tester",
+		AutoApprove: true,
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument(AutoApprove=true): %v", err)
+	}
+
+	// No status transition should have been triggered on the feature.
+	for _, tc := range mock.transitions {
+		if tc.entityID == "FEAT-123" && tc.newStatus == "developing" {
+			t.Errorf("auto_approve triggered a cascade to 'developing'; it must not (AC-C07)")
+		}
+	}
+}
+
+// ─── Dev-plan cascade removal test (F02, AC-C01) ─────────────────────────────
+
+func TestApproveDocument_DevPlanApproval_NoCascade(t *testing.T) {
+	// AC-C01: approving a dev-plan must NOT transition the owning feature.
+	// The feature stays in dev-planning; an explicit entity(transition) is required.
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	mock := &mockEntityHook{entityType: "feature", status: "dev-planning"}
+	svc.SetEntityHook(mock)
+
+	docPath := "work/dev-plan/plan.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/dev-plan"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("# Dev Plan\n\nContent."), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "dev-plan",
+		Title:     "Dev Plan",
+		Owner:     "FEAT-123",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	// Reset recorded transitions before the approval under test.
+	mock.transitions = nil
+
+	approveResult, err := svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitted.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err != nil {
+		t.Fatalf("ApproveDocument: %v", err)
+	}
+
+	if approveResult.Status != string(model.DocumentStatusApproved) {
+		t.Errorf("Status = %q, want %q", approveResult.Status, model.DocumentStatusApproved)
+	}
+
+	// No status transition must have been triggered on the feature.
+	if len(mock.transitions) != 0 {
+		t.Errorf("expected 0 transitions after dev-plan approval, got %d: %v",
+			len(mock.transitions), mock.transitions)
+	}
+
+	// EntityTransition field in the result must be nil.
+	if approveResult.EntityTransition != nil {
+		t.Errorf("EntityTransition = %+v, want nil (dev-plan approval must not cascade feature)",
+			approveResult.EntityTransition)
+	}
+}
+
+// ─── Section validation integration tests (F04, AC-D05, AC-D06) ──────────────
+
+func TestSubmitDocument_SectionProvider_Warnings(t *testing.T) {
+	// AC-D05: when a sectionProvider is set and required sections are missing,
+	// SubmitDocument must populate result.Warnings but still succeed.
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	// Set a section provider that requires two sections.
+	svc.SetSectionProvider(func(docType string) []string {
+		if docType == "specification" {
+			return []string{"Overview", "Acceptance Criteria"}
+		}
+		return nil
+	})
+
+	// Write a file with only one of the required sections.
+	docPath := "work/spec/partial.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/spec"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	content := "# Spec\n\n## Overview\n\nThis is the overview.\n"
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte(content), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	result, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Partial Spec",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument should succeed with missing sections (warn-only), got: %v", err)
+	}
+
+	// Result must contain a warning about the missing section.
+	if len(result.Warnings) == 0 {
+		t.Fatal("expected Warnings to be non-empty for document with missing sections")
+	}
+	foundWarning := false
+	for _, w := range result.Warnings {
+		if strings.Contains(w, "Acceptance Criteria") {
+			foundWarning = true
+			break
+		}
+	}
+	if !foundWarning {
+		t.Errorf("expected warning about 'Acceptance Criteria', got: %v", result.Warnings)
+	}
+}
+
+func TestApproveDocument_SectionProvider_BlocksOnMissing(t *testing.T) {
+	// AC-D06: when a sectionProvider is set and required sections are missing,
+	// ApproveDocument must return an error and not write the approved record.
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	// Set a section provider that requires two sections.
+	svc.SetSectionProvider(func(docType string) []string {
+		if docType == "specification" {
+			return []string{"Overview", "Acceptance Criteria"}
+		}
+		return nil
+	})
+
+	// Write a file missing "Acceptance Criteria".
+	docPath := "work/spec/incomplete.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/spec"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	content := "# Spec\n\n## Overview\n\nJust the overview, no AC section.\n"
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte(content), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Incomplete Spec",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	_, err = svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitted.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err == nil {
+		t.Fatal("expected error when approving document with missing required sections, got nil")
+	}
+	if !strings.Contains(err.Error(), "Acceptance Criteria") {
+		t.Errorf("error should mention missing section name, got: %v", err)
+	}
+
+	// Document must still be in draft status — not written as approved.
+	got, getErr := svc.GetDocument(submitted.ID, false)
+	if getErr != nil {
+		t.Fatalf("GetDocument: %v", getErr)
+	}
+	if got.Status != string(model.DocumentStatusDraft) {
+		t.Errorf("Status = %q after blocked approval, want %q", got.Status, model.DocumentStatusDraft)
+	}
+}
+
+func TestApproveDocument_SectionProvider_PassesWhenAllPresent(t *testing.T) {
+	// When all required sections are present, ApproveDocument must succeed.
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	svc.SetSectionProvider(func(docType string) []string {
+		if docType == "specification" {
+			return []string{"Overview", "Acceptance Criteria"}
+		}
+		return nil
+	})
+
+	docPath := "work/spec/complete.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/spec"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	content := "# Spec\n\n## Overview\n\nDetails.\n\n## Acceptance Criteria\n\n- AC1\n"
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte(content), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Complete Spec",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	result, err := svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitted.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err != nil {
+		t.Fatalf("ApproveDocument should succeed when all required sections present: %v", err)
+	}
+	if result.Status != string(model.DocumentStatusApproved) {
+		t.Errorf("Status = %q, want approved", result.Status)
+	}
+}

@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -1478,5 +1479,131 @@ func TestDocImport_DryRun_SummaryCounts(t *testing.T) {
 	}
 	if int(wouldSkipCount) != len(wouldSkip) {
 		t.Errorf("summary.would_skip=%v != len(would_skip)=%d", wouldSkipCount, len(wouldSkip))
+	}
+}
+
+// ─── Auto-commit injection tests (F03, AC-A12, AC-A13) ───────────────────────
+
+// TestDocTool_Register_AutoCommit_MessageFormat verifies that docCommitPathsFunc
+// is called with the correct "workflow(<id>): register <type>" format.
+func TestDocTool_Register_AutoCommit_MessageFormat(t *testing.T) {
+	// Not parallel: modifies package-level docCommitPathsFunc.
+	env := setupDocToolTest(t)
+	writeDocFile(t, env.repoRoot, "work/spec/msg-fmt.md", "# Spec\n\nContent.")
+
+	var capturedMsg string
+	savedFn := docCommitPathsFunc
+	docCommitPathsFunc = func(repoRoot, message string, extraPaths ...string) (bool, error) {
+		capturedMsg = message
+		return false, nil
+	}
+	defer func() { docCommitPathsFunc = savedFn }()
+
+	callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/spec/msg-fmt.md",
+		"type":   "specification",
+		"title":  "Message Format Spec",
+	})
+
+	if !strings.HasPrefix(capturedMsg, "workflow(") {
+		t.Errorf("commit message = %q; want prefix \"workflow(\"", capturedMsg)
+	}
+	if !strings.Contains(capturedMsg, "): register specification") {
+		t.Errorf("commit message = %q; want it to contain \": register specification\"", capturedMsg)
+	}
+}
+
+// TestDocTool_Register_AutoCommit_FailureDoesNotBlockResult verifies that a
+// commit failure does not prevent the register result from being returned
+// (best-effort semantics, AC-A13).
+func TestDocTool_Register_AutoCommit_FailureDoesNotBlockResult(t *testing.T) {
+	// Not parallel: modifies package-level docCommitPathsFunc.
+	env := setupDocToolTest(t)
+	writeDocFile(t, env.repoRoot, "work/spec/commit-fail.md", "# Spec\n\nContent.")
+
+	savedFn := docCommitPathsFunc
+	docCommitPathsFunc = func(repoRoot, message string, extraPaths ...string) (bool, error) {
+		return false, fmt.Errorf("simulated git commit failure")
+	}
+	defer func() { docCommitPathsFunc = savedFn }()
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/spec/commit-fail.md",
+		"type":   "specification",
+		"title":  "Commit Fail Spec",
+	})
+
+	// Must not contain a top-level error — commit failure is non-blocking.
+	if _, hasErr := resp["error"]; hasErr {
+		t.Errorf("register returned error after commit failure; should proceed normally: %v", resp["error"])
+	}
+	doc, ok := resp["document"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected document field in response, got: %v", resp)
+	}
+	if doc["status"] != "draft" {
+		t.Errorf("document status = %q, want draft", doc["status"])
+	}
+}
+
+// TestDocTool_Approve_AutoCommit_MessageFormat verifies that docCommitFunc is
+// called with the correct "workflow(<id>): approve <type>" format.
+func TestDocTool_Approve_AutoCommit_MessageFormat(t *testing.T) {
+	// Not parallel: modifies package-level docCommitFunc.
+	env := setupDocToolTest(t)
+
+	docID := registerDoc(t, env, "work/design/approve-fmt.md", "design", "Approve Format Design")
+
+	var capturedMsg string
+	savedFn := docCommitFunc
+	docCommitFunc = func(repoRoot, message string) (bool, error) {
+		capturedMsg = message
+		return false, nil
+	}
+	defer func() { docCommitFunc = savedFn }()
+
+	callDoc(t, env, map[string]any{
+		"action": "approve",
+		"id":     docID,
+	})
+
+	if !strings.HasPrefix(capturedMsg, "workflow(") {
+		t.Errorf("commit message = %q; want prefix \"workflow(\"", capturedMsg)
+	}
+	if !strings.Contains(capturedMsg, "): approve design") {
+		t.Errorf("commit message = %q; want it to contain \": approve design\"", capturedMsg)
+	}
+}
+
+// TestDocTool_Approve_AutoCommit_FailureDoesNotBlockResult verifies that a
+// commit failure after approve does not prevent the result from being returned.
+func TestDocTool_Approve_AutoCommit_FailureDoesNotBlockResult(t *testing.T) {
+	// Not parallel: modifies package-level docCommitFunc.
+	env := setupDocToolTest(t)
+
+	docID := registerDoc(t, env, "work/design/approve-fail.md", "design", "Approve Fail Design")
+
+	savedFn := docCommitFunc
+	docCommitFunc = func(repoRoot, message string) (bool, error) {
+		return false, fmt.Errorf("simulated git commit failure")
+	}
+	defer func() { docCommitFunc = savedFn }()
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "approve",
+		"id":     docID,
+	})
+
+	if _, hasErr := resp["error"]; hasErr {
+		t.Errorf("approve returned error after commit failure; should proceed normally: %v", resp["error"])
+	}
+	doc, ok := resp["document"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected document field in response, got: %v", resp)
+	}
+	if doc["status"] != "approved" {
+		t.Errorf("document status = %q, want approved", doc["status"])
 	}
 }

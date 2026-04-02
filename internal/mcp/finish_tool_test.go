@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"strings"
 	"testing"
 	"time"
@@ -1671,5 +1672,103 @@ func TestFinish_SummaryLengthLimit(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+// ─── Auto-commit injection tests (F03, AC-A06, AC-A07, AC-A13) ───────────────
+
+// TestFinish_AutoCommit_MessageFormat verifies that finishCommitFunc is called
+// with the correct "workflow(TASK-xxx): complete – <summary>" format (AC-A06).
+func TestFinish_AutoCommit_MessageFormat(t *testing.T) {
+	// Not parallel: modifies package-level finishCommitFunc.
+	entitySvc, dispatchSvc := setupFinishTest(t)
+	taskID, taskSlug := setupFinishScenario(t, entitySvc, "commit-fmt")
+	advanceToActive(t, entitySvc, taskID, taskSlug)
+
+	var capturedMsg string
+	savedFn := finishCommitFunc
+	finishCommitFunc = func(repoRoot, message string) (bool, error) {
+		capturedMsg = message
+		return false, nil
+	}
+	defer func() { finishCommitFunc = savedFn }()
+
+	callFinish(t, entitySvc, dispatchSvc, map[string]any{
+		"task_id": taskID,
+		"summary": "Implemented the feature",
+	})
+
+	// Message must match "workflow(TASK-xxx): complete – <summary>"
+	if !strings.HasPrefix(capturedMsg, "workflow("+taskID+"): complete") {
+		t.Errorf("commit message = %q; want prefix %q", capturedMsg, "workflow("+taskID+"): complete")
+	}
+	if !strings.Contains(capturedMsg, "Implemented the feature") {
+		t.Errorf("commit message = %q; want it to contain the summary", capturedMsg)
+	}
+}
+
+// TestFinish_AutoCommit_FailureDoesNotBlockResult verifies that a commit failure
+// does not prevent the task completion result from being returned (AC-A13,
+// best-effort semantics).
+func TestFinish_AutoCommit_FailureDoesNotBlockResult(t *testing.T) {
+	// Not parallel: modifies package-level finishCommitFunc.
+	entitySvc, dispatchSvc := setupFinishTest(t)
+	taskID, taskSlug := setupFinishScenario(t, entitySvc, "commit-fail-result")
+	advanceToActive(t, entitySvc, taskID, taskSlug)
+
+	savedFn := finishCommitFunc
+	finishCommitFunc = func(repoRoot, message string) (bool, error) {
+		return false, fmt.Errorf("simulated git commit failure")
+	}
+	defer func() { finishCommitFunc = savedFn }()
+
+	resp := callFinishJSON(t, entitySvc, dispatchSvc, map[string]any{
+		"task_id": taskID,
+		"summary": "Done despite commit failure",
+	})
+
+	// Must not contain a top-level error.
+	if _, hasErr := resp["error"]; hasErr {
+		t.Errorf("finish returned error after commit failure; should proceed normally: %v", resp["error"])
+	}
+	taskData, ok := resp["task"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected task field in response, got: %v", resp)
+	}
+	if taskData["status"] != "done" {
+		t.Errorf("task status = %q, want done", taskData["status"])
+	}
+}
+
+// TestFinish_BatchAutoCommit_SingleCommit verifies that batch finish produces
+// a single commit covering all tasks, not one commit per task (AC-A07).
+func TestFinish_BatchAutoCommit_SingleCommit(t *testing.T) {
+	// Not parallel: modifies package-level finishCommitFunc.
+	entitySvc, dispatchSvc := setupFinishTest(t)
+
+	// Create and activate two tasks.
+	taskID1, taskSlug1 := setupFinishScenario(t, entitySvc, "batch-commit-1")
+	taskID2, taskSlug2 := setupFinishScenario(t, entitySvc, "batch-commit-2")
+	advanceToActive(t, entitySvc, taskID1, taskSlug1)
+	advanceToActive(t, entitySvc, taskID2, taskSlug2)
+
+	var commitCount int
+	savedFn := finishCommitFunc
+	finishCommitFunc = func(repoRoot, message string) (bool, error) {
+		commitCount++
+		return false, nil
+	}
+	defer func() { finishCommitFunc = savedFn }()
+
+	callFinish(t, entitySvc, dispatchSvc, map[string]any{
+		"tasks": []any{
+			map[string]any{"task_id": taskID1, "summary": "Task 1 done"},
+			map[string]any{"task_id": taskID2, "summary": "Task 2 done"},
+		},
+	})
+
+	// Batch must result in exactly one commit, not two.
+	if commitCount != 1 {
+		t.Errorf("batch finish triggered %d commits, want exactly 1 (AC-A07)", commitCount)
 	}
 }
