@@ -10,7 +10,7 @@ description: >
   and refresh rules still apply.
 metadata:
   kanbanzai-managed: "true"
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # SKILL: Kanbanzai Documents
@@ -27,6 +27,21 @@ and the approval workflow that makes them authoritative.
 - When approving a document or checking whether it is ready for approval
 - When editing a document that has already been registered
 - When unsure which document type or directory to use
+
+## Vocabulary
+
+| Term | Definition |
+|------|------------|
+| **document record** | The YAML metadata file in `.kbz/state/documents/` that tracks a document's type, status, content hash, and ownership |
+| **content hash** | A hash of the document's file contents, recorded at registration and checked at approval to ensure what was reviewed is what gets approved |
+| **document type** | One of `design`, `specification`, `dev-plan`, `research`, `report`, or `policy` — determines how the system treats the document in lifecycle gates |
+| **document approval** | Calling `doc(action: "approve")` to transition a document from `draft` to `approved`, binding the approval to the current content hash |
+| **document registration** | Calling `doc(action: "register")` to create a document record, making the document visible to the workflow system |
+| **supersession** | Replacing an approved document with a newer version via `doc(action: "supersede")`, marking the old document as `superseded` |
+| **document drift** | The state where a registered document's file contents no longer match its stored content hash, typically after editing |
+| **hash refresh** | Calling `doc(action: "refresh")` to update a document record's content hash to match current file contents |
+| **document owner** | The parent Plan or Feature ID that a document is associated with, set via the `owner` field at registration |
+| **document chain** | The succession history of a document — its predecessors and replacements, retrieved via `doc(action: "chain")` |
 
 ---
 
@@ -160,32 +175,51 @@ no longer authoritative.
 
 ## Anti-Patterns
 
-**Creating documents without registering them.** An unregistered document is invisible to the workflow system — it won't appear in document gap analysis, won't be tracked for staleness, and won't participate in lifecycle gates. Every document in a configured document root must be registered.
+### Unregistered Document
 
-**Editing an approved document without refreshing.** When you edit a document that has `approved` status, its content hash changes but the approval status doesn't automatically update. Call `doc(action: refresh)` after significant edits so the system detects the drift and demotes the document back to `draft` for re-approval.
+- **Detect:** A design, spec, or plan document exists on disk but has no
+  document record in `.kbz/state/documents/`.
+- **BECAUSE:** Unregistered documents are invisible to the workflow system —
+  stage gates can't check prerequisites, and other agents can't discover the
+  document through MCP tools.
+- **Resolve:** Call `doc(action: "register")` immediately after creating any
+  document.
 
-**Registering with the wrong type.** A specification registered as `design` won't be found when the system checks for specification prerequisites. Check the Document Types table — the type determines how the system treats the document in lifecycle gates.
+### Stale Content Hash
+
+- **Detect:** `doc(action: "approve")` fails with a content hash mismatch.
+- **BECAUSE:** The file was edited after registration, so the stored hash no
+  longer matches disk. Approval binds to a specific content version.
+- **Resolve:** Call `doc(action: "refresh")` to update the hash, then
+  re-approve.
+
+### Silent Supersession
+
+- **Detect:** An approved document is edited directly instead of creating a
+  replacement and superseding.
+- **BECAUSE:** The approval is tied to the content hash. Editing voids the
+  approval silently — downstream consumers see "approved" but the content
+  has drifted.
+- **Resolve:** Create a new document, register it, and call
+  `doc(action: "supersede")` on the old one.
 
 ---
 
 ## Gotchas
 
 - **Forgot to register.** If you create a file in `work/` and forget to call
-  `doc` action: `register`, the document is invisible to the system — no approval
-  workflow, no document intelligence, no health check coverage. This is the
-  single most common mistake. Run `doc(action="import", path="work")` as a
-  safety net if unsure.
-- **Editing after approval.** If you edit an approved document, the approval
-  is silently void — the content hash no longer matches. You must notify the
-  human and re-approve. Do not assume the approval still holds.
+  `doc` action: `register`, the document is invisible to the system. Run
+  `doc(action="import", path="work")` as a safety net if unsure.
 - **Design in the wrong place.** Design decisions belong in `work/design/`,
-  not `work/plan/`. If a planning document starts containing architecture
-  decisions, move that content to a design document. See `kanbanzai-workflow`
-  for the emergency brake rules.
+  not `work/plan/`. If a planning document contains architecture decisions,
+  move that content to a design document.
+- **Registering with the wrong type.** A specification registered as `design`
+  won't be found when the system checks for specification prerequisites.
+  Check the Document Types table — the type determines how the system treats
+  the document in lifecycle gates.
 - **Tool call fails.** If `doc` action: `register` or `doc` action: `approve`
-  returns an error, read the message — it usually explains the problem (wrong
-  type, drifted hash, document already exists). Do not retry with the same
-  arguments. Fix the underlying issue first.
+  returns an error, read the message — it explains the problem. Do not retry
+  with the same arguments. Fix the underlying issue first.
 
 ---
 
@@ -210,11 +244,35 @@ git commit -m "workflow(PROJECT): register new documents with system"
 
 ## Output Templates
 
-When producing specific document types, use these templates as structural guides:
+When producing specific document types, use these templates as structural
+guides:
 
-- **Specifications:** See `work/templates/specification-prompt-template.md` for required sections and example requirements
-- **Implementation plans:** See `work/templates/implementation-plan-prompt-template.md` for task breakdown structure
-- **Reviews:** See `work/templates/review-prompt-template.md` for finding format and severity levels
+- **Specifications:** `work/templates/specification-prompt-template.md`
+- **Implementation plans:** `work/templates/implementation-plan-prompt-template.md`
+- **Reviews:** `work/templates/review-prompt-template.md`
+
+---
+
+## Evaluation Criteria
+
+| # | Question | Weight |
+|---|----------|--------|
+| 1 | Was every new document registered via `doc(action: "register")` immediately after creation? | required |
+| 2 | Was `doc(action: "approve")` called immediately when approval was signalled? | required |
+| 3 | Were edited approved documents handled via supersession rather than direct edit? | high |
+| 4 | Was `doc(action: "refresh")` used to resolve content hash mismatches before re-approval? | high |
+
+---
+
+## Questions This Skill Answers
+
+- How do I register a new document?
+- How do I approve a document?
+- What do I do when approval fails with a hash mismatch?
+- How do I supersede an old document?
+- What document types does the system support?
+- When should I call `doc(action: "refresh")`?
+- How do I check if all specs for a plan are approved?
 
 ---
 
@@ -222,4 +280,4 @@ When producing specific document types, use these templates as structural guides
 
 - `kanbanzai-getting-started` — session orientation
 - `kanbanzai-workflow` — stage gates that depend on document approval
-- `kanbanzai-design` — the design process that produces design documents
+- `write-design` — the design process that produces design documents

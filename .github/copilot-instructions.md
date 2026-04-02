@@ -81,10 +81,7 @@ conventions, and tool usage. They complement the task-execution skills above.
 | **Workflow** | `.agents/skills/kanbanzai-workflow/SKILL.md` | Stage gates, lifecycle transitions, when to stop and ask |
 | **Agents** | `.agents/skills/kanbanzai-agents/SKILL.md` | Task dispatch, commits, knowledge, sub-agent spawning |
 | **Documents** | `.agents/skills/kanbanzai-documents/SKILL.md` | Creating, registering, approving documents |
-| **Design** | `.agents/skills/kanbanzai-design/SKILL.md` | Design documents, alternatives, quality assessment |
 | **Planning** | `.agents/skills/kanbanzai-planning/SKILL.md` | Scoping work, feature vs plan decisions |
-| **Code review** | `.agents/skills/kanbanzai-code-review/SKILL.md` | Review procedure, finding classification, verdicts |
-| **Plan review** | `.agents/skills/kanbanzai-plan-review/SKILL.md` | Plan completion verification, delivery review |
 
 ## Codebase knowledge graph skills (`.github/skills/`)
 

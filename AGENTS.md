@@ -27,6 +27,20 @@ Examples:
 - `kanbanzai serve` (MCP server, launched by MCP client)
 - `.kbz/state/` (instance directory on disk)
 
+## Key Terms
+
+| Term | Meaning |
+|------|---------|
+| **stage binding** | An entry in `.kbz/stage-bindings.yaml` that maps a workflow stage to its role, skill, and prerequisites |
+| **role** | A YAML file in `.kbz/roles/` defining agent identity, vocabulary, anti-patterns, and tool constraints |
+| **skill** | A `SKILL.md` file defining the procedure, checklist, and evaluation criteria for a specific task type |
+| **lifecycle gate** | A prerequisite check that must pass before a feature can advance to the next workflow stage |
+| **context packet** | The assembled bundle of role instructions, spec sections, knowledge entries, and file paths delivered to an agent via `next` or `handoff` |
+
+## Task-Execution Skills and Stage Bindings
+
+When working on a task, `.kbz/stage-bindings.yaml` maps each workflow stage (designing, specifying, dev-planning, developing, reviewing) to the role and skill that apply. Read the binding for your current stage to know what role to adopt and which skill procedure to follow. Task-execution skills live in `.kbz/skills/`; system skills (how to use the Kanbanzai workflow itself) live in `.agents/skills/`.
+
 ## Self-Managed Development
 
 Kanbanzai manages its own development — this project uses the tool it is building. The workflow rules, stage gates, and lifecycle states are defined in the `.agents/skills/kanbanzai-*/SKILL.md` files (the product interface) and enforced by the MCP tools. This file (`AGENTS.md`) contains only project-specific instructions for developing the kanbanzai server itself.
@@ -40,26 +54,26 @@ kanbanzai/
 ├── cmd/kanbanzai/         ← binary entry point (CLI and MCP server)
 ├── internal/              ← core logic (shared by MCP server and CLI)
 │   ├── cache/             ← local derived SQLite cache
-│   ├── cleanup/           ← post-merge cleanup scheduling and execution (Phase 3)
-│   ├── config/            ← project configuration and prefix registry (Phase 2a + Phase 2b user identity)
-│   ├── context/           ← context profiles, inheritance resolution, and assembly (Phase 2b)
+│   ├── cleanup/           ← post-merge cleanup scheduling and execution
+│   ├── config/            ← project configuration and prefix registry
+│   ├── context/           ← context profiles, inheritance resolution, and assembly
 │   ├── core/              ← instance paths and root utilities
 │   ├── docint/            ← document intelligence (structural parsing, classification, graph)
 │   ├── fsutil/            ← filesystem utilities (atomic write)
-│   ├── git/               ← Git operations, branch tracking, staleness detection (Phase 3)
-│   ├── github/            ← GitHub API client, PR operations (Phase 3)
-│   ├── health/            ← health check categories and formatting (Phase 3)
+│   ├── git/               ← Git operations, branch tracking, staleness detection
+│   ├── github/            ← GitHub API client, PR operations
+│   ├── health/            ← health check categories and formatting
 │   ├── id/                ← canonical ID allocation and display formatting
-│   ├── knowledge/         ← deduplication, confidence scoring, link resolution (Phase 2b), TTL pruning, promotion, compaction (Phase 3)
-│   ├── checkpoint/        ← human checkpoint creation and management (Phase 4a)
-│   ├── mcp/               ← MCP server and 22 workflow-oriented 2.0 tools across 7 feature groups (Kanbanzai 2.0)
-│   ├── merge/             ← merge gate definitions, checker, override (Phase 3)
+│   ├── knowledge/         ← deduplication, confidence scoring, TTL pruning, promotion
+│   ├── checkpoint/        ← human checkpoint creation and management
+│   ├── mcp/               ← MCP server and workflow-oriented tools
+│   ├── merge/             ← merge gate definitions, checker, override
 │   ├── model/             ← entity type definitions and ID utilities
 │   ├── service/           ← entity, plan, and document record service logic
 │   ├── storage/           ← canonical YAML entity and document record storage
 │   ├── testutil/          ← shared test helpers
 │   ├── validate/          ← lifecycle state machines, health checks
-│   └── worktree/          ← worktree store, git worktree operations, naming (Phase 3)
+│   └── worktree/          ← worktree store, git worktree operations, naming
 ├── docs/                  ← user-facing and reference documentation (reserved for later)
 ├── work/                  ← active design, spec, planning, and research documents
 │   ├── bootstrap/         ← historical process documents
@@ -70,60 +84,39 @@ kanbanzai/
 │   └── reviews/           ← feature and bug review reports from the reviewing lifecycle gate
 └── .kbz/                  ← instance root (project-local workflow state, not committed)
     ├── config.yaml        ← project configuration including prefix registry
-    ├── local.yaml            ← per-machine settings, not committed (Phase 2b)
+    ├── local.yaml         ← per-machine settings, not committed
     ├── state/             ← canonical entity records (plans, features, tasks, etc.)
-    │   ├── plans/         ← Plan entity files (Phase 2a)
-    │   ├── documents/     ← document metadata records (Phase 2a)
-    │   ├── knowledge/     ← KnowledgeEntry records (Phase 2b)
-    │   ├── worktrees/     ← worktree tracking records (Phase 3)
+    │   ├── plans/         ← Plan entity files
+    │   ├── documents/     ← document metadata records
+    │   ├── knowledge/     ← KnowledgeEntry records
+    │   ├── worktrees/     ← worktree tracking records
     │   └── ...            ← other entity type directories
     ├── context/
-    │   └── roles/            ← context profile YAML files (Phase 2b)
+    │   └── roles/         ← context profile YAML files
     ├── index/             ← document intelligence index (structural, graph, concepts)
     └── cache/             ← derived local cache (not committed)
 ```
 
 ## Before Every Task — Required Checklist
 
-**Copy this checklist. Complete every item before writing any code or documents.**
-
 - [ ] Run `git status`. Act on what you find:
   - Changes from previous work are coherent and complete → **commit them now**, then proceed
   - Changes are incomplete or belong to a different task → inform the human, **do not stash** or discard
   - Working tree is clean → proceed
 - [ ] Confirm you are on the correct branch for this task (or `main` if starting fresh)
-- [ ] Read this file (`AGENTS.md`) if you haven't already this session
-- [ ] If the task involves design decisions, read the relevant spec or design document before touching any file
 
-**Why this matters:** Uncommitted changes from a previous task bleed into your new work. This makes commits meaningless (one commit covers two unrelated tasks), makes `git bisect` impossible, and makes code review confusing. One task = one clean commit history. This step is not optional.
+One task = one clean commit history. Uncommitted changes from a previous task make commits meaningless and code review confusing.
 
-## Document Reading Order
+## Documents and Decisions
 
-Essential reads (in order):
-
-1. `work/design/workflow-design-basis.md` — consolidated design vision
-2. `work/design/document-centric-interface.md` — document-centric human interface model
-3. `work/design/agent-interaction-protocol.md` — agent behavior and normalization protocol
-4. `work/design/quality-gates-and-review-policy.md` — review expectations and quality gates
-5. `work/design/git-commit-policy.md` — commit message and commit discipline policy
-
-For phase-specific specifications, plans, and decisions, see [`refs/document-map.md`](refs/document-map.md).
-
-## Key Design Documents by Topic
-
-See [`refs/document-map.md`](refs/document-map.md) for the full document-to-topic mapping.
-
-## Decision-Making Rules
+For design documents, specifications, plans, and decision logs by topic, see [`refs/document-map.md`](refs/document-map.md).
 
 When making a non-trivial change to any document or code:
 
 1. Identify which spec or design document owns the topic.
-2. Check `work/plan/phase-1-decision-log.md` — there are 12 accepted architectural decisions covering ID allocation, YAML format, lifecycle transitions, required fields, file layout, and more. Do not reinvent or contradict them.
-3. Check `work/plan/phase-2-decision-log.md` — there are Phase 2 architectural decisions (P2-DEC-001 through P2-DEC-004) covering context profiles, knowledge management, and related topics. Do not reinvent or contradict them.
-4. Check `work/plan/phase-3-decision-log.md` — there are Phase 3 design decisions (P3-DES-001 through P3-DES-008) covering worktree lifecycle, branch naming, merge gates, PR scope, and cleanup behavior. Do not reinvent or contradict them.
-5. Check `work/plan/phase-4-decision-log.md` — there are Phase 4 design decisions (P4-DES-001 through P4-DES-007) covering phase split, estimation, self-management thresholds, dependency modelling, agent delegation, incidents/RCA, and document store deprecation. Do not reinvent or contradict them.
-6. Check whether the design basis or specification says something different from what you intend.
-7. If there is a conflict or ambiguity, surface it to the human rather than guessing.
+2. Check for prior decisions — use `refs/document-map.md` to locate the relevant decision log, or query `knowledge(action: "list")` for project-level decisions. Do not reinvent or contradict existing decisions.
+3. Check whether the design basis or specification says something different from what you intend.
+4. If there is a conflict or ambiguity, surface it to the human rather than guessing.
 
 ## Git Discipline
 

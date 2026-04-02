@@ -2,4 +2,6 @@ id: TASK-01KN70AAMTNR0
 parent_feature: FEAT-01KN6ZA4NYJ25
 slug: migrate-review-plan
 summary: "Port criterion-by-criterion spec conformance, cross-cutting checks, retrospective step, document registration, and prerequisites from kanbanzai-plan-review into review-plan SKILL.md (FR-008 to FR-011)"
-status: ready
+status: done
+completed: "2026-04-02T11:58:49Z"
+completion_summary: "Migrated prerequisites section, criterion-by-criterion spec conformance with per-feature tables, cross-cutting checks (go test, health, git status), retrospective contribution step, and document registration step into review-plan SKILL.md. 405 lines."
