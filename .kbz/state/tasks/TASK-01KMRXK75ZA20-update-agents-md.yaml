@@ -1,6 +1,7 @@
 id: TASK-01KMRXK75ZA20
 parent_feature: FEAT-01KMRX1SEQV49
 slug: update-agents-md
+name: Update agents md
 summary: "Update AGENTS.md: add a clear statement that code review is a mandatory feature lifecycle gate (developing → reviewing → done, no shortcut); add a cross-reference to .skills/code-review.md for review expectations; identify and remove any inline review instructions that duplicate what is now in the SKILL. Covers spec AC-G-01 through AC-G-03."
 status: done
 depends_on:

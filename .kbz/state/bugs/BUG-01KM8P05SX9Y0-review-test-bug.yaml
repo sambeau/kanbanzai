@@ -1,6 +1,6 @@
 id: BUG-01KM8P05SX9Y0
 slug: review-test-bug
-title: Bootstrap bug creation test
+name: Bootstrap bug creation test
 status: reported
 severity: medium
 priority: medium

@@ -1,5 +1,6 @@
 id: FEAT-01KMWJ3ZQZF5R
 slug: default-roles
+name: Default roles
 parent: P11-fresh-install-experience
 status: developing
 summary: "kbz init installs base.yaml (scaffold) and reviewer.yaml (fully populated, kanbanzai-managed) into .kbz/context/roles/ on new projects. Adds --skip-roles flag and extends --update-skills scope to include managed role files."

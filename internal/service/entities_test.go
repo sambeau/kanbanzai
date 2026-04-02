@@ -38,7 +38,7 @@ func TestEntityService_CreateEpic(t *testing.T) {
 
 	got, err := service.CreateEpic(CreateEpicInput{
 		Slug:      "phase 1 kernel",
-		Title:     "Phase 1 Kernel",
+		Name:      "Phase 1 Kernel",
 		Summary:   "Build the initial workflow kernel",
 		CreatedBy: "sam",
 	})
@@ -63,7 +63,7 @@ func TestEntityService_CreateEpic(t *testing.T) {
 	wantState := map[string]any{
 		"id":         "EPIC-PHASE-1-KERNEL",
 		"slug":       "phase-1-kernel",
-		"title":      "Phase 1 Kernel",
+		"name":       "Phase 1 Kernel",
 		"status":     "proposed",
 		"summary":    "Build the initial workflow kernel",
 		"created":    "2026-03-19T12:00:00Z",
@@ -84,6 +84,7 @@ func TestEntityService_CreateFeature_AllocatesSequentialID(t *testing.T) {
 	writeTestPlan(t, service, planID)
 
 	first, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "storage layer",
 		Parent:    planID,
 		Summary:   "Implement canonical storage",
@@ -94,6 +95,7 @@ func TestEntityService_CreateFeature_AllocatesSequentialID(t *testing.T) {
 	}
 
 	second, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "validation engine",
 		Parent:    planID,
 		Summary:   "Implement lifecycle validation",
@@ -123,6 +125,7 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 	writeTestPlan(t, service, planID)
 
 	feat1, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "feature-one",
 		Parent:    planID,
 		Summary:   "First feature",
@@ -133,6 +136,7 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 	}
 
 	feat2, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "feature-two",
 		Parent:    planID,
 		Summary:   "Second feature",
@@ -143,6 +147,7 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 	}
 
 	first, err := service.CreateTask(CreateTaskInput{
+		Name:          "test",
 		ParentFeature: feat1.ID,
 		Slug:          "write entity files",
 		Summary:       "Write canonical entity files to disk",
@@ -152,6 +157,7 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 	}
 
 	second, err := service.CreateTask(CreateTaskInput{
+		Name:          "test",
 		ParentFeature: feat1.ID,
 		Slug:          "read entity files",
 		Summary:       "Read canonical entity files from disk",
@@ -161,6 +167,7 @@ func TestEntityService_CreateTask_AllocatesFeatureLocalID(t *testing.T) {
 	}
 
 	otherFeature, err := service.CreateTask(CreateTaskInput{
+		Name:          "test",
 		ParentFeature: feat2.ID,
 		Slug:          "first task",
 		Summary:       "Start work for another feature",
@@ -193,7 +200,7 @@ func TestEntityService_CreateBug_AppliesDefaults(t *testing.T) {
 
 	got, err := service.CreateBug(CreateBugInput{
 		Slug:       "bad-yaml-output",
-		Title:      "Writer produces unstable YAML",
+		Name:       "Writer produces unstable YAML",
 		ReportedBy: "sam",
 		Observed:   "Repeated writes produce different output",
 		Expected:   "Repeated writes should be stable",
@@ -207,7 +214,7 @@ func TestEntityService_CreateBug_AppliesDefaults(t *testing.T) {
 	wantState := map[string]any{
 		"id":          got.ID, // dynamic TSID
 		"slug":        "bad-yaml-output",
-		"title":       "Writer produces unstable YAML",
+		"name":        "Writer produces unstable YAML",
 		"status":      "reported",
 		"severity":    "medium",
 		"priority":    "medium",
@@ -229,6 +236,7 @@ func TestEntityService_CreateDecision(t *testing.T) {
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
 	got, err := service.CreateDecision(CreateDecisionInput{
+		Name:      "test",
 		Slug:      "strict-yaml-subset",
 		Summary:   "Use a strict canonical YAML subset",
 		Rationale: "Deterministic output is required for Git-friendly state",
@@ -243,6 +251,7 @@ func TestEntityService_CreateDecision(t *testing.T) {
 	wantState := map[string]any{
 		"id":         got.ID, // dynamic TSID
 		"slug":       "strict-yaml-subset",
+		"name":       "test",
 		"summary":    "Use a strict canonical YAML subset",
 		"rationale":  "Deterministic output is required for Git-friendly state",
 		"decided_by": "sam",
@@ -262,7 +271,7 @@ func TestEntityService_UpdateStatus_ReopensCannotReproduceBug(t *testing.T) {
 
 	created, err := service.CreateBug(CreateBugInput{
 		Slug:       "flaky-repro",
-		Title:      "Flaky reproduction steps",
+		Name:       "Flaky reproduction steps",
 		ReportedBy: "sam",
 		Observed:   "Bug appears intermittently",
 		Expected:   "Bug should reproduce consistently",
@@ -330,6 +339,7 @@ func TestEntityService_Get_ReturnsStoredEntity(t *testing.T) {
 	writeTestPlan(t, service, planID)
 
 	created, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "entity retrieval",
 		Parent:    planID,
 		Summary:   "Support entity reads by canonical identity",
@@ -373,6 +383,7 @@ func TestEntityService_List_ReturnsEntitiesSortedByID(t *testing.T) {
 	writeTestPlan(t, service, planID)
 
 	createdFirst, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "storage layer",
 		Parent:    planID,
 		Summary:   "Implement canonical storage",
@@ -383,6 +394,7 @@ func TestEntityService_List_ReturnsEntitiesSortedByID(t *testing.T) {
 	}
 
 	createdSecond, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "validation engine",
 		Parent:    planID,
 		Summary:   "Implement lifecycle validation",
@@ -422,6 +434,7 @@ func TestEntityService_StatusUpdate_UsesLifecycleValidation(t *testing.T) {
 	writeTestPlan(t, service, planID)
 
 	created, err := service.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "status updates",
 		Parent:    planID,
 		Summary:   "Support lifecycle status changes",
@@ -490,7 +503,7 @@ func TestEntityService_StatusUpdate_RejectsIllegalTransition(t *testing.T) {
 
 	created, err := service.CreateEpic(CreateEpicInput{
 		Slug:      "phase 1 kernel",
-		Title:     "Phase 1 Kernel",
+		Name:      "Phase 1 Kernel",
 		Summary:   "Build the initial workflow kernel",
 		CreatedBy: "sam",
 	})
@@ -520,6 +533,7 @@ func TestEntityService_CreateTask_InvalidFeatureID(t *testing.T) {
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
 	_, err := service.CreateTask(CreateTaskInput{
+		Name:          "test",
 		ParentFeature: "EPIC-TEST",
 		Slug:          "bad parent",
 		Summary:       "This should fail",
@@ -537,7 +551,7 @@ func TestEntityService_CreateEpic_MissingRequiredField(t *testing.T) {
 
 	_, err := service.CreateEpic(CreateEpicInput{
 		Slug:      "",
-		Title:     "Phase 1 Kernel",
+		Name:      "Phase 1 Kernel",
 		Summary:   "Build the initial workflow kernel",
 		CreatedBy: "sam",
 	})
@@ -779,7 +793,7 @@ func writeTestPlan(t *testing.T, svc *EntityService, id string) {
 	fields := map[string]any{
 		"id":         id,
 		"slug":       slug,
-		"title":      "Test Plan",
+		"name":       "Test Plan",
 		"status":     "active",
 		"summary":    "Test plan for unit tests",
 		"created":    "2026-03-19T12:00:00Z",
@@ -805,7 +819,7 @@ func TestEntityService_CreateBug_RejectsInvalidSeverity(t *testing.T) {
 
 	_, err := svc.CreateBug(CreateBugInput{
 		Slug:       "test-bug",
-		Title:      "Test",
+		Name:       "Test",
 		ReportedBy: "sam",
 		Observed:   "Bad",
 		Expected:   "Good",
@@ -827,7 +841,7 @@ func TestEntityService_CreateBug_RejectsInvalidPriority(t *testing.T) {
 
 	_, err := svc.CreateBug(CreateBugInput{
 		Slug:       "test-bug",
-		Title:      "Test",
+		Name:       "Test",
 		ReportedBy: "sam",
 		Observed:   "Bad",
 		Expected:   "Good",
@@ -849,7 +863,7 @@ func TestEntityService_CreateBug_RejectsInvalidType(t *testing.T) {
 
 	_, err := svc.CreateBug(CreateBugInput{
 		Slug:       "test-bug",
-		Title:      "Test",
+		Name:       "Test",
 		ReportedBy: "sam",
 		Observed:   "Bad",
 		Expected:   "Good",
@@ -871,7 +885,7 @@ func TestEntityService_CreateBug_AcceptsValidEnums(t *testing.T) {
 
 	got, err := svc.CreateBug(CreateBugInput{
 		Slug:       "test-bug",
-		Title:      "Test",
+		Name:       "Test",
 		ReportedBy: "sam",
 		Observed:   "Bad",
 		Expected:   "Good",
@@ -902,7 +916,7 @@ func TestEntityService_ValidateCandidate_ValidEpic(t *testing.T) {
 	errs := svc.ValidateCandidate("epic", map[string]any{
 		"id":         "EPIC-TESTEPIC",
 		"slug":       "test",
-		"title":      "Test Epic",
+		"name":       "Test Epic",
 		"status":     "proposed",
 		"summary":    "A test epic",
 		"created":    "2026-03-19T12:00:00Z",
@@ -930,17 +944,17 @@ func TestEntityService_ValidateCandidate_MissingField(t *testing.T) {
 		t.Fatal("expected validation errors for missing fields, got none")
 	}
 
-	foundTitle := false
+	foundName := false
 	foundCreatedBy := false
 	for _, e := range errs {
-		if e.Field == "title" {
-			foundTitle = true
+		if e.Field == "name" {
+			foundName = true
 		}
 		if e.Field == "created_by" {
 			foundCreatedBy = true
 		}
 	}
-	if !foundTitle {
+	if !foundName {
 		t.Error("expected error for missing title field")
 	}
 	if !foundCreatedBy {
@@ -957,7 +971,7 @@ func TestEntityService_ValidateCandidate_InvalidBugEnums(t *testing.T) {
 	errs := svc.ValidateCandidate("bug", map[string]any{
 		"id":          "BUG-01J4AR7WHN4F2",
 		"slug":        "test",
-		"title":       "Test Bug",
+		"name":        "Test Bug",
 		"status":      "reported",
 		"severity":    "extreme",
 		"priority":    "urgent",
@@ -997,6 +1011,7 @@ func TestEntityService_HealthCheck_CleanProject(t *testing.T) {
 		Parent:    planID,
 		Summary:   "A feature for health checking",
 		CreatedBy: "agent",
+		Name:      "Health feature",
 	})
 	if err != nil {
 		t.Fatalf("CreateFeature() error = %v", err)
@@ -1050,6 +1065,7 @@ func TestEntityService_CreateFeature_RejectsNonExistentParent(t *testing.T) {
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
 	_, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "orphan-feature",
 		Parent:    "P1-does-not-exist",
 		Summary:   "Feature referencing non-existent plan",
@@ -1070,6 +1086,7 @@ func TestEntityService_CreateTask_RejectsNonExistentFeature(t *testing.T) {
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
 	_, err := svc.CreateTask(CreateTaskInput{
+		Name:          "test",
 		ParentFeature: "FEAT-01ZZZZZZZZZZ9",
 		Slug:          "orphan-task",
 		Summary:       "Task referencing non-existent feature",
@@ -1090,7 +1107,7 @@ func TestEntityService_UpdateEntity_CorrectField(t *testing.T) {
 
 	created, err := svc.CreateEpic(CreateEpicInput{
 		Slug:      "phase-1-kernel",
-		Title:     "Phase 1 Kernel",
+		Name:      "Phase 1 Kernel",
 		Summary:   "Build the initial workflow kernel",
 		CreatedBy: "sam",
 	})
@@ -1102,22 +1119,22 @@ func TestEntityService_UpdateEntity_CorrectField(t *testing.T) {
 		Type:   created.Type,
 		ID:     created.ID,
 		Slug:   created.Slug,
-		Fields: map[string]string{"title": "Phase 1 Kernel (Revised)"},
+		Fields: map[string]string{"name": "Phase 1 Kernel (Revised)"},
 	})
 	if err != nil {
 		t.Fatalf("UpdateEntity() error = %v", err)
 	}
 
-	if updated.State["title"] != "Phase 1 Kernel (Revised)" {
-		t.Fatalf("UpdateEntity() title = %v, want %q", updated.State["title"], "Phase 1 Kernel (Revised)")
+	if updated.State["name"] != "Phase 1 Kernel (Revised)" {
+		t.Fatalf("UpdateEntity() name = %v, want %q", updated.State["name"], "Phase 1 Kernel (Revised)")
 	}
 
 	got, err := svc.Get(created.Type, created.ID, created.Slug)
 	if err != nil {
 		t.Fatalf("Get() after update error = %v", err)
 	}
-	if got.State["title"] != "Phase 1 Kernel (Revised)" {
-		t.Fatalf("persisted title = %v, want %q", got.State["title"], "Phase 1 Kernel (Revised)")
+	if got.State["name"] != "Phase 1 Kernel (Revised)" {
+		t.Fatalf("persisted name = %v, want %q", got.State["name"], "Phase 1 Kernel (Revised)")
 	}
 }
 
@@ -1129,7 +1146,7 @@ func TestEntityService_UpdateEntity_RejectsIDChange(t *testing.T) {
 
 	created, err := svc.CreateEpic(CreateEpicInput{
 		Slug:      "phase-1-kernel",
-		Title:     "Phase 1 Kernel",
+		Name:      "Phase 1 Kernel",
 		Summary:   "Build the initial workflow kernel",
 		CreatedBy: "sam",
 	})
@@ -1159,7 +1176,7 @@ func TestEntityService_UpdateEntity_RejectsStatusChange(t *testing.T) {
 
 	created, err := svc.CreateEpic(CreateEpicInput{
 		Slug:      "phase-1-kernel",
-		Title:     "Phase 1 Kernel",
+		Name:      "Phase 1 Kernel",
 		Summary:   "Build the initial workflow kernel",
 		CreatedBy: "sam",
 	})
@@ -1189,7 +1206,7 @@ func TestEntityService_UpdateEntity_ValidatesResult(t *testing.T) {
 
 	created, err := svc.CreateEpic(CreateEpicInput{
 		Slug:      "phase-1-kernel",
-		Title:     "Phase 1 Kernel",
+		Name:      "Phase 1 Kernel",
 		Summary:   "Build the initial workflow kernel",
 		CreatedBy: "sam",
 	})
@@ -1201,7 +1218,7 @@ func TestEntityService_UpdateEntity_ValidatesResult(t *testing.T) {
 		Type:   created.Type,
 		ID:     created.ID,
 		Slug:   created.Slug,
-		Fields: map[string]string{"title": ""},
+		Fields: map[string]string{"name": ""},
 	})
 	if err == nil {
 		t.Fatal("UpdateEntity() error = nil, want validation error for empty title")
@@ -1228,6 +1245,7 @@ func TestEntityService_UpdateEntity_CorrectParentReference(t *testing.T) {
 		Parent:    plan1ID,
 		Summary:   "A feature under first plan",
 		CreatedBy: "sam",
+		Name:      "My feature",
 	})
 	if err != nil {
 		t.Fatalf("CreateFeature() error = %v", err)
@@ -1316,7 +1334,7 @@ func TestEntityService_EpicLifecycle(t *testing.T) {
 
 	created, err := svc.CreateEpic(CreateEpicInput{
 		Slug:      "lifecycle-epic",
-		Title:     "Lifecycle Epic",
+		Name:      "Lifecycle Epic",
 		Summary:   "Test epic lifecycle transitions",
 		CreatedBy: "sam",
 	})
@@ -1369,6 +1387,7 @@ func TestEntityService_TaskLifecycle(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "task-parent-feature",
 		Parent:    planID,
 		Summary:   "Feature for task lifecycle test",
@@ -1379,6 +1398,7 @@ func TestEntityService_TaskLifecycle(t *testing.T) {
 	}
 
 	created, err := svc.CreateTask(CreateTaskInput{
+		Name:          "test",
 		ParentFeature: feat.ID,
 		Slug:          "lifecycle-task",
 		Summary:       "Test task lifecycle transitions",
@@ -1429,6 +1449,7 @@ func TestEntityService_DecisionLifecycle(t *testing.T) {
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
 	created, err := svc.CreateDecision(CreateDecisionInput{
+		Name:      "test",
 		Slug:      "lifecycle-decision",
 		Summary:   "Test decision lifecycle transitions",
 		Rationale: "Verify lifecycle state machine",
@@ -1481,7 +1502,7 @@ func TestEntityService_BugLifecycle_FullPath(t *testing.T) {
 
 	created, err := svc.CreateBug(CreateBugInput{
 		Slug:       "lifecycle-bug",
-		Title:      "Lifecycle Bug",
+		Name:       "Lifecycle Bug",
 		ReportedBy: "sam",
 		Observed:   "Something broke",
 		Expected:   "It should work",
@@ -1536,7 +1557,7 @@ func TestEntityService_ResolvePrefix(t *testing.T) {
 
 	epic, err := svc.CreateEpic(CreateEpicInput{
 		Slug:      "prefix-epic",
-		Title:     "Prefix Epic",
+		Name:      "Prefix Epic",
 		Summary:   "Epic for prefix resolution tests",
 		CreatedBy: "sam",
 	})
@@ -1548,6 +1569,7 @@ func TestEntityService_ResolvePrefix(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	feat1, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "alpha-feature",
 		Parent:    planID,
 		Summary:   "First feature",
@@ -1563,6 +1585,7 @@ func TestEntityService_ResolvePrefix(t *testing.T) {
 	}
 
 	feat2, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "beta-feature",
 		Parent:    planID,
 		Summary:   "Second feature",
@@ -1672,6 +1695,7 @@ func TestEntityService_Get_WithEmptySlug(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	created, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
 		Slug:      "prefix-get",
 		Parent:    planID,
 		Summary:   "Feature for prefix get",

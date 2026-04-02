@@ -21,7 +21,7 @@ import (
 type CreateEpicInput struct {
 	EpicSlug  string // human-chosen slug for the EPIC-{SLUG} ID; derived from Slug if empty
 	Slug      string
-	Title     string
+	Name      string
 	Summary   string
 	CreatedBy string
 }
@@ -33,19 +33,19 @@ type CreateFeatureInput struct {
 	Tags      []string
 	Summary   string
 	CreatedBy string
-	Label     string
+	Name      string
 }
 
 type CreateTaskInput struct {
 	ParentFeature string
 	Slug          string
 	Summary       string
-	Label         string
+	Name          string
 }
 
 type CreateBugInput struct {
 	Slug       string
-	Title      string
+	Name       string
 	ReportedBy string
 	Observed   string
 	Expected   string
@@ -56,6 +56,7 @@ type CreateBugInput struct {
 
 type CreateDecisionInput struct {
 	Slug      string
+	Name      string
 	Summary   string
 	Rationale string
 	DecidedBy string
@@ -185,10 +186,15 @@ func (s *EntityService) RebuildCache() (int, error) {
 func (s *EntityService) CreateEpic(input CreateEpicInput) (CreateResult, error) {
 	if err := validateRequired(
 		field("slug", input.Slug),
-		field("title", input.Title),
+		field("name", input.Name),
 		field("summary", input.Summary),
 		field("created_by", input.CreatedBy),
 	); err != nil {
+		return CreateResult{}, err
+	}
+
+	name, err := validate.ValidateName(input.Name)
+	if err != nil {
 		return CreateResult{}, err
 	}
 
@@ -208,7 +214,7 @@ func (s *EntityService) CreateEpic(input CreateEpicInput) (CreateResult, error) 
 	entity := model.Epic{
 		ID:        idValue,
 		Slug:      normalizeSlug(input.Slug),
-		Title:     strings.TrimSpace(input.Title),
+		Name:      name,
 		Status:    model.EpicStatus("proposed"),
 		Summary:   strings.TrimSpace(input.Summary),
 		Created:   s.now(),
@@ -247,10 +253,15 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		return CreateResult{}, err
 	}
 
+	featureName, nameErr := validate.ValidateName(input.Name)
+	if nameErr != nil {
+		return CreateResult{}, nameErr
+	}
+
 	entity := model.Feature{
 		ID:        idValue,
 		Slug:      normalizeSlug(input.Slug),
-		Label:     strings.TrimSpace(input.Label),
+		Name:      featureName,
 		Parent:    parentID,
 		Status:    model.FeatureStatusProposed,
 		Summary:   strings.TrimSpace(input.Summary),
@@ -291,11 +302,16 @@ func (s *EntityService) CreateTask(input CreateTaskInput) (CreateResult, error) 
 		return CreateResult{}, err
 	}
 
+	taskName, nameErr := validate.ValidateName(input.Name)
+	if nameErr != nil {
+		return CreateResult{}, nameErr
+	}
+
 	entity := model.Task{
 		ID:            idValue,
 		ParentFeature: featureID,
 		Slug:          normalizeSlug(input.Slug),
-		Label:         strings.TrimSpace(input.Label),
+		Name:          taskName,
 		Summary:       strings.TrimSpace(input.Summary),
 		Status:        model.TaskStatus("queued"),
 	}
@@ -315,7 +331,7 @@ func (s *EntityService) CreateTask(input CreateTaskInput) (CreateResult, error) 
 func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 	if err := validateRequired(
 		field("slug", input.Slug),
-		field("title", input.Title),
+		field("name", input.Name),
 		field("reported_by", input.ReportedBy),
 		field("observed", input.Observed),
 		field("expected", input.Expected),
@@ -326,6 +342,11 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 	idValue, err := s.allocateID(model.EntityKindBug)
 	if err != nil {
 		return CreateResult{}, err
+	}
+
+	bugName, nameErr := validate.ValidateName(input.Name)
+	if nameErr != nil {
+		return CreateResult{}, nameErr
 	}
 
 	severity := defaultString(input.Severity, string(model.BugSeverityMedium))
@@ -346,7 +367,7 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 	entity := model.Bug{
 		ID:         idValue,
 		Slug:       normalizeSlug(input.Slug),
-		Title:      strings.TrimSpace(input.Title),
+		Name:       bugName,
 		Status:     model.BugStatus("reported"),
 		Severity:   model.BugSeverity(severity),
 		Priority:   model.BugPriority(priority),
@@ -384,9 +405,15 @@ func (s *EntityService) CreateDecision(input CreateDecisionInput) (CreateResult,
 		return CreateResult{}, err
 	}
 
+	decisionName, nameErr := validate.ValidateName(input.Name)
+	if nameErr != nil {
+		return CreateResult{}, nameErr
+	}
+
 	entity := model.Decision{
 		ID:        idValue,
 		Slug:      normalizeSlug(input.Slug),
+		Name:      decisionName,
 		Summary:   strings.TrimSpace(input.Summary),
 		Rationale: strings.TrimSpace(input.Rationale),
 		DecidedBy: strings.TrimSpace(input.DecidedBy),
@@ -1012,7 +1039,7 @@ func epicFields(e model.Epic) map[string]any {
 	fields := map[string]any{
 		"id":         e.ID,
 		"slug":       e.Slug,
-		"title":      e.Title,
+		"name":       e.Name,
 		"status":     string(e.Status),
 		"summary":    e.Summary,
 		"created":    e.Created.Format(time.RFC3339),
@@ -1058,6 +1085,7 @@ func featureFields(e model.Feature) map[string]any {
 	if len(e.Decisions) > 0 {
 		fields["decisions"] = append([]string(nil), e.Decisions...)
 	}
+	fields["name"] = e.Name
 	if len(e.Tags) > 0 {
 		fields["tags"] = append([]string(nil), e.Tags...)
 	}
@@ -1132,6 +1160,7 @@ func taskFields(e model.Task) map[string]any {
 	if e.Estimate != nil {
 		fields["estimate"] = *e.Estimate
 	}
+	fields["name"] = e.Name
 	if e.Assignee != "" {
 		fields["assignee"] = e.Assignee
 	}
@@ -1175,7 +1204,7 @@ func bugFields(e model.Bug) map[string]any {
 	fields := map[string]any{
 		"id":          e.ID,
 		"slug":        e.Slug,
-		"title":       e.Title,
+		"name":        e.Name,
 		"status":      string(e.Status),
 		"severity":    string(e.Severity),
 		"priority":    string(e.Priority),
@@ -1233,7 +1262,7 @@ func (s *EntityService) cacheUpsertFromResult(result CreateResult) {
 		ID:         result.ID,
 		Slug:       result.Slug,
 		Status:     stringFromState(result.State, "status"),
-		Title:      stringFromState(result.State, "title"),
+		Title:      stringFromState(result.State, "name"),
 		Summary:    stringFromState(result.State, "summary"),
 		ParentRef:  extractParentRefFromState(result.Type, result.State),
 		FilePath:   result.Path,
@@ -1303,6 +1332,7 @@ func decisionFields(e model.Decision) map[string]any {
 		"date":       e.Date.Format(time.RFC3339),
 		"status":     string(e.Status),
 	}
+	fields["name"] = e.Name
 	if len(e.Affects) > 0 {
 		fields["affects"] = append([]string(nil), e.Affects...)
 	}
@@ -1319,7 +1349,7 @@ func incidentFields(e model.Incident) map[string]any {
 	fields := map[string]any{
 		"id":          e.ID,
 		"slug":        e.Slug,
-		"title":       e.Title,
+		"name":        e.Name,
 		"status":      string(e.Status),
 		"severity":    string(e.Severity),
 		"reported_by": e.ReportedBy,

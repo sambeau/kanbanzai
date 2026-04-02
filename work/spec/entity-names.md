@@ -2,7 +2,7 @@
 
 | Document | Entity Names                                |
 |----------|---------------------------------------------|
-| Status   | Draft                                       |
+| Status   | Approved                                    |
 | Created  | 2026-06-17                                  |
 | Updated  | 2026-06-17                                  |
 | Design   | `work/design/entity-names.md`               |

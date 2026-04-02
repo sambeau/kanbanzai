@@ -1,6 +1,7 @@
 id: TASK-01KMRXJR9FNM3
 parent_feature: FEAT-01KMRX1F47Z94
 slug: add-lifecycle-state-constants
+name: Add lifecycle state constants
 summary: "Add FeatureStatusReviewing and FeatureStatusNeedsRework constants to model/entities.go. Update the feature transition map in validate/lifecycle.go to include all new transitions (developing → reviewing, reviewing → done/needs-rework, needs-rework → developing/reviewing) and remove the developing → done direct path. Covers spec AC-01 through AC-10."
 status: done
 files_planned:

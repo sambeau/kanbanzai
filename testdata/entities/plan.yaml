@@ -1,6 +1,6 @@
 id: P1-initial-kernel
 slug: initial-kernel
-title: Phase 1 Kernel
+name: Phase 1 Kernel
 status: active
 summary: Build the initial workflow kernel
 design: work/design/workflow-design-basis.md

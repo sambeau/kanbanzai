@@ -1,5 +1,6 @@
 id: FEAT-01KMRX1QPN3CB
 slug: review-orchestration-pattern
+name: Review orchestration pattern
 parent: P6-workflow-quality-and-review
 status: done
 summary: "Implement the review orchestration pattern: document the orchestrator procedure in the SKILL, verify the tool chain works end-to-end (list_entities_filtered → doc_outline → context_assemble → spawn_agent → create_task → update_status), and test at single-feature and multi-feature scale. Design ref: code-review-workflow.md §5, §6, §10."

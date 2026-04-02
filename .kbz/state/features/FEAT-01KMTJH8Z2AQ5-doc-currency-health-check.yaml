@@ -1,5 +1,6 @@
 id: FEAT-01KMTJH8Z2AQ5
 slug: doc-currency-health-check
+name: Doc currency health check
 parent: P10-review-and-doc-currency
 status: done
 summary: "Add a documentation currency health check that detects stale tool references in SKILL files and AGENTS.md, and verifies AGENTS.md mentions completed plans."

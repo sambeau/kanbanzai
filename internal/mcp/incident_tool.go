@@ -44,8 +44,8 @@ func incidentTool(svc *service.EntityService) server.ServerTool {
 		mcp.WithString("slug",
 			mcp.Description("URL-friendly identifier for the incident (create only)"),
 		),
-		mcp.WithString("title",
-			mcp.Description("Title of the incident (create only)"),
+		mcp.WithString("name",
+			mcp.Description("Name of the incident (create only)"),
 		),
 		mcp.WithString("severity",
 			mcp.Description("Incident severity: critical, high, medium, or low (create required; update optional)"),
@@ -113,9 +113,9 @@ func incidentCreateAction(svc *service.EntityService) ActionHandler {
 		if err != nil {
 			return nil, fmt.Errorf("Cannot create incident: slug is missing.\n\nTo resolve:\n  Provide slug: incident(action: \"create\", slug: \"my-incident\", ...)")
 		}
-		title, err := req.RequireString("title")
+		name, err := req.RequireString("name")
 		if err != nil {
-			return nil, fmt.Errorf("Cannot create incident: title is missing.\n\nTo resolve:\n  Provide title: incident(action: \"create\", title: \"...\", ...)")
+			return nil, fmt.Errorf("Cannot create incident: name is missing.\n\nTo resolve:\n  Provide name: incident(action: \"create\", name: \"...\", ...)")
 		}
 		severity, err := req.RequireString("severity")
 		if err != nil {
@@ -137,7 +137,7 @@ func incidentCreateAction(svc *service.EntityService) ActionHandler {
 
 		result, err := svc.CreateIncident(service.CreateIncidentInput{
 			Slug:       slug,
-			Title:      title,
+			Name:       name,
 			Severity:   severity,
 			Summary:    summary,
 			ReportedBy: reportedBy,

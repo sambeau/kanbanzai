@@ -1,6 +1,7 @@
 id: TASK-01KMNA54M26B8
 parent_feature: FEAT-01KMKRQRRX3CC
 slug: init-existing-project
+name: Init existing project
 summary: "Implement existing-project detection and behaviour: if .kbz/config.yaml exists skip work/ dir creation; if config absent prompt for docs-path (interactive) or use --docs-path (non-interactive); error in --non-interactive without --docs-path; guard against schema version newer than binary (exit non-zero with download URL); handle syntactically invalid config (offer overwrite in interactive, overwrite silently in non-interactive)."
 status: done
 files_planned:

@@ -1,5 +1,6 @@
 id: FEAT-01KMKA278DFNV
 slug: phase-4b-remediation
+name: Phase 4b remediation
 parent: P1-phase-4-orchestration
 status: proposed
 summary: Resolve all post-implementation review findings for Phase 4b and declare the Phase 5 gate open

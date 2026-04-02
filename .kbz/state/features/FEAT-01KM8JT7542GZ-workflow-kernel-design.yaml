@@ -1,5 +1,6 @@
 id: FEAT-01KM8JT7542GZ
 slug: workflow-kernel-design
+name: Workflow kernel design
 parent: P2-phase-1-kernel
 status: draft
 summary: "Core workflow kernel design: entity model, lifecycle enforcement, document support"

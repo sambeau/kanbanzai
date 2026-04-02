@@ -1,6 +1,6 @@
 id: BUG-01KMKA2194NKM
 slug: review-output-files-wrong-schema
-title: review_task_output declares output_files as WithObject instead of WithArray
+name: Review output files wrong schema
 status: reported
 severity: medium
 priority: medium

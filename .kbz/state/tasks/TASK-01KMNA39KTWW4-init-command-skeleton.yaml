@@ -1,6 +1,7 @@
 id: TASK-01KMNA39KTWW4
 parent_feature: FEAT-01KMKRQRRX3CC
 slug: init-command-skeleton
+name: Init command skeleton
 summary: "Implement kanbanzai init CLI subcommand skeleton with flag parsing: --docs-path, --skip-skills, --update-skills, --non-interactive. Validate mutually exclusive flags (--skip-skills + --update-skills). Wire --help output with all flags and a usage example. Add init to top-level help output."
 status: done
 files_planned:

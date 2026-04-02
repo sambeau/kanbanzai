@@ -1,6 +1,7 @@
 id: TASK-01KMWJW30MRBK
 parent_feature: FEAT-01KMWJ3ZQZF5R
 slug: default-roles-tests
+name: Default roles tests
 summary: "Add tests to internal/kbzinit/init_test.go: new project creates both .kbz/context/roles/base.yaml and reviewer.yaml; base.yaml content has id: base and conventions: [] and commented architecture block and no managed marker; reviewer.yaml has id: reviewer, inherits: base, managed marker, conventions with review_approach/output_format/dimensions keys; --skip-roles creates neither; --update-skills updates managed reviewer.yaml when older, no-ops when current, skips unmanaged reviewer.yaml with warning, never touches base.yaml; developer.yaml is not created. Integration: verify context_assemble(role=reviewer) returns non-empty packet on fresh init."
 status: done
 depends_on:

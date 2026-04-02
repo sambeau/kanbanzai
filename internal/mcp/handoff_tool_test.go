@@ -64,6 +64,7 @@ func createHandoffPlan(t *testing.T, entitySvc *service.EntityService, slug stri
 func createHandoffFeature(t *testing.T, entitySvc *service.EntityService, planID, slug string) string {
 	t.Helper()
 	result, err := entitySvc.CreateFeature(service.CreateFeatureInput{
+		Name: "test",
 		Slug: slug, Parent: planID, Summary: "Feature " + slug, CreatedBy: "tester",
 	})
 	if err != nil {
@@ -75,6 +76,7 @@ func createHandoffFeature(t *testing.T, entitySvc *service.EntityService, planID
 func createHandoffTask(t *testing.T, entitySvc *service.EntityService, featID, slug string) (string, string) {
 	t.Helper()
 	result, err := entitySvc.CreateTask(service.CreateTaskInput{
+		Name: "test",
 		ParentFeature: featID, Slug: slug, Summary: "Implement " + slug,
 	})
 	if err != nil {

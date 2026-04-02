@@ -1667,12 +1667,14 @@ func TestSynthesise_FeatureScope(t *testing.T) {
 
 	writeRetroTestPlan(t, svc.entitySvc, "P1-scope-test")
 	featResult, err := svc.entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug: "scope-feat", Parent: "P1-scope-test", Summary: "Scope test feature", CreatedBy: "test",
 	})
 	if err != nil {
 		t.Fatalf("CreateFeature: %v", err)
 	}
 	taskResult, err := svc.entitySvc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featResult.ID,
 		Slug:          "scope-task",
 		Summary:       "Scope test task",
@@ -1712,18 +1714,21 @@ func TestSynthesise_FeatureScopeExcludesOtherFeature(t *testing.T) {
 
 	writeRetroTestPlan(t, svc.entitySvc, "P1-scope-excl-test")
 	featA, err := svc.entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug: "feature-a", Parent: "P1-scope-excl-test", Summary: "Feature A", CreatedBy: "test",
 	})
 	if err != nil {
 		t.Fatalf("CreateFeature A: %v", err)
 	}
 	featB, err := svc.entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug: "feature-b", Parent: "P1-scope-excl-test", Summary: "Feature B", CreatedBy: "test",
 	})
 	if err != nil {
 		t.Fatalf("CreateFeature B: %v", err)
 	}
 	taskB, err := svc.entitySvc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featB.ID,
 		Slug:          "task-b",
 		Summary:       "Task under feature B",
@@ -1755,12 +1760,14 @@ func TestSynthesise_PlanScope(t *testing.T) {
 
 	writeRetroTestPlan(t, svc.entitySvc, "P1-plan-scope")
 	featResult, err := svc.entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug: "plan-scope-feat", Parent: "P1-plan-scope", Summary: "Feature under plan", CreatedBy: "test",
 	})
 	if err != nil {
 		t.Fatalf("CreateFeature: %v", err)
 	}
 	taskResult, err := svc.entitySvc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featResult.ID,
 		Slug:          "plan-scope-task",
 		Summary:       "Task under plan feature",
@@ -1796,6 +1803,7 @@ func TestSynthesise_PlanScopeExcludesOtherPlan(t *testing.T) {
 
 	// Feature and task under plan A (no signals attributed to it).
 	_, err := svc.entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug: "feat-plan-a", Parent: "P1-plan-excl-a", Summary: "Feature under plan A", CreatedBy: "test",
 	})
 	if err != nil {
@@ -1804,12 +1812,14 @@ func TestSynthesise_PlanScopeExcludesOtherPlan(t *testing.T) {
 
 	// Feature and task under plan B (signal attributed here).
 	featB, err := svc.entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug: "feat-plan-b", Parent: "P2-plan-excl-b", Summary: "Feature under plan B", CreatedBy: "test",
 	})
 	if err != nil {
 		t.Fatalf("CreateFeature B: %v", err)
 	}
 	taskB, err := svc.entitySvc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featB.ID,
 		Slug:          "task-plan-b",
 		Summary:       "Task under plan B",

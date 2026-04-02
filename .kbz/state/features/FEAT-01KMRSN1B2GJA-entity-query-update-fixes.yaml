@@ -1,5 +1,6 @@
 id: FEAT-01KMRSN1B2GJA
 slug: entity-query-update-fixes
+name: Entity query update fixes
 parent: P6-workflow-quality-and-review
 status: done
 summary: Fix list_entities_filtered parent filter returning empty results. Add depends_on support to update_entity for task entities. Both are prerequisite for the code review orchestrator pattern.

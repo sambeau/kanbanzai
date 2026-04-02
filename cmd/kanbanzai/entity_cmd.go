@@ -13,7 +13,7 @@ const entityUsageText = `Usage: kbz entity <subcommand> [options]
 
 Subcommands:
   create <type>              Create a new entity (plan, feature, task, bug, decision)
-    --slug, --title, --summary, --parent, etc.
+    --slug, --name, --summary, --parent, etc.
 
   get <type> --id <id>       Get an entity by ID
 
@@ -61,7 +61,7 @@ func runEntityCreate(args []string, deps dependencies) error {
 		result, err := svc.CreatePlan(service.CreatePlanInput{
 			Prefix:    values["prefix"],
 			Slug:      values["slug"],
-			Title:     values["title"],
+			Name:      values["name"],
 			Summary:   values["summary"],
 			CreatedBy: values["created_by"],
 		})
@@ -77,6 +77,7 @@ func runEntityCreate(args []string, deps dependencies) error {
 		result, err := svc.CreateFeature(service.CreateFeatureInput{
 			Slug:      values["slug"],
 			Parent:    values["parent"],
+			Name:      values["name"],
 			Summary:   values["summary"],
 			CreatedBy: values["created_by"],
 		})
@@ -92,6 +93,7 @@ func runEntityCreate(args []string, deps dependencies) error {
 		result, err := svc.CreateTask(service.CreateTaskInput{
 			ParentFeature: values["parent_feature"],
 			Slug:          values["slug"],
+			Name:          values["name"],
 			Summary:       values["summary"],
 		})
 		if err != nil {
@@ -105,7 +107,7 @@ func runEntityCreate(args []string, deps dependencies) error {
 		}
 		result, err := svc.CreateBug(service.CreateBugInput{
 			Slug:       values["slug"],
-			Title:      values["title"],
+			Name:       values["name"],
 			ReportedBy: values["reported_by"],
 			Observed:   values["observed"],
 			Expected:   values["expected"],
@@ -124,6 +126,7 @@ func runEntityCreate(args []string, deps dependencies) error {
 		}
 		result, err := svc.CreateDecision(service.CreateDecisionInput{
 			Slug:      values["slug"],
+			Name:      values["name"],
 			Summary:   values["summary"],
 			Rationale: values["rationale"],
 			DecidedBy: values["decided_by"],

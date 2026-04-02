@@ -1,6 +1,7 @@
 id: TASK-01KMKA3192MES
 parent_feature: FEAT-01KMKA278DFNV
 slug: update-version-and-help-text
+name: Update version and help text
 summary: Update ServerVersion from phase-3-dev to phase-4b; update usageText to say Phase 4b; add feature/task/incident to top-level help (fixes R4B-7 and R4B-8)
 status: done
 files_planned:

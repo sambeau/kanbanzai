@@ -1,6 +1,7 @@
 id: TASK-01KMTCYNCX1HC
 parent_feature: FEAT-01KMTCWXAGX06
 slug: feat-a-tool-annotations
+name: Feat a tool annotations
 summary: "Add MCP safety annotations (readOnlyHint, destructiveHint, idempotentHint, openWorldHint) to all 22 tools in internal/mcp/. Each tool must be classified according to the tier table in spec §3.2 and design §4.3. Use mcp.WithToolAnnotation or the individual helper functions. All four pointer fields must be set to non-nil values on every tool."
 status: done
 files_planned:

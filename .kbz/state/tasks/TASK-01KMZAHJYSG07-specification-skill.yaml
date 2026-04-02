@@ -1,6 +1,7 @@
 id: TASK-01KMZAHJYSG07
 parent_feature: FEAT-01KMZA33G1FFR
 slug: specification-skill
+name: Specification skill
 summary: "Create kanbanzai-specification skill at skills/specification/SKILL.md with all required sections per spec §6.3. Add to skillNames in skills.go. ≤200 lines, follows design skill structure. Spec §6."
 status: done
 estimate: "3"

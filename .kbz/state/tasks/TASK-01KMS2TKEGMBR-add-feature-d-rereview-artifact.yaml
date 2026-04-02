@@ -1,6 +1,7 @@
 id: TASK-01KMS2TKEGMBR
 parent_feature: FEAT-01KMRX1QPN3CB
 slug: add-feature-d-rereview-artifact
+name: Add feature d rereview artifact
 summary: "Add a Re-Review section to work/reports/review-FEAT-01KMRX1F47Z94.md documenting the targeted re-review performed after remediation: which spec sections and files were re-evaluated, the passing outcome, and confirmation only affected sections were reviewed. Addresses B3 (AC-F-17). Independent of other remediation tasks."
 status: done
 files_planned:

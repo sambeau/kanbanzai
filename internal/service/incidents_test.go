@@ -14,7 +14,7 @@ func TestEntityService_CreateIncident(t *testing.T) {
 
 	got, err := svc.CreateIncident(CreateIncidentInput{
 		Slug:       "prod-outage",
-		Title:      "Production outage in API gateway",
+		Name:       "Production outage in API gateway",
 		Severity:   "high",
 		Summary:    "API gateway returning 503 for all requests",
 		ReportedBy: "oncall-eng",
@@ -40,8 +40,8 @@ func TestEntityService_CreateIncident(t *testing.T) {
 	if state["severity"] != "high" {
 		t.Fatalf("CreateIncident() severity = %v, want %q", state["severity"], "high")
 	}
-	if state["title"] != "Production outage in API gateway" {
-		t.Fatalf("CreateIncident() title = %v, want %q", state["title"], "Production outage in API gateway")
+	if state["name"] != "Production outage in API gateway" {
+		t.Fatalf("CreateIncident() name = %v, want %q", state["name"], "Production outage in API gateway")
 	}
 	if state["summary"] != "API gateway returning 503 for all requests" {
 		t.Fatalf("CreateIncident() summary = %v, want %q", state["summary"], "API gateway returning 503 for all requests")
@@ -59,7 +59,7 @@ func TestEntityService_CreateIncident_InvalidSeverity(t *testing.T) {
 
 	_, err := svc.CreateIncident(CreateIncidentInput{
 		Slug:       "bad-severity",
-		Title:      "Test incident",
+		Name:       "Test incident",
 		Severity:   "extreme",
 		Summary:    "Testing invalid severity",
 		ReportedBy: "tester",
@@ -80,7 +80,7 @@ func TestEntityService_CreateIncident_MissingFields(t *testing.T) {
 
 	_, err := svc.CreateIncident(CreateIncidentInput{
 		Slug:       "",
-		Title:      "Test incident",
+		Name:       "Test incident",
 		Severity:   "high",
 		Summary:    "Missing slug",
 		ReportedBy: "tester",
@@ -98,7 +98,7 @@ func TestEntityService_UpdateIncident_StatusTransition(t *testing.T) {
 
 	created, err := svc.CreateIncident(CreateIncidentInput{
 		Slug:       "status-transition",
-		Title:      "Transition test",
+		Name:       "Transition test",
 		Severity:   "medium",
 		Summary:    "Testing status transition",
 		ReportedBy: "tester",
@@ -133,7 +133,7 @@ func TestEntityService_UpdateIncident_InvalidTransition(t *testing.T) {
 
 	created, err := svc.CreateIncident(CreateIncidentInput{
 		Slug:       "bad-transition",
-		Title:      "Invalid transition test",
+		Name:       "Invalid transition test",
 		Severity:   "low",
 		Summary:    "Testing invalid transition",
 		ReportedBy: "tester",
@@ -165,7 +165,7 @@ func TestEntityService_UpdateIncident_FieldsOnly(t *testing.T) {
 
 	created, err := svc.CreateIncident(CreateIncidentInput{
 		Slug:       "field-update",
-		Title:      "Field update test",
+		Name:       "Field update test",
 		Severity:   "medium",
 		Summary:    "Testing field-only update",
 		ReportedBy: "tester",
@@ -201,7 +201,7 @@ func TestEntityService_ListIncidents(t *testing.T) {
 	// Create first incident (stays in "reported")
 	_, err := svc.CreateIncident(CreateIncidentInput{
 		Slug:       "incident-one",
-		Title:      "First incident",
+		Name:       "First incident",
 		Severity:   "high",
 		Summary:    "First test incident",
 		ReportedBy: "tester",
@@ -213,7 +213,7 @@ func TestEntityService_ListIncidents(t *testing.T) {
 	// Create second incident and advance to "triaged"
 	second, err := svc.CreateIncident(CreateIncidentInput{
 		Slug:       "incident-two",
-		Title:      "Second incident",
+		Name:       "Second incident",
 		Severity:   "low",
 		Summary:    "Second test incident",
 		ReportedBy: "tester",
@@ -267,7 +267,7 @@ func TestEntityService_LinkBug(t *testing.T) {
 
 	incident, err := svc.CreateIncident(CreateIncidentInput{
 		Slug:       "link-bug-test",
-		Title:      "Link bug test incident",
+		Name:       "Link bug test incident",
 		Severity:   "high",
 		Summary:    "Testing bug linking",
 		ReportedBy: "tester",
@@ -278,7 +278,7 @@ func TestEntityService_LinkBug(t *testing.T) {
 
 	bugResult, err := svc.CreateBug(CreateBugInput{
 		Slug:       "test-bug",
-		Title:      "Test bug",
+		Name:       "Test bug",
 		ReportedBy: "tester",
 		Observed:   "broken",
 		Expected:   "working",
@@ -323,7 +323,7 @@ func TestEntityService_LinkBug_Idempotent(t *testing.T) {
 
 	incident, err := svc.CreateIncident(CreateIncidentInput{
 		Slug:       "idempotent-link",
-		Title:      "Idempotent link test",
+		Name:       "Idempotent link test",
 		Severity:   "medium",
 		Summary:    "Testing idempotent linking",
 		ReportedBy: "tester",
@@ -334,7 +334,7 @@ func TestEntityService_LinkBug_Idempotent(t *testing.T) {
 
 	bugResult, err := svc.CreateBug(CreateBugInput{
 		Slug:       "test-bug",
-		Title:      "Test bug",
+		Name:       "Test bug",
 		ReportedBy: "tester",
 		Observed:   "broken",
 		Expected:   "working",
@@ -389,7 +389,7 @@ func TestEntityService_IncidentRoundTrip(t *testing.T) {
 
 	created, err := svc.CreateIncident(CreateIncidentInput{
 		Slug:       "round-trip",
-		Title:      "Round trip test",
+		Name:       "Round trip test",
 		Severity:   "low",
 		Summary:    "Testing round-trip serialization",
 		ReportedBy: "tester",

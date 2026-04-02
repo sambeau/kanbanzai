@@ -1,6 +1,7 @@
 id: TASK-01KMS2T9TXR6D
 parent_feature: FEAT-01KMRX1QPN3CB
 slug: update-skill-tool-names
+name: Update skill tool names
 summary: "Replace all 1.0 tool references in the ## Orchestration Procedure section of .skills/code-review.md with 2.0 equivalents. See B1 in review-FEAT-01KMRX1QPN3CB.md for the full mapping table. Also: add transition tool reference to Decision Point section (N3), add required review document sections list to Step 6 (N4)."
 status: done
 files_planned:

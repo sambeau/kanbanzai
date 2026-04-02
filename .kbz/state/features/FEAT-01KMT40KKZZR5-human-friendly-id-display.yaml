@@ -1,5 +1,6 @@
 id: FEAT-01KMT40KKZZR5
 slug: human-friendly-id-display
+name: Human friendly id display
 parent: P7-developer-experience
 status: done
 summary: "Surface display_id (split format) as primary in all tool outputs; always show slug alongside display ID; add optional label field (max 24 chars) on features and tasks for short ordering prefixes + descriptive words, filterable in entity list."

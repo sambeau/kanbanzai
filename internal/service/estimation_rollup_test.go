@@ -16,6 +16,7 @@ func TestComputeFeatureRollup_EmptyFeature(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "empty-feature",
 		Parent:    planID,
 		Summary:   "Empty feature with no tasks",
@@ -59,6 +60,7 @@ func TestComputeFeatureRollup_NoEstimates(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "unestimated-feature",
 		Parent:    planID,
 		Summary:   "Feature with unestimated tasks",
@@ -71,6 +73,7 @@ func TestComputeFeatureRollup_NoEstimates(t *testing.T) {
 	// Create two tasks, neither gets an estimate.
 	for i, slug := range []string{"task-alpha", "task-beta"} {
 		_, err := svc.CreateTask(CreateTaskInput{
+			Name: "test",
 			ParentFeature: feat.ID,
 			Slug:          slug,
 			Summary:       "Task without estimate",
@@ -111,6 +114,7 @@ func TestComputeFeatureRollup_WithNotPlanned(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "np-feature",
 		Parent:    planID,
 		Summary:   "Feature with a not-planned task",
@@ -122,6 +126,7 @@ func TestComputeFeatureRollup_WithNotPlanned(t *testing.T) {
 
 	// T1 will be transitioned to not-planned — should be excluded.
 	t1, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "will-not-plan",
 		Summary:       "This task is not planned",
@@ -132,6 +137,7 @@ func TestComputeFeatureRollup_WithNotPlanned(t *testing.T) {
 
 	// T2 gets estimate=5, stays queued — should contribute to rollup.
 	t2, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "estimated-two",
 		Summary:       "Task two with estimate",
@@ -142,6 +148,7 @@ func TestComputeFeatureRollup_WithNotPlanned(t *testing.T) {
 
 	// T3 gets estimate=3, stays queued — should contribute to rollup.
 	t3, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "estimated-three",
 		Summary:       "Task three with estimate",
@@ -152,6 +159,7 @@ func TestComputeFeatureRollup_WithNotPlanned(t *testing.T) {
 
 	// T4: no estimate, stays queued — counted in TaskCount, not EstimatedTaskCount.
 	_, err = svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "no-estimate-four",
 		Summary:       "Task four without estimate",
@@ -215,6 +223,7 @@ func TestComputeFeatureRollup_WithDuplicate(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "dup-feature",
 		Parent:    planID,
 		Summary:   "Feature with a duplicate task",
@@ -226,6 +235,7 @@ func TestComputeFeatureRollup_WithDuplicate(t *testing.T) {
 
 	// T1 will be transitioned to duplicate — should be excluded.
 	t1, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "will-duplicate",
 		Summary:       "This task is a duplicate",
@@ -236,6 +246,7 @@ func TestComputeFeatureRollup_WithDuplicate(t *testing.T) {
 
 	// T2 gets estimate=8 — should contribute.
 	t2, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "real-task",
 		Summary:       "Real task with estimate",
@@ -292,6 +303,7 @@ func TestComputeFeatureRollup_WithDoneTask(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "done-feature",
 		Parent:    planID,
 		Summary:   "Feature with a completed task",
@@ -303,6 +315,7 @@ func TestComputeFeatureRollup_WithDoneTask(t *testing.T) {
 
 	// T1 will reach done — estimate=5.
 	t1, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "task-to-complete",
 		Summary:       "Task that will be completed",
@@ -313,6 +326,7 @@ func TestComputeFeatureRollup_WithDoneTask(t *testing.T) {
 
 	// T2 stays queued — estimate=3.
 	t2, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "task-in-progress",
 		Summary:       "Task still in queue",
@@ -380,6 +394,7 @@ func TestComputeFeatureRollup_FeatureIsolation(t *testing.T) {
 
 	// Feature A — the one we'll query.
 	featA, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "feature-alpha",
 		Parent:    planID,
 		Summary:   "Feature A",
@@ -391,6 +406,7 @@ func TestComputeFeatureRollup_FeatureIsolation(t *testing.T) {
 
 	// Feature B — tasks here must NOT appear in Feature A's rollup.
 	featB, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "feature-beta",
 		Parent:    planID,
 		Summary:   "Feature B",
@@ -402,6 +418,7 @@ func TestComputeFeatureRollup_FeatureIsolation(t *testing.T) {
 
 	// Create a task for Feature A with estimate=5.
 	tA, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featA.ID,
 		Slug:          "task-for-a",
 		Summary:       "Task belonging to Feature A",
@@ -415,6 +432,7 @@ func TestComputeFeatureRollup_FeatureIsolation(t *testing.T) {
 
 	// Create a task for Feature B with estimate=13.
 	tB, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featB.ID,
 		Slug:          "task-for-b",
 		Summary:       "Task belonging to Feature B",
@@ -471,6 +489,7 @@ func TestComputeFeatureRollup_BothExcludedStates(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "mixed-feature",
 		Parent:    planID,
 		Summary:   "Feature with both excluded states",
@@ -482,6 +501,7 @@ func TestComputeFeatureRollup_BothExcludedStates(t *testing.T) {
 
 	// T1 → not-planned
 	t1, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "not-planned-task",
 		Summary:       "Goes to not-planned",
@@ -492,6 +512,7 @@ func TestComputeFeatureRollup_BothExcludedStates(t *testing.T) {
 
 	// T2 → duplicate
 	t2, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "duplicate-task",
 		Summary:       "Goes to duplicate",
@@ -502,6 +523,7 @@ func TestComputeFeatureRollup_BothExcludedStates(t *testing.T) {
 
 	// T3 → estimate=2, stays active
 	t3, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "active-task",
 		Summary:       "Stays active with estimate",
@@ -560,6 +582,7 @@ func TestSetEstimate_ValidAndInvalid(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "est-feature",
 		Parent:    planID,
 		Summary:   "Feature for estimate testing",
@@ -570,6 +593,7 @@ func TestSetEstimate_ValidAndInvalid(t *testing.T) {
 	}
 
 	task, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "estimable-task",
 		Summary:       "Task to estimate",
@@ -605,6 +629,7 @@ func TestSetEstimate_SoftLimitWarning(t *testing.T) {
 	writeTestPlan(t, svc, planID)
 
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "sl-feature",
 		Parent:    planID,
 		Summary:   "Feature for soft-limit testing",
@@ -615,6 +640,7 @@ func TestSetEstimate_SoftLimitWarning(t *testing.T) {
 	}
 
 	task, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: feat.ID,
 		Slug:          "large-task",
 		Summary:       "Task with a large estimate",

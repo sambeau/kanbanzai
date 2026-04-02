@@ -1,6 +1,7 @@
 id: TASK-01KMWJVBZ43Q4
 parent_feature: FEAT-01KMWJ3ZQ57ZY
 slug: zed-config-writer
+name: Zed config writer
 summary: "Implement .zed/settings.json writer in kbz init. Add writeZedConfig(baseDir, version) to internal/kbzinit/mcp_config.go: only writes if .zed/ directory already exists at baseDir, writes Zed context_servers.kanbanzai entry with _kanbanzai managed marker, same version-aware conflict logic as .mcp.json writer."
 status: done
 depends_on:

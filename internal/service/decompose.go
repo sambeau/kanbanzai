@@ -18,6 +18,7 @@ type DecomposeInput struct {
 // ProposedTask is a single task in a decomposition proposal.
 type ProposedTask struct {
 	Slug      string   `json:"slug"`
+	Name      string   `json:"name"`
 	Summary   string   `json:"summary"`
 	Role      string   `json:"role,omitempty"`
 	Estimate  *float64 `json:"estimate,omitempty"`

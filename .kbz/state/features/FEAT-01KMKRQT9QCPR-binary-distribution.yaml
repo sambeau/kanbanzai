@@ -1,5 +1,6 @@
 id: FEAT-01KMKRQT9QCPR
 slug: binary-distribution
+name: Binary distribution
 parent: P3-kanbanzai-1.0
 status: done
 summary: "Pre-compiled binary distribution via GitHub Releases. GoReleaser and GitHub Actions pipeline triggered on version tags. macOS ARM64 for alpha; macOS AMD64, Linux AMD64/ARM64, Windows AMD64 for 1.0."

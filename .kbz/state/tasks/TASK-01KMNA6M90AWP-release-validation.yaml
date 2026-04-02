@@ -1,6 +1,7 @@
 id: TASK-01KMNA6M90AWP
 parent_feature: FEAT-01KMKRQT9QCPR
 slug: release-validation
+name: Release validation
 summary: "Validate the release pipeline end-to-end by pushing a v1.0.0-alpha.1 tag and verifying: workflow completes without manual steps, correct artefacts produced for alpha tier (macOS ARM64 only), checksums.txt present and passes sha256sum -c, kanbanzai --version prints 1.0.0-alpha.1 on the downloaded binary, and install script installs and runs the binary successfully."
 status: needs-review
 files_planned:

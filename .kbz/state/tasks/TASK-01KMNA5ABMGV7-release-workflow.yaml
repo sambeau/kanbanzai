@@ -1,6 +1,7 @@
 id: TASK-01KMNA5ABMGV7
 parent_feature: FEAT-01KMKRQT9QCPR
 slug: release-workflow
+name: Release workflow
 summary: "Create .github/workflows/release.yml triggered only by version tag push matching v*.*.*. Workflow: check out tagged commit, set up Go from go.mod version, run goreleaser release --clean. Requires no secrets beyond the automatically injected GITHUB_TOKEN. Must not commit back to the repository."
 status: done
 files_planned:

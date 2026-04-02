@@ -1,6 +1,7 @@
 id: TASK-01KMZAHKSVV5A
 parent_feature: FEAT-01KMZA34WSPRR
 slug: mcp-orientation-breadcrumbs
+name: MCP orientation breadcrumbs
 summary: "Add orientation field to status (project overview, always) and next (empty queue only) responses. Define orientationInfo struct. Tests for inclusion/exclusion conditions. Spec §7."
 status: done
 estimate: "3"

@@ -1,6 +1,7 @@
 id: TASK-01KMNA6VH4804
 parent_feature: FEAT-01KMKRQVKBPRX
 slug: configuration-reference-doc
+name: Configuration reference doc
 summary: "Write docs/configuration-reference.md covering: config.yaml (all fields with type/default/description, minimal and advanced examples), prefix registry (declaration/use/retirement/constraints), local.yaml (per-machine fields, user identity, note it is not committed), context profiles (location, creation, inheritance), environment variables, kbz config validate (or equivalent), and migration between versions. Register with doc_record_submit."
 status: done
 files_planned:

@@ -1,6 +1,6 @@
 id: BUG-01KMKA1VKTC9R
 slug: incident-cli-command-group-missing
-title: kbz incident CLI command group entirely absent
+name: Incident CLI command group absent
 status: reported
 severity: high
 priority: high

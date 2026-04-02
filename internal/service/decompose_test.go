@@ -31,6 +31,7 @@ func setupDecomposeTest(t *testing.T, specContent string) (*DecomposeService, st
 		Parent:    planID,
 		Summary:   "Test feature for decompose",
 		CreatedBy: "tester",
+		Name:      "Test feature",
 	})
 	if err != nil {
 		t.Fatalf("create feature: %v", err)
@@ -282,6 +283,7 @@ func TestDecomposeFeature_DraftSpec_ReturnsError(t *testing.T) {
 		Parent:    planID,
 		Summary:   "Test feature",
 		CreatedBy: "tester",
+		Name:      "Test feature",
 	})
 	if err != nil {
 		t.Fatalf("create feature: %v", err)
@@ -1116,7 +1118,7 @@ func writeDecomposeTestPlan(t *testing.T, svc *EntityService, id string) {
 	fields := map[string]any{
 		"id":         id,
 		"slug":       slug,
-		"title":      "Test Plan",
+		"name":       "Test Plan",
 		"status":     "active",
 		"summary":    "Test plan for decompose tests",
 		"created":    "2026-03-19T12:00:00Z",

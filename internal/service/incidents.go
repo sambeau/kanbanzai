@@ -14,7 +14,7 @@ import (
 // CreateIncidentInput holds the parameters for creating a new incident.
 type CreateIncidentInput struct {
 	Slug       string
-	Title      string
+	Name       string
 	Severity   string
 	Summary    string
 	ReportedBy string
@@ -44,12 +44,17 @@ type LinkBugInput struct {
 func (s *EntityService) CreateIncident(input CreateIncidentInput) (CreateResult, error) {
 	if err := validateRequired(
 		field("slug", input.Slug),
-		field("title", input.Title),
+		field("name", input.Name),
 		field("severity", input.Severity),
 		field("summary", input.Summary),
 		field("reported_by", input.ReportedBy),
 	); err != nil {
 		return CreateResult{}, err
+	}
+
+	incidentName, nameErr := validate.ValidateName(input.Name)
+	if nameErr != nil {
+		return CreateResult{}, nameErr
 	}
 
 	if err := validate.ValidateIncidentSeverity(input.Severity); err != nil {
@@ -75,7 +80,7 @@ func (s *EntityService) CreateIncident(input CreateIncidentInput) (CreateResult,
 	entity := model.Incident{
 		ID:         idValue,
 		Slug:       normalizeSlug(input.Slug),
-		Title:      strings.TrimSpace(input.Title),
+		Name:       incidentName,
 		Status:     model.IncidentStatusReported,
 		Severity:   model.IncidentSeverity(input.Severity),
 		ReportedBy: strings.TrimSpace(input.ReportedBy),

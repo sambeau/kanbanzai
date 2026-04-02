@@ -1,6 +1,7 @@
 id: TASK-01KMJVK9V8YTT
 parent_feature: FEAT-01KMJVK9V84TZ
 slug: write-phase-4b-spec
+name: Write phase 4b spec
 summary: "Write the Phase 4b specification document (work/spec/phase-4b-specification.md), covering feature decomposition, automatic dependency unblocking, worker review, conflict domain analysis, vertical slice guidance, and incident/RCA entities. Base the spec on the Phase 4b feature breakdown in work/plan/phase-4-scope.md §7 and the design decisions in work/plan/phase-4-decision-log.md."
 status: done
 estimate: 5

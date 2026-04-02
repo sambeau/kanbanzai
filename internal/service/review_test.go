@@ -32,6 +32,7 @@ func setupReviewTest(t *testing.T, specDocID string) (*ReviewService, *EntitySer
 		Parent:    testPlanIDReview,
 		Summary:   "Feature for review tests",
 		CreatedBy: "tester",
+		Name:      "Review feature",
 	})
 	if err != nil {
 		t.Fatalf("create feature: %v", err)
@@ -54,6 +55,7 @@ func setupReviewTest(t *testing.T, specDocID string) (*ReviewService, *EntitySer
 		ParentFeature: featureID,
 		Slug:          "review-task",
 		Summary:       "Implement authentication middleware with JWT tokens",
+		Name:          "Implement auth middleware",
 	})
 	if err != nil {
 		t.Fatalf("create task: %v", err)
@@ -84,7 +86,7 @@ func writeReviewTestPlan(t *testing.T, svc *EntityService, id string) {
 	fields := map[string]any{
 		"id":         id,
 		"slug":       slug,
-		"title":      "Test Plan",
+		"name":       "Test Plan",
 		"status":     "active",
 		"summary":    "Test plan for review tests",
 		"created":    "2026-03-19T12:00:00Z",
@@ -430,6 +432,7 @@ func TestReviewTaskOutput_RoundTrip_ReworkReason(t *testing.T) {
 		Parent:    testPlanIDReview,
 		Summary:   "Feature for round-trip test",
 		CreatedBy: "tester",
+		Name:      "Round trip feature",
 	})
 	if err != nil {
 		t.Fatalf("create feature: %v", err)
@@ -439,6 +442,7 @@ func TestReviewTaskOutput_RoundTrip_ReworkReason(t *testing.T) {
 		ParentFeature: featResult.ID,
 		Slug:          "rt-task",
 		Summary:       "Task for round-trip test",
+		Name:          "Round trip task",
 	})
 	if err != nil {
 		t.Fatalf("create task: %v", err)
@@ -531,6 +535,7 @@ func TestReviewTaskOutput_VerificationMet_Pass(t *testing.T) {
 		Parent:    testPlanIDReview,
 		Summary:   "Feature for verification test",
 		CreatedBy: "tester",
+		Name:      "Verify JWT authentication",
 	})
 	if err != nil {
 		t.Fatalf("create feature: %v", err)
@@ -540,6 +545,7 @@ func TestReviewTaskOutput_VerificationMet_Pass(t *testing.T) {
 		ParentFeature: featResult.ID,
 		Slug:          "ver-task",
 		Summary:       "Implement JWT authentication",
+		Name:          "Implement JWT auth",
 	})
 	if err != nil {
 		t.Fatalf("create task: %v", err)
@@ -670,6 +676,7 @@ func TestReviewTaskOutput_InvalidStatus_RejectsQueued(t *testing.T) {
 	writeReviewTestPlan(t, entitySvc, testPlanIDReview)
 
 	featResult, err := entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "q-feature",
 		Parent:    testPlanIDReview,
 		Summary:   "Feature for queued test",
@@ -680,6 +687,7 @@ func TestReviewTaskOutput_InvalidStatus_RejectsQueued(t *testing.T) {
 	}
 
 	taskResult, err := entitySvc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featResult.ID,
 		Slug:          "queued-task",
 		Summary:       "A task that stays queued",
@@ -790,6 +798,7 @@ func TestLifecycle_ActiveToNeedsRework(t *testing.T) {
 	writeReviewTestPlan(t, entitySvc, testPlanIDReview)
 
 	featResult, err := entitySvc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "lc-feature",
 		Parent:    testPlanIDReview,
 		Summary:   "Feature for lifecycle test",
@@ -800,6 +809,7 @@ func TestLifecycle_ActiveToNeedsRework(t *testing.T) {
 	}
 
 	taskResult, err := entitySvc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featResult.ID,
 		Slug:          "lc-task",
 		Summary:       "Lifecycle test task",

@@ -223,7 +223,7 @@ func fieldOrderForEntityType(entityType string) []string {
 		return []string{
 			"id",
 			"slug",
-			"title",
+			"name",
 			"status",
 			"summary",
 			"design",
@@ -238,7 +238,7 @@ func fieldOrderForEntityType(entityType string) []string {
 		return []string{
 			"id",
 			"slug",
-			"title",
+			"name",
 			"status",
 			"estimate",
 			"summary",
@@ -250,7 +250,7 @@ func fieldOrderForEntityType(entityType string) []string {
 		return []string{
 			"id",
 			"slug",
-			"label",
+			"name",
 			"parent",
 			"status",
 			"review_cycle",
@@ -275,7 +275,7 @@ func fieldOrderForEntityType(entityType string) []string {
 			"id",
 			"parent_feature",
 			"slug",
-			"label",
+			"name",
 			"summary",
 			"status",
 			"estimate",
@@ -297,7 +297,7 @@ func fieldOrderForEntityType(entityType string) []string {
 		return []string{
 			"id",
 			"slug",
-			"title",
+			"name",
 			"status",
 			"estimate",
 			"severity",
@@ -322,6 +322,7 @@ func fieldOrderForEntityType(entityType string) []string {
 		return []string{
 			"id",
 			"slug",
+			"name",
 			"summary",
 			"rationale",
 			"decided_by",
@@ -377,7 +378,7 @@ func fieldOrderForEntityType(entityType string) []string {
 		return []string{
 			"id",
 			"slug",
-			"title",
+			"name",
 			"status",
 			"severity",
 			"reported_by",

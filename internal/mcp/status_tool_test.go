@@ -26,7 +26,7 @@ func setupStatusTest(t *testing.T) (*service.EntityService, *service.DocumentSer
 
 // createTestPlan creates a plan record directly via the storage layer,
 // bypassing the config-dependent CreatePlan path so tests run without .kbz/config.yaml.
-func createTestPlan(t *testing.T, entitySvc *service.EntityService, slug, title string) string {
+func createTestPlan(t *testing.T, entitySvc *service.EntityService, slug, name string) string {
 	t.Helper()
 	now := time.Now().UTC().Format(time.RFC3339)
 	// Use a deterministic but unique-enough ID for tests.
@@ -38,7 +38,7 @@ func createTestPlan(t *testing.T, entitySvc *service.EntityService, slug, title 
 		Fields: map[string]any{
 			"id":         id,
 			"slug":       slug,
-			"title":      title,
+			"name":       name,
 			"status":     "proposed",
 			"summary":    "Test plan " + slug,
 			"created":    now,
@@ -56,6 +56,7 @@ func createTestPlan(t *testing.T, entitySvc *service.EntityService, slug, title 
 func createStatusTestFeature(t *testing.T, entitySvc *service.EntityService, parentPlanID, slug, summary string) string {
 	t.Helper()
 	result, err := entitySvc.CreateFeature(service.CreateFeatureInput{
+		Name: "test",
 		Slug:      slug,
 		Parent:    parentPlanID,
 		Summary:   summary,
@@ -71,6 +72,7 @@ func createStatusTestFeature(t *testing.T, entitySvc *service.EntityService, par
 func createStatusTestTask(t *testing.T, entitySvc *service.EntityService, parentFeatID, slug, summary string) string {
 	t.Helper()
 	result, err := entitySvc.CreateTask(service.CreateTaskInput{
+		Name: "test",
 		ParentFeature: parentFeatID,
 		Slug:          slug,
 		Summary:       summary,

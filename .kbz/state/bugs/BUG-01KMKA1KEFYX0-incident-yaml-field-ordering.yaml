@@ -1,6 +1,6 @@
 id: BUG-01KMKA1KEFYX0
 slug: incident-yaml-field-ordering
-title: Incident YAML field ordering non-deterministic in storage
+name: Incident YAML field ordering
 status: reported
 severity: high
 priority: high

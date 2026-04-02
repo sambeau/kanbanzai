@@ -1,5 +1,6 @@
 id: FEAT-01KMTJH8YBSE3
 slug: plan-review-skill
+name: Plan review skill
 parent: P10-review-and-doc-currency
 status: done
 summary: "Create .skills/plan-review.md — a SKILL document defining the procedure for reviewing a completed plan, routing reviewers through Kanbanzai tools (status, entity list, health)."

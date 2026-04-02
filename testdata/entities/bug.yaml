@@ -1,6 +1,6 @@
 id: BUG-01J4AR7WHN4F2
 slug: bad-yaml-output
-title: Writer produces unstable YAML
+name: Writer produces unstable YAML
 status: reported
 severity: medium
 priority: medium

@@ -1,5 +1,6 @@
 id: FEAT-01KMZA31HYW6A
 slug: skill-content-updates
+name: Skill content updates
 parent: P12-agent-onboarding
 status: done
 summary: "Add 'use MCP tools, don't write files directly' rule to getting-started and workflow skills. Add direct-write to the emergency brake list."

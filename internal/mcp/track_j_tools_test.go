@@ -541,7 +541,7 @@ func TestTrackJ_Incident_Create_AndList(t *testing.T) {
 	createResp := ts.call(t, "incident", map[string]any{
 		"action":      "create",
 		"slug":        "test-incident",
-		"title":       "Test Incident",
+		"name":        "Test Incident",
 		"severity":    "high",
 		"summary":     "A test incident for unit tests",
 		"reported_by": "tester",
@@ -1145,6 +1145,7 @@ func TestTrackJ_Decompose_Apply_CreatesTasksWithDependencies(t *testing.T) {
 
 	// Create the feature under the plan.
 	feat, err := entitySvc.CreateFeature(service.CreateFeatureInput{
+		Name:      "test",
 		Slug:      "widget-feature",
 		Parent:    planID,
 		Summary:   "Implement the widget",
@@ -1176,12 +1177,14 @@ func TestTrackJ_Decompose_Apply_CreatesTasksWithDependencies(t *testing.T) {
 		"tasks": []any{
 			map[string]any{
 				"slug":       "task-a",
+				"name":       "Task A",
 				"summary":    "First task",
 				"rationale":  "Must come first",
 				"depends_on": []any{},
 			},
 			map[string]any{
 				"slug":       "task-b",
+				"name":       "Task B",
 				"summary":    "Second task",
 				"rationale":  "Depends on task-a",
 				"depends_on": []any{"task-a"},
@@ -1283,7 +1286,7 @@ func writePlanForTest(t *testing.T, svc *service.EntityService, planID, slug str
 		Fields: map[string]any{
 			"id":         planID,
 			"slug":       slug,
-			"title":      "Test Plan",
+			"name":       "Test Plan",
 			"status":     "active",
 			"summary":    "Plan for testing",
 			"created":    now,

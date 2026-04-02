@@ -1,6 +1,7 @@
 id: TASK-01KMRXJVQ9XH6
 parent_feature: FEAT-01KMRX1HG8BAX
 slug: create-code-review-skill
+name: Create code review skill
 summary: "Create .skills/code-review.md covering: required inputs for a review unit, per-dimension evaluation guidance for all five dimensions, structured output format with all required fields (per-dimension outcome + overall verdict), blocking vs non-blocking classification rules, four edge cases (missing spec, partial implementation, ambiguous conformance, missing context), scope exclusion note, and a verification checklist. Add an entry to .skills/README.md. Covers spec AC-E-07 through AC-E-15."
 status: done
 files_planned:

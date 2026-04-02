@@ -176,6 +176,60 @@ deleted users, not 410" is good. "Be careful with the API" is not.
 
 ---
 
+## Entity Names
+
+Every entity (plan, feature, task, bug, decision) requires a `name` field. These rules
+apply to all entity types.
+
+### Hard Rules
+
+These are code-enforced. Violations are rejected with an error:
+
+- **Required** — `name` must be set on every entity. Never omit it.
+- **60-character maximum.**
+- **No colon (`:`).**
+- **No phase or version prefix** — do not start a name with a pattern like `P4`, `P8`,
+  or `P11` followed by a space or dash. The phase is already encoded in the entity's
+  parent field.
+- Leading/trailing whitespace is stripped automatically.
+
+### Quality Guidance
+
+- **Target approximately four words.** If you need more than five or six, the scope is
+  too broad or the name is doing the summary's job.
+- **No em-dashes as separators.** Hyphens in compound technical terms are fine
+  (`"Human-friendly ID display"`), but not `"P8 — decompose"`.
+- **A name should not be merely the slug capitalised.** `init-command` → `"Init command"`
+  adds nothing. Prefer `"Project init command"` or `"Init and skill install"`.
+- **Names must be self-contained** — readable without knowing the parent entity.
+  `"Update agents"` is ambiguous; `"Update AGENTS.md layout"` is not.
+- **Do not include the parent plan or feature name** in the entity name — the hierarchy
+  is visible from the parent field.
+
+### Examples
+
+Good names:
+
+| Entity | Name | Why |
+|--------|------|-----|
+| Plan | Kanbanzai 2.0 | Short, identity-oriented |
+| Feature | Human-friendly ID display | ~4 words, no prefix, self-contained |
+| Feature | Init and skill install | ~4 words, descriptive, no prefix |
+| Task | Server info tool | ~3 words, clear |
+| Task | Label model and storage | ~4 words |
+| Decision | Use TSID for entity IDs | Self-contained, concise |
+
+Bad names:
+
+| Entity | Name | Problem |
+|--------|------|---------|
+| Plan | P4 Kanbanzai 2.0: MCP Tool Surface Redesign | Phase prefix + colon |
+| Feature | P8 — decompose propose Reliability Fixes | Phase prefix + separator dash |
+| Feature | The kanbanzai init command: creates .kbz/config.yaml | Colon + far too long — this is a summary |
+| Task | Update | Too vague, not self-contained |
+
+---
+
 ## Communicating With Humans
 
 Documents are the human interface to the system. Decision records and their

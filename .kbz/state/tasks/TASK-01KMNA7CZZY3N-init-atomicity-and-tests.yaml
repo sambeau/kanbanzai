@@ -1,5 +1,6 @@
 id: TASK-01KMNA7CZZY3N
 parent_feature: FEAT-01KMKRQRRX3CC
 slug: init-atomicity-and-tests
+name: Init atomicity and tests
 summary: "Implement init atomicity (write to temp directory, rename atomically, clean up on any failure so no partial .kbz/ is left) and idempotency (second invocation on same project exits 0, no files modified). Write integration tests covering all 18 acceptance criteria from the init-command spec. Depends on tasks init-skill-embedding and init-existing-project being complete."
 status: not-planned

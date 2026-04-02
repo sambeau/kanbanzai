@@ -17,6 +17,7 @@ func setupDepHookTest(t *testing.T) (*EntityService, string) {
 
 	writeTestPlan(t, svc, testPlanIDDep)
 	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name: "test",
 		Slug:      "dep-feat",
 		Parent:    testPlanIDDep,
 		Summary:   "Feature for dependency tests",
@@ -32,6 +33,7 @@ func setupDepHookTest(t *testing.T) (*EntityService, string) {
 func createTestTask(t *testing.T, svc *EntityService, featureID, slug, summary string) (string, string) {
 	t.Helper()
 	task, err := svc.CreateTask(CreateTaskInput{
+		Name: "test",
 		ParentFeature: featureID,
 		Slug:          slug,
 		Summary:       summary,

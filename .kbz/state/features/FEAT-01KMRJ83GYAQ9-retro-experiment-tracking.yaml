@@ -1,5 +1,6 @@
 id: FEAT-01KMRJ83GYAQ9
 slug: retro-experiment-tracking
+name: Retro experiment tracking
 parent: P5-workflow-retrospective
 status: done
 summary: "Phase 3: Add `related_decision` field to the retrospective signal structure. Extend `retro` synthesis to produce an `experiments` section cross-referencing `workflow-experiment` decisions. Add a context nudge in `next` and `handoff` that surfaces active `workflow-experiment` decisions. Requires Phase 2 to be complete."

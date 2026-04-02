@@ -1,6 +1,7 @@
 id: TASK-01KMNA2V322MF
 parent_feature: FEAT-01KMKRQSD1TKK
 slug: author-documents-skill
+name: Author documents skill
 summary: "Author the kanbanzai-documents skill file covering: document types and where they live, how to register with doc_record_submit, when to use batch_import_documents, drift detection and doc_record_refresh, and the document approval lifecycle."
 status: done
 files_planned:

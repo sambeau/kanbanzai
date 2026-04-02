@@ -1,6 +1,7 @@
 id: TASK-01KMNA2WTBQ7T
 parent_feature: FEAT-01KMKRQSD1TKK
 slug: author-planning-skill
+name: Author planning skill
 summary: "Author the kanbanzai-planning skill file (opinionated) covering: how to create a Plan with create_plan and the prefix registry, how to create Features under a Plan, how to check the work queue, task lifecycle (ready→active→done), and decision recording with record_decision."
 status: done
 files_planned:

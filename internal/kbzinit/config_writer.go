@@ -70,6 +70,7 @@ type initDocuments struct {
 // are omitted intentionally — they are added later by other commands or the user.
 type initFileConfig struct {
 	Version   string            `yaml:"version"`
+	Name      string            `yaml:"name"`
 	Prefixes  []initPrefixEntry `yaml:"prefixes"`
 	Documents initDocuments     `yaml:"documents"`
 }
@@ -77,9 +78,10 @@ type initFileConfig struct {
 // WriteInitConfig writes a minimal .kbz/config.yaml to kbzDir with the given
 // document roots. It creates kbzDir if it does not exist. The file is written
 // with 2-space YAML indentation to match the canonical spec layout.
-func WriteInitConfig(kbzDir string, roots []DocumentRoot) error {
+func WriteInitConfig(kbzDir string, name string, roots []DocumentRoot) error {
 	cfg := initFileConfig{
 		Version: "2",
+		Name:    name,
 		Prefixes: []initPrefixEntry{
 			{Prefix: "P", Name: "Plan"},
 		},

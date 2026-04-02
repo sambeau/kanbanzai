@@ -1,6 +1,7 @@
 id: TASK-01KMWJWE5V5GG
 parent_feature: FEAT-01KMWJ3ZRBYFH
 slug: work-readme-on-init
+name: Work readme on init
 summary: "Update internal/kbzinit/init.go: in runNewProject, after createWorkDirs, write work/README.md with the static 8-row table template from spec §5 (directory, type, purpose columns, plus AI agents line). Extend --skip-work-dirs to also skip README creation. Do not write README on the existing project path (runExistingProject). Add init_test.go tests: new project creates work/README.md, content contains all 8 directories and the AI agents line, --skip-work-dirs omits README, existing project path does not create README."
 status: done
 depends_on:

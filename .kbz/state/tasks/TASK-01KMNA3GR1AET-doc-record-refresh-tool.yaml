@@ -1,6 +1,7 @@
 id: TASK-01KMNA3GR1AET
 parent_feature: FEAT-01KMKRQWF0FCH
 slug: doc-record-refresh-tool
+name: Doc record refresh tool
 summary: "Implement doc_record_refresh MCP tool: reads current file content, computes hash, returns changed:false if unchanged; updates hash if changed; transitions approved→draft if changed content was approved (returns old hash, new hash, and transition message). Includes error conditions for missing document/file. Tests for AC-11, AC-12, AC-13."
 status: done
 files_planned:
