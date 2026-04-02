@@ -179,6 +179,13 @@ func finishOne(
 	if strings.TrimSpace(input.Summary) == "" {
 		return nil, fmt.Errorf("Cannot complete task %s: summary is missing.\n\nTo resolve:\n  Provide a brief description: finish(task_id: %q, summary: \"what was accomplished\")", input.TaskID, input.TaskID)
 	}
+	if len(input.Summary) > 500 {
+		return nil, fmt.Errorf(
+			"summary exceeds 500-character limit (%d characters provided). "+
+				"Truncate the summary to 500 characters or fewer",
+			len(input.Summary),
+		)
+	}
 
 	// Load the task to inspect its current status.
 	task, err := entitySvc.Get("task", input.TaskID, "")
