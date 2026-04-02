@@ -1,0 +1,7 @@
+id: WT-01KN7ZAC92GQE
+entity_id: BUG-01KN7YN12DS7H
+branch: bug/BUG-01KN7YN12DS7H-base-role-yaml-health-crash
+path: .worktrees/BUG-01KN7YN12DS7H-base-role-yaml-health-crash
+status: active
+created: "2026-04-02T20:49:22Z"
+created_by: sambeau
