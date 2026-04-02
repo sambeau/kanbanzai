@@ -1,8 +1,8 @@
 id: P11-fresh-install-experience
 slug: fresh-install-experience
 title: Fresh Install Experience
-status: proposed
+status: done
 summary: "Redesign the out-of-box experience for new kanbanzai projects: MCP server connection via .mcp.json, two new embedded skills (kanbanzai-review and kanbanzai-plan-review), default context roles (base and reviewer), standard document layout with eight directories and two new document types, and a self-identifying getting-started skill description."
 created: "2026-03-29T10:26:16Z"
 created_by: sambeau
-updated: "2026-03-29T10:26:16Z"
+updated: "2026-04-02T18:12:31Z"
