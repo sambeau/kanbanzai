@@ -25,10 +25,14 @@ func decomposeTool(decomposeSvc *service.DecomposeService, entitySvc *service.En
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Feature Decomposition"),
 		mcp.WithDescription(
-			"Feature decomposition and vertical slice analysis. "+
-				"Actions: propose (propose task breakdown from spec), review (review a proposal), "+
-				"apply (create tasks from a confirmed proposal), slice (vertical slice analysis). "+
-				"Use propose → review → apply as the standard decomposition workflow.",
+			"Use when a feature needs to be broken into implementation tasks — the standard workflow "+
+				"for feature decomposition. Follow the propose → review → apply sequence: propose generates "+
+				"a task breakdown from the feature's specification, review validates it, apply creates the tasks. "+
+				"Do NOT manually create tasks with entity(action: \"create\") when a structured decomposition is "+
+				"needed — decompose produces dependency-aware, spec-traced task proposals. "+
+				"Call AFTER the feature has an approved specification. "+
+				"For all actions: feature_id is required. For review and apply: the proposal object from the "+
+				"previous step is required. The slice action provides vertical slice analysis without creating tasks.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

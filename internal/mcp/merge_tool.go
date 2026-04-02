@@ -44,10 +44,14 @@ func mergeTool(
 		mcp.WithOpenWorldHintAnnotation(true),
 		mcp.WithTitleAnnotation("Merge Gate & Execution"),
 		mcp.WithDescription(
-			"Check merge readiness and execute merges for feature/bug entities. "+
-				"Consolidates merge_readiness_check and merge_execute. "+
+			"Use when a feature or bug is ready to be merged into the main branch. "+
+				"Call check first to evaluate merge gates (CI status, review approvals, branch health, "+
+				"task completion), then call execute to perform the merge. Do NOT merge directly via git — "+
+				"merge enforces Kanbanzai workflow gates and records the merge in entity state. "+
+				"Call AFTER all tasks are complete and pr(action: \"create\") has opened a pull request. "+
 				"Actions: check (evaluate merge gates), execute (merge after gate verification). "+
-				"execute supports override + override_reason to bypass blocking gates.",
+				"For both actions: entity_id (FEAT-... or BUG-...) is required. "+
+				"execute supports override + override_reason to bypass blocking gates when justified.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),
