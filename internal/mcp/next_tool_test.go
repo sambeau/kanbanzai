@@ -196,6 +196,27 @@ func callNextFull(
 	return parsed
 }
 
+// advanceNextFeatureTo transitions a feature through the lifecycle to reach
+// the given target status. The forward chain is:
+//   proposed -> designing -> specifying -> dev-planning -> developing -> reviewing
+func advanceNextFeatureTo(t *testing.T, entitySvc *service.EntityService, featID, target string) {
+	t.Helper()
+	chain := []string{"designing", "specifying", "dev-planning", "developing", "reviewing"}
+	for _, s := range chain {
+		if _, err := entitySvc.UpdateStatus(service.UpdateStatusInput{
+			Type:   "feature",
+			ID:     featID,
+			Status: s,
+		}); err != nil {
+			t.Fatalf("advance feature %s to %s: %v", featID, s, err)
+		}
+		if s == target {
+			return
+		}
+	}
+	t.Fatalf("advanceNextFeatureTo: unsupported target %q", target)
+}
+
 // ─── Queue inspection mode ───────────────────────────────────────────────────
 
 func TestNext_QueueMode_Empty(t *testing.T) {
@@ -426,6 +447,7 @@ func TestNext_ClaimByTaskID(t *testing.T) {
 
 	planID := createNextTestPlan(t, entitySvc, "next-c1")
 	featID := createNextTestFeature(t, entitySvc, planID, "feat-c1")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
 	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "task-c1")
 	setNextTaskReady(t, entitySvc, taskID, taskSlug)
 
@@ -475,6 +497,7 @@ func TestNext_ClaimByTaskID_TransitionsToActive(t *testing.T) {
 
 	planID := createNextTestPlan(t, entitySvc, "next-c2")
 	featID := createNextTestFeature(t, entitySvc, planID, "feat-c2")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
 	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "task-c2")
 	setNextTaskReady(t, entitySvc, taskID, taskSlug)
 
@@ -499,6 +522,7 @@ func TestNext_ClaimByTaskID_AlreadyActive(t *testing.T) {
 
 	planID := createNextTestPlan(t, entitySvc, "next-c3")
 	featID := createNextTestFeature(t, entitySvc, planID, "feat-c3")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
 	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "task-c3")
 	setNextTaskReady(t, entitySvc, taskID, taskSlug)
 
@@ -531,6 +555,7 @@ func TestNext_ClaimByTaskID_NotReady(t *testing.T) {
 
 	planID := createNextTestPlan(t, entitySvc, "next-c4")
 	featID := createNextTestFeature(t, entitySvc, planID, "feat-c4")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
 	taskID, _ := createNextTestTask(t, entitySvc, featID, "task-c4")
 	// Task is still in queued status — not ready.
 
@@ -552,6 +577,7 @@ func TestNext_ClaimByFeatureID(t *testing.T) {
 
 	planID := createNextTestPlan(t, entitySvc, "next-f1")
 	featID := createNextTestFeature(t, entitySvc, planID, "feat-f1")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
 	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "task-f1")
 	setNextTaskReady(t, entitySvc, taskID, taskSlug)
 
@@ -597,6 +623,7 @@ func TestNext_ClaimByFeatureID_PicksTopTask(t *testing.T) {
 
 	planID := createNextTestPlan(t, entitySvc, "next-f3")
 	featID := createNextTestFeature(t, entitySvc, planID, "feat-f3")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
 
 	// Create two tasks: one with estimate=8, one with estimate=2.
 	t1ID, t1Slug := createNextTestTask(t, entitySvc, featID, "task-f3-big")
@@ -629,6 +656,7 @@ func TestNext_ClaimByPlanID(t *testing.T) {
 
 	planID := createNextTestPlan(t, entitySvc, "next-p1")
 	featID := createNextTestFeature(t, entitySvc, planID, "feat-p1")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
 	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "task-p1")
 	setNextTaskReady(t, entitySvc, taskID, taskSlug)
 
@@ -670,7 +698,9 @@ func TestNext_ClaimByPlanID_PicksTopTaskAcrossFeatures(t *testing.T) {
 
 	planID := createNextTestPlan(t, entitySvc, "next-p3")
 	feat1 := createNextTestFeature(t, entitySvc, planID, "feat-p3a")
+	advanceNextFeatureTo(t, entitySvc, feat1, "developing")
 	feat2 := createNextTestFeature(t, entitySvc, planID, "feat-p3b")
+	advanceNextFeatureTo(t, entitySvc, feat2, "developing")
 
 	t1ID, t1Slug := createNextTestTask(t, entitySvc, feat1, "task-p3-big")
 	setNextTaskReady(t, entitySvc, t1ID, t1Slug)
@@ -701,6 +731,7 @@ func TestNext_ContextAssembly_FilesContext(t *testing.T) {
 
 	planID := createNextTestPlan(t, entitySvc, "next-ctx1")
 	featID := createNextTestFeature(t, entitySvc, planID, "feat-ctx1")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
 	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "task-ctx1")
 	setNextTaskReady(t, entitySvc, taskID, taskSlug)
 
@@ -777,6 +808,7 @@ func TestNext_ContextAssembly_ByteBudgetFields(t *testing.T) {
 
 	planID := createNextTestPlan(t, entitySvc, "next-ctx2")
 	featID := createNextTestFeature(t, entitySvc, planID, "feat-ctx2")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
 	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "task-ctx2")
 	setNextTaskReady(t, entitySvc, taskID, taskSlug)
 
@@ -803,6 +835,7 @@ func TestNext_ContextAssembly_KnowledgeEntries(t *testing.T) {
 
 	planID := createNextTestPlan(t, entitySvc, "next-ke")
 	featID := createNextTestFeature(t, entitySvc, planID, "feat-ke")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
 	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "task-ke")
 	setNextTaskReady(t, entitySvc, taskID, taskSlug)
 
@@ -847,6 +880,7 @@ func TestNext_ContextAssembly_GracefulDegradation(t *testing.T) {
 
 	planID := createNextTestPlan(t, entitySvc, "next-gd")
 	featID := createNextTestFeature(t, entitySvc, planID, "feat-gd")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
 	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "task-gd")
 	setNextTaskReady(t, entitySvc, taskID, taskSlug)
 
@@ -1033,6 +1067,7 @@ func TestNext_ClaimMode_NoOrientation(t *testing.T) {
 	entitySvc, dispatchSvc := setupNextTest(t)
 	planID := createNextTestPlan(t, entitySvc, "orient-claim-plan")
 	featID := createNextTestFeature(t, entitySvc, planID, "orient-claim-feat")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
 	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "orient-claim-task")
 	setNextTaskReady(t, entitySvc, taskID, taskSlug)
 

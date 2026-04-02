@@ -549,3 +549,40 @@ func TestAsmExtractCriteria_BoldIdent_MayKeyword(t *testing.T) {
 		t.Fatalf("len(criteria) = %d, want 1 (MAY keyword); got: %v", len(got), got)
 	}
 }
+
+
+// TestAssembleContext_StageContentFilter verifies that file path extraction
+// respects stage-aware IncludeFilePaths configuration (FR-005).
+func TestAssembleContext_StageContentFilter(t *testing.T) {
+	t.Parallel()
+
+	taskState := map[string]any{
+		"id":            "TASK-TEST",
+		"files_planned": []any{"file1.go", "file2.go"},
+	}
+
+	tests := []struct {
+		name         string
+		featureStage string
+		wantFiles    int
+	}{
+		{"designing stage excludes files", "designing", 0},
+		{"specifying stage excludes files", "specifying", 0},
+		{"developing stage includes files", "developing", 2},
+		{"reviewing stage includes files", "reviewing", 2},
+		{"no stage (backward compat) includes files", "", 2},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			actx := assembleContext(asmInput{
+				taskState:    taskState,
+				featureStage: tt.featureStage,
+			})
+			if got := len(actx.filesContext); got != tt.wantFiles {
+				t.Errorf("stage %q: filesContext has %d entries, want %d", tt.featureStage, got, tt.wantFiles)
+			}
+		})
+	}
+}

@@ -1618,3 +1618,56 @@ func TestFinish_BatchRetroIsolation(t *testing.T) {
 		t.Errorf("task B: total_accepted = %v, want 1 (should not be affected by task A's bad signal)", got)
 	}
 }
+
+// TestFinish_SummaryLengthLimit verifies the 500-character maximum on summary.
+func TestFinish_SummaryLengthLimit(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name      string
+		length    int
+		wantError bool
+	}{
+		{"exactly_500_chars", 500, false},
+		{"501_chars_rejected", 501, true},
+		{"499_chars_accepted", 499, false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			entitySvc, dispatchSvc := setupFinishTest(t)
+			taskID, taskSlug := setupFinishScenario(t, entitySvc, "len-"+tt.name)
+			advanceToActive(t, entitySvc, taskID, taskSlug)
+
+			summary := strings.Repeat("x", tt.length)
+			text := callFinish(t, entitySvc, dispatchSvc, map[string]any{
+				"task_id": taskID,
+				"summary": summary,
+			})
+
+			var resp map[string]any
+			if err := json.Unmarshal([]byte(text), &resp); err != nil {
+				t.Fatalf("parse response: %v\nraw: %s", err, text)
+			}
+
+			_, hasError := resp["error"]
+			if tt.wantError && !hasError {
+				t.Fatalf("expected error for %d-char summary, got: %v", tt.length, resp)
+			}
+			if !tt.wantError && hasError {
+				t.Fatalf("unexpected error for %d-char summary: %v", tt.length, resp)
+			}
+			if tt.wantError {
+				errDetail, _ := resp["error"].(map[string]any)
+				msg, _ := errDetail["message"].(string)
+				if !strings.Contains(msg, "500-character limit") {
+					t.Errorf("error should mention '500-character limit', got: %q", msg)
+				}
+				if !strings.Contains(msg, "501") {
+					t.Errorf("error should mention actual length '501', got: %q", msg)
+				}
+			}
+		})
+	}
+}

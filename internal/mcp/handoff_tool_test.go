@@ -37,6 +37,7 @@ func createHandoffScenario(t *testing.T, entitySvc *service.EntityService, suffi
 	t.Helper()
 	planID := createHandoffPlan(t, entitySvc, "ho-plan-"+suffix)
 	featID := createHandoffFeature(t, entitySvc, planID, "ho-feat-"+suffix)
+	advanceHandoffFeatureTo(t, entitySvc, featID, "developing")
 	return createHandoffTask(t, entitySvc, featID, "ho-task-"+suffix)
 }
 
@@ -107,6 +108,38 @@ func advanceHandoffTaskTo(t *testing.T, entitySvc *service.EntityService, taskID
 			Type: "task", ID: taskID, Slug: taskSlug, Status: s,
 		}); err != nil {
 			t.Fatalf("advance %s to %s: %v", taskID, s, err)
+		}
+	}
+}
+
+// advanceHandoffFeatureTo transitions a feature to the target status via the required chain.
+func advanceHandoffFeatureTo(t *testing.T, entitySvc *service.EntityService, featID, target string) {
+	t.Helper()
+	var chain []string
+	switch target {
+	case "designing":
+		chain = []string{"designing"}
+	case "specifying":
+		chain = []string{"designing", "specifying"}
+	case "dev-planning":
+		chain = []string{"designing", "specifying", "dev-planning"}
+	case "developing":
+		chain = []string{"designing", "specifying", "dev-planning", "developing"}
+	case "reviewing":
+		chain = []string{"designing", "specifying", "dev-planning", "developing", "reviewing"}
+	default:
+		t.Fatalf("advanceHandoffFeatureTo: unsupported target %q", target)
+	}
+	feat, err := entitySvc.Get("feature", featID, "")
+	if err != nil {
+		t.Fatalf("advanceHandoffFeatureTo: get %s: %v", featID, err)
+	}
+	slug, _ := feat.State["slug"].(string)
+	for _, s := range chain {
+		if _, err := entitySvc.UpdateStatus(service.UpdateStatusInput{
+			Type: "feature", ID: featID, Slug: slug, Status: s,
+		}); err != nil {
+			t.Fatalf("advance feature %s to %s: %v", featID, s, err)
 		}
 	}
 }
@@ -218,9 +251,9 @@ func TestHandoff_ReturnsPromptString(t *testing.T) {
 		t.Fatalf("expected non-empty prompt string, got: %v", resp["prompt"])
 	}
 
-	// Must start with a Markdown ## heading.
-	if !strings.HasPrefix(prompt, "## Task:") {
-		t.Errorf("prompt does not open with '## Task:' heading; got prefix: %q",
+	// Must start with conventions (high-attention zone per FR-012).
+	if !strings.HasPrefix(prompt, "### Conventions") {
+		t.Errorf("prompt does not open with '### Conventions' heading; got prefix: %q",
 			prompt[:min(80, len(prompt))])
 	}
 }
@@ -840,11 +873,11 @@ func TestRenderHandoffPrompt_AcceptanceCriteria(t *testing.T) {
 			t.Errorf("prompt missing acceptance criterion %q:\n%s", criterion, prompt)
 		}
 	}
-	// Section must appear between spec sections and known constraints.
-	crit := strings.Index(prompt, "### Acceptance Criteria")
+	// Conventions now come first (high-attention zone), then acceptance criteria.
 	conv := strings.Index(prompt, "### Conventions")
-	if crit >= conv {
-		t.Errorf("'### Acceptance Criteria' (pos %d) must appear before '### Conventions' (pos %d)", crit, conv)
+	crit := strings.Index(prompt, "### Acceptance Criteria")
+	if conv >= crit {
+		t.Errorf("'### Conventions' (pos %d) must appear before '### Acceptance Criteria' (pos %d)", conv, crit)
 	}
 }
 
@@ -895,12 +928,12 @@ func TestRenderHandoffPrompt_SectionOrder(t *testing.T) {
 
 	positions := map[string]int{}
 	for _, section := range []string{
+		"### Conventions",
 		"### Summary",
 		"### Specification",
 		"### Acceptance Criteria",
 		"### Known Constraints",
 		"### Files",
-		"### Conventions",
 		"### Additional Instructions",
 	} {
 		idx := strings.Index(prompt, section)
@@ -911,12 +944,12 @@ func TestRenderHandoffPrompt_SectionOrder(t *testing.T) {
 	}
 
 	ordered := []string{
+		"### Conventions",
 		"### Summary",
 		"### Specification",
 		"### Acceptance Criteria",
 		"### Known Constraints",
 		"### Files",
-		"### Conventions",
 		"### Additional Instructions",
 	}
 	for i := 1; i < len(ordered); i++ {
