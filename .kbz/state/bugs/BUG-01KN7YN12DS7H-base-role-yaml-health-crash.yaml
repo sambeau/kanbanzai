@@ -1,7 +1,7 @@
 id: BUG-01KN7YN12DS7H
 slug: base-role-yaml-health-crash
 name: Base role YAML crashes health check
-status: triaged
+status: reproduced
 severity: high
 priority: high
 type: implementation-defect
