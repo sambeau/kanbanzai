@@ -1,0 +1,11 @@
+id: BUG-01KN87EEF2G49
+slug: build-info-race-detected
+name: Race detected failures in build info package
+status: reported
+severity: high
+priority: high
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-04-02T23:11:24Z"
+observed: go test -race on the build info package produces race-detected failures intermittently. Agents have been dismissing these as pre-existing without investigation.
+expected: "All tests pass cleanly under go test -race with no data races detected. If a race was ever introduced, it must be fixed before being marked as acceptable."
