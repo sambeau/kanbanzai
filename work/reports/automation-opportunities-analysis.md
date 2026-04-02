@@ -373,6 +373,53 @@ if required sections are missing.
 
 ---
 
+### 9. Atomic document move
+
+**Category:** Atomicity
+**Complexity:** Low
+**Risk:** Very Low
+
+#### Problem
+
+Moving a registered document from one path to another requires four manual steps:
+
+1. Move the file on disk
+2. Register a new document record at the new path (possibly with a new type)
+3. Handle the old record (supersede if approved, or leave orphaned if draft)
+4. Stage both the file move and all state record changes, then commit
+
+These steps have no transactional guarantee. If the agent moves the file but forgets to
+re-register, the old record points at a missing file and the new file is invisible to the
+workflow system. If only some state files are committed, the document graph is inconsistent.
+The old draft record cannot be superseded (supersede requires `approved` status), so it
+lingers as a ghost record referencing a deleted path.
+
+This is not hypothetical — the move of this very report from `work/research/` to
+`work/reports/` required manual orchestration of all four steps.
+
+#### Recommendation
+
+Add a `doc(action: move, id: "DOC-xxx", new_path: "work/reports/foo.md")` action that:
+
+1. Moves the file on disk
+2. Updates the existing document record's `path` field in-place (no new record needed)
+3. Optionally updates `type` if the new path implies a different document type
+4. Recomputes the content hash (the file content hasn't changed, but the path has)
+5. Commits the file move and state record update atomically
+
+This avoids the register-new / supersede-old dance entirely. The document ID is stable —
+only the path changes.
+
+#### Safety argument
+
+- The file move is a rename, not a destructive operation — git tracks it as such.
+- Updating the path field on an existing record preserves document identity, approval
+  status, and all cross-references (owner links, entity refs).
+- The content hash recomputation confirms the file arrived intact at its new path.
+- A single atomic commit ensures the file and its record are always consistent.
+
+---
+
 ## Recommendations NOT Made
 
 The following automations were considered and rejected:
@@ -428,8 +475,9 @@ Ordered by value-to-effort ratio:
 | 4 | 6 | Post-decompose state commit | Very Low | Medium |
 | 5 | 1 | Auto-commit at all terminal operations | Low | High |
 | 6 | 3 | Auto-approve implementation documents | Low | Medium |
-| 7 | 2 | Atomic document + state commits | Medium | High |
-| 8 | 8 | Validate document required sections | Medium | Medium |
+| 7 | 9 | Atomic document move | Low | Medium |
+| 8 | 2 | Atomic document + state commits | Medium | High |
+| 9 | 8 | Validate document required sections | Medium | Medium |
 
 Recommendations 1–4 share a common implementation pattern (call `CommitStateIfDirty` or
 its parameterised variant at the end of a handler). They could be implemented together as
