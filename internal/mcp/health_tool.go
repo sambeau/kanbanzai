@@ -205,7 +205,7 @@ func mergeHealthResult(report *validate.HealthReport, category string, result he
 				Message:    issue.Message,
 			})
 			report.Summary.ErrorCount++
-		case health.SeverityWarning:
+		case health.SeverityWarning, health.SeverityInfo:
 			report.Warnings = append(report.Warnings, validate.ValidationWarning{
 				EntityType: category,
 				EntityID:   coalesce(issue.EntityID, issue.EntryID),

@@ -243,6 +243,8 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			capSaturationHealthChecker(capTracker),
 			freshnessHealthChecker(cfg),
 			GateOverrideHealthChecker(entitySvc),
+			GateSourceHealthChecker(registryCache),
+			CheckpointOverrideHealthChecker(entitySvc),
 		)...)
 	}
 

@@ -9,6 +9,8 @@ type Severity string
 const (
 	// SeverityOK indicates no issues.
 	SeverityOK Severity = "ok"
+	// SeverityInfo indicates an informational observation that requires no action.
+	SeverityInfo Severity = "info"
 	// SeverityWarning indicates a non-critical issue that should be addressed.
 	SeverityWarning Severity = "warning"
 	// SeverityError indicates a critical issue requiring immediate attention.
@@ -66,13 +68,16 @@ func (r *CategoryResult) AddIssue(issue Issue) {
 }
 
 // WorstSeverity returns the more severe of two severities.
-// Error > Warning > OK.
+// Error > Warning > Info > OK.
 func WorstSeverity(a, b Severity) Severity {
 	if a == SeverityError || b == SeverityError {
 		return SeverityError
 	}
 	if a == SeverityWarning || b == SeverityWarning {
 		return SeverityWarning
+	}
+	if a == SeverityInfo || b == SeverityInfo {
+		return SeverityInfo
 	}
 	return SeverityOK
 }
