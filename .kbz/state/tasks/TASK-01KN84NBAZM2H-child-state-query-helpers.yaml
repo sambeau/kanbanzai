@@ -3,4 +3,4 @@ parent_feature: FEAT-01KN83QN0VAFG
 slug: child-state-query-helpers
 name: Child-state query helpers
 summary: "Extract shared child-state query logic into unexported helpers on EntityService: countNonTerminalTasks, countNonTerminalFeatures, checkAllTasksTerminal, checkAllFeaturesTerminal. Foundation for lifecycle gates (T2) and auto-advance (T3, T4)."
-status: queued
+status: ready
