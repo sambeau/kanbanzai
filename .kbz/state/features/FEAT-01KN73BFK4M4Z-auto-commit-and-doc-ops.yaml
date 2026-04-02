@@ -1,9 +1,10 @@
 id: FEAT-01KN73BFK4M4Z
 slug: auto-commit-and-doc-ops
 parent: P18-workflow-automation
-status: designing
+status: specifying
 summary: "Implement auto-commit at transaction boundaries, atomic document file operations (create/move/delete), auto-refresh hash on approval, decouple dev-plan approval from implementation cascade, add auto_approve flag for agent-authored documents, and validate document required sections on registration."
 design: FEAT-01KN73BFK4M4Z/design-workflow-automation-design
+spec: FEAT-01KN73BFK4M4Z/specification-workflow-automation-spec
 dev_plan: FEAT-01KN73BFK4M4Z/dev-plan-workflow-automation-plan
 created: "2026-04-02T12:40:38Z"
 created_by: sambeau

@@ -1,0 +1,213 @@
+document_id: FEAT-01KN73BFK4M4Z/dev-plan-workflow-automation-plan
+document_path: work/plan/workflow-automation-plan.md
+content_hash: d1ea7817902c7e9dbea19eff13636652d7ece4eb33346f391b9aaed4afc53647
+indexed_at: 2026-04-02T12:45:16.874145Z
+sections:
+    - path: "1"
+      level: 1
+      title: Workflow State Automation — Implementation Plan
+      byte_offset: 0
+      byte_count: 24486
+      word_count: 3324
+      content_hash: d1ea7817902c7e9dbea19eff13636652d7ece4eb33346f391b9aaed4afc53647
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Scope
+          byte_offset: 382
+          byte_count: 1329
+          word_count: 176
+          content_hash: 6ea9080025c846351fc2ab10c527393b638547abb52d1cf4d79c4079e1d587bc
+        - path: "1.2"
+          level: 2
+          title: 2. Task Breakdown
+          byte_offset: 1711
+          byte_count: 1612
+          word_count: 221
+          content_hash: 8d93abb3613a80d392c842e7a11a23c086920915f21bb8cec27af973f0302aa2
+        - path: "1.3"
+          level: 2
+          title: 3. Task Details
+          byte_offset: 3323
+          byte_count: 16243
+          word_count: 2148
+          content_hash: a585f95c59be1f25acf4aec4e3b18034af514c472f3fbc71f9d2edbe2dd5a228
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Task 1: `CommitStateWithMessage` + `CommitStateAndPaths`'
+              byte_offset: 3343
+              byte_count: 1779
+              word_count: 226
+              content_hash: a4312c564178bac2a6fb3fb6f743e1e149108ab491517445a0799dc0d0316121
+            - path: 1.3.2
+              level: 3
+              title: 'Task 2: Auto-commit in `finish` handler'
+              byte_offset: 5122
+              byte_count: 1224
+              word_count: 169
+              content_hash: 08c01401f4d335cff13dfc75d756d9bfb84078384622698ae2b59c327cff24af
+            - path: 1.3.3
+              level: 3
+              title: 'Task 3: Auto-commit in `decompose apply` handler'
+              byte_offset: 6346
+              byte_count: 735
+              word_count: 97
+              content_hash: 9312526f1e1155bc97404bf31c85621038fa35e4b745abce021278f80186471c
+            - path: 1.3.4
+              level: 3
+              title: 'Task 4: Auto-commit in `merge execute` handler'
+              byte_offset: 7081
+              byte_count: 852
+              word_count: 113
+              content_hash: 496908b21f34985577c2aa1109b1a9bb5d6cd0479559f1b0c21c5ea2ebe09943
+            - path: 1.3.5
+              level: 3
+              title: 'Task 5: Auto-commit in `entity` and `doc` handlers'
+              byte_offset: 7933
+              byte_count: 1180
+              word_count: 138
+              content_hash: db89d1d06a8c88afd2fa0261cf34a940b37ee7f497ee57297a1e05ec8a3fd355
+            - path: 1.3.6
+              level: 3
+              title: 'Task 6: Auto-refresh hash on `doc approve`'
+              byte_offset: 9113
+              byte_count: 1079
+              word_count: 168
+              content_hash: db537d6d0514f17db700cee0e828e5c2a8b03a14b9c9302fae1ef7078b01dc6d
+            - path: 1.3.7
+              level: 3
+              title: 'Task 7: Remove dev-plan approval cascade'
+              byte_offset: 10192
+              byte_count: 992
+              word_count: 131
+              content_hash: a299f06588ade1826405af628319cde057acc9c03095141bb17728b5f77253a3
+            - path: 1.3.8
+              level: 3
+              title: 'Task 8: `doc move` action'
+              byte_offset: 11184
+              byte_count: 1514
+              word_count: 208
+              content_hash: 8d5d56662acb6213248e8024757b9651effd2ce9c70b6983f526b5c8664bcdd6
+            - path: 1.3.9
+              level: 3
+              title: 'Task 9: `doc delete` action'
+              byte_offset: 12698
+              byte_count: 1473
+              word_count: 199
+              content_hash: 2e4ff0e4cd22741f46b9ccf3b6ce3b8a87de9651742eeab853c899fe86eba0d1
+            - path: 1.3.10
+              level: 3
+              title: 'Task 10: `auto_approve` flag on `doc register`'
+              byte_offset: 14171
+              byte_count: 1697
+              word_count: 224
+              content_hash: d03b9aa2e4478bf4ec8d9b37c16d262abe3bb813da0b1891dbfdc9cfc0fcfe98
+            - path: 1.3.11
+              level: 3
+              title: 'Task 11: Document section validation'
+              byte_offset: 15868
+              byte_count: 1650
+              word_count: 215
+              content_hash: 83b15871ab01b115fdef9ee350bad320dd80b9dae86a9bad08587d9c70c0b881
+            - path: 1.3.12
+              level: 3
+              title: 'Task 12: Skill and documentation updates'
+              byte_offset: 17518
+              byte_count: 2048
+              word_count: 256
+              content_hash: 056d1075b9b2ebf00fc3d9bbbf43f62356bf5e46169ca2f11478479eec5f0d1b
+        - path: "1.4"
+          level: 2
+          title: 4. Dependency Graph
+          byte_offset: 19566
+          byte_count: 1376
+          word_count: 155
+          content_hash: adb7c8a518359c6c0225f624dbf37bd2463ffde0ab6e3969e0413324d6c014f6
+        - path: "1.5"
+          level: 2
+          title: 5. Risk Assessment
+          byte_offset: 20942
+          byte_count: 1600
+          word_count: 262
+          content_hash: f0813abb3a0ef15e72281b77294ab5c9fec682a0c84a2be4f2146dabfd48ffdd
+        - path: "1.6"
+          level: 2
+          title: 6. Verification Approach
+          byte_offset: 22542
+          byte_count: 1944
+          word_count: 336
+          content_hash: 11cb988c18a8a9753e2c1fb4f138dc6169b3c5709e89ee8c774b0d2a7c37ef3a
+entity_refs:
+    - entity_id: FEAT-01KN73BFK4M4Z
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 84
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.3.3
+      byte_offset: 6765
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.3.4
+      byte_offset: 7492
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 5482
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.3.5
+      byte_offset: 8556
+    - entity_id: P18-workflow-automation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 139
+cross_doc_links:
+    - target_path: ../design/workflow-automation-design.md
+      link_text: Workflow Automation Design
+      section_path: "1"
+    - target_path: ../reports/automation-opportunities-analysis.md
+      link_text: Automation Opportunities Analysis
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+    - target_path: .kbz/skills/decompose-feature/SKILL.md
+      link_text: .kbz/skills/decompose-feature/SKILL.md
+      section_path: 1.3.12
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.3.12
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: 1.3.12
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.3.12
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.12
+    - target_path: write-dev-plan/SKILL.md
+      link_text: write-dev-plan/SKILL.md
+      section_path: 1.3.12
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: 1.3.12
+    - target_path: kanbanzai-workflow/SKILL.md
+      link_text: kanbanzai-workflow/SKILL.md
+      section_path: 1.3.12
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: 1.3.12
+    - target_path: kanbanzai-agents/SKILL.md
+      link_text: kanbanzai-agents/SKILL.md
+      section_path: 1.3.12
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: risk
+      confidence: high
+classified: false

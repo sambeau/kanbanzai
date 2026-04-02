@@ -1,0 +1,217 @@
+document_id: FEAT-01KN73BFK4M4Z/specification-workflow-automation-spec
+document_path: work/spec/workflow-automation-spec.md
+content_hash: d119d3893ca6c09ef27048e893e9d4fea8d853fa1e496a8f4d8c71ff871d7c5b
+indexed_at: 2026-04-02T12:55:15.584228Z
+sections:
+    - path: "1"
+      level: 1
+      title: Workflow State Automation — Specification
+      byte_offset: 0
+      byte_count: 19366
+      word_count: 2753
+      content_hash: d119d3893ca6c09ef27048e893e9d4fea8d853fa1e496a8f4d8c71ff871d7c5b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 266
+          byte_count: 479
+          word_count: 56
+          content_hash: 2d2e0b4feb0d7f5850d69f0674aaee831a05d98c0dd6c4820c18a93a6ea289f6
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 745
+          byte_count: 832
+          word_count: 121
+          content_hash: 8ea29a4880df3849151f2f3ef2d70a3f31e7febd75b7bed49acf17535dc1768c
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 755
+              byte_count: 471
+              word_count: 68
+              content_hash: b17021de8a499e17a12dae64d458153de9894bfd6013d1fc28a2101902adc812
+            - path: 1.2.2
+              level: 3
+              title: Out of scope
+              byte_offset: 1226
+              byte_count: 351
+              word_count: 51
+              content_hash: 65a07d187b281153b00aae02fe585eda94f65de97e6b79433bf28c594ad94152
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 1577
+          byte_count: 9108
+          word_count: 1274
+          content_hash: 99f924b1a19d6b288e4be02c57f2647a2a5903cdfd36905ba28849ed2037ca82
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Pillar A: Parameterised State Commit'
+              byte_offset: 1605
+              byte_count: 2642
+              word_count: 351
+              content_hash: 0dfaf26749cdeed8028b770a21d8a16580ec77784548f25649f131a6a83a5b1f
+            - path: 1.3.2
+              level: 3
+              title: 'Pillar B: Atomic Document File Operations'
+              byte_offset: 4247
+              byte_count: 4132
+              word_count: 605
+              content_hash: 711982ab162e29f0081f8ff17ef9d3098ecf6615becbd58d175449e8edcd6b4e
+              children:
+                - path: 1.3.2.1
+                  level: 4
+                  title: '`doc register` enhancements'
+                  byte_offset: 4294
+                  byte_count: 1214
+                  word_count: 160
+                  content_hash: 53d7b41ee3355b77918e622dc0b5e39b7b80978f2e3b6e2d17d8591d455007a2
+                - path: 1.3.2.2
+                  level: 4
+                  title: '`doc approve` enhancements'
+                  byte_offset: 5508
+                  byte_count: 601
+                  word_count: 97
+                  content_hash: 66ff266271dc3dfbb4791f2a5093529bf8961fc60172e4a155fa85200fbc7ddc
+                - path: 1.3.2.3
+                  level: 4
+                  title: '`doc move` (new action)'
+                  byte_offset: 6109
+                  byte_count: 1150
+                  word_count: 178
+                  content_hash: 8122add4dc9a0bf155d4cf633d33bc1ed4fe5df45c39b7a5bf7d50cec6c8611c
+                - path: 1.3.2.4
+                  level: 4
+                  title: '`doc delete` (new action)'
+                  byte_offset: 7259
+                  byte_count: 1120
+                  word_count: 163
+                  content_hash: bb21d9eb211220ea9221da189bb4f4b8a6af3c33e29ca8da48b6d8a2920a1d88
+            - path: 1.3.3
+              level: 3
+              title: 'Pillar C: Dev-Plan Approval Decoupling'
+              byte_offset: 8379
+              byte_count: 999
+              word_count: 135
+              content_hash: bc426aef15514d15c3dd05b22fb1951ba1e5fbd3b794548d6c0334d13bba3fb8
+            - path: 1.3.4
+              level: 3
+              title: 'Pillar D: Document Section Validation'
+              byte_offset: 9378
+              byte_count: 1307
+              word_count: 180
+              content_hash: 1754aaf66179fb357a18d290b88ff1f33f1c5b5a7b450f85f206a078c6983cea
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 10685
+          byte_count: 1152
+          word_count: 151
+          content_hash: 2c972d30837d8e175ff8b6f9d459eb7edbc0ff94c03c68b168d43c586044d780
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 11837
+          byte_count: 5535
+          word_count: 870
+          content_hash: ff2e0701ad198183a3454160052a4564634ca70fe9089141c83e57a55e492620
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Pillar A: Parameterised State Commit'
+              byte_offset: 11861
+              byte_count: 1499
+              word_count: 228
+              content_hash: 5eebca283e5156f1cf522fb8bdd966fb722500c5b636b8b21c300159f34dc841
+            - path: 1.5.2
+              level: 3
+              title: 'Pillar B: Atomic Document File Operations'
+              byte_offset: 13360
+              byte_count: 2490
+              word_count: 415
+              content_hash: 3137b95a1e170e5011246e3651be0492557c3871d62ba3845cb3aa6c715d1696
+            - path: 1.5.3
+              level: 3
+              title: 'Pillar C: Dev-Plan Approval Decoupling'
+              byte_offset: 15850
+              byte_count: 811
+              word_count: 119
+              content_hash: 4157ef8fac882e3c0ed99f2036fdfc21eed4ea1d7f9e097ca762bde53a1e8c7f
+            - path: 1.5.4
+              level: 3
+              title: 'Pillar D: Document Section Validation'
+              byte_offset: 16661
+              byte_count: 711
+              word_count: 105
+              content_hash: 552737d3df99efd4ed0415ee8697fd8e88e560cd0a706608951db86ccfaf697b
+        - path: "1.6"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 17372
+          byte_count: 1994
+          word_count: 261
+          content_hash: b4954769972725a4c65bd82f3cb04a9dc13d46b6afeb5739f7f474ba06986a1d
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 17405
+              byte_count: 823
+              word_count: 105
+              content_hash: 5d3e205c1ba847be7ed4a42091cc5539d70baf6c13257fd20bfd8ae24c48e0c1
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 18228
+              byte_count: 1138
+              word_count: 152
+              content_hash: 6e395ffde306cd1cbdbfcc3b448242138421755c216b34a03321d73d41952695
+entity_refs:
+    - entity_id: FEAT-01KN73BFK4M4Z
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 78
+    - entity_id: P18-workflow-automation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 133
+cross_doc_links:
+    - target_path: ../design/workflow-automation-design.md
+      link_text: Workflow Automation Design
+      section_path: "1"
+    - target_path: ../reports/automation-opportunities-analysis.md
+      link_text: Automation Opportunities Analysis
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

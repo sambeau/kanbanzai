@@ -1,0 +1,350 @@
+document_id: FEAT-01KN73BFK4M4Z/design-workflow-automation-design
+document_path: work/design/workflow-automation-design.md
+content_hash: e03fa34154c9e82bbbf04c3026e731fd4890a238ba49b54c07b8013030958354
+indexed_at: 2026-04-02T12:45:16.065863Z
+sections:
+    - path: "1"
+      level: 1
+      title: Workflow State Automation — Design
+      byte_offset: 0
+      byte_count: 21587
+      word_count: 3055
+      content_hash: e03fa34154c9e82bbbf04c3026e731fd4890a238ba49b54c07b8013030958354
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 273
+          byte_count: 2528
+          word_count: 355
+          content_hash: 4ff56d76580287dcf9fb9a015b7fc5b7cf1b11838cc3c7a336e684bd87d35d4d
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 1. Orphaned state
+              byte_offset: 683
+              byte_count: 457
+              word_count: 72
+              content_hash: 673aaf3adf553fc6d1223ceaa60380cf2778a8b53e87f7aa491c5bddc9c0253f
+            - path: 1.1.2
+              level: 3
+              title: 2. Document–state inconsistency
+              byte_offset: 1140
+              byte_count: 469
+              word_count: 67
+              content_hash: 4654956bc442df6ca449692b25679cd0510892bd065ed426913d884a0ca3502c
+            - path: 1.1.3
+              level: 3
+              title: 3. Conflated concerns in the approval cascade
+              byte_offset: 1609
+              byte_count: 815
+              word_count: 107
+              content_hash: 32f5aec4b58ab1ed2fca3fad12928d41a3c5945e9fc1108e87f44385a019dbea
+            - path: 1.1.4
+              level: 3
+              title: What happens if nothing changes
+              byte_offset: 2424
+              byte_count: 377
+              word_count: 53
+              content_hash: bf7b83929ad28e09e2304def2f1951bc7bd63cbdbeb10ea9db85be0a2870a956
+        - path: "1.2"
+          level: 2
+          title: Design
+          byte_offset: 2801
+          byte_count: 9587
+          word_count: 1353
+          content_hash: a2704de59516801c66a4f83ca8e5978e42f184875f6ef08298f560235ec5daab
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Pillar A: Parameterised state commit'
+              byte_offset: 2891
+              byte_count: 2675
+              word_count: 382
+              content_hash: ac671227f8e28e606113f318d4267299c6db330030cc54e6163e739108fb70a5
+              children:
+                - path: 1.2.1.1
+                  level: 4
+                  title: Current state
+                  byte_offset: 2933
+                  byte_count: 257
+                  word_count: 33
+                  content_hash: cf0c2ea791bf9e2b33ee4db152118f81dfb5436f9308a898a09c1a5f8f749548
+                - path: 1.2.1.2
+                  level: 4
+                  title: Proposed change
+                  byte_offset: 3190
+                  byte_count: 1068
+                  word_count: 143
+                  content_hash: 2e5104329700e612610b317b7c475777dff2a9f763e33d6a1558d8a31c5fc431
+                - path: 1.2.1.3
+                  level: 4
+                  title: Commit semantics
+                  byte_offset: 4258
+                  byte_count: 617
+                  word_count: 94
+                  content_hash: f757e4913cddaf4d9cad8f38adf531b2eb8d0c08eb9aae731f4228409c6f1fa6
+                - path: 1.2.1.4
+                  level: 4
+                  title: Interaction with `handoff`
+                  byte_offset: 4875
+                  byte_count: 336
+                  word_count: 51
+                  content_hash: 6310f3a9db28ab9d036fbacfa4b20ea3a363c4a34ebf1cf82b27c2a2ed3eddab
+                - path: 1.2.1.5
+                  level: 4
+                  title: Failure mode
+                  byte_offset: 5211
+                  byte_count: 355
+                  word_count: 55
+                  content_hash: 0deaffba5f747f63cce2e9fd0d141f7d3e18f2e18618cc782b4bd08ccc9aacea
+            - path: 1.2.2
+              level: 3
+              title: 'Pillar B: Atomic document file operations'
+              byte_offset: 5566
+              byte_count: 3850
+              word_count: 552
+              content_hash: 01977fa198851406c53a93079f03f2e318534240b5d79c079902386b90e0a939
+              children:
+                - path: 1.2.2.1
+                  level: 4
+                  title: Current state
+                  byte_offset: 5613
+                  byte_count: 247
+                  word_count: 36
+                  content_hash: 00d3d0339a4d230a9275c90b7758dc8c67f227e168dd504c2d74be52f7e580e7
+                - path: 1.2.2.2
+                  level: 4
+                  title: 'Foundation: `CommitStateAndPaths`'
+                  byte_offset: 5860
+                  byte_count: 711
+                  word_count: 95
+                  content_hash: ebd669332efeb5a60e04b3b80884aeb49d081d33a2f722694f9d815774c8e36f
+                - path: 1.2.2.3
+                  level: 4
+                  title: 'New action: `doc move`'
+                  byte_offset: 6571
+                  byte_count: 698
+                  word_count: 102
+                  content_hash: dbd13d2b70a4ac5f35bb028418ce2c2bf39d1232746f6bc7135f080d93ddacec
+                - path: 1.2.2.4
+                  level: 4
+                  title: 'New action: `doc delete`'
+                  byte_offset: 7269
+                  byte_count: 694
+                  word_count: 100
+                  content_hash: 9daa4cdb1b5ac814b96e5a5c2a0a4bb9659eccf09987073471057f0c7be6bfda
+                - path: 1.2.2.5
+                  level: 4
+                  title: Enhanced `doc register`
+                  byte_offset: 7963
+                  byte_count: 239
+                  word_count: 33
+                  content_hash: a8c612b06a5edb945f4c2b8c65f3ab29126ac90594d60f2e46ea8293bb5e440c
+                - path: 1.2.2.6
+                  level: 4
+                  title: Auto-refresh on `doc approve`
+                  byte_offset: 8202
+                  byte_count: 540
+                  word_count: 85
+                  content_hash: f52b3ebf980dfc78ac7c12856036a6cc8cb6e72a7ed32af16e21593f8c59a942
+                - path: 1.2.2.7
+                  level: 4
+                  title: Auto-approve flag on `doc register`
+                  byte_offset: 8742
+                  byte_count: 674
+                  word_count: 94
+                  content_hash: 9b551257ec9f58290e74b4caacc6b0541ec0c58cced6130d5b738f372034dde9
+            - path: 1.2.3
+              level: 3
+              title: 'Pillar C: Decouple dev-plan approval from implementation trigger'
+              byte_offset: 9416
+              byte_count: 2027
+              word_count: 271
+              content_hash: 8250ddecdf3be3a1cfee1d3abc3aa1ae87cbaa38b6f4db4819a01701dfacc784
+              children:
+                - path: 1.2.3.1
+                  level: 4
+                  title: Current state
+                  byte_offset: 9486
+                  byte_count: 297
+                  word_count: 34
+                  content_hash: 11db9a88c95899dbad897582858bee267ae79eccfa9c5e7eb5654d9611eba5c9
+                - path: 1.2.3.2
+                  level: 4
+                  title: Proposed change
+                  byte_offset: 9783
+                  byte_count: 788
+                  word_count: 105
+                  content_hash: d141c4db0e33e9667ec88ff56a611604da83704067439e084f3b58a5429104d9
+                - path: 1.2.3.3
+                  level: 4
+                  title: What cascades are preserved
+                  byte_offset: 10571
+                  byte_count: 439
+                  word_count: 61
+                  content_hash: a8cd646b84da117ae9bbae8d5b1a526efafcc6c5c3c4d8cb5bc0671af0cbc06d
+                - path: 1.2.3.4
+                  level: 4
+                  title: Failure mode
+                  byte_offset: 11010
+                  byte_count: 433
+                  word_count: 62
+                  content_hash: b5d5614e0d4d55e714894cf5076ff2fec1f853dfd1a9e19a45fe67d1e8081a06
+            - path: 1.2.4
+              level: 3
+              title: 'Pillar D: Document section validation'
+              byte_offset: 11443
+              byte_count: 945
+              word_count: 136
+              content_hash: dca4ee395be619738fe33c1470e20575a5e748148700e83f2680da798c90063c
+              children:
+                - path: 1.2.4.1
+                  level: 4
+                  title: Current state
+                  byte_offset: 11486
+                  byte_count: 179
+                  word_count: 21
+                  content_hash: 428b13cb83eb9b1339fff819eef3f39951f60504acfdc578feb1a305008d0887
+                - path: 1.2.4.2
+                  level: 4
+                  title: Proposed change
+                  byte_offset: 11665
+                  byte_count: 723
+                  word_count: 109
+                  content_hash: 13ab93131afd7890f533cdefc4b74921b3fa79a021d8d2424c1bc33afb390e35
+        - path: "1.3"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 12388
+          byte_count: 3240
+          word_count: 464
+          content_hash: 2f915cbabbf233b9c9fbb424936ce6479a4119566d78efc17dc7dc5e3e1dfc12
+          children:
+            - path: 1.3.1
+              level: 3
+              title: A. Commit on every state write (inside the store layer)
+              byte_offset: 12416
+              byte_count: 843
+              word_count: 122
+              content_hash: 5aac68170d3ad86a35915b5c621da47fb39bb1850481af6f9081692f834ddc8e
+            - path: 1.3.2
+              level: 3
+              title: B. Deferred commit with a session-end hook
+              byte_offset: 13259
+              byte_count: 747
+              word_count: 111
+              content_hash: 35a068d788e2e447482d1101e9b1ba5c169e1eb11ad7f395cd0b83b14372f58b
+            - path: 1.3.3
+              level: 3
+              title: C. Keep the dev-plan cascade and add a `--no-cascade` flag to `doc approve`
+              byte_offset: 14006
+              byte_count: 762
+              word_count: 111
+              content_hash: a6f2a146fedf194ddabcd4bc9db4d713dee59f0eec125ea44d6d9bc803372133
+            - path: 1.3.4
+              level: 3
+              title: D. File-system watcher for document drift detection
+              byte_offset: 14768
+              byte_count: 860
+              word_count: 117
+              content_hash: 945a961a446a52a78e536f3b2233e6b9fa61fc6821a66ead101cacbd643bf392
+        - path: "1.4"
+          level: 2
+          title: Decisions
+          byte_offset: 15628
+          byte_count: 5959
+          word_count: 863
+          content_hash: c9e623b40ef0616282d606c0905c04d0e1475589be2a4acac5fb70f33a6b6ccf
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'D1: Commit at the tool handler level, not the store level'
+              byte_offset: 15642
+              byte_count: 1058
+              word_count: 157
+              content_hash: 7672059c65188979767e1f5d6f4095e3e8e34917a811517142ecfd7321dc98f9
+            - path: 1.4.2
+              level: 3
+              title: 'D2: Best-effort commits that do not block tool results'
+              byte_offset: 16700
+              byte_count: 916
+              word_count: 138
+              content_hash: 59b5950acc7c61b5055dfdb6788df9d01ebe5a928d03a511d0e49cacdfe760a6
+            - path: 1.4.3
+              level: 3
+              title: 'D3: Remove the dev-plan approval cascade unconditionally'
+              byte_offset: 17616
+              byte_count: 1086
+              word_count: 150
+              content_hash: 616ce13dd1ca6282b698ab42682d0cc05af227ad1626622e86ce530933bd05eb
+            - path: 1.4.4
+              level: 3
+              title: 'D4: `CommitStateAndPaths` uses explicit path list, never globs'
+              byte_offset: 18702
+              byte_count: 954
+              word_count: 140
+              content_hash: 35a64083c5602525036708053627c6048258667d2be235cc143463d6bcd2a785
+            - path: 1.4.5
+              level: 3
+              title: 'D5: Section validation is a lint on register, a gate on approve'
+              byte_offset: 19656
+              byte_count: 975
+              word_count: 140
+              content_hash: a424cb3dcdb84c17d5d43a2ab71e210ba8f319858b3e0d2362421ead04e3fb36
+            - path: 1.4.6
+              level: 3
+              title: 'D6: Auto-approve is opt-in per call, scoped by document type'
+              byte_offset: 20631
+              byte_count: 956
+              word_count: 136
+              content_hash: bc5c7ca35b50677e3a96a16e71645a9f328f7052ccdf7f0f1c47b05f9568817a
+entity_refs:
+    - entity_id: FEAT-01KN73BFK4M4Z
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 71
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.2.1.2
+      byte_offset: 3910
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.2.3.2
+      byte_offset: 10095
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.2.1.2
+      byte_offset: 3839
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.2.1.2
+      byte_offset: 3977
+    - entity_id: P18-workflow-automation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 126
+cross_doc_links:
+    - target_path: ../reports/automation-opportunities-analysis.md
+      link_text: Automation Opportunities Analysis
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.1.1
+    - target_path: work/**/*.md
+      link_text: work/**/*.md
+      section_path: 1.1.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.1.4
+conventional_roles:
+    - section_path: "1.3"
+      role: alternative
+      confidence: high
+    - section_path: "1.4"
+      role: decision
+      confidence: high
+    - section_path: 1.4.6
+      role: constraint
+      confidence: high
+classified: false
