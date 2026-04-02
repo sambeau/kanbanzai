@@ -2,10 +2,16 @@ id: FEAT-01KN8132Y8NX8
 slug: retro-experiment-tracking-remaining
 name: Retro experiment tracking remaining
 parent: P5-workflow-retrospective
-status: proposed
+status: developing
 summary: "Continuation of Phase 3 (retro-experiment-tracking). Implements the three tasks that were not completed before FEAT-01KMRJ83GYAQ9 was prematurely marked done: (1) add optional `related_decision` field to retrospective signal structure, (2) extend `retro` synthesis to produce an `experiments` section cross-referencing workflow-experiment decisions, (3) add context nudge in `next` and `handoff` surfacing active workflow-experiment decisions."
 design: P5-workflow-retrospective/specification-workflow-retrospective
 tags:
   - "phase:3"
 created: "2026-04-02T21:20:20Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: dev-planning
+    reason: Tasks already exist and are scoped from the original FEAT-01KMRJ83GYAQ9 spec. Design/spec/planning stages are inherited — advancing directly to developing.
+    timestamp: "2026-04-02T22:23:39+01:00"
+    to_status: developing
