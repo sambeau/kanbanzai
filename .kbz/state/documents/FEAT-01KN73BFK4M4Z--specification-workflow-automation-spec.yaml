@@ -2,9 +2,11 @@ id: FEAT-01KN73BFK4M4Z/specification-workflow-automation-spec
 path: work/spec/workflow-automation-spec.md
 type: specification
 title: Workflow State Automation — Specification
-status: draft
+status: approved
 owner: FEAT-01KN73BFK4M4Z
+approved_by: sambeau
+approved_at: "2026-04-02T14:13:16Z"
 content_hash: d119d3893ca6c09ef27048e893e9d4fea8d853fa1e496a8f4d8c71ff871d7c5b
 created: "2026-04-02T12:55:15Z"
 created_by: sambeau
-updated: "2026-04-02T12:55:15Z"
+updated: "2026-04-02T14:13:16Z"
