@@ -1,0 +1,484 @@
+document_id: PROJECT/design-interactive-help-system
+document_path: work/design/interactive-help-system.md
+content_hash: 312ab0b3f08687d465b559c61c78262df7402916dd61c747d2b374e635023199
+indexed_at: 2026-04-02T18:01:13.336165Z
+sections:
+    - path: "1"
+      level: 1
+      title: Interactive Help System Design
+      byte_offset: 0
+      byte_count: 27040
+      word_count: 3950
+      content_hash: 312ab0b3f08687d465b559c61c78262df7402916dd61c747d2b374e635023199
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 465
+          byte_count: 753
+          word_count: 108
+          content_hash: ff0a2e0a3766d63ad06232f9a5fd9c4980557f45503cf39c400c2306077c6283
+        - path: "1.2"
+          level: 2
+          title: 2. Problem Statement
+          byte_offset: 1218
+          byte_count: 2320
+          word_count: 347
+          content_hash: 50aa2174af5b661c7deefbc7a55445d1964c155dc4e952a4b4ecaae7f1ba1c28
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Preloaded Knowledge Entries
+              byte_offset: 1607
+              byte_count: 788
+              word_count: 111
+              content_hash: 9c59795e87ff399d1732caf6eed43fbdaf99976dc79c34e13af343a6a1da277a
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Documentation Files in `.kbz/`
+              byte_offset: 2395
+              byte_count: 648
+              word_count: 94
+              content_hash: b5c4a4473dcb86ba7f694a4d0e615f77abccb15797f835762145d399101e6186
+            - path: 1.2.3
+              level: 3
+              title: 2.3 Knowledge Queries on Demand
+              byte_offset: 3043
+              byte_count: 495
+              word_count: 78
+              content_hash: ae5a90c2f5468c23ab5bb444d35d3b1ee33b3b6fe43e96b58caf8805f2493c52
+        - path: "1.3"
+          level: 2
+          title: '3. Design: The `help` Tool'
+          byte_offset: 3538
+          byte_count: 3753
+          word_count: 547
+          content_hash: 4bf97466e1946c705c9195b6ef6c8f2d7a1848d8d37594daa0effeff806fa442
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Overview
+              byte_offset: 3569
+              byte_count: 498
+              word_count: 77
+              content_hash: 648529712133e86e236b94c98252cf6a68d6699f5cad6802cb1adce9b24dc796
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Interface
+              byte_offset: 4067
+              byte_count: 793
+              word_count: 117
+              content_hash: c540df0a2066355f85406fa7fe25a9ec3ca88b277af6b6344d5a4e9cf3d36616
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Tool Registration
+              byte_offset: 4860
+              byte_count: 458
+              word_count: 74
+              content_hash: 6ff26e831b692a39cc9c276b761c0f2c76fa13e364b5d85ff22257a1e852c79e
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Tool Annotations
+              byte_offset: 5318
+              byte_count: 176
+              word_count: 25
+              content_hash: f452ffe7c13300964d24eda7b2460ae3bd8837f9cd61bf325f93682eae304ba0
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Return Format
+              byte_offset: 5494
+              byte_count: 890
+              word_count: 101
+              content_hash: 272b9aedf1e1f6e2806f2867427e71a8d8d996564e23fc947b9ab981e22b883b
+            - path: 1.3.6
+              level: 3
+              title: 3.6 Search Implementation
+              byte_offset: 6384
+              byte_count: 489
+              word_count: 78
+              content_hash: e1d1e394ce85b3af25d2dbd823ab5ff27a113fd865738b6e34f27ddc4d598933
+            - path: 1.3.7
+              level: 3
+              title: 3.7 Content Size Budget
+              byte_offset: 6873
+              byte_count: 418
+              word_count: 69
+              content_hash: 8b62ecad703371b3511dfbe2ec11482f73374091ecd0144e3d9dd5eb56da39d1
+        - path: "1.4"
+          level: 2
+          title: 4. Help Content Structure
+          byte_offset: 7291
+          byte_count: 3663
+          word_count: 563
+          content_hash: bc45a34f3a0e243670db7ad7bf306c37cc744bfaa14c0c43bdbe9d04f0a917f6
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Topic Anatomy
+              byte_offset: 7321
+              byte_count: 608
+              word_count: 81
+              content_hash: 8a5f3145d8b7cbdc7b9c3f0a19e767fc5d27e8b5757613faeaae69a6ca38e1b8
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Categories
+              byte_offset: 7929
+              byte_count: 615
+              word_count: 86
+              content_hash: 8775fcdaeabe07cb5eb1c01e4cc78ef34aa5b8be74929f53582d1b2c1885140a
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Provisional Topic List
+              byte_offset: 8544
+              byte_count: 1702
+              word_count: 283
+              content_hash: b3150af2fc9d0690a8b284e94f8963d49ba29a9e2ba8cded23b6d67fcffd3fef
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Content Derivation from Documentation
+              byte_offset: 10246
+              byte_count: 708
+              word_count: 108
+              content_hash: 2a7199aa76b8a81a60dd99dc8048a8d3f6c9e51d002e2d32f994d39f2e6868e4
+        - path: "1.5"
+          level: 2
+          title: 5. Embedded Content Pipeline
+          byte_offset: 10954
+          byte_count: 2326
+          word_count: 265
+          content_hash: 35409a4456375347d2f4c627350304bb8671e5c9c1140dca73e2f805bd396462
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Directory Structure
+              byte_offset: 10987
+              byte_count: 1029
+              word_count: 67
+              content_hash: d35f4e40a0a1635ef758cc3b04ac2aa71a88379bba4b5029d8cfa5c6fb892ddb
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Embedding
+              byte_offset: 12016
+              byte_count: 379
+              word_count: 56
+              content_hash: ebda659b3747dcde05927ac99ca9c63f95e8ab614fe530c596c716b1d31806fa
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Front Matter Parsing
+              byte_offset: 12395
+              byte_count: 444
+              word_count: 67
+              content_hash: 12971a7ea87942d4f21e4e58ac97a171af8f0da830c621d2edfd1c57388fd7f9
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Versioning
+              byte_offset: 12839
+              byte_count: 441
+              word_count: 70
+              content_hash: 6389cc96b1074ec2084fda8009343931e688c661296e0cc1f57c63ad47604b0a
+        - path: "1.6"
+          level: 2
+          title: 6. The `teacher` Role
+          byte_offset: 13280
+          byte_count: 3306
+          word_count: 477
+          content_hash: a40ca46cea8438a9e550a3966c4fb005c134f4e430b55ea3c513eb1f2c68f95e
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Purpose
+              byte_offset: 13306
+              byte_count: 255
+              word_count: 37
+              content_hash: 6eb853698859c93fdf10fe8d268e622bfbf506919ecbd5a0580c8c5f442669ee
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Role Definition
+              byte_offset: 13561
+              byte_count: 2028
+              word_count: 288
+              content_hash: d3b4f13bb72be694b29de76a09bb0177e5d5efdac9d6aac249f3019854229797
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Tool Surface
+              byte_offset: 15589
+              byte_count: 734
+              word_count: 111
+              content_hash: 0ede68d4f387f7ac702d5d0f49194657ce6e0c4d4c87b3789582c29a5b62a135
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Shipping
+              byte_offset: 16323
+              byte_count: 263
+              word_count: 36
+              content_hash: d94b3d89dbf001a26bdac889dedc7fcbf3cfb6655ffa2fd5a35ac2771cf545f8
+        - path: "1.7"
+          level: 2
+          title: 7. The `teach-kanbanzai` Skill
+          byte_offset: 16586
+          byte_count: 1866
+          word_count: 292
+          content_hash: 33fc8ee061e81d7ac6829ebfebe90bb8a581967d923fabec8790c6bd4b0d74bb
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Purpose
+              byte_offset: 16621
+              byte_count: 240
+              word_count: 40
+              content_hash: a9d818aeada50c37153bb497a88bd1b64fb39ba7b8a26a87f8d061f1ba952358
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Procedure Summary
+              byte_offset: 16861
+              byte_count: 971
+              word_count: 149
+              content_hash: 41eacb2a6c69ab9341aa3127a1818dd06a1674631a38a37792cdcc4effe951ee
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Stage Binding
+              byte_offset: 17832
+              byte_count: 424
+              word_count: 72
+              content_hash: 5b4b4442324d4d2728c16978841820c29ccf88cbce270da103b9c28a2830b2a3
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Shipping
+              byte_offset: 18256
+              byte_count: 196
+              word_count: 26
+              content_hash: 5b251da7d5f05744e789dd6e633a893885d3758d98d34666ad95b225fca110f8
+        - path: "1.8"
+          level: 2
+          title: 8. Default Profile for New Projects
+          byte_offset: 18452
+          byte_count: 1162
+          word_count: 186
+          content_hash: 57ff15e11d22f49745f8c1923ba1fb44cb7734073ad5e95a7dc9dbfd4b12bf2f
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Rationale
+              byte_offset: 18492
+              byte_count: 267
+              word_count: 48
+              content_hash: 962c4735f88bf8f0432d8279173364dfc828f4ae6fb895836b7249bb6e3d7116
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Proposal
+              byte_offset: 18759
+              byte_count: 546
+              word_count: 88
+              content_hash: bfe671e78c97b6e0f4da29a905723bbb19aef6720191102a015fac636d7ac472
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Decision Deferred
+              byte_offset: 19305
+              byte_count: 309
+              word_count: 43
+              content_hash: 9444206758f9503ba112cf0de9f02b83b0d048543eb34bfbc2750e3f44da3eae
+        - path: "1.9"
+          level: 2
+          title: 9. Implementation Scope
+          byte_offset: 19614
+          byte_count: 1728
+          word_count: 252
+          content_hash: 6bbd2d2f347f652d1718a4e1a472c14f42c2c91f016c0fdca4559a5ff64a38bc
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 What Is New Code
+              byte_offset: 19642
+              byte_count: 673
+              word_count: 89
+              content_hash: deaff13ba5d7b2cc81ffa0dbab8f3591de9a61a84edbed93e60cd30c36dee375
+            - path: 1.9.2
+              level: 3
+              title: 9.2 What Is Content
+              byte_offset: 20315
+              byte_count: 255
+              word_count: 44
+              content_hash: 48d62ac778700cac972a9d1ae4e3c22425e13c16069b69030b0971a8af3fec18
+            - path: 1.9.3
+              level: 3
+              title: 9.3 What Is Not In Scope
+              byte_offset: 20570
+              byte_count: 772
+              word_count: 115
+              content_hash: 639ff905082dbc8481f36887f7c17f4b53e5121adbb90a8c13877131ec817723
+        - path: "1.10"
+          level: 2
+          title: 10. Relationship to Documentation
+          byte_offset: 21342
+          byte_count: 870
+          word_count: 129
+          content_hash: dd6782e7e3f53f20d16195ca0409bdcc8ceec3f9f7e728b7138adbcd655d7762
+        - path: "1.11"
+          level: 2
+          title: 11. Sequencing
+          byte_offset: 22212
+          byte_count: 747
+          word_count: 131
+          content_hash: b4580da0026d8d6a615dd4699268046b8a729853945169ab9af4defd2d96846f
+        - path: "1.12"
+          level: 2
+          title: 12. Decisions
+          byte_offset: 22959
+          byte_count: 2007
+          word_count: 295
+          content_hash: 867b197e8c1393546abaf1908420cf309585b1b462d060c66138070f39dc623f
+          children:
+            - path: 1.12.1
+              level: 3
+              title: 12.1 Content Is Embedded in the Binary
+              byte_offset: 22977
+              byte_count: 358
+              word_count: 54
+              content_hash: d6227c0e2780c1f79996c5e4e8906b53100f6c8d7d0b510ce6feef22320f759c
+            - path: 1.12.2
+              level: 3
+              title: 12.2 The `help` Tool Is in the Core Group
+              byte_offset: 23335
+              byte_count: 233
+              word_count: 42
+              content_hash: adb70433973260a0672beb4a23f11fdda837bec8f6e455407c20bbcbfede6917
+            - path: 1.12.3
+              level: 3
+              title: 12.3 Help Topics Are Manually Authored Summaries
+              byte_offset: 23568
+              byte_count: 349
+              word_count: 49
+              content_hash: 38f05752ebb151304c81a3e8f1cf5b309df771c86d1e2c6e8ab2a18f74958642
+            - path: 1.12.4
+              level: 3
+              title: 12.4 The Teacher Role Does Not Perform Workflow Actions
+              byte_offset: 23917
+              byte_count: 434
+              word_count: 60
+              content_hash: 031c7703f8e4aae41c1856fb61aba1cf3a22b14e2d90609121a260baa96e583a
+            - path: 1.12.5
+              level: 3
+              title: 12.5 Search Is Simple Token Matching
+              byte_offset: 24351
+              byte_count: 258
+              word_count: 36
+              content_hash: f619d1032f63bbdd61b594d0ed13d4749d7642664b9335bdc10a4d1a7ab26799
+            - path: 1.12.6
+              level: 3
+              title: 12.6 No Preloaded Knowledge Entries
+              byte_offset: 24609
+              byte_count: 357
+              word_count: 51
+              content_hash: 124a6cea2486a7e4142ddaee3305aa473aca55d0906355ddf71e391595274226
+        - path: "1.13"
+          level: 2
+          title: 13. Open Questions
+          byte_offset: 24966
+          byte_count: 1221
+          word_count: 181
+          content_hash: a434833936f33ef02a231f5dcf8c4000854855214e32022e4007feec8b35cf2f
+          children:
+            - path: 1.13.1
+              level: 3
+              title: 13.1 Exact Topic List
+              byte_offset: 24989
+              byte_count: 278
+              word_count: 43
+              content_hash: 5c28b3556b25ec19c9c901110a4d81c371d26c6c0f632ab9017c9b78b0cba71e
+            - path: 1.13.2
+              level: 3
+              title: 13.2 Default Profile Mechanism
+              byte_offset: 25267
+              byte_count: 241
+              word_count: 33
+              content_hash: 2bbec0c9f25613c9db92369b4238c93d596a2215287732ce5448c557bce17723
+            - path: 1.13.3
+              level: 3
+              title: 13.3 Help Content Maintenance Process
+              byte_offset: 25508
+              byte_count: 412
+              word_count: 63
+              content_hash: 1cbf9a2e7866f72aa96cf6b3e8182b512ce03900036627ca7b2c180e74f01f9d
+            - path: 1.13.4
+              level: 3
+              title: 13.4 Skill Name in Init Installer
+              byte_offset: 25920
+              byte_count: 267
+              word_count: 38
+              content_hash: 0ef4e3ce8098f11f4d005830c794ce3d651af99d046af4b7179ead7d2930c684
+        - path: "1.14"
+          level: 2
+          title: 14. Summary
+          byte_offset: 26187
+          byte_count: 853
+          word_count: 125
+          content_hash: ce7055e4b47cf0348080aa391c70a4006a2072db7a6831a1e500a11ffa227129
+cross_doc_links:
+    - target_path: work/design/public-release-documentation.md
+      link_text: work/design/public-release-documentation.md
+      section_path: "1"
+    - target_path: work/design/fresh-install-experience.md
+      link_text: work/design/fresh-install-experience.md
+      section_path: "1"
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: "1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/public-release-documentation.md
+      link_text: work/design/public-release-documentation.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-teaching/SKILL.md
+      link_text: .agents/skills/kanbanzai-teaching/SKILL.md
+      section_path: 1.7.4
+    - target_path: internal/kbzinit/skills/teaching/SKILL.md
+      link_text: internal/kbzinit/skills/teaching/SKILL.md
+      section_path: 1.9.1
+    - target_path: internal/kbzhelp/topics/**/*.md
+      link_text: internal/kbzhelp/topics/**/*.md
+      section_path: 1.9.1
+    - target_path: public-release-documentation.md
+      link_text: public-release-documentation.md
+      section_path: "1.10"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+    - section_path: 1.6.1
+      role: narrative
+      confidence: high
+    - section_path: 1.6.2
+      role: definition
+      confidence: high
+    - section_path: 1.7.1
+      role: narrative
+      confidence: high
+    - section_path: 1.7.2
+      role: narrative
+      confidence: high
+    - section_path: 1.8.1
+      role: rationale
+      confidence: high
+    - section_path: 1.8.3
+      role: decision
+      confidence: high
+    - section_path: "1.9"
+      role: constraint
+      confidence: high
+    - section_path: 1.9.3
+      role: constraint
+      confidence: high
+    - section_path: "1.12"
+      role: decision
+      confidence: high
+    - section_path: "1.13"
+      role: question
+      confidence: high
+    - section_path: "1.14"
+      role: narrative
+      confidence: high
+classified: false

@@ -1,0 +1,191 @@
+# Documentation for public release proposal 
+
+– Part of “Kanban Public Release Readiness”
+
+We need good documentation. It should be clear, professional, and thorough while being minimalist, friendly and at the correct technical level depending on the audience for each, document and section—Manual sections aimed at designers: less technical, more chatty; document and manuals aimed at developers: as technical as required.
+
+As a rule of thumb: 
+- use an inverted pyramid as the structure, placing the most critical information at the top of a article or section, followed by supporting details in descending order of importance. 
+- When it feels appropriate use an inverted pyramid of **tone** chatter and more casual at the top, more formal and unambiguous the more detailed you are being. 
+- if necessary also use an inverted pyramid of **expected technical proficiency**, being more technical the more detailed you are being.
+
+We should always use the implementation as the single source of truth, rather than design documents. 
+
+- Design documents for concepts, intentions
+- Implementation (Code and SKILLs) for facts
+
+## public-facing documents 
+
+All public-facing documents should be rewritten as part of the public release process.
+
+In particular, we need:
+
+1. A manual
+2. A getting-started guide
+3. A concise README 
+
+Create the documents in this order so that the later documents can refer to the earlier documents.
+
+Also needed:
+- Updated schema and related documentation 
+
+## Manual
+
+The manual should be clear and unambiguous. Sections aimed at designers can be more casual than the technical sections. Use emoji sparingly and only where they will add to clarity or aid structure.
+
+Structure the whole document using an inverted pyramid of most important (or most broad) information to least (or most specialised) information.
+
+Each section should follow the inverted pyramid structure.
+
+Assume the user has used a workflow process before: probably agile: Scrum or Kanban. So there is no need to explain what they are.
+
+Assume the user is a designer-developer who has enough technical knowledge to use git, create a repo, use the command line etc. 
+
+If the section is technical, you can assume they are consulting it as they have the technical knowledge to understand the technical details. 
+
+Assume the user is experienced with Agentic development, it’s terms and methods.
+
+### Kanbanzai Workflow System
+
+The manual should explain the Kanbanzai Workflow from the point of view of a human: *Product Manager* or *Design Manager*.
+
+The similarities and differences between it and agile systems: Kanban and Scrum.
+
+The similarities and differences between it and ‘specification-led’ systems. 
+
+- Kanbanzai is agile *until* specification; ‘Waterfall’ *after* specification.
+
+The main concepts of the Kanbanzai system:
+- Design-led workflow
+- Document-led process
+- Specification-led implementation
+- Chat-based AI Agent project manager
+- Approval stages and state
+
+The stages of the workflow and how each stage is governed by a document.
+
+The flow of work from proposal to implementation.
+
+The role of the human design manager vs the AI Agent roles.
+
+How `kanbanzai MCP` manages the workflow process.
+
+How using AI Agent chat keeps the process agile and flexible. While there is automation in the system, the human **control** of the process is with an intelligent agent, not a rigid command line or web app. This allows for a more natural, flexible process. 
+
+### Design-led workflow
+
+The Kanbanzai System is design-led: it manages the process of getting from a proposal through a design process that outputs a *specification*.
+
+This is achieved through a series of design document revisions (drafts) until a final design is agreed and approved.
+
+An approved design moves to the specification stage and a specification document is created.
+
+The design manager can request changes to a specification before approving it.
+
+Once a specification is approved, the design manager has completed their role in the process. They then effectively become a product manager and manage the initiation of the development process. I.e. the only role a human has in implementation of a feature is to choose when the implementation should begin.
+
+The design process is an agile development process because: as long as the implementation hasn’t started, a design manager can request a feature be returned to any previous stage of the workflow.
+
+The design process is an agile design  process: as it embraces iteration. An epic (or even feature) can go through multiple development cycles: additions (amendments) are made to the documents, a new round of specifications, planning and implementation can take place.
+
+### Document-led process
+
+The main human interface for the Kanbanzai process is text written in Markdown documents.
+
+In particular:
+- Proposals
+- Research
+- Design
+- Specification
+
+#### Proposal documents
+The process starts with a proposal. This can be a document or a proposal written in a chat message. The proposal kicks of a discussion that may go nowhere, but normally ends with a design draft.
+
+The system will store, but does not *manage* Proposal documents as they are not a formal stage in the workflow: workflow begins with the first design document.
+
+#### Research documents
+
+The process of creating a design draft may include 
+- research: online research that ends in a research document
+- reports: local research of the codebase, current documents or processes
+
+The system will store, but does not *manage* Research and Report documents as they are not a formal stage in the workflow: workflow begins with the first design document.
+
+#### Design Documents
+
+A design document can go through as many drafts as is needed before becoming a final design.
+
+Throughout the design process the human design manager and the AI Agent acting as senior designer discuss and hone the design by making decisions. Gradually alternative designs are dropped until one tree design remains: this is the final design.
+
+The final design should be unambiguous and  should not contain alternative designs unless needed to inform the user documentation. The final design is used to create a specification document *and* to create user documentation from.
+
+Once approved, the Senior Designer (AI Agent) uses the final design to create a specification document.
+
+The system manages design document as they are part of the workflow system.
+
+#### Specification documents 
+
+A specification document is a *design specification* (not an implementation specification): it is a formalised, unambiguous distillation of the design. It is used to inform the creation of an implementation, tests and is the blueprint used when reviewing an implementation: the main purpose of a review is to check the implementation *against* the blueprint.
+
+Specification documents are created by the Senior Designer (an AI Agent role).
+
+Specification documents are checked and approved by the Design Manager (human).
+
+Once a specification is approved, the design process is finished: the design manager’s job is finished and the work is handed to the development team. The dev team then create an implementation plan from it.
+
+### Specification-led implementation
+
+Kanbanzai is a specification-led implementation process: in effect, a waterfall development process. 
+
+The implementation uses the specification to create an implementation plan that orchestrates the implementation by a team of AI Agents.
+
+Once a pan is written, the dev team waits for the a human to request implementation.
+
+### Chat-based AI Agent project manager
+
+In the Kanbanzai System the human is the Design (and Product) Manager: they design what will be built and when.
+
+The AI agent fills in the other roles: project manager, senior designer, development manager and, of course, all the roles in the development team.
+
+Communication between Design and Product Manager (the human) and the rest of the team (AI Agents) is done through chat. In most cases the human in design manager role is discussing design with the senior designer role or the project in general with the AI Agent acting as project manager. 
+
+The discussion takes places through chat messages.
+
+Chat is agile and flexible and allows for more natural workflow than a command based system or web app. 
+
+### Approval stages and state
+
+(A slightly more technical/formal guide to workflow state and stages: for documents and work (entities))
+
+### Orchestrator and Intelligence/knowledge system
+
+(A guide to how `kanbanzai` intelligently breaks up knowledge, stores it, manages it and parcels it out to AI Agents)
+
+(A guide to how `kanbanzai` orchestrates agents and subagents to get work done)
+
+(A guide to skills and roles and how our skills system is designed)
+
+### Retrospectives and `retro` Knowledge 
+
+Please add a section on how `kanbanzai` can manage a retrospective process by storing information about the process in the knowledge base.
+
+## Getting started guide
+
+This should be a guide to installing, initialising and running a `kanbanzai` MCP server. 
+
+It must guide a user through the setup process, then through their first feature from design to implementation.
+
+Structure the whole document in a sequential order of the process.
+
+Show by example rather than by prose: show don’t tell.
+
+Explain concepts sparingly or refer the reader to the manual.
+
+It can touch a little on what the system is.
+
+
+Assume the user is a designer-developer who has enough technical knowledge to use git, create a repo, use the command line etc. 
+
+Assume the user has used a workflow process before: probably agile: Scrum or Kanban. So there is no need to explain what they are.
+
+Assume the user is a novice to Agentic development. Use the more widely terms feely; quickly explain the lesser-know terms and concepts. 

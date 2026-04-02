@@ -2,7 +2,10 @@ id: TASK-01KN78V6443J2
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t12-skill-doc-updates
 summary: "Skill and documentation updates — update SKILL.md files and AGENTS.md to reflect decoupled dev-plan approval, auto-commit, auto-approve, new doc actions"
-status: queued
+status: done
 depends_on:
   - TASK-01KN78V61CMJR
   - TASK-01KN78V62VG7W
+completed: "2026-04-02T14:53:09Z"
+completion_summary: "Updated kanbanzai-documents SKILL.md: auto-refresh-on-approve, auto_approve, doc move/delete, simplified commit discipline. kanbanzai-workflow: added explicit developing transition step. kanbanzai-agents: softened .kbz/state/ manual commit note. write-dev-plan: auto_approve guidance, no cascade note. decompose-feature: dev-planning stage clarification. AGENTS.md: auto-commit note."
+verification: Manual review of prose changes

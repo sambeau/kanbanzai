@@ -2,6 +2,11 @@ id: TASK-01KN78V5ZWXH2
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t4-auto-commit-merge
 summary: Auto-commit in merge execute handler — call CommitStateWithMessage after worktree record update
-status: queued
+status: done
 depends_on:
   - TASK-01KN78T6CFGX3
+files_planned:
+  - internal/mcp/merge_tool.go
+completed: "2026-04-02T14:52:32Z"
+completion_summary: "Added mergeCommitFunc package-level var to merge_tool.go; auto-commits after worktree record update in executeMerge with 'workflow(FEAT-{id}): mark worktree merged'."
+verification: go test ./internal/mcp/... passes

@@ -2,6 +2,11 @@ id: TASK-01KN78V5YS75Z
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t2-auto-commit-finish
 summary: Auto-commit in finish handler — call CommitStateWithMessage after successful task completion; single commit for batch mode
-status: queued
+status: done
 depends_on:
   - TASK-01KN78T6CFGX3
+files_planned:
+  - internal/mcp/finish_tool.go
+completed: "2026-04-02T14:52:32Z"
+completion_summary: "Added finishCommitFunc package-level var to finish_tool.go; auto-commits after single task completion with format 'workflow(TASK-{id}): complete – {summary}'; batch mode commits once after all tasks with 'workflow: complete N tasks'."
+verification: go test ./internal/mcp/... passes

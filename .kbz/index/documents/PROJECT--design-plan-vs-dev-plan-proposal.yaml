@@ -1,0 +1,50 @@
+document_id: PROJECT/design-plan-vs-dev-plan-proposal
+document_path: work/design/PLAN vs DEV-PLAN proposal.txt
+content_hash: 6654ed1ba46e265264f8c23f4643c0f7c7363cb0cbc5dc7646f2cf9335f31839
+indexed_at: 2026-04-02T18:01:13.76675Z
+sections:
+    - path: "1"
+      level: 1
+      title: PLAN vs DEV-PLAN ambiguity
+      byte_offset: 0
+      byte_count: 2685
+      word_count: 458
+      content_hash: 6654ed1ba46e265264f8c23f4643c0f7c7363cb0cbc5dc7646f2cf9335f31839
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Proposal: back to EPIC'
+          byte_offset: 354
+          byte_count: 706
+          word_count: 124
+          content_hash: 94d8acd5d642f43f7774070fedd45387abafa9b16b9557027e435ef1221ad230
+        - path: "1.2"
+          level: 2
+          title: What needs to be done.
+          byte_offset: 1060
+          byte_count: 1625
+          word_count: 281
+          content_hash: 06da30fae021cbc1d60de822473144a7bd66d81253e6d56a3883ae96ddf9e176
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Task ambiguity
+              byte_offset: 1759
+              byte_count: 293
+              word_count: 52
+              content_hash: 937f2d68485cb672cde5448a4a3fc5de0dfe40c1e20f3ba832a4333033cba3c0
+            - path: 1.2.2
+              level: 3
+              title: Deprecation vs immediate action
+              byte_offset: 2052
+              byte_count: 334
+              word_count: 57
+              content_hash: e5a04d894f77b1323136ad1eb62b83bf52ce11e86c64158b956dad57077e274a
+            - path: 1.2.3
+              level: 3
+              title: '`kanbanzai` Project vs Kanbanzai System Product/Installations'
+              byte_offset: 2386
+              byte_count: 299
+              word_count: 48
+              content_hash: d160d5142962c769c98356a5e42ed30c259c9b263a6aeaf3950967195836756b
+classified: false

@@ -2,4 +2,10 @@ id: TASK-01KN78T6CFGX3
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t1-git-commit-helpers
 summary: CommitStateWithMessage and CommitStateAndPaths — add two new parameterised commit helpers to internal/git/commit.go; refactor CommitStateIfDirty to delegate to CommitStateWithMessage
-status: ready
+status: done
+files_planned:
+  - internal/git/commit.go
+  - internal/git/commit_test.go
+completed: "2026-04-02T14:52:32Z"
+completion_summary: Added CommitStateWithMessage and CommitStateAndPaths to internal/git/commit.go; refactored CommitStateIfDirty to delegate to CommitStateWithMessage. Added full test coverage for both new functions.
+verification: go test ./internal/git/... passes; all 8 new and existing tests pass

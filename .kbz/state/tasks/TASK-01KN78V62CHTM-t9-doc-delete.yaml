@@ -2,6 +2,12 @@ id: TASK-01KN78V62CHTM
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t9-doc-delete
 summary: "New doc delete action — remove file, clear entity references, remove state and index records, CommitStateAndPaths"
-status: queued
+status: done
 depends_on:
   - TASK-01KN78T6CFGX3
+files_planned:
+  - internal/service/documents.go
+  - internal/mcp/doc_tool.go
+completed: "2026-04-02T14:52:32Z"
+completion_summary: "Added DeleteDocument method to DocumentService: guards approved docs without force, removes file, clears entity doc ref, deletes state record, removes index file. Added docDeleteAction to doc_tool.go with CommitStateAndPaths. Added MoveDocumentInput and DeleteDocumentInput types."
+verification: go test ./... passes

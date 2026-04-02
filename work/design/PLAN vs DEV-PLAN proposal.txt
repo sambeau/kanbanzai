@@ -1,0 +1,53 @@
+# PLAN vs DEV-PLAN ambiguity
+
+– Part of “Kanbanzai Public Release Readiness”
+
+AI Agents are finding the terminology ‘plan’ (design plan) and ‘dev-plan’ (implementation plan) confusing and mistakes are being made:
+
+Recent example:
+
+- I asked for “a design and plan” and got a ‘design’ and a ‘dev-plan’.
+
+We need to remedy this.
+
+## Proposal: back to EPIC
+
+We began with ‘epic’, but there was mild confusion about what should *be* an ‘epic’ as it has connotations of a *large piece of work,* rather than a *grouping of features* that should be implemented together.
+
+We also rejected EPIC as it is a scrum term and the Kanbanzai System is a workflow system more similar to Kanban than Scrum: we do not have “stories”, nor “sprints”.
+
+However …
+
+AI Agents have a lot of embedded knowledge about agile development, and Scrum terminology has bled out from Scrum into the wider world of workflow.
+
+AI Agents also, occasionally, refer to a PLAN (design plan) as an epic.
+
+So, I suggest we give in, and we go back to EPIC.
+
+## What needs to be done.
+
+This will be a big change throughout the codebase and all the SKILLs and agent interactions will need to be updated. Similarly we should rename the work folder.
+
+There is also the question of whether we retrospectively update all existing records. Would that be possible? Desirable? Or should we simply allow stores to use both ID types (It feels dangerous to start rename every ID).
+
+We will need to make clear references to the vocabulary in the skills and instructions:
+
+- Epic, group of FEATS, decompose a design into features etc: EPIC
+- Feature, create a feature, etc: FEAT
+- TASKS are AI Agent-only, humans should use an TASK ID if they ever need to refer to one.
+
+### Task ambiguity
+
+There exists a similar *potential* problem “task” (though I have never seen it arise): humans often refer to a small feature or change as a “task”. So it is another loaded term. Can we make it clear that if a human says “task” they mean small FEAT, not TASK? 
+
+### Deprecation vs immediate action
+
+There is only one other codebase currently using the Kanbanzai System and `kanbanzai` MCP.
+
+I would rather we provide a way to upgrade their store (or for the store to continue to use old IDs) than to go through a complicated deprecation stage: we are pre-public release, so we can break things.
+
+### `kanbanzai` Project vs Kanbanzai System Product/Installations
+
+We must to be mindful of what is local to the kanbanzai project and what is part of the `kanbanzai` product, installed with the MCP server.
+
+Any instruction or skill that needs to be installed alongside the server should be updated.

@@ -2,6 +2,12 @@ id: TASK-01KN78V61WAAW
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t8-doc-move
 summary: New doc move action — atomic file rename + record update + CommitStateAndPaths with both old and new paths
-status: queued
+status: done
 depends_on:
   - TASK-01KN78T6CFGX3
+files_planned:
+  - internal/service/documents.go
+  - internal/mcp/doc_tool.go
+completed: "2026-04-02T14:52:32Z"
+completion_summary: "Added MoveDocument method to DocumentService: loads record, verifies source exists, renames file, updates path/hash/type, writes record. Added docMoveAction to doc_tool.go with atomic CommitStateAndPaths on old+new paths. Added inferDocTypeFromPath helper."
+verification: go test ./... passes

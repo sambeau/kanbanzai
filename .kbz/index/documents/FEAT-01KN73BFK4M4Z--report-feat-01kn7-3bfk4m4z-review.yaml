@@ -1,0 +1,180 @@
+document_id: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review
+document_path: work/reports/feat-01kn7-3bfk4m4z-review.md
+content_hash: 9d84c0f83cc754978c34ac5e7b9a46a02483d4a7af5b34e6238c428b55a50c23
+indexed_at: 2026-04-02T15:11:14.287782Z
+sections:
+    - path: "1"
+      level: 1
+      title: FEAT-01KN7-3BFK4M4Z Implementation Review
+      byte_offset: 0
+      byte_count: 44
+      word_count: 4
+      content_hash: 415b4ed6f4035a855efcc9e2ffaf37b3c36123a496a7f071386e8af879930fe0
+    - path: "2"
+      level: 1
+      title: Workflow State Automation
+      byte_offset: 44
+      byte_count: 12114
+      word_count: 1600
+      content_hash: e7b594b572a18567f8a7235399d33aa0ba2d51652c3dc5d4352d87c375dab3cc
+      children:
+        - path: "2.1"
+          level: 2
+          title: Overview
+          byte_offset: 366
+          byte_count: 573
+          word_count: 87
+          content_hash: 62c3b26dc3eacf0e6988696c846d251f11d0e4dd7b6090ddd0aabfc553c55657
+        - path: "2.2"
+          level: 2
+          title: Scope
+          byte_offset: 939
+          byte_count: 806
+          word_count: 64
+          content_hash: ed0ed87b0d349c8c57059a400ecb0981e4651f1b671a37849629aaaa3b072ab8
+        - path: "2.3"
+          level: 2
+          title: Specification Coverage
+          byte_offset: 1745
+          byte_count: 480
+          word_count: 82
+          content_hash: adc2db0748b4c2ef7865083a98940dbd9f80aefce8edd1b8848a1937c0281b67
+        - path: "2.4"
+          level: 2
+          title: Findings
+          byte_offset: 2225
+          byte_count: 6605
+          word_count: 901
+          content_hash: 307357fff7099dcb9a36f37c9729c5d5609659869d35fd52dc0ba9af273ff9df
+          children:
+            - path: 2.4.1
+              level: 3
+              title: 'F01 — CRITICAL: No service-layer tests for `MoveDocument`, `DeleteDocument`, or `auto_approve`'
+              byte_offset: 2238
+              byte_count: 985
+              word_count: 118
+              content_hash: 5442ca1c984cbc00f3bd83c808780298805748d4f96bdfb655562e5fca4825c5
+            - path: 2.4.2
+              level: 3
+              title: 'F02 — CRITICAL: No test for dev-plan cascade removal (AC-C01)'
+              byte_offset: 3223
+              byte_count: 744
+              word_count: 108
+              content_hash: 5e7119bbfb66d8dc4af71935e275786b131e8c622a4c3969bc3c8a84226814d9
+            - path: 2.4.3
+              level: 3
+              title: 'F03 — HIGH: Auto-commit path is untested in all tool handlers'
+              byte_offset: 3967
+              byte_count: 838
+              word_count: 107
+              content_hash: 0fe9adb1f43e5ae25ad2b9774296384dbc1443759e049b236ae7530b5cb4e69d
+            - path: 2.4.4
+              level: 3
+              title: 'F04 — HIGH: Section validation integration in service layer untested (AC-D05, AC-D06)'
+              byte_offset: 4805
+              byte_count: 671
+              word_count: 86
+              content_hash: 89ee2018487508e77733e8021b4e49d36cce26805eaf20b23756c5e02bcafb60
+            - path: 2.4.5
+              level: 3
+              title: 'F05 — HIGH: Tool description omits `move` and `delete` actions'
+              byte_offset: 5476
+              byte_count: 665
+              word_count: 91
+              content_hash: 5413e0a81f94c5cb578c874c5aa07be1ab2423c4b8e3b5b5e757fda599334cc2
+            - path: 2.4.6
+              level: 3
+              title: 'F06 — MEDIUM: Commit message format deviates from spec (Contract 5)'
+              byte_offset: 6141
+              byte_count: 702
+              word_count: 104
+              content_hash: 807b3630c1d93869059cb128a32e55b5be30a7624798f6155e574a516e4fe7ba
+            - path: 2.4.7
+              level: 3
+              title: 'F07 — MEDIUM: `auto_approve` bypasses the section hard gate'
+              byte_offset: 6843
+              byte_count: 818
+              word_count: 116
+              content_hash: 4700251179a682c8b8ecafef3c8a7a2e10fd920f05d6e2eb9793de2f5492930a
+            - path: 2.4.8
+              level: 3
+              title: 'F08 — MINOR: Double `entitySvc.Get` for feature Phase 2 transitions'
+              byte_offset: 7661
+              byte_count: 511
+              word_count: 73
+              content_hash: b31c92581f42a579ba5e38939b8b973b36f08ff5bac1eef599135df177372a23
+            - path: 2.4.9
+              level: 3
+              title: 'F09 — MINOR: Orphaned comment between method declarations in `documents.go`'
+              byte_offset: 8172
+              byte_count: 658
+              word_count: 96
+              content_hash: 362753ef3ed7c4071556e3434abde40e24860767b6aa24a1840290a3a873c6b5
+        - path: "2.5"
+          level: 2
+          title: What Is Implemented Well
+          byte_offset: 8830
+          byte_count: 1496
+          word_count: 205
+          content_hash: c1109a362cef823119454acc37590bf3e365f310790af540f65e9e32955e5842
+        - path: "2.6"
+          level: 2
+          title: Recommended Actions (Priority Order)
+          byte_offset: 10326
+          byte_count: 1832
+          word_count: 229
+          content_hash: b153ce6bfe04f60e80d151211ed269c7a7c2384133036b2db59c8a0a0fb0149a
+entity_refs:
+    - entity_id: FEAT-01KN7
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 2
+    - entity_id: FEAT-01KN7
+      entity_type: feature
+      section_path: "2"
+      byte_offset: 111
+    - entity_id: FEAT-01KN73BFK4M4Z
+      entity_type: feature
+      section_path: "2"
+      byte_offset: 225
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 2.4.3
+      byte_offset: 4487
+    - entity_id: P18-workflow-automation
+      entity_type: plan
+      section_path: "2"
+      byte_offset: 169
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: "2.2"
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: "2.2"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: "2.2"
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: "2.2"
+    - target_path: .kbz/skills/decompose-feature/SKILL.md
+      link_text: .kbz/skills/decompose-feature/SKILL.md
+      section_path: "2.2"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "2.2"
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: "2.5"
+    - target_path: write-dev-plan/SKILL.md
+      link_text: write-dev-plan/SKILL.md
+      section_path: "2.5"
+conventional_roles:
+    - section_path: "2.1"
+      role: narrative
+      confidence: high
+    - section_path: "2.2"
+      role: constraint
+      confidence: high
+classified: false

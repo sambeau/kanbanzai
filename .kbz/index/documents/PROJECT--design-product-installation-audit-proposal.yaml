@@ -1,0 +1,32 @@
+document_id: PROJECT/design-product-installation-audit-proposal
+document_path: work/design/product-installation-audit-proposal.txt
+content_hash: a6717c2b96c0805e5deb3205faaac07b1be0e5c5475553be63a589d757b6a061
+indexed_at: 2026-04-02T18:01:13.62624Z
+sections:
+    - path: "1"
+      level: 1
+      title: Kanbanzai system product and installation audit proposal
+      byte_offset: 0
+      byte_count: 1855
+      word_count: 289
+      content_hash: a6717c2b96c0805e5deb3205faaac07b1be0e5c5475553be63a589d757b6a061
+      children:
+        - path: "1.1"
+          level: 2
+          title: Associated files audit
+          byte_offset: 512
+          byte_count: 933
+          word_count: 146
+          content_hash: 07deac4dd823ea0592a394caa4d70540ff2b97c36ffbc93f2aabd9ca21d0b6fa
+        - path: "1.2"
+          level: 2
+          title: Initialisation process
+          byte_offset: 1445
+          byte_count: 410
+          word_count: 63
+          content_hash: e7a474a2284cec606d840c3b5c6f94a5cc5a2d3ce11b9c16a5bde098e5ec52b3
+cross_doc_links:
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+classified: false

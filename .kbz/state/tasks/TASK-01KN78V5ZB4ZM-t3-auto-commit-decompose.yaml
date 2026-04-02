@@ -2,6 +2,11 @@ id: TASK-01KN78V5ZB4ZM
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t3-auto-commit-decompose
 summary: Auto-commit in decompose apply handler — call CommitStateWithMessage after both passes complete
-status: queued
+status: done
 depends_on:
   - TASK-01KN78T6CFGX3
+files_planned:
+  - internal/mcp/decompose_tool.go
+completed: "2026-04-02T14:52:32Z"
+completion_summary: "Added decomposeCommitFunc package-level var to decompose_tool.go; auto-commits after both passes of decomposeApply with 'workflow(FEAT-{id}): decompose into N tasks'."
+verification: go test ./internal/mcp/... passes

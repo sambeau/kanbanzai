@@ -1,0 +1,34 @@
+# Kanbanzai system product and installation audit proposal
+
+– Part of “Kanbanzai Public Release Readiness”
+
+There is an ambiguity of terminology between **The Kanbanzai System** and **`kanbanzai` MCP and associated files** that are shipped as the product.
+
+We need to be clear about when you are discussing the kanbanzai project and its codebase, vs the kanbanzai MCP server and the files that are shipped with it as an installable product.
+
+In this document I will refer to: **project** and **product**.
+
+## Associated files audit
+
+First, we must ascertain what files are part of the product and must be shipped with it. In particular: skills and instructions.
+
+Any skills that are required for the system to work must be installed alongside it and be considered part of the `init` process.
+
+Any additions to `AGENTS.md` or similar instructions that are not skills should be part of the installation and `init` process.
+
+We must minimise the the instruction that are held outside of SKILLs installed by the product.
+
+We must minimise the number of installed files.
+
+We must ensure that all commonly-used agentic environments: Claude Code, Github Copilot, VSCode, Zed, etc. *and* commonly used AI Agents: Claude, GPT, Codex, Gemini, can find the SKILLs and other instructions from install.
+
+If we cannot guarantee that ‘init’ will create a working environment without manually adding instructions, we must provide those instructions.
+
+## Initialisation process
+
+The project initialiser should take an empty project and make it  a fully functional Kanbanzai System. If there are manual steps, the installer should provide them as part of the `init` process.
+
+The installer could ask what agents and environments/editors  will be used and install correct instructions for that agent.
+
+Any manual steps should also form part of the documentation.
+

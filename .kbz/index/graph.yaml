@@ -1,4 +1,4 @@
-updated_at: 2026-04-02T12:55:15.584228Z
+updated_at: 2026-04-02T18:01:13.76675Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -53210,3 +53210,1053 @@ edges:
       to: ../reports/automation-opportunities-analysis.md
       to_type: document
       edge_type: LINKS_TO
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review
+      from_type: document
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review
+      from_type: document
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#1
+      from_type: section
+      to: FEAT-01KN7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2
+      from_type: section
+      to: FEAT-01KN7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2
+      from_type: section
+      to: FEAT-01KN73BFK4M4Z
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.4.3
+      from_type: section
+      to: TASK-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2
+      from_type: section
+      to: P18-workflow-automation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.2
+      from_type: section
+      to: .agents/skills/kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.2
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.2
+      from_type: section
+      to: .agents/skills/kanbanzai-agents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.2
+      from_type: section
+      to: .kbz/skills/write-dev-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.2
+      from_type: section
+      to: .kbz/skills/decompose-feature/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.5
+      from_type: section
+      to: kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review#2.5
+      from_type: section
+      to: write-dev-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation
+      from_type: document
+      to: PROJECT/design-public-release-documentation#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.3
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.3
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.3
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.3
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.3
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.4
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.4
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.4
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.5
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.5
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.5
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.5
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.5
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.5
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.5.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.6
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.6
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.6
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.6
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.7
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.7
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.7
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.7
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.7
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.7.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.8
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.8
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.8
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.8
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.8
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.8.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.9
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.9
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.9
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.10
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.10.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.10
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.10.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.10
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.10.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.10
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.10.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.11
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.11.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.11
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.11.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.11
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.11.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.11
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.11.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.12
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.12.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.12
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.12.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.12
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.12.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.12
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.12.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.13
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.13
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.13.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.13
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.13.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.13
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.13.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.13
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.13.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.13
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.13.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.13
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.13.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.13
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.13.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.14
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.14
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.14.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.14
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.14.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.14
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.14.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.14
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.14.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: PROJECT/design-public-release-documentation#1.15
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-public-release-documentation#1.12.3
+      from_type: section
+      to: FEAT-xxxxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: work/design/public-schema-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: work/design/fresh-install-experience.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: work/design/workflow-design-basis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1
+      from_type: section
+      to: work/design/consistent-front-matter.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.4.1
+      from_type: section
+      to: README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.4.1
+      from_type: section
+      to: docs/user-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.4.1
+      from_type: section
+      to: docs/workflow-overview.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.4.1
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.4.1
+      from_type: section
+      to: docs/orchestration-and-knowledge.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.4.1
+      from_type: section
+      to: docs/retrospectives.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.4.2
+      from_type: section
+      to: docs/schema-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.4.2
+      from_type: section
+      to: docs/mcp-tool-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.4.2
+      from_type: section
+      to: docs/configuration-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.4.2
+      from_type: section
+      to: docs/kanbanzai-guide-for-viewer-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.7.5
+      from_type: section
+      to: docs/workflow-overview.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.8.5
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-public-release-documentation#1.12.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-interactive-help-system
+      from_type: document
+      to: PROJECT/design-interactive-help-system#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.2
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.2
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.2
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.3
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.3
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.3
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.3
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.3
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.3
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.3
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.4
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.4
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.4
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.4
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.5
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.5
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.5
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.5
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.6
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.6
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.6
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.6
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.7
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.7
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.7
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.7
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.8
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.8
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.8
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.9
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.9
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.9
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.12
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.12.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.12
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.12.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.12
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.12.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.12
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.12.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.12
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.12.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.12
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.12.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.13
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.13
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.13.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.13
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.13.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.13
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.13.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1.13
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.13.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: PROJECT/design-interactive-help-system#1.14
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: work/design/public-release-documentation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: work/design/fresh-install-experience.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: work/design/skills-system-redesign-v2.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-interactive-help-system#1
+      from_type: section
+      to: work/design/workflow-design-basis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-interactive-help-system#1.1
+      from_type: section
+      to: work/design/public-release-documentation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-interactive-help-system#1.7.4
+      from_type: section
+      to: .agents/skills/kanbanzai-teaching/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-interactive-help-system#1.9.1
+      from_type: section
+      to: internal/kbzinit/skills/teaching/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-interactive-help-system#1.9.1
+      from_type: section
+      to: internal/kbzhelp/topics/**/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-interactive-help-system#1.10
+      from_type: section
+      to: public-release-documentation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-documentation-for-public-release-proposal
+      from_type: document
+      to: PROJECT/design-documentation-for-public-release-proposal#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1.2
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1.2
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1.2
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1.2.3
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1.2.3
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1.2.3
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1.2.3
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1.2
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1.2
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1.2
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1.2
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1.2
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.2.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-documentation-for-public-release-proposal#1
+      from_type: section
+      to: PROJECT/design-documentation-for-public-release-proposal#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-product-installation-audit-proposal
+      from_type: document
+      to: PROJECT/design-product-installation-audit-proposal#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-product-installation-audit-proposal#1
+      from_type: section
+      to: PROJECT/design-product-installation-audit-proposal#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-product-installation-audit-proposal#1
+      from_type: section
+      to: PROJECT/design-product-installation-audit-proposal#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-product-installation-audit-proposal#1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-plan-vs-dev-plan-proposal
+      from_type: document
+      to: PROJECT/design-plan-vs-dev-plan-proposal#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-plan-vs-dev-plan-proposal#1
+      from_type: section
+      to: PROJECT/design-plan-vs-dev-plan-proposal#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-plan-vs-dev-plan-proposal#1
+      from_type: section
+      to: PROJECT/design-plan-vs-dev-plan-proposal#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-plan-vs-dev-plan-proposal#1.2
+      from_type: section
+      to: PROJECT/design-plan-vs-dev-plan-proposal#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-plan-vs-dev-plan-proposal#1.2
+      from_type: section
+      to: PROJECT/design-plan-vs-dev-plan-proposal#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-plan-vs-dev-plan-proposal#1.2
+      from_type: section
+      to: PROJECT/design-plan-vs-dev-plan-proposal#1.2.3
+      to_type: section
+      edge_type: CONTAINS

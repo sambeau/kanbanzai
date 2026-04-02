@@ -2,4 +2,7 @@ id: TASK-01KN78V61CMJR
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t7-remove-devplan-cascade
 summary: Remove dev-plan approval cascade — approving a dev-plan must NOT auto-transition the owning feature to developing
-status: queued
+status: done
+completed: "2026-04-02T14:52:56Z"
+completion_summary: Removed DocumentTypeDevPlan cascade from ApproveDocument switch. Dev-plan approval now only sets document status to approved without transitioning feature to developing. Added comment explaining the explicit transition requirement.
+verification: go test ./internal/service/... passes

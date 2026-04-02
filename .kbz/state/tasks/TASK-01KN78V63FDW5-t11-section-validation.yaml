@@ -2,4 +2,7 @@ id: TASK-01KN78V63FDW5
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t11-section-validation
 summary: "Document section validation — ValidateSections function; warnings on register, hard error on approve; reads required sections from stage-bindings.yaml"
-status: queued
+status: done
+completed: "2026-04-02T14:52:56Z"
+completion_summary: "Created internal/service/section_validate.go with ValidateSections (level-2 heading scan, case-insensitive). Added SectionValidationResult type. Integrated into SubmitDocument (warnings) and ApproveDocument (hard error). Added SetSectionProvider to DocumentService. Wired in server.go from stage-bindings.yaml."
+verification: go test ./... passes; 9 ValidateSections tests pass

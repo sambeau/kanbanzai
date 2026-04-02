@@ -2,7 +2,10 @@ id: TASK-01KN78V62VG7W
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t10-auto-approve-flag
 summary: auto_approve flag on doc register — whitelist dev-plan/research/report; register+approve in one call
-status: queued
+status: done
 depends_on:
   - TASK-01KN78V60WTSX
   - TASK-01KN78V61CMJR
+completed: "2026-04-02T14:53:09Z"
+completion_summary: "Added AutoApprove bool to SubmitDocumentInput; in SubmitDocument validates type against whitelist (dev-plan/research/report), errors if not permitted, then approves inline setting approved status, approved_by and approved_at. Deletes orphaned draft if whitelist check fails. Added auto_approve parameter to docRegisterOne in doc_tool.go."
+verification: go test ./... passes
