@@ -235,7 +235,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		}
 		mcpServer.AddTools(HealthTool(entitySvc,
 			knowledgeHealthChecker(knowledgeSvc, profileStore),
-			profileHealthChecker(profileStore),
+			profileHealthChecker(roleStore),
 			Phase3HealthChecker(worktreeStore, knowledgeSvc, cfg, repoRoot),
 			Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
 			Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
@@ -308,22 +308,23 @@ func (w *worktreeBranchLookup) GetFilesOnBranch(repoRoot, branch string) ([]stri
 }
 
 // profileHealthChecker returns an AdditionalHealthChecker that validates
-// all context profiles for schema correctness and inheritance resolution.
-func profileHealthChecker(profileStore *kbzctx.ProfileStore) AdditionalHealthChecker {
+// all roles for schema correctness and inheritance resolution.
+// Uses RoleStore so that roles in .kbz/roles/ are visible to health validation.
+func profileHealthChecker(roleStore *kbzctx.RoleStore) AdditionalHealthChecker {
 	return func() (*validate.HealthReport, error) {
 		loadAll := func() ([]validate.ProfileInfo, error) {
-			profiles, err := profileStore.LoadAll()
+			roles, err := roleStore.LoadAll()
 			if err != nil {
 				return nil, err
 			}
-			infos := make([]validate.ProfileInfo, len(profiles))
-			for i, p := range profiles {
-				infos[i] = validate.ProfileInfo{ID: p.ID, Inherits: p.Inherits}
+			infos := make([]validate.ProfileInfo, len(roles))
+			for i, r := range roles {
+				infos[i] = validate.ProfileInfo{ID: r.ID, Inherits: r.Inherits}
 			}
 			return infos, nil
 		}
 		resolveProfile := func(id string) error {
-			_, err := kbzctx.ResolveProfile(profileStore, id)
+			_, err := kbzctx.ResolveRole(roleStore, id)
 			return err
 		}
 		return validate.CheckProfileHealth(loadAll, resolveProfile)

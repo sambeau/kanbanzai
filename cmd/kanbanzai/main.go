@@ -504,24 +504,25 @@ func runProfile(args []string, deps dependencies) error {
 }
 
 func runProfileList(deps dependencies) error {
-	profileRoot := filepath.Join(core.InstanceRootDir, "context", "roles")
-	store := kbzctx.NewProfileStore(profileRoot)
+	newRoot := filepath.Join(core.InstanceRootDir, "roles")
+	legacyRoot := filepath.Join(core.InstanceRootDir, "context", "roles")
+	store := kbzctx.NewRoleStore(newRoot, legacyRoot)
 
-	profiles, err := store.LoadAll()
+	roles, err := store.LoadAll()
 	if err != nil {
 		return fmt.Errorf("list profiles: %w", err)
 	}
 
-	if len(profiles) == 0 {
-		fmt.Fprintln(deps.stdout, "no profiles found in .kbz/context/roles/")
+	if len(roles) == 0 {
+		fmt.Fprintln(deps.stdout, "no roles found in .kbz/roles/")
 		return nil
 	}
 
-	for _, p := range profiles {
-		if p.Inherits != "" {
-			fmt.Fprintf(deps.stdout, "%s (inherits: %s) — %s\n", p.ID, p.Inherits, p.Description)
+	for _, r := range roles {
+		if r.Inherits != "" {
+			fmt.Fprintf(deps.stdout, "%s (inherits: %s) — %s\n", r.ID, r.Inherits, r.Identity)
 		} else {
-			fmt.Fprintf(deps.stdout, "%s — %s\n", p.ID, p.Description)
+			fmt.Fprintf(deps.stdout, "%s — %s\n", r.ID, r.Identity)
 		}
 	}
 	return nil
@@ -541,85 +542,53 @@ func runProfileGet(args []string, deps dependencies) error {
 		return fmt.Errorf("profile get requires a profile ID (--id <id> or positional)")
 	}
 
-	profileRoot := filepath.Join(core.InstanceRootDir, "context", "roles")
-	store := kbzctx.NewProfileStore(profileRoot)
+	newRoot := filepath.Join(core.InstanceRootDir, "roles")
+	legacyRoot := filepath.Join(core.InstanceRootDir, "context", "roles")
+	store := kbzctx.NewRoleStore(newRoot, legacyRoot)
 
 	raw := flags["raw"] == "true"
 	if raw {
-		p, err := store.Load(profileID)
+		r, err := store.Load(profileID)
 		if err != nil {
 			return fmt.Errorf("get profile: %w", err)
 		}
-		fmt.Fprintf(deps.stdout, "id:          %s\n", p.ID)
-		if p.Inherits != "" {
-			fmt.Fprintf(deps.stdout, "inherits:    %s\n", p.Inherits)
+		fmt.Fprintf(deps.stdout, "id:       %s\n", r.ID)
+		if r.Inherits != "" {
+			fmt.Fprintf(deps.stdout, "inherits: %s\n", r.Inherits)
 		}
-		fmt.Fprintf(deps.stdout, "description: %s\n", p.Description)
-		if len(p.Packages) > 0 {
-			fmt.Fprintf(deps.stdout, "packages:    %s\n", strings.Join(p.Packages, ", "))
+		fmt.Fprintf(deps.stdout, "identity: %s\n", r.Identity)
+		if len(r.Vocabulary) > 0 {
+			fmt.Fprintf(deps.stdout, "vocabulary:\n")
+			for _, v := range r.Vocabulary {
+				fmt.Fprintf(deps.stdout, "  - %s\n", v)
+			}
 		}
-		switch c := p.Conventions.(type) {
-		case []interface{}:
-			if len(c) > 0 {
-				fmt.Fprintf(deps.stdout, "conventions:\n")
-				for _, item := range c {
-					fmt.Fprintf(deps.stdout, "  - %v\n", item)
-				}
+		if len(r.AntiPatterns) > 0 {
+			fmt.Fprintf(deps.stdout, "anti_patterns:\n")
+			for _, ap := range r.AntiPatterns {
+				fmt.Fprintf(deps.stdout, "  - name: %s\n", ap.Name)
 			}
-		case map[string]interface{}:
-			if len(c) > 0 {
-				fmt.Fprintf(deps.stdout, "conventions:\n")
-				for key, val := range c {
-					fmt.Fprintf(deps.stdout, "  %s:\n", key)
-					if items, ok := val.([]interface{}); ok {
-						for _, item := range items {
-							fmt.Fprintf(deps.stdout, "    - %v\n", item)
-						}
-					}
-				}
-			}
+		}
+		if len(r.Tools) > 0 {
+			fmt.Fprintf(deps.stdout, "tools:    %s\n", strings.Join(r.Tools, ", "))
 		}
 		return nil
 	}
 
-	resolved, err := kbzctx.ResolveProfile(store, profileID)
+	resolved, err := kbzctx.ResolveRole(store, profileID)
 	if err != nil {
 		return fmt.Errorf("resolve profile: %w", err)
 	}
-	fmt.Fprintf(deps.stdout, "id:          %s (resolved)\n", resolved.ID)
-	fmt.Fprintf(deps.stdout, "description: %s\n", resolved.Description)
-	if len(resolved.Packages) > 0 {
-		fmt.Fprintf(deps.stdout, "packages:    %s\n", strings.Join(resolved.Packages, ", "))
-	}
-	switch c := resolved.Conventions.(type) {
-	case []interface{}:
-		if len(c) > 0 {
-			fmt.Fprintf(deps.stdout, "conventions:\n")
-			for _, item := range c {
-				fmt.Fprintf(deps.stdout, "  - %v\n", item)
-			}
-		}
-	case map[string]interface{}:
-		if len(c) > 0 {
-			fmt.Fprintf(deps.stdout, "conventions:\n")
-			for key, val := range c {
-				fmt.Fprintf(deps.stdout, "  %s:\n", key)
-				if items, ok := val.([]interface{}); ok {
-					for _, item := range items {
-						fmt.Fprintf(deps.stdout, "    - %v\n", item)
-					}
-				}
-			}
+	fmt.Fprintf(deps.stdout, "id:       %s (resolved)\n", resolved.ID)
+	fmt.Fprintf(deps.stdout, "identity: %s\n", resolved.Identity)
+	if len(resolved.Vocabulary) > 0 {
+		fmt.Fprintf(deps.stdout, "vocabulary:\n")
+		for _, v := range resolved.Vocabulary {
+			fmt.Fprintf(deps.stdout, "  - %s\n", v)
 		}
 	}
-	if resolved.Architecture != nil {
-		fmt.Fprintf(deps.stdout, "architecture:\n")
-		if resolved.Architecture.Summary != "" {
-			fmt.Fprintf(deps.stdout, "  summary: %s\n", resolved.Architecture.Summary)
-		}
-		for _, ki := range resolved.Architecture.KeyInterfaces {
-			fmt.Fprintf(deps.stdout, "  - %s\n", ki)
-		}
+	if len(resolved.Tools) > 0 {
+		fmt.Fprintf(deps.stdout, "tools:    %s\n", strings.Join(resolved.Tools, ", "))
 	}
 	return nil
 }
