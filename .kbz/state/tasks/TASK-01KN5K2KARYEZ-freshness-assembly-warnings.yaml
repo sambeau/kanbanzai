@@ -1,6 +1,7 @@
 id: TASK-01KN5K2KARYEZ
 parent_feature: FEAT-01KN588PETZQE
 slug: freshness-assembly-warnings
+name: Freshness assembly warnings
 summary: "Staleness warnings in assembled context metadata: stepCheckFreshness in pipeline.go, StalenessWarnings on PipelineState, MetadataWarnings on PipelineResult, surfaced via handoff_tool.go context_metadata"
 status: done
 depends_on:

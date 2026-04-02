@@ -1,6 +1,7 @@
 id: TASK-01KN7SXP58W66
 parent_feature: FEAT-01KN07T66SAH3
 slug: doc-inheritance-tests
+name: Doc inheritance tests
 summary: Write unit tests for document inheritance in doc gaps and status tool
 status: done
 completed: "2026-04-02T19:51:46Z"

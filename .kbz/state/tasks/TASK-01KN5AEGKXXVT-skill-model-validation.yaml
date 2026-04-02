@@ -1,6 +1,7 @@
 id: TASK-01KN5AEGKXXVT
 parent_feature: FEAT-01KN588PDBW85
 slug: skill-model-validation
+name: Skill model validation
 summary: "Define Go structs (Skill, SkillFrontmatter, SkillDescription, BodySection) and validateFrontmatter in internal/context/skill.go"
 status: done
 completed: "2026-04-01T20:11:40Z"

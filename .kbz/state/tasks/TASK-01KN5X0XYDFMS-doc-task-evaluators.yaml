@@ -1,6 +1,7 @@
 id: TASK-01KN5X0XYDFMS
 parent_feature: FEAT-01KN58J27H83N
 slug: doc-task-evaluators
+name: Doc task evaluators
 summary: "Document and task prerequisite evaluators — evalDocuments with three-level lookup, evalTasks with min_count and all_terminal in internal/gate/eval_documents.go and eval_tasks.go"
 status: done
 files_planned:

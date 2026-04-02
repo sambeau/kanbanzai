@@ -1,6 +1,7 @@
 id: TASK-01KN5X0XZBC2A
 parent_feature: FEAT-01KN58J27H83N
 slug: checkpoint-override
+name: Checkpoint override
 summary: "Checkpoint override policy integration — HandleCheckpointOverride, ResolveCheckpointResponse, CheckpointOverrideParams/Result in internal/gate/checkpoint_override.go"
 status: done
 files_planned:

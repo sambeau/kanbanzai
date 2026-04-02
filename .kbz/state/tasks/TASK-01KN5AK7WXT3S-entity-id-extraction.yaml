@@ -1,6 +1,7 @@
 id: TASK-01KN5AK7WXT3S
 parent_feature: FEAT-01KN58J275BWJ
 slug: entity-id-extraction
+name: Entity id extraction
 summary: "Extract entity_id from tool call parameters and resolve the stage field by looking up the parent feature's lifecycle stage."
 status: done
 depends_on:

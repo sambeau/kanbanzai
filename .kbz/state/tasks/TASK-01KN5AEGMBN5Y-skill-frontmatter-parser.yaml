@@ -1,6 +1,7 @@
 id: TASK-01KN5AEGMBN5Y
 parent_feature: FEAT-01KN588PDBW85
 slug: skill-frontmatter-parser
+name: Skill frontmatter parser
 summary: Parse SKILL.md frontmatter (YAML between --- delimiters) with strict field validation in internal/context/skill_parse.go
 status: done
 depends_on:

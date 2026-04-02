@@ -1,6 +1,7 @@
 id: TASK-01KN5AK7XEJ82
 parent_feature: FEAT-01KN58J275BWJ
 slug: mcp-logging-hook
+name: Mcp logging hook
 summary: "Integrate the action log writer into the MCP server's tool dispatch path so every invocation produces one log entry, with error classification."
 status: done
 depends_on:

@@ -1,6 +1,7 @@
 id: TASK-01KN7SXHTG0VZ
 parent_feature: FEAT-01KN07T66DZ68
 slug: closeout-skill-updates
+name: Closeout skill updates
 summary: "Update close-out procedure in orchestrate-development, kanbanzai-agents, and kanbanzai-workflow skills"
 status: done
 completed: "2026-04-02T19:51:46Z"

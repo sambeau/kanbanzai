@@ -1,5 +1,6 @@
 id: P17-workflow-and-tooling-3.0
 slug: workflow-and-tooling-3.0
+name: Workflow and tooling 3.0
 title: Kanbanzai 3.0 — Workflow Engine and MCP Tooling
 status: done
 summary: "Implement the workflow engine, MCP tool surface, and context assembly changes defined in the 3.0 Workflow Engine and MCP Tooling design. Covers mandatory stage gates, ACI tool description audit, stage-aware context assembly, review-rework loop formalisation, decomposition quality validation, document structural checks, action pattern logging, and binding registry gate integration."

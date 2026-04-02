@@ -1,5 +1,6 @@
 id: FEAT-01KN4ZPTQSZT5
 slug: doc-import-dry-run
+name: Doc import dry run
 parent: P15-kanbanzai-25-infrastructure-hardening
 status: developing
 summary: Add a dry_run parameter to doc import that shows what would be registered without writing to the store.

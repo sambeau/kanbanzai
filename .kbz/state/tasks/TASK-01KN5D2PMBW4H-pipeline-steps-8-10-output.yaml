@@ -1,6 +1,7 @@
 id: TASK-01KN5D2PMBW4H
 parent_feature: FEAT-01KN588PE43M6
 slug: pipeline-steps-8-10-output
+name: Pipeline steps 8 10 output
 summary: "Implement pipeline steps 8-10: tool subset guidance generation (step 8), token budget estimation with 40% warning and 60% refusal (step 9), progressive disclosure layers (FR-018), attention-curve output ordering (step 10). FR-012 through FR-018, NFR-001, NFR-002."
 status: done
 files_planned:

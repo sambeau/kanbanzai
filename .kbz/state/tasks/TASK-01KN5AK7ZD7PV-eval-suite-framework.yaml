@@ -1,6 +1,7 @@
 id: TASK-01KN5AK7ZD7PV
 parent_feature: FEAT-01KN58J275BWJ
 slug: eval-suite-framework
+name: Eval suite framework
 summary: "Create the evaluation suite directory structure, scenario YAML schema validation, and 15-20 scenario files covering all five evaluation categories."
 status: done
 files_planned:

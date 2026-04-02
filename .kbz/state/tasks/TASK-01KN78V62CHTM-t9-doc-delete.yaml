@@ -1,6 +1,7 @@
 id: TASK-01KN78V62CHTM
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t9-doc-delete
+name: Doc delete
 summary: "New doc delete action — remove file, clear entity references, remove state and index records, CommitStateAndPaths"
 status: done
 depends_on:

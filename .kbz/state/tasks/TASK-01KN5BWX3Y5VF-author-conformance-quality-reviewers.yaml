@@ -1,6 +1,7 @@
 id: TASK-01KN5BWX3Y5VF
 parent_feature: FEAT-01KN588PFG6GY
 slug: author-conformance-quality-reviewers
+name: Author conformance quality reviewers
 summary: "Author .kbz/roles/reviewer-conformance.yaml (inherits reviewer, identity: Senior requirements verification engineer, 6+ ADDITIONAL vocabulary terms, 3+ ADDITIONAL anti-patterns: Assumed conformance/Partial verification/Phantom requirement) and .kbz/roles/reviewer-quality.yaml (inherits reviewer, identity: Senior software quality engineer, 8+ ADDITIONAL vocabulary terms, 3+ ADDITIONAL anti-patterns: Style-as-defect/Nitpick escalation/Improvement suggestion disguised as defect). Verify no duplication with parent reviewer vocabulary/anti-patterns."
 status: done
 depends_on:

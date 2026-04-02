@@ -1,6 +1,7 @@
 id: TASK-01KN5AEGKFNCY
 parent_feature: FEAT-01KN588PCVN4Y
 slug: role-integration-tests
+name: Role integration tests
 summary: "End-to-end tests for role loading pipeline through MCP tool responses, backward compatibility verification, benchmark for 3-level chain under 50ms"
 status: done
 depends_on:

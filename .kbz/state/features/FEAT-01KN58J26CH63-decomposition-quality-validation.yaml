@@ -1,5 +1,6 @@
 id: FEAT-01KN58J26CH63
 slug: decomposition-quality-validation
+name: Decomposition quality validation
 parent: P17-workflow-and-tooling-3.0
 status: done
 summary: "Add quality validation checks to the decompose tool's review step: description present (error), dependencies declared (warning), single-agent sizing (warning), testing coverage (warning), no orphan tasks (warning). Errors block proposal application; warnings are surfaced in output."

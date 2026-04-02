@@ -1,5 +1,6 @@
 id: P18-workflow-automation
 slug: workflow-automation
+name: Workflow automation
 title: Workflow State Automation
 status: done
 summary: "Automate workflow state persistence and document lifecycle operations identified in the Toolkit Principle analysis (work/reports/automation-opportunities-analysis.md). Three pillars: (1) auto-commit at transaction boundaries so state changes are never orphaned, (2) atomic document file operations (create, move, delete) that keep files and metadata records consistent, (3) decouple dev-plan approval from implementation trigger and support auto-approve for agent-authored documents. Also: auto-refresh content hash on approval, validate document required sections on registration."

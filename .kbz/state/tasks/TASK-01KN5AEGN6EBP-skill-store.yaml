@@ -1,6 +1,7 @@
 id: TASK-01KN5AEGN6EBP
 parent_feature: FEAT-01KN588PDBW85
 slug: skill-store
+name: Skill store
 summary: "Implement SkillStore with Load, LoadAll reading from .kbz/skills/*/SKILL.md in internal/context/skill_store.go"
 status: done
 depends_on:

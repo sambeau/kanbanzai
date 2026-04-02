@@ -1,6 +1,7 @@
 id: TASK-01KN5X0Y092RB
 parent_feature: FEAT-01KN58J27H83N
 slug: health-and-integration
+name: Health and integration
 summary: "Health reporting and end-to-end integration tests — gate source health checker, checkpoint override health checker, 10 integration tests in internal/gate/integration_test.go"
 status: done
 files_planned:

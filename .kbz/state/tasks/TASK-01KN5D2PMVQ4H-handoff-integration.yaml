@@ -1,6 +1,7 @@
 id: TASK-01KN5D2PMVQ4H
 parent_feature: FEAT-01KN588PE43M6
 slug: handoff-integration
+name: Handoff integration
 summary: "Wire the 10-step pipeline into the existing handoff MCP tool. When a stage binding exists, use new pipeline; otherwise fall back to current assembleContext(). Add KnowledgeSurfacer stub for step 7. Preserve backward compatibility with existing handoff calls. FR-001, FR-011, NFR-003, NFR-004, NFR-005."
 status: done
 files_planned:

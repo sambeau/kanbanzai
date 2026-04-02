@@ -1,6 +1,7 @@
 id: TASK-01KN5BXT41WKS
 parent_feature: FEAT-01KN588PGJNM0
 slug: author-orchestrate-review-skill
+name: Author orchestrate review skill
 summary: "Author .kbz/skills/orchestrate-review/SKILL.md (name: orchestrate-review, stage: reviewing, roles: [orchestrator], constraint_level: medium). Review coordinator skill. Procedure: decompose into review units → select specialists adaptively (1–4 based on change scope, Captain Agent research) → dispatch sub-agents → collate findings → deduplicate → route to remediation or approval. Anti-patterns: Result-without-evidence, Over-decomposition, Static team dispatch."
 status: done
 files_planned:

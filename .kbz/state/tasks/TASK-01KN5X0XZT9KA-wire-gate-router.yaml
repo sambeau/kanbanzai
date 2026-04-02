@@ -1,6 +1,7 @@
 id: TASK-01KN5X0XZT9KA
 parent_feature: FEAT-01KN58J27H83N
 slug: wire-gate-router
+name: Wire gate router
 summary: "Wire gate router into transition handler and advance mode — modify entity_tool.go, advance.go, server.go; add AdvanceConfig, adapter types, checkpoint policy branching"
 status: done
 files_planned:

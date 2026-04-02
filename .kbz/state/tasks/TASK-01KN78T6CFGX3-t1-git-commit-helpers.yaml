@@ -1,6 +1,7 @@
 id: TASK-01KN78T6CFGX3
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t1-git-commit-helpers
+name: Git commit helpers
 summary: CommitStateWithMessage and CommitStateAndPaths — add two new parameterised commit helpers to internal/git/commit.go; refactor CommitStateIfDirty to delegate to CommitStateWithMessage
 status: done
 files_planned:

@@ -1,6 +1,7 @@
 id: TASK-01KN5BX99YX3B
 parent_feature: FEAT-01KN588PFWADY
 slug: author-write-spec-skill
+name: Author write spec skill
 summary: "Author .kbz/skills/write-spec/SKILL.md (name: write-spec, stage: specifying, roles: [spec-author], constraint_level: high). Guides specification authoring. 5-section template: Problem Statement, Requirements, Constraints, Acceptance Criteria, Verification Plan. Problem Statement must cross-reference design document. Include validation script at scripts/validate-spec-structure.sh."
 status: done
 depends_on:

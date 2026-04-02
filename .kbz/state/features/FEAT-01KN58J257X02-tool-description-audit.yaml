@@ -1,5 +1,6 @@
 id: FEAT-01KN58J257X02
 slug: tool-description-audit
+name: Tool description audit
 parent: P17-workflow-and-tooling-3.0
 status: needs-rework
 summary: "Audit and rewrite all MCP tool descriptions following ACI principles: lead with when-to-use, include negative guidance, state workflow position, keep under 200 tokens. Run agent-driven testing on rewritten descriptions. Audit actionable error messages across all tool handlers beyond gate failures."

@@ -1,6 +1,7 @@
 id: TASK-01KN5AK7XXXSQ
 parent_feature: FEAT-01KN58J275BWJ
 slug: log-file-cleanup
+name: Log file cleanup
 summary: "Implement automatic cleanup of log files older than 30 days at MCP server startup, matching only the actions-YYYY-MM-DD.jsonl pattern."
 status: done
 depends_on:

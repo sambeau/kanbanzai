@@ -1,6 +1,7 @@
 id: TASK-01KN5AKE4HPDP
 parent_feature: FEAT-01KN58J27H83N
 slug: health-e2e-tests
+name: Health e2e tests
 summary: "Add health check reporting for gate source indicators and checkpoint overrides, and write end-to-end integration tests for the complete pipeline."
 status: done
 depends_on:

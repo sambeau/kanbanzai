@@ -1,6 +1,7 @@
 id: TASK-01KN5AJRPNZ7G
 parent_feature: FEAT-01KN58J25K4QD
 slug: lifecycle-validation
+name: Lifecycle validation
 summary: "Implement ValidateFeatureStage which resolves a task's parent feature, checks its status against stage.IsWorkingState, and returns an actionable StageValidationError on failure."
 status: done
 depends_on:

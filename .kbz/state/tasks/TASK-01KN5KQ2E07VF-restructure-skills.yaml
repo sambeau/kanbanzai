@@ -1,6 +1,7 @@
 id: TASK-01KN5KQ2E07VF
 parent_feature: FEAT-01KN588PGXATW
 slug: restructure-skills
+name: Restructure skills
 summary: "Create .kbz/skills/ directory structure with all restructured SKILL.md files: review-code, orchestrate-review, review-plan, write-design, write-spec, write-dev-plan, write-research, update-docs, implement-task, orchestrate-development, decompose-feature."
 status: done
 files_planned:

@@ -1,6 +1,7 @@
 id: TASK-01KN5BXT3C7N5
 parent_feature: FEAT-01KN588PGJNM0
 slug: author-review-code-skill
+name: Author review code skill
 summary: "Author .kbz/skills/review-code/SKILL.md — most detailed skill in the catalog. Name: review-code, stage: reviewing, roles: [reviewer, reviewer-conformance, reviewer-quality, reviewer-security, reviewer-testing], constraint_level: medium. 8+ methodology vocabulary terms, 5 anti-patterns with MAST FM-3.1 citations, 7+ item checklist, 3-step procedure (Orient/Evaluate/Validate), structured machine-parseable output format, 3 BAD/GOOD examples, 6+ gradable evaluation criteria, 6+ retrieval anchors. ≤500 lines."
 status: done
 files_planned:

@@ -1,6 +1,7 @@
 id: TASK-01KN5KQ2DD2FY
 parent_feature: FEAT-01KN588PGXATW
 slug: migrate-role-files
+name: Migrate role files
 summary: "Create .kbz/roles/ directory with all migrated role files: base, implementer, implementer-go, architect, spec-author, researcher, documenter, orchestrator, reviewer + 4 specialist subtypes."
 status: done
 files_planned:

@@ -1,6 +1,7 @@
 id: TASK-01KN5AJRP33VW
 parent_feature: FEAT-01KN58J25K4QD
 slug: stage-config-data
+name: Stage config data
 summary: "Create the internal/stage package with hardcoded stage configuration data — allowed states, orchestration patterns, effort budgets, tool subsets, and content inclusion flags."
 status: done
 files_planned:

@@ -1,6 +1,7 @@
 id: TASK-01KN5BWMGR8JS
 parent_feature: FEAT-01KN588PF5P5Y
 slug: author-implementer-roles
+name: Author implementer roles
 summary: "Author .kbz/roles/implementer.yaml (abstract parent, inherits base, minimal language-agnostic content) and .kbz/roles/implementer-go.yaml (inherits implementer, identity: Senior Go engineer, 8+ Go-specific vocabulary terms, 5+ anti-patterns: God struct/Interface pollution/init() coupling/Naked goroutine/Error swallowing, stage: developing). Two-level inheritance chain: implementer-go → implementer → base."
 status: done
 depends_on:

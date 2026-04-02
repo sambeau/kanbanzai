@@ -1,6 +1,7 @@
 id: TASK-01KN5KQ2CVJQC
 parent_feature: FEAT-01KN588PGXATW
 slug: handoff-new-structures
+name: Handoff new structures
 summary: Extend handoff/assembly pipeline for new attention-curve skill format and role vocabulary/anti-pattern fields. Handles mixed old/new format states.
 status: done
 files_planned:

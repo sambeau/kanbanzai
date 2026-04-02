@@ -1,6 +1,7 @@
 id: TASK-01KN5AJZ3CNGQ
 parent_feature: FEAT-01KN58J26CH63
 slug: decompose-integ-tests
+name: Decompose integ tests
 summary: "Add integration-level tests exercising the full ReviewProposal path with combinations of old and new findings, verifying status determination and finding aggregation."
 status: done
 depends_on:

@@ -1,6 +1,7 @@
 id: TASK-01KN5AKE2H4VD
 parent_feature: FEAT-01KN58J27H83N
 slug: doc-task-evaluators
+name: Doc task evaluators
 summary: Implement the documents and tasks prerequisite evaluators and register them with the evaluator framework. Document evaluator reuses three-level lookup; task evaluator supports min_count and all_terminal.
 status: done
 depends_on:

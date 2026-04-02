@@ -1,6 +1,7 @@
 id: TASK-01KN5BWX4HPKY
 parent_feature: FEAT-01KN588PFG6GY
 slug: author-security-testing-reviewers
+name: Author security testing reviewers
 summary: "Author .kbz/roles/reviewer-security.yaml (inherits reviewer, identity: Senior application security engineer, 12+ ADDITIONAL vocabulary terms including OWASP/STRIDE/CWE/CVSS, 5+ anti-patterns: Checkbox Compliance/Scope Creep into Exploitation/Severity Inflation (security-specific)/Framework Trust/Boundary Blindness) and .kbz/roles/reviewer-testing.yaml (inherits reviewer, identity: Senior test engineer, 8+ ADDITIONAL vocabulary terms, 5+ anti-patterns: Coverage theater/Mock overuse/Happy-path-only testing/Test coupling/Assertion-free tests). Verify no duplication with parent."
 status: done
 depends_on:

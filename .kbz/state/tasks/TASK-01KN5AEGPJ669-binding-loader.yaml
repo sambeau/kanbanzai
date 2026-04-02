@@ -1,6 +1,7 @@
 id: TASK-01KN5AEGPJ669
 parent_feature: FEAT-01KN588PDPE8V
 slug: binding-loader
+name: Binding loader
 summary: YAML loader with duplicate key detection for stage-bindings.yaml in internal/context/binding_load.go
 status: done
 depends_on:

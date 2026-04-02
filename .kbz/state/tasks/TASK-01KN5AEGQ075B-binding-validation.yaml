@@ -1,6 +1,7 @@
 id: TASK-01KN5AEGQ075B
 parent_feature: FEAT-01KN588PDPE8V
 slug: binding-validation
+name: Binding validation
 summary: "Stage and cross-reference validation (valid stage names, role existence checks, prerequisite consistency) in internal/context/binding_validate.go"
 status: done
 depends_on:

@@ -1,6 +1,7 @@
 id: TASK-01KN5AJVZG8AG
 parent_feature: FEAT-01KN58J2606B0
 slug: cycle-increment-cap
+name: Cycle increment cap
 summary: Increment review_cycle by 1 each time a feature transitions into reviewing status. Define DefaultMaxReviewCycles = 3 constant.
 status: done
 depends_on:

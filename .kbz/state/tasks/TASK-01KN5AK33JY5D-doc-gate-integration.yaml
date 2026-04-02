@@ -1,6 +1,7 @@
 id: TASK-01KN5AK33JY5D
 parent_feature: FEAT-01KN58J26RSB6
 slug: doc-gate-integration
+name: Doc gate integration
 summary: "Wire the check engine and promotion state into feature lifecycle transitions, enforcing structural checks at document-producing gates with override support and enriched responses."
 status: done
 depends_on:

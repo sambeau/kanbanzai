@@ -1,6 +1,7 @@
 id: TASK-01KN5BWX3BHAA
 parent_feature: FEAT-01KN588PFG6GY
 slug: author-reviewer-yaml
+name: Author reviewer yaml
 summary: "Author .kbz/roles/reviewer.yaml — base review role. Inherits base, identity: Senior code reviewer. 6 foundational review vocabulary terms (finding classification, evidence-backed verdict, review dimension, blocking vs non-blocking, severity assessment, remediation recommendation). 4+ anti-patterns with research citations: Rubber-stamp approval (MAST FM-3.1), Dimension bleed, Prose commentary, Severity inflation. Read-oriented tool subset (no decompose/estimate). Stage: reviewing."
 status: done
 files_planned:

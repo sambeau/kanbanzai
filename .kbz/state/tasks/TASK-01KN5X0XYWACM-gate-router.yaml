@@ -1,6 +1,7 @@
 id: TASK-01KN5X0XYWACM
 parent_feature: FEAT-01KN58J27H83N
 slug: gate-router
+name: Gate router
 summary: "Gate source router with hardcoded fallback — GateRouter, CheckGate, OverridePolicy, Source field on results in internal/gate/router.go"
 status: done
 files_planned:

@@ -1,6 +1,7 @@
 id: TASK-01KN5AK7WB3NV
 parent_feature: FEAT-01KN58J275BWJ
 slug: log-entry-writer
+name: Log entry writer
 summary: "Define the 7-field log entry struct, error type constants, and a writer that appends JSON lines atomically to date-partitioned JSONL files under .kbz/logs/."
 status: done
 files_planned:

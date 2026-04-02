@@ -1,6 +1,7 @@
 id: TASK-01KN5BX97TVWE
 parent_feature: FEAT-01KN588PFWADY
 slug: establish-skill-conventions
+name: Establish skill conventions
 summary: "Create .kbz/skills/CONVENTIONS.md — shared formatting reference for all skill authors. Covers: frontmatter YAML template, vocabulary section format (term + one-line definition, 15–30 terms), anti-pattern format (Name/Detect/BECAUSE/Resolve), example format (BAD with WHY BAD, GOOD with WHY GOOD, GOOD last), evaluation criteria format (gradable question + weight), Questions This Skill Answers format (5–10 queries), line-budget guidance for references/ overflow."
 status: done
 files_planned:

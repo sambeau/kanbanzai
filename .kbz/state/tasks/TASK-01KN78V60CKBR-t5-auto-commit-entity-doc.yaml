@@ -1,6 +1,7 @@
 id: TASK-01KN78V60CKBR
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t5-auto-commit-entity-doc
+name: Auto commit entity doc
 summary: "Auto-commit in entity create, entity transition, doc register, and doc approve handlers"
 status: done
 depends_on:

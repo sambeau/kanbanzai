@@ -1,6 +1,7 @@
 id: TASK-01KN5BXHW6Z6K
 parent_feature: FEAT-01KN588PG7HA3
 slug: author-implement-task-skill
+name: Author implement task skill
 summary: "Author .kbz/skills/implement-task/SKILL.md (name: implement-task, stage: developing, roles: [implementer, implementer-go], constraint_level: medium). Lean task execution skill — defines read → implement → test → verify procedure. Anti-patterns: scope creep, untested code paths, spec deviation. Must be shortest of the three implementation skills. No language-specific instructions."
 status: done
 files_planned:

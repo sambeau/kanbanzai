@@ -1,6 +1,7 @@
 id: TASK-01KN78V62VG7W
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t10-auto-approve-flag
+name: Auto approve flag
 summary: auto_approve flag on doc register — whitelist dev-plan/research/report; register+approve in one call
 status: done
 depends_on:

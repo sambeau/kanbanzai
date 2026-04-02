@@ -1,6 +1,7 @@
 id: TASK-01KN504DNFGBG
 parent_feature: FEAT-01KN4ZPQFQN1C
 slug: doc-audit-mcp-dispatch
+name: Doc audit mcp dispatch
 summary: "Add audit action to doc tool dispatcher: accept path and include_registered parameters, call AuditDocuments, return structured response."
 status: done
 files_planned:

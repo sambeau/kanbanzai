@@ -1,6 +1,7 @@
 id: TASK-01KN5AJKNW4G3
 parent_feature: FEAT-01KN58J257X02
 slug: agent-test-p1
+name: Agent test p1
 summary: "Run agent-driven testing on rewritten Priority 1 tool descriptions, record results, identify failures, and iterate on descriptions until the agent selects correct tool sequences."
 status: done
 depends_on:

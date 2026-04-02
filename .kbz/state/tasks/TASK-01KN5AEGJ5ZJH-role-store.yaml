@@ -1,6 +1,7 @@
 id: TASK-01KN5AEGJ5ZJH
 parent_feature: FEAT-01KN588PCVN4Y
 slug: role-store
+name: Role store
 summary: "Implement RoleStore with Load, LoadAll, Exists in internal/context/role_store.go with dual-location fallback (.kbz/roles/ over .kbz/context/roles/)"
 status: done
 depends_on:

@@ -1,6 +1,7 @@
 id: TASK-01KN5AEGJKTTE
 parent_feature: FEAT-01KN588PCVN4Y
 slug: role-inheritance
+name: Role inheritance
 summary: Implement ResolveRoleChain and ResolveRole in internal/context/role_resolve.go with concatenation semantics for vocabulary/anti_patterns and union for tools
 status: done
 depends_on:

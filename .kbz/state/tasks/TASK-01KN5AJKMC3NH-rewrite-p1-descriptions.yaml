@@ -1,6 +1,7 @@
 id: TASK-01KN5AJKMC3NH
 parent_feature: FEAT-01KN58J257X02
 slug: rewrite-p1-descriptions
+name: Rewrite p1 descriptions
 summary: "Rewrite descriptions for the six high-frequency Priority 1 tools (entity, doc, handoff, next, finish, status) to satisfy all five ACI description principles."
 status: done
 files_planned:

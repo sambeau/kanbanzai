@@ -1,6 +1,7 @@
 id: TASK-01KN5AK32GMYG
 parent_feature: FEAT-01KN58J26RSB6
 slug: check-engine
+name: Check engine
 summary: "Implement required-sections, cross-reference, and acceptance-criteria structural checks as pure functions returning CheckResult structs."
 status: done
 depends_on:

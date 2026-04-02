@@ -1,6 +1,7 @@
 id: TASK-01KN5K2KBDW5Q
 parent_feature: FEAT-01KN588PETZQE
 slug: freshness-refresh-mechanism
+name: Freshness refresh mechanism
 summary: "Refresh mechanism for roles and skills: RefreshRoleLastVerified and RefreshSkillLastVerified in context/refresh.go, atomic writes, profile tool refresh action"
 status: done
 files_planned:

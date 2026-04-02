@@ -1,6 +1,7 @@
 id: TASK-01KN7SXKQEBH1
 parent_feature: FEAT-01KN07T674DZM
 slug: direct-to-main-tests
+name: Direct to main tests
 summary: Write unit tests for direct-to-main workflow (merge and pr tools)
 status: done
 completed: "2026-04-02T19:51:46Z"

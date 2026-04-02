@@ -1,6 +1,7 @@
 id: TASK-01KN5AJKQDQ38
 parent_feature: FEAT-01KN58J257X02
 slug: error-audit-remaining
+name: Error audit remaining
 summary: Audit and rewrite all error messages in the remaining tool handlers to follow the three-part actionable error template.
 status: done
 depends_on:

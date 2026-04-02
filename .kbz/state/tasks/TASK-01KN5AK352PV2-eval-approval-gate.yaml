@@ -1,6 +1,7 @@
 id: TASK-01KN5AK352PV2
 parent_feature: FEAT-01KN58J26RSB6
 slug: eval-approval-gate
+name: Eval approval gate
 summary: "Add an optional quality evaluation prerequisite to doc approve, checking evaluation existence, pass status, and configurable score threshold."
 status: done
 depends_on:

@@ -1,6 +1,7 @@
 id: TASK-01KN5AJZ2WAZ5
 parent_feature: FEAT-01KN58J26CH63
 slug: single-agent-sizing
+name: Single agent sizing
 summary: Implement checkSingleAgentSizing to detect task summaries containing multiple action clauses joined by coordinating separators.
 status: done
 depends_on:

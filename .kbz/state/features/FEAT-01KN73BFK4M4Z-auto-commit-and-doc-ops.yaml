@@ -1,5 +1,6 @@
 id: FEAT-01KN73BFK4M4Z
 slug: auto-commit-and-doc-ops
+name: Auto commit and doc ops
 parent: P18-workflow-automation
 status: done
 review_cycle: 1

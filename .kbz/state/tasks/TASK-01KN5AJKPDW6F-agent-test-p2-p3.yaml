@@ -1,6 +1,7 @@
 id: TASK-01KN5AJKPDW6F
 parent_feature: FEAT-01KN58J257X02
 slug: agent-test-p2-p3
+name: Agent test p2 p3
 summary: "Run agent-driven testing on rewritten Priority 2 and Priority 3 tool descriptions, record results for both tiers, and iterate descriptions as needed."
 status: done
 depends_on:

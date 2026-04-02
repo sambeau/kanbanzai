@@ -1,6 +1,7 @@
 id: TASK-01KN503RX67H0
 parent_feature: FEAT-01KN4ZPCMJ1FP
 slug: extend-asm-extract-criteria
+name: Extend asm extract criteria
 summary: "Add bold-identifier pattern recognition (AC-NN, REQ-NN) to asmExtractCriteria with context-sensitive rules and unit tests."
 status: done
 files_planned:

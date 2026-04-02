@@ -1,6 +1,7 @@
 id: TASK-01KN7SXHSX65P
 parent_feature: FEAT-01KN07T66DZ68
 slug: health-check-extensions
+name: Health check extensions
 summary: Extend CheckFeatureChildConsistency and add CheckPlanChildConsistency in entity_consistency.go
 status: done
 completed: "2026-04-02T19:51:46Z"

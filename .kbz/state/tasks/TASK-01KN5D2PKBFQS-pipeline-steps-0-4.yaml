@@ -1,6 +1,7 @@
 id: TASK-01KN5D2PKBFQS
 parent_feature: FEAT-01KN588PE43M6
 slug: pipeline-steps-0-4
+name: Pipeline steps 0 4
 summary: "Implement pipeline steps 0-4: lifecycle state validation (step 0), task-to-stage resolution (step 1), stage binding lookup (step 2), stage-specific inclusion/exclusion (step 3), orchestration metadata extraction (step 4). FR-002 through FR-006, NFR-004."
 status: done
 files_planned:

@@ -1,6 +1,7 @@
 id: TASK-01KN5AEGHMRZC
 parent_feature: FEAT-01KN588PCVN4Y
 slug: role-model-validation
+name: Role model validation
 summary: "Define Go structs (Role, ResolvedRole, AntiPattern) and validateRole function in internal/context/role.go with table-driven tests"
 status: done
 completed: "2026-04-01T20:11:40Z"

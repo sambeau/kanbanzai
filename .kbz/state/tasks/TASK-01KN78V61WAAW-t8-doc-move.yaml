@@ -1,6 +1,7 @@
 id: TASK-01KN78V61WAAW
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t8-doc-move
+name: Doc move
 summary: New doc move action — atomic file rename + record update + CommitStateAndPaths with both old and new paths
 status: done
 depends_on:

@@ -1,6 +1,7 @@
 id: TASK-01KN503TRSPV6
 parent_feature: FEAT-01KN4ZPG44T5B
 slug: git-commit-state-if-dirty
+name: Git commit state if dirty
 summary: Implement CommitStateIfDirty git utility that stages and commits only .kbz/state/ changes with the fixed commit message.
 status: done
 files_planned:

@@ -1,6 +1,7 @@
 id: TASK-01KN5X0XXCFGZ
 parent_feature: FEAT-01KN58J27H83N
 slug: registry-cache
+name: Registry cache
 summary: "Registry cache with mtime-based invalidation — RegistryCache struct, NewRegistryCache, Get, LookupPrereqs, LookupOverridePolicy in internal/gate/registry_cache.go"
 status: done
 files_planned:

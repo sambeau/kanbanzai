@@ -1,5 +1,6 @@
 id: FEAT-01KN07T65HDZM
 slug: lifecycle-override-and-recovery
+name: Lifecycle override and recovery
 parent: P13-workflow-flexibility
 status: done
 review_cycle: 1

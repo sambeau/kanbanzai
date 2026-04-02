@@ -1,6 +1,7 @@
 id: TASK-01KN5AJRQ6F47
 parent_feature: FEAT-01KN58J25K4QD
 slug: handoff-integration
+name: Handoff integration
 summary: "Wire lifecycle validation into the handoff handler and extend the prompt renderer to include stage-aware sections (orchestration, effort budget, tool subset, output convention)."
 status: done
 depends_on:

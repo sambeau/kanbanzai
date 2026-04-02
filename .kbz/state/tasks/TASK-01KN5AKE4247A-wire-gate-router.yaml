@@ -1,6 +1,7 @@
 id: TASK-01KN5AKE4247A
 parent_feature: FEAT-01KN58J27H83N
 slug: wire-gate-router
+name: Wire gate router
 summary: "Replace hardcoded gate call sites in MCP entity transition handler and AdvanceFeatureStatus with the gate router. Override handling branches on policy: agent proceeds, checkpoint halts."
 status: done
 depends_on:

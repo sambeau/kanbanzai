@@ -1,6 +1,7 @@
 id: TASK-01KN5KQ2C4YHF
 parent_feature: FEAT-01KN588PGXATW
 slug: profile-store-dual-root
+name: Profile store dual root
 summary: "Extend ProfileStore/RoleStore for dual-location loading (.kbz/roles/ primary, .kbz/context/roles/ fallback). Role struct gains Vocabulary, AntiPatterns, Tools fields. ResolvedRole merges new fields."
 status: done
 files_planned:

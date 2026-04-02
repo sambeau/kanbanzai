@@ -1,6 +1,7 @@
 id: TASK-01KN5D2PJTMWZ
 parent_feature: FEAT-01KN588PE43M6
 slug: pipeline-data-types
+name: Pipeline data types
 summary: "Define core data types and step interfaces for the 10-step assembly pipeline. PipelineInput, PipelineResult, PipelineSection, PipelineState types. Interfaces for RoleLoader, SkillLoader, BindingLookup, KnowledgeSurfacer. Pipeline orchestrator that runs steps in sequence. FR-001, FR-016, FR-018, NFR-005."
 status: done
 files_planned:

@@ -1,6 +1,7 @@
 id: TASK-01KN504H8S0YQ
 parent_feature: FEAT-01KN4ZPXXEG1F
 slug: author-eval-scenarios
+name: Author eval scenarios
 summary: "Write 15-20 scenario YAML files in work/eval/ covering all six categories (happy path, gate failure, review loop, multi-feature, edge cases, tool selection)."
 status: done
 depends_on:

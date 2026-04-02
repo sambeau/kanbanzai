@@ -1,6 +1,7 @@
 id: TASK-01KN5K2K8HQEM
 parent_feature: FEAT-01KN588PETZQE
 slug: freshness-config-core
+name: Freshness config core
 summary: "Staleness configuration and core detection logic: FreshnessConfig in config.go with default 30-day window, ClassifyFreshness/StalenessDetail/ValidateStalenessWindow in health/freshness.go"
 status: done
 files_planned:

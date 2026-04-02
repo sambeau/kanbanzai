@@ -1,6 +1,7 @@
 id: TASK-01KN5AJBENCEY
 parent_feature: FEAT-01KN58J24S2XW
 slug: override-health-warns
+name: Override health warns
 summary: "Add a health check category that flags features with gate overrides as warnings, producing one warning per override record with the feature ID, transition, and reason."
 status: done
 depends_on:

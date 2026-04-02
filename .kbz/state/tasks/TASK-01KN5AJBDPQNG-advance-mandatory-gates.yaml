@@ -1,6 +1,7 @@
 id: TASK-01KN5AJBDPQNG
 parent_feature: FEAT-01KN58J24S2XW
 slug: advance-mandatory-gates
+name: Advance mandatory gates
 summary: "Update AdvanceFeatureStatus to enforce gates on every step, accept override+reason parameters, and log each overridden gate as an OverrideRecord on the feature."
 status: done
 depends_on:

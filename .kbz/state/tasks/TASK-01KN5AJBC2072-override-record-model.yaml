@@ -1,6 +1,7 @@
 id: TASK-01KN5AJBC2072
 parent_feature: FEAT-01KN58J24S2XW
 slug: override-record-model
+name: Override record model
 summary: "Add an OverrideRecord type and Overrides field to the Feature model struct, with round-trip YAML serialisation and updated featureFields serialisation."
 status: done
 files_planned:

@@ -1,6 +1,7 @@
 id: TASK-01KN7SXS9321E
 parent_feature: FEAT-01KN07T65HDZM
 slug: stuck-task-attention
+name: Stuck task attention
 summary: Add stuck-task attention items to status_tool.go
 status: done
 completed: "2026-04-02T19:51:47Z"

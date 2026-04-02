@@ -1,6 +1,7 @@
 id: TASK-01KN78V5ZWXH2
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t4-auto-commit-merge
+name: Auto commit merge
 summary: Auto-commit in merge execute handler — call CommitStateWithMessage after worktree record update
 status: done
 depends_on:

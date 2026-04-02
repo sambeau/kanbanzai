@@ -1,6 +1,7 @@
 id: TASK-01KN5AK342WDJ
 parent_feature: FEAT-01KN58J26RSB6
 slug: quality-eval-schema
+name: Quality eval schema
 summary: Extend DocumentRecord with an optional QualityEvaluation field and implement the service method to validate and attach evaluations.
 status: done
 files_planned:

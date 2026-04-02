@@ -1,6 +1,7 @@
 id: TASK-01KN5AJRRKF7K
 parent_feature: FEAT-01KN58J25K4QD
 slug: stage-content-filter
+name: Stage content filter
 summary: "Implement content inclusion/exclusion logic in assembleContext so assembled context varies by stage — excluding file paths for designing/specifying, review rubrics for developing, etc."
 status: done
 depends_on:

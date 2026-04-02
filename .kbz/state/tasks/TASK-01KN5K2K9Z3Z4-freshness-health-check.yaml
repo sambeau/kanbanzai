@@ -1,6 +1,7 @@
 id: TASK-01KN5K2K9Z3Z4
 parent_feature: FEAT-01KN588PETZQE
 slug: freshness-health-check
+name: Freshness health check
 summary: "Health check category for stale roles and skills: CheckRoleFreshness, CheckSkillFreshness, ParseRoleLastVerified, ParseSkillLastVerified, ComputeFreshnessSummary, freshnessHealthChecker wiring in server.go"
 status: done
 depends_on:

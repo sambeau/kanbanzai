@@ -1,6 +1,7 @@
 id: TASK-01KN5AEGQFGWM
 parent_feature: FEAT-01KN588PDPE8V
 slug: binding-registry-api
+name: Binding registry api
 summary: "Implement BindingRegistry with Load, Lookup, Stages, Warnings in internal/context/binding_registry.go"
 status: done
 depends_on:

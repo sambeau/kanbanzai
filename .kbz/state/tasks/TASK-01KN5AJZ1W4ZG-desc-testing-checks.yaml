@@ -1,6 +1,7 @@
 id: TASK-01KN5AJZ1W4ZG
 parent_feature: FEAT-01KN58J26CH63
 slug: desc-testing-checks
+name: Desc testing checks
 summary: Implement checkDescriptionPresent and checkTestingCoverage validation checks for empty task summaries and missing testing keywords.
 status: done
 depends_on:

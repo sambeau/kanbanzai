@@ -1,6 +1,7 @@
 id: TASK-01KN7SXP4NAHG
 parent_feature: FEAT-01KN07T66SAH3
 slug: status-tool-doc-inheritance
+name: Status tool doc inheritance
 summary: Update synthesisePlan and generateFeatureAttention in status_tool.go for doc inheritance
 status: done
 completed: "2026-04-02T19:51:46Z"

@@ -1,6 +1,7 @@
 id: TASK-01KN504FBWJXQ
 parent_feature: FEAT-01KN4ZPTQSZT5
 slug: import-dry-run-mcp-parameter
+name: Import dry run mcp parameter
 summary: "Add dry_run boolean parameter to doc import action handler; route to ImportDryRun when true, leave live path unchanged when false."
 status: done
 depends_on:

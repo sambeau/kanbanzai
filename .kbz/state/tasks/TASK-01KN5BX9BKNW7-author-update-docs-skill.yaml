@@ -1,6 +1,7 @@
 id: TASK-01KN5BX9BKNW7
 parent_feature: FEAT-01KN588PFWADY
 slug: author-update-docs-skill
+name: Author update docs skill
 summary: "Author .kbz/skills/update-docs/SKILL.md (name: update-docs, stage: documenting, roles: [documenter], constraint_level: medium). Guides documentation updates. No gate-checkable template or validation script. Full attention-curve sections with output format describing documentation update conventions."
 status: done
 depends_on:

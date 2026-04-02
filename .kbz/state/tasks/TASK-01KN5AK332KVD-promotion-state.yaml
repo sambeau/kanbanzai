@@ -1,6 +1,7 @@
 id: TASK-01KN5AK332KVD
 parent_feature: FEAT-01KN58J26RSB6
 slug: promotion-state
+name: Promotion state
 summary: "Implement the promotion/demotion state machine tracking per (check_type, document_type) tuple, promoting to hard_gate after 5 consecutive passes with YAML persistence."
 status: done
 files_planned:

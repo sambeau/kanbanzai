@@ -1,6 +1,7 @@
 id: TASK-01KN5AJZ2CE8Z
 parent_feature: FEAT-01KN58J26CH63
 slug: deps-orphan-checks
+name: Deps orphan checks
 summary: "Implement checkDependenciesDeclared and checkOrphanTasks validation checks operating on the proposal's dependency graph structure."
 status: done
 depends_on:

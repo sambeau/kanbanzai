@@ -1,6 +1,7 @@
 id: TASK-01KN504QP5XHW
 parent_feature: FEAT-01KN4ZPTQSZT5
 slug: import-dry-run-tests
+name: Import dry run tests
 summary: "Write integration tests covering AC-21 through AC-25: dry-run returns preview data, no store records created, live path unchanged."
 status: done
 depends_on:

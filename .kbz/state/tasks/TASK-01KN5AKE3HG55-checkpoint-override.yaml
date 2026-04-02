@@ -1,6 +1,7 @@
 id: TASK-01KN5AKE3HG55
 parent_feature: FEAT-01KN58J27H83N
 slug: checkpoint-override
+name: Checkpoint override
 summary: Implement checkpoint override policy where overriding a gate with checkpoint policy creates a human checkpoint. Approval completes the transition; rejection keeps feature at current status.
 status: done
 depends_on:

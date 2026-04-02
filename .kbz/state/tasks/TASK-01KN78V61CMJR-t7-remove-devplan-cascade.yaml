@@ -1,6 +1,7 @@
 id: TASK-01KN78V61CMJR
 parent_feature: FEAT-01KN73BFK4M4Z
 slug: t7-remove-devplan-cascade
+name: Remove devplan cascade
 summary: Remove dev-plan approval cascade — approving a dev-plan must NOT auto-transition the owning feature to developing
 status: done
 completed: "2026-04-02T14:52:56Z"

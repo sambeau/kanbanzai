@@ -1,6 +1,7 @@
 id: TASK-01KN5BWMG1TPT
 parent_feature: FEAT-01KN588PF5P5Y
 slug: author-architect-spec-author
+name: Author architect spec author
 summary: "Author .kbz/roles/architect.yaml (inherits base, identity: Senior software architect, 6+ vocabulary terms, 3+ anti-patterns including Gold plating/Premature abstraction/Accidental coupling, stages: designing/dev-planning) and .kbz/roles/spec-author.yaml (inherits base, identity: Senior requirements engineer, 5+ vocabulary terms, 5+ anti-patterns, stage: specifying). Verify no content duplication with base.yaml."
 status: done
 depends_on:

@@ -1,6 +1,7 @@
 id: TASK-01KN50402DX0X
 parent_feature: FEAT-01KN4ZPTQSZT5
 slug: import-dry-run-service
+name: Import dry run service
 summary: "Implement ImportDryRun on the document service: run full inference pipeline without store writes, return would_import/would_skip/summary."
 status: done
 files_planned:

@@ -1,6 +1,7 @@
 id: TASK-01KN5AJBD5NHZ
 parent_feature: FEAT-01KN58J24S2XW
 slug: gate-error-formatter
+name: Gate error formatter
 summary: "Create a gate failure error formatter that produces structured, actionable error messages with per-gate recovery steps containing tool call examples."
 status: done
 depends_on:

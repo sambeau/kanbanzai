@@ -1,6 +1,7 @@
 id: TASK-01KN5AEGK14QJ
 parent_feature: FEAT-01KN588PCVN4Y
 slug: role-mcp-tool
+name: Role mcp tool
 summary: "Update profile MCP tool to use RoleStore, return identity/vocabulary/anti_patterns/tools in list and get actions"
 status: done
 depends_on:

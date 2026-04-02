@@ -1,6 +1,7 @@
 id: TASK-01KN5AEGMRTB1
 parent_feature: FEAT-01KN588PDBW85
 slug: skill-body-parser
+name: Skill body parser
 summary: "Parse markdown body into sections, validate attention-curve ordering in internal/context/skill_sections.go"
 status: done
 depends_on:

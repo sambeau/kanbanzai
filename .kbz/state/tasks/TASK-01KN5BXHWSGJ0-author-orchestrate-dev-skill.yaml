@@ -1,6 +1,7 @@
 id: TASK-01KN5BXHWSGJ0
 parent_feature: FEAT-01KN588PG7HA3
 slug: author-orchestrate-dev-skill
+name: Author orchestrate dev skill
 summary: "Author .kbz/skills/orchestrate-development/SKILL.md (name: orchestrate-development, stage: developing, roles: [orchestrator], constraint_level: medium). Multi-task coordination skill. 5-phase procedure: read plan → identify parallel tasks → dispatch → monitor → compact. Three context compaction techniques: post-completion summarisation (2–3 sentences), document-based offloading (60% threshold), single-feature scoping. 15–30 vocabulary terms."
 status: done
 files_planned:
