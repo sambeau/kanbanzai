@@ -1,0 +1,176 @@
+document_id: FEAT-01KN07T66DZ68/specification-completion-detection
+document_path: work/spec/completion-detection.md
+content_hash: c21adb6f34a49e58d2e2a45a97ec9d1fd3d109e237ea3c00bac3033089167fa1
+indexed_at: 2026-04-02T18:57:56.049277Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Completion Detection and Close-Out Procedures'
+      byte_offset: 0
+      byte_count: 18761
+      word_count: 2636
+      content_hash: c21adb6f34a49e58d2e2a45a97ec9d1fd3d109e237ea3c00bac3033089167fa1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 278
+          byte_count: 1899
+          word_count: 260
+          content_hash: 96a3a79c17e0802dea1fe5c2feef70a53b8576fa6d4867673d529cad44e412ee
+          children:
+            - path: 1.1.1
+              level: 3
+              title: In Scope
+              byte_offset: 1282
+              byte_count: 495
+              word_count: 57
+              content_hash: d3ce71c693f82a47ca571dbbefe135986201e1448cde303ad9e5956a7bb637d5
+            - path: 1.1.2
+              level: 3
+              title: Out of Scope
+              byte_offset: 1777
+              byte_count: 400
+              word_count: 53
+              content_hash: 609e19cd04bae515b2b5a9fb9afdfa9fb5ccae573ec0a9dd6db4526523a55d3e
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 2177
+          byte_count: 5382
+          word_count: 763
+          content_hash: 355b3a15f49c97f281e116c1fefa74d54c14f89670154a4c6c3849125405dd2d
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 2194
+              byte_count: 4903
+              word_count: 698
+              content_hash: 04800f2f741bdc5108fc66a760e1617ff078f687903ea1a670bd6e11df690c5d
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 7097
+              byte_count: 462
+              word_count: 63
+              content_hash: 53354862f358d6a1f5bf865faa8aca2331ff88694a03a53c3ac5fe8de6d24c66
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 7559
+          byte_count: 1260
+          word_count: 158
+          content_hash: ea504a16ddb66cf70a32fcefb6f716599fec24a6467761239cfe6b4fd1446757
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 8819
+          byte_count: 6810
+          word_count: 1035
+          content_hash: da71cc33b2ee0383af7aa5beae0f8830bbe4bad62de8f23885e828c759fbb043
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Feature-Level Completion Detection
+              byte_offset: 8843
+              byte_count: 2402
+              word_count: 380
+              content_hash: be27500eb5cb9fb706cd78c8d28ae9c021986cf16160bb56ab1e8c9f084d8df7
+            - path: 1.4.2
+              level: 3
+              title: Plan-Level Completion Detection
+              byte_offset: 11245
+              byte_count: 1435
+              word_count: 232
+              content_hash: faf895d497de8a4f030cdef4394a357f06f20ffa87bd770a44f40d918a2f2657
+            - path: 1.4.3
+              level: 3
+              title: 'Health Check: Feature-Child Consistency Extension'
+              byte_offset: 12680
+              byte_count: 1084
+              word_count: 155
+              content_hash: 2055aef411db6a72328ffef775363e7431ad3432f7cf43f6de85a088eae356a9
+            - path: 1.4.4
+              level: 3
+              title: 'Health Check: Plan-Child Consistency'
+              byte_offset: 13764
+              byte_count: 1038
+              word_count: 153
+              content_hash: 6e0ad665b6c226036142144f5f13821fb17d3f8339536893e5b115517b4ade85
+            - path: 1.4.5
+              level: 3
+              title: Skill Updates
+              byte_offset: 14802
+              byte_count: 827
+              word_count: 112
+              content_hash: 8c3b152a9678c700b559adeb803f946e091edb35a12b648e9bdaa89d055925fe
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 15629
+          byte_count: 3132
+          word_count: 396
+          content_hash: f298d4375aec1a8b87bcc1848a64d85b7123289a06c3c8dfcf908a90008360f5
+entity_refs:
+    - entity_id: FEAT-01KN07T66DZ68
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 95
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 9085
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 12918
+    - entity_id: P13-workflow-flexibility
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 154
+cross_doc_links:
+    - target_path: work/design/workflow-completeness.md
+      link_text: work/design/workflow-completeness.md
+      section_path: "1"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "1.5"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: "1.5"
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: 1.1.1
+      role: constraint
+      confidence: high
+    - section_path: 1.1.2
+      role: constraint
+      confidence: high
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

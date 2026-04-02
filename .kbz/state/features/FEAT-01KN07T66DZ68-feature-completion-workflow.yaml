@@ -1,7 +1,8 @@
 id: FEAT-01KN07T66DZ68
 slug: feature-completion-workflow
 parent: P13-workflow-flexibility
-status: proposed
+status: specifying
 summary: "Surface completion signals and document the close-out procedure. (1) Add attention items in status when all child tasks are terminal: feature-level ('ready to advance to reviewing') and plan-level ('ready to close'). (2) Extend health checks to flag developing features and active plans with all children done. (3) Add close-out procedures to orchestrate-development, kanbanzai-agents, and kanbanzai-workflow skills covering: transition, PR, merge, cleanup."
+spec: FEAT-01KN07T66DZ68/specification-completion-detection
 created: "2026-03-30T20:43:53Z"
 created_by: sambeau

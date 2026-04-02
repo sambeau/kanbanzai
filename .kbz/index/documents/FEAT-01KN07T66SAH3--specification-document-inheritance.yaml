@@ -1,0 +1,147 @@
+document_id: FEAT-01KN07T66SAH3/specification-document-inheritance
+document_path: work/spec/document-inheritance.md
+content_hash: 0fc8a8e1012ce7a70adf51a910b1f4784208d84b83bec33a50a0ae6561055a6f
+indexed_at: 2026-04-02T18:57:58.027149Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Document Inheritance for Gap Checks'
+      byte_offset: 0
+      byte_count: 8117
+      word_count: 1178
+      content_hash: 0fc8a8e1012ce7a70adf51a910b1f4784208d84b83bec33a50a0ae6561055a6f
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 268
+          byte_count: 727
+          word_count: 99
+          content_hash: d82bf4b96e0b56d526245654c121a2f476ea9c8dfb12dc3af6e0175f3ffb1dc3
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 995
+          byte_count: 1630
+          word_count: 259
+          content_hash: 443f5bb28583acb78a7a052d7c6fe4c97a13e5cd1e3a5ef5631002eb191d7e5b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 1012
+              byte_count: 1613
+              word_count: 257
+              content_hash: 19ec0d67fde3307735bdbc031bb8ce2b14081c3b30eca044ba1a933238bf45aa
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 2625
+          byte_count: 1056
+          word_count: 141
+          content_hash: ba5eb0f6ad8c0d4f55f4053e9f177a83e42b5517f2482bbc046a53baaaa3525b
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 3681
+          byte_count: 3513
+          word_count: 530
+          content_hash: 5556009b3dddded3535a88c621a2a95686e0913543fb75bf65c2e725df228fc4
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'AC-1: doc(action: "gaps") inherits plan spec'
+              byte_offset: 3705
+              byte_count: 440
+              word_count: 70
+              content_hash: 468c16a943e1232b337f933f933ff8ea37d3d00bbb3ef96c355cbb5851ff716b
+            - path: 1.4.2
+              level: 3
+              title: 'AC-2: doc(action: "gaps") does not inherit draft plan docs'
+              byte_offset: 4145
+              byte_count: 368
+              word_count: 56
+              content_hash: 81f8c050ba9e51fcba6b720f96ea26c4b61c1b5466cda26b56ded6942a24d499
+            - path: 1.4.3
+              level: 3
+              title: 'AC-3: Feature''s own document takes precedence over plan'
+              byte_offset: 4513
+              byte_count: 462
+              word_count: 70
+              content_hash: d69b99c56ee1d18b263054be141276b9f56d583efb69ba7fd45b00bd1f07c673
+            - path: 1.4.4
+              level: 3
+              title: 'AC-4: Plan dashboard has_spec reflects inheritance'
+              byte_offset: 4975
+              byte_count: 332
+              word_count: 51
+              content_hash: a67f34e1e5216640713b081fc8e1584836e56d95bb511c0243f8ae6c69c0f97d
+            - path: 1.4.5
+              level: 3
+              title: 'AC-5: Feature attention suppresses false-positive warnings'
+              byte_offset: 5307
+              byte_count: 416
+              word_count: 60
+              content_hash: 74beccaaf634d23a89e370886cc3be1b451e54cbadb751b1966014a6f23e9116
+            - path: 1.4.6
+              level: 3
+              title: 'AC-6: Feature attention still warns when plan has no approved doc'
+              byte_offset: 5723
+              byte_count: 329
+              word_count: 50
+              content_hash: 8634898894ce147ddb055d157730b8113c6b564b161b900236e6fe8b81941757
+            - path: 1.4.7
+              level: 3
+              title: 'AC-7: Inheritance applies to all three document types'
+              byte_offset: 6052
+              byte_count: 397
+              word_count: 62
+              content_hash: 37a40c4459e9caea30ae2103dbfa8c506fa800d540639057babcbec3d728a509
+            - path: 1.4.8
+              level: 3
+              title: 'AC-8: No document records created on features'
+              byte_offset: 6449
+              byte_count: 408
+              word_count: 57
+              content_hash: e1073e26e32c7c934cf6a1a90d7c33b0bc0a7dcfa1c0bfa1a533917f541ff7bf
+            - path: 1.4.9
+              level: 3
+              title: 'AC-9: Plan dashboard doc gaps suppressed'
+              byte_offset: 6857
+              byte_count: 337
+              word_count: 51
+              content_hash: a4245089e081094993c213577f62f79c0e186c12b81f8324fbd3e4406c80ef65
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 7194
+          byte_count: 923
+          word_count: 127
+          content_hash: 11089fb87bf5d946b9bff8249f1c9dd201081dcbe0d351bce74f22d9bd22ac77
+entity_refs:
+    - entity_id: FEAT-01KN07T66SAH3
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 85
+    - entity_id: P13-workflow-flexibility
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 151
+cross_doc_links:
+    - target_path: work/design/workflow-completeness.md
+      link_text: work/design/workflow-completeness.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

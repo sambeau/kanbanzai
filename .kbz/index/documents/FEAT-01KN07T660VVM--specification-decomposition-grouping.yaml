@@ -1,0 +1,140 @@
+document_id: FEAT-01KN07T660VVM/specification-decomposition-grouping
+document_path: work/spec/decomposition-grouping.md
+content_hash: 0750417cc4b3dfbb0fce7fedbf596914a280714a46374612f1ee87a0fb51d156
+indexed_at: 2026-04-02T18:58:00.047393Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Decomposition Grouping'
+      byte_offset: 0
+      byte_count: 12361
+      word_count: 1801
+      content_hash: 0750417cc4b3dfbb0fce7fedbf596914a280714a46374612f1ee87a0fb51d156
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 242
+          byte_count: 893
+          word_count: 123
+          content_hash: f5b53f541722c9606f878a065cd3873e3fc03a15738586f68355ceda7537913a
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 1135
+          byte_count: 3149
+          word_count: 471
+          content_hash: 99b64d12689e2fd575a0013ddbad4ec386137e8952c1793de07276c91e4c71f4
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 1152
+              byte_count: 3132
+              word_count: 469
+              content_hash: bd571556efa5b8f789ef663fee5ffc641feb7437c6c903f476a17acccbf53ab3
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 4284
+          byte_count: 1037
+          word_count: 149
+          content_hash: 7f365c6ee98c42dd9c979d2b0b98efff1061fd2f89132e1e3ff4d4980b71fa82
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 5321
+          byte_count: 5231
+          word_count: 772
+          content_hash: 5fa0b8c09bf13da3bb6295df3fae584746b64872e180f4982ef8630b304795b6
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Section-Based Grouping
+              byte_offset: 5345
+              byte_count: 1356
+              word_count: 204
+              content_hash: 92e16c1d7ce2dae7f867914c575a80556e4fffd45c5ea9d57c41cbec6b5643d9
+            - path: 1.4.2
+              level: 3
+              title: Covers Field
+              byte_offset: 6701
+              byte_count: 485
+              word_count: 71
+              content_hash: 8209bf9582f367dae8b65c81a6f85d7fec2f871c0bc119d614b4231dcae6cdd3
+            - path: 1.4.3
+              level: 3
+              title: Guidance Rule
+              byte_offset: 7186
+              byte_count: 487
+              word_count: 61
+              content_hash: f4f6615a303e9aa7ab12b34a85876e0cbf9d365c7e2203bc05d50425d67bf8c3
+            - path: 1.4.4
+              level: 3
+              title: Grouped Task Shape
+              byte_offset: 7673
+              byte_count: 562
+              word_count: 84
+              content_hash: 5e050e6201afb4035f2ea5695b1da09352794e6454de3fcb4694b09754dbaf3e
+            - path: 1.4.5
+              level: 3
+              title: Gap Check Compatibility
+              byte_offset: 8235
+              byte_count: 578
+              word_count: 90
+              content_hash: 981408941f863d51821ff869f430c76b4726548ca9ac9e3db641f43469386346
+            - path: 1.4.6
+              level: 3
+              title: Table Row Extraction
+              byte_offset: 8813
+              byte_count: 841
+              word_count: 136
+              content_hash: 8ab5783d49e64d1ed70391d24b46d9652a4e80d9ecca114aa097aae6b26814b5
+            - path: 1.4.7
+              level: 3
+              title: Backward Compatibility
+              byte_offset: 9654
+              byte_count: 540
+              word_count: 78
+              content_hash: d6fcae00c5a91c59710d5503a1f89accc315fe33501e7bda0f400ebb3d7cb1df
+            - path: 1.4.8
+              level: 3
+              title: Testing
+              byte_offset: 10194
+              byte_count: 358
+              word_count: 45
+              content_hash: dc1b85cf778c390afad761b7c43044d2df24eedd2b1f2efdd7e56c8cf20bb041
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 10552
+          byte_count: 1809
+          word_count: 267
+          content_hash: 3c4e281c395c73fdface7d8ff5a3a2f00f5a2154f2747ebcb6dde720b3b247c7
+entity_refs:
+    - entity_id: FEAT-01KN07T660VVM
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 72
+    - entity_id: P13-workflow-flexibility
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 125
+cross_doc_links:
+    - target_path: work/design/workflow-completeness.md
+      link_text: work/design/workflow-completeness.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

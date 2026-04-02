@@ -2,9 +2,11 @@ id: P13-workflow-flexibility/design-workflow-completeness
 path: work/design/workflow-completeness.md
 type: design
 title: Workflow Completeness Design
-status: draft
+status: approved
 owner: P13-workflow-flexibility
+approved_by: sambeau
+approved_at: "2026-04-02T18:54:08Z"
 content_hash: bb0cf1134101e1d2a776d41d2c7d98f7a35f2302d7ccd04d3c3600a6175b6bfc
 created: "2026-04-02T18:52:04Z"
 created_by: sambeau
-updated: "2026-04-02T18:52:04Z"
+updated: "2026-04-02T18:54:08Z"

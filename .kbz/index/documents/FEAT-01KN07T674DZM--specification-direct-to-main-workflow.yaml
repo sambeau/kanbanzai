@@ -1,0 +1,95 @@
+document_id: FEAT-01KN07T674DZM/specification-direct-to-main-workflow
+document_path: work/spec/direct-to-main-workflow.md
+content_hash: d448f1b7f58e8e52e895d8247acbf91358a299bc210fb5c650394b82c2c320ca
+indexed_at: 2026-04-02T18:57:57.223146Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Direct-to-Main Workflow'
+      byte_offset: 0
+      byte_count: 10668
+      word_count: 1441
+      content_hash: d448f1b7f58e8e52e895d8247acbf91358a299bc210fb5c650394b82c2c320ca
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 242
+          byte_count: 808
+          word_count: 124
+          content_hash: 14090da8aa7d8832ada6e13b3f73359bb72c9c58f602b9fba3165b1a4aa5a403
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 1050
+          byte_count: 2523
+          word_count: 346
+          content_hash: 29265bf45b122926453404a30ee3014895c644b879b3aa7daf7549844aec0e8e
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 1067
+              byte_count: 2506
+              word_count: 344
+              content_hash: a731eaab46f3351138c232686e3c4d51c54d05d1ef212e7bcd8e76a706d3bdfc
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 3573
+          byte_count: 934
+          word_count: 134
+          content_hash: c559a6ec0cca51d5606e29f41269172a773ba72a717999b803364cb9f66d00b6
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 4507
+          byte_count: 4090
+          word_count: 581
+          content_hash: f720c9a53173dd6b1af81bd690d4e26087757050dd37c27804d262d334cc44d6
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 8597
+          byte_count: 2071
+          word_count: 237
+          content_hash: 1b3b222b08be75519a8c1211c84944090b7eddfa2eecf387ce6fda8a197a9abc
+entity_refs:
+    - entity_id: FEAT-01KN07T674DZM
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 73
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 379
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 4601
+    - entity_id: BUG-xxx
+      entity_type: bug
+      section_path: "1.4"
+      byte_offset: 8386
+    - entity_id: P13-workflow-flexibility
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 125
+cross_doc_links:
+    - target_path: work/design/workflow-completeness.md
+      link_text: work/design/workflow-completeness.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false
