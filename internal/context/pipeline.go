@@ -485,7 +485,7 @@ func (p *Pipeline) stepAssembleSections(state *PipelineState) {
 	// Position 1: Project identity and hard constraints (Layer 1).
 	taskID, _ := state.Input.TaskState["id"].(string)
 	summary, _ := state.Input.TaskState["summary"].(string)
-	identityContent := fmt.Sprintf("## Task: %s\n\n%s", summary, summary)
+	identityContent := fmt.Sprintf("## Task: %s\n\n%s", taskID, summary)
 	if state.Input.Instructions != "" {
 		identityContent += "\n\n### Additional Instructions\n\n" + state.Input.Instructions
 	}
