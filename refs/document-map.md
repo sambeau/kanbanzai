@@ -11,8 +11,9 @@ Quick-reference mapping from topic to the document that owns it. Use this when y
 | How humans interact with the system | `work/design/document-centric-interface.md` |
 | How agents should behave | `work/design/agent-interaction-protocol.md` |
 | How to review and verify work | `work/design/quality-gates-and-review-policy.md` |
-| Code review SKILL (procedure + orchestration) | `.agents/skills/kanbanzai-code-review/SKILL.md` |
-| Plan review SKILL (procedure + checklist) | `.agents/skills/kanbanzai-plan-review/SKILL.md` |
+| Code review SKILL (procedure + checklist) | `.kbz/skills/review-code/SKILL.md` |
+| Code review orchestration SKILL | `.kbz/skills/orchestrate-review/SKILL.md` |
+| Plan review SKILL (procedure + checklist) | `.kbz/skills/review-plan/SKILL.md` |
 | How to write commits | `work/design/git-commit-policy.md` |
 | Machine context model | `work/design/machine-context-design.md` |
 | Document intelligence | `work/design/document-intelligence-design.md` |

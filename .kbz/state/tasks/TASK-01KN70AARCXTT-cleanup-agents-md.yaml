@@ -2,10 +2,12 @@ id: TASK-01KN70AARCXTT
 parent_feature: FEAT-01KN6ZA4NYJ25
 slug: cleanup-agents-md
 summary: "Apply six fixes to AGENTS.md: deduplicate checklist, replace inline document list, remove phase labels, add mini-vocabulary, add skill/binding pointers, restructure decision rules (FR-028 to FR-033)"
-status: active
+status: done
 depends_on:
   - TASK-01KN70AAPSR3P
+completed: "2026-04-02T12:40:47Z"
 claimed_at: "2026-04-02T11:58:57Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-02T11:58:57Z"
 dispatched_by: sambeau
+completion_summary: "Applied 6 fixes to AGENTS.md: added 5-term Key Terms vocabulary, added task-execution skills/bindings pointer, deduplicated checklist, replaced inline document reading order with refs/document-map.md pointer, removed phase labels from repo structure, restructured decision rules."

@@ -79,6 +79,13 @@ Kanbanzai has stage gates that require human approval at specific points.
 See `kanbanzai-workflow` for the rules, the human/agent ownership boundary,
 and when to stop and ask.
 
+Each workflow stage (designing, specifying, developing, reviewing, etc.) maps
+to a specific **role** and **skill** via `.kbz/stage-bindings.yaml`. Read the
+binding for your current stage to know which role to adopt and which skill
+procedure to follow. The task-execution skills themselves live in
+`.kbz/skills/` (e.g. `write-design`, `write-spec`, `review-code`,
+`orchestrate-review`).
+
 ---
 
 ## Anti-Patterns

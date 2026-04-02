@@ -2,10 +2,12 @@ id: TASK-01KN70AAP9WRG
 parent_feature: FEAT-01KN6ZA4NYJ25
 slug: retire-kanbanzai-design
 summary: Delete .agents/skills/kanbanzai-design/ directory and update all stale references (FR-017)
-status: active
+status: done
 depends_on:
   - TASK-01KN70AANS9HT
+completed: "2026-04-02T12:40:47Z"
 claimed_at: "2026-04-02T11:58:56Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-02T11:58:56Z"
 dispatched_by: sambeau
+completion_summary: Deleted .agents/skills/kanbanzai-design/ directory (including references/). Updated stale references in system skills and copilot-instructions.
