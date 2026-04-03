@@ -1,0 +1,195 @@
+document_id: PROJECT/design-codebase-memory-integration
+document_path: work/design/codebase-memory-integration.md
+content_hash: cdbd99a21ff7917a83b5400ead7a40f9e3d30fd956545ed70c91899065b16f50
+indexed_at: 2026-04-03T01:01:22.256326Z
+sections:
+    - path: "1"
+      level: 1
+      title: Codebase Memory — Deep Integration Design
+      byte_offset: 0
+      byte_count: 15285
+      word_count: 2226
+      content_hash: cdbd99a21ff7917a83b5400ead7a40f9e3d30fd956545ed70c91899065b16f50
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 221
+          byte_count: 771
+          word_count: 115
+          content_hash: b9165d10b3774bffc4b64d33b1c73c08165ccd814759b5003491bade5307606d
+        - path: "1.2"
+          level: 2
+          title: Motivation
+          byte_offset: 992
+          byte_count: 3911
+          word_count: 585
+          content_hash: 2825ef38016efc17a62e5721c43e24e96b826002d6470d69f57ccbedacaf2111
+          children:
+            - path: 1.2.1
+              level: 3
+              title: What we observed
+              byte_offset: 1007
+              byte_count: 1203
+              word_count: 167
+              content_hash: 669aa1ba656242bf71add23f625fd9c087d463635b398096218dfb99a5427d88
+            - path: 1.2.2
+              level: 3
+              title: The token efficiency case
+              byte_offset: 2210
+              byte_count: 1311
+              word_count: 229
+              content_hash: eeceaa4c545d7bc8c1c2842f2e78dd79cd0139b0651ad2982954b690081f130e
+            - path: 1.2.3
+              level: 3
+              title: The multi-project architecture already exists
+              byte_offset: 3521
+              byte_count: 598
+              word_count: 69
+              content_hash: 3fad9cf1a39803cccfce48d394aaa7ddef385c10c42e9d380d4592782357e9c9
+            - path: 1.2.4
+              level: 3
+              title: Worktree location does not affect index quality
+              byte_offset: 4119
+              byte_count: 784
+              word_count: 118
+              content_hash: 9247b1e30c17c1c5e1ec6e25221d15d0d37f8150209e13cd45b2529f73d84ef6
+        - path: "1.3"
+          level: 2
+          title: Goals
+          byte_offset: 4903
+          byte_count: 572
+          word_count: 88
+          content_hash: 252c01041af19c36225aacea8852e637511e3fbf70bae401e7692c791475d83f
+        - path: "1.4"
+          level: 2
+          title: Non-Goals
+          byte_offset: 5475
+          byte_count: 409
+          word_count: 59
+          content_hash: 508fe60ad813636a16fcbb8ec3c50a3fa2d2e493d2abb86b8691477d1e3d3ec0
+        - path: "1.5"
+          level: 2
+          title: Design
+          byte_offset: 5884
+          byte_count: 3865
+          word_count: 505
+          content_hash: 95a7879dd16eddf2480bb52b0b4e5725cf46a3145d805c924aed8a25d06fc78b
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Overview of changes
+              byte_offset: 5895
+              byte_count: 548
+              word_count: 79
+              content_hash: fb29cf1cf4b28505bda5f74a7d830dfae9565288be16ff37e7f943f7ccc286a7
+            - path: 1.5.2
+              level: 3
+              title: 1. Worktree creation
+              byte_offset: 6443
+              byte_count: 942
+              word_count: 122
+              content_hash: 1100ee0711f0dbff49e51e35e39b82820b2478a49fab25cfa2a1fd8f84f02087
+            - path: 1.5.3
+              level: 3
+              title: 2. Worktree removal and cleanup
+              byte_offset: 7385
+              byte_count: 545
+              word_count: 72
+              content_hash: 362f4c16ef2e81c33824d8fc0243a763d2a2e3013b6d1eaec109e3af27bfdc6f
+            - path: 1.5.4
+              level: 3
+              title: 3. Handoff and next
+              byte_offset: 7930
+              byte_count: 933
+              word_count: 104
+              content_hash: 327e2348792de3a780719a7c03521727777aeece2a2226a04efa4f62ea7c1106
+            - path: 1.5.5
+              level: 3
+              title: 4. Skill and stage binding updates
+              byte_offset: 8863
+              byte_count: 886
+              word_count: 126
+              content_hash: 813d17b9506e37e54d9c21bba1df06ddfad78063631cb84f1849231d2986b762
+        - path: "1.6"
+          level: 2
+          title: Index freshness
+          byte_offset: 9749
+          byte_count: 1430
+          word_count: 231
+          content_hash: 700208ae5cea0d17acde536088c120d4838ad9bfebd7680b19d5bf7fe2304893
+        - path: "1.7"
+          level: 2
+          title: Making it a prerequisite
+          byte_offset: 11179
+          byte_count: 1243
+          word_count: 179
+          content_hash: 00d954fb4fbf3c9239c415120ceaf894a88b14fa56d3f07c41d60173cd1d194d
+        - path: "1.8"
+          level: 2
+          title: Open questions
+          byte_offset: 12422
+          byte_count: 2024
+          word_count: 307
+          content_hash: 68fad83a35f27074e4138cdb39ad13767da64c39253b38aa3b2aa3b60f363475
+        - path: "1.9"
+          level: 2
+          title: Summary of proposed changes
+          byte_offset: 14446
+          byte_count: 839
+          word_count: 128
+          content_hash: 6abaf5f9b30c3e19dd64337decafa28c3b4bc009921ea0e980e0c4f93748096f
+entity_refs:
+    - entity_id: FEAT-01KN83QN0VAFG
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 126
+    - entity_id: FEAT-01KN83QN0VAFG
+      entity_type: feature
+      section_path: 1.2.1
+      byte_offset: 1050
+    - entity_id: FEAT-X
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 3942
+    - entity_id: FEAT-01KN83QN0VAFG
+      entity_type: feature
+      section_path: 1.2.4
+      byte_offset: 4197
+    - entity_id: FEAT-01KN83QN0VAFG
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 6707
+    - entity_id: FEAT-01KN8
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 7287
+    - entity_id: FEAT-01KN8
+      entity_type: feature
+      section_path: 1.5.4
+      byte_offset: 8225
+    - entity_id: FEAT-01KN8
+      entity_type: feature
+      section_path: "1.8"
+      byte_offset: 12660
+cross_doc_links:
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.2.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: constraint
+      confidence: high
+    - section_path: 1.5.1
+      role: narrative
+      confidence: high
+    - section_path: "1.8"
+      role: question
+      confidence: high
+    - section_path: "1.9"
+      role: narrative
+      confidence: high
+classified: false
