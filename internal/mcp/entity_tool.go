@@ -74,8 +74,8 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		mcp.WithString("id", mcp.Description("Entity ID — type inferred from prefix (required for get, update, transition)")),
 		mcp.WithString("status", mcp.Description("Target status (transition) or status filter (list)")),
 		mcp.WithString("parent", mcp.Description("Parent ID filter: plan ID for features, feature ID for tasks (list only)")),
-		mcp.WithArray("tags", mcp.Description("Tag filter (list) or tags to set (create/update)")),
-		mcp.WithArray("entities", mcp.Description("Batch create: array of entity objects, each with the same fields as single create")),
+		mcp.WithArray("tags", mcp.WithStringItems(), mcp.Description("Tag filter (list) or tags to set (create/update)")),
+		mcp.WithArray("entities", mcp.Items(map[string]any{"type": "object"}), mcp.Description("Batch create: array of entity objects, each with the same fields as single create")),
 		// Common entity fields (type-specific, all optional at top level).
 		mcp.WithString("slug", mcp.Description("URL-friendly identifier")),
 		mcp.WithString("summary", mcp.Description("Brief summary")),
@@ -91,7 +91,7 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		mcp.WithString("bug_type", mcp.Description("Bug type: implementation-defect, specification-defect, design-problem")),
 		mcp.WithString("created_by", mcp.Description("Who created it. Auto-resolved from .kbz/local.yaml or git config if not provided.")),
 		mcp.WithString("design", mcp.Description("Design document reference (feature or plan)")),
-		mcp.WithArray("depends_on", mcp.Description("Task IDs this task depends on (task update only). Each must be a valid TASK-... ID.")),
+		mcp.WithArray("depends_on", mcp.WithStringItems(), mcp.Description("Task IDs this task depends on (task update only). Each must be a valid TASK-... ID.")),
 		mcp.WithString("created_after", mcp.Description("Created-after filter, RFC3339 (list only)")),
 		mcp.WithString("created_before", mcp.Description("Created-before filter, RFC3339 (list only)")),
 		mcp.WithBoolean("advance", mcp.Description(

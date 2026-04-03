@@ -92,13 +92,13 @@ func docTool(docSvc *service.DocumentService, entitySvc *service.EntityService) 
 		),
 		// Common identifier fields.
 		mcp.WithString("id", mcp.Description("Document record ID (approve, get, content, validate, supersede, refresh, chain)")),
-		mcp.WithArray("ids", mcp.Description("Batch approve: array of document record IDs")),
+		mcp.WithArray("ids", mcp.WithStringItems(), mcp.Description("Batch approve: array of document record IDs")),
 		// register fields.
 		mcp.WithString("path", mcp.Description("Document file path (register: required; get: alternative to id; import: directory to scan)")),
 		mcp.WithString("type", mcp.Description("Document type: design, specification, dev-plan, research, report, policy (register, list)")),
 		mcp.WithString("title", mcp.Description("Human-readable title (register)")),
 		mcp.WithString("owner", mcp.Description("Parent Plan or Feature ID (register, list, import)")),
-		mcp.WithArray("documents", mcp.Description("Batch register: array of {path, type, title, owner?} objects")),
+		mcp.WithArray("documents", mcp.Items(map[string]any{"type": "object"}), mcp.Description("Batch register: array of {path, type, title, owner?} objects")),
 		mcp.WithBoolean("auto_approve", mcp.Description("When true, registers and approves the document in one call. Permitted for: dev-plan, research, report (register only)")),
 		// move fields.
 		mcp.WithString("new_path", mcp.Description("New relative file path for the document (move only)")),

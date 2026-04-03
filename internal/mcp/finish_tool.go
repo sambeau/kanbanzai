@@ -73,12 +73,12 @@ func finishTool(entitySvc *service.EntityService, dispatchSvc *service.DispatchS
 		mcp.WithString("to_status", mcp.Description("Target status: done (default) or needs-review")),
 		mcp.WithArray("files_modified", mcp.WithStringItems(), mcp.Description("Files created or modified")),
 		mcp.WithString("verification", mcp.Description("Testing or verification performed")),
-		mcp.WithArray("knowledge", mcp.Description(
+		mcp.WithArray("knowledge", mcp.Items(map[string]any{"type": "object"}), mcp.Description(
 			"Inline knowledge entries to contribute. Each entry: "+
 				"{topic, content, scope} required; {tags, tier} optional. "+
 				"Duplicates are rejected per-entry without blocking completion.",
 		)),
-		mcp.WithArray("retrospective", mcp.Description(
+		mcp.WithArray("retrospective", mcp.Items(map[string]any{"type": "object"}), mcp.Description(
 			"Retrospective signals to record at task completion. Each entry: "+
 				"{category, observation, severity} required; {suggestion, related_decision} optional. "+
 				"Valid categories: workflow-friction, tool-gap, tool-friction, spec-ambiguity, "+
@@ -86,7 +86,7 @@ func finishTool(entitySvc *service.EntityService, dispatchSvc *service.DispatchS
 				"Valid severities: minor, moderate, significant. "+
 				"Invalid signals are rejected per-entry without blocking completion.",
 		)),
-		mcp.WithArray("tasks", mcp.Description(
+		mcp.WithArray("tasks", mcp.Items(map[string]any{"type": "object"}), mcp.Description(
 			"Batch mode: array of task completion objects. "+
 				"Each item contains task_id, summary, and optional fields. "+
 				"Items are processed independently; a failure on one does not affect others.",

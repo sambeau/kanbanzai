@@ -62,6 +62,7 @@ func estimateTool(entitySvc *service.EntityService, knowledgeSvc *service.Knowle
 		),
 		// set — batch mode
 		mcp.WithArray("entities",
+			mcp.Items(map[string]any{"type": "object"}),
 			mcp.Description("Batch set: array of {entity_id, points} objects (set action, batch mode)"),
 		),
 		// add_reference

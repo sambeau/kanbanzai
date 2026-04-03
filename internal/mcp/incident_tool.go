@@ -76,6 +76,7 @@ func incidentTool(svc *service.EntityService) server.ServerTool {
 			mcp.Description("When the incident was resolved (ISO 8601) (update only)"),
 		),
 		mcp.WithArray("affected_features",
+			mcp.WithStringItems(),
 			mcp.Description("List of affected feature IDs — replaces existing list (update only)"),
 		),
 		// list parameters
