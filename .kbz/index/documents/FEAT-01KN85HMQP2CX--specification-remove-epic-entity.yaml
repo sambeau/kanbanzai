@@ -1,0 +1,74 @@
+document_id: FEAT-01KN85HMQP2CX/specification-remove-epic-entity
+document_path: work/spec/remove-epic-entity.md
+content_hash: d3e6d38e996295b00c95bcc13b07c0a733650be13d4b3082c6ac033027ca52a6
+indexed_at: 2026-04-02T22:42:51.326204Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Remove Epic Entity'
+      byte_offset: 0
+      byte_count: 2386
+      word_count: 338
+      content_hash: d3e6d38e996295b00c95bcc13b07c0a733650be13d4b3082c6ac033027ca52a6
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 89
+          byte_count: 143
+          word_count: 25
+          content_hash: cced880428d7953c9918d6df510c2837a4eda85ba74078fbc66c08005ca3d50d
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 232
+          byte_count: 140
+          word_count: 21
+          content_hash: cc2ee149940acf00d5d5a0b50299880afd377b96271f8b7953d9b3d99ed2b3cb
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 372
+          byte_count: 1425
+          word_count: 194
+          content_hash: ce439156c32bc0ebf9abfba2207e0c65e06be034067ab69dca9be01af8e0eec4
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 1797
+          byte_count: 199
+          word_count: 29
+          content_hash: 4c7065eba489ef65c01a2499085aa1f69a91c823f444991ece2bfc48b809fc9b
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 1996
+          byte_count: 390
+          word_count: 57
+          content_hash: d4bc837f3b8802995b6256c3627868702a92384303625d3fb82d61fb35a61ada
+front_matter:
+    status: draft
+    extra:
+        Feature: FEAT-01KN85HMQP2CX
+entity_refs:
+    - entity_id: FEAT-01KN85HMQP2CX
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 48
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+classified: false

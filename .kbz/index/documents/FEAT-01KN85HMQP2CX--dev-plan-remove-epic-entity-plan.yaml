@@ -1,0 +1,70 @@
+document_id: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan
+document_path: work/plan/remove-epic-entity-plan.md
+content_hash: 73f4c1fcbc5eb6e4694ae9907d4bd11233cad77e837099f1706660295b38a43f
+indexed_at: 2026-04-02T22:45:20.607749Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Remove Epic Entity'
+      byte_offset: 0
+      byte_count: 2455
+      word_count: 328
+      content_hash: 73f4c1fcbc5eb6e4694ae9907d4bd11233cad77e837099f1706660295b38a43f
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 167
+          byte_count: 159
+          word_count: 27
+          content_hash: 65d46f55a356f86a6f12418e6d9ce2313fac5f9c7014490ca0941a4a4929ae96
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 326
+          byte_count: 1068
+          word_count: 105
+          content_hash: be3bc10eb2797e51902b0b6bf808a66d3684d53dd724169a42275eceafbf7b21
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1394
+          byte_count: 172
+          word_count: 25
+          content_hash: f445f173686d0daf0b7d493be2b3679a70e4c9b1097d18556104b7bbcc46c6b1
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 1566
+          byte_count: 98
+          word_count: 15
+          content_hash: ea29f752e8cd2c15e545b82bd5660379812fbfea2a77daf15d6a35338615cd02
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 1664
+          byte_count: 791
+          word_count: 140
+          content_hash: 6e23b9f943c36aac363702bbac3b865cfa7b75f9d912056c97c7c47c0ff5651d
+front_matter:
+    extra:
+        Design: '`work/design/remove-epic-entity.md`'
+        Feature: FEAT-01KN85HMQP2CX
+        Spec: '`work/spec/remove-epic-entity.md`'
+entity_refs:
+    - entity_id: FEAT-01KN85HMQP2CX
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 54
+cross_doc_links:
+    - target_path: work/spec/remove-epic-entity.md
+      link_text: work/spec/remove-epic-entity.md
+      section_path: "1"
+    - target_path: work/design/remove-epic-entity.md
+      link_text: work/design/remove-epic-entity.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false
