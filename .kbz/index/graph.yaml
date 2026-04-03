@@ -1,4 +1,4 @@
-updated_at: 2026-04-02T22:17:58.200842Z
+updated_at: 2026-04-03T09:48:49.218051Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -55828,5 +55828,565 @@ edges:
     - from: FEAT-01KN83QN0VAFG/dev-plan-lifecycle-integrity-plan#1.1
       from_type: section
       to: work/spec/lifecycle-integrity.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KN85HMQP2CX/design-remove-epic-entity
+      from_type: document
+      to: FEAT-01KN85HMQP2CX/design-remove-epic-entity#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/design-remove-epic-entity#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX/design-remove-epic-entity#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/design-remove-epic-entity#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KN85HMQP2CX/specification-remove-epic-entity
+      from_type: document
+      to: FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan
+      from_type: document
+      to: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1
+      from_type: section
+      to: FEAT-01KN85HMQP2CX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1
+      from_type: section
+      to: work/spec/remove-epic-entity.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan#1
+      from_type: section
+      to: work/design/remove-epic-entity.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review
+      from_type: document
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1
+      from_type: section
+      to: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1
+      from_type: section
+      to: FEAT-01KN83QN0VAFG
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1
+      from_type: section
+      to: P19-workflow-lifecycle-integrity
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review#1.3.7
+      from_type: section
+      to: work/spec/lifecycle-integrity.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-role-tool-hints
+      from_type: document
+      to: PROJECT/design-role-tool-hints#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.1
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.1
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.3
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.3
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.3
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.3
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.3
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.4
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.4
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.5
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.5
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.5
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1.5
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1
+      from_type: section
+      to: PROJECT/design-role-tool-hints#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-role-tool-hints#1
+      from_type: section
+      to: work/design/machine-context-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-role-tool-hints#1
+      from_type: section
+      to: work/design/agent-onboarding.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-role-tool-hints#1
+      from_type: section
+      to: refs/sub-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-role-tool-hints#1
+      from_type: section
+      to: refs/knowledge-graph.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-role-tool-hints#1.1
+      from_type: section
+      to: refs/sub-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-role-tool-hints#1.4.1
+      from_type: section
+      to: refs/sub-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-role-tool-hints#1.5.2
+      from_type: section
+      to: refs/sub-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-codebase-memory-integration
+      from_type: document
+      to: PROJECT/design-codebase-memory-integration#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1.2
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1.2
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1.2
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1.2
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1.5
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1.5
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1.5
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1.5
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1.5
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1
+      from_type: section
+      to: PROJECT/design-codebase-memory-integration#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-codebase-memory-integration#1
+      from_type: section
+      to: FEAT-01KN83QN0VAFG
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-codebase-memory-integration#1.2.1
+      from_type: section
+      to: FEAT-01KN83QN0VAFG
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-codebase-memory-integration#1.2.3
+      from_type: section
+      to: FEAT-X
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-codebase-memory-integration#1.2.4
+      from_type: section
+      to: FEAT-01KN83QN0VAFG
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-codebase-memory-integration#1.5.2
+      from_type: section
+      to: FEAT-01KN83QN0VAFG
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-codebase-memory-integration#1.5.2
+      from_type: section
+      to: FEAT-01KN8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-codebase-memory-integration#1.5.4
+      from_type: section
+      to: FEAT-01KN8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-codebase-memory-integration#1.8
+      from_type: section
+      to: FEAT-01KN8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-codebase-memory-integration#1.2.1
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-readme
+      from_type: document
+      to: PROJECT/report-readme#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1
+      from_type: section
+      to: PROJECT/report-readme#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1
+      from_type: section
+      to: PROJECT/report-readme#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1.2
+      from_type: section
+      to: PROJECT/report-readme#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1.2
+      from_type: section
+      to: PROJECT/report-readme#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1.2
+      from_type: section
+      to: PROJECT/report-readme#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1.2
+      from_type: section
+      to: PROJECT/report-readme#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1.2.4
+      from_type: section
+      to: PROJECT/report-readme#1.2.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1.2.4
+      from_type: section
+      to: PROJECT/report-readme#1.2.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1.2
+      from_type: section
+      to: PROJECT/report-readme#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1.2
+      from_type: section
+      to: PROJECT/report-readme#1.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1.2
+      from_type: section
+      to: PROJECT/report-readme#1.2.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1
+      from_type: section
+      to: PROJECT/report-readme#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1
+      from_type: section
+      to: PROJECT/report-readme#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1
+      from_type: section
+      to: PROJECT/report-readme#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-readme#1.2.4.1
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-readme#1.5
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-readme#1.5
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-readme#1.5
+      from_type: section
+      to: work/design/workflow-design-basis.md
       to_type: document
       edge_type: LINKS_TO
