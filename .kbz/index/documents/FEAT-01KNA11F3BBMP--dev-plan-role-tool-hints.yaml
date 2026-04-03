@@ -1,0 +1,108 @@
+document_id: FEAT-01KNA11F3BBMP/dev-plan-role-tool-hints
+document_path: work/dev-plan/role-tool-hints.md
+content_hash: 021ecee35c909a127c60f4e26dbd1019bdbfa579011df3ecb7b3d0c30b3dad88
+indexed_at: 2026-04-03T21:33:30.915289Z
+sections:
+    - path: "1"
+      level: 1
+      title: Role-Scoped Tool Hints — Development Plan
+      byte_offset: 0
+      byte_count: 4543
+      word_count: 562
+      content_hash: 021ecee35c909a127c60f4e26dbd1019bdbfa579011df3ecb7b3d0c30b3dad88
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 174
+          byte_count: 591
+          word_count: 78
+          content_hash: 3b007c2b19620315844f5da0ef017f03831a0d58c750777ab19aae5cfe3a5bb7
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 765
+          byte_count: 1067
+          word_count: 115
+          content_hash: 53190babb3b1d4706acd30a97e25e0d00a7631038535df5957f173e7d04f3003
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1832
+          byte_count: 281
+          word_count: 37
+          content_hash: e358cfd621704a3374bec8a62169e33cae30d03ef8b7bf4cfe0d02da632ded3e
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 2113
+          byte_count: 1580
+          word_count: 185
+          content_hash: eb71341b4e2eab2e620bd5e040c62833ed039e0aaa84cede656a0e4d0bbfcaf2
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Config structs
+              byte_offset: 2137
+              byte_count: 325
+              word_count: 35
+              content_hash: dbc091d19d002d799036df38daf7946de53dc81a952becb45e0b66067f06d3d9
+            - path: 1.4.2
+              level: 3
+              title: Merge function (`internal/config/tool_hints.go`)
+              byte_offset: 2462
+              byte_count: 285
+              word_count: 36
+              content_hash: f52c8583ded24fb1f8abc35025ab0367f5efad6a39c88865aecabd2b0f8b3818
+            - path: 1.4.3
+              level: 3
+              title: Role inheritance resolution (`internal/context/tool_hints.go`)
+              byte_offset: 2747
+              byte_count: 330
+              word_count: 42
+              content_hash: 18226d510775550bc7fb880e24abaf8b14014bd8cebf30a72c5c3dd6336da145
+            - path: 1.4.4
+              level: 3
+              title: Injection points
+              byte_offset: 3077
+              byte_count: 501
+              word_count: 50
+              content_hash: 6675f58cf0710c866b49dbb3e5158bf7a3f292bde07087204f15746aeb9da5ee
+            - path: 1.4.5
+              level: 3
+              title: Section ordering with Phase 2
+              byte_offset: 3578
+              byte_count: 115
+              word_count: 19
+              content_hash: 874a18770f8efcef4946572d62016badc661010fcb2632fae453bf35a4183ace
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 3693
+          byte_count: 850
+          word_count: 128
+          content_hash: 9f091aa11034a710b592d94eba5df7adda7cb463939c55800c870bfff42e3dc9
+entity_refs:
+    - entity_id: FEAT-01KNA
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 70
+    - entity_id: TASK-01KNA
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 898
+    - entity_id: TASK-01KNA
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 1857
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.3
+      role: narrative
+      confidence: high
+classified: false
