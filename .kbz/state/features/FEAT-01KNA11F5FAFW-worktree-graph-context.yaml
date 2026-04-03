@@ -3,6 +3,7 @@ slug: worktree-graph-context
 name: Worktree Graph Context
 parent: P21-codebase-memory-integration
 status: specifying
+estimate: "3"
 summary: "Add GraphProject string field to worktree.Record. When set, handoff emits a ## Code Graph section with the project name and per-tool call examples; when empty but a worktree exists, handoff emits an indexing prompt. next includes graph_project in structured output. status emits a missing_graph_index info-level attention item. Cleanup notes the project for manual deletion. ~80-120 lines of Go."
 design: work/design/codebase-memory-integration.md
 spec: FEAT-01KNA11F5FAFW/specification-worktree-graph-context

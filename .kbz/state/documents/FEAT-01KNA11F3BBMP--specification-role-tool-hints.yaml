@@ -2,9 +2,11 @@ id: FEAT-01KNA11F3BBMP/specification-role-tool-hints
 path: work/spec/role-tool-hints.md
 type: specification
 title: Role-Scoped Tool Hints — Specification
-status: draft
+status: approved
 owner: FEAT-01KNA11F3BBMP
+approved_by: sambeau
+approved_at: "2026-04-03T21:25:35Z"
 content_hash: 555d67310a790544a5f16aad14a7cd868142c06783c0ce0234ca1c31a6917ef7
 created: "2026-04-03T21:21:48Z"
 created_by: sambeau
-updated: "2026-04-03T21:21:48Z"
+updated: "2026-04-03T21:25:35Z"
