@@ -1,0 +1,6 @@
+id: TASK-01KNAKX73CCHS
+parent_feature: FEAT-01KNA11F3BBMP
+slug: tool-hints-config
+name: Tool Hints Config and Resolve
+summary: "Add ToolHints map[string]string to Config and LocalConfig structs. Implement MergeToolHints (per-key, local wins) and ResolveToolHint (exact match then walk inherits chain). Wire merge at server startup. Covers FR-001 through FR-009, AC-001 through AC-009."
+status: queued
