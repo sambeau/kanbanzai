@@ -1,0 +1,6 @@
+id: TASK-01KNAKX798DCB
+parent_feature: FEAT-01KNA11F3BBMP
+slug: tool-hints-health
+name: Tool Hints Health Surfacing
+summary: "Add tool_hints section to health tool output showing merged hints per role. Covers FR-018 through FR-019, AC-017 through AC-018."
+status: queued
