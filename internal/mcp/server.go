@@ -165,6 +165,15 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	// Load local config for GitHub token (best-effort).
 	localConfig, _ := config.LoadLocalConfig()
 
+	// Merge tool hints: local overrides project, per-key.
+	var mergedToolHints map[string]string
+	if localConfig != nil {
+		mergedToolHints = config.MergeToolHints(cfg.ToolHints, localConfig.ToolHints)
+	} else {
+		mergedToolHints = config.MergeToolHints(cfg.ToolHints, nil)
+	}
+	_ = mergedToolHints // will be wired into tools in a subsequent task
+
 	// Checkpoint store and dispatch service.
 	checkpointStore := checkpoint.NewStore(stateRoot)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
