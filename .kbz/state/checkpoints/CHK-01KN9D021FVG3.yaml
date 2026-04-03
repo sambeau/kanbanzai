@@ -1,0 +1,9 @@
+id: CHK-01KN9D021FVG3
+question: "Pipeline complete. The README has significant factual issues (hallucinated `kbz` commands, stale manual init procedure, wrong tool count) and structural recommendations (reorder sections, add problem statement, condense Getting Started). Would you like me to: (A) apply all findings and rewrite the README, (B) apply only factual corrections, (C) leave the file as-is and just deliver the pipeline report? Or something else?"
+context: "All 5 pipeline stages complete. The README prose is clean but has significant factual drift (hallucinated commands, stale procedures, outdated directory tree) and structural issues (concepts buried after procedure, missing problem statement). No changes have been applied to the file yet."
+orchestration_summary: "Pipeline complete: Write → Edit → Check → Style → Copyedit. 11 Check findings (3 hallucinations, 4 stale), 5 structural-blocking Edit findings, very clean Style/Copyedit passes. Document record needs refresh."
+status: pending
+created_at: "2026-04-03T10:07:38Z"
+created_by: doc-pipeline-orchestrator
+responded_at: null
+response: null

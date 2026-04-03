@@ -1,0 +1,134 @@
+document_id: PROJECT/report-readme
+document_path: README.md
+content_hash: 82571b5a32a73bdf12c954da568fee18fcdb951435f69543bc3626074aea390a
+indexed_at: 2026-04-03T09:48:49.218051Z
+sections:
+    - path: "1"
+      level: 1
+      title: Kanbanzai
+      byte_offset: 0
+      byte_count: 6833
+      word_count: 984
+      content_hash: 82571b5a32a73bdf12c954da568fee18fcdb951435f69543bc3626074aea390a
+      children:
+        - path: "1.1"
+          level: 2
+          title: What agents can do with it
+          byte_offset: 527
+          byte_count: 895
+          word_count: 136
+          content_hash: ce48b7c68ec6db4ec8906815e04cfc5dfacf7aa9209adf32cbdb11d0f27406a8
+        - path: "1.2"
+          level: 2
+          title: Getting started
+          byte_offset: 1422
+          byte_count: 3608
+          word_count: 514
+          content_hash: a167aacbc6003f08aabbecc624c938d81bfb0743b49a85e5087dcbe5429aab4e
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 1. Requirements
+              byte_offset: 1442
+              byte_count: 119
+              word_count: 22
+              content_hash: 328239f212f98f039e1ef7d498bbe8e76fa8a1d3764e622e68c1bcc66b8a7b1b
+            - path: 1.2.2
+              level: 3
+              title: 2. Install
+              byte_offset: 1561
+              byte_count: 314
+              word_count: 33
+              content_hash: 9826d8b33fdd6e819bbc4112a30111f07aa10f74f52b9d215481b45b0c000a2a
+            - path: 1.2.3
+              level: 3
+              title: 3. Initialise your project
+              byte_offset: 1875
+              byte_count: 587
+              word_count: 81
+              content_hash: d9ef4e201b62889303f91adabb430d9c8bd981066c2f0716753f5550c88eb307
+            - path: 1.2.4
+              level: 3
+              title: 4. Connect your editor
+              byte_offset: 2462
+              byte_count: 1233
+              word_count: 177
+              content_hash: 38f034933b9b99f7855452b2c25681578a63e025523ada4ee217c1bacd8dbf13
+              children:
+                - path: 1.2.4.1
+                  level: 4
+                  title: Zed
+                  byte_offset: 2490
+                  byte_count: 1088
+                  word_count: 153
+                  content_hash: afe874356b43c6cdf79e254bdc08e925cf9ee2118bbc57cd25e000f779314eaa
+                - path: 1.2.4.2
+                  level: 4
+                  title: Other MCP clients
+                  byte_offset: 3578
+                  byte_count: 117
+                  word_count: 19
+                  content_hash: f422374588dd95eb4835b6ec4c5a82c15b02ec5071fe15a32ce596dec488ffa4
+            - path: 1.2.5
+              level: 3
+              title: 5. Create a context profile
+              byte_offset: 3695
+              byte_count: 673
+              word_count: 96
+              content_hash: 5bdab48f8f99e1b1765938ff7b19ddfcb770260972dd71d5984fad71e04ea4eb
+            - path: 1.2.6
+              level: 3
+              title: 6. Import your design documents
+              byte_offset: 4368
+              byte_count: 375
+              word_count: 53
+              content_hash: 6e20d7e82552d02b0bbb6217f2e0c6e155019fa5e339168d76833b46100adde3
+            - path: 1.2.7
+              level: 3
+              title: 7. Check everything is healthy
+              byte_offset: 4743
+              byte_count: 287
+              word_count: 49
+              content_hash: ea92fa4d8b7e5d409f2e55cbcd62761b1aaaf07f1ec9cf2ffe825c239e62a696
+        - path: "1.3"
+          level: 2
+          title: The human side of the workflow
+          byte_offset: 5030
+          byte_count: 602
+          word_count: 97
+          content_hash: 76b5433591bd238f851271cce6b1c4d28cf0b071a1a7a1153da04539935180a5
+        - path: "1.4"
+          level: 2
+          title: What gets stored
+          byte_offset: 5632
+          byte_count: 951
+          word_count: 117
+          content_hash: 069c93a445c1251572690f496bd264fc796b79d94f77b719668a93a6e7818bf6
+        - path: "1.5"
+          level: 2
+          title: Further reading
+          byte_offset: 6583
+          byte_count: 250
+          word_count: 33
+          content_hash: d804b14a52dae36dfb604362524a0b7bc2bdef32657c0f91e198bc92db83dca4
+cross_doc_links:
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: 1.2.4.1
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: "1.5"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.5
+      role: narrative
+      confidence: high
+classified: false

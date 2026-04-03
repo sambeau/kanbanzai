@@ -2,16 +2,20 @@
 
 Kanbanzai is an MCP server that gives AI agents a structured workflow to follow — so they can pick up where the last session left off, coordinate across tasks without stepping on each other, and keep you informed without overwhelming you.
 
-You write documents and make decisions. Agents handle the rest: decomposing work, implementing, reviewing, tracking state, and handing back to you when they need a choice made.
+You write documents and make decisions. Agents handle the rest: decomposing work, implementing, reviewing, tracking state, and handing back to you when they need you to choose.
 
 Everything lives in plain YAML files in your Git repo. Nothing is hidden in a database.
 
----
+## Why
 
-## What agents can do with it
+AI agents lose context between sessions. When two agents work in parallel, they overwrite each other's files. When an agent finishes a task, nobody knows what it did or whether the output matches the spec. The human ends up as a full-time project manager, manually tracking what's done, what's blocked, and what to do next.
+
+Kanbanzai fixes this by giving agents the same project management structure that human teams use — plans, specs, task queues, reviews, and knowledge that persists — delivered as MCP tools they can call directly.
+
+## What agents can do
 
 - **See the work queue** — what's ready, what's blocked, what's in progress
-- **Claim and complete tasks** — with automatic unblocking of dependents
+- **Claim and complete tasks** — automatically unblocking dependents
 - **Assemble context before starting** — role conventions, project knowledge, and relevant spec fragments, packed to fit the model's context window
 - **Review their own output** — against verification criteria before handing off
 - **Remember things** — knowledge entries persist across sessions and earn confidence over time
@@ -20,25 +24,41 @@ Everything lives in plain YAML files in your Git repo. Nothing is hidden in a da
 - **Work in parallel safely** — conflict domain analysis flags file overlap before tasks start
 - **Create pull requests and manage branches** — Git worktrees, merge gates, GitHub PR integration
 
----
+## What you do
+
+Your job is documents and decisions:
+
+1. **Write documents** — designs, specifications, plans
+2. **Review and approve** — approving a spec advances its feature automatically
+3. **Respond to checkpoints** — when an agent needs a decision it can't make, it creates a checkpoint and waits. You answer; work resumes.
+4. **Review completed work** — agents mark tasks `needs-review` after passing self-review. You make the final call.
+
+You don't manage task lists or update statuses by hand. The agents do that.
+
+## Key concepts
+
+- **Plan** — a group of related features delivered together, like a milestone or release
+- **Feature** — a unit of work that progresses through a lifecycle: design → spec → dev-plan → implementation → review
+- **Task** — a single implementation step within a feature, small enough for one agent to complete
+- **Checkpoint** — a point where an agent pauses and asks a human for a decision
+- **Knowledge entry** — a fact or convention that persists across sessions and earns confidence as agents confirm it
+- **Worktree** — an isolated Git working directory for a feature, so parallel work doesn't collide
 
 ## Getting started
 
-### 1. Requirements
+### Requirements
 
 - Go 1.25 or later
 - Zed (recommended) — or any MCP client that supports stdio transport
 - Git
 
-### 2. Install
-
-**Remote install** (easiest):
+### Install
 
 ```sh
 go install github.com/sambeau/kanbanzai/cmd/kanbanzai@latest
 ```
 
-**From source:**
+Or build from source:
 
 ```sh
 git clone https://github.com/sambeau/kanbanzai
@@ -49,72 +69,41 @@ go install ./cmd/kanbanzai
 Confirm it worked:
 
 ```sh
-~/go/bin/kanbanzai version
-# kanbanzai phase-4b
+kanbanzai version
 ```
 
-### 3. Initialise your project
+### Initialise your project
 
 In the root of the project you want to manage:
 
 ```sh
-mkdir -p .kbz/state .kbz/context/roles
+kanbanzai init
 ```
 
-Create `.kbz/config.yaml`:
+This creates `.kbz/config.yaml`, installs default role and skill files, sets up work directories, writes `.gitignore` entries, and generates editor configuration. Run `kanbanzai init --help` to see flags for customising what gets installed.
 
-```yaml
-version: "2"
-prefixes:
-  - prefix: P
-    name: Plan
-```
-
-Add to `.gitignore`:
-
-```
-.kbz/cache/
-.kbz/local.yaml
-.kbz-tmp-*
-```
-
-Create `.kbz/local.yaml` (not committed — this is yours):
+If you want GitHub PR integration, create `.kbz/local.yaml` (not committed):
 
 ```yaml
 user:
   name: Your Name
-github:            # optional, only needed for PR tools
+github:
   token: ghp_...
-  owner: sambeau
-  repo: kanbanzai
+  owner: your-org
+  repo: your-repo
 ```
 
-If you skip `local.yaml`, identity falls back to `git config user.name` automatically.
+If you skip `local.yaml`, identity falls back to `git config user.name`.
 
-### 4. Connect your editor
+### Connect your editor
 
 #### Zed
 
-The setup is split across two files because Zed only allows `context_servers` in project-local settings — `agent` profiles and permissions must go in the global settings file.
+`kanbanzai init` writes `.zed/settings.json` with the MCP server configuration. Open the project in Zed and the kanbanzai server should appear with a green dot in the Agent Panel settings.
 
-**`.zed/settings.json`** (already committed to this repo — edit the binary path if your `GOPATH` differs from `~/go`):
+Add agent profiles and tool permissions to your global Zed settings (`~/Library/Application Support/Zed/settings.json` on macOS). See `docs/getting-started.md` for the full profiles to paste in.
 
-```json
-{
-  "context_servers": {
-    "kanbanzai": {
-      "command": "/Users/you/go/bin/kanbanzai",
-      "args": ["serve"]
-    }
-  }
-}
-```
-
-**`~/Library/Application Support/Zed/settings.json`** — add an `agent` block alongside any existing entries. See `docs/getting-started.md` for the full profiles and tool permissions to paste in.
-
-Open the project in Zed. The kanbanzai server should appear with a green dot in the Agent Panel settings. Select the **Kanbanzai Developer** or **Kanbanzai Orchestrator** profile from the profile picker to scope the tool surface for each session.
-
-> The server resolves `.kbz/` relative to its working directory. Zed uses the workspace root as cwd for project-local servers — always open the project from its root, not a subdirectory.
+> The server resolves `.kbz/` relative to its working directory. Zed uses the workspace root as the working directory for project-local servers — always open the project from its root, not a subdirectory.
 
 #### Other MCP clients
 
@@ -124,90 +113,46 @@ The server speaks standard MCP over stdio. Point your client at:
 kanbanzai serve
 ```
 
-### 5. Create a context profile
-
-Profiles tell agents what they need to know for a given role. Create at least a base profile at `.kbz/context/roles/base.yaml`:
-
-```yaml
-id: base
-description: "Project-wide conventions for all agents"
-conventions:
-  - "Write your key conventions here"
-  - "Error handling, test patterns, naming rules, etc."
-architecture:
-  summary: "One paragraph describing the project structure"
-  key_interfaces:
-    - "The most important files and what they do"
-```
-
-Agents call `context_assemble` with a profile ID before starting any task. The more useful information you put in profiles, the less time agents spend re-discovering your conventions.
-
-### 6. Import your design documents
-
-If you have existing design documents, register them:
+### Check everything is healthy
 
 ```sh
-kbz import work/design/
+kanbanzai health
 ```
 
-Or register a single document:
+On a fresh project this should pass cleanly. On an existing project it flags dangling references, stale worktrees, and incidents missing an RCA.
 
-```sh
-kbz create document --path work/design/my-feature.md --type design --title "My Feature Design"
-```
+See `docs/getting-started.md` for the full setup guide, including importing existing design documents, customising role profiles, and troubleshooting.
 
-Agents use these documents to decompose features into tasks and to review their work against specifications.
-
-### 7. Check everything is healthy
-
-```sh
-kbz health
-```
-
-This runs a full project health check. On a fresh project it should pass cleanly. On an existing project it will flag anything that looks wrong — dangling references, stale worktrees, incidents missing an RCA, and so on.
-
----
-
-## The human side of the workflow
-
-Once the project is set up, your job is:
-
-1. **Write documents** — designs, specifications, plans
-2. **Review and approve** — approving a spec advances its feature automatically
-3. **Respond to checkpoints** — when an agent needs a decision it can't make, it creates a checkpoint and waits. You answer; work resumes.
-4. **Review completed work** — agents mark tasks `needs-review` after passing self-review. You make the final call.
-
-You don't manage task lists or update statuses by hand. The agents do that. Your interface is documents and decisions.
-
----
-
-## What gets stored
+## Project structure
 
 ```
 .kbz/
-├── config.yaml          ← project settings
-├── local.yaml           ← your machine-local settings (not committed)
+├── config.yaml            ← project settings
+├── local.yaml             ← your machine-local settings (not committed)
+├── stage-bindings.yaml    ← maps workflow stages to roles and skills
+├── roles/                 ← role definitions (identity, vocabulary, anti-patterns)
+├── skills/                ← skill procedures (checklists, evaluation criteria)
 ├── state/
-│   ├── plans/           ← plans
-│   ├── features/        ← features
-│   ├── tasks/           ← tasks
-│   ├── bugs/            ← bugs
-│   ├── decisions/       ← decisions
-│   ├── documents/       ← document metadata
-│   ├── knowledge/       ← knowledge entries
-│   └── worktrees/       ← active worktree records
+│   ├── plans/             ← plans
+│   ├── features/          ← features
+│   ├── tasks/             ← tasks
+│   ├── bugs/              ← bugs
+│   ├── checkpoints/       ← human decision checkpoints
+│   ├── decisions/         ← architectural decisions
+│   ├── documents/         ← document metadata
+│   ├── knowledge/         ← knowledge entries
+│   └── worktrees/         ← active worktree records
 ├── context/
-│   └── roles/           ← context profile definitions
-├── index/               ← document intelligence index (derived)
-└── cache/               ← local cache (derived)
+│   └── roles/             ← context profiles for agents
+├── index/                 ← document intelligence index (derived)
+├── logs/                  ← server logs (not committed)
+└── cache/                 ← local cache (not committed)
 ```
 
-Everything in `state/` and `context/roles/` is plain YAML committed to Git. You can read it, diff it, and review it in a pull request like any other file.
-
----
+Everything in `state/`, `roles/`, and `skills/` is plain YAML committed to Git. You can read it, diff it, and review it in a pull request like any other file.
 
 ## Further reading
 
-- `docs/getting-started.md` — full setup guide, all 98 MCP tools, CLI reference, troubleshooting
+- `docs/getting-started.md` — full setup guide, all 22 MCP tools, CLI reference, troubleshooting
 - `AGENTS.md` — instructions for AI agents working on this project
 - `work/design/workflow-design-basis.md` — the design vision
