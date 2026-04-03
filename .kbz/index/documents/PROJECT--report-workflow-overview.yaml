@@ -1,0 +1,220 @@
+document_id: PROJECT/report-workflow-overview
+document_path: docs/workflow-overview.md
+content_hash: 79858e2226f9183960bd179527b834129a6d5993e77ec085a15b33bb93061c1b
+indexed_at: 2026-04-03T10:59:35.13719Z
+sections:
+    - path: "1"
+      level: 1
+      title: Workflow Overview
+      byte_offset: 0
+      byte_count: 16600
+      word_count: 2506
+      content_hash: 79858e2226f9183960bd179527b834129a6d5993e77ec085a15b33bb93061c1b
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. The collaboration model
+          byte_offset: 633
+          byte_count: 1340
+          word_count: 204
+          content_hash: 4882428627421d794339101197ca7165af4c07a01b96ec63c0e7a53f042279f2
+        - path: "1.2"
+          level: 2
+          title: 2. Stage overview
+          byte_offset: 1973
+          byte_count: 1353
+          word_count: 227
+          content_hash: f8cf95b7b69dd3761d62f7f5f23998adc4d86eae14b0825ff6da43694622a56a
+        - path: "1.3"
+          level: 2
+          title: 3. Stage detail
+          byte_offset: 3326
+          byte_count: 7904
+          word_count: 1204
+          content_hash: 7bd05b0acc7b4591d377699f7bec3ca418817448c25af51a6b4d6e77a4bba8a0
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Planning
+              byte_offset: 3346
+              byte_count: 1292
+              word_count: 214
+              content_hash: cc5741631645c94b37ee2f2c395812deb00e989515b7de11c6d98852c8c73e3f
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Design
+              byte_offset: 4638
+              byte_count: 1144
+              word_count: 170
+              content_hash: 2b3f4c8c0a984dd674e1c36db5adbcbf5632fc021acafe70f933734e0f0b2e69
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Specification
+              byte_offset: 5782
+              byte_count: 996
+              word_count: 146
+              content_hash: 8a2426132114c614d8f9e8319fe3474f5ec575af3521d2f9c11e4f58af8cfb42
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Dev planning
+              byte_offset: 6778
+              byte_count: 1143
+              word_count: 168
+              content_hash: d5740c8f282957f3ff70416978414ee552609726ef6792690b9ec5e62d003f9f
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Developing
+              byte_offset: 7921
+              byte_count: 1232
+              word_count: 185
+              content_hash: 810a1528c6e07555c25a24153500b51bd6f92149dfba92ce7d4c2442faa8b3bf
+            - path: 1.3.6
+              level: 3
+              title: 3.6 Reviewing
+              byte_offset: 9153
+              byte_count: 1046
+              word_count: 153
+              content_hash: 075f521fd37a8ced5181a725fd7211cc028989de3371c4e996f1c9b273bdca71
+            - path: 1.3.7
+              level: 3
+              title: 3.7 Integration
+              byte_offset: 10199
+              byte_count: 1031
+              word_count: 164
+              content_hash: 3f6cc71965bbec3953e94672cf95d6c8e2440cad57abcf1a22a1c1222161841a
+        - path: "1.4"
+          level: 2
+          title: 4. The document-centric interface
+          byte_offset: 11230
+          byte_count: 1910
+          word_count: 283
+          content_hash: 2aaab70eec06b57b84126519469949f9e4165542b8bbc81def69fb3bf17308d8
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Documents drive the workflow
+              byte_offset: 11415
+              byte_count: 412
+              word_count: 61
+              content_hash: 61d594fe610dc3f24cd859eab265183d16b9efe38f451b9cd90e820ad3fd45cc
+            - path: 1.4.2
+              level: 3
+              title: Document lifecycle drives feature lifecycle
+              byte_offset: 11827
+              byte_count: 659
+              word_count: 101
+              content_hash: 027eeeef548d55f60d1d3d4db521abe7c41f126f2d11a63d04b8de93ad2db377
+            - path: 1.4.3
+              level: 3
+              title: Document records track status, not replace the files
+              byte_offset: 12486
+              byte_count: 323
+              word_count: 48
+              content_hash: 661be37f5b7f7e6f867b404e10bdf8aa0d201627437dedbb45d848be7904eaad
+            - path: 1.4.4
+              level: 3
+              title: Why documents, not raw entities
+              byte_offset: 12809
+              byte_count: 331
+              word_count: 48
+              content_hash: de598ea8f56158ddddc575822641731e80d6393ad854a3af7b219433da84425b
+        - path: "1.5"
+          level: 2
+          title: 5. Common failure modes
+          byte_offset: 13140
+          byte_count: 1651
+          word_count: 236
+          content_hash: 16f8c77bfe5a69cef8ac57e8085deed6991a809f91487dfa76c6a57fdbf7de80
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Creating tasks without a specification
+              byte_offset: 13341
+              byte_count: 277
+              word_count: 39
+              content_hash: befd4325392e9d2f5715e9b3d80f04503126199d758803d4432e6020ed66c112
+            - path: 1.5.2
+              level: 3
+              title: Making architecture decisions without an approved design
+              byte_offset: 13618
+              byte_count: 324
+              word_count: 46
+              content_hash: 427591e2438604b40e1007d30ee10cd5a63d3aaf520d2729f78922ae4adc81ff
+            - path: 1.5.3
+              level: 3
+              title: Skipping dev planning
+              byte_offset: 13942
+              byte_count: 264
+              word_count: 34
+              content_hash: 13c1469eb906e5f0edc07aac6e05fbc34469a057220ba95cedbb247762b5bcf7
+            - path: 1.5.4
+              level: 3
+              title: Treating agent context as a substitute for workflow documents
+              byte_offset: 14206
+              byte_count: 295
+              word_count: 43
+              content_hash: 3cd1fe80a9a796bd4773e46d637497edfc787eda63c7d979f56e4f82595fe1c3
+            - path: 1.5.5
+              level: 3
+              title: Implementing before the gates are open
+              byte_offset: 14501
+              byte_count: 290
+              word_count: 43
+              content_hash: dc29aae1d1f536b3c87eee2fc3d665ad6d2906052a9ed07f36544c1aeb34c3a1
+        - path: "1.6"
+          level: 2
+          title: 6. Feature lifecycle summary
+          byte_offset: 14791
+          byte_count: 731
+          word_count: 106
+          content_hash: 8e874756ee3e42e4167c0a677a0dfbc03599bdc3d81a32eae2f0ff0c196a70a7
+        - path: "1.7"
+          level: 2
+          title: 7. Plan lifecycle summary
+          byte_offset: 15522
+          byte_count: 522
+          word_count: 87
+          content_hash: d2311992e411d6eea55bf7233470c2b258ae042b45e3ca505b95b76c9de27c41
+        - path: "1.8"
+          level: 2
+          title: What to read next
+          byte_offset: 16044
+          byte_count: 556
+          word_count: 69
+          content_hash: 7415148a9ff811371dc90b6966c34b3a6923841b245bbb20d6ad1690e9571378
+cross_doc_links:
+    - target_path: getting-started.md
+      link_text: Getting Started
+      section_path: "1"
+    - target_path: getting-started.md
+      link_text: Getting Started
+      section_path: "1.8"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.8"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1.8"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.8"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.5.2
+      role: decision
+      confidence: high
+    - section_path: 1.5.4
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+classified: false
