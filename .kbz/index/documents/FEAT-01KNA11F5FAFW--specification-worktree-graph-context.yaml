@@ -1,0 +1,92 @@
+document_id: FEAT-01KNA11F5FAFW/specification-worktree-graph-context
+document_path: work/spec/worktree-graph-context.md
+content_hash: fa97d7b09d2c7f7304327709b1e588e34ba7185c764002d3b9cf423ba9dd7395
+indexed_at: 2026-04-03T21:21:48.95646Z
+sections:
+    - path: "1"
+      level: 1
+      title: Worktree Graph Context — Specification
+      byte_offset: 0
+      byte_count: 13691
+      word_count: 1828
+      content_hash: fa97d7b09d2c7f7304327709b1e588e34ba7185c764002d3b9cf423ba9dd7395
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 208
+          byte_count: 653
+          word_count: 92
+          content_hash: 0430c899bbb850cd81c7a3cf304a4f27093978d8038ee2b8d4a1be298564ae6e
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 861
+          byte_count: 1090
+          word_count: 147
+          content_hash: 4b34b79deb8ac96954de0e83c389da360f4b8095bf0b507fadb48c2e6dabdace
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 1951
+          byte_count: 3797
+          word_count: 530
+          content_hash: 30224912da0888dfd9158219149b6ae2baf011c63f197ff30061b8e62ba29aef
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 5748
+          byte_count: 683
+          word_count: 102
+          content_hash: bbfef868497749e0d48ab0232091fcb8e719e800aa291cf6e078755fb42d770e
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 6431
+          byte_count: 4383
+          word_count: 569
+          content_hash: bd5e7c9b7fa86c57bc84c39623752980fd5e42ba4d0c0e99e01961a5ff9dba54
+        - path: "1.6"
+          level: 2
+          title: Verification Plan
+          byte_offset: 10814
+          byte_count: 2877
+          word_count: 370
+          content_hash: a84a0ec6c8dc67a201937b19e58885de11030d9d4b1c8de1a502d99e78a275d0
+entity_refs:
+    - entity_id: FEAT-01KNA
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 64
+    - entity_id: FEAT-01KNA
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 4055
+    - entity_id: FEAT-XXX
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 6756
+    - entity_id: P21-codebase-memory-integration
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 117
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+classified: false

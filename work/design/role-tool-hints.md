@@ -18,7 +18,22 @@
 
 ---
 
-## 1. Problem Statement
+## Overview
+
+Role-scoped tool hints are a configuration mechanism that allows users to
+inject machine-specific tool availability guidance into sub-agent prompts.
+Hints are keyed by role ID, stored in `local.yaml` (per-machine) and/or
+`config.yaml` (per-project), and injected automatically by `handoff` and
+`next` into the `## Available Tools` section of agent prompts.
+
+This is Phase 1 of the codebase-memory integration roadmap. It solves the
+general problem of agents not knowing about optional MCP tools, independent
+of any specific tool. Phase 2 (worktree-aware graph context) builds on this
+foundation.
+
+---
+
+## Problem Statement
 
 Kanbanzai's `handoff` tool assembles a prompt for each sub-agent containing
 role instructions, skill procedures, spec sections, and knowledge entries. It
@@ -87,7 +102,9 @@ Skill files could mention optional tools, but:
 
 ---
 
-## 2. Design Goals
+## Goals and Non-Goals
+
+### Goals
 
 1. **Portable** — the core system works identically for users with or without
    optional MCP servers; no hardcoded tool references in committed files
@@ -102,9 +119,19 @@ Skill files could mention optional tools, but:
 6. **Overridable** — `local.yaml` (per-machine) overrides `config.yaml`
    (per-project) on a per-key basis
 
+### Non-Goals
+
+- Validating hint content — values are opaque strings; no schema enforcement
+- Multiple hints per role — one hint per role keeps injection simple; users
+  who need composition can write a multi-line YAML string
+- Hint templating or variable substitution
+- Auto-detection of available MCP tools (see Alternatives Considered §5.5)
+- Global per-machine config (e.g. `~/.config/kanbanzai/`) — not in current
+  architecture; a separate design decision
+
 ---
 
-## 3. Design
+## Design
 
 ### 3.1 Config format
 
@@ -337,9 +364,7 @@ tool_hints:
 
 ---
 
-## 4. Scope
-
-### In scope
+## Scope
 
 - `tool_hints` field on `LocalConfig` (`internal/config/user.go`)
 - `tool_hints` field on `Config` (`internal/config/config.go`)
@@ -353,22 +378,29 @@ tool_hints:
 - Documentation: `refs/sub-agents.md` updated to reference this mechanism and
   deprecate the manual tool-context convention
 
-### Out of scope
+---
 
-- `codebase-memory-mcp` graph project injection — covered by Phase 2 of
-  `work/design/codebase-memory-integration.md`
-- Global per-machine config (e.g. `~/.config/kanbanzai/`) — not in current
-  architecture; a separate design decision
-- Validation of hint content — values are opaque strings; no schema
-  enforcement
-- Multiple hints per role — one hint per role keeps the config readable and
-  the injection simple; users who need composition can write a multi-line
-  YAML string
-- Hint templating or variable substitution
+## Dependencies
+
+This feature has no external dependencies. It modifies only Kanbanzai's own
+config system and prompt assembly pipeline:
+
+- **Internal**: `internal/config/config.go`, `internal/config/user.go`,
+  `internal/context/pipeline.go`, `internal/mcp/handoff_tool.go`,
+  `internal/mcp/next_tool.go`, `internal/mcp/server.go`,
+  `internal/mcp/health_tool.go`
+- **Existing interfaces**: `RoleResolver` in `internal/context/pipeline.go`
+  (used for inheritance resolution — no changes needed)
+- **External**: None. Tool hints are opaque strings; the server has no
+  knowledge of or dependency on any MCP tool they reference.
+
+Phase 2 (worktree-aware graph context from
+`work/design/codebase-memory-integration.md`) depends on this feature's
+config infrastructure and injection points being in place.
 
 ---
 
-## 5. Alternatives Considered
+## Alternatives Considered
 
 ### 5.1 Hardcode graph tool instructions in skill files
 
@@ -410,7 +442,7 @@ servers. User-authored hints are the correct layer for this information.
 
 ---
 
-## 6. Resolved Questions
+## Resolved Questions
 
 These were open in the previous draft and are now resolved:
 
@@ -432,7 +464,7 @@ keeps the injection logic trivial.
 
 ---
 
-## 7. Summary of Proposed Changes
+## Summary of Proposed Changes
 
 | Component | File(s) | Change | Lines (est.) |
 |-----------|---------|--------|-------------|

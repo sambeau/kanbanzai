@@ -143,7 +143,7 @@ Separately, it was confirmed that the main index does *not* traverse into
 
 ---
 
-## Dependency Assessment
+## Dependencies
 
 `codebase_memory_mcp` is an impressive piece of engineering — a single static C
 binary with zero runtime dependencies, 66 languages, 14 MCP tools. However, the
@@ -166,7 +166,9 @@ should be purely additive — failures must never block workflow.
 
 ---
 
-## Goals
+## Goals and Non-Goals
+
+### Goals
 
 - Make graph-based code navigation the default for all agents working on a
   feature branch, not an opt-in that competes with grep
@@ -181,7 +183,7 @@ should be purely additive — failures must never block workflow.
 - **No hard dependency**: if `codebase_memory_mcp` is unavailable, the
   workflow operates identically to today — no degradation
 
-## Non-Goals
+### Non-Goals
 
 - Kanbanzai Go code calling `codebase_memory_mcp` directly (deferred; see
   Phase 3 below)
@@ -194,7 +196,7 @@ should be purely additive — failures must never block workflow.
 
 ---
 
-## Phased Design
+## Design
 
 ### Phase 1: Role-Tool-Hints (portable foundation)
 
@@ -447,6 +449,37 @@ structured answer instead of navigating a file tree.
 
 Documentation, planning, and simple single-file tasks gain little from graph
 tools. These stages should not be burdened with indexing instructions.
+
+---
+
+## Alternatives Considered
+
+### Alternative: Hardcode graph tool instructions in skill files
+
+Rejected. Breaks portability — users without `codebase_memory_mcp` receive
+instructions for tools that don't exist. Skill files are committed project
+assets and should not encode machine-specific tool availability.
+
+### Alternative: Require orchestrators to manually include tool context
+
+The current approach, documented in `refs/sub-agents.md`. Rejected as the
+primary solution because it is fragile — easy to forget, not enforced by the
+system, and breaks down across delegation chains.
+
+### Alternative: Deep process-level integration from the start
+
+Rejected for Phase 1–2. Kanbanzai calling `codebase_memory_mcp` directly
+requires either shelling out to the CLI binary (fragile — path discovery,
+version skew) or implementing an MCP client (significant complexity). Neither
+is justified while the dependency is pre-1.0 and prompt-layer integration
+achieves the same outcome. Preserved as Phase 3 for future evaluation.
+
+### Alternative: Make graph index a hard stage gate prerequisite
+
+Rejected. Creates a hard dependency on `codebase_memory_mcp` being running
+and reachable; infrastructure failures would block workflow advancement. Gate
+prerequisites should reflect quality requirements, not tooling availability.
+A soft `info`-level attention item achieves visibility without blocking.
 
 ---
 
