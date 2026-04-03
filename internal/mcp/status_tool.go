@@ -51,11 +51,11 @@ import (
 // StatusTools returns the status MCP tool registered in the core group.
 // worktreeStore may be nil; feature detail will omit the worktree field in that case.
 // repoPath is used for stuck-task git activity detection; pass the repository root.
-func StatusTools(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store, repoPath string) []server.ServerTool {
-	return []server.ServerTool{statusTool(entitySvc, docSvc, worktreeStore, repoPath)}
+func StatusTools(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store, repoPath string, staleReviewingDays int) []server.ServerTool {
+	return []server.ServerTool{statusTool(entitySvc, docSvc, worktreeStore, repoPath, staleReviewingDays)}
 }
 
-func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store, repoPath string) server.ServerTool {
+func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store, repoPath string, staleReviewingDays int) server.ServerTool {
 	tool := mcp.NewTool("status",
 		mcp.WithReadOnlyHintAnnotation(true),
 		mcp.WithDestructiveHintAnnotation(false),
@@ -93,7 +93,7 @@ func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		case idTypePlan:
 			result, err = synthesisePlan(id, entitySvc, docSvc)
 		case idTypeFeature:
-			result, err = synthesiseFeature(id, entitySvc, docSvc, worktreeStore, repoPath)
+			result, err = synthesiseFeature(id, entitySvc, docSvc, worktreeStore, repoPath, staleReviewingDays)
 		case idTypeTask:
 			result, err = synthesiseTask(id, entitySvc)
 		case idTypeBug:
@@ -175,6 +175,25 @@ type statusHealthSummary struct {
 	Warnings int `json:"warnings"`
 }
 
+// AttentionItem is a structured attention entry in status response objects.
+// It replaces the legacy []string attention field (REQ-017).
+type AttentionItem struct {
+	Type      string `json:"type"`
+	Severity  string `json:"severity"`
+	EntityID  string `json:"entity_id,omitempty"`
+	DisplayID string `json:"display_id,omitempty"`
+	Message   string `json:"message"`
+}
+
+// bugItem is a minimal bug record for open critical/high bug detection.
+type bugItem struct {
+	ID       string
+	Name     string
+	Severity string
+	Priority string
+	Status   string
+}
+
 // buildHealthSummary runs the entity health check and returns a compact summary.
 // On error it returns an empty summary rather than failing the whole status call,
 // because health-check failure should not block the dashboard.
@@ -228,7 +247,7 @@ type projectOverview struct {
 	Plans       []planSummary        `json:"plans"`
 	Total       planAggregate        `json:"total"`
 	Health      *statusHealthSummary `json:"health,omitempty"`
-	Attention   []string             `json:"attention,omitempty"`
+	Attention   []AttentionItem      `json:"attention,omitempty"`
 	Orientation *orientationInfo     `json:"orientation,omitempty"`
 	GeneratedAt string               `json:"generated_at"`
 }
@@ -367,6 +386,30 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 	attention := generateProjectAttention(summaries, allTasks, worktreeBranches, repoPath)
 	health := buildHealthSummary(entitySvc)
 
+	// Pillar C — T7: Inject health findings as attention items (REQ-020, REQ-021).
+	// Runs only at project scope (not plan/feature/task). Best-effort: if health
+	// check fails, no items are added but the status call still succeeds.
+	if report, healthErr := entitySvc.HealthCheck(); healthErr == nil {
+		for _, e := range report.Errors {
+			attention = append(attention, AttentionItem{
+				Type:      "health_error",
+				Severity:  "error",
+				EntityID:  e.EntityID,
+				DisplayID: id.FormatFullDisplay(e.EntityID),
+				Message:   fmt.Sprintf("%s %s: %s", e.EntityType, e.EntityID, e.Message),
+			})
+		}
+		for _, w := range report.Warnings {
+			attention = append(attention, AttentionItem{
+				Type:      "health_warning",
+				Severity:  "warning",
+				EntityID:  w.EntityID,
+				DisplayID: id.FormatFullDisplay(w.EntityID),
+				Message:   fmt.Sprintf("%s %s: %s", w.EntityType, w.EntityID, w.Message),
+			})
+		}
+	}
+
 	return &projectOverview{
 		Scope:     "project",
 		Plans:     summaries,
@@ -389,7 +432,7 @@ type planDashboard struct {
 	Features    []featureSummary     `json:"features"`
 	DocGaps     []string             `json:"doc_gaps,omitempty"`
 	Health      *statusHealthSummary `json:"health,omitempty"`
-	Attention   []string             `json:"attention,omitempty"`
+	Attention   []AttentionItem      `json:"attention,omitempty"`
 	GeneratedAt string               `json:"generated_at"`
 }
 
@@ -580,11 +623,11 @@ type featureDetail struct {
 		Done   int `json:"done"`
 		Total  int `json:"total"`
 	} `json:"task_summary"`
-	Documents   []docInfo     `json:"documents,omitempty"`
-	Estimate    *float64      `json:"estimate,omitempty"`
-	Worktree    *worktreeInfo `json:"worktree,omitempty"`
-	Attention   []string      `json:"attention,omitempty"`
-	GeneratedAt string        `json:"generated_at"`
+	Documents   []docInfo       `json:"documents,omitempty"`
+	Estimate    *float64        `json:"estimate,omitempty"`
+	Worktree    *worktreeInfo   `json:"worktree,omitempty"`
+	Attention   []AttentionItem `json:"attention,omitempty"`
+	GeneratedAt string          `json:"generated_at"`
 }
 
 type taskInfo struct {
@@ -606,7 +649,7 @@ type docInfo struct {
 	Path      string `json:"path,omitempty"`
 }
 
-func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store, repoPath string) (*featureDetail, error) {
+func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store, repoPath string, staleReviewingDays int) (*featureDetail, error) {
 	feat, err := entitySvc.Get("feature", featID, "")
 	if err != nil {
 		return nil, fmt.Errorf("Cannot show status for feature %s: feature not found or unreadable: %w.\n\nTo resolve:\n  Verify the feature ID with entity(action: \"list\", type: \"feature\").", featID, err)
@@ -733,9 +776,36 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 	}
 
 	featDisplayID := id.FormatFullDisplay(feat.ID)
-	attention := generateFeatureAttention(tasks, docs, taskSummary.total, featDisplayID, fstatus, fUpdated, inheritedHasSpec, inheritedHasDevPlan)
+
+	// Load open bugs for critical/high bug warning (REQ-025, REQ-026).
+	var openBugs []bugItem
+	if allBugs, bugErr := entitySvc.List("bug"); bugErr == nil {
+		for _, b := range allBugs {
+			originFeature, _ := b.State["origin_feature"].(string)
+			if originFeature != featID {
+				continue
+			}
+			bStatus, _ := b.State["status"].(string)
+			// Skip resolved bugs (REQ-026).
+			switch bStatus {
+			case "done", "closed", "not-planned", "duplicate", "wont-fix":
+				continue
+			}
+			bSeverity, _ := b.State["severity"].(string)
+			bPriority, _ := b.State["priority"].(string)
+			bName, _ := b.State["name"].(string)
+			openBugs = append(openBugs, bugItem{
+				ID:       b.ID,
+				Name:     bName,
+				Severity: bSeverity,
+				Priority: bPriority,
+				Status:   bStatus,
+			})
+		}
+	}
+	attention := generateFeatureAttention(tasks, docs, taskSummary.total, feat.ID, featDisplayID, fstatus, fUpdated, inheritedHasSpec, inheritedHasDevPlan, staleReviewingDays, openBugs)
 	if fblockedReason != "" {
-		attention = append([]string{"BLOCKED: " + fblockedReason}, attention...)
+		attention = append([]AttentionItem{{Type: "stalled_task", Severity: "warning", EntityID: feat.ID, DisplayID: featDisplayID, Message: "BLOCKED: " + fblockedReason}}, attention...)
 	}
 
 	d := &featureDetail{
@@ -769,13 +839,13 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 // ─── Task detail synthesis ────────────────────────────────────────────────────
 
 type taskDetail struct {
-	Scope         string        `json:"scope"`
-	Task          taskFullInfo  `json:"task"`
-	ParentFeature *featureInfo  `json:"parent_feature,omitempty"`
-	Dependencies  []depInfo     `json:"dependencies,omitempty"`
-	Dispatch      *dispatchInfo `json:"dispatch,omitempty"`
-	Attention     []string      `json:"attention,omitempty"`
-	GeneratedAt   string        `json:"generated_at"`
+	Scope         string          `json:"scope"`
+	Task          taskFullInfo    `json:"task"`
+	ParentFeature *featureInfo    `json:"parent_feature,omitempty"`
+	Dependencies  []depInfo       `json:"dependencies,omitempty"`
+	Dispatch      *dispatchInfo   `json:"dispatch,omitempty"`
+	Attention     []AttentionItem `json:"attention,omitempty"`
+	GeneratedAt   string          `json:"generated_at"`
 }
 
 type taskFullInfo struct {
@@ -890,10 +960,10 @@ func stringFromTaskState(state map[string]any, key string) string {
 // ─── Bug detail synthesis ─────────────────────────────────────────────────────
 
 type bugDetail struct {
-	Scope       string   `json:"scope"`
-	Bug         bugInfo  `json:"bug"`
-	Attention   []string `json:"attention,omitempty"`
-	GeneratedAt string   `json:"generated_at"`
+	Scope       string          `json:"scope"`
+	Bug         bugInfo         `json:"bug"`
+	Attention   []AttentionItem `json:"attention,omitempty"`
+	GeneratedAt string          `json:"generated_at"`
 }
 
 type bugInfo struct {
@@ -917,12 +987,20 @@ func synthesiseBug(bugID string, entitySvc *service.EntityService) (*bugDetail, 
 	bseverity, _ := bug.State["severity"].(string)
 	bpriority, _ := bug.State["priority"].(string)
 
-	var attention []string
+	var attention []AttentionItem
 	if bseverity == "critical" || bseverity == "high" {
-		attention = append(attention, fmt.Sprintf("High-severity bug (%s) — prioritise resolution", bseverity))
+		attention = append(attention, AttentionItem{
+			Type:     "open_critical_bug",
+			Severity: "warning",
+			Message:  fmt.Sprintf("High-severity bug (%s) — prioritise resolution", bseverity),
+		})
 	}
 	if bstatus == "reported" {
-		attention = append(attention, "Bug not yet triaged — run triage to confirm severity and assign")
+		attention = append(attention, AttentionItem{
+			Type:     "stalled_task",
+			Severity: "warning",
+			Message:  "Bug not yet triaged — run triage to confirm severity and assign",
+		})
 	}
 
 	return &bugDetail{
@@ -945,8 +1023,8 @@ func synthesiseBug(bugID string, entitySvc *service.EntityService) (*bugDetail, 
 
 const maxAttentionItems = 5
 
-func generateProjectAttention(plans []planSummary, allTasks []service.ListResult, worktreeBranches map[string]string, repoPath string) []string {
-	var items []string
+func generateProjectAttention(plans []planSummary, allTasks []service.ListResult, worktreeBranches map[string]string, repoPath string) []AttentionItem {
+	var items []AttentionItem
 
 	// Count active plans.
 	activePlans := 0
@@ -959,7 +1037,11 @@ func generateProjectAttention(plans []planSummary, allTasks []service.ListResult
 	// Find plans with ready tasks.
 	for _, p := range plans {
 		if p.Tasks.Ready > 0 {
-			items = append(items, fmt.Sprintf("%d task(s) ready to claim in plan %s", p.Tasks.Ready, p.DisplayID))
+			items = append(items, AttentionItem{
+				Type:     "ready_tasks",
+				Severity: "info",
+				Message:  fmt.Sprintf("%d task(s) ready to claim in plan %s", p.Tasks.Ready, p.DisplayID),
+			})
 		}
 		if len(items) >= maxAttentionItems {
 			break
@@ -983,7 +1065,11 @@ func generateProjectAttention(plans []planSummary, allTasks []service.ListResult
 		}
 	}
 	if stalledCount > 0 && len(items) < maxAttentionItems {
-		items = append(items, fmt.Sprintf("%d active task(s) stalled for >3 days — check progress", stalledCount))
+		items = append(items, AttentionItem{
+			Type:     "stalled_task",
+			Severity: "warning",
+			Message:  fmt.Sprintf("%d active task(s) stalled for >3 days — check progress", stalledCount),
+		})
 	}
 
 	// Detect stuck tasks: active for >24h with no recent git activity.
@@ -1009,7 +1095,13 @@ func generateProjectAttention(plans []planSummary, allTasks []service.ListResult
 		parentFeature, _ := t.State["parent_feature"].(string)
 		branch := worktreeBranches[parentFeature]
 		if health.IsTaskStuck(dispatchedAt, 24*time.Hour, repoPath, branch) {
-			items = append(items, fmt.Sprintf("%s has been active for >24h with no recent commits — may need unclaim", taskID))
+			items = append(items, AttentionItem{
+				Type:      "stuck_task",
+				Severity:  "warning",
+				EntityID:  taskID,
+				DisplayID: id.FormatFullDisplay(taskID),
+				Message:   fmt.Sprintf("%s has been active for >24h with no recent commits — may need unclaim", taskID),
+			})
 		}
 	}
 
@@ -1019,24 +1111,38 @@ func generateProjectAttention(plans []planSummary, allTasks []service.ListResult
 			break
 		}
 		if p.AllFeaturesFinished && p.Status != "done" {
-			items = append(items, fmt.Sprintf("Plan %s has all %d features done — ready to close", p.DisplayID, p.Features))
+			items = append(items, AttentionItem{
+				Type:      "plan_ready_to_close",
+				Severity:  "info",
+				EntityID:  p.ID,
+				DisplayID: p.DisplayID,
+				Message:   fmt.Sprintf("Plan %s has all %d features done — ready to close", p.DisplayID, p.Features),
+			})
 		}
 	}
 
 	if activePlans == 0 && len(plans) > 0 && len(items) < maxAttentionItems {
-		items = append(items, "No active plans — advance a plan from designing or proposed to active")
+		items = append(items, AttentionItem{
+			Type:     "plan_ready_to_close",
+			Severity: "info",
+			Message:  "No active plans — advance a plan from designing or proposed to active",
+		})
 	}
 
 	return items
 }
 
-func generatePlanAttention(features []featureSummary, docGaps []string, planDisplayID string, planStatus string, allFeaturesFinished bool, featureCount int) []string {
-	var items []string
+func generatePlanAttention(features []featureSummary, docGaps []string, planDisplayID string, planStatus string, allFeaturesFinished bool, featureCount int) []AttentionItem {
+	var items []AttentionItem
 
 	// Features with ready tasks.
 	for _, f := range features {
 		if f.Tasks.Ready > 0 && len(items) < maxAttentionItems {
-			items = append(items, fmt.Sprintf("%d task(s) ready in %s (%s)", f.Tasks.Ready, f.DisplayID, f.Slug))
+			items = append(items, AttentionItem{
+				Type:     "ready_tasks",
+				Severity: "info",
+				Message:  fmt.Sprintf("%d task(s) ready in %s (%s)", f.Tasks.Ready, f.DisplayID, f.Slug),
+			})
 		}
 	}
 
@@ -1045,26 +1151,44 @@ func generatePlanAttention(features []featureSummary, docGaps []string, planDisp
 		if len(items) >= maxAttentionItems {
 			break
 		}
-		items = append(items, gap)
+		itemType := "missing_spec"
+		if strings.Contains(gap, "missing specification") {
+			itemType = "missing_spec"
+		} else {
+			itemType = "missing_dev_plan"
+		}
+		items = append(items, AttentionItem{
+			Type:     itemType,
+			Severity: "warning",
+			Message:  gap,
+		})
 	}
 
 	// Features with no tasks.
 	for _, f := range features {
 		if f.Tasks.Total == 0 && f.Status != "done" && len(items) < maxAttentionItems {
-			items = append(items, fmt.Sprintf("%s has no tasks — decompose the feature to start work", f.DisplayID))
+			items = append(items, AttentionItem{
+				Type:     "feature_no_tasks",
+				Severity: "info",
+				Message:  fmt.Sprintf("%s has no tasks — decompose the feature to start work", f.DisplayID),
+			})
 		}
 	}
 
 	// Plan completion detection: all features finished but plan not yet closed.
 	if allFeaturesFinished && featureCount > 0 && planStatus != "done" && len(items) < maxAttentionItems {
-		items = append(items, fmt.Sprintf("Plan %s has all %d features done — ready to close", planDisplayID, featureCount))
+		items = append(items, AttentionItem{
+			Type:     "plan_ready_to_close",
+			Severity: "info",
+			Message:  fmt.Sprintf("Plan %s has all %d features done — ready to close", planDisplayID, featureCount),
+		})
 	}
 
 	return items
 }
 
-func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int, featureDisplayID string, featureStatus string, featureUpdated time.Time, inheritedHasSpec bool, inheritedHasDevPlan bool) []string {
-	var items []string
+func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int, featureID string, featureDisplayID string, featureStatus string, featureUpdated time.Time, inheritedHasSpec bool, inheritedHasDevPlan bool, staleReviewingDays int, bugs []bugItem) []AttentionItem {
+	var items []AttentionItem
 
 	// Ready tasks available.
 	readyCount := 0
@@ -1074,7 +1198,11 @@ func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int, 
 		}
 	}
 	if readyCount > 0 {
-		items = append(items, fmt.Sprintf("%d task(s) ready to claim", readyCount))
+		items = append(items, AttentionItem{
+			Type:     "ready_tasks",
+			Severity: "info",
+			Message:  fmt.Sprintf("%d task(s) ready to claim", readyCount),
+		})
 	}
 
 	// Feature completion detection: all tasks terminal in developing/needs-rework.
@@ -1099,7 +1227,50 @@ func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int, 
 				msg = "⚠️ STALE: " + msg
 			}
 			if len(items) < maxAttentionItems {
-				items = append(items, msg)
+				items = append(items, AttentionItem{
+					Type:     "all_tasks_done",
+					Severity: "warning",
+					Message:  msg,
+				})
+			}
+		}
+	}
+
+	// Stale reviewing: feature in reviewing longer than threshold (REQ-022, REQ-023, REQ-024).
+	if featureStatus == "reviewing" && staleReviewingDays > 0 && !featureUpdated.IsZero() {
+		threshold := time.Duration(staleReviewingDays) * 24 * time.Hour
+		if time.Since(featureUpdated) > threshold {
+			days := int(time.Since(featureUpdated).Hours() / 24)
+			items = append(items, AttentionItem{
+				Type:      "stale_reviewing",
+				Severity:  "warning",
+				EntityID:  featureID,
+				DisplayID: featureDisplayID,
+				Message:   fmt.Sprintf("Feature has been in reviewing for %d days", days),
+			})
+		}
+	}
+
+	// Open critical/high bug warnings (REQ-025, REQ-026, REQ-027).
+	// Only emit for features that are not done/superseded/cancelled.
+	if featureStatus != "done" && featureStatus != "superseded" && featureStatus != "cancelled" {
+		for _, b := range bugs {
+			if b.Severity == "critical" || b.Priority == "critical" || b.Priority == "high" {
+				label := b.Severity
+				if label == "" {
+					label = b.Priority
+				}
+				msg := fmt.Sprintf("Open %s bug: %s", label, b.Name)
+				if b.Name == "" {
+					msg = fmt.Sprintf("Open %s bug: %s", label, b.ID)
+				}
+				items = append(items, AttentionItem{
+					Type:      "open_critical_bug",
+					Severity:  "warning",
+					EntityID:  b.ID,
+					DisplayID: id.FormatFullDisplay(b.ID),
+					Message:   msg,
+				})
 			}
 		}
 	}
@@ -1119,22 +1290,34 @@ func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int, 
 		}
 	}
 	if !hasSpec && len(items) < maxAttentionItems {
-		items = append(items, "Missing specification document — create work/spec/*.md and register it")
+		items = append(items, AttentionItem{
+			Type:     "missing_spec",
+			Severity: "warning",
+			Message:  "Missing specification document — create work/spec/*.md and register it",
+		})
 	}
 	if !hasDevPlan && len(items) < maxAttentionItems {
-		items = append(items, "Missing dev-plan document — create work/plan/*.md and register it")
+		items = append(items, AttentionItem{
+			Type:     "missing_dev_plan",
+			Severity: "warning",
+			Message:  "Missing dev-plan document — create work/plan/*.md and register it",
+		})
 	}
 
 	// No tasks.
 	if totalTasks == 0 && len(items) < maxAttentionItems {
-		items = append(items, "No tasks exist — run decompose to generate the task breakdown")
+		items = append(items, AttentionItem{
+			Type:     "feature_no_tasks",
+			Severity: "info",
+			Message:  "No tasks exist — run decompose to generate the task breakdown",
+		})
 	}
 
 	return items
 }
 
-func generateTaskAttention(task taskFullInfo, deps []depInfo) []string {
-	var items []string
+func generateTaskAttention(task taskFullInfo, deps []depInfo) []AttentionItem {
+	var items []AttentionItem
 
 	// Blocking dependencies.
 	blockingCount := 0
@@ -1144,17 +1327,29 @@ func generateTaskAttention(task taskFullInfo, deps []depInfo) []string {
 		}
 	}
 	if blockingCount > 0 {
-		items = append(items, fmt.Sprintf("%d blocking dependency(ies) not yet done — task cannot start", blockingCount))
+		items = append(items, AttentionItem{
+			Type:     "stalled_task",
+			Severity: "warning",
+			Message:  fmt.Sprintf("%d blocking dependency(ies) not yet done — task cannot start", blockingCount),
+		})
 	}
 
 	// Task is ready.
 	if task.Status == "ready" {
-		items = append(items, "Task is ready — use next(task_id) to claim and receive full context")
+		items = append(items, AttentionItem{
+			Type:     "ready_tasks",
+			Severity: "info",
+			Message:  "Task is ready — use next(task_id) to claim and receive full context",
+		})
 	}
 
 	// Missing files_planned.
 	if len(task.FilesPlanned) == 0 && task.Status != "done" {
-		items = append(items, "No files_planned set — add planned files for better conflict detection")
+		items = append(items, AttentionItem{
+			Type:     "missing_dev_plan",
+			Severity: "warning",
+			Message:  "No files_planned set — add planned files for better conflict detection",
+		})
 	}
 
 	return items

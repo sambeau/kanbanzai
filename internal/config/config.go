@@ -130,6 +130,13 @@ type DispatchConfig struct {
 	StallThresholdDays int `yaml:"stall_threshold_days"`
 }
 
+// LifecycleConfig holds settings for feature lifecycle behaviour.
+type LifecycleConfig struct {
+	// StaleReviewingDays is the number of days a feature can remain in reviewing
+	// before it is flagged as stale. Set to 0 to disable the check.
+	StaleReviewingDays int `yaml:"stale_reviewing_days"`
+}
+
 // MCPConfig holds settings for the MCP tool surface (Kanbanzai 2.0).
 // MergeConfig holds settings for merge operations.
 type MergeConfig struct {
@@ -152,7 +159,7 @@ type MCPConfig struct {
 // QualityEvaluationConfig holds settings for the quality evaluation approval gate.
 type QualityEvaluationConfig struct {
 	// RequireForApproval gates document approval on the presence of a passing evaluation.
-	RequireForApproval bool    `yaml:"require_quality_evaluation"`
+	RequireForApproval bool `yaml:"require_quality_evaluation"`
 	// Threshold is the minimum overall_score required when RequireForApproval is true.
 	Threshold float64 `yaml:"quality_evaluation_threshold"`
 }
@@ -191,6 +198,8 @@ type Config struct {
 	MCP MCPConfig `yaml:"mcp,omitempty"`
 	// QualityEvaluation holds settings for the quality evaluation approval gate.
 	QualityEvaluation QualityEvaluationConfig `yaml:"quality_evaluation,omitempty"`
+	// Lifecycle holds settings for feature lifecycle behaviour.
+	Lifecycle LifecycleConfig `yaml:"lifecycle,omitempty"`
 }
 
 // DefaultConfig returns a new Config with sensible defaults.
@@ -212,6 +221,7 @@ func DefaultConfig() Config {
 		Incidents:      DefaultIncidentsConfig(),
 		Decomposition:  DefaultDecompositionConfig(),
 		Freshness:      DefaultFreshnessConfig(),
+		Lifecycle:      DefaultLifecycleConfig(),
 	}
 }
 
@@ -275,6 +285,13 @@ func DefaultKnowledgeConfig() KnowledgeConfig {
 		Pruning: KnowledgePruningConfig{
 			GracePeriodDays: 7,
 		},
+	}
+}
+
+// DefaultLifecycleConfig returns default lifecycle settings.
+func DefaultLifecycleConfig() LifecycleConfig {
+	return LifecycleConfig{
+		StaleReviewingDays: 7,
 	}
 }
 

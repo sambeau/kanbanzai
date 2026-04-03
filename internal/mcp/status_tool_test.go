@@ -351,7 +351,7 @@ func TestSynthesisePlan_HasHealthSummary(t *testing.T) {
 func TestSynthesiseFeature_NotFound(t *testing.T) {
 	t.Parallel()
 	entitySvc, docSvc := setupStatusTest(t)
-	_, err := synthesiseFeature("FEAT-01NOTEXIST1", entitySvc, docSvc, nil, "")
+	_, err := synthesiseFeature("FEAT-01NOTEXIST1", entitySvc, docSvc, nil, "", 7)
 	if err == nil {
 		t.Fatal("synthesiseFeature: expected error for unknown feature, got nil")
 	}
@@ -368,7 +368,7 @@ func TestSynthesiseFeature_WithTasks(t *testing.T) {
 	_ = createStatusTestTask(t, entitySvc, featID, "task-two", "Task Two")
 	_ = createStatusTestTask(t, entitySvc, featID, "task-three", "Task Three")
 
-	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil, "")
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil, "", 7)
 	if err != nil {
 		t.Fatalf("synthesiseFeature error: %v", err)
 	}
@@ -398,7 +398,7 @@ func TestSynthesiseFeature_PlanIDPopulated(t *testing.T) {
 	planID := createTestPlan(t, entitySvc, "plan-id-check", "Plan")
 	featID := createStatusTestFeature(t, entitySvc, planID, "plan-id-feat", "Feature")
 
-	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil, "")
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil, "", 7)
 	if err != nil {
 		t.Fatalf("synthesiseFeature error: %v", err)
 	}
@@ -414,7 +414,7 @@ func TestSynthesiseFeature_AttentionIncludesMissingDocs(t *testing.T) {
 	planID := createTestPlan(t, entitySvc, "att-plan", "Plan")
 	featID := createStatusTestFeature(t, entitySvc, planID, "att-feat", "Attention Feature")
 
-	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil, "")
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, nil, "", 7)
 	if err != nil {
 		t.Fatalf("synthesiseFeature error: %v", err)
 	}
@@ -423,10 +423,10 @@ func TestSynthesiseFeature_AttentionIncludesMissingDocs(t *testing.T) {
 	foundSpec := false
 	foundTasks := false
 	for _, item := range detail.Attention {
-		if strings.Contains(strings.ToLower(item), "spec") {
+		if strings.Contains(strings.ToLower(item.Message), "spec") {
 			foundSpec = true
 		}
-		if strings.Contains(strings.ToLower(item), "task") || strings.Contains(strings.ToLower(item), "decompose") {
+		if strings.Contains(strings.ToLower(item.Message), "task") || strings.Contains(strings.ToLower(item.Message), "decompose") {
 			foundTasks = true
 		}
 	}
@@ -461,7 +461,7 @@ func TestSynthesiseFeature_WithWorktree(t *testing.T) {
 		t.Fatalf("worktree.Create: %v", err)
 	}
 
-	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore, "")
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore, "", 7)
 	if err != nil {
 		t.Fatalf("synthesiseFeature error: %v", err)
 	}
@@ -492,7 +492,7 @@ func TestSynthesiseFeature_NoWorktree(t *testing.T) {
 	stateRoot := t.TempDir()
 	wtStore := worktree.NewStore(stateRoot)
 
-	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore, "")
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore, "", 7)
 	if err != nil {
 		t.Fatalf("synthesiseFeature error: %v", err)
 	}
@@ -594,7 +594,7 @@ func TestSynthesiseTask_AttentionReadyTask(t *testing.T) {
 
 	foundReady := false
 	for _, item := range detail.Attention {
-		if strings.Contains(strings.ToLower(item), "ready") || strings.Contains(strings.ToLower(item), "next") {
+		if strings.Contains(strings.ToLower(item.Message), "ready") || strings.Contains(strings.ToLower(item.Message), "next") {
 			foundReady = true
 			break
 		}
@@ -1141,10 +1141,10 @@ func TestFeatureAttention_AllTasksDone_Developing(t *testing.T) {
 		{Status: "done"},
 		{Status: "not-planned"},
 	}
-	items := generateFeatureAttention(tasks, nil, 3, "FEAT-01", "developing", time.Time{}, true, true)
+	items := generateFeatureAttention(tasks, nil, 3, "FEAT-01", "FEAT-01", "developing", time.Time{}, true, true, 7, nil)
 	found := false
 	for _, item := range items {
-		if strings.Contains(item, "FEAT-01") && strings.Contains(item, "3/3") && strings.Contains(item, "ready to advance") {
+		if strings.Contains(item.Message, "FEAT-01") && strings.Contains(item.Message, "3/3") && strings.Contains(item.Message, "ready to advance") {
 			found = true
 		}
 	}
@@ -1156,10 +1156,10 @@ func TestFeatureAttention_AllTasksDone_Developing(t *testing.T) {
 // TestFeatureAttention_AllTasksDone_NeedsRework verifies needs-rework also triggers the item.
 func TestFeatureAttention_AllTasksDone_NeedsRework(t *testing.T) {
 	tasks := []taskInfo{{Status: "done"}, {Status: "done"}}
-	items := generateFeatureAttention(tasks, nil, 2, "FEAT-02", "needs-rework", time.Time{}, true, true)
+	items := generateFeatureAttention(tasks, nil, 2, "FEAT-02", "FEAT-02", "needs-rework", time.Time{}, true, true, 7, nil)
 	found := false
 	for _, item := range items {
-		if strings.Contains(item, "FEAT-02") && strings.Contains(item, "2/2") {
+		if strings.Contains(item.Message, "FEAT-02") && strings.Contains(item.Message, "2/2") {
 			found = true
 		}
 	}
@@ -1172,10 +1172,10 @@ func TestFeatureAttention_AllTasksDone_NeedsRework(t *testing.T) {
 // does NOT trigger the completion item.
 func TestFeatureAttention_AllTasksDone_Reviewing(t *testing.T) {
 	tasks := []taskInfo{{Status: "done"}, {Status: "done"}}
-	items := generateFeatureAttention(tasks, nil, 2, "FEAT-03", "reviewing", time.Time{}, true, true)
+	items := generateFeatureAttention(tasks, nil, 2, "FEAT-03", "FEAT-03", "reviewing", time.Time{}, true, true, 7, nil)
 	for _, item := range items {
-		if strings.Contains(item, "ready to advance") {
-			t.Errorf("unexpected 'ready to advance' item for reviewing status: %s", item)
+		if strings.Contains(item.Message, "ready to advance") {
+			t.Errorf("unexpected 'ready to advance' item for reviewing status: %s", item.Message)
 		}
 	}
 }
@@ -1183,10 +1183,10 @@ func TestFeatureAttention_AllTasksDone_Reviewing(t *testing.T) {
 // TestFeatureAttention_ZeroTasks_NoCompletionItem verifies that zero tasks
 // does NOT trigger the completion item.
 func TestFeatureAttention_ZeroTasks_NoCompletionItem(t *testing.T) {
-	items := generateFeatureAttention(nil, nil, 0, "FEAT-04", "developing", time.Time{}, true, true)
+	items := generateFeatureAttention(nil, nil, 0, "FEAT-04", "FEAT-04", "developing", time.Time{}, true, true, 7, nil)
 	for _, item := range items {
-		if strings.Contains(item, "ready to advance") {
-			t.Errorf("unexpected completion item for zero tasks: %s", item)
+		if strings.Contains(item.Message, "ready to advance") {
+			t.Errorf("unexpected completion item for zero tasks: %s", item.Message)
 		}
 	}
 }
@@ -1195,10 +1195,10 @@ func TestFeatureAttention_ZeroTasks_NoCompletionItem(t *testing.T) {
 // task blocks the completion item.
 func TestFeatureAttention_NonTerminalTask_NoCompletionItem(t *testing.T) {
 	tasks := []taskInfo{{Status: "done"}, {Status: "active"}}
-	items := generateFeatureAttention(tasks, nil, 2, "FEAT-05", "developing", time.Time{}, true, true)
+	items := generateFeatureAttention(tasks, nil, 2, "FEAT-05", "FEAT-05", "developing", time.Time{}, true, true, 7, nil)
 	for _, item := range items {
-		if strings.Contains(item, "ready to advance") {
-			t.Errorf("unexpected completion item when active task present: %s", item)
+		if strings.Contains(item.Message, "ready to advance") {
+			t.Errorf("unexpected completion item when active task present: %s", item.Message)
 		}
 	}
 }
@@ -1208,10 +1208,10 @@ func TestFeatureAttention_NonTerminalTask_NoCompletionItem(t *testing.T) {
 func TestFeatureAttention_StalePrefix_After48h(t *testing.T) {
 	tasks := []taskInfo{{Status: "done"}}
 	staleTime := time.Now().Add(-49 * time.Hour)
-	items := generateFeatureAttention(tasks, nil, 1, "FEAT-06", "developing", staleTime, true, true)
+	items := generateFeatureAttention(tasks, nil, 1, "FEAT-06", "FEAT-06", "developing", staleTime, true, true, 7, nil)
 	found := false
 	for _, item := range items {
-		if strings.HasPrefix(item, "⚠️ STALE:") {
+		if strings.HasPrefix(item.Message, "⚠️ STALE:") {
 			found = true
 		}
 	}
@@ -1225,10 +1225,10 @@ func TestFeatureAttention_StalePrefix_After48h(t *testing.T) {
 func TestFeatureAttention_NoStalePrefix_Recent(t *testing.T) {
 	tasks := []taskInfo{{Status: "done"}}
 	recentTime := time.Now().Add(-1 * time.Hour)
-	items := generateFeatureAttention(tasks, nil, 1, "FEAT-07", "developing", recentTime, true, true)
+	items := generateFeatureAttention(tasks, nil, 1, "FEAT-07", "FEAT-07", "developing", recentTime, true, true, 7, nil)
 	for _, item := range items {
-		if strings.HasPrefix(item, "⚠️ STALE:") {
-			t.Errorf("unexpected STALE prefix for recently updated feature: %s", item)
+		if strings.HasPrefix(item.Message, "⚠️ STALE:") {
+			t.Errorf("unexpected STALE prefix for recently updated feature: %s", item.Message)
 		}
 	}
 }
@@ -1238,10 +1238,10 @@ func TestFeatureAttention_NoStalePrefix_Recent(t *testing.T) {
 func TestFeatureAttention_NeedsRework_NoStalePrefix(t *testing.T) {
 	tasks := []taskInfo{{Status: "done"}}
 	staleTime := time.Now().Add(-72 * time.Hour)
-	items := generateFeatureAttention(tasks, nil, 1, "FEAT-08", "needs-rework", staleTime, true, true)
+	items := generateFeatureAttention(tasks, nil, 1, "FEAT-08", "FEAT-08", "needs-rework", staleTime, true, true, 7, nil)
 	for _, item := range items {
-		if strings.HasPrefix(item, "⚠️ STALE:") {
-			t.Errorf("unexpected STALE prefix for needs-rework feature: %s", item)
+		if strings.HasPrefix(item.Message, "⚠️ STALE:") {
+			t.Errorf("unexpected STALE prefix for needs-rework feature: %s", item.Message)
 		}
 	}
 }
@@ -1249,10 +1249,10 @@ func TestFeatureAttention_NeedsRework_NoStalePrefix(t *testing.T) {
 // TestFeatureAttention_InheritedSpec_NoWarning verifies that when inheritedHasSpec=true,
 // the "Missing specification" attention item is NOT emitted.
 func TestFeatureAttention_InheritedSpec_NoWarning(t *testing.T) {
-	items := generateFeatureAttention(nil, nil, 0, "FEAT-09", "dev-planning", time.Time{}, true, true)
+	items := generateFeatureAttention(nil, nil, 0, "FEAT-09", "FEAT-09", "dev-planning", time.Time{}, true, true, 7, nil)
 	for _, item := range items {
-		if strings.Contains(item, "Missing specification") {
-			t.Errorf("unexpected Missing specification item when inherited: %s", item)
+		if strings.Contains(item.Message, "Missing specification") {
+			t.Errorf("unexpected Missing specification item when inherited: %s", item.Message)
 		}
 	}
 }
@@ -1260,10 +1260,10 @@ func TestFeatureAttention_InheritedSpec_NoWarning(t *testing.T) {
 // TestFeatureAttention_NoInheritedSpec_Warning verifies that when inheritedHasSpec=false
 // and no feature-owned spec exists, the warning is emitted.
 func TestFeatureAttention_NoInheritedSpec_Warning(t *testing.T) {
-	items := generateFeatureAttention(nil, nil, 0, "FEAT-10", "specifying", time.Time{}, false, true)
+	items := generateFeatureAttention(nil, nil, 0, "FEAT-10", "FEAT-10", "specifying", time.Time{}, false, true, 7, nil)
 	found := false
 	for _, item := range items {
-		if strings.Contains(item, "Missing specification") {
+		if strings.Contains(item.Message, "Missing specification") {
 			found = true
 		}
 	}
@@ -1284,7 +1284,7 @@ func TestPlanAttention_AllFeaturesDone_Active(t *testing.T) {
 	items := generatePlanAttention(features, nil, "P13-workflow-flexibility", "active", true, 3)
 	found := false
 	for _, item := range items {
-		if strings.Contains(item, "P13-workflow-flexibility") && strings.Contains(item, "all 3 features done") && strings.Contains(item, "ready to close") {
+		if strings.Contains(item.Message, "P13-workflow-flexibility") && strings.Contains(item.Message, "all 3 features done") && strings.Contains(item.Message, "ready to close") {
 			found = true
 		}
 	}
@@ -1299,8 +1299,8 @@ func TestPlanAttention_PlanAlreadyDone_NoItem(t *testing.T) {
 	features := []featureSummary{{Status: "done"}}
 	items := generatePlanAttention(features, nil, "P13", "done", true, 1)
 	for _, item := range items {
-		if strings.Contains(item, "ready to close") {
-			t.Errorf("unexpected completion item for already-done plan: %s", item)
+		if strings.Contains(item.Message, "ready to close") {
+			t.Errorf("unexpected completion item for already-done plan: %s", item.Message)
 		}
 	}
 }
@@ -1311,8 +1311,8 @@ func TestPlanAttention_NonFinishedFeature_NoItem(t *testing.T) {
 	features := []featureSummary{{Status: "done"}, {Status: "developing"}}
 	items := generatePlanAttention(features, nil, "P13", "active", false, 2)
 	for _, item := range items {
-		if strings.Contains(item, "ready to close") {
-			t.Errorf("unexpected completion item when features not finished: %s", item)
+		if strings.Contains(item.Message, "ready to close") {
+			t.Errorf("unexpected completion item when features not finished: %s", item.Message)
 		}
 	}
 }
@@ -1322,8 +1322,8 @@ func TestPlanAttention_NonFinishedFeature_NoItem(t *testing.T) {
 func TestPlanAttention_ZeroFeatures_NoItem(t *testing.T) {
 	items := generatePlanAttention(nil, nil, "P13", "active", true, 0)
 	for _, item := range items {
-		if strings.Contains(item, "ready to close") {
-			t.Errorf("unexpected completion item for zero features: %s", item)
+		if strings.Contains(item.Message, "ready to close") {
+			t.Errorf("unexpected completion item for zero features: %s", item.Message)
 		}
 	}
 }
@@ -1338,7 +1338,7 @@ func TestProjectAttention_PlanAllFeaturesDone_NotClosed_Fires(t *testing.T) {
 	items := generateProjectAttention(plans, nil, nil, "")
 	found := false
 	for _, item := range items {
-		if strings.Contains(item, "P99-test") && strings.Contains(item, "ready to close") {
+		if strings.Contains(item.Message, "P99-test") && strings.Contains(item.Message, "ready to close") {
 			found = true
 		}
 	}
@@ -1354,7 +1354,7 @@ func TestProjectAttention_PlanAlreadyDone_NoCloseItem(t *testing.T) {
 	}
 	items := generateProjectAttention(plans, nil, nil, "")
 	for _, item := range items {
-		if strings.Contains(item, "ready to close") {
+		if strings.Contains(item.Message, "ready to close") {
 			t.Errorf("plan already done should not produce 'ready to close'; got: %v", items)
 		}
 	}
@@ -1367,7 +1367,7 @@ func TestProjectAttention_PlanNotAllFeaturesDone_NoCloseItem(t *testing.T) {
 	}
 	items := generateProjectAttention(plans, nil, nil, "")
 	for _, item := range items {
-		if strings.Contains(item, "P99-partial") && strings.Contains(item, "ready to close") {
+		if strings.Contains(item.Message, "P99-partial") && strings.Contains(item.Message, "ready to close") {
 			t.Errorf("plan with unfinished features should not produce 'ready to close'; got: %v", items)
 		}
 	}
@@ -1380,7 +1380,7 @@ func TestProjectAttention_StuckTask_NoDispatchedAt_NotFlagged(t *testing.T) {
 	}
 	items := generateProjectAttention(nil, tasks, nil, "")
 	for _, item := range items {
-		if strings.Contains(item, "TASK-NODISPATCH") {
+		if strings.Contains(item.Message, "TASK-NODISPATCH") {
 			t.Errorf("task without dispatched_at should not be flagged; got: %v", items)
 		}
 	}
@@ -1398,7 +1398,7 @@ func TestProjectAttention_StuckTask_RecentDispatch_NotFlagged(t *testing.T) {
 	}
 	items := generateProjectAttention(nil, tasks, nil, "")
 	for _, item := range items {
-		if strings.Contains(item, "TASK-RECENT") {
+		if strings.Contains(item.Message, "TASK-RECENT") {
 			t.Errorf("task dispatched 1h ago should not be flagged as stuck; got: %v", items)
 		}
 	}
@@ -1420,7 +1420,7 @@ func TestProjectAttention_StuckTask_OldDispatch_NoGitBranch_Flagged(t *testing.T
 	items := generateProjectAttention(nil, tasks, map[string]string{}, "")
 	found := false
 	for _, item := range items {
-		if strings.Contains(item, "TASK-STUCK01") {
+		if strings.Contains(item.Message, "TASK-STUCK01") {
 			found = true
 		}
 	}

@@ -1,0 +1,140 @@
+document_id: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review
+document_path: work/reviews/lifecycle-integrity-review.md
+content_hash: 179b9a8603f7c80cdba8d22e7e8a07fe35d61f6904054c369ed540e9dbf596c2
+indexed_at: 2026-04-02T23:28:21.24893Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: Lifecycle Integrity and Proactive Status'
+      byte_offset: 0
+      byte_count: 18853
+      word_count: 2528
+      content_hash: 179b9a8603f7c80cdba8d22e7e8a07fe35d61f6904054c369ed540e9dbf596c2
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 355
+          byte_count: 458
+          word_count: 36
+          content_hash: 71965ea6b7ce37775602f8564fc056476d87690ce2ab2795077b2c00f36ec21c
+        - path: "1.2"
+          level: 2
+          title: Summary
+          byte_offset: 813
+          byte_count: 639
+          word_count: 86
+          content_hash: 3729ebf88813a260dd224e0cac54e5542ed391913762cbef924dca3b1e573110
+        - path: "1.3"
+          level: 2
+          title: Findings
+          byte_offset: 1452
+          byte_count: 11064
+          word_count: 1415
+          content_hash: 3160e9cd3ea8a7467485e330c7d6dc8ca73eb7030835eb96489c901a80146195
+          children:
+            - path: 1.3.1
+              level: 3
+              title: '[defect] REQ-007: Gate query storage error is logged but not returned in the response'
+              byte_offset: 1465
+              byte_count: 1323
+              word_count: 192
+              content_hash: db7b580a6d35d8e73cc3cb7f624bc06cccd96a5c1bc2cd2467ebdd6f6aaeceef
+            - path: 1.3.2
+              level: 3
+              title: '[defect] REQ-023: `StaleReviewingDays` default (7) not applied for existing config files'
+              byte_offset: 2788
+              byte_count: 1710
+              word_count: 220
+              content_hash: 37a3caddda04f3f7b2e0645c336b7ef8a231ee415df9c97219c2f085de654fa0
+            - path: 1.3.3
+              level: 3
+              title: '[defect] REQ-006: Override record not written for `superseded`/`cancelled` feature terminal transitions'
+              byte_offset: 4498
+              byte_count: 2058
+              word_count: 284
+              content_hash: 5f7715d218ecfe4bb5c1358ad992734431362806b1528cd0e9fb4828ceb71824
+            - path: 1.3.4
+              level: 3
+              title: '[gap] Verification Plan test functions do not exist'
+              byte_offset: 6556
+              byte_count: 2146
+              word_count: 214
+              content_hash: 2ef5ef801b661918f5aceba82b0a4ca4c7d4d2997e738c0081ca6c362b83709c
+            - path: 1.3.5
+              level: 3
+              title: '[gap] AC-028 test does not inject health findings into the scenario'
+              byte_offset: 8702
+              byte_count: 984
+              word_count: 140
+              content_hash: 3a469d3a5b71ac74f482161f513c5c9a12bac819d71ac0008633bfa6ae6da2b2
+            - path: 1.3.6
+              level: 3
+              title: '[improvement] REQ-020: Health findings not injected into `planDashboard` attention'
+              byte_offset: 9686
+              byte_count: 1293
+              word_count: 170
+              content_hash: 98a0483f9804dedb9d48e1770bb9c45e6323308057c6de8bdf2574ef956ddcc3
+            - path: 1.3.7
+              level: 3
+              title: '[nit] REQ-010 references `complete_task`, which is a removed legacy tool'
+              byte_offset: 10979
+              byte_count: 787
+              word_count: 92
+              content_hash: 0a7d3d2889797ae8f95de565692bb6caeaa88dcc489002f21928918d1d32b734
+            - path: 1.3.8
+              level: 3
+              title: '[nit] Bug open-status check includes undocumented `"closed"` state'
+              byte_offset: 11766
+              byte_count: 750
+              word_count: 101
+              content_hash: 8e7332bbc6970c38a07f776adc9ad8fd4065afa57af15784916ff43b2ce67164
+        - path: "1.4"
+          level: 2
+          title: Specification Completeness
+          byte_offset: 12516
+          byte_count: 2329
+          word_count: 389
+          content_hash: e76887beb098950871f9f031c1657cefd622130f9b1afe89f9f6ce38a5fc18c4
+        - path: "1.5"
+          level: 2
+          title: Test Coverage Assessment
+          byte_offset: 14845
+          byte_count: 2032
+          word_count: 308
+          content_hash: 3c7a0fb3e4cd7dd76f9a1af4211c8ba753bed0dfa6d60c1342d3cefa849a0418
+        - path: "1.6"
+          level: 2
+          title: Code Quality Notes
+          byte_offset: 16877
+          byte_count: 895
+          word_count: 115
+          content_hash: 4a570328198e8c8bc871d0bd3d2f7a563cecd331764682a8ed351e4cb37e4c2b
+        - path: "1.7"
+          level: 2
+          title: Required Actions Before Merge
+          byte_offset: 17772
+          byte_count: 1081
+          word_count: 147
+          content_hash: 9c1a0c3732b35ab474ed62cda8f6a070f6ab4024522a41ec6fbfc68204d201da
+entity_refs:
+    - entity_id: FEAT-01KN83QN0VAFG
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 64
+    - entity_id: P19-workflow-lifecycle-integrity
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 130
+cross_doc_links:
+    - target_path: work/spec/lifecycle-integrity.md
+      link_text: work/spec/lifecycle-integrity.md
+      section_path: 1.3.7
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+classified: false
