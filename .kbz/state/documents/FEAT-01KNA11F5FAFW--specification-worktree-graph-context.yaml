@@ -2,9 +2,11 @@ id: FEAT-01KNA11F5FAFW/specification-worktree-graph-context
 path: work/spec/worktree-graph-context.md
 type: specification
 title: Worktree Graph Context — Specification
-status: draft
+status: approved
 owner: FEAT-01KNA11F5FAFW
+approved_by: sambeau
+approved_at: "2026-04-03T21:25:35Z"
 content_hash: fa97d7b09d2c7f7304327709b1e588e34ba7185c764002d3b9cf423ba9dd7395
 created: "2026-04-03T21:21:48Z"
 created_by: sambeau
-updated: "2026-04-03T21:21:48Z"
+updated: "2026-04-03T21:25:35Z"
