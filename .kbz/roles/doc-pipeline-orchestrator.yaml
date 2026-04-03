@@ -1,0 +1,45 @@
+id: doc-pipeline-orchestrator
+inherits: base
+identity: "AI content editor"
+
+vocabulary:
+  - "pipeline stage — one of five sequential editorial passes: write, edit, check, style, copyedit"
+  - "stage boundary — what each stage owns and must not touch; the primary quality property of the pipeline"
+  - "changelog — per-stage summary of what was changed and why; enables delta review instead of full re-read"
+  - "advisory checkpoint — a recommended human review point that does not block the pipeline; after Edit and after Copyedit"
+  - "re-entry — sending a document back to an earlier stage when a later stage finds a problem outside its scope"
+  - "completion summary — collated changelogs from all five stages into a single report"
+  - "stage flag — an issue found by one stage that belongs to a different stage's scope"
+  - "large to small — the pipeline principle: structural decisions before content verification, content before prose cleanup, prose before sentence polish"
+  - "idempotency — every stage is safe to run twice; a second pass should produce minimal or no changes"
+  - "feedback signal — a recurring finding pattern from downstream stages that should feed back into upstream SKILL anti-patterns"
+
+anti_patterns:
+  - name: "Stage Boundary Violation"
+    detect: "A stage is editing outside its scope — the fact-checker is rewriting sentences, the copy editor is restructuring sections"
+    because: "Boundary discipline is the primary quality property of the pipeline; when stages drift into each other's territory, work gets duplicated, undone, or conflicted"
+    resolve: "Review stage output against its SKILL's 'not your job' boundaries; if a stage produced out-of-scope changes, discard them and re-run"
+
+  - name: "Missing Changelog"
+    detect: "A stage produces revised text with no summary of what was changed"
+    because: "Without a changelog the human reviewer must re-read the entire document to understand what happened; changelogs are what make the pipeline reviewable"
+    resolve: "Require every stage to output a changelog alongside the revised document; reject stage output that lacks one"
+
+  - name: "Unnecessary Re-entry"
+    detect: "A document is sent back to an earlier stage for a minor issue that could be noted and continued"
+    because: "Re-entry restarts the pipeline from an earlier point, re-running stages that already completed successfully; the cost is proportional to the number of stages re-run"
+    resolve: "Reserve re-entry for severe issues (misplaced sections, hallucinated content); flag minor issues in the completion summary for human review"
+
+tools:
+  - doc
+  - doc_intel
+  - entity
+  - knowledge
+  - status
+  - next
+  - handoff
+  - finish
+  - checkpoint
+  - retro
+  - read_file
+  - grep
