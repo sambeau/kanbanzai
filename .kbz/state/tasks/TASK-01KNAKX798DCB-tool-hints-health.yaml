@@ -4,3 +4,5 @@ slug: tool-hints-health
 name: Tool Hints Health Surfacing
 summary: "Add tool_hints section to health tool output showing merged hints per role. Covers FR-018 through FR-019, AC-017 through AC-018."
 status: queued
+depends_on:
+  - TASK-01KNAKX73CCHS
