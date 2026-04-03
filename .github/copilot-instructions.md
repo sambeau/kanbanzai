@@ -40,7 +40,12 @@ Each role is a YAML file. Roles use inheritance (e.g. `reviewer-security` inheri
 | `reviewer-security` | `.kbz/roles/reviewer-security.yaml` | reviewing |
 | `reviewer-testing` | `.kbz/roles/reviewer-testing.yaml` | reviewing |
 | `researcher` | `.kbz/roles/researcher.yaml` | researching |
-| `documenter` | `.kbz/roles/documenter.yaml` | documenting |
+| `documenter` | `.kbz/roles/documenter.yaml` | documenting (writing) |
+| `doc-pipeline-orchestrator` | `.kbz/roles/doc-pipeline-orchestrator.yaml` | doc-publishing |
+| `doc-editor` | `.kbz/roles/doc-editor.yaml` | doc-publishing (sub-agent) |
+| `doc-checker` | `.kbz/roles/doc-checker.yaml` | doc-publishing (sub-agent) |
+| `doc-stylist` | `.kbz/roles/doc-stylist.yaml` | doc-publishing (sub-agent) |
+| `doc-copyeditor` | `.kbz/roles/doc-copyeditor.yaml` | doc-publishing (sub-agent) |
 
 ### Skills (`.kbz/skills/`)
 
@@ -61,6 +66,12 @@ Always read the skill specified by the stage binding before starting work.
 | **review-plan** | `.kbz/skills/review-plan/SKILL.md` | plan-reviewing |
 | **write-research** | `.kbz/skills/write-research/SKILL.md` | researching |
 | **update-docs** | `.kbz/skills/update-docs/SKILL.md` | documenting |
+| **orchestrate-doc-pipeline** | `.kbz/skills/orchestrate-doc-pipeline/SKILL.md` | doc-publishing |
+| **write-docs** | `.kbz/skills/write-docs/SKILL.md` | doc-publishing (write stage) |
+| **edit-docs** | `.kbz/skills/edit-docs/SKILL.md` | doc-publishing (edit stage) |
+| **check-docs** | `.kbz/skills/check-docs/SKILL.md` | doc-publishing (check stage) |
+| **style-docs** | `.kbz/skills/style-docs/SKILL.md` | doc-publishing (style stage) |
+| **copyedit-docs** | `.kbz/skills/copyedit-docs/SKILL.md` | doc-publishing (copyedit stage) |
 
 ### How to use the system
 

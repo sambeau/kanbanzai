@@ -131,3 +131,24 @@ stage_bindings:
     human_gate: false
     effort_budget: "5-15 tool calls"
     notes: "No human gate — documentation updates are low-risk currency fixes verified by the author. Any structural documentation changes that affect workflow behaviour should go through a design or spec stage instead."
+
+  doc-publishing:
+    description: "Running a document through the five-stage editorial pipeline"
+    orchestration: pipeline-coordinator
+    roles: [doc-pipeline-orchestrator]
+    skills: [orchestrate-doc-pipeline]
+    human_gate: false
+    effort_budget: "5-15 tool calls per stage"
+    sub_agents:
+      roles: [documenter, doc-editor, doc-checker, doc-stylist, doc-copyeditor]
+      skills: [write-docs, edit-docs, check-docs, style-docs, copyedit-docs]
+      topology: sequential
+    notes: >
+      Pipeline coordinator — lighter than a full orchestrator. Sequential
+      dispatch only, no parallelism. No mandatory human gates; advisory
+      checkpoints after Edit and after Copyedit. The coordinator passes
+      the document and the previous stage's changelog to each successive
+      stage, handles re-entry when a later stage flags an earlier-stage
+      problem, and collates all changelogs into a completion summary.
+      All documents run through all five stages. Individual stages can
+      also be triggered independently via their own skill triggers.
