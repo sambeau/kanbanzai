@@ -2,8 +2,10 @@ id: PROJECT/design-role-tool-hints
 path: work/design/role-tool-hints.md
 type: design
 title: Role-Scoped Tool Hints
-status: draft
-content_hash: 21b3f642992839c43a86436a67a8349024394ef221de7b3bb46b247235eb2121
+status: approved
+approved_by: sambeau
+approved_at: "2026-04-03T15:56:17Z"
+content_hash: 461fbcd0ff0f854a3b0cca0b6d5a56c095831c8ab84db1ddf5c647ab3852ffc2
 created: "2026-04-03T00:31:16Z"
 created_by: sambeau
-updated: "2026-04-03T00:31:16Z"
+updated: "2026-04-03T15:56:17Z"
