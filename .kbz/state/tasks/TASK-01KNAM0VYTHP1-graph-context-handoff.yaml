@@ -4,3 +4,5 @@ slug: graph-context-handoff
 name: Graph Context Handoff and Next
 summary: "Emit ## Code Graph section in handoff with three states: project set (full section with tool examples), project empty (indexing prompt), no worktree (omitted). Add graph_project field to next structured output. Handle section ordering after ## Available Tools. Covers FR-004 through FR-008, AC-006 through AC-011."
 status: queued
+depends_on:
+  - TASK-01KNAM0VVWJT6
