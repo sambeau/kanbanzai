@@ -2,9 +2,11 @@ id: FEAT-01KNA11F5FAFW/dev-plan-worktree-graph-context
 path: work/dev-plan/worktree-graph-context.md
 type: dev-plan
 title: Worktree Graph Context — Development Plan
-status: draft
+status: approved
 owner: FEAT-01KNA11F5FAFW
+approved_by: sambeau
+approved_at: "2026-04-03T21:33:40Z"
 content_hash: 76e10150f6215b6c26e33b9c86a3a8909dc778c2c37b6cae9c9ca0dc41992451
 created: "2026-04-03T21:33:31Z"
 created_by: sambeau
-updated: "2026-04-03T21:33:31Z"
+updated: "2026-04-03T21:33:40Z"
