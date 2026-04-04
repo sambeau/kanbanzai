@@ -181,7 +181,7 @@ type Pipeline struct {
 	MergedToolHints     map[string]string // merged tool hints (project + local)
 	ToolHintRoleStore   *RoleStore        // for tool hint inheritance walking
 	WindowSize          int               // context window in tokens; 0 means DefaultContextWindowTokens
-	StalenessWindowDays int // 0 means 30 (default)
+	StalenessWindowDays int               // 0 means 30 (default)
 }
 
 // stalenessWindow returns the effective staleness window in days.
@@ -646,18 +646,10 @@ func (p *Pipeline) stepAssembleSections(state *PipelineState) {
 	}
 }
 
-
 // stepResolveToolHint resolves the tool hint for the active role (step 8b).
 // Uses exact match then walks the role inheritance chain via Pipeline.Roles.
 func (p *Pipeline) stepResolveToolHint(state *PipelineState) {
 	if len(p.MergedToolHints) == 0 || state.Role == nil {
-		return
-	}
-	if p.ToolHintRoleStore == nil {
-		// No role store: can only do exact match.
-		if hint, ok := p.MergedToolHints[state.Role.ID]; ok {
-			state.ToolHint = hint
-		}
 		return
 	}
 	state.ToolHint = ResolveToolHint(p.MergedToolHints, state.Role.ID, p.ToolHintRoleStore)

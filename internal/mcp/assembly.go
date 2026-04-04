@@ -145,9 +145,9 @@ type asmInput struct {
 	intelligenceSvc *service.IntelligenceService
 	docRecordSvc    *service.DocumentService
 	entitySvc       *service.EntityService
-	featureStage    string // resolved feature lifecycle stage; empty = non-stage-aware
-	mergedToolHints map[string]string      // merged tool hints for role-scoped resolution
-	roleStore       *kbzctx.RoleStore      // for tool hint inheritance walking
+	featureStage    string            // resolved feature lifecycle stage; empty = non-stage-aware
+	mergedToolHints map[string]string // merged tool hints for role-scoped resolution
+	roleStore       *kbzctx.RoleStore // for tool hint inheritance walking
 }
 
 // assembleContext gathers spec sections, acceptance criteria, knowledge,
@@ -217,7 +217,7 @@ func assembleContext(input asmInput) assembledContext {
 	}
 
 	// Tool hint resolution: resolve role-scoped hint via inheritance (FR-015, FR-016).
-	if len(input.mergedToolHints) > 0 && input.role != "" && input.roleStore != nil {
+	if len(input.mergedToolHints) > 0 && input.role != "" {
 		actx.toolHint = kbzctx.ResolveToolHint(input.mergedToolHints, input.role, input.roleStore)
 	}
 

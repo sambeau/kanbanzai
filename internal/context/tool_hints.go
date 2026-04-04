@@ -11,7 +11,10 @@ func ResolveToolHint(hints map[string]string, roleID string, store *RoleStore) s
 	if hint, ok := hints[roleID]; ok {
 		return hint
 	}
-	// 2. Walk inheritance chain.
+	// 2. Walk inheritance chain (requires a store).
+	if store == nil {
+		return ""
+	}
 	current := roleID
 	visited := make(map[string]bool)
 	for {

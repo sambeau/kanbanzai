@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/sambeau/kanbanzai/internal/skill"
 )
 
 // TestStepResolveToolHint_ExactMatch verifies that an exact role ID match
@@ -142,6 +144,51 @@ func TestStepAssembleSections_ToolHintsBeforeProcedure(t *testing.T) {
 	if PositionAvailableTools >= PositionProcedure {
 		t.Errorf("PositionAvailableTools (%d) must be < PositionProcedure (%d)",
 			PositionAvailableTools, PositionProcedure)
+	}
+}
+
+// TestStepAssembleSections_ToolHintBeforeProcedure_Behavioral verifies that when
+// both a tool hint and a skill with a Procedure section are present, the
+// "Available Tools" section has a lower Position than "Procedure" in the
+// assembled output (AC-016).
+func TestStepAssembleSections_ToolHintBeforeProcedure_Behavioral(t *testing.T) {
+	p := &Pipeline{
+		Roles:    &mockRoleResolver{},
+		Skills:   &mockSkillResolver{},
+		Bindings: &mockBindingResolver{},
+	}
+	state := &PipelineState{
+		Input: PipelineInput{
+			TaskState: map[string]any{"id": "TASK-123", "summary": "test task"},
+		},
+		Role:     &ResolvedRole{ID: "implementer-go", Identity: "Go implementer"},
+		ToolHint: "Use search_graph",
+		Skill: &skill.Skill{
+			Sections: []skill.BodySection{
+				{Heading: "Procedure", Content: "Do the thing.\n"},
+			},
+		},
+	}
+	p.stepAssembleSections(state)
+
+	toolsPos := -1
+	procPos := -1
+	for _, s := range state.Sections {
+		if s.Label == "Available Tools" {
+			toolsPos = s.Position
+		}
+		if s.Label == "Procedure" {
+			procPos = s.Position
+		}
+	}
+	if toolsPos == -1 {
+		t.Fatal("Available Tools section not found in assembled sections")
+	}
+	if procPos == -1 {
+		t.Fatal("Procedure section not found in assembled sections")
+	}
+	if toolsPos >= procPos {
+		t.Errorf("Available Tools position (%d) must be less than Procedure position (%d)", toolsPos, procPos)
 	}
 }
 

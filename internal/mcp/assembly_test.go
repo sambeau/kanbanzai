@@ -550,7 +550,6 @@ func TestAsmExtractCriteria_BoldIdent_MayKeyword(t *testing.T) {
 	}
 }
 
-
 // TestAssembleContext_StageContentFilter verifies that file path extraction
 // respects stage-aware IncludeFilePaths configuration (FR-005).
 func TestAssembleContext_StageContentFilter(t *testing.T) {
@@ -661,5 +660,32 @@ func TestNextContextToMap_WithoutToolHint(t *testing.T) {
 	m := nextContextToMap(actx)
 	if _, ok := m["tool_hint"]; ok {
 		t.Error("tool_hint should not be present when no hint is set")
+	}
+}
+
+// TestRenderHandoffPrompt_NoHintsIdenticalOutput verifies that a zero-value
+// assembledContext and one with an explicitly empty toolHint produce
+// byte-identical prompts, and neither contains "## Available Tools" (AC-019).
+func TestRenderHandoffPrompt_NoHintsIdenticalOutput(t *testing.T) {
+	t.Parallel()
+	taskState := map[string]any{
+		"id":      "TASK-001",
+		"summary": "Test task",
+	}
+
+	zeroCtx := assembledContext{}
+	emptyCtx := assembledContext{toolHint: ""}
+
+	promptZero := renderHandoffPrompt(taskState, zeroCtx, "")
+	promptEmpty := renderHandoffPrompt(taskState, emptyCtx, "")
+
+	if promptZero != promptEmpty {
+		t.Error("zero-value and explicitly-empty toolHint prompts must be byte-identical")
+	}
+	if containsStr(promptZero, "## Available Tools") {
+		t.Error("zero-value prompt should not contain '## Available Tools'")
+	}
+	if containsStr(promptEmpty, "## Available Tools") {
+		t.Error("empty toolHint prompt should not contain '## Available Tools'")
 	}
 }

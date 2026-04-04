@@ -77,3 +77,22 @@ func TestResolveToolHint(t *testing.T) {
 		})
 	}
 }
+
+func TestResolveToolHint_CycleProtection(t *testing.T) {
+	tmpDir := t.TempDir()
+	newRoot := filepath.Join(tmpDir, "roles")
+
+	// Create a cycle: role-a inherits role-b, role-b inherits role-a.
+	writeRoleFile(t, newRoot, "role-a", validRoleWithInherits("role-a", "role-b"))
+	writeRoleFile(t, newRoot, "role-b", validRoleWithInherits("role-b", "role-a"))
+
+	store := NewRoleStore(newRoot, "")
+
+	// Hints only for a key not matching either role in the cycle.
+	hints := map[string]string{"other": "hint"}
+
+	got := ResolveToolHint(hints, "role-a", store)
+	if got != "" {
+		t.Errorf("ResolveToolHint() with cycle = %q, want empty string", got)
+	}
+}

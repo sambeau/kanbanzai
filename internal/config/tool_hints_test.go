@@ -1,8 +1,65 @@
 package config
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 )
+
+func TestConfigParse_NoToolHints(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	cfgPath := filepath.Join(tmpDir, "config.yaml")
+
+	yamlContent := `version: "2"
+prefixes:
+  - prefix: P
+    name: Plan
+`
+	if err := os.WriteFile(cfgPath, []byte(yamlContent), 0o644); err != nil {
+		t.Fatalf("failed to write config file: %v", err)
+	}
+
+	loaded, err := LoadFrom(cfgPath)
+	if err != nil {
+		t.Fatalf("LoadFrom() error = %v", err)
+	}
+
+	if loaded.ToolHints != nil {
+		t.Errorf("expected ToolHints to be nil, got %v", loaded.ToolHints)
+	}
+}
+
+func TestConfigParse_WithToolHints(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	cfgPath := filepath.Join(tmpDir, "config.yaml")
+
+	yamlContent := `version: "2"
+prefixes:
+  - prefix: P
+    name: Plan
+tool_hints:
+  implementer-go: "Use search_graph"
+`
+	if err := os.WriteFile(cfgPath, []byte(yamlContent), 0o644); err != nil {
+		t.Fatalf("failed to write config file: %v", err)
+	}
+
+	loaded, err := LoadFrom(cfgPath)
+	if err != nil {
+		t.Fatalf("LoadFrom() error = %v", err)
+	}
+
+	if loaded.ToolHints == nil {
+		t.Fatal("expected ToolHints to be non-nil")
+	}
+	if got := loaded.ToolHints["implementer-go"]; got != "Use search_graph" {
+		t.Errorf("ToolHints[\"implementer-go\"] = %q, want %q", got, "Use search_graph")
+	}
+}
 
 func TestMergeToolHints(t *testing.T) {
 	tests := []struct {
