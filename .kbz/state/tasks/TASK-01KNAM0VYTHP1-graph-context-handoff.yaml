@@ -3,10 +3,20 @@ parent_feature: FEAT-01KNA11F5FAFW
 slug: graph-context-handoff
 name: Graph Context Handoff and Next
 summary: "Emit ## Code Graph section in handoff with three states: project set (full section with tool examples), project empty (indexing prompt), no worktree (omitted). Add graph_project field to next structured output. Handle section ordering after ## Available Tools. Covers FR-004 through FR-008, AC-006 through AC-011."
-status: active
+status: done
 depends_on:
   - TASK-01KNAM0VVWJT6
+files_planned:
+  - internal/mcp/assembly.go
+  - internal/mcp/handoff_tool.go
+  - internal/mcp/next_tool.go
+  - internal/mcp/server.go
+  - internal/mcp/assembly_test.go
+  - internal/mcp/integration_test.go
+completed: "2026-04-04T09:03:55Z"
 claimed_at: "2026-04-04T08:52:42Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-04T08:52:42Z"
 dispatched_by: sambeau
+completion_summary: "Added ## Code Graph section to handoff with three states (project set: full tool examples, project empty: indexing prompt, no worktree: omitted). Added graph_project to next structured output. Threaded worktreeStore through HandoffTools, NextTools, and assembleContext. Section ordered after ## Available Tools. 7 new tests covering AC-006 through AC-011 plus NFR-003."
+verification: go build ./... and go test ./... pass. All 7 acceptance criteria (AC-006 through AC-011) and NFR-003 covered by tests.

@@ -3,10 +3,20 @@ parent_feature: FEAT-01KNA11F5FAFW
 slug: graph-context-status-cleanup
 name: Graph Context Status and Cleanup
 summary: "Emit missing_graph_index info attention item in status when worktree exists but GraphProject is empty. Suppress when set or no worktree. Add cleanup note on worktree remove and cleanup execute when GraphProject is non-empty. Covers FR-009 through FR-013, AC-012 through AC-018."
-status: active
+status: done
 depends_on:
   - TASK-01KNAM0VVWJT6
+files_planned:
+  - internal/mcp/status_tool.go
+  - internal/mcp/worktree_tool.go
+  - internal/mcp/cleanup_tool.go
+  - internal/mcp/status_tool_test.go
+  - internal/mcp/worktree_tool_test.go
+  - internal/mcp/cleanup_tool_test.go
+completed: "2026-04-04T09:03:55Z"
 claimed_at: "2026-04-04T08:52:42Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-04T08:52:42Z"
 dispatched_by: sambeau
+completion_summary: "Added missing_graph_index info attention item in status when worktree exists with empty GraphProject. Added graph_project_note to worktree remove and cleanup execute responses when GraphProject is non-empty. Pre-captures GraphProject values before cleanup deletes records. 10 new tests covering AC-012 through AC-017, plus AC-018 satisfied by design."
+verification: go build ./... and go test ./... pass. All 7 acceptance criteria (AC-012 through AC-018) covered by tests.
