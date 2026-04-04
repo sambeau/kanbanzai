@@ -82,40 +82,49 @@ func TestRecord_Fields(t *testing.T) {
 func TestRecord_GraphProject_Fields(t *testing.T) {
 	t.Parallel()
 
-	tests := []struct {
-		name         string
-		graphProject string
-		want         string
-	}{
-		{"empty string included in fields", "", ""},
-		{"non-empty value included in fields", "kanbanzai-FEAT-XXX", "kanbanzai-FEAT-XXX"},
-	}
+	t.Run("empty string omitted from fields", func(t *testing.T) {
+		t.Parallel()
+		record := Record{
+			ID:           "WT-01JX123456789",
+			EntityID:     "FEAT-01JX987654321",
+			Branch:       "feature/test",
+			Path:         ".worktrees/test",
+			Status:       StatusActive,
+			Created:      time.Date(2025, 1, 27, 10, 0, 0, 0, time.UTC),
+			CreatedBy:    "sambeau",
+			GraphProject: "",
+		}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
-			record := Record{
-				ID:           "WT-01JX123456789",
-				EntityID:     "FEAT-01JX987654321",
-				Branch:       "feature/test",
-				Path:         ".worktrees/test",
-				Status:       StatusActive,
-				Created:      time.Date(2025, 1, 27, 10, 0, 0, 0, time.UTC),
-				CreatedBy:    "sambeau",
-				GraphProject: tt.graphProject,
-			}
+		fields := record.Fields()
 
-			fields := record.Fields()
+		if _, ok := fields["graph_project"]; ok {
+			t.Error("fields[graph_project] should not be present when GraphProject is empty")
+		}
+	})
 
-			got, ok := fields["graph_project"]
-			if !ok {
-				t.Fatal("fields[graph_project] not present")
-			}
-			if got != tt.want {
-				t.Errorf("fields[graph_project] = %q, want %q", got, tt.want)
-			}
-		})
-	}
+	t.Run("non-empty value included in fields", func(t *testing.T) {
+		t.Parallel()
+		record := Record{
+			ID:           "WT-01JX123456789",
+			EntityID:     "FEAT-01JX987654321",
+			Branch:       "feature/test",
+			Path:         ".worktrees/test",
+			Status:       StatusActive,
+			Created:      time.Date(2025, 1, 27, 10, 0, 0, 0, time.UTC),
+			CreatedBy:    "sambeau",
+			GraphProject: "kanbanzai-FEAT-XXX",
+		}
+
+		fields := record.Fields()
+
+		got, ok := fields["graph_project"]
+		if !ok {
+			t.Fatal("fields[graph_project] not present")
+		}
+		if got != "kanbanzai-FEAT-XXX" {
+			t.Errorf("fields[graph_project] = %q, want %q", got, "kanbanzai-FEAT-XXX")
+		}
+	})
 }
 
 func TestRecord_GraphProject_FieldOrder(t *testing.T) {

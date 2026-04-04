@@ -60,7 +60,9 @@ func (r Record) Fields() map[string]any {
 		fields["cleanup_after"] = r.CleanupAfter.Format(time.RFC3339)
 	}
 
-	fields["graph_project"] = r.GraphProject
+	if r.GraphProject != "" {
+		fields["graph_project"] = r.GraphProject
+	}
 
 	return fields
 }

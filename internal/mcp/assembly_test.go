@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/sambeau/kanbanzai/internal/service"
 )
@@ -878,5 +879,67 @@ func TestNextContextToMap_GraphProjectEmpty(t *testing.T) {
 	}
 	if gp != "" {
 		t.Errorf("graph_project = %q, want empty string", gp)
+	}
+}
+
+// TestWorkflow_NoGraphToolsAvailable verifies AC-018: when codebase_memory_mcp
+// is unavailable (GraphProject empty, no worktree), handoff, next context, and
+// status attention all produce no errors and identical non-graph behaviour.
+// This is the verification plan entry for AC-018.
+func TestWorkflow_NoGraphToolsAvailable(t *testing.T) {
+	t.Parallel()
+
+	taskState := map[string]any{
+		"id":      "TASK-001",
+		"summary": "Test task",
+	}
+
+	// Zero-value assembledContext simulates no worktree / no graph tools.
+	actx := assembledContext{}
+
+	// 1. Handoff: no ## Code Graph section, no errors.
+	prompt := renderHandoffPrompt(taskState, actx, "some instructions")
+	if containsStr(prompt, "## Code Graph") {
+		t.Error("handoff prompt should not contain '## Code Graph' when no graph tools available")
+	}
+	if containsStr(prompt, "index_repository") {
+		t.Error("handoff prompt should not reference index_repository when no worktree exists")
+	}
+	if !containsStr(prompt, "Test task") {
+		t.Error("handoff prompt should still contain the task summary")
+	}
+
+	// 2. Next context: graph_project is empty string, no error fields.
+	m := nextContextToMap(actx)
+	gp, ok := m["graph_project"].(string)
+	if !ok {
+		t.Fatal("graph_project should be present in next context map")
+	}
+	if gp != "" {
+		t.Errorf("graph_project = %q, want empty string", gp)
+	}
+
+	// 3. Status attention: no missing_graph_index item when no worktree.
+	// Use the full generateFeatureAttention signature with zero/empty values
+	// to simulate a feature with no worktree and no graph tools.
+	items := generateFeatureAttention(
+		nil,          // tasks
+		nil,          // docs
+		0,            // totalTasks
+		"",           // featureID
+		"",           // featureDisplayID
+		"developing", // featureStatus
+		time.Time{},  // featureUpdated
+		false,        // inheritedHasSpec
+		false,        // inheritedHasDevPlan
+		14,           // staleReviewingDays
+		nil,          // bugs
+		false,        // hasActiveWorktree
+		"",           // worktreeGraphProject
+	)
+	for _, item := range items {
+		if item.Type == "missing_graph_index" {
+			t.Error("status should not emit missing_graph_index when no worktree exists")
+		}
 	}
 }
