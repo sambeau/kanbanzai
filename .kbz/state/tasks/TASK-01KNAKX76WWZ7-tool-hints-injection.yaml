@@ -3,6 +3,6 @@ parent_feature: FEAT-01KNA11F3BBMP
 slug: tool-hints-injection
 name: Tool Hints Injection
 summary: "Inject resolved tool hint into handoff (3.0 pipeline and legacy 2.0 paths) as ## Available Tools section and into next context output as tool_hint field. Handle section ordering with Phase 2 Code Graph section. Covers FR-010 through FR-017, AC-010 through AC-016, AC-019."
-status: queued
+status: ready
 depends_on:
   - TASK-01KNAKX73CCHS

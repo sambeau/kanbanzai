@@ -3,4 +3,18 @@ parent_feature: FEAT-01KNA11F3BBMP
 slug: tool-hints-config
 name: Tool Hints Config and Resolve
 summary: "Add ToolHints map[string]string to Config and LocalConfig structs. Implement MergeToolHints (per-key, local wins) and ResolveToolHint (exact match then walk inherits chain). Wire merge at server startup. Covers FR-001 through FR-009, AC-001 through AC-009."
-status: ready
+status: done
+files_planned:
+  - internal/config/config.go
+  - internal/config/user.go
+  - internal/config/tool_hints.go
+  - internal/config/tool_hints_test.go
+  - internal/context/tool_hints.go
+  - internal/context/tool_hints_test.go
+  - internal/mcp/server.go
+completed: "2026-04-04T07:27:50Z"
+claimed_at: "2026-04-03T21:34:28Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-03T21:34:28Z"
+dispatched_by: sambeau
+completion_summary: "Implemented ToolHints map[string]string on Config and LocalConfig structs, MergeToolHints (per-key, local wins), ResolveToolHint (exact match then inherits chain walk with cycle protection), and wired merge at server startup. All tests passing."
