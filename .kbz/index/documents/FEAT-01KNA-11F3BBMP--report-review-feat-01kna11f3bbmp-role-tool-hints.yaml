@@ -1,0 +1,121 @@
+document_id: FEAT-01KNA-11F3BBMP/report-review-feat-01kna11f3bbmp-role-tool-hints
+document_path: work/reviews/review-FEAT-01KNA11F3BBMP-role-tool-hints.md
+content_hash: b3a633081192bbbfec0e510a7818db55c7aff3ed6d2baa7da90ff3a0c9249970
+indexed_at: 2026-04-04T08:22:35.202566Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: Role-Scoped Tool Hints'
+      byte_offset: 0
+      byte_count: 11714
+      word_count: 1390
+      content_hash: b3a633081192bbbfec0e510a7818db55c7aff3ed6d2baa7da90ff3a0c9249970
+      children:
+        - path: "1.1"
+          level: 2
+          title: Per-Reviewer Summary
+          byte_offset: 304
+          byte_count: 1695
+          word_count: 229
+          content_hash: 510244d6cc310c73549db3f36c14ccdc59edfa8c4a9d59aee896915fe3d1444b
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 'Reviewer: reviewer-conformance'
+              byte_offset: 329
+              byte_count: 532
+              word_count: 70
+              content_hash: 7c11fd2187be9f7c0c59752c3d0d2652dcde7aa5dfe90c30f7fd2d8043f8e9e4
+            - path: 1.1.2
+              level: 3
+              title: 'Reviewer: reviewer-quality'
+              byte_offset: 861
+              byte_count: 564
+              word_count: 77
+              content_hash: 639e589747bb1cfba5439545907907f6cece24dc21037758bb99bfaeb4c86933
+            - path: 1.1.3
+              level: 3
+              title: 'Reviewer: reviewer-testing'
+              byte_offset: 1425
+              byte_count: 574
+              word_count: 79
+              content_hash: 5a0a436d2f4c5a063e58f1b3e36e0df048b47eeaf5ee10342c56a688f2884b8a
+        - path: "1.2"
+          level: 2
+          title: Collated Findings (deduplicated)
+          byte_offset: 1999
+          byte_count: 6560
+          word_count: 759
+          content_hash: 357b1a89e63dbd5248489b5c08fd55ddea778332a5386b71074977b940dce4a6
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Blocking
+              byte_offset: 2036
+              byte_count: 1715
+              word_count: 180
+              content_hash: 04530b0584a6f0ccfbb0b6d25f4c0d693a6a6dfbbcfa95101ee83de22b5a2583
+            - path: 1.2.2
+              level: 3
+              title: Non-Blocking
+              byte_offset: 3751
+              byte_count: 4808
+              word_count: 575
+              content_hash: bc9f631b3a0c1e7ae3c8b83ab6c4e7d7e05ed75b0cc6bcc68ce22374208536a5
+        - path: "1.3"
+          level: 2
+          title: 'Aggregate Verdict: approved_with_followups'
+          byte_offset: 8559
+          byte_count: 1486
+          word_count: 199
+          content_hash: f2d362c8b67fc5157a5c27cae609cca709b7a77f45fc97e316401ea42be733e7
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Rationale
+              byte_offset: 8606
+              byte_count: 687
+              word_count: 90
+              content_hash: 57892264efadf9d5b3b12d2925bac77adefdcb2d49b65c92f8f71c3b4486edaf
+            - path: 1.3.2
+              level: 3
+              title: Blocking Finding Assessment
+              byte_offset: 9293
+              byte_count: 752
+              word_count: 105
+              content_hash: b3ab4b22ed85cf58e34a9f8df42a5b3f154e804fa845d1478f9bfe5a80f5bef7
+        - path: "1.4"
+          level: 2
+          title: Review Unit Breakdown
+          byte_offset: 10045
+          byte_count: 1669
+          word_count: 169
+          content_hash: 92efefc41e6159624b502a5831d5656a885f26659eb4a640d6c34ff6ccaba318
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Unit: tool-hints-all'
+              byte_offset: 10071
+              byte_count: 1643
+              word_count: 165
+              content_hash: 8da9a857d38feb812d602cae6884cfb0b714363b944785494b6c7badf6505e86
+entity_refs:
+    - entity_id: FEAT-01KNA
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 45
+    - entity_id: FEAT-01KNA11F3BBMP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 237
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.1
+      role: rationale
+      confidence: high
+classified: false
