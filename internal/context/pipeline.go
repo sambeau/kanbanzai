@@ -28,11 +28,12 @@ const (
 	PositionOrchestration     = 3
 	PositionVocabulary        = 4
 	PositionAntiPatterns      = 5
-	PositionProcedure         = 6
-	PositionOutputAndExamples = 7
-	PositionKnowledge         = 8
-	PositionEvalCriteria      = 9
-	PositionRetrievalAnchors  = 10
+	PositionAvailableTools    = 6
+	PositionProcedure         = 7
+	PositionOutputAndExamples = 8
+	PositionKnowledge         = 9
+	PositionEvalCriteria      = 10
+	PositionRetrievalAnchors  = 11
 )
 
 // Progressive disclosure layer assignments (FR-018).
@@ -154,6 +155,7 @@ type PipelineState struct {
 	MergedAnti        []AntiPatternEntry    // from steps 5+6
 	Knowledge         []SurfacedEntry       // from step 7
 	ToolGuidance      string                // from step 8
+	ToolHint          string                // resolved tool hint for active role
 	Sections          []PipelineSection     // accumulated by step 10
 	TokenEstimate     int                   // from step 9
 	StalenessWarnings []string              // from freshness check after steps 5+6
@@ -176,8 +178,10 @@ type Pipeline struct {
 	Skills              SkillResolver
 	Bindings            BindingResolver
 	Knowledge           KnowledgeSurfacer
-	WindowSize          int // context window in tokens; 0 means DefaultContextWindowTokens
-	StalenessWindowDays int // 0 means 30 (default)
+	MergedToolHints     map[string]string // merged tool hints (project + local)
+	ToolHintRoleStore   *RoleStore        // for tool hint inheritance walking
+	WindowSize          int               // context window in tokens; 0 means DefaultContextWindowTokens
+	StalenessWindowDays int               // 0 means 30 (default)
 }
 
 // stalenessWindow returns the effective staleness window in days.
@@ -241,6 +245,9 @@ func (p *Pipeline) Run(input PipelineInput) (*PipelineResult, error) {
 
 	// Step 8: Tool subset guidance.
 	p.stepToolGuidance(state)
+
+	// Step 8b: Resolve role-scoped tool hint.
+	p.stepResolveToolHint(state)
 
 	// Step 9: Token budget estimation.
 	// (Populates state.Sections first, then estimates.)
@@ -548,7 +555,20 @@ func (p *Pipeline) stepAssembleSections(state *PipelineState) {
 		})
 	}
 
-	// Position 6: Skill procedure (Layer 2).
+	// Position 6: Available tools — role-scoped tool hint (Layer 1).
+	// Omitted when no hint resolves for the active role (FR-012).
+	if state.ToolHint != "" {
+		toolHintContent := "## Available Tools\n\n" + state.ToolHint
+		state.Sections = append(state.Sections, PipelineSection{
+			Position: PositionAvailableTools,
+			Label:    "Available Tools",
+			Content:  toolHintContent,
+			Layer:    LayerAlways,
+			Tokens:   estimateTokens(toolHintContent),
+		})
+	}
+
+	// Position 7: Skill procedure (Layer 2).
 	if state.Skill != nil {
 		proc := extractSkillSection(state.Skill, "Procedure")
 		if proc == "" {
@@ -565,7 +585,7 @@ func (p *Pipeline) stepAssembleSections(state *PipelineState) {
 		}
 	}
 
-	// Position 7: Output format and examples (Layer 2).
+	// Position 8: Output format and examples (Layer 2).
 	if state.Skill != nil && state.Inclusion.IncludeExamples {
 		outputFmt := extractSkillSection(state.Skill, "Output Format")
 		examples := extractSkillSection(state.Skill, "Examples")
@@ -581,7 +601,7 @@ func (p *Pipeline) stepAssembleSections(state *PipelineState) {
 		}
 	}
 
-	// Position 8: Knowledge entries (Layer 2).
+	// Position 9: Knowledge entries (Layer 2).
 	if len(state.Knowledge) > 0 {
 		var lines []string
 		for _, ke := range state.Knowledge {
@@ -597,7 +617,7 @@ func (p *Pipeline) stepAssembleSections(state *PipelineState) {
 		})
 	}
 
-	// Position 9: Evaluation criteria (Layer 2).
+	// Position 10: Evaluation criteria (Layer 2).
 	if state.Skill != nil {
 		evalContent := extractSkillSection(state.Skill, "Evaluation Criteria")
 		if evalContent != "" {
@@ -611,7 +631,7 @@ func (p *Pipeline) stepAssembleSections(state *PipelineState) {
 		}
 	}
 
-	// Position 10: Retrieval anchors (Layer 2).
+	// Position 11: Retrieval anchors (Layer 2).
 	if state.Skill != nil {
 		anchors := extractSkillSection(state.Skill, "Questions This Skill Answers")
 		if anchors != "" {
@@ -624,6 +644,15 @@ func (p *Pipeline) stepAssembleSections(state *PipelineState) {
 			})
 		}
 	}
+}
+
+// stepResolveToolHint resolves the tool hint for the active role (step 8b).
+// Uses exact match then walks the role inheritance chain via Pipeline.Roles.
+func (p *Pipeline) stepResolveToolHint(state *PipelineState) {
+	if len(p.MergedToolHints) == 0 || state.Role == nil {
+		return
+	}
+	state.ToolHint = ResolveToolHint(p.MergedToolHints, state.Role.ID, p.ToolHintRoleStore)
 }
 
 // stepTokenBudget estimates total tokens and enforces budget thresholds (step 9).

@@ -39,8 +39,10 @@ func NextTools(
 	knowledgeSvc *service.KnowledgeService,
 	intelligenceSvc *service.IntelligenceService,
 	docRecordSvc *service.DocumentService,
+	mergedToolHints map[string]string,
+	roleStore *kbzctx.RoleStore,
 ) []server.ServerTool {
-	return []server.ServerTool{nextTool(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc)}
+	return []server.ServerTool{nextTool(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore)}
 }
 
 func nextTool(
@@ -50,6 +52,8 @@ func nextTool(
 	knowledgeSvc *service.KnowledgeService,
 	intelligenceSvc *service.IntelligenceService,
 	docRecordSvc *service.DocumentService,
+	mergedToolHints map[string]string,
+	roleStore *kbzctx.RoleStore,
 ) server.ServerTool {
 	tool := mcp.NewTool("next",
 		mcp.WithReadOnlyHintAnnotation(false),
@@ -93,7 +97,7 @@ func nextTool(
 		if id == "" {
 			return nextQueueMode(ctx, role, conflictCheck, entitySvc)
 		}
-		return nextClaimMode(ctx, id, role, entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc)
+		return nextClaimMode(ctx, id, role, entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore)
 	})
 
 	return server.ServerTool{Tool: tool, Handler: handler}
@@ -179,6 +183,8 @@ func nextClaimMode(
 	knowledgeSvc *service.KnowledgeService,
 	intelligenceSvc *service.IntelligenceService,
 	docRecordSvc *service.DocumentService,
+	mergedToolHints map[string]string,
+	roleStore *kbzctx.RoleStore,
 ) (any, error) {
 	// Resolve the input ID to a specific task ID.
 	taskID, err := nextResolveTaskID(id, entitySvc)
@@ -293,6 +299,8 @@ func nextClaimMode(
 		intelligenceSvc: intelligenceSvc,
 		docRecordSvc:    docRecordSvc,
 		entitySvc:       entitySvc,
+		mergedToolHints: mergedToolHints,
+		roleStore:       roleStore,
 	})
 
 	return map[string]any{
@@ -400,6 +408,10 @@ func nextContextToMap(actx assembledContext) map[string]any {
 	}
 	if actx.planGuidanceText != "" {
 		out["plan_guidance"] = actx.planGuidanceText
+	}
+	// Tool hint — omitted when no hint resolves (FR-015, FR-016).
+	if actx.toolHint != "" {
+		out["tool_hint"] = actx.toolHint
 	}
 	return out
 }

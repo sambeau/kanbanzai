@@ -32,6 +32,9 @@ type LocalConfig struct {
 	} `yaml:"user"`
 	// GitHub holds GitHub-related settings.
 	GitHub GitHubConfig `yaml:"github,omitempty"`
+	// ToolHints maps role IDs to opaque tool guidance strings. Local hints
+	// override project-level hints on a per-key basis.
+	ToolHints map[string]string `yaml:"tool_hints,omitempty"`
 }
 
 // GetGitHubToken returns the configured GitHub token, or empty string if not set.

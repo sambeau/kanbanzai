@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -233,4 +234,39 @@ func jsonResult(v any) (*mcp.CallToolResult, error) {
 		return mcp.NewToolResultErrorFromErr("Cannot format health check result: JSON serialisation failed.\n\nTo resolve:\n  Report this as a bug — the health check data could not be serialised", err), nil
 	}
 	return mcp.NewToolResultText(string(data)), nil
+}
+
+// ToolHintsHealthChecker returns an AdditionalHealthChecker that reports
+// the merged tool hints configuration (FR-018, FR-019).
+func ToolHintsHealthChecker(mergedHints map[string]string) AdditionalHealthChecker {
+	return func() (*validate.HealthReport, error) {
+		report := &validate.HealthReport{
+			Summary: validate.HealthSummary{
+				EntitiesByType: make(map[string]int),
+			},
+		}
+
+		if len(mergedHints) == 0 {
+			report.Warnings = append(report.Warnings, validate.ValidationWarning{
+				EntityType: "tool_hints",
+				Message:    "No tool hints configured. Add tool_hints to .kbz/local.yaml to guide agents toward available MCP tools.",
+			})
+			report.Summary.WarningCount = len(report.Warnings)
+			return report, nil
+		}
+
+		for role, hint := range mergedHints {
+			display := hint
+			if len(display) > 80 {
+				display = display[:77] + "..."
+			}
+			report.Warnings = append(report.Warnings, validate.ValidationWarning{
+				EntityType: "tool_hints",
+				Message:    fmt.Sprintf("Role %q: %s", role, display),
+			})
+		}
+
+		report.Summary.WarningCount = len(report.Warnings)
+		return report, nil
+	}
 }

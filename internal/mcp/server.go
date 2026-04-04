@@ -111,6 +111,16 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	// When nil, handoff falls back to the legacy 2.0 assembly path (NFR-003).
 	var capTracker *knowledge.CapTracker
 	var pipeline *kbzctx.Pipeline
+
+	// Load local config early for tool hints merge and GitHub token (best-effort).
+	localConfig, _ := config.LoadLocalConfig()
+	var mergedToolHints map[string]string
+	if localConfig != nil {
+		mergedToolHints = config.MergeToolHints(cfg.ToolHints, localConfig.ToolHints)
+	} else {
+		mergedToolHints = config.MergeToolHints(cfg.ToolHints, nil)
+	}
+
 	bindingPath := filepath.Join(core.InstanceRootDir, "stage-bindings.yaml")
 	if bf, errs := binding.LoadBindingFile(bindingPath); bf != nil && len(errs) == 0 {
 		capTracker = knowledge.NewCapTracker(cacheDir)
@@ -130,6 +140,8 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			Skills:              &kbzctx.SkillStoreAdapter{Store: skillStore},
 			Bindings:            &kbzctx.BindingFileAdapter{File: bf},
 			Knowledge:           kbzctx.NewSurfacer(entryLoader, capTracker, nil),
+			MergedToolHints:     mergedToolHints,
+			ToolHintRoleStore:   roleStore,
 			StalenessWindowDays: cfg.Freshness.StalenessWindowDays,
 		}
 		log.Printf("[server] 3.0 context assembly pipeline loaded with %d stage bindings", len(bf.StageBindings))
@@ -161,9 +173,6 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	// Writer appends JSONL to .kbz/logs/; hook wraps every tool handler.
 	logWriter := actionlog.NewWriter(actionlog.LogsDir())
 	logHook := actionlog.NewHook(logWriter, &entityStageLookup{svc: entitySvc})
-
-	// Load local config for GitHub token (best-effort).
-	localConfig, _ := config.LoadLocalConfig()
 
 	// Checkpoint store and dispatch service.
 	checkpointStore := checkpoint.NewStore(stateRoot)
@@ -201,9 +210,9 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		// Track E: finish — completion + inline knowledge + lenient lifecycle
 		mcpServer.AddTools(FinishTools(entitySvc, dispatchSvc)...)
 		// Track F: next — work queue inspection and task claiming
-		mcpServer.AddTools(NextTools(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc)...)
+		mcpServer.AddTools(NextTools(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore)...)
 		// Track G: handoff — sub-agent prompt generation (3.0 pipeline + legacy fallback)
-		mcpServer.AddTools(HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, pipeline)...)
+		mcpServer.AddTools(HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, pipeline, mergedToolHints, roleStore)...)
 		// Track H: entity — consolidated entity CRUD
 		mcpServer.AddTools(EntityTool(entitySvc, docRecordSvc, gateRouter, checkpointStore)...)
 		// Track I: doc — consolidated document operations
@@ -268,6 +277,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			GateOverrideHealthChecker(entitySvc),
 			GateSourceHealthChecker(registryCache),
 			CheckpointOverrideHealthChecker(entitySvc),
+			ToolHintsHealthChecker(mergedToolHints),
 		)...)
 	}
 

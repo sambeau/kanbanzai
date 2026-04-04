@@ -129,6 +129,8 @@ type assembledContext struct {
 	// Contains the raw spec document path for the agent to read manually
 	// (graceful degradation per spec §24.3).
 	specFallbackPath string
+	// toolHint is the resolved tool hint for the active role (FR-015, FR-016).
+	toolHint string
 }
 
 // ─── Assembly entry point ─────────────────────────────────────────────────────
@@ -143,7 +145,9 @@ type asmInput struct {
 	intelligenceSvc *service.IntelligenceService
 	docRecordSvc    *service.DocumentService
 	entitySvc       *service.EntityService
-	featureStage    string // resolved feature lifecycle stage; empty = non-stage-aware
+	featureStage    string            // resolved feature lifecycle stage; empty = non-stage-aware
+	mergedToolHints map[string]string // merged tool hints for role-scoped resolution
+	roleStore       *kbzctx.RoleStore // for tool hint inheritance walking
 }
 
 // assembleContext gathers spec sections, acceptance criteria, knowledge,
@@ -210,6 +214,11 @@ func assembleContext(input asmInput) assembledContext {
 			actx.roleProfile = input.role
 			actx.constraints = append(actx.constraints, flattenConventions(profile.Conventions)...)
 		}
+	}
+
+	// Tool hint resolution: resolve role-scoped hint via inheritance (FR-015, FR-016).
+	if len(input.mergedToolHints) > 0 && input.role != "" {
+		actx.toolHint = kbzctx.ResolveToolHint(input.mergedToolHints, input.role, input.roleStore)
 	}
 
 	// Spec/design sections from document intelligence, with automatic

@@ -200,6 +200,8 @@ type Config struct {
 	QualityEvaluation QualityEvaluationConfig `yaml:"quality_evaluation,omitempty"`
 	// Lifecycle holds settings for feature lifecycle behaviour.
 	Lifecycle LifecycleConfig `yaml:"lifecycle,omitempty"`
+	// ToolHints maps role IDs to opaque tool guidance strings injected into agent prompts.
+	ToolHints map[string]string `yaml:"tool_hints,omitempty"`
 }
 
 // DefaultConfig returns a new Config with sensible defaults.

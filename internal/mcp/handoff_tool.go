@@ -57,8 +57,10 @@ func HandoffTools(
 	intelligenceSvc *service.IntelligenceService,
 	docRecordSvc *service.DocumentService,
 	pipeline *kbzctx.Pipeline,
+	mergedToolHints map[string]string,
+	roleStore *kbzctx.RoleStore,
 ) []server.ServerTool {
-	return []server.ServerTool{handoffTool(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, pipeline)}
+	return []server.ServerTool{handoffTool(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, pipeline, mergedToolHints, roleStore)}
 }
 
 func handoffTool(
@@ -68,6 +70,8 @@ func handoffTool(
 	intelligenceSvc *service.IntelligenceService,
 	docRecordSvc *service.DocumentService,
 	pipeline *kbzctx.Pipeline,
+	mergedToolHints map[string]string,
+	roleStore *kbzctx.RoleStore,
 ) server.ServerTool {
 	tool := mcp.NewTool("handoff",
 		mcp.WithReadOnlyHintAnnotation(true),
@@ -209,6 +213,8 @@ func handoffTool(
 			intelligenceSvc: intelligenceSvc,
 			docRecordSvc:    docRecordSvc,
 			entitySvc:       entitySvc,
+			mergedToolHints: mergedToolHints,
+			roleStore:       roleStore,
 		})
 
 		prompt := renderHandoffPrompt(task.State, actx, instructions)
@@ -471,7 +477,14 @@ func renderHandoffPrompt(taskState map[string]any, actx assembledContext, instru
 		sb.WriteString("\n")
 	}
 
-	// 9. Additional orchestrator instructions.
+	// 9. Available tools — role-scoped tool hint (FR-013, FR-014).
+	if actx.toolHint != "" {
+		sb.WriteString("## Available Tools\n\n")
+		sb.WriteString(actx.toolHint)
+		sb.WriteString("\n\n")
+	}
+
+	// 10. Additional orchestrator instructions.
 	if instructions != "" {
 		fmt.Fprintf(&sb, "### Additional Instructions\n\n%s\n\n", instructions)
 	}

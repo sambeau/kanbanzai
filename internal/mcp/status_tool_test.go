@@ -87,7 +87,7 @@ func createStatusTestTask(t *testing.T, entitySvc *service.EntityService, parent
 // returns the parsed JSON response. Passes nil for the worktree store.
 func callStatus(t *testing.T, entitySvc *service.EntityService, docSvc *service.DocumentService, id string) map[string]any {
 	t.Helper()
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{"id": id})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -673,7 +673,7 @@ func TestStatusTool_UnknownIDFormat(t *testing.T) {
 	t.Parallel()
 	// Verifies §30.4: unknown ID format returns clear error.
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 
 	req := makeRequest(map[string]any{"id": "TOTALLY-INVALID-ID-FORMAT"})
 	result, err := tool.Handler(context.Background(), req)
@@ -698,7 +698,7 @@ func TestStatusTool_EntityNotFound(t *testing.T) {
 	t.Parallel()
 	// Verifies §30.4: entity not found returns clear error.
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 
 	req := makeRequest(map[string]any{"id": "FEAT-01NOTEXIST1"})
 	result, err := tool.Handler(context.Background(), req)
@@ -726,7 +726,7 @@ func TestStatusTool_ProjectOverview(t *testing.T) {
 	entitySvc, docSvc := setupStatusTest(t)
 	createTestPlan(t, entitySvc, "p-one", "Plan One")
 
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -748,7 +748,7 @@ func TestStatusTool_PlanDashboard(t *testing.T) {
 	entitySvc, docSvc := setupStatusTest(t)
 	planID := createTestPlan(t, entitySvc, "dashboard-plan", "Dashboard Plan")
 
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{"id": planID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -777,7 +777,7 @@ func TestStatusTool_FeatureDetail(t *testing.T) {
 	planID := createTestPlan(t, entitySvc, "feat-detail-p", "Plan")
 	featID := createStatusTestFeature(t, entitySvc, planID, "detail-f", "Detail Feature")
 
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{"id": featID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -800,7 +800,7 @@ func TestStatusTool_TaskDetail(t *testing.T) {
 	featID := createStatusTestFeature(t, entitySvc, planID, "task-detail-f", "Feature")
 	taskID := createStatusTestTask(t, entitySvc, featID, "task-detail-t", "Task")
 
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{"id": taskID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -834,7 +834,7 @@ func TestStatusTool_AttentionItemsGenerated(t *testing.T) {
 		})
 	}
 
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{"id": planID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -855,7 +855,7 @@ func TestStatusTool_AttentionItemsGenerated(t *testing.T) {
 func TestStatusTool_ResponseHasGeneratedAt(t *testing.T) {
 	t.Parallel()
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -875,7 +875,7 @@ func TestStatusTool_NoSideEffects(t *testing.T) {
 	t.Parallel()
 	// Verifies status is read-only (no side_effects field).
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -891,7 +891,7 @@ func TestStatusTool_ProjectOverview_HasHealth(t *testing.T) {
 	t.Parallel()
 	// Verifies §30.4 criterion 8: health field present in project overview response.
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -920,7 +920,7 @@ func TestStatusTool_PlanDashboard_HasHealth(t *testing.T) {
 	entitySvc, docSvc := setupStatusTest(t)
 	planID := createTestPlan(t, entitySvc, "health-dash-plan", "Health Plan")
 
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{"id": planID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -965,7 +965,7 @@ func TestStatusTool_FeatureDetail_HasWorktreeWhenPresent(t *testing.T) {
 		t.Fatalf("worktree.Create: %v", err)
 	}
 
-	tool := statusTool(entitySvc, docSvc, wtStore, "")
+	tool := statusTool(entitySvc, docSvc, wtStore, "", 0)
 	req := makeRequest(map[string]any{"id": featID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -1015,7 +1015,7 @@ func TestStatusTool_TaskDetail_HasDispatch(t *testing.T) {
 		t.Fatalf("write task record: %v", err)
 	}
 
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{"id": taskID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -1046,7 +1046,7 @@ func TestStatusTool_ProjectOverview_HasOrientation(t *testing.T) {
 	// AC-E2: orientation.message references getting-started skill path.
 	// AC-E3: orientation.skills_path is ".agents/skills/".
 	entitySvc, docSvc := setupStatusTest(t)
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -1086,7 +1086,7 @@ func TestStatusTool_ProjectOverview_OrientationDoesNotBreakExistingFields(t *tes
 	entitySvc, docSvc := setupStatusTest(t)
 	createTestPlan(t, entitySvc, "orient-plan", "Orient Plan")
 
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -1115,7 +1115,7 @@ func TestStatusTool_PlanDashboard_NoOrientation(t *testing.T) {
 	entitySvc, docSvc := setupStatusTest(t)
 	planID := createTestPlan(t, entitySvc, "no-orient-plan", "No Orient Plan")
 
-	tool := statusTool(entitySvc, docSvc, nil, "")
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
 	req := makeRequest(map[string]any{"id": planID})
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
