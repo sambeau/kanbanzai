@@ -1,0 +1,17 @@
+id: KE-01KNBQ9KYG6XS
+tier: 3
+topic: worktree-file-editing-pattern
+scope: project
+content: "When editing files in a git worktree (.worktrees/), use terminal commands with python3 -c or heredocs. The edit_file tool only works on the main project root, not worktree directories. Pattern: read current file, construct replacement in Python, write back."
+learned_from: TASK-01KNAKX798DCB
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - worktree
+  - workflow
+created: "2026-04-04T07:46:06Z"
+created_by: unknown
+updated: "2026-04-04T07:46:06Z"

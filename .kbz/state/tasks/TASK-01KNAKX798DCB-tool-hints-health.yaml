@@ -3,6 +3,19 @@ parent_feature: FEAT-01KNA11F3BBMP
 slug: tool-hints-health
 name: Tool Hints Health Surfacing
 summary: "Add tool_hints section to health tool output showing merged hints per role. Covers FR-018 through FR-019, AC-017 through AC-018."
-status: ready
+status: done
 depends_on:
   - TASK-01KNAKX73CCHS
+files_planned:
+  - internal/mcp/health_tool.go
+  - internal/mcp/health_tool_hints_test.go
+  - internal/mcp/server.go
+  - internal/mcp/handoff_tool_test.go
+  - internal/mcp/status_tool_test.go
+completed: "2026-04-04T07:46:06Z"
+claimed_at: "2026-04-04T07:42:27Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-04T07:42:27Z"
+dispatched_by: sambeau
+completion_summary: "Added ToolHintsHealthChecker to health tool output. When hints are configured, shows role-to-hint mapping; when empty, shows advisory note. Truncates long hints at 80 chars. Wired into server health checkers. Also fixed pre-existing status_tool_test.go argument count errors."
+verification: "go build ./... clean, go test ./internal/mcp/ all passing, 3 new tests for health checker (with hints, no hints, truncation)."

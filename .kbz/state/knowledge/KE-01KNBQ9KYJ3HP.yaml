@@ -1,0 +1,17 @@
+id: KE-01KNBQ9KYJ3HP
+tier: 3
+topic: retro-task-01knakx798dcb
+scope: project
+content: "[minor] worked-well: Python-based file editing via terminal was reliable for worktree modifications across 8 files. The pattern of reading, replacing, and writing was more predictable than sed for multi-line changes."
+learned_from: TASK-01KNAKX798DCB
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - worked-well
+created: "2026-04-04T07:46:06Z"
+created_by: unknown
+updated: "2026-04-04T07:46:06Z"
