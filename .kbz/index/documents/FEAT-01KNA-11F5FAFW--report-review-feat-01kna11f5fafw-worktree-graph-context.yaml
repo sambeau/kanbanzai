@@ -1,0 +1,116 @@
+document_id: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context
+document_path: work/reviews/review-FEAT-01KNA11F5FAFW-worktree-graph-context.md
+content_hash: febd9ee81a63aa621968438eb186a738b7907bebcf46688655f45ec51eda3c4c
+indexed_at: 2026-04-04T09:10:35.480707Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: FEAT-01KNA-11F5FAFW — Worktree Graph Context'
+      byte_offset: 0
+      byte_count: 9918
+      word_count: 1200
+      content_hash: febd9ee81a63aa621968438eb186a738b7907bebcf46688655f45ec51eda3c4c
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 261
+          byte_count: 500
+          word_count: 67
+          content_hash: 84cdf6b8acd45e0ed5d04cdb1cd6f877a3d204629c0507f156e2d776abf9744f
+        - path: "1.2"
+          level: 2
+          title: Review Panel
+          byte_offset: 761
+          byte_count: 263
+          word_count: 33
+          content_hash: 4294773074ed3c49493aec9277758599f5b4c1a040331998bd4b7b87f0f2c052
+        - path: "1.3"
+          level: 2
+          title: Files Changed
+          byte_offset: 1024
+          byte_count: 1886
+          word_count: 198
+          content_hash: b1fae2c67959c883536d6cc4df0d4ede1dafa3864f8691d9a451487dc9ce305a
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Production (9 files)
+              byte_offset: 1042
+              byte_count: 993
+              word_count: 94
+              content_hash: d7c074ccaf6ed5e82b6a9351ff9164899fc05c1568a1a61f90f7cc3ddebc00ad
+            - path: 1.3.2
+              level: 3
+              title: Tests (8 files, ~24 new test cases)
+              byte_offset: 2035
+              byte_count: 875
+              word_count: 101
+              content_hash: 224fe652dfa4a74c3a0354fafe3a45a882af2fd84b3f24878234953f82c590ab
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria Traceability
+          byte_offset: 2910
+          byte_count: 3297
+          word_count: 412
+          content_hash: ecd58a9ab579bb2c83a8adb857f7bd266ab541e6cb344a00b19f7ba4c09807b7
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 5743
+              byte_count: 464
+              word_count: 63
+              content_hash: 21cdd6c0a1977f6737ff7f97c1dea06d4ea53f7511c3005732c4c5dd47f7b56a
+        - path: "1.5"
+          level: 2
+          title: Findings
+          byte_offset: 6207
+          byte_count: 2702
+          word_count: 331
+          content_hash: 39bb7983683663f112a0a967d04faa1ab7d2dceeadea9e5bebdc3d95bf59644c
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Non-Blocking Findings
+              byte_offset: 6220
+              byte_count: 2689
+              word_count: 329
+              content_hash: bf4659f262f437fbe5f3b7bd0ded880bd1fa4fc9b4e7cc97a82c17475d7a8913
+        - path: "1.6"
+          level: 2
+          title: Review Unit Breakdown
+          byte_offset: 8909
+          byte_count: 330
+          word_count: 44
+          content_hash: 486aca5a9be6a2422011f178fc6a4acf863ae9e2d426310775bde2830e9dfc69
+        - path: "1.7"
+          level: 2
+          title: Verdict
+          byte_offset: 9239
+          byte_count: 679
+          word_count: 90
+          content_hash: 7208f5ac0dbf1585b777db2585fdd3312616656dc62b74e5d1823b1daa115783
+entity_refs:
+    - entity_id: FEAT-01KNA
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 10
+    - entity_id: P21-codebase-memory-integration
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 122
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: 1.4.1
+      role: requirement
+      confidence: high
+classified: false

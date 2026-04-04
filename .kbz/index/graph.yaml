@@ -1,4 +1,4 @@
-updated_at: 2026-04-04T08:39:50.353973Z
+updated_at: 2026-04-04T09:10:35.480707Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -56983,5 +56983,75 @@ edges:
     - from: FEAT-01KNA11F3BBMP/report-review-feat-01kna11f3bbmp-role-tool-hints#1
       from_type: section
       to: FEAT-01KNA11F3BBMP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context
+      from_type: document
+      to: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1
+      from_type: section
+      to: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1
+      from_type: section
+      to: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1
+      from_type: section
+      to: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.3
+      from_type: section
+      to: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.3
+      from_type: section
+      to: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1
+      from_type: section
+      to: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.4
+      from_type: section
+      to: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1
+      from_type: section
+      to: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.5
+      from_type: section
+      to: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1
+      from_type: section
+      to: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1
+      from_type: section
+      to: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1
+      from_type: section
+      to: FEAT-01KNA
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KNA-11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context#1
+      from_type: section
+      to: P21-codebase-memory-integration
       to_type: entity_ref
       edge_type: REFERENCES
