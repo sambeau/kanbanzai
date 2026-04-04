@@ -147,7 +147,7 @@ func callNext(
 	args map[string]any,
 ) string {
 	t.Helper()
-	tool := nextTool(entitySvc, dispatchSvc, nil, nil, nil, nil)
+	tool := nextTool(entitySvc, dispatchSvc, nil, nil, nil, nil, nil, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -184,7 +184,7 @@ func callNextFull(
 	args map[string]any,
 ) map[string]any {
 	t.Helper()
-	tool := nextTool(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc)
+	tool := nextTool(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, nil, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -910,7 +910,7 @@ func TestNext_ContextAssembly_GracefulDegradation(t *testing.T) {
 	}
 
 	// Use a nil intelligence service to force graceful degradation.
-	tool := nextTool(entitySvc, dispatchSvc, nil, nil, nil, docRecordSvc)
+	tool := nextTool(entitySvc, dispatchSvc, nil, nil, nil, docRecordSvc, nil, nil)
 	req := makeRequest(map[string]any{"id": taskID})
 	toolResult, err := tool.Handler(context.Background(), req)
 	if err != nil {
