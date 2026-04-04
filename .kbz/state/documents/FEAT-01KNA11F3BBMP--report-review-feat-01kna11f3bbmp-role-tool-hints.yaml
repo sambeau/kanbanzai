@@ -2,9 +2,11 @@ id: FEAT-01KNA11F3BBMP/report-review-feat-01kna11f3bbmp-role-tool-hints
 path: work/reviews/review-FEAT-01KNA11F3BBMP-role-tool-hints.md
 type: report
 title: "Review: role-tool-hints"
-status: draft
+status: approved
 owner: FEAT-01KNA11F3BBMP
+approved_by: sambeau
+approved_at: "2026-04-04T08:39:56Z"
 content_hash: b3a633081192bbbfec0e510a7818db55c7aff3ed6d2baa7da90ff3a0c9249970
 created: "2026-04-04T08:39:50Z"
 created_by: sambeau
-updated: "2026-04-04T08:39:50Z"
+updated: "2026-04-04T08:39:56Z"
