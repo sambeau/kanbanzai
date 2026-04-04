@@ -79,6 +79,118 @@ func TestRecord_Fields(t *testing.T) {
 	}
 }
 
+func TestRecord_GraphProject_Fields(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name         string
+		graphProject string
+		want         string
+	}{
+		{"empty string included in fields", "", ""},
+		{"non-empty value included in fields", "kanbanzai-FEAT-XXX", "kanbanzai-FEAT-XXX"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			record := Record{
+				ID:           "WT-01JX123456789",
+				EntityID:     "FEAT-01JX987654321",
+				Branch:       "feature/test",
+				Path:         ".worktrees/test",
+				Status:       StatusActive,
+				Created:      time.Date(2025, 1, 27, 10, 0, 0, 0, time.UTC),
+				CreatedBy:    "sambeau",
+				GraphProject: tt.graphProject,
+			}
+
+			fields := record.Fields()
+
+			got, ok := fields["graph_project"]
+			if !ok {
+				t.Fatal("fields[graph_project] not present")
+			}
+			if got != tt.want {
+				t.Errorf("fields[graph_project] = %q, want %q", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestRecord_GraphProject_FieldOrder(t *testing.T) {
+	t.Parallel()
+
+	order := FieldOrder()
+
+	// graph_project must appear after cleanup_after.
+	var cleanupIdx, graphIdx int
+	found := false
+	for i, f := range order {
+		if f == "cleanup_after" {
+			cleanupIdx = i
+		}
+		if f == "graph_project" {
+			graphIdx = i
+			found = true
+		}
+	}
+	if !found {
+		t.Fatal("graph_project not found in FieldOrder()")
+	}
+	if graphIdx <= cleanupIdx {
+		t.Errorf("graph_project (index %d) should come after cleanup_after (index %d)", graphIdx, cleanupIdx)
+	}
+}
+
+func TestRecordFromFields_LegacyNoGraphProject(t *testing.T) {
+	t.Parallel()
+
+	// Simulate a legacy YAML record that has no graph_project key at all (AC-001).
+	fields := map[string]any{
+		"id":         "WT-01JX123456789",
+		"entity_id":  "FEAT-01JX987654321",
+		"branch":     "feature/test",
+		"path":       ".worktrees/test",
+		"status":     "active",
+		"created":    "2025-01-27T10:00:00Z",
+		"created_by": "sambeau",
+	}
+
+	record, err := recordFromFields(fields)
+	if err != nil {
+		t.Fatalf("recordFromFields: %v", err)
+	}
+
+	if record.GraphProject != "" {
+		t.Errorf("GraphProject = %q, want empty string for legacy record", record.GraphProject)
+	}
+}
+
+func TestRecordFromFields_WithGraphProject(t *testing.T) {
+	t.Parallel()
+
+	fields := map[string]any{
+		"id":            "WT-01JX123456789",
+		"entity_id":     "FEAT-01JX987654321",
+		"branch":        "feature/test",
+		"path":          ".worktrees/test",
+		"status":        "active",
+		"created":       "2025-01-27T10:00:00Z",
+		"created_by":    "sambeau",
+		"graph_project": "kanbanzai-FEAT-XXX",
+	}
+
+	record, err := recordFromFields(fields)
+	if err != nil {
+		t.Fatalf("recordFromFields: %v", err)
+	}
+
+	if record.GraphProject != "kanbanzai-FEAT-XXX" {
+		t.Errorf("GraphProject = %q, want %q", record.GraphProject, "kanbanzai-FEAT-XXX")
+	}
+}
+
 func TestRecord_Fields_WithOptionalFields(t *testing.T) {
 	t.Parallel()
 
@@ -124,6 +236,7 @@ func TestFieldOrder(t *testing.T) {
 		"created_by",
 		"merged_at",
 		"cleanup_after",
+		"graph_project",
 	}
 
 	if len(order) != len(expected) {

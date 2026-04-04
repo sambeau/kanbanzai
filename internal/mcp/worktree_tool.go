@@ -36,12 +36,12 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 				"Use INSTEAD OF manual `git worktree` commands; this tool tracks worktree records alongside entity lifecycle. "+
 				"Call AFTER entity(action: create) establishes the feature or bug. "+
 				"Do NOT use for branch health checks — use branch for that. "+
-				"Actions: create, get, list, remove. "+
-				"entity_id is required for create, get, and remove; optional filter for list.",
+				"Actions: create, get, list, remove, update. "+
+				"entity_id is required for create, get, remove, and update; optional filter for list.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),
-			mcp.Description("Action: create, get, list, remove"),
+			mcp.Description("Action: create, get, list, remove, update"),
 		),
 		mcp.WithString("entity_id",
 			mcp.Description("Entity ID (FEAT-... or BUG-...) — required for create, get, remove; optional filter for list"),
@@ -61,6 +61,9 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 		mcp.WithBoolean("force",
 			mcp.Description("Remove even with uncommitted changes (default: false) — remove only"),
 		),
+		mcp.WithString("graph_project",
+			mcp.Description("codebase-memory-mcp project name for graph-based code navigation — create and update only"),
+		),
 	)
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
@@ -69,6 +72,7 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 			"get":    worktreeGetAction(store),
 			"list":   worktreeListAction(store),
 			"remove": worktreeRemoveAction(store, gitOps),
+			"update": worktreeUpdateAction(store),
 		})
 	})
 
@@ -138,12 +142,13 @@ func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityServic
 
 		// Create the worktree record.
 		record := worktree.Record{
-			EntityID:  entityID,
-			Branch:    branchName,
-			Path:      wtPath,
-			Status:    worktree.StatusActive,
-			Created:   time.Now().UTC(),
-			CreatedBy: createdBy,
+			EntityID:     entityID,
+			Branch:       branchName,
+			Path:         wtPath,
+			Status:       worktree.StatusActive,
+			Created:      time.Now().UTC(),
+			CreatedBy:    createdBy,
+			GraphProject: req.GetString("graph_project", ""),
 		}
 
 		created, err := store.Create(record)
@@ -214,6 +219,46 @@ func worktreeListAction(store *worktree.Store) ActionHandler {
 		return map[string]any{
 			"count":     len(worktrees),
 			"worktrees": worktrees,
+		}, nil
+	}
+}
+
+// ─── update ───────────────────────────────────────────────────────────────────
+
+func worktreeUpdateAction(store *worktree.Store) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+
+		entityID, err := req.RequireString("entity_id")
+		if err != nil {
+			return inlineErr("missing_parameter", "entity_id is required for update action")
+		}
+
+		record, err := store.GetByEntityID(entityID)
+		if err != nil {
+			if errors.Is(err, worktree.ErrNotFound) {
+				return inlineErr("no_worktree",
+					fmt.Sprintf("no worktree found for entity %s", entityID))
+			}
+			return nil, fmt.Errorf("Cannot update worktree for %s: storage read failed: %w", entityID, err)
+		}
+
+		// graph_project: update only when the param is explicitly provided.
+		// Per FR-003: "When omitted, the existing value MUST be preserved."
+		args, _ := req.Params.Arguments.(map[string]any)
+		if graphProject, ok := args["graph_project"]; ok {
+			if s, isStr := graphProject.(string); isStr {
+				record.GraphProject = s
+			}
+		}
+
+		updated, err := store.Update(record)
+		if err != nil {
+			return nil, fmt.Errorf("Cannot update worktree for %s: save failed: %w", entityID, err)
+		}
+
+		return map[string]any{
+			"worktree": worktreeRecordToMap(updated),
 		}, nil
 	}
 }
@@ -298,6 +343,7 @@ func worktreeRecordToMap(r worktree.Record) map[string]any {
 	if r.CleanupAfter != nil {
 		m["cleanup_after"] = r.CleanupAfter.Format(time.RFC3339)
 	}
+	m["graph_project"] = r.GraphProject
 	return m
 }
 

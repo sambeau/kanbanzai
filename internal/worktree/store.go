@@ -471,6 +471,9 @@ func recordFromFields(fields map[string]any) (Record, error) {
 			record.CleanupAfter = &t
 		}
 	}
+	if v, ok := fields["graph_project"].(string); ok {
+		record.GraphProject = v
+	}
 
 	return record, nil
 }

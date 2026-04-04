@@ -37,6 +37,7 @@ type Record struct {
 	CreatedBy    string     // User who created the worktree
 	MergedAt     *time.Time // Timestamp when merged (optional)
 	CleanupAfter *time.Time // When to auto-delete (optional)
+	GraphProject string     // codebase-memory-mcp project name (empty = not indexed)
 	FileHash     string     // SHA-256 hex digest of file contents at load time; used for optimistic locking
 }
 
@@ -59,6 +60,8 @@ func (r Record) Fields() map[string]any {
 		fields["cleanup_after"] = r.CleanupAfter.Format(time.RFC3339)
 	}
 
+	fields["graph_project"] = r.GraphProject
+
 	return fields
 }
 
@@ -74,6 +77,7 @@ func FieldOrder() []string {
 		"created_by",
 		"merged_at",
 		"cleanup_after",
+		"graph_project",
 	}
 }
 
