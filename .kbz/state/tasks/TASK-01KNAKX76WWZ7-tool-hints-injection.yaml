@@ -3,6 +3,22 @@ parent_feature: FEAT-01KNA11F3BBMP
 slug: tool-hints-injection
 name: Tool Hints Injection
 summary: "Inject resolved tool hint into handoff (3.0 pipeline and legacy 2.0 paths) as ## Available Tools section and into next context output as tool_hint field. Handle section ordering with Phase 2 Code Graph section. Covers FR-010 through FR-017, AC-010 through AC-016, AC-019."
-status: ready
+status: done
 depends_on:
   - TASK-01KNAKX73CCHS
+files_planned:
+  - internal/context/pipeline.go
+  - internal/context/pipeline_tool_hints_test.go
+  - internal/mcp/assembly.go
+  - internal/mcp/handoff_tool.go
+  - internal/mcp/next_tool.go
+  - internal/mcp/server.go
+  - internal/mcp/integration_test.go
+  - internal/mcp/next_tool_test.go
+completed: "2026-04-04T07:42:21Z"
+claimed_at: "2026-04-04T07:27:57Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-04T07:27:57Z"
+dispatched_by: sambeau
+completion_summary: "Injected tool hints into all three paths: 3.0 pipeline (stepResolveToolHint + PositionAvailableTools section), legacy 2.0 handoff (## Available Tools before Additional Instructions), and next structured output (tool_hint field). Threaded mergedToolHints and roleStore through HandoffTools/NextTools constructors. All 7 new tests pass, full build clean."
+verification: "go build ./... clean, go test ./internal/context/ ./internal/config/ all passing, 7 new tests covering exact match, inheritance, no match, nil hints, section assembly, section omission, and position ordering."
