@@ -2,7 +2,7 @@ id: FEAT-01KNA11F3BBMP
 slug: role-tool-hints
 name: Role-Scoped Tool Hints
 parent: P21-codebase-memory-integration
-status: reviewing
+status: done
 review_cycle: 1
 estimate: "3"
 summary: "Add a tool_hints config mechanism to local.yaml and config.yaml. Hints are role-scoped opaque strings, merged per-key (local overrides project), resolved via role inheritance, and injected automatically into handoff prompts (## Available Tools section) and next context output (tool_hint field). Includes health tool surfacing of merged hints. ~100 lines of Go across config, context, and MCP layers."
