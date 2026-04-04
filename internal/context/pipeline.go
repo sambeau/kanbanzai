@@ -662,6 +662,7 @@ func (p *Pipeline) stepResolveToolHint(state *PipelineState) {
 	}
 	state.ToolHint = ResolveToolHint(p.MergedToolHints, state.Role.ID, p.ToolHintRoleStore)
 }
+
 // stepTokenBudget estimates total tokens and enforces budget thresholds (step 9).
 func (p *Pipeline) stepTokenBudget(state *PipelineState) error {
 	total := 0

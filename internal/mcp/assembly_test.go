@@ -586,3 +586,80 @@ func TestAssembleContext_StageContentFilter(t *testing.T) {
 		})
 	}
 }
+
+// renderHandoffPrompt includes ## Available Tools section when tool hint is set (AC-012).
+func TestRenderHandoffPrompt_WithToolHint(t *testing.T) {
+	t.Parallel()
+	taskState := map[string]any{
+		"id":      "TASK-001",
+		"summary": "Test task",
+	}
+	actx := assembledContext{
+		toolHint: "Use search_graph and trace_call_path for code navigation.",
+	}
+	prompt := renderHandoffPrompt(taskState, actx, "some instructions")
+	if !containsStr(prompt, "## Available Tools") {
+		t.Error("prompt should contain '## Available Tools' section when tool hint is set")
+	}
+	if !containsStr(prompt, "search_graph") {
+		t.Error("prompt should contain the tool hint content")
+	}
+	// Verify ordering: Available Tools before Additional Instructions (FR-013).
+	toolsIdx := 0
+	instrIdx := 0
+	for i := 0; i+len("## Available Tools") <= len(prompt); i++ {
+		if prompt[i:i+len("## Available Tools")] == "## Available Tools" {
+			toolsIdx = i
+			break
+		}
+	}
+	for i := 0; i+len("### Additional Instructions") <= len(prompt); i++ {
+		if prompt[i:i+len("### Additional Instructions")] == "### Additional Instructions" {
+			instrIdx = i
+			break
+		}
+	}
+	if toolsIdx >= instrIdx {
+		t.Errorf("## Available Tools (pos %d) must appear before ### Additional Instructions (pos %d)", toolsIdx, instrIdx)
+	}
+}
+
+// renderHandoffPrompt omits ## Available Tools when no tool hint (AC-013).
+func TestRenderHandoffPrompt_WithoutToolHint(t *testing.T) {
+	t.Parallel()
+	taskState := map[string]any{
+		"id":      "TASK-001",
+		"summary": "Test task",
+	}
+	actx := assembledContext{}
+	prompt := renderHandoffPrompt(taskState, actx, "")
+	if containsStr(prompt, "## Available Tools") {
+		t.Error("prompt should not contain '## Available Tools' when no tool hint is set")
+	}
+}
+
+// nextContextToMap includes tool_hint when set (AC-014).
+func TestNextContextToMap_WithToolHint(t *testing.T) {
+	t.Parallel()
+	actx := assembledContext{
+		toolHint: "Use search_graph for code navigation",
+	}
+	m := nextContextToMap(actx)
+	hint, ok := m["tool_hint"].(string)
+	if !ok {
+		t.Fatal("tool_hint should be present in context map")
+	}
+	if hint != "Use search_graph for code navigation" {
+		t.Errorf("tool_hint = %q, want %q", hint, "Use search_graph for code navigation")
+	}
+}
+
+// nextContextToMap omits tool_hint when not set (AC-015).
+func TestNextContextToMap_WithoutToolHint(t *testing.T) {
+	t.Parallel()
+	actx := assembledContext{}
+	m := nextContextToMap(actx)
+	if _, ok := m["tool_hint"]; ok {
+		t.Error("tool_hint should not be present when no hint is set")
+	}
+}
