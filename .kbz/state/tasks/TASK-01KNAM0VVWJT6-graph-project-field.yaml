@@ -3,4 +3,4 @@ parent_feature: FEAT-01KNA11F5FAFW
 slug: graph-project-field
 name: GraphProject Field and Worktree Params
 summary: "Add GraphProject string field to worktree.Record. Accept graph_project param on worktree create and update actions. Backward-compatible deserialisation (missing key = empty string). Covers FR-001 through FR-003, AC-001 through AC-005."
-status: queued
+status: ready
