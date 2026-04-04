@@ -758,12 +758,18 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 
 	// Look up worktree for this feature, if a store is provided.
 	var wt *worktreeInfo
+	var hasActiveWorktree bool
+	var worktreeGraphProject string
 	if worktreeStore != nil {
 		if record, err := worktreeStore.GetByEntityID(featID); err == nil {
 			wt = &worktreeInfo{
 				Status: string(record.Status),
 				Branch: record.Branch,
 				Path:   record.Path,
+			}
+			if record.Status == worktree.StatusActive {
+				hasActiveWorktree = true
+				worktreeGraphProject = record.GraphProject
 			}
 		}
 	}
@@ -803,7 +809,7 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 			})
 		}
 	}
-	attention := generateFeatureAttention(tasks, docs, taskSummary.total, feat.ID, featDisplayID, fstatus, fUpdated, inheritedHasSpec, inheritedHasDevPlan, staleReviewingDays, openBugs)
+	attention := generateFeatureAttention(tasks, docs, taskSummary.total, feat.ID, featDisplayID, fstatus, fUpdated, inheritedHasSpec, inheritedHasDevPlan, staleReviewingDays, openBugs, hasActiveWorktree, worktreeGraphProject)
 	if fblockedReason != "" {
 		attention = append([]AttentionItem{{Type: "stalled_task", Severity: "warning", EntityID: feat.ID, DisplayID: featDisplayID, Message: "BLOCKED: " + fblockedReason}}, attention...)
 	}
@@ -1187,7 +1193,7 @@ func generatePlanAttention(features []featureSummary, docGaps []string, planDisp
 	return items
 }
 
-func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int, featureID string, featureDisplayID string, featureStatus string, featureUpdated time.Time, inheritedHasSpec bool, inheritedHasDevPlan bool, staleReviewingDays int, bugs []bugItem) []AttentionItem {
+func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int, featureID string, featureDisplayID string, featureStatus string, featureUpdated time.Time, inheritedHasSpec bool, inheritedHasDevPlan bool, staleReviewingDays int, bugs []bugItem, hasActiveWorktree bool, worktreeGraphProject string) []AttentionItem {
 	var items []AttentionItem
 
 	// Ready tasks available.
@@ -1310,6 +1316,15 @@ func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int, 
 			Type:     "feature_no_tasks",
 			Severity: "info",
 			Message:  "No tasks exist — run decompose to generate the task breakdown",
+		})
+	}
+
+	// Missing graph index: worktree exists and active but no graph project set (FR-009, FR-010).
+	if hasActiveWorktree && worktreeGraphProject == "" && len(items) < maxAttentionItems {
+		items = append(items, AttentionItem{
+			Type:     "missing_graph_index",
+			Severity: "info",
+			Message:  "Worktree exists but has no graph index — run index_repository on the worktree path to enable graph-based code navigation",
 		})
 	}
 

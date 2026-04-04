@@ -301,12 +301,21 @@ func worktreeRemoveAction(store *worktree.Store, gitOps *worktree.Git) ActionHan
 			return nil, fmt.Errorf("Cannot remove worktree %s: failed to delete worktree record: %w.\n\nTo resolve:\n  Check file permissions in .kbz/state/worktrees/ and retry", record.ID, err)
 		}
 
-		return map[string]any{
+		response := map[string]any{
 			"removed": map[string]any{
 				"id":   record.ID,
 				"path": record.Path,
 			},
-		}, nil
+		}
+
+		if record.GraphProject != "" {
+			response["graph_project_note"] = fmt.Sprintf(
+				"Worktree had graph project %q indexed. Run delete_project(project_name: %q) to free the index.",
+				record.GraphProject, record.GraphProject,
+			)
+		}
+
+		return response, nil
 	}
 }
 

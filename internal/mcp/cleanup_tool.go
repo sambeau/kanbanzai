@@ -135,6 +135,9 @@ func cleanupExecuteAction(store *worktree.Store, git *worktree.Git, cfg *config.
 
 		var results []cleanup.CleanupResult
 
+		// Capture GraphProject values before cleanup deletes the records (FR-012).
+		graphProjects := make(map[string]string)
+
 		if worktreeID != "" {
 			record, err := store.Get(worktreeID)
 			if err != nil {
@@ -151,9 +154,21 @@ func cleanupExecuteAction(store *worktree.Store, git *worktree.Git, cfg *config.
 				opts.ForceRemove = true
 			}
 
+			if record.GraphProject != "" {
+				graphProjects[record.ID] = record.GraphProject
+			}
+
 			result := cleanup.ExecuteCleanup(store, git, record, opts)
 			results = append(results, result)
 		} else {
+			// Pre-load all records to capture GraphProject before ExecuteAllReady deletes them.
+			if records, err := store.List(); err == nil {
+				for _, r := range records {
+					if r.GraphProject != "" {
+						graphProjects[r.ID] = r.GraphProject
+					}
+				}
+			}
 			results = cleanup.ExecuteAllReady(store, git, opts)
 		}
 
@@ -168,6 +183,12 @@ func cleanupExecuteAction(store *worktree.Store, git *worktree.Git, cfg *config.
 				"remote_branch_deleted": r.RemoteBranchDeleted,
 			}
 			if r.Success {
+				if gp, ok := graphProjects[r.WorktreeID]; ok && gp != "" {
+					entry["graph_project_note"] = fmt.Sprintf(
+						"Graph project %q was indexed for this worktree. Run delete_project(project_name: %q) to free the index.",
+						gp, gp,
+					)
+				}
 				cleaned = append(cleaned, entry)
 			} else {
 				if r.Error != nil {

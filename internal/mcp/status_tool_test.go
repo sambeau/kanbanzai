@@ -1141,7 +1141,7 @@ func TestFeatureAttention_AllTasksDone_Developing(t *testing.T) {
 		{Status: "done"},
 		{Status: "not-planned"},
 	}
-	items := generateFeatureAttention(tasks, nil, 3, "FEAT-01", "FEAT-01", "developing", time.Time{}, true, true, 7, nil)
+	items := generateFeatureAttention(tasks, nil, 3, "FEAT-01", "FEAT-01", "developing", time.Time{}, true, true, 7, nil, false, "")
 	found := false
 	for _, item := range items {
 		if strings.Contains(item.Message, "FEAT-01") && strings.Contains(item.Message, "3/3") && strings.Contains(item.Message, "ready to advance") {
@@ -1156,7 +1156,7 @@ func TestFeatureAttention_AllTasksDone_Developing(t *testing.T) {
 // TestFeatureAttention_AllTasksDone_NeedsRework verifies needs-rework also triggers the item.
 func TestFeatureAttention_AllTasksDone_NeedsRework(t *testing.T) {
 	tasks := []taskInfo{{Status: "done"}, {Status: "done"}}
-	items := generateFeatureAttention(tasks, nil, 2, "FEAT-02", "FEAT-02", "needs-rework", time.Time{}, true, true, 7, nil)
+	items := generateFeatureAttention(tasks, nil, 2, "FEAT-02", "FEAT-02", "needs-rework", time.Time{}, true, true, 7, nil, false, "")
 	found := false
 	for _, item := range items {
 		if strings.Contains(item.Message, "FEAT-02") && strings.Contains(item.Message, "2/2") {
@@ -1172,7 +1172,7 @@ func TestFeatureAttention_AllTasksDone_NeedsRework(t *testing.T) {
 // does NOT trigger the completion item.
 func TestFeatureAttention_AllTasksDone_Reviewing(t *testing.T) {
 	tasks := []taskInfo{{Status: "done"}, {Status: "done"}}
-	items := generateFeatureAttention(tasks, nil, 2, "FEAT-03", "FEAT-03", "reviewing", time.Time{}, true, true, 7, nil)
+	items := generateFeatureAttention(tasks, nil, 2, "FEAT-03", "FEAT-03", "reviewing", time.Time{}, true, true, 7, nil, false, "")
 	for _, item := range items {
 		if strings.Contains(item.Message, "ready to advance") {
 			t.Errorf("unexpected 'ready to advance' item for reviewing status: %s", item.Message)
@@ -1183,7 +1183,7 @@ func TestFeatureAttention_AllTasksDone_Reviewing(t *testing.T) {
 // TestFeatureAttention_ZeroTasks_NoCompletionItem verifies that zero tasks
 // does NOT trigger the completion item.
 func TestFeatureAttention_ZeroTasks_NoCompletionItem(t *testing.T) {
-	items := generateFeatureAttention(nil, nil, 0, "FEAT-04", "FEAT-04", "developing", time.Time{}, true, true, 7, nil)
+	items := generateFeatureAttention(nil, nil, 0, "FEAT-04", "FEAT-04", "developing", time.Time{}, true, true, 7, nil, false, "")
 	for _, item := range items {
 		if strings.Contains(item.Message, "ready to advance") {
 			t.Errorf("unexpected completion item for zero tasks: %s", item.Message)
@@ -1195,7 +1195,7 @@ func TestFeatureAttention_ZeroTasks_NoCompletionItem(t *testing.T) {
 // task blocks the completion item.
 func TestFeatureAttention_NonTerminalTask_NoCompletionItem(t *testing.T) {
 	tasks := []taskInfo{{Status: "done"}, {Status: "active"}}
-	items := generateFeatureAttention(tasks, nil, 2, "FEAT-05", "FEAT-05", "developing", time.Time{}, true, true, 7, nil)
+	items := generateFeatureAttention(tasks, nil, 2, "FEAT-05", "FEAT-05", "developing", time.Time{}, true, true, 7, nil, false, "")
 	for _, item := range items {
 		if strings.Contains(item.Message, "ready to advance") {
 			t.Errorf("unexpected completion item when active task present: %s", item.Message)
@@ -1208,7 +1208,7 @@ func TestFeatureAttention_NonTerminalTask_NoCompletionItem(t *testing.T) {
 func TestFeatureAttention_StalePrefix_After48h(t *testing.T) {
 	tasks := []taskInfo{{Status: "done"}}
 	staleTime := time.Now().Add(-49 * time.Hour)
-	items := generateFeatureAttention(tasks, nil, 1, "FEAT-06", "FEAT-06", "developing", staleTime, true, true, 7, nil)
+	items := generateFeatureAttention(tasks, nil, 1, "FEAT-06", "FEAT-06", "developing", staleTime, true, true, 7, nil, false, "")
 	found := false
 	for _, item := range items {
 		if strings.HasPrefix(item.Message, "⚠️ STALE:") {
@@ -1225,7 +1225,7 @@ func TestFeatureAttention_StalePrefix_After48h(t *testing.T) {
 func TestFeatureAttention_NoStalePrefix_Recent(t *testing.T) {
 	tasks := []taskInfo{{Status: "done"}}
 	recentTime := time.Now().Add(-1 * time.Hour)
-	items := generateFeatureAttention(tasks, nil, 1, "FEAT-07", "FEAT-07", "developing", recentTime, true, true, 7, nil)
+	items := generateFeatureAttention(tasks, nil, 1, "FEAT-07", "FEAT-07", "developing", recentTime, true, true, 7, nil, false, "")
 	for _, item := range items {
 		if strings.HasPrefix(item.Message, "⚠️ STALE:") {
 			t.Errorf("unexpected STALE prefix for recently updated feature: %s", item.Message)
@@ -1238,7 +1238,7 @@ func TestFeatureAttention_NoStalePrefix_Recent(t *testing.T) {
 func TestFeatureAttention_NeedsRework_NoStalePrefix(t *testing.T) {
 	tasks := []taskInfo{{Status: "done"}}
 	staleTime := time.Now().Add(-72 * time.Hour)
-	items := generateFeatureAttention(tasks, nil, 1, "FEAT-08", "FEAT-08", "needs-rework", staleTime, true, true, 7, nil)
+	items := generateFeatureAttention(tasks, nil, 1, "FEAT-08", "FEAT-08", "needs-rework", staleTime, true, true, 7, nil, false, "")
 	for _, item := range items {
 		if strings.HasPrefix(item.Message, "⚠️ STALE:") {
 			t.Errorf("unexpected STALE prefix for needs-rework feature: %s", item.Message)
@@ -1249,7 +1249,7 @@ func TestFeatureAttention_NeedsRework_NoStalePrefix(t *testing.T) {
 // TestFeatureAttention_InheritedSpec_NoWarning verifies that when inheritedHasSpec=true,
 // the "Missing specification" attention item is NOT emitted.
 func TestFeatureAttention_InheritedSpec_NoWarning(t *testing.T) {
-	items := generateFeatureAttention(nil, nil, 0, "FEAT-09", "FEAT-09", "dev-planning", time.Time{}, true, true, 7, nil)
+	items := generateFeatureAttention(nil, nil, 0, "FEAT-09", "FEAT-09", "dev-planning", time.Time{}, true, true, 7, nil, false, "")
 	for _, item := range items {
 		if strings.Contains(item.Message, "Missing specification") {
 			t.Errorf("unexpected Missing specification item when inherited: %s", item.Message)
@@ -1260,7 +1260,7 @@ func TestFeatureAttention_InheritedSpec_NoWarning(t *testing.T) {
 // TestFeatureAttention_NoInheritedSpec_Warning verifies that when inheritedHasSpec=false
 // and no feature-owned spec exists, the warning is emitted.
 func TestFeatureAttention_NoInheritedSpec_Warning(t *testing.T) {
-	items := generateFeatureAttention(nil, nil, 0, "FEAT-10", "FEAT-10", "specifying", time.Time{}, false, true, 7, nil)
+	items := generateFeatureAttention(nil, nil, 0, "FEAT-10", "FEAT-10", "specifying", time.Time{}, false, true, 7, nil, false, "")
 	found := false
 	for _, item := range items {
 		if strings.Contains(item.Message, "Missing specification") {
@@ -1271,6 +1271,158 @@ func TestFeatureAttention_NoInheritedSpec_Warning(t *testing.T) {
 		t.Errorf("expected Missing specification warning, got: %v", items)
 	}
 }
+
+// ─── missing_graph_index attention tests (AC-012, AC-013, AC-014) ────────────
+
+// TestFeatureAttention_MissingGraphIndex verifies AC-012:
+// Worktree exists and active with empty GraphProject → missing_graph_index emitted.
+func TestFeatureAttention_MissingGraphIndex(t *testing.T) {
+	t.Parallel()
+	items := generateFeatureAttention(nil, nil, 1, "FEAT-GI1", "FEAT-GI1", "developing", time.Time{}, true, true, 7, nil, true, "")
+	found := false
+	for _, item := range items {
+		if item.Type == "missing_graph_index" {
+			found = true
+			if item.Severity != "info" {
+				t.Errorf("severity = %q, want info", item.Severity)
+			}
+			if !strings.Contains(item.Message, "index_repository") {
+				t.Errorf("message should mention index_repository, got: %s", item.Message)
+			}
+		}
+	}
+	if !found {
+		t.Errorf("expected missing_graph_index attention item, got: %v", items)
+	}
+}
+
+// TestFeatureAttention_NoMissingGraphIndex_ProjectSet verifies AC-013:
+// Worktree exists with non-empty GraphProject → no missing_graph_index.
+func TestFeatureAttention_NoMissingGraphIndex_ProjectSet(t *testing.T) {
+	t.Parallel()
+	items := generateFeatureAttention(nil, nil, 1, "FEAT-GI2", "FEAT-GI2", "developing", time.Time{}, true, true, 7, nil, true, "kanbanzai-FEAT-GI2")
+	for _, item := range items {
+		if item.Type == "missing_graph_index" {
+			t.Errorf("unexpected missing_graph_index item when GraphProject is set: %v", item)
+		}
+	}
+}
+
+// TestFeatureAttention_NoMissingGraphIndex_NoWorktree verifies AC-014:
+// No worktree → no missing_graph_index.
+func TestFeatureAttention_NoMissingGraphIndex_NoWorktree(t *testing.T) {
+	t.Parallel()
+	items := generateFeatureAttention(nil, nil, 1, "FEAT-GI3", "FEAT-GI3", "developing", time.Time{}, true, true, 7, nil, false, "")
+	for _, item := range items {
+		if item.Type == "missing_graph_index" {
+			t.Errorf("unexpected missing_graph_index item when no worktree exists: %v", item)
+		}
+	}
+}
+
+// TestSynthesiseFeature_MissingGraphIndex_Integration verifies that synthesiseFeature
+// populates the missing_graph_index attention item when a worktree exists with empty
+// GraphProject (AC-012 end-to-end via synthesise).
+func TestSynthesiseFeature_MissingGraphIndex_Integration(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+	planID := createTestPlan(t, entitySvc, "gi-plan", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "gi-feat", "Graph Index Feature")
+	_ = createStatusTestTask(t, entitySvc, featID, "gi-task", "task")
+
+	wtStore := worktree.NewStore(t.TempDir())
+	_, err := wtStore.Create(worktree.Record{
+		EntityID:     featID,
+		Branch:       "feat/gi-feat",
+		Path:         ".worktrees/gi-feat",
+		Status:       worktree.StatusActive,
+		Created:      time.Now().UTC(),
+		CreatedBy:    "tester",
+		GraphProject: "", // empty — should trigger attention item
+	})
+	if err != nil {
+		t.Fatalf("worktree.Create: %v", err)
+	}
+
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore, "", 7)
+	if err != nil {
+		t.Fatalf("synthesiseFeature: %v", err)
+	}
+
+	found := false
+	for _, item := range detail.Attention {
+		if item.Type == "missing_graph_index" {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("expected missing_graph_index in attention, got: %v", detail.Attention)
+	}
+}
+
+// TestSynthesiseFeature_NoMissingGraphIndex_ProjectSet_Integration verifies AC-013
+// via synthesiseFeature: worktree with GraphProject set → no missing_graph_index.
+func TestSynthesiseFeature_NoMissingGraphIndex_ProjectSet_Integration(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+	planID := createTestPlan(t, entitySvc, "gi-set-plan", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "gi-set-feat", "Graph Index Set Feature")
+	_ = createStatusTestTask(t, entitySvc, featID, "gi-set-task", "task")
+
+	wtStore := worktree.NewStore(t.TempDir())
+	_, err := wtStore.Create(worktree.Record{
+		EntityID:     featID,
+		Branch:       "feat/gi-set-feat",
+		Path:         ".worktrees/gi-set-feat",
+		Status:       worktree.StatusActive,
+		Created:      time.Now().UTC(),
+		CreatedBy:    "tester",
+		GraphProject: "kanbanzai-FEAT-XXX",
+	})
+	if err != nil {
+		t.Fatalf("worktree.Create: %v", err)
+	}
+
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore, "", 7)
+	if err != nil {
+		t.Fatalf("synthesiseFeature: %v", err)
+	}
+
+	for _, item := range detail.Attention {
+		if item.Type == "missing_graph_index" {
+			t.Errorf("unexpected missing_graph_index when GraphProject is set: %v", item)
+		}
+	}
+}
+
+// TestSynthesiseFeature_NoMissingGraphIndex_NoWorktree_Integration verifies AC-014
+// via synthesiseFeature: no worktree → no missing_graph_index.
+func TestSynthesiseFeature_NoMissingGraphIndex_NoWorktree_Integration(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+	planID := createTestPlan(t, entitySvc, "gi-none-plan", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "gi-none-feat", "No WT Feature")
+	_ = createStatusTestTask(t, entitySvc, featID, "gi-none-task", "task")
+
+	wtStore := worktree.NewStore(t.TempDir())
+	// No worktree created for this feature.
+
+	detail, err := synthesiseFeature(featID, entitySvc, docSvc, wtStore, "", 7)
+	if err != nil {
+		t.Fatalf("synthesiseFeature: %v", err)
+	}
+
+	for _, item := range detail.Attention {
+		if item.Type == "missing_graph_index" {
+			t.Errorf("unexpected missing_graph_index when no worktree: %v", item)
+		}
+	}
+}
+
+// AC-018 note: The missing_graph_index attention item is inert metadata — it adds a
+// string to the attention array without calling codebase_memory_mcp. When the MCP is
+// unavailable, the GraphProject field is simply empty and no attention item is emitted,
+// so all non-graph behaviour is identical. No separate test is needed beyond AC-014.
 
 // ─── generatePlanAttention tests ─────────────────────────────────────────────
 

@@ -3,6 +3,9 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"os"
+	"os/exec"
+	"path/filepath"
 	"testing"
 	"time"
 
@@ -294,6 +297,143 @@ func TestWorktreeUpdate_MissingEntityID(t *testing.T) {
 
 	if _, hasErr := resp["error"]; !hasErr {
 		t.Errorf("expected error for missing entity_id, got: %v", resp)
+	}
+}
+
+// ─── remove action: graph_project_note (AC-015, AC-016) ─────────────────────
+
+// setupGitRepoForRemove creates a temporary git repository with an initial commit
+// and a worktree at the given path, suitable for testing worktreeRemoveAction.
+func setupGitRepoForRemove(t *testing.T, wtRelPath string) (repoDir string, wtAbsPath string) {
+	t.Helper()
+
+	if _, err := exec.LookPath("git"); err != nil {
+		t.Skip("git not found in PATH, skipping test")
+	}
+
+	repoDir = t.TempDir()
+
+	runGitCmd := func(args ...string) {
+		t.Helper()
+		cmd := exec.Command("git", args...)
+		cmd.Dir = repoDir
+		out, err := cmd.CombinedOutput()
+		if err != nil {
+			t.Fatalf("git %v failed: %v\n%s", args, err, out)
+		}
+	}
+
+	runGitCmd("init")
+	runGitCmd("config", "user.email", "test@test.com")
+	runGitCmd("config", "user.name", "Test")
+
+	readme := filepath.Join(repoDir, "README.md")
+	if err := os.WriteFile(readme, []byte("# test\n"), 0o644); err != nil {
+		t.Fatalf("write README: %v", err)
+	}
+	runGitCmd("add", "README.md")
+	runGitCmd("commit", "-m", "init")
+
+	wtAbsPath = filepath.Join(repoDir, wtRelPath)
+	runGitCmd("worktree", "add", "-b", "test-branch", wtAbsPath)
+
+	return repoDir, wtAbsPath
+}
+
+// TestWorktreeRemove_GraphProjectNote verifies AC-015:
+// Removing a worktree with non-empty GraphProject → response contains graph_project_note.
+func TestWorktreeRemove_GraphProjectNote(t *testing.T) {
+	t.Parallel()
+
+	repoDir, wtAbsPath := setupGitRepoForRemove(t, "wt-gp-note")
+	gitOps := worktree.NewGit(repoDir)
+	store := worktree.NewStore(t.TempDir())
+
+	entityID := "FEAT-01AAAAAAAAAAAAA"
+	_, err := store.Create(worktree.Record{
+		EntityID:     entityID,
+		Branch:       "test-branch",
+		Path:         wtAbsPath,
+		Status:       worktree.StatusActive,
+		Created:      time.Now().UTC(),
+		CreatedBy:    "tester",
+		GraphProject: "kanbanzai-FEAT-XXX",
+	})
+	if err != nil {
+		t.Fatalf("store.Create: %v", err)
+	}
+
+	handler := worktreeRemoveAction(store, gitOps)
+	req := mcp.CallToolRequest{}
+	req.Params.Arguments = map[string]any{
+		"entity_id": entityID,
+	}
+
+	result, err := handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("worktreeRemoveAction: %v", err)
+	}
+
+	data, _ := json.Marshal(result)
+	var resp map[string]any
+	if err := json.Unmarshal(data, &resp); err != nil {
+		t.Fatalf("unmarshal: %v", err)
+	}
+
+	note, ok := resp["graph_project_note"].(string)
+	if !ok {
+		t.Fatalf("expected graph_project_note in response, got: %v", resp)
+	}
+	if !containsIgnoreCase(note, "kanbanzai-FEAT-XXX") {
+		t.Errorf("graph_project_note should reference project name, got: %s", note)
+	}
+	if !containsIgnoreCase(note, "delete_project") {
+		t.Errorf("graph_project_note should mention delete_project, got: %s", note)
+	}
+}
+
+// TestWorktreeRemove_NoGraphProjectNote verifies AC-016:
+// Removing a worktree with empty GraphProject → no graph_project_note in response.
+func TestWorktreeRemove_NoGraphProjectNote(t *testing.T) {
+	t.Parallel()
+
+	repoDir, wtAbsPath := setupGitRepoForRemove(t, "wt-no-gp-note")
+	gitOps := worktree.NewGit(repoDir)
+	store := worktree.NewStore(t.TempDir())
+
+	entityID := "FEAT-01BBBBBBBBBBBBB"
+	_, err := store.Create(worktree.Record{
+		EntityID:     entityID,
+		Branch:       "test-branch",
+		Path:         wtAbsPath,
+		Status:       worktree.StatusActive,
+		Created:      time.Now().UTC(),
+		CreatedBy:    "tester",
+		GraphProject: "",
+	})
+	if err != nil {
+		t.Fatalf("store.Create: %v", err)
+	}
+
+	handler := worktreeRemoveAction(store, gitOps)
+	req := mcp.CallToolRequest{}
+	req.Params.Arguments = map[string]any{
+		"entity_id": entityID,
+	}
+
+	result, err := handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("worktreeRemoveAction: %v", err)
+	}
+
+	data, _ := json.Marshal(result)
+	var resp map[string]any
+	if err := json.Unmarshal(data, &resp); err != nil {
+		t.Fatalf("unmarshal: %v", err)
+	}
+
+	if _, hasNote := resp["graph_project_note"]; hasNote {
+		t.Errorf("unexpected graph_project_note for empty GraphProject: %v", resp)
 	}
 }
 
