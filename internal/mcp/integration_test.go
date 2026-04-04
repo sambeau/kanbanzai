@@ -44,7 +44,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 	writeIntegrationPlan(t, entitySvc, planID)
 
 	feat, err := entitySvc.CreateFeature(service.CreateFeatureInput{
-		Name: "test",
+		Name:      "test",
 		Slug:      "e2e-feature",
 		Parent:    planID,
 		Summary:   "End-to-end integration test feature",
@@ -64,7 +64,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 	}
 
 	taskResult, err := entitySvc.CreateTask(service.CreateTaskInput{
-		Name: "test",
+		Name:          "test",
 		ParentFeature: feat.ID,
 		Slug:          "e2e-task",
 		Summary:       "Implement the widget",
@@ -84,7 +84,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 
 	// ── Step 1: next(task_id) — claim the task ──────────────────────────
 
-	nextTools := NextTools(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, nil, nil, nil)
+	nextTools := NextTools(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, nil, nil, nil, nil)
 	if len(nextTools) == 0 {
 		t.Fatal("NextTools returned no tools")
 	}
@@ -124,7 +124,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 
 	// ── Step 2: handoff(task_id) — generate sub-agent prompt ────────────
 
-	handoffTools := HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, nil, nil, nil, nil)
+	handoffTools := HandoffTools(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, nil, nil, nil, nil, nil)
 	if len(handoffTools) == 0 {
 		t.Fatal("HandoffTools returned no tools")
 	}

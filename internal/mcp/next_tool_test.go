@@ -84,7 +84,7 @@ func createNextTestPlan(t *testing.T, entitySvc *service.EntityService, slug str
 func createNextTestFeature(t *testing.T, entitySvc *service.EntityService, planID, slug string) string {
 	t.Helper()
 	result, err := entitySvc.CreateFeature(service.CreateFeatureInput{
-		Name: "test",
+		Name:      "test",
 		Slug:      slug,
 		Parent:    planID,
 		Summary:   "Test feature " + slug,
@@ -100,7 +100,7 @@ func createNextTestFeature(t *testing.T, entitySvc *service.EntityService, planI
 func createNextTestTask(t *testing.T, entitySvc *service.EntityService, featID, slug string) (string, string) {
 	t.Helper()
 	result, err := entitySvc.CreateTask(service.CreateTaskInput{
-		Name: "test",
+		Name:          "test",
 		ParentFeature: featID,
 		Slug:          slug,
 		Summary:       "Test task " + slug,
@@ -147,7 +147,7 @@ func callNext(
 	args map[string]any,
 ) string {
 	t.Helper()
-	tool := nextTool(entitySvc, dispatchSvc, nil, nil, nil, nil, nil, nil)
+	tool := nextTool(entitySvc, dispatchSvc, nil, nil, nil, nil, nil, nil, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -184,7 +184,7 @@ func callNextFull(
 	args map[string]any,
 ) map[string]any {
 	t.Helper()
-	tool := nextTool(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, nil, nil)
+	tool := nextTool(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, nil, nil, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -910,7 +910,7 @@ func TestNext_ContextAssembly_GracefulDegradation(t *testing.T) {
 	}
 
 	// Use a nil intelligence service to force graceful degradation.
-	tool := nextTool(entitySvc, dispatchSvc, nil, nil, nil, docRecordSvc, nil, nil)
+	tool := nextTool(entitySvc, dispatchSvc, nil, nil, nil, docRecordSvc, nil, nil, nil)
 	req := makeRequest(map[string]any{"id": taskID})
 	toolResult, err := tool.Handler(context.Background(), req)
 	if err != nil {

@@ -22,6 +22,7 @@ import (
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/stage"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // boldIdentifierRe matches lines of the form **XX-NN.** <text>
@@ -131,6 +132,14 @@ type assembledContext struct {
 	specFallbackPath string
 	// toolHint is the resolved tool hint for the active role (FR-015, FR-016).
 	toolHint string
+	// graphProject is the codebase-memory-mcp project name from the worktree record.
+	// Empty string when no worktree exists or GraphProject is not set.
+	graphProject string
+	// worktreePath is the filesystem path of the feature's worktree.
+	// Empty string when no worktree exists.
+	worktreePath string
+	// hasWorktree indicates whether the parent feature has a worktree record.
+	hasWorktree bool
 }
 
 // ─── Assembly entry point ─────────────────────────────────────────────────────
@@ -148,6 +157,7 @@ type asmInput struct {
 	featureStage    string            // resolved feature lifecycle stage; empty = non-stage-aware
 	mergedToolHints map[string]string // merged tool hints for role-scoped resolution
 	roleStore       *kbzctx.RoleStore // for tool hint inheritance walking
+	worktreeStore   *worktree.Store   // for graph project lookup
 }
 
 // assembleContext gathers spec sections, acceptance criteria, knowledge,
@@ -250,6 +260,15 @@ func assembleContext(input asmInput) assembledContext {
 	// Active workflow experiments (Phase 3 context nudge, spec §8.4).
 	if input.entitySvc != nil {
 		actx.experimentNudge = asmLoadExperimentNudge(input.entitySvc)
+	}
+
+	// Graph project context from worktree record.
+	if input.worktreeStore != nil && input.parentFeature != "" {
+		if wt, err := input.worktreeStore.GetByEntityID(input.parentFeature); err == nil {
+			actx.hasWorktree = true
+			actx.worktreePath = wt.Path
+			actx.graphProject = wt.GraphProject
+		}
 	}
 
 	// Byte usage and trim if over budget.

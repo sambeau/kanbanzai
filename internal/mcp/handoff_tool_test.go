@@ -76,7 +76,7 @@ func createHandoffFeature(t *testing.T, entitySvc *service.EntityService, planID
 func createHandoffTask(t *testing.T, entitySvc *service.EntityService, featID, slug string) (string, string) {
 	t.Helper()
 	result, err := entitySvc.CreateTask(service.CreateTaskInput{
-		Name: "test",
+		Name:          "test",
 		ParentFeature: featID, Slug: slug, Summary: "Implement " + slug,
 	})
 	if err != nil {
@@ -186,7 +186,7 @@ func callHandoff(
 	args map[string]any,
 ) string {
 	t.Helper()
-	tool := handoffTool(entitySvc, profileStore, knowledgeSvc, nil, nil, nil, nil, nil)
+	tool := handoffTool(entitySvc, profileStore, knowledgeSvc, nil, nil, nil, nil, nil, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {

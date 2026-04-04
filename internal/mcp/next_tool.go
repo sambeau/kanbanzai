@@ -29,6 +29,7 @@ import (
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/stage"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // NextTools returns the `next` MCP tool registered in the core group.
@@ -41,8 +42,9 @@ func NextTools(
 	docRecordSvc *service.DocumentService,
 	mergedToolHints map[string]string,
 	roleStore *kbzctx.RoleStore,
+	worktreeStore *worktree.Store,
 ) []server.ServerTool {
-	return []server.ServerTool{nextTool(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore)}
+	return []server.ServerTool{nextTool(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore, worktreeStore)}
 }
 
 func nextTool(
@@ -54,6 +56,7 @@ func nextTool(
 	docRecordSvc *service.DocumentService,
 	mergedToolHints map[string]string,
 	roleStore *kbzctx.RoleStore,
+	worktreeStore *worktree.Store,
 ) server.ServerTool {
 	tool := mcp.NewTool("next",
 		mcp.WithReadOnlyHintAnnotation(false),
@@ -97,7 +100,7 @@ func nextTool(
 		if id == "" {
 			return nextQueueMode(ctx, role, conflictCheck, entitySvc)
 		}
-		return nextClaimMode(ctx, id, role, entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore)
+		return nextClaimMode(ctx, id, role, entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore, worktreeStore)
 	})
 
 	return server.ServerTool{Tool: tool, Handler: handler}
@@ -185,6 +188,7 @@ func nextClaimMode(
 	docRecordSvc *service.DocumentService,
 	mergedToolHints map[string]string,
 	roleStore *kbzctx.RoleStore,
+	worktreeStore *worktree.Store,
 ) (any, error) {
 	// Resolve the input ID to a specific task ID.
 	taskID, err := nextResolveTaskID(id, entitySvc)
@@ -301,6 +305,7 @@ func nextClaimMode(
 		entitySvc:       entitySvc,
 		mergedToolHints: mergedToolHints,
 		roleStore:       roleStore,
+		worktreeStore:   worktreeStore,
 	})
 
 	return map[string]any{
@@ -413,6 +418,8 @@ func nextContextToMap(actx assembledContext) map[string]any {
 	if actx.toolHint != "" {
 		out["tool_hint"] = actx.toolHint
 	}
+	// Graph project — always present (empty string when no worktree).
+	out["graph_project"] = actx.graphProject
 	return out
 }
 

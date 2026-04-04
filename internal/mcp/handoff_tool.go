@@ -33,6 +33,7 @@ import (
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/stage"
 	"github.com/sambeau/kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // commitStateFunc is the function called by the handoff handler to commit any
@@ -59,8 +60,9 @@ func HandoffTools(
 	pipeline *kbzctx.Pipeline,
 	mergedToolHints map[string]string,
 	roleStore *kbzctx.RoleStore,
+	worktreeStore *worktree.Store,
 ) []server.ServerTool {
-	return []server.ServerTool{handoffTool(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, pipeline, mergedToolHints, roleStore)}
+	return []server.ServerTool{handoffTool(entitySvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, pipeline, mergedToolHints, roleStore, worktreeStore)}
 }
 
 func handoffTool(
@@ -72,6 +74,7 @@ func handoffTool(
 	pipeline *kbzctx.Pipeline,
 	mergedToolHints map[string]string,
 	roleStore *kbzctx.RoleStore,
+	worktreeStore *worktree.Store,
 ) server.ServerTool {
 	tool := mcp.NewTool("handoff",
 		mcp.WithReadOnlyHintAnnotation(true),
@@ -215,6 +218,7 @@ func handoffTool(
 			entitySvc:       entitySvc,
 			mergedToolHints: mergedToolHints,
 			roleStore:       roleStore,
+			worktreeStore:   worktreeStore,
 		})
 
 		prompt := renderHandoffPrompt(task.State, actx, instructions)
@@ -482,6 +486,21 @@ func renderHandoffPrompt(taskState map[string]any, actx assembledContext, instru
 		sb.WriteString("## Available Tools\n\n")
 		sb.WriteString(actx.toolHint)
 		sb.WriteString("\n\n")
+	}
+
+	// 9b. Code Graph — codebase-memory-mcp project context (FR-004, FR-005, FR-006).
+	// NFR-003: full section must stay under 500 bytes — keep text terse.
+	if actx.graphProject != "" {
+		sb.WriteString("## Code Graph\n\n")
+		fmt.Fprintf(&sb, "Project `%s` — prefer graph tools over grep:\n", actx.graphProject)
+		fmt.Fprintf(&sb, "- `search_graph(project=\"%s\", ...)`\n", actx.graphProject)
+		fmt.Fprintf(&sb, "- `trace_call_path(project=\"%s\", ...)`\n", actx.graphProject)
+		fmt.Fprintf(&sb, "- `query_graph(project=\"%s\", ...)`\n", actx.graphProject)
+		fmt.Fprintf(&sb, "- `get_code_snippet(project=\"%s\", ...)`\n\n", actx.graphProject)
+		fmt.Fprintf(&sb, "Re-index: `index_repository(repo_path=\"%s\")`\n\n", actx.worktreePath)
+	} else if actx.hasWorktree {
+		sb.WriteString("## Code Graph\n\n")
+		fmt.Fprintf(&sb, "Run `index_repository(repo_path=\"%s\")` before structural code exploration.\n\n", actx.worktreePath)
 	}
 
 	// 10. Additional orchestrator instructions.
