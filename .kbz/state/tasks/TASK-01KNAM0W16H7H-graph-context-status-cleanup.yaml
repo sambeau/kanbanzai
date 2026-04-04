@@ -3,6 +3,6 @@ parent_feature: FEAT-01KNA11F5FAFW
 slug: graph-context-status-cleanup
 name: Graph Context Status and Cleanup
 summary: "Emit missing_graph_index info attention item in status when worktree exists but GraphProject is empty. Suppress when set or no worktree. Add cleanup note on worktree remove and cleanup execute when GraphProject is non-empty. Covers FR-009 through FR-013, AC-012 through AC-018."
-status: queued
+status: ready
 depends_on:
   - TASK-01KNAM0VVWJT6

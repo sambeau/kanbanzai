@@ -3,8 +3,17 @@ parent_feature: FEAT-01KNA11F5FAFW
 slug: graph-project-field
 name: GraphProject Field and Worktree Params
 summary: "Add GraphProject string field to worktree.Record. Accept graph_project param on worktree create and update actions. Backward-compatible deserialisation (missing key = empty string). Covers FR-001 through FR-003, AC-001 through AC-005."
-status: active
+status: done
+files_planned:
+  - internal/worktree/worktree.go
+  - internal/worktree/worktree_test.go
+  - internal/worktree/store.go
+  - internal/mcp/worktree_tool.go
+  - internal/mcp/worktree_tool_test.go
+completed: "2026-04-04T08:52:31Z"
 claimed_at: "2026-04-04T08:45:54Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-04T08:45:54Z"
 dispatched_by: sambeau
+completion_summary: "Added GraphProject string field to worktree.Record with backward-compatible deserialisation (AC-001). Implemented graph_project parameter on worktree create (AC-002, AC-003) and new update action (AC-004, AC-005). Updated Fields(), FieldOrder(), recordFromFields(), worktreeRecordToMap(), and tool definition. Created comprehensive tests in both worktree_test.go and new worktree_tool_test.go."
+verification: go build ./... passes. go test ./internal/worktree/... ./internal/mcp/... passes. All 5 acceptance criteria (AC-001 through AC-005) covered by tests.
