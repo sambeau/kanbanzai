@@ -3,8 +3,12 @@ parent_feature: FEAT-01KP8T4HXPEAY
 slug: write-retrospectives
 name: Write Retrospectives
 summary: "Write stage: produce docs/retrospectives.md (~3-5 pages) from design §10 and codebase source material. Six sections: what retrospectives capture, signal categories, recording signals, synthesising, generating reports, when to run a retro."
-status: active
+status: done
+files_planned:
+  - docs/retrospectives.md
+completed: "2026-04-15T18:50:13Z"
 claimed_at: "2026-04-15T18:47:53Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-15T18:47:53Z"
 dispatched_by: sambeau
+completion_summary: "Write stage: produced docs/retrospectives.md (~276 lines, 6 sections) from design §10 and codebase source material. Sections: what retrospectives capture, signal categories, recording signals, synthesising, generating reports, when to run a retro."
