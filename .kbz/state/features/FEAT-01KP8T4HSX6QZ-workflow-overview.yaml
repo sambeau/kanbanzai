@@ -2,7 +2,7 @@ id: FEAT-01KP8T4HSX6QZ
 slug: workflow-overview
 name: Workflow Overview
 parent: P22-documentation-for-public-release
-status: proposed
+status: designing
 summary: "Produce the Workflow Overview (docs/workflow-overview.md) — the methodology document. Covers design-led workflow, document-led process, specification-led implementation, chat-based project management, approval stages. Purpose, audience, structure defined in design §7. Full editorial pipeline with advisory checkpoints. Depends on: User Guide."
 created: "2026-04-15T14:53:44Z"
 created_by: sambeau
