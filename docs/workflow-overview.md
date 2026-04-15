@@ -10,7 +10,7 @@ It is written for design managers and product managers who have experience with 
 
 The workflow has two distinct halves. The first half — planning, design, and specification — is a collaborative design conversation. You shape ideas through documents, revise them, make decisions, and narrow alternatives until a clear specification remains. This half is agile in the original sense: iterative, flexible, driven by conversation and revision.
 
-The second half — development planning, implementation, and review — is specification-driven. Once a specification is approved, it becomes the binding contract for what gets built. Agents decompose it into tasks, implement against it, and reviewers check the result against it. This half is deliberately rigid because the cost of ambiguity rises sharply once multiple agents are writing code in parallel.
+The second half — development planning, implementation, and review — is specification-driven. Once a specification is approved, it becomes the binding contract for what gets built. Agents decompose it into tasks and implement against it, and reviewers check the result against it. This half is deliberately rigid because the cost of ambiguity rises sharply once multiple agents are writing code in parallel.
 
 The two halves are not in tension. Flexibility during design is how you get the specification right. Rigour during implementation is how you get the code right. Kanbanzai formalises both into a single workflow with explicit gates between phases.
 
@@ -88,7 +88,7 @@ Review reports are registered as type `report`.
 
 ### What the system manages vs what it stores
 
-The Markdown files are the human-facing artifacts — you edit them in your editor, review them in conversation, and treat them as the record of intent. Document records are the system-facing metadata: ownership, approval status, content hashes, and lifecycle tracking. The records make the workflow enforceable. The files remain the thing you actually read and write.
+The Markdown files are the human-facing artefacts — you edit them in your editor, review them in conversation, and treat them as the record of intent. Document records are the system-facing metadata: ownership, approval status, content hashes, and lifecycle tracking. The records make the workflow enforceable. The files remain the thing you actually read and write.
 
 When a document is superseded — say, a specification is rewritten because requirements changed — the owning feature moves backward to the stage that matches the new document state. This rollback is designed behaviour. It keeps the workflow aligned with current intent rather than letting implementation drift from an outdated specification.
 
@@ -100,7 +100,7 @@ After the specification is approved, the workflow shifts character. The design c
 
 ### The development plan
 
-Agents break the approved specification into a development plan: a set of tasks with explicit dependencies, interface contracts where tasks interact, and traceability from each task back to the specification requirements it addresses. They lead this stage because decomposition depends on implementation-level judgment about sequencing and interfaces. You review the resulting plan and approve it before implementation begins.
+Agents break the approved specification into a development plan: a set of tasks with explicit dependencies, interface contracts where tasks interact, and traceability from each task back to the specification requirements it addresses. They lead this stage because decomposition depends on implementation-level judgement about sequencing and interfaces. You review the resulting plan and approve it before implementation begins.
 
 The development plan matters because ad-hoc task creation — agents inventing work without structured decomposition — hides dependencies, makes parallel work unsafe, and weakens the link between implementation and specification.
 
