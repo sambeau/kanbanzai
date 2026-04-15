@@ -3,4 +3,4 @@ parent_feature: FEAT-01KP8T4HVPY2Y
 slug: check-orchestration-doc
 name: Check Orchestration Doc
 summary: "Check stage: verify factual claims in docs/orchestration-and-knowledge.md against source code and existing documentation. Flag incorrect tool names, wrong field names, inaccurate descriptions."
-status: queued
+status: ready
