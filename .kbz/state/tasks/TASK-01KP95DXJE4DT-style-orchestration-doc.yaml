@@ -3,8 +3,10 @@ parent_feature: FEAT-01KP8T4HVPY2Y
 slug: style-orchestration-doc
 name: Style Orchestration Doc
 summary: "Style stage: apply style guide to docs/orchestration-and-knowledge.md. Fix banned words, passive voice, nominalisations, sentence length."
-status: active
+status: done
+completed: "2026-04-15T18:32:40Z"
 claimed_at: "2026-04-15T18:29:27Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-15T18:29:27Z"
 dispatched_by: sambeau
+completion_summary: "Style stage: 6 passive→active voice conversions, broke up 3 sentences exceeding 50 words, bolded key orchestrator vocabulary terms for scannability. No banned words found."
