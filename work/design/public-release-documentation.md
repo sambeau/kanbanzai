@@ -8,6 +8,7 @@
 Related:
 
 - `work/design/documentation-for-public-release-proposal.txt` (original proposal)
+- `work/design/documentation-pipeline.md` (editorial pipeline — production methodology for this workstream)
 - `work/design/public-schema-interface.md` (schema as public contract)
 - `work/design/fresh-install-experience.md` (init command and onboarding)
 - `work/design/workflow-design-basis.md` §14 (human-AI delegation model)
@@ -15,7 +16,7 @@ Related:
 
 ---
 
-## 1. Purpose
+## Overview
 
 This document designs the public-facing documentation set for the Kanbanzai 1.0 release. It defines what documents we produce, who they are for, what each one covers, how they relate to each other, and the editorial principles that govern them all.
 
@@ -23,7 +24,24 @@ This is a plan for documentation, not the documentation itself. It sits alongsid
 
 ---
 
-## 2. Problem Statement
+## Goals and Non-Goals
+
+### Goals
+
+- Produce a complete, polished public documentation set: 6 new or rewritten documents plus 4 updated reference documents.
+- Establish a clear production order so later documents can reference earlier ones.
+- Define per-document briefs (purpose, audience, tone, structure) that feed directly into the editorial pipeline's Write stage.
+- Position Kanbanzai honestly — articulating costs and benefits without overselling.
+
+### Non-Goals
+
+- Writing the documentation itself. This document designs the set; production follows via the editorial pipeline.
+- Redesigning the editorial pipeline. The pipeline is defined in `work/design/documentation-pipeline.md` and used as-is.
+- Changing the Kanbanzai workflow or MCP tools. This workstream produces documentation about the system, not changes to it.
+
+---
+
+## Problem Statement
 
 The current documentation was written during development for developers of the system. It serves that audience adequately but fails the public release audience on several dimensions:
 
@@ -39,7 +57,11 @@ The current documentation was written during development for developers of the s
 
 ---
 
-## 3. Design Principles
+## Design
+
+The design covers editorial principles (§3.1–§3.5), the document inventory and production methodology (§4), per-document content briefs (§5–§10), reference documentation updates (§11), and cross-cutting concerns (§12).
+
+### Design Principles
 
 ### 3.1 The Inverted Pyramid
 
@@ -75,7 +97,7 @@ Documentation must be completely factual about what Kanbanzai does well, what it
 
 ---
 
-## 4. Document Inventory
+### Document Inventory
 
 ### 4.1 Documents to Produce (New or Rewritten)
 
@@ -94,10 +116,10 @@ These are technically accurate and structurally sound. They need editorial polis
 
 | Document | Location | Update scope |
 |----------|----------|--------------|
-| Schema Reference | `docs/schema-reference.md` | Style pass, verify completeness |
-| MCP Tool Reference | `docs/mcp-tool-reference.md` | Style pass, correct tool count (22 tools, not 97), verify all actions documented |
-| Configuration Reference | `docs/configuration-reference.md` | Style pass, verify completeness |
-| Viewer Agents Guide | `docs/kanbanzai-guide-for-viewer-agents.md` | Style pass |
+| Schema Reference | `docs/schema-reference.md` | Check → Style → Copyedit pipeline stages; verify completeness |
+| MCP Tool Reference | `docs/mcp-tool-reference.md` | Check → Style → Copyedit pipeline stages; verify all actions documented |
+| Configuration Reference | `docs/configuration-reference.md` | Check → Style → Copyedit pipeline stages; verify completeness |
+| Viewer Agents Guide | `docs/kanbanzai-guide-for-viewer-agents.md` | Check → Style → Copyedit pipeline stages |
 
 ### 4.3 Production Order
 
@@ -109,13 +131,35 @@ Documents are produced in this order so that later documents can reference earli
 4. **Retrospectives** — standalone, can be written in parallel with 3
 5. **Getting Started** — the guided walkthrough, references all of the above
 6. **README** — the shop window, written last when all links are available
-7. **Reference doc updates** — style pass across schema, tools, config, viewer guide
+7. **Reference doc updates** — Check → Style → Copyedit across schema, tools, config, viewer guide
 
 The Getting Started guide is written after the manual collection because it needs to link into specific sections. The README is written last because it summarises everything.
 
+Each document follows the production order above and then passes through the editorial pipeline (§4.4) before the next document is started. This ensures earlier documents are fully polished before later documents link into them.
+
+### 4.4 Production Methodology: The Editorial Pipeline
+
+Each document is produced through the five-stage editorial pipeline defined in `work/design/documentation-pipeline.md`. The pipeline runs Write → Edit → Check → Style → Copyedit, with each stage operating at a progressively smaller scale (document → section → claim → paragraph → sentence).
+
+The per-document structure tables in §5–§10 serve as the brief for the Write stage: they define purpose, audience, tone, and content. The pipeline stages handle editorial quality — the design principles in §3 (inverted pyramid, audience assumptions, show-don't-tell) are already encoded in the pipeline's `write-docs` and `edit-docs` SKILLs.
+
+**Pipeline configuration by document:**
+
+| Document | Pipeline stages | Checkpoints | Rationale |
+|----------|----------------|-------------|-----------|
+| README | Full (Write → Edit → Check → Style → Copyedit) | **Hard** after Edit and Copyedit | Public-facing, high-stakes — structural decisions and final polish warrant human review |
+| User Guide | Full | Advisory after Edit and Copyedit | Hub document; structural correctness matters but is lower risk than the README |
+| Workflow Overview | Full | Advisory after Edit and Copyedit | Methodology document; standard pipeline treatment |
+| Getting Started | Full | Advisory after Edit and Copyedit | Code examples get particular attention at the Check stage |
+| Orchestration and Knowledge | Full | Advisory after Edit and Copyedit | Standard pipeline treatment |
+| Retrospectives | Full | Advisory after Edit and Copyedit | Standard pipeline treatment |
+| Reference doc updates | **Check → Style → Copyedit only** | Advisory after Copyedit | Structure is already sound; skip Write and Edit stages |
+
+**Relationship to `update-docs`.** The editorial pipeline handles new document creation and editorial refinement. After the public release set is complete, future incremental updates to keep documentation in sync with code changes use the `update-docs` skill, not the full pipeline. The pipeline is re-invoked only when a document needs substantial revision.
+
 ---
 
-## 5. README
+### README
 
 ### 5.1 Purpose
 
@@ -175,7 +219,7 @@ The README should include a workflow diagram showing the stage-gate progression 
 
 ---
 
-## 6. User Guide (Base Document)
+### User Guide (Base Document)
 
 ### 6.1 Purpose
 
@@ -218,7 +262,7 @@ It provides just enough context to orient the reader and send them to the right 
 
 ---
 
-## 7. Workflow Overview
+### Workflow Overview
 
 ### 7.1 Purpose
 
@@ -266,7 +310,7 @@ The rewrite restructures this material around the proposal's conceptual framewor
 
 ---
 
-## 8. Getting Started Guide
+### Getting Started Guide
 
 ### 8.1 Purpose
 
@@ -313,7 +357,7 @@ The current getting-started guide is accurate and covers installation, init, and
 
 ---
 
-## 9. Orchestration and Knowledge
+### Orchestration and Knowledge
 
 ### 9.1 Purpose
 
@@ -339,7 +383,7 @@ Agentic developers and power users. Assumes familiarity with AI agent concepts: 
 
 ---
 
-## 10. Retrospectives
+### Retrospectives
 
 ### 10.1 Purpose
 
@@ -366,7 +410,7 @@ This is a short document — likely 3–5 pages. It may feel thin as a standalon
 
 ---
 
-## 11. Reference Documentation Updates
+### Reference Documentation Updates
 
 The four existing reference documents are kept and updated with a style pass rather than rewritten.
 
@@ -393,88 +437,85 @@ The four existing reference documents are kept and updated with a style pass rat
 
 ---
 
-## 12. Cross-Cutting Concerns
+### Cross-Cutting Concerns
 
-### 12.1 Emoji Policy
+The editorial pipeline (§4.4) enforces most cross-cutting editorial concerns through its stage-specific SKILLs. The concerns below are inputs to those stages, recorded here for completeness and as guidance for the Write stage briefs.
 
-Use emoji sparingly and only where they add to clarity or aid scanning structure. Do not use emoji as decoration. Acceptable uses: status indicators (✅, ❌), section type markers in tables, callout boxes. Unacceptable uses: in headings, in prose, as bullet markers.
-
-### 12.2 Naming Consistency
-
-Follow the naming conventions from `AGENTS.md`:
-
-- **Kanbanzai** (or "the Kanbanzai System") — the system/methodology, used the way people say "Scrum" or "Kanban"
-- **`kanbanzai`** — the tool binary and MCP server name
-- **`.kbz/`** — the instance root directory
-
-### 12.3 Code Examples
-
-Code examples must be accurate and runnable. Do not show hypothetical tool calls that would fail. Where a tool call requires an entity ID that varies, use a placeholder format (`FEAT-xxxxx`) and note that the reader should substitute their own.
-
-### 12.4 Versioning
-
-All public documentation should carry a version or last-updated date. The reference documents already have this. The new documents should include a date in their front matter.
+- **Emoji policy.** Use emoji sparingly and only where they add to clarity or aid scanning structure. No emoji in headings, prose, or as bullet markers. Acceptable: status indicators (✅, ❌), section type markers in tables. Enforced by the **Edit** stage (structural tells).
+- **Naming consistency.** Follow `AGENTS.md` conventions: **Kanbanzai** (the system/methodology), **`kanbanzai`** (the tool binary), **`.kbz/`** (the instance root). Enforced by the **Check** stage (verify against source of truth) and **Copyedit** stage (consistency).
+- **Code examples.** Must be accurate and runnable. No hypothetical tool calls that would fail. Use placeholder format (`FEAT-xxxxx`) where entity IDs vary. Enforced by the **Check** stage (verify against implementation).
+- **Versioning.** All public documentation should carry a last-updated date in front matter. Handled during the **Write** stage (document setup).
 
 ---
 
-## 13. Decisions
+## Alternatives Considered
 
-### 13.1 Manual Is a Collection, Not a Single Document
+### Manual Is a Collection, Not a Single Document
 
-The "manual" is a collection of documents with the User Guide as the base document, not a single monolithic file. This gives each topic a clear home, keeps diffs clean, and allows individual documents to be updated without touching the others.
+The "manual" is a collection of documents with the User Guide as the base document, not a single monolithic file. This gives each topic a clear home, keeps diffs clean, and allows individual documents to be updated without touching the others. The alternative — a single monolithic manual — was rejected because it produces unwieldy diffs and forces unrelated sections to share a file.
 
-### 13.2 Workflow Overview Absorbs the Methodology Content
+### Workflow Overview Absorbs the Methodology Content
 
-Rather than creating a separate "Kanbanzai Methodology" document, the Workflow Overview is expanded to cover philosophy, positioning, design-led workflow, document-led process, specification-led implementation, and chat-based project management. These topics are tightly coupled and read naturally as a single narrative.
+Rather than creating a separate "Kanbanzai Methodology" document, the Workflow Overview is expanded to cover philosophy, positioning, design-led workflow, document-led process, specification-led implementation, and chat-based project management. The alternative — a standalone methodology document — was rejected because these topics are tightly coupled and read naturally as a single narrative.
 
-### 13.3 Approval Stages Live in the Workflow Overview
+### Approval Stages Live in the Workflow Overview
 
 Approval stages and state transitions are the mechanism that makes the workflow real. They belong in the Workflow Overview as a closing section that gives the reader the precise model after the conceptual narrative has established the "why."
 
-### 13.4 Bugs and Incidents Live in the User Guide
+### Bugs and Incidents Live in the User Guide
 
 The bug lifecycle (report → triage → reproduce → plan → fix → verify → close) and incident tracking are covered in the User Guide rather than as a standalone document. They are important for every user but not deep enough to warrant their own document.
 
-### 13.5 Concurrency Lives in Orchestration and Knowledge
+### Concurrency Lives in Orchestration and Knowledge
 
 Worktrees, conflict domains, and merge gates are covered in the Orchestration and Knowledge document. They are part of the coordination story and their primary audience is agentic developers who need to understand parallel execution.
 
-### 13.6 The README Uses Problem-First Positioning
+### The README Uses Problem-First Positioning
 
-The README's "what problems does it solve" section frames capabilities as solutions to problems the reader is already experiencing, rather than as a feature list. Feature lists follow, but the hook is the problem.
+The README's "what problems does it solve" section frames capabilities as solutions to problems the reader is already experiencing, rather than as a feature list. The alternative — leading with a feature list — was rejected because it fails to connect with the reader's existing pain points.
 
-### 13.7 "Specification-Led" Not "Waterfall"
+### "Specification-Led" Not "Waterfall"
 
-The implementation phase is described as "specification-led." Waterfall may be referenced as a comparison for readers familiar with the term, but Kanbanzai is not labelled as a waterfall system.
+The implementation phase is described as "specification-led." Waterfall may be referenced as a comparison for readers familiar with the term, but Kanbanzai is not labelled as a waterfall system. The alternative — using "waterfall" as the primary label — was rejected because it carries negative connotations that misrepresent the deliberate design choice.
 
 ---
 
-## 14. Open Questions
+## Dependencies
 
-### 14.1 Getting Started Example Feature
+- **Approved design:** This document must be approved before production begins.
+- **Editorial pipeline:** `work/design/documentation-pipeline.md` — the five-stage pipeline (Write → Edit → Check → Style → Copyedit) and its roles, SKILLs, and stage binding. Must be implemented before document production. Status: ✅ implemented.
+- **Styleguides:** `refs/documentation-structure-guide.md`, `refs/technical-writing-guide.md`, `refs/humanising-ai-prose.md`, `refs/punctuation-guide.md` — used by the editorial pipeline's stage-specific SKILLs.
+- **Implementation as source of truth:** The Check stage verifies all factual claims against the current codebase. The implementation must be stable (no major refactors in flight) during document production.
+
+---
+
+## Open Questions
+
+### Getting Started Example Feature
 
 The specific feature used in the Getting Started walkthrough has not been chosen. It needs to be simple enough to fit in a guide, complex enough to exercise the full workflow, and relatable. Candidates include a CLI subcommand, a configuration option, or a small library utility. Decision deferred to implementation.
 
-### 14.2 Diagram Tooling
+### Diagram Tooling → Resolved
 
-The workflow diagram could be a Mermaid diagram (renders in GitHub, many editors), an ASCII diagram (universal but less attractive), or an SVG committed to the repo. Mermaid is the current leading option. Decision deferred to implementation.
+Diagrams are produced during the Write stage. The editorial pipeline explicitly excludes diagram generation from its scope (pipeline design §2, Non-Goals). Mermaid is the default format — it renders in GitHub and most editors. If a diagram needs an alternative format, that is a Write-stage decision per document, not a cross-cutting concern.
 
-### 14.3 Retrospectives: Standalone or User Guide Section?
+### Retrospectives: Standalone or User Guide Section?
 
 This design specifies retrospectives as a standalone document (§10). It is a borderline case — the content may be only 3–5 pages. If during writing it proves too thin to stand alone, it can be folded into the User Guide as a section. The standalone structure is the starting point.
 
-### 14.4 Tool Count Presentation
+### Tool Count Presentation → Resolved
 
-The MCP tool reference currently claims 97 tools. The actual count is 22 MCP tools, each with multiple actions. The reference document can enumerate all action-combinations but must be upfront about the distinction. The exact presentation format is deferred to the style pass.
+The Check stage of the editorial pipeline verifies all factual claims against the implementation, including tool counts. The MCP tool reference will be corrected during its Check → Style → Copyedit pass (§4.2). The Check stage's structured output will flag the 97-vs-22 discrepancy and classify it as a hallucination finding, ensuring it is resolved before the Style and Copyedit stages run.
 
 ---
 
-## 15. Summary
+## Summary
 
 The public release documentation set consists of:
 
 - **6 new or rewritten documents:** README, User Guide, Workflow Overview, Getting Started, Orchestration and Knowledge, Retrospectives
 - **4 updated reference documents:** Schema, MCP Tools, Configuration, Viewer Agents Guide
 - **Production order:** User Guide → Workflow Overview → Orchestration and Knowledge → Retrospectives → Getting Started → README → Reference updates
+- **Production methodology:** Each new document passes through the full five-stage editorial pipeline (Write → Edit → Check → Style → Copyedit). Reference doc updates skip Write and Edit and run Check → Style → Copyedit only. The README uses hard human checkpoints after Edit and Copyedit; all other documents use advisory checkpoints.
 
-The editorial framework is the inverted pyramid applied to content, tone, and technical proficiency. The audience is designer-developers and design/product managers. The positioning is honest: Kanbanzai adds overhead that pays for itself on projects of sufficient scale and complexity, and the documentation says so clearly.
+The editorial framework is the inverted pyramid applied to content, tone, and technical proficiency — encoded in the pipeline's `write-docs` and `edit-docs` SKILLs. The audience is designer-developers and design/product managers. The positioning is honest: Kanbanzai adds overhead that pays for itself on projects of sufficient scale and complexity, and the documentation says so clearly.
