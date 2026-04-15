@@ -2,9 +2,11 @@ id: P22-documentation-for-public-release/design-public-release-documentation
 path: work/design/public-release-documentation.md
 type: design
 title: Public Release Documentation Design
-status: draft
+status: approved
 owner: P22-documentation-for-public-release
+approved_by: sambeau
+approved_at: "2026-04-15T15:01:33Z"
 content_hash: 24af33ac3c7fd311eb58de0c6615b9587b957af7ef5b814b0a17fe4893840905
 created: "2026-04-15T14:59:08Z"
 created_by: sambeau
-updated: "2026-04-15T14:59:08Z"
+updated: "2026-04-15T15:01:33Z"
