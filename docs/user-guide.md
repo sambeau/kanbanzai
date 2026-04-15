@@ -10,7 +10,7 @@ After reading this guide, you will have a mental model of the system — its wor
 
 Kanbanzai is three things at once. It is a **methodology** for structuring human-AI collaboration on software projects. It is a **workflow system** that tracks plans, features, tasks, bugs, and decisions as YAML files in your Git repository. And it is an **MCP server** that exposes structured tools to AI agents working in any editor that supports the Model Context Protocol.
 
-The methodology defines how work flows from an idea to a shipped feature: through design, specification, planning, implementation, and review, with human approval at each transition. The workflow system enforces that process — it tracks entity state, checks prerequisites at stage gates, and prevents work from advancing until the right documents are approved. The MCP server is how AI agents interact with the system. It provides 23 tools, each with multiple actions, that handle everything from creating entities to assembling context for a task to checking merge readiness.
+The methodology defines how work flows from an idea to a shipped feature: through design, specification, planning, implementation, and review, with human approval at each transition. The workflow system enforces that process — it tracks entity state, checks prerequisites at stage gates, and prevents work from advancing until the right documents are approved. The MCP server is how AI agents interact with the system. It provides 22 tools, each with multiple actions, that handle everything from creating entities to assembling context for a task to checking merge readiness.
 
 The system is Git-native. All state lives in a `.kbz/` directory inside your repository, stored as plain YAML files that are committed alongside your code. There is no external database, no cloud service, no separate server to run. The MCP server starts on demand when your editor launches it and communicates over stdio.
 
@@ -74,9 +74,9 @@ This gives the human two levers of control: **forward approval** (letting work p
 
 Bugs and incidents are tracked separately from the feature workflow, each with their own lifecycle.
 
-A **bug** tracks a code defect. Its lifecycle runs: `reported` → `triaged` → `reproduced` → `planned` → `in-progress` → `needs-review` → `verified` → `closed`. Bugs can also be marked `duplicate`, `not-planned`, or `cannot-reproduce`. The lifecycle ensures that bugs are confirmed before work begins and verified after a fix is applied.
+A **bug** tracks a code defect. Its lifecycle runs: `reported` → `triaged` → `reproduced` → `planned` → `in-progress` → `needs-review` → `verified` → `closed`. Bugs can also be marked `duplicate` or `not-planned` as terminal resolutions. A `cannot-reproduce` state sends the bug back to triage for reassessment rather than closing it. The lifecycle ensures that bugs are confirmed before work begins and verified after a fix is applied.
 
-An **incident** tracks a production-significant failure. Incidents carry timestamps for detection, triage, mitigation, and resolution — the data needed to measure mean time to recovery. Each incident can link to affected features and to the bugs filed to fix the underlying cause. Incidents require a linked root cause analysis before they can be closed. Severity levels — critical, high, medium, low — drive prioritisation.
+An **incident** tracks a production-significant failure. Incidents carry timestamps for detection, triage, mitigation, and resolution — the data needed to measure mean time to recovery. Each incident can link to affected features and to the bugs filed to fix the underlying cause. The health system flags resolved incidents that lack a linked root cause analysis, but closure is not blocked — this allows trivial or false-alarm incidents to be closed without ceremony. Severity levels — critical, high, medium, low — drive prioritisation.
 
 Bugs and incidents surface in health checks and status reports, so they remain visible alongside feature work. The [Schema Reference](schema-reference.md) documents the full field set for both entity types.
 
@@ -140,9 +140,9 @@ The [Orchestration and Knowledge](orchestration-and-knowledge.md) document cover
 
 ## MCP server
 
-The MCP server is how AI agents interact with Kanbanzai — it exposes 23 structured tools covering everything from entity management to merge readiness. It communicates over stdio using the Model Context Protocol and starts automatically when your editor launches it. Any editor that supports MCP can use it: Zed, VS Code, Cursor, Claude Desktop, and others.
+The MCP server is how AI agents interact with Kanbanzai — it exposes 22 structured tools covering everything from entity management to merge readiness. It communicates over stdio using the Model Context Protocol and starts automatically when your editor launches it. Any editor that supports MCP can use it: Zed, VS Code, Cursor, Claude Desktop, and others.
 
-The 23 tools are organised into seven groups:
+The 22 tools are organised into seven groups:
 
 | Group | Tools | Purpose |
 |-------|-------|---------|
