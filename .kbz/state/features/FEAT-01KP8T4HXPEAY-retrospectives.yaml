@@ -2,7 +2,18 @@ id: FEAT-01KP8T4HXPEAY
 slug: retrospectives
 name: Retrospectives
 parent: P22-documentation-for-public-release
-status: proposed
+status: developing
 summary: "Produce the Retrospectives document (docs/retrospectives.md) — standalone guide to the retrospective system. Covers signal categories, recording, synthesis, report generation. Purpose, audience, structure defined in design §10. Full editorial pipeline with advisory checkpoints. Can run in parallel with Orchestration and Knowledge."
 created: "2026-04-15T14:53:44Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: specifying
+    reason: "P22 streamlined pipeline: design brief serves as authoritative spec; editorial pipeline provides quality control. Same override approved for User Guide, Workflow Overview, and Orchestration and Knowledge features."
+    timestamp: "2026-04-15T19:46:14+01:00"
+    to_status: dev-planning
+  -
+    from_status: dev-planning
+    reason: "P22 streamlined pipeline: design brief serves as authoritative spec; editorial pipeline provides quality control. Same override approved for User Guide, Workflow Overview, and Orchestration and Knowledge features."
+    timestamp: "2026-04-15T19:46:15+01:00"
+    to_status: developing

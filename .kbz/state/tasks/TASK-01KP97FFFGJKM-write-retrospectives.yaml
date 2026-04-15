@@ -1,0 +1,6 @@
+id: TASK-01KP97FFFGJKM
+parent_feature: FEAT-01KP8T4HXPEAY
+slug: write-retrospectives
+name: Write Retrospectives
+summary: "Write stage: produce docs/retrospectives.md (~3-5 pages) from design §10 and codebase source material. Six sections: what retrospectives capture, signal categories, recording signals, synthesising, generating reports, when to run a retro."
+status: queued
