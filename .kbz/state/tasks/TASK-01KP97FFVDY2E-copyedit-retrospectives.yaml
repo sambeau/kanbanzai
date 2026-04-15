@@ -4,3 +4,5 @@ slug: copyedit-retrospectives
 name: Copyedit Retrospectives
 summary: "Copyedit stage: final pass for spelling, punctuation, serial commas, British spelling consistency, em dashes."
 status: queued
+depends_on:
+  - TASK-01KP97FFQNGJH

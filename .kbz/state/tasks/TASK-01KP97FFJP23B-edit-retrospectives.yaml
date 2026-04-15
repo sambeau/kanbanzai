@@ -4,3 +4,5 @@ slug: edit-retrospectives
 name: Edit Retrospectives
 summary: "Edit stage: structural and clarity review. Check headings, remove redundancy, merge or split sections as needed, improve flow."
 status: queued
+depends_on:
+  - TASK-01KP97FFFGJKM

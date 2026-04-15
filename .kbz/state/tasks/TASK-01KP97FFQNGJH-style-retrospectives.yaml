@@ -4,3 +4,5 @@ slug: style-retrospectives
 name: Style Retrospectives
 summary: "Style stage: passive to active voice, sentence length, bold key terms, consistent formatting."
 status: queued
+depends_on:
+  - TASK-01KP97FFN0D4Q
