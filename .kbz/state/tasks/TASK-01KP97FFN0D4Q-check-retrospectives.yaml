@@ -3,10 +3,14 @@ parent_feature: FEAT-01KP8T4HXPEAY
 slug: check-retrospectives
 name: Check Retrospectives
 summary: "Check stage: fact-check all claims against codebase. Verify signal categories, severity levels, tool parameters, clustering thresholds, synthesis response fields, report generation details."
-status: active
+status: done
 depends_on:
   - TASK-01KP97FFJP23B
+files_planned:
+  - docs/retrospectives.md
+completed: "2026-04-15T19:00:18Z"
 claimed_at: "2026-04-15T18:53:10Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-15T18:53:10Z"
 dispatched_by: sambeau
+completion_summary: "Check stage: fact-checked all claims against codebase via sub-agent. Found 1 error (scope hardcoded to 'project', not inherited). Clarified nudge mutual exclusivity, batch nudge suppression, US spelling alias, and revise/revert recommendation threshold."

@@ -3,6 +3,6 @@ parent_feature: FEAT-01KP8T4HXPEAY
 slug: style-retrospectives
 name: Style Retrospectives
 summary: "Style stage: passive to active voice, sentence length, bold key terms, consistent formatting."
-status: queued
+status: ready
 depends_on:
   - TASK-01KP97FFN0D4Q
