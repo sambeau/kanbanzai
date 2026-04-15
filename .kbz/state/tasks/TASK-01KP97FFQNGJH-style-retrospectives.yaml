@@ -3,10 +3,14 @@ parent_feature: FEAT-01KP8T4HXPEAY
 slug: style-retrospectives
 name: Style Retrospectives
 summary: "Style stage: passive to active voice, sentence length, bold key terms, consistent formatting."
-status: active
+status: done
 depends_on:
   - TASK-01KP97FFN0D4Q
+files_planned:
+  - docs/retrospectives.md
+completed: "2026-04-15T19:02:58Z"
 claimed_at: "2026-04-15T19:00:37Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-15T19:00:37Z"
 dispatched_by: sambeau
+completion_summary: "Style stage: 4 passive→active voice conversions (validates/rejects, separated→separates, clustered→clusters, ranked→ranks), bolded key vocabulary terms (nudges, experiment tracking), tightened transitional sentences."
