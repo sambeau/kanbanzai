@@ -1,0 +1,6 @@
+id: TASK-01KP9ARCZCTDG
+parent_feature: FEAT-01KP8T4J4795M
+slug: style-reference-docs
+name: Style Reference Docs
+summary: "Apply style pass to all four reference documents: bold vocabulary on first use, passive→active voice conversions, consistent formatting, trim redundancy. Documents: MCP Tool Reference, Schema Reference, Configuration Reference, Viewer Agents Guide."
+status: queued
