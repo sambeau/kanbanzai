@@ -3,6 +3,14 @@ parent_feature: FEAT-01KP8T4J02S7F
 slug: check-getting-started
 name: Check Getting Started Guide
 summary: "Check stage: fact-check all tool invocations, parameter names, command outputs, and workflow claims in docs/getting-started.md against the codebase. Code examples get particular attention per design §4.4."
-status: ready
+status: done
 depends_on:
   - TASK-01KP98YP6RNX5
+files_planned:
+  - docs/getting-started.md
+completed: "2026-04-15T19:28:19Z"
+claimed_at: "2026-04-15T19:19:37Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T19:19:37Z"
+dispatched_by: sambeau
+completion_summary: "Check stage complete. Fact-check sub-agent verified 26 claims: 20 correct, 3 errors, 3 unclear. Fixed all 3 errors: Go version 1.21→1.25 (matches go.mod), plan lifecycle missing reviewing state, merge gates listed 4 of 7 (now lists all 7). Also clarified .kbz/state/ is lazy-created and added work queue sort description."
