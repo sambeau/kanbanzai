@@ -296,7 +296,7 @@ Kanbanzai forms Plan IDs.
 | Retire a prefix | Edit `config.yaml` | Set `retired: true` on the prefix entry. Retired prefixes cannot be used for new Plans but remain valid for Plans that already use them. The `Config` struct has a `RetirePrefix()` method internally. |
 
 You perform these operations by editing `config.yaml` directly or through the
-init command. There are no standalone MCP tools for prefix management.
+`init` command. There are no standalone MCP tools for prefix management.
 
 ---
 
@@ -418,8 +418,8 @@ This validates:
 
 - Config file syntax and required fields.
 - Entity YAML validity across all entity types.
-- Referential integrity between entities (parent–child links, dependencies).
-- Knowledge entry consistency (TTL, confidence, staleness).
+- Referential integrity between entities (parent-child links, dependencies).
+- Knowledge entry consistency (TTL, confidence, and staleness).
 - Context profile schema and inheritance resolution.
 - Worktree status and branch health.
 
@@ -452,7 +452,7 @@ keys. This means:
 
 - Upgrading from an older configuration adds newer sections
   (`branch_tracking`, `cleanup`, `knowledge`, `dispatch`, `incidents`,
-  `decomposition`) with sensible defaults.
+  and `decomposition`) with sensible defaults.
 - Kanbanzai never overwrites existing settings.
 - You rarely need a manual migration.
 

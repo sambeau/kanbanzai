@@ -8,7 +8,7 @@ This document briefs AI agents building a **viewer** — a project that reads an
 
 Kanbanzai is a Git-native project workflow system. It tracks plans, features, tasks, bugs, decisions, documents, knowledge entries, and human checkpoints as plain YAML files inside a `.kbz/` directory at the root of a Git repository. There is no external database. All canonical state is version-controlled alongside the project's source code.
 
-Kanbanzai supports human-AI collaborative development. Humans express intent through documents (designs, specifications, dev plans) and decisions. AI agents execute: decomposing work, implementing tasks, and tracking status. The MCP (Model Context Protocol) server is the primary write interface. The `.kbz/` directory on disk is the primary read interface.
+Kanbanzai supports human-AI collaborative development. Humans express intent through documents (designs, specifications, and dev plans) and decisions. AI agents execute: decomposing work, implementing tasks, and tracking status. The MCP (Model Context Protocol) server is the primary write interface. The `.kbz/` directory on disk is the primary read interface.
 
 A viewer's job is to read committed `.kbz/` state and present it to humans — project managers, designers, and developers — who want to see project progress without using the MCP server or CLI directly.
 
@@ -161,7 +161,7 @@ The `kbzschema` Go package (§8) handles all of this for you if you are writing 
 
 ## 6. Lifecycle State Machines
 
-Every entity with a status field follows a defined state machine. Valid transitions are strict — the Kanbanzai server rejects anything not listed. A viewer does not enforce transitions but should understand them for display purposes (colouring, progress calculation, filtering).
+Every entity with a status field follows a defined state machine. Valid transitions are strict — the Kanbanzai server rejects anything not listed. A viewer does not enforce transitions but should understand them for display purposes (colouring, progress calculation, and filtering).
 
 ### Plan
 ```
@@ -237,7 +237,7 @@ All YAML files written by Kanbanzai follow strict, deterministic conventions. A 
 2. **Minimal quoting.** Strings are unquoted unless YAML syntax demands it. When quoting is needed, double quotes are used.
 3. **Deterministic field order.** Fields always appear in the same order as defined in the struct/schema. This order is fixed.
 4. **UTF-8, LF line endings, trailing newline.**
-5. **No advanced YAML features.** No tags (`!!str`), no anchors (`&name`), no aliases (`*name`), no multi-document streams.
+5. **No advanced YAML features.** No tags (`!!str`), no anchors (`&name`), no aliases (`*name`), and no multi-document streams.
 6. **Omit empty optionals.** Optional fields with zero/nil/empty values are omitted entirely rather than written as empty.
 7. **Timestamps are always double-quoted.** Example: `created: "2026-03-26T00:28:22Z"`. This prevents YAML parser date coercion. All timestamps are RFC 3339 UTC.
 8. **Estimates are nullable numbers.** When present, they are from the Modified Fibonacci scale: `0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100`. When absent, the field is omitted entirely (not set to zero or null). In the Go `kbzschema` types, this is represented as `*float64`.
@@ -247,7 +247,7 @@ All YAML files written by Kanbanzai follow strict, deterministic conventions. A 
 - You can use any standard YAML parser — there are no exotic YAML features to handle.
 - Missing fields mean "not set", never "empty string". Treat absence and `null` identically.
 - Timestamps are strings. Parse them as RFC 3339 if you need date arithmetic. They are always UTC.
-- Enumerated string fields (status, severity, priority, type) may contain values you don't recognise — new values are added in minor schema versions. **Do not fail on unknown values.** Display the raw string.
+- Enumerated string fields (status, severity, priority, and type) may contain values you don't recognise — new values are added in minor schema versions. **Do not fail on unknown values.** Display the raw string.
 
 ---
 
@@ -455,14 +455,14 @@ But this is a convention, not a schema requirement. Do not parse it as structure
 
 | Type | Typical Directory | Purpose |
 |------|-------------------|---------|
-| `design` | `work/design/` | Architecture, vision, approach |
+| `design` | `work/design/` | Architecture, vision, and approach |
 | `specification` | `work/spec/` | Acceptance criteria, binding contracts |
 | `dev-plan` | `work/dev/` | Feature implementation plans, task breakdowns |
 | `research` | `work/research/` | Analysis, exploration |
 | `report` | `work/reports/` or `work/reviews/` | Audit reports, reviews |
 | `policy` | `work/design/` | Process and governance documents |
 | `rca` | (varies) | Root cause analysis |
-| `plan` | `work/plan/` | Project planning: roadmaps, scope, decision logs |
+| `plan` | `work/plan/` | Project planning: roadmaps, scope, and decision logs |
 | `retrospective` | `work/retro/` | Retrospective synthesis documents |
 
 The configured document roots are in `.kbz/config.yaml` under `document_roots` (if present). But the `path` field in each Document Record is the authoritative location — always use it.
@@ -523,7 +523,7 @@ The `version` field (`"2"`) is a legacy internal version counter from developmen
 
 ### The golden rule
 
-**Never fail on unknown values.** New status values, new entity types, new fields — display them as raw strings. A viewer built for schema `1.0.0` must work with any `1.x.x` schema without crashing.
+**Never fail on unknown values.** New status values, new entity types, and new fields — display them as raw strings. A viewer built for schema `1.0.0` must work with any `1.x.x` schema without crashing.
 
 ---
 
@@ -699,7 +699,7 @@ If you need deeper detail, these are the authoritative sources within the Kanban
 
 | Document | What it covers |
 |----------|----------------|
-| `docs/schema-reference.md` | Complete field tables, lifecycle state machines, ID formats, referential integrity rules |
+| `docs/schema-reference.md` | Complete field tables, lifecycle state machines, ID formats, and referential integrity rules |
 | `work/design/public-schema-interface.md` | Design rationale for the public schema boundary, versioning, and the Go interface |
 | `work/spec/public-schema-interface.md` | Formal specification of the schema interface, compatibility policy, and acceptance criteria |
 | `docs/getting-started.md` | Installation, initialisation, and first-use guide |
@@ -715,8 +715,8 @@ If you need deeper detail, these are the authoritative sources within the Kanban
 3. **Read `schema_version`** from `config.yaml`. If absent, treat as pre-1.0.
 4. **If using Go**: import `github.com/sambeau/kanbanzai/kbzschema`, create a `Reader`, and use its methods.
 5. **If not using Go**: walk `.kbz/state/` subdirectories, parse YAML files with a standard library, and use `docs/schema-reference.md` as your field reference.
-6. **Build the entity hierarchy**: Plans → Features → Tasks. Bugs, Decisions, Incidents are standalone with cross-references.
+6. **Build the entity hierarchy**: Plans → Features → Tasks. Bugs, Decisions, and Incidents are standalone with cross-references.
 7. **Resolve document paths**: DocumentRecord `.path` → Markdown file relative to repo root.
-8. **Handle missing data gracefully**: absent fields, broken references, unknown enum values.
+8. **Handle missing data gracefully**: absent fields, broken references, and unknown enum values.
 9. **Never write to `.kbz/`** — the viewer is read-only. All writes go through the MCP server or CLI.
 10. **Pull regularly** if you need fresh data. Webhooks or filesystem watching for real-time updates.

@@ -34,7 +34,7 @@ Every Kanbanzai project has a `.kbz` directory at the repository root. This is t
 
 The `state/` directory is the single source of truth. Every entity is one YAML file. The `cache/` directory is derived and can be rebuilt at any time with `rebuild_cache`. The `index/` directory holds the document intelligence pipeline output and is also regenerable from the source documents.
 
-### Files outside `.kbz`
+### Files Outside `.kbz`
 
 Two paths outside the `.kbz` directory are managed by Kanbanzai:
 
@@ -649,8 +649,8 @@ Examples: `P1-my-project`, `P2-phase-two`, `P3-kanbanzai-1.0`.
 
 Document records use a composite format that encodes ownership and type:
 
-- **Owned documents:** `{owner-entity-id}/{type}-{slug}` — e.g., `FEAT-01KMKRQRRX3CC/design-init-command`
-- **Unowned (project-level) documents:** `PROJECT/{type}-{slug}` — e.g., `PROJECT/design-kanbanzai-10`
+- **Owned documents:** `{owner-entity-id}/{type}-{slug}` — e.g., `FEAT-01KMKRQRRX3CC/design-init-command`.
+- **Unowned (project-level) documents:** `PROJECT/{type}-{slug}` — e.g., `PROJECT/design-kanbanzai-10`.
 
 In YAML filenames, the slash is replaced with `--` to stay filesystem-safe. For example, the document record `FEAT-01KMKRQRRX3CC/design-init-command` is stored at `.kbz/state/documents/FEAT-01KMKRQRRX3CC--design-init-command.yaml`.
 
@@ -658,8 +658,8 @@ In YAML filenames, the slash is replaced with `--` to stay filesystem-safe. For 
 
 Entity files follow one of two naming patterns:
 
-- **Entities with slugs:** `{ID}-{slug}.yaml` — e.g., `FEAT-01KMKRQRRX3CC-init-command.yaml`
-- **Entities without slugs:** `{ID}.yaml` — e.g., `KE-01KMKEZC72XAY.yaml`
+- **Entities with slugs:** `{ID}-{slug}.yaml` — e.g., `FEAT-01KMKRQRRX3CC-init-command.yaml`.
+- **Entities without slugs:** `{ID}.yaml` — e.g., `KE-01KMKEZC72XAY.yaml`.
 
 ---
 
@@ -689,7 +689,7 @@ prefixes:
 
 Kanbanzai validates references at creation time but does not enforce cascading deletes or updates. The rules below describe the expected relationships between entities.
 
-### Hard references (validated on creation)
+### Hard References (Validated on Creation)
 
 | Source | Field | Target |
 |--------|-------|--------|
@@ -698,7 +698,7 @@ Kanbanzai validates references at creation time but does not enforce cascading d
 | Task | `depends_on` | Valid Task IDs |
 | Document Record | `owner` | Valid Feature or Plan ID (if set) |
 
-### Soft references (validated when set, not cascaded)
+### Soft References (Validated When Set, Not Cascaded)
 
 | Source | Field | Target |
 |--------|-------|--------|
@@ -712,7 +712,7 @@ Kanbanzai validates references at creation time but does not enforce cascading d
 | Decision | `affects` | Entity IDs |
 | Feature | `design`, `spec`, `dev_plan` | Document Record IDs |
 
-### What "advisory" means
+### What "Advisory" Means
 
 If a referenced entity is later deleted or transitions to a terminal state, Kanbanzai does not automatically clear the referencing field. Tools that read these references handle missing targets gracefully. The `health_check` tool reports broken references as warnings.
 

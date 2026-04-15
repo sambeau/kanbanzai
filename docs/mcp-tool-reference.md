@@ -149,8 +149,8 @@ Create a new bug entity.
 | slug | string | yes | URL-friendly identifier | |
 | title | string | yes | Title of the bug | |
 | reported_by | string | yes | Who reported the bug | |
-| observed | string | yes | Observed behavior | |
-| expected | string | yes | Expected behavior | |
+| observed | string | yes | Observed behaviour | |
+| expected | string | yes | Expected behaviour | |
 | severity | string | yes | Bug severity level | `low`, `medium`, `high`, `critical` |
 | priority | string | yes | Bug priority level | `low`, `medium`, `high`, `critical` |
 | type | string | yes | Bug type classification | `implementation-defect`, `specification-defect`, `design-problem` |
@@ -814,11 +814,11 @@ Validate a document record and check content integrity.
 
 > **MCP call:** `doc(action: "gaps", feature_id: "...")`
 
-Analyze what document types are missing for a feature. Checks whether design, specification, and dev-plan documents exist.
+Analyse what document types are missing for a feature. Checks whether design, specification, and dev-plan documents exist.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| feature_id | string | yes | Feature ID to analyze |
+| feature_id | string | yes | Feature ID to analyse |
 
 **Returns:** JSON object with `success`, `feature_id`, `complete` (boolean), `gaps` array, and `message`.
 
