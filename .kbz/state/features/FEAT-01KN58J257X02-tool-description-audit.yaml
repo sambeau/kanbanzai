@@ -2,7 +2,7 @@ id: FEAT-01KN58J257X02
 slug: tool-description-audit
 name: Tool description audit
 parent: P17-workflow-and-tooling-3.0
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Audit and rewrite all MCP tool descriptions following ACI principles: lead with when-to-use, include negative guidance, state workflow position, keep under 200 tokens. Run agent-driven testing on rewritten descriptions. Audit actionable error messages across all tool handlers beyond gate failures."
 spec: FEAT-01KN58J257X02/specification-30-tool-description-audit
@@ -13,3 +13,9 @@ tags:
   - high-impact
 created: "2026-04-01T19:33:07Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "All 4 blocking findings resolved: B-03 fixed (decompose error templates committed 0c06ddc), B-04 already fixed (token budget test exists), B-05 fixed (agent-driven test results committed e8db98b for all 3 tiers), B-06 already fixed (handoff/merge/pr scenarios exist). Original review at work/reviews/review-P17-workflow-and-tooling-3.0.md."
+    timestamp: "2026-04-15T14:39:54+01:00"
+    to_status: done

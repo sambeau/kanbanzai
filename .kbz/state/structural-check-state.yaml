@@ -1,0 +1,13 @@
+entries:
+    acceptance_criteria/design:
+        mode: warning
+        consecutive_clean: 0
+        false_positive_count: 1
+    cross_reference/design:
+        mode: warning
+        consecutive_clean: 0
+        false_positive_count: 1
+    required_sections/design:
+        mode: warning
+        consecutive_clean: 0
+        false_positive_count: 2
