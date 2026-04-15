@@ -110,7 +110,7 @@ func decomposeReview(svc *service.DecomposeService) ActionHandler {
 
 		proposal, err := parseProposal(proposalRaw)
 		if err != nil {
-			return inlineErr("invalid_parameter", err.Error())
+			return inlineErr("invalid_parameter", fmt.Sprintf("Cannot review decomposition proposal: invalid proposal format — %v.\n\nTo resolve:\n  Run decompose(action: \"propose\", feature_id: \"FEAT-...\") first and pass the returned proposal object unmodified", err))
 		}
 
 		result, err := svc.ReviewProposal(service.DecomposeReviewInput{
@@ -144,7 +144,7 @@ func decomposeApply(entitySvc *service.EntityService) ActionHandler {
 
 		proposal, err := parseProposal(proposalRaw)
 		if err != nil {
-			return inlineErr("invalid_parameter", err.Error())
+			return inlineErr("invalid_parameter", fmt.Sprintf("Cannot apply decomposition proposal: invalid proposal format — %v.\n\nTo resolve:\n  Run decompose(action: \"propose\", feature_id: \"FEAT-...\") first and pass the returned proposal object unmodified", err))
 		}
 
 		if len(proposal.Tasks) == 0 {
