@@ -3,4 +3,8 @@ parent_feature: FEAT-01KN85HMQP2CX
 slug: remove-epic-internals
 name: Remove Epic from internals
 summary: "Remove Epic struct, EpicStatus constants, EntityKindEpic, EPIC- prefix from ID allocation/display, CreateEpic/CreateEpicInput from service layer and entityService interface, epic lifecycle/entry/terminal/required-field entries from validate, epic case from storage field ordering, cache extractParentRef, service RebuildCache/HealthCheck/parseRecordIdentity/recordFromEntity/epicFields, docint EPIC- entity-ref pattern, and Feature.Epic field with extractParentRefFromState fallback. Spec refs: FR-1 through FR-9, FR-11, NFR-1-2."
-status: ready
+status: active
+claimed_at: "2026-04-15T11:42:23Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T11:42:23Z"
+dispatched_by: sambeau
