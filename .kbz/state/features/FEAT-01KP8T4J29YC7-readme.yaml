@@ -1,0 +1,8 @@
+id: FEAT-01KP8T4J29YC7
+slug: readme
+name: README
+parent: P22-documentation-for-public-release
+status: proposed
+summary: "Produce the README (README.md) — the shop window. Problem-first positioning, quickstart, honest cost/benefit. Purpose, audience, structure defined in design §5. Full editorial pipeline with HARD checkpoints after Edit and Copyedit (public-facing, high-stakes). Depends on: all other new documents."
+created: "2026-04-15T14:53:44Z"
+created_by: sambeau
