@@ -2,7 +2,8 @@ id: FEAT-01KN4ZPQFQN1C
 slug: doc-audit
 name: Doc audit
 parent: P15-kanbanzai-25-infrastructure-hardening
-status: developing
+status: reviewing
+review_cycle: 1
 summary: Add a doc audit action that compares files on disk against the document store and reports unregistered files and missing records.
 spec: FEAT-01KN4ZPQFQN1C/specification-doc-audit
 dev_plan: FEAT-01KN4ZPQFQN1C/dev-plan-doc-audit-plan
