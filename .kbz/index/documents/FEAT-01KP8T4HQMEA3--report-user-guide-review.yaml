@@ -1,0 +1,131 @@
+document_id: FEAT-01KP8T4HQMEA3/report-user-guide-review
+document_path: work/reports/user-guide-review.md
+content_hash: 6a30060cccecf2bb07695f374e34bb22e261f358b14a41a2fb3896b1fefc06e4
+indexed_at: 2026-04-15T16:29:33.658031Z
+sections:
+    - path: "1"
+      level: 1
+      title: User Guide Review Report
+      byte_offset: 0
+      byte_count: 2748
+      word_count: 379
+      content_hash: 6a30060cccecf2bb07695f374e34bb22e261f358b14a41a2fb3896b1fefc06e4
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 250
+          byte_count: 255
+          word_count: 36
+          content_hash: 6fce7651358de215cda5d274321f0b9919f3a3563dc95796a6c32ce47bc776bd
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 505
+          byte_count: 159
+          word_count: 13
+          content_hash: 10c4d5986e6e587b0eea0bb6cdf0eb98343297420a83c07ce1e42375b0da544d
+        - path: "1.3"
+          level: 2
+          title: Editorial pipeline results
+          byte_offset: 664
+          byte_count: 1409
+          word_count: 188
+          content_hash: 9471f5e3c60e6354fc148741fb9cae42dbd59e9ca3ced0beb1d821e3aaf6bec8
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Stage 1: Write'
+              byte_offset: 695
+              byte_count: 282
+              word_count: 36
+              content_hash: e388355ca1d4e178ef701a86fd7a9ba41a1b847d97cee2125e5aa352fd0c0fb8
+            - path: 1.3.2
+              level: 3
+              title: 'Stage 2: Edit (Structural)'
+              byte_offset: 977
+              byte_count: 186
+              word_count: 24
+              content_hash: b6f348ad2be8d913f1f46864f4436710f9c5c0cf4425198e6d13e8c9a450f61c
+            - path: 1.3.3
+              level: 3
+              title: 'Stage 3: Check (Factual accuracy)'
+              byte_offset: 1163
+              byte_count: 472
+              word_count: 64
+              content_hash: 15e4425dc27417e52f816583c1b0f72e8b8023942a71fd88dfe18c09c2bc2424
+            - path: 1.3.4
+              level: 3
+              title: 'Stage 4: Style'
+              byte_offset: 1635
+              byte_count: 198
+              word_count: 27
+              content_hash: 32e4886efbaddd3a013c47268cdfc330cf2c7e82eb59eae0d684cada91fba9a9
+            - path: 1.3.5
+              level: 3
+              title: 'Stage 5: Copyedit'
+              byte_offset: 1833
+              byte_count: 240
+              word_count: 33
+              content_hash: ed785db562b435e9de8e17422ab8fca8abee1ab5d5f66b7fae3c9b7cb3349086
+        - path: "1.4"
+          level: 2
+          title: Acceptance criteria verification
+          byte_offset: 2073
+          byte_count: 371
+          word_count: 67
+          content_hash: f257f03a47dbe74b1df5492234591b0abed79364cf07ea3398fad9454eed9151
+        - path: "1.5"
+          level: 2
+          title: Findings
+          byte_offset: 2444
+          byte_count: 131
+          word_count: 19
+          content_hash: d378053fd54dd06a04f7de9ba734c3b5887f70fa8e64f6510733921584c16691
+        - path: "1.6"
+          level: 2
+          title: Recommendation
+          byte_offset: 2575
+          byte_count: 173
+          word_count: 26
+          content_hash: abebb8a516fdd1a47df3519a1610d11a35a80cf29685bf02f134dffc7ce7358c
+front_matter:
+    extra:
+        '**Date': '** 2026-04-15'
+        '**Feature': '** FEAT-01KP8-T4HQMEA3 (user-guide)'
+        '**Plan': '** P22-documentation-for-public-release'
+        '**Reviewer': '** AI agent (editorial pipeline)'
+        '**Status': '** Review complete — no issues found'
+entity_refs:
+    - entity_id: FEAT-01KP8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 66
+    - entity_id: P22-documentation-for-public-release
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 111
+cross_doc_links:
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: "1.1"
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: "1.2"
+    - target_path: work/spec/user-guide.md
+      link_text: work/spec/user-guide.md
+      section_path: "1.2"
+    - target_path: work/plan/user-guide-dev-plan.md
+      link_text: work/plan/user-guide-dev-plan.md
+      section_path: "1.2"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

@@ -1,0 +1,266 @@
+document_id: FEAT-01KP8T4HSX6QZ/specification-workflow-overview
+document_path: work/spec/workflow-overview.md
+content_hash: f3df659cc101f55fea069d1a00202e436cc7afce8f45f5225efa6cba305b263c
+indexed_at: 2026-04-15T16:33:21.331284Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Workflow Overview: Specification'
+      byte_offset: 0
+      byte_count: 18901
+      word_count: 2603
+      content_hash: f3df659cc101f55fea069d1a00202e436cc7afce8f45f5225efa6cba305b263c
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 361
+          byte_count: 628
+          word_count: 93
+          content_hash: 9fcce801ea1377ad58212ea98153914decfeda49cf44ea690cc375d08705461b
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 989
+          byte_count: 1491
+          word_count: 200
+          content_hash: d181d5d15bc6f9833d6ec6202e7921c465d6e93d91a5fd1b224dac143fff9cfb
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 999
+              byte_count: 867
+              word_count: 117
+              content_hash: f75e6c32a1345b2c4ed3e9f8ea5288b532e8392068ded965fe051641db9f63d6
+            - path: 1.2.2
+              level: 3
+              title: Out of scope
+              byte_offset: 1866
+              byte_count: 614
+              word_count: 81
+              content_hash: 2e19e34f51b1e74f8dc820251eea262153836024d47849c5a322ada788e81d8f
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2480
+          byte_count: 7532
+          word_count: 1045
+          content_hash: 64073444c7e3763f4cce0171d7708e2e45f9b73674ce02286362946980b9043e
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Framing and Positioning
+              byte_offset: 2508
+              byte_count: 754
+              word_count: 107
+              content_hash: fdb26ac45bd268d141ef2d8a56d7fab8c31fc4feeed994a15a375d34fffb8987
+            - path: 1.3.2
+              level: 3
+              title: Design-Led Workflow
+              byte_offset: 3262
+              byte_count: 653
+              word_count: 88
+              content_hash: 68704514c6f87222703f8e5a76de04e33e9412260c106d9aa5aa9004ad11c9fc
+            - path: 1.3.3
+              level: 3
+              title: Document-Led Process
+              byte_offset: 3915
+              byte_count: 716
+              word_count: 100
+              content_hash: 3d94f04d5c5ba3c5678f5f2fadc9d1c2421b03ee7ff5aa5d440df5b9a6ef5094
+            - path: 1.3.4
+              level: 3
+              title: Specification-Led Implementation
+              byte_offset: 4631
+              byte_count: 747
+              word_count: 96
+              content_hash: 5e9f604e6b360ee7532b230d8df6dfbba1908621a9fe8f6df12aedce2a99507a
+            - path: 1.3.5
+              level: 3
+              title: Chat-Based Project Management
+              byte_offset: 5378
+              byte_count: 659
+              word_count: 92
+              content_hash: 46c2f3194ccefd1a7f0dc3c1a48de4cf74d1e867936be191a8d9fd95c24561d7
+            - path: 1.3.6
+              level: 3
+              title: Approval Stages and State
+              byte_offset: 6037
+              byte_count: 1121
+              word_count: 160
+              content_hash: 25553983b9f95af1b20f8c0d771c33088c07dc86baea4c83ec832296e1656553
+            - path: 1.3.7
+              level: 3
+              title: Workflow Diagram
+              byte_offset: 7158
+              byte_count: 227
+              word_count: 35
+              content_hash: e9404a34b61f042a33d7afac5300c8942527351ccb4a64cfea369bd1f1ddd0a1
+            - path: 1.3.8
+              level: 3
+              title: Common Failure Modes
+              byte_offset: 7385
+              byte_count: 367
+              word_count: 51
+              content_hash: 2331ac9ac766396ef46b47de7b9d0de56e7411eeb0351e5ccb65717a21dfa8f6
+            - path: 1.3.9
+              level: 3
+              title: Structural Requirements
+              byte_offset: 7752
+              byte_count: 540
+              word_count: 80
+              content_hash: 6d8fc29c8ead16aa8f8844afdc26f1748e6b73eeab03fa8e4f133fdb9d9d9afd
+            - path: 1.3.10
+              level: 3
+              title: Cross-Reference Requirements
+              byte_offset: 8292
+              byte_count: 644
+              word_count: 90
+              content_hash: dca51b42085fc14fb01faa9a95b8110c7557690a3e378ee8348215773ada7a1c
+            - path: 1.3.11
+              level: 3
+              title: Exclusion Requirements
+              byte_offset: 8936
+              byte_count: 1076
+              word_count: 143
+              content_hash: 00510d7b68dac8f76de3660c5c78a7ab6cc6138fb92a13bbc4d57163b0083686
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 10012
+          byte_count: 1579
+          word_count: 234
+          content_hash: 36490072d0c06c1c4d4856be00d694fb31480860bab54da8af455def9fc624b6
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 11591
+          byte_count: 3657
+          word_count: 484
+          content_hash: b5507b183b841c13efc07a0bdf198e6593b2e1b3024981af9dd7423a7cde94f7
+        - path: "1.6"
+          level: 2
+          title: Verification Plan
+          byte_offset: 15248
+          byte_count: 2378
+          word_count: 346
+          content_hash: fc260df74e1aa80475b18f109cdac9d09b7e161548743d545d535179dc11f6bb
+        - path: "1.7"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 17626
+          byte_count: 1275
+          word_count: 165
+          content_hash: f36e45252379527744b5223b6a63b15296f2a7ba12274bc6f28b4103fa30deb9
+entity_refs:
+    - entity_id: FEAT-01KP8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 163
+    - entity_id: P22-documentation-for-public-release
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 279
+cross_doc_links:
+    - target_path: work/design/public-release-documentation.md
+      link_text: work/design/public-release-documentation.md
+      section_path: "1"
+    - target_path: docs/workflow-overview.md
+      link_text: docs/workflow-overview.md
+      section_path: "1.1"
+    - target_path: docs/workflow-overview.md
+      link_text: docs/workflow-overview.md
+      section_path: 1.2.1
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: 1.3.10
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: 1.3.10
+    - target_path: docs/orchestration-and-knowledge.md
+      link_text: docs/orchestration-and-knowledge.md
+      section_path: 1.3.10
+    - target_path: work/design/documentation-pipeline.md
+      link_text: work/design/documentation-pipeline.md
+      section_path: "1.4"
+    - target_path: refs/humanising-ai-prose.md
+      link_text: refs/humanising-ai-prose.md
+      section_path: "1.4"
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: "1.5"
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: "1.5"
+    - target_path: docs/orchestration-and-knowledge.md
+      link_text: docs/orchestration-and-knowledge.md
+      section_path: "1.5"
+    - target_path: user-guide.md
+      link_text: user-guide.md
+      section_path: "1.6"
+    - target_path: getting-started.md
+      link_text: getting-started.md
+      section_path: "1.6"
+    - target_path: orchestration-and-knowledge.md
+      link_text: orchestration-and-knowledge.md
+      section_path: "1.6"
+    - target_path: work/design/public-release-documentation.md
+      link_text: work/design/public-release-documentation.md
+      section_path: "1.7"
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: "1.7"
+    - target_path: docs/workflow-overview.md
+      link_text: docs/workflow-overview.md
+      section_path: "1.7"
+    - target_path: refs/documentation-structure-guide.md
+      link_text: refs/documentation-structure-guide.md
+      section_path: "1.7"
+    - target_path: refs/technical-writing-guide.md
+      link_text: refs/technical-writing-guide.md
+      section_path: "1.7"
+    - target_path: refs/humanising-ai-prose.md
+      link_text: refs/humanising-ai-prose.md
+      section_path: "1.7"
+    - target_path: refs/punctuation-guide.md
+      link_text: refs/punctuation-guide.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.9
+      role: requirement
+      confidence: high
+    - section_path: 1.3.10
+      role: requirement
+      confidence: high
+    - section_path: 1.3.11
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+classified: false
