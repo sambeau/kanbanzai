@@ -1,0 +1,17 @@
+id: KE-01KP9F9KRPBF5
+tier: 3
+topic: mcp-tool-reference-22-tools
+scope: project
+content: "The MCP Tool Reference documents 22 consolidated tools with action-based dispatch. Legacy 1.0 names (~97 individual names) are rejected by TestServer_ListTools_NoLegacyTools. The 22 tools are: entity, doc, knowledge, next, finish, handoff, status, health, decompose, estimate, conflict, retro, profile, worktree, merge, pr, branch, cleanup, doc_intel, incident, checkpoint, server_info."
+learned_from: TASK-01KP9ARCWVRQJ
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - documentation
+  - mcp-tools
+created: "2026-04-15T21:03:30Z"
+created_by: unknown
+updated: "2026-04-15T21:03:30Z"
