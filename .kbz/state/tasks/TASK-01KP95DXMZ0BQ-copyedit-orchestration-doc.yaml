@@ -1,0 +1,6 @@
+id: TASK-01KP95DXMZ0BQ
+parent_feature: FEAT-01KP8T4HVPY2Y
+slug: copyedit-orchestration-doc
+name: Copyedit Orchestration Doc
+summary: "Copyedit stage: final polish of docs/orchestration-and-knowledge.md. Fix grammar, punctuation, parallel construction, spelling consistency."
+status: queued
