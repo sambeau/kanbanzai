@@ -3,6 +3,15 @@ parent_feature: FEAT-01KP8T4HQMEA3
 slug: copyedit
 name: Sentence-level polish
 summary: "Copyedit stage: polish sentences for clarity — active voice, smothered verbs, sentence length, punctuation, capitalisation, parallel structure, consistency, reading rhythm. Produce copyedit changelog. Advisory checkpoint after completion. Role: doc-copyeditor. Skill: copyedit-docs."
-status: ready
+status: done
 depends_on:
   - TASK-01KP8V5EES7GS
+files_planned:
+  - docs/user-guide.md
+completed: "2026-04-15T16:23:24Z"
+claimed_at: "2026-04-15T15:55:42Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T15:55:42Z"
+dispatched_by: sambeau
+completion_summary: "Copyedit complete. 35 sentence-level changes: 20 em→en dash conversions, 6 passive→active voice, MCP abbreviation expansion, sentence tightening, conjunction fixes, pronoun agreement, system label formatting. All 5 pipeline stages done (AC-018 met)."
+verification: "Read full document after copyedit. Checked punctuation consistency, voice, capitalisation, parallel structure. No smothered verbs, consistent serial comma, correct hyphenation throughout."

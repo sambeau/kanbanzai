@@ -1,0 +1,18 @@
+id: KE-01KP8Z8QKJM7T
+tier: 2
+topic: editorial-pipeline-as-task-decomposition
+scope: project
+content: "The editorial pipeline (Write→Edit→Check→Style→Copyedit) works well as a task decomposition for documentation features. Each stage produces clear, non-overlapping changes. Sub-agents per stage keep context focused. The pipeline completed in 5 sequential tasks with no rework."
+learned_from: TASK-01KP8V5EHM1NE
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - editorial-pipeline
+  - documentation
+  - workflow
+created: "2026-04-15T16:23:24Z"
+created_by: unknown
+updated: "2026-04-15T16:23:24Z"

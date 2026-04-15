@@ -1,0 +1,17 @@
+id: KE-01KP8Z8QKNWEE
+tier: 3
+topic: retro-task-01kp8v5ehm1ne-2
+scope: project
+content: "[moderate] worked-well: Fact-checking sub-agent found 3 genuine inaccuracies (tool count, bug lifecycle, incident RCA enforcement) that would have been published uncorrected without the Check stage."
+learned_from: TASK-01KP8V5EHM1NE
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - worked-well
+created: "2026-04-15T16:23:24Z"
+created_by: unknown
+updated: "2026-04-15T16:23:24Z"
