@@ -2,7 +2,8 @@ id: FEAT-01KN58J275BWJ
 slug: action-pattern-logging
 name: Action pattern logging
 parent: P17-workflow-and-tooling-3.0
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "Implement MCP tool invocation logging to .kbz/logs/ (JSON lines, date-rotated, 30-day retention). Log timestamp, tool, action, entity_id, stage, success, error_type. Derive stage-level workflow metrics (time per stage, revision cycles, gate failure rate, structural check pass rate, tool subset compliance). Create 15-20 representative evaluation scenarios."
 spec: FEAT-01KN58J275BWJ/specification-30-action-pattern-logging
 dev_plan: FEAT-01KN58J275BWJ/dev-plan-30-action-pattern-logging
