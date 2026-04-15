@@ -1,0 +1,6 @@
+id: TASK-01KP92BTWVV2S
+parent_feature: FEAT-01KP8T4HSX6QZ
+slug: check-workflow-overview
+name: Check workflow overview
+summary: "Fact-check docs/workflow-overview.md against the codebase. Verify lifecycle stages, gate prerequisites, document types, entity states, and all factual claims. Produce changelog."
+status: queued
