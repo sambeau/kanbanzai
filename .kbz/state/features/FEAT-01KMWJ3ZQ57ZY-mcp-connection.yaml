@@ -2,7 +2,8 @@ id: FEAT-01KMWJ3ZQ57ZY
 slug: mcp-connection
 name: MCP connection
 parent: P11-fresh-install-experience
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "kbz init writes .mcp.json (and .zed/settings.json when .zed/ exists) so the MCP server starts automatically on project open. Adds --skip-mcp flag, version-aware update logic, and updates the getting-started skill description to be self-identifying with a preflight check section."
 spec: FEAT-01KMWJ3ZQ57ZY/specification-spec-mcp-connection
 dev_plan: FEAT-01KMWJ3ZQ57ZY/dev-plan-p11-dev-mcp-connection
