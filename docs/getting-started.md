@@ -27,7 +27,7 @@ This mirrors the real workflow for any feature, whether it is a one-file change 
 
 ### From source
 
-Kanbanzai is a Go project. With Go 1.21 or later installed, run:
+Kanbanzai is a Go project. With Go 1.25 or later installed, run:
 
 ```sh
 go install github.com/sambeau/kanbanzai/cmd/kanbanzai@latest
@@ -93,7 +93,7 @@ your-repo/
 │   └── copilot-instructions.md  # GitHub Copilot instructions
 ├── .kbz/
 │   ├── config.yaml              # Project configuration
-│   ├── state/                   # Entity storage (features, tasks, bugs, etc.)
+│   ├── state/                   # Entity storage (created when you first add an entity)
 │   └── context/
 │       └── roles/               # Context profiles
 ├── .agents/
@@ -232,7 +232,7 @@ entity(action: "create", type: "plan", prefix: "P",
 
 This creates a plan with an ID like **P1-cli-improvements**. You will use this ID when creating features under it.
 
-**What is a plan?** A plan is a container for related features — think of it as a project milestone or a themed batch of work. Plans progress through their own lifecycle (proposed → designing → active → done) as the features within them advance. See [Workflow Overview — Plans](workflow-overview.md) for the full lifecycle.
+**What is a plan?** A plan is a container for related features — think of it as a project milestone or a themed batch of work. Plans progress through their own lifecycle (proposed → designing → active → reviewing → done) as the features within them advance. See [Workflow Overview — Plans](workflow-overview.md) for the full lifecycle.
 
 ---
 
@@ -371,7 +371,7 @@ This creates the task entities with dependencies — the feature is now ready fo
 
 ## Implement through the work queue
 
-With tasks created, implementation happens through the **work queue**. Check what is ready:
+With tasks created, implementation happens through the **work queue**. The queue sorts tasks by estimate (smallest first), then by age (oldest first). Check what is ready:
 
 > What's next?
 
@@ -418,7 +418,7 @@ merge(action: "check", entity_id: "FEAT-xxxxx")
 merge(action: "execute", entity_id: "FEAT-xxxxx")
 ```
 
-The merge tool checks gates (all tasks complete, verification exists, no conflicts, health check clean) and then performs the merge. The feature transitions to **done**.
+The merge tool checks seven gates — entity done, all tasks complete, verification exists and passed, no conflicts, health check clean, and branch not stale — then performs the merge. The feature transitions to **done**.
 
 ---
 
