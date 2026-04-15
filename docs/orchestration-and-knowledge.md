@@ -43,7 +43,7 @@ Role definitions live in `.kbz/roles/` as YAML files. Each role contains:
 
 Roles use inheritance. The `base` role defines shared vocabulary and constraints. Language-specific roles like `implementer-go` inherit from `implementer`, which inherits from `base`. Inherited fields are merged — child vocabulary extends parent vocabulary, and child anti-patterns add to (not replace) parent anti-patterns.
 
-The orchestrator role carries vocabulary specific to coordination: the 45% context utilisation threshold (do not load more than 45% of the context window before dispatching sub-agents), agent saturation at 4 (maximum concurrent sub-agents, based on diminishing returns beyond this point), and the cascade pattern (re-evaluate all downstream dependents when a task fails).
+The orchestrator role carries vocabulary specific to coordination. Three concepts appear frequently: the **45% context utilisation threshold** (do not load more than 45% of the context window before dispatching sub-agents), **agent saturation at 4** (maximum concurrent sub-agents, beyond which returns diminish), and the **cascade pattern** (re-evaluate all downstream dependents when a task fails).
 
 ### Skills
 
@@ -79,7 +79,7 @@ The `developing` stage, for example, binds to the `orchestrator` role and the `o
 
 ## How agents receive context
 
-When an agent claims a task or receives a handoff, the system assembles a **context packet** — a structured bundle of instructions, specification fragments, knowledge entries, and file paths scoped to the work at hand. Two tools produce context packets: `next` (which also claims the task) and `handoff` (which prepares a prompt for a sub-agent).
+When an agent claims a task or receives a handoff, the system assembles a **context packet** — a structured bundle of instructions, specification fragments, knowledge entries, and file paths scoped to the work at hand. Two tools produce context packets: `next` (which also claims the task) and `handoff` (which renders a prompt for a sub-agent).
 
 ### What a context packet contains
 
@@ -98,11 +98,11 @@ When an agent claims a task or receives a handoff, the system assembles a **cont
 
 ### Budget trimming
 
-Context packets have a byte budget (default: 30 KB). When the assembled content exceeds this budget, the system trims lower-priority entries to fit. Trimmed items are recorded with their type, topic, and size so the agent knows what was removed. Knowledge entries and specification sections are the primary candidates for trimming; role constraints and stage guidance are never trimmed.
+Context packets have a byte budget (default: 30 KB). When assembled content exceeds this budget, the system trims lower-priority entries to fit. The system records each trimmed item with its type, topic, and size so the agent knows what was removed. Knowledge entries and specification sections are the primary trim candidates; the system never trims role constraints or stage guidance.
 
 ### The handoff prompt
 
-The `handoff` tool renders the context packet into a Markdown prompt suitable for a sub-agent. The prompt is assembled in a fixed order:
+The `handoff` tool renders the context packet into a Markdown prompt suitable for a sub-agent. The tool assembles the prompt in a fixed order:
 
 1. Conventions — role constraints and commit format
 2. Stage-aware sections — orchestration, effort budget, tools, output convention
@@ -138,7 +138,7 @@ The `next` tool operates in two modes:
 2. Age descending — older tasks first among equal estimates
 3. Task ID lexicographic — deterministic tiebreaker
 
-Queue inspection also triggers **promotion**: the system checks all `queued` tasks, validates their dependencies, and promotes eligible tasks to `ready`. A task is eligible for promotion when every task ID in its `depends_on` list has reached `done` status. Promoted tasks appear as side effects in the response.
+Queue inspection also triggers **promotion**: the system checks all `queued` tasks, validates their dependencies, and promotes eligible tasks to `ready`. A task becomes eligible when every task ID in its `depends_on` list has reached `done` status. The response includes promoted tasks as side effects.
 
 When called with `conflict_check: true`, queue inspection annotates each ready task with conflict risk against all currently active tasks. This shows the orchestrator which tasks are safe to dispatch in parallel and which should be serialised.
 
@@ -251,11 +251,11 @@ Each knowledge entry contains:
 
 Knowledge entries move through five statuses:
 
-- **Contributed** — newly created, unverified. This is the default status when an entry is recorded via `finish` or `knowledge(action: "contribute")`.
+- **Contributed** — newly created, unverified. Both `finish` and `knowledge(action: "contribute")` create entries in this status.
 - **Confirmed** — validated by usage or human review. Confirmed entries rank higher in context assembly.
 - **Disputed** — flagged as potentially incorrect. Requires a reason. Disputed entries are still surfaced but with lower priority.
 - **Stale** — content may be outdated. The staleness check compares git anchors against the current repository state to detect when referenced code has changed.
-- **Retired** — removed from active use. Retired entries are excluded from context assembly.
+- **Retired** — removed from active use. Context assembly excludes retired entries.
 
 Entries move forward through validation (contributed → confirmed) or backward through challenge (any non-retired status → disputed). Stale entries are detected automatically when referenced code changes. All paths eventually lead to retired when the observation is no longer relevant.
 
@@ -282,7 +282,7 @@ Entries can also be contributed directly via `knowledge(action: "contribute")` o
 
 ### How entries are surfaced
 
-During context assembly, the system searches for knowledge entries relevant to the task being claimed. Matching entries are included in the context packet, subject to the byte budget. Each inclusion increments the entry's `use_count`; each skip increments `miss_count`. Over time, frequently used entries rise in ranking while unused entries become candidates for pruning.
+During context assembly, the system searches for knowledge entries relevant to the task being claimed and includes matching entries in the context packet, subject to the byte budget. Each inclusion increments the entry's `use_count`; each skip increments `miss_count`. Frequently used entries rise in ranking over time, while unused entries become pruning candidates.
 
 ### Promotion and pruning
 
@@ -344,7 +344,7 @@ Seven gates run in order:
 
 ### Overall status
 
-The overall merge status is determined by the strictest failing gate:
+The strictest failing gate determines the overall merge status:
 
 - Any **blocking** gate with `failed` status → overall `blocked`
 - Any gate with `warning` status → overall `warnings`
@@ -362,7 +362,7 @@ Three merge strategies are available:
 
 ### Overrides
 
-When a blocking gate fails but the merge is justified, `merge(action: "execute")` accepts `override: true` with a required `override_reason`. The override is logged permanently on the entity record. This mechanism exists for cases where a gate failure is understood and accepted — for example, merging a documentation-only change where `verification_passed` is not applicable.
+When a blocking gate fails but the merge is justified, `merge(action: "execute")` accepts `override: true` with a required `override_reason`. The system logs the override permanently on the entity record. This mechanism covers cases where a gate failure is understood and accepted — for example, merging a documentation-only change where `verification_passed` does not apply.
 
 ### Post-merge cleanup
 
