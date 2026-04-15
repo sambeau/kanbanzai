@@ -113,7 +113,7 @@ The `handoff` tool renders the context packet into a Markdown prompt suitable fo
 7. File paths (excluded during designing and specifying stages, where files are not yet determined)
 8. Active workflow experiments
 9. Available tools — role-scoped tool hints
-10. Code graph instructions — `search_graph`, `trace_call_path`, and `query_graph` with the project name
+10. Code graph instructions — `search_graph`, `trace_call_path`, `query_graph`, and `get_code_snippet` with the project name
 11. Additional instructions from the orchestrator
 
 The `handoff` tool also commits `.kbz/state/` to disk before returning, ensuring that sub-agents spawned immediately after do not encounter uncommitted workflow state.
@@ -154,9 +154,9 @@ The `id` parameter accepts a task ID (claims that specific task), a feature ID (
 
 Tasks declare dependencies through the `depends_on` field — an array of task IDs that must complete before this task can start. The system enforces dependencies through status transitions:
 
-1. Tasks with unmet dependencies stay in `queued` status.
+1. Tasks with unmet dependencies stay in `queued` or `blocked` status.
 2. When a task completes, a `StatusTransitionHook` fires and checks all tasks that depend on it.
-3. Tasks whose dependencies are now fully satisfied are promoted from `queued` to `ready`.
+3. Tasks whose dependencies are now fully satisfied are promoted from `queued` or `blocked` to `ready`.
 4. The work queue surfaces only `ready` tasks — agents never see tasks they cannot start.
 
 This automatic promotion means the orchestrator does not need to manually track which tasks are unblocked. Completing a task automatically makes its dependents available.
@@ -184,12 +184,12 @@ Before dispatching tasks in parallel, the system checks whether they risk editin
 
 | Condition | Risk level |
 |-----------|------------|
-| No overlap in files or directories | `none` |
-| Tasks touch files in the same directory | `low` |
+| No overlap in planned files | `none` |
 | Tasks share one or more planned files | `medium` |
-| Actual git-level merge conflicts detected | `high` |
+| Git-level merge conflicts with shared planned files | `high` |
+| Git-level merge conflicts without shared planned files | `medium` |
 
-When branch information is available, the system also runs `git merge-tree` to detect real merge conflicts, not just planned file overlap.
+When branch information is available, the system compares file lists across branches to detect real conflicts beyond planned file overlap.
 
 **Dependency order** checks whether one task depends on another, directly or transitively:
 
@@ -203,8 +203,9 @@ When branch information is available, the system also runs `git merge-tree` to d
 
 | Condition | Risk level |
 |-----------|------------|
-| Three or more shared keywords | `low` |
-| Fewer than three shared keywords | `none` |
+| Three or more shared keywords | `medium` |
+| One or two shared keywords | `low` |
+| No shared keywords | `none` |
 
 ### Risk recommendations
 
@@ -241,6 +242,8 @@ Each knowledge entry contains:
 | `miss_count` | Times this entry was available but not included |
 | `tags` | Classification tags |
 | `created_by` | Who contributed the entry |
+| `created` | Creation timestamp (RFC 3339) |
+| `updated` | Last modification timestamp (RFC 3339) |
 | `learned_from` | Provenance — typically a task ID |
 | `ttl_days` | Time to live (30 days for tier 3, 90 days for tier 2) |
 
@@ -388,8 +391,11 @@ Each feature or bug gets its own Git worktree — a separate working directory w
 | `branch` | Git branch name |
 | `path` | Filesystem path relative to the repository root |
 | `status` | `active`, `merged`, or `abandoned` |
-| `graph_project` | Code knowledge graph project name for this worktree |
+| `created` | Creation timestamp |
 | `created_by` | Who created the worktree |
+| `merged_at` | When the branch was merged (set by merge) |
+| `cleanup_after` | When auto-cleanup becomes eligible (grace period after merge) |
+| `graph_project` | Code knowledge graph project name for this worktree |
 
 Worktrees provide hard isolation. Agent A working in `.worktrees/feat-caching/` and Agent B working in `.worktrees/feat-auth/` cannot interfere with each other's uncommitted changes. Their commits stay on separate branches until merge.
 
