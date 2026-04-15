@@ -1,8 +1,8 @@
 id: P22-documentation-for-public-release
 slug: documentation-for-public-release
 name: Documentation for public release
-status: proposed
+status: designing
 summary: "Produce the complete public-facing documentation set for the Kanbanzai 1.0 release. Six new or rewritten documents plus four reference document updates, produced through the editorial pipeline (doc-publishing). Design: work/design/public-release-documentation.md."
 created: "2026-04-15T14:53:12Z"
 created_by: sambeau
-updated: "2026-04-15T14:53:12Z"
+updated: "2026-04-15T14:54:27Z"
