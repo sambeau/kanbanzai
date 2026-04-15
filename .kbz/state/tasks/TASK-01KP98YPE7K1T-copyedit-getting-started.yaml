@@ -3,6 +3,14 @@ parent_feature: FEAT-01KP8T4J02S7F
 slug: copyedit-getting-started
 name: Copyedit Getting Started Guide
 summary: "Copyedit stage: spelling, punctuation, serial commas, British spelling consistency, em dash consistency for docs/getting-started.md."
-status: ready
+status: done
 depends_on:
   - TASK-01KP98YPB8V3T
+files_planned:
+  - docs/getting-started.md
+completed: "2026-04-15T19:36:18Z"
+claimed_at: "2026-04-15T19:31:27Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T19:31:27Z"
+dispatched_by: sambeau
+completion_summary: "Copyedit stage complete. British spelling consistent throughout (personalised, organised, prioritised, behaviour). Serial commas used consistently. Em dashes consistently spaced. One minor fix: numbered list item 5 adjusted for parallel verb structure. Document is clean."
