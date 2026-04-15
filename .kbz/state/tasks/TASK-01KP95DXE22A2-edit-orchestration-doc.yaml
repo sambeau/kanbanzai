@@ -1,0 +1,6 @@
+id: TASK-01KP95DXE22A2
+parent_feature: FEAT-01KP8T4HVPY2Y
+slug: edit-orchestration-doc
+name: Edit Orchestration Doc
+summary: "Edit stage: structural and organisational review of docs/orchestration-and-knowledge.md. Check section flow, heading descriptiveness, information architecture."
+status: queued
