@@ -3,6 +3,14 @@ parent_feature: FEAT-01KP8T4HSX6QZ
 slug: style-workflow-overview
 name: Style workflow overview
 summary: "Style pass on docs/workflow-overview.md. Apply consistent voice, tense, formatting. Remove AI writing artifacts per refs/humanising-ai-prose.md. Produce changelog."
-status: ready
+status: done
 depends_on:
   - TASK-01KP92BTWVV2S
+files_planned:
+  - docs/workflow-overview.md
+completed: "2026-04-15T17:47:50Z"
+claimed_at: "2026-04-15T17:34:49Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T17:34:49Z"
+dispatched_by: sambeau
+completion_summary: "Style pass: fixed 1 banned word ('unlocks' → 'opens') and 6 passive→active voice conversions where the actor (you, agents, or system) was known. No issues found for hedging, tense, formatting, or sentence structure."
