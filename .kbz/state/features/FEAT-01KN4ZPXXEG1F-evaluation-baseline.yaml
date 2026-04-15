@@ -2,10 +2,16 @@ id: FEAT-01KN4ZPXXEG1F
 slug: evaluation-baseline
 name: Evaluation baseline
 parent: P15-kanbanzai-25-infrastructure-hardening
-status: reviewing
+status: done
 review_cycle: 1
 summary: Create 15-20 structured workflow scenario files in work/eval/ as a measurement baseline for comparing pre- and post-V3.0 agent behaviour.
 spec: FEAT-01KN4ZPXXEG1F/specification-evaluation-baseline
 dev_plan: FEAT-01KN4ZPXXEG1F/dev-plan-evaluation-baseline-plan
 created: "2026-04-01T16:58:30Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "State repair: all 3 tasks complete, parent plan P15 already done. Lifecycle never advanced from developing."
+    timestamp: "2026-04-15T12:26:08+01:00"
+    to_status: done
