@@ -1,0 +1,262 @@
+document_id: FEAT-01KP8T4J02S7F/report-getting-started
+document_path: docs/getting-started.md
+content_hash: b54297b07dcbe48f870a3c8acc842a649e0da470c74738e4bd6da82fe64761b1
+indexed_at: 2026-04-15T19:36:48.842705Z
+sections:
+    - path: "1"
+      level: 1
+      title: Getting Started with Kanbanzai
+      byte_offset: 0
+      byte_count: 17334
+      word_count: 2420
+      content_hash: b54297b07dcbe48f870a3c8acc842a649e0da470c74738e4bd6da82fe64761b1
+      children:
+        - path: "1.1"
+          level: 2
+          title: What you will build
+          byte_offset: 468
+          byte_count: 688
+          word_count: 116
+          content_hash: 9f6a7a311a6ba844e455dc05068e1b8492a8e0b849501f259719893d572c4970
+        - path: "1.2"
+          level: 2
+          title: Install Kanbanzai
+          byte_offset: 1156
+          byte_count: 1240
+          word_count: 177
+          content_hash: de25132708b733cef8d05efe2f1cc06c4c98b76a82cc6db1be8fbe74c1a7b495
+          children:
+            - path: 1.2.1
+              level: 3
+              title: From source
+              byte_offset: 1178
+              byte_count: 417
+              word_count: 59
+              content_hash: 598d73d6bfa01103e4aa6ef44a709234d7981eb781b2ff0b1ab2864d8bdc67e9
+            - path: 1.2.2
+              level: 3
+              title: Prebuilt binaries
+              byte_offset: 1595
+              byte_count: 280
+              word_count: 34
+              content_hash: f8ff59b3fc466fccc23335ea61a16cba1ec6e9a2627c8d44cebc77bce806515d
+            - path: 1.2.3
+              level: 3
+              title: Verify the installation
+              byte_offset: 1875
+              byte_count: 132
+              word_count: 21
+              content_hash: 881cc2f33e9f7e294092a1add216295013eb55c5df321c73cba925a0151c5745
+            - path: 1.2.4
+              level: 3
+              title: macOS GUI editors and PATH
+              byte_offset: 2007
+              byte_count: 389
+              word_count: 60
+              content_hash: c663959f8c011ee7f9e18c29807d2661bdb1e7a291eb57294b481e5ddb03add9
+        - path: "1.3"
+          level: 2
+          title: Initialise a project
+          byte_offset: 2396
+          byte_count: 2904
+          word_count: 362
+          content_hash: 537bdbf824fe9b47dd18ae4ef5e0c78d0c061576afa01dc49ba080472301cf0d
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Local configuration
+              byte_offset: 4843
+              byte_count: 457
+              word_count: 62
+              content_hash: cc0a952f2191f1be479b10d8f8f462807e625ab9c38d301855333fc8844ee0be
+        - path: "1.4"
+          level: 2
+          title: Connect your editor
+          byte_offset: 5300
+          byte_count: 2348
+          word_count: 316
+          content_hash: 9e7c422f023727a073b9cb1f7d8c3be61cb0344aedc7ab3be311a7aeeabc5d3d
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Zed
+              byte_offset: 5783
+              byte_count: 611
+              word_count: 87
+              content_hash: 7f04bbacd33a0d8ab3204870ce49b2d031dc9eb1eb054a6599d5c641e104bb47
+            - path: 1.4.2
+              level: 3
+              title: Claude Desktop
+              byte_offset: 6394
+              byte_count: 549
+              word_count: 66
+              content_hash: c002fc09b2e0c486b87c4695a3039e8882d5797aeaab0340fadc9b20a4041780
+            - path: 1.4.3
+              level: 3
+              title: VS Code
+              byte_offset: 6943
+              byte_count: 355
+              word_count: 43
+              content_hash: 73203aa6934199392b39bbfe1a897866f8e1d7393e6baf120ad389c9b9fa85f8
+            - path: 1.4.4
+              level: 3
+              title: Cursor
+              byte_offset: 7298
+              byte_count: 350
+              word_count: 47
+              content_hash: 28959382041ee540ca32734b55cb2a57c15286e7a5fa590594e710ec5a7c2810
+        - path: "1.5"
+          level: 2
+          title: Create a plan
+          byte_offset: 7648
+          byte_count: 939
+          word_count: 143
+          content_hash: eebd6ecf2a88c54f92c3fa982234ef62546835fce9015b4eafb203729ece215d
+        - path: "1.6"
+          level: 2
+          title: Create a feature
+          byte_offset: 8587
+          byte_count: 619
+          word_count: 85
+          content_hash: 2b6115898ec11d5d0b5546e67b6d085b03c5b97168114f662518847fed1ad248
+        - path: "1.7"
+          level: 2
+          title: Write a design document
+          byte_offset: 9206
+          byte_count: 1083
+          word_count: 160
+          content_hash: c7783e7a10b2a21a2f358aa7daa98f5e3ac3067b50a076bcced0312dbcab6a9e
+        - path: "1.8"
+          level: 2
+          title: Approve the design
+          byte_offset: 10289
+          byte_count: 517
+          word_count: 72
+          content_hash: ccbd4efbb48394ee3d199d6aef5bd505a8d7a9085fc05637d400c9c1186f6a49
+        - path: "1.9"
+          level: 2
+          title: Write a specification
+          byte_offset: 10806
+          byte_count: 1172
+          word_count: 168
+          content_hash: 659a914dcb3c7565fb0d5663c4936f375944e6e258438f6d894012e5145633ab
+        - path: "1.10"
+          level: 2
+          title: Decompose into tasks
+          byte_offset: 11978
+          byte_count: 944
+          word_count: 138
+          content_hash: ca7fc0103ee079cf0a98e7ceae99e6a872e3fa1795ecb86cfa6ec78dc9b017d4
+        - path: "1.11"
+          level: 2
+          title: Implement through the work queue
+          byte_offset: 12922
+          byte_count: 1329
+          word_count: 191
+          content_hash: 5b9eeeb13acad86f7e3ce635ac506b02b3d5f8944ecac1b10334752be93c2e00
+        - path: "1.12"
+          level: 2
+          title: Review and merge
+          byte_offset: 14251
+          byte_count: 788
+          word_count: 110
+          content_hash: c0b4e5b8267cac6bdca4779425ee8c5456455bc71444cdb364573e613ea47b4d
+        - path: "1.13"
+          level: 2
+          title: What just happened
+          byte_offset: 15039
+          byte_count: 1221
+          word_count: 185
+          content_hash: e8a94349040475a23b28c776ced81a0cd756750bf2751ef708683ac6657e564d
+        - path: "1.14"
+          level: 2
+          title: Next steps
+          byte_offset: 16260
+          byte_count: 1074
+          word_count: 132
+          content_hash: 5f609b17530de73b501d37caf5a10297b6cfc1ef81c0d17b9379b67f02fb9c39
+entity_refs:
+    - entity_id: FEAT-xxxxx
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 10266
+    - entity_id: FEAT-xxxxx
+      entity_type: feature
+      section_path: "1.8"
+      byte_offset: 10532
+    - entity_id: FEAT-xxxxx
+      entity_type: feature
+      section_path: "1.10"
+      byte_offset: 12295
+    - entity_id: FEAT-xxxxx
+      entity_type: feature
+      section_path: "1.12"
+      byte_offset: 14741
+    - entity_id: TASK-xxxxx
+      entity_type: task
+      section_path: "1.11"
+      byte_offset: 13222
+    - entity_id: P1-cli-improvements
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 8155
+    - entity_id: P1-cli-improvements
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 8837
+cross_doc_links:
+    - target_path: user-guide.md
+      link_text: User Guide
+      section_path: "1"
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview
+      section_path: "1"
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview — Plans
+      section_path: "1.5"
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview
+      section_path: "1.8"
+    - target_path: orchestration-and-knowledge.md
+      link_text: conflict analysis
+      section_path: "1.11"
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview
+      section_path: "1.12"
+    - target_path: user-guide.md
+      link_text: User Guide
+      section_path: "1.14"
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview
+      section_path: "1.14"
+    - target_path: orchestration-and-knowledge.md
+      link_text: Orchestration and Knowledge
+      section_path: "1.14"
+    - target_path: retrospectives.md
+      link_text: Retrospectives
+      section_path: "1.14"
+    - target_path: schema-reference.md
+      link_text: Schema Reference
+      section_path: "1.14"
+    - target_path: mcp-tool-reference.md
+      link_text: MCP Tool Reference
+      section_path: "1.14"
+    - target_path: configuration-reference.md
+      link_text: Configuration Reference
+      section_path: "1.14"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.3"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.3"
+    - target_path: work/design/greet-command.md
+      link_text: work/design/greet-command.md
+      section_path: "1.7"
+    - target_path: work/spec/greet-command.md
+      link_text: work/spec/greet-command.md
+      section_path: "1.9"
+    - target_path: work/dev/greet-command.md
+      link_text: work/dev/greet-command.md
+      section_path: "1.10"
+classified: false
