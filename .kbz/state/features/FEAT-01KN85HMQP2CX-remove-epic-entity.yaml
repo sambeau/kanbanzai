@@ -2,10 +2,17 @@ id: FEAT-01KN85HMQP2CX
 slug: remove-epic-entity
 name: Remove Epic entity
 parent: P20-deprecation-cleanup
-status: developing
+status: done
+review_cycle: 1
 summary: "Delete all code, tests, and supporting structures for the deprecated Epic entity type, which was replaced by Plan in Phase 2. No live state exists; this is a pure code cleanup."
 design: FEAT-01KN85HMQP2CX/design-remove-epic-entity
 spec: FEAT-01KN85HMQP2CX/specification-remove-epic-entity
 dev_plan: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan
 created: "2026-04-02T22:38:11Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "All 5 acceptance criteria verified: (1) no epic references in Go source, (2) go build succeeds, (3) go test passes all packages, (4) no epics/ state directory, (5) epic.yaml testdata deleted. Pure deletion task with 43 files changed, -1879 lines net. No new behaviour to review."
+    timestamp: "2026-04-15T13:28:03+01:00"
+    to_status: done
