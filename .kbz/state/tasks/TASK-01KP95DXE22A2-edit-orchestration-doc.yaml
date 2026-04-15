@@ -3,4 +3,8 @@ parent_feature: FEAT-01KP8T4HVPY2Y
 slug: edit-orchestration-doc
 name: Edit Orchestration Doc
 summary: "Edit stage: structural and organisational review of docs/orchestration-and-knowledge.md. Check section flow, heading descriptiveness, information architecture."
-status: ready
+status: active
+claimed_at: "2026-04-15T18:15:51Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T18:15:51Z"
+dispatched_by: sambeau

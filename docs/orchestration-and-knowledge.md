@@ -77,7 +77,7 @@ The `developing` stage, for example, binds to the `orchestrator` role and the `o
 
 ---
 
-## Context assembly
+## How agents receive context
 
 When an agent claims a task or receives a handoff, the system assembles a **context packet** — a structured bundle of instructions, specification fragments, knowledge entries, and file paths scoped to the work at hand. Two tools produce context packets: `next` (which also claims the task) and `handoff` (which prepares a prompt for a sub-agent).
 
@@ -174,7 +174,7 @@ The orchestrator tracks active sub-agents and their file scopes. The agent satur
 
 ---
 
-## Conflict awareness
+## Detecting conflicts before parallel dispatch
 
 Before dispatching tasks in parallel, the system checks whether they risk editing the same files. The `conflict` tool accepts two or more task IDs and returns a per-pair risk assessment.
 
@@ -248,19 +248,13 @@ Each knowledge entry contains:
 
 Knowledge entries move through five statuses:
 
-```
-contributed → confirmed
-     ↓            ↓
-  disputed → ... → retired
-     ↓
-   stale → retired
-```
-
 - **Contributed** — newly created, unverified. This is the default status when an entry is recorded via `finish` or `knowledge(action: "contribute")`.
 - **Confirmed** — validated by usage or human review. Confirmed entries rank higher in context assembly.
 - **Disputed** — flagged as potentially incorrect. Requires a reason. Disputed entries are still surfaced but with lower priority.
 - **Stale** — content may be outdated. The staleness check compares git anchors against the current repository state to detect when referenced code has changed.
 - **Retired** — removed from active use. Retired entries are excluded from context assembly.
+
+Entries move forward through validation (contributed → confirmed) or backward through challenge (any non-retired status → disputed). Stale entries are detected automatically when referenced code changes. All paths eventually lead to retired when the observation is no longer relevant.
 
 ### How entries are contributed
 
@@ -305,9 +299,7 @@ During context assembly, the system searches for knowledge entries relevant to t
 
 When two entries cover the same topic with conflicting content, the `resolve` action keeps one and retires the other. The `merge_content` option merges usage counts and git anchors from the retired entry into the kept entry, preserving usage history.
 
----
-
-## Knowledge governance
+### Choosing the right record type
 
 The knowledge base is one of several places where project information lives. Each type of record serves a different purpose, and using the wrong one causes confusion:
 
@@ -329,7 +321,7 @@ Contributing a decision as a knowledge entry means it will eventually expire. Re
 
 ---
 
-## Merge gates
+## Verifying readiness before merge
 
 Before merging a feature branch into main, the system runs a series of gate checks. Gates verify that the work is complete, verified, and conflict-free. The `merge` tool runs these checks via `merge(action: "check")` and performs the merge via `merge(action: "execute")`.
 
@@ -381,9 +373,9 @@ Abandoned worktrees (marked via `Record.MarkAbandoned`) skip the grace period an
 
 ---
 
-## Concurrency model
+## Working in parallel with worktrees
 
-Multiple agents work on the same codebase simultaneously through three layers: worktrees for filesystem isolation, branches for version control isolation, and conflict analysis for coordination.
+Multiple agents work on the same codebase simultaneously through worktrees for filesystem isolation and branches for version control isolation. Conflict analysis (covered in [Detecting conflicts before parallel dispatch](#detecting-conflicts-before-parallel-dispatch)) coordinates which tasks run concurrently.
 
 ### Worktrees
 
@@ -411,19 +403,9 @@ The `branch` tool checks worktree branch health before merging or resuming work.
 
 This check runs as part of the merge gate (`branch_not_stale`) and can be called independently to assess whether a branch needs rebasing before work continues.
 
-### Parallel execution pattern
+### Known limitation: file editing in worktrees
 
-The typical pattern for parallel work is:
-
-1. **Decompose** — break a feature into tasks with explicit `depends_on` declarations.
-2. **Check conflicts** — run `conflict(action: "check")` on task pairs that might run in parallel.
-3. **Dispatch safe pairs** — tasks rated `safe_to_parallelise` are dispatched to concurrent sub-agents.
-4. **Serialise risky pairs** — tasks rated `serialise` or `checkpoint_required` run sequentially, or the orchestrator creates a checkpoint for human decision.
-5. **Monitor and complete** — the orchestrator monitors sub-agent outputs, records completions via `finish`, and lets automatic dependency promotion unblock the next wave of tasks.
-
-### File editing in worktrees
-
-Standard file editing tools (`edit_file`, `create_directory`) operate on the main project root, not on worktree directories. Agents working in a worktree use terminal commands (typically Python-based file writes) to modify files in the worktree path. This is a known limitation — the context packet includes the worktree path so agents know where to write.
+Standard file editing tools (`edit_file`, `create_directory`) operate on the main project root, not on worktree directories. Agents working in a worktree use terminal commands (typically Python-based file writes) to modify files in the worktree path. The context packet includes the worktree path so agents know where to write.
 
 ---
 
