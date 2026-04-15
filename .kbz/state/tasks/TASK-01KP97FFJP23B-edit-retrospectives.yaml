@@ -3,10 +3,14 @@ parent_feature: FEAT-01KP8T4HXPEAY
 slug: edit-retrospectives
 name: Edit Retrospectives
 summary: "Edit stage: structural and clarity review. Check headings, remove redundancy, merge or split sections as needed, improve flow."
-status: active
+status: done
 depends_on:
   - TASK-01KP97FFFGJKM
+files_planned:
+  - docs/retrospectives.md
+completed: "2026-04-15T18:52:49Z"
 claimed_at: "2026-04-15T18:50:28Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-15T18:50:28Z"
 dispatched_by: sambeau
+completion_summary: "Edit stage: tightened intro to remove repetition with first section, made 4 headings more descriptive (What signals are, How to record signals, How synthesis works, How to generate reports), improved transitional sentences before response structure tables, minor flow tightening."
