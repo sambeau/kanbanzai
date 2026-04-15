@@ -3,6 +3,6 @@ parent_feature: FEAT-01KP8T4HQMEA3
 slug: copyedit
 name: Sentence-level polish
 summary: "Copyedit stage: polish sentences for clarity — active voice, smothered verbs, sentence length, punctuation, capitalisation, parallel structure, consistency, reading rhythm. Produce copyedit changelog. Advisory checkpoint after completion. Role: doc-copyeditor. Skill: copyedit-docs."
-status: queued
+status: ready
 depends_on:
   - TASK-01KP8V5EES7GS

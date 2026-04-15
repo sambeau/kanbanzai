@@ -3,6 +3,15 @@ parent_feature: FEAT-01KP8T4HQMEA3
 slug: style-cleanup
 name: AI artifact removal
 summary: "Style stage: hunt and eliminate AI writing patterns — banned vocabulary, inflated adjectives, staccato rhetoric, hedging, tricolon overuse, robotic transitions. Rewrite affected sentences. Target: zero unresolved style findings (AC-020). Role: doc-stylist. Skill: style-docs."
-status: ready
+status: done
 depends_on:
   - TASK-01KP8V5ECFXW7
+files_planned:
+  - docs/user-guide.md
+completed: "2026-04-15T15:55:12Z"
+claimed_at: "2026-04-15T15:42:49Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T15:42:49Z"
+dispatched_by: sambeau
+completion_summary: "Style stage: 17 AI artifacts found and resolved. Banned vocabulary (1), tricolon patterns (3), staccato anaphora (5), repetitive structure (2), inflated metaphors (2), formal hedging (1), abstract jargon (1), marketing cadence (1), elegant variation (1). Zero unresolved findings (AC-020 met)."
+verification: "Sub-agent scanned full document against refs/humanising-ai-prose.md §1-3, §7, §9. All 17 findings classified, rewritten, and applied. Verified no structural changes were made."
