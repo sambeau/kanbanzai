@@ -1,28 +1,28 @@
 # User Guide
 
-Kanbanzai is a workflow system for human-AI collaborative software development. This guide explains what it does, how the pieces fit together, and where to find detail on each topic. It is written for designer-developers and product or design managers who know roughly what Kanbanzai is and want to understand how it works before diving into specifics.
+Kanbanzai is a workflow system for human-AI collaborative software development. This guide explains what it does, how the pieces fit together, and where to find detail on each topic. It is written for designer-developers and product or design managers who know roughly what Kanbanzai is and want to understand how it works before reading the details.
 
-After reading this guide, you will have a mental model of the system — its workflow, its orchestration, its storage model — and know which document to read next for any topic you want to explore further.
+After reading this guide, you will understand the workflow, orchestration, and storage model well enough to know which document to read next for any topic.
 
 ---
 
 ## What is Kanbanzai?
 
-Kanbanzai is three things at once. It is a **methodology** for structuring human-AI collaboration on software projects. It is a **workflow system** that tracks plans, features, tasks, bugs, and decisions as YAML files in your Git repository. And it is an **MCP server** that exposes structured tools to AI agents working in any editor that supports the Model Context Protocol.
+Kanbanzai is a **methodology** for structuring human-AI collaboration on software projects, a **workflow system** that tracks plans, features, tasks, bugs, and decisions as YAML files in your Git repository, and an **MCP server** that exposes structured tools to AI agents in any editor supporting the Model Context Protocol.
 
-The methodology defines how work flows from an idea to a shipped feature: through design, specification, planning, implementation, and review, with human approval at each transition. The workflow system enforces that process — it tracks entity state, checks prerequisites at stage gates, and prevents work from advancing until the right documents are approved. The MCP server is how AI agents interact with the system. It provides 22 tools, each with multiple actions, that handle everything from creating entities to assembling context for a task to checking merge readiness.
+The methodology defines how work flows from an idea to a shipped feature: through design, specification, planning, implementation, and review, with human approval at each transition. The workflow system enforces that process by tracking entity state, checking prerequisites at stage gates, and preventing work from advancing until the right documents are approved. Agents interact with the system through the MCP server, which provides 22 multi-action tools covering entity management, context assembly, and merge operations.
 
-The system is Git-native. All state lives in a `.kbz/` directory inside your repository, stored as plain YAML files that are committed alongside your code. There is no external database, no cloud service, no separate server to run. The MCP server starts on demand when your editor launches it and communicates over stdio.
+The system is Git-native. All state lives in a `.kbz/` directory inside your repository, stored as plain YAML files that are committed alongside your code. There is no external database or cloud service, and the MCP server is not a separate process — it starts on demand when your editor launches it and communicates over stdio.
 
 ---
 
 ## Collaboration model
 
-Humans and AI agents have distinct roles in Kanbanzai. **Humans own intent** — goals, priorities, product direction, and approvals. **Agents own execution** — decomposing work into tasks, implementing code, running verification, and tracking status. **Documents are the interface** between them.
+Humans and AI agents have distinct roles in Kanbanzai. **Humans own intent** — goals, priorities, product direction, and approvals — while **agents own execution**: decomposing work into tasks, writing code, running verification, and tracking status. Documents are the interface between the two.
 
 This split means humans do not manage entities directly. They do not create tasks, update statuses, or wire up dependencies. Instead, they write and review design documents, make decisions in conversation, and approve the outputs that agents produce. Agents read those documents, extract the requirements, create the structured records the system needs, and do the implementation work — all within guardrails that the workflow enforces.
 
-The result is that humans stay in control of what gets built and why, while agents handle the mechanical complexity of how. For a detailed treatment of this model and the full design-to-delivery process, see the [Workflow Overview](workflow-overview.md).
+The result is that humans stay in control of what gets built and why, while agents handle the mechanical complexity of how. The [Workflow Overview](workflow-overview.md) covers this model and the design-to-delivery process in detail.
 
 ---
 
@@ -84,7 +84,7 @@ Bugs and incidents surface in health checks and status reports, so they remain v
 
 ## Task dispatch and context assembly
 
-The orchestration system is responsible for getting the right context to the right agent at the right time. When an agent claims a task, the system assembles a **context packet** containing the role it should adopt, the skill procedure it should follow, relevant sections from the specification, knowledge entries that might help, and the file paths likely to be involved.
+The orchestration system assembles context for agents when they claim tasks. The result is a **context packet** containing the role the agent should adopt, the skill procedure it should follow, relevant sections from the specification, knowledge entries that might help, and the file paths likely to be involved.
 
 **Roles** define agent identity — vocabulary, anti-patterns to avoid, and tool preferences. A `doc-editor` role produces different behaviour than an `implementer-go` role, even on similar tasks, because the vocabulary and constraints differ.
 
@@ -100,9 +100,9 @@ The [Orchestration and Knowledge](orchestration-and-knowledge.md) document cover
 
 ## Knowledge system
 
-Knowledge entries capture lessons learned during development. When an agent completes a task, it can record observations — a pattern that worked well, a tool limitation, a design decision and its rationale. These entries persist across sessions and compound over time.
+Knowledge entries capture lessons learned during development. When an agent completes a task, it can record observations — a pattern that worked well, a tool limitation, a design decision and its rationale. These entries persist across sessions and build up over time.
 
-Each entry has a topic, a scope (project-wide or session-specific), a confidence score, and tags. Entries start in `contributed` status and can be promoted to `confirmed` as they prove useful, or flagged and retired if they become stale. The system tracks how often each entry is surfaced and used, so high-value knowledge rises and unused knowledge fades.
+Each entry has a topic, a scope (project-wide or session-specific), a confidence score, and tags. Entries start in `contributed` status and can be promoted to `confirmed` as they prove useful, or flagged and retired if they become stale. The system tracks how often each entry is surfaced and used, so frequently used entries rank higher and unused ones drop out.
 
 When an agent claims a new task, the context assembly system searches for knowledge entries relevant to the work and includes them in the context packet. This means an agent working on a caching feature will see previous observations about caching patterns in this codebase, even if a different agent in a different session recorded them weeks ago.
 
@@ -154,11 +154,11 @@ The 22 tools are organised into seven groups:
 | **Incidents** | `incident` | Incident lifecycle tracking |
 | **Checkpoints** | `checkpoint` | Human decision checkpoints for pausing automated work |
 
-Each tool supports multiple actions. The `entity` tool, for example, handles create, get, list, update, and transition — five distinct operations through one tool interface. This keeps the tool count manageable while covering the full workflow surface.
+Each tool supports multiple actions. The `entity` tool, for example, handles create, get, list, update, and transition — five distinct operations through one tool interface. This keeps the tool count manageable while covering the full workflow.
 
 Tool groups can be enabled or disabled per project. A project that does not use incident tracking can disable the incidents group, and those tools will not appear in the agent's tool list.
 
-The [MCP Tool Reference](mcp-tool-reference.md) documents every tool, every action, every parameter, and every return value.
+The [MCP Tool Reference](mcp-tool-reference.md) documents all tools, actions, parameters, and return values.
 
 ---
 
@@ -175,7 +175,7 @@ The directory contains several areas:
 - **`index/`** holds derived data — document intelligence indexes and graph structures. This data is regenerated from source documents and does not need to be committed.
 - **`cache/`** holds local derived data that is machine-specific and not committed.
 
-The YAML serialisation follows strict rules: block style, deterministic field order, UTF-8 encoding, LF line endings. This ensures clean diffs when entity state changes are committed. The [Schema Reference](schema-reference.md) documents every entity type, every field, and every valid value. The [Configuration Reference](configuration-reference.md) documents all configuration options.
+The YAML serialisation follows strict rules: block style, deterministic field order, UTF-8 encoding, LF line endings. This ensures clean diffs when entity state changes are committed. The [Schema Reference](schema-reference.md) documents all entity types, fields, and valid values. The [Configuration Reference](configuration-reference.md) documents all configuration options.
 
 ---
 
@@ -199,9 +199,9 @@ Your next step depends on what you want to do.
 | If you want to… | Read |
 |-----------------|------|
 | **Try Kanbanzai** on a project | [Getting Started](getting-started.md) — install, configure your editor, run your first feature end to end |
-| **Understand the workflow** in depth | [Workflow Overview](workflow-overview.md) — every stage, every gate, every document type, and how humans and agents collaborate |
+| **Understand the workflow** in depth | [Workflow Overview](workflow-overview.md) — all stages, gates, document types, and how humans and agents collaborate |
 | **Set up multi-agent orchestration** | [Orchestration and Knowledge](orchestration-and-knowledge.md) — roles, skills, context assembly, task dispatch, conflict awareness, the knowledge system |
 | **Use retrospectives** to improve your process | [Retrospectives](retrospectives.md) — signal recording, synthesis, report generation |
-| **Look up a tool** parameter or return value | [MCP Tool Reference](mcp-tool-reference.md) — every tool, every action, every parameter |
-| **Look up an entity field** or lifecycle state | [Schema Reference](schema-reference.md) — every entity type, every field, valid values, state machines |
+| **Look up a tool** parameter or return value | [MCP Tool Reference](mcp-tool-reference.md) — all tools, actions, and parameters |
+| **Look up an entity field** or lifecycle state | [Schema Reference](schema-reference.md) — all entity types, fields, valid values, and state machines |
 | **Configure** a Kanbanzai instance | [Configuration Reference](configuration-reference.md) — `config.yaml`, `local.yaml`, prefix registry, tool groups |
