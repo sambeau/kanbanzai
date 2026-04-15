@@ -4,3 +4,5 @@ slug: style-reference-docs
 name: Style Reference Docs
 summary: "Apply style pass to all four reference documents: bold vocabulary on first use, passive→active voice conversions, consistent formatting, trim redundancy. Documents: MCP Tool Reference, Schema Reference, Configuration Reference, Viewer Agents Guide."
 status: queued
+depends_on:
+  - TASK-01KP9ARCWVRQJ
