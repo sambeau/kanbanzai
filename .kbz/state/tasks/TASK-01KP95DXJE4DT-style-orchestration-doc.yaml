@@ -1,0 +1,6 @@
+id: TASK-01KP95DXJE4DT
+parent_feature: FEAT-01KP8T4HVPY2Y
+slug: style-orchestration-doc
+name: Style Orchestration Doc
+summary: "Style stage: apply style guide to docs/orchestration-and-knowledge.md. Fix banned words, passive voice, nominalisations, sentence length."
+status: queued
