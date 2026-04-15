@@ -1,328 +1,262 @@
 # Workflow Overview
 
-This document explains the workflow that Kanbanzai implements today. You collaborate with AI agents to design, specify, plan, implement, review, and merge software changes.
+Kanbanzai structures work as a conversation between humans and AI agents that moves through staged phases — flexible and iterative during design, rigorous and specification-driven during implementation. This document explains how that workflow operates: what happens at each phase, who decides what, and how approvals move work forward.
 
-Kanbanzai uses documents and conversation as the interface between human intent and agent execution. Agents turn your intent into structured workflow state, implementation work, and verification. To understand what happens at each stage, who decides what, and which approvals move work forward, start here.
-
-For hands-on setup and day-to-day usage, see [Getting Started](getting-started.md).
+It is written for design managers and product managers who have experience with agile workflows and some familiarity with agentic development. If you want a broader orientation to the system first, start with the [User Guide](user-guide.md). If you want to try it hands-on, see the [Getting Started guide](getting-started.md).
 
 ---
 
-## 1. The collaboration model
+## The Kanbanzai workflow
 
-Kanbanzai coordinates work between humans and agents. Neither side works alone, and neither side owns the whole process.
+The workflow has two distinct halves. The first half — planning, design, and specification — is a collaborative design conversation. You shape ideas through documents, revise them, make decisions, and narrow alternatives until a clear specification remains. This half is agile in the original sense: iterative, flexible, driven by conversation and revision.
 
-**You own intent.** You decide what to build, what matters now, what trade-offs are acceptable, and when a document or change is good enough to approve. Design direction, scope, priorities, and approval signals stay with you.
+The second half — development planning, implementation, and review — is specification-driven. Once a specification is approved, it becomes the binding contract for what gets built. Agents decompose it into tasks, implement against it, and reviewers check the result against it. This half is deliberately rigid because the cost of ambiguity rises sharply once multiple agents are writing code in parallel.
 
-**Agents own execution.** Once intent is expressed clearly, agents create and maintain the supporting workflow state, decompose work, assemble context, implement tasks, run verification, prepare reviews, and keep progress moving.
-
-**Documents and chat are the interface.** You work through documents and conversation. Agents mediate between that human interface and the internal structured model.
-
-Work moves through a staged conversation of durable artifacts. You refine a design. An agent helps draft a specification. You approve it. An agent decomposes it into tasks. Agents implement those tasks. You review the results and approve the gates that belong to you.
-
-The workflow formalizes that conversation into stages with explicit prerequisites. Work can move backward when a document is revised or when a stage gate finds blocking issues. It must not skip forward without satisfying the documented prerequisites.
+The two halves are not in tension. Flexibility during design is how you get the specification right. Rigour during implementation is how you get the code right. Kanbanzai formalises both into a single workflow with explicit gates between phases.
 
 ---
 
-## 2. Stage overview
+## How it compares
 
-The workflow moves from intent to implementation through seven stages. Each stage produces an artifact that the next stage depends on, and each stage has a clear gate that must pass before work advances.
+If you have worked with Scrum or Kanban, the design phases will feel familiar. Work moves through stages, priorities shift, documents get revised, and decisions emerge from conversation rather than a single upfront plan. Kanbanzai shares agile's emphasis on iteration and responsiveness during design.
 
-| Stage | What starts it | Main output | Gate to leave the stage |
-|-------|----------------|-------------|--------------------------|
-| Planning | You identify a body of work | Agreed scope and plan direction | You decide design work should begin |
-| Design | A plan or feature needs architectural direction | Approved design document | Design document approved |
-| Specification | Design direction is approved | Approved specification | Specification approved |
-| Dev planning | Specification is approved | Approved dev plan and task breakdown | Dev plan approved |
-| Developing | Approved tasks are ready to execute | Code, tests, docs, and completed tasks | All tasks complete |
-| Reviewing | Implementation is complete | Review report and resolved findings | Human review approval |
-| Integration | Review passes and merge gates pass | Merged change on `main` | Human merge approval |
+If you have worked with specification-driven systems — where a formal specification defines what gets built and review checks conformance — the implementation phases will feel familiar. After specification approval, the spec is the blueprint. Agents implement against it. Review verifies against it. Changes to scope go back through the specification, not through ad-hoc decisions during coding.
 
-These gates are deliberate. The cost of catching a bad decision rises as work moves downstream. A design flaw caught during design costs far less than the same flaw discovered after several agents have implemented against it.
+The combination is the point. Kanbanzai is agile where flexibility matters (deciding what to build) and specification-driven where consistency matters (building it correctly). The label for the implementation phase is "specification-led" — not waterfall, because there is no big-upfront-design phase and because design decisions can still send work backward at any point.
 
 ---
 
-## 3. Stage detail
+## Design-led workflow
 
-### 3.1 Planning
+The first half of the workflow is a design conversation that narrows possibilities until a clear, approved specification remains. Three stages participate in this conversation: planning, design, and specification. They are not isolated sequential steps — they form a continuous refinement of intent.
 
-**What happens.** You identify a body of work — a new capability, a substantial refactor, or a set of related improvements — and decide how to frame it. In Kanbanzai, planning is about agreeing on scope and ownership before design work begins.
+### Planning
 
-**Who drives it.** You do. Planning is human-led. Agents can help you inspect existing work, spot overlap, and suggest boundaries, but do not decide what belongs in the plan.
+You identify a body of work and decide how to frame it. A new capability, a refactor, a set of related improvements — you set the scope and boundaries. Agents help by inspecting existing work, spotting overlap, and surfacing related decisions, but they do not choose what belongs in the plan. Planning is human-led.
 
-**Output artifact.** A Plan entity that captures the scope of the work. The plan record matters, but the more important output at this stage is shared human understanding of what the work includes and where its boundaries are.
+There is no automatic gate. You decide when the scope is clear enough to justify a design document. That judgment is yours because only you know whether the work is concrete enough to design or still needs more discussion.
 
-**Approval gate.** There is no automatic approval mechanism. You decide when the scope is clear enough to justify design work. This typically means the work is concrete enough to deserve a design document rather than more planning discussion.
+### Design
 
-**Agents should:**
-- Help check whether the proposed work overlaps existing plans or features
-- Surface related design documents, specs, or open bugs
-- Create or update plan records when you ask
+You create or revise a design document that captures the architectural direction: the problem, the proposed approach, key decisions, trade-offs, and affected interfaces. Agents can draft sections, research alternatives, compare approaches, and flag conflicts with existing architecture. They do not settle architectural decisions on their own — that authority stays with you.
 
-**Agents should not:**
-- Create plans without your direction
-- Choose the scope or priority of a plan
-- Treat planning discussion as design approval
+The design document must be formally approved before specification can begin. Approval here means you are satisfied with the direction, not that every detail is final. The specification stage is where details become precise.
 
----
+### Specification
 
-### 3.2 Design
+The approved design is turned into a precise, testable specification. This is where intent becomes binding: numbered requirements, explicit acceptance criteria, stated scope boundaries. You are the final authority because the specification defines what "correct implementation" means.
 
-**What happens.** You create or revise a design document that captures the architectural direction for the feature: the problem, the proposed approach, key decisions, trade-offs, and affected interfaces.
+Agents help surface missing requirements, edge cases, and ambiguities. They point out conflicts between the draft and existing behaviour. But gaps in an unapproved specification must not be filled by guessing — they must be resolved through conversation with you before the specification is approved.
 
-**Who drives it.** This stage is collaborative, but you own the decisions. Agents can help draft, research, compare alternatives, and highlight conflicts. They do not settle architecture on their own.
+The specification must be approved before any implementation begins. This gate exists because the cost of a specification error multiplies across every agent that implements against it.
 
-**Output artifact.** An approved design document, usually in `work/design/`, registered as a document record of type `design`.
+### The design conversation in practice
 
-**Approval gate.** The design document must be approved before specification can proceed. This is a document prerequisite, not a casual signal in chat.
+In practice, these three stages overlap and loop. A planning discussion reveals a design question. A design draft exposes a specification gap. A specification review sends you back to revise the design. The workflow allows and expects backward movement — it formalises the conversation, not a conveyor belt.
 
-**Agents should:**
-- Draft sections when asked as proposals for review
-- Research alternatives and summarize trade-offs
-- Flag conflicts with existing architecture or prior decisions
-- Register and refresh the document record as needed
-
-**Agents should not:**
-- Make architecture decisions on your behalf
-- Treat a draft design as settled direction
-- Advance past the design gate without formal approval
+The human role through all of this is **design manager**: you set direction, make trade-off decisions, approve documents, and decide when the work is ready to move forward. The agent role is **senior designer**: drafting, researching, analysing alternatives, and flagging problems for your decision.
 
 ---
 
-### 3.3 Specification
+## Document-led process
 
-**What happens.** You and agents turn the approved design into a precise, testable specification. This is where intent becomes binding requirements and acceptance criteria.
+Documents are the durable interface between human intent and agent execution. Four document types drive the workflow, and each one's approval unlocks the next phase of work.
 
-**Who drives it.** You are the final authority on the spec because it defines what correct implementation means. Agents can help identify gaps, edge cases, ambiguities, and traceability concerns.
+### Design documents
 
-**Output artifact.** An approved specification document in `work/spec/`, registered as type `specification`.
+A design document captures architectural direction: the problem being solved, the proposed approach, alternatives considered, and key decisions. Its approval signals that the direction is set and specification work can begin.
 
-**Approval gate.** The specification must be approved before dev planning can begin. Until then, implementation should not start.
+Design documents live in `work/design/` and are registered as document records of type `design`. The system tracks their approval status and content hash so that downstream work can verify it is building on an approved foundation.
 
-**Agents should:**
-- Help surface missing requirements and edge cases
-- Ask clarifying questions before approval
-- Point out conflicts between the draft spec and existing behavior
+### Specifications
 
-**Agents should not:**
-- Fill gaps in an unapproved spec by guessing
-- Change scope inside the spec without your approval
-- Treat the design as a substitute for the spec
+A specification translates the design into numbered, testable requirements with explicit acceptance criteria. Its approval signals that the requirements are binding and development planning can begin.
 
----
+Specifications live in `work/spec/` and are registered as type `specification`. The specification is the most consequential document in the workflow — everything downstream traces back to it.
 
-### 3.4 Dev planning
+### Development plans
 
-**What happens.** The approved specification is broken into implementable tasks and a development plan. Each task should represent a coherent slice of work with clear dependencies and traceability back to the specification.
+A development plan breaks the specification into implementable tasks with dependencies, sequencing, and traceability back to the specification's requirements. Its approval signals that the task breakdown is sound and implementation can begin.
 
-**Who drives it.** Agents lead this stage because it depends on decomposition, dependency analysis, and implementation sequencing. You review the resulting plan and task breakdown.
+Development plans live in `work/plan/` and are registered as type `dev-plan`.
 
-**Output artifact.** An approved dev plan, usually in `work/plan/`, plus task entities linked to the feature. The plan should show how the specification turns into implementable slices, not just list tasks.
+### Review reports
 
-**Approval gate.** The dev plan must be approved before the feature should move into development. Task decomposition is not self-approving.
+A review report evaluates the implementation against the specification across dimensions like conformance, quality, security, and test coverage. Its approval (by you) signals that the implementation is acceptable and the feature can be completed.
 
-**Agents should:**
-- Propose tasks from the approved specification
-- Record dependencies between tasks
-- Keep tasks small enough to review and implement safely
-- Ensure the task set covers the spec
+Review reports are registered as type `report`.
 
-**Agents should not:**
-- Create ad-hoc tasks without structured decomposition
-- Skip dependency analysis
-- Start implementation before the dev plan is approved
+### What the system manages vs what it stores
+
+The Markdown files are the human-facing artifacts — you edit them in your editor, review them in conversation, and treat them as the record of intent. Document records are the system-facing metadata: ownership, approval status, content hashes, and lifecycle tracking. The records make the workflow enforceable. The files remain the thing you actually read and write.
+
+When a document is superseded — say, a specification is rewritten because requirements changed — the owning feature moves backward to the stage that matches the new document state. This rollback is designed behaviour. It keeps the workflow aligned with current intent rather than letting implementation drift from an outdated specification.
 
 ---
 
-### 3.5 Developing
+## Specification-led implementation
 
-**What happens.** Approved tasks enter the work queue. Agents claim ready tasks, receive assembled context, implement changes, run verification, and complete the work.
+After the specification is approved, the workflow shifts character. The design conversation is over. What remains is execution: decomposing the specification into tasks, implementing them, and verifying the result.
 
-**Who drives it.** Agents do. This is the implementation stage. Your role is to review checkpoints, answer questions that affect intent, and inspect progress when needed.
+### The development plan
 
-**Output artifact.** Code changes, tests, documentation updates, knowledge entries, and completed task records.
+The approved specification is broken into a development plan: a set of tasks with explicit dependencies, interface contracts where tasks interact, and traceability from each task back to the specification requirements it addresses. Agents lead this stage because decomposition depends on implementation-level judgment about sequencing and interfaces. You review the resulting plan and approve it before implementation begins.
 
-**Approval gate.** There is no human gate on every task, but there is still a discipline gate: agents should work only from approved documents, on ready tasks, with dependencies satisfied, and with verification performed before marking the task complete.
+The development plan matters because ad-hoc task creation — agents inventing work without structured decomposition — hides dependencies, makes parallel work unsafe, and weakens the link between implementation and specification.
 
-**Agents should:**
-- Claim tasks through the work queue
-- Read the assembled context before making changes
-- Implement within the boundaries of the approved spec and dev plan
-- Run verification and record what was checked
-- Escalate ambiguity through a checkpoint instead of guessing
+### Implementation
 
-**Agents should not:**
-- Work from an unapproved spec or dev plan
-- Make design or product decisions during implementation
-- Start tasks whose dependencies are incomplete
-- Mark work done without verification
+Approved tasks enter the work queue. Agents claim ready tasks (those whose dependencies are satisfied), receive assembled context, implement changes, run verification, and complete the work. Multiple agents can work in parallel on independent tasks.
 
----
+Your role shifts here. During the design phases, you were the design manager — shaping direction, making trade-off decisions, approving documents. During implementation, you are closer to a product manager: you decide priorities, answer questions that affect intent, review progress, and approve the gates that belong to you. You do not manage task assignment, sequencing, or the mechanics of implementation — agents handle that within the boundaries the specification and development plan define.
 
-### 3.6 Reviewing
+This shift is deliberate. The specification captures your intent precisely enough that agents can execute without constant direction. If they cannot — if they keep raising questions about what the specification means — that is a signal the specification needs revision, not that agents need more supervision.
 
-**What happens.** After implementation completes, the feature moves into reviewing. Agents evaluate the result against the specification across multiple dimensions, usually including conformance, quality, security, and testing.
+### Review
 
-**Who drives it.** Agents coordinate and perform the review work, but this stage requires human approval. Review reports exist to help you make the approval decision.
+After all tasks are complete, the feature moves into review. Agents evaluate the implementation against the specification across multiple dimensions — typically conformance, code quality, security, and test coverage. Each dimension produces findings classified by severity.
 
-**Output artifact.** A review report, usually recorded as a document of type `report`, plus any resulting rework if findings block approval.
+Blocking findings send the work back for rework. The rework cycle can repeat, but not indefinitely — if review fails repeatedly, the issue escalates to you. Non-blocking findings are reported but do not prevent the feature from advancing.
 
-**Approval gate.** Human approval is required to leave the reviewing stage. If blocking findings appear, the work goes back for rework before the feature can move on.
+Review produces a report. You review the report and decide whether to approve the feature. This is a human gate — the system can tell you whether findings are resolved, but the decision to accept the work is yours.
 
-**Agents should:**
-- Review implementation against the approved specification
-- Classify and report findings clearly
-- Send work back for rework when findings are blocking
+### Integration
 
-**Agents should not:**
-- Treat a completed implementation as self-approving
-- Ignore unresolved blocking findings
-- Bypass the human approval gate
+After review passes, the change is prepared for merge. The system checks merge gates: task completion, branch health, CI status, and review readiness. You make the final decision to merge. After the merge lands, the feature is done.
 
 ---
 
-### 3.7 Integration
+## Chat-based project management
 
-**What happens.** After review passes, the change is prepared for merge. Merge gates check task completion, branch health, CI status, and review readiness before the change lands on `main`.
+You interact with Kanbanzai through conversation in your editor, not through a separate project management interface. There is no web dashboard to update, no CLI commands to memorise, no ticket system to maintain. You talk to an AI agent, and the agent maintains the structured workflow state on your behalf.
 
-**Who drives it.** This is collaborative. Agents prepare the branch, pull request, and merge checks. You make the final approval decision for merging.
+This is more agile than a traditional interface for the design phases, where work is exploratory and iterative. A conversation can shift direction, revisit a decision, explore an alternative, and return to the main thread — all without navigating forms or updating fields. The agent translates your conversational intent into the structured records the system needs.
 
-**Output artifact.** A merged pull request, updated workflow state, and a completed feature or bug.
+The AI agent fills a composite role. During design, the agent acts as a senior designer: drafting documents, researching alternatives, analysing trade-offs for your decision. During implementation, the agent acts as a project manager and development team: decomposing work, dispatching tasks, tracking progress, and implementing changes. During review, the agent coordinates specialist reviewers and assembles findings for your decision.
 
-**Approval gate.** Human approval is required before the final merge. The system can tell you whether the technical gates pass; it does not replace your judgment about whether the work should land.
-
-**Agents should:**
-- Open or update the pull request when the work is ready
-- Check merge gates before attempting the merge
-- Report blockers clearly
-- Clean up workflow state after the merge
-
-**Agents should not:**
-- Merge without your approval
-- Override failing merge gates without explicit direction
-- Skip review or gate checks because the change looks small
+Through all of this, you retain decision authority. The agent proposes; you approve. The agent implements; you review. The agent reports; you decide. The structured workflow — the stage gates, the document prerequisites, the approval points — exists to make that authority enforceable rather than aspirational.
 
 ---
 
-## 4. The document-centric interface
+## Approval stages and state
 
-Kanbanzai lets humans work through documents and conversation while agents maintain the structured bookkeeping behind the scenes.
+### Feature lifecycle
 
-### Documents drive the workflow
-
-The core workflow documents are Markdown files in the repository:
+A feature moves through seven stages. Each stage has a gate — a prerequisite that must be satisfied before work advances.
 
 ```text
-work/
-├── design/   ← design documents
-├── spec/     ← specifications
-└── plan/     ← development plans and related planning documents
+proposed → designing → specifying → dev-planning → developing → reviewing → done
 ```
 
-These are normal project files. You edit them in your editor, review them in pull requests, and use them as the durable record of intent.
+| Transition | Gate |
+|------------|------|
+| proposed → designing | You decide design work should begin |
+| designing → specifying | Design document approved |
+| specifying → dev-planning | Specification approved |
+| dev-planning → developing | Development plan approved |
+| developing → reviewing | All tasks complete |
+| reviewing → done | Review approved (human gate) |
 
-### Document lifecycle drives feature lifecycle
+Features can also move backward. A superseded specification sends the feature back to specifying. A review with blocking findings sends it to rework. Backward movement is a designed mechanism — it keeps work aligned with current intent rather than pushing forward on an outdated basis.
 
-Feature progression depends on approved documents:
+A feature can also be cancelled or superseded at any point if direction changes.
 
-| Document type | What approval means | Workflow consequence |
-|---------------|---------------------|----------------------|
-| Design | Architectural direction is set | Specification may begin |
-| Specification | Requirements are binding | Dev planning may begin |
-| Dev plan | Task breakdown is approved | Development may begin |
+### Plan lifecycle
 
-If a document is superseded, the owning feature moves backward to the stage that matches the new state of the document chain. That rollback is a feature, not a failure. It keeps the workflow aligned with current intent.
-
-### Document records track status, not replace the files
-
-Document records exist so the system can track status, ownership, approval, and content drift. The files remain the human-facing artifact. The records make the workflow enforceable, but they do not replace normal document editing or pull-request review.
-
-### Why documents, not raw entities
-
-You reason in prose, diagrams, comparisons, and review comments. Requiring you to operate the internal entity model directly would add ceremony without making decisions clearer. Kanbanzai keeps the structured model strict while letting you work through the artifacts you already use.
-
----
-
-## 5. Common failure modes
-
-The stage-gate workflow exists because skipping stages or forcing gates creates expensive rework. These are the failures it is designed to prevent:
-
-### Creating tasks without a specification
-
-Tasks created before the specification is approved do not have a stable basis for correctness. Agents fill the gaps differently, and the result is rework.
-
-**Fix:** Approve the specification before decomposition and implementation.
-
-### Making architecture decisions without an approved design
-
-If architectural decisions live only in chat or temporary agent context, later agents cannot rely on them. Contradictory implementation decisions are likely to follow.
-
-**Fix:** Record the architecture in a design document and approve it before moving forward.
-
-### Skipping dev planning
-
-Ad-hoc tasks hide dependencies, make parallel work unsafe, and weaken traceability from implementation back to the specification.
-
-**Fix:** Use structured decomposition and review the resulting task breakdown before development begins.
-
-### Treating agent context as a substitute for workflow documents
-
-Context packets and knowledge entries help agents work efficiently. They do not replace the design, specification, or dev plan.
-
-**Fix:** Keep intent in approved documents. Let context packets support execution, not define it.
-
-### Implementing before the gates are open
-
-A common downstream mistake is starting code changes before the required documents are approved.
-
-**Fix:** Treat stage gates as real prerequisites, not suggestions. If a gate is missing, stop and resolve it before implementation continues.
-
----
-
-## 6. Feature lifecycle summary
-
-A feature moves through a staged lifecycle. In the normal forward path, that looks like this:
-
-```text
-proposed → designing → specifying → dev planning → developing → reviewing → done
-```
-
-The exact transition mechanics are enforced by the workflow tools, but the high-level rule is straightforward:
-
-- approved design unlocks specification
-- approved specification unlocks dev planning
-- approved dev plan unlocks development
-- completed implementation unlocks review
-- approved review unlocks integration, and a completed merge unlocks done
-
-Features can also move backwards when a prerequisite document is superseded or when review finds blocking problems that require rework.
-
----
-
-## 7. Plan lifecycle summary
-
-Plans bracket the feature work at a higher level:
+Plans group related features at a higher level. Their lifecycle is simpler:
 
 ```text
 proposed → designing → active → done
 ```
 
-At this level the idea is simpler:
-
-- `proposed` means the scope exists but design work has not started in earnest
-- `designing` means the body of work is being shaped through design documents
-- `active` means features under the plan are being delivered
-- `done` means the plan's scoped work is complete
+A plan is `proposed` when the scope exists but design work has not started. It moves to `designing` when the body of work is being shaped through design documents. It becomes `active` when features under the plan are being delivered. It reaches `done` when all scoped features are complete.
 
 Plans can also become `superseded` or `cancelled` when direction changes.
+
+### Why gates exist
+
+The cost of catching a bad decision rises as work moves downstream. A design flaw caught during design costs a document revision. The same flaw caught after three agents have implemented against it costs rework across multiple task branches, potential merge conflicts, and wasted verification effort.
+
+Gates are the mechanism that makes early detection possible. They force decisions to be recorded in documents, reviewed, and approved before downstream work begins. They are prerequisites, not suggestions.
+
+---
+
+## The workflow diagram
+
+The full stage-gate flow for a feature, showing document dependencies and approval points:
+
+```text
+                    ┌─────────┐
+                    │proposed │
+                    └────┬────┘
+                         │  you decide to begin design
+                         ▼
+                    ┌─────────┐
+                    │designing│
+                    └────┬────┘
+                         │  design document approved
+                         ▼
+                   ┌──────────┐
+                   │specifying│◄──────────────────┐
+                   └────┬─────┘                   │
+                        │  specification approved │ spec superseded
+                        ▼                         │
+                  ┌───────────┐                   │
+                  │dev-planning│                   │
+                  └─────┬─────┘                   │
+                        │  dev plan approved      │
+                        ▼                         │
+                  ┌───────────┐                   │
+                  │developing │                   │
+                  └─────┬─────┘                   │
+                        │  all tasks complete     │
+                        ▼                         │
+                  ┌───────────┐    rework    ┌────┴─────┐
+                  │ reviewing │─────────────►│needs-work│
+                  └─────┬─────┘              └──────────┘
+                        │  review approved
+                        ▼
+                    ┌────┐
+                    │done│
+                    └────┘
+```
+
+Each box is a stage. Each arrow is a gate with its prerequisite labelled. The backward arrows show how work returns to earlier stages when the basis changes.
+
+---
+
+## Common failure modes
+
+The stage-gate workflow exists because skipping stages or forcing gates creates expensive rework. These are the failures it prevents.
+
+### Creating tasks without a specification
+
+Tasks created before the specification is approved have no stable basis for correctness. Different agents fill the gaps differently, and the result is contradictory implementations that need rework. The fix: approve the specification before decomposition and implementation begin.
+
+### Making architecture decisions without an approved design
+
+If architectural decisions live only in chat context or temporary notes, later agents cannot rely on them. Contradictory implementation decisions follow because each agent works from a different understanding of the architecture. The fix: record the architecture in a design document and approve it before moving forward.
+
+### Skipping development planning
+
+Ad-hoc tasks — created without structured decomposition from the specification — hide dependencies, make parallel work unsafe, and break traceability from implementation back to requirements. When something goes wrong, there is no clear path from the failing code to the requirement it was supposed to satisfy. The fix: use structured decomposition and review the task breakdown before development begins.
+
+### Implementing before gates are satisfied
+
+Starting code changes before the required documents are approved is the most common downstream failure. It feels productive — code is being written — but it builds on an unstable foundation. If the specification changes, the code changes too, and now the rework cost includes both the original implementation and the revision. The fix: treat stage gates as real prerequisites. If a gate is not satisfied, stop and resolve it.
+
+### Treating agent context as a substitute for documents
+
+Context packets and knowledge entries help agents work efficiently within a session. They do not replace the design, specification, or development plan. Intent that lives only in agent context is invisible to other agents, invisible to review, and lost between sessions. The fix: keep intent in approved documents. Let context support execution, not define it.
 
 ---
 
 ## What to read next
 
-If you are new to the system, read the getting-started guide first. If you want the reasoning behind this workflow, continue with the design documents.
+Where you go from here depends on what you need:
 
-- **[Getting Started](getting-started.md)** — installation, project setup, and the session loop
-- **`work/design/workflow-design-basis.md`** — the consolidated workflow design basis
-- **`work/design/document-centric-interface.md`** — the rationale for the document-centric human interface
-- **`AGENTS.md`** — repository conventions and the required pre-task checklist
+- **Try it yourself** — the [Getting Started guide](getting-started.md) walks through installation, project setup, and your first feature from start to finish.
+- **Understand orchestration** — the [Orchestration and Knowledge](orchestration-and-knowledge.md) document covers how agents receive context, claim tasks, work in parallel, and contribute knowledge.
+- **Understand retrospectives** — the [Retrospectives](retrospectives.md) document covers how the system records workflow signals, synthesises themes, and generates reports.
+- **Look up specifics** — the [MCP Tool Reference](mcp-tool-reference.md), [Schema Reference](schema-reference.md), and [Configuration Reference](configuration-reference.md) cover tool parameters, entity fields, and configuration keys.
+- **Return to the overview** — the [User Guide](user-guide.md) provides orientation to every part of the system.
