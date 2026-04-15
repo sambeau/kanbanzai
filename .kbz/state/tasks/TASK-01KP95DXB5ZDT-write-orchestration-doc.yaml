@@ -3,4 +3,8 @@ parent_feature: FEAT-01KP8T4HVPY2Y
 slug: write-orchestration-doc
 name: Write Orchestration Doc
 summary: "Write stage: produce docs/orchestration-and-knowledge.md from design brief section 9. Nine sections covering coordination problem, roles and skills, context assembly, task dispatch, conflict awareness, knowledge system, knowledge governance, merge gates, concurrency model."
-status: ready
+status: active
+claimed_at: "2026-04-15T18:11:39Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T18:11:39Z"
+dispatched_by: sambeau
