@@ -20,7 +20,7 @@ Without structured orchestration, AI agents working on a codebase encounter four
 
 4. **Inconsistent conventions.** Without shared vocabulary and constraints, agents produce code in different styles, use different error handling patterns, and make different architectural assumptions — even when working on the same feature.
 
-Kanbanzai addresses these failures through five mechanisms: roles constrain agent identity, skills define procedures, context assembly delivers scoped information, knowledge entries persist observations, and conflict analysis flags overlapping work before it starts.
+Kanbanzai addresses these through five mechanisms: roles constrain agent identity, skills define procedures, context assembly delivers scoped information, knowledge entries persist observations, and conflict analysis flags overlapping work before it starts.
 
 ---
 
@@ -140,7 +140,7 @@ The `next` tool operates in two modes:
 
 Queue inspection also triggers **promotion**: the system checks all `queued` tasks, validates their dependencies, and promotes eligible tasks to `ready`. A task becomes eligible when every task ID in its `depends_on` list has reached `done` status. The response includes promoted tasks as side effects.
 
-When called with `conflict_check: true`, queue inspection annotates each ready task with conflict risk against all currently active tasks. This shows the orchestrator which tasks are safe to dispatch in parallel and which should be serialised.
+When called with `conflict_check: true`, queue inspection annotates each ready task with its conflict risk against all currently active tasks. This shows the orchestrator which tasks are safe to dispatch in parallel and which to serialise.
 
 **Task claiming** (with `id` parameter) transitions a `ready` task to `active` and sets dispatch metadata:
 
@@ -199,7 +199,7 @@ When branch information is available, the system compares file lists across bran
 | Task B is reachable from Task A via the dependency graph (BFS) | `medium` (transitive dependency) |
 | No dependency path exists | `none` |
 
-**Boundary crossing** analyses task metadata (slug, summary, feature slug, spec keywords) for semantic overlap. It tokenises the text, filters to tokens of three or more characters, and computes overlap:
+**Boundary crossing** analyses task metadata (slug, summary, feature slug, and spec keywords) for semantic overlap. It tokenises the text, filters to tokens of three or more characters, and computes overlap:
 
 | Condition | Risk level |
 |-----------|------------|
@@ -257,7 +257,7 @@ Knowledge entries move through five statuses:
 - **Stale** — content may be outdated. The staleness check compares git anchors against the current repository state to detect when referenced code has changed.
 - **Retired** — removed from active use. Context assembly excludes retired entries.
 
-Entries move forward through validation (contributed → confirmed) or backward through challenge (any non-retired status → disputed). Stale entries are detected automatically when referenced code changes. All paths eventually lead to retired when the observation is no longer relevant.
+Entries move forward through validation (contributed → confirmed) or backward through challenge (any non-retired status → disputed). The system detects stale entries automatically when referenced code changes. All paths eventually lead to retired when the observation is no longer relevant.
 
 ### How entries are contributed
 
@@ -419,6 +419,6 @@ Standard file editing tools (`edit_file`, `create_directory`) operate on the mai
 
 - **Try it yourself** — the [Getting Started guide](getting-started.md) walks through a complete feature from installation to merge.
 - **Understand retrospectives** — the [Retrospectives](retrospectives.md) document covers how the system records process signals, synthesises themes, and generates reports.
-- **Look up tool parameters** — the [MCP Tool Reference](mcp-tool-reference.md) documents every tool mentioned in this document.
+- **Look up tool parameters** — the [MCP Tool Reference](mcp-tool-reference.md) covers every tool mentioned in this document.
 - **Look up entity fields** — the [Schema Reference](schema-reference.md) covers knowledge entry fields, worktree records, and task structures.
-- **Return to the overview** — the [User Guide](user-guide.md) provides orientation to every part of the system.
+- **Return to the overview** — the [User Guide](user-guide.md) covers every part of the system at a glance.
