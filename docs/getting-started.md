@@ -1,5 +1,28 @@
 # Getting Started with Kanbanzai
 
+This guide walks you through Kanbanzai from installation to a completed feature. Every concept is introduced through a concrete action — by the end, you will have taken an idea through design, specification, implementation, and review using the full workflow.
+
+If you want a conceptual overview first, read the [User Guide](user-guide.md). If you want to understand the stage-gate model in depth, see the [Workflow Overview](workflow-overview.md).
+
+---
+
+## What you will build
+
+You will create a small feature for a hypothetical CLI tool: a `greet` subcommand that takes a name and prints a personalised greeting. The feature is deliberately simple — the point is the workflow, not the code.
+
+Along the way you will:
+
+- Create a **plan** and a **feature**
+- Write a **design document** and have it approved
+- Produce a **specification** with acceptance criteria
+- Generate a **dev plan** that decomposes the feature into tasks
+- **Implement** the code by claiming and completing tasks
+- **Review** the work and **merge** it
+
+This mirrors the real workflow for any feature, whether it is a one-file change or a multi-service refactor.
+
+---
+
 ## Installation
 
 ### From source
@@ -48,16 +71,6 @@ This is the most reliable way to ensure any editor can start the MCP server.
 
 ---
 
-## What Kanbanzai is
-
-Kanbanzai is a Git-native project workflow system that runs as an MCP (Model Context Protocol) server. MCP is an open protocol that lets AI-powered editors communicate with external tools through a structured interface. Kanbanzai exposes its entire feature set — plans, features, tasks, bugs, decisions, work queues, document tracking — as MCP tools that your editor's AI assistant can call directly.
-
-All project state lives in a `.kbz/` directory inside your repository, stored as plain YAML files. Plans, features, tasks, knowledge entries, context profiles — they are all version-controlled alongside your code. There is no external database, no cloud service, no separate sync step. If you can clone the repo, you have the full project state.
-
-The system bridges two worlds: human intent expressed through documents (designs, specifications, dev plans) and agent execution through structured tasks, work queues, and context assembly. You write a spec, decompose it into tasks, and an AI agent can pick up those tasks with full context about what to build and why. Kanbanzai is editor-agnostic — it works with any editor that supports MCP, including Zed, VS Code, Cursor, and Claude Desktop.
-
----
-
 ## Initialising a project
 
 Navigate to a Git repository and run:
@@ -66,55 +79,42 @@ Navigate to a Git repository and run:
 kanbanzai init
 ```
 
-This must be run inside an existing Git repository. If you don't have one yet, run `git init` first.
+This must be run inside an existing Git repository. If you do not have one yet, run `git init` first.
 
 `kanbanzai init` creates the following structure:
 
 ```
 your-repo/
-├── AGENTS.md                  # Agent instructions: workflow rules and skill pointers
-├── .mcp.json                  # MCP server configuration (auto-detected by most editors)
+├── AGENTS.md                    # Agent instructions: workflow rules and skill pointers
+├── .mcp.json                    # MCP server configuration (auto-detected by most editors)
 ├── .zed/
-│   └── settings.json          # Zed context server configuration
+│   └── settings.json            # Zed context server configuration
 ├── .github/
-│   └── copilot-instructions.md  # GitHub Copilot instructions (points to AGENTS.md)
+│   └── copilot-instructions.md  # GitHub Copilot instructions
 ├── .kbz/
-│   ├── config.yaml            # Project configuration (schema version, prefixes, document roots)
-│   ├── state/                 # Entity storage (features, tasks, bugs, etc.)
+│   ├── config.yaml              # Project configuration
+│   ├── state/                   # Entity storage (features, tasks, bugs, etc.)
 │   └── context/
-│       └── roles/             # Context profiles (base.yaml scaffold, reviewer.yaml managed)
+│       └── roles/               # Context profiles
 ├── .agents/
-│   └── skills/                # Kanbanzai skill files for AI agents
-│       ├── kanbanzai-getting-started/
-│       ├── kanbanzai-workflow/
-│       ├── kanbanzai-design/
-│       ├── kanbanzai-specification/
-│       ├── kanbanzai-documents/
-│       ├── kanbanzai-agents/
-│       ├── kanbanzai-planning/
-│       ├── kanbanzai-review/
-│       └── kanbanzai-plan-review/
+│   └── skills/                  # Kanbanzai skill files for AI agents
 └── work/
-    ├── README.md              # Directory map
-    ├── design/                # Architecture decisions, vision, policies
-    ├── spec/                  # Acceptance criteria and binding contracts
-    ├── plan/                  # Project planning: roadmaps, scope, decision logs
-    ├── dev/                   # Feature implementation plans and task breakdowns
-    ├── research/              # Analysis, exploration, background reading
-    ├── report/                # Audit reports, post-mortems, general reports
-    ├── review/                # Feature and plan review reports
-    └── retro/                 # Retrospective synthesis documents
+    ├── README.md                # Directory map
+    ├── design/                  # Architecture decisions, vision, policies
+    ├── spec/                    # Acceptance criteria and binding contracts
+    ├── plan/                    # Project planning: roadmaps, scope, decision logs
+    ├── dev/                     # Feature implementation plans and task breakdowns
+    ├── research/                # Analysis, exploration, background reading
+    ├── report/                  # Audit reports, post-mortems, general reports
+    ├── review/                  # Feature and plan review reports
+    └── retro/                   # Retrospective synthesis documents
 ```
 
-`kanbanzai init` is idempotent. Running it again on an already-initialised project updates skill files and managed role files to the current version, and applies version-aware conflict logic to `.mcp.json`, `.zed/settings.json`, `AGENTS.md`, and `.github/copilot-instructions.md`. If `AGENTS.md` or `.github/copilot-instructions.md` already exist without a kanbanzai managed marker, they are left untouched and a warning is printed.
+`kanbanzai init` is idempotent — running it again updates skill files and managed configuration to the current version without overwriting your changes.
 
-**Agent orientation:** `AGENTS.md` is read by most AI agent platforms and tells agents to use kanbanzai MCP tools, follow the stage gates, and where to find the skill files. `.github/copilot-instructions.md` serves the same purpose for GitHub Copilot. Both files use a `<!-- kanbanzai-managed: v1 -->` marker on line 1 so future `kbz init` runs can update them safely.
+**Agent orientation.** `AGENTS.md` tells AI agents to use Kanbanzai MCP tools, follow the stage gates, and where to find the skill files. `.github/copilot-instructions.md` does the same for GitHub Copilot. Both use a managed marker so future `kbz init` runs can update them safely. Use `--skip-agents-md` to suppress writing both files.
 
-Use `--skip-agents-md` to suppress writing both files.
-
-**Existing repositories:** If you run `kanbanzai init` in a repository that already has commits but has never had kanbanzai set up (no `.kbz/` directory), it behaves as a first-time init: all files listed above are created, including the `work/` directories. You will be prompted for a document root path — press Enter to use the standard `work/` layout, or type a custom path.
-
-**macOS GUI editors and PATH:** If `kanbanzai` is not on the PATH that your editor can see, the MCP server will silently fail to start. See [macOS GUI editors and PATH](#macos-gui-editors-and-path) above.
+**Existing repositories.** If you run `kanbanzai init` in a repository that already has commits but no `.kbz/` directory, it behaves as a first-time init and creates all the files shown above.
 
 ### Local configuration
 
@@ -142,7 +142,7 @@ If the automatic configuration does not work for your setup, use the manual snip
 
 ### Zed
 
-`kbz init` writes `.zed/settings.json` automatically. If you need to configure it manually, add the following to your project-local `.zed/settings.json` or to your global Zed settings:
+`kbz init` writes `.zed/settings.json` automatically. To configure manually, add the following to your project-local `.zed/settings.json` or to your global Zed settings:
 
 ```json
 {
@@ -181,7 +181,7 @@ Replace `/path/to/your/project` with the actual path to your project root. Claud
 
 ### VS Code
 
-For **GitHub Copilot** (built-in MCP support), `.mcp.json` is read automatically. If you need to configure manually, add to `.vscode/settings.json`:
+For **GitHub Copilot** (built-in MCP support), `.mcp.json` is read automatically. To configure manually, add to `.vscode/settings.json`:
 
 ```json
 {
@@ -198,7 +198,7 @@ For **GitHub Copilot** (built-in MCP support), `.mcp.json` is read automatically
 
 ### Cursor
 
-`.mcp.json` is read automatically by Cursor. If you need to configure manually, add a server through Settings → MCP Servers → Add:
+`.mcp.json` is read automatically by Cursor. To configure manually, add a server through Settings → MCP Servers → Add:
 
 ```json
 {
@@ -216,52 +216,254 @@ For **GitHub Copilot** (built-in MCP support), `.mcp.json` is read automatically
 
 ---
 
-## Your first plan
+## Create a plan
 
-Kanbanzai's primary interface is through MCP tools. You interact with it by asking your editor's AI assistant to call specific tools. Here is a walkthrough that creates a plan, a feature, a task, and then checks the work queue.
+With the MCP server running, you interact with Kanbanzai by asking your editor's AI assistant to call tools. Start by creating a plan — the top-level organising unit that groups related features.
 
-### Step 1: Create a plan
+Ask your AI assistant:
 
-Ask your AI assistant to call `entity` with these arguments:
+> Create a plan for my CLI tool improvements.
 
-```
-entity(action: "create", type: "plan", prefix: "P", slug: "my-first-project",
-       title: "My First Project", summary: "Learning Kanbanzai")
-```
-
-This creates a plan with an ID like `P1-my-first-project`. Plans are the top-level organising unit — they group related features together.
-
-### Step 2: Create a feature
+The assistant calls:
 
 ```
-entity(action: "create", type: "feature", parent: "P1-my-first-project",
-       slug: "hello-world", summary: "Implement a hello world endpoint")
+entity(action: "create", type: "plan", prefix: "P",
+       slug: "cli-improvements", name: "CLI Improvements",
+       summary: "Add user-facing CLI subcommands")
 ```
 
-This returns a feature with an ID like `FEAT-01ABC...`. Note the full ID.
+This creates a plan with an ID like **P1-cli-improvements**. You will use this ID when creating features under it.
 
-### Step 3: Create a task
+**What is a plan?** A plan is a container for related features — think of it as a project milestone or a themed batch of work. Plans progress through their own lifecycle (proposed → designing → active → done) as the features within them advance. See [Workflow Overview — Plans](workflow-overview.md) for the full lifecycle.
+
+---
+
+## Create a feature
+
+Next, create a feature under your plan for the `greet` command:
+
+> Create a feature for adding a greet subcommand.
 
 ```
-entity(action: "create", type: "task", parent_feature: "FEAT-01ABC...",
-       slug: "write-handler", summary: "Write the HTTP handler for /hello")
+entity(action: "create", type: "feature",
+       parent: "P1-cli-improvements",
+       slug: "greet-command",
+       name: "Greet Command",
+       summary: "Add a greet subcommand that takes a name argument and prints a personalised greeting")
 ```
 
-Tasks are the atomic units of work. Each task belongs to a feature.
+The feature starts in **proposed** status. Before any code is written, it must pass through design and specification — this is the structure that prevents wasted implementation effort.
 
-### Step 4: Check the work queue
+---
+
+## Write a design
+
+The design phase captures *how* you intend to solve the problem. Ask your assistant to write a design document:
+
+> Write a design for the greet command feature.
+
+The assistant creates a file at `work/design/greet-command.md` with sections covering the approach, alternatives considered, and key decisions. A simple design might look like:
+
+```markdown
+# Greet Command Design
+
+## Overview
+Add a `greet` subcommand to the CLI that accepts a `--name` flag
+and prints a personalised greeting to stdout.
+
+## Approach
+- Register a new cobra command under the root command
+- Accept `--name` as a required string flag
+- Default to "World" when no name is provided
+- Print "Hello, {name}!" to stdout
+
+## Alternatives Considered
+- Interactive prompt for the name — rejected, not composable in scripts
+- Positional argument instead of flag — rejected, flags are more explicit
+```
+
+After writing the document, the assistant registers it:
+
+```
+doc(action: "register", path: "work/design/greet-command.md",
+    type: "design", title: "Greet Command Design",
+    owner: "FEAT-xxxxx")
+```
+
+---
+
+## Approve the design
+
+Read the design document and decide whether the approach is sound. If you are happy with it:
+
+> Approve the design.
+
+```
+doc(action: "approve", id: "FEAT-xxxxx/design-greet-command")
+```
+
+Approval is a **stage gate** — it records your decision and advances the feature from the designing phase into specification. This is where human judgement shapes the project: you decide whether the approach is right before any detailed requirements are written.
+
+For more on how stage gates work, see [Workflow Overview — Stage gates and approvals](workflow-overview.md).
+
+---
+
+## Create a specification
+
+With the design approved, the assistant writes a specification — the binding contract that defines *what* the implementation must do. Ask:
+
+> Write a spec for the greet command.
+
+The assistant produces `work/spec/greet-command.md` with formal acceptance criteria:
+
+```markdown
+# Greet Command Specification
+
+## Purpose
+Define the acceptance criteria for the greet subcommand.
+
+## Acceptance Criteria
+
+**AC-01.** Running `mycli greet --name Alice` prints "Hello, Alice!" to stdout
+and exits with code 0.
+
+**AC-02.** Running `mycli greet` without --name prints "Hello, World!" and
+exits with code 0.
+
+**AC-03.** The greet subcommand appears in `mycli --help` output with a
+one-line description.
+
+**AC-04.** Running `mycli greet --name ""` (empty string) prints "Hello, World!"
+— empty strings are treated as absent.
+```
+
+The assistant registers and you approve it, just as with the design:
+
+```
+doc(action: "register", path: "work/spec/greet-command.md",
+    type: "specification", title: "Greet Command Specification",
+    owner: "FEAT-xxxxx")
+```
+
+> Approve the spec.
+
+```
+doc(action: "approve", id: "FEAT-xxxxx/specification-greet-command")
+```
+
+**Why a separate spec?** The design says *how*; the spec says *what*. Designs can be exploratory and conversational. Specifications are precise and testable — each acceptance criterion becomes a concrete verification target during implementation and review.
+
+---
+
+## Create a dev plan
+
+The dev plan breaks the specification down into implementable tasks. Ask:
+
+> Create a dev plan for the greet command.
+
+The assistant writes `work/dev/greet-command.md` describing the task breakdown, then uses the `decompose` tool to create the tasks:
+
+```
+decompose(action: "propose", feature_id: "FEAT-xxxxx")
+```
+
+For a small feature like this, the decomposition might produce three tasks:
+
+| Task | Summary |
+|------|---------|
+| **Register greet command** | Add the cobra command, wire it into the root command, add the `--name` flag |
+| **Implement greet logic** | Handle the name argument, empty-string fallback, print output |
+| **Add greet tests** | Unit tests covering AC-01 through AC-04 |
+
+After reviewing the proposed breakdown:
+
+```
+decompose(action: "apply", feature_id: "FEAT-xxxxx", proposal: {...})
+```
+
+This creates the task entities with dependencies. The feature is now ready for implementation.
+
+---
+
+## Implement
+
+Implementation happens through the **work queue**. Check what is ready:
+
+> What's next?
 
 ```
 next()
 ```
 
-Your task should appear in the ready queue. From here, you or an AI agent can claim the task with `next(id: "TASK-...")`, do the work, and mark it complete with `finish`.
+The work queue shows your tasks sorted by priority. The assistant claims the first ready task:
+
+```
+next(id: "TASK-xxxxx")
+```
+
+Claiming a task transitions it from **ready** to **active** and assembles context — the relevant spec sections, knowledge entries, and file paths the agent needs to do the work. The assistant then writes the code, runs the tests, and marks the task complete:
+
+```
+finish(task_id: "TASK-xxxxx",
+       summary: "Registered greet cobra command with --name flag",
+       verification: "go test ./cmd/... — all passing")
+```
+
+The `finish` tool transitions the task to **done** and contributes any knowledge gained during implementation. When one task completes, its dependents automatically become ready — the next `next()` call picks up the next task in the queue.
+
+Repeat this cycle — claim, implement, verify, finish — until all tasks are done.
+
+**Parallel work.** For larger features with independent tasks, multiple agents can work simultaneously. Kanbanzai's [conflict analysis](orchestration-and-knowledge.md) checks whether tasks risk editing the same files before you dispatch them in parallel.
+
+---
+
+## Review and merge
+
+With all tasks complete, the feature moves to review. Ask:
+
+> Review the greet command feature.
+
+The assistant checks the implementation against the specification's acceptance criteria, verifies test coverage, and produces a review document. Reviews can flag issues at several severity levels — see [Workflow Overview](workflow-overview.md) for the full review process.
+
+If the review passes:
+
+> Merge the greet command feature.
+
+```
+merge(action: "check", entity_id: "FEAT-xxxxx")
+merge(action: "execute", entity_id: "FEAT-xxxxx")
+```
+
+The merge tool checks gates (all tasks complete, verification exists, no conflicts, health check clean) and then performs the merge. The feature transitions to **done**.
+
+---
+
+## What just happened
+
+You took an idea — "add a greet command" — through a structured workflow:
+
+1. **Plan** organised the work into a named container
+2. **Design** captured the approach and key decisions
+3. **Specification** defined precise, testable acceptance criteria
+4. **Dev plan** decomposed the spec into implementable tasks
+5. **Implementation** happened through a prioritised work queue
+6. **Review** verified the implementation against the spec
+7. **Merge** landed the work after passing all quality gates
+
+Each transition required an explicit approval or gate check. This structure scales — the same workflow handles a three-task CLI command and a fifty-task architectural refactor. The AI agent handles the mechanical work (writing drafts, running decomposition, claiming tasks); you make the judgement calls (approving designs, reviewing specs, deciding what to build).
+
+All of this state — plans, features, tasks, documents, knowledge — lives in `.kbz/` inside your Git repository. There is no external database. Clone the repo and you have the full project history, including every decision and approval.
 
 ---
 
 ## Next steps
 
-- **[Workflow Overview](workflow-overview.md)** — The stage-gate model that governs how work flows from plan through feature through task to completion.
-- **[Schema Reference](schema-reference.md)** — Detailed structure of every entity type: plans, features, tasks, bugs, decisions, and their lifecycle states.
+You have seen the end-to-end workflow. Here is where to go deeper:
+
+- **[User Guide](user-guide.md)** — Conceptual overview of every entity type (plans, features, tasks, bugs, decisions), the document system, and the knowledge base.
+- **[Workflow Overview](workflow-overview.md)** — The stage-gate model in detail: what happens at each phase, who decides what, and how approvals govern transitions.
+- **[Orchestration and Knowledge](orchestration-and-knowledge.md)** — How agents receive context, work in parallel, and contribute knowledge that compounds across sessions.
+- **[Retrospectives](retrospectives.md)** — How to capture process observations and synthesise them into actionable patterns.
+- **[Schema Reference](schema-reference.md)** — Detailed structure of every entity type and their lifecycle states.
 - **[MCP Tool Reference](mcp-tool-reference.md)** — The full list of available tools with their parameters and behaviour.
-- **[Configuration Reference](configuration-reference.md)** — All settings in `config.yaml` and `local.yaml`, including document roots, prefix registries, and branch tracking.
+- **[Configuration Reference](configuration-reference.md)** — All settings in `config.yaml` and `local.yaml`.
