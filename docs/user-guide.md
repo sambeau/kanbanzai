@@ -16,7 +16,7 @@ The system is Git-native. All state lives in a `.kbz/` directory inside your rep
 
 ---
 
-## The collaboration model
+## Collaboration model
 
 Humans and AI agents have distinct roles in Kanbanzai. **Humans own intent** — goals, priorities, product direction, and approvals. **Agents own execution** — decomposing work into tasks, implementing code, running verification, and tracking status. **Documents are the interface** between them.
 
@@ -26,7 +26,7 @@ The result is that humans stay in control of what gets built and why, while agen
 
 ---
 
-## The stage-gate workflow
+## Stage-gate workflow
 
 Every feature in Kanbanzai passes through a defined lifecycle. Each stage produces a specific output, and a gate stands between each stage and the next.
 
@@ -82,7 +82,7 @@ Bugs and incidents surface in health checks and status reports, so they remain v
 
 ---
 
-## Orchestration
+## Task dispatch and context assembly
 
 The orchestration system is responsible for getting the right context to the right agent at the right time. When an agent claims a task, the system assembles a **context packet** containing the role it should adopt, the skill procedure it should follow, relevant sections from the specification, knowledge entries that might help, and the file paths likely to be involved.
 
@@ -98,7 +98,7 @@ The [Orchestration and Knowledge](orchestration-and-knowledge.md) document cover
 
 ---
 
-## The knowledge system
+## Knowledge system
 
 Knowledge entries capture lessons learned during development. When an agent completes a task, it can record observations — a pattern that worked well, a tool limitation, a design decision and its rationale. These entries persist across sessions and compound over time.
 
@@ -138,11 +138,11 @@ The [Orchestration and Knowledge](orchestration-and-knowledge.md) document cover
 
 ---
 
-## The MCP server
+## MCP server
 
-The Kanbanzai MCP server communicates over stdio using the Model Context Protocol. It starts when your editor launches it — there is no separate process to manage. Any editor that supports MCP can use it: Zed, VS Code, Cursor, Claude Desktop, and others.
+The MCP server is how AI agents interact with Kanbanzai — it exposes 23 structured tools covering everything from entity management to merge readiness. It communicates over stdio using the Model Context Protocol and starts automatically when your editor launches it. Any editor that supports MCP can use it: Zed, VS Code, Cursor, Claude Desktop, and others.
 
-The server exposes 23 tools, organised into seven groups:
+The 23 tools are organised into seven groups:
 
 | Group | Tools | Purpose |
 |-------|-------|---------|
@@ -176,6 +176,19 @@ The directory contains several areas:
 - **`cache/`** holds local derived data that is machine-specific and not committed.
 
 The YAML serialisation follows strict rules: block style, deterministic field order, UTF-8 encoding, LF line endings. This ensures clean diffs when entity state changes are committed. The [Schema Reference](schema-reference.md) documents every entity type, every field, and every valid value. The [Configuration Reference](configuration-reference.md) documents all configuration options.
+
+---
+
+## Common workflows at a glance
+
+Most work with Kanbanzai falls into a handful of patterns. Each starts with a human decision and ends with a verified outcome.
+
+- **Start a new feature.** Write a design document, have it approved, then let agents decompose it into a specification, dev plan, and tasks. The [Workflow Overview](workflow-overview.md) walks through every stage.
+- **Review a specification or plan.** Read the document an agent produced, check it against your intent, and approve it or send it back with feedback. Approval and backward transitions are covered in the section above.
+- **Investigate a bug.** File a bug entity, let agents triage and reproduce it, then track the fix through to verification. The [Schema Reference](schema-reference.md) documents the full bug lifecycle.
+- **Check project health.** Use the status dashboard to see what is blocked, what is ready, and where attention is needed — across plans, features, and tasks.
+
+These patterns compose. A typical session might start with checking status, reviewing a pending specification, and then watching agents implement the tasks from an already-approved plan.
 
 ---
 
