@@ -3,6 +3,14 @@ parent_feature: FEAT-01KP8T4HSX6QZ
 slug: edit-workflow-overview
 name: Edit workflow overview
 summary: "Structural edit of docs/workflow-overview.md. Check section ordering, depth balance, logical flow, inverted pyramid structure, heading descriptiveness. Produce changelog."
-status: ready
+status: done
 depends_on:
   - TASK-01KP92BTQV4NY
+files_planned:
+  - docs/workflow-overview.md
+completed: "2026-04-15T17:29:23Z"
+claimed_at: "2026-04-15T17:22:23Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T17:22:23Z"
+dispatched_by: sambeau
+completion_summary: "Structural edit: renamed generic heading 'How it compares' to be descriptive, merged standalone workflow diagram into lifecycle section for general→specific flow, added intro paragraph to lifecycle section for inverted-pyramid compliance. All content and voice preserved."
