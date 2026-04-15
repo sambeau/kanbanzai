@@ -1,6 +1,6 @@
 # MCP Tool Reference
 
-Complete reference for every MCP tool exposed by the Kanbanzai server. This document covers transport details, tool organisation, parameter definitions, return values, error conditions, and example calls for all 97 tools.
+Complete reference for the MCP tools exposed by the Kanbanzai server. Kanbanzai exposes **22 consolidated MCP tools**, each using an `action` parameter for dispatch (e.g., `entity(action: "create", type: "feature")`). This document enumerates individual action-combinations for completeness, covering transport details, tool organisation, parameter definitions, return values, error conditions, and example calls.
 
 **Audience:** Agent developers and tool builders.
 
@@ -12,28 +12,23 @@ Complete reference for every MCP tool exposed by the Kanbanzai server. This docu
 2. [Tool Organisation by Domain](#2-tool-organisation-by-domain)
 3. [Entity Management](#3-entity-management)
 4. [Plan Management](#4-plan-management)
-5. [Configuration](#5-configuration)
-6. [Document Records](#6-document-records)
-7. [Document Intelligence](#7-document-intelligence)
-8. [Knowledge Management](#8-knowledge-management)
-9. [Context and Profiles](#9-context-and-profiles)
-10. [Work Queue and Dispatch](#10-work-queue-and-dispatch)
-11. [Human Checkpoints](#11-human-checkpoints)
-12. [Estimation](#12-estimation)
-13. [Feature Decomposition and Review](#13-feature-decomposition-and-review)
-14. [Conflict Analysis](#14-conflict-analysis)
-15. [Incident Management](#15-incident-management)
-16. [Git Integration — Worktrees](#16-git-integration--worktrees)
-17. [Git Integration — Branches and Cleanup](#17-git-integration--branches-and-cleanup)
-18. [Git Integration — Merge](#18-git-integration--merge)
-19. [Git Integration — Pull Requests](#19-git-integration--pull-requests)
-20. [Agent Capabilities](#20-agent-capabilities)
-21. [Batch Operations](#21-batch-operations)
-22. [Migration](#22-migration)
-23. [Rich Queries](#23-rich-queries)
-24. [Retrospective Synthesis](#24-retrospective-synthesis)
-25. [Lifecycle Operation Constraints](#25-lifecycle-operation-constraints)
-26. [Idempotency Notes](#26-idempotency-notes)
+5. [Document Records](#5-document-records)
+6. [Document Intelligence](#6-document-intelligence)
+7. [Knowledge Management](#7-knowledge-management)
+8. [Work Queue and Dispatch](#8-work-queue-and-dispatch)
+9. [Human Checkpoints](#9-human-checkpoints)
+10. [Estimation](#10-estimation)
+11. [Feature Decomposition and Review](#11-feature-decomposition-and-review)
+12. [Conflict Analysis](#12-conflict-analysis)
+13. [Incident Management](#13-incident-management)
+14. [Git Integration — Worktrees](#14-git-integration--worktrees)
+15. [Git Integration — Branches and Cleanup](#15-git-integration--branches-and-cleanup)
+16. [Git Integration — Merge](#16-git-integration--merge)
+17. [Git Integration — Pull Requests](#17-git-integration--pull-requests)
+18. [Dashboard, Handoff, and Server Info](#18-dashboard-handoff-and-server-info)
+19. [Retrospective Synthesis](#19-retrospective-synthesis)
+20. [Lifecycle Operation Constraints](#20-lifecycle-operation-constraints)
+21. [Idempotency Notes](#21-idempotency-notes)
 
 ---
 
@@ -62,63 +57,28 @@ Clients send `tools/call` requests with a tool name and a JSON arguments object.
 
 ## 2. Tool Organisation by Domain
 
-Kanbanzai exposes 97 tools across 16 domains:
+Kanbanzai exposes **22 MCP tools** across 8 domains. Each tool uses an `action` parameter for dispatch:
 
-| Domain | Count | Tools |
-|---|---|---|
-| Entity Management | 15 | create_epic, create_feature, create_task, create_bug, record_decision, get_entity, list_entities, list_entities_filtered, list_by_tag, list_tags, update_status, update_entity, validate_candidate, health_check, rebuild_cache |
-| Plan Management | 5 | create_plan, get_plan, list_plans, update_plan, update_plan_status |
-| Configuration | 4 | get_project_config, get_prefix_registry, add_prefix, retire_prefix |
-| Document Records | 11 | doc_record_submit, doc_record_get, doc_record_get_content, doc_record_list, doc_record_list_pending, doc_record_approve, doc_record_supersede, doc_record_validate, doc_gaps, doc_trace, doc_supersession_chain |
-| Document Intelligence | 9 | doc_outline, doc_section, doc_classify, doc_pending, doc_find_by_concept, doc_find_by_entity, doc_find_by_role, doc_impact, doc_extraction_guide |
-| Knowledge Management | 13 | knowledge_contribute, knowledge_get, knowledge_list, knowledge_update, knowledge_confirm, knowledge_flag, knowledge_retire, knowledge_promote, knowledge_compact, knowledge_prune, knowledge_check_staleness, knowledge_resolve_conflict, context_report |
-| Context and Profiles | 3 | context_assemble, profile_get, profile_list |
-| Work Queue and Dispatch | 4 | work_queue, dependency_status, dispatch_task, complete_task |
-| Human Checkpoints | 4 | human_checkpoint, human_checkpoint_get, human_checkpoint_list, human_checkpoint_respond |
-| Estimation | 4 | estimate_set, estimate_query, estimate_reference_add, estimate_reference_remove |
-| Feature Decomposition | 4 | decompose_feature, decompose_review, slice_analysis, review_task_output |
-| Conflict Analysis | 1 | conflict_domain_check |
-| Incident Management | 4 | incident_create, incident_update, incident_list, incident_link_bug |
-| Git Integration | 12 | worktree_create, worktree_get, worktree_list, worktree_remove, branch_status, cleanup_list, cleanup_execute, merge_readiness_check, merge_execute, pr_create, pr_update, pr_status |
-| Agent Capabilities | 3 | suggest_links, check_duplicates, doc_extraction_guide |
-| Batch Operations | 1 | batch_import_documents |
-| Migration | 1 | migrate_phase2 |
-| Rich Queries | 1 | query_plan_tasks |
+| Domain | Tools |
+|---|---|
+| **Core** | `entity`, `status`, `next`, `finish`, `handoff`, `doc`, `health` |
+| **Planning** | `decompose`, `estimate`, `conflict`, `retro` |
+| **Knowledge** | `knowledge`, `profile` |
+| **Git** | `worktree`, `merge`, `pr`, `branch`, `cleanup` |
+| **Documents** | `doc_intel` |
+| **Incidents** | `incident` |
+| **Checkpoints** | `checkpoint` |
+| **Server** | `server_info` |
+
+> **Note:** The sections below document individual action-combinations for completeness (e.g., `create_feature` documents `entity(action: "create", type: "feature")`). Each sub-section heading shows the legacy name used in earlier documentation; an **MCP call** annotation at the top of each section shows the actual tool invocation.
 
 ---
 
 ## 3. Entity Management
 
-### create_epic
-
-Create a new epic entity.
-
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| slug | string | yes | URL-friendly identifier for the epic |
-| title | string | yes | Title of the epic |
-| summary | string | yes | Brief summary of the epic |
-| created_by | string | no | Who created the epic. Auto-resolved from `.kbz/local.yaml` or git config if not provided |
-
-**Returns:** JSON object with `Type`, `ID`, `DisplayID`, `Slug`, `Path`, and `State`.
-
-**Error conditions:**
-- Missing required parameters
-- Identity resolution fails (no `.kbz/local.yaml`, no git config)
-- Slug collision with existing epic
-
-**Example:**
-
-```json
-// Call
-{"tool": "create_epic", "arguments": {"slug": "user-auth", "title": "User Authentication", "summary": "Implement core authentication flows"}}
-// Response
-{"Type": "epic", "ID": "EPIC-01JX...", "DisplayID": "EPIC-01JX...", "Slug": "user-auth", "Path": ".kbz/epics/EPIC-01JX.../user-auth.yaml", "State": {"status": "proposed", "title": "User Authentication", "summary": "Implement core authentication flows"}}
-```
-
----
-
 ### create_feature
+
+> **MCP call:** `entity(action: "create", type: "feature", ...)`
 
 Create a new feature entity.
 
@@ -151,6 +111,8 @@ Create a new feature entity.
 
 ### create_task
 
+> **MCP call:** `entity(action: "create", type: "task", ...)`
+
 Create a new task entity.
 
 | Parameter | Type | Required | Description |
@@ -177,6 +139,8 @@ Create a new task entity.
 ---
 
 ### create_bug
+
+> **MCP call:** `entity(action: "create", type: "bug", ...)`
 
 Create a new bug entity.
 
@@ -210,6 +174,8 @@ Create a new bug entity.
 
 ### record_decision
 
+> **MCP call:** `entity(action: "create", type: "decision", ...)`
+
 Record a new decision entity.
 
 | Parameter | Type | Required | Description |
@@ -238,11 +204,13 @@ Record a new decision entity.
 
 ### get_entity
 
-Get a specific entity by type, ID, and slug.
+> **MCP call:** `entity(action: "get", id: "...")`
+
+Get a specific entity by ID.
 
 | Parameter | Type | Required | Description | Valid values |
 |---|---|---|---|---|
-| entity_type | string | yes | Type of entity to retrieve | `epic`, `feature`, `task`, `bug`, `decision` |
+| type | string | yes | Type of entity to retrieve | `feature`, `task`, `bug`, `decision`, `plan` |
 | id | string | yes | Entity ID or unambiguous prefix | |
 | slug | string | no | Entity slug (resolved from ID prefix if omitted) | |
 
@@ -257,7 +225,7 @@ Get a specific entity by type, ID, and slug.
 
 ```json
 // Call
-{"tool": "get_entity", "arguments": {"entity_type": "feature", "id": "FEAT-01JX..."}}
+{"tool": "get_entity", "arguments": {"type": "feature", "id": "FEAT-01JX..."}}
 // Response
 {"Type": "feature", "ID": "FEAT-01JX...", "DisplayID": "FEAT-01JX...", "Slug": "login-form", "Path": "...", "State": {"status": "proposed", "summary": "Login form with email/password", "parent": "P1-user-auth"}}
 ```
@@ -266,11 +234,13 @@ Get a specific entity by type, ID, and slug.
 
 ### list_entities
 
+> **MCP call:** `entity(action: "list", type: "...")`
+
 List all entities of a given type.
 
 | Parameter | Type | Required | Description | Valid values |
 |---|---|---|---|---|
-| entity_type | string | yes | Type of entities to list | `epic`, `feature`, `task`, `bug`, `decision` |
+| type | string | yes | Type of entities to list | `feature`, `task`, `bug`, `decision`, `plan` |
 
 **Returns:** JSON array of entity summary objects, each with `Type`, `ID`, `DisplayID`, `Slug`, `Path`, and `State`.
 
@@ -282,7 +252,7 @@ List all entities of a given type.
 
 ```json
 // Call
-{"tool": "list_entities", "arguments": {"entity_type": "feature"}}
+{"tool": "list_entities", "arguments": {"type": "feature"}}
 // Response
 [{"Type": "feature", "ID": "FEAT-01JX...", "DisplayID": "FEAT-01JX...", "Slug": "login-form", "Path": "...", "State": "proposed"}, ...]
 ```
@@ -291,11 +261,13 @@ List all entities of a given type.
 
 ### list_entities_filtered
 
+> **MCP call:** `entity(action: "list", type: "...", status: "...", tags: [...], ...)`
+
 List entities of a given type with optional filters for status, tags, parent, and date ranges.
 
 | Parameter | Type | Required | Description | Valid values |
 |---|---|---|---|---|
-| entity_type | string | yes | Type of entities to list | `epic`, `feature`, `task`, `bug`, `decision`, `plan` |
+| type | string | yes | Type of entities to list | `feature`, `task`, `bug`, `decision`, `plan` |
 | status | string | no | Filter by lifecycle status | |
 | tags | array | no | Filter by tags (must have at least one) | |
 | parent | string | no | Filter by parent entity ID (for features) | |
@@ -314,7 +286,7 @@ List entities of a given type with optional filters for status, tags, parent, an
 
 ```json
 // Call
-{"tool": "list_entities_filtered", "arguments": {"entity_type": "task", "status": "active", "parent": "FEAT-01JX..."}}
+{"tool": "list_entities_filtered", "arguments": {"type": "task", "status": "active", "parent": "FEAT-01JX..."}}
 // Response
 {"success": true, "type": "task", "count": 3, "results": [...]}
 ```
@@ -322,6 +294,8 @@ List entities of a given type with optional filters for status, tags, parent, an
 ---
 
 ### list_by_tag
+
+> **MCP call:** `entity(action: "list", tags: ["..."])`
 
 List all entities across all types that have the given tag.
 
@@ -347,6 +321,8 @@ List all entities across all types that have the given tag.
 
 ### list_tags
 
+> **MCP call:** `entity(action: "list")` — tag listing is part of the list action
+
 List all unique tags across all entity types, sorted alphabetically.
 
 | Parameter | Type | Required | Description |
@@ -371,11 +347,13 @@ List all unique tags across all entity types, sorted alphabetically.
 
 ### update_status
 
+> **MCP call:** `entity(action: "transition", id: "...", status: "...")`
+
 Update the lifecycle status of an entity. Enforces lifecycle state machine rules.
 
 | Parameter | Type | Required | Description | Valid values |
 |---|---|---|---|---|
-| entity_type | string | yes | Type of entity to update | `epic`, `feature`, `task`, `bug`, `decision` |
+| type | string | yes | Type of entity to update | `feature`, `task`, `bug`, `decision`, `plan` |
 | id | string | yes | Entity ID or unambiguous prefix | |
 | slug | string | no | Entity slug (resolved from ID prefix if omitted) | |
 | status | string | yes | New lifecycle status | varies by entity type |
@@ -391,7 +369,7 @@ Update the lifecycle status of an entity. Enforces lifecycle state machine rules
 
 ```json
 // Call
-{"tool": "update_status", "arguments": {"entity_type": "task", "id": "T-01JX...", "status": "active"}}
+{"tool": "update_status", "arguments": {"type": "task", "id": "T-01JX...", "status": "active"}}
 // Response
 {"Type": "task", "ID": "T-01JX...", "State": {"status": "active", ...}}
 ```
@@ -400,11 +378,13 @@ Update the lifecycle status of an entity. Enforces lifecycle state machine rules
 
 ### update_entity
 
+> **MCP call:** `entity(action: "update", id: "...", ...)`
+
 Update fields of an existing entity. Cannot change `id` or `status` (use `update_status` for status changes).
 
 | Parameter | Type | Required | Description | Valid values |
 |---|---|---|---|---|
-| entity_type | string | yes | Type of entity to update | `epic`, `feature`, `task`, `bug`, `decision` |
+| type | string | yes | Type of entity to update | `feature`, `task`, `bug`, `decision`, `plan` |
 | id | string | yes | Entity ID or unambiguous prefix | |
 | slug | string | no | Entity slug | |
 | *(additional)* | string | no | Any other string field is passed through as a field update | |
@@ -419,39 +399,16 @@ Update fields of an existing entity. Cannot change `id` or `status` (use `update
 
 ```json
 // Call
-{"tool": "update_entity", "arguments": {"entity_type": "feature", "id": "FEAT-01JX...", "summary": "Updated summary for the login form feature"}}
+{"tool": "update_entity", "arguments": {"type": "feature", "id": "FEAT-01JX...", "summary": "Updated summary for the login form feature"}}
 // Response
 {"Type": "feature", "ID": "FEAT-01JX...", "State": {"summary": "Updated summary for the login form feature", ...}}
 ```
 
 ---
 
-### validate_candidate
-
-Validate candidate entity data without persisting it. Useful for pre-flight checks before creation.
-
-| Parameter | Type | Required | Description | Valid values |
-|---|---|---|---|---|
-| entity_type | string | yes | Type of entity to validate | `epic`, `feature`, `task`, `bug`, `decision` |
-| *(additional)* | any | no | All other arguments are treated as candidate entity fields | |
-
-**Returns:** Validation result — either empty (valid) or a list of validation errors.
-
-**Error conditions:**
-- Invalid entity type
-
-**Example:**
-
-```json
-// Call
-{"tool": "validate_candidate", "arguments": {"entity_type": "bug", "title": "Missing title crash", "severity": "invalid"}}
-// Response
-[{"field": "severity", "message": "invalid value: must be one of low, medium, high, critical"}]
-```
-
----
-
 ### health_check
+
+> **MCP call:** `health()`
 
 Run a comprehensive health check across all entities, knowledge entries, worktrees, branches, and context profiles.
 
@@ -475,33 +432,11 @@ Run a comprehensive health check across all entities, knowledge entries, worktre
 
 ---
 
-### rebuild_cache
-
-Rebuild the local derived cache from canonical entity files. The cache accelerates queries but is not required for correctness.
-
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| *(none)* | | | |
-
-**Returns:** JSON object with `status` and `entities_cached` count.
-
-**Error conditions:**
-- Filesystem errors
-
-**Example:**
-
-```json
-// Call
-{"tool": "rebuild_cache", "arguments": {}}
-// Response
-{"status": "ok", "entities_cached": 47}
-```
-
----
-
 ## 4. Plan Management
 
 ### create_plan
+
+> **MCP call:** `entity(action: "create", type: "plan", ...)`
 
 Create a new Plan entity. Plans coordinate bodies of work and organise Features. The prefix must be declared in `.kbz/config.yaml`.
 
@@ -534,6 +469,8 @@ Create a new Plan entity. Plans coordinate bodies of work and organise Features.
 
 ### get_plan
 
+> **MCP call:** `entity(action: "get", id: "plan-id")`
+
 Get a Plan by its ID.
 
 | Parameter | Type | Required | Description |
@@ -557,6 +494,8 @@ Get a Plan by its ID.
 ---
 
 ### list_plans
+
+> **MCP call:** `entity(action: "list", type: "plan", ...)`
 
 List all Plans with optional filtering.
 
@@ -583,6 +522,8 @@ List all Plans with optional filtering.
 ---
 
 ### update_plan
+
+> **MCP call:** `entity(action: "update", id: "plan-id", ...)`
 
 Update mutable fields on a Plan (title, summary, design reference, tags).
 
@@ -614,6 +555,8 @@ Update mutable fields on a Plan (title, summary, design reference, tags).
 
 ### update_plan_status
 
+> **MCP call:** `entity(action: "transition", id: "plan-id", status: "...")`
+
 Transition a Plan to a new lifecycle status.
 
 Valid transitions: `proposed` → `designing`, `designing` → `active`, `active` → `done`. Any non-terminal state can transition to `superseded` or `cancelled`.
@@ -641,113 +584,11 @@ Valid transitions: `proposed` → `designing`, `designing` → `active`, `active
 
 ---
 
-## 5. Configuration
-
-### get_project_config
-
-Get the project configuration including the prefix registry, version, and other settings. Returns the contents of `.kbz/config.yaml`.
-
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| *(none)* | | | |
-
-**Returns:** JSON object with `success`, optionally `using_defaults`, and `config` containing `version` and `prefixes`.
-
-**Error conditions:**
-- If no config file exists, returns defaults with `using_defaults: true`
-
-**Example:**
-
-```json
-// Call
-{"tool": "get_project_config", "arguments": {}}
-// Response
-{"success": true, "config": {"version": "1.0", "prefixes": [{"prefix": "P", "name": "Plan"}]}}
-```
-
----
-
-### get_prefix_registry
-
-Get the Plan ID prefix registry. Lists all declared prefixes with their labels and retired status.
-
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| *(none)* | | | |
-
-**Returns:** JSON object with `success`, `active_prefixes`, `retired_prefixes`, `total_count`, and `active_count`.
-
-**Error conditions:**
-- Returns defaults if no config file exists
-
-**Example:**
-
-```json
-// Call
-{"tool": "get_prefix_registry", "arguments": {}}
-// Response
-{"success": true, "active_prefixes": [{"prefix": "P", "name": "Plan"}], "retired_prefixes": [], "total_count": 1, "active_count": 1}
-```
-
----
-
-### add_prefix
-
-Add a new prefix to the Plan ID prefix registry.
-
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| prefix | string | yes | Single non-digit Unicode character |
-| name | string | yes | Human-readable name for the prefix |
-| description | string | no | Longer description of the prefix purpose |
-
-**Returns:** JSON object with `success`, `message`, and `prefix` details.
-
-**Error conditions:**
-- Invalid prefix format (must be single non-digit character)
-- Prefix already exists
-- Config save fails
-
-**Example:**
-
-```json
-// Call
-{"tool": "add_prefix", "arguments": {"prefix": "S", "name": "Sprint", "description": "Short-lived sprint plans"}}
-// Response
-{"success": true, "message": "Prefix added successfully", "prefix": {"prefix": "S", "name": "Sprint", "description": "Short-lived sprint plans", "retired": false}}
-```
-
----
-
-### retire_prefix
-
-Mark a prefix as retired. Retired prefixes cannot be used for new Plans but remain valid for existing Plans. At least one active prefix must remain.
-
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| prefix | string | yes | The prefix to retire |
-
-**Returns:** JSON object with `success`, `message`, and `prefix`.
-
-**Error conditions:**
-- Prefix not found
-- Cannot retire the last active prefix
-- Config load/save fails
-
-**Example:**
-
-```json
-// Call
-{"tool": "retire_prefix", "arguments": {"prefix": "S"}}
-// Response
-{"success": true, "message": "Prefix retired successfully", "prefix": "S"}
-```
-
----
-
-## 6. Document Records
+## 5. Document Records
 
 ### doc_record_submit
+
+> **MCP call:** `doc(action: "register", ...)`
 
 Register a document with the system, creating a document record in draft status. Computes the content hash and prepares the document for Layer 1-2 analysis. The document file must already exist at the specified path.
 
@@ -779,6 +620,8 @@ Register a document with the system, creating a document record in draft status.
 
 ### doc_record_approve
 
+> **MCP call:** `doc(action: "approve", id: "...")`
+
 Transition a document from draft to approved status. Approval triggers lifecycle transitions on the owning entity (e.g., approving a design doc can transition a feature from `proposed` to `designing`).
 
 | Parameter | Type | Required | Description |
@@ -805,6 +648,8 @@ Transition a document from draft to approved status. Approval triggers lifecycle
 ---
 
 ### doc_record_supersede
+
+> **MCP call:** `doc(action: "supersede", id: "...", superseded_by: "...")`
 
 Transition a document from approved to superseded status, linking to the newer replacement document. Supersession may trigger backward lifecycle transitions on the owning entity.
 
@@ -833,6 +678,8 @@ Transition a document from approved to superseded status, linking to the newer r
 
 ### doc_record_get
 
+> **MCP call:** `doc(action: "get", id: "...")`
+
 Get a document record by ID. Returns metadata including status, owner, content hash, and drift detection.
 
 | Parameter | Type | Required | Description |
@@ -858,6 +705,8 @@ Get a document record by ID. Returns metadata including status, owner, content h
 
 ### doc_record_get_content
 
+> **MCP call:** `doc(action: "content", id: "...")`
+
 Get the content of a document file. Includes drift detection warning if content has changed since the record was created.
 
 | Parameter | Type | Required | Description |
@@ -882,6 +731,8 @@ Get the content of a document file. Includes drift detection warning if content 
 ---
 
 ### doc_record_list
+
+> **MCP call:** `doc(action: "list", ...)`
 
 List all document records with optional filtering.
 
@@ -909,6 +760,8 @@ List all document records with optional filtering.
 
 ### doc_record_list_pending
 
+> **MCP call:** `doc(action: "list", pending: true)`
+
 List all documents in draft status that are awaiting approval or classification.
 
 | Parameter | Type | Required | Description |
@@ -932,6 +785,8 @@ List all documents in draft status that are awaiting approval or classification.
 ---
 
 ### doc_record_validate
+
+> **MCP call:** `doc(action: "validate", id: "...")`
 
 Validate a document record and check content integrity.
 
@@ -957,6 +812,8 @@ Validate a document record and check content integrity.
 
 ### doc_gaps
 
+> **MCP call:** `doc(action: "gaps", feature_id: "...")`
+
 Analyze what document types are missing for a feature. Checks whether design, specification, and dev-plan documents exist.
 
 | Parameter | Type | Required | Description |
@@ -980,6 +837,10 @@ Analyze what document types are missing for a feature. Checks whether design, sp
 ---
 
 ### doc_trace
+
+> **MCP call:** `doc_intel(action: "trace", entity_id: "...")`
+>
+> *Note: Despite being listed with document records, this action belongs to the `doc_intel` tool.*
 
 Trace an entity through the document refinement chain. Returns all document sections that reference the entity, ordered by document type (design → specification → dev-plan).
 
@@ -1005,6 +866,8 @@ Trace an entity through the document refinement chain. Returns all document sect
 
 ### doc_supersession_chain
 
+> **MCP call:** `doc(action: "chain", id: "...")`
+
 Follow supersedes/superseded_by links to build the full version chain for a document. Returns documents ordered from oldest to newest.
 
 | Parameter | Type | Required | Description |
@@ -1027,9 +890,11 @@ Follow supersedes/superseded_by links to build the full version chain for a docu
 
 ---
 
-## 7. Document Intelligence
+## 6. Document Intelligence
 
 ### doc_outline
+
+> **MCP call:** `doc_intel(action: "outline", id: "...")`
 
 Get the structural outline (Layer 1) of an indexed document. Returns the section tree with paths, titles, levels, word counts, and content hashes.
 
@@ -1054,6 +919,8 @@ Get the structural outline (Layer 1) of an indexed document. Returns the section
 ---
 
 ### doc_section
+
+> **MCP call:** `doc_intel(action: "section", id: "...", section_path: "...")`
 
 Get a specific section's metadata and raw content from an indexed document.
 
@@ -1080,6 +947,8 @@ Get a specific section's metadata and raw content from an indexed document.
 ---
 
 ### doc_classify
+
+> **MCP call:** `doc_intel(action: "classify", id: "...", ...)`
 
 Submit agent-provided classifications (Layer 3) for a previously indexed document. Classifications assign semantic roles to document sections.
 
@@ -1119,6 +988,8 @@ Each classification object in the JSON array should contain:
 
 ### doc_pending
 
+> **MCP call:** `doc_intel(action: "pending")`
+
 List document IDs that have been indexed (Layers 1-2) but not yet classified (Layer 3).
 
 | Parameter | Type | Required | Description |
@@ -1142,6 +1013,8 @@ List document IDs that have been indexed (Layers 1-2) but not yet classified (La
 ---
 
 ### doc_find_by_entity
+
+> **MCP call:** `doc_intel(action: "find", entity_id: "...")`
 
 Find all document sections across the corpus that reference a specific entity.
 
@@ -1167,6 +1040,8 @@ Find all document sections across the corpus that reference a specific entity.
 
 ### doc_find_by_concept
 
+> **MCP call:** `doc_intel(action: "find", concept: "...")`
+
 Find all document sections that introduce or use a specific concept. Concepts are identified during Layer 3 classification.
 
 | Parameter | Type | Required | Description |
@@ -1190,6 +1065,8 @@ Find all document sections that introduce or use a specific concept. Concepts ar
 ---
 
 ### doc_find_by_role
+
+> **MCP call:** `doc_intel(action: "find", role: "...")`
 
 Find all document fragments with a given semantic role across the corpus.
 
@@ -1216,6 +1093,8 @@ Find all document fragments with a given semantic role across the corpus.
 
 ### doc_impact
 
+> **MCP call:** `doc_intel(action: "impact", section_id: "...")`
+
 Find what references or depends on a given section. Returns all graph edges where the target matches the section ID.
 
 | Parameter | Type | Required | Description |
@@ -1240,6 +1119,8 @@ Find what references or depends on a given section. Returns all graph edges wher
 
 ### doc_extraction_guide
 
+> **MCP call:** `doc_intel(action: "guide", id: "...")`
+
 Return an extraction guide for a document: structural outline with section roles, entity references already found, and classification hints. Use this before extracting entities or decisions from a document.
 
 | Parameter | Type | Required | Description |
@@ -1262,9 +1143,11 @@ Return an extraction guide for a document: structural outline with section roles
 
 ---
 
-## 8. Knowledge Management
+## 7. Knowledge Management
 
 ### knowledge_contribute
+
+> **MCP call:** `knowledge(action: "contribute", ...)`
 
 Contribute a new knowledge entry to the shared knowledge base. Topics are normalised (lowercased, hyphenated). Duplicate detection rejects entries with an identical topic or similar content (Jaccard > 0.65) in the same scope.
 
@@ -1297,6 +1180,8 @@ Contribute a new knowledge entry to the shared knowledge base. Topics are normal
 
 ### knowledge_get
 
+> **MCP call:** `knowledge(action: "get", id: "...")`
+
 Get a knowledge entry by ID. Includes staleness information for entries with git_anchors.
 
 | Parameter | Type | Required | Description |
@@ -1320,6 +1205,8 @@ Get a knowledge entry by ID. Includes staleness information for entries with git
 ---
 
 ### knowledge_list
+
+> **MCP call:** `knowledge(action: "list", ...)`
 
 List knowledge entries with optional filters. Retired entries are excluded by default.
 
@@ -1351,6 +1238,8 @@ List knowledge entries with optional filters. Retired entries are excluded by de
 
 ### knowledge_update
 
+> **MCP call:** `knowledge(action: "update", id: "...", content: "...")`
+
 Update the content of a knowledge entry. Resets `use_count`, `miss_count`, and `confidence` to defaults.
 
 | Parameter | Type | Required | Description |
@@ -1377,6 +1266,8 @@ Update the content of a knowledge entry. Resets `use_count`, `miss_count`, and `
 
 ### knowledge_confirm
 
+> **MCP call:** `knowledge(action: "confirm", id: "...")`
+
 Manually confirm a knowledge entry, transitioning it from `contributed` or `disputed` to `confirmed` status.
 
 | Parameter | Type | Required | Description |
@@ -1401,6 +1292,8 @@ Manually confirm a knowledge entry, transitioning it from `contributed` or `disp
 ---
 
 ### knowledge_flag
+
+> **MCP call:** `knowledge(action: "flag", id: "...", reason: "...")`
 
 Flag a knowledge entry as incorrect or disputed. Increments `miss_count` and recomputes confidence. Auto-retires if `miss_count` reaches 2.
 
@@ -1428,6 +1321,8 @@ Flag a knowledge entry as incorrect or disputed. Increments `miss_count` and rec
 
 ### knowledge_retire
 
+> **MCP call:** `knowledge(action: "retire", id: "...", reason: "...")`
+
 Manually retire a knowledge entry, marking it as no longer valid. Retired entries are excluded from listing by default.
 
 | Parameter | Type | Required | Description |
@@ -1454,6 +1349,8 @@ Manually retire a knowledge entry, marking it as no longer valid. Retired entrie
 
 ### knowledge_promote
 
+> **MCP call:** `knowledge(action: "promote", id: "...")`
+
 Promote a tier-3 knowledge entry to tier 2 in place, extending its TTL from 30 to 90 days.
 
 | Parameter | Type | Required | Description |
@@ -1478,6 +1375,8 @@ Promote a tier-3 knowledge entry to tier 2 in place, extending its TTL from 30 t
 ---
 
 ### knowledge_check_staleness
+
+> **MCP call:** `knowledge(action: "staleness", ...)`
 
 Check staleness of knowledge entries that have `git_anchors`. An entry is stale if any anchored file was modified after the entry was last confirmed.
 
@@ -1505,6 +1404,8 @@ Check staleness of knowledge entries that have `git_anchors`. An entry is stale 
 
 ### knowledge_prune
 
+> **MCP call:** `knowledge(action: "prune", ...)`
+
 Prune expired knowledge entries based on TTL rules. Tier-3 entries expire after 30 days without use; tier-2 after 90 days.
 
 | Parameter | Type | Required | Description |
@@ -1529,6 +1430,8 @@ Prune expired knowledge entries based on TTL rules. Tier-3 entries expire after 
 ---
 
 ### knowledge_compact
+
+> **MCP call:** `knowledge(action: "compact", ...)`
 
 Compact knowledge entries by merging duplicates and near-duplicates, and flagging contradictions. Tier-3 entries are auto-merged; tier-2 entries are flagged for review.
 
@@ -1555,6 +1458,8 @@ Compact knowledge entries by merging duplicates and near-duplicates, and flaggin
 
 ### knowledge_resolve_conflict
 
+> **MCP call:** `knowledge(action: "resolve", keep: "...", retire_id: "...")`
+
 Resolve a conflict between two knowledge entries by keeping one and retiring the other. Optionally merge content from the retired entry into the kept entry.
 
 | Parameter | Type | Required | Description |
@@ -1579,66 +1484,9 @@ Resolve a conflict between two knowledge entries by keeping one and retiring the
 
 ---
 
-### context_report
-
-Report knowledge entry usage from a completed task. For each used entry: increments `use_count` and updates `last_used`; auto-confirms if `use_count` >= 3 and `miss_count` == 0. For each flagged entry: increments `miss_count`; auto-retires if `miss_count` >= 2.
-
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| task_id | string | yes | ID of the task that consumed the entries |
-| used | array | yes | List of knowledge entry IDs that were used and found helpful |
-| flagged | string | no | JSON array of flagged entries: `[{"entry_id": "KE-...", "reason": "..."}]` |
-
-**Returns:** JSON object with `success`, `task_id`, `used_count`, `flagged_count`, and `message`.
-
-**Error conditions:**
-- Missing task_id or used list
-- Invalid JSON in flagged parameter
-
-**Example:**
-
-```json
-// Call
-{"tool": "context_report", "arguments": {"task_id": "T-01JX...", "used": ["KE-01JXaaa...", "KE-01JXbbb..."], "flagged": "[{\"entry_id\": \"KE-01JXccc...\", \"reason\": \"outdated advice\"}]"}}
-// Response
-{"success": true, "task_id": "T-01JX...", "used_count": 2, "flagged_count": 1, "message": "Context report processed successfully"}
-```
-
----
-
-## 9. Context and Profiles
-
-### context_assemble
-
-Assemble a context packet for an agent role. Returns the role profile, relevant knowledge entries (Tier 2 and Tier 3 scoped to the role or project), design context from document intelligence (if `task_id` provided), and task instructions — all within the byte budget.
-
-Profile and task instructions are never trimmed. When over budget, lowest-confidence Tier 3 is trimmed first, then Tier 2, then design context.
-
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| role | string | yes | Profile ID for the agent role (e.g., `backend`, `frontend`) |
-| task_id | string | no | Task entity ID to include task instructions and design context |
-| max_bytes | number | no | Maximum byte budget (default: 30720) |
-| orchestration_context | string | no | Handoff note from orchestrating agent. Injected as ephemeral Tier 3 entry; not persisted |
-
-**Returns:** JSON object with `success`, `role`, `byte_count`, `trimmed` (list of dropped items), and `items` array. Each item has `source`, `entry_id` (optional), `priority`, `confidence`, `content`, and optional `staleness`.
-
-**Error conditions:**
-- Profile not found
-- Task not found (when task_id provided)
-
-**Example:**
-
-```json
-// Call
-{"tool": "context_assemble", "arguments": {"role": "backend", "task_id": "T-01JX...", "orchestration_context": "Focus on error handling patterns"}}
-// Response
-{"success": true, "role": "backend", "task_id": "T-01JX...", "byte_count": 12480, "trimmed": [], "items": [{"source": "profile", "priority": "required", "content": "..."}, {"source": "knowledge", "entry_id": "KE-01JX...", "priority": "high", "confidence": 0.9, "content": "..."}]}
-```
-
----
-
 ### profile_get
+
+> **MCP call:** `profile(action: "get", id: "...")`
 
 Get a context profile by ID. By default returns the fully resolved profile with inheritance applied.
 
@@ -1665,6 +1513,8 @@ Get a context profile by ID. By default returns the fully resolved profile with 
 
 ### profile_list
 
+> **MCP call:** `profile(action: "list")`
+
 List all context profiles with their ID, parent (inherits), and description.
 
 | Parameter | Type | Required | Description |
@@ -1687,9 +1537,11 @@ List all context profiles with their ID, parent (inherits), and description.
 
 ---
 
-## 10. Work Queue and Dispatch
+## 8. Work Queue and Dispatch
 
 ### work_queue
+
+> **MCP call:** `next()` (no `id` parameter — queue inspection mode)
 
 Return the current ready task queue, promoting eligible queued tasks first. This is a write-through query: it promotes queued tasks whose dependencies are all in terminal states (`done`, `not-planned`, or `duplicate`) to `ready` status as a side effect.
 
@@ -1718,6 +1570,8 @@ Returns all ready tasks sorted by estimate (ascending, null last), then age (des
 
 ### dependency_status
 
+> **MCP call:** `status(id: "task-id")` — dependency info is included in the status dashboard
+
 Show the dependency picture for a given task: each dependency, its current status, and whether it is blocking or resolved.
 
 | Parameter | Type | Required | Description |
@@ -1742,6 +1596,8 @@ Show the dependency picture for a given task: each dependency, its current statu
 
 ### dispatch_task
 
+> **MCP call:** `next(id: "task-id")` (claim mode)
+
 Atomically claim a ready task and return its context packet. Transitions the task from `ready` to `active`, records dispatch metadata, and assembles the context packet for the executing agent.
 
 | Parameter | Type | Required | Description |
@@ -1758,7 +1614,7 @@ Atomically claim a ready task and return its context packet. Transitions the tas
 - Task not found
 - Task not in `ready` status
 - Profile not found for the specified role
-- If context assembly fails after claiming, error includes recovery hint to use `context_assemble` manually
+- If context assembly fails after claiming, error includes recovery hint to use `handoff` manually
 
 **Example:**
 
@@ -1773,6 +1629,8 @@ Atomically claim a ready task and return its context packet. Transitions the tas
 
 ### complete_task
 
+> **MCP call:** `finish(task_id: "...", summary: "...", ...)`
+
 Close the dispatch loop for a completed task. Transitions the task to `done` (or `needs-review`), records completion metadata, and contributes knowledge entries to the knowledge base.
 
 | Parameter | Type | Required | Description |
@@ -1781,9 +1639,10 @@ Close the dispatch loop for a completed task. Transitions the task to `done` (or
 | summary | string | yes | Brief description of what was accomplished |
 | to_status | string | no | Target status: `done` (default) or `needs-review` |
 | files_modified | array | no | Files created or modified (string array) |
-| verification_performed | string | no | Testing or verification carried out |
-| blockers_encountered | string | no | Obstacles noted for future work |
-| knowledge_entries | array | no | Knowledge entries to contribute. Each object: `{topic, content, scope, tier, tags}` |
+| verification | string | no | Testing or verification carried out |
+| knowledge | array | no | Knowledge entries to contribute. Each object: `{topic, content, scope, tier, tags}` |
+| retrospective | array | no | Retrospective signals to record. Each object: `{category, observation, severity}` with optional `{suggestion, related_decision}` |
+| tasks | array | no | Batch mode: array of task completion objects (each with `task_id`, `summary`, and optional fields) |
 
 **Returns:** JSON object with `task` (updated state), `knowledge_contributions` (with `accepted` and `rejected` arrays, `total_attempted`, `total_accepted`), and `unblocked_tasks` array of tasks that were promoted because this task completed.
 
@@ -1796,16 +1655,18 @@ Close the dispatch loop for a completed task. Transitions the task to `done` (or
 
 ```json
 // Call
-{"tool": "complete_task", "arguments": {"task_id": "T-01JX...", "summary": "Implemented email validation with RFC 5322 regex", "files_modified": ["internal/auth/validate.go", "internal/auth/validate_test.go"], "verification_performed": "Unit tests pass, covers empty, valid, and malformed inputs", "knowledge_entries": [{"topic": "email-validation-regex", "content": "Use RFC 5322 regex for email validation", "scope": "backend"}]}}
+{"tool": "complete_task", "arguments": {"task_id": "T-01JX...", "summary": "Implemented email validation with RFC 5322 regex", "files_modified": ["internal/auth/validate.go", "internal/auth/validate_test.go"], "verification": "Unit tests pass, covers empty, valid, and malformed inputs", "knowledge": [{"topic": "email-validation-regex", "content": "Use RFC 5322 regex for email validation", "scope": "backend"}]}}
 // Response
 {"task": {"id": "T-01JX...", "status": "done"}, "knowledge_contributions": {"accepted": [{"entry_id": "KE-01JX...", "topic": "email-validation-regex"}], "rejected": [], "total_attempted": 1, "total_accepted": 1}, "unblocked_tasks": [{"task_id": "T-01JXnext...", "slug": "password-validation", "status": "ready"}]}
 ```
 
 ---
 
-## 11. Human Checkpoints
+## 9. Human Checkpoints
 
 ### human_checkpoint
+
+> **MCP call:** `checkpoint(action: "create", ...)`
 
 Record a structured decision point requiring human input. After calling this, stop dispatching new tasks until you poll `human_checkpoint_get` and receive `status: responded`.
 
@@ -1834,6 +1695,8 @@ Record a structured decision point requiring human input. After calling this, st
 
 ### human_checkpoint_respond
 
+> **MCP call:** `checkpoint(action: "respond", checkpoint_id: "...", response: "...")`
+
 Record a human response to a pending checkpoint.
 
 | Parameter | Type | Required | Description |
@@ -1860,6 +1723,8 @@ Record a human response to a pending checkpoint.
 
 ### human_checkpoint_get
 
+> **MCP call:** `checkpoint(action: "get", checkpoint_id: "...")`
+
 Get the current state of a checkpoint. Poll this after calling `human_checkpoint` until status is `responded`.
 
 | Parameter | Type | Required | Description |
@@ -1884,6 +1749,8 @@ Get the current state of a checkpoint. Poll this after calling `human_checkpoint
 
 ### human_checkpoint_list
 
+> **MCP call:** `checkpoint(action: "list", ...)`
+
 List checkpoint records. Optionally filter by status. Returns total count and pending count.
 
 | Parameter | Type | Required | Description |
@@ -1906,18 +1773,21 @@ List checkpoint records. Optionally filter by status. Returns total count and pe
 
 ---
 
-## 12. Estimation
+## 10. Estimation
 
 ### estimate_set
 
-Set a story point estimate on a task, feature, epic, bug, or plan. Entity type is auto-detected from the ID.
+> **MCP call:** `estimate(action: "set", entity_id: "...", points: N)`
+
+Set a story point estimate on a task, feature, bug, or plan. Entity type is auto-detected from the ID.
 
 Uses the Modified Fibonacci scale: `0`, `0.5`, `1`, `2`, `3`, `5`, `8`, `13`, `20`, `40`, `100`.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | entity_id | string | yes | Entity ID (e.g., `T-01ABC...`, `FEAT-01ABC...`, `BUG-01ABC...`) |
-| estimate | number | yes | Story point estimate from the Modified Fibonacci scale |
+| points | number | yes | Story point estimate from the Modified Fibonacci scale |
+| entities | array | no | Batch mode: array of `{entity_id, points}` objects (use instead of single `entity_id`/`points`) |
 
 **Returns:** JSON object with `entity_id`, `entity_type`, `estimate`, `soft_limit_warning` (null or warning string), `references` (calibration examples), and `scale` (reference table).
 
@@ -1929,7 +1799,7 @@ Uses the Modified Fibonacci scale: `0`, `0.5`, `1`, `2`, `3`, `5`, `8`, `13`, `2
 
 ```json
 // Call
-{"tool": "estimate_set", "arguments": {"entity_id": "T-01JX...", "estimate": 3}}
+{"tool": "estimate_set", "arguments": {"entity_id": "T-01JX...", "points": 3}}
 // Response
 {"entity_id": "T-01JX...", "entity_type": "task", "estimate": 3, "soft_limit_warning": null, "references": [], "scale": [{"points": 0, "meaning": "No effort"}, {"points": 0.5, "meaning": "Trivial"}, ...]}
 ```
@@ -1938,7 +1808,9 @@ Uses the Modified Fibonacci scale: `0`, `0.5`, `1`, `2`, `3`, `5`, `8`, `13`, `2
 
 ### estimate_query
 
-Query the current estimate and rollup statistics for an entity. For features, includes a task-level rollup. For epics/plans, includes a feature-level rollup.
+> **MCP call:** `estimate(action: "query", entity_id: "...")`
+
+Query the current estimate and rollup statistics for an entity. For features, includes a task-level rollup. For plans, includes a feature-level rollup.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -1964,6 +1836,8 @@ Query the current estimate and rollup statistics for an entity. For features, in
 ---
 
 ### estimate_reference_add
+
+> **MCP call:** `estimate(action: "add_reference", entity_id: "...", content: "...")`
 
 Add a calibration reference example for an entity to help with future estimation. References are stored as project-scoped knowledge entries tagged `estimation-reference` with TTL exempt (`ttl_days=0`).
 
@@ -1991,6 +1865,8 @@ Add a calibration reference example for an entity to help with future estimation
 
 ### estimate_reference_remove
 
+> **MCP call:** `estimate(action: "remove_reference", entity_id: "...")`
+
 Remove (retire) the estimation calibration reference for an entity.
 
 | Parameter | Type | Required | Description |
@@ -2013,9 +1889,11 @@ Remove (retire) the estimation calibration reference for an entity.
 
 ---
 
-## 13. Feature Decomposition and Review
+## 11. Feature Decomposition and Review
 
 ### decompose_feature
+
+> **MCP call:** `decompose(action: "propose", feature_id: "...")`
 
 Propose a task decomposition for a feature based on its linked specification document. Applies embedded decomposition guidance (vertical slices, size limits, explicit dependencies). Returns a proposal preview — does NOT write any tasks.
 
@@ -2044,6 +1922,8 @@ Propose a task decomposition for a feature based on its linked specification doc
 
 ### decompose_review
 
+> **MCP call:** `decompose(action: "review", feature_id: "...", proposal: {...})`
+
 Review a decomposition proposal against a feature's specification. Checks for uncovered acceptance criteria, oversized tasks, dependency cycles, and ambiguous summaries. Returns structured findings with pass/fail/warn status.
 
 | Parameter | Type | Required | Description |
@@ -2070,6 +1950,8 @@ Review a decomposition proposal against a feature's specification. Checks for un
 
 ### slice_analysis
 
+> **MCP call:** `decompose(action: "slice", feature_id: "...")`
+
 Analyse a feature's vertical slice structure without committing to a decomposition. Identifies candidate end-to-end slices from the feature's linked spec document, mapping each to stack layers, acceptance criteria outcomes, and size estimates. Identifies inter-slice dependencies.
 
 Use for planning conversations before `decompose_feature`. Tip: when creating tasks from slices, tag them with `slice:<name>` for traceability.
@@ -2095,36 +1977,11 @@ Use for planning conversations before `decompose_feature`. Tip: when creating ta
 
 ---
 
-### review_task_output
-
-Run a first-pass review of a completed task's output against its verification criteria and parent feature spec. Returns findings with severity (error/warning) and triggers state transitions: fail → `needs-rework`, pass → `needs-review`. Tasks already in `needs-review` or `done` are reviewed without state changes.
-
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| task_id | string | yes | TASK ID of the completed or active task |
-| output_files | array | no | Paths of files produced or modified (string array) |
-| output_summary | string | no | Agent's description of what was done |
-
-**Returns:** JSON review result with `status` (`pass` or `fail`), `findings` array, and `state_transition` information.
-
-**Error conditions:**
-- Task not found
-- Task not in a reviewable status
-
-**Example:**
-
-```json
-// Call
-{"tool": "review_task_output", "arguments": {"task_id": "T-01JX...", "output_files": ["internal/auth/validate.go"], "output_summary": "Implemented email validation"}}
-// Response
-{"status": "pass", "findings": [], "state_transition": {"from": "active", "to": "needs-review"}}
-```
-
----
-
-## 14. Conflict Analysis
+## 12. Conflict Analysis
 
 ### conflict_domain_check
+
+> **MCP call:** `conflict(action: "check", task_ids: [...])`
 
 Analyse conflict risk between two or more tasks that might run in parallel. Checks file overlap (planned and git-history), dependency ordering, and architectural boundary crossing. Returns per-pair risk assessment and recommendation.
 
@@ -2149,16 +2006,18 @@ Analyse conflict risk between two or more tasks that might run in parallel. Chec
 
 ---
 
-## 15. Incident Management
+## 13. Incident Management
 
 ### incident_create
+
+> **MCP call:** `incident(action: "create", ...)`
 
 Create a new incident entity in `reported` status.
 
 | Parameter | Type | Required | Description | Valid values |
 |---|---|---|---|---|
 | slug | string | yes | URL-friendly identifier | |
-| title | string | yes | Title of the incident | |
+| name | string | yes | Name of the incident | |
 | severity | string | yes | Incident severity | `critical`, `high`, `medium`, `low` |
 | summary | string | yes | Brief summary of the incident | |
 | reported_by | string | yes | Who reported. Auto-resolved from config | |
@@ -2174,7 +2033,7 @@ Create a new incident entity in `reported` status.
 
 ```json
 // Call
-{"tool": "incident_create", "arguments": {"slug": "auth-outage", "title": "Authentication service outage", "severity": "critical", "summary": "Users unable to log in since 14:00 UTC", "reported_by": "sam"}}
+{"tool": "incident_create", "arguments": {"slug": "auth-outage", "name": "Authentication service outage", "severity": "critical", "summary": "Users unable to log in since 14:00 UTC", "reported_by": "sam"}}
 // Response
 {"Type": "incident", "ID": "INC-01JX...", "Slug": "auth-outage", "State": {"status": "reported", "severity": "critical", "title": "Authentication service outage"}}
 ```
@@ -2182,6 +2041,8 @@ Create a new incident entity in `reported` status.
 ---
 
 ### incident_update
+
+> **MCP call:** `incident(action: "update", incident_id: "...")`
 
 Update an existing incident. Can change status (with lifecycle validation), severity, summary, timestamps, and affected features.
 
@@ -2216,6 +2077,8 @@ Update an existing incident. Can change status (with lifecycle validation), seve
 
 ### incident_list
 
+> **MCP call:** `incident(action: "list", ...)`
+
 List incidents with optional status and severity filters.
 
 | Parameter | Type | Required | Description | Valid values |
@@ -2241,6 +2104,8 @@ List incidents with optional status and severity filters.
 
 ### incident_link_bug
 
+> **MCP call:** `incident(action: "link_bug", incident_id: "...", bug_id: "...")`
+
 Link a bug to an incident. Adds the bug to the incident's `linked_bugs` list. Idempotent — linking the same bug twice has no effect.
 
 | Parameter | Type | Required | Description |
@@ -2265,9 +2130,11 @@ Link a bug to an incident. Adds the bug to the incident's `linked_bugs` list. Id
 
 ---
 
-## 16. Git Integration — Worktrees
+## 14. Git Integration — Worktrees
 
 ### worktree_create
+
+> **MCP call:** `worktree(action: "create", entity_id: "...")`
 
 Create a new Git worktree for a feature or bug entity. The worktree provides an isolated workspace for development.
 
@@ -2299,6 +2166,8 @@ Create a new Git worktree for a feature or bug entity. The worktree provides an 
 
 ### worktree_get
 
+> **MCP call:** `worktree(action: "get", entity_id: "...")`
+
 Get the worktree record for a specific entity.
 
 | Parameter | Type | Required | Description |
@@ -2322,6 +2191,8 @@ Get the worktree record for a specific entity.
 ---
 
 ### worktree_list
+
+> **MCP call:** `worktree(action: "list", ...)`
 
 List all worktrees with optional filtering by status or entity.
 
@@ -2348,6 +2219,8 @@ List all worktrees with optional filtering by status or entity.
 
 ### worktree_remove
 
+> **MCP call:** `worktree(action: "remove", entity_id: "...")`
+
 Remove a worktree for an entity. By default, fails if there are uncommitted changes.
 
 | Parameter | Type | Required | Description |
@@ -2373,9 +2246,11 @@ Remove a worktree for an entity. By default, fails if there are uncommitted chan
 
 ---
 
-## 17. Git Integration — Branches and Cleanup
+## 15. Git Integration — Branches and Cleanup
 
 ### branch_status
+
+> **MCP call:** `branch(action: "status", entity_id: "...")`
 
 Get branch health metrics for an entity's worktree branch. Reports staleness, drift from main, and merge conflicts.
 
@@ -2402,6 +2277,8 @@ Get branch health metrics for an entity's worktree branch. Reports staleness, dr
 
 ### cleanup_list
 
+> **MCP call:** `cleanup(action: "list", ...)`
+
 List worktrees pending cleanup. Shows merged and abandoned worktrees that are either ready for cleanup (past grace period) or scheduled (within grace period).
 
 | Parameter | Type | Required | Description |
@@ -2427,6 +2304,8 @@ List worktrees pending cleanup. Shows merged and abandoned worktrees that are ei
 
 ### cleanup_execute
 
+> **MCP call:** `cleanup(action: "execute", ...)`
+
 Execute cleanup on worktrees. Removes worktree directories, deletes local branches, optionally deletes remote branches, and removes tracking records.
 
 | Parameter | Type | Required | Description |
@@ -2451,9 +2330,11 @@ Execute cleanup on worktrees. Removes worktree directories, deletes local branch
 
 ---
 
-## 18. Git Integration — Merge
+## 16. Git Integration — Merge
 
 ### merge_readiness_check
+
+> **MCP call:** `merge(action: "check", entity_id: "...")`
 
 Check if an entity (feature or bug) is ready to merge. Evaluates all merge gates and optionally checks PR status if GitHub is configured.
 
@@ -2479,6 +2360,8 @@ Check if an entity (feature or bug) is ready to merge. Evaluates all merge gates
 ---
 
 ### merge_execute
+
+> **MCP call:** `merge(action: "execute", entity_id: "...")`
 
 Execute a merge for an entity after verifying all gates pass. Use override with reason to bypass blocking gates.
 
@@ -2510,9 +2393,11 @@ Execute a merge for an entity after verifying all gates pass. Use override with 
 
 ---
 
-## 19. Git Integration — Pull Requests
+## 17. Git Integration — Pull Requests
 
 ### pr_create
+
+> **MCP call:** `pr(action: "create", entity_id: "...")`
 
 Create a new pull request for an entity's branch on GitHub.
 
@@ -2542,6 +2427,8 @@ Create a new pull request for an entity's branch on GitHub.
 
 ### pr_update
 
+> **MCP call:** `pr(action: "update", entity_id: "...")`
+
 Update an existing pull request's description and labels based on current entity state.
 
 | Parameter | Type | Required | Description |
@@ -2568,6 +2455,8 @@ Update an existing pull request's description and labels based on current entity
 
 ### pr_status
 
+> **MCP call:** `pr(action: "status", entity_id: "...")`
+
 Get the status of a pull request for an entity, including CI status, reviews, and merge conflicts.
 
 | Parameter | Type | Required | Description |
@@ -2592,154 +2481,94 @@ Get the status of a pull request for an entity, including CI status, reviews, an
 
 ---
 
-## 20. Agent Capabilities
+## 18. Dashboard, Handoff, and Server Info
 
-### suggest_links
+### status
 
-Scan free text for entity ID patterns (`FEAT-`, `TASK-`, `BUG-`, `DEC-`, `KE-`, Plan IDs) and look up each found ID in the entity and knowledge stores. Returns a list of confirmed references with their entity type and title.
+> **MCP call:** `status(id: "...")`
+
+Dashboard and synthesis tool. Returns lifecycle status, progress metrics, attention items, and derived state. Call with no `id` for project overview, plan ID for plan dashboard, `FEAT-...` for feature detail, `TASK-...` or `BUG-...` for task/bug detail.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| text | string | yes | Free text to scan for entity references |
-| scope | string | no | Entity type filter (e.g., `feature`, `task`, `bug`, `decision`, `plan`, `knowledge_entry`) |
+| id | string | no | Entity ID to scope the dashboard. Omit for project overview |
 
-**Returns:** JSON object with `success`, `count`, and `links` array. Each link has `text_span`, `entity_id`, `entity_type`, `entity_title`, and `match_quality`.
+**Returns:** Synthesised dashboard with lifecycle status, attention items, progress metrics, and derived state that raw YAML files do not contain.
 
 **Error conditions:**
-- Missing text parameter
+- Entity not found (when id provided)
 
 **Example:**
 
 ```json
 // Call
-{"tool": "suggest_links", "arguments": {"text": "This relates to FEAT-01JX... and depends on the decision in DEC-01JX..."}}
+{"tool": "status", "arguments": {}}
 // Response
-{"success": true, "count": 2, "links": [{"text_span": "FEAT-01JX...", "entity_id": "FEAT-01JX...", "entity_type": "feature", "entity_title": "Login form", "match_quality": "exact"}, {"text_span": "DEC-01JX...", "entity_id": "DEC-01JX...", "entity_type": "decision", "entity_title": "Use JWT for API authentication", "match_quality": "exact"}]}
+{"project": {"features": {"total": 12, "by_status": {"proposed": 2, "developing": 3, "done": 7}}, "tasks": {"total": 34, "by_status": {"ready": 5, "active": 3, "done": 26}}, "attention_items": [...]}}
 ```
 
 ---
 
-### check_duplicates
+### handoff
 
-Check whether an entity being created would duplicate an existing one. Computes Jaccard similarity between the candidate's title+summary and existing entities. Returns advisory candidates with similarity >= 0.5. Does NOT block creation.
+> **MCP call:** `handoff(task_id: "...", ...)`
+
+Generate a complete, ready-to-use sub-agent prompt from task context. Assembles spec sections, knowledge constraints, file paths, and role conventions. The output goes directly into a sub-agent's message parameter.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| entity_type | string | yes | Entity type: `feature`, `task`, `bug`, `decision`, `plan`, `knowledge_entry` |
-| title | string | yes | Title or topic of the candidate entity |
-| summary | string | no | Optional summary of the candidate entity |
+| task_id | string | yes | Task ID (should be in `active` status; also accepts `ready` or `needs-rework`) |
+| role | string | no | Role profile ID for context shaping (e.g., `backend`, `frontend`) |
+| instructions | string | no | Additional orchestrator instructions to include in the prompt |
 
-**Returns:** JSON object with `success`, `advisory` (always true), `entity_type`, `count`, `candidates` array (each with `entity_id`, `entity_type`, `title`, `similarity`), and `message`.
+**Returns:** Rendered Markdown prompt ready for sub-agent dispatch.
 
 **Error conditions:**
-- Missing required parameters
+- Task not found
+- Task not in active, ready, or needs-rework status
 
 **Example:**
 
 ```json
 // Call
-{"tool": "check_duplicates", "arguments": {"entity_type": "feature", "title": "Login form", "summary": "Email and password login"}}
+{"tool": "handoff", "arguments": {"task_id": "T-01JX...", "role": "backend", "instructions": "Focus on error handling"}}
 // Response
-{"success": true, "advisory": true, "entity_type": "feature", "count": 1, "candidates": [{"entity_id": "FEAT-01JX...", "entity_type": "feature", "title": "Login form with email/password", "similarity": 0.72}], "message": "Found 1 candidate duplicate(s). This check is advisory — creation is not blocked."}
+"## Task: T-01JX... — Email Validation\n\n### Role: backend\n\n### Spec Context\n..."
 ```
 
 ---
 
-### doc_extraction_guide
+### server_info
 
-*(Also listed under Document Intelligence — included here as it is registered in the Agent Capabilities tool group.)*
+> **MCP call:** `server_info()`
 
-See [doc_extraction_guide](#doc_extraction_guide) in Section 7 for full details.
-
----
-
-## 21. Batch Operations
-
-### batch_import_documents
-
-Batch import document records from a directory. Scans for matching Markdown files and creates document records idempotently. Already-imported files are skipped.
-
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| path | string | yes | Directory path to scan for documents |
-| default_type | string | no | Fallback document type when no path pattern matches (`design`, `specification`, `dev-plan`, `research`, `report`, `policy`) |
-| owner | string | no | Parent Plan or Feature ID to assign as owner of imported documents |
-| created_by | string | no | Who is importing. Auto-resolved |
-| glob | string | no | Glob pattern to filter files. Path separator in pattern matches relative paths; no separator matches filenames only. `**` recursive matching is not supported. If empty, all `.md` files are imported |
-
-**Returns:** JSON object with `success`, `imported` (count or array of imported records), `skipped` (array of `{path, reason}`), and `errors` (array of `{path, error}`).
-
-**Error conditions:**
-- Directory not found
-- No `.md` files match
-
-**Example:**
-
-```json
-// Call
-{"tool": "batch_import_documents", "arguments": {"path": "docs/", "default_type": "design", "owner": "P1-user-auth"}}
-// Response
-{"success": true, "imported": 5, "skipped": [{"path": "docs/README.md", "reason": "already imported"}], "errors": []}
-```
-
----
-
-## 22. Migration
-
-### migrate_phase2
-
-Migrate Phase 1 epic entities to Phase 2 plan entities. Converts epics to plans, updates feature references, and creates required directories. The migration is idempotent: re-running it skips already-migrated entities. Requires a configured prefix registry in `.kbz/config.yaml`.
+Diagnose stale-binary and version-mismatch issues. Returns build metadata including version, git SHA, build time, Go version, and binary path.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | *(none)* | | | |
 
-**Returns:** JSON object with `success`, `plans_created`, `features_updated`, `files_moved`, `dirs_created`, optional `errors` array, and `message`.
+**Returns:** JSON object with `version`, `git_sha`, `build_time`, `go_version`, `binary_path`, and `in_sync` (whether the running binary matches the install record).
 
 **Error conditions:**
-- Prefix registry not configured
-- Filesystem errors during migration
+- None
 
 **Example:**
 
 ```json
 // Call
-{"tool": "migrate_phase2", "arguments": {}}
+{"tool": "server_info", "arguments": {}}
 // Response
-{"success": true, "plans_created": 3, "features_updated": 12, "files_moved": 6, "dirs_created": 3, "message": "migration completed successfully"}
+{"version": "0.12.0", "git_sha": "abc123d", "build_time": "2024-01-15T10:00:00Z", "go_version": "go1.23.0", "binary_path": "/usr/local/bin/kanbanzai", "in_sync": true}
 ```
 
 ---
 
-## 23. Rich Queries
-
-### query_plan_tasks
-
-Find all tasks belonging to features under a given Plan. Useful for getting a complete task breakdown for a Plan.
-
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| plan_id | string | yes | Plan ID (e.g., `P1-basic-ui`) |
-
-**Returns:** JSON object with `success`, `plan_id`, `count`, and `tasks` array.
-
-**Error conditions:**
-- Plan not found
-
-**Example:**
-
-```json
-// Call
-{"tool": "query_plan_tasks", "arguments": {"plan_id": "P1-user-auth"}}
-// Response
-{"success": true, "plan_id": "P1-user-auth", "count": 15, "tasks": [{"Type": "task", "ID": "T-01JX...", "Slug": "email-validation", "State": "ready"}, ...]}
-```
-
----
-
-## 24. Retrospective Synthesis
+## 19. Retrospective Synthesis
 
 ### retro
+
+> **MCP call:** `retro(action: "synthesise")` and `retro(action: "report", output_path: "...")`
 
 Synthesise accumulated retrospective signals from the knowledge base. Reads signal entries tagged `retrospective`, clusters them into themes by category and Jaccard similarity, and returns a ranked synthesis. Optionally generates and registers a markdown report document.
 
@@ -2798,45 +2627,39 @@ All synthesise parameters plus:
 
 ---
 
-## 25. Lifecycle Operation Constraints
+## 20. Lifecycle Operation Constraints
 
 Several tools enforce lifecycle state machine rules. Understanding these constraints is essential for correct orchestration.
 
 ### Status transition enforcement
 
-`update_status` enforces the lifecycle state machine for each entity type. Attempting an invalid transition (e.g., moving a task from `queued` directly to `done`) returns an error. See the Schema Reference for the complete set of valid transitions per entity type.
+`entity(action: "transition")` enforces the lifecycle state machine for each entity type. Attempting an invalid transition (e.g., moving a task from `queued` directly to `done`) returns an error. See the Schema Reference for the complete set of valid transitions per entity type.
 
 ### Document-driven lifecycle advancement
 
-`doc_record_approve` triggers feature lifecycle advancement. For example:
+`doc(action: "approve")` triggers feature lifecycle advancement. For example:
 - Approving a **design** document transitions the owning feature from `proposed` → `designing`
 - Approving a **specification** document transitions the owning feature from `designing` → `specifying`
 
-`doc_record_supersede` can trigger **backward** lifecycle transitions on the owning entity when the current approved document is superseded without an immediate replacement in the same type.
+`doc(action: "supersede")` can trigger **backward** lifecycle transitions on the owning entity when the current approved document is superseded without an immediate replacement in the same type.
 
 ### Dispatch constraints
 
-- `dispatch_task` requires the task to be in `ready` status. It atomically transitions the task to `active` and records dispatch metadata. A task in any other status will be rejected.
-- `complete_task` requires the task to be in `active` status. It transitions to `done` (default) or `needs-review`.
-
-### Review constraints
-
-- `review_task_output` can transition tasks: `active` → `needs-rework` (on fail) or `active` → `needs-review` (on pass). Tasks already in `needs-review` or `done` are reviewed without state changes.
+- `next(id: "task-id")` requires the task to be in `ready` status. It atomically transitions the task to `active` and records dispatch metadata. A task in any other status will be rejected.
+- `finish(task_id: "...")` requires the task to be in `active` status. It transitions to `done` (default) or `needs-review`.
 
 ---
 
-## 26. Idempotency Notes
+## 21. Idempotency Notes
 
 The following tools are idempotent — calling them multiple times with the same arguments produces the same result without unintended side effects:
 
 | Tool | Idempotency behaviour |
 |---|---|
-| `batch_import_documents` | Already-imported files are skipped; only new files are imported |
-| `incident_link_bug` | Linking the same bug to the same incident twice has no effect |
-| `rebuild_cache` | Can be called any number of times safely; always rebuilds from canonical files |
-| `health_check` | Read-only, no side effects |
-| `work_queue` | Promotes eligible tasks as a side effect, but repeated calls are safe — already-promoted tasks are not re-promoted |
-| `knowledge_confirm` | Confirming an already-confirmed entry is a no-op |
-| `migrate_phase2` | Re-running skips already-migrated entities |
+| `doc(action: "import")` | Already-imported files are skipped; only new files are imported |
+| `incident(action: "link_bug")` | Linking the same bug to the same incident twice has no effect |
+| `health()` | Read-only, no side effects |
+| `next()` (queue mode) | Promotes eligible tasks as a side effect, but repeated calls are safe — already-promoted tasks are not re-promoted |
+| `knowledge(action: "confirm")` | Confirming an already-confirmed entry is a no-op |
 
 All other tools may have side effects (creating entities, transitioning statuses, writing files). Callers should track which operations have been performed to avoid duplicate creation.

@@ -71,7 +71,7 @@ Plans are the top-level organising unit. They group related features into a coor
 |-------|------|----------|-------------|
 | id | string | yes | Plan ID: `{prefix}{number}-{slug}` (e.g., `P1-my-project`) |
 | slug | string | yes | URL-friendly identifier |
-| title | string | yes | Human-readable title |
+| name | string | yes | Human-readable display name |
 | status | string | yes | Lifecycle status |
 | summary | string | yes | Brief description of purpose and scope |
 | design | string | no | Reference to a design document record ID |
@@ -82,14 +82,14 @@ Plans are the top-level organising unit. They group related features into a coor
 | supersedes | string | no | ID of the plan this one supersedes |
 | superseded_by | string | no | ID of the plan that supersedes this one |
 
-**Valid statuses:** proposed → designing → active → done. From any non-terminal state: → superseded, → cancelled.
+**Valid statuses:** proposed → designing → active → reviewing → done. From any non-terminal state: → superseded, → cancelled.
 
 **Example:**
 
 ```
 id: P3-kanbanzai-1.0
 slug: kanbanzai-1.0
-title: Kanbanzai 1.0
+name: Kanbanzai 1.0
 status: active
 summary: "Make Kanbanzai installable and usable by projects other than itself: pre-compiled binary distribution, skills-based agent onboarding, public schema interface, kanbanzai init command, and user documentation."
 design: PROJECT/design-kanbanzai-10
@@ -108,7 +108,7 @@ Features represent deliverable units of work within a plan. In Phase 2, features
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| id | string | yes | `FEAT-{ULID}` |
+| id | string | yes | `FEAT-{TSID13}` |
 | slug | string | yes | URL-friendly identifier |
 | parent | string | yes | Parent Plan ID |
 | status | string | yes | Lifecycle status |
@@ -121,7 +121,10 @@ Features represent deliverable units of work within a plan. In Phase 2, features
 | spec | string | no | Document record ID for the specification |
 | dev_plan | string | no | Document record ID for the dev plan |
 | tags | string[] | no | Freeform tags |
-| epic | string | no | Legacy: parent epic ID (Phase 1 compatibility) |
+| name | string | yes | Human-readable display name |
+| review_cycle | int | no | Review cycle counter |
+| blocked_reason | string | no | Why feature is blocked |
+| overrides | []OverrideRecord | no | Gate override history |
 | plan | string | no | Legacy: alternative parent reference |
 | tasks | string[] | no | Denormalised list of child task IDs |
 | decisions | string[] | no | Related decision IDs |
@@ -129,7 +132,7 @@ Features represent deliverable units of work within a plan. In Phase 2, features
 | supersedes | string | no | ID of the feature this one supersedes |
 | superseded_by | string | no | ID of the feature that supersedes this one |
 
-**Valid statuses (Phase 2, document-driven):** proposed → designing → specifying → dev-planning → developing → done. From any non-terminal state: → superseded, → cancelled.
+**Valid statuses (Phase 2, document-driven):** proposed → designing → specifying → dev-planning → developing → reviewing → done. From any non-terminal state: → superseded, → cancelled.
 
 **Example:**
 
@@ -156,9 +159,10 @@ Tasks are the atomic units of work. Each task belongs to a feature and can decla
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| id | string | yes | `TASK-{ULID}` |
+| id | string | yes | `TASK-{TSID13}` |
 | parent_feature | string | yes | Parent feature ID |
 | slug | string | yes | URL-friendly identifier |
+| name | string | yes | Human-readable display name |
 | summary | string | yes | Brief description of the work |
 | status | string | yes | Lifecycle status |
 | estimate | number | no | Story points |
@@ -213,9 +217,9 @@ Bugs track defects with structured severity, priority, and classification. They 
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| id | string | yes | `BUG-{ULID}` |
+| id | string | yes | `BUG-{TSID13}` |
 | slug | string | yes | URL-friendly identifier |
-| title | string | yes | Bug title |
+| name | string | yes | Bug name |
 | status | string | yes | Lifecycle status |
 | estimate | number | no | Story points |
 | severity | string | yes | `low`, `medium`, `high`, or `critical` |
@@ -243,7 +247,7 @@ Bugs track defects with structured severity, priority, and classification. They 
 ```
 id: BUG-01KMKA1KEFYX0
 slug: incident-yaml-field-ordering
-title: Incident YAML field ordering non-deterministic in storage
+name: Incident YAML field ordering non-deterministic in storage
 status: reported
 severity: high
 priority: high
@@ -265,8 +269,9 @@ Decisions record architectural and process choices with their rationale. They ca
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| id | string | yes | `DEC-{ULID}` |
+| id | string | yes | `DEC-{TSID13}` |
 | slug | string | yes | URL-friendly identifier |
+| name | string | yes | Human-readable display name |
 | summary | string | yes | Decision summary |
 | rationale | string | yes | Why this decision was made |
 | decided_by | string | yes | Who made the decision |
@@ -301,7 +306,7 @@ Knowledge entries capture reusable project knowledge discovered during task exec
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| id | string | yes | `KE-{ULID}` |
+| id | string | yes | `KE-{TSID13}` |
 | tier | number | yes | `2` (project-level) or `3` (session-level) |
 | topic | string | yes | Normalised topic (lowercase, hyphenated) |
 | scope | string | yes | Profile name (e.g., `backend`) or `project` |
@@ -314,6 +319,10 @@ Knowledge entries capture reusable project knowledge discovered during task exec
 | ttl_days | number | auto | Time-to-live in days: 30 (tier 3), 90 (tier 2), 0 (exempt) |
 | git_anchors | string[] | no | File paths for staleness checking |
 | tags | string[] | no | Classification tags |
+| last_used | string | no | Timestamp of last use in context assembly |
+| promoted_from | string | no | ID of the entry this was promoted from |
+| merged_from | string[] | no | IDs of entries merged into this one |
+| deprecated_reason | string | no | Reason the entry was deprecated |
 | created | timestamp | auto | Creation timestamp |
 | created_by | string | auto | Creator identity |
 | updated | timestamp | auto | Last update timestamp |
@@ -358,7 +367,7 @@ The document record ID contains a slash (e.g., `FEAT-01ABC/design-my-feature`). 
 |-------|------|----------|-------------|
 | id | string | yes | Composite: `{owner}/{type}-{slug}` or `PROJECT/{type}-{slug}` |
 | path | string | yes | Relative file path from the repo root |
-| type | string | yes | `design`, `specification`, `dev-plan`, `research`, `report`, `policy`, or `rca` |
+| type | string | yes | `design`, `specification`, `dev-plan`, `research`, `report`, `policy`, `rca`, `plan`, or `retrospective` |
 | title | string | yes | Human-readable title |
 | status | string | yes | Lifecycle status |
 | owner | string | no | Parent Plan or Feature ID |
@@ -369,6 +378,7 @@ The document record ID contains a slash (e.g., `FEAT-01ABC/design-my-feature`). 
 | superseded_by | string | no | ID of the document record that supersedes this one |
 | created | timestamp | auto | Creation timestamp |
 | created_by | string | auto | Creator identity |
+| quality_evaluation | QualityEvaluation | no | Quality assessment (overall_score, pass, evaluated_at, evaluator, dimensions) |
 | updated | timestamp | auto | Last update timestamp |
 
 **Valid statuses:** draft → approved → superseded.
@@ -402,11 +412,14 @@ Worktree records track Git worktrees created for feature or bug development. Eac
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| id | string | yes | `WT-{ULID}` |
+| id | string | yes | `WT-{TSID13}` |
 | entity_id | string | yes | Associated feature or bug ID |
 | branch | string | yes | Git branch name |
 | path | string | yes | Worktree directory path (relative to repo root) |
 | status | string | yes | `active`, `merged`, or `abandoned` |
+| merged_at | timestamp | no | When the worktree branch was merged |
+| cleanup_after | timestamp | no | Grace period expiry for cleanup |
+| graph_project | string | no | Codebase-memory-mcp project name for graph-based navigation |
 | created | timestamp | auto | Creation timestamp |
 | created_by | string | auto | Creator identity |
 
@@ -432,9 +445,9 @@ Incidents track production issues and outages. They link to affected features an
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| id | string | yes | `INC-{ULID}` |
+| id | string | yes | `INC-{TSID13}` |
 | slug | string | yes | URL-friendly identifier |
-| title | string | yes | Incident title |
+| name | string | yes | Incident name |
 | status | string | yes | Lifecycle status |
 | severity | string | yes | `critical`, `high`, `medium`, or `low` |
 | reported_by | string | yes | Who reported the incident |
@@ -457,7 +470,7 @@ Incidents track production issues and outages. They link to affected features an
 ```
 id: INC-01KMABC123DEF
 slug: api-timeout-spike
-title: API response times spiking above 10s
+name: API response times spiking above 10s
 status: investigating
 severity: high
 reported_by: monitoring
@@ -481,14 +494,14 @@ Human checkpoints record structured decision points where an orchestrating agent
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| id | string | yes | `CHK-{ULID}` |
+| id | string | yes | `CHK-{TSID13}` |
 | question | string | yes | The decision or question requiring human input |
 | context | string | yes | Background information to help the human answer |
 | orchestration_summary | string | yes | State of the orchestration session at checkpoint time |
 | created_by | string | yes | Identity of the orchestrating agent |
 | status | string | yes | `pending` or `responded` |
 | response | string | no | The human's answer (populated after response) |
-| created | timestamp | auto | Creation timestamp |
+| created_at | timestamp | auto | Creation timestamp |
 | responded_at | timestamp | no | When the human responded |
 
 **Example:**
@@ -512,15 +525,19 @@ Each entity type with a lifecycle follows a defined state machine. Transitions n
 ### Plan
 
 ```
-proposed → designing → active → done
+proposed → designing → active → reviewing → done
 ```
 
 From any non-terminal state, a plan can also transition to **superseded** or **cancelled**.
 
+Back-transitions: reviewing → active.
+
+> **Note:** `done` is non-terminal — plans can still transition to **superseded** or **cancelled** from `done`.
+
 ### Feature (Phase 2, document-driven)
 
 ```
-proposed → designing → specifying → dev-planning → developing → done
+proposed → designing → specifying → dev-planning → developing → reviewing → done
 ```
 
 From any non-terminal state: → **superseded**, → **cancelled**.
@@ -529,6 +546,7 @@ Backward transitions are triggered by document supersession:
 - specifying → designing (design document superseded)
 - dev-planning → specifying (specification superseded)
 - developing → dev-planning (dev plan superseded)
+- reviewing → needs-rework (review fail)
 
 ### Task
 
@@ -536,7 +554,9 @@ Backward transitions are triggered by document supersession:
 queued → ready → active → done
                   ├────→ needs-review → done
                   │                   → needs-rework → active
-                  └────→ blocked → active
+                  ├────→ blocked → active
+                  ├────→ ready          (unclaim / crash recovery)
+                  └────→ needs-rework   (review fail from active)
 ```
 
 Terminal states: **done**, **not-planned**, **duplicate**.
@@ -548,7 +568,10 @@ Tasks promote from queued to ready automatically when all dependencies reach a t
 ```
 reported → triaged → reproduced → planned → in-progress → needs-review → verified → closed
               │                                                │
-              └→ cannot-reproduce → triaged                    └→ needs-rework → in-progress
+              ├→ cannot-reproduce → triaged                    └→ needs-rework → in-progress
+              ├→ planned
+              ├→ not-planned
+              └→ duplicate
 ```
 
 Terminal states: **closed**, **duplicate**, **not-planned**.
@@ -573,6 +596,8 @@ reported → triaged → investigating → root-cause-identified → mitigated �
 
 Back-transitions: root-cause-identified → investigating, mitigated → investigating.
 
+From any non-terminal state: → **closed** (for false alarms or early closure).
+
 ### Document Record
 
 ```
@@ -593,9 +618,9 @@ Terminal state: **retired**.
 
 ## 5. ID Formats
 
-### ULID-based IDs
+### TSID13-based IDs
 
-All entities except Plans use a ULID (Universally Unique Lexicographically Sortable Identifier) as the unique portion of their ID. The format is `{PREFIX}-{ULID}`, where the prefix identifies the entity type:
+All entities except Plans use a TSID13 (Time-Sorted ID, 13 characters) as the unique portion of their ID. TSID13 uses Crockford base32 encoding with a 48-bit millisecond timestamp and a 15-bit random component. The format is `{PREFIX}-{TSID13}`, where the prefix identifies the entity type:
 
 | Prefix | Entity Type |
 |--------|-------------|
@@ -608,7 +633,7 @@ All entities except Plans use a ULID (Universally Unique Lexicographically Sorta
 | `INC-` | Incident |
 | `CHK-` | Human Checkpoint |
 
-ULIDs are 26-character strings encoding a millisecond timestamp and random component, which means they sort chronologically. Example: `FEAT-01KMKRQRRX3CC`.
+TSID13s are 13-character strings encoding a millisecond timestamp and random component, which means they sort chronologically. Example: `FEAT-01KMKRQRRX3CC`.
 
 ### Plan IDs
 
@@ -725,7 +750,6 @@ The project configuration file at `.kbz/config.yaml` contains:
 |-------|------|-------------|
 | version | string | Schema version (currently `"2"`) |
 | prefixes | object[] | Prefix registry entries |
-| document_roots | object | Mapping of document types to directory paths |
 | decomposition | object | Optional decomposition settings |
 
 Each prefix entry has:
@@ -734,9 +758,12 @@ Each prefix entry has:
 |-------|------|-------------|
 | prefix | string | Single non-digit Unicode character |
 | name | string | Human-readable label |
+| description | string | Optional description of the prefix's purpose |
 | retired | boolean | Whether the prefix is retired (omitted if false) |
 
 The configuration file is created by `kanbanzai init` and should be committed to version control.
+
+> **Note:** This table lists the core fields. The Configuration Reference document provides the complete listing of all supported configuration options.
 
 ---
 
@@ -750,6 +777,7 @@ The optional file `.kbz/local.yaml` stores per-machine settings. It must be list
 | github.token | string | GitHub personal access token |
 | github.owner | string | GitHub repository owner |
 | github.repo | string | GitHub repository name |
+| tool_hints | map[string]string | Per-user tool hint overrides |
 
 If `user.name` is not set in `local.yaml`, the system falls back to `git config user.name`.
 

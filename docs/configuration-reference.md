@@ -30,6 +30,8 @@ MCP tools.
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
+| `name` | string | `""` | Project name. |
+| `schema_version` | string | `"1.0.0"` | Schema version (semver, auto-set). |
 | `version` | string | `"2"` | Configuration schema version. |
 | `prefixes` | PrefixEntry[] | `[{prefix: "P", name: "Plan"}]` | Plan ID prefix registry. |
 | `import` | ImportConfig | *(see below)* | Batch document import settings. |
@@ -39,6 +41,12 @@ MCP tools.
 | `dispatch` | DispatchConfig | *(see below)* | Task dispatch settings. |
 | `incidents` | IncidentsConfig | *(see below)* | Incident management settings. |
 | `decomposition` | DecompositionConfig | *(see below)* | Feature decomposition settings. |
+| `merge` | MergeConfig | *(see below)* | Post-merge settings. |
+| `freshness` | FreshnessConfig | *(see below)* | Staleness window settings. |
+| `mcp` | MCPConfig | *(see below)* | MCP tool surface configuration. |
+| `quality_evaluation` | QualityEvaluationConfig | *(see below)* | Document quality settings. |
+| `lifecycle` | LifecycleConfig | *(see below)* | Lifecycle timing settings. |
+| `tool_hints` | map[string]string | `nil` | Per-tool agent guidance strings. |
 
 ### PrefixEntry
 
@@ -53,7 +61,7 @@ Each element in the `prefixes` array describes one Plan ID prefix.
 
 ### ImportConfig
 
-Controls how `batch_import_documents` maps file paths to document types.
+Controls how `doc(action: "import")` maps file paths to document types.
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
@@ -138,6 +146,48 @@ Lifecycle settings for the knowledge base. Organised into three sub-sections.
 |-------|------|---------|-------------|
 | `max_tasks_per_feature` | int | `20` | Soft limit on the number of tasks produced by a single decomposition. |
 
+### MergeConfig
+
+Post-merge behaviour settings.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `post_merge_install` | *bool | `true` (nil treated as true) | Reinstall binary after merge. |
+
+### FreshnessConfig
+
+Staleness window settings for knowledge and document freshness.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `staleness_window_days` | int | `30` | Days before knowledge/doc freshness warnings. |
+
+### MCPConfig
+
+MCP tool surface configuration.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `preset` | string | `"full"` | MCP tool surface preset (full, minimal). |
+| `groups` | map[string]bool | `nil` | Fine-grained tool group enables/disables. |
+
+### QualityEvaluationConfig
+
+Document quality evaluation settings.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `require_quality_evaluation` | bool | `false` | Require doc quality eval before approval. |
+| `quality_evaluation_threshold` | float64 | `0` | Minimum quality score. |
+
+### LifecycleConfig
+
+Lifecycle timing settings.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `stale_reviewing_days` | int | `7` | Days in reviewing before staleness warning. |
+
 ### Minimal Example
 
 The smallest valid configuration. Every other section inherits built-in
@@ -202,6 +252,25 @@ incidents:
 
 decomposition:
   max_tasks_per_feature: 20
+
+merge:
+  post_merge_install: true
+
+freshness:
+  staleness_window_days: 30
+
+mcp:
+  preset: "full"
+  groups: {}
+
+quality_evaluation:
+  require_quality_evaluation: false
+  quality_evaluation_threshold: 0
+
+lifecycle:
+  stale_reviewing_days: 7
+
+tool_hints: {}
 ```
 
 ---
@@ -221,13 +290,13 @@ Plan IDs are formed.
 
 ### Managing Prefixes
 
-| Action | Tool | Notes |
-|--------|------|-------|
-| Add a prefix | `add_prefix` | Supply the character and a human-readable name. |
-| Retire a prefix | `retire_prefix` | Retired prefixes cannot be used for new Plans but remain valid for Plans that already use them. |
+| Action | Method | Notes |
+|--------|--------|-------|
+| Add a prefix | Edit `config.yaml` or use the `init` command | Add an entry to the `prefixes` array with a character and human-readable name. The `Config` struct has an `AddPrefix()` method internally. |
+| Retire a prefix | Edit `config.yaml` | Set `retired: true` on the prefix entry. Retired prefixes cannot be used for new Plans but remain valid for Plans that already use them. The `Config` struct has a `RetirePrefix()` method internally. |
 
-You can also edit `config.yaml` directly, but the MCP tools handle validation
-for you.
+These operations are performed by editing `config.yaml` directly or through
+the init command. There are no standalone MCP tools for prefix management.
 
 ---
 
@@ -250,6 +319,7 @@ This file holds per-user settings — credentials and identity — that must
 | `github.token` | string | GitHub personal access token for PR and repository tools. |
 | `github.owner` | string | Override the auto-detected repository owner. |
 | `github.repo` | string | Override the auto-detected repository name. |
+| `tool_hints` | map[string]string | Per-user tool hint overrides (merged with project-level tool_hints). |
 
 ### Identity Resolution
 
@@ -277,11 +347,11 @@ github:
 
 ## 4. Context Profiles
 
-**Location:** `.kbz/context/roles/*.yaml`
+**Location:** `.kbz/roles/*.yaml` (primary) or `.kbz/context/roles/*.yaml` (legacy fallback)
 
-Context profiles define agent roles. The `context_assemble` tool reads them to
-build context packets — bundles of conventions, architecture knowledge, and
-scoped knowledge entries that are handed to an agent at the start of a session.
+Context profiles define agent roles. The `handoff` tool reads them to build
+context packets — bundles of conventions, architecture knowledge, and scoped
+knowledge entries that are handed to an agent at the start of a session.
 
 ### Fields
 
@@ -298,8 +368,9 @@ scoped knowledge entries that are handed to an agent at the start of a session.
 ### Inheritance
 
 A profile with `inherits: base` receives all conventions and architecture
-entries from `base`, then layers its own on top. Inheritance is single-level —
-you can have a parent and a child, but not a grandparent chain.
+entries from `base`, then layers its own on top. Inheritance supports multiple
+levels — a grandchild inherits from its parent, which inherits from its
+grandparent, and so on. Cycles are detected and rejected.
 
 ### Example
 
@@ -326,9 +397,10 @@ architecture:
 
 ## 5. Environment Variables
 
-Kanbanzai does not read environment variables for configuration. All settings
-come from `config.yaml` (project-wide) and `local.yaml` (per-user). The GitHub
-token lives in `local.yaml` rather than in an environment variable.
+Kanbanzai does not use environment variables for project or user configuration.
+All settings come from `config.yaml` and `local.yaml`. Standard Go environment
+variables (`GOBIN`, `GOPATH`) may influence binary installation paths. The
+GitHub token lives in `local.yaml` rather than in an environment variable.
 
 ---
 
@@ -353,8 +425,9 @@ This validates:
 
 ### MCP
 
-The `health_check` MCP tool performs the same validation and returns a
-structured report.
+The `health` MCP tool performs the same validation and returns a structured
+report. It also runs additional checks beyond the CLI command, including
+document currency validation and branch health.
 
 ### Common Config Errors
 
@@ -385,6 +458,7 @@ that are missing. This means:
 
 ### Phase 1 → Phase 2
 
-Projects that used Phase 1 epics can convert them to Phase 2 plans with the
-`migrate_phase2` MCP tool. The migration is idempotent — running it again
-skips entities that have already been converted.
+Projects that used Phase 1 epics can convert them to Phase 2 plans by
+re-initialising the project. The migration is handled internally during config
+loading — older entity formats are upgraded automatically. Running
+initialisation again skips entities that have already been converted.

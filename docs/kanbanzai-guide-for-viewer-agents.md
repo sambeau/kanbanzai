@@ -46,14 +46,16 @@ Every Kanbanzai-managed repository has this structure at the repo root:
 │   ├── documents/           # Document metadata records
 │   ├── knowledge/           # Knowledge entries
 │   ├── checkpoints/         # Human checkpoint records
-│   ├── incidents/           # Incident entities
+│   ├── incidents/           # Incident entities (created on demand)
 │   ├── worktrees/           # Worktree tracking (LOCAL ONLY — see §5)
-│   └── epics/               # Deprecated (Phase 1 compatibility)
 ├── index/                   # Document intelligence index (derived, not canonical)
 ├── cache/                   # SQLite cache (derived, not canonical)
+├── roles/                   # Context role profiles (YAML)
+├── skills/                  # Skill definitions (SKILL.md per skill)
+├── stage-bindings.yaml      # Maps workflow stages to roles and skills
 ├── local.yaml               # Per-machine settings (NEVER committed)
 └── context/
-    └── roles/               # Context role profiles
+    └── roles/               # Legacy context role profiles
 ```
 
 Outside `.kbz/`, Kanbanzai also manages:
@@ -96,7 +98,10 @@ This is the most important concept for a viewer. **Not everything under `.kbz/` 
 
 | Path | Notes |
 |------|-------|
-| `.kbz/context/roles/` | Context role profiles (YAML). These ARE committed to Git and are readable, but the public schema interface specification does not formally cover them. They define agent dispatch roles (e.g. `backend`, `reviewer`) and are unlikely to be useful to a viewer, but they are safe to read if you want them. |
+| `.kbz/context/roles/` | Legacy context role profiles (YAML). These ARE committed to Git and are readable, but the public schema interface specification does not formally cover them. They define agent dispatch roles (e.g. `backend`, `reviewer`) and are unlikely to be useful to a viewer, but they are safe to read if you want them. |
+| `.kbz/roles/` | Role profiles (YAML). Committed to Git and readable. Define identity, vocabulary, and anti-patterns for each agent role. Not covered by the public schema spec but safe to read. |
+| `.kbz/skills/` | Skill definitions (`SKILL.md` per skill directory). Committed to Git and readable. Define procedures and checklists for specific task types. Not covered by the public schema spec but safe to read. |
+| `.kbz/stage-bindings.yaml` | Maps workflow stages to roles, skills, and prerequisites. Committed to Git and readable. Not covered by the public schema spec but safe to read. |
 
 ### Rule of thumb
 
@@ -160,15 +165,18 @@ Every entity with a status field follows a defined state machine. Valid transiti
 
 ### Plan
 ```
-proposed → designing → active → done
+proposed → designing → active → reviewing → done
 ```
+Back-transition: reviewing → active.
 From any non-terminal state: → superseded, → cancelled.
+Note: `done` is non-terminal — a done plan can transition to superseded or cancelled.
 
 ### Feature (document-driven)
 ```
-proposed → designing → specifying → dev-planning → developing → done
+proposed → designing → specifying → dev-planning → developing → reviewing → done
 ```
 From any non-terminal state: → superseded, → cancelled.
+Additional transitions: reviewing → needs-rework, needs-rework → developing or → reviewing.
 
 Backward transitions occur when documents are superseded (e.g. specifying → designing if the design document is superseded). This is important for the viewer: features can move backwards.
 
@@ -177,7 +185,8 @@ Backward transitions occur when documents are superseded (e.g. specifying → de
 queued → ready → active → done
                   ├────→ needs-review → done
                   │                   → needs-rework → active
-                  └────→ blocked → active
+                  ├────→ blocked → active
+                  └────→ ready (unclaim/crash recovery)
 ```
 Terminal states: done, not-planned, duplicate.
 
@@ -201,6 +210,7 @@ Terminal states: rejected, superseded.
 reported → triaged → investigating → root-cause-identified → mitigated → resolved → closed
 ```
 Back-transitions: root-cause-identified → investigating, mitigated → investigating.
+From any non-terminal state: → closed (early-close).
 
 ### Document Record
 ```
@@ -212,6 +222,9 @@ draft → approved → superseded
 contributed → confirmed  (auto: use_count ≥ 3, miss_count = 0)
            → disputed    (via flagging)
            → retired     (auto: miss_count ≥ 2, or manual, or TTL expiry)
+confirmed  → stale       (staleness detection)
+stale      → confirmed   (recovery — re-confirmed after review)
+           → retired     (no longer relevant)
 ```
 
 ---
@@ -295,6 +308,12 @@ As of the current implementation, the `kbzschema` package does **not** yet cover
 
 - **Incident** — the `INC-` entity type has no struct or Reader method in `kbzschema`
 - **Worktree** — deliberately excluded (local machine state, not part of public schema)
+- **Plan and Feature missing `reviewing` status constant** — the `reviewing` lifecycle state is not represented in the exported status constants
+- **Feature missing `needs-rework` status constant** — the `needs-rework` lifecycle state is not represented in the exported status constants
+- **Missing `plan` and `retrospective` document type constants** — these document types exist but have no `kbzschema.DocType*` constants
+- **Plan `Title` yaml tag should be `name`** — the Go struct's yaml tag is misaligned with the internal model (which uses `name`)
+- **Bug `Title` yaml tag should be `name`** — same misalignment as Plan
+- **Entity `name` field missing from Feature, Task, Decision structs** — these entity types have a `name` field in the internal model but the `kbzschema` structs do not include it
 
 For Incidents, you would need to parse the YAML directly until `kbzschema` adds coverage (expected in a minor version). The schema-reference document (`docs/schema-reference.md`) defines the full field table.
 
@@ -440,7 +459,7 @@ But this is a convention, not a schema requirement. Do not parse it as structure
 | `specification` | `work/spec/` | Acceptance criteria, binding contracts |
 | `dev-plan` | `work/dev/` | Feature implementation plans, task breakdowns |
 | `research` | `work/research/` | Analysis, exploration |
-| `report` | `work/report/` or `work/review/` | Audit reports, reviews |
+| `report` | `work/reports/` or `work/reviews/` | Audit reports, reviews |
 | `policy` | `work/design/` | Process and governance documents |
 | `rca` | (varies) | Root cause analysis |
 | `plan` | `work/plan/` | Project planning: roadmaps, scope, decision logs |
@@ -597,7 +616,7 @@ The Modified Fibonacci scale used for estimates: `0, 0.5, 1, 2, 3, 5, 8, 13, 20,
 ```yaml
 id: P3-kanbanzai-1.0
 slug: kanbanzai-1.0
-title: Kanbanzai 1.0
+name: Kanbanzai 1.0
 status: active
 summary: "Make Kanbanzai installable and usable by projects other than itself."
 design: PROJECT/design-kanbanzai-10
@@ -611,6 +630,7 @@ updated: "2026-03-26T14:48:05Z"
 ```yaml
 id: FEAT-01KMKRQRRX3CC
 slug: init-command
+name: Init command
 parent: P3-kanbanzai-1.0
 status: developing
 summary: "The kanbanzai init command."
@@ -627,6 +647,7 @@ created_by: sambeau
 id: TASK-01KMNA39KTWW4
 parent_feature: FEAT-01KMKRQRRX3CC
 slug: init-command-skeleton
+name: Init command skeleton
 summary: "Implement kanbanzai init CLI subcommand skeleton with flag parsing."
 status: done
 files_planned:
@@ -667,7 +688,7 @@ context: "The auth feature has grown to 13 tasks spanning two distinct concerns.
 orchestration_summary: "Decomposing FEAT-01KMXYZ into tasks."
 created_by: agent/orchestrator
 status: pending
-created: "2026-03-27T10:30:00Z"
+created_at: "2026-03-27T10:30:00Z"
 ```
 
 ---
