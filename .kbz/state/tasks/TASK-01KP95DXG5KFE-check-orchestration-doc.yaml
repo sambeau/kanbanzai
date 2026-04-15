@@ -3,8 +3,10 @@ parent_feature: FEAT-01KP8T4HVPY2Y
 slug: check-orchestration-doc
 name: Check Orchestration Doc
 summary: "Check stage: verify factual claims in docs/orchestration-and-knowledge.md against source code and existing documentation. Flag incorrect tool names, wrong field names, inaccurate descriptions."
-status: active
+status: done
+completed: "2026-04-15T18:28:49Z"
 claimed_at: "2026-04-15T18:18:25Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-15T18:18:25Z"
 dispatched_by: sambeau
+completion_summary: "Check stage: fixed 5 factual errors. (1) Added get_code_snippet to handoff code graph tools. (2) Fixed dependency promotion to include blocked status. (3) Fixed conflict file overlap — removed non-existent directory level, corrected git conflict risk levels. (4) Fixed boundary crossing risk levels. (5) Added missing fields to knowledge entries and worktree records."
