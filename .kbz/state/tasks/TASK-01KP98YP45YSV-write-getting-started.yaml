@@ -1,0 +1,6 @@
+id: TASK-01KP98YP45YSV
+parent_feature: FEAT-01KP8T4J02S7F
+slug: write-getting-started
+name: Write Getting Started Guide
+summary: "Write stage: produce docs/getting-started.md following design §8. Preserve existing installation/init/editor content. Extend with full design-to-delivery walkthrough (What you will build → Install → Initialise → Connect editor → Create plan → Write design → Approve design → Create spec → Approve spec → Create dev plan → Implement → Review and merge → What just happened). Show-don't-tell, audience novice to agentic dev."
+status: queued
