@@ -2,10 +2,16 @@ id: FEAT-01KN4ZPCMJ1FP
 slug: docint-ac-pattern-recognition
 name: Docint ac pattern recognition
 parent: P15-kanbanzai-25-infrastructure-hardening
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Fix asmExtractCriteria to recognise **AC-NN.** and **REQ-NN.** bold-identifier patterns used in Kanbanzai specifications."
 spec: FEAT-01KN4ZPCMJ1FP/specification-docint-ac-pattern-recognition
 dev_plan: FEAT-01KN4ZPCMJ1FP/dev-plan-docint-ac-pattern-recognition-plan
 created: "2026-04-01T16:58:12Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "State repair: all 2 tasks complete, parent plan P15 already done. Lifecycle never advanced from developing."
+    timestamp: "2026-04-15T12:26:03+01:00"
+    to_status: done
