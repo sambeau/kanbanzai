@@ -2,7 +2,7 @@ id: FEAT-01KN58J26RSB6
 slug: document-structural-checks
 name: Document structural checks
 parent: P17-workflow-and-tooling-3.0
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Implement automated structural checks on documents at stage gates: required sections present, cross-references valid, acceptance criteria listed. Initially as warnings, promoted to hard gates after validation. Add quality_evaluation structural hook for document approval - server gate checks evaluation record exists with score >= threshold."
 spec: FEAT-01KN58J26RSB6/specification-30-document-structural-checks
@@ -13,3 +13,9 @@ tags:
   - medium-impact
 created: "2026-04-01T19:33:07Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: All 5 blocking findings (B-16 through B-20) verified as resolved. Rework cycle — original review report at work/reviews/review-P17-workflow-and-tooling-3.0.md serves as review evidence.
+    timestamp: "2026-04-15T14:05:24+01:00"
+    to_status: done

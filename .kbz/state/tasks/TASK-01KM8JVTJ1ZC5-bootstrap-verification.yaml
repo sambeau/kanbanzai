@@ -3,4 +3,6 @@ parent_feature: FEAT-01KM8JTF0MK91
 slug: bootstrap-verification
 name: Bootstrap verification
 summary: Verify bootstrap acceptance criteria
-status: ready
+status: done
+completed: "2026-04-15T13:08:56Z"
+completion_summary: Test completion for MCP tool evaluation

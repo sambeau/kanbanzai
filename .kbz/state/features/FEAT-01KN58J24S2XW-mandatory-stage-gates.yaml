@@ -2,7 +2,7 @@ id: FEAT-01KN58J24S2XW
 slug: mandatory-stage-gates
 name: Mandatory stage gates
 parent: P17-workflow-and-tooling-3.0
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Make stage gates mandatory on all feature transitions (not just advance). Add new gates: developing→reviewing (all tasks terminal), reviewing→done (review report, no blocking findings), needs-rework→developing (rework task exists), needs-rework→reviewing (rework tasks terminal). Implement gate override with reason logging. Produce actionable error messages for all gate failures per the error template in §6."
 spec: FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates
@@ -13,3 +13,9 @@ tags:
   - high-impact
 created: "2026-04-01T19:33:07Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "All 2 blocking findings (B-01, B-02) verified as resolved. Rework cycle — original review report at work/reviews/review-P17-workflow-and-tooling-3.0.md serves as review evidence."
+    timestamp: "2026-04-15T14:05:19+01:00"
+    to_status: done

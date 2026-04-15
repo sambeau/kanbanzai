@@ -2,7 +2,7 @@ id: FEAT-01KN58J25K4QD
 slug: stage-aware-context-assembly
 name: Stage aware context assembly
 parent: P17-workflow-and-tooling-3.0
-status: reviewing
+status: done
 review_cycle: 1
 summary: Add lifecycle state validation to handoff/next (reject wrong-state assembly). Implement stage-specific inclusion/exclusion in context assembly. Add orchestration pattern signalling (single-agent vs orchestrator-workers). Embed effort budgets in high-attention zone. Include role-scoped tool subset lists. Reinforce filesystem-output convention in orchestrator context.
 spec: FEAT-01KN58J25K4QD/specification-30-stage-aware-context-assembly
@@ -13,3 +13,9 @@ tags:
   - high-impact
 created: "2026-04-01T19:33:07Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "All 4 blocking findings (B-07, B-08, B-09, B-10) verified as resolved. Rework cycle — original review report at work/reviews/review-P17-workflow-and-tooling-3.0.md serves as review evidence."
+    timestamp: "2026-04-15T14:05:20+01:00"
+    to_status: done
