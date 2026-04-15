@@ -3,8 +3,44 @@ parent_feature: FEAT-01KN85HMQP2CX
 slug: remove-epic-internals
 name: Remove Epic from internals
 summary: "Remove Epic struct, EpicStatus constants, EntityKindEpic, EPIC- prefix from ID allocation/display, CreateEpic/CreateEpicInput from service layer and entityService interface, epic lifecycle/entry/terminal/required-field entries from validate, epic case from storage field ordering, cache extractParentRef, service RebuildCache/HealthCheck/parseRecordIdentity/recordFromEntity/epicFields, docint EPIC- entity-ref pattern, and Feature.Epic field with extractParentRefFromState fallback. Spec refs: FR-1 through FR-9, FR-11, NFR-1-2."
-status: active
+status: done
+files_planned:
+  - internal/model/entities.go
+  - internal/model/entities_test.go
+  - internal/testutil/ids.go
+  - internal/id/allocator.go
+  - internal/id/allocator_test.go
+  - internal/id/display.go
+  - internal/id/display_test.go
+  - internal/id/slug.go
+  - internal/id/slug_test.go
+  - internal/validate/lifecycle.go
+  - internal/validate/lifecycle_test.go
+  - internal/validate/entity.go
+  - internal/validate/entity_test.go
+  - internal/validate/health.go
+  - internal/validate/health_test.go
+  - internal/validate/doc_health_test.go
+  - internal/cache/cache.go
+  - internal/cache/cache_test.go
+  - internal/storage/entity_store.go
+  - internal/storage/entity_store_test.go
+  - internal/docint/extractor.go
+  - internal/docint/extractor_test.go
+  - internal/service/entities.go
+  - internal/service/entities_test.go
+  - internal/service/estimation.go
+  - internal/service/estimation_test.go
+  - internal/service/documents.go
+  - internal/service/documents_test.go
+  - internal/service/queries.go
+  - internal/service/queries_test.go
+  - internal/service/migration.go
+  - internal/service/migration_test.go
+  - internal/service/status_transition_hook_test.go
+completed: "2026-04-15T12:27:16Z"
 claimed_at: "2026-04-15T11:42:23Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-15T11:42:23Z"
 dispatched_by: sambeau
+completion_summary: "Removed all Epic references from internal packages: model (EntityKindEpic, EpicStatus, Epic struct, Feature.Epic field), id (EPIC- allocation/display/slug), validate (lifecycle, entity, health), cache (extractParentRef), storage (field ordering), docint (EPIC- extractor pattern), service (CreateEpic, estimation EpicRollup→PlanRollup, migration, queries, documents). 33 files changed across internal/."
