@@ -1,0 +1,6 @@
+id: TASK-01KP8V5E7BJ3G
+parent_feature: FEAT-01KP8T4HQMEA3
+slug: write-draft
+name: Write first draft
+summary: "Produce a structured first draft of the User Guide (docs/user-guide.md) following the design brief §6 and spec FR-001 through FR-018. All 13 content sections, purpose/audience opener, and cross-reference links to all 7 documents. Role: documenter. Skill: write-docs."
+status: queued
