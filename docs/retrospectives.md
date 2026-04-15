@@ -104,17 +104,17 @@ Each accepted signal becomes a knowledge entry with:
 - **Topic:** `retro-{task_id}` for the first signal from a task, `retro-{task_id}-2`, `retro-{task_id}-3`, etc. for subsequent signals
 - **Tags:** `["retrospective", "{category}"]`
 - **Content:** `[{severity}] {category}: {observation}` — with `Suggestion: {suggestion}` and `Related: {decision_id}` appended when present
-- **Scope:** inherited from the task context
+- **Scope:** `project` (hardcoded for all retrospective signals)
 - **Learned from:** the task ID
 
 ### Nudges
 
-The system encourages signal recording through two nudges:
+The system encourages signal recording through two nudges. At most one nudge fires per completion — the feature-level nudge takes priority:
 
 1. **Feature completion nudge** — when the last task in a feature completes and no task in that feature recorded any retrospective signals, the response includes a reminder to consider adding signals.
-2. **Task completion nudge** — when a task completes with a summary but no knowledge entries and no retrospective signals, the response suggests including them.
+2. **Task completion nudge** — when a task completes with a summary but no knowledge entries and no retrospective signals (and the feature-level nudge did not fire), the response suggests including them.
 
-Nudges are informational — they do not block completion or require action.
+Nudges are informational — they do not block completion or require action. Batch-mode `finish` calls suppress nudges entirely.
 
 ---
 
@@ -122,7 +122,7 @@ Nudges are informational — they do not block completion or require action.
 
 The `retro` tool's **synthesise** action reads accumulated signals, clusters them by category and textual similarity, and returns a ranked synthesis.
 
-Call `retro` with no arguments (or `action: "synthesise"`) to synthesise all project signals:
+Call `retro` with no arguments (or `action: "synthesise"`) to synthesise all project signals. The tool also accepts the US spelling `"synthesize"`.
 
 ```json
 {"tool": "retro", "arguments": {}}
@@ -204,7 +204,7 @@ Each entry in the `experiments` array contains:
 | **positive_signals** | Count of **worked-well** signals referencing this decision |
 | **negative_signals** | Count of friction signals referencing this decision |
 | **net_assessment** | Summary string (e.g. "3 positive, 1 negative") |
-| **recommendation** | `keep` (positive > negative), `revise` (mixed), or `revert` (all negative) |
+| **recommendation** | `keep` (positive > negative), `revert` (zero positive, at least one negative), or `revise` (everything else — including cases where negatives outnumber positives) |
 
 The experiment tracking feature connects retrospective signals to workflow experiments. When you try a new process and record signals with `related_decision` pointing to the experiment's Decision entity, the synthesis engine automatically tracks whether the experiment is producing more positive or negative outcomes.
 
