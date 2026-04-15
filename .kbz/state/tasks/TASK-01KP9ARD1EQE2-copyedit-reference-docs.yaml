@@ -3,10 +3,18 @@ parent_feature: FEAT-01KP8T4J4795M
 slug: copyedit-reference-docs
 name: Copyedit Reference Docs
 summary: "Final copyedit pass on all four reference documents: British spelling, serial commas, em dashes, consistent punctuation, verb structure. Documents: MCP Tool Reference, Schema Reference, Configuration Reference, Viewer Agents Guide."
-status: active
+status: done
 depends_on:
   - TASK-01KP9ARCZCTDG
+files_planned:
+  - docs/mcp-tool-reference.md
+  - docs/schema-reference.md
+  - docs/configuration-reference.md
+  - docs/kanbanzai-guide-for-viewer-agents.md
+completed: "2026-04-15T21:25:37Z"
 claimed_at: "2026-04-15T21:14:41Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-15T21:14:41Z"
 dispatched_by: sambeau
+completion_summary: "Copyedit pass on 4 reference docs. All already very clean. MCP Tool Ref: 4 fixes (behaviour, analyse). Schema Ref: 8 fixes (heading caps, trailing periods). Config Ref: 4 fixes (en dash, serial commas, backtick). Viewer Guide: 10 fixes (serial commas)."
+verification: "Each sub-agent verified British spelling consistency, serial commas, em dash spacing, and table punctuation uniformity across the entire document."
