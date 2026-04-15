@@ -3,6 +3,15 @@ parent_feature: FEAT-01KP8T4HQMEA3
 slug: check-facts
 name: Fact verification
 summary: "Check stage: verify every factual claim against the current Kanbanzai implementation. Test code examples and command references. Flag hallucinations, inaccuracies, vague claims. Produce classified findings report. Target: zero unresolved error/hallucination findings (AC-019). Role: doc-checker. Skill: check-docs."
-status: ready
+status: done
 depends_on:
   - TASK-01KP8V5EADK5E
+files_planned:
+  - docs/user-guide.md
+completed: "2026-04-15T15:42:03Z"
+claimed_at: "2026-04-15T15:28:27Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T15:28:27Z"
+dispatched_by: sambeau
+completion_summary: "Check stage: 20 claims verified, 3 inaccuracies corrected. Tool count 23→22. Bug cannot-reproduce clarified as non-terminal. Incident RCA requirement corrected to health warning. Zero unresolved error/hallucination findings (AC-019 met)."
+verification: "Sub-agent checked 20 factual claims against codebase: groups.go, lifecycle.go, entities.go, stage-bindings.yaml, server.go, config.go, conflict.go, core paths. 17 verified, 3 corrected."

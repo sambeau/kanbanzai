@@ -3,6 +3,6 @@ parent_feature: FEAT-01KP8T4HQMEA3
 slug: style-cleanup
 name: AI artifact removal
 summary: "Style stage: hunt and eliminate AI writing patterns — banned vocabulary, inflated adjectives, staccato rhetoric, hedging, tricolon overuse, robotic transitions. Rewrite affected sentences. Target: zero unresolved style findings (AC-020). Role: doc-stylist. Skill: style-docs."
-status: queued
+status: ready
 depends_on:
   - TASK-01KP8V5ECFXW7
