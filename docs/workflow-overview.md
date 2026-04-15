@@ -168,9 +168,9 @@ Every feature and plan advances through a defined set of stages, with approval g
                   └─────┬─────┘                   │
                         │  all tasks complete     │
                         ▼                         │
-                  ┌───────────┐    rework    ┌────┴─────┐
-                  │ reviewing │─────────────►│needs-work│
-                  └─────┬─────┘              └──────────┘
+                  ┌───────────┐    rework    ┌────┴───────┐
+                  │ reviewing │─────────────►│needs-rework│
+                  └─────┬─────┘              └────────────┘
                         │  review approved
                         ▼
                     ┌────┐
@@ -206,10 +206,10 @@ A feature can also be cancelled or superseded at any point if direction changes.
 Plans group related features at a higher level. Their lifecycle is simpler:
 
 ```text
-proposed → designing → active → done
+proposed → designing → active → reviewing → done
 ```
 
-A plan is `proposed` when the scope exists but design work has not started. It moves to `designing` when the body of work is being shaped through design documents. It becomes `active` when features under the plan are being delivered. It reaches `done` when all scoped features are complete.
+A plan is `proposed` when the scope exists but design work has not started. It moves to `designing` when the body of work is being shaped through design documents. It becomes `active` when features under the plan are being delivered. It moves to `reviewing` when delivery is evaluated at the aggregate level. It reaches `done` when the plan review is approved and all scoped features are complete.
 
 Plans can also become `superseded` or `cancelled` when direction changes.
 
