@@ -1,4 +1,4 @@
-updated_at: 2026-04-04T09:22:20.695953Z
+updated_at: 2026-04-15T15:05:50.259429Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -57125,3 +57125,658 @@ edges:
       to: P21-codebase-memory-integration
       to_type: entity_ref
       edge_type: REFERENCES
+    - from: P22-documentation-for-public-release/design-public-release-documentation
+      from_type: document
+      to: P22-documentation-for-public-release/design-public-release-documentation#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.2
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.2
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.13
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.14
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.15
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.16
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.17
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.18
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.19
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.20
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.21
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.22
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.23
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.24
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.25
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.26
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.27
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.28
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.29
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.30
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.31
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.32
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.33
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.34
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.35
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.36
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.37
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.38
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.39
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.40
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.41
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.42
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.43
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.44
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.45
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.46
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.47
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.48
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.49
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.4.50
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.5
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.5
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.5
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.5
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.5
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.5
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.5.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.5
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.5.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.7
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.7
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.7
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.7
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: P22-documentation-for-public-release/design-public-release-documentation#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.50
+      from_type: section
+      to: FEAT-xxxxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: work/design/documentation-pipeline.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: work/design/public-schema-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: work/design/fresh-install-experience.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: work/design/workflow-design-basis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1
+      from_type: section
+      to: work/design/consistent-front-matter.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.2.2
+      from_type: section
+      to: work/design/documentation-pipeline.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.8
+      from_type: section
+      to: README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.8
+      from_type: section
+      to: docs/user-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.8
+      from_type: section
+      to: docs/workflow-overview.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.8
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.8
+      from_type: section
+      to: docs/orchestration-and-knowledge.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.8
+      from_type: section
+      to: docs/retrospectives.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.9
+      from_type: section
+      to: docs/schema-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.9
+      from_type: section
+      to: docs/mcp-tool-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.9
+      from_type: section
+      to: docs/configuration-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.9
+      from_type: section
+      to: docs/kanbanzai-guide-for-viewer-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.11
+      from_type: section
+      to: work/design/documentation-pipeline.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.29
+      from_type: section
+      to: docs/workflow-overview.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.35
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.4.50
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.6
+      from_type: section
+      to: work/design/documentation-pipeline.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.6
+      from_type: section
+      to: refs/documentation-structure-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.6
+      from_type: section
+      to: refs/technical-writing-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.6
+      from_type: section
+      to: refs/humanising-ai-prose.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P22-documentation-for-public-release/design-public-release-documentation#1.6
+      from_type: section
+      to: refs/punctuation-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide
+      from_type: document
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.2
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.2
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.3
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.3
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.3
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.3
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1
+      from_type: section
+      to: FEAT-01KP8T4HQMEA3/specification-user-guide#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1
+      from_type: section
+      to: FEAT-01KP8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1
+      from_type: section
+      to: P22-documentation-for-public-release
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1
+      from_type: section
+      to: work/design/public-release-documentation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.1
+      from_type: section
+      to: docs/user-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.2.1
+      from_type: section
+      to: docs/user-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.4
+      from_type: section
+      to: work/design/documentation-pipeline.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.4
+      from_type: section
+      to: refs/humanising-ai-prose.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.5
+      from_type: section
+      to: docs/workflow-overview.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.5
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.5
+      from_type: section
+      to: docs/orchestration-and-knowledge.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.5
+      from_type: section
+      to: docs/retrospectives.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.5
+      from_type: section
+      to: docs/mcp-tool-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.5
+      from_type: section
+      to: docs/schema-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.5
+      from_type: section
+      to: docs/configuration-reference.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.7
+      from_type: section
+      to: work/design/public-release-documentation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.7
+      from_type: section
+      to: refs/documentation-structure-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.7
+      from_type: section
+      to: refs/technical-writing-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.7
+      from_type: section
+      to: refs/humanising-ai-prose.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KP8T4HQMEA3/specification-user-guide#1.7
+      from_type: section
+      to: refs/punctuation-guide.md
+      to_type: document
+      edge_type: LINKS_TO

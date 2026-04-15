@@ -1,0 +1,205 @@
+document_id: FEAT-01KP8T4HQMEA3/specification-user-guide
+document_path: work/spec/user-guide.md
+content_hash: b9f66a576b9de6166c03275f9900cff50fb23e41a99cd44cab67615894b24c5d
+indexed_at: 2026-04-15T15:05:50.259429Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'User Guide: Specification'
+      byte_offset: 0
+      byte_count: 14112
+      word_count: 2033
+      content_hash: b9f66a576b9de6166c03275f9900cff50fb23e41a99cd44cab67615894b24c5d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 341
+          byte_count: 518
+          word_count: 80
+          content_hash: 43a76d9fb64ba42eb94b2688e90f8f2fdb05779c5208c65479b7595913fa21e1
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 859
+          byte_count: 958
+          word_count: 142
+          content_hash: db4985c04b9dd5eb09a18743363f04d18212aab918093bca009b01bfe02fc542
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 869
+              byte_count: 513
+              word_count: 79
+              content_hash: 5dcb66e5c6171db0966067e480ba0732b84965b9987a927442bc3676e6911aa1
+            - path: 1.2.2
+              level: 3
+              title: Out of scope
+              byte_offset: 1382
+              byte_count: 435
+              word_count: 61
+              content_hash: 3435bce77a4788fabc3d6bb7ca9741ca93b4f05a7cba4c3d1aa67079a0cd1eb5
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 1817
+          byte_count: 4206
+          word_count: 603
+          content_hash: 29bb61df7b1f8f1a8ea2673d6bac14e2873f0d779e79ba9d644811f034ec8f69
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Content Requirements
+              byte_offset: 1845
+              byte_count: 2454
+              word_count: 358
+              content_hash: 3f53bdda8d39951767085d32a6b73e04fb733508faae8383c3e2f70d8c140749
+            - path: 1.3.2
+              level: 3
+              title: Structural Requirements
+              byte_offset: 4299
+              byte_count: 540
+              word_count: 80
+              content_hash: 98b904c96b82c574544f7866dea35bcda64cc2d8ae7e1e3e58e97ad37f16fc54
+            - path: 1.3.3
+              level: 3
+              title: Cross-Reference Requirements
+              byte_offset: 4839
+              byte_count: 493
+              word_count: 70
+              content_hash: 62f3fd95c3c34ebe43b0d285adbd0aa74097a4ff47a2926171be2896c48a29ac
+            - path: 1.3.4
+              level: 3
+              title: Exclusion Requirements
+              byte_offset: 5332
+              byte_count: 691
+              word_count: 92
+              content_hash: a33c7bce56eee2d296c49c601fb22c15324f1b9cdf7f0a0b3e8d9a9707e21f4b
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 6023
+          byte_count: 1310
+          word_count: 191
+          content_hash: 0266ccf41760b01ae3deeb9612cf134a71ca835c41952bc66860fa3a431d6f34
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 7333
+          byte_count: 3500
+          word_count: 480
+          content_hash: db937c9faffbf19d1eccecd97cef95108b476aa8cde48280c498ca968092ed0c
+        - path: "1.6"
+          level: 2
+          title: Verification Plan
+          byte_offset: 10833
+          byte_count: 2399
+          word_count: 387
+          content_hash: 77dbd7dba6a2942cb0228c476057948a739150b25a696a117481d2ab5486b9af
+        - path: "1.7"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 13232
+          byte_count: 880
+          word_count: 114
+          content_hash: 7e288eb60f0cd803b57cdef43728a5fb554e6e3d934300400c2f79ebd86d8527
+entity_refs:
+    - entity_id: FEAT-01KP8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 143
+    - entity_id: P22-documentation-for-public-release
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 259
+cross_doc_links:
+    - target_path: work/design/public-release-documentation.md
+      link_text: work/design/public-release-documentation.md
+      section_path: "1"
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: "1.1"
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: 1.2.1
+    - target_path: work/design/documentation-pipeline.md
+      link_text: work/design/documentation-pipeline.md
+      section_path: "1.4"
+    - target_path: refs/humanising-ai-prose.md
+      link_text: refs/humanising-ai-prose.md
+      section_path: "1.4"
+    - target_path: docs/workflow-overview.md
+      link_text: docs/workflow-overview.md
+      section_path: "1.5"
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: "1.5"
+    - target_path: docs/orchestration-and-knowledge.md
+      link_text: docs/orchestration-and-knowledge.md
+      section_path: "1.5"
+    - target_path: docs/retrospectives.md
+      link_text: docs/retrospectives.md
+      section_path: "1.5"
+    - target_path: docs/mcp-tool-reference.md
+      link_text: docs/mcp-tool-reference.md
+      section_path: "1.5"
+    - target_path: docs/schema-reference.md
+      link_text: docs/schema-reference.md
+      section_path: "1.5"
+    - target_path: docs/configuration-reference.md
+      link_text: docs/configuration-reference.md
+      section_path: "1.5"
+    - target_path: work/design/public-release-documentation.md
+      link_text: work/design/public-release-documentation.md
+      section_path: "1.7"
+    - target_path: refs/documentation-structure-guide.md
+      link_text: refs/documentation-structure-guide.md
+      section_path: "1.7"
+    - target_path: refs/technical-writing-guide.md
+      link_text: refs/technical-writing-guide.md
+      section_path: "1.7"
+    - target_path: refs/humanising-ai-prose.md
+      link_text: refs/humanising-ai-prose.md
+      section_path: "1.7"
+    - target_path: refs/punctuation-guide.md
+      link_text: refs/punctuation-guide.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.1
+      role: requirement
+      confidence: high
+    - section_path: 1.3.2
+      role: requirement
+      confidence: high
+    - section_path: 1.3.3
+      role: requirement
+      confidence: high
+    - section_path: 1.3.4
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+classified: false
