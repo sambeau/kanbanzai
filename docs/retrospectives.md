@@ -1,16 +1,14 @@
 # Retrospectives
 
-Kanbanzai's retrospective system captures process observations during task completion, clusters them into themes, and generates reports. It operates in three steps: **record**, **synthesise**, **report**.
+Kanbanzai's retrospective system turns process observations into actionable patterns. You **record** signals during task completion, **synthesise** them into ranked themes, and **generate reports** that highlight what caused friction and what worked well.
 
-This document covers what retrospective signals are, how to record them, how to synthesise patterns from accumulated signals, and how to generate retrospective reports.
-
-> **Prerequisites.** You should be familiar with the [User Guide](user-guide.md) — particularly the sections on task completion and the knowledge system. The retrospective system stores signals as knowledge entries, so understanding that foundation helps.
+> **Prerequisites.** This document assumes familiarity with the [User Guide](user-guide.md) — particularly task completion and the knowledge system. Signals are stored as knowledge entries, so that foundation helps.
 
 ---
 
-## What retrospectives capture
+## What signals are
 
-Retrospective **signals** are short, structured observations about the development process. They answer the question: *what happened during this task that the team should know about?*
+A retrospective **signal** is a short, structured observation about the development process. It answers the question: *what happened during this task that the team should know about?*
 
 Each signal records:
 
@@ -22,7 +20,7 @@ Each signal records:
 
 Signals are not bug reports or feature requests. They capture *process-level* observations — things about how the work happened, not what the work produced. A signal might note that a specification was ambiguous, that a tool behaved unexpectedly, or that parallel worktrees eliminated merge conflicts.
 
-The system stores each signal as a tagged knowledge entry. This means signals participate in the same lifecycle as other knowledge — they have confidence scores, use counts, and can be promoted, compacted, or retired. The `retrospective` tag distinguishes them from regular knowledge entries.
+The system stores each signal as a tagged knowledge entry, so signals participate in the same lifecycle as other knowledge — they have confidence scores, use counts, and can be promoted, compacted, or retired. The `retrospective` tag distinguishes them from regular knowledge entries.
 
 ---
 
@@ -45,9 +43,9 @@ Seven categories capture friction; one — **worked-well** — captures positive
 
 ---
 
-## Recording signals
+## How to record signals
 
-Record retrospective signals by including them in the `finish` call when completing a task. The `retrospective` parameter accepts an array of signal objects.
+Record signals by including them in the `finish` call when completing a task. The `retrospective` parameter accepts an array of signal objects.
 
 Each signal object has three required fields and two optional fields:
 
@@ -99,7 +97,7 @@ The system validates each signal independently. An invalid signal — missing a 
 
 This non-blocking design means you never have to choose between completing a task and recording observations. If a signal is malformed, the response includes the rejection reason so you can correct and resubmit it.
 
-### Storage
+### How signals are stored
 
 Each accepted signal becomes a knowledge entry with:
 
@@ -120,7 +118,7 @@ Nudges are informational — they do not block completion or require action.
 
 ---
 
-## Synthesising signals
+## How synthesis works
 
 The `retro` tool's **synthesise** action reads accumulated signals, clusters them by category and textual similarity, and returns a ranked synthesis.
 
@@ -165,7 +163,7 @@ Each cluster becomes a **theme**. Themes are ranked by **severity score** — th
 
 ### Response structure
 
-The synthesise action returns:
+The synthesise action returns a JSON object. The top-level fields are:
 
 | Field | Description |
 |-------|-------------|
@@ -176,7 +174,7 @@ The synthesise action returns:
 | **worked_well** | Array of positive-outcome clusters (from **worked-well** signals) |
 | **experiments** | Array of experiment tracking entries (when signals reference Decision entities tagged `workflow-experiment`) |
 
-Each **theme** contains:
+Each **theme** in the `themes` array contains:
 
 | Field | Description |
 |-------|-------------|
@@ -189,7 +187,7 @@ Each **theme** contains:
 | **representative_observation** | The observation from the highest-severity signal in the cluster |
 | **top_suggestion** | First non-empty suggestion in the cluster (if any) |
 
-Each **worked_well** entry contains:
+Each entry in the `worked_well` array contains:
 
 | Field | Description |
 |-------|-------------|
@@ -197,7 +195,7 @@ Each **worked_well** entry contains:
 | **signal_count** | Number of signals in this cluster |
 | **representative_observation** | The observation from the highest-severity signal |
 
-Each **experiment** entry contains:
+Each entry in the `experiments` array contains:
 
 | Field | Description |
 |-------|-------------|
@@ -212,7 +210,7 @@ The experiment tracking feature connects retrospective signals to workflow exper
 
 ---
 
-## Generating reports
+## How to generate reports
 
 The `retro` tool's **report** action runs the same synthesis, then generates a Markdown document and registers it as a document record.
 

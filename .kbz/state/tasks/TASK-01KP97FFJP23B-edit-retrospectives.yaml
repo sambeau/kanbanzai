@@ -3,6 +3,10 @@ parent_feature: FEAT-01KP8T4HXPEAY
 slug: edit-retrospectives
 name: Edit Retrospectives
 summary: "Edit stage: structural and clarity review. Check headings, remove redundancy, merge or split sections as needed, improve flow."
-status: ready
+status: active
 depends_on:
   - TASK-01KP97FFFGJKM
+claimed_at: "2026-04-15T18:50:28Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T18:50:28Z"
+dispatched_by: sambeau
