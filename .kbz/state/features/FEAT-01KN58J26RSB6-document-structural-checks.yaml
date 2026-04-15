@@ -2,7 +2,8 @@ id: FEAT-01KN58J26RSB6
 slug: document-structural-checks
 name: Document structural checks
 parent: P17-workflow-and-tooling-3.0
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "Implement automated structural checks on documents at stage gates: required sections present, cross-references valid, acceptance criteria listed. Initially as warnings, promoted to hard gates after validation. Add quality_evaluation structural hook for document approval - server gate checks evaluation record exists with score >= threshold."
 spec: FEAT-01KN58J26RSB6/specification-30-document-structural-checks
 dev_plan: FEAT-01KN58J26RSB6/dev-plan-30-document-structural-checks
