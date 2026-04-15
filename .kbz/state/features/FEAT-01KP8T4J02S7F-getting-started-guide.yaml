@@ -2,7 +2,7 @@ id: FEAT-01KP8T4J02S7F
 slug: getting-started-guide
 name: Getting Started Guide
 parent: P22-documentation-for-public-release
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Produce the Getting Started Guide (docs/getting-started.md) — hands-on walkthrough from install to first completed feature. Show-don't-tell approach, assumes novice to agentic development. Purpose, audience, structure defined in design §8. Full editorial pipeline with advisory checkpoints. Depends on: User Guide, Workflow Overview, Orchestration and Knowledge, Retrospectives."
 created: "2026-04-15T14:53:44Z"
