@@ -3,6 +3,6 @@ parent_feature: FEAT-01KP8T4J02S7F
 slug: copyedit-getting-started
 name: Copyedit Getting Started Guide
 summary: "Copyedit stage: spelling, punctuation, serial commas, British spelling consistency, em dash consistency for docs/getting-started.md."
-status: queued
+status: ready
 depends_on:
   - TASK-01KP98YPB8V3T

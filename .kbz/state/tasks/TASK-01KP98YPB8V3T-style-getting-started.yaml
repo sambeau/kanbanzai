@@ -3,6 +3,14 @@ parent_feature: FEAT-01KP8T4J02S7F
 slug: style-getting-started
 name: Style Getting Started Guide
 summary: "Style stage: passive→active voice, consistent term bolding, paragraph rhythm, reading level for docs/getting-started.md."
-status: ready
+status: done
 depends_on:
   - TASK-01KP98YP8Z899
+files_planned:
+  - docs/getting-started.md
+completed: "2026-04-15T19:31:06Z"
+claimed_at: "2026-04-15T19:28:39Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T19:28:39Z"
+dispatched_by: sambeau
+completion_summary: "Style stage complete. Bolded MCP and acceptance criteria on first use. Converted 4 passive voice instances to active. Removed redundant 'sorted by priority' sentence that duplicated the new estimate/age description. Tightened register/approve and finish tool descriptions."
