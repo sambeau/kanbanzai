@@ -1,0 +1,184 @@
+document_id: FEAT-01KP8T4HXPEAY/report-retrospectives
+document_path: docs/retrospectives.md
+content_hash: d8ac6ffe3925fe72792ecfbe8a14ca901100d47e281a7c366de07fa7854eb600
+indexed_at: 2026-04-15T19:06:03.097889Z
+sections:
+    - path: "1"
+      level: 1
+      title: Retrospectives
+      byte_offset: 0
+      byte_count: 15132
+      word_count: 2217
+      content_hash: d8ac6ffe3925fe72792ecfbe8a14ca901100d47e281a7c366de07fa7854eb600
+      children:
+        - path: "1.1"
+          level: 2
+          title: What signals are
+          byte_offset: 499
+          byte_count: 1223
+          word_count: 189
+          content_hash: 9ccd40b447f62f4122c3f413befc1c03d67d56a60f98d150494e13ba9bba4730
+        - path: "1.2"
+          level: 2
+          title: Signal categories
+          byte_offset: 1722
+          byte_count: 1655
+          word_count: 251
+          content_hash: d2f83539b93a72a479f99ce06cea602e08b8acac0d2010db23c8fd27e727237b
+        - path: "1.3"
+          level: 2
+          title: How to record signals
+          byte_offset: 3377
+          byte_count: 3777
+          word_count: 548
+          content_hash: d57108a8b41b9f65c9665a68de0ffb6bdb70e9cca8ecc70ae57c5d04b2dde8a1
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Severity levels
+              byte_offset: 4114
+              byte_count: 684
+              word_count: 105
+              content_hash: 28d0c4cde53cb94f4c03d7c651b199cccbdc287082a9b86541244429b78a7653
+            - path: 1.3.2
+              level: 3
+              title: Example
+              byte_offset: 4798
+              byte_count: 610
+              word_count: 69
+              content_hash: 33b1d27f53b2b76fd65e9a83bf4639f9b2270c2f7d4ca151b87aba5fd7273c5d
+            - path: 1.3.3
+              level: 3
+              title: Validation and error handling
+              byte_offset: 5408
+              byte_count: 538
+              word_count: 85
+              content_hash: 6dc8de95204b9ccec374bc024c88381fed7c87126b1f452469edfb6a2cdfde8e
+            - path: 1.3.4
+              level: 3
+              title: How signals are stored
+              byte_offset: 5946
+              byte_count: 504
+              word_count: 62
+              content_hash: 313195ff6e5cd4f1340e3f2fcc533d124b89643a73894125a27018f2cc5b52c1
+            - path: 1.3.5
+              level: 3
+              title: Nudges
+              byte_offset: 6450
+              byte_count: 704
+              word_count: 106
+              content_hash: 4e64291c2f389a0fafe1d4167e8d8d06598cbe8fda0fcc4f4ffb45bbbf222720
+        - path: "1.4"
+          level: 2
+          title: How synthesis works
+          byte_offset: 7154
+          byte_count: 4774
+          word_count: 709
+          content_hash: 076b2c00e2a49185bdea2e47f45c3726b5b4145f3923b3a0bdd662715407fbd8
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Parameters
+              byte_offset: 7526
+              byte_count: 534
+              word_count: 89
+              content_hash: fd7bf14294fdfa6ef0eed85a9ea191ed95b9697d3733f8d1698bd919296ad677
+            - path: 1.4.2
+              level: 3
+              title: Scoping
+              byte_offset: 8060
+              byte_count: 554
+              word_count: 78
+              content_hash: 871d714c659ae1656058d6bb0b8c946cfdaad8a6488dceb1eaa9c2cb6f1daba7
+            - path: 1.4.3
+              level: 3
+              title: Clustering
+              byte_offset: 8614
+              byte_count: 582
+              word_count: 87
+              content_hash: 3ea9325c9fbc77625bbfbfdab4b26c6246569206128889c8f6445e976a561244
+            - path: 1.4.4
+              level: 3
+              title: Ranking
+              byte_offset: 9196
+              byte_count: 274
+              word_count: 45
+              content_hash: 156e4fd2c14d15b7ec89acfdff4396269bde6ac18f278382bf5adb08347914d7
+            - path: 1.4.5
+              level: 3
+              title: Response structure
+              byte_offset: 9470
+              byte_count: 2458
+              word_count: 359
+              content_hash: 55f544cfdc7d96e26e2f40381452da73ee13c24e9962f2a6ec3acb78b913a259
+        - path: "1.5"
+          level: 2
+          title: How to generate reports
+          byte_offset: 11928
+          byte_count: 1628
+          word_count: 228
+          content_hash: 3d363685e1a28152283df290984f54c01662e89d995074c689fa7bf617be2f22
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Additional parameters
+              byte_offset: 12283
+              byte_count: 794
+              word_count: 119
+              content_hash: 174ac7a8ba4f141af7c8461e936a2fb5e71f5f99656636d79d487294afd453e9
+            - path: 1.5.2
+              level: 3
+              title: Report structure
+              byte_offset: 13077
+              byte_count: 479
+              word_count: 64
+              content_hash: 2395ceae0ab3f3dc8759e8374de4a77e9dee6d6868598a44e0aff4d697a6e740
+        - path: "1.6"
+          level: 2
+          title: When to run a retrospective
+          byte_offset: 13556
+          byte_count: 1117
+          word_count: 171
+          content_hash: e83f3425f5c11ef043849772eb755fb8d0d20db4d9b75f8c6680abdfe9fc2f7d
+        - path: "1.7"
+          level: 2
+          title: What to read next
+          byte_offset: 14673
+          byte_count: 459
+          word_count: 58
+          content_hash: b440ea0dcb08035521bf97b62cbc2de3c463062204f7cf7bc04f88d8c649f7f2
+entity_refs:
+    - entity_id: FEAT-01KP8T4HXPEAY
+      entity_type: feature
+      section_path: 1.4.2
+      byte_offset: 8377
+    - entity_id: TASK-01KN5AK342WDJ
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 4884
+    - entity_id: DEC-042
+      entity_type: decision
+      section_path: "1.3"
+      byte_offset: 4068
+    - entity_id: P22-documentation-for-public-release
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 8256
+cross_doc_links:
+    - target_path: user-guide.md
+      link_text: User Guide
+      section_path: "1"
+    - target_path: user-guide.md
+      link_text: User Guide
+      section_path: "1.7"
+    - target_path: orchestration-and-knowledge.md
+      link_text: Orchestration and Knowledge
+      section_path: "1.7"
+    - target_path: mcp-tool-reference.md
+      link_text: MCP Tool Reference
+      section_path: "1.7"
+conventional_roles:
+    - section_path: 1.3.2
+      role: example
+      confidence: high
+classified: false
