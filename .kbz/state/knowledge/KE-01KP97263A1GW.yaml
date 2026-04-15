@@ -1,0 +1,17 @@
+id: KE-01KP97263A1GW
+tier: 3
+topic: retro-task-01kp95dxmz0bq
+scope: project
+content: "[moderate] worked-well: The fact-checking sub-agent found 5 genuine errors in the orchestration doc including incorrect conflict risk levels and missing struct fields — more errors than the Workflow Overview check stage."
+learned_from: TASK-01KP95DXMZ0BQ
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - worked-well
+created: "2026-04-15T18:39:38Z"
+created_by: unknown
+updated: "2026-04-15T18:39:38Z"

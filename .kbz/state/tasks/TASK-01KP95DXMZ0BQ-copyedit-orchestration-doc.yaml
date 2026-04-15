@@ -3,8 +3,10 @@ parent_feature: FEAT-01KP8T4HVPY2Y
 slug: copyedit-orchestration-doc
 name: Copyedit Orchestration Doc
 summary: "Copyedit stage: final polish of docs/orchestration-and-knowledge.md. Fix grammar, punctuation, parallel construction, spelling consistency."
-status: active
+status: done
+completed: "2026-04-15T18:39:38Z"
 claimed_at: "2026-04-15T18:33:26Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-15T18:33:26Z"
 dispatched_by: sambeau
+completion_summary: "Copyedit stage: standardised verb forms in What to read next, added serial comma, fixed one passive voice, minor wording tightening. Document is clean — British spelling consistent, em dashes consistent, parallel construction sound."
