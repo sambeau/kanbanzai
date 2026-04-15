@@ -1,0 +1,6 @@
+id: TASK-01KP8V5EADK5E
+parent_feature: FEAT-01KP8T4HQMEA3
+slug: edit-structure
+name: Structural editing
+summary: "Edit stage: verify and improve structure, scannability, tone gradient, audience fit. Check inverted-pyramid compliance, heading descriptiveness (FR-016), exclusion requirements (FR-019–022). Produce editorial changelog. Advisory checkpoint after completion. Role: doc-editor. Skill: edit-docs."
+status: queued
