@@ -3,6 +3,6 @@ parent_feature: FEAT-01KP8T4HSX6QZ
 slug: edit-workflow-overview
 name: Edit workflow overview
 summary: "Structural edit of docs/workflow-overview.md. Check section ordering, depth balance, logical flow, inverted pyramid structure, heading descriptiveness. Produce changelog."
-status: queued
+status: ready
 depends_on:
   - TASK-01KP92BTQV4NY

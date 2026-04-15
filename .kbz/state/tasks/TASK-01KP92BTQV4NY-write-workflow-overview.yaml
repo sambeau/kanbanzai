@@ -3,8 +3,12 @@ parent_feature: FEAT-01KP8T4HSX6QZ
 slug: write-workflow-overview
 name: Write workflow overview
 summary: "Write docs/workflow-overview.md from the design brief (§7) and existing content. Restructure around the new conceptual framework: framing, comparison, design-led workflow, document-led process, specification-led implementation, chat-based project management, approval stages, workflow diagram, failure modes."
-status: active
+status: done
+files_planned:
+  - docs/workflow-overview.md
+completed: "2026-04-15T17:22:04Z"
 claimed_at: "2026-04-15T17:18:30Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-15T17:18:30Z"
 dispatched_by: sambeau
+completion_summary: "Rewrote docs/workflow-overview.md following design §7 framework. Sections: framing (dual nature), methodology comparison, design-led workflow, document-led process, specification-led implementation, chat-based project management, approval stages with lifecycle tables, ASCII workflow diagram, and failure modes. Incorporates reusable material from the existing document per §7.5."
