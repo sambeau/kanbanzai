@@ -4,3 +4,5 @@ slug: check-facts
 name: Fact verification
 summary: "Check stage: verify every factual claim against the current Kanbanzai implementation. Test code examples and command references. Flag hallucinations, inaccuracies, vague claims. Produce classified findings report. Target: zero unresolved error/hallucination findings (AC-019). Role: doc-checker. Skill: check-docs."
 status: queued
+depends_on:
+  - TASK-01KP8V5EADK5E
