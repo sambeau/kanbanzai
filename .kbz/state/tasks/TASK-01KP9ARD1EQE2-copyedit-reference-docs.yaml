@@ -3,6 +3,6 @@ parent_feature: FEAT-01KP8T4J4795M
 slug: copyedit-reference-docs
 name: Copyedit Reference Docs
 summary: "Final copyedit pass on all four reference documents: British spelling, serial commas, em dashes, consistent punctuation, verb structure. Documents: MCP Tool Reference, Schema Reference, Configuration Reference, Viewer Agents Guide."
-status: queued
+status: ready
 depends_on:
   - TASK-01KP9ARCZCTDG
