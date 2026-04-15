@@ -18,14 +18,6 @@ import (
 	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
-type CreateEpicInput struct {
-	EpicSlug  string // human-chosen slug for the EPIC-{SLUG} ID; derived from Slug if empty
-	Slug      string
-	Name      string
-	Summary   string
-	CreatedBy string
-}
-
 type CreateFeatureInput struct {
 	Slug      string
 	Parent    string
@@ -70,7 +62,7 @@ type UpdateStatusInput struct {
 }
 
 type UpdateEntityInput struct {
-	Type       string              // entity type: "epic", "feature", "task", "bug", "decision"
+	Type       string              // entity type: "feature", "task", "bug", "decision"
 	ID         string              // entity ID
 	Slug       string              // entity slug
 	Fields     map[string]string   // field name → new value (string values only)
@@ -159,7 +151,6 @@ func (s *EntityService) RebuildCache() (int, error) {
 
 	var records []cache.RebuildRecord
 	for _, kind := range []string{
-		string(model.EntityKindEpic),
 		string(model.EntityKindFeature),
 		string(model.EntityKindTask),
 		string(model.EntityKindBug),
@@ -181,56 +172,6 @@ func (s *EntityService) RebuildCache() (int, error) {
 	}
 
 	return s.cache.Rebuild(records)
-}
-
-func (s *EntityService) CreateEpic(input CreateEpicInput) (CreateResult, error) {
-	if err := validateRequired(
-		field("slug", input.Slug),
-		field("name", input.Name),
-		field("summary", input.Summary),
-		field("created_by", input.CreatedBy),
-	); err != nil {
-		return CreateResult{}, err
-	}
-
-	name, err := validate.ValidateName(input.Name)
-	if err != nil {
-		return CreateResult{}, err
-	}
-
-	epicSlug := strings.TrimSpace(input.EpicSlug)
-	if epicSlug == "" {
-		epicSlug = strings.ToUpper(strings.ReplaceAll(normalizeSlug(input.Slug), " ", "-"))
-	}
-
-	exists := func(candidateID string) bool {
-		return s.entityExists(string(model.EntityKindEpic), candidateID)
-	}
-	idValue, err := s.allocator.Allocate(model.EntityKindEpic, epicSlug, exists)
-	if err != nil {
-		return CreateResult{}, err
-	}
-
-	entity := model.Epic{
-		ID:        idValue,
-		Slug:      normalizeSlug(input.Slug),
-		Name:      name,
-		Status:    model.EpicStatus("proposed"),
-		Summary:   strings.TrimSpace(input.Summary),
-		Created:   s.now(),
-		CreatedBy: strings.TrimSpace(input.CreatedBy),
-	}
-
-	if err := validate.ValidateInitialState(validate.EntityEpic, string(entity.Status)); err != nil {
-		return CreateResult{}, err
-	}
-
-	result, err := s.write(entity)
-	if err != nil {
-		return result, err
-	}
-	s.cacheUpsertFromResult(result)
-	return result, nil
 }
 
 func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, error) {
@@ -458,7 +399,6 @@ func (s *EntityService) HealthCheck() (*validate.HealthReport, error) {
 		}
 
 		for _, kind := range []string{
-			string(model.EntityKindEpic),
 			string(model.EntityKindFeature),
 			string(model.EntityKindTask),
 			string(model.EntityKindBug),
@@ -885,8 +825,6 @@ func validateKindForType(entityType string) (validate.EntityKind, error) {
 	switch entityType {
 	case string(model.EntityKindPlan):
 		return validate.EntityPlan, nil
-	case string(model.EntityKindEpic):
-		return validate.EntityEpic, nil
 	case string(model.EntityKindFeature):
 		return validate.EntityFeature, nil
 	case string(model.EntityKindTask):
@@ -910,25 +848,6 @@ func parseRecordIdentity(entityType, idPart string) (string, string, error) {
 			return idPart, "", nil
 		}
 		return "", "", fmt.Errorf("invalid plan record filename %q", idPart)
-
-	case string(model.EntityKindEpic):
-		// New format: EPIC-{EPICSLUG}-{filename-slug}
-		// Epic slug is uppercase letters, digits, hyphens.
-		// Filename slug starts with a lowercase letter.
-		if strings.HasPrefix(idPart, "EPIC-") {
-			rest := idPart[5:] // after "EPIC-"
-			for i := 0; i < len(rest); i++ {
-				c := rest[i]
-				if c >= 'a' && c <= 'z' {
-					if i > 0 && rest[i-1] == '-' {
-						return idPart[:5+i-1], rest[i:], nil
-					}
-					break
-				}
-			}
-		}
-		// Fall back to legacy format
-		return parseLegacyRecordIdentity(entityType, idPart)
 
 	case string(model.EntityKindFeature), string(model.EntityKindBug),
 		string(model.EntityKindDecision), string(model.EntityKindTask),
@@ -988,13 +907,6 @@ func typePrefixForEntityType(entityType string) string {
 
 func recordFromEntity(entity model.Entity) (storage.EntityRecord, error) {
 	switch e := entity.(type) {
-	case model.Epic:
-		return storage.EntityRecord{
-			Type:   string(model.EntityKindEpic),
-			ID:     e.ID,
-			Slug:   e.Slug,
-			Fields: epicFields(e),
-		}, nil
 	case model.Feature:
 		return storage.EntityRecord{
 			Type:   string(model.EntityKindFeature),
@@ -1033,25 +945,6 @@ func recordFromEntity(entity model.Entity) (storage.EntityRecord, error) {
 	default:
 		return storage.EntityRecord{}, fmt.Errorf("internal error: entity type is not supported for serialisation — this is likely a bug; please report it")
 	}
-}
-
-func epicFields(e model.Epic) map[string]any {
-	fields := map[string]any{
-		"id":         e.ID,
-		"slug":       e.Slug,
-		"name":       e.Name,
-		"status":     string(e.Status),
-		"summary":    e.Summary,
-		"created":    e.Created.Format(time.RFC3339),
-		"created_by": e.CreatedBy,
-	}
-	if e.Estimate != nil {
-		fields["estimate"] = *e.Estimate
-	}
-	if len(e.Features) > 0 {
-		fields["features"] = append([]string(nil), e.Features...)
-	}
-	return fields
 }
 
 func featureFields(e model.Feature) map[string]any {
@@ -1288,11 +1181,7 @@ func stringFromState(state map[string]any, key string) string {
 func extractParentRefFromState(entityType string, state map[string]any) string {
 	switch strings.ToLower(entityType) {
 	case "feature":
-		// Phase 2: use "parent" field; fallback to "epic" for Phase 1 compatibility
-		if parent := stringFromState(state, "parent"); parent != "" {
-			return parent
-		}
-		return stringFromState(state, "epic")
+		return stringFromState(state, "parent")
 	case "task":
 		return stringFromState(state, "parent_feature")
 	case "bug":

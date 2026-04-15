@@ -124,16 +124,11 @@ func CheckHealth(loadAll func() ([]EntityInfo, error), entityExists func(entityT
 		}
 
 		switch e.Type {
-		case string(EntityEpic):
-			checkRefSlice("features", string(EntityFeature), toStringSlice(e.Fields["features"]))
-
 		case string(EntityFeature):
 			parent := toString(e.Fields["parent"])
 			if parent != "" {
 				if model.IsPlanID(parent) {
 					checkRef("parent", string(EntityPlan), parent)
-				} else {
-					checkRef("parent", string(EntityEpic), parent)
 				}
 			}
 			checkRef("supersedes", string(EntityFeature), toString(e.Fields["supersedes"]))
@@ -442,9 +437,6 @@ func MergeReports(reports ...*HealthReport) *HealthReport {
 func inferEntityType(id string) string {
 	if model.IsPlanID(id) {
 		return string(model.EntityKindPlan)
-	}
-	if strings.HasPrefix(id, "EPIC-") {
-		return string(model.EntityKindEpic)
 	}
 	if strings.HasPrefix(id, "FEAT-") {
 		return string(model.EntityKindFeature)

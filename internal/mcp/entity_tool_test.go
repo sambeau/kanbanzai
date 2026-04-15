@@ -217,27 +217,6 @@ func TestEntity_Create_Bug(t *testing.T) {
 	}
 }
 
-func TestEntity_Create_Epic(t *testing.T) {
-	t.Parallel()
-	entitySvc := setupEntityToolTest(t)
-
-	result := callEntityToolJSON(t, entitySvc, map[string]any{
-		"action":  "create",
-		"type":    "epic",
-		"slug":    "big-initiative",
-		"name":    "Big Initiative",
-		"summary": "A large-scale effort",
-	})
-
-	entity, ok := result["entity"].(map[string]any)
-	if !ok {
-		t.Fatalf("expected 'entity' object, got: %v", result)
-	}
-	if entity["type"] != "epic" {
-		t.Errorf("entity.type = %v, want epic", entity["type"])
-	}
-}
-
 func TestEntity_Create_Decision(t *testing.T) {
 	t.Parallel()
 	entitySvc := setupEntityToolTest(t)
@@ -954,7 +933,7 @@ func TestEntityInferType(t *testing.T) {
 		{"t-01JX123", "task", true},
 		{"BUG-01JX123", "bug", true},
 		{"bug-01JX123", "bug", true},
-		{"EPIC-MYSLUG-xyz", "epic", true},
+
 		{"DEC-01JX123", "decision", true},
 		{"INC-01JX123", "incident", true},
 		{"P1-my-plan", "plan", true},

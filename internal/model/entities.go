@@ -16,10 +16,6 @@ const (
 	EntityKindDecision EntityKind = "decision"
 	EntityKindDocument EntityKind = "document"
 	EntityKindIncident EntityKind = "incident"
-
-	// EntityKindEpic is deprecated and will be removed after migration.
-	// Use EntityKindPlan instead.
-	EntityKindEpic EntityKind = "epic"
 )
 
 // PlanStatus is the lifecycle state for a Plan.
@@ -33,17 +29,6 @@ const (
 	PlanStatusDone       PlanStatus = "done"
 	PlanStatusSuperseded PlanStatus = "superseded"
 	PlanStatusCancelled  PlanStatus = "cancelled"
-)
-
-// EpicStatus is the lifecycle state for an Epic (deprecated, use PlanStatus).
-type EpicStatus string
-
-const (
-	EpicStatusProposed EpicStatus = "proposed"
-	EpicStatusApproved EpicStatus = "approved"
-	EpicStatusActive   EpicStatus = "active"
-	EpicStatusOnHold   EpicStatus = "on-hold"
-	EpicStatusDone     EpicStatus = "done"
 )
 
 // FeatureStatus is the lifecycle state for a Feature.
@@ -255,36 +240,6 @@ func (p Plan) GetSlug() string {
 	return p.Slug
 }
 
-// Epic is the canonical Phase 1 representation of an Epic (deprecated).
-// Use Plan for Phase 2 and beyond.
-type Epic struct {
-	ID        string     `yaml:"id"`
-	Slug      string     `yaml:"slug"`
-	Name      string     `yaml:"name"`
-	Status    EpicStatus `yaml:"status"`
-	Estimate  *float64   `yaml:"estimate,omitempty"`
-	Summary   string     `yaml:"summary"`
-	Created   time.Time  `yaml:"created"`
-	CreatedBy string     `yaml:"created_by"`
-
-	Features []string `yaml:"features,omitempty"`
-}
-
-// GetKind returns the entity kind.
-func (Epic) GetKind() EntityKind {
-	return EntityKindEpic
-}
-
-// GetID returns the canonical ID.
-func (e Epic) GetID() string {
-	return e.ID
-}
-
-// GetSlug returns the human-readable slug.
-func (e Epic) GetSlug() string {
-	return e.Slug
-}
-
 // OverrideRecord captures a single gate override performed on a feature
 // transition. It is appended to Feature.Overrides each time a gate is
 // bypassed via the override mechanism (FR-014, FR-016).
@@ -321,7 +276,6 @@ type Feature struct {
 	Tags []string `yaml:"tags,omitempty"`
 
 	// Legacy fields (Phase 1 compatibility)
-	Epic string `yaml:"epic,omitempty"` // Deprecated: use Parent
 	Plan string `yaml:"plan,omitempty"` // Deprecated: use DevPlan
 
 	Tasks        []string         `yaml:"tasks,omitempty"`

@@ -502,34 +502,3 @@ func TestCrossEntityQuery_EmptyPlanID(t *testing.T) {
 		t.Fatal("expected error for empty plan_id")
 	}
 }
-
-func TestCrossEntityQuery_LegacyEpicField(t *testing.T) {
-	t.Parallel()
-	root := t.TempDir()
-	svc := NewEntityService(root)
-
-	planID := "P1-legacy"
-
-	// Feature uses legacy "epic" field instead of "parent"
-	fields := map[string]any{
-		"id":         "FEAT-01EEEEEEEEE01",
-		"slug":       "feat-legacy",
-		"epic":       planID,
-		"status":     "draft",
-		"summary":    "legacy feature",
-		"created":    "2026-01-01T00:00:00Z",
-		"created_by": "tester",
-	}
-	writeTestEntity(t, root, "feature", "FEAT-01EEEEEEEEE01", "feat-legacy", fields)
-
-	writeTestEntity(t, root, "task", "TASK-01FFFFFFFFFFF1", "task-leg",
-		makeTaskFields("TASK-01FFFFFFFFFFF1", "task-leg", "FEAT-01EEEEEEEEE01", "queued", nil))
-
-	results, err := svc.CrossEntityQuery(planID)
-	if err != nil {
-		t.Fatalf("CrossEntityQuery() error = %v", err)
-	}
-	if len(results) != 1 {
-		t.Fatalf("expected 1 task via legacy epic field, got %d", len(results))
-	}
-}

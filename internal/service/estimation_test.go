@@ -135,8 +135,6 @@ func TestSoftLimitWarning_NoWarning(t *testing.T) {
 		{"bug", 13},
 		{"feature", 20},
 		{"feature", 100},
-		{"epic", 40},
-		{"epic", 100},
 	}
 
 	for _, tc := range cases {

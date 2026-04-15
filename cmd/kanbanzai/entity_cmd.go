@@ -166,7 +166,7 @@ func runEntityGet(args []string, deps dependencies) error {
 			Path:  listResult.Path,
 			State: listResult.State,
 		})
-	case "epic", "feature", "task", "bug", "decision":
+	case "feature", "task", "bug", "decision":
 		values, err := parseFlags(args[1:])
 		if err != nil {
 			return err
@@ -202,8 +202,6 @@ func runEntityList(args []string, deps dependencies) error {
 			fmt.Fprintf(deps.stdout, "%s\t%s\t%s\t%s\n", r.ID, r.Slug, r.Path, status)
 		}
 		return nil
-	case "epics":
-		return printListResults(deps.stdout, "epic", svc)
 	case "features":
 		return printListResults(deps.stdout, "feature", svc)
 	case "tasks":

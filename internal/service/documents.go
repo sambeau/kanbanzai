@@ -1089,7 +1089,7 @@ func isValidEntityID(id string) bool {
 	}
 
 	// Check for standard entity ID formats (FEAT-xxx, TASK-xxx, etc.)
-	prefixes := []string{"FEAT-", "TASK-", "BUG-", "DEC-", "EPIC-"}
+	prefixes := []string{"FEAT-", "TASK-", "BUG-", "DEC-"}
 	for _, prefix := range prefixes {
 		if strings.HasPrefix(id, prefix) {
 			return true

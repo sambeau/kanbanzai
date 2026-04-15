@@ -26,7 +26,6 @@ var version = "dev"
 
 type entityService interface {
 	CreatePlan(service.CreatePlanInput) (service.CreateResult, error)
-	CreateEpic(service.CreateEpicInput) (service.CreateResult, error)
 	CreateFeature(service.CreateFeatureInput) (service.CreateResult, error)
 	CreateTask(service.CreateTaskInput) (service.CreateResult, error)
 	CreateBug(service.CreateBugInput) (service.CreateResult, error)

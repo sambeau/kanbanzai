@@ -56,7 +56,7 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Entity Manager"),
 		mcp.WithDescription(
-			"The primary tool for managing workflow entities (plans, features, tasks, bugs, epics, decisions) — "+
+			"The primary tool for managing workflow entities (plans, features, tasks, bugs, decisions) — "+
 				"use this whenever you need to create, query, modify, or advance entities through their lifecycle. "+
 				"Use INSTEAD OF reading .kbz/state/ YAML files directly — action: get and action: list return "+
 				"structured data with lifecycle state and cross-references that raw files do not provide. "+
@@ -70,7 +70,7 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 			mcp.Required(),
 			mcp.Description("Action: create, get, list, update, transition"),
 		),
-		mcp.WithString("type", mcp.Description("Entity type: plan, feature, task, bug, epic, decision (required for create and list)")),
+		mcp.WithString("type", mcp.Description("Entity type: plan, feature, task, bug, decision (required for create and list)")),
 		mcp.WithString("id", mcp.Description("Entity ID — type inferred from prefix (required for get, update, transition)")),
 		mcp.WithString("status", mcp.Description("Target status (transition) or status filter (list)")),
 		mcp.WithString("parent", mcp.Description("Parent ID filter: plan ID for features, feature ID for tasks (list only)")),
@@ -129,7 +129,7 @@ func entityCreateAction(entitySvc *service.EntityService) ActionHandler {
 
 		entityType := strings.ToLower(entityArgStr(args, "type"))
 		if entityType == "" {
-			return nil, fmt.Errorf("Cannot create entity: type is missing.\n\nTo resolve:\n  Provide the entity type: entity(action: \"create\", type: \"task|feature|plan|bug|epic|decision\", ...)")
+			return nil, fmt.Errorf("Cannot create entity: type is missing.\n\nTo resolve:\n  Provide the entity type: entity(action: \"create\", type: \"task|feature|plan|bug|decision\", ...)")
 		}
 
 		// Signal mutation so side_effects: [] is always present in both
@@ -220,14 +220,6 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 			Type:       entityArgStr(args, "bug_type"),
 		})
 
-	case "epic":
-		result, err = entitySvc.CreateEpic(service.CreateEpicInput{
-			Slug:      entityArgStr(args, "slug"),
-			Name:      name,
-			Summary:   entityArgStr(args, "summary"),
-			CreatedBy: createdBy,
-		})
-
 	case "decision":
 		result, err = entitySvc.CreateDecision(service.CreateDecisionInput{
 			Slug:      entityArgStr(args, "slug"),
@@ -238,7 +230,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 		})
 
 	default:
-		return nil, fmt.Errorf("Cannot create entity: unknown type %q.\n\nTo resolve:\n  Use one of: plan, feature, task, bug, epic, decision", entityType)
+		return nil, fmt.Errorf("Cannot create entity: unknown type %q.\n\nTo resolve:\n  Use one of: plan, feature, task, bug, decision", entityType)
 	}
 
 	if err != nil {
@@ -379,7 +371,7 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 		args, _ := req.Params.Arguments.(map[string]any)
 		entityType := strings.ToLower(entityArgStr(args, "type"))
 		if entityType == "" {
-			return nil, fmt.Errorf("Cannot list entities: no type provided.\n\nTo resolve:\n  Pass type with one of: plan, feature, task, bug, epic, decision.")
+			return nil, fmt.Errorf("Cannot list entities: no type provided.\n\nTo resolve:\n  Pass type with one of: plan, feature, task, bug, decision.")
 		}
 
 		statusFilter := entityArgStr(args, "status")
@@ -424,7 +416,7 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 			CreatedBefore: createdBefore,
 		})
 		if err != nil {
-			return nil, fmt.Errorf("Cannot list %s entities: %w.\n\nTo resolve:\n  Check that %q is a valid entity type (plan, feature, task, bug, epic, decision).", entityType, err, entityType)
+			return nil, fmt.Errorf("Cannot list %s entities: %w.\n\nTo resolve:\n  Check that %q is a valid entity type (plan, feature, task, bug, decision).", entityType, err, entityType)
 		}
 		return entityListResponse(entityType, entitySummaries(results)), nil
 	}
@@ -1151,8 +1143,6 @@ func entityKindFromType(entityType string) (validate.EntityKind, bool) {
 		return validate.EntityTask, true
 	case "bug":
 		return validate.EntityBug, true
-	case "epic":
-		return validate.EntityEpic, true
 	case "decision":
 		return validate.EntityDecision, true
 	case "incident":
@@ -1174,8 +1164,6 @@ func entityInferType(entityID string) (entityType string, ok bool) {
 		return "task", true
 	case strings.HasPrefix(upper, "BUG-"):
 		return "bug", true
-	case strings.HasPrefix(upper, "EPIC-"):
-		return "epic", true
 	case strings.HasPrefix(upper, "DEC-"):
 		return "decision", true
 	case strings.HasPrefix(upper, "INC-"):

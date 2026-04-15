@@ -817,7 +817,7 @@ func TestIsValidEntityID(t *testing.T) {
 		{"TASK-abc", true},
 		{"BUG-01ABC", true},
 		{"DEC-xyz", true},
-		{"EPIC-TEST", true},
+
 		{"P1-basic", true},
 		{"X99-test", true},
 		{"invalid", false},

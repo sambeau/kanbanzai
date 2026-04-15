@@ -7,40 +7,6 @@ import (
 	"github.com/sambeau/kanbanzai/internal/model"
 )
 
-func TestAllocator_AllocateEpic(t *testing.T) {
-	t.Parallel()
-	allocator := NewAllocator()
-
-	got, err := allocator.Allocate(model.EntityKindEpic, "my-project", nil)
-	if err != nil {
-		t.Fatalf("Allocate() error = %v", err)
-	}
-	if got != "EPIC-MY-PROJECT" {
-		t.Fatalf("Allocate() = %q, want %q", got, "EPIC-MY-PROJECT")
-	}
-}
-
-func TestAllocator_AllocateEpic_DuplicateRejected(t *testing.T) {
-	t.Parallel()
-	allocator := NewAllocator()
-
-	exists := func(id string) bool { return id == "EPIC-DUPE" }
-	_, err := allocator.Allocate(model.EntityKindEpic, "DUPE", exists)
-	if err == nil {
-		t.Fatal("Allocate() error = nil, want duplicate error")
-	}
-}
-
-func TestAllocator_AllocateEpic_InvalidSlug(t *testing.T) {
-	t.Parallel()
-	allocator := NewAllocator()
-
-	_, err := allocator.Allocate(model.EntityKindEpic, "A", nil) // too short
-	if err == nil {
-		t.Fatal("Allocate() error = nil, want error for short slug")
-	}
-}
-
 func TestAllocator_AllocateTSIDTypes(t *testing.T) {
 	t.Parallel()
 	allocator := NewAllocator()
@@ -123,7 +89,6 @@ func TestAllocator_Validate(t *testing.T) {
 		id      string
 		wantErr bool
 	}{
-		{"valid epic", model.EntityKindEpic, "EPIC-MYPROJECT", false},
 		{"valid feature TSID", model.EntityKindFeature, "FEAT-01J3K7MXP3RT5", false},
 		{"valid bug TSID", model.EntityKindBug, "BUG-01J4AR7WHN4F2", false},
 		{"valid task TSID", model.EntityKindTask, "TASK-01J3KZZZBB4KF", false},
@@ -133,7 +98,6 @@ func TestAllocator_Validate(t *testing.T) {
 		{"legacy bug accepted", model.EntityKindBug, "BUG-002", false},
 		{"wrong prefix", model.EntityKindFeature, "BUG-01J3K7MXP3RT5", true},
 		{"invalid format", model.EntityKindFeature, "notanid", true},
-		{"epic with invalid slug", model.EntityKindEpic, "EPIC-A", true}, // too short
 	}
 
 	for _, tt := range tests {
@@ -158,7 +122,6 @@ func TestTypePrefix_AllKinds(t *testing.T) {
 		kind   model.EntityKind
 		prefix string
 	}{
-		{model.EntityKindEpic, "EPIC"},
 		{model.EntityKindFeature, "FEAT"},
 		{model.EntityKindBug, "BUG"},
 		{model.EntityKindDecision, "DEC"},
@@ -205,12 +168,10 @@ func TestIsLegacyID(t *testing.T) {
 		id   string
 		want bool
 	}{
-		{"E-001", true},
 		{"FEAT-001", true},
 		{"FEAT-001.1", true},
 		{"BUG-002", true},
 		{"DEC-003", true},
-		{"EPIC-MYPROJECT", false},
 		{"FEAT-01J3K7MXP3RT5", false},
 		{"TASK-01J3KZZZBB4KF", false},
 	}

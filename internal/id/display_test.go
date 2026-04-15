@@ -25,9 +25,6 @@ func TestNormalizeID(t *testing.T) {
 		{"P7-developer-experience", "P7-developer-experience"},
 		{"P1-my-plan", "P1-my-plan"},
 
-		// Epic IDs — pass through unchanged
-		{"EPIC-MYPROJECT", "EPIC-MYPROJECT"},
-
 		// Empty and whitespace
 		{"", ""},
 		{"  FEAT-01KMR-X1SEQV49  ", "FEAT-01KMRX1SEQV49"},
@@ -111,7 +108,6 @@ func TestFormatFullDisplay(t *testing.T) {
 		{"TASK-01J3KZZZBB4KF", "TASK-01J3K-ZZZBB4KF"},
 		{"DEC-01J3KABCDE7MX", "DEC-01J3K-ABCDE7MX"},
 		{"DOC-01J3K7MXP3RT5", "DOC-01J3K-7MXP3RT5"},
-		{"EPIC-MYPROJECT", "EPIC-MYPROJECT"}, // epic unchanged
 	}
 
 	for _, tt := range tests {
@@ -136,7 +132,6 @@ func TestStripBreakHyphens(t *testing.T) {
 		{"FEAT-01J3K-7MXP3RT5", "FEAT-01J3K7MXP3RT5"},
 		{"feat-01j3k-7mxp3rt5", "FEAT-01J3K7MXP3RT5"}, // case normalized
 		{"FEAT-01J3K7MXP3RT5", "FEAT-01J3K7MXP3RT5"},  // already canonical
-		{"EPIC-MYPROJECT", "EPIC-MYPROJECT"},          // epic unchanged
 		{"BUG-01J4A-R7WHN4F2", "BUG-01J4AR7WHN4F2"},
 	}
 

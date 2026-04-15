@@ -23,57 +23,6 @@ func assertIDFormat(t *testing.T, label, id, wantPrefix string, wantLen int) {
 	}
 }
 
-func assertEpicID(t *testing.T, label, id, wantID string) {
-	t.Helper()
-	if id != wantID {
-		t.Fatalf("%s ID = %q, want %q", label, id, wantID)
-	}
-}
-
-func TestEntityService_CreateEpic(t *testing.T) {
-	t.Parallel()
-
-	root := t.TempDir()
-	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
-
-	got, err := service.CreateEpic(CreateEpicInput{
-		Slug:      "phase 1 kernel",
-		Name:      "Phase 1 Kernel",
-		Summary:   "Build the initial workflow kernel",
-		CreatedBy: "sam",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
-	}
-
-	if got.Type != "epic" {
-		t.Fatalf("CreateEpic() type = %q, want %q", got.Type, "epic")
-	}
-	// Epic slug "phase 1 kernel" normalizes to "phase-1-kernel", uppercased to "PHASE-1-KERNEL"
-	assertEpicID(t, "CreateEpic()", got.ID, "EPIC-PHASE-1-KERNEL")
-	if got.Slug != "phase-1-kernel" {
-		t.Fatalf("CreateEpic() slug = %q, want %q", got.Slug, "phase-1-kernel")
-	}
-
-	wantPath := filepath.Join(root, "epics", "EPIC-PHASE-1-KERNEL-phase-1-kernel.yaml")
-	if got.Path != wantPath {
-		t.Fatalf("CreateEpic() path = %q, want %q", got.Path, wantPath)
-	}
-
-	wantState := map[string]any{
-		"id":         "EPIC-PHASE-1-KERNEL",
-		"slug":       "phase-1-kernel",
-		"name":       "Phase 1 Kernel",
-		"status":     "proposed",
-		"summary":    "Build the initial workflow kernel",
-		"created":    "2026-03-19T12:00:00Z",
-		"created_by": "sam",
-	}
-	if !reflect.DeepEqual(got.State, wantState) {
-		t.Fatalf("CreateEpic() state mismatch\nwant: %#v\ngot:  %#v", wantState, got.State)
-	}
-}
-
 func TestEntityService_CreateFeature_AllocatesSequentialID(t *testing.T) {
 	t.Parallel()
 
@@ -501,14 +450,18 @@ func TestEntityService_StatusUpdate_RejectsIllegalTransition(t *testing.T) {
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	created, err := service.CreateEpic(CreateEpicInput{
-		Slug:      "phase 1 kernel",
+	planID := "P1-illegal-transition"
+	writeTestPlan(t, service, planID)
+
+	created, err := service.CreateFeature(CreateFeatureInput{
+		Slug:      "phase-1-kernel",
 		Name:      "Phase 1 Kernel",
+		Parent:    planID,
 		Summary:   "Build the initial workflow kernel",
 		CreatedBy: "sam",
 	})
 	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
+		t.Fatalf("CreateFeature() error = %v", err)
 	}
 
 	if created.State["status"] != "proposed" {
@@ -534,29 +487,12 @@ func TestEntityService_CreateTask_InvalidFeatureID(t *testing.T) {
 
 	_, err := service.CreateTask(CreateTaskInput{
 		Name:          "test",
-		ParentFeature: "EPIC-TEST",
+		ParentFeature: "BAD-PARENT",
 		Slug:          "bad parent",
 		Summary:       "This should fail",
 	})
 	if err == nil {
 		t.Fatal("CreateTask() error = nil, want non-nil")
-	}
-}
-
-func TestEntityService_CreateEpic_MissingRequiredField(t *testing.T) {
-	t.Parallel()
-
-	root := t.TempDir()
-	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
-
-	_, err := service.CreateEpic(CreateEpicInput{
-		Slug:      "",
-		Name:      "Phase 1 Kernel",
-		Summary:   "Build the initial workflow kernel",
-		CreatedBy: "sam",
-	})
-	if err == nil {
-		t.Fatal("CreateEpic() error = nil, want non-nil")
 	}
 }
 
@@ -620,11 +556,6 @@ func TestValidateKindForType(t *testing.T) {
 		wantError bool
 	}{
 		{
-			name:  "epic",
-			input: "epic",
-			want:  validate.EntityEpic,
-		},
-		{
 			name:  "feature",
 			input: "feature",
 			want:  validate.EntityFeature,
@@ -685,13 +616,6 @@ func TestParseRecordIdentity(t *testing.T) {
 		wantError  bool
 	}{
 		{
-			name:       "epic new format",
-			entityType: "epic",
-			idPart:     "EPIC-PHASE-1-KERNEL-phase-1-kernel",
-			wantID:     "EPIC-PHASE-1-KERNEL",
-			wantSlug:   "phase-1-kernel",
-		},
-		{
 			name:       "feature TSID format",
 			entityType: "feature",
 			idPart:     "FEAT-01J3K7MXP3RT5-storage-layer",
@@ -718,12 +642,6 @@ func TestParseRecordIdentity(t *testing.T) {
 			idPart:     "TASK-01J3KZZZBB4KF-write-files",
 			wantID:     "TASK-01J3KZZZBB4KF",
 			wantSlug:   "write-files",
-		},
-		{
-			name:       "epic with no dashes returns error",
-			entityType: "epic",
-			idPart:     "nodashes",
-			wantError:  true,
 		},
 		{
 			name:       "feature with only one dash segment returns error",
@@ -907,55 +825,34 @@ func TestEntityService_CreateBug_AcceptsValidEnums(t *testing.T) {
 	}
 }
 
-func TestEntityService_ValidateCandidate_ValidEpic(t *testing.T) {
-	t.Parallel()
-
-	root := t.TempDir()
-	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
-
-	errs := svc.ValidateCandidate("epic", map[string]any{
-		"id":         "EPIC-TESTEPIC",
-		"slug":       "test",
-		"name":       "Test Epic",
-		"status":     "proposed",
-		"summary":    "A test epic",
-		"created":    "2026-03-19T12:00:00Z",
-		"created_by": "agent",
-	})
-	if len(errs) != 0 {
-		t.Fatalf("expected no errors, got %d: %v", len(errs), errs)
-	}
-}
-
 func TestEntityService_ValidateCandidate_MissingField(t *testing.T) {
 	t.Parallel()
 
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	errs := svc.ValidateCandidate("epic", map[string]any{
-		"id":      "EPIC-TESTEPIC",
-		"slug":    "test",
-		"status":  "proposed",
-		"summary": "A test epic",
-		"created": "2026-03-19T12:00:00Z",
+	errs := svc.ValidateCandidate("feature", map[string]any{
+		"id":     "FEAT-01AAAAAAAAA01",
+		"slug":   "test",
+		"status": "draft",
+		"parent": "P1-test",
 	})
 	if len(errs) == 0 {
 		t.Fatal("expected validation errors for missing fields, got none")
 	}
 
-	foundName := false
+	foundSummary := false
 	foundCreatedBy := false
 	for _, e := range errs {
-		if e.Field == "name" {
-			foundName = true
+		if e.Field == "summary" {
+			foundSummary = true
 		}
 		if e.Field == "created_by" {
 			foundCreatedBy = true
 		}
 	}
-	if !foundName {
-		t.Error("expected error for missing title field")
+	if !foundSummary {
+		t.Error("expected error for missing summary field")
 	}
 	if !foundCreatedBy {
 		t.Error("expected error for missing created_by field")
@@ -1105,14 +1002,18 @@ func TestEntityService_UpdateEntity_CorrectField(t *testing.T) {
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	created, err := svc.CreateEpic(CreateEpicInput{
+	planID := "P1-update-field"
+	writeTestPlan(t, svc, planID)
+
+	created, err := svc.CreateFeature(CreateFeatureInput{
 		Slug:      "phase-1-kernel",
 		Name:      "Phase 1 Kernel",
+		Parent:    planID,
 		Summary:   "Build the initial workflow kernel",
 		CreatedBy: "sam",
 	})
 	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
+		t.Fatalf("CreateFeature() error = %v", err)
 	}
 
 	updated, err := svc.UpdateEntity(UpdateEntityInput{
@@ -1144,21 +1045,25 @@ func TestEntityService_UpdateEntity_RejectsIDChange(t *testing.T) {
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	created, err := svc.CreateEpic(CreateEpicInput{
+	planID := "P1-reject-id"
+	writeTestPlan(t, svc, planID)
+
+	created, err := svc.CreateFeature(CreateFeatureInput{
 		Slug:      "phase-1-kernel",
 		Name:      "Phase 1 Kernel",
+		Parent:    planID,
 		Summary:   "Build the initial workflow kernel",
 		CreatedBy: "sam",
 	})
 	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
+		t.Fatalf("CreateFeature() error = %v", err)
 	}
 
 	_, err = svc.UpdateEntity(UpdateEntityInput{
 		Type:   created.Type,
 		ID:     created.ID,
 		Slug:   created.Slug,
-		Fields: map[string]string{"id": "EPIC-HACKED"},
+		Fields: map[string]string{"id": "FEAT-HACKED"},
 	})
 	if err == nil {
 		t.Fatal("UpdateEntity() error = nil, want error about immutable id")
@@ -1174,14 +1079,18 @@ func TestEntityService_UpdateEntity_RejectsStatusChange(t *testing.T) {
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	created, err := svc.CreateEpic(CreateEpicInput{
+	planID := "P1-reject-status"
+	writeTestPlan(t, svc, planID)
+
+	created, err := svc.CreateFeature(CreateFeatureInput{
 		Slug:      "phase-1-kernel",
 		Name:      "Phase 1 Kernel",
+		Parent:    planID,
 		Summary:   "Build the initial workflow kernel",
 		CreatedBy: "sam",
 	})
 	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
+		t.Fatalf("CreateFeature() error = %v", err)
 	}
 
 	_, err = svc.UpdateEntity(UpdateEntityInput{
@@ -1204,24 +1113,28 @@ func TestEntityService_UpdateEntity_ValidatesResult(t *testing.T) {
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	created, err := svc.CreateEpic(CreateEpicInput{
+	planID := "P1-validate-result"
+	writeTestPlan(t, svc, planID)
+
+	created, err := svc.CreateFeature(CreateFeatureInput{
 		Slug:      "phase-1-kernel",
 		Name:      "Phase 1 Kernel",
+		Parent:    planID,
 		Summary:   "Build the initial workflow kernel",
 		CreatedBy: "sam",
 	})
 	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
+		t.Fatalf("CreateFeature() error = %v", err)
 	}
 
 	_, err = svc.UpdateEntity(UpdateEntityInput{
 		Type:   created.Type,
 		ID:     created.ID,
 		Slug:   created.Slug,
-		Fields: map[string]string{"name": ""},
+		Fields: map[string]string{"summary": ""},
 	})
 	if err == nil {
-		t.Fatal("UpdateEntity() error = nil, want validation error for empty title")
+		t.Fatal("UpdateEntity() error = nil, want validation error for empty summary")
 	}
 	if !strings.Contains(err.Error(), "validation") {
 		t.Fatalf("unexpected error: %v", err)
@@ -1323,57 +1236,6 @@ func TestEntityService_HealthCheck_DetectsBrokenReference(t *testing.T) {
 	}
 	if !foundParentError {
 		t.Fatalf("expected error about non-existent plan P1-does-not-exist, errors: %v", report.Errors)
-	}
-}
-
-func TestEntityService_EpicLifecycle(t *testing.T) {
-	t.Parallel()
-
-	root := t.TempDir()
-	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
-
-	created, err := svc.CreateEpic(CreateEpicInput{
-		Slug:      "lifecycle-epic",
-		Name:      "Lifecycle Epic",
-		Summary:   "Test epic lifecycle transitions",
-		CreatedBy: "sam",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
-	}
-
-	if created.State["status"] != "proposed" {
-		t.Fatalf("initial status = %v, want %q", created.State["status"], "proposed")
-	}
-
-	transitions := []string{"approved", "active", "on-hold", "active", "done"}
-	current := created
-	for _, next := range transitions {
-		prev := current.State["status"]
-		updated, err := svc.UpdateStatus(UpdateStatusInput{
-			Type:   current.Type,
-			ID:     current.ID,
-			Slug:   current.Slug,
-			Status: next,
-		})
-		if err != nil {
-			t.Fatalf("UpdateStatus(%v -> %q) error = %v", prev, next, err)
-		}
-		if updated.State["status"] != next {
-			t.Fatalf("status after transition = %v, want %q", updated.State["status"], next)
-		}
-		current = CreateResult(updated)
-	}
-
-	// Terminal state: further transitions should be rejected.
-	_, err = svc.UpdateStatus(UpdateStatusInput{
-		Type:   current.Type,
-		ID:     current.ID,
-		Slug:   current.Slug,
-		Status: "proposed",
-	})
-	if err == nil {
-		t.Fatal("UpdateStatus() from terminal state should fail, got nil error")
 	}
 }
 
@@ -1555,16 +1417,6 @@ func TestEntityService_ResolvePrefix(t *testing.T) {
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	epic, err := svc.CreateEpic(CreateEpicInput{
-		Slug:      "prefix-epic",
-		Name:      "Prefix Epic",
-		Summary:   "Epic for prefix resolution tests",
-		CreatedBy: "sam",
-	})
-	if err != nil {
-		t.Fatalf("CreateEpic() error = %v", err)
-	}
-
 	planID := "P1-prefix-plan"
 	writeTestPlan(t, svc, planID)
 
@@ -1632,13 +1484,6 @@ func TestEntityService_ResolvePrefix(t *testing.T) {
 			prefix:   feat1.ID[:10] + "-" + feat1.ID[10:],
 			wantID:   feat1.ID,
 			wantSlug: feat1.Slug,
-		},
-		{
-			name:       "epic prefix resolution",
-			entityType: "epic",
-			prefix:     epic.ID[:7],
-			wantID:     epic.ID,
-			wantSlug:   epic.Slug,
 		},
 		{
 			name:       "ambiguous prefix",

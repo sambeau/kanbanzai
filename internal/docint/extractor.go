@@ -14,7 +14,6 @@ var entityPatterns = []struct {
 	{regexp.MustCompile(`\bTASK-[A-Za-z0-9]+\b`), "task"},
 	{regexp.MustCompile(`\bBUG-[A-Za-z0-9]+\b`), "bug"},
 	{regexp.MustCompile(`\bDEC-[A-Za-z0-9]+\b`), "decision"},
-	{regexp.MustCompile(`\bEPIC-[A-Za-z0-9]+\b`), "epic"},
 	{regexp.MustCompile(`\bDOC-[A-Za-z0-9]+\b`), "document"},
 }
 
@@ -37,7 +36,7 @@ type ExtractResult struct {
 
 // ExtractPatterns performs Layer 2 pattern extraction on a document.
 // It takes the raw content and the parsed sections (from Layer 1) and extracts:
-//   - Entity references (FEAT-xxx, TASK-xxx, BUG-xxx, DEC-xxx, EPIC-xxx, Plan IDs)
+//   - Entity references (FEAT-xxx, TASK-xxx, BUG-xxx, DEC-xxx, Plan IDs)
 //   - Cross-document links (markdown links to .md files, backtick-quoted .md paths)
 //   - Conventional section roles (headings matching known keywords)
 //   - Front matter (bullet-list key: value lines after the H1 heading)

@@ -23,12 +23,6 @@ func TestEntryState(t *testing.T) {
 			wantOK:    true,
 		},
 		{
-			name:      "epic",
-			kind:      EntityEpic,
-			wantState: "proposed",
-			wantOK:    true,
-		},
-		{
 			name:      "feature",
 			kind:      EntityFeature,
 			wantState: "proposed",
@@ -87,8 +81,6 @@ func TestIsTerminalState(t *testing.T) {
 		{name: "plan done", kind: EntityPlan, state: "done", want: false},
 		{name: "plan superseded", kind: EntityPlan, state: "superseded", want: true},
 		{name: "plan cancelled", kind: EntityPlan, state: "cancelled", want: true},
-		{name: "epic done", kind: EntityEpic, state: "done", want: true},
-		{name: "epic active", kind: EntityEpic, state: "active", want: false},
 		{name: "feature done", kind: EntityFeature, state: "done", want: false},
 		{name: "feature superseded", kind: EntityFeature, state: "superseded", want: true},
 		{name: "feature cancelled", kind: EntityFeature, state: "cancelled", want: true},
@@ -129,8 +121,6 @@ func TestIsKnownState(t *testing.T) {
 		state string
 		want  bool
 	}{
-		{name: "epic entry state", kind: EntityEpic, state: "proposed", want: true},
-		{name: "epic terminal state", kind: EntityEpic, state: "done", want: true},
 		{name: "feature middle state", kind: EntityFeature, state: "needs-rework", want: true},
 		{name: "task review state", kind: EntityTask, state: "needs-review", want: true},
 		{name: "bug reopening state", kind: EntityBug, state: "cannot-reproduce", want: true},
@@ -175,20 +165,6 @@ func TestCanTransition(t *testing.T) {
 			from: "done",
 			to:   "cancelled",
 			want: true,
-		},
-		{
-			name: "epic proposed to approved",
-			kind: EntityEpic,
-			from: "proposed",
-			to:   "approved",
-			want: true,
-		},
-		{
-			name: "epic proposed to done is illegal",
-			kind: EntityEpic,
-			from: "proposed",
-			to:   "done",
-			want: false,
 		},
 		{
 			name: "feature needs rework to in review",
@@ -503,14 +479,14 @@ func TestCanTransition(t *testing.T) {
 		},
 		{
 			name: "unknown from state is illegal",
-			kind: EntityEpic,
+			kind: EntityFeature,
 			from: "mystery",
-			to:   "approved",
+			to:   "designing",
 			want: false,
 		},
 		{
 			name: "unknown to state is illegal",
-			kind: EntityEpic,
+			kind: EntityFeature,
 			from: "proposed",
 			to:   "mystery",
 			want: false,
@@ -556,18 +532,6 @@ func TestValidateInitialState(t *testing.T) {
 			name:    "invalid plan non entry state",
 			kind:    EntityPlan,
 			state:   "active",
-			wantErr: true,
-		},
-		{
-			name:    "valid epic entry state",
-			kind:    EntityEpic,
-			state:   "proposed",
-			wantErr: false,
-		},
-		{
-			name:    "invalid epic non entry state",
-			kind:    EntityEpic,
-			state:   "approved",
 			wantErr: true,
 		},
 		{
@@ -619,20 +583,6 @@ func TestValidateTransition(t *testing.T) {
 		to      string
 		wantErr bool
 	}{
-		{
-			name:    "valid epic transition",
-			kind:    EntityEpic,
-			from:    "approved",
-			to:      "active",
-			wantErr: false,
-		},
-		{
-			name:    "invalid epic jump",
-			kind:    EntityEpic,
-			from:    "approved",
-			to:      "done",
-			wantErr: true,
-		},
 		{
 			name:    "valid feature transition from needs rework to in progress",
 			kind:    EntityFeature,
@@ -898,15 +848,6 @@ func TestIncidentLifecycle_TerminalState(t *testing.T) {
 		if IsTerminalState(EntityIncident, state) {
 			t.Fatalf("IsTerminalState(%q, %q) = true, want false", EntityIncident, state)
 		}
-	}
-}
-
-func TestEntryStateOrPanic_ReturnsEntryState(t *testing.T) {
-	t.Parallel()
-
-	got := EntryStateOrPanic(EntityEpic)
-	if got != "proposed" {
-		t.Fatalf("EntryStateOrPanic(%q) = %q, want %q", EntityEpic, got, "proposed")
 	}
 }
 

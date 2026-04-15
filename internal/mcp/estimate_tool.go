@@ -248,8 +248,8 @@ func estimateQueryAction(entitySvc *service.EntityService) ActionHandler {
 				"excluded_task_count":  rollup.ExcludedTaskCount,
 			}
 
-		case "epic", "plan":
-			rollup, err := entitySvc.ComputeEpicRollup(result.ID)
+		case "plan":
+			rollup, err := entitySvc.ComputePlanRollup(result.ID)
 			if err != nil {
 				return nil, fmt.Errorf("Cannot query estimate for %s %s: rollup computation failed: %w.\n\nTo resolve:\n  Check that the child features are in a valid state", entityType, result.ID, err)
 			}

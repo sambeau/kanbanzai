@@ -21,21 +21,10 @@ func NewAllocator() *Allocator {
 }
 
 // Allocate returns a new canonical ID for the given entity type.
-//
-// For Epics, epicSlug must be provided. It is validated per §8 rules and
-// formatted as EPIC-{SLUG}. The exists function is used to check uniqueness.
-//
-// For all other entity types (Feature, Bug, Decision, Task, Document),
-// a TSID13 is generated and formatted as {TYPE}-{TSID13}. The exists
+// A TSID13 is generated and formatted as {TYPE}-{TSID13}. The exists
 // function is used for local collision checking with retry.
-//
-// epicSlug is ignored for non-Epic types.
 // exists may be nil if collision checking is not available.
-func (a *Allocator) Allocate(entityKind model.EntityKind, epicSlug string, exists ExistsFunc) (string, error) {
-	if entityKind == model.EntityKindEpic {
-		return a.allocateEpic(epicSlug, exists)
-	}
-
+func (a *Allocator) Allocate(entityKind model.EntityKind, slug string, exists ExistsFunc) (string, error) {
 	prefix, err := TypePrefix(entityKind)
 	if err != nil {
 		return "", err
@@ -53,10 +42,6 @@ func (a *Allocator) Validate(entityKind model.EntityKind, id string) error {
 		return nil
 	}
 
-	if entityKind == model.EntityKindEpic {
-		return validateEpicID(id)
-	}
-
 	prefix, err := TypePrefix(entityKind)
 	if err != nil {
 		return fmt.Errorf("validate id %q: %w", id, err)
@@ -68,8 +53,6 @@ func (a *Allocator) Validate(entityKind model.EntityKind, id string) error {
 // TypePrefix returns the ID type prefix for an entity kind.
 func TypePrefix(entityKind model.EntityKind) (string, error) {
 	switch entityKind {
-	case model.EntityKindEpic:
-		return "EPIC", nil
 	case model.EntityKindFeature:
 		return "FEAT", nil
 	case model.EntityKindBug:
@@ -90,8 +73,6 @@ func TypePrefix(entityKind model.EntityKind) (string, error) {
 // EntityKindFromPrefix returns the entity kind for a given type prefix.
 func EntityKindFromPrefix(prefix string) (model.EntityKind, error) {
 	switch strings.ToUpper(prefix) {
-	case "EPIC":
-		return model.EntityKindEpic, nil
 	case "FEAT":
 		return model.EntityKindFeature, nil
 	case "BUG":
@@ -111,7 +92,6 @@ func EntityKindFromPrefix(prefix string) (model.EntityKind, error) {
 
 // ParseCanonicalID splits a canonical ID into its type prefix and the identifier portion.
 // For "FEAT-01J3K7MXP3RT5" returns ("FEAT", "01J3K7MXP3RT5", nil).
-// For "EPIC-MYPROJECT" returns ("EPIC", "MYPROJECT", nil).
 func ParseCanonicalID(id string) (prefix, ident string, err error) {
 	idx := strings.Index(id, "-")
 	if idx <= 0 || idx >= len(id)-1 {
@@ -120,13 +100,9 @@ func ParseCanonicalID(id string) (prefix, ident string, err error) {
 	return id[:idx], id[idx+1:], nil
 }
 
-// IsLegacyID returns true if the ID uses the old sequential format (e.g., FEAT-001, E-001, FEAT-001.1).
+// IsLegacyID returns true if the ID uses the old sequential format (e.g., FEAT-001, FEAT-001.1).
 func IsLegacyID(id string) bool {
-	// Old format: E-NNN, FEAT-NNN, BUG-NNN, DEC-NNN, FEAT-NNN.N
-	if strings.HasPrefix(id, "E-") {
-		rest := id[2:]
-		return isAllDigits(rest)
-	}
+	// Old format: FEAT-NNN, BUG-NNN, DEC-NNN, FEAT-NNN.N
 	for _, prefix := range []string{"FEAT-", "BUG-", "DEC-"} {
 		if strings.HasPrefix(id, prefix) {
 			rest := id[len(prefix):]
@@ -138,20 +114,6 @@ func IsLegacyID(id string) bool {
 		}
 	}
 	return false
-}
-
-func (a *Allocator) allocateEpic(slug string, exists ExistsFunc) (string, error) {
-	normalized, err := ValidateEpicSlug(slug)
-	if err != nil {
-		return "", err
-	}
-
-	id := "EPIC-" + normalized
-	if exists != nil && exists(id) {
-		return "", fmt.Errorf("epic slug %q is already in use", normalized)
-	}
-
-	return id, nil
 }
 
 func (a *Allocator) allocateTSID(prefix string, exists ExistsFunc) (string, error) {
@@ -169,19 +131,6 @@ func (a *Allocator) allocateTSID(prefix string, exists ExistsFunc) (string, erro
 	}
 
 	return "", fmt.Errorf("ID collision persisted after %d retries", maxCollisionRetries)
-}
-
-func validateEpicID(id string) error {
-	if !strings.HasPrefix(id, "EPIC-") {
-		return fmt.Errorf("invalid epic ID %q: must start with EPIC-", id)
-	}
-
-	slug := id[5:]
-	_, err := ValidateEpicSlug(slug)
-	if err != nil {
-		return fmt.Errorf("invalid epic ID %q: %w", id, err)
-	}
-	return nil
 }
 
 func validateTSIDBasedID(expectedPrefix, id string) error {

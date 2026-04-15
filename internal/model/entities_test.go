@@ -12,69 +12,11 @@ import (
 
 // Compile-time Entity interface satisfaction checks.
 var _ model.Entity = model.Plan{}
-var _ model.Entity = model.Epic{}
 var _ model.Entity = model.Feature{}
 var _ model.Entity = model.Task{}
 var _ model.Entity = model.Bug{}
 var _ model.Entity = model.Decision{}
 var _ model.Entity = model.DocumentRecord{}
-
-func TestEpic_YAMLRoundTrip(t *testing.T) {
-	t.Parallel()
-
-	ts := time.Date(2025, 1, 15, 10, 30, 0, 0, time.UTC)
-
-	original := model.Epic{
-		ID:        testutil.TestEpicID,
-		Slug:      "phase-1-kernel",
-		Name:      "Phase 1 Kernel",
-		Status:    model.EpicStatusActive,
-		Summary:   "Build the initial workflow kernel",
-		Created:   ts,
-		CreatedBy: "sam",
-		Features:  []string{testutil.TestFeatureID, testutil.TestFeatureID2},
-	}
-
-	data, err := yaml.Marshal(original)
-	if err != nil {
-		t.Fatalf("Marshal() error = %v", err)
-	}
-
-	var decoded model.Epic
-	if err := yaml.Unmarshal(data, &decoded); err != nil {
-		t.Fatalf("Unmarshal() error = %v", err)
-	}
-
-	if decoded.ID != original.ID {
-		t.Errorf("ID = %q, want %q", decoded.ID, original.ID)
-	}
-	if decoded.Slug != original.Slug {
-		t.Errorf("Slug = %q, want %q", decoded.Slug, original.Slug)
-	}
-	if decoded.Name != original.Name {
-		t.Errorf("Name = %q, want %q", decoded.Name, original.Name)
-	}
-	if decoded.Status != original.Status {
-		t.Errorf("Status = %q, want %q", decoded.Status, original.Status)
-	}
-	if decoded.Summary != original.Summary {
-		t.Errorf("Summary = %q, want %q", decoded.Summary, original.Summary)
-	}
-	if !decoded.Created.Equal(original.Created) {
-		t.Errorf("Created = %v, want %v", decoded.Created, original.Created)
-	}
-	if decoded.CreatedBy != original.CreatedBy {
-		t.Errorf("CreatedBy = %q, want %q", decoded.CreatedBy, original.CreatedBy)
-	}
-	if len(decoded.Features) != len(original.Features) {
-		t.Fatalf("Features length = %d, want %d", len(decoded.Features), len(original.Features))
-	}
-	for i, f := range decoded.Features {
-		if f != original.Features[i] {
-			t.Errorf("Features[%d] = %q, want %q", i, f, original.Features[i])
-		}
-	}
-}
 
 func TestFeature_YAMLRoundTrip(t *testing.T) {
 	t.Parallel()
@@ -84,7 +26,6 @@ func TestFeature_YAMLRoundTrip(t *testing.T) {
 	original := model.Feature{
 		ID:           testutil.TestFeatureID,
 		Slug:         "initial-kernel",
-		Epic:         testutil.TestEpicID,
 		Status:       model.FeatureStatusInProgress,
 		Summary:      "Start the workflow kernel",
 		Created:      ts,
@@ -113,9 +54,6 @@ func TestFeature_YAMLRoundTrip(t *testing.T) {
 	}
 	if decoded.Slug != original.Slug {
 		t.Errorf("Slug = %q, want %q", decoded.Slug, original.Slug)
-	}
-	if decoded.Epic != original.Epic {
-		t.Errorf("Epic = %q, want %q", decoded.Epic, original.Epic)
 	}
 	if decoded.Status != original.Status {
 		t.Errorf("Status = %q, want %q", decoded.Status, original.Status)
@@ -509,9 +447,6 @@ func TestDecision_YAMLRoundTrip(t *testing.T) {
 func TestEntityKind_Values(t *testing.T) {
 	t.Parallel()
 
-	if model.EntityKindEpic != "epic" {
-		t.Errorf("EntityKindEpic = %q, want %q", model.EntityKindEpic, "epic")
-	}
 	if model.EntityKindFeature != "feature" {
 		t.Errorf("EntityKindFeature = %q, want %q", model.EntityKindFeature, "feature")
 	}
@@ -531,23 +466,6 @@ func TestEntityKind_Values(t *testing.T) {
 
 func TestEnumStringValues(t *testing.T) {
 	t.Parallel()
-
-	// EpicStatus
-	if model.EpicStatusProposed != "proposed" {
-		t.Errorf("EpicStatusProposed = %q, want %q", model.EpicStatusProposed, "proposed")
-	}
-	if model.EpicStatusApproved != "approved" {
-		t.Errorf("EpicStatusApproved = %q, want %q", model.EpicStatusApproved, "approved")
-	}
-	if model.EpicStatusActive != "active" {
-		t.Errorf("EpicStatusActive = %q, want %q", model.EpicStatusActive, "active")
-	}
-	if model.EpicStatusOnHold != "on-hold" {
-		t.Errorf("EpicStatusOnHold = %q, want %q", model.EpicStatusOnHold, "on-hold")
-	}
-	if model.EpicStatusDone != "done" {
-		t.Errorf("EpicStatusDone = %q, want %q", model.EpicStatusDone, "done")
-	}
 
 	// FeatureStatus
 	if model.FeatureStatusDraft != "draft" {
@@ -741,7 +659,6 @@ func TestEntity_GetKind(t *testing.T) {
 		e    model.Entity
 		want model.EntityKind
 	}{
-		{"Epic", model.Epic{ID: testutil.TestEpicID, Slug: "test"}, model.EntityKindEpic},
 		{"Feature", model.Feature{ID: testutil.TestFeatureID, Slug: "test"}, model.EntityKindFeature},
 		{"Task", model.Task{ID: testutil.TestTaskID, Slug: "test"}, model.EntityKindTask},
 		{"Bug", model.Bug{ID: testutil.TestBugID, Slug: "test"}, model.EntityKindBug},

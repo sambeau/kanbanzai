@@ -339,7 +339,7 @@ func stringFromFields(fields map[string]any, key string) string {
 func extractParentRef(entityType string, fields map[string]any) string {
 	switch strings.ToLower(entityType) {
 	case "feature":
-		return stringFromFields(fields, "epic")
+		return stringFromFields(fields, "parent")
 	case "task":
 		return stringFromFields(fields, "parent_feature")
 	case "bug":

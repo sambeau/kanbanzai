@@ -12,7 +12,7 @@ This references FEAT-ABC123 and TASK-XYZ in the intro.
 
 ## Details
 
-See BUG-001 and DEC-042 for context. Also EPIC-ALPHA and DOC-ABC.
+See BUG-001 and DEC-042 for context. Also DOC-ABC.
 `)
 	sections := ParseStructure(content)
 	result := ExtractPatterns(content, sections)
@@ -26,7 +26,6 @@ See BUG-001 and DEC-042 for context. Also EPIC-ALPHA and DOC-ABC.
 		"TASK-XYZ":    "task",
 		"BUG-001":     "bug",
 		"DEC-042":     "decision",
-		"EPIC-ALPHA":  "epic",
 		"DOC-ABC":     "document",
 	}
 

@@ -1,6 +1,6 @@
 id: FEAT-01J3K7MXP3RT5
 slug: initial-kernel
-parent: EPIC-PHASE1KERNEL
+parent: P1-phase-1-kernel
 status: draft
 summary: Start the workflow kernel
 spec: work/spec/phase-1-specification.md

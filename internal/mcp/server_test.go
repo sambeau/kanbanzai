@@ -141,7 +141,7 @@ func TestServer_ListTools_NoLegacyTools(t *testing.T) {
 	tools := testServerToolNames(t, &cfg)
 
 	legacyNames := []string{
-		"create_epic", "create_feature", "create_task", "create_bug",
+		"create_feature", "create_task", "create_bug",
 		"record_decision", "get_entity", "list_entities",
 		"update_status", "update_entity", "validate_candidate",
 		"health_check", "rebuild_cache",

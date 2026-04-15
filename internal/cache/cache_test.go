@@ -29,29 +29,29 @@ func TestUpsert_AndLookupByID(t *testing.T) {
 	c := openTestCache(t)
 
 	row := EntityRow{
-		EntityType: "epic",
-		ID:         testutil.TestEpicID,
-		Slug:       "test-epic",
+		EntityType: "plan",
+		ID:         "P1-test-plan",
+		Slug:       "test-plan",
 		Status:     "proposed",
-		Title:      "Test Epic",
-		Summary:    "A test epic",
+		Title:      "Test Plan",
+		Summary:    "A test plan",
 		ParentRef:  "",
-		FilePath:   ".kbz/state/epics/" + testutil.TestEpicID + "-test-epic.yaml",
-		FieldsJSON: `{"id":"` + testutil.TestEpicID + `","slug":"test-epic","status":"proposed","title":"Test Epic","summary":"A test epic"}`,
+		FilePath:   ".kbz/state/plans/P1-test-plan.yaml",
+		FieldsJSON: `{"id":"P1-test-plan","slug":"test-plan","status":"proposed","title":"Test Plan","summary":"A test plan"}`,
 	}
 
 	if err := c.Upsert(row); err != nil {
 		t.Fatalf("upsert: %v", err)
 	}
 
-	slug, filePath, found := c.LookupByID("epic", testutil.TestEpicID)
+	slug, filePath, found := c.LookupByID("plan", "P1-test-plan")
 	if !found {
 		t.Fatal("expected to find entity")
 	}
-	if slug != "test-epic" {
-		t.Errorf("slug = %q, want %q", slug, "test-epic")
+	if slug != "test-plan" {
+		t.Errorf("slug = %q, want %q", slug, "test-plan")
 	}
-	wantPath := ".kbz/state/epics/" + testutil.TestEpicID + "-test-epic.yaml"
+	wantPath := ".kbz/state/plans/P1-test-plan.yaml"
 	if filePath != wantPath {
 		t.Errorf("filePath = %q, want %q", filePath, wantPath)
 	}
@@ -60,7 +60,7 @@ func TestUpsert_AndLookupByID(t *testing.T) {
 func TestLookupByID_NotFound(t *testing.T) {
 	c := openTestCache(t)
 
-	_, _, found := c.LookupByID("epic", "EPIC-01J3KBNXS7VX9")
+	_, _, found := c.LookupByID("plan", "P2-alpha-plan")
 	if found {
 		t.Fatal("expected not found")
 	}
@@ -109,11 +109,11 @@ func TestUpsert_UpdatesExisting(t *testing.T) {
 	c := openTestCache(t)
 
 	row := EntityRow{
-		EntityType: "epic",
-		ID:         testutil.TestEpicID,
+		EntityType: "plan",
+		ID:         "P1-test-plan",
 		Slug:       "old-slug",
 		Status:     "proposed",
-		FilePath:   "epics/" + testutil.TestEpicID + "-old-slug.yaml",
+		FilePath:   "plans/P1-test-plan.yaml",
 		FieldsJSON: `{}`,
 	}
 	if err := c.Upsert(row); err != nil {
@@ -122,19 +122,19 @@ func TestUpsert_UpdatesExisting(t *testing.T) {
 
 	row.Slug = "new-slug"
 	row.Status = "approved"
-	row.FilePath = "epics/" + testutil.TestEpicID + "-new-slug.yaml"
+	row.FilePath = "plans/P1-test-plan.yaml"
 	if err := c.Upsert(row); err != nil {
 		t.Fatalf("second upsert: %v", err)
 	}
 
-	slug, filePath, found := c.LookupByID("epic", testutil.TestEpicID)
+	slug, filePath, found := c.LookupByID("plan", "P1-test-plan")
 	if !found {
 		t.Fatal("expected to find entity after update")
 	}
 	if slug != "new-slug" {
 		t.Errorf("slug = %q, want %q", slug, "new-slug")
 	}
-	wantPath := "epics/" + testutil.TestEpicID + "-new-slug.yaml"
+	wantPath := "plans/P1-test-plan.yaml"
 	if filePath != wantPath {
 		t.Errorf("filePath = %q, want %q", filePath, wantPath)
 	}
@@ -166,7 +166,7 @@ func TestDelete_NonExistent(t *testing.T) {
 	c := openTestCache(t)
 
 	// Should not error when deleting a non-existent entity.
-	if err := c.Delete("epic", "EPIC-01J3KBNXS7VX9"); err != nil {
+	if err := c.Delete("plan", "P2-alpha-plan"); err != nil {
 		t.Fatalf("delete non-existent: %v", err)
 	}
 }
@@ -174,11 +174,11 @@ func TestDelete_NonExistent(t *testing.T) {
 func TestListByType(t *testing.T) {
 	c := openTestCache(t)
 
-	epicID2 := "EPIC-01J3K9PYR5TV7"
+	planID2 := "P2-alpha-plan"
 
 	for _, row := range []EntityRow{
-		{EntityType: "epic", ID: testutil.TestEpicID, Slug: "alpha", FieldsJSON: `{}`},
-		{EntityType: "epic", ID: epicID2, Slug: "beta", FieldsJSON: `{}`},
+		{EntityType: "plan", ID: "P1-test-plan", Slug: "alpha", FieldsJSON: `{}`},
+		{EntityType: "plan", ID: planID2, Slug: "beta", FieldsJSON: `{}`},
 		{EntityType: "feature", ID: testutil.TestFeatureID, Slug: "gamma", FieldsJSON: `{}`},
 	} {
 		if err := c.Upsert(row); err != nil {
@@ -186,15 +186,15 @@ func TestListByType(t *testing.T) {
 		}
 	}
 
-	epics, err := c.ListByType("epic")
+	plans, err := c.ListByType("plan")
 	if err != nil {
-		t.Fatalf("list epics: %v", err)
+		t.Fatalf("list plans: %v", err)
 	}
-	if len(epics) != 2 {
-		t.Fatalf("expected 2 epics, got %d", len(epics))
+	if len(plans) != 2 {
+		t.Fatalf("expected 2 plans, got %d", len(plans))
 	}
-	if epics[0].ID != epicID2 || epics[1].ID != testutil.TestEpicID {
-		t.Errorf("expected sorted by ID: got %s, %s", epics[0].ID, epics[1].ID)
+	if plans[0].ID != "P1-test-plan" || plans[1].ID != planID2 {
+		t.Errorf("expected sorted by ID: got %s, %s", plans[0].ID, plans[1].ID)
 	}
 
 	features, err := c.ListByType("feature")
@@ -222,7 +222,7 @@ func TestListAll(t *testing.T) {
 	c := openTestCache(t)
 
 	for _, row := range []EntityRow{
-		{EntityType: "epic", ID: testutil.TestEpicID, Slug: "a", FieldsJSON: `{}`},
+		{EntityType: "plan", ID: "P1-test-plan", Slug: "a", FieldsJSON: `{}`},
 		{EntityType: "bug", ID: testutil.TestBugID, Slug: "b", FieldsJSON: `{}`},
 		{EntityType: "task", ID: testutil.TestTaskID, Slug: "c", FieldsJSON: `{}`},
 	} {
@@ -242,16 +242,17 @@ func TestListAll(t *testing.T) {
 	if all[0].EntityType != "bug" {
 		t.Errorf("first entity type = %q, want %q", all[0].EntityType, "bug")
 	}
+	// plan should sort after bug and before task.
 }
 
 func TestCount(t *testing.T) {
 	c := openTestCache(t)
 
-	epicID2 := "EPIC-01J3K9PYR5TV7"
+	planID2 := "P2-alpha-plan"
 
 	for _, row := range []EntityRow{
-		{EntityType: "epic", ID: testutil.TestEpicID, Slug: "a", FieldsJSON: `{}`},
-		{EntityType: "epic", ID: epicID2, Slug: "b", FieldsJSON: `{}`},
+		{EntityType: "plan", ID: "P1-test-plan", Slug: "a", FieldsJSON: `{}`},
+		{EntityType: "plan", ID: planID2, Slug: "b", FieldsJSON: `{}`},
 		{EntityType: "feature", ID: testutil.TestFeatureID, Slug: "c", FieldsJSON: `{}`},
 	} {
 		if err := c.Upsert(row); err != nil {
@@ -267,12 +268,12 @@ func TestCount(t *testing.T) {
 		t.Errorf("total = %d, want 3", total)
 	}
 
-	epicCount, err := c.Count("epic")
+	planCount, err := c.Count("plan")
 	if err != nil {
-		t.Fatalf("count epics: %v", err)
+		t.Fatalf("count plans: %v", err)
 	}
-	if epicCount != 2 {
-		t.Errorf("epic count = %d, want 2", epicCount)
+	if planCount != 2 {
+		t.Errorf("plan count = %d, want 2", planCount)
 	}
 }
 
@@ -294,7 +295,7 @@ func TestEntityExists(t *testing.T) {
 	if c.EntityExists("decision", "DEC-01J3KNOTFND01") {
 		t.Error("expected entity to not exist")
 	}
-	if c.EntityExists("epic", testutil.TestDecisionID) {
+	if c.EntityExists("plan", testutil.TestDecisionID) {
 		t.Error("expected wrong-type lookup to not exist")
 	}
 }
@@ -303,8 +304,8 @@ func TestClear(t *testing.T) {
 	c := openTestCache(t)
 
 	if err := c.Upsert(EntityRow{
-		EntityType: "epic",
-		ID:         testutil.TestEpicID,
+		EntityType: "plan",
+		ID:         "P1-test-plan",
 		Slug:       "a",
 		FieldsJSON: `{}`,
 	}); err != nil {
@@ -327,12 +328,12 @@ func TestClear(t *testing.T) {
 func TestRebuild(t *testing.T) {
 	c := openTestCache(t)
 
-	staleEpicID := "EPIC-01J3KCSTALE01"
+	stalePlanID := "P5-stale-plan"
 
 	// Pre-populate with stale data that should be cleared.
 	if err := c.Upsert(EntityRow{
-		EntityType: "epic",
-		ID:         staleEpicID,
+		EntityType: "plan",
+		ID:         stalePlanID,
 		Slug:       "stale",
 		FieldsJSON: `{}`,
 	}); err != nil {
@@ -341,14 +342,14 @@ func TestRebuild(t *testing.T) {
 
 	records := []RebuildRecord{
 		{
-			EntityType: "epic",
-			ID:         testutil.TestEpicID,
+			EntityType: "plan",
+			ID:         "P1-test-plan",
 			Slug:       "alpha",
-			FilePath:   "epics/" + testutil.TestEpicID + "-alpha.yaml",
+			FilePath:   "plans/P1-test-plan.yaml",
 			Fields: map[string]any{
-				"id":      testutil.TestEpicID,
+				"id":      "P1-test-plan",
 				"slug":    "alpha",
-				"title":   "Alpha Epic",
+				"title":   "Alpha Plan",
 				"status":  "proposed",
 				"summary": "Alpha summary",
 			},
@@ -361,7 +362,7 @@ func TestRebuild(t *testing.T) {
 			Fields: map[string]any{
 				"id":      testutil.TestFeatureID,
 				"slug":    "beta",
-				"epic":    testutil.TestEpicID,
+				"parent":  "P1-test-plan",
 				"status":  "draft",
 				"summary": "Beta summary",
 			},
@@ -390,14 +391,14 @@ func TestRebuild(t *testing.T) {
 	}
 
 	// Stale entity should be gone.
-	if c.EntityExists("epic", staleEpicID) {
+	if c.EntityExists("plan", stalePlanID) {
 		t.Error("stale entity should have been cleared")
 	}
 
 	// New entities should be present.
-	slug, _, found := c.LookupByID("epic", testutil.TestEpicID)
+	slug, _, found := c.LookupByID("plan", "P1-test-plan")
 	if !found {
-		t.Fatalf("%s not found after rebuild", testutil.TestEpicID)
+		t.Fatal("P1-test-plan not found after rebuild")
 	}
 	if slug != "alpha" {
 		t.Errorf("slug = %q, want %q", slug, "alpha")
@@ -411,8 +412,8 @@ func TestRebuild(t *testing.T) {
 	if len(features) != 1 {
 		t.Fatalf("expected 1 feature, got %d", len(features))
 	}
-	if features[0].ParentRef != testutil.TestEpicID {
-		t.Errorf("feature parent_ref = %q, want %q", features[0].ParentRef, testutil.TestEpicID)
+	if features[0].ParentRef != "P1-test-plan" {
+		t.Errorf("feature parent_ref = %q, want %q", features[0].ParentRef, "P1-test-plan")
 	}
 
 	tasks, err := c.ListByType("task")
@@ -431,15 +432,15 @@ func TestGetFields(t *testing.T) {
 	c := openTestCache(t)
 
 	if err := c.Upsert(EntityRow{
-		EntityType: "epic",
-		ID:         testutil.TestEpicID,
+		EntityType: "plan",
+		ID:         "P1-test-plan",
 		Slug:       "test",
-		FieldsJSON: `{"id":"` + testutil.TestEpicID + `","slug":"test","title":"Test","status":"proposed","summary":"A test"}`,
+		FieldsJSON: `{"id":"P1-test-plan","slug":"test","title":"Test","status":"proposed","summary":"A test"}`,
 	}); err != nil {
 		t.Fatalf("upsert: %v", err)
 	}
 
-	fields, err := c.GetFields("epic", testutil.TestEpicID)
+	fields, err := c.GetFields("plan", "P1-test-plan")
 	if err != nil {
 		t.Fatalf("get fields: %v", err)
 	}
@@ -454,7 +455,7 @@ func TestGetFields(t *testing.T) {
 func TestGetFields_NotFound(t *testing.T) {
 	c := openTestCache(t)
 
-	_, err := c.GetFields("epic", "EPIC-01J3KBNXS7VX9")
+	_, err := c.GetFields("plan", "P2-alpha-plan")
 	if err == nil {
 		t.Fatal("expected error for missing entity")
 	}
@@ -466,10 +467,10 @@ func TestExtractParentRef(t *testing.T) {
 		fields     map[string]any
 		want       string
 	}{
-		{"feature", map[string]any{"epic": testutil.TestEpicID}, testutil.TestEpicID},
+		{"feature", map[string]any{"parent": "P1-test-plan"}, "P1-test-plan"},
 		{"task", map[string]any{"parent_feature": testutil.TestFeatureID}, testutil.TestFeatureID},
 		{"bug", map[string]any{"origin_feature": testutil.TestFeatureID2}, testutil.TestFeatureID2},
-		{"epic", map[string]any{"title": "No parent"}, ""},
+		{"plan", map[string]any{"title": "No parent"}, ""},
 		{"decision", map[string]any{}, ""},
 		{"feature", map[string]any{}, ""},
 	}
@@ -520,13 +521,13 @@ func TestRebuild_EmptyRecords(t *testing.T) {
 func TestRebuild_ClearsOldData(t *testing.T) {
 	c := openTestCache(t)
 
-	epicID2 := "EPIC-01J3K9PYR5TV7"
-	epicID3 := "EPIC-01J3KANXR6UW8"
+	planID2 := "P2-alpha-plan"
+	planID3 := "P3-beta-plan"
 
 	// First rebuild with two entities.
 	_, err := c.Rebuild([]RebuildRecord{
-		{EntityType: "epic", ID: testutil.TestEpicID, Slug: "a", Fields: map[string]any{"id": testutil.TestEpicID}},
-		{EntityType: "epic", ID: epicID2, Slug: "b", Fields: map[string]any{"id": epicID2}},
+		{EntityType: "plan", ID: "P1-test-plan", Slug: "a", Fields: map[string]any{"id": "P1-test-plan"}},
+		{EntityType: "plan", ID: planID2, Slug: "b", Fields: map[string]any{"id": planID2}},
 	})
 	if err != nil {
 		t.Fatalf("first rebuild: %v", err)
@@ -534,7 +535,7 @@ func TestRebuild_ClearsOldData(t *testing.T) {
 
 	// Second rebuild with only one entity.
 	count, err := c.Rebuild([]RebuildRecord{
-		{EntityType: "epic", ID: epicID3, Slug: "c", Fields: map[string]any{"id": epicID3}},
+		{EntityType: "plan", ID: planID3, Slug: "c", Fields: map[string]any{"id": planID3}},
 	})
 	if err != nil {
 		t.Fatalf("second rebuild: %v", err)
@@ -544,13 +545,13 @@ func TestRebuild_ClearsOldData(t *testing.T) {
 	}
 
 	// Old entities should be gone.
-	if c.EntityExists("epic", testutil.TestEpicID) {
-		t.Errorf("%s should be gone after rebuild", testutil.TestEpicID)
+	if c.EntityExists("plan", "P1-test-plan") {
+		t.Error("P1-test-plan should be gone after rebuild")
 	}
-	if c.EntityExists("epic", epicID2) {
-		t.Errorf("%s should be gone after rebuild", epicID2)
+	if c.EntityExists("plan", planID2) {
+		t.Errorf("%s should be gone after rebuild", planID2)
 	}
-	if !c.EntityExists("epic", epicID3) {
-		t.Errorf("%s should exist after rebuild", epicID3)
+	if !c.EntityExists("plan", planID3) {
+		t.Errorf("%s should exist after rebuild", planID3)
 	}
 }

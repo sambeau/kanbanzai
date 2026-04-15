@@ -85,18 +85,6 @@ func TestValidateBugType(t *testing.T) {
 	}
 }
 
-func validEpicFields() map[string]any {
-	return map[string]any{
-		"id":         "EPIC-TESTEPIC",
-		"slug":       "my-epic",
-		"name":       "My Epic",
-		"status":     "proposed",
-		"summary":    "A summary of the epic",
-		"created":    "2024-01-15",
-		"created_by": "alice",
-	}
-}
-
 func validFeatureFields() map[string]any {
 	return map[string]any{
 		"id":         "FEAT-01J3K7MXP3RT5",
@@ -147,15 +135,6 @@ func validDecisionFields() map[string]any {
 		"decided_by": "alice",
 		"date":       "2024-01-15",
 		"status":     "proposed",
-	}
-}
-
-func TestValidateRecord_ValidEpic(t *testing.T) {
-	t.Parallel()
-
-	errs := ValidateRecord("epic", validEpicFields())
-	if len(errs) != 0 {
-		t.Errorf("expected no errors for valid epic, got %v", errs)
 	}
 }
 
@@ -286,12 +265,6 @@ func TestValidateRecord_MissingRequiredFields(t *testing.T) {
 		baseFields   func() map[string]any
 		missingField string
 	}{
-		{name: "epic missing name", entityType: "epic", baseFields: validEpicFields, missingField: "name"},
-		{name: "epic missing slug", entityType: "epic", baseFields: validEpicFields, missingField: "slug"},
-		{name: "epic missing status", entityType: "epic", baseFields: validEpicFields, missingField: "status"},
-		{name: "epic missing summary", entityType: "epic", baseFields: validEpicFields, missingField: "summary"},
-		{name: "epic missing created", entityType: "epic", baseFields: validEpicFields, missingField: "created"},
-		{name: "epic missing created_by", entityType: "epic", baseFields: validEpicFields, missingField: "created_by"},
 		{name: "feature missing parent", entityType: "feature", baseFields: validFeatureFields, missingField: "parent"},
 		{name: "feature missing slug", entityType: "feature", baseFields: validFeatureFields, missingField: "slug"},
 		{name: "task missing feature", entityType: "task", baseFields: validTaskFields, missingField: "parent_feature"},
@@ -337,7 +310,6 @@ func TestValidateRecord_EmptyRequiredField(t *testing.T) {
 		baseFields func() map[string]any
 		emptyField string
 	}{
-		{name: "epic empty name", entityType: "epic", baseFields: validEpicFields, emptyField: "name"},
 		{name: "feature empty summary", entityType: "feature", baseFields: validFeatureFields, emptyField: "summary"},
 		{name: "task empty slug", entityType: "task", baseFields: validTaskFields, emptyField: "slug"},
 		{name: "bug empty observed", entityType: "bug", baseFields: validBugFields, emptyField: "observed"},
@@ -388,10 +360,10 @@ func TestValidateRecord_UnknownEntityType(t *testing.T) {
 func TestValidateRecord_InvalidStatus(t *testing.T) {
 	t.Parallel()
 
-	fields := validEpicFields()
+	fields := validFeatureFields()
 	fields["status"] = "mystery"
 
-	errs := ValidateRecord("epic", fields)
+	errs := ValidateRecord("feature", fields)
 
 	found := false
 	for _, e := range errs {
@@ -447,7 +419,7 @@ func TestValidateRecord_InvalidBugEnums(t *testing.T) {
 func TestValidateEntityExists_Exists(t *testing.T) {
 	t.Parallel()
 
-	result := ValidateEntityExists("epic", "EPIC-001", func(entityType, id string) bool {
+	result := ValidateEntityExists("plan", "P1-my-plan", func(entityType, id string) bool {
 		return true
 	})
 	if result != nil {
@@ -458,17 +430,17 @@ func TestValidateEntityExists_Exists(t *testing.T) {
 func TestValidateEntityExists_NotExists(t *testing.T) {
 	t.Parallel()
 
-	result := ValidateEntityExists("epic", "EPIC-999", func(entityType, id string) bool {
+	result := ValidateEntityExists("plan", "P1-missing", func(entityType, id string) bool {
 		return false
 	})
 	if result == nil {
 		t.Fatal("expected non-nil ValidationError for missing entity")
 	}
-	if result.EntityType != "epic" {
-		t.Errorf("expected EntityType 'epic', got %q", result.EntityType)
+	if result.EntityType != "plan" {
+		t.Errorf("expected EntityType 'plan', got %q", result.EntityType)
 	}
-	if result.EntityID != "EPIC-999" {
-		t.Errorf("expected EntityID 'EPIC-999', got %q", result.EntityID)
+	if result.EntityID != "P1-missing" {
+		t.Errorf("expected EntityID 'P1-missing', got %q", result.EntityID)
 	}
 }
 
@@ -479,13 +451,13 @@ func TestValidationError_Error(t *testing.T) {
 		t.Parallel()
 
 		e := ValidationError{
-			EntityType: "epic",
-			EntityID:   "EPIC-001",
+			EntityType: "plan",
+			EntityID:   "P1-my-plan",
 			Field:      "name",
 			Message:    "required field is missing",
 		}
 		got := e.Error()
-		want := "epic EPIC-001: name: required field is missing"
+		want := "plan P1-my-plan: name: required field is missing"
 		if got != want {
 			t.Errorf("Error() = %q, want %q", got, want)
 		}
@@ -495,13 +467,13 @@ func TestValidationError_Error(t *testing.T) {
 		t.Parallel()
 
 		e := ValidationError{
-			EntityType: "epic",
+			EntityType: "plan",
 			EntityID:   "",
 			Field:      "id",
 			Message:    "required field is missing",
 		}
 		got := e.Error()
-		want := "epic: id: required field is missing"
+		want := "plan: id: required field is missing"
 		if got != want {
 			t.Errorf("Error() = %q, want %q", got, want)
 		}

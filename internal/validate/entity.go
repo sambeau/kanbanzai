@@ -134,7 +134,6 @@ func ValidateSlug(slug string) error {
 
 var requiredFields = map[EntityKind][]string{
 	EntityPlan:     {"id", "slug", "name", "status", "summary", "created", "created_by"},
-	EntityEpic:     {"id", "slug", "name", "status", "summary", "created", "created_by"},
 	EntityFeature:  {"id", "slug", "name", "parent", "status", "summary", "created", "created_by"},
 	EntityTask:     {"id", "parent_feature", "slug", "name", "summary", "status"},
 	EntityBug:      {"id", "slug", "name", "status", "severity", "priority", "type", "reported_by", "reported", "observed", "expected"},
@@ -282,7 +281,7 @@ func ValidateRecord(entityType string, fields map[string]any) []ValidationError 
 }
 
 // ValidateEntityExists checks that a referenced entity exists.
-// entityType is the type of the referenced entity (e.g., "epic").
+// entityType is the type of the referenced entity (e.g., "plan").
 // id is the ID to check.
 // exists is a function that returns true if the entity exists.
 func ValidateEntityExists(entityType, id string, exists func(entityType, id string) bool) *ValidationError {

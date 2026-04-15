@@ -12,7 +12,6 @@ type EntityKind = model.EntityKind
 
 const (
 	EntityPlan     = model.EntityKindPlan
-	EntityEpic     = model.EntityKindEpic
 	EntityFeature  = model.EntityKindFeature
 	EntityTask     = model.EntityKindTask
 	EntityBug      = model.EntityKindBug
@@ -22,7 +21,6 @@ const (
 
 var entryStates = map[EntityKind]string{
 	EntityPlan:     string(model.PlanStatusProposed),
-	EntityEpic:     string(model.EpicStatusProposed),
 	EntityFeature:  phase2FeatureEntryState, // Phase 2 entry state (document-driven lifecycle)
 	EntityTask:     string(model.TaskStatusQueued),
 	EntityBug:      string(model.BugStatusReported),
@@ -37,9 +35,6 @@ var terminalStates = map[EntityKind]map[string]struct{}{
 	EntityPlan: {
 		string(model.PlanStatusSuperseded): {},
 		string(model.PlanStatusCancelled):  {},
-	},
-	EntityEpic: {
-		string(model.EpicStatusDone): {},
 	},
 	EntityFeature: {
 		string(model.FeatureStatusSuperseded): {},
@@ -92,23 +87,6 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 		string(model.PlanStatusDone): {
 			string(model.PlanStatusSuperseded): {},
 			string(model.PlanStatusCancelled):  {},
-		},
-	},
-	// Epic lifecycle (deprecated, for Phase 1 compatibility)
-	EntityEpic: {
-		string(model.EpicStatusProposed): {
-			string(model.EpicStatusApproved): {},
-		},
-		string(model.EpicStatusApproved): {
-			string(model.EpicStatusActive): {},
-		},
-		string(model.EpicStatusActive): {
-			string(model.EpicStatusOnHold): {},
-			string(model.EpicStatusDone):   {},
-		},
-		string(model.EpicStatusOnHold): {
-			string(model.EpicStatusActive): {},
-			string(model.EpicStatusDone):   {},
 		},
 	},
 	// Feature lifecycle supports both Phase 1 and Phase 2 states for backward compatibility.

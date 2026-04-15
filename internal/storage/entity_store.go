@@ -234,18 +234,6 @@ func fieldOrderForEntityType(entityType string) []string {
 			"supersedes",
 			"superseded_by",
 		}
-	case string(model.EntityKindEpic):
-		return []string{
-			"id",
-			"slug",
-			"name",
-			"status",
-			"estimate",
-			"summary",
-			"created",
-			"created_by",
-			"features",
-		}
 	case string(model.EntityKindFeature):
 		return []string{
 			"id",

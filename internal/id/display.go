@@ -17,7 +17,7 @@ var splitIDPattern = regexp.MustCompile(
 
 // NormalizeID strips the display break hyphen from a split entity ID,
 // returning the canonical unsplit form. IDs that do not match the split
-// pattern (including plan IDs, epic IDs, and already-canonical IDs) pass
+// pattern (including plan IDs and already-canonical IDs) pass
 // through unchanged.
 //
 // Examples:
@@ -25,7 +25,6 @@ var splitIDPattern = regexp.MustCompile(
 //	NormalizeID("FEAT-01KMR-X1SEQV49") → "FEAT-01KMRX1SEQV49"
 //	NormalizeID("FEAT-01KMRX1SEQV49")  → "FEAT-01KMRX1SEQV49" (no change)
 //	NormalizeID("P7-developer-experience") → "P7-developer-experience" (no change)
-//	NormalizeID("EPIC-MYPROJECT") → "EPIC-MYPROJECT" (no change)
 func NormalizeID(id string) string {
 	trimmed := strings.TrimSpace(id)
 	upper := strings.ToUpper(trimmed)
@@ -55,16 +54,15 @@ func FormatEntityRef(displayID, slug, label string) string {
 
 // FormatFullDisplay formats an ID in full display form with break hyphen.
 // For TSID-based IDs: FEAT-01J3K-7MXP3RT5
-// For Epic IDs: returned as-is (EPIC-MYSLUG)
 // For Plan IDs: returned as-is (P1-basic)
 func FormatFullDisplay(canonicalID string) string {
-	// Plan IDs and Epic IDs pass through unchanged
+	// Plan IDs pass through unchanged
 	if model.IsPlanID(canonicalID) {
 		return canonicalID
 	}
 
 	prefix, tsid, ok := splitCanonicalID(canonicalID)
-	if !ok || prefix == "EPIC" {
+	if !ok {
 		return canonicalID
 	}
 	if len(tsid) <= 5 {
@@ -77,13 +75,13 @@ func FormatFullDisplay(canonicalID string) string {
 // unique prefix. The ids slice should contain all canonical IDs of the same
 // entity type (used to compute uniqueness).
 func FormatShortDisplay(canonicalID string, sameTypeIDs []string) string {
-	// Plan IDs and Epic IDs pass through unchanged
+	// Plan IDs pass through unchanged
 	if model.IsPlanID(canonicalID) {
 		return canonicalID
 	}
 
 	prefix, tsid, ok := splitCanonicalID(canonicalID)
-	if !ok || prefix == "EPIC" {
+	if !ok {
 		return canonicalID
 	}
 
@@ -140,7 +138,7 @@ func StripBreakHyphens(input string) string {
 	if !ok {
 		// Try to parse as a TSID-type ID with an extra hyphen
 		// e.g., "FEAT-01J3K-7MXP3RT5" -> find the type prefix, then rejoin
-		for _, p := range []string{"EPIC", "FEAT", "BUG", "DEC", "TASK", "DOC"} {
+		for _, p := range []string{"FEAT", "BUG", "DEC", "TASK", "DOC"} {
 			pfx := p + "-"
 			if strings.HasPrefix(upper, pfx) {
 				after := upper[len(pfx):]
@@ -149,10 +147,6 @@ func StripBreakHyphens(input string) string {
 				return p + "-" + cleaned
 			}
 		}
-		return upper
-	}
-
-	if prefix == "EPIC" {
 		return upper
 	}
 

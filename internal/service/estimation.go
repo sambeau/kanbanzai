@@ -32,7 +32,6 @@ var SoftLimits = map[string]float64{
 	"task":    13,
 	"bug":     13,
 	"feature": 100,
-	"epic":    100,
 }
 
 // IsValidEstimate returns true if the estimate is in the Modified Fibonacci scale.
@@ -76,8 +75,8 @@ type FeatureRollup struct {
 	ExcludedTaskCount  int // not-planned or duplicate
 }
 
-// EpicRollup holds computed rollup values for an Epic.
-type EpicRollup struct {
+// PlanRollup holds computed rollup values for a Plan.
+type PlanRollup struct {
 	FeatureTotal          *float64
 	Progress              float64
 	Delta                 *float64
@@ -189,24 +188,21 @@ func (s *EntityService) ComputeFeatureRollup(featureID string) (FeatureRollup, e
 	return rollup, nil
 }
 
-// ComputeEpicRollup computes rollup statistics for an Epic (Plan).
-func (s *EntityService) ComputeEpicRollup(epicID string) (EpicRollup, error) {
-	// Load all features for this epic/plan
+// ComputePlanRollup computes rollup statistics for a Plan.
+func (s *EntityService) ComputePlanRollup(planID string) (PlanRollup, error) {
+	// Load all features for this plan
 	allFeatures, err := s.List("feature")
 	if err != nil {
-		return EpicRollup{}, fmt.Errorf("list features: %w", err)
+		return PlanRollup{}, fmt.Errorf("list features: %w", err)
 	}
 
-	var rollup EpicRollup
+	var rollup PlanRollup
 	var featureTotal float64
 	hasEstimatedFeatures := false
 
 	for _, f := range allFeatures {
 		parent, _ := f.State["parent"].(string)
-		if parent == "" {
-			parent, _ = f.State["epic"].(string)
-		}
-		if parent != epicID {
+		if parent != planID {
 			continue
 		}
 

@@ -113,9 +113,6 @@ func (s *EntityService) CrossEntityQuery(planID string) ([]ListResult, error) {
 	featureIDs := make(map[string]bool)
 	for _, f := range features {
 		parent := stringFromState(f.State, "parent")
-		if parent == "" {
-			parent = stringFromState(f.State, "epic")
-		}
 		if parent == planID {
 			featureIDs[f.ID] = true
 		}
@@ -161,9 +158,6 @@ func matchesFilteredInput(r ListResult, input ListFilteredInput) bool {
 		parent := stringFromState(r.State, "parent")
 		if parent == "" {
 			parent = stringFromState(r.State, "parent_feature")
-		}
-		if parent == "" {
-			parent = stringFromState(r.State, "epic")
 		}
 		if parent != input.Parent {
 			return false
@@ -237,7 +231,6 @@ func parseTimeFromState(state map[string]any, key string) time.Time {
 func allQueryableKinds() []string {
 	return []string{
 		string(model.EntityKindPlan),
-		string(model.EntityKindEpic),
 		string(model.EntityKindFeature),
 		string(model.EntityKindTask),
 		string(model.EntityKindBug),

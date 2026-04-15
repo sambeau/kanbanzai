@@ -107,7 +107,7 @@ func TestEntityStore_WriteAndLoad(t *testing.T) {
 		Fields: map[string]any{
 			"id":         "FEAT-01J3K7MXP3RT5",
 			"slug":       "initial-kernel",
-			"epic":       "EPIC-TESTEPIC",
+			"parent":     "P1-test-plan",
 			"status":     "draft",
 			"summary":    "Start the workflow kernel",
 			"created":    "2026-03-19T00:00:00Z",
@@ -134,7 +134,7 @@ func TestEntityStore_WriteAndLoad(t *testing.T) {
 	want := map[string]any{
 		"created":    "2026-03-19T00:00:00Z",
 		"created_by": "sam",
-		"epic":       "EPIC-TESTEPIC",
+		"parent":     "P1-test-plan",
 		"id":         "FEAT-01J3K7MXP3RT5",
 		"slug":       "initial-kernel",
 		"status":     "draft",
@@ -231,12 +231,12 @@ func TestEntityStore_Write_RejectsMismatchedIdentity(t *testing.T) {
 	store := NewEntityStore(t.TempDir())
 
 	record := EntityRecord{
-		Type: "epic",
-		ID:   "EPIC-TESTEPIC",
-		Slug: "phase-1",
+		Type: "plan",
+		ID:   "P1-test-plan",
+		Slug: "test-plan",
 		Fields: map[string]any{
-			"id":      "EPIC-MISMATCH",
-			"slug":    "phase-1",
+			"id":      "P1-mismatch",
+			"slug":    "test-plan",
 			"title":   "Phase 1",
 			"status":  "proposed",
 			"summary": "Build the kernel",
@@ -269,7 +269,7 @@ func TestCanonicalYAML_FixturesRoundTrip(t *testing.T) {
 		entityType string
 	}{
 		{name: "plan", path: filepath.Join("..", "..", "testdata", "entities", "plan.yaml"), entityType: "plan"},
-		{name: "epic", path: filepath.Join("..", "..", "testdata", "entities", "epic.yaml"), entityType: "epic"},
+
 		{name: "feature", path: filepath.Join("..", "..", "testdata", "entities", "feature.yaml"), entityType: "feature"},
 		{name: "task", path: filepath.Join("..", "..", "testdata", "entities", "task.yaml"), entityType: "task"},
 		{name: "bug", path: filepath.Join("..", "..", "testdata", "entities", "bug.yaml"), entityType: "bug"},
@@ -339,24 +339,7 @@ func TestEntityStore_Load_FixtureFiles(t *testing.T) {
 			},
 			wantFilePath: filepath.Join(root, "plans", "P1-initial-kernel.yaml"),
 		},
-		{
-			name:       "epic",
-			sourcePath: filepath.Join("..", "..", "testdata", "entities", "epic.yaml"),
-			entityType: "epic",
-			id:         "EPIC-PHASE1KERNEL",
-			slug:       "phase-1-kernel",
-			wantFields: map[string]any{
-				"id":         "EPIC-PHASE1KERNEL",
-				"slug":       "phase-1-kernel",
-				"name":       "Phase 1 Kernel",
-				"status":     "proposed",
-				"summary":    "Build the initial workflow kernel",
-				"created":    "2026-03-19T12:00:00Z",
-				"created_by": "sam",
-				"features":   []any{"FEAT-01J3K7MXP3RT5", "FEAT-01J3K8NYQ4SU6"},
-			},
-			wantFilePath: filepath.Join(root, "epics", "EPIC-PHASE1KERNEL-phase-1-kernel.yaml"),
-		},
+
 		{
 			name:       "feature",
 			sourcePath: filepath.Join("..", "..", "testdata", "entities", "feature.yaml"),
@@ -366,7 +349,7 @@ func TestEntityStore_Load_FixtureFiles(t *testing.T) {
 			wantFields: map[string]any{
 				"id":         "FEAT-01J3K7MXP3RT5",
 				"slug":       "initial-kernel",
-				"parent":     "EPIC-PHASE1KERNEL",
+				"parent":     "P1-phase-1-kernel",
 				"status":     "draft",
 				"summary":    "Start the workflow kernel",
 				"created":    "2026-03-19T12:00:00Z",
@@ -917,7 +900,7 @@ func TestEntityStore_Load_NonExistentFile(t *testing.T) {
 	root := t.TempDir()
 	store := NewEntityStore(root)
 
-	_, err := store.Load("epic", "EPIC-NONEXIST", "does-not-exist")
+	_, err := store.Load("plan", "P1-nonexist", "does-not-exist")
 	if err == nil {
 		t.Fatal("Load() error = nil, want non-nil for non-existent file")
 	}
@@ -934,15 +917,15 @@ func TestEntityStore_Load_CorruptYAML(t *testing.T) {
 	root := t.TempDir()
 	store := NewEntityStore(root)
 
-	dir := filepath.Join(root, "epics")
+	dir := filepath.Join(root, "plans")
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		t.Fatalf("MkdirAll() error = %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(dir, "EPIC-TESTEPIC-corrupt.yaml"), []byte("{{{{"), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(dir, "P1-corrupt.yaml"), []byte("{{{{"), 0o644); err != nil {
 		t.Fatalf("WriteFile() error = %v", err)
 	}
 
-	_, err := store.Load("epic", "EPIC-TESTEPIC", "corrupt")
+	_, err := store.Load("plan", "P1-corrupt", "corrupt")
 	if err == nil {
 		t.Fatal("Load() error = nil, want non-nil for corrupt YAML")
 	}
@@ -964,7 +947,7 @@ func TestEntityStore_Load_LegacySequentialID(t *testing.T) {
 	legacyFields := map[string]any{
 		"id":         "FEAT-001",
 		"slug":       "legacy-feature",
-		"epic":       "EPIC-TESTEPIC",
+		"parent":     "P1-test-plan",
 		"status":     "draft",
 		"summary":    "A feature with a legacy sequential ID",
 		"created":    "2025-01-01T00:00:00Z",
@@ -1005,15 +988,15 @@ func TestEntityStore_Load_EmptyFile(t *testing.T) {
 	root := t.TempDir()
 	store := NewEntityStore(root)
 
-	dir := filepath.Join(root, "epics")
+	dir := filepath.Join(root, "plans")
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		t.Fatalf("MkdirAll() error = %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(dir, "EPIC-TESTEPIC-empty.yaml"), []byte(""), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(dir, "P1-empty.yaml"), []byte(""), 0o644); err != nil {
 		t.Fatalf("WriteFile() error = %v", err)
 	}
 
-	got, err := store.Load("epic", "EPIC-TESTEPIC", "empty")
+	got, err := store.Load("plan", "P1-empty", "empty")
 	if err != nil {
 		t.Fatalf("Load() error = %v", err)
 	}

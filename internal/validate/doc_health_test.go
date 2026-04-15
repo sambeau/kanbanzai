@@ -455,7 +455,7 @@ func TestCheckFeatureParentRefs_NonPlanParent(t *testing.T) {
 	features := []EntityInfo{
 		{Type: "feature", ID: "FEAT-01DDDD", Fields: map[string]any{
 			"id":     "FEAT-01DDDD",
-			"parent": "EPIC-LEGACY",
+			"parent": "PROJ-LEGACY",
 		}},
 	}
 	loadAll := func() ([]EntityInfo, error) { return features, nil }
@@ -466,7 +466,7 @@ func TestCheckFeatureParentRefs_NonPlanParent(t *testing.T) {
 		t.Fatalf("CheckFeatureParentRefs returned error: %v", err)
 	}
 	if len(report.Errors) != 0 {
-		t.Fatalf("expected 0 errors for non-Plan parent, got %d: %v", len(report.Errors), report.Errors)
+		t.Fatalf("expected 0 errors for non-plan parent, got %d: %v", len(report.Errors), report.Errors)
 	}
 }
 
@@ -617,7 +617,6 @@ func TestInferEntityType(t *testing.T) {
 		want string
 	}{
 		{"P1-basic", string(model.EntityKindPlan)},
-		{"EPIC-KERNEL", string(model.EntityKindEpic)},
 		{"FEAT-01AAAA", string(model.EntityKindFeature)},
 		{"TASK-01AAAA", string(model.EntityKindTask)},
 		{"BUG-01AAAA", string(model.EntityKindBug)},

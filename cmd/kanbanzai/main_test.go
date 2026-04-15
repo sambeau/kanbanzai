@@ -379,7 +379,6 @@ func TestRunValidate_PrintsCandidateValidationResult(t *testing.T) {
 		"--type", "feature",
 		"--id", "FEAT-01J3K7MXP3RT5",
 		"--slug", "storage-layer",
-		"--epic", "EPIC-TESTEPIC",
 		"--status", "draft",
 		"--summary", "Implement storage",
 		"--created", "2025-01-15",
@@ -472,16 +471,16 @@ func TestRunUpdateStatus_RejectsIllegalTransition(t *testing.T) {
 
 	err := run([]string{
 		"entity", "transition",
-		"--type", "epic",
-		"--id", "EPIC-TESTEPIC",
-		"--slug", "phase-1-kernel",
+		"--type", "feature",
+		"--id", "FEAT-01J3K7MXP3RT5",
+		"--slug", "storage-layer",
 		"--status", "done",
 	}, deps)
 	if err == nil {
-		t.Fatal("run(update status epic invalid jump) error = nil, want non-nil")
+		t.Fatal("run(update status feature invalid jump) error = nil, want non-nil")
 	}
 
-	if !strings.Contains(err.Error(), `invalid epic transition "proposed" -> "done"`) {
+	if !strings.Contains(err.Error(), `invalid feature transition "draft" -> "done"`) {
 		t.Fatalf("unexpected error: %v", err)
 	}
 }
@@ -730,15 +729,6 @@ func newFakeEntityService() *fakeEntityService {
 					"status": "draft",
 				},
 			},
-			"epic:EPIC-TESTEPIC:phase-1-kernel": {
-				Type: "epic",
-				ID:   "EPIC-TESTEPIC",
-				Slug: "phase-1-kernel",
-				Path: "test/state/epics/EPIC-TESTEPIC-phase-1-kernel.yaml",
-				State: map[string]any{
-					"status": "proposed",
-				},
-			},
 			"feature:FEAT-01J3K9ABC5DE7:status-updates": {
 				Type: "feature",
 				ID:   "FEAT-01J3K9ABC5DE7",
@@ -777,18 +767,6 @@ func (f *fakeEntityService) GetPlan(id string) (service.ListResult, error) {
 
 func (f *fakeEntityService) ListPlans(filters service.PlanFilters) ([]service.ListResult, error) {
 	return nil, nil
-}
-
-func (f *fakeEntityService) CreateEpic(input service.CreateEpicInput) (service.CreateResult, error) {
-	return service.CreateResult{
-		Type: "epic",
-		ID:   "EPIC-TESTEPIC",
-		Slug: "phase-1-kernel",
-		Path: "test/state/epics/EPIC-TESTEPIC-phase-1-kernel.yaml",
-		State: map[string]any{
-			"status": "proposed",
-		},
-	}, nil
 }
 
 func (f *fakeEntityService) CreateFeature(input service.CreateFeatureInput) (service.CreateResult, error) {
@@ -904,8 +882,8 @@ func (f *fakeEntityService) UpdateStatus(input service.UpdateStatusInput) (servi
 		return service.GetResult{}, &testError{"status is required"}
 	}
 
-	if input.Type == "epic" && input.ID == "EPIC-TESTEPIC" && input.Slug == "phase-1-kernel" && input.Status == "done" {
-		return service.GetResult{}, &testError{`invalid epic transition "proposed" -> "done"`}
+	if input.Type == "feature" && input.ID == "FEAT-01J3K7MXP3RT5" && input.Status == "done" {
+		return service.GetResult{}, &testError{`invalid feature transition "draft" -> "done"`}
 	}
 
 	result, err := f.Get(input.Type, input.ID, input.Slug)

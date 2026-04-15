@@ -948,8 +948,8 @@ func TestNextInferEntityType(t *testing.T) {
 		{"feat-01JX123", "feature"},
 		{"P1-my-plan", "plan"},
 		{"P2-another", "plan"},
-		{"BUG-01JX123", ""},  // bug is not handled by next
-		{"EPIC-01JX123", ""}, // epic is not handled by next
+		{"BUG-01JX123", ""}, // bug is not handled by next
+
 		{"", ""},
 		{"random-string", ""},
 	}
