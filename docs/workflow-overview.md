@@ -16,7 +16,7 @@ The two halves are not in tension. Flexibility during design is how you get the 
 
 ---
 
-## How it compares
+## How Kanbanzai compares to agile and specification-driven workflows
 
 If you have worked with Scrum or Kanban, the design phases will feel familiar. Work moves through stages, priorities shift, documents get revised, and decisions emerge from conversation rather than a single upfront plan. Kanbanzai shares agile's emphasis on iteration and responsiveness during design.
 
@@ -138,7 +138,47 @@ Through all of this, you retain decision authority. The agent proposes; you appr
 
 ---
 
-## Approval stages and state
+## Lifecycle stages and gates
+
+Every feature and plan advances through a defined set of stages, with approval gates that control each transition. The diagram below shows the complete stage-gate flow for a feature; the tables and descriptions that follow detail each gate and its prerequisite.
+
+```text
+                    ┌─────────┐
+                    │proposed │
+                    └────┬────┘
+                         │  you decide to begin design
+                         ▼
+                    ┌─────────┐
+                    │designing│
+                    └────┬────┘
+                         │  design document approved
+                         ▼
+                   ┌──────────┐
+                   │specifying│◄──────────────────┐
+                   └────┬─────┘                   │
+                        │  specification approved │ spec superseded
+                        ▼                         │
+                  ┌───────────┐                   │
+                  │dev-planning│                   │
+                  └─────┬─────┘                   │
+                        │  dev plan approved      │
+                        ▼                         │
+                  ┌───────────┐                   │
+                  │developing │                   │
+                  └─────┬─────┘                   │
+                        │  all tasks complete     │
+                        ▼                         │
+                  ┌───────────┐    rework    ┌────┴─────┐
+                  │ reviewing │─────────────►│needs-work│
+                  └─────┬─────┘              └──────────┘
+                        │  review approved
+                        ▼
+                    ┌────┐
+                    │done│
+                    └────┘
+```
+
+Each box is a stage. Each arrow is a gate with its prerequisite labelled. The backward arrows show how work returns to earlier stages when the basis changes.
 
 ### Feature lifecycle
 
@@ -178,50 +218,6 @@ Plans can also become `superseded` or `cancelled` when direction changes.
 The cost of catching a bad decision rises as work moves downstream. A design flaw caught during design costs a document revision. The same flaw caught after three agents have implemented against it costs rework across multiple task branches, potential merge conflicts, and wasted verification effort.
 
 Gates are the mechanism that makes early detection possible. They force decisions to be recorded in documents, reviewed, and approved before downstream work begins. They are prerequisites, not suggestions.
-
----
-
-## The workflow diagram
-
-The full stage-gate flow for a feature, showing document dependencies and approval points:
-
-```text
-                    ┌─────────┐
-                    │proposed │
-                    └────┬────┘
-                         │  you decide to begin design
-                         ▼
-                    ┌─────────┐
-                    │designing│
-                    └────┬────┘
-                         │  design document approved
-                         ▼
-                   ┌──────────┐
-                   │specifying│◄──────────────────┐
-                   └────┬─────┘                   │
-                        │  specification approved │ spec superseded
-                        ▼                         │
-                  ┌───────────┐                   │
-                  │dev-planning│                   │
-                  └─────┬─────┘                   │
-                        │  dev plan approved      │
-                        ▼                         │
-                  ┌───────────┐                   │
-                  │developing │                   │
-                  └─────┬─────┘                   │
-                        │  all tasks complete     │
-                        ▼                         │
-                  ┌───────────┐    rework    ┌────┴─────┐
-                  │ reviewing │─────────────►│needs-work│
-                  └─────┬─────┘              └──────────┘
-                        │  review approved
-                        ▼
-                    ┌────┐
-                    │done│
-                    └────┘
-```
-
-Each box is a stage. Each arrow is a gate with its prerequisite labelled. The backward arrows show how work returns to earlier stages when the basis changes.
 
 ---
 
