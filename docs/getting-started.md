@@ -1,8 +1,8 @@
 # Getting Started with Kanbanzai
 
-This guide walks you through Kanbanzai from installation to a completed feature. Every concept is introduced through a concrete action — by the end, you will have taken an idea through design, specification, implementation, and review using the full workflow.
+This guide takes you from installation to a completed feature. Every concept is introduced through a concrete action — by the end, you will have moved an idea through design, specification, implementation, and review using the full workflow.
 
-If you want a conceptual overview first, read the [User Guide](user-guide.md). If you want to understand the stage-gate model in depth, see the [Workflow Overview](workflow-overview.md).
+> **Already familiar with the concepts?** The [User Guide](user-guide.md) gives a conceptual overview; the [Workflow Overview](workflow-overview.md) explains the stage-gate model in depth.
 
 ---
 
@@ -23,7 +23,7 @@ This mirrors the real workflow for any feature, whether it is a one-file change 
 
 ---
 
-## Installation
+## Install Kanbanzai
 
 ### From source
 
@@ -71,9 +71,9 @@ This is the most reliable way to ensure any editor can start the MCP server.
 
 ---
 
-## Initialising a project
+## Initialise a project
 
-Navigate to a Git repository and run:
+With Kanbanzai installed, navigate to a Git repository and run:
 
 ```sh
 kanbanzai init
@@ -134,11 +134,11 @@ Add `.kbz/local.yaml` to your `.gitignore` — it contains credentials and machi
 
 ---
 
-## Editor integration
+## Connect your editor
 
-`kbz init` writes `.mcp.json` at the project root. Most editors (Claude Code, VS Code with Copilot/Claude extensions, Cursor) read this file automatically and start the MCP server when you open the project. For Zed, `kbz init` also writes `.zed/settings.json`.
+Kanbanzai runs as an MCP server that your editor's AI assistant calls directly. `kbz init` writes `.mcp.json` at the project root — most editors (Claude Code, VS Code with Copilot/Claude extensions, Cursor) read this file automatically and start the server when you open the project. For Zed, `kbz init` also writes `.zed/settings.json`.
 
-If the automatic configuration does not work for your setup, use the manual snippets below.
+If automatic configuration does not work for your setup, use the manual snippets below.
 
 ### Zed
 
@@ -218,13 +218,11 @@ For **GitHub Copilot** (built-in MCP support), `.mcp.json` is read automatically
 
 ## Create a plan
 
-With the MCP server running, you interact with Kanbanzai by asking your editor's AI assistant to call tools. Start by creating a plan — the top-level organising unit that groups related features.
-
-Ask your AI assistant:
+With the server running, you interact with Kanbanzai by asking your editor's AI assistant to call tools. Start by creating a **plan** — the top-level container that groups related features.
 
 > Create a plan for my CLI tool improvements.
 
-The assistant calls:
+The assistant calls the `entity` tool:
 
 ```
 entity(action: "create", type: "plan", prefix: "P",
@@ -240,7 +238,7 @@ This creates a plan with an ID like **P1-cli-improvements**. You will use this I
 
 ## Create a feature
 
-Next, create a feature under your plan for the `greet` command:
+A plan contains features — each feature represents a distinct piece of work. Create one for the `greet` command:
 
 > Create a feature for adding a greet subcommand.
 
@@ -256,13 +254,13 @@ The feature starts in **proposed** status. Before any code is written, it must p
 
 ---
 
-## Write a design
+## Write a design document
 
-The design phase captures *how* you intend to solve the problem. Ask your assistant to write a design document:
+The design phase captures *how* you intend to solve the problem before committing to detailed requirements.
 
 > Write a design for the greet command feature.
 
-The assistant creates a file at `work/design/greet-command.md` with sections covering the approach, alternatives considered, and key decisions. A simple design might look like:
+The assistant creates `work/design/greet-command.md` covering the approach, alternatives considered, and key decisions. A simple design might look like:
 
 ```markdown
 # Greet Command Design
@@ -294,7 +292,7 @@ doc(action: "register", path: "work/design/greet-command.md",
 
 ## Approve the design
 
-Read the design document and decide whether the approach is sound. If you are happy with it:
+Read the design and decide whether the approach is sound. This is the first **stage gate** — your approval advances the feature from designing into specification.
 
 > Approve the design.
 
@@ -302,15 +300,13 @@ Read the design document and decide whether the approach is sound. If you are ha
 doc(action: "approve", id: "FEAT-xxxxx/design-greet-command")
 ```
 
-Approval is a **stage gate** — it records your decision and advances the feature from the designing phase into specification. This is where human judgement shapes the project: you decide whether the approach is right before any detailed requirements are written.
-
-For more on how stage gates work, see [Workflow Overview — Stage gates and approvals](workflow-overview.md).
+Stage gates are where human judgement shapes the project: you decide whether the approach is right before detailed requirements are written. See [Workflow Overview](workflow-overview.md) for how gates govern every transition.
 
 ---
 
-## Create a specification
+## Write a specification
 
-With the design approved, the assistant writes a specification — the binding contract that defines *what* the implementation must do. Ask:
+With the design approved, the next phase produces a specification — the binding contract that defines *what* the implementation must do.
 
 > Write a spec for the greet command.
 
@@ -337,31 +333,19 @@ one-line description.
 — empty strings are treated as absent.
 ```
 
-The assistant registers and you approve it, just as with the design:
+The assistant registers the spec, and you approve it — the same register-then-approve pattern as the design.
 
-```
-doc(action: "register", path: "work/spec/greet-command.md",
-    type: "specification", title: "Greet Command Specification",
-    owner: "FEAT-xxxxx")
-```
-
-> Approve the spec.
-
-```
-doc(action: "approve", id: "FEAT-xxxxx/specification-greet-command")
-```
-
-**Why a separate spec?** The design says *how*; the spec says *what*. Designs can be exploratory and conversational. Specifications are precise and testable — each acceptance criterion becomes a concrete verification target during implementation and review.
+**Why a separate spec?** The design says *how*; the spec says *what*. Designs can be exploratory and conversational. Specifications are precise and testable — each acceptance criterion becomes a verification target during implementation and review.
 
 ---
 
-## Create a dev plan
+## Decompose into tasks
 
-The dev plan breaks the specification down into implementable tasks. Ask:
+The dev plan breaks the specification into implementable tasks.
 
 > Create a dev plan for the greet command.
 
-The assistant writes `work/dev/greet-command.md` describing the task breakdown, then uses the `decompose` tool to create the tasks:
+The assistant writes `work/dev/greet-command.md` describing the task breakdown, then uses the `decompose` tool to create task entities:
 
 ```
 decompose(action: "propose", feature_id: "FEAT-xxxxx")
@@ -381,13 +365,13 @@ After reviewing the proposed breakdown:
 decompose(action: "apply", feature_id: "FEAT-xxxxx", proposal: {...})
 ```
 
-This creates the task entities with dependencies. The feature is now ready for implementation.
+This creates the task entities with dependencies — the feature is now ready for implementation.
 
 ---
 
-## Implement
+## Implement through the work queue
 
-Implementation happens through the **work queue**. Check what is ready:
+With tasks created, implementation happens through the **work queue**. Check what is ready:
 
 > What's next?
 
@@ -419,13 +403,13 @@ Repeat this cycle — claim, implement, verify, finish — until all tasks are d
 
 ## Review and merge
 
-With all tasks complete, the feature moves to review. Ask:
+With all tasks complete, the feature moves to review.
 
 > Review the greet command feature.
 
-The assistant checks the implementation against the specification's acceptance criteria, verifies test coverage, and produces a review document. Reviews can flag issues at several severity levels — see [Workflow Overview](workflow-overview.md) for the full review process.
+The assistant checks the implementation against the specification's acceptance criteria, verifies test coverage, and produces a review document. Reviews can flag issues at several severity levels — see [Workflow Overview](workflow-overview.md) for how the review process works.
 
-If the review passes:
+Once the review passes:
 
 > Merge the greet command feature.
 
@@ -440,7 +424,7 @@ The merge tool checks gates (all tasks complete, verification exists, no conflic
 
 ## What just happened
 
-You took an idea — "add a greet command" — through a structured workflow:
+You moved a single idea — "add a greet command" — through a structured workflow:
 
 1. **Plan** organised the work into a named container
 2. **Design** captured the approach and key decisions
@@ -450,7 +434,7 @@ You took an idea — "add a greet command" — through a structured workflow:
 6. **Review** verified the implementation against the spec
 7. **Merge** landed the work after passing all quality gates
 
-Each transition required an explicit approval or gate check. This structure scales — the same workflow handles a three-task CLI command and a fifty-task architectural refactor. The AI agent handles the mechanical work (writing drafts, running decomposition, claiming tasks); you make the judgement calls (approving designs, reviewing specs, deciding what to build).
+Each transition required an explicit approval or gate check. The same workflow handles a three-task CLI command and a fifty-task architectural refactor — what changes is the size of the documents and the number of tasks, not the process. The AI agent handles the mechanical work (writing drafts, decomposing specs, claiming tasks); you make the judgement calls (approving designs, reviewing specs, deciding what to build).
 
 All of this state — plans, features, tasks, documents, knowledge — lives in `.kbz/` inside your Git repository. There is no external database. Clone the repo and you have the full project history, including every decision and approval.
 
