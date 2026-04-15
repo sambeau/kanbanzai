@@ -2,10 +2,16 @@ id: FEAT-01KMWJ3ZQZF5R
 slug: default-roles
 name: Default roles
 parent: P11-fresh-install-experience
-status: reviewing
+status: done
 review_cycle: 1
 summary: "kbz init installs base.yaml (scaffold) and reviewer.yaml (fully populated, kanbanzai-managed) into .kbz/context/roles/ on new projects. Adds --skip-roles flag and extends --update-skills scope to include managed role files."
 spec: FEAT-01KMWJ3ZQZF5R/specification-spec-default-roles
 dev_plan: FEAT-01KMWJ3ZQZF5R/dev-plan-p11-dev-default-roles
 created: "2026-03-29T10:27:02Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "State repair: all 3 tasks complete, parent plan P11 already done. Lifecycle never advanced from developing."
+    timestamp: "2026-04-15T12:26:03+01:00"
+    to_status: done
