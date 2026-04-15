@@ -3,6 +3,14 @@ parent_feature: FEAT-01KP8T4HSX6QZ
 slug: check-workflow-overview
 name: Check workflow overview
 summary: "Fact-check docs/workflow-overview.md against the codebase. Verify lifecycle stages, gate prerequisites, document types, entity states, and all factual claims. Produce changelog."
-status: ready
+status: done
 depends_on:
   - TASK-01KP92BTTGZEB
+files_planned:
+  - docs/workflow-overview.md
+completed: "2026-04-15T17:34:19Z"
+claimed_at: "2026-04-15T17:29:37Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T17:29:37Z"
+dispatched_by: sambeau
+completion_summary: "Fact-checked workflow-overview.md against codebase. Two corrections: (1) 'needs-work' → 'needs-rework' in ASCII diagram, (2) plan lifecycle was missing 'reviewing' stage — added it. All other claims verified accurate against lifecycle.go, entities.go, and stage-bindings.yaml."
