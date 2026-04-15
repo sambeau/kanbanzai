@@ -44,9 +44,9 @@ The design document must be formally approved before specification can begin. Ap
 
 ### Specification
 
-The approved design is turned into a precise, testable specification. This is where intent becomes binding: numbered requirements, explicit acceptance criteria, stated scope boundaries. You are the final authority because the specification defines what "correct implementation" means.
+You turn the approved design into a precise, testable specification. This is where intent becomes binding: numbered requirements, explicit acceptance criteria, stated scope boundaries. You are the final authority because the specification defines what "correct implementation" means.
 
-Agents help surface missing requirements, edge cases, and ambiguities. They point out conflicts between the draft and existing behaviour. But gaps in an unapproved specification must not be filled by guessing — they must be resolved through conversation with you before the specification is approved.
+Agents help surface missing requirements, edge cases, and ambiguities. They point out conflicts between the draft and existing behaviour. But agents must not fill specification gaps by guessing — they must resolve them through conversation with you before approval.
 
 The specification must be approved before any implementation begins. This gate exists because the cost of a specification error multiplies across every agent that implements against it.
 
@@ -60,7 +60,7 @@ The human role through all of this is **design manager**: you set direction, mak
 
 ## Document-led process
 
-Documents are the durable interface between human intent and agent execution. Four document types drive the workflow, and each one's approval unlocks the next phase of work.
+Documents are the durable interface between human intent and agent execution. Four document types drive the workflow, and each one's approval opens the next phase of work.
 
 ### Design documents
 
@@ -100,7 +100,7 @@ After the specification is approved, the workflow shifts character. The design c
 
 ### The development plan
 
-The approved specification is broken into a development plan: a set of tasks with explicit dependencies, interface contracts where tasks interact, and traceability from each task back to the specification requirements it addresses. Agents lead this stage because decomposition depends on implementation-level judgment about sequencing and interfaces. You review the resulting plan and approve it before implementation begins.
+Agents break the approved specification into a development plan: a set of tasks with explicit dependencies, interface contracts where tasks interact, and traceability from each task back to the specification requirements it addresses. They lead this stage because decomposition depends on implementation-level judgment about sequencing and interfaces. You review the resulting plan and approve it before implementation begins.
 
 The development plan matters because ad-hoc task creation — agents inventing work without structured decomposition — hides dependencies, makes parallel work unsafe, and weakens the link between implementation and specification.
 
@@ -122,7 +122,7 @@ Review produces a report. You review the report and decide whether to approve th
 
 ### Integration
 
-After review passes, the change is prepared for merge. The system checks merge gates: task completion, branch health, CI status, and review readiness. You make the final decision to merge. After the merge lands, the feature is done.
+After review passes, the system prepares the change for merge and checks merge gates: task completion, branch health, CI status, and review readiness. You make the final decision to merge. After the merge lands, the feature is done.
 
 ---
 
@@ -209,7 +209,7 @@ Plans group related features at a higher level. Their lifecycle is simpler:
 proposed → designing → active → reviewing → done
 ```
 
-A plan is `proposed` when the scope exists but design work has not started. It moves to `designing` when the body of work is being shaped through design documents. It becomes `active` when features under the plan are being delivered. It moves to `reviewing` when delivery is evaluated at the aggregate level. It reaches `done` when the plan review is approved and all scoped features are complete.
+A plan is `proposed` when the scope exists but design work has not started. It moves to `designing` when you begin shaping the body of work through design documents. It becomes `active` when feature delivery begins. It moves to `reviewing` when you evaluate delivery at the aggregate level. It reaches `done` when the plan review is approved and all scoped features are complete.
 
 Plans can also become `superseded` or `cancelled` when direction changes.
 
@@ -217,7 +217,7 @@ Plans can also become `superseded` or `cancelled` when direction changes.
 
 The cost of catching a bad decision rises as work moves downstream. A design flaw caught during design costs a document revision. The same flaw caught after three agents have implemented against it costs rework across multiple task branches, potential merge conflicts, and wasted verification effort.
 
-Gates are the mechanism that makes early detection possible. They force decisions to be recorded in documents, reviewed, and approved before downstream work begins. They are prerequisites, not suggestions.
+Gates are the mechanism that makes early detection possible. They force you to record decisions in documents, review them, and approve them before downstream work begins. They are prerequisites, not suggestions.
 
 ---
 
