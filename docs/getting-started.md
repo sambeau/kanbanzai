@@ -1,6 +1,6 @@
 # Getting Started with Kanbanzai
 
-This guide takes you from installation to a completed feature. Every concept is introduced through a concrete action — by the end, you will have moved an idea through design, specification, implementation, and review using the full workflow.
+This guide takes you from installation to a completed feature. Every concept arrives through a concrete action — by the end, you will have moved an idea through design, specification, implementation, and review using the full workflow.
 
 > **Already familiar with the concepts?** The [User Guide](user-guide.md) gives a conceptual overview; the [Workflow Overview](workflow-overview.md) explains the stage-gate model in depth.
 
@@ -136,7 +136,7 @@ Add `.kbz/local.yaml` to your `.gitignore` — it contains credentials and machi
 
 ## Connect your editor
 
-Kanbanzai runs as an MCP server that your editor's AI assistant calls directly. `kbz init` writes `.mcp.json` at the project root — most editors (Claude Code, VS Code with Copilot/Claude extensions, Cursor) read this file automatically and start the server when you open the project. For Zed, `kbz init` also writes `.zed/settings.json`.
+Kanbanzai runs as an **MCP** (Model Context Protocol) server that your editor's AI assistant calls directly. `kbz init` writes `.mcp.json` at the project root — most editors (Claude Code, VS Code with Copilot/Claude extensions, Cursor) read this file automatically and start the server when you open the project. For Zed, `kbz init` also writes `.zed/settings.json`.
 
 If automatic configuration does not work for your setup, use the manual snippets below.
 
@@ -250,7 +250,7 @@ entity(action: "create", type: "feature",
        summary: "Add a greet subcommand that takes a name argument and prints a personalised greeting")
 ```
 
-The feature starts in **proposed** status. Before any code is written, it must pass through design and specification — this is the structure that prevents wasted implementation effort.
+The feature starts in **proposed** status. Before any code is written, it passes through design and specification — this structure prevents wasted implementation effort.
 
 ---
 
@@ -292,7 +292,7 @@ doc(action: "register", path: "work/design/greet-command.md",
 
 ## Approve the design
 
-Read the design and decide whether the approach is sound. This is the first **stage gate** — your approval advances the feature from designing into specification.
+Read the design and decide whether the approach is sound. This is the first **stage gate** — approving it advances the feature from designing into specification.
 
 > Approve the design.
 
@@ -300,7 +300,7 @@ Read the design and decide whether the approach is sound. This is the first **st
 doc(action: "approve", id: "FEAT-xxxxx/design-greet-command")
 ```
 
-Stage gates are where human judgement shapes the project: you decide whether the approach is right before detailed requirements are written. See [Workflow Overview](workflow-overview.md) for how gates govern every transition.
+Stage gates are where human judgement shapes the project — you decide whether the approach is right before detailed requirements are written. See [Workflow Overview](workflow-overview.md) for how gates govern every transition.
 
 ---
 
@@ -310,7 +310,7 @@ With the design approved, the next phase produces a specification — the bindin
 
 > Write a spec for the greet command.
 
-The assistant produces `work/spec/greet-command.md` with formal acceptance criteria:
+The assistant produces `work/spec/greet-command.md` with formal **acceptance criteria**:
 
 ```markdown
 # Greet Command Specification
@@ -333,9 +333,9 @@ one-line description.
 — empty strings are treated as absent.
 ```
 
-The assistant registers the spec, and you approve it — the same register-then-approve pattern as the design.
+Register and approve the spec — the same pattern as the design.
 
-**Why a separate spec?** The design says *how*; the spec says *what*. Designs can be exploratory and conversational. Specifications are precise and testable — each acceptance criterion becomes a verification target during implementation and review.
+**Why a separate spec?** The design says *how*; the spec says *what*. Designs are exploratory and conversational. Specifications are precise and testable — each acceptance criterion becomes a verification target during implementation and review.
 
 ---
 
@@ -379,7 +379,7 @@ With tasks created, implementation happens through the **work queue**. The queue
 next()
 ```
 
-The work queue shows your tasks sorted by priority. The assistant claims the first ready task:
+The assistant claims the first ready task:
 
 ```
 next(id: "TASK-xxxxx")
@@ -393,7 +393,7 @@ finish(task_id: "TASK-xxxxx",
        verification: "go test ./cmd/... — all passing")
 ```
 
-The `finish` tool transitions the task to **done** and contributes any knowledge gained during implementation. When one task completes, its dependents automatically become ready — the next `next()` call picks up the next task in the queue.
+`finish` transitions the task to **done** and contributes any **knowledge** gained during implementation. When one task completes, its dependents automatically become ready — the next `next()` call picks up the next task in the queue.
 
 Repeat this cycle — claim, implement, verify, finish — until all tasks are done.
 
@@ -407,7 +407,7 @@ With all tasks complete, the feature moves to review.
 
 > Review the greet command feature.
 
-The assistant checks the implementation against the specification's acceptance criteria, verifies test coverage, and produces a review document. Reviews can flag issues at several severity levels — see [Workflow Overview](workflow-overview.md) for how the review process works.
+The assistant checks the implementation against the specification's acceptance criteria, verifies test coverage, and produces a review document. Reviews flag issues at several severity levels — see [Workflow Overview](workflow-overview.md) for how the review process works.
 
 Once the review passes:
 
