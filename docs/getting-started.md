@@ -430,7 +430,7 @@ You moved a single idea — "add a greet command" — through a structured workf
 2. **Design** captured the approach and key decisions
 3. **Specification** defined precise, testable acceptance criteria
 4. **Dev plan** decomposed the spec into implementable tasks
-5. **Implementation** happened through a prioritised work queue
+5. **Implementation** claimed and completed tasks through a prioritised work queue
 6. **Review** verified the implementation against the spec
 7. **Merge** landed the work after passing all quality gates
 
