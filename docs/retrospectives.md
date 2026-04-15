@@ -93,7 +93,7 @@ A `finish` call with two retrospective signals:
 
 ### Validation and error handling
 
-The system validates each signal independently. An invalid signal — missing a required field or using an unrecognised category or severity — is rejected with an error message, but **does not block task completion**. Valid signals in the same call are still accepted and stored.
+The system validates each signal independently. It rejects any invalid signal — one missing a required field or using an unrecognised category or severity — with an error message, but **does not block task completion**. Valid signals in the same call are still accepted and stored.
 
 This non-blocking design means you never have to choose between completing a task and recording observations. If a signal is malformed, the response includes the rejection reason so you can correct and resubmit it.
 
@@ -109,7 +109,7 @@ Each accepted signal becomes a knowledge entry with:
 
 ### Nudges
 
-The system encourages signal recording through two nudges. At most one nudge fires per completion — the feature-level nudge takes priority:
+The system encourages signal recording through two **nudges**. At most one nudge fires per completion — the feature-level nudge takes priority:
 
 1. **Feature completion nudge** — when the last task in a feature completes and no task in that feature recorded any retrospective signals, the response includes a reminder to consider adding signals.
 2. **Task completion nudge** — when a task completes with a summary but no knowledge entries and no retrospective signals (and the feature-level nudge did not fire), the response suggests including them.
@@ -152,14 +152,14 @@ Scoping uses the `learned_from` field on each knowledge entry to trace signals b
 
 The engine groups signals in two stages:
 
-1. **Category grouping** — signals are first separated by category.
-2. **Jaccard similarity clustering** — within each category, signals are clustered using greedy Jaccard similarity with a threshold of 0.5. Each signal either joins the first existing cluster whose centroid word set is sufficiently similar, or starts a new singleton cluster.
+1. **Category grouping** — the engine separates signals by category.
+2. **Jaccard similarity clustering** — within each category, the engine clusters signals using greedy Jaccard similarity with a threshold of 0.5. Each signal either joins the first existing cluster whose centroid word set is sufficiently similar, or starts a new singleton cluster.
 
-This means two signals about "spec ambiguity in error formats" will likely cluster together, while a signal about "spec ambiguity in lifecycle states" will form its own cluster.
+Two signals about "spec ambiguity in error formats" will likely cluster together, while a signal about "spec ambiguity in lifecycle states" will form its own cluster.
 
 ### Ranking
 
-Each cluster becomes a **theme**. Themes are ranked by **severity score** — the product of the cluster's signal count and the highest severity weight in the cluster. When two themes have the same severity score, the one with more signals ranks higher.
+Each cluster becomes a **theme**. The engine ranks themes by **severity score** — the product of the cluster's signal count and the highest severity weight in the cluster. When two themes have the same severity score, the one with more signals ranks higher.
 
 ### Response structure
 
@@ -206,7 +206,7 @@ Each entry in the `experiments` array contains:
 | **net_assessment** | Summary string (e.g. "3 positive, 1 negative") |
 | **recommendation** | `keep` (positive > negative), `revert` (zero positive, at least one negative), or `revise` (everything else — including cases where negatives outnumber positives) |
 
-The experiment tracking feature connects retrospective signals to workflow experiments. When you try a new process and record signals with `related_decision` pointing to the experiment's Decision entity, the synthesis engine automatically tracks whether the experiment is producing more positive or negative outcomes.
+**Experiment tracking** connects retrospective signals to workflow experiments. When you try a new process and record signals with `related_decision` pointing to the experiment's Decision entity, the synthesis engine automatically tracks whether the experiment produces more positive or negative outcomes.
 
 ---
 
@@ -261,7 +261,7 @@ There is no enforced cadence — run retrospectives when they will be most usefu
 - **Periodically on long-running projects** — use time-range filtering (`since`, `until`) to review a specific period regardless of entity boundaries.
 - **Before planning new work** — synthesise recent signals to inform process improvements in the next plan's design.
 
-The `min_severity` filter helps focus attention. Set it to `moderate` or `significant` to skip minor observations and concentrate on the patterns that caused real friction.
+Use the `min_severity` filter to focus attention. Set it to `moderate` or `significant` to skip minor observations and concentrate on the patterns that caused real friction.
 
 > **Tip.** Always call `retro(action: "synthesise")` before writing any retrospective or review document. The synthesis surfaces signals from across the project that may not be in your immediate context. Do not write retrospective documents from memory alone.
 
