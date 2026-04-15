@@ -2,7 +2,8 @@ id: FEAT-01KN4ZPG44T5B
 slug: sub-agent-state-isolation
 name: Sub agent state isolation
 parent: P15-kanbanzai-25-infrastructure-hardening
-status: developing
+status: reviewing
+review_cycle: 1
 summary: Protect workflow state from sub-agent git operations by committing .kbz/state/ changes before handoff dispatches a sub-agent.
 spec: FEAT-01KN4ZPG44T5B/specification-sub-agent-state-isolation
 dev_plan: FEAT-01KN4ZPG44T5B/dev-plan-sub-agent-state-isolation-plan
