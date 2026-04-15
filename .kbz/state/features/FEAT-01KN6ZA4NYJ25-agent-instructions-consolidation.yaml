@@ -2,7 +2,7 @@ id: FEAT-01KN6ZA4NYJ25
 slug: agent-instructions-consolidation
 name: Agent instructions consolidation
 parent: P16-skills-and-roles-3.0
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Consolidate agent-facing instructions by migrating unique content from three overlapping .agents/skills/ files (kanbanzai-code-review, kanbanzai-plan-review, kanbanzai-design) into their .kbz/skills/ counterparts and retiring the old files. Upgrade five retained system skills to match CONVENTIONS.md quality (vocabulary, anti-patterns, evaluation criteria, retrieval anchors). Fix .kbz/ store-commit discipline across kanbanzai-agents, kanbanzai-getting-started, AGENTS.md, and base.yaml. Clean up AGENTS.md (deduplicate, remove stale content, add discovery pointers). Create CLAUDE.md bootstrap. Verify context assembly ordering and effort budget inclusion. Implements all 19 recommendations (R1-R19) from work/reports/agent-instructions-review.md."
 design: FEAT-01KN6-ZA4NYJ25/design-agent-instructions-consolidation
@@ -10,3 +10,9 @@ spec: FEAT-01KN6-ZA4NYJ25/specification-agent-instructions-consolidation
 dev_plan: FEAT-01KN6-ZA4NYJ25/dev-plan-agent-instructions-consolidation
 created: "2026-04-02T11:29:59Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "State repair: all 14 tasks complete, parent plan P16 already done. Lifecycle never advanced from developing."
+    timestamp: "2026-04-15T12:26:09+01:00"
+    to_status: done
