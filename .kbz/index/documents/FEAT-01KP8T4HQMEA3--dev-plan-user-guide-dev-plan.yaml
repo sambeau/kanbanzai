@@ -1,0 +1,191 @@
+document_id: FEAT-01KP8T4HQMEA3/dev-plan-user-guide-dev-plan
+document_path: work/plan/user-guide-dev-plan.md
+content_hash: ff252969079c864d0b53642f4177eb11c9f7c1351c7adb2eb868f28357c42589
+indexed_at: 2026-04-15T15:10:22.197028Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'User Guide: Development Plan'
+      byte_offset: 0
+      byte_count: 10531
+      word_count: 1476
+      content_hash: ff252969079c864d0b53642f4177eb11c9f7c1351c7adb2eb868f28357c42589
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 412
+          byte_count: 847
+          word_count: 107
+          content_hash: 0ff8e873df0c1ddc2659ee55ffe3f651eefcb26f597cbb6404447e16b171f666
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1259
+          byte_count: 4773
+          word_count: 597
+          content_hash: 08e1539153af7fa1ba51d11f438c3c5d00660feb4c684224bfed9c043a152bc6
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Write — Produce First Draft'
+              byte_offset: 1278
+              byte_count: 973
+              word_count: 125
+              content_hash: 8daee2d156d19e24e27d44bfff4cbd701558f56e621be58d65219ccd8101cce0
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Edit — Structural Editing'
+              byte_offset: 2251
+              byte_count: 994
+              word_count: 126
+              content_hash: 6642e0767141fd4342eedc5b2d569794772c8aa463b285ee714b39cbac755bc6
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Check — Fact Verification'
+              byte_offset: 3245
+              byte_count: 934
+              word_count: 115
+              content_hash: deb3e15811e9db25da6c26c0bbd629a7fedc1e725f5151fc372895cd3df522ee
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Style — AI Artifact Removal'
+              byte_offset: 4179
+              byte_count: 852
+              word_count: 105
+              content_hash: 4dfd134a42746f488699f7920e976d3ae94df0464c0ab76e7efe7effb8207fc8
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Copyedit — Sentence-Level Polish'
+              byte_offset: 5031
+              byte_count: 1001
+              word_count: 123
+              content_hash: ad0e7026f0f20f0f89633674119392917f20124b36d13332b89a238e83148eb8
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 6032
+          byte_count: 543
+          word_count: 98
+          content_hash: 3f21adb40f8a50ce84895e2e0dffba0ced2e74bc898ceb31a10cdf60d22fbb94
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 6575
+          byte_count: 2004
+          word_count: 304
+          content_hash: fee70c3e91f72340e6728a2097c5203e1956c0249b7e82290948fe045711eff9
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: First Draft Exceeds Reading Time Budget'
+              byte_offset: 6595
+              byte_count: 491
+              word_count: 77
+              content_hash: 2e3ba687cb9e558654067416aba8ef8f53c8f9f97570155d539553a57cacab62
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: Factual Claims Outdated by Concurrent Development'
+              byte_offset: 7086
+              byte_count: 508
+              word_count: 72
+              content_hash: 75986422f0a3d36dd3cafcee3e131931876d79b28bfd2465645937c492616734
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: AI Writing Patterns Persist After Style Stage'
+              byte_offset: 7594
+              byte_count: 462
+              word_count: 67
+              content_hash: ab3d2829861ded873594e5e51b79d8b626f7650565f393d17e04a3d07dfdd589
+            - path: 1.4.4
+              level: 3
+              title: 'Risk: Links to Unproduced Documents Break Reader Flow'
+              byte_offset: 8056
+              byte_count: 523
+              word_count: 85
+              content_hash: adde0e03c750ec9b4ee909d754f21a58f22fb2a7936d9285add7139126782b44
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 8579
+          byte_count: 1952
+          word_count: 323
+          content_hash: 931147c3e7ddf4b429e5194bf44f1bf753c67d0aef1f8d3a35ffb73a88f9c2a2
+entity_refs:
+    - entity_id: FEAT-01KP8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 151
+    - entity_id: FEAT-01KP8T4HQMEA3
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 239
+cross_doc_links:
+    - target_path: work/spec/user-guide.md
+      link_text: work/spec/user-guide.md
+      section_path: "1"
+    - target_path: work/design/public-release-documentation.md
+      link_text: work/design/public-release-documentation.md
+      section_path: "1"
+    - target_path: work/design/documentation-pipeline.md
+      link_text: work/design/documentation-pipeline.md
+      section_path: "1"
+    - target_path: work/spec/user-guide.md
+      link_text: work/spec/user-guide.md
+      section_path: "1.1"
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: "1.1"
+    - target_path: work/design/documentation-pipeline.md
+      link_text: work/design/documentation-pipeline.md
+      section_path: "1.1"
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: 1.2.1
+    - target_path: work/design/public-release-documentation.md
+      link_text: work/design/public-release-documentation.md
+      section_path: 1.2.1
+    - target_path: work/spec/user-guide.md
+      link_text: work/spec/user-guide.md
+      section_path: 1.2.1
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: 1.2.2
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: 1.2.3
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: 1.2.4
+    - target_path: refs/humanising-ai-prose.md
+      link_text: refs/humanising-ai-prose.md
+      section_path: 1.2.4
+    - target_path: docs/user-guide.md
+      link_text: docs/user-guide.md
+      section_path: 1.2.5
+    - target_path: refs/punctuation-guide.md
+      link_text: refs/punctuation-guide.md
+      section_path: 1.2.5
+    - target_path: refs/technical-writing-guide.md
+      link_text: refs/technical-writing-guide.md
+      section_path: 1.2.5
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+    - section_path: 1.4.4
+      role: risk
+      confidence: high
+classified: false
