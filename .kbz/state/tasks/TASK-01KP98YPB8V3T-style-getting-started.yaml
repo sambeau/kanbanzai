@@ -4,3 +4,5 @@ slug: style-getting-started
 name: Style Getting Started Guide
 summary: "Style stage: passive→active voice, consistent term bolding, paragraph rhythm, reading level for docs/getting-started.md."
 status: queued
+depends_on:
+  - TASK-01KP98YP8Z899
