@@ -4,3 +4,5 @@ slug: copyedit-workflow-overview
 name: Copyedit workflow overview
 summary: "Final copyedit of docs/workflow-overview.md. Check spelling, punctuation, grammar, link formatting. Produce changelog."
 status: queued
+depends_on:
+  - TASK-01KP92BTZBMDT

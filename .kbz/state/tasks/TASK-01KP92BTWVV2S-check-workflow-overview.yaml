@@ -4,3 +4,5 @@ slug: check-workflow-overview
 name: Check workflow overview
 summary: "Fact-check docs/workflow-overview.md against the codebase. Verify lifecycle stages, gate prerequisites, document types, entity states, and all factual claims. Produce changelog."
 status: queued
+depends_on:
+  - TASK-01KP92BTTGZEB

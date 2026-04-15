@@ -4,3 +4,5 @@ slug: style-workflow-overview
 name: Style workflow overview
 summary: "Style pass on docs/workflow-overview.md. Apply consistent voice, tense, formatting. Remove AI writing artifacts per refs/humanising-ai-prose.md. Produce changelog."
 status: queued
+depends_on:
+  - TASK-01KP92BTWVV2S

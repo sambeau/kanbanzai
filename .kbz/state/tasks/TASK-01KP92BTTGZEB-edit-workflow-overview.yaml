@@ -4,3 +4,5 @@ slug: edit-workflow-overview
 name: Edit workflow overview
 summary: "Structural edit of docs/workflow-overview.md. Check section ordering, depth balance, logical flow, inverted pyramid structure, heading descriptiveness. Produce changelog."
 status: queued
+depends_on:
+  - TASK-01KP92BTQV4NY
