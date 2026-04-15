@@ -52,7 +52,7 @@ var validBugTypes = map[string]struct{}{
 	string(model.BugTypeDesignProblem):        {},
 }
 
-var slugPattern = regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)
+var slugPattern = regexp.MustCompile(`^[a-z0-9]+(?:[-.]?[a-z0-9]+)*$`)
 
 // phasePrefixPattern matches names that begin with a phase/version prefix:
 // a single uppercase ASCII letter immediately followed by one or more digits,
@@ -127,7 +127,7 @@ func ValidateSlug(slug string) error {
 		return fmt.Errorf("invalid slug %q: must not contain path separators", slug)
 	}
 	if !slugPattern.MatchString(slug) {
-		return fmt.Errorf("invalid slug %q: must be lowercase kebab-case using only letters, numbers, and hyphens", slug)
+		return fmt.Errorf("invalid slug %q: must be lowercase kebab-case using only letters, numbers, hyphens, and dots", slug)
 	}
 	return nil
 }
