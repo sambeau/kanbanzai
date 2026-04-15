@@ -3,6 +3,6 @@ parent_feature: FEAT-01KP8T4J02S7F
 slug: edit-getting-started
 name: Edit Getting Started Guide
 summary: "Edit stage: structural and clarity editing of docs/getting-started.md. Check section flow, heading descriptiveness, transitional sentences, eliminate repetition."
-status: queued
+status: ready
 depends_on:
   - TASK-01KP98YP45YSV
