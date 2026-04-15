@@ -5,5 +5,6 @@ parent: P22-documentation-for-public-release
 status: dev-planning
 summary: "Produce the User Guide (docs/user-guide.md) — the hub document of the documentation collection. Provides high-level orientation, links to all other documents. Purpose, audience, structure defined in design §6. Full editorial pipeline with advisory checkpoints."
 spec: FEAT-01KP8T4HQMEA3/specification-user-guide
+dev_plan: FEAT-01KP8T4HQMEA3/dev-plan-user-guide-dev-plan
 created: "2026-04-15T14:53:44Z"
 created_by: sambeau
