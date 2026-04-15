@@ -3,6 +3,14 @@ parent_feature: FEAT-01KP8T4J02S7F
 slug: edit-getting-started
 name: Edit Getting Started Guide
 summary: "Edit stage: structural and clarity editing of docs/getting-started.md. Check section flow, heading descriptiveness, transitional sentences, eliminate repetition."
-status: ready
+status: done
 depends_on:
   - TASK-01KP98YP45YSV
+files_planned:
+  - docs/getting-started.md
+completed: "2026-04-15T19:19:19Z"
+claimed_at: "2026-04-15T19:17:25Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T19:17:25Z"
+dispatched_by: sambeau
+completion_summary: "Edit stage complete. Tightened intro paragraph, converted navigation links to callout box, renamed 5 headings for action-oriented consistency (Install Kanbanzai, Initialise a project, Connect your editor, Decompose into tasks, Implement through the work queue). Added transitional sentences between sections. Reduced repetition in the register/approve pattern for the spec section. Improved the scaling paragraph in What just happened."

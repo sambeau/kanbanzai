@@ -3,6 +3,6 @@ parent_feature: FEAT-01KP8T4J02S7F
 slug: check-getting-started
 name: Check Getting Started Guide
 summary: "Check stage: fact-check all tool invocations, parameter names, command outputs, and workflow claims in docs/getting-started.md against the codebase. Code examples get particular attention per design §4.4."
-status: queued
+status: ready
 depends_on:
   - TASK-01KP98YP6RNX5
