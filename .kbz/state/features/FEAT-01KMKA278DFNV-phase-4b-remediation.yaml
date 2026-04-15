@@ -2,7 +2,24 @@ id: FEAT-01KMKA278DFNV
 slug: phase-4b-remediation
 name: Phase 4b remediation
 parent: P1-phase-4-orchestration
-status: designing
+status: reviewing
+review_cycle: 1
 summary: Resolve all post-implementation review findings for Phase 4b and declare the Phase 5 gate open
 created: "2026-03-25T20:13:06Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: designing
+    reason: "State repair: all 7 tasks complete, parent plan P1 already done. Feature stuck since 2026-03-25."
+    timestamp: "2026-04-15T12:26:48+01:00"
+    to_status: specifying
+  -
+    from_status: specifying
+    reason: "State repair: all 7 tasks complete, parent plan P1 already done. Feature stuck since 2026-03-25."
+    timestamp: "2026-04-15T12:26:48+01:00"
+    to_status: dev-planning
+  -
+    from_status: dev-planning
+    reason: "State repair: all 7 tasks complete, parent plan P1 already done. Feature stuck since 2026-03-25."
+    timestamp: "2026-04-15T12:26:48+01:00"
+    to_status: developing
