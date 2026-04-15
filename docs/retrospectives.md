@@ -245,8 +245,8 @@ The report action:
 
 The generated Markdown document contains:
 
-- A **title heading** and metadata table (scope, total signals, period)
-- A **Themes** section with ranked subsections — each showing the category, signal count, severity score, representative observation, and top suggestion
+- A **title heading** and metadata table (scope, total signals, and period)
+- A **Themes** section with ranked subsections — each showing category, signal count, severity score, representative observation, and top suggestion
 - An **Experiments** section (when applicable) showing each workflow experiment's signal tally and recommendation
 - A **What Worked Well** section listing positive-outcome clusters
 
