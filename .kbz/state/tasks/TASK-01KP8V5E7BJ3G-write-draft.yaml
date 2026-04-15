@@ -3,4 +3,13 @@ parent_feature: FEAT-01KP8T4HQMEA3
 slug: write-draft
 name: Write first draft
 summary: "Produce a structured first draft of the User Guide (docs/user-guide.md) following the design brief §6 and spec FR-001 through FR-018. All 13 content sections, purpose/audience opener, and cross-reference links to all 7 documents. Role: documenter. Skill: write-docs."
-status: ready
+status: done
+files_planned:
+  - docs/user-guide.md
+completed: "2026-04-15T15:21:35Z"
+claimed_at: "2026-04-15T15:13:38Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T15:13:38Z"
+dispatched_by: sambeau
+completion_summary: "Produced the first draft of the User Guide (docs/user-guide.md) — 194 lines covering all 13 content sections from the spec (FR-001 through FR-013). Opens with purpose and audience statement (FR-015). All sections follow inverted pyramid (FR-014). All 7 cross-reference links present (FR-017). Descriptive headings throughout (FR-016). No installation instructions, tool parameters, entity fields, or agent-facing content (FR-019–022)."
+verification: "Verified all 7 document links present via grep: workflow-overview.md (4), getting-started.md (1), orchestration-and-knowledge.md (4), retrospectives.md (2), mcp-tool-reference.md (2), schema-reference.md (3), configuration-reference.md (2)."
