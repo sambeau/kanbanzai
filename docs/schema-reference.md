@@ -1,6 +1,6 @@
 # Schema Reference
 
-This document is the authoritative reference for the `.kbz` directory structure and all YAML entity formats used by Kanbanzai. It covers directory layout, serialisation rules, every entity type with field tables and examples, lifecycle state machines, ID formats, and referential integrity rules.
+This document is the authoritative reference for the `.kbz` directory structure and all YAML **entity** formats used by Kanbanzai. It covers directory layout, serialisation rules, every entity type with field tables and examples, **lifecycle** state machines, ID formats, and **referential integrity** rules.
 
 ---
 
@@ -211,7 +211,7 @@ verification: "go build ./..., go test -race ./internal/kbzinit/... (37 tests pa
 
 ### Bug
 
-Bugs track defects with structured severity, priority, and classification. They follow a detailed lifecycle from report through triage, reproduction, fix, and verification.
+Bugs track defects with structured severity, priority, and classification. They follow a lifecycle from report through triage, reproduction, fix, and verification.
 
 **Storage path:** `.kbz/state/bugs/{id}-{slug}.yaml`
 
@@ -383,7 +383,7 @@ The document record ID contains a slash (e.g., `FEAT-01ABC/design-my-feature`). 
 
 **Valid statuses:** draft → approved → superseded.
 
-When a document is approved, its `content_hash` is locked. If the file on disk later changes, drift detection will flag a mismatch. Document approval can trigger forward lifecycle transitions on the owning feature (e.g., approving a design moves the feature from designing to specifying). Document supersession can trigger backward transitions.
+Approving a document locks its `content_hash`. If the file on disk later changes, drift detection flags a mismatch. Document approval can trigger forward lifecycle transitions on the owning feature (e.g., approving a design moves the feature from designing to specifying). Document supersession can trigger backward transitions.
 
 **Example:**
 
@@ -488,7 +488,7 @@ updated: "2026-03-27T03:22:00Z"
 
 ### Human Checkpoint
 
-Human checkpoints record structured decision points where an orchestrating agent pauses to request human input. They are stored as YAML files alongside other entities.
+Human checkpoints record decision points where an orchestrating agent pauses for human input. They are stored as YAML files with other entities.
 
 **Storage path:** `.kbz/state/checkpoints/{id}.yaml`
 
@@ -520,7 +520,7 @@ created: "2026-03-27T10:30:00Z"
 
 ## 4. Lifecycle State Machines
 
-Each entity type with a lifecycle follows a defined state machine. Transitions not listed here are rejected.
+Each entity type with a lifecycle follows a defined **state machine**. The system rejects unlisted transitions.
 
 ### Plan
 
@@ -620,7 +620,7 @@ Terminal state: **retired**.
 
 ### TSID13-based IDs
 
-All entities except Plans use a TSID13 (Time-Sorted ID, 13 characters) as the unique portion of their ID. TSID13 uses Crockford base32 encoding with a 48-bit millisecond timestamp and a 15-bit random component. The format is `{PREFIX}-{TSID13}`, where the prefix identifies the entity type:
+All entities except Plans use a **TSID13** (Time-Sorted ID, 13 characters) as the unique portion of their ID. TSID13 uses Crockford base32 encoding with a 48-bit millisecond timestamp and a 15-bit random component. The format is `{PREFIX}-{TSID13}`, where the prefix identifies the entity type:
 
 | Prefix | Entity Type |
 |--------|-------------|
@@ -714,7 +714,7 @@ Kanbanzai validates references at creation time but does not enforce cascading d
 
 ### What "advisory" means
 
-If a referenced entity is later deleted or transitions to a terminal state, the referencing field is not automatically cleared. Tools that read these references handle missing targets gracefully. The `health_check` tool reports broken references as warnings.
+If a referenced entity is later deleted or transitions to a terminal state, Kanbanzai does not automatically clear the referencing field. Tools that read these references handle missing targets gracefully. The `health_check` tool reports broken references as warnings.
 
 ---
 
@@ -738,7 +738,7 @@ All timestamps are stored in RFC 3339 format with UTC timezone. They are always 
 created: "2026-03-26T00:28:22Z"
 ```
 
-Fields marked as "auto" in the entity tables are set automatically by the system and should not be manually edited. The `created` field is set once at entity creation. The `updated` field is refreshed on every write.
+The system sets fields marked "auto" in the entity tables automatically — do not edit them by hand. It sets `created` once at entity creation and refreshes `updated` on every write.
 
 ---
 

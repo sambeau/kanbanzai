@@ -1,7 +1,8 @@
 # Configuration Reference
 
-Complete reference for all Kanbanzai configuration files. Covers project-wide
-settings, user-local overrides, context profiles, and validation.
+Reference for all Kanbanzai configuration files. Covers **config.yaml**
+(project-wide settings), **local.yaml** (user-local overrides), **context
+profiles**, and validation.
 
 ---
 
@@ -21,10 +22,9 @@ settings, user-local overrides, context profiles, and validation.
 
 **Location:** `.kbz/config.yaml`
 
-This is the main project configuration file. It is committed to version control
-and shared by everyone working in the repository. Kanbanzai creates it
-automatically when you initialise a project; you can edit it by hand or through
-MCP tools.
+The main project configuration file. It lives in version control and everyone
+in the repository shares it. Kanbanzai creates it automatically when you
+initialise a project; you can edit it by hand or through MCP tools.
 
 ### Top-Level Fields
 
@@ -50,7 +50,7 @@ MCP tools.
 
 ### PrefixEntry
 
-Each element in the `prefixes` array describes one Plan ID prefix.
+Each element in the `prefixes` array describes one Plan ID **prefix**.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
@@ -278,7 +278,7 @@ tool_hints: {}
 ## 2. Prefix Registry
 
 Prefixes live in the `prefixes` array inside `config.yaml`. They control how
-Plan IDs are formed.
+Kanbanzai forms Plan IDs.
 
 ### Rules
 
@@ -295,8 +295,8 @@ Plan IDs are formed.
 | Add a prefix | Edit `config.yaml` or use the `init` command | Add an entry to the `prefixes` array with a character and human-readable name. The `Config` struct has an `AddPrefix()` method internally. |
 | Retire a prefix | Edit `config.yaml` | Set `retired: true` on the prefix entry. Retired prefixes cannot be used for new Plans but remain valid for Plans that already use them. The `Config` struct has a `RetirePrefix()` method internally. |
 
-These operations are performed by editing `config.yaml` directly or through
-the init command. There are no standalone MCP tools for prefix management.
+You perform these operations by editing `config.yaml` directly or through the
+init command. There are no standalone MCP tools for prefix management.
 
 ---
 
@@ -351,7 +351,7 @@ github:
 
 Context profiles define agent roles. The `handoff` tool reads them to build
 context packets — bundles of conventions, architecture knowledge, and scoped
-knowledge entries that are handed to an agent at the start of a session.
+knowledge entries that it hands to an agent at the start of a session.
 
 ### Fields
 
@@ -370,7 +370,7 @@ knowledge entries that are handed to an agent at the start of a session.
 A profile with `inherits: base` receives all conventions and architecture
 entries from `base`, then layers its own on top. Inheritance supports multiple
 levels — a grandchild inherits from its parent, which inherits from its
-grandparent, and so on. Cycles are detected and rejected.
+grandparent, and so on. Kanbanzai detects and rejects cycles.
 
 ### Example
 
@@ -425,9 +425,9 @@ This validates:
 
 ### MCP
 
-The `health` MCP tool performs the same validation and returns a structured
-report. It also runs additional checks beyond the CLI command, including
-document currency validation and branch health.
+The `health` MCP tool runs the same validation and returns a structured report.
+It also checks document currency and branch health, which the CLI command does
+not cover.
 
 ### Common Config Errors
 
@@ -447,18 +447,18 @@ The current version is `"2"`.
 
 ### Automatic Defaults
 
-When Kanbanzai loads a config file, it merges in default values for any keys
-that are missing. This means:
+When Kanbanzai loads a config file, it merges default values into any missing
+keys. This means:
 
-- Upgrading from an older configuration automatically adds newer sections
+- Upgrading from an older configuration adds newer sections
   (`branch_tracking`, `cleanup`, `knowledge`, `dispatch`, `incidents`,
   `decomposition`) with sensible defaults.
-- Existing settings are never overwritten.
-- No manual migration is typically needed.
+- Kanbanzai never overwrites existing settings.
+- You rarely need a manual migration.
 
 ### Phase 1 → Phase 2
 
 Projects that used Phase 1 epics can convert them to Phase 2 plans by
-re-initialising the project. The migration is handled internally during config
-loading — older entity formats are upgraded automatically. Running
+re-initialising the project. Config loading handles the migration
+internally — it upgrades older entity formats automatically. Running
 initialisation again skips entities that have already been converted.

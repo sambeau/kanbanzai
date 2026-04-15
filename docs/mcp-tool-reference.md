@@ -1,6 +1,6 @@
 # MCP Tool Reference
 
-Complete reference for the MCP tools exposed by the Kanbanzai server. Kanbanzai exposes **22 consolidated MCP tools**, each using an `action` parameter for dispatch (e.g., `entity(action: "create", type: "feature")`). This document enumerates individual action-combinations for completeness, covering transport details, tool organisation, parameter definitions, return values, error conditions, and example calls.
+Complete reference for the MCP tools exposed by the Kanbanzai server. Kanbanzai exposes **22 consolidated MCP tools**, each using an `action` parameter for dispatch (e.g., `entity(action: "create", type: "feature")`). This document lists individual action-combinations for completeness, covering transport details, tool organisation, parameter definitions, return values, error conditions, and example calls.
 
 **Audience:** Agent developers and tool builders.
 
@@ -349,7 +349,7 @@ List all unique tags across all entity types, sorted alphabetically.
 
 > **MCP call:** `entity(action: "transition", id: "...", status: "...")`
 
-Update the lifecycle status of an entity. Enforces lifecycle state machine rules.
+Update the lifecycle status of an entity. Enforces **lifecycle state machine** rules.
 
 | Parameter | Type | Required | Description | Valid values |
 |---|---|---|---|---|
@@ -410,7 +410,7 @@ Update fields of an existing entity. Cannot change `id` or `status` (use `update
 
 > **MCP call:** `health()`
 
-Run a comprehensive health check across all entities, knowledge entries, worktrees, branches, and context profiles.
+Run a full health check across all entities, knowledge entries, worktrees, branches, and context profiles.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -590,7 +590,7 @@ Valid transitions: `proposed` → `designing`, `designing` → `active`, `active
 
 > **MCP call:** `doc(action: "register", ...)`
 
-Register a document with the system, creating a document record in draft status. Computes the content hash and prepares the document for Layer 1-2 analysis. The document file must already exist at the specified path.
+Register a document with the system, creating a **document record** in draft status. Computes the content hash and prepares the document for Layer 1-2 analysis. The document file must already exist at the specified path.
 
 | Parameter | Type | Required | Description | Valid values |
 |---|---|---|---|---|
@@ -1042,7 +1042,7 @@ Find all document sections across the corpus that reference a specific entity.
 
 > **MCP call:** `doc_intel(action: "find", concept: "...")`
 
-Find all document sections that introduce or use a specific concept. Concepts are identified during Layer 3 classification.
+Find all document sections that introduce or use a specific concept. Layer 3 classification identifies concepts.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -1149,7 +1149,7 @@ Return an extraction guide for a document: structural outline with section roles
 
 > **MCP call:** `knowledge(action: "contribute", ...)`
 
-Contribute a new knowledge entry to the shared knowledge base. Topics are normalised (lowercased, hyphenated). Duplicate detection rejects entries with an identical topic or similar content (Jaccard > 0.65) in the same scope.
+Contribute a new **knowledge entry** to the shared knowledge base. Topics are normalised (lowercased, hyphenated). Duplicate detection rejects entries with an identical topic or similar content (Jaccard > 0.65) in the same scope.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -1598,7 +1598,7 @@ Show the dependency picture for a given task: each dependency, its current statu
 
 > **MCP call:** `next(id: "task-id")` (claim mode)
 
-Atomically claim a ready task and return its context packet. Transitions the task from `ready` to `active`, records dispatch metadata, and assembles the context packet for the executing agent.
+Atomically claim a ready task and return its **context packet**. Transitions the task from `ready` to `active`, records dispatch metadata, and assembles the context packet for the executing agent.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -1839,7 +1839,7 @@ Query the current estimate and rollup statistics for an entity. For features, in
 
 > **MCP call:** `estimate(action: "add_reference", entity_id: "...", content: "...")`
 
-Add a calibration reference example for an entity to help with future estimation. References are stored as project-scoped knowledge entries tagged `estimation-reference` with TTL exempt (`ttl_days=0`).
+Add a calibration reference example for an entity to help with future estimation. The system stores references as project-scoped knowledge entries tagged `estimation-reference` with TTL exempt (`ttl_days=0`).
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -2136,7 +2136,7 @@ Link a bug to an incident. Adds the bug to the incident's `linked_bugs` list. Id
 
 > **MCP call:** `worktree(action: "create", entity_id: "...")`
 
-Create a new Git worktree for a feature or bug entity. The worktree provides an isolated workspace for development.
+Create a new Git **worktree** for a feature or bug entity. The worktree provides an isolated workspace for development.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -2629,7 +2629,7 @@ All synthesise parameters plus:
 
 ## 20. Lifecycle Operation Constraints
 
-Several tools enforce lifecycle state machine rules. Understanding these constraints is essential for correct orchestration.
+Several tools enforce lifecycle state machine rules. Orchestrators must follow these constraints.
 
 ### Status transition enforcement
 

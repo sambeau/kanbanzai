@@ -1,6 +1,6 @@
 # Kanbanzai: Guide for Viewer Agents
 
-This document is a self-contained briefing for AI agents working on a project that reads and displays the contents of a Kanbanzai-managed repository. It covers what Kanbanzai is, how its data is structured, how to read it safely, and the pitfalls to watch for.
+This document briefs AI agents building a **viewer** — a project that reads and displays Kanbanzai repository state. It covers what Kanbanzai is, how its data is structured, how to read it safely, and the pitfalls to watch for.
 
 ---
 
@@ -8,15 +8,15 @@ This document is a self-contained briefing for AI agents working on a project th
 
 Kanbanzai is a Git-native project workflow system. It tracks plans, features, tasks, bugs, decisions, documents, knowledge entries, and human checkpoints as plain YAML files inside a `.kbz/` directory at the root of a Git repository. There is no external database. All canonical state is version-controlled alongside the project's source code.
 
-The system is designed for human-AI collaborative development. Humans express intent through documents (designs, specifications, dev plans) and decisions. AI agents execute: decomposing work, implementing tasks, and tracking status. The MCP (Model Context Protocol) server is the primary write interface. The `.kbz/` directory on disk is the primary read interface.
+Kanbanzai supports human-AI collaborative development. Humans express intent through documents (designs, specifications, dev plans) and decisions. AI agents execute: decomposing work, implementing tasks, and tracking status. The MCP (Model Context Protocol) server is the primary write interface. The `.kbz/` directory on disk is the primary read interface.
 
-A viewer's job is to read committed `.kbz/` state and present it to humans — project managers, designers, and developers — who want visibility into project progress without interacting with the MCP server or CLI directly.
+A viewer's job is to read committed `.kbz/` state and present it to humans — project managers, designers, and developers — who want to see project progress without using the MCP server or CLI directly.
 
 ---
 
 ## 2. Technology Stack
 
-Kanbanzai is written in Go. There is a single binary, `kanbanzai`, which serves dual duty:
+Kanbanzai is written in Go. There is a single binary, `kanbanzai`, with two modes:
 
 - **`kanbanzai serve`** — runs as an MCP server (the write interface for AI agents)
 - **`kanbanzai <subcommand>`** — a CLI with ~20 subcommands (`status`, `next`, `entity`, `doc`, `health`, etc.) for human use in the terminal
@@ -25,7 +25,7 @@ The getting-started guide suggests creating a symlink `ln -s ~/go/bin/kanbanzai 
 
 All core logic lives under `internal/` and is not importable by external Go programs. However, there is **an exported Go package specifically for external consumers**: `kbzschema`. More on this in §8.
 
-The state format is YAML. Documents are Markdown. Timestamps are RFC 3339. IDs use TSID13s — 13-character time-sorted identifiers (except for Plans, which use a custom prefix+number+slug format). From 1.0 onwards, the schema is versioned with semantic versioning via a `schema_version` field in `.kbz/config.yaml`. Pre-1.0 repositories do not have this field (see §13).
+The state format is YAML. Documents are Markdown. Timestamps are RFC 3339. IDs use **TSID13s** — 13-character time-sorted identifiers (except for Plans, which use a custom prefix+number+slug format). From 1.0 onwards, the schema uses semantic versioning via a `schema_version` field in `.kbz/config.yaml`. Pre-1.0 repositories do not have this field (see §13).
 
 ---
 
@@ -67,7 +67,7 @@ Outside `.kbz/`, Kanbanzai also manages:
 
 ## 4. The Public Schema Boundary
 
-This is the most important concept for a viewer. **Not everything under `.kbz/` is meant to be read by external tools.**
+This is the most important concept for a viewer. Kanbanzai defines a **public schema** — the subset of `.kbz/` that external tools can safely read. **Not everything under `.kbz/` is part of it.**
 
 ### Part of the public schema (safe and stable to read)
 
@@ -362,7 +362,7 @@ Entities reference each other via ID strings. These are the key relationships a 
 
 ### Important: references can be broken
 
-References are validated at creation time but not cascaded. A referenced entity may have been transitioned to a terminal state or (in rare cases) may not exist. Your viewer must handle missing targets gracefully — display "unknown" or a broken-link indicator rather than crashing.
+Kanbanzai validates references at creation time but does not cascade updates. A referenced entity may have transitioned to a terminal state or (in rare cases) may not exist. Your viewer must handle missing targets gracefully — display "unknown" or a broken-link indicator rather than crashing.
 
 ---
 
@@ -396,7 +396,7 @@ Checkpoints where `status == "pending"` — these are questions awaiting human r
 
 ## 11. Reading Documents (Markdown Files)
 
-Document Records in `.kbz/state/documents/` are metadata. The actual content is a Markdown file elsewhere in the repository, referenced by the `path` field.
+**Document Records** in `.kbz/state/documents/` are metadata. The actual content is a Markdown file elsewhere in the repository, referenced by the `path` field.
 
 ### Following the path
 
@@ -479,7 +479,7 @@ However, there is no cross-file transactional consistency. If you read the featu
 
 ### The recommended model: your own Git clone
 
-The design intent is that a viewer reads from **its own Git clone**, not from the same working directory as a running Kanbanzai server. This eliminates all concurrency concerns:
+A viewer should read from **its own Git clone**, not from the same working directory as a running Kanbanzai server. This eliminates all concurrency concerns:
 
 - The viewer's state is as current as its last `git pull`.
 - No shared mutable state between the viewer and any Kanbanzai process.
@@ -499,7 +499,7 @@ The design intent is that a viewer reads from **its own Git clone**, not from th
 
 ### The `schema_version` field
 
-At 1.0, `config.yaml` will carry a `schema_version` field (semver). This is the public compatibility signal:
+At 1.0, `config.yaml` has a `schema_version` field (semver). This is the public compatibility signal:
 
 ```yaml
 version: "2"
