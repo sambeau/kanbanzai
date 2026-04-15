@@ -2,7 +2,7 @@ id: FEAT-01KP8T4HSX6QZ
 slug: workflow-overview
 name: Workflow Overview
 parent: P22-documentation-for-public-release
-status: dev-planning
+status: developing
 summary: "Produce the Workflow Overview (docs/workflow-overview.md) — the methodology document. Covers design-led workflow, document-led process, specification-led implementation, chat-based project management, approval stages. Purpose, audience, structure defined in design §7. Full editorial pipeline with advisory checkpoints. Depends on: User Guide."
 spec: ""
 created: "2026-04-15T14:53:44Z"
@@ -13,3 +13,8 @@ overrides:
     reason: Documentation features use the design document (§7) as the content brief and the editorial pipeline as the quality process. Spec and dev-plan stages are redundant for doc-publishing workflow.
     timestamp: "2026-04-15T18:17:06+01:00"
     to_status: dev-planning
+  -
+    from_status: dev-planning
+    reason: Editorial pipeline tasks are created directly from the design brief (§7). No separate dev-plan document needed for doc-publishing workflow.
+    timestamp: "2026-04-15T18:17:12+01:00"
+    to_status: developing
