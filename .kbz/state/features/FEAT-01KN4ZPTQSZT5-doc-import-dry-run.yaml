@@ -2,10 +2,16 @@ id: FEAT-01KN4ZPTQSZT5
 slug: doc-import-dry-run
 name: Doc import dry run
 parent: P15-kanbanzai-25-infrastructure-hardening
-status: reviewing
+status: done
 review_cycle: 1
 summary: Add a dry_run parameter to doc import that shows what would be registered without writing to the store.
 spec: FEAT-01KN4ZPTQSZT5/specification-doc-import-dry-run
 dev_plan: FEAT-01KN4ZPTQSZT5/dev-plan-doc-import-dry-run-plan
 created: "2026-04-01T16:58:26Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "State repair: all 3 tasks complete, parent plan P15 already done. Lifecycle never advanced from developing."
+    timestamp: "2026-04-15T12:26:07+01:00"
+    to_status: done
