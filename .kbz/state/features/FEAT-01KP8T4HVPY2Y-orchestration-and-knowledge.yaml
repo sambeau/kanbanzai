@@ -2,7 +2,18 @@ id: FEAT-01KP8T4HVPY2Y
 slug: orchestration-and-knowledge
 name: Orchestration and Knowledge
 parent: P22-documentation-for-public-release
-status: proposed
+status: developing
 summary: "Produce the Orchestration and Knowledge document (docs/orchestration-and-knowledge.md) — technical depth for agentic developers. Covers roles, skills, context assembly, task dispatch, conflict awareness, knowledge system, merge gates, concurrency. Purpose, audience, structure defined in design §9. Full editorial pipeline with advisory checkpoints. Depends on: Workflow Overview."
 created: "2026-04-15T14:53:44Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: specifying
+    reason: "Streamlined doc-publishing workflow for P22: design brief in §9 serves as spec, editorial pipeline replaces dev-plan and review"
+    timestamp: "2026-04-15T19:04:18+01:00"
+    to_status: dev-planning
+  -
+    from_status: dev-planning
+    reason: "Streamlined doc-publishing workflow for P22: design brief in §9 serves as spec, editorial pipeline replaces dev-plan and review"
+    timestamp: "2026-04-15T19:04:18+01:00"
+    to_status: developing
