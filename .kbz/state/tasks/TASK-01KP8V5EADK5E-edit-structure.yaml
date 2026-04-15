@@ -3,6 +3,15 @@ parent_feature: FEAT-01KP8T4HQMEA3
 slug: edit-structure
 name: Structural editing
 summary: "Edit stage: verify and improve structure, scannability, tone gradient, audience fit. Check inverted-pyramid compliance, heading descriptiveness (FR-016), exclusion requirements (FR-019–022). Produce editorial changelog. Advisory checkpoint after completion. Role: doc-editor. Skill: edit-docs."
-status: ready
+status: done
 depends_on:
   - TASK-01KP8V5E7BJ3G
+files_planned:
+  - docs/user-guide.md
+completed: "2026-04-15T15:28:03Z"
+claimed_at: "2026-04-15T15:21:59Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-15T15:21:59Z"
+dispatched_by: sambeau
+completion_summary: "Structural edit: 1 blocking finding (missing link targets — expected per FR-018), 4 suggestions applied. Renamed 'Orchestration' heading (FR-016), dropped 'The' from 4 headings, reordered MCP server opening for value-first (FR-014), added 'Common workflows at a glance' bridge section. Overall: well-structured, inverted pyramid works, tone gradient appropriate, scannability good."
+verification: Full edit report from sub-agent following edit-docs 10-step procedure. Heading skeleton extracted. Pyramid checked at document and section level. FR-014 through FR-022 all verified passing.
