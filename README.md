@@ -1,158 +1,166 @@
 # Kanbanzai
 
-Kanbanzai is an MCP server that gives AI agents a structured workflow to follow — so they can pick up where the last session left off, coordinate across tasks without stepping on each other, and keep you informed without overwhelming you.
+Kanbanzai is a workflow system that gives AI agents structure — so they can pick up where the last session left off, coordinate without stepping on each other, and hand back to you when they need a decision.
 
-You write documents and make decisions. Agents handle the rest: decomposing work, implementing, reviewing, tracking state, and handing back to you when they need you to choose.
+You write designs and make decisions. Agents handle implementation: decomposing work, claiming tasks, reviewing output, and tracking what they learnt. Everything lives in plain YAML files committed to your Git repository — nothing hidden in a database.
 
-Everything lives in plain YAML files in your Git repo. Nothing is hidden in a database.
+## What problems does it solve?
 
-## Why
+**If you work with AI agents on code**, you have probably hit these:
 
-AI agents lose context between sessions. When two agents work in parallel, they overwrite each other's files. When an agent finishes a task, nobody knows what it did or whether the output matches the spec. The human ends up as a full-time project manager, manually tracking what's done, what's blocked, and what to do next.
+- **Context vanishes between sessions.** An agent does good work, then the next session starts from scratch. Nobody remembers what was decided, what was tried, or what failed.
+- **Parallel agents collide.** Two agents edit the same file. One wins; the other's work disappears. You find out later.
+- **Knowledge is rediscovered, not retained.** Every session re-learns the same conventions, the same architectural constraints, the same "don't touch that module" warnings.
+- **You become a full-time project manager.** Instead of designing, you spend your time tracking what is done, what is blocked, and what to do next.
 
-Kanbanzai fixes this by giving agents the same project management structure that human teams use — plans, specs, task queues, reviews, and knowledge that persists — delivered as MCP tools they can call directly.
+**If you care about design quality and specification-led development**, you have probably hit these:
 
-## What agents can do
+- **Implementation outruns design.** Agents start coding before anyone has agreed on the approach. Rework follows.
+- **There is no approval gate.** Work proceeds without explicit sign-off. You review after the fact, when changing course is expensive.
+- **Process is invisible.** You cannot see which features are designed, which are specified, and which are in progress — not without manually checking files.
 
-- **See the work queue** — what's ready, what's blocked, what's in progress
-- **Claim and complete tasks** — automatically unblocking dependents
-- **Assemble context before starting** — role conventions, project knowledge, and relevant spec fragments, packed to fit the model's context window
-- **Review their own output** — against verification criteria before handing off
-- **Remember things** — knowledge entries persist across sessions and earn confidence over time
-- **Manage incidents** — create, triage, link bugs, and track resolution
-- **Decompose features** — propose task breakdowns from a spec document, check for gaps and cycles
-- **Work in parallel safely** — conflict domain analysis flags file overlap before tasks start
-- **Create pull requests and manage branches** — Git worktrees, merge gates, GitHub PR integration
+Kanbanzai solves both sets of problems with a stage-gate workflow delivered as MCP (Model Context Protocol) tools that agents call directly.
 
-## What you do
+## What does using it look like?
 
-Your job is documents and decisions:
+A typical feature flows like this:
 
-1. **Write documents** — designs, specifications, plans
-2. **Review and approve** — approving a spec advances its feature automatically
-3. **Respond to checkpoints** — when an agent needs a decision it can't make, it creates a checkpoint and waits. You answer; work resumes.
-4. **Review completed work** — agents mark tasks `needs-review` after passing self-review. You make the final call.
+> **You:** "Create a feature for user authentication."
+>
+> **Agent:** Creates the feature, writes a design document, and asks you to review it.
+>
+> **You:** Read the design. "Approved — but use OAuth, not custom tokens."
+>
+> **Agent:** Revises, writes the specification, decomposes it into tasks, and starts implementing. Two sub-agents work in parallel on separate worktrees. A third reviews their output.
+>
+> **You:** Get a checkpoint: "The OAuth library doesn't support refresh tokens out of the box. Custom wrapper or different library?" You decide. Work resumes.
+>
+> **Agent:** All tasks pass review. A pull request is ready for your final sign-off.
 
-You don't manage task lists or update statuses by hand. The agents do that.
+You make the design calls and approve at gates. Agents handle the mechanics between gates.
 
-## Key concepts
+## How the workflow fits together
 
-- **Plan** — a group of related features delivered together, like a milestone or release
-- **Feature** — a unit of work that progresses through a lifecycle: design → spec → dev-plan → implementation → review
-- **Task** — a single implementation step within a feature, small enough for one agent to complete
-- **Checkpoint** — a point where an agent pauses and asks a human for a decision
-- **Knowledge entry** — a fact or convention that persists across sessions and earns confidence as agents confirm it
-- **Worktree** — an isolated Git working directory for a feature, so parallel work doesn't collide
+Every feature progresses through a stage-gate lifecycle. Gates enforce prerequisites — approved documents, completed tasks, or registered reports — before work advances to the next stage.
 
-## Getting started
+```mermaid
+flowchart LR
+    P["proposed"] --> Des["designing"]
+    Des -- "design approved" --> Spec["specifying"]
+    Spec -- "spec approved" --> Dev["dev-planning"]
+    Dev -- "dev plan approved + tasks created" --> Imp["developing"]
+    Imp -- "all tasks complete" --> Rev["reviewing"]
+    Rev -- "review report registered" --> D["done"]
+```
 
-### Requirements
+Agents cannot skip stages. A feature in **designing** cannot move to **developing** without an approved specification. This is deliberate — catching errors at design time costs less than catching them during implementation.
 
-- Go 1.25 or later
-- Zed (recommended) — or any MCP client that supports stdio transport
-- Git
+## Key capabilities
 
-### Install
+**Workflow and lifecycle**
+- Stage-gate progression with document-based approval at each gate
+- Plans group features; features decompose into dependency-aware tasks
+- Backward transitions when rework is needed — nothing is a one-way door except done
+
+**Agent coordination**
+- Work queue sorted by estimate and age — agents claim the next ready task
+- Conflict analysis flags file overlap before parallel tasks start
+- Role and skill profiles shape agent behaviour per workflow stage
+- Context assembly packs relevant spec sections, knowledge, and conventions into each task handoff
+
+**Knowledge persistence**
+- Knowledge entries survive across sessions and earn confidence as agents confirm them
+- Retrospective signals capture process observations — what worked, what caused friction
+- Synthesis clusters signals into actionable themes
+
+**Git integration**
+- Isolated worktrees for parallel feature development
+- Merge gates check task completion, verification, conflicts, and branch health before merging
+- Creates pull requests and manages branch lifecycles
+
+**Human control**
+- Checkpoints pause work and wait for your decision — agents do not guess
+- Document approval is always a human action
+- Everything is plain YAML in Git — you can read, diff, and review it in a pull request
+
+## When to use it — and when not to
+
+**Kanbanzai earns its keep when:**
+- Features regularly take more than one session to implement
+- Multiple AI agents work on the same codebase
+- Design decisions need to persist and be reviewable
+- You care about specification-led quality — catching errors at design time rather than during implementation
+
+**Think twice when:**
+- You are building a weekend project or prototype — the process overhead exceeds the work itself
+- Every feature is simple and self-contained, done in a single session with no coordination needed
+- You prefer to work without structured process
+
+**The honest cost.** Kanbanzai adds process, time, and token overhead. On a small project, that overhead exceeds the savings. On a larger project — multiple concurrent features, complex architecture, long-running work — the overhead is repaid through reduced rework, persistent knowledge, and coordinated parallel execution. The crossover point is roughly when features span multiple sessions or when you have more than one active work stream.
+
+**The investment.** Expect to spend one to two hours learning the workflow before it feels natural. The first feature will feel slow. The fifth will not.
+
+## Quickstart
+
+**Requirements:** Go 1.25+, Git, and an MCP-capable editor (Zed recommended)
 
 ```sh
+# Install
 go install github.com/sambeau/kanbanzai/cmd/kanbanzai@latest
-```
 
-Or build from source:
-
-```sh
-git clone https://github.com/sambeau/kanbanzai
-cd kanbanzai
-go install ./cmd/kanbanzai
-```
-
-Confirm it worked:
-
-```sh
-kanbanzai version
-```
-
-### Initialise your project
-
-In the root of the project you want to manage:
-
-```sh
+# Initialise in your project root
+cd your-project
 kanbanzai init
-```
 
-This creates `.kbz/config.yaml`, installs default role and skill files, sets up work directories, writes `.gitignore` entries, and generates editor configuration. Run `kanbanzai init --help` to see flags for customising what gets installed.
-
-If you want GitHub PR integration, create `.kbz/local.yaml` (not committed):
-
-```yaml
-user:
-  name: Your Name
-github:
-  token: ghp_...
-  owner: your-org
-  repo: your-repo
-```
-
-If you skip `local.yaml`, identity falls back to `git config user.name`.
-
-### Connect your editor
-
-#### Zed
-
-`kanbanzai init` writes `.zed/settings.json` with the MCP server configuration. Open the project in Zed and the kanbanzai server should appear with a green dot in the Agent Panel settings.
-
-Add agent profiles and tool permissions to your global Zed settings (`~/Library/Application Support/Zed/settings.json` on macOS). See `docs/getting-started.md` for the full profiles to paste in.
-
-> The server resolves `.kbz/` relative to its working directory. Zed uses the workspace root as the working directory for project-local servers — always open the project from its root, not a subdirectory.
-
-#### Other MCP clients
-
-The server speaks standard MCP over stdio. Point your client at:
-
-```sh
-kanbanzai serve
-```
-
-### Check everything is healthy
-
-```sh
+# Verify
 kanbanzai health
 ```
 
-On a fresh project this should pass cleanly. On an existing project it flags dangling references, stale worktrees, and incidents missing an RCA.
+`kanbanzai init` creates the `.kbz/` directory, installs default roles and skills, and generates editor configuration. Open the project in your editor — the MCP server should connect automatically.
 
-See `docs/getting-started.md` for the full setup guide, including importing existing design documents, customising role profiles, and troubleshooting.
+For GitHub integration, editor profiles, and a guided walkthrough of your first feature, see the [Getting Started guide](docs/getting-started.md).
 
-## Project structure
+## What gets stored
+
+Kanbanzai stores all state in a `.kbz/` directory at your project root, committed to Git alongside your code:
 
 ```
 .kbz/
 ├── config.yaml            ← project settings
-├── local.yaml             ← your machine-local settings (not committed)
+├── local.yaml             ← machine-local settings (not committed)
 ├── stage-bindings.yaml    ← maps workflow stages to roles and skills
-├── roles/                 ← role definitions (identity, vocabulary, anti-patterns)
+├── roles/                 ← role definitions (identity, vocabulary, constraints)
 ├── skills/                ← skill procedures (checklists, evaluation criteria)
 ├── state/
 │   ├── plans/             ← plans
 │   ├── features/          ← features
 │   ├── tasks/             ← tasks
 │   ├── bugs/              ← bugs
-│   ├── checkpoints/       ← human decision checkpoints
+│   ├── checkpoints/       ← human decision points
 │   ├── decisions/         ← architectural decisions
 │   ├── documents/         ← document metadata
 │   ├── knowledge/         ← knowledge entries
-│   └── worktrees/         ← active worktree records
-├── context/
-│   └── roles/             ← context profiles for agents
-├── index/                 ← document intelligence index (derived)
-├── logs/                  ← server logs (not committed)
-└── cache/                 ← local cache (not committed)
+│   └── worktrees/         ← worktree records
+└── index/                 ← document intelligence index (derived)
 ```
 
-Everything in `state/`, `roles/`, and `skills/` is plain YAML committed to Git. You can read it, diff it, and review it in a pull request like any other file.
+Every file is plain YAML. You can read it, search it with grep, and review it in a pull request like any other file in your repository.
 
 ## Further reading
 
-- `docs/getting-started.md` — full setup guide, all 22 MCP tools, CLI reference, troubleshooting
-- `AGENTS.md` — instructions for AI agents working on this project
-- `work/design/workflow-design-basis.md` — the design vision
+| Document | What it covers |
+|----------|---------------|
+| [Getting Started](docs/getting-started.md) | Install, configure, and deliver your first feature end to end |
+| [User Guide](docs/user-guide.md) | Conceptual overview — how all the pieces fit together |
+| [Workflow Overview](docs/workflow-overview.md) | The stage-gate methodology in depth |
+| [Orchestration and Knowledge](docs/orchestration-and-knowledge.md) | Agent coordination, context assembly, and the knowledge system |
+| [Retrospectives](docs/retrospectives.md) | Recording process signals and synthesising actionable themes |
+| [MCP Tool Reference](docs/mcp-tool-reference.md) | All 22 MCP tools with parameters, returns, and examples |
+| [Schema Reference](docs/schema-reference.md) | Entity types, field definitions, and lifecycle state machines |
+| [Configuration Reference](docs/configuration-reference.md) | Every configuration option with defaults and examples |
+| [Viewer Agents Guide](docs/kanbanzai-guide-for-viewer-agents.md) | Building read-only integrations against `.kbz/` state |
+| [AGENTS.md](AGENTS.md) | Instructions for AI agents working on this project |
+
+## Licence
+
+MIT
