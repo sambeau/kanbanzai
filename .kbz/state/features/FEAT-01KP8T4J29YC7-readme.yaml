@@ -2,7 +2,24 @@ id: FEAT-01KP8T4J29YC7
 slug: readme
 name: README
 parent: P22-documentation-for-public-release
-status: proposed
+status: done
+review_cycle: 1
 summary: "Produce the README (README.md) — the shop window. Problem-first positioning, quickstart, honest cost/benefit. Purpose, audience, structure defined in design §5. Full editorial pipeline with HARD checkpoints after Edit and Copyedit (public-facing, high-stakes). Depends on: all other new documents."
 created: "2026-04-15T14:53:44Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: specifying
+    reason: "README is a single-document feature with no child tasks; produced through the full editorial pipeline with human approval at both HARD checkpoints (Edit and Copyedit). No design/spec/dev-plan documents needed — the brief lives in the parent plan's design doc §5."
+    timestamp: "2026-04-16T01:18:27+01:00"
+    to_status: dev-planning
+  -
+    from_status: dev-planning
+    reason: "README is a single-document feature with no child tasks; produced through the full editorial pipeline with human approval at both HARD checkpoints (Edit and Copyedit). No design/spec/dev-plan documents needed — the brief lives in the parent plan's design doc §5."
+    timestamp: "2026-04-16T01:18:27+01:00"
+    to_status: developing
+  -
+    from_status: reviewing
+    reason: README passed full editorial pipeline (Edit → Check → Style → Copyedit) with human LGTM at both HARD checkpoints. No formal review report needed — the pipeline reports served as review artifacts.
+    timestamp: "2026-04-16T01:18:45+01:00"
+    to_status: done
