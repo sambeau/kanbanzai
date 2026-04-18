@@ -1,5 +1,21 @@
 # Kanbanzai
 
+## Introduction
+
+Kanbanzai is a workflow for small teams (or single developers) to work with AI agents to create large software projects. It is an MCP Server that provides tools to your AI Agents to manage your project.
+
+Kanbanzai manages the process of creating software using a ***design-first***, ***spec-driven*** development process. It is part ***project management*** tool (it manages, documents, plans, features, tasks etc), part ***orchestration*** tool (it manages parallel teams of agents, roles, skills, sub-agents etc.)
+
+You play the role of product/design manager, the AI Agent plays the role of the rest of the team: senior designer, development manager, developers, testers, etc. Your main role is to create designs that get turned into clear specs; the AIs role is to take the specs and accurately turn them into software.
+
+You communicate with it using chat and markdown documents: proposals, design, specification, implementation plan, review etc. These documents act as the project main source persistent memory for the team. The AI dev manager also tracks the process of all plans, features and tasks using the tools in the MCP server. Like Jira or any other project management software there are approval steps (‘gates’) and state management (designing, waiting for approval, … done).
+
+However, you don’t have to deal with the tool: you are the manager. The AI deals with the tool as they are the dev team. You simply write proposals, discuss them, collaborate on creating a design and once you are happy, the AI Agent takes over creating a spec, a development plan and then orchestrates its development using a team of sub-agents. As the work progresses through the system, the AI project manager uses the tool to keep the project state up-to-date.
+
+The orchestration, roles and skills are built upon the latest academic research first introduced to me by JD Forsythe in his wonderful [10 CLAUDE CODE PRINCIPLES: What the Research Actually Says](https://jdforsythe.github.io/10-principles/) report/site.
+
+## What is Kanbanzai?
+
 Kanbanzai is a workflow system that gives AI agents structure — so they can pick up where the last session left off, coordinate without stepping on each other, and hand back to you when they need a decision.
 
 You write designs and make decisions. Agents handle implementation: decomposing work, claiming tasks, reviewing output, and tracking what they learnt. Everything lives in plain YAML files committed to your Git repository — nothing hidden in a database.
@@ -29,7 +45,7 @@ A typical feature flows like this:
 >
 > **Agent:** Provides feedback, offers questions.
 > 
-> **You:** "I have answered your questions. Please create a design document."
+> **You:** Anwser the questions in the document or directly in the chat. "I have answered your questions. Please create a design document."
 >
 > **Agent:** Creates the feature, writes a design document, and asks you to review it.
 >
