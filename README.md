@@ -25,7 +25,11 @@ Kanbanzai solves both sets of problems with a stage-gate workflow delivered as M
 
 A typical feature flows like this:
 
-> **You:** "Create a feature for user authentication."
+> **You:** "Here is a proposal for an authentication system. Please give me some feedback."
+>
+> **Agent:** Provides feedback, offers questions.
+> 
+> **You:** "I have answered your questions. Please create a design document."
 >
 > **Agent:** Creates the feature, writes a design document, and asks you to review it.
 >
