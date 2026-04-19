@@ -45,7 +45,7 @@ A typical feature flows like this:
 >
 > **Agent:** Provides feedback, offers questions.
 > 
-> **You:** Anwser the questions in the document or directly in the chat. "I have answered your questions. Please create a design document."
+> **You:** Answer the questions in the document or directly in the chat. "I have answered your questions. Please create a design document."
 >
 > **Agent:** Creates the feature, writes a design document, and asks you to review it.
 >
