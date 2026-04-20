@@ -1,0 +1,173 @@
+document_id: FEAT-01KPPG2MYSG6A/design-p24-doc-approve-status-patch
+document_path: work/design/p24-doc-approve-status-patch.md
+content_hash: 62429f170ed83b2c45a053a5278ed1eca10d3d3599f0107b719a225919b4ea63
+indexed_at: 2026-04-20T22:35:59.372425Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: doc approve patches Status in source file'
+      byte_offset: 0
+      byte_count: 11538
+      word_count: 1695
+      content_hash: 62429f170ed83b2c45a053a5278ed1eca10d3d3599f0107b719a225919b4ea63
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 210
+          byte_count: 1370
+          word_count: 207
+          content_hash: 5f235eaef56e72a9f58c262db88c04dae3b592a7d62e3f006aacd821dbc53318
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Relationship to consistent-front-matter
+              byte_offset: 933
+              byte_count: 647
+              word_count: 99
+              content_hash: 9ecb78be0054704da74cc58cc99a950f2cae7cfce7ea8897ae4ed17fce9be857
+        - path: "1.2"
+          level: 2
+          title: 2. Goals and Non-Goals
+          byte_offset: 1580
+          byte_count: 925
+          word_count: 145
+          content_hash: 13acc410473d8069bb07fbfb9efb4107431029f6dfc7811005e91a5a7cf90ce1
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 1607
+              byte_count: 389
+              word_count: 65
+              content_hash: 8bd3681386ff838cb621b77317dc90ea44defa88f4b59680e34498e422853aed
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 1996
+              byte_count: 509
+              word_count: 75
+              content_hash: 01a6f05b49b0abaad3f93eec8ef90b47f7aaa42b61e44850d4595f5dddbdb0eb
+        - path: "1.3"
+          level: 2
+          title: 3. Design
+          byte_offset: 2505
+          byte_count: 6104
+          word_count: 876
+          content_hash: ba669bb33aac6a04d831b396aacb88f0aef780ae4b07be6dd5a11f4149319c81
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Status field formats
+              byte_offset: 2519
+              byte_count: 1220
+              word_count: 190
+              content_hash: 4558ad11b33e5b11bb0620e57718ec06f4718c9af1c431c2b8194564f1ace814
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Implementation location
+              byte_offset: 3739
+              byte_count: 1069
+              word_count: 140
+              content_hash: 90de4c77fe636d02608d661b344b80ef71b824d7263b12f89500f0592360d1ff
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Service layer call site
+              byte_offset: 4808
+              byte_count: 1676
+              word_count: 224
+              content_hash: af99341f1d08cf0f4f9a678ce6cc49af162430813bfce6e1c085c415b1e0ce20
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Content hash re-sync rationale
+              byte_offset: 6484
+              byte_count: 495
+              word_count: 82
+              content_hash: 5f3ab6384e0ca9f518f741169e759fb4fa0d7adf4971dd0c46e46ecf84647176
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Failure handling
+              byte_offset: 6979
+              byte_count: 687
+              word_count: 105
+              content_hash: 0b854af3f86b71fc4ba112f8d557d5ef9c97af62385dc8cc4c68fd18811fca52
+            - path: 1.3.6
+              level: 3
+              title: 3.6 Verify-then-fix test approach
+              byte_offset: 7666
+              byte_count: 943
+              word_count: 132
+              content_hash: 23209eef2abfc138747fce1cfdaced6d9d603e0ef6a175697bf9a8e22203f29f
+        - path: "1.4"
+          level: 2
+          title: 4. Alternatives Considered
+          byte_offset: 8609
+          byte_count: 2224
+          word_count: 341
+          content_hash: 8c5f867de607134acc669ae6834041a358b54463e65ce0c9ba769108379b08df
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4a. Patch in the MCP layer (`docApproveOne`)
+              byte_offset: 8640
+              byte_count: 581
+              word_count: 89
+              content_hash: 133a416e5289442ea384cb9e04ca7426d2f01ba0fcb154559a04bacee130997d
+            - path: 1.4.2
+              level: 3
+              title: 4b. Lazy patch on read
+              byte_offset: 9221
+              byte_count: 469
+              word_count: 74
+              content_hash: f82b74f6a8b7ea3ce3b1382bdd22da8316fb0c088b63b97133a99489755e3f02
+            - path: 1.4.3
+              level: 3
+              title: 4c. Treat Status as store-only immediately (skip the patch)
+              byte_offset: 9690
+              byte_count: 650
+              word_count: 99
+              content_hash: 3f52fdaea67eb1c7ff7006f38ad5ad6d9c9590576ecad9b35dbe97e5a48a6a19
+            - path: 1.4.4
+              level: 3
+              title: 4d. Patch all three lifecycle transitions (draft, approved, superseded)
+              byte_offset: 10340
+              byte_count: 493
+              word_count: 75
+              content_hash: 811be4878bf2f04f6908d1bc51a4abe2fed7dcc28a0ba630a65e2cdf450bb7de
+        - path: "1.5"
+          level: 2
+          title: 5. Dependencies
+          byte_offset: 10833
+          byte_count: 705
+          word_count: 90
+          content_hash: 8b4cac141d14d630f1e532b4523a3727ad719f3df103789aab3ffcb2fb64fdae
+entity_refs:
+    - entity_id: FEAT-01KPPG2MYSG6A
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 146
+    - entity_id: P24-retro-recommendations
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 176
+cross_doc_links:
+    - target_path: work/design/consistent-front-matter.md
+      link_text: work/design/consistent-front-matter.md
+      section_path: 1.1.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: 1.3.4
+      role: rationale
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+classified: false

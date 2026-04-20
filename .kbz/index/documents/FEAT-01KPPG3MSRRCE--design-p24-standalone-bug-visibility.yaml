@@ -1,0 +1,161 @@
+document_id: FEAT-01KPPG3MSRRCE/design-p24-standalone-bug-visibility
+document_path: work/design/p24-standalone-bug-visibility.md
+content_hash: 7cd07c29febb6e2bf67fe2f1c680513f6392407806e50213c3377f0795fe2c47
+indexed_at: 2026-04-20T22:36:00.461603Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Standalone bugs visible in status health'
+      byte_offset: 0
+      byte_count: 8646
+      word_count: 1131
+      content_hash: 7cd07c29febb6e2bf67fe2f1c680513f6392407806e50213c3377f0795fe2c47
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 254
+          byte_count: 665
+          word_count: 100
+          content_hash: 00dd5991c6ecd3a3e298731a5c52b38fff8a03736f822d96063c67151c543012
+        - path: "1.2"
+          level: 2
+          title: 2. Goals and Non-Goals
+          byte_offset: 919
+          byte_count: 826
+          word_count: 119
+          content_hash: 01f133c01404a3ab49315386aca23062bd9ea7963a1303c0e6231778237c822d
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 946
+              byte_count: 388
+              word_count: 56
+              content_hash: de98baa36579c478efc05091fe03b1fe28de2199d689426038e252ecedaf668c
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 1334
+              byte_count: 411
+              word_count: 58
+              content_hash: 324d4209b5e445d3062887aaeaf4ef0ddd430043aea56e518fb1bf770b443c60
+        - path: "1.3"
+          level: 2
+          title: 3. Design
+          byte_offset: 1745
+          byte_count: 5026
+          word_count: 614
+          content_hash: 1078bf1e0b88e76b9df8ef9b3b261a11fd79f4caf8f9f586e26e36c2f1e03d27
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Where the filter lives today
+              byte_offset: 1759
+              byte_count: 793
+              word_count: 94
+              content_hash: c24935df3ddcf6777813b00a5e7cb2442f1371038a0e0f7816232503af7f59c3
+            - path: 1.3.2
+              level: 3
+              title: 3.2 What to change
+              byte_offset: 2552
+              byte_count: 1650
+              word_count: 177
+              content_hash: 4a2560868060ec0381c549f92902af4359124ab769fbf34573710164677fcc34
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Filter conditions
+              byte_offset: 4202
+              byte_count: 461
+              word_count: 65
+              content_hash: 4b1c2401af1a3844eca2909bf0ec3e4ff0128258199fc22b0a3533bd92594313
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Double-surfacing avoidance
+              byte_offset: 4663
+              byte_count: 826
+              word_count: 105
+              content_hash: 0bc19609209ce54e3b43f8e94477891207db71e44a7e300de968a528435d7bd8
+            - path: 1.3.5
+              level: 3
+              title: 3.5 AttentionItem shape
+              byte_offset: 5489
+              byte_count: 524
+              word_count: 55
+              content_hash: 8c084441e312816b62e2f2255d46942b4e1a62736de728ba5d230722ea8e9d3e
+            - path: 1.3.6
+              level: 3
+              title: 3.6 Verify-then-fix test approach
+              byte_offset: 6013
+              byte_count: 758
+              word_count: 115
+              content_hash: 596bbcea43592d495ea6e9cdf309fb7df868898985e912be9544e0666e2d05f5
+        - path: "1.4"
+          level: 2
+          title: 4. Alternatives Considered
+          byte_offset: 6771
+          byte_count: 1500
+          word_count: 207
+          content_hash: 18b4bcbde1fba9c98d50c4b0d3a2944a8698f9e8dfdd413fbb0699d4d76ba39b
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Surface standalone bugs at all scopes (project, plan, feature)
+              byte_offset: 6802
+              byte_count: 313
+              word_count: 47
+              content_hash: 309bbcfb0e18089c7c2edec2770f856238c5c7b88cfc10ed256c1c2826949aa5
+            - path: 1.4.2
+              level: 3
+              title: Add a new `AttentionItem.Type` value (e.g., `"standalone_bug"`)
+              byte_offset: 7115
+              byte_count: 403
+              word_count: 56
+              content_hash: 828e118aeadb907f350f3aa4dd1d311ba31f098406ccf1b9c3f389ecbdfb8c0c
+            - path: 1.4.3
+              level: 3
+              title: Surface all open standalone bugs regardless of severity
+              byte_offset: 7518
+              byte_count: 307
+              word_count: 40
+              content_hash: dfbad81c2b7831e52b06bbf9ca13bee9c67a0e78bb9382f01bccf9c9fcf33f37
+            - path: 1.4.4
+              level: 3
+              title: Move standalone-bug logic into `generateProjectAttention`
+              byte_offset: 7825
+              byte_count: 446
+              word_count: 60
+              content_hash: c69d89f3364e626bca93498d4fcb3535ab2ad874881c1650a9ec84436fd83f7e
+        - path: "1.5"
+          level: 2
+          title: 5. Dependencies
+          byte_offset: 8271
+          byte_count: 375
+          word_count: 49
+          content_hash: 1f311617571dbd01fd8fd64a56c014cba9244cb443a57c14c43dfba37f296c34
+entity_refs:
+    - entity_id: FEAT-01KPPG3MSRRCE
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 145
+    - entity_id: P24-retro-recommendations
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 220
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: constraint
+      confidence: high
+classified: false
