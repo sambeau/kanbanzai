@@ -1,0 +1,205 @@
+document_id: FEAT-01KPPG1MF4DAT/design-p24-ac-pattern-and-decompose
+document_path: work/design/p24-ac-pattern-and-decompose.md
+content_hash: 757bc2b7ef1cc737c7d7211e4bca689701ff4e4af360cf85381d35aae9fe812d
+indexed_at: 2026-04-20T22:40:57.613656Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: AC Pattern Recognition and Decompose Hardening'
+      byte_offset: 0
+      byte_count: 20649
+      word_count: 2610
+      content_hash: 757bc2b7ef1cc737c7d7211e4bca689701ff4e4af360cf85381d35aae9fe812d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 189
+          byte_count: 1765
+          word_count: 240
+          content_hash: 09fccbb174dcaf2461a9b7c17b428c57e84973dbec184cd1222aefd2cf8172d7
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1954
+          byte_count: 1155
+          word_count: 150
+          content_hash: b031dfdd0b6c86715b1716df33ddedc5f73e5493d235950e61d468dac804d567
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 3109
+          byte_count: 14086
+          word_count: 1736
+          content_hash: f50a6dbd061efd8ff9452a73e66a046d852a08b6da863f5aa6ad749d9a003694
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 1. AC Pattern Recognition in docint (Layer 2)
+              byte_offset: 3120
+              byte_count: 3651
+              word_count: 420
+              content_hash: 7db03a8f85c36268cd60ca0e31893103a43f32ba9dd93aee810b55f6eaab3e28
+              children:
+                - path: 1.3.1.1
+                  level: 4
+                  title: Current behaviour
+                  byte_offset: 3171
+                  byte_count: 888
+                  word_count: 85
+                  content_hash: b333fa1ca0056e628788464ea629e11f520cda690681706a10fedd2732dbf7b1
+                - path: 1.3.1.2
+                  level: 4
+                  title: 'Change: extend signature and add content scan'
+                  byte_offset: 4059
+                  byte_count: 1682
+                  word_count: 196
+                  content_hash: 7b3c2e065ea56bbd4e2d7642bd013c4b0eda1456786f9150c9f2f75ace02f18f
+                - path: 1.3.1.3
+                  level: 4
+                  title: What `ConventionalRole` value to assign
+                  byte_offset: 5741
+                  byte_count: 1030
+                  word_count: 130
+                  content_hash: 1600885041614d22936d0febfdfda4a13b4f730bfe184f636c2ae901f155287d
+            - path: 1.3.2
+              level: 3
+              title: 2. Hardened decompose propose behaviour
+              byte_offset: 6771
+              byte_count: 5858
+              word_count: 763
+              content_hash: 4d0ec813bef8dd06cec9a2ec2aa06b49761508a83bce7f8c98d0bdc8bf085105
+              children:
+                - path: 1.3.2.1
+                  level: 4
+                  title: Where the current fallback lives and what it does
+                  byte_offset: 6816
+                  byte_count: 1104
+                  word_count: 145
+                  content_hash: a602821282c0ccba224f1c7033a43c478e8f88557d1b9a08b54ad02d82649232
+                - path: 1.3.2.2
+                  level: 4
+                  title: 'Fix A: handle `- **AC-NN.** text` in `parseSpecStructure`'
+                  byte_offset: 7920
+                  byte_count: 1366
+                  word_count: 169
+                  content_hash: 656225dd04748203a73058b9e26c2b31d38e226045a027bc777353ee6267a1db
+                - path: 1.3.2.3
+                  level: 4
+                  title: 'Fix B: same normalisation in `asmExtractCriteria`'
+                  byte_offset: 9286
+                  byte_count: 1355
+                  word_count: 176
+                  content_hash: 7339f002520be088a1f98b066b426cd5c382e3058d6d9a144116248aeedc9eea
+                - path: 1.3.2.4
+                  level: 4
+                  title: 'Fix C: richer diagnostic in `DecomposeFeature`'
+                  byte_offset: 10641
+                  byte_count: 1988
+                  word_count: 267
+                  content_hash: c2d009565424febbaad60211346192f5a8ce30f67a849ff5348280cec6a8f13e
+            - path: 1.3.3
+              level: 3
+              title: 3. Verify-then-fix approach
+              byte_offset: 12629
+              byte_count: 4566
+              word_count: 551
+              content_hash: 2dabf559bd6b65948305595743499ca7c434de55bf33e11b121d529936ac2c24
+              children:
+                - path: 1.3.3.1
+                  level: 4
+                  title: 'Test 1 — `internal/docint`: content-based AC detection'
+                  byte_offset: 12780
+                  byte_count: 1716
+                  word_count: 202
+                  content_hash: 2c5919c5cd79787e19be36957e50b9eb71d39a78102ed25cb1c0167e9fdbe554
+                - path: 1.3.3.2
+                  level: 4
+                  title: 'Test 2 — `service/decompose`: list-item bold-identifier extraction'
+                  byte_offset: 14496
+                  byte_count: 1333
+                  word_count: 156
+                  content_hash: 490017aae1bd0b70a989ade89f3bc36a58853c1811c80616fe151532884d4471
+                - path: 1.3.3.3
+                  level: 4
+                  title: 'Test 3 — `assembly.go`: list-item form normalised without bold markers'
+                  byte_offset: 15829
+                  byte_count: 1366
+                  word_count: 169
+                  content_hash: e49ea609e40c9e1d3e0eeaa554abe4e962227c7c2d48b1b366ddf23410002da9
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 17195
+          byte_count: 2720
+          word_count: 359
+          content_hash: 032ca486354a94d1c9da34677eaa612c153ab4cff9834321724f7cd01ddcca79
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Layer 3 (LLM classification) instead of Layer 2
+              byte_offset: 17223
+              byte_count: 906
+              word_count: 130
+              content_hash: ad87a0872cc312b9d6afd557e85e647bfe30bfe2eec91a9159b7125342aa4650
+            - path: 1.4.2
+              level: 3
+              title: Introduce `"acceptance-criteria"` as a new `FragmentRole`
+              byte_offset: 18129
+              byte_count: 1036
+              word_count: 129
+              content_hash: 764dbad95be40823746459363783b5f993c64f5fa284f067dfa7360d778cee6c
+            - path: 1.4.3
+              level: 3
+              title: Fix only `asmExtractCriteria` (skip the docint layer)
+              byte_offset: 19165
+              byte_count: 750
+              word_count: 97
+              content_hash: 282994a75626160a11249e3437aa2b8a6910d54a7e7f0a86f43d418c1c1f9d62
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 19915
+          byte_count: 734
+          word_count: 95
+          content_hash: e45bc6d0e7766827c1f59e396ccb54717e68802ed58a4f00f5aeceb8515f4538
+entity_refs:
+    - entity_id: FEAT-01KPPG1MF4DAT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 106
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: 1.3.2.1
+      byte_offset: 7008
+    - entity_id: FEAT-01KN4ZPCMJ1FP
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 19254
+    - entity_id: FEAT-01KPPG1MF4DAT
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 19495
+    - entity_id: FEAT-01KN4ZPCMJ1FP
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 19999
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 20159
+    - entity_id: P24-retro-recommendations
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 136
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+classified: false
