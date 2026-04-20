@@ -60,7 +60,7 @@ func TestIndexStore_SaveAndLoad_PreservesClassifications(t *testing.T) {
 				SectionPath:   "1",
 				Role:          "narrative",
 				Confidence:    "high",
-				ConceptsIntro: []string{"lifecycle-states"},
+				ConceptsIntro: []ConceptIntroEntry{{Name: "lifecycle-states"}},
 			},
 			{
 				SectionPath:  "2",

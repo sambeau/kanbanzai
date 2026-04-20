@@ -107,7 +107,7 @@ func TestValidateClassification(t *testing.T) {
 			Role:          "requirement",
 			Confidence:    "medium",
 			Summary:       "Must support YAML output",
-			ConceptsIntro: []string{"yaml-output"},
+			ConceptsIntro: []ConceptIntroEntry{{Name: "yaml-output"}},
 			ConceptsUsed:  []string{"serialisation"},
 		}
 		if err := ValidateClassification(c); err != nil {

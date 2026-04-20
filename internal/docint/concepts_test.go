@@ -1,238 +1,309 @@
 package docint
 
-import "testing"
+import (
+	"testing"
 
-func TestUpdateConceptRegistry_NewConcept(t *testing.T) {
-	registry := &ConceptRegistry{}
-	classifications := []Classification{
-		{
-			SectionPath:   "1",
-			ConceptsIntro: []string{"Lifecycle States"},
-		},
-	}
+	"gopkg.in/yaml.v3"
+)
 
-	UpdateConceptRegistry(registry, "doc-a", classifications)
+// ---------------------------------------------------------------------------
+// Task 1 — ConceptIntroEntry YAML unmarshaling
+// ---------------------------------------------------------------------------
 
-	if len(registry.Concepts) != 1 {
-		t.Fatalf("expected 1 concept, got %d", len(registry.Concepts))
+func TestConceptIntroEntry_UnmarshalYAML_PlainString(t *testing.T) {
+	input := `- foo-concept`
+	var entries []ConceptIntroEntry
+	if err := yaml.Unmarshal([]byte(input), &entries); err != nil {
+		t.Fatalf("unexpected error: %v", err)
 	}
-	c := registry.Concepts[0]
-	if c.Name != "lifecycle-states" {
-		t.Errorf("concept name = %q, want %q", c.Name, "lifecycle-states")
+	if len(entries) != 1 {
+		t.Fatalf("expected 1 entry, got %d", len(entries))
 	}
-	if len(c.IntroducedIn) != 1 || c.IntroducedIn[0] != "doc-a#1" {
-		t.Errorf("introduced_in = %v, want [doc-a#1]", c.IntroducedIn)
+	if entries[0].Name != "foo-concept" {
+		t.Errorf("Name = %q, want %q", entries[0].Name, "foo-concept")
+	}
+	if len(entries[0].Aliases) != 0 {
+		t.Errorf("expected no aliases, got %v", entries[0].Aliases)
 	}
 }
 
-func TestUpdateConceptRegistry_ExistingConcept(t *testing.T) {
-	registry := &ConceptRegistry{
-		Concepts: []Concept{
-			{Name: "lifecycle-states", IntroducedIn: []string{"doc-a#1"}},
-		},
+func TestConceptIntroEntry_UnmarshalYAML_ObjectForm(t *testing.T) {
+	input := `
+- name: workflow-stage
+  aliases:
+    - stage
+    - lifecycle-stage
+`
+	var entries []ConceptIntroEntry
+	if err := yaml.Unmarshal([]byte(input), &entries); err != nil {
+		t.Fatalf("unexpected error: %v", err)
 	}
-	classifications := []Classification{
-		{
-			SectionPath:  "2",
-			ConceptsUsed: []string{"lifecycle-states"},
-		},
+	if len(entries) != 1 {
+		t.Fatalf("expected 1 entry, got %d", len(entries))
 	}
-
-	UpdateConceptRegistry(registry, "doc-b", classifications)
-
-	if len(registry.Concepts) != 1 {
-		t.Fatalf("expected 1 concept, got %d", len(registry.Concepts))
+	e := entries[0]
+	if e.Name != "workflow-stage" {
+		t.Errorf("Name = %q, want %q", e.Name, "workflow-stage")
 	}
-	c := registry.Concepts[0]
-	if len(c.IntroducedIn) != 1 {
-		t.Errorf("introduced_in should still have 1 entry, got %d", len(c.IntroducedIn))
-	}
-	if len(c.UsedIn) != 1 || c.UsedIn[0] != "doc-b#2" {
-		t.Errorf("used_in = %v, want [doc-b#2]", c.UsedIn)
+	if len(e.Aliases) != 2 || e.Aliases[0] != "stage" || e.Aliases[1] != "lifecycle-stage" {
+		t.Errorf("Aliases = %v, want [stage lifecycle-stage]", e.Aliases)
 	}
 }
 
-func TestUpdateConceptRegistry_NoDuplicateRefs(t *testing.T) {
-	registry := &ConceptRegistry{}
-	classifications := []Classification{
-		{
-			SectionPath:   "1",
-			ConceptsIntro: []string{"Entity Model"},
-		},
+func TestConceptIntroEntry_UnmarshalYAML_MixedList(t *testing.T) {
+	input := `
+- plain-concept
+- name: rich-concept
+  aliases: [alias-a, alias-b]
+`
+	var entries []ConceptIntroEntry
+	if err := yaml.Unmarshal([]byte(input), &entries); err != nil {
+		t.Fatalf("unexpected error: %v", err)
 	}
-
-	// Add the same classification twice.
-	UpdateConceptRegistry(registry, "doc-a", classifications)
-	UpdateConceptRegistry(registry, "doc-a", classifications)
-
-	if len(registry.Concepts) != 1 {
-		t.Fatalf("expected 1 concept, got %d", len(registry.Concepts))
+	if len(entries) != 2 {
+		t.Fatalf("expected 2 entries, got %d", len(entries))
 	}
-	c := registry.Concepts[0]
-	if len(c.IntroducedIn) != 1 {
-		t.Errorf("introduced_in should have 1 entry (no duplicates), got %d: %v", len(c.IntroducedIn), c.IntroducedIn)
+	if entries[0].Name != "plain-concept" || len(entries[0].Aliases) != 0 {
+		t.Errorf("entry[0] = %+v, want {Name:plain-concept Aliases:[]}", entries[0])
 	}
-}
-
-func TestUpdateConceptRegistry_Normalization(t *testing.T) {
-	registry := &ConceptRegistry{}
-
-	// First: introduce "Lifecycle States" (space-separated, title case).
-	UpdateConceptRegistry(registry, "doc-a", []Classification{
-		{SectionPath: "1", ConceptsIntro: []string{"Lifecycle States"}},
-	})
-
-	// Second: use "lifecycle-states" (already normalized form).
-	UpdateConceptRegistry(registry, "doc-b", []Classification{
-		{SectionPath: "3", ConceptsUsed: []string{"lifecycle-states"}},
-	})
-
-	if len(registry.Concepts) != 1 {
-		t.Fatalf("expected 1 concept after normalization merge, got %d", len(registry.Concepts))
-	}
-	c := registry.Concepts[0]
-	if len(c.IntroducedIn) != 1 {
-		t.Errorf("introduced_in count = %d, want 1", len(c.IntroducedIn))
-	}
-	if len(c.UsedIn) != 1 {
-		t.Errorf("used_in count = %d, want 1", len(c.UsedIn))
+	if entries[1].Name != "rich-concept" || len(entries[1].Aliases) != 2 {
+		t.Errorf("entry[1] = %+v, want {Name:rich-concept Aliases:[alias-a alias-b]}", entries[1])
 	}
 }
 
-func TestRemoveDocumentFromRegistry(t *testing.T) {
-	registry := &ConceptRegistry{
-		Concepts: []Concept{
-			{
-				Name:         "lifecycle-states",
-				IntroducedIn: []string{"doc-a#1"},
-				UsedIn:       []string{"doc-a#2", "doc-b#1"},
-			},
-			{
-				Name:         "entity-model",
-				IntroducedIn: []string{"doc-a#3"},
-			},
-		},
+func TestConceptIntroEntry_UnmarshalYAML_Backward(t *testing.T) {
+	// Old-style plain string entries must still parse correctly after the type change.
+	input := `
+- alpha
+- beta
+- gamma
+`
+	var entries []ConceptIntroEntry
+	if err := yaml.Unmarshal([]byte(input), &entries); err != nil {
+		t.Fatalf("unexpected error: %v", err)
 	}
-
-	RemoveDocumentFromRegistry(registry, "doc-a")
-
-	// "entity-model" should be pruned entirely (only had doc-a references).
-	// "lifecycle-states" should remain with only doc-b#1 in used_in.
-	if len(registry.Concepts) != 1 {
-		t.Fatalf("expected 1 concept after removal, got %d", len(registry.Concepts))
+	if len(entries) != 3 {
+		t.Fatalf("expected 3 entries, got %d", len(entries))
 	}
-	c := registry.Concepts[0]
-	if c.Name != "lifecycle-states" {
-		t.Errorf("remaining concept name = %q, want %q", c.Name, "lifecycle-states")
-	}
-	if len(c.IntroducedIn) != 0 {
-		t.Errorf("introduced_in should be empty, got %v", c.IntroducedIn)
-	}
-	if len(c.UsedIn) != 1 || c.UsedIn[0] != "doc-b#1" {
-		t.Errorf("used_in = %v, want [doc-b#1]", c.UsedIn)
-	}
-}
-
-func TestRemoveDocumentFromRegistry_NoFalsePositive(t *testing.T) {
-	// Ensure "doc-a" removal doesn't affect "doc-ab" references.
-	registry := &ConceptRegistry{
-		Concepts: []Concept{
-			{
-				Name:         "some-concept",
-				IntroducedIn: []string{"doc-a#1", "doc-ab#1"},
-			},
-		},
-	}
-
-	RemoveDocumentFromRegistry(registry, "doc-a")
-
-	if len(registry.Concepts) != 1 {
-		t.Fatalf("expected 1 concept, got %d", len(registry.Concepts))
-	}
-	c := registry.Concepts[0]
-	if len(c.IntroducedIn) != 1 || c.IntroducedIn[0] != "doc-ab#1" {
-		t.Errorf("introduced_in = %v, want [doc-ab#1]", c.IntroducedIn)
-	}
-}
-
-func TestNormalizeConcept(t *testing.T) {
-	tests := []struct {
-		input string
-		want  string
-	}{
-		{"Lifecycle States", "lifecycle-states"},
-		{"lifecycle-states", "lifecycle-states"},
-		{"  Entity Model  ", "entity-model"},
-		{"UPPER_CASE", "upper-case"},
-		{"mixed-Case_Name", "mixed-case-name"},
-		{"already-normal", "already-normal"},
-		{"  spaces  everywhere  ", "spaces-everywhere"},
-	}
-
-	for _, tt := range tests {
-		got := NormalizeConcept(tt.input)
-		if got != tt.want {
-			t.Errorf("NormalizeConcept(%q) = %q, want %q", tt.input, got, tt.want)
+	names := []string{"alpha", "beta", "gamma"}
+	for i, want := range names {
+		if entries[i].Name != want {
+			t.Errorf("entries[%d].Name = %q, want %q", i, entries[i].Name, want)
+		}
+		if len(entries[i].Aliases) != 0 {
+			t.Errorf("entries[%d].Aliases = %v, want empty", i, entries[i].Aliases)
 		}
 	}
 }
 
-func TestFindConcept(t *testing.T) {
-	registry := &ConceptRegistry{
-		Concepts: []Concept{
-			{Name: "lifecycle-states"},
-			{Name: "entity-model"},
+// ---------------------------------------------------------------------------
+// Task 2 — UpdateConceptRegistry alias storage
+// ---------------------------------------------------------------------------
+
+func TestUpdateConceptRegistry_Aliases_Stored(t *testing.T) {
+	registry := &ConceptRegistry{}
+	classifications := []Classification{
+		{
+			SectionPath: "1",
+			ConceptsIntro: []ConceptIntroEntry{
+				{Name: "workflow-stage", Aliases: []string{"stage", "lifecycle-stage"}},
+			},
 		},
 	}
+	UpdateConceptRegistry(registry, "doc1", classifications)
 
-	// Exact match.
-	c := FindConcept(registry, "lifecycle-states")
+	c := FindConcept(registry, "workflow-stage")
 	if c == nil {
-		t.Fatal("expected to find lifecycle-states")
+		t.Fatal("concept not found")
 	}
-	if c.Name != "lifecycle-states" {
-		t.Errorf("name = %q, want %q", c.Name, "lifecycle-states")
+	if len(c.Aliases) != 2 {
+		t.Fatalf("expected 2 aliases, got %d: %v", len(c.Aliases), c.Aliases)
 	}
-
-	// Case-insensitive match via normalization.
-	c = FindConcept(registry, "Entity Model")
-	if c == nil {
-		t.Fatal("expected to find entity-model via 'Entity Model'")
+	if !stringSliceContains(c.Aliases, "stage") {
+		t.Errorf("alias 'stage' not stored; aliases = %v", c.Aliases)
 	}
-	if c.Name != "entity-model" {
-		t.Errorf("name = %q, want %q", c.Name, "entity-model")
-	}
-
-	// Not found.
-	c = FindConcept(registry, "nonexistent")
-	if c != nil {
-		t.Errorf("expected nil for nonexistent concept, got %v", c)
+	if !stringSliceContains(c.Aliases, "lifecycle-stage") {
+		t.Errorf("alias 'lifecycle-stage' not stored; aliases = %v", c.Aliases)
 	}
 }
 
-func TestFindConcept_EmptyRegistry(t *testing.T) {
+func TestUpdateConceptRegistry_Aliases_Deduplicated(t *testing.T) {
 	registry := &ConceptRegistry{}
-	c := FindConcept(registry, "anything")
-	if c != nil {
-		t.Errorf("expected nil for empty registry, got %v", c)
+	classifications := []Classification{
+		{
+			SectionPath: "1",
+			ConceptsIntro: []ConceptIntroEntry{
+				{Name: "concept-a", Aliases: []string{"alias-x", "alias-x", "alias-x"}},
+			},
+		},
+	}
+	UpdateConceptRegistry(registry, "doc1", classifications)
+
+	c := FindConcept(registry, "concept-a")
+	if c == nil {
+		t.Fatal("concept not found")
+	}
+	if len(c.Aliases) != 1 {
+		t.Errorf("expected 1 deduplicated alias, got %d: %v", len(c.Aliases), c.Aliases)
+	}
+}
+
+func TestUpdateConceptRegistry_Aliases_Accumulated(t *testing.T) {
+	registry := &ConceptRegistry{}
+
+	// First call: introduces concept with alias-one
+	UpdateConceptRegistry(registry, "doc1", []Classification{
+		{
+			SectionPath: "1",
+			ConceptsIntro: []ConceptIntroEntry{
+				{Name: "my-concept", Aliases: []string{"alias-one"}},
+			},
+		},
+	})
+
+	// Second call: same concept from another document, adds alias-two
+	UpdateConceptRegistry(registry, "doc2", []Classification{
+		{
+			SectionPath: "2",
+			ConceptsIntro: []ConceptIntroEntry{
+				{Name: "my-concept", Aliases: []string{"alias-two"}},
+			},
+		},
+	})
+
+	c := FindConcept(registry, "my-concept")
+	if c == nil {
+		t.Fatal("concept not found")
+	}
+	if len(c.Aliases) != 2 {
+		t.Errorf("expected 2 accumulated aliases, got %d: %v", len(c.Aliases), c.Aliases)
+	}
+	if !stringSliceContains(c.Aliases, "alias-one") || !stringSliceContains(c.Aliases, "alias-two") {
+		t.Errorf("unexpected aliases: %v", c.Aliases)
+	}
+}
+
+func TestUpdateConceptRegistry_Aliases_ExcludeCanonical(t *testing.T) {
+	registry := &ConceptRegistry{}
+	classifications := []Classification{
+		{
+			SectionPath: "1",
+			ConceptsIntro: []ConceptIntroEntry{
+				// "my-concept" is both the canonical name and listed as an alias — should be dropped
+				{Name: "my-concept", Aliases: []string{"my-concept", "My Concept", "real-alias"}},
+			},
+		},
+	}
+	UpdateConceptRegistry(registry, "doc1", classifications)
+
+	c := FindConcept(registry, "my-concept")
+	if c == nil {
+		t.Fatal("concept not found")
+	}
+	// "my-concept" and "My Concept" both normalise to "my-concept" — excluded
+	// "real-alias" remains
+	if len(c.Aliases) != 1 || c.Aliases[0] != "real-alias" {
+		t.Errorf("expected [real-alias], got %v", c.Aliases)
+	}
+}
+
+func TestUpdateConceptRegistry_PlainString_NoAliases(t *testing.T) {
+	registry := &ConceptRegistry{}
+	classifications := []Classification{
+		{
+			SectionPath: "1",
+			ConceptsIntro: []ConceptIntroEntry{
+				{Name: "simple-concept"},
+			},
+		},
+	}
+	UpdateConceptRegistry(registry, "doc1", classifications)
+
+	c := FindConcept(registry, "simple-concept")
+	if c == nil {
+		t.Fatal("concept not found")
+	}
+	if len(c.Aliases) != 0 {
+		t.Errorf("expected no aliases, got %v", c.Aliases)
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Task 3 — FindConcept alias resolution
+// ---------------------------------------------------------------------------
+
+func TestFindConcept_AliasResolution(t *testing.T) {
+	registry := &ConceptRegistry{
+		Concepts: []Concept{
+			{Name: "workflow-stage", Aliases: []string{"stage", "lifecycle-stage"}},
+		},
+	}
+	c := FindConcept(registry, "lifecycle-stage")
+	if c == nil {
+		t.Fatal("expected concept via alias, got nil")
+	}
+	if c.Name != "workflow-stage" {
+		t.Errorf("Name = %q, want %q", c.Name, "workflow-stage")
+	}
+}
+
+func TestFindConcept_AliasResolution_CaseInsensitive(t *testing.T) {
+	registry := &ConceptRegistry{
+		Concepts: []Concept{
+			{Name: "kanban-board", Aliases: []string{"kanban"}},
+		},
+	}
+	c := FindConcept(registry, "KANBAN")
+	if c == nil {
+		t.Fatal("expected case-insensitive alias match, got nil")
+	}
+	if c.Name != "kanban-board" {
+		t.Errorf("Name = %q, want %q", c.Name, "kanban-board")
+	}
+}
+
+func TestFindConcept_CanonicalPriority(t *testing.T) {
+	// "stage" is also an alias on another concept, but it IS the canonical name of this one.
+	registry := &ConceptRegistry{
+		Concepts: []Concept{
+			{Name: "stage", Aliases: []string{}},
+			{Name: "workflow-stage", Aliases: []string{"stage"}},
+		},
+	}
+	c := FindConcept(registry, "stage")
+	if c == nil {
+		t.Fatal("expected a result, got nil")
+	}
+	// Canonical "stage" must win over the alias on "workflow-stage"
+	if c.Name != "stage" {
+		t.Errorf("canonical should win; Name = %q, want %q", c.Name, "stage")
+	}
+}
+
+func TestFindConcept_NoMatch_ReturnsNil(t *testing.T) {
+	registry := &ConceptRegistry{
+		Concepts: []Concept{
+			{Name: "alpha", Aliases: []string{"a"}},
+		},
+	}
+	if c := FindConcept(registry, "beta"); c != nil {
+		t.Errorf("expected nil, got %+v", c)
 	}
 }
 
 func TestFindConcept_MutatesInPlace(t *testing.T) {
 	registry := &ConceptRegistry{
 		Concepts: []Concept{
-			{Name: "lifecycle-states"},
+			{Name: "my-concept", Aliases: []string{"mc"}},
 		},
 	}
-
-	c := FindConcept(registry, "lifecycle-states")
+	c := FindConcept(registry, "mc") // alias lookup
 	if c == nil {
-		t.Fatal("expected to find concept")
+		t.Fatal("expected concept via alias, got nil")
 	}
-	c.UsedIn = append(c.UsedIn, "doc-x#5")
-
-	// The mutation should be visible through the registry.
-	if len(registry.Concepts[0].UsedIn) != 1 {
-		t.Errorf("expected mutation to be visible in registry, got used_in = %v", registry.Concepts[0].UsedIn)
+	// Mutate via the returned pointer — change should be visible in the registry.
+	c.UsedIn = append(c.UsedIn, "doc1#1")
+	if len(registry.Concepts[0].UsedIn) != 1 || registry.Concepts[0].UsedIn[0] != "doc1#1" {
+		t.Errorf("mutation not visible through registry; UsedIn = %v", registry.Concepts[0].UsedIn)
 	}
 }

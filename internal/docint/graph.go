@@ -43,11 +43,11 @@ func BuildGraphEdges(index *DocumentIndex) []GraphEdge {
 	// INTRODUCES and USES edges: fragment → concept
 	for _, c := range index.Classifications {
 		fragmentID := docID + "#" + c.SectionPath
-		for _, name := range c.ConceptsIntro {
+		for _, entry := range c.ConceptsIntro {
 			edges = append(edges, GraphEdge{
 				From:     fragmentID,
 				FromType: "fragment",
-				To:       NormalizeConcept(name),
+				To:       NormalizeConcept(entry.Name),
 				ToType:   "concept",
 				EdgeType: "INTRODUCES",
 			})

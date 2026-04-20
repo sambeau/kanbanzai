@@ -4,11 +4,15 @@ import "strings"
 
 // UpdateConceptRegistry updates the concept registry with concepts from a document's classifications.
 // It adds new concepts and updates existing ones with new introduced_in/used_in references.
+// For concepts_intro entries that carry aliases, the aliases are stored on the concept.
 func UpdateConceptRegistry(registry *ConceptRegistry, docID string, classifications []Classification) {
 	for _, c := range classifications {
 		sectionRef := docID + "#" + c.SectionPath
-		for _, name := range c.ConceptsIntro {
-			upsertConceptRef(registry, name, sectionRef, true)
+		for _, entry := range c.ConceptsIntro {
+			upsertConceptRef(registry, entry.Name, sectionRef, true)
+			if len(entry.Aliases) > 0 {
+				mergeAliases(registry, entry.Name, entry.Aliases)
+			}
 		}
 		for _, name := range c.ConceptsUsed {
 			upsertConceptRef(registry, name, sectionRef, false)
@@ -36,6 +40,25 @@ func upsertConceptRef(registry *ConceptRegistry, name, sectionRef string, isIntr
 	} else {
 		if !stringSliceContains(concept.UsedIn, sectionRef) {
 			concept.UsedIn = append(concept.UsedIn, sectionRef)
+		}
+	}
+}
+
+// mergeAliases stores normalised aliases on the named concept.
+// Aliases that equal the canonical name, or that are already present, are skipped.
+func mergeAliases(registry *ConceptRegistry, canonicalName string, aliases []string) {
+	concept := FindConcept(registry, canonicalName)
+	if concept == nil {
+		return
+	}
+	canonical := NormalizeConcept(canonicalName)
+	for _, a := range aliases {
+		norm := NormalizeConcept(a)
+		if norm == canonical {
+			continue // skip alias identical to canonical name
+		}
+		if !stringSliceContains(concept.Aliases, norm) {
+			concept.Aliases = append(concept.Aliases, norm)
 		}
 	}
 }
@@ -69,11 +92,20 @@ func NormalizeConcept(name string) string {
 }
 
 // FindConcept looks up a concept by name (case-insensitive, normalized).
+// It first checks canonical names, then searches aliases.
 func FindConcept(registry *ConceptRegistry, name string) *Concept {
 	normalized := NormalizeConcept(name)
 	for i := range registry.Concepts {
 		if NormalizeConcept(registry.Concepts[i].Name) == normalized {
 			return &registry.Concepts[i]
+		}
+	}
+	// No canonical match — scan aliases.
+	for i := range registry.Concepts {
+		for _, alias := range registry.Concepts[i].Aliases {
+			if NormalizeConcept(alias) == normalized {
+				return &registry.Concepts[i]
+			}
 		}
 	}
 	return nil

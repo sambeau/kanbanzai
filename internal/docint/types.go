@@ -1,6 +1,11 @@
 package docint
 
-import "time"
+import (
+	"fmt"
+	"time"
+
+	"gopkg.in/yaml.v3"
+)
 
 // Section represents a headed section in a Markdown document (Layer 1).
 type Section struct {
@@ -45,14 +50,62 @@ type FrontMatter struct {
 	Extra   map[string]string `yaml:"extra,omitempty"`
 }
 
+// ConceptIntroEntry represents a concept introduced by a section.
+// It accepts both plain string and object form in YAML:
+//
+//	concepts_intro:
+//	  - plain-string-concept
+//	  - name: concept-name
+//	    aliases: [alt-form, another-form]
+type ConceptIntroEntry struct {
+	Name    string   // canonical concept name
+	Aliases []string // alternative forms (optional)
+}
+
+// UnmarshalYAML implements yaml.Unmarshaler.
+// A scalar node is treated as a plain name with no aliases.
+// A mapping node must have a "name" key and an optional "aliases" key.
+func (e *ConceptIntroEntry) UnmarshalYAML(value *yaml.Node) error {
+	switch value.Kind {
+	case yaml.ScalarNode:
+		e.Name = value.Value
+		return nil
+	case yaml.MappingNode:
+		var obj struct {
+			Name    string   `yaml:"name"`
+			Aliases []string `yaml:"aliases"`
+		}
+		if err := value.Decode(&obj); err != nil {
+			return err
+		}
+		e.Name = obj.Name
+		e.Aliases = obj.Aliases
+		return nil
+	default:
+		return fmt.Errorf("concepts_intro entry must be a string or map, got kind %v", value.Kind)
+	}
+}
+
+// MarshalYAML implements yaml.Marshaler.
+// Entries without aliases are serialised as plain strings for backward compatibility.
+func (e ConceptIntroEntry) MarshalYAML() (interface{}, error) {
+	if len(e.Aliases) == 0 {
+		return e.Name, nil
+	}
+	return struct {
+		Name    string   `yaml:"name"`
+		Aliases []string `yaml:"aliases"`
+	}{Name: e.Name, Aliases: e.Aliases}, nil
+}
+
 // Classification represents an agent-provided fragment classification (Layer 3).
 type Classification struct {
-	SectionPath   string   `yaml:"section_path"`
-	Role          string   `yaml:"role"`                     // From FragmentRole taxonomy
-	Confidence    string   `yaml:"confidence"`               // "high", "medium", "low"
-	Summary       string   `yaml:"summary,omitempty"`        // One-line characterisation
-	ConceptsIntro []string `yaml:"concepts_intro,omitempty"` // Concepts this section introduces
-	ConceptsUsed  []string `yaml:"concepts_used,omitempty"`  // Concepts this section uses
+	SectionPath   string             `yaml:"section_path"`
+	Role          string             `yaml:"role"`                     // From FragmentRole taxonomy
+	Confidence    string             `yaml:"confidence"`               // "high", "medium", "low"
+	Summary       string             `yaml:"summary,omitempty"`        // One-line characterisation
+	ConceptsIntro []ConceptIntroEntry `yaml:"concepts_intro,omitempty"` // Concepts this section introduces
+	ConceptsUsed  []string           `yaml:"concepts_used,omitempty"`  // Concepts this section uses
 }
 
 // ClassificationSubmission is the input for Layer 3 classification.
@@ -106,9 +159,8 @@ type DocumentGraph struct {
 
 // Concept represents an entry in the concept registry.
 type Concept struct {
-	Name    string   `yaml:"name"`              // Canonical name (lowercase, hyphenated)
-	Aliases []string `yaml:"aliases,omitempty"` // Alternative forms
-	// TODO: Aliases field is currently unused - implement alias resolution or remove
+	Name         string   `yaml:"name"`                    // Canonical name (lowercase, hyphenated)
+	Aliases      []string `yaml:"aliases,omitempty"`       // Alternative forms (normalised)
 	IntroducedIn []string `yaml:"introduced_in,omitempty"` // Section IDs that INTRODUCE this concept
 	UsedIn       []string `yaml:"used_in,omitempty"`       // Section IDs that USE this concept
 }
