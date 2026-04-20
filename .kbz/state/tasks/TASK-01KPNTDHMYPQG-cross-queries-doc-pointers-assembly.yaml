@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPNNYYZRAEK
 slug: cross-queries-doc-pointers-assembly
 name: Surface document pointers in context assembly
 summary: "Add asmDocumentPointers step in internal/mcp/assembly.go running after asmLoadKnowledge. Collect entity IDs from surfaced knowledge entries (learned_from and tags). Query IntelligenceService for sections referencing those entities. Add lightweight document pointer list (path, section path, optional title) to assembled context. No full section content in pointers."
-status: queued
+status: ready
