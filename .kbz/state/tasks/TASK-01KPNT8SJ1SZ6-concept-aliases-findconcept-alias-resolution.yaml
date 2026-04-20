@@ -1,0 +1,6 @@
+id: TASK-01KPNT8SJ1SZ6
+parent_feature: FEAT-01KPNNYZ1ZSS6
+slug: concept-aliases-findconcept-alias-resolution
+name: Update FindConcept with alias resolution
+summary: "Modify FindConcept in docint/concepts.go to first check canonical names then scan aliases if no canonical match found. Canonical names always take priority. Tests: alias lookup, canonical priority, nil on no match, mutable pointer for alias match."
+status: queued
