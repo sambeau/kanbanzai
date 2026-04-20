@@ -1,0 +1,6 @@
+id: TASK-01KPNTAST512X
+parent_feature: FEAT-01KPNNYYSQTA7
+slug: sqlite-search-action
+name: Add search action to doc_intel tool
+summary: "Implement docIntelSearchAction in internal/mcp/doc_intel_tool.go. Parameters: query (required), mode (default outline), limit (default 10, max 50), doc_type, role. Execute FTS5 MATCH with BM25 ranking. Apply post-filters. Return query, total_matches, returned, results array with outline/summary/full modes. Add IndexStore.SearchSections method. Update tool description."
+status: queued
