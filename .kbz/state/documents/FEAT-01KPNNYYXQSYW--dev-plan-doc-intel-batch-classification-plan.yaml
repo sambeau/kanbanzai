@@ -2,9 +2,11 @@ id: FEAT-01KPNNYYXQSYW/dev-plan-doc-intel-batch-classification-plan
 path: work/plan/doc-intel-batch-classification-plan.md
 type: dev-plan
 title: Batch Classification Activation — Dev Plan
-status: draft
+status: approved
 owner: FEAT-01KPNNYYXQSYW
+approved_by: sambeau
+approved_at: "2026-04-20T16:03:23Z"
 content_hash: 5671a414972eaadd8875f9c31389e38c7f5d9566f7cbb6ea19267021157463fe
 created: "2026-04-20T16:02:46Z"
 created_by: sambeau
-updated: "2026-04-20T16:02:46Z"
+updated: "2026-04-20T16:03:23Z"
