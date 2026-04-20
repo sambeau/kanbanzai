@@ -2,7 +2,7 @@ id: FEAT-01KPPG4SXY6T0
 slug: workflow-hygiene-docs
 name: Workflow hygiene documentation
 parent: P24-retro-recommendations
-status: specifying
+status: dev-planning
 summary: "Update AGENTS.md and five skill files to eliminate the recurring friction captured in REC-02, REC-05, REC-06, REC-07, and REC-08: remove the git stash instruction, add commit-before-spawn rules, document the edit_file worktree limitation, add MCP-bypass and shell-query anti-patterns, and codify the flaky-test policy."
 design: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs
 spec: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs
