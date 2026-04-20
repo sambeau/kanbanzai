@@ -79,11 +79,12 @@ type asmSpecSection struct {
 
 // asmKnowledgeEntry represents a knowledge entry included in assembled context.
 type asmKnowledgeEntry struct {
-	topic      string
-	content    string
-	scope      string
-	confidence float64
-	tier       int
+	topic       string
+	content     string
+	scope       string
+	learnedFrom string
+	confidence  float64
+	tier        int
 }
 
 // asmDocPointer is a lightweight reference to a document section
@@ -545,14 +546,16 @@ func asmLoadKnowledge(svc *service.KnowledgeService, role string) []asmKnowledge
 			}
 			topic, _ := rec.Fields["topic"].(string)
 			content, _ := rec.Fields["content"].(string)
+			learnedFrom, _ := rec.Fields["learned_from"].(string)
 			conf := asmFieldFloat(rec.Fields, "confidence")
 			tier := asmFieldInt(rec.Fields, "tier")
 			entries = append(entries, asmKnowledgeEntry{
-				topic:      topic,
-				content:    content,
-				scope:      scope,
-				confidence: conf,
-				tier:       tier,
+				topic:       topic,
+				content:     content,
+				scope:       scope,
+				learnedFrom: learnedFrom,
+				confidence:  conf,
+				tier:        tier,
 			})
 		}
 	}
@@ -563,7 +566,6 @@ func asmLoadKnowledge(svc *service.KnowledgeService, role string) []asmKnowledge
 	})
 	return entries
 }
-
 
 // ─── Document pointer loading ─────────────────────────────────────────────────
 
@@ -587,6 +589,9 @@ func asmLoadDocumentPointers(svc *service.IntelligenceService, knowledge []asmKn
 	for _, ke := range knowledge {
 		if asmIsEntityID(ke.scope) {
 			entityIDs[ke.scope] = true
+		}
+		if asmIsEntityID(ke.learnedFrom) {
+			entityIDs[ke.learnedFrom] = true
 		}
 	}
 	if len(entityIDs) == 0 {

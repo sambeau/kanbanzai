@@ -38,7 +38,7 @@ func docIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *se
 				"Call guide before manually extracting information from a document. "+
 				"The find action routes by parameter: provide exactly one of concept, entity_id, or role. "+
 				"id is required for outline, section, classify, and guide. "+
-				"Actions: outline, section, classify, find, trace, impact, guide, pending.",
+				"Actions: outline, section, classify, find, trace, impact, guide, pending, search.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),
@@ -73,7 +73,7 @@ func docIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *se
 			mcp.Description("Entity ID to search for (e.g. FEAT-001, TASK-042) — find and trace actions"),
 		),
 		mcp.WithString("role",
-			mcp.Description("Fragment role to search for (requirement, decision, rationale, etc.) — find action"),
+			mcp.Description("Fragment role to search for (requirement, decision, rationale, etc.) — find and search actions"),
 		),
 		mcp.WithString("scope",
 			mcp.Description("Limit role search to a specific document ID — find action with role"),
@@ -85,7 +85,7 @@ func docIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *se
 		// guide — uses id (same as outline)
 		// search
 		mcp.WithString("query",
-			mcp.Description("Full-text search query in FTS5 syntax — required for search"),
+			mcp.Description("Full-text search query in FTS5 syntax — required for search. total_matches in the response is the count before doc_type/role post-filtering."),
 		),
 		mcp.WithString("mode",
 			mcp.Description("Output level: outline (default), summary, full — search action"),
@@ -523,7 +523,6 @@ func docIntelSearchAction(svc *service.IntelligenceService) ActionHandler {
 	}
 }
 
-
 // ─── knowledge cross-query helpers ───────────────────────────────────────────
 
 // findRelatedKnowledge returns knowledge entries related to entityID.
@@ -598,7 +597,7 @@ func findRelatedKnowledge(
 		if !matched && len(docPaths) > 0 {
 			if scope, _ := rec.Fields["scope"].(string); scope != "" {
 				for dp := range docPaths {
-					if strings.HasPrefix(dp, scope) || strings.HasPrefix(scope, dp) {
+					if strings.HasPrefix(dp, scope) {
 						matched = true
 						break
 					}

@@ -158,6 +158,16 @@ func (s *IntelligenceService) ClassifyDocument(submission docint.ClassificationS
 		return fmt.Errorf("save document index: %w", err)
 	}
 
+	// Dual-write: update SQLite edges and entity refs after classification (graceful degradation).
+	var fileContent []byte
+	if index.DocumentPath != "" {
+		fullPath := s.resolveDocPath(index.DocumentPath)
+		fileContent, _ = os.ReadFile(fullPath)
+	}
+	if sqlErr := s.indexStore.UpsertDocumentSQLite(submission.DocumentID, index.Sections, fileContent, index.EntityRefs, edges); sqlErr != nil {
+		log.Printf("warning: SQLite write failed after classify for %s: %v", submission.DocumentID, sqlErr)
+	}
+
 	return nil
 }
 
@@ -506,6 +516,7 @@ type RebuildStats struct {
 	Edges       int
 	EntityRefs  int
 	FTSSections int
+	Failed      int
 }
 
 // RebuildIndex deletes the SQLite database and rebuilds it from all per-document YAML indexes.
@@ -517,6 +528,9 @@ func (s *IntelligenceService) RebuildIndex() (RebuildStats, error) {
 	if err := os.Remove(dbPath); err != nil && !os.IsNotExist(err) {
 		return stats, fmt.Errorf("remove db: %w", err)
 	}
+	// Also remove WAL and shared-memory sidecar files (they belong to the deleted DB).
+	os.Remove(dbPath + "-wal") //nolint:errcheck
+	os.Remove(dbPath + "-shm") //nolint:errcheck
 	s.indexStore.ResetDB()
 
 	// Enumerate all per-document YAML index files
@@ -542,6 +556,7 @@ func (s *IntelligenceService) RebuildIndex() (RebuildStats, error) {
 
 		if err := s.indexStore.UpsertDocumentSQLite(docID, index.Sections, fileContent, index.EntityRefs, edges); err != nil {
 			log.Printf("warning: rebuild skip %s: %v", docID, err)
+			stats.Failed++
 			continue
 		}
 

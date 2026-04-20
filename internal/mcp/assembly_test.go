@@ -1035,3 +1035,73 @@ func TestAsmLoadDocumentPointers_EntityScopeNoIndex(t *testing.T) {
 		t.Errorf("asmLoadDocumentPointers with no index = %d pointers, want 0", len(got))
 	}
 }
+
+// TestAsmLoadDocumentPointers_EntityScopeWithIndex verifies the happy path:
+// a knowledge entry with an entity ID scope, where the entity is referenced
+// in an indexed document, produces a document pointer.
+func TestAsmLoadDocumentPointers_EntityScopeWithIndex(t *testing.T) {
+	t.Parallel()
+	repoRoot := t.TempDir()
+	indexRoot := filepath.Join(t.TempDir(), "index")
+	svc := service.NewIntelligenceService(indexRoot, repoRoot)
+
+	entityID := "FEAT-ASMPTRENTITY001"
+
+	// Write and ingest a document that references the entity.
+	content := "# Design\n\nThis document covers " + entityID + " feature.\n"
+	docPath := filepath.Join(repoRoot, "work", "doc.md")
+	if err := os.MkdirAll(filepath.Dir(docPath), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(docPath, []byte(content), 0o644); err != nil {
+		t.Fatalf("write doc: %v", err)
+	}
+	if _, err := svc.IngestDocument("work/doc.md", "work/doc.md"); err != nil {
+		t.Fatalf("IngestDocument: %v", err)
+	}
+
+	// Knowledge entry with scope = entity ID (so it is picked up).
+	knowledge := []asmKnowledgeEntry{
+		{topic: "feature-insight", content: "Some insight", scope: entityID},
+	}
+
+	got := asmLoadDocumentPointers(svc, knowledge)
+	if len(got) == 0 {
+		t.Error("expected at least one document pointer for entity-scoped knowledge with indexed doc, got 0")
+	}
+}
+
+// TestAsmLoadDocumentPointers_LearnedFromEntityID verifies that a knowledge entry
+// whose learnedFrom field is an entity ID (and scope is "project") still generates
+// document pointers when the entity appears in indexed documents.
+func TestAsmLoadDocumentPointers_LearnedFromEntityID(t *testing.T) {
+	t.Parallel()
+	repoRoot := t.TempDir()
+	indexRoot := filepath.Join(t.TempDir(), "index")
+	svc := service.NewIntelligenceService(indexRoot, repoRoot)
+
+	entityID := "FEAT-ASMLEARNFROM0001"
+
+	// Write and ingest a document that references the entity.
+	content := "# Design\n\nThis document covers " + entityID + " feature.\n"
+	docPath := filepath.Join(repoRoot, "work", "doc.md")
+	if err := os.MkdirAll(filepath.Dir(docPath), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(docPath, []byte(content), 0o644); err != nil {
+		t.Fatalf("write doc: %v", err)
+	}
+	if _, err := svc.IngestDocument("work/doc.md", "work/doc.md"); err != nil {
+		t.Fatalf("IngestDocument: %v", err)
+	}
+
+	// Knowledge entry with scope="project" but learnedFrom=entityID.
+	knowledge := []asmKnowledgeEntry{
+		{topic: "task-insight", content: "Learned from the feature task", scope: "project", learnedFrom: entityID},
+	}
+
+	got := asmLoadDocumentPointers(svc, knowledge)
+	if len(got) == 0 {
+		t.Error("expected at least one document pointer for learnedFrom-based entity ID, got 0")
+	}
+}

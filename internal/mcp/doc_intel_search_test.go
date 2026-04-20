@@ -164,3 +164,49 @@ func TestDocIntelSearch_EmptyResults(t *testing.T) {
 		t.Errorf("expected 0 results, got %d", len(results))
 	}
 }
+
+func TestDocIntelSearch_DocTypeFilter(t *testing.T) {
+	env := setupDocIntelSearch(t)
+
+	// Document with type: specification in bullet front matter
+	specContent := "# Auth Spec\n\n- Type: specification\n- Status: draft\n\n## Requirements\n\nThe system must validate tokens.\n"
+	specPath := writeDocIntelFile(t, env.repoRoot, "docs/auth-spec.md", specContent)
+	if _, err := env.intelSvc.IngestDocument("auth-spec", specPath); err != nil {
+		t.Fatalf("IngestDocument spec: %v", err)
+	}
+
+	// Document without a type field
+	designContent := "# Auth Design\n\n## Overview\n\nThe system should validate tokens using JWT.\n"
+	designPath := writeDocIntelFile(t, env.repoRoot, "docs/auth-design.md", designContent)
+	if _, err := env.intelSvc.IngestDocument("auth-design", designPath); err != nil {
+		t.Fatalf("IngestDocument design: %v", err)
+	}
+
+	// Search with doc_type filter — should return only auth-spec results
+	resp := callDocIntel(t, env, map[string]any{
+		"action":   "search",
+		"query":    "validate tokens",
+		"doc_type": "specification",
+	})
+
+	if _, ok := resp["error"]; ok {
+		t.Fatalf("unexpected error: %v", resp)
+	}
+
+	results, ok := resp["results"].([]any)
+	if !ok {
+		t.Fatalf("expected results array, got: %T", resp["results"])
+	}
+
+	// Every returned result must come from the specification document
+	for _, r := range results {
+		rm, ok := r.(map[string]any)
+		if !ok {
+			continue
+		}
+		docID, _ := rm["document_id"].(string)
+		if docID != "auth-spec" {
+			t.Errorf("expected only auth-spec results with doc_type filter, got document_id = %q", docID)
+		}
+	}
+}

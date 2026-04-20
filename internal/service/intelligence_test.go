@@ -901,3 +901,105 @@ func countSections(sections []docint.Section) int {
 	}
 	return n
 }
+
+func TestRebuildIndex_RoundTrip(t *testing.T) {
+	tmp := t.TempDir()
+	indexRoot := filepath.Join(tmp, "index")
+	docPath1 := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
+	docPath2 := writeTestDoc(t, tmp, "docs/spec.md", testMarkdown2)
+
+	svc := NewIntelligenceService(indexRoot, tmp)
+
+	if _, err := svc.IngestDocument("test-doc-1", docPath1); err != nil {
+		t.Fatalf("IngestDocument 1: %v", err)
+	}
+	if _, err := svc.IngestDocument("test-doc-2", docPath2); err != nil {
+		t.Fatalf("IngestDocument 2: %v", err)
+	}
+
+	// Record pre-rebuild FTS row counts
+	preCount1, err := svc.indexStore.CountFTSSectionsForDoc("test-doc-1")
+	if err != nil {
+		t.Fatalf("pre-rebuild count 1: %v", err)
+	}
+	preCount2, err := svc.indexStore.CountFTSSectionsForDoc("test-doc-2")
+	if err != nil {
+		t.Fatalf("pre-rebuild count 2: %v", err)
+	}
+	if preCount1 == 0 || preCount2 == 0 {
+		t.Fatal("expected non-zero FTS rows before rebuild")
+	}
+
+	// Rebuild the index
+	stats, err := svc.RebuildIndex()
+	if err != nil {
+		t.Fatalf("RebuildIndex: %v", err)
+	}
+
+	if stats.Documents != 2 {
+		t.Errorf("stats.Documents = %d, want 2", stats.Documents)
+	}
+	if stats.Failed != 0 {
+		t.Errorf("stats.Failed = %d, want 0", stats.Failed)
+	}
+	if stats.FTSSections == 0 {
+		t.Error("expected FTSSections > 0 after rebuild")
+	}
+
+	// Verify FTS row counts are restored after rebuild
+	postCount1, err := svc.indexStore.CountFTSSectionsForDoc("test-doc-1")
+	if err != nil {
+		t.Fatalf("post-rebuild count 1: %v", err)
+	}
+	postCount2, err := svc.indexStore.CountFTSSectionsForDoc("test-doc-2")
+	if err != nil {
+		t.Fatalf("post-rebuild count 2: %v", err)
+	}
+
+	if postCount1 != preCount1 {
+		t.Errorf("test-doc-1 FTS row count after rebuild = %d, want %d", postCount1, preCount1)
+	}
+	if postCount2 != preCount2 {
+		t.Errorf("test-doc-2 FTS row count after rebuild = %d, want %d", postCount2, preCount2)
+	}
+}
+
+func TestClassifyDocument_SQLite_EdgesDualWrite(t *testing.T) {
+	tmp := t.TempDir()
+	indexRoot := filepath.Join(tmp, "index")
+	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
+
+	svc := NewIntelligenceService(indexRoot, tmp)
+
+	idx, err := svc.IngestDocument("test-doc", docPath)
+	if err != nil {
+		t.Fatalf("IngestDocument: %v", err)
+	}
+
+	preEdgeCount, err := svc.indexStore.CountEdgesForDoc("test-doc")
+	if err != nil {
+		t.Fatalf("pre-classify edge count: %v", err)
+	}
+
+	// Apply a minimal valid classification
+	submission := docint.ClassificationSubmission{
+		DocumentID:      "test-doc",
+		ContentHash:     idx.ContentHash,
+		ModelName:       "test-model",
+		ModelVersion:    "v1",
+		Classifications: []docint.Classification{},
+	}
+	if err := svc.ClassifyDocument(submission); err != nil {
+		t.Fatalf("ClassifyDocument: %v", err)
+	}
+
+	// Edge count in SQLite should remain consistent after classify
+	postEdgeCount, err := svc.indexStore.CountEdgesForDoc("test-doc")
+	if err != nil {
+		t.Fatalf("post-classify edge count: %v", err)
+	}
+
+	if postEdgeCount != preEdgeCount {
+		t.Errorf("edge count changed after classify: before=%d after=%d (expected equal)", preEdgeCount, postEdgeCount)
+	}
+}

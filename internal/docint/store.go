@@ -3,6 +3,7 @@ package docint
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -57,9 +58,14 @@ func (s *IndexStore) openDB(dbPath string) error {
 	if err != nil {
 		return fmt.Errorf("open sqlite: %w", err)
 	}
+	db.SetMaxOpenConns(1)
 	if _, err := db.Exec("PRAGMA journal_mode=WAL"); err != nil {
 		db.Close()
 		return fmt.Errorf("set WAL mode: %w", err)
+	}
+	if _, err := db.Exec("PRAGMA busy_timeout=5000"); err != nil {
+		db.Close()
+		return fmt.Errorf("set busy timeout: %w", err)
 	}
 	if err := createSchema(db); err != nil {
 		db.Close()
@@ -308,10 +314,10 @@ func (s *IndexStore) SearchSections(params SearchParams) (total int, results []S
 	}
 
 	rows, err := s.db.Query(
-		`SELECT document_id, section_path, title, bm25(sections_fts) AS score
+		`SELECT document_id, section_path, title, bm25(sections_fts) * -1.0 AS score
 		 FROM sections_fts
 		 WHERE sections_fts MATCH ?
-		 ORDER BY score
+		 ORDER BY score DESC
 		 LIMIT ?`,
 		params.Query, scanLimit,
 	)
@@ -364,7 +370,7 @@ func (s *IndexStore) SearchSections(params SearchParams) (total int, results []S
 		}
 
 		if params.Mode == "summary" && sec != nil {
-			r.Summary = findSectionSummary(index, r.SectionPath)
+			r.Summary = findSectionSummary(index, r.SectionPath, index.DocumentPath, sec)
 		}
 		if params.Mode == "full" && sec != nil {
 			r.Content = loadSectionContent(index.DocumentPath, sec)
@@ -406,14 +412,29 @@ func findSectionRole(index *DocumentIndex, sectionPath string) *string {
 	return nil
 }
 
-// findSectionSummary returns the agent-provided summary for a section, or empty if unclassified.
-func findSectionSummary(index *DocumentIndex, sectionPath string) string {
+// findSectionSummary returns the agent-provided summary for a section, or falls back to the first paragraph.
+func findSectionSummary(index *DocumentIndex, sectionPath string, docPath string, sec *Section) string {
 	for _, c := range index.Classifications {
 		if c.SectionPath == sectionPath {
 			return c.Summary
 		}
 	}
+	// Fallback: extract first paragraph from source file.
+	if sec != nil {
+		return firstParagraph(loadSectionContent(docPath, sec))
+	}
 	return ""
+}
+
+// firstParagraph returns the first non-blank double-newline-separated paragraph from text.
+func firstParagraph(text string) string {
+	for _, p := range strings.Split(text, "\n\n") {
+		p = strings.TrimSpace(p)
+		if p != "" {
+			return p
+		}
+	}
+	return strings.TrimSpace(text)
 }
 
 // loadSectionContent reads a section's raw content from the source file via byte offsets.
@@ -423,6 +444,7 @@ func loadSectionContent(docPath string, sec *Section) string {
 	}
 	data, err := os.ReadFile(docPath)
 	if err != nil {
+		log.Printf("doc_intel: cannot read source file %q for content retrieval: %v", docPath, err)
 		return ""
 	}
 	start := sec.ByteOffset

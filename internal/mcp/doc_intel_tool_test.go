@@ -13,9 +13,9 @@ import (
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
 type docIntelFindEnv struct {
-	intelSvc    *service.IntelligenceService
+	intelSvc     *service.IntelligenceService
 	knowledgeSvc *service.KnowledgeService
-	stateRoot   string
+	stateRoot    string
 }
 
 func setupDocIntelFind(t *testing.T) *docIntelFindEnv {
@@ -24,9 +24,9 @@ func setupDocIntelFind(t *testing.T) *docIntelFindEnv {
 	repoRoot := t.TempDir()
 	indexRoot := filepath.Join(t.TempDir(), "index")
 	return &docIntelFindEnv{
-		intelSvc:    service.NewIntelligenceService(indexRoot, repoRoot),
+		intelSvc:     service.NewIntelligenceService(indexRoot, repoRoot),
 		knowledgeSvc: service.NewKnowledgeService(stateRoot),
-		stateRoot:   stateRoot,
+		stateRoot:    stateRoot,
 	}
 }
 
@@ -280,6 +280,74 @@ func TestDocIntelFind_EntityID_RetiredExcluded(t *testing.T) {
 	}
 	if len(rk) != 0 {
 		t.Errorf("related_knowledge len = %d, want 0 (retired excluded)", len(rk))
+	}
+}
+
+// TestDocIntelFind_EntityID_RelatedKnowledge_ScopeMatch verifies that a knowledge
+// entry whose scope is a path prefix of a document referencing the entity appears
+// in related_knowledge (FR-004 scope-based matching).
+func TestDocIntelFind_EntityID_RelatedKnowledge_ScopeMatch(t *testing.T) {
+	t.Parallel()
+
+	repoRoot := t.TempDir()
+	indexRoot := filepath.Join(t.TempDir(), "index")
+	stateRoot := t.TempDir()
+
+	intelSvc := service.NewIntelligenceService(indexRoot, repoRoot)
+	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+
+	entityID := "FEAT-TESTSCOPEMATCH001"
+
+	// Write and ingest a document that references the entity.
+	docContent := "# Feature Design\n\nThis design covers " + entityID + " requirements.\n"
+	docPath := filepath.Join(repoRoot, "work/design/feat.md")
+	if err := os.MkdirAll(filepath.Dir(docPath), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(docPath, []byte(docContent), 0o644); err != nil {
+		t.Fatalf("write doc: %v", err)
+	}
+	if _, err := intelSvc.IngestDocument("work/design/feat.md", "work/design/feat.md"); err != nil {
+		t.Fatalf("IngestDocument: %v", err)
+	}
+
+	// Contribute a knowledge entry with scope = the document path (exact match is a prefix match).
+	contributeKnowledge(t, knowledgeSvc, "scope-match-entry", "Design insight", "work/design/feat.md", "", nil)
+
+	tool := docIntelTool(intelSvc, nil, knowledgeSvc)
+	req := makeRequest(map[string]any{
+		"action":    "find",
+		"entity_id": entityID,
+	})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var out map[string]any
+	if err := json.Unmarshal([]byte(text), &out); err != nil {
+		t.Fatalf("unmarshal: %v\nraw: %s", err, text)
+	}
+
+	rk, ok := out["related_knowledge"].([]any)
+	if !ok {
+		t.Fatalf("expected related_knowledge array, got %T", out["related_knowledge"])
+	}
+	if len(rk) == 0 {
+		t.Error("expected at least one knowledge entry matched by scope prefix, got 0")
+	}
+	// Verify the matched entry is the one we contributed.
+	found := false
+	for _, e := range rk {
+		if em, ok := e.(map[string]any); ok {
+			if em["topic"] == "scope-match-entry" {
+				found = true
+				break
+			}
+		}
+	}
+	if !found {
+		t.Errorf("expected 'scope-match-entry' in related_knowledge, got: %v", rk)
 	}
 }
 
