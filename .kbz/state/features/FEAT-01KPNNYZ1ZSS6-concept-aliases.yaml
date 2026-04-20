@@ -6,6 +6,7 @@ status: dev-planning
 summary: Implement the declared-but-unused concept alias mechanism. Aliases are declared by agents during classification (concepts_intro accepts objects with name and aliases alongside plain strings). FindByConcept resolves queries against both canonical names and aliases. Covers design section 7 (concept alias resolution). Benefits from batch classification (Feature 2) populating the concept registry.
 design: work/design/doc-intel-enhancement-design.md
 spec: FEAT-01KPNNYZ1ZSS6/specification-doc-intel-concept-aliases
+dev_plan: FEAT-01KPNNYZ1ZSS6/dev-plan-doc-intel-concept-aliases-plan
 created: "2026-04-20T14:50:54Z"
 created_by: sambeau
 overrides:
