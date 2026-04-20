@@ -152,14 +152,18 @@ func runWorktreeCreate(args []string, deps dependencies) error {
 		return fmt.Errorf("create git worktree: %w", err)
 	}
 
+	// Resolve graph_project: fall back to local config default if not provided.
+	graphProject := config.ResolveGraphProject()
+
 	// Create the worktree record
 	record := worktree.Record{
-		EntityID:  entityID,
-		Branch:    branchName,
-		Path:      wtPath,
-		Status:    worktree.StatusActive,
-		Created:   time.Now().UTC(),
-		CreatedBy: createdBy,
+		EntityID:     entityID,
+		Branch:       branchName,
+		Path:         wtPath,
+		Status:       worktree.StatusActive,
+		Created:      time.Now().UTC(),
+		CreatedBy:    createdBy,
+		GraphProject: graphProject,
 	}
 
 	created, err := store.Create(record)

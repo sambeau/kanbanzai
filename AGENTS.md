@@ -191,6 +191,15 @@ See [`refs/testing.md`](refs/testing.md) for test conventions, isolation rules, 
 
 This project is indexed under **`Users-samphillips-Dev-kanbanzai`**. Use graph tools **instead of** `grep` or `find_path` for all structural questions — definitions, callers, callees, dependencies, architecture. See [`refs/knowledge-graph.md`](refs/knowledge-graph.md) for the full tool reference and fallback policy.
 
+**One-time setup:** Set `codebase_memory.graph_project` in `.kbz/local.yaml` once per machine:
+
+```
+codebase_memory:
+  graph_project: Users-samphillips-Dev-kanbanzai
+```
+
+This value is used automatically by `worktree(action: "create")` as the default `graph_project`, so sub-agents receive Code Graph context in every `handoff`/`next` call without the orchestrator needing to pass the parameter explicitly.
+
 ## Delegating to Sub-Agents
 
 Sub-agents do **not** see this file — all context must be explicitly propagated in every `spawn_agent` call. See [`refs/sub-agents.md`](refs/sub-agents.md) for the required context template and propagation rule.

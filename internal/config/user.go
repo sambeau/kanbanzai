@@ -25,6 +25,16 @@ type GitHubConfig struct {
 	Repo string `yaml:"repo,omitempty"`
 }
 
+// CodebaseMemoryConfig holds codebase-memory-mcp settings for the local environment.
+type CodebaseMemoryConfig struct {
+	// GraphProject is the default project name for graph-based code navigation tools.
+	// Used as the graph_project value when creating worktrees, so it need not be
+	// provided explicitly on every worktree(action: "create") call.
+	// Set once per machine to the project name shown in codebase-memory-mcp
+	// (e.g. "Users-alice-Dev-myrepo").
+	GraphProject string `yaml:"graph_project,omitempty"`
+}
+
 // LocalConfig is the schema for .kbz/local.yaml.
 type LocalConfig struct {
 	User struct {
@@ -35,6 +45,8 @@ type LocalConfig struct {
 	// ToolHints maps role IDs to opaque tool guidance strings. Local hints
 	// override project-level hints on a per-key basis.
 	ToolHints map[string]string `yaml:"tool_hints,omitempty"`
+	// CodebaseMemory holds codebase-memory-mcp settings for this machine.
+	CodebaseMemory CodebaseMemoryConfig `yaml:"codebase_memory,omitempty"`
 }
 
 // GetGitHubToken returns the configured GitHub token, or empty string if not set.
@@ -103,4 +115,25 @@ func resolveIdentity(explicit, localConfigPath string) (string, error) {
 	}
 
 	return "", fmt.Errorf("cannot resolve user identity: provide created_by explicitly, or set user.name in .kbz/local.yaml, or configure git user.name")
+}
+
+// ResolveGraphProject returns the default codebase-memory-mcp project name from local config.
+// Returns empty string if local.yaml is absent or has no codebase_memory.graph_project set.
+// Resolution is best-effort: errors are silently ignored so worktree creation never fails
+// solely because the local config is missing.
+func ResolveGraphProject() string {
+	return resolveGraphProject(filepath.Join(core.RootPath(), LocalConfigFile))
+}
+
+// resolveGraphProject is the testable core of ResolveGraphProject.
+func resolveGraphProject(localConfigPath string) string {
+	data, err := os.ReadFile(localConfigPath)
+	if err != nil {
+		return ""
+	}
+	var lc LocalConfig
+	if err := yaml.Unmarshal(data, &lc); err != nil {
+		return ""
+	}
+	return strings.TrimSpace(lc.CodebaseMemory.GraphProject)
 }

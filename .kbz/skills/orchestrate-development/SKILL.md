@@ -120,6 +120,10 @@ Copy this checklist and track your progress:
 
 ### Phase 3: Dispatch Sub-Agents
 
+0. **Before creating worktrees**, verify `.kbz/local.yaml` has `codebase_memory.graph_project` set
+   (e.g. `Users-alice-Dev-myrepo`). If missing, add it now — worktrees created without it will not
+   inject Code Graph context into sub-agent handoffs. Once set in local config, the `worktree` tool
+   picks it up automatically and you never need to pass `graph_project` explicitly.
 1. For each task in the dispatch batch, generate a sub-agent prompt using `handoff(task_id: "TASK-xxx")`.
 2. Include file scope boundaries in the dispatch — tell each agent which files it owns and which it must not modify (because a parallel agent owns them).
 3. Include codebase knowledge graph context per `refs/sub-agents.md`: project name, tool preferences, and the propagation rule for nested delegation.

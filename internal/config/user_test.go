@@ -291,3 +291,76 @@ func TestLoadLocalConfigFrom_InvalidYAML(t *testing.T) {
 		t.Error("LoadLocalConfigFrom() should fail for invalid YAML")
 	}
 }
+
+func TestResolveGraphProject_LocalYAMLFallback(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	localPath := filepath.Join(tmpDir, "local.yaml")
+	content := "codebase_memory:\n  graph_project: Users-alice-Dev-myrepo\n"
+	if err := os.WriteFile(localPath, []byte(content), 0o644); err != nil {
+		t.Fatalf("failed to write local.yaml: %v", err)
+	}
+
+	got := resolveGraphProject(localPath)
+	if got != "Users-alice-Dev-myrepo" {
+		t.Errorf("resolveGraphProject() = %q, want %q", got, "Users-alice-Dev-myrepo")
+	}
+}
+
+func TestResolveGraphProject_TrimsWhitespace(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	localPath := filepath.Join(tmpDir, "local.yaml")
+	content := "codebase_memory:\n  graph_project: \"  Users-alice-Dev-myrepo  \"\n"
+	if err := os.WriteFile(localPath, []byte(content), 0o644); err != nil {
+		t.Fatalf("failed to write local.yaml: %v", err)
+	}
+
+	got := resolveGraphProject(localPath)
+	if got != "Users-alice-Dev-myrepo" {
+		t.Errorf("resolveGraphProject() = %q, want %q (should trim whitespace)", got, "Users-alice-Dev-myrepo")
+	}
+}
+
+func TestResolveGraphProject_MissingFile(t *testing.T) {
+	t.Parallel()
+
+	got := resolveGraphProject("/nonexistent/path/local.yaml")
+	if got != "" {
+		t.Errorf("resolveGraphProject() = %q, want empty string for missing file", got)
+	}
+}
+
+func TestResolveGraphProject_MissingSection(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	localPath := filepath.Join(tmpDir, "local.yaml")
+	content := "user:\n  name: alice\n"
+	if err := os.WriteFile(localPath, []byte(content), 0o644); err != nil {
+		t.Fatalf("failed to write local.yaml: %v", err)
+	}
+
+	got := resolveGraphProject(localPath)
+	if got != "" {
+		t.Errorf("resolveGraphProject() = %q, want empty string when section absent", got)
+	}
+}
+
+func TestResolveGraphProject_EmptyValue(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	localPath := filepath.Join(tmpDir, "local.yaml")
+	content := "codebase_memory:\n  graph_project: \"\"\n"
+	if err := os.WriteFile(localPath, []byte(content), 0o644); err != nil {
+		t.Fatalf("failed to write local.yaml: %v", err)
+	}
+
+	got := resolveGraphProject(localPath)
+	if got != "" {
+		t.Errorf("resolveGraphProject() = %q, want empty string for blank value", got)
+	}
+}

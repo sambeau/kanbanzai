@@ -140,6 +140,12 @@ func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityServic
 			return inlineErr("git_error", fmt.Sprintf("git worktree create failed: %v", err))
 		}
 
+		// Resolve graph_project: explicit parameter wins; fall back to local config default.
+		graphProject := req.GetString("graph_project", "")
+		if graphProject == "" {
+			graphProject = config.ResolveGraphProject()
+		}
+
 		// Create the worktree record.
 		record := worktree.Record{
 			EntityID:     entityID,
@@ -148,7 +154,7 @@ func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityServic
 			Status:       worktree.StatusActive,
 			Created:      time.Now().UTC(),
 			CreatedBy:    createdBy,
-			GraphProject: req.GetString("graph_project", ""),
+			GraphProject: graphProject,
 		}
 
 		created, err := store.Create(record)
