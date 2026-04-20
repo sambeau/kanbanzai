@@ -2,11 +2,11 @@ id: FEAT-01KPNNYZ1ZSS6/specification-doc-intel-concept-aliases
 path: work/spec/doc-intel-concept-aliases.md
 type: specification
 title: Concept Alias Resolution Specification
-status: approved
+status: draft
 owner: FEAT-01KPNNYZ1ZSS6
 approved_by: sambeau
 approved_at: "2026-04-20T15:16:03Z"
 content_hash: ef245d0cc190501546878043469aca1a45d1675a066d50f105d8ba4c240fed8e
 created: "2026-04-20T15:12:36Z"
 created_by: sambeau
-updated: "2026-04-20T15:16:03Z"
+updated: "2026-04-20T15:33:59Z"
