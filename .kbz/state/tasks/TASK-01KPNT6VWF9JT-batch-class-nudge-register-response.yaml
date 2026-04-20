@@ -3,8 +3,14 @@ parent_feature: FEAT-01KPNNYYXQSYW
 slug: batch-class-nudge-register-response
 name: Add classification nudge to doc register response
 summary: "Modify docRegisterOne in internal/mcp/doc_tool.go to include a classification_nudge string field in the response. The nudge is concise (3 lines max) with the document ID interpolated, mentioning guide+classify workflow. Works for both single and batch registration. Add tests in doc_tool_test.go."
-status: active
+status: done
+files_planned:
+  - internal/mcp/doc_tool.go
+  - internal/mcp/doc_tool_test.go
+completed: "2026-04-20T16:20:30Z"
 claimed_at: "2026-04-20T16:15:21Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-20T16:15:21Z"
 dispatched_by: sambeau
+completion_summary: "Added classification_nudge field to docRegisterOne response. The nudge is a 3-line string with the document ID interpolated three times, directing agents to call doc_intel guide then classify. Works for both single and batch registration since both paths go through docRegisterOne. Added two tests: TestDocTool_Register_Single_ClassificationNudge and TestDocTool_Register_Batch_ClassificationNudge."
+verification: go test ./internal/mcp/... -run TestDoc passes all tests including 2 new nudge tests
