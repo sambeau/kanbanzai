@@ -1,0 +1,6 @@
+id: TASK-01KPPJQS3E7PF
+parent_feature: FEAT-01KPPG5XMJWT3
+slug: optional-github-pr-skill-docs
+name: Update workflow skill documentation for two-track PR policy
+summary: "Update .agents/skills/kanbanzai-workflow/SKILL.md to add a PR policy note in the \"Before completing a feature\" section, and update .agents/skills/kanbanzai-agents/SKILL.md Feature Completion section with a two-track merge procedure. The note must describe both tracks: require_github_pr: false (default, PR optional) and require_github_pr: true (PR required, blocking gate). Covers AC-011 (FR-007, FR-008). Independent of code tasks."
+status: queued
