@@ -1,0 +1,8 @@
+id: FEAT-01KPPG3MSRRCE
+slug: standalone-bug-visibility
+name: Standalone bugs visible in status health
+parent: P24-retro-recommendations
+status: proposed
+summary: "Extend the status attention-item system (P19 C4) to surface open high and critical bugs that are not linked to any in-flight feature. Currently only feature-linked bugs appear; standalone bugs filed against general code areas are permanently invisible. Source: REC-04."
+created: "2026-04-20T22:27:51Z"
+created_by: sambeau
