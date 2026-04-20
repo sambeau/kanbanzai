@@ -3,6 +3,12 @@ parent_feature: FEAT-01KPNNYZ1ZSS6
 slug: concept-aliases-update-build-graph-edges
 name: Update BuildGraphEdges for extended ConceptsIntro
 summary: Modify BuildGraphEdges in docint/graph.go to extract canonical concept name from ConceptIntroEntry values when building INTRODUCES edges. Tests confirm graph edges correct for extended format.
-status: queued
+status: done
 depends_on:
   - TASK-01KPNT8SBZKFT
+files_planned:
+  - internal/docint/graph.go
+  - internal/docint/graph_test.go
+completed: "2026-04-20T16:58:33Z"
+completion_summary: Updated BuildGraphEdges INTRODUCES/USES edge building loop to use entry.Name from ConceptIntroEntry instead of bare string.
+verification: "go test ./internal/docint/... -race: all tests pass"

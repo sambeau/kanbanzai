@@ -3,4 +3,13 @@ parent_feature: FEAT-01KPNNYZ1ZSS6
 slug: concept-aliases-extend-concepts-intro-type
 name: Extend ConceptsIntro type with custom YAML unmarshalling
 summary: "Change Classification.ConceptsIntro in docint/types.go from []string to a new type accepting both plain strings and objects {name, aliases}. Implement custom yaml.Unmarshaler. Backward compatible with existing plain-string entries. Update concepts.go and graph.go call sites."
-status: ready
+status: done
+files_planned:
+  - internal/docint/types.go
+  - internal/docint/concepts.go
+  - internal/docint/graph.go
+  - internal/docint/store_test.go
+  - internal/docint/taxonomy_test.go
+completed: "2026-04-20T16:58:33Z"
+completion_summary: "Added ConceptIntroEntry struct with UnmarshalYAML supporting both plain strings and {name, aliases} objects. Changed Classification.ConceptsIntro from []string to []ConceptIntroEntry. Added MarshalYAML for backward-compatible serialisation. Updated all call sites in concepts.go and graph.go. Fixed pre-existing []string literals in store_test.go and taxonomy_test.go."
+verification: "go test ./internal/docint/... -race: all 75 tests pass"

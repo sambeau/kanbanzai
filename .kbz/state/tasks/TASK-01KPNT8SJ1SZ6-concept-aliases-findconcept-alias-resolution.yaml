@@ -3,6 +3,12 @@ parent_feature: FEAT-01KPNNYZ1ZSS6
 slug: concept-aliases-findconcept-alias-resolution
 name: Update FindConcept with alias resolution
 summary: "Modify FindConcept in docint/concepts.go to first check canonical names then scan aliases if no canonical match found. Canonical names always take priority. Tests: alias lookup, canonical priority, nil on no match, mutable pointer for alias match."
-status: queued
+status: done
 depends_on:
   - TASK-01KPNT8SBZKFT
+files_planned:
+  - internal/docint/concepts.go
+  - internal/docint/concepts_test.go
+completed: "2026-04-20T16:58:33Z"
+completion_summary: "Updated FindConcept to do canonical name scan first (existing behaviour), then scan all concepts' Aliases if no canonical match found. Returns concept owning the matching alias."
+verification: "go test ./internal/docint/... -race: all tests pass"
