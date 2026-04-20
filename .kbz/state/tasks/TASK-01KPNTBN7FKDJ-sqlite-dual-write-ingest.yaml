@@ -1,0 +1,6 @@
+id: TASK-01KPNTBN7FKDJ
+parent_feature: FEAT-01KPNNYYSQTA7
+slug: sqlite-dual-write-ingest
+name: Dual-write IngestDocument to SQLite
+summary: "Modify IntelligenceService.IngestDocument to write sections_fts, edges, entity_refs to SQLite after existing YAML write. Delete-then-insert for re-ingest atomically. Add extractSectionText helper to strip Markdown formatting. YAML write unchanged (dual-write). Tests confirm row counts match."
+status: queued
