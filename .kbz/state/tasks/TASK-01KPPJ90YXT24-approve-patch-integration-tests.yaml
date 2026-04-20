@@ -4,3 +4,6 @@ slug: approve-patch-integration-tests
 name: Integration tests for ApproveDocument patch behaviour
 summary: "Add integration test functions to internal/service/documents_test.go (or documents_status_patch_test.go) that exercise the full approve-then-patch round-trip: TestApproveDocument_PatchesStatusField (AC-008), TestApproveDocument_PatchFailure_ApprovalSucceeds (AC-009), TestApproveDocument_NoStatusField_NoSideEffects (AC-010), TestApproveDocument_HashRefreshFailure_ApprovalSucceeds (AC-011). Each test creates a real temp file, registers a document, calls ApproveDocument, and asserts on file content, record status, and content hash."
 status: queued
+depends_on:
+  - TASK-01KPPJ7MFSTV5
+  - TASK-01KPPJ8CV7BDM

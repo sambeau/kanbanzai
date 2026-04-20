@@ -4,3 +4,5 @@ slug: patch-status-field-unit-tests
 name: Unit tests for PatchStatusField
 summary: "Create internal/fsutil/status_patch_test.go with table-driven unit tests covering all three format variants (AC-001–AC-003), case-insensitivity (AC-004), no-field-found (AC-005), first-match-only (AC-006), file-not-found error (AC-007), and code inspection that WriteFileAtomic is used (AC-012)."
 status: queued
+depends_on:
+  - TASK-01KPPJ72818FK

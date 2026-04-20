@@ -4,3 +4,5 @@ slug: integrate-patch-into-approve
 name: Integrate PatchStatusField into ApproveDocument
 summary: "Modify internal/service/documents.go to call fsutil.PatchStatusField(fullPath, \"approved\") immediately after the successful store.Write in ApproveDocument. If patched, re-compute content hash and do a second store write (best-effort). Log WARNING on any patch or hash-refresh failure; never roll back approval. Covers FR-006–FR-010, NFR-001, NFR-004."
 status: queued
+depends_on:
+  - TASK-01KPPJ72818FK
