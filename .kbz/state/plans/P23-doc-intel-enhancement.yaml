@@ -1,8 +1,8 @@
 id: P23-doc-intel-enhancement
 slug: doc-intel-enhancement
 name: Doc intel enhancement
-status: reviewing
+status: done
 summary: "Activate and enhance Kanbanzai's existing document intelligence system: add full-text search via SQLite FTS5, migrate graph storage from YAML to SQLite, run batch Layer 3 classification to populate the concept registry, wire knowledge and doc_intel together for cross-system queries, and implement concept alias resolution. Five enhancements in three phases, each delivering independent value. Designed as the prerequisite evaluation step before deciding whether to build a standalone docs-memory-mcp server (Option B)."
 created: "2026-04-20T14:49:39Z"
 created_by: sambeau
-updated: "2026-04-20T17:56:18Z"
+updated: "2026-04-20T17:56:56Z"
