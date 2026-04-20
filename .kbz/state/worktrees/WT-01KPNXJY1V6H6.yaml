@@ -2,6 +2,8 @@ id: WT-01KPNXJY1V6H6
 entity_id: FEAT-01KPNNYYZRAEK
 branch: feature/FEAT-01KPNNYYZRAEK-knowledge-doc-cross-queries
 path: .worktrees/FEAT-01KPNNYYZRAEK-knowledge-doc-cross-queries
-status: active
+status: merged
 created: "2026-04-20T17:04:09Z"
 created_by: sambeau
+merged_at: "2026-04-20T17:49:31Z"
+cleanup_after: "2026-04-27T17:49:31Z"
