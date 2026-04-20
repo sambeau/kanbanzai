@@ -2,9 +2,11 @@ id: FEAT-01KPNNYYZRAEK/dev-plan-doc-intel-knowledge-cross-queries-plan
 path: work/plan/doc-intel-knowledge-cross-queries-plan.md
 type: dev-plan
 title: Knowledge-Document Cross-Queries — Dev Plan
-status: draft
+status: approved
 owner: FEAT-01KPNNYYZRAEK
+approved_by: sambeau
+approved_at: "2026-04-20T16:03:23Z"
 content_hash: 6909140f4d41cfe2c35c33ce0580f05116904d2bdf45076ae48dcca96af3e97b
 created: "2026-04-20T16:03:03Z"
 created_by: sambeau
-updated: "2026-04-20T16:03:03Z"
+updated: "2026-04-20T16:03:23Z"
