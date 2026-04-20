@@ -2,9 +2,11 @@ id: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility
 path: work/dev-plan/p24-standalone-bug-visibility.md
 type: dev-plan
 title: "Dev Plan: Standalone bugs visible in status health"
-status: draft
+status: approved
 owner: FEAT-01KPPG3MSRRCE
+approved_by: sambeau
+approved_at: "2026-04-20T23:09:21Z"
 content_hash: fd0dbcc98f2f98ba01ca0373c5dedf52c89ef82f004272e72edfa4e43ed4ca33
 created: "2026-04-20T23:09:08Z"
 created_by: sambeau
-updated: "2026-04-20T23:09:08Z"
+updated: "2026-04-20T23:09:21Z"
