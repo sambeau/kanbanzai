@@ -4,3 +4,5 @@ slug: concept-aliases-update-registry
 name: Update UpdateConceptRegistry for alias storage
 summary: "Modify UpdateConceptRegistry in docint/concepts.go to process ConceptIntroEntry values. Store normalised aliases in Concept.Aliases, deduplicated and accumulated across multiple classification calls. Tests for alias storage, deduplication, accumulation."
 status: queued
+depends_on:
+  - TASK-01KPNT8SBZKFT

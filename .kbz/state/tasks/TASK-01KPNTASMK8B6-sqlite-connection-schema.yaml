@@ -1,0 +1,6 @@
+id: TASK-01KPNTASMK8B6
+parent_feature: FEAT-01KPNNYYSQTA7
+slug: sqlite-connection-schema
+name: SQLite connection management and schema creation
+summary: "Add SQLite database initialisation to IndexStore (internal/docint/store.go). Lazy init on first access at .kbz/index/docint.db. Create tables: sections_fts (FTS5 with porter unicode61), edges, entity_refs. All indexes. WAL mode. Add Close() method. Add .kbz/index/docint.db to .gitignore. Unit tests for schema creation."
+status: queued

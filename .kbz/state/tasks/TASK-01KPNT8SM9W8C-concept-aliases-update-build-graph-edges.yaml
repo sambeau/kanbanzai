@@ -4,3 +4,5 @@ slug: concept-aliases-update-build-graph-edges
 name: Update BuildGraphEdges for extended ConceptsIntro
 summary: Modify BuildGraphEdges in docint/graph.go to extract canonical concept name from ConceptIntroEntry values when building INTRODUCES edges. Tests confirm graph edges correct for extended format.
 status: queued
+depends_on:
+  - TASK-01KPNT8SBZKFT
