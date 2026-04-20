@@ -2,8 +2,14 @@ id: FEAT-01KPNNYZ1ZSS6
 slug: concept-aliases
 name: Concept alias resolution
 parent: P23-doc-intel-enhancement
-status: proposed
+status: specifying
 summary: Implement the declared-but-unused concept alias mechanism. Aliases are declared by agents during classification (concepts_intro accepts objects with name and aliases alongside plain strings). FindByConcept resolves queries against both canonical names and aliases. Covers design section 7 (concept alias resolution). Benefits from batch classification (Feature 2) populating the concept registry.
 design: work/design/doc-intel-enhancement-design.md
 created: "2026-04-20T14:50:54Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: designing
+    reason: Design document work/design/doc-intel-enhancement-design.md covers all four features in P23. User explicitly approved the design. The doc record system blocks formal approval due to section name mismatches but content is complete.
+    timestamp: "2026-04-20T15:52:51+01:00"
+    to_status: specifying

@@ -2,8 +2,14 @@ id: FEAT-01KPNNYYXQSYW
 slug: batch-classification
 name: Batch classification activation
 parent: P23-doc-intel-enhancement
-status: proposed
+status: specifying
 summary: "Define and execute the batch Layer 3 classification protocol to populate the concept registry and role classifications across the existing 280-document corpus. The only code change is a classification nudge on doc(action: register) responses. The main deliverable is the classified corpus itself. Once data exists, concept search, role-based search, and classification-enhanced outlines all become functional. Covers design section 5 (batch classification protocol)."
 design: work/design/doc-intel-enhancement-design.md
 created: "2026-04-20T14:50:54Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: designing
+    reason: Design document work/design/doc-intel-enhancement-design.md covers all four features in P23. User explicitly approved the design. The doc record system blocks formal approval due to section name mismatches but content is complete.
+    timestamp: "2026-04-20T15:52:50+01:00"
+    to_status: specifying

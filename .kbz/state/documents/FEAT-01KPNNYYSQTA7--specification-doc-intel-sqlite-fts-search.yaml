@@ -1,0 +1,10 @@
+id: FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search
+path: work/spec/doc-intel-sqlite-fts-search.md
+type: specification
+title: SQLite Storage and Full-Text Search Specification
+status: draft
+owner: FEAT-01KPNNYYSQTA7
+content_hash: 54ca779f72aa819ce7cf6ea7f972ab5e5feb6a6282859d5e1f44f0e8c0672232
+created: "2026-04-20T15:12:35Z"
+created_by: sambeau
+updated: "2026-04-20T15:12:35Z"
