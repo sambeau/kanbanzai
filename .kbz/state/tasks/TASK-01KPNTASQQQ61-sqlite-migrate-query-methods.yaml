@@ -3,7 +3,14 @@ parent_feature: FEAT-01KPNNYYSQTA7
 slug: sqlite-migrate-query-methods
 name: Migrate FindByEntity and GetImpact to SQLite
 summary: Update IntelligenceService.FindByEntity to query entity_refs table and GetImpact to query edges table instead of scanning YAML. Add IndexStore.QueryEntityRefsByEntityID and QueryEdgesByToID methods. TraceEntity uses FindByEntity. Behaviour-equivalent tests pass.
-status: active
+status: done
 depends_on:
   - TASK-01KPNTASMK8B6
   - TASK-01KPNTBN7FKDJ
+files_planned:
+  - internal/docint/store.go
+  - internal/service/intelligence.go
+  - internal/service/intelligence_test.go
+completed: "2026-04-20T16:37:12Z"
+completion_summary: FindByEntity now queries entity_refs SQLite table with YAML fallback. GetImpact now queries edges SQLite table with YAML fallback. QueryEntityRefsByEntityID and QueryEdgesByToID added to IndexStore. Tests TestFindByEntity_SQLite and TestGetImpact_SQLite both pass. TraceEntity uses FindByEntity unchanged.
+verification: "go test ./internal/service/... -run TestFindByEntity_SQLite,TestGetImpact_SQLite — all pass"
