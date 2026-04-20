@@ -1,0 +1,149 @@
+document_id: PROJECT/report-retro-recommendations-2026-04-20
+document_path: work/reports/retro-recommendations-2026-04-20.md
+content_hash: 4d76bc0c589d36b14479e96802f83f3c84e6c28f9bbb97840a7aa3a9d99060af
+indexed_at: 2026-04-20T22:15:07.499492Z
+sections:
+    - path: "1"
+      level: 1
+      title: Retrospective Recommendations Report
+      byte_offset: 0
+      byte_count: 6515
+      word_count: 914
+      content_hash: 4d76bc0c589d36b14479e96802f83f3c84e6c28f9bbb97840a7aa3a9d99060af
+      children:
+        - path: "1.1"
+          level: 2
+          title: Themes
+          byte_offset: 183
+          byte_count: 2906
+          word_count: 406
+          content_hash: 3290c10f3b5dd5bd7225d5a10e09d7bce9532c172983b4228df5af02b9cecdbb
+          children:
+            - path: 1.1.1
+              level: 3
+              title: '1. tool-friction: edit_file and create_directory tools write to the main repo ...'
+              byte_offset: 194
+              byte_count: 524
+              word_count: 70
+              content_hash: e0057e595309ebf3bd147eecbaa440517810a60c357483f5cf55ccc3fa1b1889
+            - path: 1.1.2
+              level: 3
+              title: '2. workflow-friction: Commit discipline is not being followed for workflow/managem...'
+              byte_offset: 718
+              byte_count: 1000
+              word_count: 140
+              content_hash: a4cf4ac6944b486b2160caf1a4c20e8d5b7210c7d572ebfabafb37aae581d65b
+            - path: 1.1.3
+              level: 3
+              title: '3. tool-friction: The stale MCP binary issue wasted significant verification t...'
+              byte_offset: 1718
+              byte_count: 578
+              word_count: 85
+              content_hash: 7b1257959d24bb209e1b30924a5ef675bda3c3822be960f1f27a1f0294d1650f
+            - path: 1.1.4
+              level: 3
+              title: '4. decomposition-issue: Task 4 (P3 descriptions) and Task 6 (P2+P3 testing) had a ci...'
+              byte_offset: 2296
+              byte_count: 449
+              word_count: 63
+              content_hash: ea0bcca6a987f46dd0999a3c35c88c9656030eb2da8f085b762f26e384be77fb
+            - path: 1.1.5
+              level: 3
+              title: '5. tool-friction: Heredoc/HEREDOC syntax consistently fails in the terminal to...'
+              byte_offset: 2745
+              byte_count: 344
+              word_count: 46
+              content_hash: 6f3c10e65e016eb28413005ebb2bec691ece708e70f5c5ee9ef07c967ea9f72e
+        - path: "1.2"
+          level: 2
+          title: What Worked Well
+          byte_offset: 3089
+          byte_count: 3426
+          word_count: 479
+          content_hash: c4453df63f8718f4e4f8941e77d761b68eb80b635c030d72c91def9686643cdf
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'worked-well: The advance: true flag on entity transitions worked perfectl...'
+              byte_offset: 3110
+              byte_count: 357
+              word_count: 49
+              content_hash: e514ddd14bac064a0e42745588996e3b51a806462fc0fbd02dbcb3cd80874969
+            - path: 1.2.2
+              level: 3
+              title: 'worked-well: Using a cross-plan feature (Skills Content from P3) as a sec...'
+              byte_offset: 3467
+              byte_count: 411
+              word_count: 62
+              content_hash: c1eda988cec034b668dd90e1d54481233952848b12f3216802c452dd498b51f2
+            - path: 1.2.3
+              level: 3
+              title: 'worked-well: T1-T4 parallelism plan held exactly — zero file conflicts....'
+              byte_offset: 3878
+              byte_count: 226
+              word_count: 34
+              content_hash: 63d9bc51815f67021fd94ccf6b867a6c550bcec4ba546509d36f9cd6eaef3082
+            - path: 1.2.4
+              level: 3
+              title: 'worked-well: Version-aware conflict logic pattern from mcp_config.go tran...'
+              byte_offset: 4104
+              byte_count: 309
+              word_count: 38
+              content_hash: 93960a73748d1e655c16772206a433b99135c9701c1601d806b3b19b3f58df3b
+            - path: 1.2.5
+              level: 3
+              title: 'worked-well: Sub-agent parallelism for disjoint file edits (description r...'
+              byte_offset: 4413
+              byte_count: 377
+              word_count: 51
+              content_hash: 4f10752f76025c997e1810065cc4344117c271816505b048d5889030aa34852a
+            - path: 1.2.6
+              level: 3
+              title: 'worked-well: Sub-agent parallelism with disjoint file scopes worked perfe...'
+              byte_offset: 4790
+              byte_count: 279
+              word_count: 41
+              content_hash: 0b7f6e0ef521e4b1e5d3b8609720b85e87224238f3b0fd835dc92d2a8bcb3d3c
+            - path: 1.2.7
+              level: 3
+              title: 'worked-well: Python-based file editing via terminal was reliable for work...'
+              byte_offset: 5069
+              byte_count: 297
+              word_count: 42
+              content_hash: 9f0698d904329b30a477eb9a7c4f4987e4ac506b96c557031ce8de63ef9d63dc
+            - path: 1.2.8
+              level: 3
+              title: 'worked-well: Sub-agent delegation per editorial pipeline stage was effect...'
+              byte_offset: 5366
+              byte_count: 278
+              word_count: 38
+              content_hash: af336893647419adb75d7f97d624987ce55951930c63c29393cd71e12080b882
+            - path: 1.2.9
+              level: 3
+              title: 'worked-well: Fact-checking sub-agent found 3 genuine inaccuracies (tool c...'
+              byte_offset: 5644
+              byte_count: 276
+              word_count: 36
+              content_hash: 1a970484dc5fa2a62d3c18487c4e2591e2c3931b4b0180991df4a5b221305ef5
+            - path: 1.2.10
+              level: 3
+              title: 'worked-well: The fact-checking sub-agent found 5 genuine errors in the or...'
+              byte_offset: 5920
+              byte_count: 300
+              word_count: 44
+              content_hash: 81821342a0be5ff45107ecd810d30f60e61194b7e1f7ffcc187a86f019d3ca4a
+            - path: 1.2.11
+              level: 3
+              title: 'worked-well: Retrospectives doc required only 1 factual correction (scope...'
+              byte_offset: 6220
+              byte_count: 295
+              word_count: 40
+              content_hash: f05a8f791bc06c1020bfa6fa18618b332d44cf7152ccd80a472b3bcb0a067c58
+conventional_roles:
+    - section_path: 1.2.6
+      role: constraint
+      confidence: high
+    - section_path: 1.2.11
+      role: constraint
+      confidence: high
+classified: false

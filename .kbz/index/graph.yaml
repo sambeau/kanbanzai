@@ -1,4 +1,4 @@
-updated_at: 2026-04-20T16:03:03.39647Z
+updated_at: 2026-04-20T22:35:17.290251Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -61708,5 +61708,550 @@ edges:
     - from: FEAT-01KPNNYYZRAEK/dev-plan-doc-intel-knowledge-cross-queries-plan#1.1
       from_type: section
       to: work/spec/doc-intel-knowledge-cross-queries.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-retro-recommendations-2026-04-20
+      from_type: document
+      to: PROJECT/report-retro-recommendations-2026-04-20#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.1
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.1
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.1
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.1
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.1
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.2
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.2
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.2
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.2
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.2
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.2
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.2
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.2.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.2
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.2.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.2
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.2.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.2
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.2.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-recommendations-2026-04-20#1.2
+      from_type: section
+      to: PROJECT/report-retro-recommendations-2026-04-20#1.2.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs
+      from_type: document
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.2
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.2
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.2
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.2
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.4
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.4
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.5
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.5
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.5
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.4
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.4
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.4
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.4
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.5
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3.2
+      from_type: section
+      to: TASK-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1.1
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1.2
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.1.3
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.2
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.2.1
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.2.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3.1
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3.2
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.3.3
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.4
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.4
+      from_type: section
+      to: .kbz/skills/write-research/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.4.1
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.4.2
+      from_type: section
+      to: write-research/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.5
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.5.1
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.5.2
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.3.5.3
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.4.1
+      from_type: section
+      to: DISCIPLINE.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.4.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.4.3
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs#1.5
+      from_type: section
+      to: .kbz/skills/write-research/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr
+      from_type: document
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.2
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.2
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.3
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.4
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.4
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.4
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.4
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.4
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.4
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.4
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.4.2
+      from_type: section
+      to: FEAT-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1
+      from_type: section
+      to: P24-retro-recommendations
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.4.1
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.3.4.2
+      from_type: section
+      to: .agents/skills/kanbanzai-agents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.5
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr#1.5
+      from_type: section
+      to: .agents/skills/kanbanzai-agents/SKILL.md
       to_type: document
       edge_type: LINKS_TO

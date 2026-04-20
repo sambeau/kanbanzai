@@ -1,0 +1,206 @@
+document_id: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr
+document_path: work/design/p24-optional-github-pr.md
+content_hash: 51c6b1c882ec17658a7047e2ceae0837067f3f5fd225ba0269b799a0450a9a8b
+indexed_at: 2026-04-20T22:35:17.290251Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Optional GitHub PR Creation'
+      byte_offset: 0
+      byte_count: 13351
+      word_count: 1842
+      content_hash: 51c6b1c882ec17658a7047e2ceae0837067f3f5fd225ba0269b799a0450a9a8b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 159
+          byte_count: 825
+          word_count: 124
+          content_hash: 415c230e566c904a3e6ca174ec3bd5abd2fc2268a178c2caff901235f3e36b23
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 984
+          byte_count: 841
+          word_count: 138
+          content_hash: 168fa416a60789fd691c22f563474f20372956909a80d83da0b3f9cd43266242
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 1008
+              byte_count: 445
+              word_count: 68
+              content_hash: d009f006e0229d55d8dbcd7cf5c1cdd81f02d1b5eb19e6e4559307683672795e
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 1453
+              byte_count: 372
+              word_count: 66
+              content_hash: 0fb0a2d46a34ca1faab2f0280c69952ff602af3859be91e0136a9f5b7af02305
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 1825
+          byte_count: 9186
+          word_count: 1241
+          content_hash: eedd956a1a2cc22c962733e4b707c44739495fe18de88727d9adfdc0f48fd53a
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 1. Where `require_github_pr` lives
+              byte_offset: 1836
+              byte_count: 2360
+              word_count: 320
+              content_hash: a7bb26f118b069a358d927312364d93ba4bd4e6db883cfd56264f0aaf8c30689
+              children:
+                - path: 1.3.1.1
+                  level: 4
+                  title: Change to `internal/config/config.go` — `MergeConfig` struct (L142–146)
+                  byte_offset: 2762
+                  byte_count: 1434
+                  word_count: 200
+                  content_hash: 630143e6259d73702940a098209877b7a0d6350aca7fe54543ae98bfe3944b08
+            - path: 1.3.2
+              level: 3
+              title: '2. Default value: `false`'
+              byte_offset: 4196
+              byte_count: 721
+              word_count: 114
+              content_hash: f28f0bc246d33fa861b0efd017dcb5ef225b338b04e3894cd65078b1def42357
+            - path: 1.3.3
+              level: 3
+              title: 3. Merge workflow change — where the config is read and how `pr` is skipped
+              byte_offset: 4917
+              byte_count: 2934
+              word_count: 397
+              content_hash: 954ffb0302062fd199c2299cfea20497d602c04d92fc0f02306f8a1f87c87d14
+              children:
+                - path: 1.3.3.1
+                  level: 4
+                  title: Change to `internal/mcp/merge_tool.go` — `checkMergeReadiness` (L229–242)
+                  byte_offset: 5441
+                  byte_count: 2410
+                  word_count: 322
+                  content_hash: 24e6d60157b3540ddb3dd1c89a5177dee6d038bfc134b8638b889b454b46cf01
+            - path: 1.3.4
+              level: 3
+              title: 4. Documentation change — `kanbanzai-workflow` skill
+              byte_offset: 7851
+              byte_count: 1984
+              word_count: 255
+              content_hash: 485201e0283cfc290779599ac8ebad47c6e65b963fdc6fd82ee8ae07b4c5abdc
+              children:
+                - path: 1.3.4.1
+                  level: 4
+                  title: Change to `.agents/skills/kanbanzai-workflow/SKILL.md` — "Before completing a feature" checklist
+                  byte_offset: 8129
+                  byte_count: 719
+                  word_count: 107
+                  content_hash: e06052410d6eb94e1b418da7642213fb65b5f630c659b5182baf92bb8fc551a9
+                - path: 1.3.4.2
+                  level: 4
+                  title: Change to `.agents/skills/kanbanzai-agents/SKILL.md` — Feature Completion section
+                  byte_offset: 8848
+                  byte_count: 987
+                  word_count: 114
+                  content_hash: d59052c4aab8567a5fd859ad1570e2e0a72032e5064ce1c0560d0423642decb8
+            - path: 1.3.5
+              level: 3
+              title: '5. Test: `require_github_pr: false` passes merge check without a PR'
+              byte_offset: 9835
+              byte_count: 1176
+              word_count: 153
+              content_hash: 3ad3bf6ed6f0fed5936efce2e5d000bdea135596f37816e123c0bc1a2c1471ea
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 11011
+          byte_count: 1676
+          word_count: 255
+          content_hash: c3069244c704a3a18ffd150cd40c5e24caabed4f116220649f557fde30845999
+          children:
+            - path: 1.4.1
+              level: 3
+              title: A. Put `require_github_pr` in `local.yaml`
+              byte_offset: 11039
+              byte_count: 310
+              word_count: 44
+              content_hash: aeae15ea18fb7b6d841d4c56084bc2ca86b2a3484a9ec64e61d5829d23a566b8
+            - path: 1.4.2
+              level: 3
+              title: B. Default to `true` (require PR by default)
+              byte_offset: 11349
+              byte_count: 301
+              word_count: 48
+              content_hash: 68db10a15a68620a5821d7182c141018a71fea6db2f62bdfbe5b6ffafcbfc026
+            - path: 1.4.3
+              level: 3
+              title: C. Remove the `pr` step from the workflow documentation entirely
+              byte_offset: 11650
+              byte_count: 342
+              word_count: 53
+              content_hash: 6872b9cbadc106506d92ec2e1962d71d910705c518c32a614bed8c05c095f6e0
+            - path: 1.4.4
+              level: 3
+              title: 'D. Add a `--no-pr` flag to `merge(action: "execute")`'
+              byte_offset: 11992
+              byte_count: 298
+              word_count: 46
+              content_hash: 0f3d62c42d9524c12e6933af530bffd1a324e88a944a9ddfea341f06503c8e12
+            - path: 1.4.5
+              level: 3
+              title: E. Implement the gate inline in `merge_tool.go` rather than as a formal `Gate`
+              byte_offset: 12290
+              byte_count: 397
+              word_count: 61
+              content_hash: 0ee9e036370366b6724b47c3ccd94b5ad56a21ea1a87eb4ca6c18c53eadf267d
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 12687
+          byte_count: 664
+          word_count: 69
+          content_hash: 10e4610f83689ca89173ac1d833af05e2150f6d555140dc5fa851e62d506aa61
+entity_refs:
+    - entity_id: FEAT-01KPPG5XMJWT3
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 52
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.3.4.2
+      byte_offset: 9048
+    - entity_id: P24-retro-recommendations
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 83
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.3.4.1
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.3.4.2
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: "1.5"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+classified: false
