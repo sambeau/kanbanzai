@@ -1,0 +1,8 @@
+id: FEAT-01KPPG5XMJWT3
+slug: optional-github-pr
+name: Optional GitHub PR creation
+parent: P24-retro-recommendations
+status: proposed
+summary: "Add a require_github_pr config flag (.kbz/config.yaml or local.yaml) that defaults to false for projects where all reviewers are AI agents. When false, the pr(action: create) step in the merge workflow is skipped. Document the two-track merge path in the kanbanzai-workflow skill. Source: REC-09."
+created: "2026-04-20T22:29:05Z"
+created_by: sambeau
