@@ -4,3 +4,5 @@ slug: sqlite-rebuild-index-cmd
 name: Add rebuild-index CLI command
 summary: "Add kanbanzai rebuild-index sub-command to cmd/kanbanzai/. Reads all per-document YAML index files, deletes existing SQLite database, recreates schema, repopulates all three tables. Progress output: doc count, edge count, entity ref count, FTS section count. Add IntelligenceService.RebuildIndex method."
 status: queued
+depends_on:
+  - TASK-01KPNTASMK8B6

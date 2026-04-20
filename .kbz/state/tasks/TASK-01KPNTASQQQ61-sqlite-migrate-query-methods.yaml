@@ -4,3 +4,6 @@ slug: sqlite-migrate-query-methods
 name: Migrate FindByEntity and GetImpact to SQLite
 summary: Update IntelligenceService.FindByEntity to query entity_refs table and GetImpact to query edges table instead of scanning YAML. Add IndexStore.QueryEntityRefsByEntityID and QueryEdgesByToID methods. TraceEntity uses FindByEntity. Behaviour-equivalent tests pass.
 status: queued
+depends_on:
+  - TASK-01KPNTASMK8B6
+  - TASK-01KPNTBN7FKDJ
