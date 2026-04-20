@@ -246,7 +246,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 
 	// GroupDocuments: doc_intel.
 	if groups[config.GroupDocuments] {
-		mcpServer.AddTools(DocIntelTool(intelligenceSvc, docRecordSvc)...)
+		mcpServer.AddTools(DocIntelTool(intelligenceSvc, docRecordSvc, knowledgeSvc)...)
 	}
 
 	// GroupIncidents: incident.

@@ -295,7 +295,7 @@ func newTrackJTestServer(t *testing.T, tools ...func() []interface{}) *trackJTes
 	allTools = append(allTools, ConflictTool(conflictSvc)...)
 	allTools = append(allTools, KnowledgeTool(knowledgeSvc, ".")...)
 	allTools = append(allTools, ProfileTool(roleStore)...)
-	allTools = append(allTools, DocIntelTool(intelligenceSvc, docRecordSvc)...)
+	allTools = append(allTools, DocIntelTool(intelligenceSvc, docRecordSvc, nil)...)
 	allTools = append(allTools, IncidentTool(entitySvc)...)
 	allTools = append(allTools, CheckpointTool(checkpointStore)...)
 
@@ -1161,7 +1161,7 @@ func TestTrackJ_Decompose_Apply_CreatesTasksWithDependencies(t *testing.T) {
 	allTools = append(allTools, ConflictTool(conflictSvc)...)
 	allTools = append(allTools, KnowledgeTool(knowledgeSvc, ".")...)
 	allTools = append(allTools, ProfileTool(roleStore)...)
-	allTools = append(allTools, DocIntelTool(intelligenceSvc, docRecordSvc)...)
+	allTools = append(allTools, DocIntelTool(intelligenceSvc, docRecordSvc, nil)...)
 	allTools = append(allTools, IncidentTool(entitySvc)...)
 	allTools = append(allTools, CheckpointTool(checkpointStore)...)
 

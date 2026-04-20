@@ -86,6 +86,14 @@ type asmKnowledgeEntry struct {
 	tier       int
 }
 
+// asmDocPointer is a lightweight reference to a document section
+// surfaced from the knowledge-document cross-query step.
+type asmDocPointer struct {
+	docPath     string
+	sectionPath string
+	title       string
+}
+
 // asmFileEntry represents a file path included in assembled context.
 type asmFileEntry struct {
 	path string
@@ -106,6 +114,7 @@ type assembledContext struct {
 	specSections         []asmSpecSection
 	acceptanceCriteria   []string
 	knowledge            []asmKnowledgeEntry
+	docPointers          []asmDocPointer
 	filesContext         []asmFileEntry
 	constraints          []string
 	roleProfile          string
@@ -243,6 +252,11 @@ func assembleContext(input asmInput) assembledContext {
 	// Knowledge entries (Tier 2 + Tier 3), scoped to role or project.
 	if input.knowledgeSvc != nil {
 		actx.knowledge = asmLoadKnowledge(input.knowledgeSvc, input.role)
+	}
+
+	// Document pointers (cross-system knowledge ↔ doc_intel query, FR-011–FR-015).
+	if input.intelligenceSvc != nil && len(actx.knowledge) > 0 {
+		actx.docPointers = asmLoadDocumentPointers(input.intelligenceSvc, actx.knowledge)
 	}
 
 	// File context from task's files_planned.
@@ -550,6 +564,74 @@ func asmLoadKnowledge(svc *service.KnowledgeService, role string) []asmKnowledge
 	return entries
 }
 
+
+// ─── Document pointer loading ─────────────────────────────────────────────────
+
+// asmLoadDocumentPointers queries the intelligence service for document sections
+// that reference entities found in the surfaced knowledge entries.
+//
+// It extracts entity IDs from knowledge entry scopes that match the FEAT-/TASK-/BUG-
+// prefix pattern, queries FindByEntity for each, and returns a deduplicated list
+// of lightweight document pointers (path + section path + optional title).
+// The list is capped at 10 entries to avoid context bloat (NFR-001).
+//
+// This step must run after asmLoadKnowledge (FR-014) and must not modify the
+// knowledge entries themselves (FR-015).
+func asmLoadDocumentPointers(svc *service.IntelligenceService, knowledge []asmKnowledgeEntry) []asmDocPointer {
+	if svc == nil || len(knowledge) == 0 {
+		return nil
+	}
+
+	// Collect unique entity IDs from knowledge entry scopes.
+	entityIDs := map[string]bool{}
+	for _, ke := range knowledge {
+		if asmIsEntityID(ke.scope) {
+			entityIDs[ke.scope] = true
+		}
+	}
+	if len(entityIDs) == 0 {
+		return nil
+	}
+
+	const maxPointers = 10
+	seen := map[string]bool{}
+	var pointers []asmDocPointer
+
+	for entityID := range entityIDs {
+		if len(pointers) >= maxPointers {
+			break
+		}
+		matches, err := svc.FindByEntity(entityID)
+		if err != nil {
+			continue
+		}
+		for _, m := range matches {
+			key := m.DocPath + ":" + m.SectionPath
+			if seen[key] {
+				continue
+			}
+			seen[key] = true
+			pointers = append(pointers, asmDocPointer{
+				docPath:     m.DocPath,
+				sectionPath: m.SectionPath,
+				title:       m.SectionTitle,
+			})
+			if len(pointers) >= maxPointers {
+				break
+			}
+		}
+	}
+	return pointers
+}
+
+// asmIsEntityID reports whether s looks like a Kanbanzai entity ID.
+// Recognised prefixes: FEAT-, TASK-, BUG-.
+func asmIsEntityID(s string) bool {
+	return strings.HasPrefix(s, "FEAT-") ||
+		strings.HasPrefix(s, "TASK-") ||
+		strings.HasPrefix(s, "BUG-")
+}
+
 // ─── File context extraction ──────────────────────────────────────────────────
 
 // asmExtractFiles extracts file paths from a task's files_planned field.
@@ -622,6 +704,9 @@ func asmByteCount(actx assembledContext) int {
 	}
 	for _, c := range actx.constraints {
 		total += len(c) + 3
+	}
+	for _, dp := range actx.docPointers {
+		total += len(dp.docPath) + len(dp.sectionPath) + len(dp.title) + 20
 	}
 	for _, f := range actx.filesContext {
 		total += len(f.path) + 20

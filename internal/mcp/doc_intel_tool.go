@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -17,11 +18,13 @@ import (
 // It consolidates doc_outline, doc_section, doc_classify, doc_find_by_concept,
 // doc_find_by_entity, doc_find_by_role, doc_trace, doc_impact, doc_extraction_guide,
 // and doc_pending into a single tool with an action parameter (spec §20.1).
-func DocIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *service.DocumentService) []server.ServerTool {
-	return []server.ServerTool{docIntelTool(intelligenceSvc, docRecordSvc)}
+// DocIntelTool returns the doc_intel MCP tool registered with the given services.
+// knowledgeSvc may be nil; when nil, find(entity_id) returns an empty related_knowledge array.
+func DocIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *service.DocumentService, knowledgeSvc *service.KnowledgeService) []server.ServerTool {
+	return []server.ServerTool{docIntelTool(intelligenceSvc, docRecordSvc, knowledgeSvc)}
 }
 
-func docIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *service.DocumentService) server.ServerTool {
+func docIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *service.DocumentService, knowledgeSvc *service.KnowledgeService) server.ServerTool {
 	tool := mcp.NewTool("doc_intel",
 		mcp.WithReadOnlyHintAnnotation(false),
 		mcp.WithDestructiveHintAnnotation(false),
@@ -103,7 +106,7 @@ func docIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *se
 			"outline":  docIntelOutlineAction(intelligenceSvc),
 			"section":  docIntelSectionAction(intelligenceSvc),
 			"classify": docIntelClassifyAction(intelligenceSvc),
-			"find":     docIntelFindAction(intelligenceSvc),
+			"find":     docIntelFindAction(intelligenceSvc, knowledgeSvc),
 			"trace":    docIntelTraceAction(intelligenceSvc),
 			"impact":   docIntelImpactAction(intelligenceSvc),
 			"guide":    docIntelGuideAction(intelligenceSvc),
@@ -226,7 +229,7 @@ func docIntelClassifyAction(svc *service.IntelligenceService) ActionHandler {
 // docIntelFindAction routes the find action based on which discriminator
 // parameter is present: concept → FindByConcept, entity_id → FindByEntity,
 // role → FindByRole. Returns an error if none are provided (spec §20.1).
-func docIntelFindAction(svc *service.IntelligenceService) ActionHandler {
+func docIntelFindAction(svc *service.IntelligenceService, knowledgeSvc *service.KnowledgeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		args := req.GetArguments()
 
@@ -249,11 +252,14 @@ func docIntelFindAction(svc *service.IntelligenceService) ActionHandler {
 			if err != nil {
 				return nil, fmt.Errorf("Cannot find by entity %s: %w.\n\nTo resolve:\n  Verify the entity ID is valid using entity(action: \"get\", id: \"...\")", entityID, err)
 			}
+			relatedKnowledge, knowledgeCount := findRelatedKnowledge(knowledgeSvc, svc, entityID)
 			return map[string]any{
-				"search_type": "entity_id",
-				"entity_id":   entityID,
-				"count":       len(matches),
-				"matches":     matches,
+				"search_type":       "entity_id",
+				"entity_id":         entityID,
+				"count":             len(matches),
+				"matches":           matches,
+				"related_knowledge": relatedKnowledge,
+				"knowledge_matches": knowledgeCount,
 			}, nil
 		}
 
@@ -514,5 +520,129 @@ func docIntelSearchAction(svc *service.IntelligenceService) ActionHandler {
 			"returned":      len(results),
 			"results":       results,
 		}, nil
+	}
+}
+
+
+// ─── knowledge cross-query helpers ───────────────────────────────────────────
+
+// findRelatedKnowledge returns knowledge entries related to entityID.
+// It matches by learned_from, tags, and document-scope.
+// Returns (entries, count); degrades gracefully when knowledgeSvc is nil.
+func findRelatedKnowledge(
+	knowledgeSvc *service.KnowledgeService,
+	svc *service.IntelligenceService,
+	entityID string,
+) ([]map[string]any, int) {
+	if knowledgeSvc == nil {
+		return []map[string]any{}, 0
+	}
+
+	recs, err := knowledgeSvc.List(service.KnowledgeFilters{})
+	if err != nil {
+		return []map[string]any{}, 0
+	}
+
+	entityType := knowledgeEntityType(entityID)
+
+	// Build set of doc paths that reference this entity (for scope matching).
+	docPaths := map[string]bool{}
+	if svc != nil {
+		if docMatches, docErr := svc.FindByEntity(entityID); docErr == nil {
+			for _, m := range docMatches {
+				docPaths[m.DocPath] = true
+			}
+		}
+	}
+
+	seen := map[string]bool{}
+	var result []map[string]any
+
+	for _, rec := range recs {
+		id, _ := rec.Fields["id"].(string)
+		if id == "" {
+			id = rec.ID
+		}
+		if seen[id] {
+			continue
+		}
+
+		matched := false
+
+		// FR-002: learned_from matches entity ID.
+		if lf, _ := rec.Fields["learned_from"].(string); lf == entityID {
+			matched = true
+		}
+
+		// FR-003: tags contain entity ID or entity type.
+		if !matched {
+			switch tags := rec.Fields["tags"].(type) {
+			case []any:
+				for _, t := range tags {
+					if s, ok := t.(string); ok && (s == entityID || (entityType != "" && s == entityType)) {
+						matched = true
+						break
+					}
+				}
+			case []string:
+				for _, s := range tags {
+					if s == entityID || (entityType != "" && s == entityType) {
+						matched = true
+						break
+					}
+				}
+			}
+		}
+
+		// FR-004: scope matches a document that references the entity.
+		if !matched && len(docPaths) > 0 {
+			if scope, _ := rec.Fields["scope"].(string); scope != "" {
+				for dp := range docPaths {
+					if strings.HasPrefix(dp, scope) || strings.HasPrefix(scope, dp) {
+						matched = true
+						break
+					}
+				}
+			}
+		}
+
+		if !matched {
+			continue
+		}
+
+		seen[id] = true
+
+		topic, _ := rec.Fields["topic"].(string)
+		recContent, _ := rec.Fields["content"].(string)
+		status, _ := rec.Fields["status"].(string)
+		confidence := asmFieldFloat(rec.Fields, "confidence")
+
+		result = append(result, map[string]any{
+			"id":         id,
+			"topic":      topic,
+			"content":    recContent,
+			"confidence": confidence,
+			"status":     status,
+		})
+	}
+
+	if result == nil {
+		result = []map[string]any{}
+	}
+	return result, len(result)
+}
+
+// knowledgeEntityType derives the entity type string from an entity ID prefix.
+// Returns empty string for unrecognised prefixes.
+func knowledgeEntityType(entityID string) string {
+	switch {
+	case strings.HasPrefix(entityID, "FEAT-"):
+		return "feature"
+	case strings.HasPrefix(entityID, "TASK-"):
+		return "task"
+	case strings.HasPrefix(entityID, "BUG-"):
+		return "bug"
+	default:
+		return ""
 	}
 }

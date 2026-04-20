@@ -41,7 +41,7 @@ func writeDocIntelFile(t *testing.T, dir, name, content string) string {
 
 func callDocIntel(t *testing.T, env *docIntelSearchEnv, args map[string]any) map[string]any {
 	t.Helper()
-	tool := docIntelTool(env.intelSvc, nil)
+	tool := docIntelTool(env.intelSvc, nil, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {

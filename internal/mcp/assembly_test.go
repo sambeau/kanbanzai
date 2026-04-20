@@ -943,3 +943,95 @@ func TestWorkflow_NoGraphToolsAvailable(t *testing.T) {
 		}
 	}
 }
+
+// ─── asmLoadDocumentPointers tests ───────────────────────────────────────────
+
+// TestAsmLoadDocumentPointers_EmptySvc verifies that a nil intelligence service
+// returns nil (graceful degradation).
+func TestAsmLoadDocumentPointers_EmptySvc(t *testing.T) {
+	t.Parallel()
+	knowledge := []asmKnowledgeEntry{
+		{topic: "some-topic", content: "some content", scope: "FEAT-01TESTPOINTER0001"},
+	}
+	got := asmLoadDocumentPointers(nil, knowledge)
+	if got != nil {
+		t.Errorf("asmLoadDocumentPointers(nil svc) = %v, want nil", got)
+	}
+}
+
+// TestAsmLoadDocumentPointers_EmptyKnowledge verifies that empty knowledge
+// entries returns nil.
+func TestAsmLoadDocumentPointers_EmptyKnowledge(t *testing.T) {
+	t.Parallel()
+	repoRoot := t.TempDir()
+	indexRoot := filepath.Join(t.TempDir(), "index")
+	svc := service.NewIntelligenceService(indexRoot, repoRoot)
+
+	got := asmLoadDocumentPointers(svc, nil)
+	if got != nil {
+		t.Errorf("asmLoadDocumentPointers(empty knowledge) = %v, want nil", got)
+	}
+	got = asmLoadDocumentPointers(svc, []asmKnowledgeEntry{})
+	if got != nil {
+		t.Errorf("asmLoadDocumentPointers(empty slice) = %v, want nil", got)
+	}
+}
+
+// TestAsmLoadDocumentPointers_NonEntityScope verifies that entries with
+// non-entity scopes (like "project" or a role name) produce no pointers.
+func TestAsmLoadDocumentPointers_NonEntityScope(t *testing.T) {
+	t.Parallel()
+	repoRoot := t.TempDir()
+	indexRoot := filepath.Join(t.TempDir(), "index")
+	svc := service.NewIntelligenceService(indexRoot, repoRoot)
+
+	knowledge := []asmKnowledgeEntry{
+		{topic: "t1", content: "c1", scope: "project"},
+		{topic: "t2", content: "c2", scope: "implementer-go"},
+	}
+	got := asmLoadDocumentPointers(svc, knowledge)
+	if got != nil {
+		t.Errorf("asmLoadDocumentPointers(non-entity scopes) = %v, want nil", got)
+	}
+}
+
+// TestAsmIsEntityID verifies the entity ID detection helper.
+func TestAsmIsEntityID(t *testing.T) {
+	t.Parallel()
+	cases := []struct {
+		s    string
+		want bool
+	}{
+		{"FEAT-01ABCDEF", true},
+		{"TASK-01ABCDEF", true},
+		{"BUG-01ABCDEF", true},
+		{"project", false},
+		{"implementer-go", false},
+		{"", false},
+		{"DEC-01ABCDEF", false},
+	}
+	for _, tc := range cases {
+		got := asmIsEntityID(tc.s)
+		if got != tc.want {
+			t.Errorf("asmIsEntityID(%q) = %v, want %v", tc.s, got, tc.want)
+		}
+	}
+}
+
+// TestAsmLoadDocumentPointers_EntityScopeNoIndex verifies that an entity-scoped
+// knowledge entry with no indexed documents produces no pointers (not an error).
+func TestAsmLoadDocumentPointers_EntityScopeNoIndex(t *testing.T) {
+	t.Parallel()
+	repoRoot := t.TempDir()
+	indexRoot := filepath.Join(t.TempDir(), "index")
+	svc := service.NewIntelligenceService(indexRoot, repoRoot)
+
+	knowledge := []asmKnowledgeEntry{
+		{topic: "t1", content: "c1", scope: "TASK-01TESTNOINDEX00001"},
+	}
+	got := asmLoadDocumentPointers(svc, knowledge)
+	// No index = no matches, so no pointers. Must not error.
+	if len(got) != 0 {
+		t.Errorf("asmLoadDocumentPointers with no index = %d pointers, want 0", len(got))
+	}
+}
