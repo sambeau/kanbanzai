@@ -3,11 +3,23 @@ entries:
         mode: warning
         consecutive_clean: 0
         false_positive_count: 2
+    acceptance_criteria/specification:
+        mode: warning
+        consecutive_clean: 0
+        false_positive_count: 4
     cross_reference/design:
         mode: warning
         consecutive_clean: 0
         false_positive_count: 2
+    cross_reference/specification:
+        mode: warning
+        consecutive_clean: 0
+        false_positive_count: 4
     required_sections/design:
         mode: warning
         consecutive_clean: 0
         false_positive_count: 3
+    required_sections/specification:
+        mode: warning
+        consecutive_clean: 0
+        false_positive_count: 4

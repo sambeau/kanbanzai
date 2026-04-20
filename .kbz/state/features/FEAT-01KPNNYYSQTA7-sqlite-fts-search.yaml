@@ -2,7 +2,7 @@ id: FEAT-01KPNNYYSQTA7
 slug: sqlite-fts-search
 name: SQLite storage and full-text search
 parent: P23-doc-intel-enhancement
-status: specifying
+status: dev-planning
 summary: "Add SQLite-backed storage for graph edges and entity references, plus BM25 full-text search over section content via FTS5. This is the foundation enhancement: it eliminates linear scans of the 2.3MB graph.yaml file, enables indexed entity/impact queries (<5ms vs ~200ms), and adds a new search action to doc_intel that provides ranked, section-level results replacing grep for document content queries. Includes the rebuild-index CLI command and .gitignore update. Covers design sections 3 (FTS5 search) and 4 (SQLite graph storage)."
 design: work/design/doc-intel-enhancement-design.md
 spec: FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search
