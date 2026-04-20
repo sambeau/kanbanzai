@@ -1,0 +1,540 @@
+document_id: PROJECT/design-doc-intel-enhancement-design
+document_path: work/design/doc-intel-enhancement-design.md
+content_hash: 5eb6af140066d8f99d6eb03040a1d85c20e910f78377b12838630b437da1a4a6
+indexed_at: 2026-04-20T14:46:34.472684Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Document Intelligence Enhancement'
+      byte_offset: 0
+      byte_count: 33429
+      word_count: 4591
+      content_hash: 5eb6af140066d8f99d6eb03040a1d85c20e910f78377b12838630b437da1a4a6
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 401
+          byte_count: 2391
+          word_count: 332
+          content_hash: d57b6573eba9ec7e8567615a5702eff3e1fb7fd43cc29505ab02fb06cf9367c2
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 1.1 Scope
+              byte_offset: 1515
+              byte_count: 742
+              word_count: 103
+              content_hash: 9ad80d644fd31209e97c38c0f1fd0db1ecc9b8ba18a09387a07c544ff23c67c9
+            - path: 1.1.2
+              level: 3
+              title: 1.2 Relationship to Option B
+              byte_offset: 2257
+              byte_count: 535
+              word_count: 80
+              content_hash: 3b985f71c2c82b5f132b2f42c694468638d5ae364be97e9ed6ccd33a0198db1c
+        - path: "1.2"
+          level: 2
+          title: 2. Design Principles
+          byte_offset: 2792
+          byte_count: 646
+          word_count: 89
+          content_hash: dad67d16fe09410f959030ca7c74b4d1f34b0fcc00d24809540f5b0ea2362cee
+        - path: "1.3"
+          level: 2
+          title: '3. Enhancement 1: Full-Text Search via FTS5'
+          byte_offset: 3438
+          byte_count: 5079
+          word_count: 685
+          content_hash: 151e5986a1c3ed394878dc07187ec03bc1b394de7acca7d856eab720e8d39399
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Problem
+              byte_offset: 3486
+              byte_count: 431
+              word_count: 58
+              content_hash: 49f814ddee6e916c3e1d0ec477a98b3c329289b100aa0b9f5e470f18ff1d4f0f
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Solution
+              byte_offset: 3917
+              byte_count: 164
+              word_count: 24
+              content_hash: beb64ff5cd108cb28287269eb936b48b5d24a1aaf8f9bdf475093e34fe14eca4
+            - path: 1.3.3
+              level: 3
+              title: '3.3 New Action: `search`'
+              byte_offset: 4081
+              byte_count: 1452
+              word_count: 181
+              content_hash: 9e29f0ffedbf891febcb41181766e971af30405f138d3fc6eceec0a286ee7ed9
+            - path: 1.3.4
+              level: 3
+              title: 3.4 FTS5 Index Design
+              byte_offset: 5533
+              byte_count: 1375
+              word_count: 182
+              content_hash: 74106a39d45c6c43b042d54645f7580c128e5d9bc6c46cf2c523158a126e1106
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Index Population
+              byte_offset: 6908
+              byte_count: 458
+              word_count: 67
+              content_hash: 8c74f0ece084a9333fb233100591d79f179e1df31b94a1d6d215dd955a507b74
+            - path: 1.3.6
+              level: 3
+              title: 3.6 Search Pipeline
+              byte_offset: 7366
+              byte_count: 1151
+              word_count: 165
+              content_hash: 585b920d9d3946c95f0b41b754805bfa4e279f33c65ae389d6bbc1dd2d17b8a9
+        - path: "1.4"
+          level: 2
+          title: '4. Enhancement 2: SQLite-Backed Graph Storage'
+          byte_offset: 8517
+          byte_count: 4675
+          word_count: 655
+          content_hash: 6fff3c1dcb301333de0bc61df2df27ba06ab9355772f8cbc067821e08621e62c
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Problem
+              byte_offset: 8567
+              byte_count: 322
+              word_count: 49
+              content_hash: c063ae66769b1bef44eb37741449f302d98f57285c70c17fa068fd8ce911a16e
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Solution
+              byte_offset: 8889
+              byte_count: 235
+              word_count: 37
+              content_hash: 3d03ca3e3c0cc7b18c5a2586c1e9a3a77924ea3be51b1eb081cf017cd7ceeef3
+            - path: 1.4.3
+              level: 3
+              title: 4.3 What Moves to SQLite
+              byte_offset: 9124
+              byte_count: 645
+              word_count: 105
+              content_hash: a319a7774e80e828e0e2fbc73de7c8162e6a55f42124d31c4c240f942ac2372b
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Database Schema
+              byte_offset: 9769
+              byte_count: 1143
+              word_count: 129
+              content_hash: 3b33dda7fdf7bbde8530b5b25003366f2f03238ac3edee986ca19e3feacdfb9c
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Database Location
+              byte_offset: 10912
+              byte_count: 327
+              word_count: 48
+              content_hash: 5e4d30f7d77027cfd16316e9e26343de2b5adf3990834ad4db4951f323637885
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Migration Strategy
+              byte_offset: 11239
+              byte_count: 738
+              word_count: 112
+              content_hash: 07eb63086b1fe0a074f12e86c907ea4bd6e0f0aedc5be46377e020a3c2f4b327
+            - path: 1.4.7
+              level: 3
+              title: 4.7 Impact on Existing Code
+              byte_offset: 11977
+              byte_count: 908
+              word_count: 126
+              content_hash: 45e8a0d6d2511978ca2e2f39a8bdc23ea55b7e8bdbef5d16f4ec54439b8a360e
+            - path: 1.4.8
+              level: 3
+              title: 4.8 Rebuild from Source
+              byte_offset: 12885
+              byte_count: 307
+              word_count: 42
+              content_hash: 803f3cb23938de0ac72c6b8d8350b3893976e1a68a4351242ae61ae286985655
+        - path: "1.5"
+          level: 2
+          title: '5. Enhancement 3: Batch Classification Protocol'
+          byte_offset: 13192
+          byte_count: 2918
+          word_count: 396
+          content_hash: b9b4997f9b7822003c20240f55742662473f2087ce55af0f2db9ce60607fbf70
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Problem
+              byte_offset: 13244
+              byte_count: 358
+              word_count: 52
+              content_hash: 9878aeb5b62134d8f7275ddc9162ecddadd433973ecc9a16459b16fa19f3dc15
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Solution
+              byte_offset: 13602
+              byte_count: 264
+              word_count: 41
+              content_hash: 89892c4de00acd55e571f52cdb9c9e99e644a5a13f52dff0c52dc9f356748e32
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Batch Classification Workflow
+              byte_offset: 13866
+              byte_count: 1244
+              word_count: 155
+              content_hash: 3508751e26b176d7a17260f0512ffedfb7361b255384b42b893ef68898f32361
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Classification on Registration
+              byte_offset: 15110
+              byte_count: 772
+              word_count: 101
+              content_hash: 97c35b066fa7208df62ee2cf5e9f7b4d43ec698a83e7e9689070bf9307d61c4f
+            - path: 1.5.5
+              level: 3
+              title: 5.5 No New Tool or Action
+              byte_offset: 15882
+              byte_count: 228
+              word_count: 40
+              content_hash: ca9ff87e49b52b89d17c2d0ab4f68a79bc92fd9852b99e0af1c8e4fbf31a9343
+        - path: "1.6"
+          level: 2
+          title: '6. Enhancement 4: Knowledge ↔ Document Cross-Queries'
+          byte_offset: 16110
+          byte_count: 3507
+          word_count: 459
+          content_hash: 4120435d3fa6236f1454fad4d8a51088b5023f4dede0bae178a0193dd80added
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Problem
+              byte_offset: 16169
+              byte_count: 322
+              word_count: 40
+              content_hash: 51fee606e45bf0e8c949ead263365f088b4cc60c0f700ffa55620ee7b2c31e4a
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Solution
+              byte_offset: 16491
+              byte_count: 294
+              word_count: 39
+              content_hash: b83c43707cf5ca3ff5a612868ea0f51ec832f36391160b0e65ce33214c1789b2
+            - path: 1.6.3
+              level: 3
+              title: '6.3 Direction 1: Entity Search Includes Knowledge'
+              byte_offset: 16785
+              byte_count: 961
+              word_count: 107
+              content_hash: 5b27a84377b2156f0e4a57010f2e828b3794e8d173378e4aab9a78305daf259d
+            - path: 1.6.4
+              level: 3
+              title: '6.4 Direction 2: Knowledge Surfacing Includes Document Pointers'
+              byte_offset: 17746
+              byte_count: 930
+              word_count: 125
+              content_hash: cfaf13c988908456f884e3aedc35f0149b5386c2790c7a8edaac420d3c61a854
+            - path: 1.6.5
+              level: 3
+              title: 6.5 Implementation Boundary
+              byte_offset: 18676
+              byte_count: 565
+              word_count: 83
+              content_hash: ef4d8ac2cbf074feb75a9b115299e0c34f8b034d4472fb21a76b0c01e328f491
+            - path: 1.6.6
+              level: 3
+              title: 6.6 What This Does Not Do
+              byte_offset: 19241
+              byte_count: 376
+              word_count: 57
+              content_hash: b5372a22e3261e4c8256282f7da139dac45634543828a23d808bab7255799f00
+        - path: "1.7"
+          level: 2
+          title: '7. Enhancement 5: Concept Alias Resolution'
+          byte_offset: 19617
+          byte_count: 2758
+          word_count: 388
+          content_hash: 23b02b6b012fbeb6f75ae278e2f2718c1fb0350fb7cc5dbf966bc1d5363ea083
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Problem
+              byte_offset: 19664
+              byte_count: 564
+              word_count: 73
+              content_hash: 0c7e5eb31841a95674c4e0bfcfae882d6e0e0e49220114dc5415f37a7be1cb60
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Solution
+              byte_offset: 20228
+              byte_count: 153
+              word_count: 23
+              content_hash: fc758801cb1e1640c44a6cebe26843ede0e9df4dd4ad48e73b32b37d23aa3eee
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Alias Declaration
+              byte_offset: 20381
+              byte_count: 890
+              word_count: 119
+              content_hash: c3d8c1834e4ec7eac52a76d671a2a7173f61cf762e83f8f60678c22bcbd3ffb3
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Resolution in FindByConcept
+              byte_offset: 21271
+              byte_count: 628
+              word_count: 95
+              content_hash: c874c382a2690d037b0bd5ee6f3f0ff9545f34f0d693abc5407e87ad1c9a7f66
+            - path: 1.7.5
+              level: 3
+              title: 7.5 Alias Management
+              byte_offset: 21899
+              byte_count: 476
+              word_count: 71
+              content_hash: 1b569fc15b5d0d407430262506f1a8c8d78f4e9eaad67243f84e29d7634b5fd5
+        - path: "1.8"
+          level: 2
+          title: 8. What Changes in the MCP Tool Interface
+          byte_offset: 22375
+          byte_count: 974
+          word_count: 148
+          content_hash: fc0492ad031f387ffa151c84312ed391fb7464f4cc1f33ab51ae059633721361
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 doc_intel Tool
+              byte_offset: 22421
+              byte_count: 413
+              word_count: 61
+              content_hash: 8f5623ec2383175eb771a4367d06998ec6230bf3e33107a26cc8d53954d335d8
+            - path: 1.8.2
+              level: 3
+              title: 8.2 knowledge Tool
+              byte_offset: 22834
+              byte_count: 147
+              word_count: 23
+              content_hash: 0c02ae1a3d36f9c2784d1812282e71c5ccfc8db1385e8b2b9f911594889c3533
+            - path: 1.8.3
+              level: 3
+              title: 8.3 doc Tool
+              byte_offset: 22981
+              byte_count: 134
+              word_count: 20
+              content_hash: a6f4bb1e82bfd20541bbb41236931a9e78b64e47ebda3670456873d9dfc2538f
+            - path: 1.8.4
+              level: 3
+              title: 8.4 New CLI Command
+              byte_offset: 23115
+              byte_count: 234
+              word_count: 35
+              content_hash: 8984ffa2f589b909886cf5ceadcd1024b7df22c4b0c37a16a70da2efc450b470
+        - path: "1.9"
+          level: 2
+          title: 9. Storage Changes
+          byte_offset: 23349
+          byte_count: 585
+          word_count: 85
+          content_hash: 2f4bd683f296a04156039cf4a61647a68ad7224f4947718e85fb9a26e5de3fba
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 New File
+              byte_offset: 23372
+              byte_count: 164
+              word_count: 25
+              content_hash: c079957a134c5e6960e8e5f3b3999c5fa34b4484ee475456098ae67da6f0d89d
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Modified Files
+              byte_offset: 23536
+              byte_count: 286
+              word_count: 40
+              content_hash: 38abc62d949f8266a2728c4460049a519694a1bf3e48bdf204cc1d0c34674ab1
+            - path: 1.9.3
+              level: 3
+              title: 9.3 No Changes
+              byte_offset: 23822
+              byte_count: 112
+              word_count: 16
+              content_hash: 6019a154f2c8a58a8c0492aef17ed2899e33e99dc1f5e4d06f98d65e10f92f30
+        - path: "1.10"
+          level: 2
+          title: 10. Dependency Changes
+          byte_offset: 23934
+          byte_count: 676
+          word_count: 100
+          content_hash: 3e76b5863990c4d6583d78841b28277a314c3dd58b9427c89af1ea8e0ef900e3
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 New Dependency
+              byte_offset: 23961
+              byte_count: 516
+              word_count: 75
+              content_hash: f00b4a9f0e90fde6bb9764cca7e101359c134734417b7ddc4a7c028bcbad5fca
+            - path: 1.10.2
+              level: 3
+              title: 10.2 FTS5 Availability
+              byte_offset: 24477
+              byte_count: 133
+              word_count: 21
+              content_hash: a2f20ffa64f41f7e05bc6edf422c40352a04e0c816899a18ad2eead9aa8791e6
+        - path: "1.11"
+          level: 2
+          title: 11. Performance Expectations
+          byte_offset: 24610
+          byte_count: 1261
+          word_count: 204
+          content_hash: f9f926a81dffbb02c4b06facaa2d2b26b348ce9c6a206908e2ac686a494c6b81
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Search Latency
+              byte_offset: 24643
+              byte_count: 848
+              word_count: 139
+              content_hash: 7541914fc9bbfb9ca51e9b608f4af6faaa178c7316da6c802a807c650da83649
+            - path: 1.11.2
+              level: 3
+              title: 11.2 Storage Overhead
+              byte_offset: 25491
+              byte_count: 230
+              word_count: 39
+              content_hash: 7af8fb70673c003c0643b1bbf0aa919449e4be1c716ea000fa0873984328ae6c
+            - path: 1.11.3
+              level: 3
+              title: 11.3 Index Build Time
+              byte_offset: 25721
+              byte_count: 150
+              word_count: 22
+              content_hash: c8979d36c3fc749c4d7b865d193cf149cc7fb0b03006107f3295ba35e93aa004
+        - path: "1.12"
+          level: 2
+          title: 12. Phasing
+          byte_offset: 25871
+          byte_count: 1506
+          word_count: 201
+          content_hash: dd09d00ebdf55e4fc8f97a6049f7f72800dbcd96f4a473804847e998485b9f6a
+          children:
+            - path: 1.12.1
+              level: 3
+              title: 'Phase 1: Search + SQLite (Week 1–2)'
+              byte_offset: 25995
+              byte_count: 498
+              word_count: 70
+              content_hash: 9d525ea4b9b4e2235ca14cd589fc06cded401b18f3f191b3e187c5dc883f70bf
+            - path: 1.12.2
+              level: 3
+              title: 'Phase 2: Batch Classification (Week 2–3)'
+              byte_offset: 26493
+              byte_count: 491
+              word_count: 62
+              content_hash: 375be595087d0ac0bf012044288920048d642be876122cff72d61e5d1acb2146
+            - path: 1.12.3
+              level: 3
+              title: 'Phase 3: Cross-System + Aliases (Week 3–4)'
+              byte_offset: 26984
+              byte_count: 393
+              word_count: 50
+              content_hash: 635ea7f03973cb6f3ac38dc33b378e75f00b08d13beec6e178890d18be0a9fb4
+        - path: "1.13"
+          level: 2
+          title: 13. Open Questions
+          byte_offset: 27377
+          byte_count: 4626
+          word_count: 594
+          content_hash: 2afa06d562b036f062eb0178224c760df0811fcc9e30a617b7b4ad31e66aef7d
+          children:
+            - path: 1.13.1
+              level: 3
+              title: 13.1 Design Questions
+              byte_offset: 27400
+              byte_count: 3586
+              word_count: 458
+              content_hash: e436eb07a95fd793261fa5dddb95b9c50baac4a2e9b9d86858e3921259d23047
+            - path: 1.13.2
+              level: 3
+              title: 13.2 Implementation Questions
+              byte_offset: 30986
+              byte_count: 1017
+              word_count: 132
+              content_hash: 69d51c025cd19084d25253cea45c2f52e745ca138f827428c559c84e2593fb60
+        - path: "1.14"
+          level: 2
+          title: 14. What This Design Is Not
+          byte_offset: 32003
+          byte_count: 721
+          word_count: 109
+          content_hash: 684c0f31f6ce1b7c7c307454ec43c3ca4a233b64ba9d223994cacea28aed443b
+        - path: "1.15"
+          level: 2
+          title: 15. Success Criteria
+          byte_offset: 32724
+          byte_count: 705
+          word_count: 91
+          content_hash: 6a81a24cdd98491e4ab6ee7f1e620a85c30daebddecc324b63cded57ef3e71e4
+entity_refs:
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.3.3
+      byte_offset: 4751
+    - entity_id: FEAT-01KMKRQSD1TKK
+      entity_type: feature
+      section_path: 1.3.3
+      byte_offset: 5029
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 10562
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 16884
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: "1.15"
+      byte_offset: 33197
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.5.4
+      byte_offset: 15812
+cross_doc_links:
+    - target_path: work/research/document-retrieval-for-ai-agents.md
+      link_text: work/research/document-retrieval-for-ai-agents.md
+      section_path: "1"
+    - target_path: work/design/document-intelligence-design.md
+      link_text: work/design/document-intelligence-design.md
+      section_path: "1"
+    - target_path: work/design/docs-memory-mcp-design.md
+      link_text: work/design/docs-memory-mcp-design.md
+      section_path: "1"
+    - target_path: work/research/document-retrieval-for-ai-agents.md
+      link_text: work/research/document-retrieval-for-ai-agents.md
+      section_path: "1.1"
+    - target_path: work/design/docs-memory-mcp-design.md
+      link_text: work/design/docs-memory-mcp-design.md
+      section_path: 1.1.2
+    - target_path: work/design/document-intelligence-design.md
+      link_text: work/design/document-intelligence-design.md
+      section_path: "1.2"
+    - target_path: work/research/document-retrieval-for-ai-agents.md
+      link_text: work/research/document-retrieval-for-ai-agents.md
+      section_path: 1.3.1
+    - target_path: work/research/document-retrieval-for-ai-agents.md
+      link_text: work/research/document-retrieval-for-ai-agents.md
+      section_path: 1.6.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.1.1
+      role: constraint
+      confidence: high
+    - section_path: "1.13"
+      role: question
+      confidence: high
+    - section_path: 1.13.1
+      role: question
+      confidence: high
+    - section_path: 1.13.2
+      role: question
+      confidence: high
+classified: false

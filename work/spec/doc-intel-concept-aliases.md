@@ -6,7 +6,7 @@
 
 ---
 
-## 1. Overview
+## Overview
 
 This specification defines concept alias resolution for the document intelligence
 subsystem. When agents classify document sections, they MAY declare aliases for
@@ -16,7 +16,7 @@ their aliases, so that searching for any known surface form of a concept returns
 canonical concept entry. This completes the implementation of the `Concept.Aliases`
 field that is currently declared but unused in `internal/docint/types.go`.
 
-## 2. Scope
+## Scope
 
 ### In scope
 
@@ -36,7 +36,7 @@ field that is currently declared but unused in `internal/docint/types.go`.
 - UI or MCP tool changes for alias management
 - Changes to `concepts_used` parsing — it remains `[]string`
 
-## 3. Functional Requirements
+## Functional Requirements
 
 ### FR-001: Extended concepts_intro format
 
@@ -190,7 +190,7 @@ For plain-string entries, no alias processing occurs.
 - [ ] Calling `UpdateConceptRegistry` with a plain-string `concepts_intro` entry
   does not modify the concept's `Aliases` field
 
-## 4. Non-Functional Requirements
+## Non-Functional Requirements
 
 ### NFR-001: Linear scan performance
 
@@ -209,7 +209,7 @@ remain compatible with existing YAML files (if any exist).
 
 *Design ref: §7.3 — backward compatibility*
 
-## 5. Acceptance Criteria
+## Acceptance Criteria
 
 All requirements above include per-requirement acceptance criteria. The following
 are integration-level criteria that span multiple requirements:
@@ -228,7 +228,7 @@ are integration-level criteria that span multiple requirements:
 - [ ] **All existing tests pass:** No regressions in `concepts_test.go`.
   *(FR-002, FR-007, FR-010)*
 
-## 6. Dependencies and Assumptions
+## Dependencies and Assumptions
 
 - **Concept registry population:** This feature is most useful after the batch
   classification protocol (design §5) has been used to classify documents and

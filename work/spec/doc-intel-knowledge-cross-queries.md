@@ -6,7 +6,7 @@
 
 ---
 
-## 1. Overview
+## Overview
 
 This specification defines the requirements for cross-system query capabilities
 between the document intelligence subsystem (`doc_intel`) and the knowledge base.
@@ -18,7 +18,7 @@ extend existing response formats without modifying or removing existing fields.
 
 ---
 
-## 2. Scope
+## Scope
 
 ### 2.1 In Scope
 
@@ -49,7 +49,7 @@ extend existing response formats without modifying or removing existing fields.
 
 ---
 
-## 3. Functional Requirements
+## Functional Requirements
 
 ### Direction 1: Entity Search Includes Knowledge
 
@@ -244,7 +244,7 @@ retyped. (Design section 6.5)
 
 ---
 
-## 4. Non-Functional Requirements
+## Non-Functional Requirements
 
 **NFR-001:** Each document pointer in the assembled context SHOULD consume
 approximately 20 tokens. A typical task surfacing 3-5 document pointers
@@ -269,7 +269,7 @@ latency of the existing document section lookup. The total response time for
 
 ---
 
-## 5. Acceptance Criteria
+## Acceptance Criteria
 
 Summary checklist for feature completion:
 
@@ -302,7 +302,7 @@ Summary checklist for feature completion:
 
 ---
 
-## 6. Dependencies and Assumptions
+## Dependencies and Assumptions
 
 ### Dependencies
 

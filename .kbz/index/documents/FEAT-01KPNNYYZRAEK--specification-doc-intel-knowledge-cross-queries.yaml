@@ -1,0 +1,192 @@
+document_id: FEAT-01KPNNYYZRAEK/specification-doc-intel-knowledge-cross-queries
+document_path: work/spec/doc-intel-knowledge-cross-queries.md
+content_hash: a6a876702590b86870b414e178030b8d0f6232023dd980ffba5fba643512160e
+indexed_at: 2026-04-20T15:12:36.520611Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Knowledge ↔ Document Cross-Queries'
+      byte_offset: 0
+      byte_count: 13409
+      word_count: 1891
+      content_hash: a6a876702590b86870b414e178030b8d0f6232023dd980ffba5fba643512160e
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 224
+          byte_count: 582
+          word_count: 76
+          content_hash: b080b4eaee0b6f0528b2bf63785532356f20dd7fc04532ad81b8902a4520004f
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 806
+          byte_count: 1438
+          word_count: 198
+          content_hash: 3bf6f1dbeb3929acca3f14130c6623dd4b2093e3b7e3237751570bc71713fc15
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 In Scope
+              byte_offset: 819
+              byte_count: 457
+              word_count: 59
+              content_hash: ecc4f64fd34063b6df844e22f194ddcee90e4cdd4bc992d3d678125634af2c27
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Out of Scope
+              byte_offset: 1276
+              byte_count: 968
+              word_count: 136
+              content_hash: 5fcb8f39a80e322f8dc8490567a9a16babc4ce9ff6343b41faeac3eb2826f8a6
+        - path: "1.3"
+          level: 2
+          title: 3. Functional Requirements
+          byte_offset: 2244
+          byte_count: 7361
+          word_count: 1046
+          content_hash: 4894ae778c4e49a7f4dbb7706ac37c3c306cb6f76dabadd6f36c919a3525bc5b
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Direction 1: Entity Search Includes Knowledge'
+              byte_offset: 2275
+              byte_count: 4500
+              word_count: 625
+              content_hash: c833b2b5dc546123e02eadcd80f137334b61c16177cede664192bdd6ba015409
+            - path: 1.3.2
+              level: 3
+              title: 'Direction 2: Context Assembly Surfaces Document Pointers'
+              byte_offset: 6775
+              byte_count: 2412
+              word_count: 354
+              content_hash: e691f7889fd0ea122a87ecc80bd09ed9d80529fc5c81320f2b1d625f54f490ad
+            - path: 1.3.3
+              level: 3
+              title: Response Format
+              byte_offset: 9187
+              byte_count: 418
+              word_count: 63
+              content_hash: 10e27cd9d9ba8ae7a1418d0657204edd125401071c3aacb6daf5d58389311592
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Functional Requirements
+          byte_offset: 9605
+          byte_count: 957
+          word_count: 148
+          content_hash: 9bed984940e97e1344534f61644abb0a43b9133155e8cc20307632b04f4fb306
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 10562
+          byte_count: 1149
+          word_count: 188
+          content_hash: dda5eae6989933c45574fa5777479c7b333867ebd572703870b6b6c6e9f3d0fd
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Direction 1 — Entity search includes knowledge
+              byte_offset: 10632
+              byte_count: 510
+              word_count: 83
+              content_hash: ca0b46f0ea63103451e7252c060efa696b2b497b82cc702536cbb88ac5df49b5
+            - path: 1.5.2
+              level: 3
+              title: Direction 2 — Context assembly surfaces document pointers
+              byte_offset: 11142
+              byte_count: 370
+              word_count: 59
+              content_hash: fc23f54a4af4c84a5ccda0df6e98f92bf0ea173b1400861ec4f0cf057d708b86
+            - path: 1.5.3
+              level: 3
+              title: Response format
+              byte_offset: 11512
+              byte_count: 61
+              word_count: 11
+              content_hash: b84a8d4f487593a39daebedfb397fa4c01301a427799f3d3697b27be4d3012f5
+            - path: 1.5.4
+              level: 3
+              title: Non-functional
+              byte_offset: 11573
+              byte_count: 138
+              word_count: 26
+              content_hash: 101e0537f056f4e64bf0b64c7d1f3351bdf5a6b3d61d077230855c2dc0166766
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 11711
+          byte_count: 1698
+          word_count: 216
+          content_hash: d5df441f91dd9d1ef58a927178e3c3d3777e659d4e603cbff9be629b8d45e218
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 11747
+              byte_count: 1020
+              word_count: 119
+              content_hash: cc062d53c839cf14cf1acb383d8bd2c3bf45a8cfc2f14ccebcf4724da21d7c5a
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 12767
+              byte_count: 642
+              word_count: 92
+              content_hash: 975e9077c5f9d1402ea128d797c29fb9a3658797debba4953ce8c6c9ea3f7d39
+entity_refs:
+    - entity_id: FEAT-01KPNNYYZRAEK
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 68
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2603
+    - entity_id: TASK-yyy
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 3170
+    - entity_id: TASK-01KMKR
+      entity_type: task
+      section_path: 1.6.2
+      byte_offset: 13069
+cross_doc_links:
+    - target_path: work/design/doc-intel-enhancement-design.md
+      link_text: work/design/doc-intel-enhancement-design.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.2
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: 1.5.2
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

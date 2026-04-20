@@ -1,0 +1,192 @@
+document_id: FEAT-01KPNNYYXQSYW/specification-doc-intel-batch-classification
+document_path: work/spec/doc-intel-batch-classification.md
+content_hash: f7fa7eb1c01af9ce53cc12e767c29a511115e60dcde002a058f710eca5664faf
+indexed_at: 2026-04-20T15:12:36.200112Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Batch Classification Activation'
+      byte_offset: 0
+      byte_count: 7648
+      word_count: 1022
+      content_hash: f7fa7eb1c01af9ce53cc12e767c29a511115e60dcde002a058f710eca5664faf
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 299
+          byte_count: 618
+          word_count: 84
+          content_hash: 69fe5babdaee6434bcfd2c9f15d4dd58b81b1d26807c21c6da207c4661ea6a86
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 917
+          byte_count: 671
+          word_count: 86
+          content_hash: 0535c7694fad96e6485b7d28710a06976f07657ce4ae20f337d6d6ff712d7f53
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 930
+              byte_count: 304
+              word_count: 34
+              content_hash: 23c50f2f80e7568caaaa5a930b504eba7709c0d88dc82131cdd4e4de55dae250
+            - path: 1.2.2
+              level: 3
+              title: Out of scope
+              byte_offset: 1234
+              byte_count: 354
+              word_count: 49
+              content_hash: 33f154e3aee315c761e5617cde07e78d1b944d816c0ef9dc3e6e6744d678cc71
+        - path: "1.3"
+          level: 2
+          title: 3. Functional Requirements
+          byte_offset: 1588
+          byte_count: 3290
+          word_count: 441
+          content_hash: 0f3ee97339ffcd00ae55876e6998ac611471855c5b7a9163bdacfd5506d743ff
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: Classification nudge on register response'
+              byte_offset: 1619
+              byte_count: 491
+              word_count: 68
+              content_hash: 3491a19094a97ad53c41e7745dbb6b0ce718fce855bcdf6db61ee505a25318cf
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: Nudge includes document ID'
+              byte_offset: 2110
+              byte_count: 259
+              word_count: 36
+              content_hash: 7fb8c178b36ddaea5683388b8c088abf111928631a119824eb17c089d32f89f6
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: Nudge present for both single and batch registration'
+              byte_offset: 2369
+              byte_count: 313
+              word_count: 43
+              content_hash: 08b412fdc5bb03461645d894c4c586643bd541ed1064bdaf57ff382730160179
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: Nudge is informational only'
+              byte_offset: 2682
+              byte_count: 300
+              word_count: 43
+              content_hash: 9aa9d7c49e8925bd569823b208f79a2efd4e1c22d3f25f59a22fdaf743329b1e
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: Batch classification workflow protocol'
+              byte_offset: 2982
+              byte_count: 550
+              word_count: 79
+              content_hash: 3b7adad68189ffe39296ddc289c7e8a817887b4a8ff837ee94bf677c259b2433
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: Classification priority ordering'
+              byte_offset: 3532
+              byte_count: 839
+              word_count: 97
+              content_hash: f3f465c31f3f8d8a9f0bb33f8f18409768827d095d8ee058fb0babe52a7531e0
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: Classification-on-registration convention'
+              byte_offset: 4371
+              byte_count: 507
+              word_count: 71
+              content_hash: 5773fbf71e096ea5a929f8a454b3d9bb671477a9e5ca7b16be6b6235598294a7
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Functional Requirements
+          byte_offset: 4878
+          byte_count: 441
+          word_count: 66
+          content_hash: c59ba2d688cebdc1fc92888c99207bd1beb73614054002338bbbf1ecf2f55c89
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: Nudge message size'
+              byte_offset: 4913
+              byte_count: 193
+              word_count: 31
+              content_hash: fec79a2ab35f5d048c2c7072a855657ac09211713fd41844845040df855c7658
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: No performance impact on registration'
+              byte_offset: 5106
+              byte_count: 213
+              word_count: 31
+              content_hash: 4f086a19fd9a2c90a5dd16e6f16fab5a180843f279d569d034a39815abfaeda4
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 5319
+          byte_count: 1320
+          word_count: 179
+          content_hash: 9d6f29323e0af418b54afeaa9ca24cd77ccb7510e76f14e06c12051d76f5960b
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 6639
+          byte_count: 1009
+          word_count: 128
+          content_hash: 58abf3dee36738ec8790dfc5d6e3b0711ed65b1d58e9b0e3fc1849abe2b765c4
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 6675
+              byte_count: 583
+              word_count: 66
+              content_hash: 36a4f3207b3ef1a3096c8821af26955228a0959935ff69918f8169091530ca97
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 7258
+              byte_count: 390
+              word_count: 57
+              content_hash: f68a31fd1e15374fa9d34733b9860d0f799694ffdbb2143d347ebd35f62b5caf
+entity_refs:
+    - entity_id: FEAT-01KPNNYYXQSYW
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 114
+    - entity_id: DOC-01KP
+      entity_type: document
+      section_path: 1.3.2
+      byte_offset: 2235
+cross_doc_links:
+    - target_path: work/design/doc-intel-enhancement-design.md
+      link_text: work/design/doc-intel-enhancement-design.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

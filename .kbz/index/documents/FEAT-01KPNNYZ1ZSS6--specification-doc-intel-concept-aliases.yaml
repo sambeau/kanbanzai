@@ -1,0 +1,198 @@
+document_id: FEAT-01KPNNYZ1ZSS6/specification-doc-intel-concept-aliases
+document_path: work/spec/doc-intel-concept-aliases.md
+content_hash: 4d79029da750fc9e478bb879d6968f72cfdd14dc278667b64ec0d09332d55f2f
+indexed_at: 2026-04-20T15:12:36.799928Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Concept Alias Resolution'
+      byte_offset: 0
+      byte_count: 10324
+      word_count: 1410
+      content_hash: 4d79029da750fc9e478bb879d6968f72cfdd14dc278667b64ec0d09332d55f2f
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 200
+          byte_count: 589
+          word_count: 80
+          content_hash: e9f30e495a0eda0f5070bebdf09d3225d0512cab3af9835d4c09f67202c6f855
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 789
+          byte_count: 838
+          word_count: 117
+          content_hash: b13ec899ba0a1d19a0bedf69e99555a741224da484292d3ce33631a66fa3a8b5
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 802
+              byte_count: 453
+              word_count: 61
+              content_hash: e0bb2745ec558dac78cd5d4748a1e6184b5196c5f6bf39d5804b0106887075fc
+            - path: 1.2.2
+              level: 3
+              title: Out of scope
+              byte_offset: 1255
+              byte_count: 372
+              word_count: 53
+              content_hash: b8707175a871ab147192a73bcb019e3120f31e296e57d014bf25d2dc03478ad3
+        - path: "1.3"
+          level: 2
+          title: 3. Functional Requirements
+          byte_offset: 1627
+          byte_count: 6152
+          word_count: 866
+          content_hash: 4a1ece2f26af6d4a811aa631ab9c6568d7f27884141302a58402006825c2bb12
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: Extended concepts_intro format'
+              byte_offset: 1658
+              byte_count: 787
+              word_count: 117
+              content_hash: e3ad37d833fdc4df87cca0876e942439b29faedc29b733d9fd9fd970cd8e775e
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: Backward compatibility for plain-string concepts_intro'
+              byte_offset: 2445
+              byte_count: 558
+              word_count: 79
+              content_hash: 78149369ef98c2bd275ece1025e67a8c702820fab438ea4053d07643e61cfd5e
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: Alias normalisation'
+              byte_offset: 3003
+              byte_count: 463
+              word_count: 67
+              content_hash: 7be549335276df5b2162798301057987a5993cb9e444000fabb6fe4261c53916
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: Alias storage in ConceptRegistry'
+              byte_offset: 3466
+              byte_count: 584
+              word_count: 82
+              content_hash: 35d656e82d8590a68c1ad9d847fa166debde5a6e67a04ca1c6245da29d46ac74
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: Alias deduplication'
+              byte_offset: 4050
+              byte_count: 567
+              word_count: 83
+              content_hash: 3a88987c7e32544f9fce2966cc1a0a4833e85858d83233df9dce22e06d288656
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: Alias accumulation across classifications'
+              byte_offset: 4617
+              byte_count: 573
+              word_count: 80
+              content_hash: 832b838d64e575067836d741f18df5d20fca4ab3e2e7bb0c8dcb1ea1e823842d
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: FindConcept canonical name resolution (existing behaviour)'
+              byte_offset: 5190
+              byte_count: 514
+              word_count: 67
+              content_hash: cf6ddfd7b266d5bc8bdbecbcd91311c806118b089d2f0dc5cd01f0027a4fba64
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008: FindConcept alias resolution'
+              byte_offset: 5704
+              byte_count: 572
+              word_count: 80
+              content_hash: aeafaee1a1115ab322fe278c2f173589134d454d14c455b004aafb3f2b15384f
+            - path: 1.3.9
+              level: 3
+              title: 'FR-009: Canonical name takes priority over aliases'
+              byte_offset: 6276
+              byte_count: 457
+              word_count: 66
+              content_hash: 93319f7cb13b83005e9b2040e45cad66f64f7431b10bad90db2a13276ab427bf
+            - path: 1.3.10
+              level: 3
+              title: 'FR-010: FindConcept returns pointer to registry entry'
+              byte_offset: 6733
+              byte_count: 467
+              word_count: 70
+              content_hash: ab6f7495c5b419fa32f96615205ab244820fcec1ecff8ac3554440ba817ea418
+            - path: 1.3.11
+              level: 3
+              title: 'FR-011: UpdateConceptRegistry processes aliases from extended format'
+              byte_offset: 7200
+              byte_count: 579
+              word_count: 71
+              content_hash: 985961d2ac7b4286740524b6c5e077bc2a3038491fd1d5a10ee258ae73987f2b
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Functional Requirements
+          byte_offset: 7779
+          byte_count: 712
+          word_count: 99
+          content_hash: 00382dfdd2a43bd704494251a5ca1b49d270d0309892cb2365cced31f2f44e9c
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: Linear scan performance'
+              byte_offset: 7814
+              byte_count: 373
+              word_count: 54
+              content_hash: ebbeeb9503181b2f3cb0015328763c94660338165b702edac87f1eb1f68499d0
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: No YAML schema migration'
+              byte_offset: 8187
+              byte_count: 304
+              word_count: 41
+              content_hash: f4642ccd8f3d7243bae1e09b8d49b7f5cba0deeaa3f4d6c76a799745d227ae6c
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 8491
+          byte_count: 967
+          word_count: 118
+          content_hash: dd64577822e2f5a870e762ff044a42889b0836d016da6d10f63de40843f86e7a
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 9458
+          byte_count: 866
+          word_count: 112
+          content_hash: 75aa372358d510e42e2df6e1d5fa828fa1e7239e5643d461813fdf57501cbec1
+entity_refs:
+    - entity_id: FEAT-01KPNNYZ1ZSS6
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 56
+cross_doc_links:
+    - target_path: work/design/doc-intel-enhancement-design.md
+      link_text: work/design/doc-intel-enhancement-design.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+classified: false

@@ -10,8 +10,12 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 )
+
+// leadingNumberDot matches a leading "N. " prefix on section headings (e.g. "1. Overview" → "Overview").
+var leadingNumberDot = regexp.MustCompile(`^\d+\.\s*`)
 
 // SectionValidationResult holds the outcome of a section validation check.
 type SectionValidationResult struct {
@@ -59,6 +63,7 @@ func ValidateSections(filePath string, requiredSections []string) (SectionValida
 			continue
 		}
 		heading := strings.TrimSpace(strings.TrimPrefix(line, "## "))
+		heading = leadingNumberDot.ReplaceAllString(heading, "")
 		lowerHeading := strings.ToLower(heading)
 		if _, ok := required[lowerHeading]; ok {
 			found[lowerHeading] = true

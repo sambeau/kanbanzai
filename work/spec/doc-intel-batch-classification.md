@@ -9,7 +9,7 @@
 
 ---
 
-## 1. Overview
+## Overview
 
 This specification defines the batch classification activation feature, which enables
 efficient Layer 3 classification of the existing document corpus and prevents the
@@ -20,7 +20,7 @@ classifying documents at scale. The feature activates capabilities that already 
 in `doc_intel(action: "classify")` and `doc_intel(action: "pending")` but have never
 been exercised.
 
-## 2. Scope
+## Scope
 
 ### In scope
 
@@ -37,7 +37,7 @@ been exercised.
 - Changes to the `doc_intel(action: "classify")` or `doc_intel(action: "pending")` actions
 - Changes to the classification storage or Layer 3 data model
 
-## 3. Functional Requirements
+## Functional Requirements
 
 ### FR-001: Classification nudge on register response
 
@@ -119,7 +119,7 @@ to wait for classification.
 
 **Traceability:** Design §5.4
 
-## 4. Non-Functional Requirements
+## Non-Functional Requirements
 
 ### NFR-001: Nudge message size
 
@@ -131,7 +131,7 @@ inflating MCP response payload size when processing batch registrations.
 Adding the nudge field MUST NOT measurably increase the latency of `doc(action: "register")`.
 The nudge is a static string template with ID interpolation only.
 
-## 5. Acceptance Criteria
+## Acceptance Criteria
 
 - [ ] **FR-001:** `doc(action: "register")` response contains a `classification_nudge`
   string field that mentions Layer 3 classification, the document ID, and the
@@ -154,7 +154,7 @@ The nudge is a static string template with ID interpolation only.
 - [ ] **NFR-002:** Registration latency is not measurably affected (no new I/O or
   computation in the nudge path)
 
-## 6. Dependencies and Assumptions
+## Dependencies and Assumptions
 
 ### Dependencies
 

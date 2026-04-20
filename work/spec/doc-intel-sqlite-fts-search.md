@@ -9,7 +9,7 @@
 
 ---
 
-## 1. Overview
+## Overview
 
 This specification defines the requirements for adding SQLite-backed storage to
 Kanbanzai's document intelligence system and introducing BM25 full-text search over
@@ -20,7 +20,7 @@ files are retained as the source of truth; SQLite serves as a derived performanc
 
 ---
 
-## 2. Scope
+## Scope
 
 ### In Scope
 
@@ -44,7 +44,7 @@ files are retained as the source of truth; SQLite serves as a derived performanc
 
 ---
 
-## 3. Functional Requirements
+## Functional Requirements
 
 ### SQLite Database Lifecycle
 
@@ -293,7 +293,7 @@ edges inserted, total entity references inserted, total FTS5 sections indexed.
 
 ---
 
-## 4. Non-Functional Requirements
+## Non-Functional Requirements
 
 **NFR-001:** Full-text search queries MUST complete in under 10ms for the current
 corpus size (~280 documents, ~50K sections).
@@ -332,7 +332,7 @@ behaviour. The SQLite migration MUST NOT change any existing tool responses.
 
 ---
 
-## 5. Acceptance Criteria
+## Acceptance Criteria
 
 ### Integration-Level Criteria
 
@@ -351,7 +351,7 @@ behaviour. The SQLite migration MUST NOT change any existing tool responses.
 
 ---
 
-## 6. Dependencies and Assumptions
+## Dependencies and Assumptions
 
 ### Dependencies
 

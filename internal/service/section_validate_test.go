@@ -185,3 +185,52 @@ func TestValidateSections_DoubleHashNoSpace_DoesNotMatch(t *testing.T) {
 		t.Error("Valid = true, want false ('##Overview' without space should not match)")
 	}
 }
+
+// Numbered headings ("## 1. Overview") should match the unnumbered required name ("Overview").
+func TestValidateSections_NumberedHeadings_Match(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	content := "# Title\n\n## 1. Overview\n\nText.\n\n## 2. Scope\n\nText.\n\n## 3. Functional Requirements\n\nText.\n"
+	path := writeSVFile(t, dir, "doc.md", content)
+
+	result, err := ValidateSections(path, []string{"Overview", "Scope", "Functional Requirements"})
+	if err != nil {
+		t.Fatalf("ValidateSections: unexpected error: %v", err)
+	}
+	if !result.Valid {
+		t.Errorf("Valid = false, want true; missing: %v", result.Missing)
+	}
+	if len(result.Found) != 3 {
+		t.Errorf("len(Found) = %d, want 3; Found: %v", len(result.Found), result.Found)
+	}
+}
+
+// Multi-digit numbered headings ("## 12. Overview") should also match.
+func TestValidateSections_MultiDigitNumberedHeadings_Match(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	path := writeSVFile(t, dir, "doc.md", "## 12. Overview\n\n## 99. Scope\n")
+
+	result, err := ValidateSections(path, []string{"Overview", "Scope"})
+	if err != nil {
+		t.Fatalf("ValidateSections: unexpected error: %v", err)
+	}
+	if !result.Valid {
+		t.Errorf("Valid = false, want true; missing: %v", result.Missing)
+	}
+}
+
+// Unnumbered headings still match (regression check).
+func TestValidateSections_UnnumberedHeadings_StillMatch(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	path := writeSVFile(t, dir, "doc.md", "## Overview\n\n## Scope\n")
+
+	result, err := ValidateSections(path, []string{"Overview", "Scope"})
+	if err != nil {
+		t.Fatalf("ValidateSections: unexpected error: %v", err)
+	}
+	if !result.Valid {
+		t.Errorf("Valid = false, want true; missing: %v", result.Missing)
+	}
+}

@@ -1,0 +1,189 @@
+document_id: FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search
+document_path: work/spec/doc-intel-sqlite-fts-search.md
+content_hash: 54ca779f72aa819ce7cf6ea7f972ab5e5feb6a6282859d5e1f44f0e8c0672232
+indexed_at: 2026-04-20T15:12:35.850859Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: SQLite Storage and Full-Text Search'
+      byte_offset: 0
+      byte_count: 15503
+      word_count: 2334
+      content_hash: 54ca779f72aa819ce7cf6ea7f972ab5e5feb6a6282859d5e1f44f0e8c0672232
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 278
+          byte_count: 530
+          word_count: 79
+          content_hash: 9257756368376c025de6c8fafc39d7ec1b12b33518070e6bc15d8ae4197734b2
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 808
+          byte_count: 875
+          word_count: 127
+          content_hash: f29d07ef7adbaf2462351a172756bdd683d1f3649d31f45cf1c4ef9531b694ea
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In Scope
+              byte_offset: 821
+              byte_count: 452
+              word_count: 67
+              content_hash: c187f4ad1154cb9d99f303b7678d26340b4c32b0ce2fa6f7cc1c8e807ed114d2
+            - path: 1.2.2
+              level: 3
+              title: Explicitly Out of Scope
+              byte_offset: 1273
+              byte_count: 410
+              word_count: 57
+              content_hash: 3da308f2b3dc64da0865b494c45bedc63492966365a31fa276c55fb46d5e6ab1
+        - path: "1.3"
+          level: 2
+          title: 3. Functional Requirements
+          byte_offset: 1683
+          byte_count: 10612
+          word_count: 1627
+          content_hash: e16a97b6daa903aee49e2165cfb200b981a45b9fffca889d0308c09b6f571c30
+          children:
+            - path: 1.3.1
+              level: 3
+              title: SQLite Database Lifecycle
+              byte_offset: 1714
+              byte_count: 1720
+              word_count: 269
+              content_hash: 2b3be69677085e533627a91af427cb910747b16e29c7eea540247838ab3e3ae0
+            - path: 1.3.2
+              level: 3
+              title: FTS5 Virtual Table
+              byte_offset: 3434
+              byte_count: 1490
+              word_count: 233
+              content_hash: 031c74f2d846a54076913ebf7436081d23c2e5c8f7cf483041f3a6f2ef37ec93
+            - path: 1.3.3
+              level: 3
+              title: Search Action
+              byte_offset: 4924
+              byte_count: 3207
+              word_count: 492
+              content_hash: 62d0b222c57a4a086dbbd1e24df4a307c992f21fe4c09268397591a0fc38cd06
+            - path: 1.3.4
+              level: 3
+              title: Graph Edges Table
+              byte_offset: 8131
+              byte_count: 1421
+              word_count: 227
+              content_hash: 6ca0b3ee8fc2d0af592b8c24548381339c88f486f4852dbaad0e96885b37628b
+            - path: 1.3.5
+              level: 3
+              title: Entity References Table
+              byte_offset: 9552
+              byte_count: 860
+              word_count: 126
+              content_hash: b3331c2ba622bde0dd00cbff1a0fd0b1986f5cf615d961db7ca01412acab0b66
+            - path: 1.3.6
+              level: 3
+              title: Query Migration
+              byte_offset: 10412
+              byte_count: 943
+              word_count: 131
+              content_hash: 0ea341d7bf4921d69ae8edd11e2b4257b2047b0652647014a6e30d2ff192953a
+            - path: 1.3.7
+              level: 3
+              title: Rebuild Command
+              byte_offset: 11355
+              byte_count: 940
+              word_count: 145
+              content_hash: ff7aac306609f9bfda3dcab0a7f9648800e38d70f09cebcd33dbeb4edc53792a
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Functional Requirements
+          byte_offset: 12295
+          byte_count: 1327
+          word_count: 197
+          content_hash: 45d37a32017774aac8f7275f765a96d2df0deb356caae1315245d2025e8075aa
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 13622
+          byte_count: 743
+          word_count: 108
+          content_hash: b2b9767a5c99037438a1b32268d72a46287a42974d44d0c06fba7c649122bda1
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Integration-Level Criteria
+              byte_offset: 13649
+              byte_count: 716
+              word_count: 104
+              content_hash: d6c7dd54f09f3fb432ba25299d823a7deb205a4eee7236c054cdcb65ca2ba09b
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 14365
+          byte_count: 1138
+          word_count: 154
+          content_hash: d58920d3c9eb935953b611480c1c007732f0f20a9f1b11eb9a4ca21f6a8ff12f
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 14401
+              byte_count: 593
+              word_count: 75
+              content_hash: 786a96de142618612692321ffc62a07728614aeed91315b6006b6e3310062526
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 14994
+              byte_count: 509
+              word_count: 74
+              content_hash: 1fb8afcd70b7d47dbbf57daf235551d75bab42697898919b4994fc9c8b648037
+entity_refs:
+    - entity_id: FEAT-01KPNNYYSQTA7
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 102
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.5.1
+      byte_offset: 13943
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.5.1
+      byte_offset: 14080
+cross_doc_links:
+    - target_path: work/design/doc-intel-enhancement-design.md
+      link_text: work/design/doc-intel-enhancement-design.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false
