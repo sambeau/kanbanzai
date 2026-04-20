@@ -1,0 +1,6 @@
+id: TASK-01KPPKQXC2R2D
+parent_feature: FEAT-01KPPG1MF4DAT
+slug: ac-pattern-and-decompose-fix-parsespecstructure-and-diagnostic
+name: Fix parseSpecStructure and add rich diagnostic
+summary: "Two changes to internal/service/decompose.go. Fix A: in parseSpecStructure, within the inACSection branch, strip leading list markers (- , * , + ) from trimmed before applying reBoldIdent; on match produce XX-NN: criterion text. Fix B: replace the generic zero-criteria fmt.Errorf in DecomposeFeature with buildZeroCriteriaDiagnostic(specDocID, content, spec) — a new unexported helper that reports section count and titles, recognised AC section titles, bold-identifier line counts inside/outside AC sections, and a remediation suggestion. Write TestParseSpecStructure_ListItemBoldIdent, TestDecomposeFeature_RichDiagnostic_BoldOutsideSection, and TestDecomposeFeature_RichDiagnostic_NoBoldIdents tests."
+status: queued
