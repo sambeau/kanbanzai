@@ -227,7 +227,14 @@ func docRegisterOne(docSvc *service.DocumentService, args map[string]any) (strin
 		log.Printf("[doc] WARNING: auto-commit after register %s failed: %v", result.ID, commitErr)
 	}
 
-	out := map[string]any{"document": docRecordToMap(result)}
+	nudge := fmt.Sprintf(
+		"Layer 3 classification pending for %s.\nCall doc_intel(action: \"guide\", id: \"%s\") then read the section outline.\nThen call doc_intel(action: \"classify\", id: \"%s\", content_hash: \"...\", ...) to classify.",
+		result.ID, result.ID, result.ID,
+	)
+	out := map[string]any{
+		"document":             docRecordToMap(result),
+		"classification_nudge": nudge,
+	}
 	if len(result.Warnings) > 0 {
 		out["warnings"] = result.Warnings
 	}

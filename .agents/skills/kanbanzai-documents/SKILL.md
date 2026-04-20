@@ -313,3 +313,67 @@ guides:
 - `kanbanzai-getting-started` — session orientation
 - `kanbanzai-workflow` — stage gates that depend on document approval
 - `write-design` — the design process that produces design documents
+---
+
+## Batch Classification Protocol
+
+Layer 3 classification assigns semantic roles to document sections, enabling
+concept search, role-based retrieval, and classification-enhanced outlines.
+This protocol describes how to classify documents efficiently at scale.
+
+### When to run this protocol
+
+- At the start of a new session, to ensure the corpus is up to date.
+- After a batch registration (`doc(action: "import")`), to catch newly added documents.
+- Periodically, to maintain classification coverage across the corpus.
+
+### Classification-on-registration convention
+
+When you register a document via `doc(action: "register")` and you have the document's
+content in context, **classify it immediately** — do not wait for a batch run.
+The register response includes a `classification_nudge` that tells you exactly which
+`doc_intel` calls to make.
+
+### Priority ordering
+
+Process documents in this order to maximise classification value per unit of effort:
+
+| Priority | Document type | Rationale |
+|----------|--------------|-----------|
+| 1 | Specifications | Most structured, highest value |
+| 2 | Designs | Narrative + decisions |
+| 3 | Dev-plans | Task-oriented, lower value |
+| 4 | Research/reports | Lowest priority |
+
+You MAY deviate from this ordering when context warrants it (e.g. a design needed
+immediately for a concept search query).
+
+### Step-by-step procedure
+
+1. **Get the pending list.** Call `doc_intel(action: "pending")` to retrieve all
+   document IDs that have no Layer 3 classifications yet.
+
+2. **Select a batch.** Choose documents to classify in the current session, applying
+   the priority ordering above. Size the batch to your available context budget.
+
+3. **For each document in the batch:**
+   1. Call `doc_intel(action: "guide", id: "DOC-xxx")` to get the section outline,
+      conventional roles, entity refs, and content hash.
+   2. Read the sections you need (use `doc_intel(action: "section", ...)` if the
+      document is large and you only need specific sections).
+   3. Produce classification objects for each section, assigning one or more roles
+      (e.g. `requirement`, `decision`, `rationale`, `context`, `procedure`).
+   4. Call `doc_intel(action: "classify", id: "DOC-xxx", content_hash: "...", ...)`
+      to submit the classifications.
+
+4. **Repeat** until the pending list is empty or your context budget is exhausted.
+   Re-call `doc_intel(action: "pending")` to confirm progress.
+
+### Anti-patterns
+
+- **Skipping `guide` before `classify`.** The `guide` response provides the content
+  hash required by `classify`. Never construct the content hash manually.
+- **Classifying without reading sections.** Classification requires understanding the
+  content. Do not assign roles without reading the relevant section text.
+- **Classifying the whole corpus in one pass.** Work in batches sized to your context
+  window. Quality drops when context is saturated.

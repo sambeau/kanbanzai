@@ -1905,3 +1905,76 @@ func TestDocTool_Gaps_FeatureDraftDocBlocksPlanInheritance(t *testing.T) {
 		}
 	}
 }
+
+func TestDocTool_Register_Single_ClassificationNudge(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+	writeDocFile(t, env.repoRoot, "work/spec/nudge.md", "# Nudge\n\nSpec content.")
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/spec/nudge.md",
+		"type":   "specification",
+		"title":  "Nudge Specification",
+	})
+
+	nudge, ok := resp["classification_nudge"].(string)
+	if !ok || nudge == "" {
+		t.Fatalf("expected classification_nudge string field, got: %v", resp)
+	}
+
+	// Nudge must contain the actual document ID.
+	doc, _ := resp["document"].(map[string]any)
+	docID, _ := doc["id"].(string)
+	if docID == "" {
+		t.Fatal("expected document.id to be set")
+	}
+	if !strings.Contains(nudge, docID) {
+		t.Errorf("nudge %q does not contain document ID %q", nudge, docID)
+	}
+}
+
+func TestDocTool_Register_Batch_ClassificationNudge(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	writeDocFile(t, env.repoRoot, "work/design/a.md", "# A\n")
+	writeDocFile(t, env.repoRoot, "work/spec/b.md", "# B\n")
+
+	resp := callDoc(t, env, map[string]any{
+		"action": "register",
+		"documents": []any{
+			map[string]any{"path": "work/design/a.md", "type": "design", "title": "Doc A"},
+			map[string]any{"path": "work/spec/b.md", "type": "specification", "title": "Doc B"},
+		},
+	})
+
+	results, ok := resp["results"].([]any)
+	if !ok || len(results) != 2 {
+		t.Fatalf("expected 2 results, got: %v", resp)
+	}
+
+	for i, r := range results {
+		item, _ := r.(map[string]any)
+		data, _ := item["data"].(map[string]any)
+		if data == nil {
+			t.Fatalf("result[%d] missing data field: %v", i, item)
+		}
+
+		nudge, ok := data["classification_nudge"].(string)
+		if !ok || nudge == "" {
+			t.Errorf("result[%d] missing classification_nudge, got data: %v", i, data)
+			continue
+		}
+
+		doc, _ := data["document"].(map[string]any)
+		docID, _ := doc["id"].(string)
+		if docID == "" {
+			t.Errorf("result[%d] document.id is empty", i)
+			continue
+		}
+		if !strings.Contains(nudge, docID) {
+			t.Errorf("result[%d] nudge %q does not contain document ID %q", i, nudge, docID)
+		}
+	}
+}
