@@ -4,5 +4,6 @@ name: AC pattern recognition and decompose hardening
 parent: P24-retro-recommendations
 status: designing
 summary: "Teach internal/docint to recognise the **AC-NN.** and - [ ] **AC-NN.** acceptance-criteria patterns used in every project spec, and make decompose propose fail with a clear diagnostic (rather than silently generating heading-based tasks) when the spec is indexed but contains no AC fragments. Source: REC-01."
+design: FEAT-01KPPG1MF4DAT/design-p24-ac-pattern-and-decompose
 created: "2026-04-20T22:26:45Z"
 created_by: sambeau
