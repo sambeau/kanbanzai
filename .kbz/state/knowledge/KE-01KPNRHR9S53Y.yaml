@@ -1,0 +1,18 @@
+id: KE-01KPNRHR9S53Y
+tier: 2
+topic: section-validator-numbered-heading-fix
+scope: project
+content: "ValidateSections in internal/service/section_validate.go did literal string matching on level-2 headings, so \"## 1. Overview\" did not match the required section \"Overview\". Fixed by adding a regexp strip of leading number-dot-space prefixes (leadingNumberDot = `^\\d+\\.\\s*`) before comparison. The fix is built and installed but requires a server restart to take effect. Tests added in section_validate_test.go. Note: the design document approval issue is separate — the design uses entirely different section names (Purpose, Scope, Enhancement 1-5) rather than the template names (Overview, Goals and Non-Goals, Design, Alternatives Considered, Dependencies), which is a content choice that cannot be auto-resolved by stripping prefixes."
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - doc-intel
+  - section-validation
+  - bug-fix
+  - numbered-headings
+created: "2026-04-20T15:36:07Z"
+created_by: sambeau
+updated: "2026-04-20T15:36:07Z"
