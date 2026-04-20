@@ -6,6 +6,7 @@ status: dev-planning
 summary: "Wire the knowledge system and doc_intel together for cross-system queries. Direction 1: doc_intel find(entity_id) responses include related knowledge entries. Direction 2: the context assembly pipeline surfaces document section pointers alongside knowledge entries during task handoff. Uses the entity reference scanner already in knowledge/links.go. Covers design section 6 (cross-queries). Depends on the SQLite storage feature for efficient entity lookups."
 design: work/design/doc-intel-enhancement-design.md
 spec: FEAT-01KPNNYYZRAEK/specification-doc-intel-knowledge-cross-queries
+dev_plan: FEAT-01KPNNYYZRAEK/dev-plan-doc-intel-knowledge-cross-queries-plan
 created: "2026-04-20T14:50:54Z"
 created_by: sambeau
 overrides:
