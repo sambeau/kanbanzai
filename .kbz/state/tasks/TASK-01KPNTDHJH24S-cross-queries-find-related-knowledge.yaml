@@ -3,6 +3,11 @@ parent_feature: FEAT-01KPNNYYZRAEK
 slug: cross-queries-find-related-knowledge
 name: Return related_knowledge in find entity_id response
 summary: "When find(entity_id) called, query knowledge base for entries matching by: learned_from==entityID, tags containing entityID or entity type prefix, scope matching a document referencing the entity (via entity_refs table). Deduplicate by ID. Exclude retired entries. Return related_knowledge array + knowledge_matches count. Each entry: id, topic, content, confidence, status. Existing fields unchanged."
-status: queued
+status: done
 depends_on:
   - TASK-01KPNTDHFQBQV
+files_planned:
+  - internal/mcp/doc_intel_tool.go
+  - internal/mcp/doc_intel_tool_test.go
+completed: "2026-04-20T17:28:02Z"
+completion_summary: "Added findRelatedKnowledge (matches by learned_from, tags, doc-scope) and knowledgeEntityType helpers. find(entity_id) now returns related_knowledge array and knowledge_matches count. Tests: BackwardCompat, NoKnowledgeSvc, LearnedFrom, Tags, Dedup, RetiredExcluded all pass."
