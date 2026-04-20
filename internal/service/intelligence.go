@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 	"time"
@@ -98,6 +99,11 @@ func (s *IntelligenceService) IngestDocument(docID, docPath string) (*docint.Doc
 	// Persist the index
 	if err := s.indexStore.SaveDocumentIndex(index); err != nil {
 		return nil, fmt.Errorf("save document index: %w", err)
+	}
+
+	// Dual-write to SQLite for FTS and fast queries (graceful degradation)
+	if sqlErr := s.indexStore.UpsertDocumentSQLite(docID, sections, content, extracted.EntityRefs, edges); sqlErr != nil {
+		log.Printf("warning: SQLite write failed for %s: %v", docID, sqlErr)
 	}
 
 	return index, nil
@@ -196,12 +202,33 @@ func (s *IntelligenceService) GetSection(docID, sectionPath string) (*docint.Sec
 }
 
 // FindByEntity finds all sections across all documents that reference an entity.
+// It queries the SQLite entity_refs table for performance; falls back to YAML scan on error.
 func (s *IntelligenceService) FindByEntity(entityID string) ([]EntityDocMatch, error) {
+	refs, sqlErr := s.indexStore.QueryEntityRefsByEntityID(entityID)
+	if sqlErr == nil {
+		var matches []EntityDocMatch
+		for _, r := range refs {
+			index, err := s.indexStore.LoadDocumentIndex(r.DocumentID)
+			if err != nil {
+				continue
+			}
+			title := sectionTitle(index.Sections, r.Ref.SectionPath)
+			matches = append(matches, EntityDocMatch{
+				DocumentID:   r.DocumentID,
+				DocPath:      index.DocumentPath,
+				SectionPath:  r.Ref.SectionPath,
+				SectionTitle: title,
+			})
+		}
+		return matches, nil
+	}
+	log.Printf("warning: SQLite FindByEntity fallback for %s: %v", entityID, sqlErr)
+
+	// Fallback: scan YAML indexes
 	docIDs, err := s.indexStore.ListDocumentIndexes()
 	if err != nil {
 		return nil, fmt.Errorf("list document indexes: %w", err)
 	}
-
 	var matches []EntityDocMatch
 	for _, id := range docIDs {
 		index, err := s.indexStore.LoadDocumentIndex(id)
@@ -220,7 +247,6 @@ func (s *IntelligenceService) FindByEntity(entityID string) ([]EntityDocMatch, e
 			}
 		}
 	}
-
 	return matches, nil
 }
 
@@ -447,12 +473,19 @@ func (s *IntelligenceService) GetDocumentIndex(docID string) (*docint.DocumentIn
 }
 
 // GetImpact finds all graph edges pointing to a given section ID.
+// It queries the SQLite edges table for performance; falls back to YAML scan on error.
 func (s *IntelligenceService) GetImpact(sectionID string) ([]docint.GraphEdge, error) {
+	edges, sqlErr := s.indexStore.QueryEdgesByToID(sectionID)
+	if sqlErr == nil {
+		return edges, nil
+	}
+	log.Printf("warning: SQLite GetImpact fallback for %s: %v", sectionID, sqlErr)
+
+	// Fallback: scan graph.yaml
 	graph, err := s.indexStore.LoadGraph()
 	if err != nil {
 		return nil, fmt.Errorf("load graph: %w", err)
 	}
-
 	var impacted []docint.GraphEdge
 	for _, edge := range graph.Edges {
 		if edge.To == sectionID {
@@ -460,6 +493,74 @@ func (s *IntelligenceService) GetImpact(sectionID string) ([]docint.GraphEdge, e
 		}
 	}
 	return impacted, nil
+}
+
+// Search executes a full-text search over section content.
+func (s *IntelligenceService) Search(params docint.SearchParams) (int, []docint.SearchResult, error) {
+	return s.indexStore.SearchSections(params)
+}
+
+// RebuildStats summarises the result of a full index rebuild.
+type RebuildStats struct {
+	Documents   int
+	Edges       int
+	EntityRefs  int
+	FTSSections int
+}
+
+// RebuildIndex deletes the SQLite database and rebuilds it from all per-document YAML indexes.
+func (s *IntelligenceService) RebuildIndex() (RebuildStats, error) {
+	var stats RebuildStats
+
+	// Delete and reset the database
+	dbPath := s.indexStore.DBPath()
+	if err := os.Remove(dbPath); err != nil && !os.IsNotExist(err) {
+		return stats, fmt.Errorf("remove db: %w", err)
+	}
+	s.indexStore.ResetDB()
+
+	// Enumerate all per-document YAML index files
+	docIDs, err := s.indexStore.ListDocumentIndexes()
+	if err != nil {
+		return stats, fmt.Errorf("list document indexes: %w", err)
+	}
+
+	for _, docID := range docIDs {
+		index, err := s.indexStore.LoadDocumentIndex(docID)
+		if err != nil {
+			continue
+		}
+
+		// Read file content for FTS
+		var fileContent []byte
+		if index.DocumentPath != "" {
+			fullPath := s.resolveDocPath(index.DocumentPath)
+			fileContent, _ = os.ReadFile(fullPath)
+		}
+
+		edges := docint.BuildGraphEdges(index)
+
+		if err := s.indexStore.UpsertDocumentSQLite(docID, index.Sections, fileContent, index.EntityRefs, edges); err != nil {
+			log.Printf("warning: rebuild skip %s: %v", docID, err)
+			continue
+		}
+
+		sectionCount, _ := s.indexStore.CountFTSSectionsForDoc(docID)
+		refCount, _ := s.indexStore.CountEntityRefsForDoc(docID)
+		edgeCount, _ := s.indexStore.CountEdgesForDoc(docID)
+
+		stats.Documents++
+		stats.FTSSections += sectionCount
+		stats.EntityRefs += refCount
+		stats.Edges += edgeCount
+	}
+
+	return stats, nil
+}
+
+// Close closes the underlying index store (and its SQLite connection).
+func (s *IntelligenceService) Close() error {
+	return s.indexStore.Close()
 }
 
 // resolveDocPath resolves a document path relative to the repo root.

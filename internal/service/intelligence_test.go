@@ -751,3 +751,153 @@ func TestParseSectionRef(t *testing.T) {
 		}
 	}
 }
+
+// ─── SQLite dual-write and query tests ────────────────────────────────────────
+
+func TestIngestDocument_SQLite_FTSRowsCreated(t *testing.T) {
+	tmp := t.TempDir()
+	indexRoot := filepath.Join(tmp, "index")
+	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
+
+	svc := NewIntelligenceService(indexRoot, tmp)
+	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
+		t.Fatalf("IngestDocument: %v", err)
+	}
+
+	count, err := svc.indexStore.CountFTSSectionsForDoc("test-doc")
+	if err != nil {
+		t.Fatalf("count fts: %v", err)
+	}
+	if count == 0 {
+		t.Error("expected FTS rows after IngestDocument, got 0")
+	}
+}
+
+func TestIngestDocument_SQLite_ReIngestReplacesFTS(t *testing.T) {
+	tmp := t.TempDir()
+	indexRoot := filepath.Join(tmp, "index")
+	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
+
+	svc := NewIntelligenceService(indexRoot, tmp)
+	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
+		t.Fatalf("first IngestDocument: %v", err)
+	}
+	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
+		t.Fatalf("second IngestDocument: %v", err)
+	}
+
+	count, err := svc.indexStore.CountFTSSectionsForDoc("test-doc")
+	if err != nil {
+		t.Fatalf("count fts: %v", err)
+	}
+
+	// Count should match section count, not be doubled
+	index, err := svc.indexStore.LoadDocumentIndex("test-doc")
+	if err != nil {
+		t.Fatalf("load index: %v", err)
+	}
+	sectionCount := countSections(index.Sections)
+	if count != sectionCount {
+		t.Errorf("FTS row count = %d, want %d (section count)", count, sectionCount)
+	}
+}
+
+func TestIngestDocument_SQLite_EdgeCount(t *testing.T) {
+	tmp := t.TempDir()
+	indexRoot := filepath.Join(tmp, "index")
+	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
+
+	svc := NewIntelligenceService(indexRoot, tmp)
+	idx, err := svc.IngestDocument("test-doc", docPath)
+	if err != nil {
+		t.Fatalf("IngestDocument: %v", err)
+	}
+
+	sqliteCount, err := svc.indexStore.CountEdgesForDoc("test-doc")
+	if err != nil {
+		t.Fatalf("count edges: %v", err)
+	}
+
+	expectedEdges := docint.BuildGraphEdges(idx)
+	if sqliteCount != len(expectedEdges) {
+		t.Errorf("SQLite edge count = %d, want %d", sqliteCount, len(expectedEdges))
+	}
+}
+
+func TestIngestDocument_SQLite_EntityRefCount(t *testing.T) {
+	tmp := t.TempDir()
+	indexRoot := filepath.Join(tmp, "index")
+	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
+
+	svc := NewIntelligenceService(indexRoot, tmp)
+	idx, err := svc.IngestDocument("test-doc", docPath)
+	if err != nil {
+		t.Fatalf("IngestDocument: %v", err)
+	}
+
+	count, err := svc.indexStore.CountEntityRefsForDoc("test-doc")
+	if err != nil {
+		t.Fatalf("count entity_refs: %v", err)
+	}
+	if count != len(idx.EntityRefs) {
+		t.Errorf("SQLite entity_ref count = %d, want %d", count, len(idx.EntityRefs))
+	}
+}
+
+func TestFindByEntity_SQLite(t *testing.T) {
+	tmp := t.TempDir()
+	indexRoot := filepath.Join(tmp, "index")
+	docPath1 := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
+	docPath2 := writeTestDoc(t, tmp, "docs/spec.md", testMarkdown2)
+
+	svc := NewIntelligenceService(indexRoot, tmp)
+	if _, err := svc.IngestDocument("doc-design", docPath1); err != nil {
+		t.Fatalf("IngestDocument doc-design: %v", err)
+	}
+	if _, err := svc.IngestDocument("doc-spec", docPath2); err != nil {
+		t.Fatalf("IngestDocument doc-spec: %v", err)
+	}
+
+	matches, err := svc.FindByEntity("FEAT-001")
+	if err != nil {
+		t.Fatalf("FindByEntity: %v", err)
+	}
+	if len(matches) < 2 {
+		t.Fatalf("expected at least 2 matches, got %d", len(matches))
+	}
+	docIDs := map[string]bool{}
+	for _, m := range matches {
+		docIDs[m.DocumentID] = true
+	}
+	if !docIDs["doc-design"] || !docIDs["doc-spec"] {
+		t.Errorf("expected both docs in matches, got %v", docIDs)
+	}
+}
+
+func TestGetImpact_SQLite(t *testing.T) {
+	tmp := t.TempDir()
+	indexRoot := filepath.Join(tmp, "index")
+	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
+
+	svc := NewIntelligenceService(indexRoot, tmp)
+	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
+		t.Fatalf("IngestDocument: %v", err)
+	}
+
+	edges, err := svc.GetImpact("test-doc#1")
+	if err != nil {
+		t.Fatalf("GetImpact: %v", err)
+	}
+	if len(edges) == 0 {
+		t.Error("expected at least one edge pointing to test-doc#1")
+	}
+}
+
+// countSections recursively counts all sections (including children).
+func countSections(sections []docint.Section) int {
+	n := len(sections)
+	for _, s := range sections {
+		n += countSections(s.Children)
+	}
+	return n
+}

@@ -325,3 +325,54 @@ func TestIndexStore_OverwriteDocumentIndex(t *testing.T) {
 		t.Errorf("section[0] title = %q, want %q", loaded.Sections[0].Title, "Updated")
 	}
 }
+
+// ─── SQLite schema tests ───────────────────────────────────────────────────────
+
+func TestIndexStore_SQLite_SchemaCreated(t *testing.T) {
+	store := NewIndexStore(t.TempDir())
+	if err := store.ensureDB(); err != nil {
+		t.Fatalf("ensureDB: %v", err)
+	}
+	defer store.Close()
+
+	tables := []string{"sections_fts", "edges", "entity_refs"}
+	for _, tbl := range tables {
+		row := store.db.QueryRow("SELECT name FROM sqlite_master WHERE type='table' AND name=?", tbl)
+		var name string
+		if err := row.Scan(&name); err != nil {
+			t.Errorf("table %q not found: %v", tbl, err)
+		}
+	}
+}
+
+func TestIndexStore_SQLite_WALMode(t *testing.T) {
+	store := NewIndexStore(t.TempDir())
+	if err := store.ensureDB(); err != nil {
+		t.Fatalf("ensureDB: %v", err)
+	}
+	defer store.Close()
+
+	row := store.db.QueryRow("PRAGMA journal_mode")
+	var mode string
+	if err := row.Scan(&mode); err != nil {
+		t.Fatalf("pragma journal_mode: %v", err)
+	}
+	if mode != "wal" {
+		t.Errorf("journal_mode = %q, want %q", mode, "wal")
+	}
+}
+
+func TestIndexStore_SQLite_IdempotentCreation(t *testing.T) {
+	store := NewIndexStore(t.TempDir())
+
+	if err := store.ensureDB(); err != nil {
+		t.Fatalf("first ensureDB: %v", err)
+	}
+	db := store.db
+	defer store.Close()
+
+	// Call createSchema again — should not error
+	if err := createSchema(db); err != nil {
+		t.Errorf("second createSchema: %v", err)
+	}
+}

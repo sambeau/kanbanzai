@@ -62,3 +62,8 @@ Desktop.ini
 # Compiled external-import test binary (platform-specific, rebuildable from source)
 _testexternal/testexternal
 dist/
+
+# SQLite document intelligence database (derived artefact)
+.kbz/index/docint.db
+.kbz/index/docint.db-wal
+.kbz/index/docint.db-shm

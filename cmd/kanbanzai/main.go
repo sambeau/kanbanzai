@@ -152,6 +152,8 @@ func run(args []string, deps dependencies) error {
 		return runImport(args[1:], deps)
 	case "install-record":
 		return runInstallRecord(args[1:], deps)
+	case "rebuild-index":
+		return runRebuildIndex(args[1:], deps)
 
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)

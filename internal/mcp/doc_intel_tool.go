@@ -39,7 +39,7 @@ func docIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *se
 		),
 		mcp.WithString("action",
 			mcp.Required(),
-			mcp.Description("Action: outline, section, classify, find, trace, impact, guide, pending"),
+			mcp.Description("Action: outline, section, classify, find, trace, impact, guide, pending, search"),
 		),
 		// outline / section / classify / guide — document identity
 		mcp.WithString("id",
@@ -80,6 +80,19 @@ func docIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *se
 			mcp.Description("Section ID in the format 'docID#sectionPath' — required for impact"),
 		),
 		// guide — uses id (same as outline)
+		// search
+		mcp.WithString("query",
+			mcp.Description("Full-text search query in FTS5 syntax — required for search"),
+		),
+		mcp.WithString("mode",
+			mcp.Description("Output level: outline (default), summary, full — search action"),
+		),
+		mcp.WithNumber("limit",
+			mcp.Description("Maximum results (default 10, max 50) — search action"),
+		),
+		mcp.WithString("doc_type",
+			mcp.Description("Filter by document type (e.g. specification, design) — search action"),
+		),
 	)
 
 	// doc_intel is predominantly read-only; no WithSideEffects wrapper needed
@@ -95,6 +108,7 @@ func docIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *se
 			"impact":   docIntelImpactAction(intelligenceSvc),
 			"guide":    docIntelGuideAction(intelligenceSvc),
 			"pending":  docIntelPendingAction(intelligenceSvc),
+			"search":   docIntelSearchAction(intelligenceSvc),
 		})
 	})
 
@@ -450,4 +464,55 @@ func extractionHints(index *docint.DocumentIndex) []string {
 		hints = append(hints, fmt.Sprintf("%d rationale section(s) found — link to corresponding Decision entities", n))
 	}
 	return hints
+}
+
+// ─── search ───────────────────────────────────────────────────────────────────
+
+func docIntelSearchAction(svc *service.IntelligenceService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		query, err := req.RequireString("query")
+		if err != nil || query == "" {
+			return inlineErr("missing_parameter",
+				"Cannot search: query is missing.\n\nTo resolve:\n  Provide query: doc_intel(action: \"search\", query: \"...\")")
+		}
+
+		mode := req.GetString("mode", "outline")
+		if mode != "outline" && mode != "summary" && mode != "full" {
+			mode = "outline"
+		}
+
+		limit := int(req.GetFloat("limit", 10))
+		if limit <= 0 {
+			limit = 10
+		}
+		if limit > 50 {
+			limit = 50
+		}
+
+		docType := req.GetString("doc_type", "")
+		role := req.GetString("role", "")
+
+		params := docint.SearchParams{
+			Query:   query,
+			Mode:    mode,
+			Limit:   limit,
+			DocType: docType,
+			Role:    role,
+		}
+
+		total, results, err := svc.Search(params)
+		if err != nil {
+			return nil, fmt.Errorf("search failed: %w", err)
+		}
+		if results == nil {
+			results = []docint.SearchResult{}
+		}
+
+		return map[string]any{
+			"query":         query,
+			"total_matches": total,
+			"returned":      len(results),
+			"results":       results,
+		}, nil
+	}
 }
