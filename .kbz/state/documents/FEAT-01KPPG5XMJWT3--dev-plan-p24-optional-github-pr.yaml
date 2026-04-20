@@ -2,9 +2,11 @@ id: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr
 path: work/dev-plan/p24-optional-github-pr.md
 type: dev-plan
 title: "Dev Plan: Optional GitHub PR creation"
-status: draft
+status: approved
 owner: FEAT-01KPPG5XMJWT3
-content_hash: 63d939465b52234d9dba90ae703a6dc443c7f735d8b85764096bf4038a698370
+approved_by: sambeau
+approved_at: "2026-04-20T23:04:05Z"
+content_hash: a3f6a1e3984bfd9acb95f9758bdfbb20d8cc238824a41ebd11f5025ece5276c7
 created: "2026-04-20T23:01:53Z"
 created_by: sambeau
-updated: "2026-04-20T23:01:53Z"
+updated: "2026-04-20T23:04:05Z"
