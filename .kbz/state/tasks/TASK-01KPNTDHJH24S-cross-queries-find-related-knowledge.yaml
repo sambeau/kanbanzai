@@ -4,3 +4,5 @@ slug: cross-queries-find-related-knowledge
 name: Return related_knowledge in find entity_id response
 summary: "When find(entity_id) called, query knowledge base for entries matching by: learned_from==entityID, tags containing entityID or entity type prefix, scope matching a document referencing the entity (via entity_refs table). Deduplicate by ID. Exclude retired entries. Return related_knowledge array + knowledge_matches count. Each entry: id, topic, content, confidence, status. Existing fields unchanged."
 status: queued
+depends_on:
+  - TASK-01KPNTDHFQBQV

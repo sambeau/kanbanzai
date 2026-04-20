@@ -1,0 +1,91 @@
+document_id: FEAT-01KPNNYZ1ZSS6/dev-plan-doc-intel-concept-aliases-plan
+document_path: work/plan/doc-intel-concept-aliases-plan.md
+content_hash: 6042f68e69aad6cb7145849db51e52f85f2c0fa57ea5e049d84eee29578f6093
+indexed_at: 2026-04-20T16:02:47.293431Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Concept Alias Resolution'
+      byte_offset: 0
+      byte_count: 4568
+      word_count: 548
+      content_hash: 6042f68e69aad6cb7145849db51e52f85f2c0fa57ea5e049d84eee29578f6093
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 150
+          byte_count: 619
+          word_count: 72
+          content_hash: 657e7c1b2066138c61149a14eda1360f857eeac8468916ef291540e4b5c70a6b
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 769
+          byte_count: 2795
+          word_count: 321
+          content_hash: 551ca00ecd47bcca28a73ece86482e126f34b972dfef0aa3c92e79e180ca55ed
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Extend ConceptsIntro type with custom YAML unmarshalling'
+              byte_offset: 788
+              byte_count: 815
+              word_count: 97
+              content_hash: bab77715aab54c6fbc2ce00e88e3a890ee6395f809604a1eadf42f89fbe68687
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Update UpdateConceptRegistry for alias storage'
+              byte_offset: 1603
+              byte_count: 775
+              word_count: 85
+              content_hash: dae0f6c9fe419449668c8ff41f97c7890bfd1e0cf07cc5fbc52aecfa5a9c9009
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Update FindConcept with alias resolution'
+              byte_offset: 2378
+              byte_count: 674
+              word_count: 80
+              content_hash: 9384efb3c93d72fac73a9a844c00308692771c78c2548d50e3c92c7bf57c55bb
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Update BuildGraphEdges for extended ConceptsIntro'
+              byte_offset: 3052
+              byte_count: 512
+              word_count: 56
+              content_hash: 64ce18fb668e5844c4c4db478fb8c62dcf5bfe4dc1f282cb0acd23f3d0e70b25
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 3564
+          byte_count: 161
+          word_count: 28
+          content_hash: 15dc685ff27912e780b692659803c50e3001c98b337025ef02a9f0d44e079a05
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 3725
+          byte_count: 588
+          word_count: 67
+          content_hash: 844093d5aa81cc2b10a14e3aa08bd789b7dd9eb89d13e3c38c1be794c75bcf88
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 4313
+          byte_count: 255
+          word_count: 43
+          content_hash: 6c61c400120fe80618a15750d3da0b64a07a3526813f9e7133a92ce307b8c150
+entity_refs:
+    - entity_id: FEAT-01KPNNYZ1ZSS6
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 49
+cross_doc_links:
+    - target_path: work/spec/doc-intel-concept-aliases.md
+      link_text: work/spec/doc-intel-concept-aliases.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

@@ -1,0 +1,120 @@
+document_id: FEAT-01KPNNYYSQTA7/dev-plan-doc-intel-sqlite-fts-search-plan
+document_path: work/plan/doc-intel-sqlite-fts-search-plan.md
+content_hash: 1c2eca85e7f227fa1af6ffe4b6d9eaf8eeda51f25b011ab67f495002941d045f
+indexed_at: 2026-04-20T16:03:01.918102Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: SQLite Storage and Full-Text Search'
+      byte_offset: 0
+      byte_count: 7547
+      word_count: 911
+      content_hash: 1c2eca85e7f227fa1af6ffe4b6d9eaf8eeda51f25b011ab67f495002941d045f
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 174
+          byte_count: 600
+          word_count: 72
+          content_hash: 509b43a92ad6b00869ff586ad4efc39f7bfb2f1c41340d8b3545246f512c332d
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 774
+          byte_count: 5100
+          word_count: 597
+          content_hash: c1a06b22eab5d1dd8c92326a7739e87099d67bf184945115eeece4dd5e9a58d5
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: SQLite connection management and schema creation'
+              byte_offset: 793
+              byte_count: 944
+              word_count: 118
+              content_hash: f78f9c21a23aa2bf2a0651b7e72ad24308afd3a1a09cb2ae4b163c7fd9135f05
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Dual-write: IngestDocument populates SQLite'
+              byte_offset: 1737
+              byte_count: 1185
+              word_count: 138
+              content_hash: 18707bd77100869f67ff532331c461cf169a98e40462613eb5c65841fa6c5840
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Migrate read queries to SQLite'
+              byte_offset: 2922
+              byte_count: 866
+              word_count: 88
+              content_hash: e5ddcd0500e989f005bd6093c20c9ea4939b3dd7969acb7868219ba254a55d85
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: search action on doc_intel tool'
+              byte_offset: 3788
+              byte_count: 1230
+              word_count: 140
+              content_hash: fdea920429ebac114f63da3359f9309e6bfe9883622eb767ca45ff2d9b1efd82
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: rebuild-index CLI command'
+              byte_offset: 5018
+              byte_count: 856
+              word_count: 110
+              content_hash: 68bc13587b8cd18438e765997e7e215c7125ddf7a5091cb9c65356908131c1a5
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 5874
+          byte_count: 310
+          word_count: 58
+          content_hash: 4c3e0f78176974d012c11d209854de550c273dd52decff0932043137733ccf70
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 6184
+          byte_count: 1018
+          word_count: 106
+          content_hash: b8968f5459d0524105d7cd9319dfee5e592dd8191649d5bd7f89b70664702144
+          children:
+            - path: 1.4.1
+              level: 3
+              title: IndexStore additions (internal/docint/store.go)
+              byte_offset: 6208
+              byte_count: 603
+              word_count: 65
+              content_hash: 22544d9674803eae71a58cf8e111d36642a8ac99fe9dcb8365dd845e4fe6b0e4
+            - path: 1.4.2
+              level: 3
+              title: IntelligenceService additions (internal/service/intelligence.go)
+              byte_offset: 6811
+              byte_count: 230
+              word_count: 19
+              content_hash: 061755890a9f5a65d51d181231e6b95a340f1096f524555520f956f0ebc2d9c5
+            - path: 1.4.3
+              level: 3
+              title: New doc_intel action
+              byte_offset: 7041
+              byte_count: 161
+              word_count: 19
+              content_hash: 89e66882a9f185007db152a6cab4a50823e2387624757fad677f269637b7579e
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 7202
+          byte_count: 345
+          word_count: 57
+          content_hash: 061fcc087e8703f29224d3c46c51807ada6e240931022f77320593dcd616020b
+entity_refs:
+    - entity_id: FEAT-01KPNNYYSQTA7
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 60
+cross_doc_links:
+    - target_path: work/spec/doc-intel-sqlite-fts-search.md
+      link_text: work/spec/doc-intel-sqlite-fts-search.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false
