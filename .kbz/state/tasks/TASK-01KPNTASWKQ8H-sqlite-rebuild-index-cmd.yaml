@@ -3,6 +3,14 @@ parent_feature: FEAT-01KPNNYYSQTA7
 slug: sqlite-rebuild-index-cmd
 name: Add rebuild-index CLI command
 summary: "Add kanbanzai rebuild-index sub-command to cmd/kanbanzai/. Reads all per-document YAML index files, deletes existing SQLite database, recreates schema, repopulates all three tables. Progress output: doc count, edge count, entity ref count, FTS section count. Add IntelligenceService.RebuildIndex method."
-status: active
+status: done
 depends_on:
   - TASK-01KPNTASMK8B6
+files_planned:
+  - internal/docint/store.go
+  - internal/service/intelligence.go
+  - cmd/kanbanzai/main.go
+  - cmd/kanbanzai/rebuild.go
+completed: "2026-04-20T16:54:14Z"
+completion_summary: "Added 'kanbanzai rebuild-index' CLI command. IntelligenceService.RebuildIndex() deletes existing SQLite DB, resets connection, iterates all YAML indexes, calls UpsertDocumentSQLite for each, returns RebuildStats. Added Close() to IntelligenceService and DBPath() to IndexStore. Command registered in main.go switch. Full test suite passes including race detector."
+verification: go test ./internal/... ./cmd/... -race — all pass
