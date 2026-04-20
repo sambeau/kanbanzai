@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPNNYYZRAEK
 slug: cross-queries-knowledge-dependency
 name: Inject knowledge query dependency into doc_intel find action
 summary: Define KnowledgeQuerier interface in internal/mcp/. Update docIntelTool and docIntelFindAction to accept and use this dependency. Update MCP server wiring in server.go to inject the knowledge service. Interface must be injectable for tests.
-status: queued
+status: ready
