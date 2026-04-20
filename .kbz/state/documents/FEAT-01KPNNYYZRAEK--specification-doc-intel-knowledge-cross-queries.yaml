@@ -2,9 +2,11 @@ id: FEAT-01KPNNYYZRAEK/specification-doc-intel-knowledge-cross-queries
 path: work/spec/doc-intel-knowledge-cross-queries.md
 type: specification
 title: Knowledge-Document Cross-Queries Specification
-status: draft
+status: approved
 owner: FEAT-01KPNNYYZRAEK
+approved_by: sambeau
+approved_at: "2026-04-20T15:16:03Z"
 content_hash: a5f230ed53e9572e4717dedeb3a40d3fbf0406c27df5f56874276839985794f4
 created: "2026-04-20T15:12:36Z"
 created_by: sambeau
-updated: "2026-04-20T15:15:29Z"
+updated: "2026-04-20T15:16:03Z"
