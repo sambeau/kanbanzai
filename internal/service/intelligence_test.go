@@ -145,7 +145,7 @@ func TestClassifyDocument(t *testing.T) {
 				Role:          "narrative",
 				Confidence:    "high",
 				Summary:       "Design overview",
-				ConceptsIntro: []string{"workflow-design"},
+				ConceptsIntro: []docint.ConceptIntroEntry{{Name: "workflow-design"}},
 			},
 		},
 	}
@@ -643,7 +643,7 @@ func TestFindByConcept(t *testing.T) {
 				SectionPath:   "1",
 				Role:          "narrative",
 				Confidence:    "high",
-				ConceptsIntro: []string{"lifecycle-management"},
+				ConceptsIntro: []docint.ConceptIntroEntry{{Name: "lifecycle-management"}},
 			},
 			{
 				SectionPath:  "1.1",
