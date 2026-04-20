@@ -364,3 +364,44 @@ func TestResolveGraphProject_EmptyValue(t *testing.T) {
 		t.Errorf("resolveGraphProject() = %q, want empty string for blank value", got)
 	}
 }
+
+func TestDeriveGraphProject_UnixPath(t *testing.T) {
+	t.Parallel()
+
+	// Use a path we know is absolute on the current machine.
+	got := DeriveGraphProject("/Users/alice/Dev/myrepo")
+	want := "Users-alice-Dev-myrepo"
+	if got != want {
+		t.Errorf("DeriveGraphProject() = %q, want %q", got, want)
+	}
+}
+
+func TestDeriveGraphProject_RelativePath(t *testing.T) {
+	t.Parallel()
+
+	// A relative path should be resolved to absolute before deriving.
+	// We can't assert the exact value since it depends on cwd, but we
+	// can assert it is non-empty and contains no leading slash.
+	got := DeriveGraphProject(".")
+	if got == "" {
+		t.Error("DeriveGraphProject(\".\") returned empty string")
+	}
+	if strings.HasPrefix(got, "/") {
+		t.Errorf("DeriveGraphProject(\".\") = %q; should not start with /", got)
+	}
+	if strings.Contains(got, "/") {
+		t.Errorf("DeriveGraphProject(\".\") = %q; should contain no slashes", got)
+	}
+}
+
+func TestDeriveGraphProject_NoLeadingSlash(t *testing.T) {
+	t.Parallel()
+
+	got := DeriveGraphProject("/a/b/c")
+	if strings.HasPrefix(got, "-") {
+		t.Errorf("DeriveGraphProject() = %q; should not start with hyphen", got)
+	}
+	if got != "a-b-c" {
+		t.Errorf("DeriveGraphProject(\"/a/b/c\") = %q, want %q", got, "a-b-c")
+	}
+}

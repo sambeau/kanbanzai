@@ -858,7 +858,7 @@ func TestTrackJ_Worktree_List_EmptyStore(t *testing.T) {
 	worktreeStore := worktree.NewStore(stateRoot)
 	gitOps := worktree.NewGit(repoRoot)
 
-	tools := WorktreeTool(worktreeStore, entitySvc, gitOps)
+	tools := WorktreeTool(worktreeStore, entitySvc, gitOps, repoRoot)
 	ts, err := mcptest.NewServer(t, tools...)
 	if err != nil {
 		t.Fatalf("new test server: %v", err)
@@ -910,7 +910,7 @@ func TestTrackJ_Worktree_Get_NotFound(t *testing.T) {
 	worktreeStore := worktree.NewStore(stateRoot)
 	gitOps := worktree.NewGit(repoRoot)
 
-	tools := WorktreeTool(worktreeStore, entitySvc, gitOps)
+	tools := WorktreeTool(worktreeStore, entitySvc, gitOps, repoRoot)
 	ts, err := mcptest.NewServer(t, tools...)
 	if err != nil {
 		t.Fatalf("new test server: %v", err)

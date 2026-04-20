@@ -137,3 +137,23 @@ func resolveGraphProject(localConfigPath string) string {
 	}
 	return strings.TrimSpace(lc.CodebaseMemory.GraphProject)
 }
+
+// DeriveGraphProject computes the codebase-memory-mcp project name for a
+// repository from its absolute filesystem path. The convention used by
+// codebase-memory-mcp is: remove the leading slash, then replace every
+// remaining slash with a hyphen.
+//
+// Examples:
+//   /Users/alice/Dev/myrepo  →  Users-alice-Dev-myrepo
+//   /home/bob/projects/api   →  home-bob-projects-api
+//
+// Returns empty string when the path cannot be made absolute.
+func DeriveGraphProject(repoPath string) string {
+	abs, err := filepath.Abs(repoPath)
+	if err != nil {
+		return ""
+	}
+	// filepath.ToSlash normalises Windows paths; TrimPrefix removes the leading /.
+	clean := strings.TrimPrefix(filepath.ToSlash(abs), "/")
+	return strings.ReplaceAll(clean, "/", "-")
+}

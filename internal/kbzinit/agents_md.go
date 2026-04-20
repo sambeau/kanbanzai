@@ -13,7 +13,7 @@ import (
 // agentsMDVersion is the current schema version for both AGENTS.md and
 // .github/copilot-instructions.md. Increment when the generated content
 // changes in a way that warrants overwriting existing managed files.
-const agentsMDVersion = 1
+const agentsMDVersion = 2
 
 // agentsMDMarkerPrefix is the HTML comment marker written on line 1 of
 // managed markdown files. It is invisible to agents reading the file as
@@ -26,7 +26,7 @@ const agentsMDMarkerSuffix = " -->"
 // agentsMDContent is the generated content for AGENTS.md.
 // Must start with the managed marker comment on line 1.
 // Must not exceed 50 lines.
-const agentsMDContent = `<!-- kanbanzai-managed: v1 -->
+const agentsMDContent = `<!-- kanbanzai-managed: v2 -->
 
 # Agent Instructions
 
@@ -62,13 +62,26 @@ workflow state is managed through the kanbanzai MCP server.
 | ` + "`kanbanzai-planning`" + ` | During planning conversations |
 | ` + "`kanbanzai-review`" + ` | When reviewing completed features |
 | ` + "`kanbanzai-plan-review`" + ` | When reviewing plans |
+
+## Optional: Code Graph Integration
+
+If your project uses codebase-memory-mcp, set graph_project in
+.kbz/local.yaml once per machine. The worktree tool uses it automatically
+when creating worktrees.
+
+    codebase_memory:
+      graph_project: YOUR-GRAPH-PROJECT-NAME
+
+Derive the name: take the repo absolute path, drop the leading slash, and
+replace remaining slashes with hyphens. For example /Users/alice/Dev/myrepo
+becomes Users-alice-Dev-myrepo.
 `
 
 // copilotInstructionsContent is the generated content for
 // .github/copilot-instructions.md.
 // Must start with the managed marker comment on line 1.
 // Must not exceed 25 lines.
-const copilotInstructionsContent = `<!-- kanbanzai-managed: v1 -->
+const copilotInstructionsContent = `<!-- kanbanzai-managed: v2 -->
 
 # Copilot Instructions
 

@@ -19,11 +19,11 @@ import (
 // WorktreeTool returns the 2.0 consolidated worktree tool.
 // It consolidates worktree_create, worktree_get, worktree_list, and worktree_remove
 // into a single tool with an action parameter (spec §19.1).
-func WorktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOps *worktree.Git) []server.ServerTool {
-	return []server.ServerTool{worktreeTool(store, entitySvc, gitOps)}
+func WorktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOps *worktree.Git, repoRoot string) []server.ServerTool {
+	return []server.ServerTool{worktreeTool(store, entitySvc, gitOps, repoRoot)}
 }
 
-func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOps *worktree.Git) server.ServerTool {
+func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOps *worktree.Git, repoRoot string) server.ServerTool {
 	tool := mcp.NewTool("worktree",
 		mcp.WithReadOnlyHintAnnotation(false),
 		mcp.WithDestructiveHintAnnotation(true),
@@ -68,7 +68,7 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		return DispatchAction(ctx, req, map[string]ActionHandler{
-			"create": worktreeCreateAction(store, entitySvc, gitOps),
+			"create": worktreeCreateAction(store, entitySvc, gitOps, repoRoot),
 			"get":    worktreeGetAction(store),
 			"list":   worktreeListAction(store),
 			"remove": worktreeRemoveAction(store, gitOps),
@@ -81,7 +81,7 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 
 // ─── create ──────────────────────────────────────────────────────────────────
 
-func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityService, gitOps *worktree.Git) ActionHandler {
+func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityService, gitOps *worktree.Git, repoRoot string) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
 
@@ -164,9 +164,23 @@ func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityServic
 			return nil, fmt.Errorf("Cannot create worktree for %s: failed to save worktree record: %w.\n\nTo resolve:\n  Check file permissions in .kbz/state/worktrees/ and retry", entityID, err)
 		}
 
-		return map[string]any{
+		resp := map[string]any{
 			"worktree": worktreeRecordToMap(created),
-		}, nil
+		}
+		if graphProject == "" {
+			// graph_project was not configured. Compute the expected value from the
+			// repo path so the agent can paste it directly into .kbz/local.yaml.
+			derived := config.DeriveGraphProject(repoRoot)
+			hint := "codebase-memory-mcp graph navigation is not configured for this machine."
+			if derived != "" {
+				hint += " Add to .kbz/local.yaml:\n\n    codebase_memory:\n      graph_project: " + derived +
+					"\n\nSub-agents receive indexed code navigation context in every handoff."
+			} else {
+				hint += " Add codebase_memory.graph_project to .kbz/local.yaml. See AGENTS.md for details."
+			}
+			resp["setup_hint"] = hint
+		}
+		return resp, nil
 	}
 }
 
