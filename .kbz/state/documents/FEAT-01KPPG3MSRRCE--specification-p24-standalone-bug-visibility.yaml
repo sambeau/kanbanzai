@@ -2,9 +2,11 @@ id: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility
 path: work/spec/p24-standalone-bug-visibility.md
 type: specification
 title: "Spec: Standalone bugs visible in status health"
-status: draft
+status: approved
 owner: FEAT-01KPPG3MSRRCE
-content_hash: a60f6626d951dd6c34bdb8f6f948486bcabf0727e467126d562afdbf7c47750c
+approved_by: sambeau
+approved_at: "2026-04-20T23:04:20Z"
+content_hash: 44bb78e875a37397bfc03da0f3ad967d5c4acbf0034890b57a0e623584454545
 created: "2026-04-20T22:56:50Z"
 created_by: sambeau
-updated: "2026-04-20T22:56:50Z"
+updated: "2026-04-20T23:04:20Z"
