@@ -2,9 +2,11 @@ id: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch
 path: work/spec/p24-doc-approve-status-patch.md
 type: specification
 title: "Spec: doc approve patches Status in source file"
-status: draft
+status: approved
 owner: FEAT-01KPPG2MYSG6A
+approved_by: sambeau
+approved_at: "2026-04-20T22:59:09Z"
 content_hash: 890bd398d9289349228f04f996c67def8a5411eb126e725f19dcc15945b58869
 created: "2026-04-20T22:56:39Z"
 created_by: sambeau
-updated: "2026-04-20T22:58:25Z"
+updated: "2026-04-20T22:59:09Z"
