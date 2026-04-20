@@ -2,11 +2,11 @@ id: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr
 path: work/spec/p24-optional-github-pr.md
 type: specification
 title: "Spec: Optional GitHub PR creation"
-status: draft
+status: approved
 owner: FEAT-01KPPG5XMJWT3
 approved_by: sambeau
-approved_at: "2026-04-20T23:06:54Z"
+approved_at: "2026-04-20T23:10:38Z"
 content_hash: 22ddfa1c6a27646f925af1b09955e3d7bb1ea6b937ab48e1e924db83c096e443
 created: "2026-04-20T22:58:21Z"
 created_by: sambeau
-updated: "2026-04-20T23:10:22Z"
+updated: "2026-04-20T23:10:38Z"
