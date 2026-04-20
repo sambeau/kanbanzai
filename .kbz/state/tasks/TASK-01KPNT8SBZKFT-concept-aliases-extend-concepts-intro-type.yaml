@@ -1,0 +1,6 @@
+id: TASK-01KPNT8SBZKFT
+parent_feature: FEAT-01KPNNYZ1ZSS6
+slug: concept-aliases-extend-concepts-intro-type
+name: Extend ConceptsIntro type with custom YAML unmarshalling
+summary: "Change Classification.ConceptsIntro in docint/types.go from []string to a new type accepting both plain strings and objects {name, aliases}. Implement custom yaml.Unmarshaler. Backward compatible with existing plain-string entries. Update concepts.go and graph.go call sites."
+status: queued
