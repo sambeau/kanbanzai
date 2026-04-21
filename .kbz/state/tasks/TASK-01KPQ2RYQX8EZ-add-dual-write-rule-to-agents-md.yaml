@@ -1,0 +1,6 @@
+id: TASK-01KPQ2RYQX8EZ
+parent_feature: FEAT-01KPQ08YKHNS9
+slug: add-dual-write-rule-to-agents-md
+name: Add dual-write rule to AGENTS.md
+summary: "Add dual-write subsection to Git Discipline section of AGENTS.md documenting requirement to update internal/kbzinit/skills/ when modifying .agents/skills/kanbanzai-*/SKILL.md files."
+status: queued
