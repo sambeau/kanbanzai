@@ -1,0 +1,10 @@
+id: FEAT-01KPQ08Y47522/dev-plan-p25-write-file-tool
+path: work/dev-plan/p25-write-file-tool.md
+type: dev-plan
+title: "Dev Plan: write_file MCP tool for worktree-safe file writing"
+status: draft
+owner: FEAT-01KPQ08Y47522
+content_hash: d613a755333e27b6b6042751afff931b304ba0849877bf862a9952dadbef3097
+created: "2026-04-21T03:47:39Z"
+created_by: sambeau
+updated: "2026-04-21T03:47:39Z"
