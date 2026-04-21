@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPQ08Y47522
 slug: write-tests-for-writefiletool
 name: Write tests for WriteFileTool
 summary: "Write internal/mcp/write_file_tool_test.go covering AC-01 through AC-10: basic write, worktree write, directory creation, path traversal rejection, missing worktree, empty path, missing content, Go source content byte-fidelity, and permission bits."
-status: active
+status: done
+files_planned:
+  - internal/mcp/write_file_tool_test.go
+completed: "2026-04-21T04:49:17Z"
 claimed_at: "2026-04-21T04:41:29Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T04:41:29Z"
 dispatched_by: sambeau
+completion_summary: "Created internal/mcp/write_file_tool_test.go with 9 test cases covering AC-01 through AC-10. Tests follow the existing mcp package patterns: invokeWriteFile helper calls writeFileTool() then tool.Handler(), extracts mcp.TextContent, and parses JSON. All tests pass."
+verification: "go test ./internal/mcp/... passed (2.282s). All 9 TestWriteFile_* tests pass individually and as part of the full package suite. AC-04 (atomic write) is infrastructure behaviour not directly testable at unit level and was excluded per task spec."
