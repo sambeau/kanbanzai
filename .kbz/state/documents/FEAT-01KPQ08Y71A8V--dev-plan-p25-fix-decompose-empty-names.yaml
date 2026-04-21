@@ -2,9 +2,11 @@ id: FEAT-01KPQ08Y71A8V/dev-plan-p25-fix-decompose-empty-names
 path: work/dev-plan/p25-fix-decompose-empty-names.md
 type: dev-plan
 title: "Dev Plan: Fix empty task names in decompose propose"
-status: draft
+status: approved
 owner: FEAT-01KPQ08Y71A8V
-content_hash: 6b8310965968e5aecb566d1568623534d88c19ee6f798d46166c5818da60fa40
+approved_by: sambeau
+approved_at: "2026-04-21T03:50:10Z"
+content_hash: 9389c2bf9d6fc7f32f91bf6c078faeeea743e795e68628dd00687984e629c4da
 created: "2026-04-21T03:47:40Z"
 created_by: sambeau
-updated: "2026-04-21T03:47:40Z"
+updated: "2026-04-21T03:50:10Z"
