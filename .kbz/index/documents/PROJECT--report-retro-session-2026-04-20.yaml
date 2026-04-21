@@ -1,0 +1,195 @@
+document_id: PROJECT/report-retro-session-2026-04-20
+document_path: work/reports/retro-session-2026-04-20.md
+content_hash: f42504358cc49508b09e9c03f4da275f83777920d995ca129bff922c457405ec
+indexed_at: 2026-04-21T02:36:44.478825Z
+sections:
+    - path: "1"
+      level: 1
+      title: Session Retrospective — 2026-04-20
+      byte_offset: 0
+      byte_count: 12308
+      word_count: 1779
+      content_hash: f42504358cc49508b09e9c03f4da275f83777920d995ca129bff922c457405ec
+      children:
+        - path: "1.1"
+          level: 2
+          title: What We Did
+          byte_offset: 193
+          byte_count: 938
+          word_count: 125
+          content_hash: e3d6c5a29f3541ebda50610e0ca2206fb872b942bf5bd9fce73d0c2f07f9024a
+        - path: "1.2"
+          level: 2
+          title: What Went Well
+          byte_offset: 1131
+          byte_count: 3109
+          word_count: 444
+          content_hash: c51adc57e1a3b646c52bdfadaa691fb7b05097a3dc798020652431d61a4bf633
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Parallel specialist review was highly effective
+              byte_offset: 1150
+              byte_count: 856
+              word_count: 112
+              content_hash: 8370dd7e9920eb08fe0645f4857d37ef2f479725a367a6c672d1a59871396ee0
+            - path: 1.2.2
+              level: 3
+              title: Parallel code fixes with disjoint file sets worked without conflicts
+              byte_offset: 2006
+              byte_count: 497
+              word_count: 73
+              content_hash: 088d931f44dccee8e3e5400747a35321a0e8927564323dff63696ca1493e9ac0
+            - path: 1.2.3
+              level: 3
+              title: Sub-agents used Kanbanzai MCP tools correctly
+              byte_offset: 2503
+              byte_count: 566
+              word_count: 80
+              content_hash: 1bf2ad3762b5b921a0328bfa3df22d3d9bb137f463641ccffb2e6c671b023334
+            - path: 1.2.4
+              level: 3
+              title: No Python was used for file editing
+              byte_offset: 3069
+              byte_count: 448
+              word_count: 68
+              content_hash: e72894501545da089d174f9ab6eb44edce150fd268b3f639ed725cacd7fda625
+            - path: 1.2.5
+              level: 3
+              title: '`retro synthesise` + `knowledge list` before writing the report'
+              byte_offset: 3517
+              byte_count: 482
+              word_count: 71
+              content_hash: 8656189b57877a670428fc8fee5bcb8cf4921b942acfd2744d5810a3273bee1d
+            - path: 1.2.6
+              level: 3
+              title: '`edit_file` in the embedded skills landed correctly first try (mostly)'
+              byte_offset: 3999
+              byte_count: 241
+              word_count: 36
+              content_hash: 60ae45da83d8f57e9c8112828f890b75df101165a17f7046e0307eb28ed512f3
+        - path: "1.3"
+          level: 2
+          title: What Didn't Go Well
+          byte_offset: 4240
+          byte_count: 3335
+          word_count: 485
+          content_hash: bc37c2344bbee8c826293366b4417657b41079930b0b7a1e3221a5af656f3aec
+          children:
+            - path: 1.3.1
+              level: 3
+              title: '`edit_file` on `planning/SKILL.md` failed twice before succeeding'
+              byte_offset: 4264
+              byte_count: 918
+              word_count: 133
+              content_hash: 5aa0c827445a54b596800151ed636f49a2c01460d55118efc4e34a695d38e21c
+            - path: 1.3.2
+              level: 3
+              title: Batch feature entity creation failed on the first call
+              byte_offset: 5182
+              byte_count: 742
+              word_count: 117
+              content_hash: c21bdd4a28fed085beb5d2a43ff6d520123f49d1ccca9ac55f523a7144572ed7
+            - path: 1.3.3
+              level: 3
+              title: Sub-agent commits created a noisy git log
+              byte_offset: 5924
+              byte_count: 820
+              word_count: 106
+              content_hash: cee486e42e481f542ac590eede952a1c7461b964b6ac55dda60bcda443a223e3
+            - path: 1.3.4
+              level: 3
+              title: The skill distribution gap was not caught until asked
+              byte_offset: 6744
+              byte_count: 831
+              word_count: 124
+              content_hash: e0c33d697b6f63dd68feb89704f79a6c7d9f78aad5bb2c76bef12568a1713ab4
+        - path: "1.4"
+          level: 2
+          title: MCP Server Behaviour — Detailed Observations
+          byte_offset: 7575
+          byte_count: 1656
+          word_count: 241
+          content_hash: f2c1fefa519154639f6b6285ca75ed2b668fb89a071cae792ec94b6939664988
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Sub-agents had full MCP access and used it correctly
+              byte_offset: 7626
+              byte_count: 808
+              word_count: 119
+              content_hash: 2bd84d07f81d6ceecd6cb547ed5713705ca085a37416fbefe73cb34967e85259
+            - path: 1.4.2
+              level: 3
+              title: No stale binary issues this session
+              byte_offset: 8434
+              byte_count: 349
+              word_count: 53
+              content_hash: 381a72dd475bf6f6627c805733a1643a12a8c083336fb5469c2cbf79f8bfc3d1
+            - path: 1.4.3
+              level: 3
+              title: State isolation between main agent and sub-agents was not a problem
+              byte_offset: 8783
+              byte_count: 448
+              word_count: 62
+              content_hash: 905fcfa6d0516a6d0656ea40b71b0a08aff12ea66f32d7cf10d5bf30d9f3142a
+        - path: "1.5"
+          level: 2
+          title: File Editing — Detailed Observations
+          byte_offset: 9231
+          byte_count: 1306
+          word_count: 190
+          content_hash: 1af4ecb0fc2b5ca4ad116c3172e54bfc37a9fc8e5c74c4ccb812bd996912135b
+          children:
+            - path: 1.5.1
+              level: 3
+              title: '`edit_file` — reliable for main project root, context-sensitive'
+              byte_offset: 9274
+              byte_count: 871
+              word_count: 130
+              content_hash: 3007970b5592b689d8e5f4cdb1c2238bf558c859e56eae99117c32b6e7df0055
+            - path: 1.5.2
+              level: 3
+              title: Overwrite mode for new design documents worked cleanly
+              byte_offset: 10145
+              byte_count: 392
+              word_count: 54
+              content_hash: cdd870942dcfe2611eee574695528c6581554c709494aae323253375b02b3f60
+        - path: "1.6"
+          level: 2
+          title: Patterns to Carry Forward
+          byte_offset: 10537
+          byte_count: 1061
+          word_count: 161
+          content_hash: 492bf45a031b54dc4655a4aa5cf4e87645f77cdd22fb5d2e9c529c07544af85a
+        - path: "1.7"
+          level: 2
+          title: Open Questions
+          byte_offset: 11598
+          byte_count: 710
+          word_count: 102
+          content_hash: 35177cac022b7fbd6a89b2f037e4788408327e8bfcc54b96ef771fb011771904
+cross_doc_links:
+    - target_path: work/reports/retro-recommendations-2026-04-20.md
+      link_text: work/reports/retro-recommendations-2026-04-20.md
+      section_path: "1.1"
+    - target_path: planning/SKILL.md
+      link_text: planning/SKILL.md
+      section_path: 1.3.1
+    - target_path: internal/kbzinit/skills/planning/SKILL.md
+      link_text: internal/kbzinit/skills/planning/SKILL.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.6"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: 1.5.1
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: question
+      confidence: high
+classified: false
