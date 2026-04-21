@@ -5,5 +5,6 @@ parent: P25-agent-tooling-pipeline-quality
 status: specifying
 summary: Allow the reviewing stage to auto-advance when all tasks are done with recorded verification and the feature config does not require a human review. Mirrors the require_github_pr pattern. Currently the reviewing stage is a hard mandatory gate causing every agentic merge to require override. Addresses proposal item P7.
 design: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance
+spec: FEAT-01KPQ08YE4399/specification-p25-agentic-review-auto-advance
 created: "2026-04-21T03:10:22Z"
 created_by: sambeau
