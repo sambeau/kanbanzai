@@ -309,6 +309,27 @@ func checkAllTasksTerminal(feature *model.Feature, entitySvc *EntityService) Gat
 	}
 }
 
+// checkAllTasksHaveVerification verifies that all child tasks of the feature
+// have a non-empty verification field. Returns nil if no child tasks exist
+// (vacuously true). Used as a prereq helper for agentic review auto-advance.
+func checkAllTasksHaveVerification(feature *model.Feature, entitySvc *EntityService) error {
+	tasks, err := entitySvc.List("task")
+	if err != nil {
+		return fmt.Errorf("error listing tasks: %v", err)
+	}
+
+	for _, t := range tasks {
+		if stringFromState(t.State, "parent_feature") != feature.ID {
+			continue
+		}
+		if stringFromState(t.State, "verification") == "" {
+			return fmt.Errorf("task %s has no recorded verification", t.ID)
+		}
+	}
+
+	return nil
+}
+
 // checkReviewReportExists verifies that at least one report document is
 // registered and owned by the feature. The report need not be approved.
 // Used by reviewing→done (FR-008).

@@ -36,9 +36,10 @@ type CheckpointCreateFunc func(featureID, fromStatus, toStatus, gateReason, over
 // CheckGate defaults to CheckTransitionGate, OverridePolicy defaults to "agent",
 // and OnCheckpoint defaults to nil (no checkpoint support).
 type AdvanceConfig struct {
-	CheckGate      GateCheckFunc        // nil → uses CheckTransitionGate
-	OverridePolicy OverridePolicyFunc   // nil → always returns "agent"
-	OnCheckpoint   CheckpointCreateFunc // nil → no checkpoint support (agent override only)
+	CheckGate           GateCheckFunc        // nil → uses CheckTransitionGate
+	OverridePolicy      OverridePolicyFunc   // nil → always returns "agent"
+	OnCheckpoint        CheckpointCreateFunc // nil → no checkpoint support (agent override only)
+	RequiresHumanReview func() bool          // nil → false (no human review required)
 }
 
 // featureForwardPath is the sequential forward path for Phase 2 features.
@@ -229,13 +230,28 @@ func AdvanceFeatureStatus(
 
 		// Halt after entering a stop state (unless it was the explicit target).
 		if advanceStopStates[nextState] && !isTarget {
-			return AdvanceResult{
-				FinalStatus:      nextState,
-				AdvancedThrough:  advancedThrough,
-				OverriddenGates:  overriddenGates,
-				StoppedReason:    fmt.Sprintf("stopped at %s: review is a mandatory gate that cannot be auto-advanced", nextState),
-				StructuralChecks: structuralChecks,
-			}, nil
+			requiresHumanReview := cfg != nil && cfg.RequiresHumanReview != nil && cfg.RequiresHumanReview()
+			if requiresHumanReview {
+				return AdvanceResult{
+					FinalStatus:      nextState,
+					AdvancedThrough:  advancedThrough,
+					OverriddenGates:  overriddenGates,
+					StoppedReason:    "stopped at reviewing: require_human_review is true",
+					StructuralChecks: structuralChecks,
+				}, nil
+			}
+			// Check auto-advance eligibility.
+			if err := checkAllTasksHaveVerification(feature, entitySvc); err != nil {
+				return AdvanceResult{
+					FinalStatus:      nextState,
+					AdvancedThrough:  advancedThrough,
+					OverriddenGates:  overriddenGates,
+					StoppedReason:    fmt.Sprintf("stopped at reviewing: %s", err),
+					StructuralChecks: structuralChecks,
+				}, nil
+			}
+			// All conditions satisfied — continue past reviewing.
+			continue
 		}
 	}
 

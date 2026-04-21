@@ -147,12 +147,22 @@ type MergeConfig struct {
 	// can be executed. When nil or false (the default), the PR step is optional.
 	// When true, merge(action: "check") will fail if no open PR exists.
 	RequireGitHubPR *bool `yaml:"require_github_pr,omitempty"`
+	// RequireHumanReview controls whether a human review approval is required before
+	// auto-advancing past the reviewing stage. When nil or false (the default), the
+	// reviewing stage can be auto-advanced by an agent. When true, a human must approve.
+	RequireHumanReview *bool `yaml:"require_human_review,omitempty"`
 }
 
 // RequiresGitHubPR returns true only when RequireGitHubPR is explicitly set to true.
 // nil and false both return false.
 func (m MergeConfig) RequiresGitHubPR() bool {
 	return m.RequireGitHubPR != nil && *m.RequireGitHubPR
+}
+
+// RequiresHumanReview returns true only when RequireHumanReview is explicitly set to true.
+// nil and false both return false.
+func (m MergeConfig) RequiresHumanReview() bool {
+	return m.RequireHumanReview != nil && *m.RequireHumanReview
 }
 
 type MCPConfig struct {

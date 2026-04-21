@@ -82,7 +82,7 @@ func createEntityTestTask(t *testing.T, entitySvc *service.EntityService, featID
 // callEntityTool invokes the entity tool and returns the raw text response.
 func callEntityTool(t *testing.T, entitySvc *service.EntityService, args map[string]any) string {
 	t.Helper()
-	tool := entityTool(entitySvc, nil, nil, nil)
+	tool := entityTool(entitySvc, nil, nil, nil, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -94,7 +94,7 @@ func callEntityTool(t *testing.T, entitySvc *service.EntityService, args map[str
 // callEntityToolWithDocSvc invokes the entity tool with a DocumentService and returns raw text.
 func callEntityToolWithDocSvc(t *testing.T, entitySvc *service.EntityService, docSvc *service.DocumentService, args map[string]any) string {
 	t.Helper()
-	tool := entityTool(entitySvc, docSvc, nil, nil)
+	tool := entityTool(entitySvc, docSvc, nil, nil, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {

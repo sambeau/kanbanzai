@@ -2,7 +2,9 @@ id: WT-01KPQ32RK1BXA
 entity_id: FEAT-01KPQ08YBJ5AK
 branch: feature/FEAT-01KPQ08YBJ5AK-decompose-devplan-aware-grouping
 path: .worktrees/FEAT-01KPQ08YBJ5AK-decompose-devplan-aware-grouping
-status: active
+status: merged
 created: "2026-04-21T03:59:25Z"
 created_by: sambeau
+merged_at: "2026-04-21T08:27:24Z"
+cleanup_after: "2026-04-28T08:27:24Z"
 graph_project: Users-samphillips-Dev-kanbanzai

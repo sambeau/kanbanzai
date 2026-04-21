@@ -1,6 +1,7 @@
 package service
 
 import (
+	"strings"
 	"testing"
 	"time"
 
@@ -207,8 +208,8 @@ func TestAdvanceFeatureStatus_TargetBehindCurrent(t *testing.T) {
 }
 
 // TestAdvanceFeatureStatus_AdvanceToDone_StopsAtReviewing verifies that advance
-// stops at reviewing (a mandatory halt state) even when targeting done.
-// The task is in terminal state so developing→reviewing passes.
+// stops at reviewing when require_human_review is true, even when targeting done.
+// The task is in terminal state so developing→reviewing passes. This tests AC-02.
 func TestAdvanceFeatureStatus_AdvanceToDone_StopsAtReviewing(t *testing.T) {
 	t.Parallel()
 	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
@@ -231,12 +232,14 @@ func TestAdvanceFeatureStatus_AdvanceToDone_StopsAtReviewing(t *testing.T) {
 	feature.Spec = specDocID
 	feature.DevPlan = devPlanDocID
 
-	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "", nil)
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "", &AdvanceConfig{
+		RequiresHumanReview: func() bool { return true },
+	})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	// Should stop at reviewing — mandatory halt state, never auto-advanced past.
+	// Should stop at reviewing — require_human_review is true, never auto-advances past.
 	if result.FinalStatus != "reviewing" {
 		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "reviewing")
 	}
@@ -924,7 +927,9 @@ func TestAdvanceFeatureStatus_Override_StopStatePreserved(t *testing.T) {
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "proposed")
 
-	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, true, "override all gates", nil)
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, true, "override all gates", &AdvanceConfig{
+		RequiresHumanReview: func() bool { return true },
+	})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -1010,3 +1015,235 @@ func TestAdvanceFeatureStatus_Override_TimestampSetOnRecord(t *testing.T) {
 		t.Errorf("override timestamp %v outside expected range [%v, %v]", ts, before, after)
 	}
 }
+
+// ─── Auto-advance reviewing tests (AC-02, AC-04 through AC-07) ───────────────
+
+// TestAdvanceFeatureStatus_RequireHumanReview_True_Halts verifies that when
+// RequiresHumanReview returns true the advance halts at reviewing regardless
+// of task verification status (AC-02).
+func TestAdvanceFeatureStatus_RequireHumanReview_True_Halts(t *testing.T) {
+	t.Parallel()
+	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01EEEEEEEEEE01"
+	slug := "rhr-true-halts"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "developing", nil)
+
+	// Task is done AND has verification — would otherwise satisfy auto-advance.
+	taskFields := makeTaskFields("T-01EEEEEEEEEE01", "verified-task", featureID, "done", nil)
+	taskFields["verification"] = "all checks passed"
+	writeTestEntity(t, stateRoot, "task", "T-01EEEEEEEEEE01", "verified-task", taskFields)
+
+	// Report doc exists — reviewing→done gate would pass.
+	submitAndApproveDoc(t, docSvc, repoRoot, "work/reports/rhr.md", "report", featureID, false)
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "developing")
+
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "", &AdvanceConfig{
+		RequiresHumanReview: func() bool { return true },
+	})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	// RequiresHumanReview=true overrides all other conditions — halts at reviewing.
+	if result.FinalStatus != "reviewing" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "reviewing")
+	}
+	if result.StoppedReason == "" {
+		t.Error("expected non-empty StoppedReason when require_human_review is true")
+	}
+	if !strings.Contains(result.StoppedReason, "require_human_review") {
+		t.Errorf("StoppedReason %q should mention require_human_review", result.StoppedReason)
+	}
+
+	got, err := entitySvc.Get("feature", featureID, slug)
+	if err != nil {
+		t.Fatalf("Get after advance: %v", err)
+	}
+	if s := stringFromState(got.State, "status"); s != "reviewing" {
+		t.Errorf("persisted status = %q, want %q", s, "reviewing")
+	}
+}
+
+// TestAdvanceFeatureStatus_AutoAdvancePastReviewing_AllVerified verifies that
+// when RequiresHumanReview is absent and all tasks have recorded verification,
+// advance continues past reviewing to done (AC-04).
+func TestAdvanceFeatureStatus_AutoAdvancePastReviewing_AllVerified(t *testing.T) {
+	t.Parallel()
+	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01EEEEEEEEEE02"
+	slug := "auto-advance-verified"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "developing", nil)
+
+	// Task is done with verification recorded.
+	taskFields := makeTaskFields("T-01EEEEEEEEEE02", "verified-task", featureID, "done", nil)
+	taskFields["verification"] = "integration tests passed"
+	writeTestEntity(t, stateRoot, "task", "T-01EEEEEEEEEE02", "verified-task", taskFields)
+
+	// Report doc required for reviewing→done gate.
+	submitAndApproveDoc(t, docSvc, repoRoot, "work/reports/auto.md", "report", featureID, false)
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "developing")
+
+	// No RequiresHumanReview — advance should auto-proceed past reviewing.
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "", nil)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if result.FinalStatus != "done" {
+		t.Errorf("FinalStatus = %q, want %q (should auto-advance past reviewing)", result.FinalStatus, "done")
+	}
+	if result.StoppedReason != "" {
+		t.Errorf("StoppedReason = %q, want empty", result.StoppedReason)
+	}
+
+	wantThrough := []string{"reviewing", "done"}
+	if len(result.AdvancedThrough) != len(wantThrough) {
+		t.Fatalf("AdvancedThrough = %v, want %v", result.AdvancedThrough, wantThrough)
+	}
+	for i, s := range wantThrough {
+		if result.AdvancedThrough[i] != s {
+			t.Errorf("AdvancedThrough[%d] = %q, want %q", i, result.AdvancedThrough[i], s)
+		}
+	}
+
+	got, err := entitySvc.Get("feature", featureID, slug)
+	if err != nil {
+		t.Fatalf("Get after advance: %v", err)
+	}
+	if s := stringFromState(got.State, "status"); s != "done" {
+		t.Errorf("persisted status = %q, want %q", s, "done")
+	}
+}
+
+// TestAdvanceFeatureStatus_HaltsAtReviewing_UnverifiedTask verifies that when
+// RequiresHumanReview is absent but a task has no recorded verification, advance
+// halts at reviewing with a StoppedReason identifying the unverified task (AC-05).
+func TestAdvanceFeatureStatus_HaltsAtReviewing_UnverifiedTask(t *testing.T) {
+	t.Parallel()
+	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01EEEEEEEEEE03"
+	slug := "halts-unverified"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "developing", nil)
+
+	// Task is done but has NO verification field.
+	writeTestEntity(t, stateRoot, "task", "T-01EEEEEEEEEE03", "unverified-task",
+		makeTaskFields("T-01EEEEEEEEEE03", "unverified-task", featureID, "done", nil))
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "developing")
+
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "", nil)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	// Should halt at reviewing — task lacks verification.
+	if result.FinalStatus != "reviewing" {
+		t.Errorf("FinalStatus = %q, want %q", result.FinalStatus, "reviewing")
+	}
+	if result.StoppedReason == "" {
+		t.Error("expected non-empty StoppedReason for unverified task")
+	}
+	if !strings.Contains(result.StoppedReason, "T-01EEEEEEEEEE03") {
+		t.Errorf("StoppedReason %q should identify unverified task T-01EEEEEEEEEE03", result.StoppedReason)
+	}
+
+	got, err := entitySvc.Get("feature", featureID, slug)
+	if err != nil {
+		t.Fatalf("Get after advance: %v", err)
+	}
+	if s := stringFromState(got.State, "status"); s != "reviewing" {
+		t.Errorf("persisted status = %q, want %q", s, "reviewing")
+	}
+}
+
+// TestAdvanceFeatureStatus_AutoAdvancePastReviewing_ZeroTasks verifies that a
+// feature with no child tasks auto-advances past reviewing when RequiresHumanReview
+// is absent (AC-06: vacuous truth — zero tasks satisfy verification).
+func TestAdvanceFeatureStatus_AutoAdvancePastReviewing_ZeroTasks(t *testing.T) {
+	t.Parallel()
+	stateRoot, repoRoot, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01EEEEEEEEEE04"
+	slug := "auto-advance-zero"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "developing", nil)
+
+	// No tasks — checkAllTasksHaveVerification returns nil vacuously.
+
+	// Report doc required for reviewing→done gate.
+	submitAndApproveDoc(t, docSvc, repoRoot, "work/reports/zero.md", "report", featureID, false)
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "developing")
+
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "", nil)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if result.FinalStatus != "done" {
+		t.Errorf("FinalStatus = %q, want %q (zero tasks → auto-advance vacuously true)", result.FinalStatus, "done")
+	}
+	if result.StoppedReason != "" {
+		t.Errorf("StoppedReason = %q, want empty", result.StoppedReason)
+	}
+
+	got, err := entitySvc.Get("feature", featureID, slug)
+	if err != nil {
+		t.Fatalf("Get after advance: %v", err)
+	}
+	if s := stringFromState(got.State, "status"); s != "done" {
+		t.Errorf("persisted status = %q, want %q", s, "done")
+	}
+}
+
+// TestAdvanceFeatureStatus_HaltsAtReviewing_NeedsReviewTask verifies that a task
+// in needs-review status blocks the path to reviewing: needs-review is non-terminal
+// so the developing→reviewing gate fails, preventing auto-advance consideration (AC-07).
+// The unit-level AC-07 behavior (checkAllTasksHaveVerification) is covered by
+// TestCheckAllTasksHaveVerification_NeedsReview in prereq_test.go.
+func TestAdvanceFeatureStatus_HaltsAtReviewing_NeedsReviewTask(t *testing.T) {
+	t.Parallel()
+	stateRoot, _, entitySvc, docSvc := setupAdvanceServices(t)
+
+	featureID := "FEAT-01EEEEEEEEEE05"
+	slug := "needs-review-blocks"
+	parent := "P1-test-plan"
+
+	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "developing", nil)
+
+	// Task in needs-review state — non-terminal, blocks developing→reviewing gate.
+	writeTestEntity(t, stateRoot, "task", "T-01EEEEEEEEEE05", "nr-task",
+		makeTaskFields("T-01EEEEEEEEEE05", "nr-task", featureID, "needs-review", nil))
+
+	feature := makeFeatureForAdvance(featureID, slug, parent, "developing")
+
+	result, err := AdvanceFeatureStatus(feature, "done", entitySvc, docSvc, false, "", nil)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	// The needs-review task is non-terminal, blocking developing→reviewing.
+	if result.FinalStatus == "done" {
+		t.Error("advance must not reach done when a needs-review task exists")
+	}
+	if result.StoppedReason == "" {
+		t.Error("expected non-empty StoppedReason")
+	}
+	if !strings.Contains(result.StoppedReason, "T-01EEEEEEEEEE05") {
+		t.Errorf("StoppedReason %q should identify the needs-review task", result.StoppedReason)
+	}
+}
+
+

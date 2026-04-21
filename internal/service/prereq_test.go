@@ -3,6 +3,7 @@ package service
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/sambeau/kanbanzai/internal/model"
@@ -962,3 +963,101 @@ func TestCheckTransitionGate_ReviewingToDone_AtCap_Allowed(t *testing.T) {
 		t.Errorf("expected ReviewCapReached=false for reviewing→done transition")
 	}
 }
+
+// ─── checkAllTasksHaveVerification unit tests ─────────────────────────────────
+
+// TestCheckAllTasksHaveVerification_ZeroTasks verifies that a feature with no
+// child tasks returns nil (vacuously true) (AC-06).
+func TestCheckAllTasksHaveVerification_ZeroTasks(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	entitySvc := NewEntityService(stateRoot)
+
+	feature := &model.Feature{ID: "FEAT-01FFFFFFFFFFF01"}
+	err := checkAllTasksHaveVerification(feature, entitySvc)
+	if err != nil {
+		t.Errorf("expected nil for feature with no tasks, got: %v", err)
+	}
+}
+
+// TestCheckAllTasksHaveVerification_AllVerified verifies that when all child
+// tasks have a non-empty verification field the function returns nil (AC-04).
+func TestCheckAllTasksHaveVerification_AllVerified(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01FFFFFFFFFFF02"
+
+	taskA := makeTaskFields("T-01FFFFFFFFFFF01", "task-a", featureID, "done", nil)
+	taskA["verification"] = "unit tests passed"
+	writeTestEntity(t, stateRoot, "task", "T-01FFFFFFFFFFF01", "task-a", taskA)
+
+	taskB := makeTaskFields("T-01FFFFFFFFFFF02", "task-b", featureID, "done", nil)
+	taskB["verification"] = "integration tests passed"
+	writeTestEntity(t, stateRoot, "task", "T-01FFFFFFFFFFF02", "task-b", taskB)
+
+	feature := &model.Feature{ID: featureID}
+	err := checkAllTasksHaveVerification(feature, entitySvc)
+	if err != nil {
+		t.Errorf("expected nil when all tasks have verification, got: %v", err)
+	}
+}
+
+// TestCheckAllTasksHaveVerification_OneEmpty verifies that when one task has an
+// empty verification field the function returns an error naming that task (AC-05).
+func TestCheckAllTasksHaveVerification_OneEmpty(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01FFFFFFFFFFF03"
+
+	// Task A has verification.
+	taskA := makeTaskFields("T-01FFFFFFFFFFF03", "task-with-verif", featureID, "done", nil)
+	taskA["verification"] = "all checks passed"
+	writeTestEntity(t, stateRoot, "task", "T-01FFFFFFFFFFF03", "task-with-verif", taskA)
+
+	// Task B has NO verification.
+	writeTestEntity(t, stateRoot, "task", "T-01FFFFFFFFFFF04", "task-no-verif",
+		makeTaskFields("T-01FFFFFFFFFFF04", "task-no-verif", featureID, "done", nil))
+
+	feature := &model.Feature{ID: featureID}
+	err := checkAllTasksHaveVerification(feature, entitySvc)
+	if err == nil {
+		t.Fatal("expected error when one task has empty verification, got nil")
+	}
+	if !strings.Contains(err.Error(), "T-01FFFFFFFFFFF04") {
+		t.Errorf("error %q should identify unverified task T-01FFFFFFFFFFF04", err.Error())
+	}
+}
+
+// TestCheckAllTasksHaveVerification_NeedsReview verifies that a task in
+// needs-review status with an empty verification field causes the function to
+// return an error — it does not auto-pass for needs-review tasks (AC-07).
+func TestCheckAllTasksHaveVerification_NeedsReview(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	entitySvc := NewEntityService(stateRoot)
+
+	featureID := "FEAT-01FFFFFFFFFFF04"
+
+	// Task is in needs-review state with NO verification recorded.
+	writeTestEntity(t, stateRoot, "task", "T-01FFFFFFFFFFF05", "nr-task",
+		makeTaskFields("T-01FFFFFFFFFFF05", "nr-task", featureID, "needs-review", nil))
+
+	feature := &model.Feature{ID: featureID}
+	err := checkAllTasksHaveVerification(feature, entitySvc)
+	if err == nil {
+		t.Fatal("expected error for needs-review task with empty verification, got nil")
+	}
+	if !strings.Contains(err.Error(), "T-01FFFFFFFFFFF05") {
+		t.Errorf("error %q should identify needs-review task T-01FFFFFFFFFFF05", err.Error())
+	}
+}
+
+

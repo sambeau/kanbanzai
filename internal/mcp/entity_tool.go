@@ -44,11 +44,11 @@ var entityCommitFunc = func(repoRoot, message string) (bool, error) {
 }
 
 // EntityTool returns the consolidated `entity` MCP tool registered in the core group.
-func EntityTool(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store) []server.ServerTool {
-	return []server.ServerTool{entityTool(entitySvc, docSvc, gateRouter, checkpointStore)}
+func EntityTool(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) []server.ServerTool {
+	return []server.ServerTool{entityTool(entitySvc, docSvc, gateRouter, checkpointStore, requiresHumanReview)}
 }
 
-func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store) server.ServerTool {
+func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) server.ServerTool {
 	tool := mcp.NewTool("entity",
 		mcp.WithReadOnlyHintAnnotation(false),
 		mcp.WithDestructiveHintAnnotation(false),
@@ -114,7 +114,7 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 			"get":        entityGetAction(entitySvc),
 			"list":       entityListAction(entitySvc),
 			"update":     entityUpdateAction(entitySvc),
-			"transition": entityTransitionAction(entitySvc, docSvc, gateRouter, checkpointStore),
+			"transition": entityTransitionAction(entitySvc, docSvc, gateRouter, checkpointStore, requiresHumanReview),
 		})
 	})
 
@@ -574,7 +574,7 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 
 // ─── transition ───────────────────────────────────────────────────────────────
 
-func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store) ActionHandler {
+func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		// Signal mutation so side_effects: [] is always present in the response (spec §8.4).
 		SignalMutation(ctx)
@@ -609,7 +609,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 					"error": "override_reason is required when override is true; cannot bypass gate without a reason",
 				}, nil
 			}
-			return entityAdvanceFeature(ctx, entitySvc, docSvc, entityID, newStatus, override, overrideReason, gateRouter, checkpointStore)
+			return entityAdvanceFeature(ctx, entitySvc, docSvc, entityID, newStatus, override, overrideReason, gateRouter, checkpointStore, requiresHumanReview)
 		}
 
 		// Plans use their own status update path (no gate enforcement).
@@ -828,7 +828,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 
 // entityAdvanceFeature loads a feature and calls AdvanceFeatureStatus, returning
 // a structured response with the stages advanced through and any stop reason.
-func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService, docSvc *service.DocumentService, entityID, targetStatus string, override bool, overrideReason string, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store) (any, error) {
+func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService, docSvc *service.DocumentService, entityID, targetStatus string, override bool, overrideReason string, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) (any, error) {
 	// Load the feature entity to get the model struct needed by AdvanceFeatureStatus.
 	getResult, err := entitySvc.Get("feature", entityID, "")
 	if err != nil {
@@ -838,10 +838,11 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 	feature := featureFromState(getResult.ID, getResult.Slug, getResult.State)
 	startStatus := string(feature.Status)
 
-	var advCfg *service.AdvanceConfig
+	advCfg := &service.AdvanceConfig{
+		RequiresHumanReview: requiresHumanReview,
+	}
 	if gateRouter != nil {
-		advCfg = &service.AdvanceConfig{
-			CheckGate: func(from, to string, f *model.Feature, ds *service.DocumentService, es *service.EntityService) service.GateResult {
+		advCfg.CheckGate = func(from, to string, f *model.Feature, ds *service.DocumentService, es *service.EntityService) service.GateResult {
 				routerCtx := buildGateEvalContext(f, ds, es)
 				routerResult := gateRouter.CheckGate(from, to, routerCtx)
 				if routerResult.Source == "registry" {
@@ -852,10 +853,9 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 					}
 				}
 				return service.CheckTransitionGate(from, to, f, ds, es)
-			},
-			OverridePolicy: func(to string) string {
-				return gateRouter.OverridePolicy(to)
-			},
+		}
+		advCfg.OverridePolicy = func(to string) string {
+			return gateRouter.OverridePolicy(to)
 		}
 		if checkpointStore != nil {
 			advCfg.OnCheckpoint = func(featureID, fromStatus, toStatus, gateReason, overrideReason string) (string, error) {
