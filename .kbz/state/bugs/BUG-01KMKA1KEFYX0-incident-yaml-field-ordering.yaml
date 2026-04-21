@@ -1,7 +1,7 @@
 id: BUG-01KMKA1KEFYX0
 slug: incident-yaml-field-ordering
 name: Incident YAML field ordering
-status: needs-review
+status: verified
 severity: high
 priority: high
 type: implementation-defect
