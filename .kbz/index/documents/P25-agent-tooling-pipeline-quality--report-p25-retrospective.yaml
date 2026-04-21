@@ -1,0 +1,342 @@
+document_id: P25-agent-tooling-pipeline-quality/report-p25-retrospective
+document_path: work/retro/p25-retrospective.md
+content_hash: 5d3acd362ef51e8e9b13a43aea6ebb5d27072db3c71829b9a01b0d0c38cfab24
+indexed_at: 2026-04-21T11:07:31.481952Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Retrospective: P25 — Agent Tooling and Pipeline Quality'
+      byte_offset: 0
+      byte_count: 17809
+      word_count: 2533
+      content_hash: 5d3acd362ef51e8e9b13a43aea6ebb5d27072db3c71829b9a01b0d0c38cfab24
+      children:
+        - path: "1.1"
+          level: 2
+          title: Executive Summary
+          byte_offset: 288
+          byte_count: 1034
+          word_count: 146
+          content_hash: 433d3a4337c04fae139da3ab37abf313bab060598f342ef6784aab4ea34cc29f
+        - path: "1.2"
+          level: 2
+          title: What Was Delivered
+          byte_offset: 1322
+          byte_count: 1100
+          word_count: 146
+          content_hash: 3edb4ddaa737c012ef0c72f4b445e78f286cf67709c9a2eb16d192ce91cd2464
+        - path: "1.3"
+          level: 2
+          title: 'Issue 1: Parallel merge race condition (Significant)'
+          byte_offset: 2422
+          byte_count: 2041
+          word_count: 298
+          content_hash: 5e2bb7e5e5a21bee31d81cc05bca6ab528c80f19ac986b06a5aa061ac26ef6fd
+          children:
+            - path: 1.3.1
+              level: 3
+              title: What happened
+              byte_offset: 2479
+              byte_count: 948
+              word_count: 132
+              content_hash: f7c661eab5bd28099c97715a0fb6e7e9f6ca5412b8d78d56159261a719f6d0fa
+            - path: 1.3.2
+              level: 3
+              title: Consequences
+              byte_offset: 3427
+              byte_count: 368
+              word_count: 57
+              content_hash: 62c6efcce77cdb7935331815f293c2be27fed0c37edb1a39cf14018a6d6e3efd
+            - path: 1.3.3
+              level: 3
+              title: Root cause
+              byte_offset: 3795
+              byte_count: 212
+              word_count: 34
+              content_hash: 18f016a79e62c055e97cf9be39c0135c9f39c9daec623a3b503be5e00538b322
+            - path: 1.3.4
+              level: 3
+              title: Recommendation
+              byte_offset: 4007
+              byte_count: 456
+              word_count: 67
+              content_hash: 1b98aeaa5e5896ce8462bb30a91f9c966af54859049694e951cea91865fcb0c7
+        - path: "1.4"
+          level: 2
+          title: 'Issue 2: Sub-agents did not use codebase-memory-mcp graph tools (Moderate)'
+          byte_offset: 4463
+          byte_count: 2239
+          word_count: 326
+          content_hash: 4c3e72fccee4243114b155de4586e73f10ddb4dd160a576a1c9095dadbbfdc25
+          children:
+            - path: 1.4.1
+              level: 3
+              title: What happened
+              byte_offset: 4542
+              byte_count: 404
+              word_count: 48
+              content_hash: b99f4f07b5028593d746a1c8ccbf5f2f1fbb0db00c1dc1fab9fb563680870fc2
+            - path: 1.4.2
+              level: 3
+              title: Why it happened
+              byte_offset: 4946
+              byte_count: 372
+              word_count: 62
+              content_hash: 06c06d5fa99603340a4deb41f38e25c133f5cca79b5f59efa72701caf2fd36c8
+            - path: 1.4.3
+              level: 3
+              title: Consequences
+              byte_offset: 5318
+              byte_count: 460
+              word_count: 67
+              content_hash: ada1bf1fc58533e666ce2d6c85c8c18eb689d4aadf6b77553c132282412b404f
+            - path: 1.4.4
+              level: 3
+              title: Recommendation
+              byte_offset: 5778
+              byte_count: 924
+              word_count: 138
+              content_hash: eb80053bec16114101a49472859adb010c1882a900f82f743c29e6f6f319b8ca
+        - path: "1.5"
+          level: 2
+          title: 'Issue 3: `write_file` was not available during its own delivery session (Moderate)'
+          byte_offset: 6702
+          byte_count: 2003
+          word_count: 287
+          content_hash: 5888133dbba88102b240ce2936c3e25050c3ff8849eb8358fef356cdb2046b98
+          children:
+            - path: 1.5.1
+              level: 3
+              title: What happened
+              byte_offset: 6789
+              byte_count: 456
+              word_count: 71
+              content_hash: 5b243170b65334ee7fcf47e86d6cd4a3c5fca6cd3baf6e09bbc5cf646c949bd9
+            - path: 1.5.2
+              level: 3
+              title: Consequences
+              byte_offset: 7245
+              byte_count: 440
+              word_count: 60
+              content_hash: 9bc8560f57c8e8672c43ee518a4f86458f1f8679a1e6871a23f51ff306dc5888
+            - path: 1.5.3
+              level: 3
+              title: What `write_file` actually provides
+              byte_offset: 7685
+              byte_count: 563
+              word_count: 76
+              content_hash: f9bfd500a5438f2e61f8ec8ea6306bea5a22a97b0a97df8416ac9bed4aa04e2c
+            - path: 1.5.4
+              level: 3
+              title: Recommendation
+              byte_offset: 8248
+              byte_count: 457
+              word_count: 67
+              content_hash: 46c64db87df67644f4fb25f2547a107aed973722557202d091b98aef04ed3887
+        - path: "1.6"
+          level: 2
+          title: 'Issue 4: Rebase conflicts from undetected shared-file overlap (Minor)'
+          byte_offset: 8705
+          byte_count: 1541
+          word_count: 202
+          content_hash: 0062fe915499923419299007c242b23ed2403492d63d3e2191bf2d7ceaaa0d49
+          children:
+            - path: 1.6.1
+              level: 3
+              title: What happened
+              byte_offset: 8779
+              byte_count: 777
+              word_count: 88
+              content_hash: 1470107819958039e88d59c609785cdf1d1ef511b8b755039f79dcf0e9b2dbf9
+            - path: 1.6.2
+              level: 3
+              title: Root cause
+              byte_offset: 9556
+              byte_count: 351
+              word_count: 54
+              content_hash: bd303a8c587121dcf2d23c165a034a6320922fb7c6d6418e8d59970a09a4f0e7
+            - path: 1.6.3
+              level: 3
+              title: Recommendation
+              byte_offset: 9907
+              byte_count: 339
+              word_count: 50
+              content_hash: 3ac9bca4c379767cd1b90a1bf53d6ce56808eea9ff585d7828a383838e48a843
+        - path: "1.7"
+          level: 2
+          title: 'Issue 5: Pre-existing nil pointer dereference in `ensureWorktree` (Significant)'
+          byte_offset: 10246
+          byte_count: 2237
+          word_count: 331
+          content_hash: 75d3f80813986dc4c93fc1f2d452a31a6672a5213c3c1918a4a21097457edbb2
+          children:
+            - path: 1.7.1
+              level: 3
+              title: What happened
+              byte_offset: 10330
+              byte_count: 692
+              word_count: 91
+              content_hash: fafb28cedc647d4d7178cd5fd5c0676f24c3e871bf82abbd2aebcbcab2bae6f4
+            - path: 1.7.2
+              level: 3
+              title: Production impact
+              byte_offset: 11022
+              byte_count: 446
+              word_count: 72
+              content_hash: 97eac7e93f8fd790a9c208dde3c31151d1dc27d824146574af4738ca22c9dce0
+            - path: 1.7.3
+              level: 3
+              title: Fix
+              byte_offset: 11468
+              byte_count: 205
+              word_count: 37
+              content_hash: 639be59f32ae9e3bbae5d0ed552bc67189266c2d76bbc106e3448ddeea35d2ba
+            - path: 1.7.4
+              level: 3
+              title: Why it was undetected
+              byte_offset: 11673
+              byte_count: 810
+              word_count: 121
+              content_hash: c3a8bc325282157cbfc7cedc15a1a58cd52ddaea21d7bb792f71799f3e322ef8
+        - path: "1.8"
+          level: 2
+          title: Broader Project Signals (from synthesis)
+          byte_offset: 12483
+          byte_count: 1940
+          word_count: 282
+          content_hash: 4db8b2b5368e95b65cbb97f054bd34b38607fbe2fe96f37fa9e842858ad2e831
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Worktree file editing friction (Significant, ongoing)
+              byte_offset: 12608
+              byte_count: 646
+              word_count: 93
+              content_hash: 84d5883adee52388050981036632e41b98df9356761909712fda04cc689640a6
+            - path: 1.8.2
+              level: 3
+              title: Stale MCP binary causes unexplained verification failures (Moderate, ongoing)
+              byte_offset: 13254
+              byte_count: 568
+              word_count: 87
+              content_hash: 8bfd564f07b5c97fa718f74f01ee3db73b372aad58e2f570bb9874a2a830cac7
+            - path: 1.8.3
+              level: 3
+              title: Commit discipline for workflow state (Moderate, ongoing)
+              byte_offset: 13822
+              byte_count: 601
+              word_count: 83
+              content_hash: 8b363e73f0dd5e804bd23a81e926a13f545beb921cbae8884ff7d03b6dd75ea5
+        - path: "1.9"
+          level: 2
+          title: What Worked Well
+          byte_offset: 14423
+          byte_count: 1339
+          word_count: 178
+          content_hash: 3657eb30186c17e7b17cdaacc07bd99aafb2f6553279a12c2601d8e21b766bf0
+        - path: "1.10"
+          level: 2
+          title: Recommendations for Next Iteration
+          byte_offset: 15762
+          byte_count: 1290
+          word_count: 224
+          content_hash: 1d4508db3e6360cf640a986b8adfb1ac52cd2a3d44629ebba80825d339fb47df
+        - path: "1.11"
+          level: 2
+          title: 'Appendix: P25 Commit Timeline'
+          byte_offset: 17052
+          byte_count: 757
+          word_count: 77
+          content_hash: ef2245d7fceea82ff24d650ed9002a589453242b0a90e3e6389813522da38171
+entity_refs:
+    - entity_id: FEAT-01KPQ08Y989P8
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2538
+    - entity_id: FEAT-01KPQ08YBJ5AK
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2558
+    - entity_id: FEAT-01KPQ08YE4399
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2582
+    - entity_id: FEAT-01KPQ08YE4399
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 3447
+    - entity_id: FEAT-01KPQ08Y47522
+      entity_type: feature
+      section_path: 1.5.1
+      byte_offset: 6808
+    - entity_id: FEAT-01KPQxxx
+      entity_type: feature
+      section_path: 1.5.3
+      byte_offset: 7922
+    - entity_id: FEAT-01KPQ08Y71A8V
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 8877
+    - entity_id: FEAT-01KPQ08YBJ5AK
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 8978
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 9158
+    - entity_id: FEAT-01KPQ08YH16WZ
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 9272
+    - entity_id: FEAT-01KPQ08Y989P8
+      entity_type: feature
+      section_path: "1.11"
+      byte_offset: 17105
+    - entity_id: FEAT-01KPQ08YBJ5AK
+      entity_type: feature
+      section_path: "1.11"
+      byte_offset: 17229
+    - entity_id: FEAT-01KPQ08YE4399
+      entity_type: feature
+      section_path: "1.11"
+      byte_offset: 17363
+    - entity_id: FEAT-01KPQ08Y47522
+      entity_type: feature
+      section_path: "1.11"
+      byte_offset: 17500
+    - entity_id: FEAT-01KPQ08Y71A8V
+      entity_type: feature
+      section_path: "1.11"
+      byte_offset: 17552
+    - entity_id: FEAT-01KPQ08YH16WZ
+      entity_type: feature
+      section_path: "1.11"
+      byte_offset: 17627
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: "1.11"
+      byte_offset: 17682
+    - entity_id: P25-agent-tooling-pipeline-quality
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 71
+    - entity_id: P1-alt
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 1505
+cross_doc_links:
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.6.1
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.8.1
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.10"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false
