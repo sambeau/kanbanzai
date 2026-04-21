@@ -9,3 +9,4 @@ reported_by: sambeau
 reported: "2026-04-02T23:11:24Z"
 observed: go test -race on the build info package produces race-detected failures intermittently. Agents have been dismissing these as pre-existing without investigation.
 expected: "All tests pass cleanly under go test -race with no data races detected. If a race was ever introduced, it must be fixed before being marked as acceptable."
+summary: "Not reproducible. After thorough investigation, the internal/buildinfo package has no race condition and cannot have one: zero goroutines, zero imports, nothing in the codebase writes to its variables at runtime, and go test -race -count=10 passes cleanly. The intermittent failures were cascade failures from the commitStateFunc data race in handoff_tool_test.go (BUG-01KPQY347TABX), fixed by removing t.Parallel() from the three TestHandoff_PreDispatchCommit_* tests."
