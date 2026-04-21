@@ -206,6 +206,12 @@ deterministic — retrying with the same arguments will produce the same error.
 **Missing verification summary:** `finish` will succeed without `verification`, but it
 degrades review quality and reduces the value of the knowledge base. Always include it.
 
+**Heredoc syntax in terminal commands:** Do not use heredoc (`<<EOF`) syntax in terminal
+commands — it fails consistently in the `sh` shell used by the terminal tool. For
+multi-line content, use `python3 -c` with escaped strings instead. For short strings,
+`echo` with single quotes works. For file creation, prefer `edit_file` when working in
+the main project root.
+
 ---
 
 ## Related

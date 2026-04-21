@@ -93,6 +93,12 @@ document is needed before moving on.
 genuine simplicity constraint. Ask what the simple version omits and whether those omissions
 are acceptable.
 
+**Partial-task-completion dependencies:** Do not plan task B to start after task A has
+"finished the schema" or "done the first part" — the entity model only supports
+full-completion dependencies. A task is either done or it is not. If two tasks need to
+interleave, split the prerequisite into Phase A and Phase B and declare the dependency on
+Phase A explicitly. Make the split visible in the task names.
+
 ---
 
 ## Related

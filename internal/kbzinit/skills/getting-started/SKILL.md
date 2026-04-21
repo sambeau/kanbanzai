@@ -35,6 +35,14 @@ a confirmation step. If you are seeing unexpected permission prompts for other
 kanbanzai tools, check that `.zed/settings.json` contains an `agent.tool_permissions`
 block; running `kbz init` will add it if missing.
 
+If kanbanzai tool calls return unexpected errors or unknown states — transitions
+failing, entity types unrecognised, responses that don't match the current codebase —
+the most common cause is a **stale binary**: the running `kanbanzai serve` process was
+built before the latest code changes. Run `server_info` first before investigating
+further. It reports the build timestamp, git SHA, and binary path so you can confirm
+whether the server matches the current source. If it is stale, rebuild and restart:
+`go install ./cmd/kanbanzai/` (or the equivalent install command for your project).
+
 Do not substitute `grep`, `find`, or direct file reading for kanbanzai tool calls.
 The workflow state in `.kbz/` is structured data — the MCP tools are the correct
 interface for reading and writing it.
