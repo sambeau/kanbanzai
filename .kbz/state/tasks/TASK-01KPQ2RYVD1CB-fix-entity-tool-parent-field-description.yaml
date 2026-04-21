@@ -1,0 +1,6 @@
+id: TASK-01KPQ2RYVD1CB
+parent_feature: FEAT-01KPQ08YKHNS9
+slug: fix-entity-tool-parent-field-description
+name: Fix entity_tool.go parent field description
+summary: "Update mcp.Description string for parent parameter in internal/mcp/entity_tool.go: remove (list only), state it is required on feature create, note parent_feature is used for tasks."
+status: queued
