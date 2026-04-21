@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPPG3MSRRCE
 slug: standalone-bug-visibility-tests
 name: Write unit tests for standalone bug visibility
 summary: "Write unit tests in status_tool_test.go covering AC-001 through AC-012: positive cases (high/critical severity), exclusions (feature-linked, resolved, low/medium severity), ordering preservation, and error resilience."
-status: active
+status: done
+files_planned:
+  - internal/mcp/status_tool_test.go
+completed: "2026-04-21T01:58:27Z"
 claimed_at: "2026-04-21T01:43:15Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T01:43:15Z"
 dispatched_by: sambeau
+completion_summary: "Added 10 unit tests in internal/mcp/status_tool_test.go covering AC-001 through AC-012. Added helper functions createStatusTestBug, setBugStatus, hasStandaloneBugItem, findStandaloneBugItem. All exclusion tests (AC-004 to AC-008) check specifically for open_critical_bug type items to avoid false failures from health-check attention items on bugs with non-standard state values."
+verification: go test ./internal/mcp/... passed (2.232s). All 10 new tests pass including the full existing suite.

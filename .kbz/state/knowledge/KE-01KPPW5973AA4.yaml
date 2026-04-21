@@ -1,0 +1,17 @@
+id: KE-01KPPW5973AA4
+tier: 3
+topic: retro-task-01kppjhpm4fsc
+scope: project
+content: "[minor] worked-well: Narrowing exclusion checks to Type == 'open_critical_bug' prevented false failures from health_error items that the health-check block legitimately adds for bugs with non-model status values."
+learned_from: TASK-01KPPJHPM4FSC
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - worked-well
+created: "2026-04-21T01:58:27Z"
+created_by: unknown
+updated: "2026-04-21T01:58:27Z"
