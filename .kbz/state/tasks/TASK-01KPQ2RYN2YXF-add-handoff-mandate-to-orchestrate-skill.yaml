@@ -1,0 +1,6 @@
+id: TASK-01KPQ2RYN2YXF
+parent_feature: FEAT-01KPQ08YKHNS9
+slug: add-handoff-mandate-to-orchestrate-skill
+name: Add handoff mandate to orchestrate-development SKILL.md
+summary: Add always-use-handoff rule before Phase 3 steps and Manual Prompt Composition anti-pattern entry to .kbz/skills/orchestrate-development/SKILL.md.
+status: queued
