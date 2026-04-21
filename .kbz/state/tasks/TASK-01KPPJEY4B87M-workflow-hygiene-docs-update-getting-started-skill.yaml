@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPPG4SXY6T0
 slug: workflow-hygiene-docs-update-getting-started-skill
 name: Update kanbanzai-getting-started SKILL.md
 summary: "Apply four targeted edits to .agents/skills/kanbanzai-getting-started/SKILL.md: (1) replace the stash instruction in the Session Start Checklist with a hard never-stash rule (FR-001/AC-001); (2) replace the Clean slate prose section with a two-case commit-or-stop structure that prohibits git stash (FR-002/AC-002); (3) insert a new Commit workflow state prose section immediately after Clean slate (FR-004/AC-004); (4) add a Shell-Querying Workflow State Files anti-pattern to the Anti-Patterns section (FR-009/AC-009)."
-status: active
+status: done
+files_planned:
+  - .agents/skills/kanbanzai-getting-started/SKILL.md
+completed: "2026-04-21T01:47:22Z"
 claimed_at: "2026-04-21T01:37:59Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T01:37:59Z"
 dispatched_by: sambeau
+completion_summary: "Applied four targeted edits to .agents/skills/kanbanzai-getting-started/SKILL.md: (1) replaced checklist Clean slate item to prohibit git stash; (2) replaced Clean slate prose with two-case commit-or-stop structure; (3) inserted new Commit workflow state prose section after Clean slate; (4) added Shell-Querying Workflow State Files anti-pattern to Anti-Patterns section."
+verification: "Verified with grep that all four changes are present at the correct lines: checklist item (L45), Clean slate prose (L52-61), Commit workflow state section (L63), Shell-Querying anti-pattern (L143)."
