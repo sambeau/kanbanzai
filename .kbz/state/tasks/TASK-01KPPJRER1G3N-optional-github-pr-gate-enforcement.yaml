@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPPG5XMJWT3
 slug: optional-github-pr-gate-enforcement
 name: Enforce PR gate in merge tool
 summary: "Modify checkMergeReadiness in internal/mcp/merge_tool.go to read cfg.Merge.RequiresGitHubPR(). When true and no open PR is found (or retrieval fails), inject pr_gate key with status: \"failed\" and descriptive message — blocking gate failure. When true and a PR is found but state != \"open\", produce the same failure with actual state in message. When false/nil, preserve current behaviour (pr_status informational only). Also update executeMerge path to be blocked consistently. Covers AC-006, AC-007, AC-008, AC-009 (FR-003, FR-004, FR-005, FR-006). Depends on config struct task."
-status: active
+status: done
+files_planned:
+  - internal/mcp/merge_tool.go
+completed: "2026-04-21T02:00:21Z"
 claimed_at: "2026-04-21T01:47:01Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T01:47:01Z"
 dispatched_by: sambeau
+completion_summary: "Modified checkMergeReadiness to load config and enforce PR gate when RequiresGitHubPR() is true (pr_gate: failed for missing/non-open PR, pr_status informational otherwise). Added executeMerge PR gate enforcement returning error when require_github_pr=true and no open PR. Also added state field to getPRStatus return map."
+verification: go test ./internal/mcp/... passed
