@@ -1,7 +1,7 @@
 id: BUG-01KPQY347TABX
 slug: finish-tool-intermittent-race
 name: Intermittent race in finish tool MCP tests
-status: reproduced
+status: planned
 severity: medium
 priority: medium
 type: implementation-defect
