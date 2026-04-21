@@ -1,7 +1,7 @@
 id: BUG-01KPQZMTF1YR5
 slug: kbzinit-skills-out-of-sync
 name: Embedded kbzinit skills out of sync with live agents skills
-status: verified
+status: closed
 severity: medium
 priority: medium
 type: implementation-defect
