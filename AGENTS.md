@@ -145,6 +145,14 @@ For commit message format, types, and examples, see the `kanbanzai-agents` skill
 
 Do not let document changes accumulate uncommitted across long sessions.
 
+### Dual-write rule for skill changes
+
+**Dual-write rule for skill changes.** The kanbanzai binary embeds `.agents/skills/kanbanzai-*/SKILL.md` files under `internal/kbzinit/skills/` for distribution to newly-initialised projects via `kanbanzai init`. When you modify any file under `.agents/skills/kanbanzai-*/`, check whether a corresponding file exists under `internal/kbzinit/skills/`. If one exists, apply the same change in the same commit.
+
+The correspondence is: `.agents/skills/kanbanzai-<name>/SKILL.md` ↔ `internal/kbzinit/skills/<name>/SKILL.md`
+
+Task-execution skills under `.kbz/skills/` are project-local; no dual-write applies to them.
+
 ### Store discipline
 
 `.kbz/state/` files are versioned project state, not ephemeral cache. They record entity lifecycle, document metadata, and knowledge entries that other agents depend on. Treat them as code changes:

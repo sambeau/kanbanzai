@@ -73,7 +73,10 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		mcp.WithString("type", mcp.Description("Entity type: plan, feature, task, bug, decision (required for create and list)")),
 		mcp.WithString("id", mcp.Description("Entity ID — type inferred from prefix (required for get, update, transition)")),
 		mcp.WithString("status", mcp.Description("Target status (transition) or status filter (list)")),
-		mcp.WithString("parent", mcp.Description("Parent ID filter: plan ID for features, feature ID for tasks (list only)")),
+		mcp.WithString("parent", mcp.Description(
+			"Parent plan ID for features (required on feature create to associate the feature "+
+				"with its plan; also used as a filter on list). "+
+				"Note: tasks use parent_feature, not parent.")),
 		mcp.WithArray("tags", mcp.WithStringItems(), mcp.Description("Tag filter (list) or tags to set (create/update)")),
 		mcp.WithArray("entities", mcp.Items(map[string]any{"type": "object"}), mcp.Description("Batch create: array of entity objects, each with the same fields as single create")),
 		// Common entity fields (type-specific, all optional at top level).

@@ -90,6 +90,11 @@ constraint_level: medium
 - **BECAUSE:** Full-file rewrites embed entire file content in terminal tool calls. An agent accumulates the content of multiple large files in its context before completing the first task, saturating its context window and degrading output quality for later tasks. This was observed in the P24 pipeline.
 - **Resolve:** For features with more than three tasks involving large source files, dispatch one sub-agent per task. Use the sizing rule above to identify when per-task isolation is required.
 
+### Manual Prompt Composition
+- **Detect:** The orchestrator writes a sub-agent prompt by hand rather than calling `handoff(task_id: "TASK-xxx")`.
+- **BECAUSE:** Manual prompts omit the graph project name (so codebase-memory-mcp tools are unavailable to the sub-agent), omit knowledge entries relevant to the task, and omit structured spec sections assembled by the context pipeline. This was the root cause of zero graph tool usage in the P24 pipeline.
+- **Resolve:** Always call `handoff(task_id)` to generate sub-agent prompts. The handoff tool assembles spec sections, knowledge constraints, file paths, role conventions, tool hints, and the graph project name. Supplement the generated prompt with file scope boundaries and parallel ownership constraints, but never replace it.
+
 ## Checklist
 
 ```
@@ -129,6 +134,8 @@ Copy this checklist and track your progress:
 For features with more than three tasks where tasks involve reading or rewriting source files longer than ~300 lines, dispatch one sub-agent per task rather than assigning multiple tasks to a single agent. Full-file rewrites embed entire file content in terminal tool calls; an agent assigned multiple large-file tasks will saturate its context window before completing the second task. Per-task isolation gives each agent a fresh context window sized for one file scope.
 
 Features with small files or documentation-only tasks do not require per-task isolation — batch dispatch remains appropriate.
+
+**Rule:** Always use `handoff(task_id: "TASK-xxx")` to generate sub-agent prompts. Never compose implementation prompts manually — manual composition silently omits graph project context, knowledge entries, and spec sections.
 
 0. **Before creating worktrees**, verify `.kbz/local.yaml` has `codebase_memory.graph_project` set
    (e.g. `Users-alice-Dev-myrepo`). If missing, add it now — worktrees created without it will not
