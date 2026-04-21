@@ -1,7 +1,7 @@
 id: BUG-01KMKA1VKTC9R
 slug: incident-cli-command-group-missing
 name: Incident CLI command group absent
-status: reported
+status: triaged
 severity: high
 priority: high
 type: implementation-defect
