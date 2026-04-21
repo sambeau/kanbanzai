@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPQ08Y71A8V
 slug: implement-derivetaskname-in-generateproposal
 name: Implement deriveTaskName in generateProposal
 summary: "Add unexported deriveTaskName(text, fallback string) helper to internal/service/decompose.go and call it in all three task-construction paths in generateProposal so every ProposedTask has a non-empty Name field."
-status: active
+status: done
+files_planned:
+  - internal/service/decompose.go
+completed: "2026-04-21T04:08:19Z"
 claimed_at: "2026-04-21T04:01:24Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T04:01:24Z"
 dispatched_by: sambeau
+completion_summary: "Added deriveTaskName(text, fallback string) string helper to internal/service/decompose.go and wired it into all three task-construction paths in generateProposal. The helper strips bold-ident prefixes (e.g. \"AC-01: \"), truncates to 60 chars at a word boundary, and falls back to the provided fallback when the candidate would be empty. Grouped tasks use \"Implement &lt;sectionTitle&gt;\", individual tasks derive from the AC text, and the test task gets the constant \"Write tests\"."
+verification: go test ./internal/service/... passed (1.835s)
