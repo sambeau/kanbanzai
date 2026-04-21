@@ -3,4 +3,13 @@ parent_feature: FEAT-01KPPG4SXY6T0
 slug: workflow-hygiene-docs-update-write-research-skill
 name: Update write-research SKILL.md for REC-07b
 summary: "Inspect .kbz/skills/write-research/SKILL.md first — if it has an anti-patterns or checklist section, add there; otherwise fall back to .kbz/roles/researcher.yaml. Do NOT add to both files. Add: (1) two pre-writing checklist items requiring retro(action: synthesise) and knowledge(action: list) before writing any report; (2) a Report From Memory anti-pattern entry (FR-010/AC-010)."
-status: ready
+status: done
+files_planned:
+  - .kbz/skills/write-research/SKILL.md
+completed: "2026-04-21T01:57:32Z"
+claimed_at: "2026-04-21T01:55:28Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-21T01:55:28Z"
+dispatched_by: sambeau
+completion_summary: "Applied two targeted edits to .kbz/skills/write-research/SKILL.md (chosen over researcher.yaml because it has an existing Anti-Patterns section): (1) added Report From Memory anti-pattern at end of Anti-Patterns section; (2) added new Pre-Writing Checklist section between Anti-Patterns and Procedure, with two checklist items requiring retro synthesise and knowledge list before writing."
+verification: "Verified with grep: Report From Memory at L80, Pre-Writing Checklist section at L86, retro/knowledge checklist items at L90-91. researcher.yaml not modified."
