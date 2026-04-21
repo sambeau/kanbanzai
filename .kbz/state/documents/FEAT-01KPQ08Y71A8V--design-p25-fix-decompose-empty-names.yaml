@@ -1,0 +1,10 @@
+id: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names
+path: work/design/p25-fix-decompose-empty-names.md
+type: design
+title: "Design: Fix empty task names in decompose propose"
+status: draft
+owner: FEAT-01KPQ08Y71A8V
+content_hash: 08ff6fd98165acec86409f667da7e640c723a956e3e8f99e66d57661954236e6
+created: "2026-04-21T03:21:12Z"
+created_by: sambeau
+updated: "2026-04-21T03:21:12Z"
