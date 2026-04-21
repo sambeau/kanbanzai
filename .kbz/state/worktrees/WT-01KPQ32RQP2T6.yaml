@@ -2,7 +2,7 @@ id: WT-01KPQ32RQP2T6
 entity_id: FEAT-01KPQ08YE4399
 branch: feature/FEAT-01KPQ08YE4399-agentic-review-auto-advance
 path: .worktrees/FEAT-01KPQ08YE4399-agentic-review-auto-advance
-status: active
+status: merged
 created: "2026-04-21T03:59:25Z"
 created_by: sambeau
 graph_project: Users-samphillips-Dev-kanbanzai
