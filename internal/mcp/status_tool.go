@@ -410,6 +410,38 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 		}
 	}
 
+	// Surface standalone high/critical bugs (no feature linkage) — spec gap P19 C4 (REQ-007).
+	if allBugs, bugErr := entitySvc.List("bug"); bugErr == nil {
+		for _, b := range allBugs {
+			originFeature, _ := b.State["origin_feature"].(string)
+			if originFeature != "" {
+				continue // feature-linked bugs are surfaced at feature scope
+			}
+			bStatus, _ := b.State["status"].(string)
+			switch bStatus {
+			case "done", "closed", "not-planned", "duplicate", "wont-fix":
+				continue
+			}
+			bSeverity, _ := b.State["severity"].(string)
+			if bSeverity != "high" && bSeverity != "critical" {
+				continue
+			}
+			bID, _ := b.State["id"].(string)
+			bName, _ := b.State["name"].(string)
+			msg := fmt.Sprintf("Standalone %s bug: %s", bSeverity, bName)
+			if bName == "" {
+				msg = fmt.Sprintf("Standalone %s bug: %s", bSeverity, bID)
+			}
+			attention = append(attention, AttentionItem{
+				Type:      "open_critical_bug",
+				Severity:  "warning",
+				EntityID:  bID,
+				DisplayID: id.FormatFullDisplay(bID),
+				Message:   msg,
+			})
+		}
+	}
+
 	return &projectOverview{
 		Scope:     "project",
 		Plans:     summaries,

@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -1578,5 +1579,340 @@ func TestProjectAttention_StuckTask_OldDispatch_NoGitBranch_Flagged(t *testing.T
 	}
 	if !found {
 		t.Errorf("expected stuck-task attention item for TASK-STUCK01; got: %v", items)
+	}
+}
+
+// ─── Standalone-bug visibility tests (FEAT-01KPPG3MSRRCE) ────────────────────
+
+// createStatusTestBug creates a bug for status tests.
+// Set originFeature to "" for standalone bugs; a non-empty value will be
+// written directly to the storage record after creation (CreateBug does not
+// accept origin_feature).
+func createStatusTestBug(t *testing.T, entitySvc *service.EntityService, slug, name, severity, originFeature string) string {
+	t.Helper()
+	result, err := entitySvc.CreateBug(service.CreateBugInput{
+		Slug:       slug,
+		Name:       name,
+		ReportedBy: "tester",
+		Observed:   "test observation",
+		Expected:   "test expectation",
+		Severity:   severity,
+	})
+	if err != nil {
+		t.Fatalf("CreateBug(%s): %v", slug, err)
+	}
+	if originFeature == "" {
+		return result.ID
+	}
+	// Write origin_feature directly to the storage record.
+	bugGet, err := entitySvc.Get("bug", result.ID, "")
+	if err != nil {
+		t.Fatalf("get bug %s: %v", result.ID, err)
+	}
+	bugRec, err := entitySvc.Store().Load("bug", result.ID, bugGet.Slug)
+	if err != nil {
+		t.Fatalf("load bug record %s: %v", result.ID, err)
+	}
+	bugRec.Fields["origin_feature"] = originFeature
+	if _, err := entitySvc.Store().Write(bugRec); err != nil {
+		t.Fatalf("write bug record with origin_feature: %v", err)
+	}
+	return result.ID
+}
+
+// setBugStatus writes a new status value directly to the storage record.
+func setBugStatus(t *testing.T, entitySvc *service.EntityService, bugID, status string) {
+	t.Helper()
+	bugGet, err := entitySvc.Get("bug", bugID, "")
+	if err != nil {
+		t.Fatalf("get bug %s: %v", bugID, err)
+	}
+	bugRec, err := entitySvc.Store().Load("bug", bugID, bugGet.Slug)
+	if err != nil {
+		t.Fatalf("load bug record %s: %v", bugID, err)
+	}
+	bugRec.Fields["status"] = status
+	if _, err := entitySvc.Store().Write(bugRec); err != nil {
+		t.Fatalf("write bug record with status %s: %v", status, err)
+	}
+}
+
+// hasStandaloneBugItem returns true when the attention slice contains an
+// open_critical_bug item with the given entity ID.
+func hasStandaloneBugItem(items []AttentionItem, bugID string) bool {
+	for _, item := range items {
+		if item.Type == "open_critical_bug" && item.EntityID == bugID {
+			return true
+		}
+	}
+	return false
+}
+
+// findStandaloneBugItem returns the first open_critical_bug item for bugID, or nil.
+func findStandaloneBugItem(items []AttentionItem, bugID string) *AttentionItem {
+	for i := range items {
+		if items[i].Type == "open_critical_bug" && items[i].EntityID == bugID {
+			return &items[i]
+		}
+	}
+	return nil
+}
+
+// TestSynthesiseProject_StandaloneBug_HighSeverity — AC-001
+func TestSynthesiseProject_StandaloneBug_HighSeverity(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+	bugID := createStatusTestBug(t, entitySvc, "standalone-high", "Data loss on save", "high", "")
+
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
+	if err != nil {
+		t.Fatalf("synthesiseProject error: %v", err)
+	}
+
+	found := findStandaloneBugItem(overview.Attention, bugID)
+	if found == nil {
+		t.Fatalf("expected open_critical_bug item for bug %s; attention: %v", bugID, overview.Attention)
+	}
+	if found.Severity != "warning" {
+		t.Errorf("Severity = %q, want warning", found.Severity)
+	}
+	if found.Message != "Standalone high bug: Data loss on save" {
+		t.Errorf("Message = %q, want %q", found.Message, "Standalone high bug: Data loss on save")
+	}
+}
+
+// TestSynthesiseProject_StandaloneBug_CriticalSeverity — AC-002
+func TestSynthesiseProject_StandaloneBug_CriticalSeverity(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+	bugID := createStatusTestBug(t, entitySvc, "standalone-critical", "System crash", "critical", "")
+
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
+	if err != nil {
+		t.Fatalf("synthesiseProject error: %v", err)
+	}
+
+	found := findStandaloneBugItem(overview.Attention, bugID)
+	if found == nil {
+		t.Fatalf("expected open_critical_bug item for critical bug %s", bugID)
+	}
+	if found.Message != "Standalone critical bug: System crash" {
+		t.Errorf("Message = %q, want %q", found.Message, "Standalone critical bug: System crash")
+	}
+}
+
+// TestSynthesiseProject_StandaloneBug_EmptyName — AC-003
+// When the bug's name is empty the Message must use the bug ID.
+func TestSynthesiseProject_StandaloneBug_EmptyName(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+
+	// Create with a placeholder name, then blank it out in storage.
+	bugID := createStatusTestBug(t, entitySvc, "noname-bug", "TempName", "high", "")
+	bugGet, err := entitySvc.Get("bug", bugID, "")
+	if err != nil {
+		t.Fatalf("get bug: %v", err)
+	}
+	bugRec, err := entitySvc.Store().Load("bug", bugID, bugGet.Slug)
+	if err != nil {
+		t.Fatalf("load bug record: %v", err)
+	}
+	bugRec.Fields["name"] = ""
+	if _, err := entitySvc.Store().Write(bugRec); err != nil {
+		t.Fatalf("write bug record: %v", err)
+	}
+
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
+	if err != nil {
+		t.Fatalf("synthesiseProject error: %v", err)
+	}
+
+	found := findStandaloneBugItem(overview.Attention, bugID)
+	if found == nil {
+		t.Fatalf("expected open_critical_bug item for bug %s; attention: %v", bugID, overview.Attention)
+	}
+	wantMsg := "Standalone high bug: " + bugID
+	if found.Message != wantMsg {
+		t.Errorf("Message = %q, want %q", found.Message, wantMsg)
+	}
+}
+
+// TestSynthesiseProject_StandaloneBug_FeatureLinked_Excluded — AC-004
+// A bug with a non-empty origin_feature must NOT appear as open_critical_bug
+// in project-level attention.
+func TestSynthesiseProject_StandaloneBug_FeatureLinked_Excluded(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+
+	planID := createTestPlan(t, entitySvc, "plan-for-linked-bug", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "feat-for-linked-bug", "Feature")
+	bugID := createStatusTestBug(t, entitySvc, "feature-linked-high", "Linked bug", "high", featID)
+
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
+	if err != nil {
+		t.Fatalf("synthesiseProject error: %v", err)
+	}
+
+	if hasStandaloneBugItem(overview.Attention, bugID) {
+		t.Errorf("feature-linked bug %s must NOT appear as open_critical_bug in project attention", bugID)
+	}
+}
+
+// TestSynthesiseProject_StandaloneBug_Closed_Excluded — AC-005
+func TestSynthesiseProject_StandaloneBug_Closed_Excluded(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+	bugID := createStatusTestBug(t, entitySvc, "closed-bug", "Closed bug", "high", "")
+	setBugStatus(t, entitySvc, bugID, "closed")
+
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
+	if err != nil {
+		t.Fatalf("synthesiseProject error: %v", err)
+	}
+
+	if hasStandaloneBugItem(overview.Attention, bugID) {
+		t.Errorf("closed bug %s must NOT appear as open_critical_bug in project attention", bugID)
+	}
+}
+
+// TestSynthesiseProject_StandaloneBug_ResolvedStatuses_Excluded — AC-006
+// Bugs in done, not-planned, duplicate, and wont-fix must not appear.
+func TestSynthesiseProject_StandaloneBug_ResolvedStatuses_Excluded(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+
+	resolvedStatuses := []string{"done", "not-planned", "duplicate", "wont-fix"}
+	bugIDs := make([]string, 0, len(resolvedStatuses))
+	for i, s := range resolvedStatuses {
+		slug := "resolved-bug-" + s
+		bugName := "Bug" + string(rune('A'+i))
+		bid := createStatusTestBug(t, entitySvc, slug, bugName, "high", "")
+		setBugStatus(t, entitySvc, bid, s)
+		bugIDs = append(bugIDs, bid)
+	}
+
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
+	if err != nil {
+		t.Fatalf("synthesiseProject error: %v", err)
+	}
+
+	for _, bid := range bugIDs {
+		if hasStandaloneBugItem(overview.Attention, bid) {
+			t.Errorf("resolved bug %s must NOT appear as open_critical_bug in project attention", bid)
+		}
+	}
+}
+
+// TestSynthesiseProject_StandaloneBug_MediumSeverity_Excluded — AC-007
+func TestSynthesiseProject_StandaloneBug_MediumSeverity_Excluded(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+	bugID := createStatusTestBug(t, entitySvc, "medium-bug", "Medium severity bug", "medium", "")
+
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
+	if err != nil {
+		t.Fatalf("synthesiseProject error: %v", err)
+	}
+
+	if hasStandaloneBugItem(overview.Attention, bugID) {
+		t.Errorf("medium-severity bug %s must NOT appear as open_critical_bug in project attention", bugID)
+	}
+}
+
+// TestSynthesiseProject_StandaloneBug_LowSeverity_Excluded — AC-008
+func TestSynthesiseProject_StandaloneBug_LowSeverity_Excluded(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+	bugID := createStatusTestBug(t, entitySvc, "low-bug", "Low severity bug", "low", "")
+
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
+	if err != nil {
+		t.Fatalf("synthesiseProject error: %v", err)
+	}
+
+	if hasStandaloneBugItem(overview.Attention, bugID) {
+		t.Errorf("low-severity bug %s must NOT appear as open_critical_bug in project attention", bugID)
+	}
+}
+
+// TestSynthesiseProject_StandaloneBug_OrderingPreserved — AC-009
+// Pre-existing attention items must appear before standalone-bug items.
+func TestSynthesiseProject_StandaloneBug_OrderingPreserved(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+
+	// Create a stuck-task situation: active task dispatched 25 hours ago.
+	planID := createTestPlan(t, entitySvc, "ordering-plan", "Plan")
+	featID := createStatusTestFeature(t, entitySvc, planID, "ordering-feat", "Feature")
+	taskID := createStatusTestTask(t, entitySvc, featID, "ordering-task", "Task")
+	taskGet, err := entitySvc.Get("task", taskID, "")
+	if err != nil {
+		t.Fatalf("get task: %v", err)
+	}
+	taskRec, err := entitySvc.Store().Load("task", taskID, taskGet.Slug)
+	if err != nil {
+		t.Fatalf("load task: %v", err)
+	}
+	taskRec.Fields["status"] = "active"
+	taskRec.Fields["dispatched_at"] = time.Now().UTC().Add(-25 * time.Hour).Format(time.RFC3339)
+	taskRec.Fields["parent_feature"] = featID
+	if _, err := entitySvc.Store().Write(taskRec); err != nil {
+		t.Fatalf("write task: %v", err)
+	}
+
+	bugID := createStatusTestBug(t, entitySvc, "ordering-bug", "Ordering test bug", "critical", "")
+
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
+	if err != nil {
+		t.Fatalf("synthesiseProject error: %v", err)
+	}
+
+	bugIdx := -1
+	for i, item := range overview.Attention {
+		if item.Type == "open_critical_bug" && item.EntityID == bugID {
+			bugIdx = i
+			break
+		}
+	}
+	if bugIdx < 0 {
+		t.Fatalf("standalone bug %s not found as open_critical_bug; attention: %v", bugID, overview.Attention)
+	}
+
+	// Any stuck-task item referencing the task must appear before the bug item.
+	for i, item := range overview.Attention {
+		if item.EntityID == taskID && i > bugIdx {
+			t.Errorf("pre-existing stuck-task item at index %d appears after bug item at index %d", i, bugIdx)
+		}
+	}
+}
+
+// TestSynthesiseProject_StandaloneBug_ListError_Ignored — AC-012
+// If entitySvc.List("bug") returns an error, synthesiseProject must still
+// succeed and return a valid response with no standalone-bug attention items.
+func TestSynthesiseProject_StandaloneBug_ListError_Ignored(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+
+	// Force List("bug") to error by placing a YAML file with an invalid filename
+	// in the bugs directory (parseRecordIdentity will fail on it).
+	bugsDir := entitySvc.Root() + "/bugs"
+	if err := os.MkdirAll(bugsDir, 0o755); err != nil {
+		t.Fatalf("MkdirAll bugs: %v", err)
+	}
+	if err := os.WriteFile(bugsDir+"/notabug-invalid.yaml", []byte("type: bug\n"), 0o644); err != nil {
+		t.Fatalf("WriteFile: %v", err)
+	}
+
+	overview, err := synthesiseProject(entitySvc, docSvc, nil, "")
+	if err != nil {
+		t.Fatalf("synthesiseProject must succeed even when List(bug) errors; got: %v", err)
+	}
+	if overview.Scope != "project" {
+		t.Errorf("Scope = %q, want project", overview.Scope)
+	}
+	for _, item := range overview.Attention {
+		if item.Type == "open_critical_bug" {
+			t.Errorf("unexpected open_critical_bug item when List(bug) errors: %v", item)
+		}
 	}
 }
