@@ -52,9 +52,9 @@ The tool does not depend on `service.EntityService`, `service.DocumentService`, 
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `path` | string | yes | File path to write. Relative to repo root (no `worktree_id`) or to the worktree's checked-out directory (`worktree_id` supplied). Absolute paths are also accepted and must resolve within the appropriate root. |
+| `path` | string | yes | File path to write. Relative to repo root (no `entity_id`) or to the worktree's checked-out directory (`entity_id` supplied). Absolute paths are also accepted and must resolve within the appropriate root. |
 | `content` | string | yes | Full file content to write, as a UTF-8 string. Written verbatim. |
-| `worktree_id` | string | no | ID of an active worktree record (e.g. `WT-01JX…`). When supplied, `path` is resolved relative to that worktree's filesystem directory. When omitted, `path` is resolved relative to the repo root. |
+| `entity_id` | string | no | Entity ID of the feature or bug whose active worktree should be the resolution root (e.g. `FEAT-01KPQ…`). When supplied, the tool looks up the active worktree for that entity and resolves `path` relative to its filesystem directory. When omitted, `path` is resolved relative to the repo root. |
 
 Response on success:
 
@@ -72,8 +72,8 @@ Response on failure uses the `inlineErr(code, message)` convention already used 
 Path resolution follows a two-step contract:
 
 1. **Determine the root directory.**
-   - If `worktree_id` is absent: root = `repoRoot` (the same `repoRoot` string already threaded through every `GroupGit` tool constructor via `newServerWithConfig`).
-   - If `worktree_id` is present: look up the worktree record in `worktree.Store`. If the record is not found or its status is not `active`, return an `inlineErr`. Root = the record's `Path` field (the on-disk worktree checkout directory).
+   - If `entity_id` is absent: root = `repoRoot` (the same `repoRoot` string already threaded through every `GroupGit` tool constructor via `newServerWithConfig`).
+   - If `entity_id` is present: look up the active worktree record for that entity in `worktree.Store` (using a `GetByEntityID` or equivalent query filtering on `entity_id` and `status == "active"`). If no active worktree is found for that entity, return a `worktree_not_found` error. Root = the record's `Path` field (the on-disk worktree checkout directory).
 
 2. **Resolve and validate the target path.**
    - If `path` is relative, join it onto root.
@@ -96,8 +96,7 @@ File content is passed as `[]byte` to `fsutil.WriteFileAtomic` with permission `
 |---|---|---|
 | `path` is empty | `missing_parameter` | Provide a non-empty path. |
 | `content` is missing from request | `missing_parameter` | Provide the content parameter. |
-| `worktree_id` supplied but record not found | `worktree_not_found` | Verify the worktree ID with `worktree(action: "get")`. |
-| `worktree_id` supplied but worktree is not active | `worktree_not_active` | Only active worktrees can be written to. |
+| `entity_id` supplied but no active worktree found | `worktree_not_found` | Verify a worktree exists with `worktree(action: "get", entity_id: "FEAT-…")`. |
 | Resolved path escapes the root | `path_traversal` | Use a path relative to the worktree or repo root; do not use `..` segments that escape it. |
 | `os.MkdirAll` fails | propagated as `tool error` | Likely a permissions issue on the host filesystem. |
 | `WriteFileAtomic` fails | propagated as `tool error` | Includes the wrapped OS error for diagnosis. |
@@ -115,6 +114,8 @@ File content is passed as `[]byte` to `fsutil.WriteFileAtomic` with permission `
 ```
 WriteFileTool(repoRoot string, worktreeStore *worktree.Store) []server.ServerTool
 ```
+
+Agents supply `entity_id` (e.g. `FEAT-01KPQ…`) rather than a worktree record ID, because the entity ID is always available in agent context (from `next()`, task summaries, and handoff prompts), while the worktree record ID (`WT-…`) is an internal implementation detail not surfaced in normal workflow.
 
 It carries `ReadOnlyHint: false`, `DestructiveHint: false` (it writes but does not delete), `IdempotentHint: false`, `OpenWorldHint: false`.
 
@@ -159,18 +160,16 @@ It carries `ReadOnlyHint: false`, `DestructiveHint: false` (it writes but does n
 | Dependency | Kind | Notes |
 |---|---|---|
 | `internal/fsutil.WriteFileAtomic` | Internal | Existing function. No changes required. |
-| `internal/worktree.Store` | Internal | Existing store. `GetByID` or equivalent lookup method required; if absent, a lookup-by-ID method may need to be added to the store interface (implementation concern, not a design risk). |
+| `internal/worktree.Store` | Internal | Existing store. A `GetByEntityID(entityID string) (*WorktreeRecord, error)` or equivalent query method is required. If the store only supports lookup by worktree record ID today, adding an entity-scoped lookup is a prerequisite task for the implementer. |
 | `github.com/mark3labs/mcp-go` | External (existing) | Already vendored. `mcp.NewTool`, `mcp.WithString`, `server.ServerTool` are used by every other tool. |
 | `internal/mcp.inlineErr` | Internal | Package-private helper already used across all tools in the package. No new dependency. |
 | `internal/config.GroupGit` | Internal | Registration group constant. No changes to group definitions required. |
 
-### Open Questions
+### Resolved Decisions
 
-1. **`worktree.Store.GetByID` availability.** The worktree store is currently queried by entity ID in all existing tool code. Path resolution for `write_file` requires lookup by worktree record ID (the `WT-...` identifier). Does `worktree.Store` already expose a `GetByID` method, or does one need to be added? If the latter, that addition should be called out in the specification as a prerequisite task.
+1. **`entity_id` as the lookup key (not `worktree_id`).** The tool accepts `entity_id` (e.g. `FEAT-01KPQ…`) rather than the worktree record ID (`WT-…`). Agents always have the entity ID in context; the worktree record ID is an internal implementation detail not surfaced in normal workflow. The store lookup by entity ID mirrors the existing pattern used in all other `GroupGit` tools. If `worktree.Store` does not yet expose a `GetByEntityID` method, the implementer must add it as a prerequisite task.
 
-2. **`worktree_id` vs entity-scoped path.** The proposal sketch uses `worktree_id` (the record's own ID). An alternative is to accept `entity_id` (e.g. `FEAT-...`) and derive the worktree from that. `entity_id` may be more natural for agents since they already hold the entity ID in context. The specification should settle this before implementation.
-
-3. **Permission bits.** `0o644` is assumed for all written files. Go source files and Markdown files are correctly handled by this. If the tool is later used to write executable scripts, the permission assumption will be wrong. For now, `0o644` is hardcoded; the spec may add an optional `mode` parameter if a concrete need is identified.
+2. **Permission bits hardcoded at `0o644`.** This covers all current use cases (Go source, Markdown, YAML, generated files). An optional `mode` parameter may be added in a future iteration if executable-script writing becomes a concrete need. The spec should not add it speculatively.
 ```
 
 Now let me register this document:

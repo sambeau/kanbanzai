@@ -173,13 +173,28 @@ Changes 2 and 3 (decompose fallback, per-task sizing) are self-contained documen
 
 ---
 
-## Open Questions
+## Resolved Decisions
 
-1. **Delimiter naming convention for heredocs:** Should the skill standardise on `GOEOF` as the default delimiter for Go files specifically, or use a generic `'EOF'` with a note to change it on collision? A Go-specific delimiter makes the collision case rarer (a file with a bare `GOEOF` line is unusual) and distinguishes the pattern visually. The implementation stage should decide and document consistently.
+1. **Delimiter naming convention for heredocs:** Use `GOEOF` as the standard delimiter for
+   Go source files. A file containing a bare `GOEOF` line is rare in practice; the
+   Go-specific name is visually distinctive and reduces collision risk compared to generic
+   `EOF`. The skill should document this as the default and note that any unique uppercase
+   string can substitute if a collision is encountered. This decision is binding for the
+   specification and implementation stages.
 
-2. **Anti-pattern entry for over-sized sub-agent dispatch:** Change 3 proposes adding sizing guidance in Phase 3. It is an open question whether a corresponding Anti-Patterns entry should also be added to `orchestrate-development/SKILL.md` for discoverability. This can be decided at the spec stage without changing the design intent.
+2. **Anti-pattern entry for over-sized sub-agent dispatch:** Yes — add the sizing guidance
+   in **both** Phase 3 (as a decision checkpoint, so it is encountered at the moment of
+   dispatch) **and** the `## Anti-Patterns` section (for discoverability when agents scan
+   for known pitfalls). Two placements with the same content is correct here; the Phase 3
+   placement is action-oriented, the anti-pattern is recognition-oriented.
 
-3. **Dual-write requirement for `.kbz/skills/` changes:** Changes to skill files under `.kbz/skills/` may need to be mirrored in `internal/kbzinit/skills/` (the embedded copy distributed to other projects). This is a separate concern (P9 in the proposal) and is out of scope for this feature. However, whoever implements the three skill edits should be aware of the dual-write requirement and check whether corresponding files exist in `internal/kbzinit/skills/` before closing their tasks.
+3. **Dual-write requirement:** The three skill files edited by this feature
+   (`.kbz/skills/implement-task/SKILL.md`, `.kbz/skills/decompose-feature/SKILL.md`,
+   `.kbz/skills/orchestrate-development/SKILL.md`) are task-execution skills under
+   `.kbz/skills/`, **not** embedded kbzinit skills. No dual-write to
+   `internal/kbzinit/skills/` is required for these changes. The dual-write requirement
+   applies only to `.agents/skills/kanbanzai-*/SKILL.md` files and is handled by
+   FEAT-01KPQ08YKHNS9 (P9). This is explicitly out of scope here.
 ```
 
 Now I'll register the document:

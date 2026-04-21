@@ -321,25 +321,36 @@ The cost of fixing it is low and the P24 pattern makes the implementation path c
 
 ---
 
-## Open Questions
+## Resolved Decisions
 
-None blocking this design. The following are noted for the specification stage:
+The following questions were raised during design and resolved before approval:
 
-1. **Partial verification:** If some tasks have verification and some do not, the advance halts
-   at reviewing with a message naming the unverified tasks. Should the message be a warning
-   that allows override, or a hard block? Proposal: hard block with a clear actionable message,
-   consistent with how other gate failures behave.
+1. **`require_human_review` default value — resolved: `false`.**
+   The default is `false` (agentic-first), consistent with `require_github_pr`. Kanbanzai is
+   designed for agentic pipelines; requiring human review by default runs against the grain of
+   that purpose. Teams that want a human gate explicitly set `require_human_review: true` in
+   `.kbz/config.yaml`. This is a semantic change for any project relying on the implicit
+   reviewing halt — the blast radius is documented as a consequence in the Decisions section.
 
-2. **Zero tasks:** If a feature has no tasks (tasks were never created), should reviewing be
-   treated as auto-advanceable? Proposal: yes — no tasks means no missing verification. The
-   condition "all tasks have verification" is vacuously true. This matches the behaviour of
-   `checkAllTasksTerminal` for empty task lists.
+2. **Partial verification — resolved: hard block.**
+   If some tasks have a verification field and others do not, the advance halts at reviewing
+   with an actionable message naming the unverified tasks. This is a hard block, not a
+   warning-level override-eligible gate, consistent with how all other prerequisite gate
+   failures behave. Partial verification indicates incomplete work, not a minor deviation.
 
-3. **`needs-review` task status:** A task completed to `needs-review` rather than `done` is
-   terminal but may or may not have a verification field. The auto-advance condition requires
-   a non-empty verification field regardless of terminal status variant. This is intentional:
-   `needs-review` implies human attention is wanted; if that task is part of a feature, the
-   feature should not auto-advance past reviewing.
+3. **Zero tasks — resolved: auto-advanceable (vacuously true).**
+   A feature with no tasks has no missing verification. The condition "all tasks have
+   verification" is vacuously satisfied for an empty task list, matching the existing
+   behaviour of `checkAllTasksTerminal`. Zero-task features auto-advance past reviewing when
+   `require_human_review` is false.
+
+4. **`needs-review` task status — resolved: blocks auto-advance.**
+   A task in `needs-review` is terminal but is explicitly signalling that human attention is
+   wanted. The auto-advance condition requires all terminal tasks to have a non-empty
+   verification field regardless of whether their terminal status is `done` or `needs-review`.
+   A `needs-review` task without a verification field blocks auto-advance, which is the
+   intended behaviour — it should not be possible to auto-advance past a stage that a task is
+   actively requesting review for.
 ```
 
 Now I'll register the document:

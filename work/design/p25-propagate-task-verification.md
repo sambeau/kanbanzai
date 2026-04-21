@@ -158,18 +158,22 @@ finishOne()
   └─ include result in MCP response under "verification_aggregation"
 ```
 
-### Open Questions
+### Resolved Decisions
 
-1. **Overwrite guard**: If the feature entity already has a manually-set `verification` field
-   (e.g. written by a reviewer agent), should aggregation overwrite it or skip? The current
-   design overwrites unconditionally. A guard (skip if `verification_status` is already
-   `"passed"`) would prevent regression but adds complexity. The specification should settle
-   this before implementation.
+1. **Overwrite guard — always overwrite.** If the feature entity already has a manually-set
+   `verification` field, aggregation overwrites it unconditionally. The far more common case
+   is tasks finishing and the aggregation needing to land accurately. A manual pre-set value
+   is a rare edge case and is strictly less accurate than the aggregated summary of actual
+   task completions. Overwriting with a current, accurate summary is always preferable to
+   preserving a potentially-stale manual value.
 
-2. **`wont_do`-only features**: If all tasks are `wont_do` (none are `done`), aggregation
-   produces no tasks to summarise and hits the `"none"` path, writing nothing. This preserves
-   existing gate behaviour. Whether this is the right outcome for a feature where all work was
-   deliberately skipped is an open design question; it is left for the reviewer.
+2. **`wont_do`-only features — remain blocking.** If all tasks are `wont_do` (none are
+   `done`), aggregation hits the `"none"` path and writes nothing, leaving both verification
+   gates failing. This is intentional: a feature where every task was deliberately skipped is
+   an unusual state that warrants a human look — scope likely changed mid-flight. The merge
+   gates acting as a forcing function in this case is the correct conservative posture.
+   Override remains available for teams that explicitly want to merge a `wont_do`-only
+   feature.
 
 ---
 

@@ -414,21 +414,21 @@ analysis output.
 
 ---
 
-## Open Questions
+## Decisions
 
-1. **Section heading variants:** Dev plans have been observed using
-   `## Task Breakdown` consistently. If the template is ever updated to use
-   a different heading (e.g. `## Tasks`), the parser will miss it. Should the
-   parser accept a small set of heading aliases, or should the template be
-   treated as a strict contract? Recommendation: treat it as a strict contract
-   for now; add aliases only if real-world divergence is observed.
+- **Decision:** The `## Task Breakdown` heading is treated as a strict contract.
+  **Rationale:** Every dev plan produced in this project uses the template heading verbatim.
+  Accepting aliases (e.g. `## Tasks`) would require maintaining a list of synonyms with no
+  concrete benefit; the template is the enforced interface. If the heading is absent or
+  spelled differently, the parser falls through to the AC-based heuristic — which is the
+  correct and safe fallback. Aliases can be added in a follow-up if real-world divergence is
+  observed.
 
-2. **Multi-line Description parsing:** The current design uses only the task
-   title for `Name` and `Summary`. The `**Description:**` field often contains
-   richer context. Should `Summary` be set to the first sentence of
-   `**Description:**` instead? This would require multi-line block extraction
-   and introduces parsing fragility. Deferring until there is evidence that
-   title-only summaries are insufficient.
+- **Decision:** `Summary` is derived from the task title only, not from `**Description:**`.
+  **Rationale:** Extracting the first sentence of a multi-line `**Description:**` block
+  requires nested block parsing with no deterministic terminator. Title text is a single
+  line with clear boundaries and is sufficient for `Summary` purposes. Richer summaries can
+  be added later if title-only summaries prove inadequate in practice.
 ```
 
 Now let me register the document:

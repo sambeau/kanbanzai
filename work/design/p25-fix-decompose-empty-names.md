@@ -81,17 +81,25 @@ This string contains a colon. `validate.ValidateName` rejects names containing c
 Using `ac.text` directly as `Name` for this format would cause `CreateTask` to fail —
 replacing one empty-name error with a colon-name error.
 
-A name derivation helper must therefore handle this format explicitly.
+A name derivation helper must therefore handle this format explicitly. The
+stripping pattern uses a strict regex `^[A-Z]+-\d+: ` (uppercase identifier,
+hyphen, digits, colon-space) rather than a loose "first colon-space sequence"
+heuristic. This avoids accidentally truncating prose ACs that contain a colon
+in their description (e.g. `"Login: users can authenticate with email"` would
+be mishandled by the loose pattern; the strict pattern correctly leaves it
+untouched and uses the full text as the name).
 
 ### Fix: `deriveTaskName` helper
 
 Introduce a package-private helper `deriveTaskName(text, fallback string) string` in
 `decompose.go`:
 
-1. **Strip bold-ident prefix.** If `text` matches `<IDENT>: <rest>` (i.e. contains `": "`
-   with a non-empty prefix that has no spaces), discard the prefix and use `<rest>` as the
-   candidate name. This handles the `"AC-01: description"` format produced by
-   `parseSpecStructure` for bold-identifier criteria.
+1. **Strip bold-ident prefix.** If `text` matches the strict pattern `^[A-Z]+-\d+: ` (one
+   or more uppercase letters, a hyphen, one or more digits, a colon, and a space), discard
+   the identifier prefix and use the remainder as the candidate name. This handles the
+   `"AC-01: description"` format produced by `parseSpecStructure` for bold-identifier
+   criteria. Prose ACs that happen to contain a colon but do not begin with a bold-ident
+   token are left untouched.
 
 2. **Trim to 60 characters.** Truncate the candidate at a word boundary where possible; never
    truncate mid-word if a shorter clean boundary exists within the limit.
