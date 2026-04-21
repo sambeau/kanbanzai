@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 // setupDecomposeTest creates entity and document services with a feature
@@ -152,7 +154,7 @@ func TestDecomposeFeature_ProposalProduced(t *testing.T) {
 		t.Errorf("TotalTasks = %d, want at least 2 (grouped tasks from acceptance criteria)", proposal.TotalTasks)
 	}
 
-	// Each proposed task must have slug, summary, and rationale.
+	// Each proposed task must have slug, summary, rationale, and a non-empty name.
 	for i, task := range proposal.Tasks {
 		if task.Slug == "" {
 			t.Errorf("task[%d].Slug is empty", i)
@@ -162,6 +164,9 @@ func TestDecomposeFeature_ProposalProduced(t *testing.T) {
 		}
 		if task.Rationale == "" {
 			t.Errorf("task[%d].Rationale is empty", i)
+		}
+		if task.Name == "" {
+			t.Errorf("task[%d].Name is empty (AC-01: every proposed task must have a non-empty name)", i)
 		}
 	}
 
@@ -2056,6 +2061,161 @@ func TestDecomposeFeature_RichDiagnostic_BoldOutsideSection(t *testing.T) {
 	}
 	if !contains(err.Error(), "outside an Acceptance Criteria section") {
 		t.Errorf("error = %q\nwant it to mention bold-idents outside AC section", err.Error())
+	}
+}
+
+// ---------------------------------------------------------------------------
+// AC-01 through AC-05: deriveTaskName and decompose apply tests
+// ---------------------------------------------------------------------------
+
+// TestDeriveTaskName_BoldIdentPrefix covers AC-02, AC-04, and AC-05.
+// It exercises deriveTaskName directly (same package) with a table of inputs.
+func TestDeriveTaskName_BoldIdentPrefix(t *testing.T) {
+	t.Parallel()
+
+	longText := strings.Repeat("x", 70) // 70 chars — exceeds 60 char limit
+
+	tests := []struct {
+		name     string
+		text     string
+		fallback string
+		// wantExact: if non-empty, output must equal this value exactly.
+		wantExact string
+		// wantMaxLen: if > 0, output must be <= this length.
+		wantMaxLen int
+		// wantNoColon: if true, output must not contain ":".
+		wantNoColon bool
+		// wantValidateName: if true, output must pass validate.ValidateName.
+		wantValidateName bool
+		// wantMatchPattern: if non-empty, output must match this regexp.
+		wantMatchPattern string
+	}{
+		{
+			// AC-02 case 1: bold-ident prefix is stripped; result has no colon and passes ValidateName.
+			name:             "bold-ident prefix stripped",
+			text:             "AC-01: The service MUST accept JSON input",
+			fallback:         "fallback",
+			wantNoColon:      true,
+			wantValidateName: true,
+		},
+		{
+			// AC-02 / AC-05: plain prose with colon — not a bold-ident prefix → not stripped.
+			name:      "plain prose with colon not stripped",
+			text:      "Login: users can authenticate",
+			fallback:  "fallback",
+			wantExact: "Login: users can authenticate",
+		},
+		{
+			// AC-02 case 3: empty input → fallback returned.
+			name:      "empty text returns fallback",
+			text:      "",
+			fallback:  "fallback",
+			wantExact: "fallback",
+		},
+		{
+			// AC-02 case 4: text longer than 60 chars → output truncated to ≤60 chars.
+			name:       "long text truncated to 60 chars",
+			text:       longText,
+			fallback:   "fallback",
+			wantMaxLen: 60,
+		},
+		{
+			// AC-04: empty AC text with fallback matching the Implement AC-NNN pattern.
+			name:             "empty text uses Implement AC fallback pattern",
+			text:             "",
+			fallback:         "Implement AC-001",
+			wantMatchPattern: `^Implement AC-\d{3}$`,
+		},
+		{
+			// AC-05: prose with colon like "Setup: configure the database" is returned verbatim.
+			name:      "Setup colon prose not stripped",
+			text:      "Setup: configure the database",
+			fallback:  "fallback",
+			wantExact: "Setup: configure the database",
+		},
+	}
+
+	for _, tc := range tests {
+		tc := tc
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			got := deriveTaskName(tc.text, tc.fallback)
+
+			if tc.wantExact != "" && got != tc.wantExact {
+				t.Errorf("deriveTaskName(%q, %q) = %q, want %q", tc.text, tc.fallback, got, tc.wantExact)
+			}
+			if tc.wantMaxLen > 0 && len(got) > tc.wantMaxLen {
+				t.Errorf("deriveTaskName(%q, %q) = %q (len %d), want len <= %d", tc.text, tc.fallback, got, len(got), tc.wantMaxLen)
+			}
+			if tc.wantNoColon && strings.Contains(got, ":") {
+				t.Errorf("deriveTaskName(%q, %q) = %q, output must not contain a colon", tc.text, tc.fallback, got)
+			}
+			if tc.wantValidateName {
+				if _, err := validate.ValidateName(got); err != nil {
+					t.Errorf("deriveTaskName(%q, %q) = %q, validate.ValidateName failed: %v", tc.text, tc.fallback, got, err)
+				}
+			}
+			if tc.wantMatchPattern != "" {
+				re := regexp.MustCompile(tc.wantMatchPattern)
+				if !re.MatchString(got) {
+					t.Errorf("deriveTaskName(%q, %q) = %q, want match %q", tc.text, tc.fallback, got, tc.wantMatchPattern)
+				}
+			}
+		})
+	}
+}
+
+// TestDecomposeApply_SucceedsWithProposedNames covers AC-03.
+// It calls DecomposeFeature to get a proposal, then simulates the apply path
+// by calling entitySvc.CreateTask for each proposed task.
+// All tasks must be created without a "name must not be empty" error.
+func TestDecomposeApply_SucceedsWithProposedNames(t *testing.T) {
+	t.Parallel()
+
+	// Use a bold-ident spec so deriveTaskName's stripping logic is exercised.
+	specContent := `# Feature Spec: Apply Names Test
+
+## Acceptance Criteria
+
+**AC-01.** The handler MUST validate all required fields before persisting.
+
+**AC-02.** The handler MUST return HTTP 400 when validation fails.
+
+**AC-03.** The handler MUST return HTTP 201 on successful creation.
+
+**AC-04.** The service MUST emit an audit event after every write.
+
+**AC-05.** The service MUST roll back on partial failure.
+`
+
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+
+	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err != nil {
+		t.Fatalf("DecomposeFeature() error = %v", err)
+	}
+
+	proposal := result.Proposal
+	if len(proposal.Tasks) == 0 {
+		t.Fatal("proposal contains no tasks; cannot test apply path")
+	}
+
+	// Simulate the apply path: create each proposed task via entitySvc.CreateTask.
+	// This mirrors what decomposeApply does in internal/mcp/decompose_tool.go.
+	for _, pt := range proposal.Tasks {
+		_, createErr := svc.entitySvc.CreateTask(CreateTaskInput{
+			ParentFeature: featureID,
+			Slug:          pt.Slug,
+			Name:          pt.Name,
+			Summary:       pt.Summary,
+		})
+		if createErr != nil {
+			if strings.Contains(createErr.Error(), "name must not be empty") {
+				t.Errorf("CreateTask(%q) failed with 'name must not be empty'; Name field from proposal was %q", pt.Slug, pt.Name)
+			} else {
+				t.Errorf("CreateTask(%q) unexpected error: %v", pt.Slug, createErr)
+			}
+		}
 	}
 }
 

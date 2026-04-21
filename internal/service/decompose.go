@@ -399,6 +399,8 @@ var (
 	reDevPlanNextL2        = regexp.MustCompile(`(?m)^## [^#].+$`)
 	reDevPlanBoldField     = regexp.MustCompile(`(?m)^\s*[-*]\s+\*\*([^:]+):\*\*\s+(.+)$`)
 	reDevPlanTaskRef       = regexp.MustCompile(`Task (\d+)`)
+	// Matches bold-identifier prefix in parsed AC text: "AC-01: " etc.
+	reBoldIdentPrefix = regexp.MustCompile(`^[A-Z]+-\d+: `)
 )
 
 // parseSpecStructure extracts sections and acceptance criteria from a
@@ -638,6 +640,7 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 				}
 				tasks = append(tasks, ProposedTask{
 					Slug:      slug,
+					Name:      deriveTaskName("Implement "+sectionTitle, "Implement grouped tasks"),
 					Summary:   summary,
 					Rationale: "Covers " + strconv.Itoa(n) + " acceptance criteria:\n" + strings.Join(rationaleLines, "\n"),
 					Covers:    covers,
@@ -648,6 +651,7 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 					slug := buildTaskSlug(featureSlug, ac.text, taskIndex+i)
 					tasks = append(tasks, ProposedTask{
 						Slug:    slug,
+						Name:    deriveTaskName(ac.text, fmt.Sprintf("Implement AC-%03d", taskIndex+i+1)),
 						Summary: ac.text,
 						Rationale: fmt.Sprintf(
 							"Covers acceptance criterion: %q (section: %s)",
@@ -673,6 +677,7 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 	if len(tasks) > 0 && !hasTestTask {
 		tasks = append(tasks, ProposedTask{
 			Slug:      featureSlug + "-tests",
+			Name:      "Write tests",
 			Summary:   "Write tests for " + featureSlug,
 			Rationale: "Guidance rule: test tasks are explicit. No test task was found among proposed tasks.",
 		})
@@ -1031,6 +1036,33 @@ func parseDevPlanTasks(featureSlug string, content []byte) ([]ProposedTask, bool
 		return nil, false
 	}
 	return tasks, true
+}
+
+// deriveTaskName produces a non-empty task name from text, falling back to
+// fallback when the candidate is empty after processing.
+//
+// Processing steps:
+//  1. Strip a bold-ident prefix (e.g. "AC-01: ") if present.
+//  2. Trim surrounding whitespace.
+//  3. Truncate to 60 characters at a word boundary where possible.
+//  4. Return fallback if the result is still empty.
+func deriveTaskName(text, fallback string) string {
+	candidate := reBoldIdentPrefix.ReplaceAllString(text, "")
+	candidate = strings.TrimSpace(candidate)
+	if candidate == "" {
+		return fallback
+	}
+	if len(candidate) > 60 {
+		truncated := candidate[:60]
+		if idx := strings.LastIndex(truncated, " "); idx > 0 {
+			truncated = truncated[:idx]
+		}
+		candidate = strings.TrimSpace(truncated)
+	}
+	if candidate == "" {
+		return fallback
+	}
+	return candidate
 }
 
 func sectionOrDefault(section string) string {
