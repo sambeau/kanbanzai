@@ -1,0 +1,6 @@
+id: TASK-01KPQ2RY3S7DS
+parent_feature: FEAT-01KPQ08Y989P8
+slug: implement-aggregatetaskverification-method
+name: Implement AggregateTaskVerification method
+summary: "Add AggregateTaskVerification(featureID string) method to DispatchService in internal/service/dispatch.go. Queries sibling tasks, derives verification_status (passed/partial/none), builds summary string, writes both fields to feature entity when status is non-none."
+status: queued
