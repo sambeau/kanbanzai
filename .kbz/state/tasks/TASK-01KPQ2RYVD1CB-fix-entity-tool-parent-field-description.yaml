@@ -3,4 +3,9 @@ parent_feature: FEAT-01KPQ08YKHNS9
 slug: fix-entity-tool-parent-field-description
 name: Fix entity_tool.go parent field description
 summary: "Update mcp.Description string for parent parameter in internal/mcp/entity_tool.go: remove (list only), state it is required on feature create, note parent_feature is used for tasks."
-status: ready
+status: done
+files_planned:
+  - internal/mcp/entity_tool.go
+completed: "2026-04-21T04:09:05Z"
+completion_summary: Updated entity_tool.go parent parameter description to remove (list only) qualifier and explain feature-create use and parent vs parent_feature distinction
+verification: go test ./internal/mcp/... passed
