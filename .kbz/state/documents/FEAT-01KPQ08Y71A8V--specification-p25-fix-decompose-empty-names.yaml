@@ -2,9 +2,11 @@ id: FEAT-01KPQ08Y71A8V/specification-p25-fix-decompose-empty-names
 path: work/spec/p25-fix-decompose-empty-names.md
 type: specification
 title: "Specification: Fix empty task names in decompose propose"
-status: draft
+status: approved
 owner: FEAT-01KPQ08Y71A8V
+approved_by: sambeau
+approved_at: "2026-04-21T03:44:38Z"
 content_hash: 1f2cc0b4f1efc34952071636338c1bfbeb78404591e0b94decd3bf863c2b6b6f
 created: "2026-04-21T03:43:31Z"
 created_by: sambeau
-updated: "2026-04-21T03:43:31Z"
+updated: "2026-04-21T03:44:38Z"
