@@ -2,9 +2,11 @@ id: FEAT-01KPQ08YE4399/dev-plan-p25-agentic-review-auto-advance
 path: work/dev-plan/p25-agentic-review-auto-advance.md
 type: dev-plan
 title: "Dev Plan: Agentic reviewing stage auto-advance"
-status: draft
+status: approved
 owner: FEAT-01KPQ08YE4399
-content_hash: dfbcb0e309429f3e3f0e695200292542d86dff9bf0fe82e1bfd5c187506b5f33
+approved_by: sambeau
+approved_at: "2026-04-21T03:50:11Z"
+content_hash: dd7930eae5a94ebd16af1dbafb267012484f4a851ed99f8acbd25945c97cc5e1
 created: "2026-04-21T03:47:44Z"
 created_by: sambeau
-updated: "2026-04-21T03:47:44Z"
+updated: "2026-04-21T03:50:11Z"
