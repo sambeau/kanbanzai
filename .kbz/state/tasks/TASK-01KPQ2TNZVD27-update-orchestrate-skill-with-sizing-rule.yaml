@@ -3,4 +3,13 @@ parent_feature: FEAT-01KPQ08YH16WZ
 slug: update-orchestrate-skill-with-sizing-rule
 name: Update orchestrate-development SKILL.md with sizing rule
 summary: "Edit .kbz/skills/orchestrate-development/SKILL.md to add per-task sizing rule in Phase 3 (>3 tasks + >300-line files threshold) with batch-dispatch exemption for small/doc-only features, and anti-pattern entry. Coordinate with FEAT-01KPQ08YKHNS9 Task 1 edits to same file."
-status: ready
+status: done
+files_planned:
+  - kanbanzai/.worktrees/FEAT-01KPQ08YH16WZ-impl-workflow-docs/.kbz/skills/orchestrate-development/SKILL.md
+completed: "2026-04-21T04:15:55Z"
+claimed_at: "2026-04-21T04:13:04Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-21T04:13:04Z"
+dispatched_by: sambeau
+completion_summary: "Added per-task sizing rule (>3 tasks + >300-line files) before Phase 3 dispatch steps and Assigning Multiple Large-File Tasks anti-pattern entry in orchestrate-development/SKILL.md"
+verification: "Manual review confirmed AC-09, AC-10, AC-11 satisfied"
