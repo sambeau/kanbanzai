@@ -2,7 +2,7 @@ id: FEAT-01KPQ08Y47522
 slug: write-file-mcp-tool
 name: write_file MCP tool for worktree-safe file writing
 parent: P25-agent-tooling-pipeline-quality
-status: specifying
+status: dev-planning
 summary: Add a write_file MCP tool that accepts path and content as distinct JSON parameters and writes the file atomically. Eliminates the python3 -c shell-escaping workaround required in worktrees. Addresses proposal item P1-alt.
 design: FEAT-01KPQ08Y47522/design-p25-write-file-tool
 spec: FEAT-01KPQ08Y47522/specification-p25-write-file-tool
