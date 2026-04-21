@@ -56,6 +56,11 @@ constraint_level: low
 - **BECAUSE:** Circular dependencies make the dependency graph unsortable — no valid dispatch order exists. The orchestrator will deadlock, with every task waiting for another to finish first
 - **Resolve:** Identify the cycle and break it by extracting the shared concern into a new task that both depend on, or by removing the dependency that is weakest (often one direction is a "nice to have" rather than a hard requirement)
 
+### Partial-Task-Completion Dependency
+- **Detect:** A task depends on another task completing only *part* of its work — e.g. "Task B can start once Task A has written the schema, before Task A's tests are done"
+- **BECAUSE:** The entity model only supports full-completion dependencies. A task is either done or it isn't — there is no "phase complete" signal. Declaring a dependency on partial completion means the orchestrator will either dispatch too early (if the dependency is omitted) or block unnecessarily (if it is declared on the full task)
+- **Resolve:** Split the prerequisite task into two sequential tasks (Phase A and Phase B) and declare the dependency on Phase A. Make the split explicit in the task names and descriptions so the dependency is self-documenting
+
 ### Missing Integration Tasks
 - **Detect:** Multiple tasks produce components that must work together (e.g. an API handler and its client, a storage layer and its consumer), but no task verifies they integrate correctly
 - **BECAUSE:** Individual tasks verify their own acceptance criteria in isolation. Without an integration task, components may individually pass tests but fail when combined — different assumptions about interfaces, field names, error formats, or ordering

@@ -181,6 +181,14 @@ goimports -w .          # organise imports
 go mod tidy             # clean up dependencies
 ```
 
+> **Terminal tool note:** Do not use heredoc (`<<EOF`) syntax in terminal commands — it fails consistently in the `sh` shell used by the terminal tool. Use `python3 -c` with escaped strings for multi-line content, or `echo` with single quotes for short strings.
+
+## Diagnosing Tool Failures
+
+If MCP tool calls return unexpected errors or unknown states (e.g. transitions failing, entity types unrecognised, tool responses that don't match the current codebase), the most common cause is a **stale binary** — the running `kanbanzai serve` process was built before recent code changes.
+
+Run `server_info` first before investigating further. It reports the build timestamp, git SHA, and binary path so you can confirm whether the server matches the current source. If the binary is stale, rebuild and restart: `go install ./cmd/kanbanzai/`.
+
 ## Go Code Style and Testing
 
 See [`refs/go-style.md`](refs/go-style.md) for full conventions: formatting, naming, error handling, interfaces, concurrency, package design, file organisation, dependencies, and YAML serialisation rules.
