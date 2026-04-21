@@ -3,8 +3,14 @@ parent_feature: FEAT-01KPQ08YE4399
 slug: update-advancefeaturestatus-halt-branch
 name: Update AdvanceFeatureStatus halt-state branch
 summary: "Add RequiresHumanReview func() bool to AdvanceConfig in internal/service/advance.go. Modify the advanceStopStates reviewing halt to be conditional: when RequiresHumanReview returns false, call checkAllTasksHaveVerification and either continue past reviewing or halt with descriptive StoppedReason."
-status: active
+status: done
+files_planned:
+  - internal/service/advance.go
+  - internal/service/advance_test.go
+completed: "2026-04-21T04:51:19Z"
 claimed_at: "2026-04-21T04:41:30Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T04:41:30Z"
 dispatched_by: sambeau
+completion_summary: "Added RequiresHumanReview func() bool to AdvanceConfig. Modified advanceStopStates reviewing halt to be conditional: when RequiresHumanReview is nil/false, calls checkAllTasksHaveVerification and either continues past reviewing or halts with descriptive StoppedReason. Updated TestAdvanceFeatureStatus_Override_StopStatePreserved to pass RequiresHumanReview: func() bool { return true } to preserve halt behavior."
+verification: "go test ./internal/service/... passed (1.259s, all tests green)"
