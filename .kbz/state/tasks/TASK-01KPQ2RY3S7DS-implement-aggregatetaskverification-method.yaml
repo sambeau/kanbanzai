@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPQ08Y989P8
 slug: implement-aggregatetaskverification-method
 name: Implement AggregateTaskVerification method
 summary: "Add AggregateTaskVerification(featureID string) method to DispatchService in internal/service/dispatch.go. Queries sibling tasks, derives verification_status (passed/partial/none), builds summary string, writes both fields to feature entity when status is non-none."
-status: active
+status: done
+files_planned:
+  - internal/service/verification.go
+completed: "2026-04-21T04:11:29Z"
 claimed_at: "2026-04-21T04:01:24Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T04:01:24Z"
 dispatched_by: sambeau
+completion_summary: "Created internal/service/verification.go with VerificationAggregationResult struct and AggregateTaskVerification method on DispatchService. The method lists all tasks for a feature, collects verification fields from done tasks, derives status (passed/partial/none), and writes verification + verification_status to the feature entity via UpdateEntity (best-effort). Returns early without writing when status is \"none\"."
+verification: go build ./... and go test ./internal/service/... both passed
