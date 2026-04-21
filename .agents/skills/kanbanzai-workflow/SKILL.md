@@ -91,6 +91,16 @@ flaw is discovered. Moving backwards is normal. Skipping forward is not.
 - [ ] All blocking findings are resolved
 - [ ] Documentation is current with implementation
 
+> **PR policy:** Whether a GitHub PR is required before merge depends on the
+> project's `merge.require_github_pr` setting in `.kbz/config.yaml`.
+>
+> - `require_github_pr: false` (default) — PR is optional. AI-agent
+>   workflows can call `merge(action: "execute")` directly after all tasks
+>   are done. The merge check will not fail for absence of a PR.
+> - `require_github_pr: true` — A GitHub PR must be open before
+>   `merge(action: "execute")`. Call `pr(action: "create")` first. The
+>   merge check will fail with a blocking gate error if no open PR exists.
+
 ---
 
 ## Feature Close-Out Trigger

@@ -26,6 +26,12 @@ var mergeCommitFunc = func(repoRoot, message string) (bool, error) {
 	return git.CommitStateWithMessage(repoRoot, message)
 }
 
+// getPRStatusFunc retrieves PR status for a branch. Package-level variable for test injection.
+var getPRStatusFunc = getPRStatus
+
+// loadPRConfigFunc loads the project config for PR gate checks. Package-level variable for test injection.
+var loadPRConfigFunc = config.LoadOrDefault
+
 // MergeTool returns the 2.0 consolidated merge tool.
 // It consolidates merge_readiness_check and merge_execute (spec §19.2).
 func MergeTool(
@@ -230,11 +236,30 @@ func checkMergeReadiness(
 	// overall_status, per-gate results, and a summary with total/passed/failed/warning counts.
 	resp := merge.FormatGateResults(gateResult)
 
-	// Check PR status if GitHub is configured
+	// Check PR status if GitHub is configured.
+	// When require_github_pr is true, a missing or non-open PR is a blocking
+	// gate failure. When false (default), PR status is informational only.
+	cfgPR := loadPRConfigFunc()
 	if localConfig != nil && localConfig.GetGitHubToken() != "" {
-		prStatus, err := getPRStatus(ctx, repoPath, wt.Branch, localConfig)
-		if err == nil && prStatus != nil {
-			resp["pr_status"] = prStatus
+		prStatus, err := getPRStatusFunc(ctx, repoPath, wt.Branch, localConfig)
+		if cfgPR.Merge.RequiresGitHubPR() {
+			if err != nil || prStatus == nil {
+				resp["pr_gate"] = map[string]any{
+					"status":  "failed",
+					"message": "require_github_pr is true but no PR status could be retrieved",
+				}
+			} else if state, _ := prStatus["state"].(string); state != "open" {
+				resp["pr_gate"] = map[string]any{
+					"status":  "failed",
+					"message": fmt.Sprintf("require_github_pr is true but PR state is %q, expected \"open\"", state),
+				}
+			} else {
+				resp["pr_status"] = prStatus
+			}
+		} else {
+			if err == nil && prStatus != nil {
+				resp["pr_status"] = prStatus
+			}
 		}
 	}
 
@@ -315,6 +340,18 @@ func executeMerge(
 			msgs = append(msgs, f.Message)
 		}
 		return nil, fmt.Errorf("Cannot merge %s: blocking merge gates failed: %v.\n\nTo resolve:\n  Fix the failing gates shown above, or use override: true with an override_reason to bypass", entityID, msgs)
+	}
+
+	// Enforce PR gate when require_github_pr is true.
+	execCfg := loadPRConfigFunc()
+	if execCfg.Merge.RequiresGitHubPR() && localConfig != nil && localConfig.GetGitHubToken() != "" {
+		prStatus, prErr := getPRStatusFunc(context.Background(), repoPath, wt.Branch, localConfig)
+		if prErr != nil || prStatus == nil {
+			return nil, fmt.Errorf("Cannot merge %s: require_github_pr is true but no open PR exists for branch %s.\n\nTo resolve:\n  Create a GitHub PR for branch %s before executing the merge", entityID, wt.Branch, wt.Branch)
+		}
+		if state, _ := prStatus["state"].(string); state != "open" {
+			return nil, fmt.Errorf("Cannot merge %s: require_github_pr is true but PR state is %q, expected \"open\".\n\nTo resolve:\n  Ensure an open GitHub PR exists for branch %s", entityID, state, wt.Branch)
+		}
 	}
 
 	// Determine default branch once and use it throughout.
@@ -459,6 +496,7 @@ func getPRStatus(ctx context.Context, repoPath, branch string, localConfig *conf
 
 	result := map[string]any{
 		"url":           pr.URL,
+		"state":         pr.State,
 		"ci_status":     pr.CIStatus,
 		"review_status": pr.ReviewStatus,
 		"has_conflicts": pr.HasConflicts,

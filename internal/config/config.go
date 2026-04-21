@@ -143,6 +143,16 @@ type MergeConfig struct {
 	// PostMergeInstall controls whether to automatically rebuild and install
 	// the binary after a successful merge. Defaults to true (nil = true).
 	PostMergeInstall *bool `yaml:"post_merge_install,omitempty"`
+	// RequireGitHubPR controls whether a GitHub PR must exist before a merge
+	// can be executed. When nil or false (the default), the PR step is optional.
+	// When true, merge(action: "check") will fail if no open PR exists.
+	RequireGitHubPR *bool `yaml:"require_github_pr,omitempty"`
+}
+
+// RequiresGitHubPR returns true only when RequireGitHubPR is explicitly set to true.
+// nil and false both return false.
+func (m MergeConfig) RequiresGitHubPR() bool {
+	return m.RequireGitHubPR != nil && *m.RequireGitHubPR
 }
 
 type MCPConfig struct {

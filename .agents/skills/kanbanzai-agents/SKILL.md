@@ -109,7 +109,15 @@ Call `finish` with:
 When `status` shows an attention item like `"FEAT-xxx has N/N tasks done — ready to advance to reviewing"`, the feature is ready for close-out. Follow this procedure:
 
 1. **Transition** the feature: `entity(action: "transition", id: "FEAT-xxx", status: "reviewing")`
-2. **PR and merge** (if a worktree exists): `pr(action: "create", entity_id: "FEAT-xxx")`, then `merge(action: "check", entity_id: "FEAT-xxx")`, then `merge(action: "execute", entity_id: "FEAT-xxx")`. If the tools return `not_applicable` (no worktree), skip these steps.
+2. **PR and merge** (if a worktree exists): Check whether the project
+   requires a GitHub PR (`merge.require_github_pr` in `.kbz/config.yaml`).
+   - If `require_github_pr: true`: call `pr(action: "create", entity_id:
+     "FEAT-xxx")` first, then `merge(action: "check")`, then
+     `merge(action: "execute")`.
+   - If `require_github_pr: false` (default, AI-agent workflow): call
+     `merge(action: "check")` then `merge(action: "execute")` directly.
+     The `pr` step is optional.
+   If the tools return `not_applicable` (no worktree), skip these steps.
 3. **Clean up**: `worktree(action: "remove", entity_id: "FEAT-xxx")` if applicable.
 
 For the full close-out procedure, see `.kbz/skills/orchestrate-development/SKILL.md` Phase 6.

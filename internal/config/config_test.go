@@ -944,3 +944,81 @@ func TestConfig_MCPConfigRoundTrip(t *testing.T) {
 		}
 	}
 }
+
+
+
+// ─── MergeConfig.RequireGitHubPR ─────────────────────────────────────────────
+
+// minimalValidYAML is the smallest valid config YAML (one prefix required).
+const minimalValidYAML = "version: \"2\"\nprefixes:\n  - prefix: P\n    name: Plan\n"
+
+// TestMergeConfig_RequireGitHubPR_Unmarshal_True verifies AC-001.
+func TestMergeConfig_RequireGitHubPR_Unmarshal_True(t *testing.T) {
+	t.Parallel()
+	data := minimalValidYAML + "merge:\n  require_github_pr: true\n"
+	cfg, err := LoadFrom(writeTempConfig(t, []byte(data)))
+	if err != nil {
+		t.Fatalf("LoadFrom() error = %v", err)
+	}
+	if cfg.Merge.RequireGitHubPR == nil {
+		t.Fatal("RequireGitHubPR is nil, want non-nil")
+	}
+	if !*cfg.Merge.RequireGitHubPR {
+		t.Errorf("*RequireGitHubPR = false, want true")
+	}
+}
+
+// TestMergeConfig_RequireGitHubPR_Unmarshal_Absent verifies AC-002.
+func TestMergeConfig_RequireGitHubPR_Unmarshal_Absent(t *testing.T) {
+	t.Parallel()
+	cfg, err := LoadFrom(writeTempConfig(t, []byte(minimalValidYAML)))
+	if err != nil {
+		t.Fatalf("LoadFrom() error = %v", err)
+	}
+	if cfg.Merge.RequireGitHubPR != nil {
+		t.Errorf("RequireGitHubPR = %v, want nil", *cfg.Merge.RequireGitHubPR)
+	}
+}
+
+// writeTempConfig writes YAML bytes to a temp file and returns its path.
+func writeTempConfig(t *testing.T, data []byte) string {
+	t.Helper()
+	f, err := os.CreateTemp(t.TempDir(), "config-*.yaml")
+	if err != nil {
+		t.Fatalf("create temp config: %v", err)
+	}
+	defer f.Close()
+	if _, err := f.Write(data); err != nil {
+		t.Fatalf("write temp config: %v", err)
+	}
+	return f.Name()
+}
+
+// TestRequiresGitHubPR_NilPointer verifies AC-003.
+func TestRequiresGitHubPR_NilPointer(t *testing.T) {
+	t.Parallel()
+	var m MergeConfig
+	if m.RequiresGitHubPR() {
+		t.Error("RequiresGitHubPR() = true, want false for nil pointer")
+	}
+}
+
+// TestRequiresGitHubPR_FalsePointer verifies AC-004.
+func TestRequiresGitHubPR_FalsePointer(t *testing.T) {
+	t.Parallel()
+	v := false
+	m := MergeConfig{RequireGitHubPR: &v}
+	if m.RequiresGitHubPR() {
+		t.Error("RequiresGitHubPR() = true, want false for *false pointer")
+	}
+}
+
+// TestRequiresGitHubPR_TruePointer verifies AC-005.
+func TestRequiresGitHubPR_TruePointer(t *testing.T) {
+	t.Parallel()
+	v := true
+	m := MergeConfig{RequireGitHubPR: &v}
+	if !m.RequiresGitHubPR() {
+		t.Error("RequiresGitHubPR() = false, want true for *true pointer")
+	}
+}
