@@ -3,4 +3,8 @@ parent_feature: FEAT-01KPQ08Y71A8V
 slug: write-tests-for-derivetaskname
 name: Write tests for deriveTaskName and decompose apply
 summary: "Update TestDecomposeFeature_ProposalProduced to assert Name non-empty. Add TestDeriveTaskName_BoldIdentPrefix, TestDecomposeFeature_BoldACSpec_NameHasNoColon, TestDecomposeApply_SucceedsWithProposedNames."
-status: ready
+status: active
+claimed_at: "2026-04-21T04:41:29Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-21T04:41:29Z"
+dispatched_by: sambeau
