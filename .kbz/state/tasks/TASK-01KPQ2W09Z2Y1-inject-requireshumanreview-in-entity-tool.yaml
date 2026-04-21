@@ -3,8 +3,15 @@ parent_feature: FEAT-01KPQ08YE4399
 slug: inject-requireshumanreview-in-entity-tool
 name: Inject RequiresHumanReview in entity tool
 summary: Update AdvanceConfig construction in internal/mcp/entity_tool.go to read cfg.Merge.RequiresHumanReview from loaded project config and set it as the RequiresHumanReview field on AdvanceConfig.
-status: active
+status: done
+files_planned:
+  - internal/mcp/entity_tool.go
+  - internal/mcp/server.go
+  - internal/mcp/entity_tool_test.go
+completed: "2026-04-21T07:48:27Z"
 claimed_at: "2026-04-21T04:55:07Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T04:55:07Z"
 dispatched_by: sambeau
+completion_summary: "Updated entity_tool.go to inject cfg.Merge.RequiresHumanReview into AdvanceConfig in entityAdvanceFeature. Threaded requiresHumanReview func() bool through EntityTool → entityTool → entityTransitionAction → entityAdvanceFeature. Restructured advCfg construction so it's always created (not only when gateRouter != nil), setting RequiresHumanReview unconditionally. Updated server.go to pass cfg.Merge.RequiresHumanReview. Updated test helpers to pass nil for the new parameter."
+verification: go build ./... — passes; go test ./internal/mcp/... — passes
