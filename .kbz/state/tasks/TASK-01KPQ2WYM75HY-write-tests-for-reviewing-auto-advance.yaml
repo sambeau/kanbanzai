@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPQ08YE4399
 slug: write-tests-for-reviewing-auto-advance
 name: Write tests for reviewing auto-advance
 summary: "Update TestAdvanceFeatureStatus_AdvanceToDone_StopsAtReviewing to use RequiresHumanReview: true. Add tests: auto-advance when all verified + flag absent, halt when tasks unverified + flag absent, halt when flag true, checkAllTasksHaveVerification with zero/all-verified/partial/needs-review cases."
-status: queued
+status: ready

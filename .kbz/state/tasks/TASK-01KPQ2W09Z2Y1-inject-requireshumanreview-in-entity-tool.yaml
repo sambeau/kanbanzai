@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPQ08YE4399
 slug: inject-requireshumanreview-in-entity-tool
 name: Inject RequiresHumanReview in entity tool
 summary: Update AdvanceConfig construction in internal/mcp/entity_tool.go to read cfg.Merge.RequiresHumanReview from loaded project config and set it as the RequiresHumanReview field on AdvanceConfig.
-status: queued
+status: ready

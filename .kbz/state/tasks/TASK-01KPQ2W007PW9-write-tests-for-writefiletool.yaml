@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPQ08Y47522
 slug: write-tests-for-writefiletool
 name: Write tests for WriteFileTool
 summary: "Write internal/mcp/write_file_tool_test.go covering AC-01 through AC-10: basic write, worktree write, directory creation, path traversal rejection, missing worktree, empty path, missing content, Go source content byte-fidelity, and permission bits."
-status: queued
+status: ready

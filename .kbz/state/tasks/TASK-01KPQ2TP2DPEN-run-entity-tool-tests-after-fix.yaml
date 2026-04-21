@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPQ08YKHNS9
 slug: run-entity-tool-tests-after-fix
 name: Run entity tool tests after description fix
 summary: Run go test ./internal/mcp/... to verify all existing entity tool tests pass after the parent field description string change. No new tests required.
-status: queued
+status: ready

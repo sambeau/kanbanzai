@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPQ08YBJ5AK
 slug: add-parsedevplantasks-and-dev-plan-discovery
 name: Add parseDevPlanTasks and dev plan discovery
 summary: "Implement parseDevPlanTasks(featureSlug string, content []byte) ([]ProposedTask, bool) and integrate dev plan discovery into DecomposeFeature. Discovery checks feat.State[dev_plan] first, then owner-query fallback. When parse succeeds, build Proposal from dev plan tasks bypassing AC heuristic."
-status: queued
+status: ready

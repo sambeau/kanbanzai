@@ -3,4 +3,8 @@ parent_feature: FEAT-01KPQ08Y47522
 slug: add-getbyentityid-worktree-store
 name: Add GetByEntityID to worktree Store
 summary: "Add GetByEntityID(entityID string) (*WorktreeRecord, error) method to worktree.Store that returns the active worktree record for a given entity ID. Returns (nil, nil) when no active worktree exists."
-status: queued
+status: active
+claimed_at: "2026-04-21T04:01:24Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-21T04:01:24Z"
+dispatched_by: sambeau

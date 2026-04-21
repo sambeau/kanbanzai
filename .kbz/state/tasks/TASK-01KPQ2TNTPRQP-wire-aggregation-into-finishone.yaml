@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPQ08Y989P8
 slug: wire-aggregation-into-finishone
 name: Wire aggregation into finishOne and MCP response
 summary: "In internal/mcp/finish_tool.go, call dispatchSvc.AggregateTaskVerification(parentFeatureID) after the all-terminal check in finishOne(). Best-effort (log on error). Include result under verification_aggregation in MCP response. Defer aggregation in finishBatch()."
-status: queued
+status: ready
