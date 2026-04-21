@@ -2,7 +2,7 @@ id: FEAT-01KPPG3MSRRCE
 slug: standalone-bug-visibility
 name: Standalone bugs visible in status health
 parent: P24-retro-recommendations
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Extend the status attention-item system (P19 C4) to surface open high and critical bugs that are not linked to any in-flight feature. Currently only feature-linked bugs appear; standalone bugs filed against general code areas are permanently invisible. Source: REC-04."
 design: FEAT-01KPPG3MSRRCE/design-p24-standalone-bug-visibility
@@ -10,3 +10,9 @@ spec: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility
 dev_plan: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility
 created: "2026-04-20T22:27:51Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: All 2 tasks completed; 10 unit tests covering AC-001 to AC-012 pass; go test ./... passed on feature branch. Double-surfacing guard confirmed by test. Orchestrated review by P24 implementation pipeline.
+    timestamp: "2026-04-21T03:42:59+01:00"
+    to_status: done
