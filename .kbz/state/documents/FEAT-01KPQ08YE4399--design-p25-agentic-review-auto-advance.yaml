@@ -2,9 +2,11 @@ id: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance
 path: work/design/p25-agentic-review-auto-advance.md
 type: design
 title: "Design: Agentic reviewing stage auto-advance"
-status: draft
+status: approved
 owner: FEAT-01KPQ08YE4399
-content_hash: 3895fc5b545bba924f22865a2f4d9b8103fad3856ecdae83e23f69ab02876c6c
+approved_by: sambeau
+approved_at: "2026-04-21T03:39:33Z"
+content_hash: 07945dc9ae84af853fa8a4098a513ed7bacaec607503dd678abdc5732d5eb987
 created: "2026-04-21T03:21:13Z"
 created_by: sambeau
-updated: "2026-04-21T03:21:13Z"
+updated: "2026-04-21T03:39:33Z"
