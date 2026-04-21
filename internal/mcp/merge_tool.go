@@ -189,15 +189,15 @@ func checkMergeReadiness(
 	// Get the worktree for this entity.
 	wt, err := worktreeStore.GetByEntityID(entityID)
 	if err != nil {
-		if errors.Is(err, worktree.ErrNotFound) {
-			// Direct-to-main workflow: no worktree means work was committed directly.
-			return map[string]any{
-				"status":         "not_applicable",
-				"reason":         "no worktree exists — work was committed directly to the default branch",
-				"recommendation": "advance the feature lifecycle directly",
-			}, nil
-		}
 		return nil, err
+	}
+	if wt == nil {
+		// Direct-to-main workflow: no worktree means work was committed directly.
+		return map[string]any{
+			"status":         "not_applicable",
+			"reason":         "no worktree exists — work was committed directly to the default branch",
+			"recommendation": "advance the feature lifecycle directly",
+		}, nil
 	}
 
 	entity, err := entitySvc.Get(entityType, entityID, "")
@@ -288,16 +288,16 @@ func executeMerge(
 	// Get the worktree for this entity.
 	wt, err := worktreeStore.GetByEntityID(entityID)
 	if err != nil {
-		if errors.Is(err, worktree.ErrNotFound) {
-			// Direct-to-main workflow: no worktree means work was committed directly.
-			// Returns {status, reason} without a recommendation field — unlike merge
-			// check, execute has no follow-up action for the caller when skipped.
-			return map[string]any{
-				"status": "skipped",
-				"reason": "no worktree exists — work was committed directly to the default branch",
-			}, nil
-		}
 		return nil, err
+	}
+	if wt == nil {
+		// Direct-to-main workflow: no worktree means work was committed directly.
+		// Returns {status, reason} without a recommendation field — unlike merge
+		// check, execute has no follow-up action for the caller when skipped.
+		return map[string]any{
+			"status": "skipped",
+			"reason": "no worktree exists — work was committed directly to the default branch",
+		}, nil
 	}
 
 	entity, err := entitySvc.Get(entityType, entityID, "")
@@ -404,7 +404,7 @@ func executeMerge(
 
 	var warnings []string
 	wt.MarkMerged(mergedAt, gracePeriodDays)
-	if _, updateErr := worktreeStore.Update(wt); updateErr != nil {
+	if _, updateErr := worktreeStore.Update(*wt); updateErr != nil {
 		// Don't fail — the merge already succeeded. Surface as a warning so the
 		// caller knows the worktree record is stale (it won't appear in cleanup lists).
 		warnings = append(warnings, fmt.Sprintf("failed to update worktree record after merge: %v", updateErr))

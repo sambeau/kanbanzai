@@ -62,8 +62,8 @@ func TestServer_ListTools_OrchestrationPreset(t *testing.T) {
 		"status", "next", "finish", "handoff", "entity", "doc", "health", "server_info",
 		// planning (4)
 		"decompose", "estimate", "conflict", "retro",
-		// git (5)
-		"worktree", "merge", "pr", "branch", "cleanup",
+		// git (6)
+		"worktree", "write_file", "merge", "pr", "branch", "cleanup",
 	}
 
 	if len(tools) != len(wantTools) {
@@ -95,8 +95,8 @@ func TestServer_ListTools_FullPreset(t *testing.T) {
 		"decompose", "estimate", "conflict", "retro",
 		// knowledge (2)
 		"knowledge", "profile",
-		// git (5)
-		"worktree", "merge", "pr", "branch", "cleanup",
+		// git (6)
+		"worktree", "write_file", "merge", "pr", "branch", "cleanup",
 		// documents (1)
 		"doc_intel",
 		// incidents (1)
@@ -105,9 +105,9 @@ func TestServer_ListTools_FullPreset(t *testing.T) {
 		"checkpoint",
 	}
 
-	if len(tools) != 22 {
+	if len(tools) != 23 {
 		got := testSortedKeys(tools)
-		t.Fatalf("full preset: got %d tools %v, want 22", len(tools), got)
+		t.Fatalf("full preset: got %d tools %v, want 23", len(tools), got)
 	}
 
 	for _, name := range wantTools {
@@ -125,9 +125,9 @@ func TestServer_ListTools_DefaultConfigIsFull(t *testing.T) {
 	cfg := config.DefaultConfig()
 	tools := testServerToolNames(t, &cfg)
 
-	if len(tools) != 22 {
+	if len(tools) != 23 {
 		got := testSortedKeys(tools)
-		t.Fatalf("default config: got %d tools %v, want 22", len(tools), got)
+		t.Fatalf("default config: got %d tools %v, want 23", len(tools), got)
 	}
 }
 

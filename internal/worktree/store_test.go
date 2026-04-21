@@ -314,6 +314,9 @@ func TestStore_GetByEntityID(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetByEntityID() error = %v", err)
 	}
+	if found == nil {
+		t.Fatal("GetByEntityID() returned nil, want record")
+	}
 	if found.ID != "WT-01JX000000001" {
 		t.Errorf("GetByEntityID() ID = %q, want %q", found.ID, "WT-01JX000000001")
 	}
@@ -322,6 +325,9 @@ func TestStore_GetByEntityID(t *testing.T) {
 	found, err = store.GetByEntityID("BUG-01JX123123123")
 	if err != nil {
 		t.Fatalf("GetByEntityID() error = %v", err)
+	}
+	if found == nil {
+		t.Fatal("GetByEntityID() returned nil, want record")
 	}
 	if found.ID != "WT-01JX000000002" {
 		t.Errorf("GetByEntityID() ID = %q, want %q", found.ID, "WT-01JX000000002")
@@ -334,12 +340,44 @@ func TestStore_GetByEntityID_NotFound(t *testing.T) {
 	root := t.TempDir()
 	store := NewStore(root)
 
-	_, err := store.GetByEntityID("FEAT-NONEXISTENT")
-	if err == nil {
-		t.Fatal("GetByEntityID() expected error, got nil")
+	found, err := store.GetByEntityID("FEAT-NONEXISTENT")
+	if err != nil {
+		t.Fatalf("GetByEntityID() unexpected error = %v", err)
 	}
-	if !errors.Is(err, ErrNotFound) {
-		t.Errorf("GetByEntityID() error = %v, want ErrNotFound", err)
+	if found != nil {
+		t.Errorf("GetByEntityID() = %v, want nil", found)
+	}
+}
+
+func TestStore_GetByEntityID_IgnoresNonActive(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	store := NewStore(root)
+
+	// Create a merged worktree for the entity — should not be returned.
+	merged := Record{
+		ID:        "WT-01JX000000003",
+		EntityID:  "FEAT-01JX111111111",
+		Branch:    "feature/FEAT-01JX111111111-old-feature",
+		Path:      ".worktrees/FEAT-01JX111111111-old-feature",
+		Status:    StatusMerged,
+		Created:   time.Date(2025, 1, 27, 9, 0, 0, 0, time.UTC),
+		CreatedBy: "user1",
+	}
+	now := time.Now().UTC()
+	merged.MarkMerged(now, 7)
+
+	if _, err := store.Create(merged); err != nil {
+		t.Fatalf("Create(merged) error = %v", err)
+	}
+
+	found, err := store.GetByEntityID("FEAT-01JX111111111")
+	if err != nil {
+		t.Fatalf("GetByEntityID() unexpected error = %v", err)
+	}
+	if found != nil {
+		t.Errorf("GetByEntityID() = %v, want nil for non-active worktree", found)
 	}
 }
 

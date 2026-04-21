@@ -175,15 +175,15 @@ func createPR(
 	// Get the worktree for this entity.
 	wt, err := worktreeStore.GetByEntityID(entityID)
 	if err != nil {
-		if errors.Is(err, worktree.ErrNotFound) {
-			// Direct-to-main workflow: no worktree exists. Returns {status, reason}
-			// without a recommendation field — no PR action is applicable.
-			return map[string]any{
-				"status": "not_applicable",
-				"reason": "no worktree exists — work was committed directly to the default branch",
-			}, nil
-		}
 		return nil, err
+	}
+	if wt == nil {
+		// Direct-to-main workflow: no worktree exists. Returns {status, reason}
+		// without a recommendation field — no PR action is applicable.
+		return map[string]any{
+			"status": "not_applicable",
+			"reason": "no worktree exists — work was committed directly to the default branch",
+		}, nil
 	}
 	entity, err := entitySvc.Get(entityType, entityID, "")
 	if err != nil {
@@ -308,13 +308,13 @@ func updatePR(
 	// Get the worktree for this entity.
 	wt, err := worktreeStore.GetByEntityID(entityID)
 	if err != nil {
-		if errors.Is(err, worktree.ErrNotFound) {
-			return map[string]any{
-				"status": "not_applicable",
-				"reason": "no worktree exists — work was committed directly to the default branch",
-			}, nil
-		}
 		return nil, err
+	}
+	if wt == nil {
+		return map[string]any{
+			"status": "not_applicable",
+			"reason": "no worktree exists — work was committed directly to the default branch",
+		}, nil
 	}
 	entity, err := entitySvc.Get(entityType, entityID, "")
 	if err != nil {
@@ -458,13 +458,13 @@ func getPRStatusForEntity(
 	// Get the worktree for this entity.
 	wt, err := worktreeStore.GetByEntityID(entityID)
 	if err != nil {
-		if errors.Is(err, worktree.ErrNotFound) {
-			return map[string]any{
-				"status": "not_applicable",
-				"reason": "no worktree exists — work was committed directly to the default branch",
-			}, nil
-		}
 		return nil, err
+	}
+	if wt == nil {
+		return map[string]any{
+			"status": "not_applicable",
+			"reason": "no worktree exists — work was committed directly to the default branch",
+		}, nil
 	}
 
 	client := github.NewClient(localConfig.GetGitHubToken())

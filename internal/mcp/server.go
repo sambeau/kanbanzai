@@ -238,6 +238,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	// GroupGit: worktree, merge, pr, branch, cleanup.
 	if groups[config.GroupGit] {
 		mcpServer.AddTools(WorktreeTool(worktreeStore, entitySvc, gitOps, repoRoot)...)
+		mcpServer.AddTools(WriteFileTool(repoRoot, worktreeStore)...)
 		mcpServer.AddTools(MergeTool(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
 		mcpServer.AddTools(PRTool(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
 		mcpServer.AddTools(BranchTool(worktreeStore, repoRoot, branchThresholds)...)

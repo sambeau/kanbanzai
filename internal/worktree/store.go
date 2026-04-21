@@ -121,21 +121,22 @@ func (s *Store) Get(wtID string) (Record, error) {
 	return record, nil
 }
 
-// GetByEntityID returns the worktree record associated with the given entity ID.
-// Returns ErrNotFound if no worktree is associated with the entity.
-func (s *Store) GetByEntityID(entityID string) (Record, error) {
+// GetByEntityID returns the active worktree record associated with the given entity ID.
+// Returns (nil, nil) if no active worktree is associated with the entity.
+func (s *Store) GetByEntityID(entityID string) (*Record, error) {
 	records, err := s.List()
 	if err != nil {
-		return Record{}, err
+		return nil, err
 	}
 
 	for _, r := range records {
-		if r.EntityID == entityID {
-			return r, nil
+		if r.Status == StatusActive && r.EntityID == entityID {
+			rec := r
+			return &rec, nil
 		}
 	}
 
-	return Record{}, fmt.Errorf("%w: no worktree for entity %s", ErrNotFound, entityID)
+	return nil, nil
 }
 
 // List returns all worktree records in the store.

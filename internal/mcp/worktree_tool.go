@@ -195,15 +195,15 @@ func worktreeGetAction(store *worktree.Store) ActionHandler {
 
 		record, err := store.GetByEntityID(entityID)
 		if err != nil {
-			if errors.Is(err, worktree.ErrNotFound) {
-				return inlineErr("no_worktree",
-					fmt.Sprintf("no worktree found for entity %s", entityID))
-			}
 			return nil, fmt.Errorf("Cannot get worktree for %s: storage read failed: %w.\n\nTo resolve:\n  Check file permissions in .kbz/state/worktrees/ and retry", entityID, err)
+		}
+		if record == nil {
+			return inlineErr("no_worktree",
+				fmt.Sprintf("no worktree found for entity %s", entityID))
 		}
 
 		return map[string]any{
-			"worktree": worktreeRecordToMap(record),
+			"worktree": worktreeRecordToMap(*record),
 		}, nil
 	}
 }
@@ -256,11 +256,11 @@ func worktreeUpdateAction(store *worktree.Store) ActionHandler {
 
 		record, err := store.GetByEntityID(entityID)
 		if err != nil {
-			if errors.Is(err, worktree.ErrNotFound) {
-				return inlineErr("no_worktree",
-					fmt.Sprintf("no worktree found for entity %s", entityID))
-			}
 			return nil, fmt.Errorf("Cannot update worktree for %s: storage read failed: %w", entityID, err)
+		}
+		if record == nil {
+			return inlineErr("no_worktree",
+				fmt.Sprintf("no worktree found for entity %s", entityID))
 		}
 
 		// graph_project: update only when the param is explicitly provided.
@@ -272,7 +272,7 @@ func worktreeUpdateAction(store *worktree.Store) ActionHandler {
 			}
 		}
 
-		updated, err := store.Update(record)
+		updated, err := store.Update(*record)
 		if err != nil {
 			return nil, fmt.Errorf("Cannot update worktree for %s: save failed: %w", entityID, err)
 		}

@@ -793,7 +793,7 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 	var hasActiveWorktree bool
 	var worktreeGraphProject string
 	if worktreeStore != nil {
-		if record, err := worktreeStore.GetByEntityID(featID); err == nil {
+		if record, err := worktreeStore.GetByEntityID(featID); err == nil && record != nil {
 			wt = &worktreeInfo{
 				Status: string(record.Status),
 				Branch: record.Branch,

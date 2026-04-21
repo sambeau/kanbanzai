@@ -194,7 +194,7 @@ func runMergeRun(args []string, deps dependencies) error {
 
 	// Update worktree record
 	record.MarkMerged(now, cfg.Cleanup.GracePeriodDays)
-	if _, err := store.Update(record); err != nil {
+	if _, err := store.Update(*record); err != nil {
 		return fmt.Errorf("update worktree record: %w", err)
 	}
 
