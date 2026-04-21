@@ -2,9 +2,11 @@ id: FEAT-01KPQ08Y47522/design-p25-write-file-tool
 path: work/design/p25-write-file-tool.md
 type: design
 title: "Design: write_file MCP tool for worktree-safe file writing"
-status: draft
+status: approved
 owner: FEAT-01KPQ08Y47522
-content_hash: a763b8c683df5cb8e518c38d0dff1f82003763db4ae801f005063b55a18aaaf1
+approved_by: sambeau
+approved_at: "2026-04-21T03:39:32Z"
+content_hash: 3adac7950e18def0f37fe91b7c59399e346eebffec5efb4b8c8113e595a17d5b
 created: "2026-04-21T03:16:45Z"
 created_by: sambeau
-updated: "2026-04-21T03:16:45Z"
+updated: "2026-04-21T03:39:32Z"
