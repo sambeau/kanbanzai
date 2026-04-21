@@ -1,0 +1,6 @@
+id: TASK-01KPQ2W07CT36
+parent_feature: FEAT-01KPQ08Y989P8
+slug: update-verificationpassedgate-partial
+name: Update VerificationPassedGate for partial status
+summary: "In internal/merge/gates.go, update VerificationPassedGate.Check() to return GateStatusWarning when entity[verification_status] == partial. Leave passed -> GateStatusPassed and absent/other -> GateStatusFailed unchanged."
+status: queued
