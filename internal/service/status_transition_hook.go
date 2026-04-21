@@ -171,7 +171,7 @@ func (h *WorktreeTransitionHook) handleBugInProgress(bugID string, bugState map[
 func (h *WorktreeTransitionHook) ensureWorktree(entityID, slug string) *WorktreeResult {
 	// Idempotency: if a worktree already exists, succeed silently
 	existing, err := h.store.GetByEntityID(entityID)
-	if err == nil && existing.ID != "" {
+	if err == nil && existing != nil && existing.ID != "" {
 		log.Printf("status hook: worktree %s already exists for %s; skipping creation", existing.ID, entityID)
 		return &WorktreeResult{
 			AlreadyExists: true,
