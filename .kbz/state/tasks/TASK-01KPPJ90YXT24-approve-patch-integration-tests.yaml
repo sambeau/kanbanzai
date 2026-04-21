@@ -3,7 +3,13 @@ parent_feature: FEAT-01KPPG2MYSG6A
 slug: approve-patch-integration-tests
 name: Integration tests for ApproveDocument patch behaviour
 summary: "Add integration test functions to internal/service/documents_test.go (or documents_status_patch_test.go) that exercise the full approve-then-patch round-trip: TestApproveDocument_PatchesStatusField (AC-008), TestApproveDocument_PatchFailure_ApprovalSucceeds (AC-009), TestApproveDocument_NoStatusField_NoSideEffects (AC-010), TestApproveDocument_HashRefreshFailure_ApprovalSucceeds (AC-011). Each test creates a real temp file, registers a document, calls ApproveDocument, and asserts on file content, record status, and content hash."
-status: ready
+status: done
 depends_on:
   - TASK-01KPPJ7MFSTV5
   - TASK-01KPPJ8CV7BDM
+files_planned:
+  - internal/service/documents.go
+  - internal/service/documents_test.go
+completed: "2026-04-21T02:03:56Z"
+completion_summary: "Added 4 integration tests (AC-008 through AC-011) plus captureLog helper. Also added testHookAfterApprovalWrite field to DocumentService for controlled test injection. Fixed a bug in T3 (was passing old record.FileHash to hash-refresh write, causing optimistic-lock conflict; changed to empty string)."
+verification: go test ./internal/... -count=1 — all packages PASS including 4 new AC-008–AC-011 integration tests

@@ -3,4 +3,8 @@ parent_feature: FEAT-01KPPG5XMJWT3
 slug: optional-github-pr-tests
 name: Write tests for require_github_pr gate
 summary: "Add tests covering: (1) YAML unmarshal of MergeConfig with and without require_github_pr (AC-001, AC-002) in internal/config/; (2) RequiresGitHubPR() helper with nil, false, true pointer inputs (AC-003, AC-004, AC-005); (3) merge check integration: nil config passes without pr_gate failure (AC-006), require_github_pr: true with no PR found produces pr_gate failed (AC-007), with non-open PR state produces pr_gate failed with state in message (AC-008); (4) execute blocked when require_github_pr: true and no open PR (AC-009); (5) regression: config without field produces no new gate failures (AC-010). Tests in internal/config/config_test.go and internal/mcp/merge_tool_test.go. Covers all testable ACs. Depends on gate enforcement task."
-status: ready
+status: active
+claimed_at: "2026-04-21T02:00:43Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-21T02:00:43Z"
+dispatched_by: sambeau
