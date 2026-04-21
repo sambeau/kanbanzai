@@ -1,0 +1,179 @@
+document_id: FEAT-01KPQ08Y47522/design-p25-write-file-tool
+document_path: work/design/p25-write-file-tool.md
+content_hash: a763b8c683df5cb8e518c38d0dff1f82003763db4ae801f005063b55a18aaaf1
+indexed_at: 2026-04-21T03:16:45.307996Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: `write_file` MCP Tool for Worktree-Safe File Writing'
+      byte_offset: 0
+      byte_count: 13131
+      word_count: 1929
+      content_hash: a763b8c683df5cb8e518c38d0dff1f82003763db4ae801f005063b55a18aaaf1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 173
+          byte_count: 817
+          word_count: 128
+          content_hash: 48c43545487fd52272cccac81ec1a862f3692803bda735fa420df916be6c61f8
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 990
+          byte_count: 1740
+          word_count: 249
+          content_hash: f261ec85296e995d3d0db87995e192fcdf0e01d455608a56af2c5b5d5c24c5ae
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 1014
+              byte_count: 868
+              word_count: 127
+              content_hash: cd552d69e525563fee4fa52da64b7cb8780eddb64353985fc1b3ee213e4f685d
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 1882
+              byte_count: 848
+              word_count: 118
+              content_hash: fbe2fd866bff88bb62d9726a509b02d6b60aca14596e30e18ecbb56f4e5ecc5f
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 2730
+          byte_count: 5329
+          word_count: 771
+          content_hash: f1188bafcb0e2a632411fd7cca65dd65c0778c51916ea0569df9dab1f751e0c0
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Component Boundaries
+              byte_offset: 2741
+              byte_count: 902
+              word_count: 120
+              content_hash: e025709ca66e21ec1465397985416a71302f00a60a3dda2fbbbbb0582e4e0bb9
+            - path: 1.3.2
+              level: 3
+              title: Parameter Schema
+              byte_offset: 3643
+              byte_count: 858
+              word_count: 135
+              content_hash: 7ec5853dee5436c19990a88d37d9ae65abdf9b237703ba1ddcdbc3d3f5f0e50b
+            - path: 1.3.3
+              level: 3
+              title: Path Resolution
+              byte_offset: 4501
+              byte_count: 1035
+              word_count: 150
+              content_hash: 78c4e21c91e7b5456d2f1ae1fe2a3486ba290511c3b5b1dc336236b01232f626
+            - path: 1.3.4
+              level: 3
+              title: Directory Creation
+              byte_offset: 5536
+              byte_count: 374
+              word_count: 51
+              content_hash: 614f5af5bfd361000bcd93f382a816401bd8d3bed7114a8c9d224b111b5af1af
+            - path: 1.3.5
+              level: 3
+              title: Atomic Write
+              byte_offset: 5910
+              byte_count: 288
+              word_count: 39
+              content_hash: ed58baac77d5158d429f7c490797234984605aeacd154545a74919d2167547f7
+            - path: 1.3.6
+              level: 3
+              title: Error Handling
+              byte_offset: 6198
+              byte_count: 848
+              word_count: 139
+              content_hash: ccdea247a7b906e2912456228569e5ef3ca5a2a7bbf57b7db4910615582837bd
+            - path: 1.3.7
+              level: 3
+              title: Security Constraints
+              byte_offset: 7046
+              byte_count: 591
+              word_count: 91
+              content_hash: 0c3eb48e331cc0b257347ad7ee32fcd22d2da5702a8ab9d79333b1a5611a9dcd
+            - path: 1.3.8
+              level: 3
+              title: Tool Registration
+              byte_offset: 7637
+              byte_count: 422
+              word_count: 44
+              content_hash: f0481964f90fa46df35bda3fca1e90a55aba7f31db48219de7ae250bf8bc35e8
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 8059
+          byte_count: 3128
+          word_count: 475
+          content_hash: 6df4da43e454558c3d91dd0067b2cb4d092db7fa17bddfd351b9be77a9ff5c30
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 1. Make `edit_file` Worktree-Aware (Proposal P1)
+              byte_offset: 8087
+              byte_count: 1197
+              word_count: 180
+              content_hash: fef9d5be5d23d0a959c8383eb85c01a60e78edbf4bf699d841c79a5e2a684d7d
+            - path: 1.4.2
+              level: 3
+              title: 2. Base64-Encoded Write via `terminal`
+              byte_offset: 9284
+              byte_count: 943
+              word_count: 148
+              content_hash: 46581804aa9f0659f87dff327266b344434b92b5cd440138a8dc5dc47038db12
+            - path: 1.4.3
+              level: 3
+              title: 3. Status Quo — Update `implement-task/SKILL.md` Only (Proposal P2)
+              byte_offset: 10227
+              byte_count: 960
+              word_count: 144
+              content_hash: 1cf9705c7d79a8914d44d01d7ff46ace3afc5b01fe368fb2c7b41b3bee9a139c
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 11187
+          byte_count: 1944
+          word_count: 284
+          content_hash: 85b19d58c7fa7f429d468af6196648379735ad055aba9556299f702bb4905b94
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Open Questions
+              byte_offset: 11973
+              byte_count: 1158
+              word_count: 177
+              content_hash: 9e66c78bfdbfb0e343fded70c40a140c8c236cff8c02adc5a3832afde7c2e565
+entity_refs:
+    - entity_id: FEAT-01KPQ08Y47522
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 77
+cross_doc_links:
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.4.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: 1.3.7
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: 1.5.1
+      role: question
+      confidence: high
+classified: false

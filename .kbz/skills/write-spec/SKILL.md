@@ -95,10 +95,11 @@ constraint_level: high
 
 ### Step 3: Write Requirements
 
-1. Derive functional requirements from the design. Each requirement gets a unique ID (REQ-001, REQ-002, ...).
-2. Derive non-functional requirements from the design's quality attribute decisions. Each must have a measurable threshold.
-3. For each requirement, verify it is testable: can you describe a specific input and expected observable outcome?
-4. IF a requirement is not derivable from the design → it may be out of scope, or the design may need updating. Flag it.
+1. Call `now` to get the current date. Record the returned value — you will use it in the document header's `Date` field. Do not guess or invent a date.
+2. Derive functional requirements from the design. Each requirement gets a unique ID (REQ-001, REQ-002, ...).
+3. Derive non-functional requirements from the design's quality attribute decisions. Each must have a measurable threshold.
+4. For each requirement, verify it is testable: can you describe a specific input and expected observable outcome?
+5. IF a requirement is not derivable from the design → it may be out of scope, or the design may need updating. Flag it.
 
 ### Step 4: Define Constraints and Acceptance Criteria
 
@@ -127,6 +128,16 @@ constraint_level: high
 3. An approved specification becomes the contract for implementation and review.
 
 ## Output Format
+
+Begin every specification with a header table:
+
+```
+| Field  | Value                          |
+|--------|--------------------------------|
+| Date   | {value returned by `now`}      |
+| Status | Draft                          |
+| Author | {who is writing}               |
+```
 
 The specification has exactly 5 required sections. Use these headings:
 

@@ -117,10 +117,11 @@ Before beginning to write the research report:
 
 ### Step 4: Draft the Report
 
-1. Write all sections in order: Research Question, Scope and Methodology, Findings, Trade-Off Analysis (if applicable), Recommendations, Limitations.
-2. Every finding must cite its source(s).
-3. Every recommendation must reference the findings that support it and include a confidence level.
-4. The Limitations section must be present and substantive.
+1. Call `now` to get the current date. Record the returned value — you will use it in the document header. Do not guess or invent a date.
+2. Write all sections in order: Research Question, Scope and Methodology, Findings, Trade-Off Analysis (if applicable), Recommendations, Limitations.
+3. Every finding must cite its source(s).
+4. Every recommendation must reference the findings that support it and include a confidence level.
+5. The Limitations section must be present and substantive.
 
 ### Step 5: Self-Validate
 
@@ -132,7 +133,19 @@ Before beginning to write the research report:
 
 ## Output Format
 
-The research report uses the following structure. Section headings may be adapted to the specific research topic, but all conceptual sections must be present:
+The research report uses the following structure. Section headings may be adapted to the specific research topic, but all conceptual sections must be present.
+
+Begin with a header table:
+
+```
+| Field  | Value                         |
+|--------|-------------------------------|
+| Date   | {value returned by `now`}     |
+| Status | Draft                         |
+| Author | {who is writing}              |
+```
+
+Then the body sections:
 
 ```
 ## Research Question

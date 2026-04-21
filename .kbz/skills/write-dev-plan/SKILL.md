@@ -118,11 +118,12 @@ constraint_level: high
 
 ### Step 6: Draft and Validate
 
-1. Write all five required sections: Scope, Task Breakdown, Dependency Graph, Risk Assessment, Verification Approach.
-2. Run the validation script: `.kbz/skills/write-dev-plan/scripts/validate-dev-plan-structure.sh <path>`
-3. Verify every task traces to a specification requirement.
-4. Verify the Scope section references the parent specification.
-5. IF validation fails → fix the structural issue → re-validate.
+1. Call `now` to get the current date. Record the returned value — you will use it in the document header. Do not guess or invent a date.
+2. Write all five required sections: Scope, Task Breakdown, Dependency Graph, Risk Assessment, Verification Approach.
+3. Run the validation script: `.kbz/skills/write-dev-plan/scripts/validate-dev-plan-structure.sh <path>`
+4. Verify every task traces to a specification requirement.
+5. Verify the Scope section references the parent specification.
+6. IF validation fails → fix the structural issue → re-validate.
 
 ### Step 7: Register and Present
 
@@ -138,6 +139,16 @@ constraint_level: high
 > to advance the feature lifecycle before dispatching tasks.
 
 ## Output Format
+
+Begin every implementation plan with a header table:
+
+```
+| Field  | Value                          |
+|--------|--------------------------------|
+| Date   | {value returned by `now`}      |
+| Status | Draft                          |
+| Author | {who is writing}               |
+```
 
 The implementation plan has exactly 5 required sections. Use these headings:
 

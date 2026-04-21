@@ -1,0 +1,179 @@
+document_id: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance
+document_path: work/design/p25-agentic-review-auto-advance.md
+content_hash: 3895fc5b545bba924f22865a2f4d9b8103fad3856ecdae83e23f69ab02876c6c
+indexed_at: 2026-04-21T03:21:13.057543Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Agentic Reviewing Stage Auto-Advance'
+      byte_offset: 0
+      byte_count: 16637
+      word_count: 2228
+      content_hash: 3895fc5b545bba924f22865a2f4d9b8103fad3856ecdae83e23f69ab02876c6c
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 157
+          byte_count: 1393
+          word_count: 204
+          content_hash: 9548eebfcf375dc5d5b694e5fa20e5718a4378f0eb41335106b487881146f604
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1550
+          byte_count: 1643
+          word_count: 224
+          content_hash: 8d0576d25b786e462900ceb2bbedcdb9e06800b7a4c5183cd4baf27ff9d33914
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 1574
+              byte_count: 683
+              word_count: 89
+              content_hash: 9f9663f1356a160be9db07dfde39936f1c78c5c41f2be3abb7286b65d4f50442
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 2257
+              byte_count: 936
+              word_count: 131
+              content_hash: ec6d98b1a2a3a8d87690980b467367ca1ec0f3466ee49691428253e50dc939ff
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 3193
+          byte_count: 6125
+          word_count: 769
+          content_hash: 8af5bb4a8648de84786968be4707c0e37d07889363c827e8637b7c593ac05daa
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Config flag
+              byte_offset: 3204
+              byte_count: 1674
+              word_count: 214
+              content_hash: 3283ef895c19b58d008eddef72c8615666f6146019d89404c8ae435547fca3a9
+            - path: 1.3.2
+              level: 3
+              title: Auto-advance conditions
+              byte_offset: 4878
+              byte_count: 990
+              word_count: 138
+              content_hash: 4c15f4d70203e24385aee2bb11a5a4896bef757b62deb443d1e9060bee4c863b
+            - path: 1.3.3
+              level: 3
+              title: Advance engine change
+              byte_offset: 5868
+              byte_count: 1999
+              word_count: 219
+              content_hash: c4c0c8099b99d4192802188c40d4330182ae228f84e3f76c44a552c6bbf831a7
+            - path: 1.3.4
+              level: 3
+              title: 'Interface boundary: `checkAllTasksHaveVerification`'
+              byte_offset: 7867
+              byte_count: 805
+              word_count: 101
+              content_hash: eb9c413bb9e407ac7232613a2203c66049d43590ab56e7dfe2ae3f4e2d151182
+            - path: 1.3.5
+              level: 3
+              title: Backward compatibility
+              byte_offset: 8672
+              byte_count: 646
+              word_count: 95
+              content_hash: d92ea1e53aa53c5132d4fd314e52022f0cd554f5caefd0273078d4d79432e828
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 9318
+          byte_count: 4459
+          word_count: 625
+          content_hash: 1bd814dcc931396f1854bbb792f8ea7cad6a918678ca9478514d309036ef98a9
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Alternative 1 (recommended): Project-level config flag in `MergeConfig`'
+              byte_offset: 9346
+              byte_count: 923
+              word_count: 125
+              content_hash: a1ce8f7c87364f50a7959247d4ca68028065681c7d16460bc37aec6cb65e3e3c
+            - path: 1.4.2
+              level: 3
+              title: 'Alternative 2: Remove the reviewing stop state entirely'
+              byte_offset: 10269
+              byte_count: 983
+              word_count: 135
+              content_hash: e2ada2cf939fc55082713d2075e170a396792a7fce2228ad10f26c27e692e978
+            - path: 1.4.3
+              level: 3
+              title: 'Alternative 3: Make `advance` skip reviewing when tasks have verification (no config)'
+              byte_offset: 11252
+              byte_count: 768
+              word_count: 112
+              content_hash: 31766187a48fa9b8acfcdb85911bd0783312efe8252a1a458da16ca473ba1828
+            - path: 1.4.4
+              level: 3
+              title: 'Alternative 4: Feature-level `require_human_review` config'
+              byte_offset: 12020
+              byte_count: 1057
+              word_count: 147
+              content_hash: d5c23c9cf048de7c588ece1441b3b84f6cf043f985a00f0b6e7a65c68d7e8b52
+            - path: 1.4.5
+              level: 3
+              title: 'Alternative 5: Status quo (no change)'
+              byte_offset: 13077
+              byte_count: 700
+              word_count: 103
+              content_hash: d6bc8a7548c302cf14c9d402e27182bfe3c5e437db09957131a5d2516286dd53
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 13777
+          byte_count: 1636
+          word_count: 207
+          content_hash: c39b87498d0e2cc6d1c47c4b3f14b0d6210ce1888f88e5a02cf14aae611c5af8
+        - path: "1.6"
+          level: 2
+          title: Open Questions
+          byte_offset: 15413
+          byte_count: 1224
+          word_count: 180
+          content_hash: ec0e639870a90d1f38faac087e590ce5941754aaf3978a9397f6f449c075a64e
+entity_refs:
+    - entity_id: FEAT-01KPQ08YE4399
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 61
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: alternative
+      confidence: high
+    - section_path: 1.4.2
+      role: alternative
+      confidence: high
+    - section_path: 1.4.3
+      role: alternative
+      confidence: high
+    - section_path: 1.4.4
+      role: alternative
+      confidence: high
+    - section_path: 1.4.5
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: question
+      confidence: high
+classified: false

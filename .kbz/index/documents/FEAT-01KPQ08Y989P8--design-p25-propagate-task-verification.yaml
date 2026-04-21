@@ -1,0 +1,166 @@
+document_id: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification
+document_path: work/design/p25-propagate-task-verification.md
+content_hash: 8846f62d280ba20b1de933233eaa0b4bfa2d29dbd31b574290a6845ad4429fd4
+indexed_at: 2026-04-21T03:23:08.495627Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Propagate Task Verification to Feature Entity'
+      byte_offset: 0
+      byte_count: 13470
+      word_count: 1754
+      content_hash: 8846f62d280ba20b1de933233eaa0b4bfa2d29dbd31b574290a6845ad4429fd4
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 166
+          byte_count: 1371
+          word_count: 187
+          content_hash: 5445d995d3d4665c0aea6137b809dbfcc5118f4ae8b303fdb90deed62895c1b4
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1537
+          byte_count: 1472
+          word_count: 215
+          content_hash: a3c0d9ed7c294e625d17aba93c331acf643d03482cb69b790d98b1d1e827e870
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 1561
+              byte_count: 759
+              word_count: 109
+              content_hash: b419b99da6926699a88069d5bef4d39bbaaf3b6e6eacd0dd970da688e688c6ba
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 2320
+              byte_count: 689
+              word_count: 102
+              content_hash: 98bb840e77525ab8c0735227936de0a9241639228ffe0e4d9f4876adaf60b280
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 3009
+          byte_count: 5963
+          word_count: 721
+          content_hash: 144f9aa04cc01291617b288dcc6899eeeb823286ec129630e35a1e9aa4d7a7fb
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Trigger Point
+              byte_offset: 3020
+              byte_count: 989
+              word_count: 150
+              content_hash: c66991cc6a7edd0ef1be78de056d007d6df55152d3c78727428c73b165beebe3
+            - path: 1.3.2
+              level: 3
+              title: Fields Written
+              byte_offset: 4009
+              byte_count: 1299
+              word_count: 165
+              content_hash: 14b0cb395b99d46336cd04a1df3240a39f34907bfef85e59dc338b88414b1952
+            - path: 1.3.3
+              level: 3
+              title: Merge Gate Behaviour After the Change
+              byte_offset: 5308
+              byte_count: 1043
+              word_count: 125
+              content_hash: 5c41cafbce24e4dcfa98596cfee36b041ddb4ef9b0ff4a70728eb5094066116c
+            - path: 1.3.4
+              level: 3
+              title: Implementation Boundaries
+              byte_offset: 6351
+              byte_count: 953
+              word_count: 106
+              content_hash: 4530193a6cad327a6da6e1ffc249ad34b1efa4bcff152e4145e6af82a8c86e82
+            - path: 1.3.5
+              level: 3
+              title: Data Flow
+              byte_offset: 7304
+              byte_count: 883
+              word_count: 63
+              content_hash: 66bb1b51dd43674ec6adcd17ed9475c0a7aa81fab7cf6d88d0480f9445ef3f1b
+            - path: 1.3.6
+              level: 3
+              title: Open Questions
+              byte_offset: 8187
+              byte_count: 785
+              word_count: 110
+              content_hash: b714488ee297d21e47d064c8546f1e0427034229a6bc07806c7d2aea7a0d204a
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 8972
+          byte_count: 3457
+          word_count: 488
+          content_hash: 753e46da46a90325b428e9a8d977a1adc5b33efedb626d4659cacecfc0830e56
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 1. Aggregate on Every `finish()` Call (Not Just the Last)
+              byte_offset: 9000
+              byte_count: 1206
+              word_count: 165
+              content_hash: 68d93e8d354a9d1f54b60e2d91843adf8b8ab56f753db56c331762c29477a822
+            - path: 1.4.2
+              level: 3
+              title: 2. Dedicated `record-verification` MCP Tool
+              byte_offset: 10206
+              byte_count: 1147
+              word_count: 169
+              content_hash: 2730affcfb6f9de84f6f0a32b083b48e0d5e0102bab821ddeec3417e83ecc96b
+            - path: 1.4.3
+              level: 3
+              title: 3. Remove the Verification Gates Entirely
+              byte_offset: 11353
+              byte_count: 1076
+              word_count: 151
+              content_hash: 315d8e444830d3b4d55b51496ae9cdc1322792dceae90b345a86da6dda8c2fde
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 12429
+          byte_count: 1041
+          word_count: 122
+          content_hash: 8d39219cf98118e9c4813b1d966001d8b84673375793bd4c5155d2f907bc634a
+entity_refs:
+    - entity_id: FEAT-01KPQ08Y989P8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 70
+    - entity_id: FEAT-01KPQ08YE4399
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 2434
+    - entity_id: TASK-01Kxxx
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 4393
+    - entity_id: TASK-01Kyyy
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 4439
+    - entity_id: TASK-01Kzzz
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 4485
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: 1.3.6
+      role: question
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+classified: false

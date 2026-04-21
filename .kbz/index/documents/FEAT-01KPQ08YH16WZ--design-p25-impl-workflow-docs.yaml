@@ -1,0 +1,213 @@
+document_id: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs
+document_path: work/design/p25-impl-workflow-docs.md
+content_hash: 84575d4007c0e38b336746433a0264c8e77c637a2518bdf21ccf3aa8d7e1facd
+indexed_at: 2026-04-21T03:16:57.53118Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Implementation Workflow Documentation Improvements'
+      byte_offset: 0
+      byte_count: 14626
+      word_count: 2118
+      content_hash: 84575d4007c0e38b336746433a0264c8e77c637a2518bdf21ccf3aa8d7e1facd
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 199
+          byte_count: 2511
+          word_count: 368
+          content_hash: d00777ecad8abc0ac2d30d9c49eb01cbfa34a1636ad6f688924ccec9d185681e
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 2710
+          byte_count: 1415
+          word_count: 204
+          content_hash: 16ae2194cb053a7add3f54c2ecd2920c1191eb5929f96328b9138907a62da412
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 2734
+              byte_count: 706
+              word_count: 96
+              content_hash: 1954d6e8002b85e6c3a8c7ae907ef543209b151adbe299945deba01b2f07fdc0
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 3440
+              byte_count: 685
+              word_count: 104
+              content_hash: 4806b04f20b7b3bb231f5a27a97b9bfff8ff6d183552ae4fc54b8fd6967fe3a6
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 4125
+          byte_count: 5226
+          word_count: 762
+          content_hash: eb918a0a58d9df20953561dd840e33587f4926ee33f7f42632e0decca23a5d65
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Change 1: `implement-task/SKILL.md` — Worktree File Editing section'
+              byte_offset: 4136
+              byte_count: 1621
+              word_count: 237
+              content_hash: 2a0ca6226fd7425c776862be57cd7c249ee310b3c16dd0543dd0ab12be37766b
+            - path: 1.3.2
+              level: 3
+              title: 'Change 2: `decompose-feature/SKILL.md` — Manual fallback when `decompose propose` fails'
+              byte_offset: 5757
+              byte_count: 1759
+              word_count: 256
+              content_hash: cfd3974d85ac0f5e1d0f09e1c8e620bbcacca4a956e42174a9db6f7b7c5afbb9
+            - path: 1.3.3
+              level: 3
+              title: 'Change 3: `orchestrate-development/SKILL.md` — One-sub-agent-per-task sizing guidance'
+              byte_offset: 7516
+              byte_count: 1835
+              word_count: 267
+              content_hash: 7358fee7072028a2c028a9d873a00d56b1bc1e103b4ca20c0970958f18e42381
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 9351
+          byte_count: 2534
+          word_count: 374
+          content_hash: f5a0a28572a7abfff3afaff162d93400c295e01cfae592c8598f648dc93206f2
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Alternative 1: Consolidate all three changes into a single skill file'
+              byte_offset: 9379
+              byte_count: 1126
+              word_count: 169
+              content_hash: 603aec47b4e1070e6250e5d412fd22df15285b902941e47a318fd61c62d6e610
+            - path: 1.4.2
+              level: 3
+              title: 'Alternative 2: Fix the underlying tools instead of updating documentation'
+              byte_offset: 10505
+              byte_count: 1380
+              word_count: 202
+              content_hash: c367e4e03b4c59c7839902192e30980c2705080aea327256d856e8a685dce9c6
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 11885
+          byte_count: 1447
+          word_count: 201
+          content_hash: bb286454f63a1f6ce58aaf132f9355f7715009e71285cebfcf298965b0e355da
+          children:
+            - path: 1.5.1
+              level: 3
+              title: FEAT-01KPQ08Y47522 — `write_file` MCP tool
+              byte_offset: 11902
+              byte_count: 1173
+              word_count: 161
+              content_hash: a90f9e2929f2dfa29fd3d98e1a13e7c5ad9f38999363c91ab0b1e815c5c68c3d
+            - path: 1.5.2
+              level: 3
+              title: No other blocking dependencies
+              byte_offset: 13075
+              byte_count: 257
+              word_count: 38
+              content_hash: b19d4b0d7d6b42930f8c69367da2f69063feb3aad8aba0ad1d8e9560c663d1d5
+        - path: "1.6"
+          level: 2
+          title: Open Questions
+          byte_offset: 13332
+          byte_count: 1294
+          word_count: 188
+          content_hash: 3c396762db9d94015fec5a93d879461b739d36afe6cb3164e8cef845a3bca4f7
+entity_refs:
+    - entity_id: FEAT-01KPQ08YH16WZ
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 75
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 7278
+    - entity_id: FEAT-01KPQ08Y47522
+      entity_type: feature
+      section_path: 1.5.1
+      byte_offset: 11906
+    - entity_id: P1-alt
+      entity_type: plan
+      section_path: 1.2.2
+      byte_offset: 3758
+    - entity_id: P1-alt
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 10738
+    - entity_id: P1-alt
+      entity_type: plan
+      section_path: 1.5.1
+      byte_offset: 12080
+cross_doc_links:
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.1"
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: "1.1"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.1"
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.2.1
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: 1.2.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.2.1
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.3.1
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.3.1
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: 1.3.2
+    - target_path: .kbz/skills/decompose-feature/SKILL.md
+      link_text: .kbz/skills/decompose-feature/SKILL.md
+      section_path: 1.3.2
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.3
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.3.3
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.5.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: alternative
+      confidence: high
+    - section_path: 1.4.2
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: question
+      confidence: high
+classified: false

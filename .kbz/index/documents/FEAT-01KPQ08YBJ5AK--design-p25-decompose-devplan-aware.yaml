@@ -1,0 +1,188 @@
+document_id: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware
+document_path: work/design/p25-decompose-devplan-aware.md
+content_hash: d139608c2c764abd093f65a62336009431ba1ea5226da4d85fd59ef10938bde4
+indexed_at: 2026-04-21T03:21:57.461815Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Dev-plan-aware task grouping in `decompose propose`'
+      byte_offset: 0
+      byte_count: 20369
+      word_count: 3046
+      content_hash: d139608c2c764abd093f65a62336009431ba1ea5226da4d85fd59ef10938bde4
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 193
+          byte_count: 1635
+          word_count: 246
+          content_hash: b13cfbebbace6591bd4e32275100938c3b44d945f20668d123d38fc76a093b13
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1828
+          byte_count: 1385
+          word_count: 215
+          content_hash: 8e7fe6674fb69eaf2879cea07dd169f24c7c89af485123c79ded141f7f7223fa
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 1852
+              byte_count: 668
+              word_count: 107
+              content_hash: 5a27136df3b0cb92f3362f0efeb389415aa9eb165354bda585251aea0b104d29
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 2520
+              byte_count: 693
+              word_count: 104
+              content_hash: a4389e59892d75011624f3979ad5c5d204bc8e20484bb8f9b5321a7165e50f9d
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 3213
+          byte_count: 7045
+          word_count: 1043
+          content_hash: a19453d1ed893343a5a9fed2fe68451def73575b430df6de6743a83ed5bde584
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 1. Dev plan discovery
+              byte_offset: 3224
+              byte_count: 1063
+              word_count: 136
+              content_hash: 2526e1eebd7561b556b11e4790abfc8149a71239de4d965595ee35622cb60b12
+            - path: 1.3.2
+              level: 3
+              title: 2. Task Breakdown parsing
+              byte_offset: 4287
+              byte_count: 2882
+              word_count: 433
+              content_hash: 4724cb00b0461ec6b7fdee59ec895576049ea46bbda269eafb0f87850da9e173
+            - path: 1.3.3
+              level: 3
+              title: 3. Integration point in `DecomposeFeature`
+              byte_offset: 7169
+              byte_count: 1397
+              word_count: 207
+              content_hash: 56e0131592e99913c25a9d1768b8b5f34929a1f2c0998e62384dd50fcbf898d0
+            - path: 1.3.4
+              level: 3
+              title: 4. Guidance and provenance
+              byte_offset: 8566
+              byte_count: 593
+              word_count: 78
+              content_hash: efaf60fb4f0f89eb1c6c364ab65ec4e4c46d19bf9962e32e0b93d4dee3621338
+            - path: 1.3.5
+              level: 3
+              title: 5. Slice enrichment
+              byte_offset: 9159
+              byte_count: 288
+              word_count: 45
+              content_hash: 4c786cb3222eb319511e391b2ee4dbf08d877d4e0c93c838e84434c687c06ddf
+            - path: 1.3.6
+              level: 3
+              title: 6. Failure modes
+              byte_offset: 9447
+              byte_count: 811
+              word_count: 142
+              content_hash: b08514eb3cbe95b8d42db6f5db553583d16e05fbc2a14523c1902dbb5184e149
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 10258
+          byte_count: 3758
+          word_count: 585
+          content_hash: 7eeda51a01ee6db6d78bf3b368b6a5d604ce54e86004ac3067fdae5a09f2517a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Alternative 1: Parse the dev plan (recommended — this design)'
+              byte_offset: 10286
+              byte_count: 1186
+              word_count: 179
+              content_hash: 68da46395c139ea0716a974dfd39f94a53b185a09d8502e4c7d78e25209fd1f9
+            - path: 1.4.2
+              level: 3
+              title: 'Alternative 2: Add a `grouping_hint` parameter to `decompose propose`'
+              byte_offset: 11472
+              byte_count: 1323
+              word_count: 215
+              content_hash: 6b0dd15cb3f4d3509d16c435626abcdcd10c38c00ddbccece885faf5ebffb2c1
+            - path: 1.4.3
+              level: 3
+              title: 'Alternative 3: Leave the heuristic unchanged; document the manual fallback'
+              byte_offset: 12795
+              byte_count: 1221
+              word_count: 188
+              content_hash: 3c665456da01319902198636944011b302168140f590810decd1152790d09610
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 14016
+          byte_count: 1174
+          word_count: 161
+          content_hash: b00380dc4e69c97afaa6bd00db88d87ddd230311a58d0877f344b2e12f6de27d
+        - path: "1.6"
+          level: 2
+          title: Decisions
+          byte_offset: 15190
+          byte_count: 4258
+          word_count: 639
+          content_hash: 5ab8c2fc3c3068dca45810d9b6cfefde06d0a607533f0560442372e610ee7e9e
+        - path: "1.7"
+          level: 2
+          title: Open Questions
+          byte_offset: 19448
+          byte_count: 921
+          word_count: 134
+          content_hash: 67279ea723794bd8ef3b3334bb7d43e47bb7708fe43527f4417ba8d67d551ed6
+entity_refs:
+    - entity_id: FEAT-01KPQ08YBJ5AK
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 76
+    - entity_id: FEAT-01KPPG4SXY6T0
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 892
+    - entity_id: FEAT-01KPQ08YBJ8J0
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 14954
+cross_doc_links:
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: 1.4.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: alternative
+      confidence: high
+    - section_path: 1.4.2
+      role: alternative
+      confidence: high
+    - section_path: 1.4.3
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: decision
+      confidence: high
+    - section_path: "1.7"
+      role: question
+      confidence: high
+classified: false

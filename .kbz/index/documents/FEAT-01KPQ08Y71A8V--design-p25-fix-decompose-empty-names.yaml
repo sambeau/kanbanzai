@@ -1,0 +1,163 @@
+document_id: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names
+document_path: work/design/p25-fix-decompose-empty-names.md
+content_hash: 08ff6fd98165acec86409f667da7e640c723a956e3e8f99e66d57661954236e6
+indexed_at: 2026-04-21T03:21:12.563889Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Fix Empty Task Names in `decompose propose`'
+      byte_offset: 0
+      byte_count: 10708
+      word_count: 1558
+      content_hash: 08ff6fd98165acec86409f667da7e640c723a956e3e8f99e66d57661954236e6
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 168
+          byte_count: 1242
+          word_count: 175
+          content_hash: 9bae67b1dcbd2a17ba76ac5e8288ff8d9bd3eaed51d0762d3415ea34c5899dd8
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1410
+          byte_count: 1051
+          word_count: 154
+          content_hash: 4eaf9fb342bab8c0c69ad5dc5ef2c2cc181993a217303f81e92a2271f1250083
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 1434
+              byte_count: 562
+              word_count: 82
+              content_hash: d5fd5eb67e484345a015d1d2bdcea8bae1ba77ffe5ba1b7db342316a3db5e208
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 1996
+              byte_count: 465
+              word_count: 68
+              content_hash: 8b1037251897487bcada6d28669b15fa07bd6fcbe90d4fc6466c70857b55bf0d
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 2461
+          byte_count: 4194
+          word_count: 586
+          content_hash: 5aa5d0179551875f67cd7fef207fe558e8119bc283d9a843bca768e4a25461db
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Root cause
+              byte_offset: 2472
+              byte_count: 718
+              word_count: 105
+              content_hash: bdad073f154767e3b166bd223f0d7c3efa093edf473dc38e4da6ec25b6e72d75
+            - path: 1.3.2
+              level: 3
+              title: The name derivation challenge
+              byte_offset: 3190
+              byte_count: 692
+              word_count: 101
+              content_hash: c6cd8cc2246f1aac89b8023b5cc0ffdc7d3b62aa47176b7d02f0cd19f7045d21
+            - path: 1.3.3
+              level: 3
+              title: 'Fix: `deriveTaskName` helper'
+              byte_offset: 3882
+              byte_count: 853
+              word_count: 116
+              content_hash: 88844c6abb54aab8f5e96001a8255648311b13ea0823a966f46d69008a67e64c
+            - path: 1.3.4
+              level: 3
+              title: Applying `deriveTaskName` in `generateProposal`
+              byte_offset: 4735
+              byte_count: 437
+              word_count: 48
+              content_hash: 0ca4cfefc85656a925eb4cb4b0bdd53a5b843348d7cb4aaf8c34cf95f1d99141
+            - path: 1.3.5
+              level: 3
+              title: Where the fix lives
+              byte_offset: 5172
+              byte_count: 362
+              word_count: 42
+              content_hash: 53250fe7a156d265ad7c1067e92c215c1b871a5851bf77937b2ecbc372433921
+            - path: 1.3.6
+              level: 3
+              title: Failure modes
+              byte_offset: 5534
+              byte_count: 610
+              word_count: 112
+              content_hash: e3cbb96705cbf667e0cd41cd8d32c7456206fcf727da3539298ff40d439b67d5
+            - path: 1.3.7
+              level: 3
+              title: Test coverage gaps to close
+              byte_offset: 6144
+              byte_count: 511
+              word_count: 60
+              content_hash: 576267ebf4b3af43cdd9a2ece4a661d3f8f15b09891f6b07a28b5db2f0ea3443
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 6655
+          byte_count: 3479
+          word_count: 553
+          content_hash: 73bc974eac36c6074e5f2b4df3a03c64e194222b184141c549a2620d41d54a2b
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Alternative 1: Fallback to AC identifier only (e.g. `"Implement AC-001"`)'
+              byte_offset: 6683
+              byte_count: 901
+              word_count: 142
+              content_hash: 9c702606f679b662aa88618598646edd57801bcdad83b87f7af44b8f66c509a7
+            - path: 1.4.2
+              level: 3
+              title: 'Alternative 2: Fail explicitly from `generateProposal` with a diagnostic'
+              byte_offset: 7584
+              byte_count: 1514
+              word_count: 243
+              content_hash: fc9af708dcbce93b3fb57b0efebc8cfc7ab063a99026f2c31cf7ce32972833e6
+            - path: 1.4.3
+              level: 3
+              title: 'Alternative 3: Strip proposal items with empty names before returning'
+              byte_offset: 9098
+              byte_count: 1036
+              word_count: 165
+              content_hash: 90d30532aeb8004c48abc39f63d3df3cf8de4fd75c6069b91c36fe1f26064d3c
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 10134
+          byte_count: 574
+          word_count: 68
+          content_hash: c3d89c42606ea2d7611632a8438890fcda8af8643e3540ecbead6b9971a8056c
+entity_refs:
+    - entity_id: FEAT-01KPQ08Y71A8V
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 68
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: alternative
+      confidence: high
+    - section_path: 1.4.2
+      role: alternative
+      confidence: high
+    - section_path: 1.4.3
+      role: alternative
+      confidence: high
+classified: false

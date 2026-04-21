@@ -113,11 +113,12 @@ If the human acknowledges a risk and decides to proceed anyway, accept the decis
 
 ### Step 3: Draft the Document
 
-1. Write all four required sections in order: Problem and Motivation, Design, Alternatives Considered, Decisions.
-2. The Design section describes the recommended approach at the level of components, boundaries, and interactions.
-3. The Alternatives Considered section includes every candidate from Step 2, with trade-offs and the reason each was chosen or rejected.
-4. The Decisions section records each architectural choice with its design rationale.
-5. IF any aspect of the design is uncertain → mark it as an open question rather than guessing.
+1. Call `now` to get the current date. Record the returned value — you will use it in the document header's `Date` field. Do not guess or invent a date.
+2. Write all four required sections in order: Problem and Motivation, Design, Alternatives Considered, Decisions.
+3. The Design section describes the recommended approach at the level of components, boundaries, and interactions.
+4. The Alternatives Considered section includes every candidate from Step 2, with trade-offs and the reason each was chosen or rejected.
+5. The Decisions section records each architectural choice with its design rationale.
+6. IF any aspect of the design is uncertain → mark it as an open question rather than guessing.
 
 ### Step 4: Self-Validate
 
@@ -136,7 +137,17 @@ If the human acknowledges a risk and decides to proceed anyway, accept the decis
 
 ## Output Format
 
-The design document has exactly 4 required sections. Use these headings verbatim:
+Begin every design document with a header table:
+
+```
+| Field  | Value                          |
+|--------|--------------------------------|
+| Date   | {value returned by `now`}      |
+| Status | Draft                          |
+| Author | {who is writing}               |
+```
+
+The document then has exactly 4 required sections. Use these headings verbatim:
 
 ```
 ## Problem and Motivation

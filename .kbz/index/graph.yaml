@@ -1,4 +1,4 @@
-updated_at: 2026-04-21T02:48:48.848227Z
+updated_at: 2026-04-21T03:23:08.495627Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -63818,5 +63818,870 @@ edges:
     - from: PROJECT/report-p24-implementation-retro#1
       from_type: section
       to: P24-retro-recommendations
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool
+      from_type: document
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.2
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.2
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.3.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.4
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.4
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.4
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.5
+      from_type: section
+      to: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1
+      from_type: section
+      to: FEAT-01KPQ08Y47522
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08Y47522/design-p25-write-file-tool#1.4.3
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs
+      from_type: document
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.2
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.2
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.4
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.4
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.5
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.5
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YH16WZ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3.2
+      from_type: section
+      to: FEAT-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.5.1
+      from_type: section
+      to: FEAT-01KPQ08Y47522
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.2.2
+      from_type: section
+      to: P1-alt
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.4.2
+      from_type: section
+      to: P1-alt
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.5.1
+      from_type: section
+      to: P1-alt
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.1
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.1
+      from_type: section
+      to: decompose-feature/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.1
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.2.1
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.2.1
+      from_type: section
+      to: decompose-feature/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.2.1
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3.1
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3.1
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3.2
+      from_type: section
+      to: decompose-feature/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3.2
+      from_type: section
+      to: .kbz/skills/decompose-feature/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3.3
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.3.3
+      from_type: section
+      to: .kbz/skills/orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.5.1
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs#1.6
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names
+      from_type: document
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.2
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.2
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.4
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.4
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.4
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names#1
+      from_type: section
+      to: FEAT-01KPQ08Y71A8V
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance
+      from_type: document
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.2
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.2
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.3
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.3
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.3
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.3
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.3
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.4
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.4
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.4
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.4
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.4
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1
+      from_type: section
+      to: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance#1
+      from_type: section
+      to: FEAT-01KPQ08YE4399
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware
+      from_type: document
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.2
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.2
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.4
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.4
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.4
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1
+      from_type: section
+      to: FEAT-01KPQ08YBJ5AK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.5
+      from_type: section
+      to: FEAT-01KPQ08YBJ8J0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware#1.4.3
+      from_type: section
+      to: decompose-feature/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs
+      from_type: document
+      to: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3
+      from_type: section
+      to: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3
+      from_type: section
+      to: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3
+      from_type: section
+      to: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.4
+      from_type: section
+      to: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.4
+      from_type: section
+      to: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.4
+      from_type: section
+      to: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1
+      from_type: section
+      to: FEAT-01KPQ08YKHNS9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.5
+      from_type: section
+      to: FEAT-01KPQ08Y47522
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3.1
+      from_type: section
+      to: TASK-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.1
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.1
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.2
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.2
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3.1
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3.1
+      from_type: section
+      to: .kbz/skills/orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3.2
+      from_type: section
+      to: refs/sub-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3.2
+      from_type: section
+      to: .agents/skills/kanbanzai-<name>/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3.2
+      from_type: section
+      to: internal/kbzinit/skills/<name>/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.3.2
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.4.2
+      from_type: section
+      to: .agents/skills/kanbanzai-*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.4.2
+      from_type: section
+      to: internal/kbzinit/skills/*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.5
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs#1.5
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification
+      from_type: document
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.2
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.2
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.4
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.4
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.4
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1
+      from_type: section
+      to: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1
+      from_type: section
+      to: FEAT-01KPQ08Y989P8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.2.2
+      from_type: section
+      to: FEAT-01KPQ08YE4399
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3.2
+      from_type: section
+      to: TASK-01Kxxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3.2
+      from_type: section
+      to: TASK-01Kyyy
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification#1.3.2
+      from_type: section
+      to: TASK-01Kzzz
       to_type: entity_ref
       edge_type: REFERENCES

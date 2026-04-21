@@ -1,0 +1,171 @@
+document_id: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs
+document_path: work/design/p25-orchestration-docs.md
+content_hash: 515759a8d5efc063e76458b9eb07f533e5757c4625e7558404f1e494ee6cf4b8
+indexed_at: 2026-04-21T03:22:36.997939Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Sub-agent Orchestration Documentation Improvements'
+      byte_offset: 0
+      byte_count: 11797
+      word_count: 1613
+      content_hash: 515759a8d5efc063e76458b9eb07f533e5757c4625e7558404f1e494ee6cf4b8
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 144
+          byte_count: 2005
+          word_count: 277
+          content_hash: de785382460fac09be51875ad7546b40e29762a9e59797eb1c23944a73aba658
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 2149
+          byte_count: 1117
+          word_count: 159
+          content_hash: 91f6c3ba05dbe38183c86501fbd52daa0fc87c407f611502c758f0d3fa341ea3
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 3266
+          byte_count: 4833
+          word_count: 640
+          content_hash: d584cb410091f61612d7f2a348c1b307a32098f54f4b13a6886726e59cde4951
+          children:
+            - path: 1.3.1
+              level: 3
+              title: P8 — Add "always use `handoff`" rule to `orchestrate-development/SKILL.md`
+              byte_offset: 3277
+              byte_count: 1892
+              word_count: 266
+              content_hash: 7ed9a34292f0e3ca6cb283a74925c8f4ef2abf475d3c1b744c417ab52aae7fe4
+            - path: 1.3.2
+              level: 3
+              title: P9 — Add dual-write requirement to `AGENTS.md`
+              byte_offset: 5169
+              byte_count: 1807
+              word_count: 210
+              content_hash: 8c1687ab07d9fa5f004e6d4f8d86bcbc83e96893efe8f64291a90e289218981a
+            - path: 1.3.3
+              level: 3
+              title: P11 — Fix `entity` tool `parent` field description
+              byte_offset: 6976
+              byte_count: 1123
+              word_count: 162
+              content_hash: d2a13daebb77a5c863317719f7e5dfdea3ecd884ccfe6a93f6a1c7ae4714d8cd
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 8099
+          byte_count: 2269
+          word_count: 323
+          content_hash: 4ec8138fb6f0733a4c2018d99376d9d6eb3ebc915cab1f3df54ec9aacf639e33
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 1. Make `handoff` mandatory at the MCP server level
+              byte_offset: 8127
+              byte_count: 819
+              word_count: 119
+              content_hash: 5ea1993a655d0c6cdcc06b6b29af03d33947079dc22e8571c1d31c2961cbc09b
+            - path: 1.4.2
+              level: 3
+              title: 2. Auto-sync `internal/kbzinit/skills/` from `.agents/skills/` on build
+              byte_offset: 8946
+              byte_count: 785
+              word_count: 103
+              content_hash: 713064cfdde2e22a093c8248c5bf16a53de56fbb7e01b68b3d2dd4392c67047e
+            - path: 1.4.3
+              level: 3
+              title: 3. Status quo — make no changes
+              byte_offset: 9731
+              byte_count: 637
+              word_count: 98
+              content_hash: 4ac1021099aeb94d5b8c48c03550fd55c6b88389716499cca0593ea86caa21cf
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 10368
+          byte_count: 1429
+          word_count: 197
+          content_hash: a8fde8039edca510330bb3ec5ef6f16d41992c45a5991eb5b188468c5260ab8e
+entity_refs:
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 72
+    - entity_id: FEAT-01KPQ08Y47522
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 10661
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 3572
+cross_doc_links:
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: "1.1"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.2"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: "1.2"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.1
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.2
+    - target_path: refs/sub-agents.md
+      link_text: refs/sub-agents.md
+      section_path: 1.3.2
+    - target_path: .agents/skills/kanbanzai-<name>/SKILL.md
+      link_text: .agents/skills/kanbanzai-<name>/SKILL.md
+      section_path: 1.3.2
+    - target_path: internal/kbzinit/skills/<name>/SKILL.md
+      link_text: |4
+        internal/kbzinit/skills/<name>/SKILL.md
+            ↔ .agents/skills/kanbanzai-<name>/SKILL.md  (live, in this repo)
+            → .agents/skills/kanbanzai-<name>/SKILL.md  (installed in new projects)
+      section_path: 1.3.2
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.3.2
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.4.2
+    - target_path: internal/kbzinit/skills/*/SKILL.md
+      link_text: internal/kbzinit/skills/*/SKILL.md
+      section_path: 1.4.2
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.5"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+classified: false
