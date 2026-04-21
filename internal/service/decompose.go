@@ -137,10 +137,100 @@ func (s *DecomposeService) DecomposeFeature(input DecomposeInput) (DecomposeResu
 		return DecomposeResult{}, fmt.Errorf("spec %q is in %q status — approve the spec before decomposing", specDocID, docResult.Status)
 	}
 
-	// 5. Parse the spec for structure.
+	// 5. Parse the spec for structure (always, for slice enrichment on all paths).
 	spec := parseSpecStructure(content)
 
-	// 6. Gate: spec must contain parseable acceptance criteria.
+	// Dev plan discovery: check for an approved dev plan and try to use its
+	// Task Breakdown section as the source of truth for decomposition.
+	var devPlanDocID string
+	var devPlanWarnings []string
+
+	// Check direct dev_plan reference on feature state first.
+	if ref, _ := feat.State["dev_plan"].(string); ref != "" {
+		_, dpResult, dpErr := s.docSvc.GetDocumentContent(ref)
+		if dpErr == nil && dpResult.Status == string(model.DocumentStatusApproved) {
+			devPlanDocID = dpResult.ID
+		}
+	}
+
+	// Fall back to listing approved dev plans owned by this feature.
+	if devPlanDocID == "" {
+		docs, listErr := s.docSvc.ListDocuments(DocumentFilters{
+			Owner:  input.FeatureID,
+			Type:   "dev-plan",
+			Status: string(model.DocumentStatusApproved),
+		})
+		if listErr == nil && len(docs) > 0 {
+			latest := docs[0]
+			for _, d := range docs[1:] {
+				if d.Updated.After(latest.Updated) {
+					latest = d
+				}
+			}
+			devPlanDocID = latest.ID
+		}
+	}
+
+	if devPlanDocID != "" {
+		dpContent, _, dpErr := s.docSvc.GetDocumentContent(devPlanDocID)
+		if dpErr == nil {
+			tasks, ok := parseDevPlanTasks(featureSlug, []byte(dpContent))
+			if ok {
+				// Build proposal from dev-plan tasks.
+				var sum float64
+				allEstimated := len(tasks) > 0
+				for _, t := range tasks {
+					if t.Estimate != nil {
+						sum += *t.Estimate
+					} else {
+						allEstimated = false
+					}
+				}
+				var estimatedTotal *float64
+				if allEstimated && len(tasks) > 0 {
+					estimatedTotal = &sum
+				}
+
+				warnings := append(devPlanWarnings, fmt.Sprintf("Tasks sourced from dev-plan %s", devPlanDocID))
+				if input.Context != "" {
+					warnings = append(warnings, fmt.Sprintf("Additional orchestration context provided: %s", input.Context))
+				}
+
+				proposal := Proposal{
+					Tasks:          tasks,
+					TotalTasks:     len(tasks),
+					EstimatedTotal: estimatedTotal,
+					Slices:         identifySlices(spec),
+					Warnings:       warnings,
+				}
+				guidance := deduplicateStrings([]string{
+					"dev-plan-tasks",
+					"size-soft-limit-8",
+					"explicit-dependencies",
+					"role-assignment",
+				})
+
+				// Slice enrichment runs on all paths.
+				proposal.SliceDetails = analyzeSlices(spec, content)
+
+				return DecomposeResult{
+					FeatureID:       feat.ID,
+					FeatureSlug:     featureSlug,
+					SpecDocumentID:  docResult.ID,
+					Proposal:        proposal,
+					GuidanceApplied: guidance,
+				}, nil
+			}
+			// Parse failed: fall through with a warning.
+			devPlanWarnings = append(devPlanWarnings, fmt.Sprintf(
+				"dev-plan %s found but Task Breakdown absent or empty — falling back to AC heuristic",
+				devPlanDocID,
+			))
+		}
+	}
+
+	// AC heuristic path.
+	// Gate: spec must contain parseable acceptance criteria.
 	if len(spec.acceptanceCriteria) == 0 {
 		return DecomposeResult{}, fmt.Errorf("%s", buildZeroCriteriaDiagnostic(specDocID, content, spec))
 	}
@@ -148,8 +238,9 @@ func (s *DecomposeService) DecomposeFeature(input DecomposeInput) (DecomposeResu
 	// 7. Generate proposal by applying embedded guidance.
 	cfg := config.LoadOrDefault()
 	proposal, guidance := generateProposal(spec, featureSlug, input.Context, cfg.Decomposition.MaxTasksPerFeature)
+	proposal.Warnings = append(devPlanWarnings, proposal.Warnings...)
 
-	// 8. Enrich with detailed slice analysis.
+	// Slice enrichment runs on all paths.
 	proposal.SliceDetails = analyzeSlices(spec, content)
 
 	return DecomposeResult{
@@ -301,6 +392,13 @@ var (
 	// where XX is one or more uppercase ASCII letters and NN is one or more digits.
 	// Group 1: identifier prefix (e.g. "AC"), Group 2: number (e.g. "01"), Group 3: criterion text.
 	reBoldIdent = regexp.MustCompile(`^\*\*([A-Z]+)-(\d+)\.\*\*\s+(.+)$`)
+
+	// Dev-plan parsing regexes.
+	reDevPlanTaskBreakdown = regexp.MustCompile(`(?im)^## Task Breakdown\s*$`)
+	reDevPlanTaskHeading   = regexp.MustCompile(`(?m)^### Task \d+: (.+)$`)
+	reDevPlanNextL2        = regexp.MustCompile(`(?m)^## [^#].+$`)
+	reDevPlanBoldField     = regexp.MustCompile(`(?m)^\s*[-*]\s+\*\*([^:]+):\*\*\s+(.+)$`)
+	reDevPlanTaskRef       = regexp.MustCompile(`Task (\d+)`)
 )
 
 // parseSpecStructure extracts sections and acceptance criteria from a
@@ -812,6 +910,127 @@ func slugify(text string) string {
 	}
 	result := b.String()
 	return strings.TrimRight(result, "-")
+}
+
+// parseDevPlanTasks parses the "## Task Breakdown" section of a dev plan
+// document and returns the tasks defined there. Returns (nil, false) if the
+// section is absent or contains no task headings (NFR-003: unexported).
+func parseDevPlanTasks(featureSlug string, content []byte) ([]ProposedTask, bool) {
+	text := string(content)
+
+	// 1. Find ## Task Breakdown heading (case-insensitive).
+	loc := reDevPlanTaskBreakdown.FindStringIndex(text)
+	if loc == nil {
+		return nil, false
+	}
+
+	// 2. Extract body from heading to next ##-level heading (or EOF).
+	bodyStart := loc[1]
+	remaining := text[bodyStart:]
+	var body string
+	nextL2 := reDevPlanNextL2.FindStringIndex(remaining)
+	if nextL2 != nil {
+		body = remaining[:nextL2[0]]
+	} else {
+		body = remaining
+	}
+
+	// 3. Find task headings.
+	taskMatches := reDevPlanTaskHeading.FindAllStringSubmatchIndex(body, -1)
+	if len(taskMatches) == 0 {
+		return nil, false
+	}
+
+	// Extract task titles and pre-compute slugs (needed for dependency resolution).
+	titles := make([]string, len(taskMatches))
+	for i, m := range taskMatches {
+		titles[i] = strings.TrimSpace(body[m[2]:m[3]])
+	}
+	slugs := make([]string, len(titles))
+	for i, title := range titles {
+		slugs[i] = featureSlug + "-" + slugify(title)
+	}
+
+	// 4. Extract each task block and parse fields.
+	var tasks []ProposedTask
+	for i, m := range taskMatches {
+		title := titles[i]
+		blockStart := m[1] // end of the ### heading line
+		var blockEnd int
+		if i+1 < len(taskMatches) {
+			blockEnd = taskMatches[i+1][0] // start of next ### heading
+		} else {
+			blockEnd = len(body)
+		}
+		block := body[blockStart:blockEnd]
+
+		task := ProposedTask{
+			Slug:      slugs[i],
+			Name:      title,
+			Summary:   title,
+			Rationale: fmt.Sprintf("Sourced from dev-plan task %d", i+1),
+		}
+
+		// 5. Parse bolded fields: Depends on, Effort, Spec requirements.
+		fieldMatches := reDevPlanBoldField.FindAllStringSubmatch(block, -1)
+		for _, fm := range fieldMatches {
+			key := strings.TrimSpace(fm[1])
+			value := strings.TrimSpace(fm[2])
+			switch key {
+			case "Effort":
+				var est float64
+				switch value {
+				case "Small":
+					est = 1.0
+				case "Medium":
+					est = 3.0
+				case "Large":
+					est = 8.0
+				default:
+					continue
+				}
+				task.Estimate = &est
+			case "Spec requirements":
+				parts := strings.Split(value, ",")
+				var covers []string
+				for _, p := range parts {
+					p = strings.TrimSpace(p)
+					if p != "" {
+						covers = append(covers, p)
+					}
+				}
+				if len(covers) > 0 {
+					task.Covers = covers
+				}
+			case "Depends on":
+				// Resolve dependency slugs from "Task N" references.
+				// "None" or "None (...)" -> nil.
+				lower := strings.ToLower(value)
+				if strings.HasPrefix(lower, "none") {
+					task.DependsOn = nil
+				} else {
+					refs := reDevPlanTaskRef.FindAllStringSubmatch(value, -1)
+					var deps []string
+					for _, ref := range refs {
+						idx, err := strconv.Atoi(ref[1])
+						if err == nil && idx >= 1 && idx <= len(slugs) {
+							deps = append(deps, slugs[idx-1])
+						}
+					}
+					if len(deps) > 0 {
+						task.DependsOn = deps
+					}
+				}
+			}
+		}
+
+		tasks = append(tasks, task)
+	}
+
+	if len(tasks) == 0 {
+		return nil, false
+	}
+	return tasks, true
 }
 
 func sectionOrDefault(section string) string {

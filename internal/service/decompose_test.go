@@ -2082,3 +2082,493 @@ The design approach is Z.
 		t.Errorf("error = %q\nwant it to mention no bold-identifier lines", err.Error())
 	}
 }
+
+// ---------------------------------------------------------------------------
+// Dev-plan-aware decomposition tests (FEAT-01KPQ08YBJ5AK)
+// ---------------------------------------------------------------------------
+
+// devPlanWithTwoTasks is a valid dev plan with a two-task breakdown.
+// Task 2 depends on Task 1.
+const devPlanWithTwoTasks = `# Dev Plan for Test Feature
+
+## Task Breakdown
+
+### Task 1: Implement data model
+- **Effort:** Small
+- **Spec requirements:** FR-001, FR-002
+- **Depends on:** None
+
+### Task 2: Implement API endpoints
+- **Effort:** Large
+- **Spec requirements:** FR-003
+- **Depends on:** Task 1
+`
+
+// devPlanNoTaskBreakdown is an approved dev plan that lacks a Task Breakdown section.
+const devPlanNoTaskBreakdown = `# Dev Plan for Test Feature
+
+## Overview
+
+This plan describes the work but has no task breakdown section yet.
+`
+
+// specWithACs is a minimal spec that has parseable acceptance criteria under L2 sections.
+const specWithACs = `# Feature Spec
+
+## Data Layer
+
+### Acceptance Criteria
+
+- [ ] Data is persisted correctly
+- [ ] Records can be retrieved by ID
+
+## API Layer
+
+### Acceptance Criteria
+
+- [ ] Endpoint accepts POST requests
+`
+
+// specWithNoACs is a spec that has no acceptance criteria whatsoever.
+const specWithNoACs = `# Feature Spec
+
+## Overview
+
+This spec describes a feature but has no acceptance criteria.
+
+## Architecture
+
+High-level architecture notes only.
+`
+
+// setupDecomposeTestWithDevPlan creates an entity + document service, a feature
+// with an approved spec, and a dev plan document owned by the feature.
+// approve controls whether the dev plan is in approved or draft status.
+// Returns: *DecomposeService, *EntityService, featureID, featureSlug.
+func setupDecomposeTestWithDevPlan(t *testing.T, specContent, devPlanContent string, approve bool) (*DecomposeService, *EntityService, string, string) {
+	t.Helper()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+
+	entitySvc := NewEntityService(stateRoot)
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+
+	planID := "P1-decompose-plan"
+	writeDecomposeTestPlan(t, entitySvc, planID)
+
+	featResult, err := entitySvc.CreateFeature(CreateFeatureInput{
+		Slug:      "test-feature",
+		Parent:    planID,
+		Summary:   "Test feature for dev-plan-aware decompose",
+		CreatedBy: "tester",
+		Name:      "Test feature",
+	})
+	if err != nil {
+		t.Fatalf("create feature: %v", err)
+	}
+	featureID := featResult.ID
+	featureSlug := "test-feature"
+
+	// Write and approve spec.
+	specPath := "work/spec/test-spec.md"
+	specFull := filepath.Join(repoRoot, specPath)
+	if err := os.MkdirAll(filepath.Dir(specFull), 0o755); err != nil {
+		t.Fatalf("mkdir for spec: %v", err)
+	}
+	if err := os.WriteFile(specFull, []byte(specContent), 0o644); err != nil {
+		t.Fatalf("write spec: %v", err)
+	}
+	specDoc, err := docSvc.SubmitDocument(SubmitDocumentInput{
+		Path:      specPath,
+		Type:      "specification",
+		Title:     "Test Specification",
+		Owner:     featureID,
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("submit spec: %v", err)
+	}
+	if _, err := docSvc.ApproveDocument(ApproveDocumentInput{
+		ID:         specDoc.ID,
+		ApprovedBy: "tester",
+	}); err != nil {
+		t.Fatalf("approve spec: %v", err)
+	}
+	_, err = entitySvc.UpdateEntity(UpdateEntityInput{
+		Type:   "feature",
+		ID:     featureID,
+		Slug:   featureSlug,
+		Fields: map[string]string{"spec": specDoc.ID},
+	})
+	if err != nil {
+		t.Fatalf("link spec to feature: %v", err)
+	}
+
+	// Write and optionally approve dev plan.
+	devPlanPath := "work/dev-plan/test-dev-plan.md"
+	devPlanFull := filepath.Join(repoRoot, devPlanPath)
+	if err := os.MkdirAll(filepath.Dir(devPlanFull), 0o755); err != nil {
+		t.Fatalf("mkdir for dev plan: %v", err)
+	}
+	if err := os.WriteFile(devPlanFull, []byte(devPlanContent), 0o644); err != nil {
+		t.Fatalf("write dev plan: %v", err)
+	}
+	devPlanDoc, err := docSvc.SubmitDocument(SubmitDocumentInput{
+		Path:      devPlanPath,
+		Type:      "dev-plan",
+		Title:     "Test Dev Plan",
+		Owner:     featureID,
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("submit dev plan: %v", err)
+	}
+	if approve {
+		if _, err := docSvc.ApproveDocument(ApproveDocumentInput{
+			ID:         devPlanDoc.ID,
+			ApprovedBy: "tester",
+		}); err != nil {
+			t.Fatalf("approve dev plan: %v", err)
+		}
+	}
+
+	decomposeSvc := NewDecomposeService(entitySvc, docSvc)
+	return decomposeSvc, entitySvc, featureID, featureSlug
+}
+
+// AC-001: Feature with approved dev plan + valid Task Breakdown -> tasks from dev plan.
+func TestDecomposeFeature_DevPlanPath_TasksFromDevPlan(t *testing.T) {
+	t.Parallel()
+
+	svc, _, featureID, featureSlug := setupDecomposeTestWithDevPlan(t, specWithACs, devPlanWithTwoTasks, true)
+
+	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err != nil {
+		t.Fatalf("DecomposeFeature() error = %v", err)
+	}
+
+	// Should produce exactly two tasks (from the dev plan, not AC heuristic).
+	if got := len(result.Proposal.Tasks); got != 2 {
+		t.Fatalf("TotalTasks = %d, want 2 (from dev plan)", got)
+	}
+
+	task1 := result.Proposal.Tasks[0]
+	task2 := result.Proposal.Tasks[1]
+
+	// Task 1: correct name and slug.
+	wantTask1Name := "Implement data model"
+	if task1.Name != wantTask1Name {
+		t.Errorf("Tasks[0].Name = %q, want %q", task1.Name, wantTask1Name)
+	}
+	wantTask1Slug := featureSlug + "-" + "implement-data-model"
+	if task1.Slug != wantTask1Slug {
+		t.Errorf("Tasks[0].Slug = %q, want %q", task1.Slug, wantTask1Slug)
+	}
+
+	// Task 2 depends on Task 1.
+	if len(task2.DependsOn) != 1 || task2.DependsOn[0] != task1.Slug {
+		t.Errorf("Tasks[1].DependsOn = %v, want [%q]", task2.DependsOn, task1.Slug)
+	}
+
+	// Task 1 has no dependencies.
+	if len(task1.DependsOn) != 0 {
+		t.Errorf("Tasks[0].DependsOn = %v, want nil", task1.DependsOn)
+	}
+}
+
+// AC-002: Draft dev plan -> falls back to AC heuristic, no error.
+func TestDecomposeFeature_DraftDevPlan_FallsBackToAC(t *testing.T) {
+	t.Parallel()
+
+	// approve=false: dev plan stays in draft; should be ignored.
+	svc, _, featureID, _ := setupDecomposeTestWithDevPlan(t, specWithACs, devPlanWithTwoTasks, false)
+
+	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err != nil {
+		t.Fatalf("DecomposeFeature() error = %v (draft dev plan should not block)", err)
+	}
+
+	// AC heuristic path: guidance should NOT contain "dev-plan-tasks".
+	for _, g := range result.GuidanceApplied {
+		if g == "dev-plan-tasks" {
+			t.Errorf("GuidanceApplied = %v, must NOT contain %q on AC heuristic path", result.GuidanceApplied, "dev-plan-tasks")
+			break
+		}
+	}
+
+	// Should have at least one task from the AC heuristic.
+	if len(result.Proposal.Tasks) == 0 {
+		t.Error("expected tasks from AC heuristic fallback, got none")
+	}
+}
+
+// AC-003: Approved dev plan without ## Task Breakdown -> AC heuristic + warning.
+func TestDecomposeFeature_DevPlanMissingTaskBreakdown_FallsBackToAC(t *testing.T) {
+	t.Parallel()
+
+	svc, _, featureID, _ := setupDecomposeTestWithDevPlan(t, specWithACs, devPlanNoTaskBreakdown, true)
+
+	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err != nil {
+		t.Fatalf("DecomposeFeature() error = %v", err)
+	}
+
+	// Should fall back to AC heuristic.
+	for _, g := range result.GuidanceApplied {
+		if g == "dev-plan-tasks" {
+			t.Errorf("GuidanceApplied must NOT contain \"dev-plan-tasks\" on fallback path; got %v", result.GuidanceApplied)
+			break
+		}
+	}
+
+	// Warnings must mention the Task Breakdown missing/empty.
+	warnFound := false
+	for _, w := range result.Proposal.Warnings {
+		if contains(w, "Task Breakdown absent or empty") {
+			warnFound = true
+			break
+		}
+	}
+	if !warnFound {
+		t.Errorf("Warnings = %v, want one entry mentioning \"Task Breakdown absent or empty\"", result.Proposal.Warnings)
+	}
+
+	// Should still produce tasks from AC heuristic.
+	if len(result.Proposal.Tasks) == 0 {
+		t.Error("expected tasks from AC heuristic fallback, got none")
+	}
+}
+
+// AC-004: Approved dev plan + spec with no ACs -> valid proposal, no zero-criteria error.
+func TestDecomposeFeature_DevPlanPath_NoACsInSpec(t *testing.T) {
+	t.Parallel()
+
+	svc, _, featureID, _ := setupDecomposeTestWithDevPlan(t, specWithNoACs, devPlanWithTwoTasks, true)
+
+	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err != nil {
+		t.Fatalf("DecomposeFeature() error = %v; want no error when dev plan has task breakdown", err)
+	}
+
+	// Should have 2 tasks from dev plan (zero-criteria gate must not fire).
+	if got := len(result.Proposal.Tasks); got != 2 {
+		t.Errorf("TotalTasks = %d, want 2", got)
+	}
+}
+
+// AC-005: No dev plan + spec with no ACs -> zero-criteria error (unchanged behaviour).
+func TestDecomposeFeature_NoDevPlan_NoACs_ZeroCriteriaError(t *testing.T) {
+	t.Parallel()
+
+	// Use setupDecomposeTest (no dev plan) with a spec that has no ACs.
+	svc, featureID, _ := setupDecomposeTest(t, specWithNoACs)
+
+	_, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err == nil {
+		t.Fatal("expected zero-criteria error, got nil")
+	}
+	if !contains(err.Error(), "no acceptance criteria found in spec") {
+		t.Errorf("error = %q, want it to contain \"no acceptance criteria found in spec\"", err.Error())
+	}
+}
+
+// AC-006: parseDevPlanTasks with Medium effort maps to Estimate == 3.0.
+func TestParseDevPlanTasks_EffortMapping(t *testing.T) {
+	t.Parallel()
+
+	devPlan := []byte(`# Dev Plan
+
+## Task Breakdown
+
+### Task 1: Widget implementation
+- **Effort:** Medium
+- **Depends on:** None
+`)
+
+	tasks, ok := parseDevPlanTasks("my-feature", devPlan)
+	if !ok {
+		t.Fatal("parseDevPlanTasks returned false, want true")
+	}
+	if len(tasks) != 1 {
+		t.Fatalf("len(tasks) = %d, want 1", len(tasks))
+	}
+	if tasks[0].Estimate == nil {
+		t.Fatal("Estimate is nil, want 3.0")
+	}
+	if *tasks[0].Estimate != 3.0 {
+		t.Errorf("Estimate = %v, want 3.0", *tasks[0].Estimate)
+	}
+}
+
+// AC-007: parseDevPlanTasks with no Spec requirements field -> Covers == nil.
+func TestParseDevPlanTasks_CoversNilWhenAbsent(t *testing.T) {
+	t.Parallel()
+
+	devPlan := []byte(`# Dev Plan
+
+## Task Breakdown
+
+### Task 1: Widget implementation
+- **Effort:** Small
+- **Depends on:** None
+`)
+
+	tasks, ok := parseDevPlanTasks("my-feature", devPlan)
+	if !ok {
+		t.Fatal("parseDevPlanTasks returned false, want true")
+	}
+	if len(tasks) != 1 {
+		t.Fatalf("len(tasks) = %d, want 1", len(tasks))
+	}
+	if tasks[0].Covers != nil {
+		t.Errorf("Covers = %v, want nil (no Spec requirements field)", tasks[0].Covers)
+	}
+}
+
+// AC-008: GuidanceApplied contains "dev-plan-tasks", NOT "test-tasks-explicit".
+func TestDecomposeFeature_DevPlanPath_GuidanceApplied(t *testing.T) {
+	t.Parallel()
+
+	svc, _, featureID, _ := setupDecomposeTestWithDevPlan(t, specWithACs, devPlanWithTwoTasks, true)
+
+	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err != nil {
+		t.Fatalf("DecomposeFeature() error = %v", err)
+	}
+
+	foundDevPlan := false
+	for _, g := range result.GuidanceApplied {
+		if g == "dev-plan-tasks" {
+			foundDevPlan = true
+		}
+		if g == "test-tasks-explicit" {
+			t.Errorf("GuidanceApplied = %v, must NOT contain \"test-tasks-explicit\" on dev plan path", result.GuidanceApplied)
+		}
+	}
+	if !foundDevPlan {
+		t.Errorf("GuidanceApplied = %v, want it to contain \"dev-plan-tasks\"", result.GuidanceApplied)
+	}
+}
+
+// AC-009: SliceDetails are populated on the dev plan path.
+func TestDecomposeFeature_DevPlanPath_SliceDetails(t *testing.T) {
+	t.Parallel()
+
+	// specWithACs has L2 sections (Data Layer, API Layer) which produce slices.
+	svc, _, featureID, _ := setupDecomposeTestWithDevPlan(t, specWithACs, devPlanWithTwoTasks, true)
+
+	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err != nil {
+		t.Fatalf("DecomposeFeature() error = %v", err)
+	}
+
+	if len(result.Proposal.SliceDetails) == 0 {
+		t.Error("expected non-empty SliceDetails on dev plan path")
+	}
+	for i, s := range result.Proposal.SliceDetails {
+		if s.Name == "" {
+			t.Errorf("SliceDetails[%d].Name is empty", i)
+		}
+	}
+}
+
+// AC-010: A dev plan proposal can be fully applied (all tasks created without error).
+func TestDecomposeApply_DevPlanProposal(t *testing.T) {
+	t.Parallel()
+
+	svc, entitySvc, featureID, _ := setupDecomposeTestWithDevPlan(t, specWithACs, devPlanWithTwoTasks, true)
+
+	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err != nil {
+		t.Fatalf("DecomposeFeature() error = %v", err)
+	}
+
+	// Apply: create each proposed task using the entity service.
+	for _, pt := range result.Proposal.Tasks {
+		_, createErr := entitySvc.CreateTask(CreateTaskInput{
+			ParentFeature: featureID,
+			Slug:          pt.Slug,
+			Name:          pt.Name,
+			Summary:       pt.Summary,
+		})
+		if createErr != nil {
+			t.Errorf("CreateTask(%q) error = %v", pt.Slug, createErr)
+		}
+	}
+}
+
+// ---------------------------------------------------------------------------
+// parseDevPlanTasks unit tests: dependency resolution
+// ---------------------------------------------------------------------------
+
+func TestParseDevPlanTasks_DependsOnTask1_ResolvesToFirstSlug(t *testing.T) {
+	t.Parallel()
+
+	devPlan := []byte(`# Dev Plan
+
+## Task Breakdown
+
+### Task 1: Setup environment
+- **Effort:** Small
+- **Depends on:** None
+
+### Task 2: Write service
+- **Effort:** Medium
+- **Depends on:** Task 1
+`)
+
+	tasks, ok := parseDevPlanTasks("feat", devPlan)
+	if !ok {
+		t.Fatal("parseDevPlanTasks returned false")
+	}
+	if len(tasks) != 2 {
+		t.Fatalf("len(tasks) = %d, want 2", len(tasks))
+	}
+	// Task 2 should depend on the slug of Task 1.
+	if len(tasks[1].DependsOn) != 1 || tasks[1].DependsOn[0] != tasks[0].Slug {
+		t.Errorf("Tasks[1].DependsOn = %v, want [%q]", tasks[1].DependsOn, tasks[0].Slug)
+	}
+}
+
+func TestParseDevPlanTasks_DependsOnNone_IsNil(t *testing.T) {
+	t.Parallel()
+
+	devPlan := []byte(`# Dev Plan
+
+## Task Breakdown
+
+### Task 1: Setup environment
+- **Effort:** Small
+- **Depends on:** None
+`)
+
+	tasks, ok := parseDevPlanTasks("feat", devPlan)
+	if !ok {
+		t.Fatal("parseDevPlanTasks returned false")
+	}
+	if tasks[0].DependsOn != nil {
+		t.Errorf("DependsOn = %v, want nil for \"None\"", tasks[0].DependsOn)
+	}
+}
+
+func TestParseDevPlanTasks_DependsOnNoneParens_IsNil(t *testing.T) {
+	t.Parallel()
+
+	devPlan := []byte(`# Dev Plan
+
+## Task Breakdown
+
+### Task 1: Setup environment
+- **Effort:** Small
+- **Depends on:** None (independent)
+`)
+
+	tasks, ok := parseDevPlanTasks("feat", devPlan)
+	if !ok {
+		t.Fatal("parseDevPlanTasks returned false")
+	}
+	if tasks[0].DependsOn != nil {
+		t.Errorf("DependsOn = %v, want nil for \"None (independent)\"", tasks[0].DependsOn)
+	}
+}
