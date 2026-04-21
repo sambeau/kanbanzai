@@ -2,9 +2,11 @@ id: FEAT-01KPQ08YE4399/specification-p25-agentic-review-auto-advance
 path: work/spec/p25-agentic-review-auto-advance.md
 type: specification
 title: "Specification: Agentic reviewing stage auto-advance"
-status: draft
+status: approved
 owner: FEAT-01KPQ08YE4399
-content_hash: 3ddb33d7d8eb65d40413d04acfa6dbdf1baa67136324433326bc0075cb758cc5
+approved_by: sambeau
+approved_at: "2026-04-21T03:44:38Z"
+content_hash: 63f160110d0eaab0ec7930f49b7df8f32fdb2b03f837a23a3629048ebee8d4a5
 created: "2026-04-21T03:43:35Z"
 created_by: sambeau
-updated: "2026-04-21T03:43:35Z"
+updated: "2026-04-21T03:44:38Z"
