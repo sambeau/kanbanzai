@@ -1,0 +1,6 @@
+id: TASK-01KPQ2WYHRMZF
+parent_feature: FEAT-01KPQ08Y989P8
+slug: write-tests-for-verification-propagation
+name: Write tests for task verification propagation
+summary: "Write unit and integration tests for AggregateTaskVerification (all AC-001 to AC-015): passed/partial/none status, wont_do exclusion, overwrite, best-effort on write failure, MCP response key, VerificationPassedGate partial warning, VerificationExistsGate after aggregation."
+status: queued
