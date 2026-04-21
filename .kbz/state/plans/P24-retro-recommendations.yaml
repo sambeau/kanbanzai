@@ -1,8 +1,8 @@
 id: P24-retro-recommendations
 slug: retro-recommendations
 name: Retro recommendations
-status: designing
+status: active
 summary: "Address the nine Fix Now and Improve Soon recommendations from the April 2026 retrospective. Five coordinated fixes: (1) teach docint to recognise the project's own AC pattern and harden decompose against unindexed specs; (2) make doc approve patch the Status field in the source file; (3) surface standalone bugs in status health outputs; (4) tighten workflow hygiene documentation across AGENTS.md and five skill files; (5) make GitHub PR creation optional via project config. Each feature follows verify-then-fix: a failing test or explicit before/after check establishes the problem before any code or documentation change is made. Source: work/reports/retro-recommendations-2026-04-20.md."
 created: "2026-04-20T22:25:20Z"
 created_by: sambeau
-updated: "2026-04-21T15:47:40Z"
+updated: "2026-04-21T15:47:49Z"
