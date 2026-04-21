@@ -697,3 +697,43 @@ func TestToString(t *testing.T) {
 		})
 	}
 }
+
+// TestVerificationPassedGate_Partial verifies that VerificationPassedGate returns
+// GateStatusWarning (non-blocking) when verification_status is "partial" (FR-009).
+func TestVerificationPassedGate_Partial(t *testing.T) {
+	gate := VerificationPassedGate{}
+	ctx := GateContext{
+		EntityID: "FEAT-001",
+		Entity:   map[string]any{"verification_status": "partial"},
+	}
+
+	result := gate.Check(ctx)
+
+	if result.Status != GateStatusWarning {
+		t.Errorf("Status: got %q, want GateStatusWarning (partial must not block merge)", result.Status)
+	}
+	wantMsg := "verification_status is \"partial\", expected \"passed\""
+	if result.Message != wantMsg {
+		t.Errorf("Message: got %q, want %q", result.Message, wantMsg)
+	}
+}
+
+// TestVerificationPassedGate_None verifies that VerificationPassedGate returns
+// GateStatusFailed when verification_status is "none" (FR-009).
+func TestVerificationPassedGate_None(t *testing.T) {
+	gate := VerificationPassedGate{}
+	ctx := GateContext{
+		EntityID: "FEAT-001",
+		Entity:   map[string]any{"verification_status": "none"},
+	}
+
+	result := gate.Check(ctx)
+
+	if result.Status != GateStatusFailed {
+		t.Errorf("Status: got %q, want GateStatusFailed", result.Status)
+	}
+	wantMsg := "verification_status is \"none\", expected \"passed\""
+	if result.Message != wantMsg {
+		t.Errorf("Message: got %q, want %q", result.Message, wantMsg)
+	}
+}

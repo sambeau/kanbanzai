@@ -152,7 +152,13 @@ func (g VerificationPassedGate) Check(ctx GateContext) GateResult {
 	}
 
 	status := toString(ctx.Entity["verification_status"])
-	if status != "passed" {
+	switch status {
+	case "passed":
+		// already GateStatusPassed
+	case "partial":
+		result.Status = GateStatusWarning
+		result.Message = "verification_status is \"partial\", expected \"passed\""
+	default:
 		result.Status = GateStatusFailed
 		if status == "" {
 			result.Message = "verification_status not set"

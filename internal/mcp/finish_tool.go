@@ -384,34 +384,53 @@ func finishOne(
 		}
 	}
 
+	// All-terminal sibling check — used for both verification aggregation and nudge-1.
+	parentFeatureID, _ := result.Task["parent_feature"].(string)
+	allTerminal := false
+	var siblingIDs []string
+	if parentFeatureID != "" {
+		siblings, err := entitySvc.ListEntitiesFiltered(service.ListFilteredInput{
+			Type:   "task",
+			Parent: parentFeatureID,
+		})
+		if err == nil {
+			allTerminal = true
+			siblingIDs = make([]string, 0, len(siblings))
+			for _, s := range siblings {
+				siblingIDs = append(siblingIDs, s.ID)
+				st, _ := s.State["status"].(string)
+				if !isFinishTerminal(st) {
+					allTerminal = false
+					break
+				}
+			}
+		}
+	}
+
+	// Aggregate task verification into the feature entity when all tasks are terminal.
+	// Best-effort: errors are logged but not propagated. Fires for both single and batch
+	// mode — in batch mode this triggers naturally when the last item makes all siblings terminal.
+	if allTerminal && parentFeatureID != "" {
+		aggResult, aggErr := dispatchSvc.AggregateTaskVerification(parentFeatureID)
+		if aggErr != nil {
+			log.Printf("[finish] WARNING: AggregateTaskVerification for feature %s failed: %v", parentFeatureID, aggErr)
+		} else {
+			resp["verification_aggregation"] = map[string]any{
+				"status":  aggResult.Status,
+				"written": aggResult.Written,
+			}
+		}
+	}
+
 	// Nudge logic — evaluates feature completion status and provides contextual hints.
 	// Nudge 1 takes priority over Nudge 2 when both conditions are met.
 	if !input.Batch {
 		nudge1Fired := false
 
 		// Nudge 1: feature just completed with no retro signals anywhere in the feature.
-		parentFeatureID, _ := result.Task["parent_feature"].(string)
-		if parentFeatureID != "" {
-			siblings, err := entitySvc.ListEntitiesFiltered(service.ListFilteredInput{
-				Type:   "task",
-				Parent: parentFeatureID,
-			})
-			if err == nil {
-				allTerminal := true
-				siblingIDs := make([]string, 0, len(siblings))
-				for _, s := range siblings {
-					siblingIDs = append(siblingIDs, s.ID)
-					st, _ := s.State["status"].(string)
-					if !isFinishTerminal(st) {
-						allTerminal = false
-						break
-					}
-				}
-				if allTerminal && !dispatchSvc.AnyTaskHasRetroSignals(siblingIDs) {
-					resp["nudge"] = nudgeNoRetroSignals
-					nudge1Fired = true
-				}
-			}
+		if allTerminal && !dispatchSvc.AnyTaskHasRetroSignals(siblingIDs) {
+			resp["nudge"] = nudgeNoRetroSignals
+			nudge1Fired = true
 		}
 
 		// Nudge 2: this call had no knowledge or retro, and summary was provided.
