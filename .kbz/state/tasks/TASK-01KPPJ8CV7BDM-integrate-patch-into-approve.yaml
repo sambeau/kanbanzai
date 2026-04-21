@@ -3,6 +3,11 @@ parent_feature: FEAT-01KPPG2MYSG6A
 slug: integrate-patch-into-approve
 name: Integrate PatchStatusField into ApproveDocument
 summary: "Modify internal/service/documents.go to call fsutil.PatchStatusField(fullPath, \"approved\") immediately after the successful store.Write in ApproveDocument. If patched, re-compute content hash and do a second store write (best-effort). Log WARNING on any patch or hash-refresh failure; never roll back approval. Covers FR-006–FR-010, NFR-001, NFR-004."
-status: ready
+status: done
 depends_on:
   - TASK-01KPPJ72818FK
+files_planned:
+  - internal/service/documents.go
+completed: "2026-04-21T01:47:36Z"
+completion_summary: "Integrated PatchStatusField into DocumentService.ApproveDocument: calls after successful store.Write, logs WARNING on error, re-computes and stores content hash on successful patch, logs WARNING on hash failures, continues in all error paths"
+verification: go test ./internal/service/... -run TestApproveDocument — all existing tests PASS
