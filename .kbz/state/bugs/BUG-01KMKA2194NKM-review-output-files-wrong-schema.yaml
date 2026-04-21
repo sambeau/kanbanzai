@@ -1,7 +1,7 @@
 id: BUG-01KMKA2194NKM
 slug: review-output-files-wrong-schema
 name: Review output files wrong schema
-status: reported
+status: triaged
 severity: medium
 priority: medium
 type: implementation-defect
