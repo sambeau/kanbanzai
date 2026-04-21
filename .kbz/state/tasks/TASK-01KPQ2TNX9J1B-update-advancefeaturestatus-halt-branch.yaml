@@ -1,0 +1,6 @@
+id: TASK-01KPQ2TNX9J1B
+parent_feature: FEAT-01KPQ08YE4399
+slug: update-advancefeaturestatus-halt-branch
+name: Update AdvanceFeatureStatus halt-state branch
+summary: "Add RequiresHumanReview func() bool to AdvanceConfig in internal/service/advance.go. Modify the advanceStopStates reviewing halt to be conditional: when RequiresHumanReview returns false, call checkAllTasksHaveVerification and either continue past reviewing or halt with descriptive StoppedReason."
+status: queued
