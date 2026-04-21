@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPPG2MYSG6A
 slug: patch-status-field-util
 name: Implement PatchStatusField utility
 summary: "Create internal/fsutil/status_patch.go with PatchStatusField(path, newStatus) that reads a file line by line, replaces the first matching Status field (pipe-table, bullet-list, or bare-YAML format, case-insensitive) with the normalised form, and writes atomically via WriteFileAtomic. Returns (false, nil) when no field found, (false, err) on I/O failure. Covers FR-001–FR-005, FR-011–FR-013, NFR-002, NFR-003."
-status: active
+status: done
+files_planned:
+  - internal/fsutil/status_patch.go
+completed: "2026-04-21T01:43:03Z"
 claimed_at: "2026-04-21T01:37:59Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T01:37:59Z"
 dispatched_by: sambeau
+completion_summary: "Created internal/fsutil/status_patch.go with PatchStatusField function supporting pipe-table, bullet-list, and bare-YAML formats with case-insensitive matching"
+verification: "go test ./internal/fsutil/... all 7 TestPatchStatusField_* tests pass"
