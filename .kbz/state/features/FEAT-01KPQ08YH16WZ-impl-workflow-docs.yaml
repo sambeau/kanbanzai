@@ -1,0 +1,8 @@
+id: FEAT-01KPQ08YH16WZ
+slug: impl-workflow-docs
+name: Implementation workflow documentation improvements
+parent: P25-agent-tooling-pipeline-quality
+status: proposed
+summary: "Documentation-only changes: (1) update implement-task/SKILL.md to prefer heredoc over python3 -c for worktree file writes; (2) document the manual entity-create fallback when decompose propose fails; (3) add one-sub-agent-per-task sizing guidance to orchestrate-development/SKILL.md. Addresses proposal items P2, P5, P10."
+created: "2026-04-21T03:10:22Z"
+created_by: sambeau
