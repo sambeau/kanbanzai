@@ -1,0 +1,6 @@
+id: TASK-01KPQ2RY90GCR
+parent_feature: FEAT-01KPQ08YE4399
+slug: add-requirehumanreview-field-to-mergeconfig
+name: Add RequireHumanReview field to MergeConfig
+summary: "Add RequireHumanReview *bool field and RequiresHumanReview() bool accessor to MergeConfig in internal/config/config.go following the RequireGitHubPR pattern."
+status: queued
