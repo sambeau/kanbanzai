@@ -3,8 +3,20 @@ parent_feature: FEAT-01KPQ08Y47522
 slug: implement-writefiletool-and-register
 name: Implement WriteFileTool and register in GroupGit
 summary: "Create internal/mcp/write_file_tool.go implementing the write_file MCP tool with path resolution, traversal prevention, MkdirAll, and atomic write. Register in GroupGit after WorktreeTool in newServerWithConfig."
-status: active
+status: done
+files_planned:
+  - internal/mcp/write_file_tool.go
+  - internal/mcp/server.go
+  - internal/mcp/worktree_tool.go
+  - internal/mcp/merge_tool.go
+  - internal/mcp/pr_tool.go
+  - internal/mcp/status_tool.go
+  - internal/mcp/server_test.go
+  - cmd/kanbanzai/merge_cmd.go
+completed: "2026-04-21T04:39:35Z"
 claimed_at: "2026-04-21T04:13:04Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T04:13:04Z"
 dispatched_by: sambeau
+completion_summary: "Created internal/mcp/write_file_tool.go with full path resolution, traversal prevention, MkdirAll, and atomic write via fsutil.WriteFileAtomic. Registered in GroupGit after WorktreeTool. Fixed pre-existing *Record type errors in worktree_tool.go, merge_tool.go, pr_tool.go, status_tool.go, merge_cmd.go (GetByEntityID return type changed by prior task). Updated server_test.go tool counts 22→23 (full/default) and 17→18 (orchestration)."
+verification: go build ./... and go test ./internal/mcp/... both passed cleanly.
