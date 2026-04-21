@@ -3,8 +3,14 @@ parent_feature: FEAT-01KPPG1MF4DAT
 slug: ac-pattern-and-decompose-extend-extractor-content-scan
 name: Extend extractConventionalRoles content scan
 summary: "Add content-based AC detection to extractConventionalRoles in internal/docint/extractor.go. Change signature to accept content []byte as first parameter. Define package-level acBoldIdentLineRe regex matching both bare (**AC-NN.** text) and list-item (- **AC-NN.** text) bold-identifier forms. After the heading walk, scan sections without roles using content[s.ByteOffset:s.ByteOffset+s.ByteCount]; assign Role:'requirement', Confidence:'medium' if any line matches. Skip sections already assigned by heading walk. Write TestExtractConventionalRoles_ACContentInNonACSection, TestExtractConventionalRoles_NoDuplicateRole, and TestAcBoldIdentLineRe_BothForms verify-then-fix tests before the fix."
-status: active
+status: done
+files_planned:
+  - internal/docint/extractor.go
+  - internal/docint/extractor_test.go
+completed: "2026-04-21T01:52:28Z"
 claimed_at: "2026-04-21T01:37:59Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T01:37:59Z"
 dispatched_by: sambeau
+completion_summary: "Extended extractConventionalRoles(content []byte, sections []Section). Added acBoldIdentLineRe regex for bare and list-prefixed bold-ident lines. After heading walk, added content scan pass assigning role=requirement, confidence=medium to sections with no heading-based role that contain AC lines. Updated call site in ExtractPatterns. Added 3 new tests."
+verification: go test ./... passed — all packages green
