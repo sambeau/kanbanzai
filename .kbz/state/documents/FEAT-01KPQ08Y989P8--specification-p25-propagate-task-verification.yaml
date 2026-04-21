@@ -2,9 +2,11 @@ id: FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification
 path: work/spec/p25-propagate-task-verification.md
 type: specification
 title: "Specification: Propagate task verification to feature entity"
-status: draft
+status: approved
 owner: FEAT-01KPQ08Y989P8
-content_hash: 624c246db4df60c4a6dd64de6813cba6f1cba8b45542720f87d053ddd5d7fd39
+approved_by: sambeau
+approved_at: "2026-04-21T03:44:38Z"
+content_hash: c2d8552471371db411696cad36860d372d586812241af5e08bdfa66948cf6ad8
 created: "2026-04-21T03:43:32Z"
 created_by: sambeau
-updated: "2026-04-21T03:43:32Z"
+updated: "2026-04-21T03:44:38Z"
