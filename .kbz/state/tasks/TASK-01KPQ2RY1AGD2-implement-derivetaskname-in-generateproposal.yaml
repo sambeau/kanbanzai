@@ -1,0 +1,6 @@
+id: TASK-01KPQ2RY1AGD2
+parent_feature: FEAT-01KPQ08Y71A8V
+slug: implement-derivetaskname-in-generateproposal
+name: Implement deriveTaskName in generateProposal
+summary: "Add unexported deriveTaskName(text, fallback string) helper to internal/service/decompose.go and call it in all three task-construction paths in generateProposal so every ProposedTask has a non-empty Name field."
+status: queued
