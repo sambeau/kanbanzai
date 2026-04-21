@@ -1,105 +1,183 @@
 ---
 name: kanbanzai-getting-started
 description: >
-  This repository is managed with Kanbanzai. Read this skill at the start of every
-  session, before writing any code or running any searches. Kanbanzai provides MCP
-  tools — next, entity, doc, status, and others — that replace manual grep and file
-  searching for project state and work queue management. The presence of a .kbz/
-  directory or kanbanzai tools in your tool list confirms you are in a
-  Kanbanzai-managed project and this skill applies.
-# kanbanzai-managed: true
-# kanbanzai-version: dev
+  Use at the start of every agent session, even if the task seems obvious and
+  you think you already know what to do. Activates when the agent has just
+  opened a repository, does not know what to do, needs to orient itself, or is
+  beginning any new session. Also activates for "where do I start?", "what
+  should I work on?", "what is the current state?". Skipping orientation leads
+  to wasted effort and missed context.
+metadata:
+  kanbanzai-managed: "true"
+  version: "0.3.0"
 ---
+
+# SKILL: Kanbanzai Getting Started
 
 ## Purpose
 
-This skill orients you at the start of any session in a Kanbanzai-managed project.
-Follow it before writing any code or making any changes.
+Orient an agent at the start of a session in a Kanbanzai-managed project.
 
-## Preflight Check
+## When to Use
 
-Kanbanzai works through MCP tools. Before calling `next` or any other tool, confirm
-the kanbanzai server is connected — your editor should list tools such as `next`,
-`entity`, `doc`, and `status` as available.
+- At the beginning of any new agent session
+- When you don't know what work to do or where to start
+- When resuming work after a break
 
-If those tools are not available, the kanbanzai MCP server is not running. The
-project's `.mcp.json` configures most editors automatically — check that the
-kanbanzai binary is on your PATH and that your editor has loaded the MCP
-configuration. See `docs/getting-started.md` for editor-specific setup instructions.
+## Vocabulary
 
-For Zed users: `.zed/settings.json` pre-approves all kanbanzai workflow tools so
-they run without confirmation prompts. The only tools that still prompt are `merge`
-(executes git merges), `pr` (creates GitHub PRs), and `cleanup` (removes worktree
-directories from disk) — these have external or irreversible effects that warrant
-a confirmation step. If you are seeing unexpected permission prompts for other
-kanbanzai tools, check that `.zed/settings.json` contains an `agent.tool_permissions`
-block; running `kbz init` will add it if missing.
+- **Session orientation** — The mandatory startup sequence that establishes what state the project is in, what work is available, and what conventions apply before any implementation begins.
+- **Work queue** — The prioritised list of ready tasks returned by `next()`. The single source of truth for what an agent should work on.
+- **Context packet** — The assembled bundle of spec sections, knowledge entries, file paths, and role conventions returned when claiming a task with `next(id)`.
+- **Clean slate** — The state where `git status` shows no uncommitted changes from previous work. Required before starting any new task.
+- **Task claim** — The act of calling `next(id)` to transition a task from `ready` to `active` and receive its context packet.
+- **Feature lifecycle state** — The current workflow stage of a feature entity (e.g. `designing`, `specifying`, `implementing`). Determines which skills, roles, and gates apply.
+- **AGENTS.md** — The project-specific conventions file in the repository root. Contains structure, build commands, Git discipline, and the pre-task checklist.
+- **Stage binding** — The mapping in `.kbz/stage-bindings.yaml` that connects each workflow stage to its required role, skill, and prerequisites.
+- **Project status** — The synthesised dashboard returned by `status()` showing progress, blocked items, and attention items across the project.
 
-If kanbanzai tool calls return unexpected errors or unknown states — transitions
-failing, entity types unrecognised, responses that don't match the current codebase —
-the most common cause is a **stale binary**: the running `kanbanzai serve` process was
-built before the latest code changes. Run `server_info` first before investigating
-further. It reports the build timestamp, git SHA, and binary path so you can confirm
-whether the server matches the current source. If it is stale, rebuild and restart:
-`go install ./cmd/kanbanzai/` (or the equivalent install command for your project).
+---
 
-Do not substitute `grep`, `find`, or direct file reading for kanbanzai tool calls.
-The workflow state in `.kbz/` is structured data — the MCP tools are the correct
-interface for reading and writing it.
+## Session Start Checklist
 
-This applies equally to writing. Do not create documents in `work/` or entities in
-`.kbz/state/` by writing files directly with `edit_file` or equivalent shell commands.
-Use `doc` to register and manage documents. Use `entity` to create and transition
-entities. Bypassing the MCP tools skips lifecycle enforcement, document registration,
-and health checks. If MCP tools are unavailable, report the issue to the human rather
-than falling back to direct file writes.
+Copy this checklist at the beginning of every session:
 
-## Before Any Work
+- [ ] **Clean slate** — Run `git status`. If changes are coherent and complete, commit them now. If changes are incomplete or belong to a different task, inform the human and stop — do not stash. Never use `git stash` in a Kanbanzai project: stashed changes hide workflow state from other agents and are silently lost across worktree switches.
+- [ ] **Store check** — If `git status` shows uncommitted `.kbz/` files, commit them now. These are versioned project state, not ephemeral cache. Do not stash, discard, or `.gitignore` them.
+- [ ] **Read project context** — Read `AGENTS.md` if you have not this session.
+- [ ] **Check the work queue** — Call `next()` to see what is ready.
+- [ ] **Claim your task** — Call `next(id: "TASK-xxx")` to get full context for your chosen task.
+- [ ] **Understand the workflow** — If unsure about the current stage, check the `kanbanzai-workflow` skill.
 
-Run `git status`. If there are uncommitted changes from a previous session:
+### Clean slate
 
-- If coherent and complete → commit them before starting new work.
-- If incomplete or risky → stash them and note this for the human.
+Run `git status`. If there are uncommitted changes from previous work:
 
-Never start new work on top of uncommitted changes from a different task.
+- Changes are coherent and complete → **commit them now**, then proceed.
+- Changes belong to a different task or are incomplete → **inform the human and stop**. Do not stash, do not discard.
 
-## Understand the Project
+Never use `git stash` in a Kanbanzai project. Stashed changes hide workflow
+state from parallel agents, are silently lost when switching worktrees, and
+bypass the commit history that makes code review meaningful.
 
-Check for `AGENTS.md` in the repository root. If it exists, read it — it contains
-project-specific conventions, structure, decisions, and reading order that override
-generic guidance. If it does not exist, the Kanbanzai skills are your primary orientation.
+### Commit workflow state
 
-## Check the Work Queue
+Even when the working tree looks clean for code, run:
 
-Call `next` (without an ID) to see what tasks are ready. The work queue promotes eligible tasks
-and returns them sorted by estimate and age.
+```
+git status
+```
 
-If the queue is empty, call `status` or `entity` action: `list` to understand the current project
-state: active features, open bugs, and their statuses.
+and look specifically for untracked or modified files under `.kbz/state/`,
+`.kbz/index/`, or `.kbz/context/`. These are versioned project state — entity
+records, document metadata, knowledge entries — that other agents depend on.
 
-## Assemble Context Before Starting a Task
+If any appear:
 
-Before beginning work on any task, call `next` with a task ID to claim it and receive
-a context packet containing the task instructions, relevant knowledge entries, and
-design context.
+1. Stage and commit them immediately before starting any new work:
+   ```
+   git add .kbz/
+   git commit -m "workflow(<context>): commit orphaned state files"
+   ```
+2. Do not stash, discard, or `.gitignore` them.
 
-See `kanbanzai-agents` for the full dispatch-and-complete protocol.
+MCP tools (`entity`, `doc`, `finish`, `decompose`, `merge`) auto-commit state
+changes during normal operation. Orphaned files appear when a previous session
+was interrupted before the auto-commit could run. They are rare but consequential:
+stale state causes parallel agents to read incorrect entity status and produce
+conflicting transitions.
 
-## Understand the Workflow
+### Read the project context
 
-Kanbanzai enforces stage gates that require human approval at specific points. Do not
-skip stages or create entities without meeting the gate conditions.
+Check whether an `AGENTS.md` exists in the repository root. If it does, read
+it — it contains project-specific conventions, structure, and decisions. If it
+does not, these Kanbanzai skills are your primary orientation.
 
-See `kanbanzai-workflow` for:
+### Check the work queue
 
-- The six stage gates and what each requires
-- What humans own vs. what agents own
-- When to stop and ask the human (the emergency brake)
+Call `next` (without an ID) to see what tasks are ready. If the queue is
+empty, call `status` or `entity` action: `list` to understand the current
+project state — active features, open bugs, what stage things are in.
+
+### Claim your task
+
+Call `next` with a task ID to claim it and get your instructions and
+context. See `kanbanzai-agents` for the full dispatch-and-complete
+protocol.
+
+### Understand the workflow
+
+Kanbanzai has stage gates that require human approval at specific points.
+See `kanbanzai-workflow` for the rules, the human/agent ownership boundary,
+and when to stop and ask.
+
+Each workflow stage (designing, specifying, developing, reviewing, etc.) maps
+to a specific **role** and **skill** via `.kbz/stage-bindings.yaml`. Read the
+binding for your current stage to know which role to adopt and which skill
+procedure to follow. The task-execution skills themselves live in
+`.kbz/skills/` (e.g. `write-design`, `write-spec`, `review-code`,
+`orchestrate-review`).
+
+---
+
+## Anti-Patterns
+
+### Skipping Orientation
+
+- **Detect:** Agent starts implementing without calling `next()` or reading AGENTS.md.
+- **BECAUSE:** Without orientation, the agent misses project conventions, active decisions, and existing work — leading to duplicated effort or conflicting changes.
+- **Resolve:** Always run the session start checklist before writing any code.
+
+### Stale Context Carry-Over
+
+- **Detect:** Agent assumes context from a previous session is still current (e.g. task status, branch state, file contents).
+- **BECAUSE:** Entity states, knowledge entries, and file contents change between sessions. Stale assumptions produce incorrect implementation decisions that compound as work progresses.
+- **Resolve:** Always check `git status` and call `next()` at session start. Treat every session as a fresh start.
+
+### Store Neglect
+
+- **Detect:** Uncommitted `.kbz/state/` files visible in `git status` at session start.
+- **BECAUSE:** Store drift causes race conditions when parallel agents read stale entity state, leading to conflicting transitions and lost updates.
+- **Resolve:** Commit `.kbz/` files immediately. Do not stash, discard, or gitignore them.
+
+### Shell-Querying Workflow State Files
+
+- **Detect:** Agent runs `cat`, `grep`, `find`, or similar shell commands against `.kbz/state/`, `.kbz/index/`, or `.kbz/context/` directories to retrieve entity data.
+- **BECAUSE:** Raw YAML files contain unresolved state. MCP tools apply lifecycle resolution, inheritance, computed fields, and cross-reference validation. Shell queries bypass all of this and produce subtly wrong results — wrong status, missing computed fields, stale index data — that lead to incorrect implementation decisions.
+- **Resolve:** Use MCP tools exclusively for all workflow state queries:
+  - Entity status → `entity(action: "get", id: "...")`
+  - Project overview → `status()`
+  - Knowledge entries → `knowledge(action: "list")`
+  - Documents → `doc(action: "get", path: "...")`
+  Never read `.kbz/state/` files with shell tools or `read_file`.
+
+---
+
+## Evaluation Criteria
+
+1. **Did the agent run `git status` and address uncommitted changes before starting work?** — Required
+2. **Did the agent call `next()` to check the work queue?** — Required
+3. **Did the agent claim a specific task before beginning implementation?** — High
+4. **Did the agent read AGENTS.md if it was their first action in the session?** — Medium
+
+---
+
+## Questions This Skill Answers
+
+- What do I do at the start of a session?
+- How do I find out what work is available?
+- How do I claim a task?
+- What if there are uncommitted changes from a previous session?
+- Where are the project conventions?
+- What is the difference between system skills and task-execution skills?
+- How do I know what stage the project is in?
 
 ---
 
 ## Related
 
-- `kanbanzai-workflow` — stage gates, entity lifecycle, human/agent boundary
-- `kanbanzai-documents` — document registration and approval
-- `kanbanzai-agents` — context assembly, task dispatch, commit format, knowledge contribution
+- `kanbanzai-workflow` — stage gates, lifecycle, when to stop and ask
+- `kanbanzai-documents` — document types, registration, approval
+- `kanbanzai-agents` — context assembly, commits, task dispatch, knowledge
+- `kanbanzai-planning` — how to run a planning conversation
+- `write-design` — how to collaborate on design documents
