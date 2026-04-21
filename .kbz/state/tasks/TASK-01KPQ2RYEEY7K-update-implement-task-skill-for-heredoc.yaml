@@ -1,0 +1,6 @@
+id: TASK-01KPQ2RYEEY7K
+parent_feature: FEAT-01KPQ08YH16WZ
+slug: update-implement-task-skill-for-heredoc
+name: Update implement-task SKILL.md for heredoc
+summary: "Edit .kbz/skills/implement-task/SKILL.md to make heredoc the primary Go file-write pattern, demote python3 -c to secondary, add GOEOF delimiter collision warning, and update checklist items."
+status: queued
