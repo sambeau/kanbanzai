@@ -3,4 +3,13 @@ parent_feature: FEAT-01KPQ08YBJ5AK
 slug: add-parsedevplantasks-and-dev-plan-discovery
 name: Add parseDevPlanTasks and dev plan discovery
 summary: "Implement parseDevPlanTasks(featureSlug string, content []byte) ([]ProposedTask, bool) and integrate dev plan discovery into DecomposeFeature. Discovery checks feat.State[dev_plan] first, then owner-query fallback. When parse succeeds, build Proposal from dev plan tasks bypassing AC heuristic."
-status: ready
+status: done
+files_planned:
+  - internal/service/decompose.go
+completed: "2026-04-21T07:47:35Z"
+claimed_at: "2026-04-21T07:36:43Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-21T07:36:43Z"
+dispatched_by: sambeau
+completion_summary: "Added parseDevPlanTasks (unexported) and dev plan discovery in DecomposeFeature. Parses ## Task Breakdown in dev plans, resolves Task N deps to slugs, maps Effort to story points. DecomposeFeature checks feat.State[dev_plan] then ListDocuments fallback; on success sets GuidanceApplied=[dev-plan-tasks,...], skips AC heuristic; on failure falls through with warning. Zero-criteria gate now only fires on AC path. analyzeSlices runs on all paths. Added 5 new regex vars."
+verification: go build ./... passes; go test ./internal/service/... all existing tests pass
