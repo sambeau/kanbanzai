@@ -3,4 +3,13 @@ parent_feature: FEAT-01KPPG4SXY6T0
 slug: workflow-hygiene-docs-update-agents-md
 name: Update AGENTS.md
 summary: "Apply three targeted edits to AGENTS.md: (1) add a parenthetical to the second bullet in the Before Every Task checklist explaining why stashing is harmful (FR-003/AC-003); (2) add a dedicated checklist item for committing orphaned .kbz/ workflow state files (FR-005/AC-005); (3) add a worktree sub-agents callout at the end of the Delegating to Sub-Agents section (FR-008/AC-008)."
-status: ready
+status: done
+files_planned:
+  - AGENTS.md
+completed: "2026-04-21T01:49:26Z"
+claimed_at: "2026-04-21T01:47:38Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-21T01:47:38Z"
+dispatched_by: sambeau
+completion_summary: "Applied three targeted edits to AGENTS.md: (1) added parenthetical explaining why stashing is harmful to the second bullet of the Before Every Task checklist; (2) replaced the embedded orphaned-state note with a dedicated top-level checklist item; (3) added worktree sub-agents callout blockquote at end of Delegating to Sub-Agents section."
+verification: "Verified with grep: parenthetical at L104, Commit orphaned checklist item at L106, Worktree sub-agents callout at L207."
