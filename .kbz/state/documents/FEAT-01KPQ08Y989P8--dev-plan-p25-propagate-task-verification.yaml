@@ -2,9 +2,11 @@ id: FEAT-01KPQ08Y989P8/dev-plan-p25-propagate-task-verification
 path: work/dev-plan/p25-propagate-task-verification.md
 type: dev-plan
 title: "Dev Plan: Propagate task verification to feature entity"
-status: draft
+status: approved
 owner: FEAT-01KPQ08Y989P8
-content_hash: a5832e4da75eb7e5b09b332848e2ce985d150328e86b073808da7ebdea5f9413
+approved_by: sambeau
+approved_at: "2026-04-21T03:50:10Z"
+content_hash: f5c5353890a66987b5a965b4bbbde7d293a85619b94d7d5268fd1070b64a654e
 created: "2026-04-21T03:47:41Z"
 created_by: sambeau
-updated: "2026-04-21T03:47:41Z"
+updated: "2026-04-21T03:50:10Z"
