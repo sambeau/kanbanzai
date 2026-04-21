@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPQ08YE4399
 slug: add-checkalltaskshaveverification-helper
 name: Add checkAllTasksHaveVerification helper
 summary: "Add checkAllTasksHaveVerification(feature *model.Feature, entitySvc *EntityService) error to internal/service/prereq.go. Returns nil when task list is empty or all tasks have non-empty Verification. Returns descriptive error naming first unverified task."
-status: active
+status: done
+files_planned:
+  - internal/service/prereq.go
+completed: "2026-04-21T04:18:30Z"
 claimed_at: "2026-04-21T04:13:04Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T04:13:04Z"
 dispatched_by: sambeau
+completion_summary: "Added checkAllTasksHaveVerification in prereq.go following checkAllTasksTerminal pattern. Returns nil for empty task lists (vacuously true); errors with task ID when verification is missing. Uses entitySvc.List(\"task\") + stringFromState helpers, same as existing prereq helpers."
+verification: go test ./internal/service/... passed (1.548s)
