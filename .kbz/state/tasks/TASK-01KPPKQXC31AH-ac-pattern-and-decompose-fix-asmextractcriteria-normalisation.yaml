@@ -3,8 +3,14 @@ parent_feature: FEAT-01KPPG1MF4DAT
 slug: ac-pattern-and-decompose-fix-asmextractcriteria-normalisation
 name: Fix asmExtractCriteria list-item normalisation
 summary: "Update asmExtractCriteria in internal/mcp/assembly.go so that - **AC-NN.** text is extracted as AC-NN: text rather than being kept with raw bold markers. After the bare bold-identifier check against trimmed fails, strip a list marker (- , * , + , or bullet) and re-apply boldIdentifierRe to the stripped text. On match, emit XX-NN: criterion text using the existing context-sensitive rule (unconditional in AC sections, RFC 2119 required outside). Write TestAsmExtractCriteria_ListItemBoldIdent_Normalised verify-then-fix test before the fix."
-status: active
+status: done
+files_planned:
+  - internal/mcp/assembly.go
+  - internal/mcp/assembly_test.go
+completed: "2026-04-21T02:04:11Z"
 claimed_at: "2026-04-21T01:59:20Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T01:59:20Z"
 dispatched_by: sambeau
+completion_summary: "In asmExtractCriteria, after the bare boldIdentifierRe check fails, strip a list marker (- /* /+ /bullet) and re-apply boldIdentifierRe to the stripped text. On match, emit XX-NN: criterion text using existing context-sensitive rule. Added TestAsmExtractCriteria_ListItemBoldIdent_Normalised verify-then-fix test."
+verification: go test ./... passed — all packages green
