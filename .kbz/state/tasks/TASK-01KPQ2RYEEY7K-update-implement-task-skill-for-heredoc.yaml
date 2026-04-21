@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPQ08YH16WZ
 slug: update-implement-task-skill-for-heredoc
 name: Update implement-task SKILL.md for heredoc
 summary: "Edit .kbz/skills/implement-task/SKILL.md to make heredoc the primary Go file-write pattern, demote python3 -c to secondary, add GOEOF delimiter collision warning, and update checklist items."
-status: active
+status: done
+files_planned:
+  - kanbanzai/.worktrees/FEAT-01KPQ08YH16WZ-impl-workflow-docs/.kbz/skills/implement-task/SKILL.md
+completed: "2026-04-21T04:05:58Z"
 claimed_at: "2026-04-21T04:01:24Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T04:01:24Z"
 dispatched_by: sambeau
+completion_summary: "Updated implement-task/SKILL.md: heredoc is now primary for Go files, python3 -c scoped to Markdown/YAML, GOEOF collision warning added"
+verification: "Manual review of diff confirmed all AC-01 through AC-04 satisfied: (1) heredoc with GOEOF promoted to primary under new \"Go source files\" sub-heading, (2) python3 -c demoted to secondary under \"Markdown and YAML files\" sub-heading, (3) GOEOF delimiter collision warning added as a blockquote next to the heredoc example, (4) explanation of why python3 -c is unsafe for Go files (triple-quote collision) added, (5) checklist item updated to \"use terminal + heredoc for Go files, python3 -c for Markdown/YAML, NOT edit_file\""
