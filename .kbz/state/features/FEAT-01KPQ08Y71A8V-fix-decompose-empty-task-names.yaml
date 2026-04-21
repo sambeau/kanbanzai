@@ -2,7 +2,8 @@ id: FEAT-01KPQ08Y71A8V
 slug: fix-decompose-empty-task-names
 name: Fix empty task names in decompose propose
 parent: P25-agent-tooling-pipeline-quality
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "decompose propose can return proposals with empty task names, causing decompose apply to crash. The tool must never produce an apply-breaking proposal: fallback to AC identifier as task name, or fail explicitly with a clear diagnostic. Addresses proposal item P3."
 design: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names
 spec: FEAT-01KPQ08Y71A8V/specification-p25-fix-decompose-empty-names
