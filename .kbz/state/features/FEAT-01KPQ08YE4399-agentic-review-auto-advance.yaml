@@ -2,7 +2,7 @@ id: FEAT-01KPQ08YE4399
 slug: agentic-review-auto-advance
 name: Agentic reviewing stage auto-advance
 parent: P25-agent-tooling-pipeline-quality
-status: reviewing
+status: done
 review_cycle: 1
 summary: Allow the reviewing stage to auto-advance when all tasks are done with recorded verification and the feature config does not require a human review. Mirrors the require_github_pr pattern. Currently the reviewing stage is a hard mandatory gate causing every agentic merge to require override. Addresses proposal item P7.
 design: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance
@@ -10,3 +10,9 @@ spec: FEAT-01KPQ08YE4399/specification-p25-agentic-review-auto-advance
 dev_plan: FEAT-01KPQ08YE4399/dev-plan-p25-agentic-review-auto-advance
 created: "2026-04-21T03:10:22Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: All 5 tasks complete. The reviewing auto-advance feature (this feature) is not yet live — using override to bypass reviewing halt. The agentic-review-auto-advance feature implements the mechanism that would make this override unnecessary.
+    timestamp: "2026-04-21T09:26:16+01:00"
+    to_status: done

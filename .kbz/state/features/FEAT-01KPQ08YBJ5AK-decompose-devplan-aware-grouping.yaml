@@ -2,7 +2,7 @@ id: FEAT-01KPQ08YBJ5AK
 slug: decompose-devplan-aware-grouping
 name: Dev-plan-aware task grouping in decompose propose
 parent: P25-agent-tooling-pipeline-quality
-status: reviewing
+status: done
 review_cycle: 1
 summary: "When an approved dev plan document exists for a feature, decompose propose should read its Task Breakdown section and use that as the authoritative grouping structure rather than applying a hardcoded one-AC-per-task heuristic. Falls back to AC-based heuristic when no dev plan exists. Addresses proposal item P4."
 design: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware
@@ -10,3 +10,9 @@ spec: FEAT-01KPQ08YBJ5AK/specification-p25-decompose-devplan-aware
 dev_plan: FEAT-01KPQ08YBJ5AK/dev-plan-p25-decompose-devplan-aware
 created: "2026-04-21T03:10:22Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: All 2 tasks complete with verified tests. Verification aggregation not yet live on main — skipping verification gates via override.
+    timestamp: "2026-04-21T09:26:20+01:00"
+    to_status: done

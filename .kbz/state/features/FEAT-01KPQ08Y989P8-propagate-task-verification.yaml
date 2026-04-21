@@ -2,7 +2,7 @@ id: FEAT-01KPQ08Y989P8
 slug: propagate-task-verification
 name: Propagate task verification to feature entity
 parent: P25-agent-tooling-pipeline-quality
-status: reviewing
+status: done
 review_cycle: 1
 summary: "When all tasks for a feature are finished via finish(), aggregate their verification fields and write a summary to the feature entity. Allows the verification_exists and verification_passed merge gates to pass without override in agentic pipelines. Addresses proposal item P6."
 design: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification
@@ -10,3 +10,9 @@ spec: FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification
 dev_plan: FEAT-01KPQ08Y989P8/dev-plan-p25-propagate-task-verification
 created: "2026-04-21T03:10:21Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: All 4 tasks complete with verified tests. Verification aggregation feature (this feature) not yet live — skipping verification gate; the feature implements the aggregation mechanism itself.
+    timestamp: "2026-04-21T09:26:10+01:00"
+    to_status: done
