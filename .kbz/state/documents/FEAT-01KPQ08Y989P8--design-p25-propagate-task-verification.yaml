@@ -2,9 +2,11 @@ id: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification
 path: work/design/p25-propagate-task-verification.md
 type: design
 title: "Design: Propagate task verification to feature entity"
-status: draft
+status: approved
 owner: FEAT-01KPQ08Y989P8
-content_hash: 8846f62d280ba20b1de933233eaa0b4bfa2d29dbd31b574290a6845ad4429fd4
+approved_by: sambeau
+approved_at: "2026-04-21T03:39:32Z"
+content_hash: 040648228bc422f2f247b27ed25082fdcdbb1c7be1df1f33e6fd9ac7ff2b0d14
 created: "2026-04-21T03:23:08Z"
 created_by: sambeau
-updated: "2026-04-21T03:23:08Z"
+updated: "2026-04-21T03:39:32Z"
