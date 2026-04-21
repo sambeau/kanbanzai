@@ -1,0 +1,6 @@
+id: TASK-01KPQ2TNR410A
+parent_feature: FEAT-01KPQ08Y47522
+slug: implement-writefiletool-and-register
+name: Implement WriteFileTool and register in GroupGit
+summary: "Create internal/mcp/write_file_tool.go implementing the write_file MCP tool with path resolution, traversal prevention, MkdirAll, and atomic write. Register in GroupGit after WorktreeTool in newServerWithConfig."
+status: queued
