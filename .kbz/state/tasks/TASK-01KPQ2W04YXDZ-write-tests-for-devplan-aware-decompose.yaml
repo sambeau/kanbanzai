@@ -1,0 +1,6 @@
+id: TASK-01KPQ2W04YXDZ
+parent_feature: FEAT-01KPQ08YBJ5AK
+slug: write-tests-for-devplan-aware-decompose
+name: Write tests for dev-plan-aware decomposition
+summary: "Add tests covering: dev plan path produces correct tasks (AC-001), draft dev plan falls back to AC heuristic (AC-002), missing Task Breakdown falls back with warning (AC-003), no-AC spec + dev plan succeeds (AC-004), no dev plan + no ACs returns error (AC-005), effort mapping (AC-006), nil Covers (AC-007), GuidanceApplied contents (AC-008), SliceDetails populated (AC-009), apply succeeds (AC-010)."
+status: queued
