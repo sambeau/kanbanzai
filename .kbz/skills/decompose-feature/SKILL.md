@@ -102,6 +102,8 @@ constraint_level: low
 4. Include integration tasks where components built by different tasks must work together.
 5. Include test tasks where acceptance-criteria-level verification requires dedicated work beyond unit tests.
 
+**⚠ If the proposal is broken:** If `decompose propose` returns a proposal with empty task names, wrong task count, or a structure that cannot be corrected by adjusting input context, do not call `decompose apply`. Proceed to the Manual Fallback in Phase 4.
+
 ### Phase 3: Validate (The 5-Point Loop)
 
 This is the most important phase. Decomposition quality is the strongest predictor of implementation success — a flawed task graph produces coordination failures, wasted work, and integration defects downstream. Run all five checks. If any check fails, fix the issue and re-validate from check 1.
@@ -135,6 +137,25 @@ IF integration or test tasks are missing → add them with appropriate dependenc
 
 1. Once all five checks pass, use the `decompose` tool with action `apply` to create the tasks.
 2. Verify the created tasks match your validated proposal — correct descriptions, correct dependencies.
+
+#### Manual Fallback — when `decompose propose` is wrong or crashes
+
+Use `entity(action: "create", type: "task")` directly. Required fields: `name`, `summary`, `parent_feature`. Optional but recommended: `depends_on` (array of TASK-... IDs for dependency wiring).
+
+Create tasks in dependency order so IDs are available for `depends_on` references before they are needed.
+
+Minimal wiring example:
+```
+entity(action: "create", type: "task",
+  name: "Task 2: Do the second thing",
+  summary: "...",
+  parent_feature: "FEAT-xxx",
+  depends_on: ["TASK-01KPQ..."])   # ID of Task 1 created first
+```
+
+Verify the created tasks with `status(id: "FEAT-xxx")` before proceeding.
+
+The manual fallback is the escape hatch — `decompose propose` + `decompose apply` remains the primary path.
 
 ### Phase 5: Record Observations
 

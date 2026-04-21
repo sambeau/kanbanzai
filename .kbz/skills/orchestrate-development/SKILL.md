@@ -85,6 +85,11 @@ constraint_level: medium
 - **BECAUSE:** Beyond ~60% utilisation, the orchestrator's ability to track task states, remember dependency relationships, and make correct dispatch decisions degrades measurably. Pushing further produces subtle errors — wrong dispatch order, missed failures, lost progress
 - **Resolve:** When context utilisation approaches 60%, trigger document-based offloading: write current progress to a registered document and start a fresh session
 
+### Assigning Multiple Large-File Tasks to One Sub-Agent
+- **Detect:** A sub-agent is dispatched with more than one task that involves reading or rewriting source files longer than ~300 lines.
+- **BECAUSE:** Full-file rewrites embed entire file content in terminal tool calls. An agent accumulates the content of multiple large files in its context before completing the first task, saturating its context window and degrading output quality for later tasks. This was observed in the P24 pipeline.
+- **Resolve:** For features with more than three tasks involving large source files, dispatch one sub-agent per task. Use the sizing rule above to identify when per-task isolation is required.
+
 ## Checklist
 
 ```
@@ -119,6 +124,11 @@ Copy this checklist and track your progress:
 4. IF the ready frontier is empty and tasks remain undone → check for blocked tasks. IF all remaining tasks have unmet dependencies on non-done tasks → a dependency chain is stalled. Check whether a failed task is blocking the chain and handle per Phase 4.
 
 ### Phase 3: Dispatch Sub-Agents
+
+**Sizing rule — one sub-agent per task for large-file features:**
+For features with more than three tasks where tasks involve reading or rewriting source files longer than ~300 lines, dispatch one sub-agent per task rather than assigning multiple tasks to a single agent. Full-file rewrites embed entire file content in terminal tool calls; an agent assigned multiple large-file tasks will saturate its context window before completing the second task. Per-task isolation gives each agent a fresh context window sized for one file scope.
+
+Features with small files or documentation-only tasks do not require per-task isolation — batch dispatch remains appropriate.
 
 0. **Before creating worktrees**, verify `.kbz/local.yaml` has `codebase_memory.graph_project` set
    (e.g. `Users-alice-Dev-myrepo`). If missing, add it now — worktrees created without it will not

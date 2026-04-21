@@ -87,24 +87,42 @@ constraint_level: medium
 > Using it inside a worktree produces silent incorrect edits or no-ops.
 
 When implementing tasks assigned to a worktree, write file content using the
-`python3 -c` shell pattern via the `terminal` tool:
+`terminal` tool with the pattern appropriate for the file type.
+
+### Go source files — use heredoc (primary)
+
+Use a heredoc for Go source files. `GOEOF` is the standard delimiter for Go
+source; any unique uppercase string may substitute:
+
+```
+terminal(
+  cd: "<worktree-path>",
+  command: "cat > path/to/file.go << 'GOEOF'\n<full file content>\nGOEOF"
+)
+```
+
+> **Delimiter collision warning:** If the file content contains a line that is
+> exactly `GOEOF`, the heredoc will silently truncate at that line. Fix: choose
+> a different delimiter (e.g. `GOEOF2`, `ENDOFFILE`).
+
+**Why not `python3 -c` for Go files?** Python uses `'''` as its triple-quote
+string delimiter. If the Go source contains `'''` (e.g. in a raw string literal
+or comment), the Python triple-quote will collide and silently truncate or
+corrupt the file content.
+
+### Markdown and YAML files — use `python3 -c` (secondary)
+
+For Markdown (`.md`) and YAML (`.yaml`/`.yml`) files, use the `python3 -c`
+pattern. These formats do not use triple-quoted Go strings, so the collision
+risk does not apply:
 
 ```
 terminal(
   cd: "<worktree-path>",
   command: "python3 -c \"
 import pathlib
-pathlib.Path('path/to/file.go').write_text('''<full file content>''')
+pathlib.Path('path/to/file.md').write_text('''<full file content>''')
 \""
-)
-```
-
-For smaller targeted edits, use a heredoc:
-
-```
-terminal(
-  cd: "<worktree-path>",
-  command: "cat > path/to/file.go << 'EOF'\n<content>\nEOF"
 )
 ```
 
@@ -116,7 +134,7 @@ packet returned by `next(id)` under `worktree.path`.
 ```
 Copy this checklist and track your progress:
 - [ ] Claimed the task with `next(id: "TASK-xxx")`
-- [ ] Confirmed whether this task runs inside a worktree — if yes, use `terminal` + `python3 -c` for file writes, NOT `edit_file`
+- [ ] Confirmed whether this task runs inside a worktree — if yes, use `terminal` + heredoc for Go files, `python3 -c` for Markdown/YAML, NOT `edit_file`
 - [ ] Read the context packet — spec sections, knowledge entries, file paths
 - [ ] Listed all acceptance criteria for this task
 - [ ] Confirmed file scope — which files to create or modify
