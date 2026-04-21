@@ -1,0 +1,11 @@
+id: BUG-01KPQZMTF1YR5
+slug: kbzinit-skills-out-of-sync
+name: Embedded kbzinit skills out of sync with live agents skills
+status: reported
+severity: medium
+priority: medium
+type: implementation-defect
+reported_by: "reviewer (P24 plan review, findings F-01, F-02, F-03)"
+reported: "2026-04-21T12:18:37Z"
+observed: "internal/kbzinit/skills/getting-started/SKILL.md, internal/kbzinit/skills/workflow/SKILL.md, and internal/kbzinit/skills/agents/SKILL.md are substantially diverged from their .agents/skills/kanbanzai-{getting-started,workflow,agents}/SKILL.md counterparts. The embedded files predate P16/P17 and are missing all changes added by P24 (stash prohibition, Commit workflow state section, Shell-Querying anti-pattern, two-track PR policy, two-track Feature Completion procedure) and likely several earlier plans. kanbanzai init installs the embedded versions to new projects."
+expected: "internal/kbzinit/skills/ files are identical to their .agents/skills/kanbanzai-*/ counterparts. New projects initialised with kanbanzai init receive current guidance."
