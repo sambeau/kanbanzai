@@ -1,8 +1,8 @@
 id: P25-agent-tooling-pipeline-quality
 slug: agent-tooling-pipeline-quality
 name: Agent Tooling and Pipeline Quality
-status: reviewing
+status: done
 summary: "Address the four friction clusters identified in the P23 and P24 retrospectives: worktree file editing, decompose reliability, merge verification gates, and sub-agent context quality. Mixes Go code changes and documentation improvements."
 created: "2026-04-21T03:09:26Z"
 created_by: sambeau
-updated: "2026-04-21T10:39:58Z"
+updated: "2026-04-21T10:40:35Z"
