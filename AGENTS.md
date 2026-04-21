@@ -101,9 +101,9 @@ kanbanzai/
 
 - [ ] Run `git status`. Act on what you find:
   - Changes from previous work are coherent and complete → **commit them now**, then proceed
-  - Changes are incomplete or belong to a different task → inform the human, **do not stash** or discard
+  - Changes are incomplete or belong to a different task → inform the human, **do not stash** or discard (stashing hides state from parallel agents and is silently lost across worktree switches)
   - Working tree is clean → proceed
-    > Note: MCP tools (entity, doc, finish, decompose, merge) now auto-commit state changes. Orphaned `.kbz/state/` files should be rare but are still worth checking.
+- [ ] **Commit orphaned workflow state** — if `git status` shows any modified or untracked files under `.kbz/state/`, `.kbz/index/`, or `.kbz/context/`, commit them now before starting work. MCP tools auto-commit during normal operation; orphaned files indicate an interrupted previous session. Do not stash or discard them.
 - [ ] Confirm you are on the correct branch for this task (or `main` if starting fresh)
 
 One task = one clean commit history. Uncommitted changes from a previous task make commits meaningless and code review confusing.
@@ -211,3 +211,8 @@ This value is used automatically by `worktree(action: "create")` as the default 
 ## Delegating to Sub-Agents
 
 Sub-agents do **not** see this file — all context must be explicitly propagated in every `spawn_agent` call. See [`refs/sub-agents.md`](refs/sub-agents.md) for the required context template and propagation rule.
+
+> **Worktree sub-agents:** Sub-agents that run inside a Git worktree cannot use
+> `edit_file` — it operates on the main working tree, not the worktree. Always
+> instruct worktree sub-agents to write files via `terminal` using the
+> `python3 -c` pattern. See the `implement-task` skill for the exact syntax.

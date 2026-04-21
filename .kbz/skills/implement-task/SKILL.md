@@ -74,11 +74,49 @@ constraint_level: medium
 - **BECAUSE:** The context packet contains curated spec sections, knowledge entries, and file paths. Skipping it means re-discovering what the system already assembled and missing knowledge that prevents known pitfalls
 - **Resolve:** Claim the task with `next(id: "TASK-xxx")` before writing any code
 
+### Unreported Flaky Test
+
+- **Detect:** Agent observes a test that fails then passes on retry (without any code change) and marks the task done without filing a BUG entity.
+- **BECAUSE:** Intermittent test failures indicate non-determinism — a race condition, timing dependency, or environmental assumption. Not recording them means future agents encounter the same failure with no prior context, re-investigate from scratch, and potentially make the same "probably fine" call. The cumulative cost far exceeds the cost of filing one BUG entity.
+- **Resolve:** File a BUG entity for every observed intermittent failure before calling `finish`. Include the test name, the failure message, and the conditions under which it was observed.
+
+## Worktree File Editing
+
+> **Warning:** The `edit_file` tool does not work correctly inside Git worktrees.
+> It edits files in the main working tree, not the worktree's checked-out branch.
+> Using it inside a worktree produces silent incorrect edits or no-ops.
+
+When implementing tasks assigned to a worktree, write file content using the
+`python3 -c` shell pattern via the `terminal` tool:
+
+```
+terminal(
+  cd: "<worktree-path>",
+  command: "python3 -c \"
+import pathlib
+pathlib.Path('path/to/file.go').write_text('''<full file content>''')
+\""
+)
+```
+
+For smaller targeted edits, use a heredoc:
+
+```
+terminal(
+  cd: "<worktree-path>",
+  command: "cat > path/to/file.go << 'EOF'\n<content>\nEOF"
+)
+```
+
+Confirm the worktree path before writing. It is available in the context
+packet returned by `next(id)` under `worktree.path`.
+
 ## Checklist
 
 ```
 Copy this checklist and track your progress:
 - [ ] Claimed the task with `next(id: "TASK-xxx")`
+- [ ] Confirmed whether this task runs inside a worktree — if yes, use `terminal` + `python3 -c` for file writes, NOT `edit_file`
 - [ ] Read the context packet — spec sections, knowledge entries, file paths
 - [ ] Listed all acceptance criteria for this task
 - [ ] Confirmed file scope — which files to create or modify
@@ -88,6 +126,7 @@ Copy this checklist and track your progress:
 - [ ] Wrote or updated tests for every code path
 - [ ] Ran the full test suite — all tests pass including regression
 - [ ] Verified each acceptance criterion is met
+- [ ] If any test failed intermittently (passed on retry without code change), filed a BUG entity before proceeding
 - [ ] Completed the task with `finish` including summary and verification
 ```
 
@@ -117,6 +156,13 @@ Copy this checklist and track your progress:
 ### Phase 4: Verify
 
 1. Run the full test suite. All tests must pass, including pre-existing tests (regression check).
+   - If any test fails intermittently — passes on retry without any code change — do not mark the task done without first filing a BUG entity:
+     ```
+     entity(action: "create", type: "bug", name: "<test name> fails intermittently",
+            observed: "<what was seen>", expected: "test passes consistently",
+            severity: "medium", priority: "medium")
+     ```
+     Record the BUG ID in the task completion summary. Intermittent failures are not "probably fine" — they indicate non-determinism that will compound in future tasks.
 2. Walk through each acceptance criterion. Confirm the implementation satisfies it and identify the test that verifies it.
 3. IF any criterion is not met → return to Phase 2 and address the gap.
 4. Complete the task with `finish`, including:

@@ -77,6 +77,19 @@ constraint_level: medium
 - **BECAUSE:** A high-confidence recommendation backed by benchmarks and a low-confidence recommendation based on a single blog post require different treatment by decision-makers — presenting both as equally certain leads to poorly calibrated decisions
 - **Resolve:** Assign a confidence level (high, medium, low) to each recommendation and state the evidence basis
 
+### Report From Memory
+
+- **Detect:** Agent writes a retrospective or research report without first calling `retro(action: "synthesise")` and `knowledge(action: "list")`.
+- **BECAUSE:** Retrospective signals and knowledge entries accumulate across sessions. In-session memory only captures the current session. Reports written from memory systematically miss recurring patterns and prior decisions, producing incomplete analysis that cannot support reliable recommendations.
+- **Resolve:** Always call `retro(action: "synthesise")` and `knowledge(action: "list")` before writing any report. Treat the synthesised output as the primary input, not a supplement.
+
+## Pre-Writing Checklist
+
+Before beginning to write the research report:
+
+- [ ] Called `retro(action: "synthesise")` to surface retrospective signals from all sessions — do not rely on in-session memory alone
+- [ ] Called `knowledge(action: "list")` to retrieve project-level knowledge entries relevant to the report topic
+
 ## Procedure
 
 ### Step 1: Define the Investigation

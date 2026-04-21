@@ -3,9 +3,9 @@ name: kanbanzai-getting-started
 description: >
   Use at the start of every agent session, even if the task seems obvious and
   you think you already know what to do. Activates when the agent has just
-  opened a repository, doesn't know what to do, needs to orient itself, or is
+  opened a repository, does not know what to do, needs to orient itself, or is
   beginning any new session. Also activates for "where do I start?", "what
-  should I work on?", "what's the current state?". Skipping orientation leads
+  should I work on?", "what is the current state?". Skipping orientation leads
   to wasted effort and missed context.
 metadata:
   kanbanzai-managed: "true"
@@ -42,18 +42,50 @@ Orient an agent at the start of a session in a Kanbanzai-managed project.
 
 Copy this checklist at the beginning of every session:
 
-- [ ] **Clean slate** — Run `git status`. Commit coherent changes, stash incomplete work, or proceed if clean.
+- [ ] **Clean slate** — Run `git status`. If changes are coherent and complete, commit them now. If changes are incomplete or belong to a different task, inform the human and stop — do not stash. Never use `git stash` in a Kanbanzai project: stashed changes hide workflow state from other agents and are silently lost across worktree switches.
 - [ ] **Store check** — If `git status` shows uncommitted `.kbz/` files, commit them now. These are versioned project state, not ephemeral cache. Do not stash, discard, or `.gitignore` them.
-- [ ] **Read project context** — Read `AGENTS.md` if you haven't this session.
-- [ ] **Check the work queue** — Call `next()` to see what's ready.
+- [ ] **Read project context** — Read `AGENTS.md` if you have not this session.
+- [ ] **Check the work queue** — Call `next()` to see what is ready.
 - [ ] **Claim your task** — Call `next(id: "TASK-xxx")` to get full context for your chosen task.
 - [ ] **Understand the workflow** — If unsure about the current stage, check the `kanbanzai-workflow` skill.
 
 ### Clean slate
 
-Run `git status`. If there are uncommitted changes from previous work, commit
-or stash them before starting anything new. Never start new work on top of
-uncommitted changes from a different task.
+Run `git status`. If there are uncommitted changes from previous work:
+
+- Changes are coherent and complete → **commit them now**, then proceed.
+- Changes belong to a different task or are incomplete → **inform the human and stop**. Do not stash, do not discard.
+
+Never use `git stash` in a Kanbanzai project. Stashed changes hide workflow
+state from parallel agents, are silently lost when switching worktrees, and
+bypass the commit history that makes code review meaningful.
+
+### Commit workflow state
+
+Even when the working tree looks clean for code, run:
+
+```
+git status
+```
+
+and look specifically for untracked or modified files under `.kbz/state/`,
+`.kbz/index/`, or `.kbz/context/`. These are versioned project state — entity
+records, document metadata, knowledge entries — that other agents depend on.
+
+If any appear:
+
+1. Stage and commit them immediately before starting any new work:
+   ```
+   git add .kbz/
+   git commit -m "workflow(<context>): commit orphaned state files"
+   ```
+2. Do not stash, discard, or `.gitignore` them.
+
+MCP tools (`entity`, `doc`, `finish`, `decompose`, `merge`) auto-commit state
+changes during normal operation. Orphaned files appear when a previous session
+was interrupted before the auto-commit could run. They are rare but consequential:
+stale state causes parallel agents to read incorrect entity status and produce
+conflicting transitions.
 
 ### Read the project context
 
@@ -108,6 +140,17 @@ procedure to follow. The task-execution skills themselves live in
 - **BECAUSE:** Store drift causes race conditions when parallel agents read stale entity state, leading to conflicting transitions and lost updates.
 - **Resolve:** Commit `.kbz/` files immediately. Do not stash, discard, or gitignore them.
 
+### Shell-Querying Workflow State Files
+
+- **Detect:** Agent runs `cat`, `grep`, `find`, or similar shell commands against `.kbz/state/`, `.kbz/index/`, or `.kbz/context/` directories to retrieve entity data.
+- **BECAUSE:** Raw YAML files contain unresolved state. MCP tools apply lifecycle resolution, inheritance, computed fields, and cross-reference validation. Shell queries bypass all of this and produce subtly wrong results — wrong status, missing computed fields, stale index data — that lead to incorrect implementation decisions.
+- **Resolve:** Use MCP tools exclusively for all workflow state queries:
+  - Entity status → `entity(action: "get", id: "...")`
+  - Project overview → `status()`
+  - Knowledge entries → `knowledge(action: "list")`
+  - Documents → `doc(action: "get", path: "...")`
+  Never read `.kbz/state/` files with shell tools or `read_file`.
+
 ---
 
 ## Evaluation Criteria
@@ -126,7 +169,7 @@ procedure to follow. The task-execution skills themselves live in
 - How do I claim a task?
 - What if there are uncommitted changes from a previous session?
 - Where are the project conventions?
-- What's the difference between system skills and task-execution skills?
+- What is the difference between system skills and task-execution skills?
 - How do I know what stage the project is in?
 
 ---
