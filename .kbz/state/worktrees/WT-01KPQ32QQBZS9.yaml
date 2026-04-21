@@ -2,7 +2,9 @@ id: WT-01KPQ32QQBZS9
 entity_id: FEAT-01KPQ08Y71A8V
 branch: feature/FEAT-01KPQ08Y71A8V-fix-decompose-empty-task-names
 path: .worktrees/FEAT-01KPQ08Y71A8V-fix-decompose-empty-task-names
-status: active
+status: merged
 created: "2026-04-21T03:59:24Z"
 created_by: sambeau
+merged_at: "2026-04-21T10:31:15Z"
+cleanup_after: "2026-04-28T10:31:15Z"
 graph_project: Users-samphillips-Dev-kanbanzai
