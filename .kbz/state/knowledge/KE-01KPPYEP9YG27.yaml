@@ -1,0 +1,18 @@
+id: KE-01KPPYEP9YG27
+tier: 3
+topic: parallel-test-isolation-package-vars
+scope: project
+content: Tests that mutate package-level variables (e.g. getPRStatusFunc) must NOT use t.Parallel() — parallel execution causes mocks from one test to interfere with another. Use t.Cleanup() for restore but remove t.Parallel() from the function. Only tests that do NOT mutate shared state can safely be parallel.
+learned_from: TASK-01KPPJS62DE5V
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - testing
+  - go
+  - parallelism
+created: "2026-04-21T02:38:33Z"
+created_by: unknown
+updated: "2026-04-21T02:38:33Z"
