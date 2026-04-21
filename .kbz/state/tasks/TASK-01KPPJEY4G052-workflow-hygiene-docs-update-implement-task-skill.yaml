@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPPG4SXY6T0
 slug: workflow-hygiene-docs-update-implement-task-skill
 name: Update implement-task SKILL.md
 summary: "Apply five targeted edits to .kbz/skills/implement-task/SKILL.md: (1) insert a Worktree File Editing section between Anti-Patterns and Checklist (FR-006/AC-006); (2) add a worktree-confirmation checklist item immediately after Claimed the task (FR-007/AC-007); (3) add a BUG-filing checklist item after acceptance-criteria verification and before finish (FR-011/AC-011); (4) expand Phase 4 Verify step 1 to cover intermittent test failures with the entity(action: create, type: bug) call (FR-012/AC-012); (5) add an Unreported Flaky Test anti-pattern entry (FR-013/AC-013)."
-status: queued
+status: ready

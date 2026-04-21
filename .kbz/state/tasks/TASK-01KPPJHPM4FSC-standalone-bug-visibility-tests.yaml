@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPPG3MSRRCE
 slug: standalone-bug-visibility-tests
 name: Write unit tests for standalone bug visibility
 summary: "Write unit tests in status_tool_test.go covering AC-001 through AC-012: positive cases (high/critical severity), exclusions (feature-linked, resolved, low/medium severity), ordering preservation, and error resilience."
-status: queued
+status: ready

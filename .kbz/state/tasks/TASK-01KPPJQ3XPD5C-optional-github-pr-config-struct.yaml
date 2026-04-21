@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPPG5XMJWT3
 slug: optional-github-pr-config-struct
 name: Extend MergeConfig with require_github_pr field
 summary: "Add RequireGitHubPR *bool field (yaml: require_github_pr,omitempty) and RequiresGitHubPR() bool helper method to MergeConfig in internal/config/config.go. The helper returns true only when the pointer is non-nil and points to true; nil and false both return false. Follows the same *bool pointer pattern as the existing PostMergeInstall field. Covers AC-001, AC-002, AC-003, AC-004, AC-005 (FR-001, FR-002, NFR-001, NFR-002)."
-status: queued
+status: ready

@@ -1,0 +1,104 @@
+document_id: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose
+document_path: work/spec/p24-ac-pattern-and-decompose.md
+content_hash: c055c46173f07049054ed1a28a379e95622d0e4c8e5dd23ec0be86202038c1e9
+indexed_at: 2026-04-20T22:58:32.631816Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: AC Pattern Recognition and Decompose Hardening'
+      byte_offset: 0
+      byte_count: 12659
+      word_count: 1561
+      content_hash: c055c46173f07049054ed1a28a379e95622d0e4c8e5dd23ec0be86202038c1e9
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 577
+          byte_count: 2031
+          word_count: 247
+          content_hash: 40cb317baac5cf72d09bd7d4992bf7c1a0a40ea451e16884982ff6642fbf1dbe
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 2608
+          byte_count: 4433
+          word_count: 575
+          content_hash: e4dd09d2bb4d2a90b8cb365e6481e2b4d143e273bad7173a1579bd85d4347f09
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 2625
+              byte_count: 3630
+              word_count: 476
+              content_hash: 320efac0bf71098820392005abb6e369b4de7d5197f75714c5df86337a211bba
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 6255
+              byte_count: 786
+              word_count: 97
+              content_hash: e66c0d378489e585c8eca460bcc0ca755c2b1e88c4c44d73374ccbd5594b5d09
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 7041
+          byte_count: 1207
+          word_count: 157
+          content_hash: b7d900c38eb8f3738968d5f09c2730bb8e8ca110d4d01e6f7fbf2285c8a7cc41
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 8248
+          byte_count: 2802
+          word_count: 366
+          content_hash: ef6b76a28385a1817687be3cde94e0f2aabc7e6d627562acaa2c0fb4d362934d
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 11050
+          byte_count: 1609
+          word_count: 178
+          content_hash: 666033916c59ac533b129fd74537b4c6cf73913bdd0204cb9ab1a2bade3db020
+entity_refs:
+    - entity_id: FEAT-01KPPG1MF4DAT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 330
+    - entity_id: FEAT-01KPPG1MF4DAT
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 700
+    - entity_id: FEAT-01KN4ZPCMJ1FP
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 7752
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 7928
+cross_doc_links:
+    - target_path: work/design/p24-ac-pattern-and-decompose.md
+      link_text: work/design/p24-ac-pattern-and-decompose.md
+      section_path: "1"
+    - target_path: work/design/p24-ac-pattern-and-decompose.md
+      link_text: work/design/p24-ac-pattern-and-decompose.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

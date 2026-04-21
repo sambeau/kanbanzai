@@ -1,4 +1,4 @@
-updated_at: 2026-04-20T22:40:57.613656Z
+updated_at: 2026-04-20T23:22:09.664295Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -62610,3 +62610,1043 @@ edges:
       to: P24-retro-recommendations
       to_type: entity_ref
       edge_type: REFERENCES
+    - from: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch
+      from_type: document
+      to: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.2
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.2
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.1
+      from_type: section
+      to: work/design/p24-doc-approve-status-patch.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility
+      from_type: document
+      to: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.2
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.2
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1
+      from_type: section
+      to: P24-retro-recommendations
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1
+      from_type: section
+      to: work/design/p24-standalone-bug-visibility.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.1
+      from_type: section
+      to: work/design/p24-standalone-bug-visibility.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs
+      from_type: document
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.3
+      from_type: section
+      to: TASK-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.5
+      from_type: section
+      to: BUG-filing
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: work/design/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.1
+      from_type: section
+      to: work/design/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.1
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.1
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.1
+      from_type: section
+      to: .kbz/skills/write-research/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.1
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.2
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.3
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.3
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.4
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.4
+      from_type: section
+      to: .kbz/skills/write-research/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.5
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.3
+      from_type: section
+      to: .kbz/skills/write-research/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.4
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.4
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.5
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.5
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.5
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.6
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.6
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.6
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.6
+      from_type: section
+      to: .kbz/skills/write-research/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr
+      from_type: document
+      to: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.2
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.2
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1
+      from_type: section
+      to: P24-retro-recommendations
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1
+      from_type: section
+      to: work/design/p24-optional-github-pr.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.1
+      from_type: section
+      to: work/design/p24-optional-github-pr.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.1
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.1
+      from_type: section
+      to: .agents/skills/kanbanzai-agents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.2.1
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.2.1
+      from_type: section
+      to: .agents/skills/kanbanzai-agents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose
+      from_type: document
+      to: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.2
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.2
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.3
+      from_type: section
+      to: FEAT-01KN4ZPCMJ1FP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.3
+      from_type: section
+      to: FEAT-01KMT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: work/design/p24-ac-pattern-and-decompose.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.1
+      from_type: section
+      to: work/design/p24-ac-pattern-and-decompose.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr
+      from_type: document
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.2
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.2
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.2
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.2
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.4
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.4
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.4
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.1
+      from_type: section
+      to: FEAT-01KPPG5XMJWT3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1
+      from_type: section
+      to: P24-retro-recommendations
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1
+      from_type: section
+      to: work/spec/p24-optional-github-pr.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.1
+      from_type: section
+      to: work/spec/p24-optional-github-pr.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.2.4
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr#1.2.4
+      from_type: section
+      to: .agents/skills/kanbanzai-agents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch
+      from_type: document
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.2
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.2
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.2
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.2
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.4
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.4
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.4
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.1
+      from_type: section
+      to: FEAT-01KPPG2MYSG6A
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.1
+      from_type: section
+      to: work/spec/p24-doc-approve-status-patch.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.2.2
+      from_type: section
+      to: refs/testing.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch#1.2.4
+      from_type: section
+      to: refs/testing.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs
+      from_type: document
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.4
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.4
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.4
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: FEAT-01KPPG4SXY6T0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.3
+      from_type: section
+      to: BUG-filing
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: work/spec/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1
+      from_type: section
+      to: work/design/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.1
+      from_type: section
+      to: work/spec/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.1
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.1
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.1
+      from_type: section
+      to: .kbz/skills/write-research/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.1
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.1
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.1
+      from_type: section
+      to: work/spec/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.1
+      from_type: section
+      to: work/design/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.2
+      from_type: section
+      to: work/spec/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.2
+      from_type: section
+      to: work/design/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.3
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.3
+      from_type: section
+      to: work/spec/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.3
+      from_type: section
+      to: work/design/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.4
+      from_type: section
+      to: write-research/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.4
+      from_type: section
+      to: .kbz/skills/write-research/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.4
+      from_type: section
+      to: work/spec/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.2.4
+      from_type: section
+      to: work/design/p24-workflow-hygiene-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs#1.4.1
+      from_type: section
+      to: write-research/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility
+      from_type: document
+      to: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.2
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.2
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.6
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.6
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.1
+      from_type: section
+      to: FEAT-01KPPG3MSRRCE
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1
+      from_type: section
+      to: P24-retro-recommendations
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1
+      from_type: section
+      to: work/spec/p24-standalone-bug-visibility.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility#1.1
+      from_type: section
+      to: work/spec/p24-standalone-bug-visibility.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose
+      from_type: document
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.2
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.2
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.2
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.4
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.4
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.4
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.4
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.1
+      from_type: section
+      to: FEAT-01KPPG1MF4DAT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.2.2
+      from_type: section
+      to: FEAT-01KMT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.2.3
+      from_type: section
+      to: FEAT-01KN4ZPCMJ1FP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.3
+      from_type: section
+      to: FEAT-01KN4ZPCMJ1FP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.3
+      from_type: section
+      to: FEAT-01KMT
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose#1.1
+      from_type: section
+      to: work/spec/p24-ac-pattern-and-decompose.md
+      to_type: document
+      edge_type: LINKS_TO

@@ -1,0 +1,99 @@
+document_id: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch
+document_path: work/spec/p24-doc-approve-status-patch.md
+content_hash: eff4215a92bfed16aa6e193404ad601d15175e2b8fe55a2405d295a0f045364d
+indexed_at: 2026-04-20T22:56:39.547057Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: doc approve patches Status in source file'
+      byte_offset: 0
+      byte_count: 12353
+      word_count: 1534
+      content_hash: eff4215a92bfed16aa6e193404ad601d15175e2b8fe55a2405d295a0f045364d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 482
+          byte_count: 1424
+          word_count: 183
+          content_hash: ca54628a09eb5cea6820195e84ac0626829954b2c17e40c3661e7f5fe83aabde
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 1906
+          byte_count: 3670
+          word_count: 472
+          content_hash: dffcf44375ca66574418b6ffe3a8f6f6166144fb8b0d36675905527ac614394e
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 1923
+              byte_count: 3070
+              word_count: 399
+              content_hash: c40dfb31355a0912c8c74d2e8c539366aa0f0b52eb8c309b990dde091651f0de
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 4993
+              byte_count: 583
+              word_count: 71
+              content_hash: 25b81f3961490ba1dd9597ad7a692cbe9c3041f70f1b4e0d7c697af0c1a99dcc
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 5576
+          byte_count: 938
+          word_count: 133
+          content_hash: d9514ee364273a57acda90a175e7988af2d4f249be7fe7680e7d72984c83be35
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 6514
+          byte_count: 3059
+          word_count: 434
+          content_hash: 43f43775a2f37bf8899d4b2c6a85980f71a33b42edec050114624ba17867d620
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 9573
+          byte_count: 1758
+          word_count: 136
+          content_hash: 6b60ab414af72306e40c98aa70119996a62217b845a5f89c23c8acdef1024ba2
+        - path: "1.6"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 11331
+          byte_count: 1022
+          word_count: 134
+          content_hash: 830b9ad6282d84fce6c818a1e758ec1c98089176a6e0fc8b313aab07595e3112
+entity_refs:
+    - entity_id: FEAT-01KPPG2MYSG6A
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 312
+cross_doc_links:
+    - target_path: work/design/p24-doc-approve-status-patch.md
+      link_text: work/design/p24-doc-approve-status-patch.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+classified: false

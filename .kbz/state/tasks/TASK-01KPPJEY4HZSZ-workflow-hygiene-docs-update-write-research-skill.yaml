@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPPG4SXY6T0
 slug: workflow-hygiene-docs-update-write-research-skill
 name: Update write-research SKILL.md for REC-07b
 summary: "Inspect .kbz/skills/write-research/SKILL.md first — if it has an anti-patterns or checklist section, add there; otherwise fall back to .kbz/roles/researcher.yaml. Do NOT add to both files. Add: (1) two pre-writing checklist items requiring retro(action: synthesise) and knowledge(action: list) before writing any report; (2) a Report From Memory anti-pattern entry (FR-010/AC-010)."
-status: queued
+status: ready

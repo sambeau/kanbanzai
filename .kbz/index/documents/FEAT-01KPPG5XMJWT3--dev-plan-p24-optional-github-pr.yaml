@@ -1,0 +1,142 @@
+document_id: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr
+document_path: work/dev-plan/p24-optional-github-pr.md
+content_hash: 63d939465b52234d9dba90ae703a6dc443c7f735d8b85764096bf4038a698370
+indexed_at: 2026-04-20T23:01:53.16083Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Optional GitHub PR Creation'
+      byte_offset: 0
+      byte_count: 7364
+      word_count: 999
+      content_hash: 63d939465b52234d9dba90ae703a6dc443c7f735d8b85764096bf4038a698370
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 190
+          byte_count: 499
+          word_count: 59
+          content_hash: ece7380f440ed669e34021be53a9b70ddf19528dbeaab754c482cc2afeef2871
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 689
+          byte_count: 3877
+          word_count: 499
+          content_hash: 4fdc13c094a80181fafd6e7a0f8b1b72adfa6e9e970f90ef961b13014234323d
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Extend `MergeConfig` with `require_github_pr`'
+              byte_offset: 708
+              byte_count: 618
+              word_count: 79
+              content_hash: 7b22234e752f4300da9b1218bf9ba4dd54df0646d822627e24f88eef4c5dbece
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Enforce PR gate in merge tool'
+              byte_offset: 1326
+              byte_count: 992
+              word_count: 141
+              content_hash: 67c3d83d53e03463e49867a471665acdef66c9c2f042bfa97f5529543b26d562
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Write tests'
+              byte_offset: 2318
+              byte_count: 1215
+              word_count: 157
+              content_hash: c8e66db55ff5c108876d3673d554c2262a7d24575739f717033cd348c1519cbb
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Update workflow skill documentation'
+              byte_offset: 3533
+              byte_count: 1033
+              word_count: 119
+              content_hash: 1bb0c89ccc568eb1f4ad84e30b82e8d06ff4204e9305cee6cd7e4a0842b7daae
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 4566
+          byte_count: 502
+          word_count: 87
+          content_hash: 3f9955742a4eb14911f4201cbbdddd5538648dca4c010de8c6053bc404fffc85
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 5068
+          byte_count: 1426
+          word_count: 214
+          content_hash: e663343e25e7799fd1ca40986a8a89bc0ea9c6b0168099fa93bdd3ac5f841c9e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: Inline vs. formal gate approach divergence'
+              byte_offset: 5088
+              byte_count: 418
+              word_count: 59
+              content_hash: ab73c0e984e4ede6116d9c4d50d85c6835518d9bef1eb8f3774bce35f20504cf
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: `getPRStatus` is not easily mockable in tests'
+              byte_offset: 5506
+              byte_count: 660
+              word_count: 103
+              content_hash: bc85013948a439e23163663cb4af91fef79da8cb95fb6dba185fb4b2056c9370
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Skill file section location changes between reading and editing'
+              byte_offset: 6166
+              byte_count: 328
+              word_count: 49
+              content_hash: 3a71e87440591064c0983a8d5cbc5fd5fedb97ada137743c9d64b2a1b6fb2adb
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 6494
+          byte_count: 870
+          word_count: 124
+          content_hash: 76c868783c316534ec206315890082189e5981134af3969544bf605a9414ace5
+entity_refs:
+    - entity_id: FEAT-01KPPG5XMJWT3
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 54
+    - entity_id: FEAT-01KPPG5XMJWT3
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 288
+    - entity_id: P24-retro-recommendations
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 83
+cross_doc_links:
+    - target_path: work/spec/p24-optional-github-pr.md
+      link_text: work/spec/p24-optional-github-pr.md
+      section_path: "1"
+    - target_path: work/spec/p24-optional-github-pr.md
+      link_text: work/spec/p24-optional-github-pr.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.2.4
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.4
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+classified: false

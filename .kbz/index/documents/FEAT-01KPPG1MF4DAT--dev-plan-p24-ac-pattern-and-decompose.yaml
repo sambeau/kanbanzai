@@ -1,0 +1,148 @@
+document_id: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose
+document_path: work/dev-plan/p24-ac-pattern-and-decompose.md
+content_hash: 7f438d912fc291a5f4550cf1891018dbc182a916aede26c158c7e2b16a1c7c8b
+indexed_at: 2026-04-20T23:22:09.664295Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: AC Pattern Recognition and Decompose Hardening'
+      byte_offset: 0
+      byte_count: 10575
+      word_count: 1214
+      content_hash: 7f438d912fc291a5f4550cf1891018dbc182a916aede26c158c7e2b16a1c7c8b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 598
+          byte_count: 1005
+          word_count: 115
+          content_hash: f295b6442711a2cb93a6c2f0fdd940fccc0defe1ee7e9159c8f95c2e05fd768c
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1603
+          byte_count: 6163
+          word_count: 672
+          content_hash: 4019b0577824e149fa06501466022ebbcac3dd3771a721836cd6f9e2631b0a29
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Extend `extractConventionalRoles` with content-based AC detection'
+              byte_offset: 1622
+              byte_count: 2514
+              word_count: 254
+              content_hash: cf8dd2550f065e079c50d52ad899dcab1a9e3ee758388c9d087c06c00a8b0bc5
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Fix `parseSpecStructure` and add `buildZeroCriteriaDiagnostic`'
+              byte_offset: 4136
+              byte_count: 2081
+              word_count: 230
+              content_hash: 01f96cc8c9aea2fbca5ec885d55193d296d3e711d8b74e4fa48b340174e30ab0
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Fix `asmExtractCriteria` list-item bold-identifier normalisation'
+              byte_offset: 6217
+              byte_count: 1549
+              word_count: 185
+              content_hash: 2111d7467aa5800b0d28f4d3aae3b73c654241aaced48d8d69668d68172f1d21
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 7766
+          byte_count: 793
+          word_count: 110
+          content_hash: 115d04d63549a4b6e064fb92c6b1ece5a268f5eb9a8fe15afc02e2a902819956
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 8559
+          byte_count: 1209
+          word_count: 170
+          content_hash: ae6b98d3e45a9fc7bb1b4a4cc9529c4b12f34d4193037ff6ae2743733985b153
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: `Section.ByteOffset` / `Section.ByteCount` are zero'
+              byte_offset: 8579
+              byte_count: 286
+              word_count: 37
+              content_hash: 9d6163a21c0f4dbc90d8e26ce97dd09c29585876cd2b16dc92aa0c27bc91c249
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: `boldIdentifierRe` not present (DEP-001 not merged)'
+              byte_offset: 8865
+              byte_count: 274
+              word_count: 38
+              content_hash: 562fb7956a2356ded6a4636d67b84d492d83c5da601cdef2832b8a9220c538ca
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: zero-criteria gate absent (DEP-002 not merged)'
+              byte_offset: 9139
+              byte_count: 289
+              word_count: 44
+              content_hash: ea3d4be168f540a7a1fdbf9180ff7c3fef8e87a9d1fda812d87596072e0524e5
+            - path: 1.4.4
+              level: 3
+              title: 'Risk: list-marker stripping interacts with existing extraction paths'
+              byte_offset: 9428
+              byte_count: 340
+              word_count: 48
+              content_hash: 34e8b05a1c30139d78cf1ce8360c810571c4b6a9e65df2de023b9e892a7fc0a6
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 9768
+          byte_count: 807
+          word_count: 106
+          content_hash: 828e31d5af51273a8804f32a07bfeb56006639e360d673e090acc33fbcaf8a6a
+entity_refs:
+    - entity_id: FEAT-01KPPG1MF4DAT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 376
+    - entity_id: FEAT-01KPPG1MF4DAT
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 702
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 6128
+    - entity_id: FEAT-01KN4ZPCMJ1FP
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 7640
+    - entity_id: FEAT-01KN4ZPCMJ1FP
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 8315
+    - entity_id: FEAT-01KMT
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 8385
+cross_doc_links:
+    - target_path: work/spec/p24-ac-pattern-and-decompose.md
+      link_text: work/spec/p24-ac-pattern-and-decompose.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+    - section_path: 1.4.4
+      role: risk
+      confidence: high
+classified: false

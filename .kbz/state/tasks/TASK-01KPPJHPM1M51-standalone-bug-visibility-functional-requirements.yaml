@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPPG3MSRRCE
 slug: standalone-bug-visibility-functional-requirements
 name: Implement standalone bug attention block
 summary: "Add the standalone-bug filter block in synthesiseProject: query all bugs, filter to open standalone high/critical bugs, append AttentionItem for each. Covers REQ-001 through REQ-007 and REQ-NF-001 through REQ-NF-003."
-status: queued
+status: ready

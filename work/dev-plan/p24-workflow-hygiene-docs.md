@@ -7,6 +7,15 @@
 
 ---
 
+## Overview
+
+This plan decomposes the requirements in `work/spec/p24-workflow-hygiene-docs.md`
+(FEAT-01KPPG4SXY6T0) into four independent documentation editing tasks. Each
+task targets a single file and can execute in parallel with the others. No code
+is written and no new files are created.
+
+---
+
 ## Scope
 
 This plan implements the requirements defined in
@@ -164,6 +173,36 @@ sections or ordering constraints.
 
 **Critical path:** Any single task (all are approximately equal weight;
 Task 3 is the largest with five changes to one file).
+
+---
+
+## Interface Contracts
+
+This feature contains no code changes. No function signatures, data structures,
+or inter-package contracts are defined or modified. All deliverables are
+Markdown and YAML documentation files.
+
+---
+
+## Traceability Matrix
+
+| Requirement | Task        |
+|-------------|-------------|
+| FR-001      | Task 1      |
+| FR-002      | Task 1      |
+| FR-003      | Task 2      |
+| FR-004      | Task 1      |
+| FR-005      | Task 2      |
+| FR-006      | Task 3      |
+| FR-007      | Task 3      |
+| FR-008      | Task 2      |
+| FR-009      | Task 1      |
+| FR-010      | Task 4      |
+| FR-011      | Task 3      |
+| FR-012      | Task 3      |
+| FR-013      | Task 3      |
+| FR-NF-001   | Tasks 1–4   |
+| FR-NF-002   | Tasks 1–4   |
 
 ---
 

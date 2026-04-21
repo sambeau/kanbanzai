@@ -1,0 +1,96 @@
+document_id: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility
+document_path: work/spec/p24-standalone-bug-visibility.md
+content_hash: a60f6626d951dd6c34bdb8f6f948486bcabf0727e467126d562afdbf7c47750c
+indexed_at: 2026-04-20T22:56:50.936045Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Standalone bugs visible in status health'
+      byte_offset: 0
+      byte_count: 10317
+      word_count: 1318
+      content_hash: a60f6626d951dd6c34bdb8f6f948486bcabf0727e467126d562afdbf7c47750c
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 542
+          byte_count: 1366
+          word_count: 184
+          content_hash: 39af1b5aaffd681db4679e96f1841847745522fc2664457c0cbb3afbb8cff723
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 1908
+          byte_count: 2587
+          word_count: 342
+          content_hash: f198966b4236db2f0f994432a610ac0f2ed81922cb359b851f3b34a08ccd73d8
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 1925
+              byte_count: 2026
+              word_count: 270
+              content_hash: 15427920f1b5b20e58f884c4b6a89da07fd3a62251b63ca7126da19f9e6fae87
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 3951
+              byte_count: 544
+              word_count: 70
+              content_hash: 2ddcd66f09a0e129787b611e0cc612d50d89c25507016392bb2499b07ba43db5
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 4495
+          byte_count: 890
+          word_count: 112
+          content_hash: 6aca65b750b8e54a8bb99b9310018ef4c0f918b8c35009c6c897096e149c3a5f
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 5385
+          byte_count: 3021
+          word_count: 412
+          content_hash: 9697f648f9611dcaeeb1f104046128338a2ac0ccf176ac0d3500fa5033b22929
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 8406
+          byte_count: 1911
+          word_count: 225
+          content_hash: aa1cd13d2d354d6b96d288411ea0706c1abeee040449b49fed278e808a719a7a
+entity_refs:
+    - entity_id: FEAT-01KPPG3MSRRCE
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 233
+    - entity_id: P24-retro-recommendations
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 394
+cross_doc_links:
+    - target_path: work/design/p24-standalone-bug-visibility.md
+      link_text: work/design/p24-standalone-bug-visibility.md
+      section_path: "1"
+    - target_path: work/design/p24-standalone-bug-visibility.md
+      link_text: work/design/p24-standalone-bug-visibility.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

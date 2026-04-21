@@ -7,6 +7,18 @@
 
 ---
 
+## Overview
+
+This plan implements the requirements in
+`work/spec/p24-optional-github-pr.md` for feature FEAT-01KPPG5XMJWT3. It
+adds a `require_github_pr` boolean configuration field to `MergeConfig`,
+enforces the corresponding PR gate in the merge tool, writes tests covering
+both configuration states, and updates the two workflow skill documents with
+a two-track PR policy description. The work spans four tasks that can be
+partially parallelised; the critical path is Task 1 → Task 2 → Task 3.
+
+---
+
 ## Scope
 
 This plan implements the requirements defined in
@@ -156,6 +168,56 @@ Task 4 is fully independent and can be completed at any point.
   exact section headers. Apply surgical edits rather than full rewrites to
   minimise merge risk.
 - **Affected tasks:** Task 4.
+
+---
+
+## Interface Contracts
+
+**`MergeConfig.RequiresGitHubPR() bool`** (produced by Task 1, consumed by
+Task 2 and Task 3):
+
+```go
+// RequiresGitHubPR returns true only when RequireGitHubPR is explicitly set
+// to true. nil and false both map to false.
+func (m MergeConfig) RequiresGitHubPR() bool
+```
+
+Task 2 calls this method to branch between informational and blocking PR gate
+behaviour. Task 3 sets `RequireGitHubPR` directly on a `MergeConfig` value
+in tests, bypassing YAML loading, so the method must work on a zero-value
+struct (nil pointer → false).
+
+**Response key `pr_gate`** (produced by Task 2, verified by Task 3):
+
+When `RequiresGitHubPR()` is `true` and the PR gate fails, `checkMergeReadiness`
+MUST add the following key to its response map:
+
+```
+"pr_gate": map[string]any{
+    "status":  "failed",
+    "message": "<human-readable reason>",
+}
+```
+
+Task 3 asserts on the presence and contents of this key.
+
+---
+
+## Traceability Matrix
+
+| Spec Requirement | Task     | Notes                                              |
+|-----------------|----------|----------------------------------------------------|
+| FR-001          | Task 1   | `RequireGitHubPR *bool` field added to `MergeConfig` |
+| FR-002          | Task 1   | `RequiresGitHubPR()` helper method                |
+| FR-003          | Task 2   | Informational-only PR status when flag is false/nil |
+| FR-004          | Task 2   | Blocking `pr_gate` failure when no PR found        |
+| FR-005          | Task 2   | Blocking `pr_gate` failure when PR state != "open" |
+| FR-006          | Task 2   | Execute path blocked when flag is true and no open PR |
+| FR-007          | Task 4   | `kanbanzai-workflow` skill updated                |
+| FR-008          | Task 4   | `kanbanzai-agents` skill updated                  |
+| NFR-001         | Task 1   | `*bool` pointer ensures nil == false, no migration |
+| NFR-002         | Task 1   | Field added to `config.go`, not `local.yaml`      |
+| NFR-003         | Task 2   | No new MCP tool parameters added                  |
 
 ---
 

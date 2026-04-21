@@ -1,0 +1,192 @@
+document_id: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs
+document_path: work/dev-plan/p24-workflow-hygiene-docs.md
+content_hash: 96913c6fd829ce6941961de01778935eccc661727bb36d1b706791805f677b44
+indexed_at: 2026-04-20T23:02:56.825254Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Workflow Hygiene Documentation'
+      byte_offset: 0
+      byte_count: 10349
+      word_count: 1323
+      content_hash: 96913c6fd829ce6941961de01778935eccc661727bb36d1b706791805f677b44
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 228
+          byte_count: 523
+          word_count: 60
+          content_hash: a8daaaf05fa594f8fb49ec7e57a2bd82f053c9b777a03b6f351f1ceafbc06f40
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 751
+          byte_count: 6581
+          word_count: 824
+          content_hash: 9625f78abb1b983108c46182f1b3e6e6396160e6891711d87e1c506a4b85fd02
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Update `kanbanzai-getting-started/SKILL.md`'
+              byte_offset: 770
+              byte_count: 1747
+              word_count: 214
+              content_hash: 4ec7b8561dc084d8711bc7c3d58c01638722c51f1850ca61b7d8b7eb76c0cc58
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Update `AGENTS.md`'
+              byte_offset: 2517
+              byte_count: 1378
+              word_count: 185
+              content_hash: 45df2b6c37296c4a0f165d961025647d513722d4db44596646cdc39f82f49160
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Update `.kbz/skills/implement-task/SKILL.md`'
+              byte_offset: 3895
+              byte_count: 1928
+              word_count: 238
+              content_hash: 1918b1326de4b22dfec732c54b5dfb320b4948a2946253c313773ed5be53a48d
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Update `write-research/SKILL.md` (or `researcher.yaml`)'
+              byte_offset: 5823
+              byte_count: 1509
+              word_count: 184
+              content_hash: efe1e1e45b49d6f98dd0ad12ea16506692de41d75fe4d6ef8830334362e87cf3
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 7332
+          byte_count: 504
+          word_count: 78
+          content_hash: 15de1c9912625cc336a8fe25f638a525a111aa73a80a724f1cb1be6de9cba9aa
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 7836
+          byte_count: 1383
+          word_count: 204
+          content_hash: 0bbbd4ca3ffa1dde9a6d584ccaeafeacd4d584cbb61d3f11371f4096507abe4e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: REC-07b target file lacks required sections'
+              byte_offset: 7856
+              byte_count: 422
+              word_count: 60
+              content_hash: 07256a13e48a6c0de2948df611d2a7ea533e9371f90db61e2bb8e41d488f28f6
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: Section headings have been renamed since the design was written'
+              byte_offset: 8278
+              byte_count: 471
+              word_count: 73
+              content_hash: 9f0cd825bb6d8c43b970f55937ebe242e79afc0344a2becd834077a51039c972
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Markdown structure is damaged by edits'
+              byte_offset: 8749
+              byte_count: 470
+              word_count: 68
+              content_hash: bdfe52495cecf19a1d5fcb4edc412d95306548c84fb264c4601875b19b91e0a8
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 9219
+          byte_count: 1130
+          word_count: 139
+          content_hash: 87d3ba4c4446daf793447f405bf0a0966e67fbb52eb8484b4d533f3eb1d61203
+entity_refs:
+    - entity_id: FEAT-01KPPG4SXY6T0
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 57
+    - entity_id: BUG-filing
+      entity_type: bug
+      section_path: 1.2.3
+      byte_offset: 4346
+cross_doc_links:
+    - target_path: work/spec/p24-workflow-hygiene-docs.md
+      link_text: work/spec/p24-workflow-hygiene-docs.md
+      section_path: "1"
+    - target_path: work/design/p24-workflow-hygiene-docs.md
+      link_text: work/design/p24-workflow-hygiene-docs.md
+      section_path: "1"
+    - target_path: work/spec/p24-workflow-hygiene-docs.md
+      link_text: work/spec/p24-workflow-hygiene-docs.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/write-research/SKILL.md
+      link_text: .kbz/skills/write-research/SKILL.md
+      section_path: "1.1"
+    - target_path: kanbanzai-getting-started/SKILL.md
+      link_text: kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.1
+    - target_path: work/spec/p24-workflow-hygiene-docs.md
+      link_text: work/spec/p24-workflow-hygiene-docs.md
+      section_path: 1.2.1
+    - target_path: work/design/p24-workflow-hygiene-docs.md
+      link_text: work/design/p24-workflow-hygiene-docs.md
+      section_path: 1.2.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.2
+    - target_path: work/spec/p24-workflow-hygiene-docs.md
+      link_text: work/spec/p24-workflow-hygiene-docs.md
+      section_path: 1.2.2
+    - target_path: work/design/p24-workflow-hygiene-docs.md
+      link_text: work/design/p24-workflow-hygiene-docs.md
+      section_path: 1.2.2
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.2.3
+    - target_path: work/spec/p24-workflow-hygiene-docs.md
+      link_text: work/spec/p24-workflow-hygiene-docs.md
+      section_path: 1.2.3
+    - target_path: work/design/p24-workflow-hygiene-docs.md
+      link_text: work/design/p24-workflow-hygiene-docs.md
+      section_path: 1.2.3
+    - target_path: write-research/SKILL.md
+      link_text: write-research/SKILL.md
+      section_path: 1.2.4
+    - target_path: .kbz/skills/write-research/SKILL.md
+      link_text: .kbz/skills/write-research/SKILL.md
+      section_path: 1.2.4
+    - target_path: work/spec/p24-workflow-hygiene-docs.md
+      link_text: work/spec/p24-workflow-hygiene-docs.md
+      section_path: 1.2.4
+    - target_path: work/design/p24-workflow-hygiene-docs.md
+      link_text: work/design/p24-workflow-hygiene-docs.md
+      section_path: 1.2.4
+    - target_path: write-research/SKILL.md
+      link_text: write-research/SKILL.md
+      section_path: 1.4.1
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+classified: false
