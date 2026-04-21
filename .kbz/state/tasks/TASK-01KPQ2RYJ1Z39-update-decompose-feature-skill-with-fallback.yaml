@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPQ08YH16WZ
 slug: update-decompose-feature-skill-with-fallback
 name: Update decompose-feature SKILL.md with fallback
 summary: "Edit .kbz/skills/decompose-feature/SKILL.md to add Phase 2 fallback note and Phase 4 Manual Fallback subsection documenting entity(action: create) with required fields, depends_on example, and status() verification step."
-status: active
+status: done
+files_planned:
+  - .kbz/skills/decompose-feature/SKILL.md
+completed: "2026-04-21T04:16:32Z"
 claimed_at: "2026-04-21T04:13:04Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T04:13:04Z"
 dispatched_by: sambeau
+completion_summary: "Added Phase 2 broken-proposal warning and Phase 4 Manual Fallback subsection to decompose-feature/SKILL.md with entity create example, depends_on wiring, and status verification step"
+verification: Manual review of diff confirmed AC-05 through AC-08 satisfied
