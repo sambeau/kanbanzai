@@ -1,0 +1,241 @@
+document_id: P25-agent-tooling-pipeline-quality/report-review-p25-agent-tooling-pipeline-quality
+document_path: work/reviews/review-P25-agent-tooling-pipeline-quality.md
+content_hash: 9f51f975c65edff5217c08abcd090f0621c6232dd26771bc09281273fcb0cf2f
+indexed_at: 2026-04-21T11:47:26.453563Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Plan Review: P25-agent-tooling-pipeline-quality — Agent Tooling and Pipeline Quality'
+      byte_offset: 0
+      byte_count: 19368
+      word_count: 2609
+      content_hash: 9f51f975c65edff5217c08abcd090f0621c6232dd26771bc09281273fcb0cf2f
+      children:
+        - path: "1.1"
+          level: 2
+          title: Feature Census
+          byte_offset: 420
+          byte_count: 887
+          word_count: 103
+          content_hash: 4c625cac0a1c9546846e29ed7c0afba8492d7615007d3ab10ec7ba6bf6a63bc9
+        - path: "1.2"
+          level: 2
+          title: Specification Approval
+          byte_offset: 1307
+          byte_count: 835
+          word_count: 76
+          content_hash: 4f3a026df9cee957a78979a3c813d1bb969161992b699b3a83c4b4b2a8eb5a76
+        - path: "1.3"
+          level: 2
+          title: Spec Conformance Detail
+          byte_offset: 2142
+          byte_count: 13554
+          word_count: 1888
+          content_hash: 022df8fbb314433b7a638e7d94d398c978968e573c63b3e4797c65cb13619c62
+          children:
+            - path: 1.3.1
+              level: 3
+              title: FEAT-01KPQ08Y47522 — `write_file` MCP Tool
+              byte_offset: 2170
+              byte_count: 2400
+              word_count: 315
+              content_hash: 5230410e6d9699839b08d1b5ec1a72f1bb3bb16be33236d943095028277f1434
+            - path: 1.3.2
+              level: 3
+              title: FEAT-01KPQ08Y71A8V — Fix Empty Task Names in `decompose propose`
+              byte_offset: 4570
+              byte_count: 1460
+              word_count: 197
+              content_hash: 7a8d89d97833200cf59d31810a1441c128ed6d424f270e10ae206857bf0885b7
+            - path: 1.3.3
+              level: 3
+              title: FEAT-01KPQ08Y989P8 — Propagate Task Verification to Feature Entity
+              byte_offset: 6030
+              byte_count: 2003
+              word_count: 285
+              content_hash: a911b8193bcd8a82e665145473d409b07f3c7b2681ba4584fc7d45bb39f4c668
+            - path: 1.3.4
+              level: 3
+              title: FEAT-01KPQ08YBJ5AK — Dev-Plan-Aware Task Grouping in `decompose propose`
+              byte_offset: 8033
+              byte_count: 1424
+              word_count: 233
+              content_hash: b8714f0024bed800a5dc03356df872151a6208530bd0bbef86153c8018f923ed
+            - path: 1.3.5
+              level: 3
+              title: FEAT-01KPQ08YE4399 — Agentic Reviewing Stage Auto-Advance
+              byte_offset: 9457
+              byte_count: 1940
+              word_count: 261
+              content_hash: ae5d409b425f9ad44b4e85bf167eb2656190566656ef1f82b7a378c79911c3ac
+            - path: 1.3.6
+              level: 3
+              title: FEAT-01KPQ08YH16WZ — Implementation Workflow Documentation Improvements
+              byte_offset: 11397
+              byte_count: 2502
+              word_count: 350
+              content_hash: 927096b43e4f5ac136a65ad5eed21e46498d9e3ed6d148bcd5bc1540b05b12fc
+            - path: 1.3.7
+              level: 3
+              title: FEAT-01KPQ08YKHNS9 — Sub-agent Orchestration Documentation Improvements
+              byte_offset: 13899
+              byte_count: 1797
+              word_count: 243
+              content_hash: 13d490d74dc1b1fbb697953ef1c9b2ff886bd7b44767bc826d14903453f272b2
+        - path: "1.4"
+          level: 2
+          title: Documentation Currency
+          byte_offset: 15696
+          byte_count: 775
+          word_count: 115
+          content_hash: db66264620f3b7ac420bafe31cc8de9a4c1b838eef50ab78193eaf6b7781d53b
+        - path: "1.5"
+          level: 2
+          title: Cross-Cutting Checks
+          byte_offset: 16471
+          byte_count: 807
+          word_count: 116
+          content_hash: fe6410b8e476b55e20a815fe467f7273aa39fce9ba2fd897d99f678a3df88081
+        - path: "1.6"
+          level: 2
+          title: Conformance Gaps
+          byte_offset: 17278
+          byte_count: 1257
+          word_count: 160
+          content_hash: f2dd372f7152b927bb67d48d818f79861fd5e1ebdbdb4dd44dfc279da2f6d526
+        - path: "1.7"
+          level: 2
+          title: Verdict
+          byte_offset: 18535
+          byte_count: 833
+          word_count: 111
+          content_hash: fc5b424ee67e088524af6a3362a5c74fbeab9603f12b309eaca6fd38b4111a1c
+entity_refs:
+    - entity_id: FEAT-01KPQ08Y47522
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 611
+    - entity_id: FEAT-01KPQ08Y71A8V
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 697
+    - entity_id: FEAT-01KPQ08Y989P8
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 783
+    - entity_id: FEAT-01KPQ08YBJ5AK
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 869
+    - entity_id: FEAT-01KPQ08YE4399
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 955
+    - entity_id: FEAT-01KPQ08YH16WZ
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1041
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1127
+    - entity_id: FEAT-01KPQ08Y47522
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1502
+    - entity_id: FEAT-01KPQ08Y71A8V
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1586
+    - entity_id: FEAT-01KPQ08Y989P8
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1670
+    - entity_id: FEAT-01KPQ08YBJ5AK
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1755
+    - entity_id: FEAT-01KPQ08YE4399
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1839
+    - entity_id: FEAT-01KPQ08YH16WZ
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1924
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 2008
+    - entity_id: FEAT-01KPQ08Y47522
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2174
+    - entity_id: FEAT-01KPQ08Y71A8V
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 4574
+    - entity_id: FEAT-01KPQ08Y989P8
+      entity_type: feature
+      section_path: 1.3.3
+      byte_offset: 6034
+    - entity_id: FEAT-01KPQ08YBJ5AK
+      entity_type: feature
+      section_path: 1.3.4
+      byte_offset: 8037
+    - entity_id: FEAT-01KPQ08YE4399
+      entity_type: feature
+      section_path: 1.3.5
+      byte_offset: 9461
+    - entity_id: FEAT-01KPQ08YH16WZ
+      entity_type: feature
+      section_path: 1.3.6
+      byte_offset: 11401
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.3.6
+      byte_offset: 12961
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: 1.3.7
+      byte_offset: 13903
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 15890
+    - entity_id: FEAT-01KPQ08Y71A8V
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 17842
+    - entity_id: TASK-01KPQ
+      entity_type: task
+      section_path: 1.3.6
+      byte_offset: 12802
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.3.7
+      byte_offset: 14205
+    - entity_id: P25-agent-tooling-pipeline-quality
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 15
+cross_doc_links:
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.3.6
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: 1.3.6
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.6
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.7
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.7
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.3.7
+classified: false
