@@ -1,0 +1,106 @@
+document_id: FEAT-01KPQ08YBJ5AK/dev-plan-p25-decompose-devplan-aware
+document_path: work/dev-plan/p25-decompose-devplan-aware.md
+content_hash: b4e9c10771dc187abdeaf0416b87d8c60d0d70416c9040d6bc6ff7b130120a12
+indexed_at: 2026-04-21T03:47:42.749979Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Dev-plan-aware task grouping in `decompose propose`'
+      byte_offset: 0
+      byte_count: 4808
+      word_count: 616
+      content_hash: b4e9c10771dc187abdeaf0416b87d8c60d0d70416c9040d6bc6ff7b130120a12
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 225
+          byte_count: 499
+          word_count: 66
+          content_hash: 6dc889c335b2f25d41010b3af35e12df4b66389a253031445f94bbe63e933b4a
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 724
+          byte_count: 2109
+          word_count: 273
+          content_hash: d1851d1acc6620b5e916c1fc3f737ffb76e48c953c5042e1d67d8e4ebdbf7e5b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Add `parseDevPlanTasks` and dev plan discovery to `DecomposeFeature`'
+              byte_offset: 743
+              byte_count: 979
+              word_count: 115
+              content_hash: 8221e6edd81109cf2ef545b873cc69acdeac24f5c31f9d01790162dd7217a221
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Write tests for dev-plan-aware decomposition'
+              byte_offset: 1722
+              byte_count: 1111
+              word_count: 155
+              content_hash: e7be7580a494daa954662399e26bf4442bba5842a81c19c2bf2f3ecacd7dda46
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 2833
+          byte_count: 221
+          word_count: 33
+          content_hash: 205fab6db94fbd0a72f71c0cdad9b7133424772c8b33464ca6151240ec75cc64
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 3054
+          byte_count: 826
+          word_count: 117
+          content_hash: 57b759173a165969782827ada25702047b8beb88ef7b05937108c7bdf7cac689
+          children:
+            - path: 1.4.1
+              level: 3
+              title: '`parseDevPlanTasks` signature'
+              byte_offset: 3078
+              byte_count: 475
+              word_count: 65
+              content_hash: 81f5e1a04da3b0387ef5268460e05496c1bc6fad9be8c0cdb000cb1b65f0a7ff
+            - path: 1.4.2
+              level: 3
+              title: '`DecomposeFeature` flow change (insertion point)'
+              byte_offset: 3553
+              byte_count: 327
+              word_count: 49
+              content_hash: 0171d8027f95719c98359630812697a2fdc87d832f8ec349918e3b3d091a0f60
+        - path: "1.5"
+          level: 2
+          title: Files to Read
+          byte_offset: 3880
+          byte_count: 546
+          word_count: 45
+          content_hash: 06376e52c2d07e10e17b142802d7538c4784255a694192068f522c809009bf4a
+        - path: "1.6"
+          level: 2
+          title: Notes
+          byte_offset: 4426
+          byte_count: 382
+          word_count: 58
+          content_hash: 86d4bdc5a36d8167a2c332c2bfd97c2c2e7ab25fdc91904986c8511afd8026b7
+entity_refs:
+    - entity_id: FEAT-01KPQ08YBJ5AK
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 78
+    - entity_id: FEAT-01KPQ08Y71A8V
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 4438
+cross_doc_links:
+    - target_path: work/spec/p25-decompose-devplan-aware.md
+      link_text: work/spec/p25-decompose-devplan-aware.md
+      section_path: "1.5"
+    - target_path: work/design/p25-decompose-devplan-aware.md
+      link_text: work/design/p25-decompose-devplan-aware.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

@@ -1,0 +1,77 @@
+document_id: FEAT-01KPQ08Y71A8V/dev-plan-p25-fix-decompose-empty-names
+document_path: work/dev-plan/p25-fix-decompose-empty-names.md
+content_hash: 6b8310965968e5aecb566d1568623534d88c19ee6f798d46166c5818da60fa40
+indexed_at: 2026-04-21T03:47:40.409358Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Fix Empty Task Names in `decompose propose`'
+      byte_offset: 0
+      byte_count: 4739
+      word_count: 571
+      content_hash: 6b8310965968e5aecb566d1568623534d88c19ee6f798d46166c5818da60fa40
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 278
+          byte_count: 263
+          word_count: 36
+          content_hash: ad08133ccee4acd1ea9b5b725cb549149969e959ed150a2c26f5f4b98cb17e96
+        - path: "1.2"
+          level: 2
+          title: Interface Contract
+          byte_offset: 541
+          byte_count: 418
+          word_count: 57
+          content_hash: 0bf7b090b11ae4925f1b012193d68e61533d3196234101f7a52937b3dda5c7a3
+        - path: "1.3"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 959
+          byte_count: 3190
+          word_count: 374
+          content_hash: 32c1753ea4d489ae88aca81a3aedb30ab45e47c228d7ba88cad91d5dd07b7d8e
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Task 1: Implement `deriveTaskName` and populate `Name` in `generateProposal`'
+              byte_offset: 978
+              byte_count: 1630
+              word_count: 199
+              content_hash: 532ec9900b60b65c885e2549552d748d8ba0ff0ee585160db29291c055f8fb99
+            - path: 1.3.2
+              level: 3
+              title: 'Task 2: Write tests for `deriveTaskName` and end-to-end `decompose apply`'
+              byte_offset: 2608
+              byte_count: 1541
+              word_count: 172
+              content_hash: 9d5c42bbe85198a823c45735c582971f7e03fa6bcdacd075ff6818cad6f2c93f
+        - path: "1.4"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 4149
+          byte_count: 158
+          word_count: 26
+          content_hash: de0c1dc3dac07f7ba5a6f2d5dd50324612a99ee6ab3dfaea6acdbf9f492dde21
+        - path: "1.5"
+          level: 2
+          title: Execution Notes
+          byte_offset: 4307
+          byte_count: 432
+          word_count: 53
+          content_hash: 92d22ca502cc3423ad5b1634b566691f320a5441a24fffdcbe86b1eb3fe26713
+entity_refs:
+    - entity_id: FEAT-01KPQ08Y71A8V
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 81
+    - entity_id: FEAT-01KPQ08YBJ5AK
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 4463
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

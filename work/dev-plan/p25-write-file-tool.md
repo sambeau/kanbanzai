@@ -14,7 +14,19 @@ Tasks 2 and 3 depend on Task 1; Task 3 depends on Task 2.
 
 ---
 
-## Interface Contract
+## Dependency Graph
+
+```
+Task 1 (GetByEntityID on worktree.Store)
+    └── Task 2 (WriteFileTool implementation + registration)
+            └── Task 3 (tests)
+```
+
+Tasks 2 and 3 are strictly serial after Task 1. Task 3 requires Task 2 to be complete.
+
+---
+
+## Interface Contracts
 
 The following must be agreed before Tasks 2 and 3 begin work:
 
@@ -120,3 +132,29 @@ func WriteFileTool(repoRoot string, worktreeStore *worktree.Store) []server.Serv
     - AC-10: written file has permission `0o644`
 - **Dependencies:** Task 2
 - **Effort:** Medium
+
+---
+
+## Traceability Matrix
+
+| Requirement | Task |
+|-------------|------|
+| FR-001 (parameter schema) | Task 2 |
+| FR-002 (repo-root resolution) | Task 2 |
+| FR-003 (entity_id / worktree resolution) | Task 1, Task 2 |
+| FR-004 (path join for relative paths) | Task 2 |
+| FR-005 (traversal prevention) | Task 2 |
+| FR-006 (MkdirAll) | Task 2 |
+| FR-007 (atomic write, 0o644) | Task 2 |
+| FR-008 (success response) | Task 2 |
+| FR-009 (error on empty path / missing content) | Task 2 |
+| FR-010 (one-file-per-tool in internal/mcp/) | Task 2 |
+| FR-011 (registration in GroupGit after WorktreeTool) | Task 2 |
+| FR-012 (constructor signature) | Task 2 |
+| FR-013 (hint flags) | Task 2 |
+| FR-014 (GetByEntityID on worktree.Store) | Task 1 |
+| NFR-001 (flat dependency graph) | Task 2 |
+| NFR-002 (verbatim content, no line-ending normalisation) | Task 2 |
+| NFR-003 (inlineErr convention) | Task 2 |
+| NFR-004 (traversal check with trailing separator) | Task 2 |
+| AC-01 through AC-10 | Task 3 |

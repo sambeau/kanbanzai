@@ -1,0 +1,66 @@
+document_id: FEAT-01KPQ08Y47522/dev-plan-p25-write-file-tool
+document_path: work/dev-plan/p25-write-file-tool.md
+content_hash: d613a755333e27b6b6042751afff931b304ba0849877bf862a9952dadbef3097
+indexed_at: 2026-04-21T03:47:39.087318Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: `write_file` MCP Tool for Worktree-Safe File Writing'
+      byte_offset: 0
+      byte_count: 5455
+      word_count: 697
+      content_hash: d613a755333e27b6b6042751afff931b304ba0849877bf862a9952dadbef3097
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 220
+          byte_count: 252
+          word_count: 44
+          content_hash: 52f5906d1afd24d04cde76f15454d9b8310edeec0291ed56751c053ffe413f80
+        - path: "1.2"
+          level: 2
+          title: Interface Contract
+          byte_offset: 472
+          byte_count: 840
+          word_count: 113
+          content_hash: eabeab2891a88e50f07d7f34a9b918033379ed48418573ca6d50c726b3967ce0
+        - path: "1.3"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1312
+          byte_count: 4143
+          word_count: 517
+          content_hash: 8eaa12878f401d9dd6d22db3088c6b6c4767c87b9fb6ed4face45fa6b49e9875
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Task 1: Add `GetByEntityID` to `worktree.Store`'
+              byte_offset: 1331
+              byte_count: 1192
+              word_count: 165
+              content_hash: 348b11cec7b8cad0bf1890852004c66ac2238cfac73724783c8884e9eb2d10c8
+            - path: 1.3.2
+              level: 3
+              title: 'Task 2: Implement `WriteFileTool` and register in `GroupGit`'
+              byte_offset: 2523
+              byte_count: 1591
+              word_count: 169
+              content_hash: ecd01d7dea7a204e2e10e94da9810f7617b29a793b8a07e553b226e90935874f
+            - path: 1.3.3
+              level: 3
+              title: 'Task 3: Write tests for `WriteFileTool`'
+              byte_offset: 4114
+              byte_count: 1341
+              word_count: 180
+              content_hash: db5e4ae8f27fd8dca7e503a8b8a63aa56090adbf1ad7ece3214cad11d93f450b
+entity_refs:
+    - entity_id: FEAT-01KPQ08Y47522
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 90
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

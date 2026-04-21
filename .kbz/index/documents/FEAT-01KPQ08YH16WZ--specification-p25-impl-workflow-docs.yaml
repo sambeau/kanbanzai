@@ -1,0 +1,301 @@
+document_id: FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs
+document_path: work/spec/p25-impl-workflow-docs.md
+content_hash: abb0b13732106fbb298851b4c70e167347fd92f8ae7f39fe1738ea5d4e84df4c
+indexed_at: 2026-04-21T03:43:36.371191Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Implementation Workflow Documentation Improvements'
+      byte_offset: 0
+      byte_count: 10981
+      word_count: 1506
+      content_hash: abb0b13732106fbb298851b4c70e167347fd92f8ae7f39fe1738ea5d4e84df4c
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 228
+          byte_count: 555
+          word_count: 68
+          content_hash: 6682ee315c747b32e0c936cc0cfb16b9783aac4ddd5e462017ac5829abe52ab2
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 783
+          byte_count: 1008
+          word_count: 131
+          content_hash: 32613d4a0c5844239e578e45f46cd73eab3bcfe3b26f199ea8edd7b2bf171de1
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In Scope
+              byte_offset: 793
+              byte_count: 475
+              word_count: 52
+              content_hash: 991d40e4648faf5fb8328bb876c880950ac911efee0a778d1109a3ba5421fd7f
+            - path: 1.2.2
+              level: 3
+              title: Out of Scope
+              byte_offset: 1268
+              byte_count: 523
+              word_count: 77
+              content_hash: 436c88231437d5902d5123e686fa2578f6fafbac10dfdc46e2a0d864e05470ac
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 1791
+          byte_count: 5849
+          word_count: 848
+          content_hash: 6fd54f55af2bd8098bb087b1b01325de8f7046f7483e8490f27562d2375ca681
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: Heredoc as primary worktree file-write pattern'
+              byte_offset: 1819
+              byte_count: 693
+              word_count: 103
+              content_hash: b36ffbb68cfdafa5a782ac78c4e68ab7c23105d261e6028bff0b03efcc96e05e
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: Heredoc delimiter collision warning'
+              byte_offset: 2512
+              byte_count: 571
+              word_count: 86
+              content_hash: 6c5b5edf671eec95fcc1594c4a1a85e50f178eea4758a0e446bdd3d10272dde0
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: Standard heredoc delimiter is `GOEOF`'
+              byte_offset: 3083
+              byte_count: 475
+              word_count: 70
+              content_hash: 183cd0e27c70156da1b0fc4581232aa47be3bcd7d1f752a6d6d14168ed4782af
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: Checklist item updated'
+              byte_offset: 3558
+              byte_count: 428
+              word_count: 64
+              content_hash: d6aaae0ca9e9d472d24e10cf92846a25f3193af5e0b36136f509303a8a38d192
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: Decompose propose failure fallback — Phase 2 note'
+              byte_offset: 3986
+              byte_count: 702
+              word_count: 108
+              content_hash: 498f2ddb6e87a40b3577ec500890d58f97ee6e3a72b7cfaa87d7aed0178b1e63
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: Manual entity fallback — Phase 4 addition'
+              byte_offset: 4688
+              byte_count: 890
+              word_count: 127
+              content_hash: a42314644533a1754ee6b706a1ab19b72ce2f69de13d5038551ae246240ce182
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: Verification step after manual task creation'
+              byte_offset: 5578
+              byte_count: 323
+              word_count: 40
+              content_hash: e6dac4ad17812da79bfb02f384f86081d2a40efcf049d6d29bcf4cf6cc5e3b4f
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008: Per-task sizing rule for large-file features'
+              byte_offset: 5901
+              byte_count: 848
+              word_count: 127
+              content_hash: f419c3efae7e0ca68cb2c0d6a461c0561280cb7cc36025a9addc0395e73b7ed2
+            - path: 1.3.9
+              level: 3
+              title: 'FR-009: Batch dispatch remains appropriate for small-file or doc-only features'
+              byte_offset: 6749
+              byte_count: 408
+              word_count: 55
+              content_hash: 4fe87ce7ebd3e9afc0cbb88e26c0fcdedd4cc8fd8277a8e4a38ae9c6d025e563
+            - path: 1.3.10
+              level: 3
+              title: 'FR-010: Anti-pattern entry for over-sized dispatch'
+              byte_offset: 7157
+              byte_count: 483
+              word_count: 65
+              content_hash: fda701071621d89c3893074e7890c02711d9c05233fa35573cc4360a364b7f89
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 7640
+          byte_count: 686
+          word_count: 96
+          content_hash: 9b22727e9243c55719a7ca672c07ebcb4f4d342b1812499a20c7ee8ac631b0e6
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: Structure preservation'
+              byte_offset: 7672
+              byte_count: 250
+              word_count: 35
+              content_hash: beddc01b881229b459ee810d75c689e44ebaf3485a08acd086a4adc54b15c379
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: No cross-file consolidation'
+              byte_offset: 7922
+              byte_count: 188
+              word_count: 28
+              content_hash: 0f88430869f7a5fef0640174e419a073607bf941e89f972df1965e6902ca706b
+            - path: 1.4.3
+              level: 3
+              title: 'NFR-003: No invented patterns'
+              byte_offset: 8110
+              byte_count: 216
+              word_count: 30
+              content_hash: 7c43de157c30bd7190ae32bea0e7b1e54236dd685b240548f2e4b396f88c3540
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria (Summary)
+          byte_offset: 8326
+          byte_count: 1339
+          word_count: 179
+          content_hash: fb67de121d5080355556aec27fa591a2c8edabee62dc3657b629fbab548375b4
+        - path: "1.6"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 9665
+          byte_count: 1316
+          word_count: 163
+          content_hash: 6bc31880ea4bebd4d44ea286448098d21ce93f2ca90509a08b607f365a1e02f7
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 9698
+              byte_count: 695
+              word_count: 87
+              content_hash: 9c05ffe4bff3974d32b71fec8880c91ea4df03e459facc585f26539333a550e4
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 10393
+              byte_count: 588
+              word_count: 72
+              content_hash: bcdec16e244d1336af25b14e105482a48258d153c3e08613a9e4375920f8dd2b
+entity_refs:
+    - entity_id: FEAT-01KPQ08YH16WZ
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 82
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 1496
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.3.7
+      byte_offset: 5766
+    - entity_id: FEAT-01KPQ08Y47522
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 9720
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 10169
+cross_doc_links:
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.1"
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: "1.1"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/decompose-feature/SKILL.md
+      link_text: .kbz/skills/decompose-feature/SKILL.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.2.1
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.3.1
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.3.2
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.3.3
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.3.4
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: 1.3.5
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: 1.3.6
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: 1.3.7
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.8
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.10
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.5"
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: "1.5"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.5"
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.6.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.6.1
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.6.2
+    - target_path: .kbz/skills/decompose-feature/SKILL.md
+      link_text: .kbz/skills/decompose-feature/SKILL.md
+      section_path: 1.6.2
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.6.2
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.6.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

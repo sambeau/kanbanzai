@@ -69,7 +69,7 @@ source change (Task 3) requires a rebuild to take effect.
 
 ---
 
-## Execution Order
+## Dependency Graph
 
 Tasks 1, 2, and 3 are fully independent and can run in parallel. Task 4 must follow
 Task 3.
@@ -105,3 +105,22 @@ No shared interfaces between tasks. Each task touches a disjoint set of files:
 - No changes to `internal/kbzinit/skills/` are required by this feature itself — the
   dual-write rule added in Task 2 is about documenting the obligation, not triggering it
   for this commit.
+
+---
+
+## Traceability Matrix
+
+| Spec Requirement | Task |
+|-----------------|------|
+| FR-001 (handoff mandate rule in Phase 3) | Task 1 |
+| FR-002 (manual composition anti-pattern) | Task 1 |
+| FR-003 (dual-write rule in AGENTS.md) | Task 2 |
+| FR-004 (embedding relationship explanation) | Task 2 |
+| FR-005 (entity_tool.go parent description) | Task 3 |
+| FR-006 (no logic changes in entity_tool.go) | Task 3 |
+| FR-007 (rebuild note in commit) | Task 3 |
+| AC-001 (handoff mandate present in SKILL.md) | Task 1 |
+| AC-002 (manual-composition anti-pattern present) | Task 1 |
+| AC-003 (dual-write rule present and correct) | Task 2 |
+| AC-004 (parent description accurate) | Task 3 |
+| AC-005 (no regressions in entity tool tests) | Task 4 |

@@ -1,0 +1,99 @@
+document_id: FEAT-01KPQ08Y989P8/dev-plan-p25-propagate-task-verification
+document_path: work/dev-plan/p25-propagate-task-verification.md
+content_hash: a5832e4da75eb7e5b09b332848e2ce985d150328e86b073808da7ebdea5f9413
+indexed_at: 2026-04-21T03:47:41.437044Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Propagate Task Verification to Feature Entity'
+      byte_offset: 0
+      byte_count: 8814
+      word_count: 1058
+      content_hash: a5832e4da75eb7e5b09b332848e2ce985d150328e86b073808da7ebdea5f9413
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 232
+          byte_count: 335
+          word_count: 56
+          content_hash: 4fad82db6146f06b9e31029d937a80e5db0f7306eb8c733b30d0394ef9c8c202
+        - path: "1.2"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 567
+          byte_count: 442
+          word_count: 64
+          content_hash: 8d83894c84aec5c6f7569a3695e69de3a267ea57eddc352fc19aefe843940b53
+        - path: "1.3"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 1009
+          byte_count: 1023
+          word_count: 121
+          content_hash: 9ff49539d14ac5779bbf6553c64e069fa42151bd9d17dce04d36659f73b7e2ea
+          children:
+            - path: 1.3.1
+              level: 3
+              title: '`AggregateTaskVerification` signature'
+              byte_offset: 1033
+              byte_count: 724
+              word_count: 86
+              content_hash: 1f6d6540702daf7233e225b99ee47fda7bff7d73ca3352a413095cffad666469
+            - path: 1.3.2
+              level: 3
+              title: '`VerificationPassedGate.Check` return values'
+              byte_offset: 1757
+              byte_count: 275
+              word_count: 32
+              content_hash: 03977d40ddc10897dda1cb00ce31c52f579d60bde3dca8e3af1d8ba62eae46a6
+        - path: "1.4"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 2032
+          byte_count: 6782
+          word_count: 793
+          content_hash: 015755d5af286799fa57c8fdc2bd0c0727ac4637995722d40eebff8b0452b01a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Task 1: Implement `AggregateTaskVerification` on `DispatchService`'
+              byte_offset: 2051
+              byte_count: 1733
+              word_count: 194
+              content_hash: 8caa1d472b7e95449d85ef1e6bdde2ba0f73f2357df46c4332552f87e5b3f71e
+            - path: 1.4.2
+              level: 3
+              title: 'Task 2: Call aggregation from `finishOne()` and include result in MCP response'
+              byte_offset: 3784
+              byte_count: 1398
+              word_count: 162
+              content_hash: ede5326590d464eee41845d702e5d4f922bb7d8dae28ae440f0be1421563491e
+            - path: 1.4.3
+              level: 3
+              title: 'Task 3: Update `VerificationPassedGate` to warn on `"partial"` status'
+              byte_offset: 5182
+              byte_count: 1072
+              word_count: 128
+              content_hash: 1bf5ccb8c43fa376cdd3373ae7d5b9c942ca1bf87a9aeb901aec6f87711683b5
+            - path: 1.4.4
+              level: 3
+              title: 'Task 4: Write tests'
+              byte_offset: 6254
+              byte_count: 2560
+              word_count: 306
+              content_hash: 37c4bd278cc764f2ef55268b240fe5fdd043d727f0a80a35099baa0770934268
+entity_refs:
+    - entity_id: FEAT-01KPQ08Y989P8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 72
+    - entity_id: TASK-ID
+      entity_type: task
+      section_path: 1.4.1
+      byte_offset: 3474
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

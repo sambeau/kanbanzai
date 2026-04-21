@@ -68,7 +68,9 @@ Returns nil on success (auto-advance permitted). Returns a non-nil error naming 
 
 ---
 
-## Execution Order
+## Dependency Graph
+
+Tasks 1 and 3 can be implemented in parallel. Task 2 requires both. Task 4 follows Task 2. Task 5 follows Tasks 2 and 3.
 
 ```
 Task 1 ──┐
@@ -92,3 +94,23 @@ Tasks 1 and 3 can be implemented in parallel. Task 2 requires both. Task 4 follo
 | `internal/mcp/entity_tool.go` | Inject `RequiresHumanReview` into `AdvanceConfig` |
 | `internal/service/advance_test.go` | Updated + new tests |
 | `internal/service/prereq_test.go` | New tests for `checkAllTasksHaveVerification` |
+
+---
+
+## Traceability Matrix
+
+| Requirement | Task(s) |
+|-------------|---------|
+| FR-001 (`RequireHumanReview` field on `MergeConfig`) | Task 1 |
+| FR-002 (`RequiresHumanReview()` accessor) | Task 1 |
+| FR-003 (`DefaultConfig()` leaves field nil) | Task 1 |
+| FR-004 (`RequiresHumanReview func() bool` on `AdvanceConfig`) | Task 2 |
+| FR-005 (conditional halt in `AdvanceFeatureStatus`) | Task 2 |
+| FR-006 (`checkAllTasksHaveVerification` helper) | Task 3 |
+| FR-007 (MCP entity tool injection) | Task 4 |
+| FR-008 (`advanceStopStates` map preserved) | Task 2 |
+| NFR-001 (structural pattern mirrors `RequireGitHubPR`) | Task 1 |
+| NFR-002 (no impact on non-reviewing advance paths) | Task 2 |
+| NFR-003 (existing mandatory-halt test updated) | Task 5 |
+| NFR-004 (new tests for auto-advance scenarios) | Task 5 |
+| AC-01 through AC-10 | Task 5 |

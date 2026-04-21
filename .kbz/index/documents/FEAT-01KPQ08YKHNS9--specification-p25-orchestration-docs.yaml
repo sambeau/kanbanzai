@@ -1,0 +1,313 @@
+document_id: FEAT-01KPQ08YKHNS9/specification-p25-orchestration-docs
+document_path: work/spec/p25-orchestration-docs.md
+content_hash: c8fdc49a1f8856788042ac0343122d0417d6c42bb159d327937bbd700bba2d13
+indexed_at: 2026-04-21T03:43:37.115018Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Sub-agent Orchestration Documentation Improvements'
+      byte_offset: 0
+      byte_count: 10077
+      word_count: 1314
+      content_hash: c8fdc49a1f8856788042ac0343122d0417d6c42bb159d327937bbd700bba2d13
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 228
+          byte_count: 440
+          word_count: 53
+          content_hash: 1ac0b0201e8e76fc91eb4aa73cbfd7686057de164c06d523cdff18e2371dcee9
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 668
+          byte_count: 982
+          word_count: 127
+          content_hash: a62e4628ae253bcbaf5fd58320e1c42d8ab0f2b6d1e8751e9ee611073447e081
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 681
+              byte_count: 543
+              word_count: 67
+              content_hash: f26c6698ea6f70ff6356ae51df700ff8c56aa09faace2ff7b2e7bb0e6fb1ac8f
+            - path: 1.2.2
+              level: 3
+              title: Out of scope
+              byte_offset: 1224
+              byte_count: 426
+              word_count: 57
+              content_hash: f7a216d219debf4685a711bfd757001627f8fe05a81e7d4e799d8bae4656fbee
+        - path: "1.3"
+          level: 2
+          title: 3. Functional Requirements
+          byte_offset: 1650
+          byte_count: 4568
+          word_count: 618
+          content_hash: 3be9f081f50a696d2ddb93ec05c6389744140dbe04497f415676f5a1f7e43b30
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: `orchestrate-development/SKILL.md` — `handoff` mandate rule'
+              byte_offset: 1681
+              byte_count: 726
+              word_count: 96
+              content_hash: 44060c38d4c365788e6789939a4686cf1723c1e651ad1f34ca0811d719e9cb9c
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: `orchestrate-development/SKILL.md` — manual composition anti-pattern'
+              byte_offset: 2407
+              byte_count: 796
+              word_count: 103
+              content_hash: 89b535e96ed9de35a6d3ef715f0304d73b4dcf7460a5367e8c09f51114cdcc1b
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: `AGENTS.md` — dual-write rule for embedded skill files'
+              byte_offset: 3203
+              byte_count: 742
+              word_count: 95
+              content_hash: fbca1b72eb4bed567e39edb7edfe38da99fde47feba0346b7ae56b59b147b076
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: `AGENTS.md` — dual-write rule explains the embedding relationship'
+              byte_offset: 3945
+              byte_count: 605
+              word_count: 77
+              content_hash: 209f0d8a75256e87a56e28765b16082ce00b61d42c3176b9053b3a2b4663bec8
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: `entity_tool.go` — corrected `parent` field description'
+              byte_offset: 4550
+              byte_count: 724
+              word_count: 111
+              content_hash: 74d44388c7eea57f9965586aee3aab04242138f98948e0164bf4ef688ee81813
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: No logic changes in `entity_tool.go`'
+              byte_offset: 5274
+              byte_count: 457
+              word_count: 64
+              content_hash: ac5fdcdd502d7c130066b9e283cdda945166b8b85a4cc1ffab4bc3ccb06f4a83
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: MCP server rebuild required after `entity_tool.go` change'
+              byte_offset: 5731
+              byte_count: 487
+              word_count: 68
+              content_hash: 47853546b1926d7715e8c5a23c033ac257c230ae172de651fd86c2bd8469d47c
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Functional Requirements
+          byte_offset: 6218
+          byte_count: 962
+          word_count: 123
+          content_hash: 55c03184f16950e906c661f54dba2055574fa24658732c3194324a0bfcffefb4
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: Minimal diff surface'
+              byte_offset: 6253
+              byte_count: 247
+              word_count: 41
+              content_hash: 088791b2bf95b89bda56ba78beb0577369da4b0ce6d51bb5e804c124b26c491a
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: Consistent voice and style'
+              byte_offset: 6500
+              byte_count: 323
+              word_count: 39
+              content_hash: c64abe13446cfeb7c251c67420b0e6d91761b4a12e7a7a23515fc9c107b299e0
+            - path: 1.4.3
+              level: 3
+              title: 'NFR-003: No dual-write required for this feature''s own changes'
+              byte_offset: 6823
+              byte_count: 357
+              word_count: 39
+              content_hash: 4f2566bb154b9892b2682687f449fc0fb14f208cc55fc9544f5e7320e34b1ba1
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria
+          byte_offset: 7180
+          byte_count: 1681
+          word_count: 218
+          content_hash: ae991c650b646da5258ef38d1c7ea284ff572fd618291bd6fcc98a7268ddace8
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'AC-001: orchestrate-development SKILL.md contains handoff mandate'
+              byte_offset: 7207
+              byte_count: 304
+              word_count: 36
+              content_hash: 36fd240b5ea94534e1cf25bfb4432836c060d6665d6801041c0256cddb523ede
+            - path: 1.5.2
+              level: 3
+              title: 'AC-002: orchestrate-development SKILL.md contains manual-composition anti-pattern'
+              byte_offset: 7511
+              byte_count: 395
+              word_count: 51
+              content_hash: 7992e30f445cba1df259ad3567d04e4651e9431e2bb4f69c029ce8d3fcfa9155
+            - path: 1.5.3
+              level: 3
+              title: 'AC-003: AGENTS.md dual-write rule is present and correct'
+              byte_offset: 7906
+              byte_count: 402
+              word_count: 52
+              content_hash: 8fefa5def6349cbc870fc01b19b94def655a22b4efe48257f5571848a70a1b0a
+            - path: 1.5.4
+              level: 3
+              title: 'AC-004: entity_tool.go parent description is accurate'
+              byte_offset: 8308
+              byte_count: 383
+              word_count: 53
+              content_hash: 4762c5e7623c818f041f5cc0755e67a0ca0bd034703681594daa41a017a4eae3
+            - path: 1.5.5
+              level: 3
+              title: 'AC-005: No regressions in entity tool tests'
+              byte_offset: 8691
+              byte_count: 170
+              word_count: 22
+              content_hash: ec735b902fda8a57eb1f862a20e449f8868a4180948e0a80ce3a6049a2e703ad
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 8861
+          byte_count: 1216
+          word_count: 154
+          content_hash: 5dfe67f7209b56fdc6bafe50d8f9d9473aa3583ac5cf3f1eb17e2711641eab0d
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 8897
+              byte_count: 769
+              word_count: 93
+              content_hash: 239963b39005a2c161dd319bcef1b2928885110eca8bf8b383b737d429895656
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 9666
+              byte_count: 411
+              word_count: 56
+              content_hash: 1816d2d92d3fb439e098479e344fe19ab0d93b79ac88e2a50bfb2428cb7f12d1
+entity_refs:
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 82
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 2191
+cross_doc_links:
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.2.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.2.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.2.2
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.1
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.3.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.2
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.3.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.3
+    - target_path: .agents/skills/kanbanzai-<name>/SKILL.md
+      link_text: .agents/skills/kanbanzai-<name>/SKILL.md
+      section_path: 1.3.3
+    - target_path: internal/kbzinit/skills/<name>/SKILL.md
+      link_text: internal/kbzinit/skills/<name>/SKILL.md
+      section_path: 1.3.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.4
+    - target_path: .agents/skills/kanbanzai-<name>/SKILL.md
+      link_text: .agents/skills/kanbanzai-<name>/SKILL.md
+      section_path: 1.3.4
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.4.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.2
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.4.2
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.4.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.3
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.5.3
+    - target_path: internal/kbzinit/skills/*/SKILL.md
+      link_text: internal/kbzinit/skills/*/SKILL.md
+      section_path: 1.5.3
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.6.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.6.1
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.6.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.6.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.6.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

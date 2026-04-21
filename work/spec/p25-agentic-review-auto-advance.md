@@ -174,7 +174,7 @@ to reflect the new conditional logic and MUST continue to pass when
 
 ---
 
-## Acceptance Criteria Summary
+## Acceptance Criteria
 
 | ID | Criterion |
 |----|-----------|

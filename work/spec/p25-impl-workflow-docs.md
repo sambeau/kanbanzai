@@ -192,7 +192,7 @@ speculatively.
 
 ---
 
-## Acceptance Criteria (Summary)
+## Acceptance Criteria
 
 | ID | Criterion |
 |----|-----------|

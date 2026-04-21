@@ -1,0 +1,119 @@
+document_id: FEAT-01KPQ08YKHNS9/dev-plan-p25-orchestration-docs
+document_path: work/dev-plan/p25-orchestration-docs.md
+content_hash: da36bfc7095268129ec328ab7c7eeb9a81b7060fb902c0635d455a1cb6449c2c
+indexed_at: 2026-04-21T03:47:45.939582Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Sub-agent Orchestration Documentation Improvements'
+      byte_offset: 0
+      byte_count: 4067
+      word_count: 565
+      content_hash: da36bfc7095268129ec328ab7c7eeb9a81b7060fb902c0635d455a1cb6449c2c
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 201
+          byte_count: 483
+          word_count: 65
+          content_hash: 8228df0fcd5465285d0b09bdeb9125275c9656442eb41f050c5098074756ae9f
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 684
+          byte_count: 2251
+          word_count: 303
+          content_hash: d83fa84548102857a9917031874568980c9cc1b0141178d0475cd302d5d6c461
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Update orchestrate-development/SKILL.md'
+              byte_offset: 703
+              byte_count: 457
+              word_count: 57
+              content_hash: 8eefb1f68e85ef640d4860e3e81d44bf862445fe3a4053b4e286d2a3738d9a2a
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Update AGENTS.md with dual-write rule'
+              byte_offset: 1160
+              byte_count: 640
+              word_count: 80
+              content_hash: 733a8c217b50bdefd4d1dea1aa35d2c3c7e9655b2a63ef336bec41be8d659bc8
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Fix entity_tool.go parent field description'
+              byte_offset: 1800
+              byte_count: 694
+              word_count: 99
+              content_hash: 9845f247330aefdd7fe21db49aeed3722328af891419d42a9fe05e706fee7bf9
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Write tests'
+              byte_offset: 2494
+              byte_count: 441
+              word_count: 64
+              content_hash: 268a9a645d0d89a2f2adb56f9dae3f45f91a009fd9bd9ca3dfe10496d6c24adb
+        - path: "1.3"
+          level: 2
+          title: Execution Order
+          byte_offset: 2935
+          byte_count: 193
+          word_count: 37
+          content_hash: 60e63fbc0adbcc565bfd84928f44aaa3649d08ecda24533dc214118d2b971503
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 3128
+          byte_count: 336
+          word_count: 54
+          content_hash: 127e1816b42914a9ac54708f3e03cc81e8a62d187a092750f87b326def43c223
+        - path: "1.5"
+          level: 2
+          title: Notes
+          byte_offset: 3464
+          byte_count: 603
+          word_count: 86
+          content_hash: 575523ee173057b31596bf0f3501ace709fd258194c189e50dfc1f7e716f9a99
+entity_refs:
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 77
+    - entity_id: FEAT-01KPQ08YH16WZ
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 3509
+cross_doc_links:
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.2.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.2
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.2.2
+    - target_path: internal/kbzinit/skills/*/SKILL.md
+      link_text: internal/kbzinit/skills/*/SKILL.md
+      section_path: 1.2.2
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "1.4"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.4"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

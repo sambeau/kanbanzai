@@ -1,0 +1,119 @@
+document_id: FEAT-01KPQ08YH16WZ/dev-plan-p25-impl-workflow-docs
+document_path: work/dev-plan/p25-impl-workflow-docs.md
+content_hash: 95d8e52fdd391049f8a95fe0e54d363199cdc9ba9370178ccd767fa062fabc61
+indexed_at: 2026-04-21T03:47:45.215631Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Implementation Workflow Documentation Improvements'
+      byte_offset: 0
+      byte_count: 3782
+      word_count: 488
+      content_hash: 95d8e52fdd391049f8a95fe0e54d363199cdc9ba9370178ccd767fa062fabc61
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 219
+          byte_count: 293
+          word_count: 38
+          content_hash: 8ff095c878e01ed28a169324789c57b4a4b0315ff30f2a58c97e83d3d620a699
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 512
+          byte_count: 2181
+          word_count: 267
+          content_hash: dceeb32af9e084001e6fe84fb6559bf5a816dadbb9c41abe3e127b2af09306ec
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Update implement-task/SKILL.md for heredoc-first worktree writes'
+              byte_offset: 531
+              byte_count: 659
+              word_count: 83
+              content_hash: f37c5b4dc562ca072b14da893b3bbece3e53e289c9a3fd51ffbca36b353c375e
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Update decompose-feature/SKILL.md with manual entity fallback'
+              byte_offset: 1190
+              byte_count: 741
+              word_count: 89
+              content_hash: d1baafd46935e3b574e44758e7851edbf7d97a5856b9aa5aa6916e34110c77cd
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Update orchestrate-development/SKILL.md with per-task sizing guidance'
+              byte_offset: 1931
+              byte_count: 762
+              word_count: 92
+              content_hash: 07014f6f933cf8188c8ca2206fefcc1f7ad5f6dac644acbb2efe111d73252bd8
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 2693
+          byte_count: 337
+          word_count: 52
+          content_hash: 554cafd28bf7de82073766f4cb4e1b072abf4a4712b1ba1336812c189e1e4ee4
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 3030
+          byte_count: 274
+          word_count: 35
+          content_hash: 1086325a197686ab0395ccaec58b0bdf1003efdafbe6f1aec571adf6296ef71c
+        - path: "1.5"
+          level: 2
+          title: Notes for Implementer
+          byte_offset: 3304
+          byte_count: 478
+          word_count: 74
+          content_hash: c95640cfc8fd6788591021438a7749b06484fa23c2c981965be52d7899d90214
+entity_refs:
+    - entity_id: FEAT-01KPQ08YH16WZ
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 77
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 431
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 2563
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 2940
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 3182
+    - entity_id: FEAT-01KPQ08YKHNS9
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 3661
+cross_doc_links:
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/decompose-feature/SKILL.md
+      link_text: .kbz/skills/decompose-feature/SKILL.md
+      section_path: 1.2.2
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.2.3
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.3"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.4"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

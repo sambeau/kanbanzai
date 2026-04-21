@@ -157,3 +157,25 @@ func (s *DispatchService) AggregateTaskVerification(featureID string) (*Verifica
 - New/updated test functions in `internal/service/dispatch_test.go` (or `verification_test.go`)
 - New/updated test functions in `internal/mcp/finish_tool_test.go`
 - New/updated test functions in `internal/merge/gates_test.go`
+
+---
+
+## Traceability Matrix
+
+| Spec Requirement | Task |
+|-----------------|------|
+| FR-001 (trigger condition) | Task 1, Task 2 |
+| FR-002 (batch mode deferral) | Task 2 |
+| FR-003 (summary string format) | Task 1 |
+| FR-004 (verification_status derivation) | Task 1 |
+| FR-005 (no-write for none) | Task 1 |
+| FR-006 (overwrite behaviour) | Task 1 |
+| FR-007 (best-effort) | Task 1, Task 2 |
+| FR-008 (MCP response key) | Task 2 |
+| FR-009 (VerificationPassedGate partial warning) | Task 3 |
+| FR-010 (VerificationExistsGate passes after aggregation) | Task 1, Task 3 |
+| FR-011 (AggregateTaskVerification on DispatchService) | Task 1 |
+| NFR-001 (no additional queries) | Task 1 |
+| NFR-002 (no latency beyond one UpdateEntity) | Task 1, Task 2 |
+| NFR-003 (backward compatibility) | Task 2 |
+| AC-001 through AC-015 | Task 4 |

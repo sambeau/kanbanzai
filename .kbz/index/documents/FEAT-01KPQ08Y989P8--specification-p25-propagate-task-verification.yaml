@@ -1,0 +1,226 @@
+document_id: FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification
+document_path: work/spec/p25-propagate-task-verification.md
+content_hash: 624c246db4df60c4a6dd64de6813cba6f1cba8b45542720f87d053ddd5d7fd39
+indexed_at: 2026-04-21T03:43:32.403872Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Propagate Task Verification to Feature Entity'
+      byte_offset: 0
+      byte_count: 12509
+      word_count: 1748
+      content_hash: 624c246db4df60c4a6dd64de6813cba6f1cba8b45542720f87d053ddd5d7fd39
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 232
+          byte_count: 578
+          word_count: 80
+          content_hash: cca2bd672846619edc59287e271f34d67b2333604f5de70e69992f03e459f3f3
+        - path: "1.2"
+          level: 2
+          title: 2. Scope
+          byte_offset: 810
+          byte_count: 1190
+          word_count: 170
+          content_hash: 4e17fde616268bd21c783cc49aa4edc4a1395986e650d139e1d794dea562c6aa
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 823
+              byte_count: 640
+              word_count: 89
+              content_hash: 447d5368acbd869291b7f96c2f2e945ed0ff65f2c9037ee20b7e8caca8f8d96f
+            - path: 1.2.2
+              level: 3
+              title: Out of scope
+              byte_offset: 1463
+              byte_count: 537
+              word_count: 78
+              content_hash: 5bb2dd1dccf1f73c4102d13c90a7c86aff7b042f56262943749a93ca6d7fe9bb
+        - path: "1.3"
+          level: 2
+          title: 3. Functional Requirements
+          byte_offset: 2000
+          byte_count: 6757
+          word_count: 931
+          content_hash: 831b071c718be08576f018ecf3f39e2dcea38370ae60cd139dffe77797b6cd59
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: Aggregation trigger condition'
+              byte_offset: 2031
+              byte_count: 720
+              word_count: 107
+              content_hash: eb925f06324adb9607500987f5ff45b45e9eea08622acd21c0e81410c868bca5
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: Aggregation in batch mode'
+              byte_offset: 2751
+              byte_count: 491
+              word_count: 79
+              content_hash: 3f48bf7d99dab3178944e2a36e14c3e31d5ff25e0a9a32eef5244738f0f2c086
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: Summary string format'
+              byte_offset: 3242
+              byte_count: 808
+              word_count: 120
+              content_hash: 58345a05c9991ca8029a6eed4366afd7a4b7bbe045f9d1380174b558a85e2458
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: Verification status derivation'
+              byte_offset: 4050
+              byte_count: 875
+              word_count: 128
+              content_hash: 69d83b74e95b68aa15f98036cd521d71a5d58c64cb2915b3728ee7f2c9058fa3
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: No-write for `"none"` status'
+              byte_offset: 4925
+              byte_count: 462
+              word_count: 61
+              content_hash: 752ef6cb6f8cd6d1b5231d846e5e8bb1873323adab734be60c6e62af215fb439
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: Overwrite behaviour'
+              byte_offset: 5387
+              byte_count: 417
+              word_count: 52
+              content_hash: cc5ced724fd574c52eeaab0e2677acfba04767091c013ff9ec30c32362a2c4ae
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: Best-effort aggregation'
+              byte_offset: 5804
+              byte_count: 508
+              word_count: 77
+              content_hash: ab4c95a5875eaa01714dd7ab3b5952a8766c416d5bff8f2bc0d873d6fa3f5cde
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008: MCP response includes aggregation result'
+              byte_offset: 6312
+              byte_count: 604
+              word_count: 83
+              content_hash: 2c5581e165ddf346fd5efc4e3a41d0e875700d5031be7808112a4549c2519e5f
+            - path: 1.3.9
+              level: 3
+              title: 'FR-009: `VerificationPassedGate` partial-status behaviour'
+              byte_offset: 6916
+              byte_count: 795
+              word_count: 94
+              content_hash: 8dee95939a3635ab58fcc4cf0354960cc937cbd38f886166f8529e07358c2196
+            - path: 1.3.10
+              level: 3
+              title: 'FR-010: `VerificationExistsGate` passes after aggregation'
+              byte_offset: 7711
+              byte_count: 555
+              word_count: 68
+              content_hash: b06cc849e4a8c29de173903e3a37285816aa6c6299040af4790da2f482f66e4c
+            - path: 1.3.11
+              level: 3
+              title: 'FR-011: `AggregateTaskVerification` is a method on `DispatchService`'
+              byte_offset: 8266
+              byte_count: 491
+              word_count: 58
+              content_hash: d100afc4dd34644261083cbd657f771f9df67e1af372a5117938a5bf13cdb22b
+        - path: "1.4"
+          level: 2
+          title: 4. Non-Functional Requirements
+          byte_offset: 8757
+          byte_count: 939
+          word_count: 136
+          content_hash: 569b99db9792aa4e8c527d2f5210615da723540ae15184970fd8fd57a394c6c3
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: No additional queries beyond sibling task list'
+              byte_offset: 8792
+              byte_count: 298
+              word_count: 42
+              content_hash: a8201f73898cd2ccc1ea9b95c3ff61f27961dbef7db7883d4a0030415762c08c
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: Aggregation does not block task completion'
+              byte_offset: 9090
+              byte_count: 279
+              word_count: 42
+              content_hash: 404703f30e0d0def47fed8f8893e21d2956c5b4bf5fe7deb3addb11a0c1ad59a
+            - path: 1.4.3
+              level: 3
+              title: 'NFR-003: Backward compatibility'
+              byte_offset: 9369
+              byte_count: 327
+              word_count: 48
+              content_hash: 44ae3700d3fee7142aa21669b48908a81d91365bd0c3ceb17007894b93b73073
+        - path: "1.5"
+          level: 2
+          title: 5. Acceptance Criteria Summary
+          byte_offset: 9696
+          byte_count: 1559
+          word_count: 251
+          content_hash: 2f99193abd4ad574073f1907651c3bf93de7a5d17fe14a237d4a9553275f4092
+        - path: "1.6"
+          level: 2
+          title: 6. Dependencies and Assumptions
+          byte_offset: 11255
+          byte_count: 1254
+          word_count: 157
+          content_hash: 0a7fa7f5645fb36c881f91e54be513ee84ec4571caf641d472812d43cb22d5e6
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Dependencies
+              byte_offset: 11291
+              byte_count: 687
+              word_count: 77
+              content_hash: 592316de29a61840f75f97cfd651e48e37bd1e4dd714d71bd2a94736b7e75a71
+            - path: 1.6.2
+              level: 3
+              title: Assumptions
+              byte_offset: 11978
+              byte_count: 531
+              word_count: 75
+              content_hash: 9cd8038343c59c67126bc57a5670e5d6c86ac77cc51c77d15083c219d79e2f1c
+entity_refs:
+    - entity_id: FEAT-01KPQ08Y989P8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 77
+    - entity_id: TASK-ID
+      entity_type: task
+      section_path: 1.3.3
+      byte_offset: 3443
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.3
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+classified: false

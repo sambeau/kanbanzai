@@ -93,3 +93,23 @@ or merged carefully).
   formatting style.
 - For Task 3: check whether FEAT-01KPQ08YKHNS9 has already been merged.
   If so, apply Task 3's changes on top. If not, coordinate to avoid conflict.
+
+---
+
+## Traceability Matrix
+
+| Requirement | Task |
+|-------------|------|
+| FR-001 (heredoc primary for Go files) | Task 1 |
+| FR-002 (delimiter collision warning) | Task 1 |
+| FR-003 (GOEOF standard delimiter) | Task 1 |
+| FR-004 (checklist updated) | Task 1 |
+| FR-005 (Phase 2 fallback note) | Task 2 |
+| FR-006 (Phase 4 manual fallback subsection) | Task 2 |
+| FR-007 (verification step after manual creation) | Task 2 |
+| FR-008 (per-task sizing rule in Phase 3) | Task 3 |
+| FR-009 (batch dispatch exemption) | Task 3 |
+| FR-010 (anti-pattern entry) | Task 3 |
+| NFR-001 (structure preservation) | Tasks 1, 2, 3 |
+| NFR-002 (no cross-file consolidation) | Tasks 1, 2, 3 |
+| NFR-003 (no invented patterns) | Tasks 1, 2, 3 |

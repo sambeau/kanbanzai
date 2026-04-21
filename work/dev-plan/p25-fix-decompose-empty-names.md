@@ -16,7 +16,7 @@ interface contract.
 
 ---
 
-## Interface Contract
+## Interface Contracts
 
 The helper introduced in Task 1 has the following signature:
 
@@ -119,3 +119,27 @@ Tasks are strictly serial: Task 2 requires the interface from Task 1.
   `decompose.go`. If both features are in flight simultaneously, coordinate
   branch merges to avoid conflicts. This feature should land first.
 - Run `go test ./internal/service/...` to verify all tests pass.
+
+---
+
+## Traceability Matrix
+
+| Spec Requirement | Task |
+|------------------|------|
+| FR-001 (every ProposedTask has non-empty Name) | Task 1 |
+| FR-002 (Name satisfies ValidateName) | Task 1 |
+| FR-003 (checkbox/numbered AC → use text directly) | Task 1 |
+| FR-004 (bold-ident prefix stripped, no colon) | Task 1 |
+| FR-005 (empty text → positional fallback) | Task 1 |
+| FR-006 (grouped task → "Implement " + sectionTitle) | Task 1 |
+| FR-007 (test task → "Write tests") | Task 1 |
+| FR-008 (Proposal struct shape unchanged) | Task 1 |
+| FR-009 (deriveTaskName is unexported) | Task 1 |
+| NFR-001 (changes confined to decompose.go + test) | Task 1, Task 2 |
+| NFR-002 (existing tests continue to pass) | Task 2 |
+| NFR-003 (no new error return from generateProposal) | Task 1 |
+| AC-01 (TestDecomposeFeature_ProposalProduced asserts Name) | Task 2 |
+| AC-02 (bold-ident spec produces no-colon names) | Task 2 |
+| AC-03 (end-to-end propose→apply round-trip) | Task 2 |
+| AC-04 (empty AC text → positional fallback) | Task 2 |
+| AC-05 (prose AC with colon not stripped) | Task 2 |

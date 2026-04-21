@@ -1,0 +1,94 @@
+document_id: FEAT-01KPQ08YE4399/dev-plan-p25-agentic-review-auto-advance
+document_path: work/dev-plan/p25-agentic-review-auto-advance.md
+content_hash: dfbcb0e309429f3e3f0e695200292542d86dff9bf0fe82e1bfd5c187506b5f33
+indexed_at: 2026-04-21T03:47:44.184877Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Agentic Reviewing Stage Auto-Advance'
+      byte_offset: 0
+      byte_count: 5384
+      word_count: 660
+      content_hash: dfbcb0e309429f3e3f0e695200292542d86dff9bf0fe82e1bfd5c187506b5f33
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 196
+          byte_count: 281
+          word_count: 44
+          content_hash: d68e9a7c1314aa17b51c25a98a54059da8e2088b01f8360d82d0e5348d8b4ffa
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 477
+          byte_count: 3369
+          word_count: 393
+          content_hash: 6ac9cfc8ceec04a7e879c3ec7dcd418dfddccdd537734471a8c6d49ed7608f6a
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Add `RequireHumanReview` to `MergeConfig`'
+              byte_offset: 496
+              byte_count: 535
+              word_count: 63
+              content_hash: 6daafd3aacc113c4e08434ad0413448b850e379cef132d66b537d749ff785ff1
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Update `AdvanceFeatureStatus` halt-state branch'
+              byte_offset: 1031
+              byte_count: 768
+              word_count: 86
+              content_hash: 99bfa51d1cdaf9d2eb2c1625754089c1ab76c94b47861ac7920a9f52f995c1c0
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Add `checkAllTasksHaveVerification` helper'
+              byte_offset: 1799
+              byte_count: 651
+              word_count: 74
+              content_hash: c2b79f016c983c150885465fbdee7e42e5fe169d8f30a440b91e53778fff2f48
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Inject `RequiresHumanReview` in MCP entity tool'
+              byte_offset: 2450
+              byte_count: 620
+              word_count: 74
+              content_hash: 2f8870f942c09fa82850297f3ceb0fa5341ea4b25e94b9d9fee09d7efe78560e
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Tests'
+              byte_offset: 3070
+              byte_count: 776
+              word_count: 93
+              content_hash: c017a774f5ca9d4532ea0d8a5898ce4ffc16ac39f62f664d845e94353423f22d
+        - path: "1.3"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 3846
+          byte_count: 639
+          word_count: 76
+          content_hash: b7fdf371c488e385e0dae7cf460a7cd45ad56f33a8cd6e7e11682f54ea1b5c5c
+        - path: "1.4"
+          level: 2
+          title: Execution Order
+          byte_offset: 4485
+          byte_count: 322
+          word_count: 62
+          content_hash: b3776610f1a66ffc647c4ac69121d249d210bc02ebd2b928763c7eecac358126
+        - path: "1.5"
+          level: 2
+          title: Key Files
+          byte_offset: 4807
+          byte_count: 577
+          word_count: 65
+          content_hash: 7d3195e40f2643377a40507acd7b02b4d76116b1a9b7dfb7dd22e1ee89a02f8d
+entity_refs:
+    - entity_id: FEAT-01KPQ08YE4399
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 63
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

@@ -95,3 +95,32 @@ The new dev plan path is inserted between the spec approval gate (step 3) and th
 - FEAT-01KPQ08Y71A8V (fix empty task names) also modifies `decompose.go`. Sequence this feature after that one lands to avoid merge conflicts, or coordinate branches.
 - Do not apply the `"test-tasks-explicit"` guidance rule on the dev plan path (per FR-009 and the design decision).
 - The zero-criteria gate moves inside the fallback path — this is intentional (FR-010).
+
+---
+
+## Traceability Matrix
+
+| Requirement | Task |
+|-------------|------|
+| FR-001 | Task 1 |
+| FR-002 | Task 1 |
+| FR-003 | Task 1 |
+| FR-004 | Task 1 |
+| FR-005 | Task 1 |
+| FR-006 | Task 1 |
+| FR-007 | Task 1 |
+| FR-008 | Task 1 |
+| FR-009 | Task 1 |
+| FR-010 | Task 1 |
+| FR-011 | Task 1 |
+| FR-012 | Task 1 |
+| AC-001 | Task 2 |
+| AC-002 | Task 2 |
+| AC-003 | Task 2 |
+| AC-004 | Task 2 |
+| AC-005 | Task 2 |
+| AC-006 | Task 2 |
+| AC-007 | Task 2 |
+| AC-008 | Task 2 |
+| AC-009 | Task 2 |
+| AC-010 | Task 2 |

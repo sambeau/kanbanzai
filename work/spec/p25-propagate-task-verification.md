@@ -210,7 +210,7 @@ parsers that do not inspect `"verification_aggregation"` MUST continue to work w
 
 ---
 
-## 5. Acceptance Criteria Summary
+## 5. Acceptance Criteria
 
 | ID     | Requirement | Verification |
 |--------|-------------|--------------|
