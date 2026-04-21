@@ -3,4 +3,13 @@ parent_feature: FEAT-01KPPG3MSRRCE
 slug: standalone-bug-visibility-functional-requirements
 name: Implement standalone bug attention block
 summary: "Add the standalone-bug filter block in synthesiseProject: query all bugs, filter to open standalone high/critical bugs, append AttentionItem for each. Covers REQ-001 through REQ-007 and REQ-NF-001 through REQ-NF-003."
-status: ready
+status: done
+files_planned:
+  - internal/mcp/status_tool.go
+completed: "2026-04-21T01:43:02Z"
+claimed_at: "2026-04-21T01:37:59Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-21T01:37:59Z"
+dispatched_by: sambeau
+completion_summary: Added standalone-bug filter block in synthesiseProject in internal/mcp/status_tool.go. Block runs after health-check attention items and before the return statement. Surfaces standalone (no origin_feature) high/critical bugs that are not in terminal states as open_critical_bug attention items.
+verification: go test ./internal/mcp/... passed (2.014s)
