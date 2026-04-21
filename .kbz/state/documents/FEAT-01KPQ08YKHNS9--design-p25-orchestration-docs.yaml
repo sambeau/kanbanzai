@@ -2,9 +2,11 @@ id: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs
 path: work/design/p25-orchestration-docs.md
 type: design
 title: "Design: Sub-agent orchestration documentation improvements"
-status: draft
+status: approved
 owner: FEAT-01KPQ08YKHNS9
+approved_by: sambeau
+approved_at: "2026-04-21T03:39:33Z"
 content_hash: 515759a8d5efc063e76458b9eb07f533e5757c4625e7558404f1e494ee6cf4b8
 created: "2026-04-21T03:22:36Z"
 created_by: sambeau
-updated: "2026-04-21T03:22:36Z"
+updated: "2026-04-21T03:39:33Z"
