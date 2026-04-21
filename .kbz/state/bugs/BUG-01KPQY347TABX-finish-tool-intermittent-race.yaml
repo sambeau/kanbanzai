@@ -1,0 +1,11 @@
+id: BUG-01KPQY347TABX
+slug: finish-tool-intermittent-race
+name: Intermittent race in finish tool MCP tests
+status: reported
+severity: medium
+priority: medium
+type: implementation-defect
+reported_by: "reviewer (P25 plan review, finding F-03)"
+reported: "2026-04-21T11:51:28Z"
+observed: "TestFinish_SummaryLengthLimit and TestFinish_RetroMissingFieldsNonBlocking report race detector failures when run as part of the full `go test -race ./...` suite. Both tests pass consistently when run in isolation (e.g. `go test -race -run TestFinish_SummaryLengthLimit ./internal/mcp/ -count=3`)."
+expected: "Both tests pass consistently under `-race` in all contexts, including the full parallel suite."
