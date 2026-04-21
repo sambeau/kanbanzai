@@ -2,9 +2,11 @@ id: FEAT-01KPQ08YKHNS9/dev-plan-p25-orchestration-docs
 path: work/dev-plan/p25-orchestration-docs.md
 type: dev-plan
 title: "Dev Plan: Sub-agent orchestration documentation improvements"
-status: draft
+status: approved
 owner: FEAT-01KPQ08YKHNS9
-content_hash: da36bfc7095268129ec328ab7c7eeb9a81b7060fb902c0635d455a1cb6449c2c
+approved_by: sambeau
+approved_at: "2026-04-21T03:50:11Z"
+content_hash: 79d313422f38719222ba991734f1d183ad1f1277fae20ab74d1797467ed93272
 created: "2026-04-21T03:47:45Z"
 created_by: sambeau
-updated: "2026-04-21T03:47:45Z"
+updated: "2026-04-21T03:50:11Z"
