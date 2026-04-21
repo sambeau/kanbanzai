@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"sort"
@@ -11,6 +12,7 @@ import (
 
 	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/fsutil"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/storage"
 )
@@ -157,6 +159,9 @@ type DocumentService struct {
 	// sectionProvider returns the required section names for a given document
 	// type string. Returns nil when no required sections are declared (FR-D06).
 	sectionProvider func(docType string) []string
+	// testHookAfterApprovalWrite, if non-nil, is called in ApproveDocument
+	// immediately after the first store.Write (approval record). For tests only.
+	testHookAfterApprovalWrite func()
 }
 
 // RepoRoot returns the repository root path used by this service.
@@ -488,6 +493,29 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 	recordPath, err := s.store.Write(updatedRecord)
 	if err != nil {
 		return DocumentResult{}, fmt.Errorf("write document record: %w", err)
+	}
+
+	// Invoke test hook if set (for AC-011 test only; no-op in production).
+	if s.testHookAfterApprovalWrite != nil {
+		s.testHookAfterApprovalWrite()
+	}
+
+	// Patch the Status field in the source file (best-effort; FR-006).
+	patchOK, patchErr := fsutil.PatchStatusField(fullPath, "approved")
+	if patchErr != nil {
+		log.Printf("[doc] WARNING: could not patch status field in %s: %v", fullPath, patchErr)
+	} else if patchOK {
+		// Re-compute and store the updated content hash.
+		newHash, hashErr := storage.ComputeContentHash(fullPath)
+		if hashErr != nil {
+			log.Printf("[doc] WARNING: could not compute content hash after status patch in %s: %v", fullPath, hashErr)
+		} else {
+			doc.ContentHash = newHash
+			hashRecord := storage.DocumentToRecord(doc, "") // no optimistic locking for hash-refresh write
+			if _, writeErr := s.store.Write(hashRecord); writeErr != nil {
+				log.Printf("[doc] WARNING: could not update content hash record after status patch in %s: %v", fullPath, writeErr)
+			}
+		}
 	}
 
 	result := DocumentResult{

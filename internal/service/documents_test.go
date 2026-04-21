@@ -1,6 +1,8 @@
 package service
 
 import (
+	"bytes"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -2267,5 +2269,240 @@ func TestApproveDocument_SectionProvider_PassesWhenAllPresent(t *testing.T) {
 	}
 	if result.Status != string(model.DocumentStatusApproved) {
 		t.Errorf("Status = %q, want approved", result.Status)
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Status-field patching integration tests (AC-008 – AC-011)
+// ---------------------------------------------------------------------------
+
+// TestApproveDocument_PatchesStatusField (AC-008): a document containing
+// "| Status | Draft |" has that line rewritten to "| Status | approved |"
+// and the stored ContentHash is refreshed to match.
+func TestApproveDocument_PatchesStatusField(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/design/test.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	initial := "# Title\n\n| Field | Value |\n| Status | Draft |\n| Author | Alice |\n"
+	if err := os.WriteFile(fullPath, []byte(initial), 0o644); err != nil {
+		t.Fatalf("write doc file: %v", err)
+	}
+
+	submitResult, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "design",
+		Title:     "Test Design",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	approveResult, err := svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitResult.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err != nil {
+		t.Fatalf("ApproveDocument: %v", err)
+	}
+
+	// File must have Status patched.
+	got, readErr := os.ReadFile(fullPath)
+	if readErr != nil {
+		t.Fatalf("read patched file: %v", readErr)
+	}
+	wantContent := "# Title\n\n| Field | Value |\n| Status | approved |\n| Author | Alice |\n"
+	if string(got) != wantContent {
+		t.Errorf("patched file:\ngot:  %q\nwant: %q", string(got), wantContent)
+	}
+
+	// Stored ContentHash must match the patched file.
+	expectedHash, hashErr := storage.ComputeContentHash(fullPath)
+	if hashErr != nil {
+		t.Fatalf("compute expected hash: %v", hashErr)
+	}
+	if approveResult.ContentHash != expectedHash {
+		t.Errorf("ContentHash = %q, want %q", approveResult.ContentHash, expectedHash)
+	}
+}
+
+// TestApproveDocument_PatchFailure_ApprovalSucceeds (AC-009): when the source
+// file is unreadable (after the store write), PatchStatusField returns an error
+// but ApproveDocument still returns success and emits a WARNING log entry.
+func TestApproveDocument_PatchFailure_ApprovalSucceeds(t *testing.T) {
+	if os.Getuid() == 0 {
+		t.Skip("running as root; chmod 0o000 has no effect")
+	}
+	// Not parallel — uses global log.SetOutput.
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/design/test.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(fullPath, []byte("| Status | Draft |\n"), 0o644); err != nil {
+		t.Fatalf("write doc file: %v", err)
+	}
+
+	submitResult, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "design",
+		Title:     "Test",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	// Hook: make the file unreadable AFTER the first store.Write (so hash
+	// computation before the write still succeeds) but BEFORE PatchStatusField.
+	svc.testHookAfterApprovalWrite = func() {
+		os.Chmod(fullPath, 0o000)
+	}
+	t.Cleanup(func() { os.Chmod(fullPath, 0o644) })
+
+	var logBuf bytes.Buffer
+	log.SetOutput(&logBuf)
+	t.Cleanup(func() { log.SetOutput(os.Stderr) })
+
+	approveResult, approveErr := svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitResult.ID,
+		ApprovedBy: "reviewer",
+	})
+	if approveErr != nil {
+		t.Fatalf("ApproveDocument should succeed even with patch failure, got: %v", approveErr)
+	}
+	if approveResult.Status != string(model.DocumentStatusApproved) {
+		t.Errorf("Status = %q, want approved", approveResult.Status)
+	}
+	if !strings.Contains(logBuf.String(), "[doc] WARNING") {
+		t.Errorf("expected WARNING in log, got: %q", logBuf.String())
+	}
+}
+
+// TestApproveDocument_NoStatusField_NoSideEffects (AC-010): a document without
+// any Status field is left unchanged and no WARNING is emitted.
+func TestApproveDocument_NoStatusField_NoSideEffects(t *testing.T) {
+	// Not parallel — uses global log.SetOutput.
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/design/test.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	original := "# Title\n\nNo status field here.\n"
+	if err := os.WriteFile(fullPath, []byte(original), 0o644); err != nil {
+		t.Fatalf("write doc file: %v", err)
+	}
+
+	submitResult, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "design",
+		Title:     "Test",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	var logBuf bytes.Buffer
+	log.SetOutput(&logBuf)
+	t.Cleanup(func() { log.SetOutput(os.Stderr) })
+
+	_, err = svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitResult.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err != nil {
+		t.Fatalf("ApproveDocument: %v", err)
+	}
+
+	// File content must be unchanged.
+	got, readErr := os.ReadFile(fullPath)
+	if readErr != nil {
+		t.Fatalf("read file: %v", readErr)
+	}
+	if string(got) != original {
+		t.Errorf("file should be unchanged\ngot:  %q\nwant: %q", string(got), original)
+	}
+
+	// No WARNING should be logged.
+	if strings.Contains(logBuf.String(), "[doc] WARNING") {
+		t.Errorf("unexpected WARNING log: %q", logBuf.String())
+	}
+}
+
+// TestApproveDocument_HashRefreshFailure_ApprovalSucceeds (AC-011): when the
+// second store.Write (hash refresh) fails, ApproveDocument still returns
+// success and emits a WARNING log entry.
+func TestApproveDocument_HashRefreshFailure_ApprovalSucceeds(t *testing.T) {
+	if os.Getuid() == 0 {
+		t.Skip("running as root; chmod restrictions have no effect")
+	}
+	// Not parallel — uses global log.SetOutput.
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "work/design/test.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	if err := os.WriteFile(fullPath, []byte("| Status | Draft |\n"), 0o644); err != nil {
+		t.Fatalf("write doc file: %v", err)
+	}
+
+	submitResult, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "design",
+		Title:     "Test",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	// Hook: after the first store.Write, make the documents directory
+	// unwritable so the second store.Write (hash refresh) fails.
+	docsDir := filepath.Join(stateRoot, "documents")
+	svc.testHookAfterApprovalWrite = func() {
+		os.Chmod(docsDir, 0o555)
+	}
+	t.Cleanup(func() { os.Chmod(docsDir, 0o755) })
+
+	var logBuf bytes.Buffer
+	log.SetOutput(&logBuf)
+	t.Cleanup(func() { log.SetOutput(os.Stderr) })
+
+	approveResult, approveErr := svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitResult.ID,
+		ApprovedBy: "reviewer",
+	})
+	if approveErr != nil {
+		t.Fatalf("ApproveDocument should succeed even when hash refresh fails, got: %v", approveErr)
+	}
+	if approveResult.Status != string(model.DocumentStatusApproved) {
+		t.Errorf("Status = %q, want approved", approveResult.Status)
+	}
+	if !strings.Contains(logBuf.String(), "[doc] WARNING") {
+		t.Errorf("expected WARNING log for hash refresh failure, got: %q", logBuf.String())
 	}
 }
