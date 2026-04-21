@@ -2,9 +2,11 @@ id: FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs
 path: work/spec/p25-impl-workflow-docs.md
 type: specification
 title: "Specification: Implementation workflow documentation improvements"
-status: draft
+status: approved
 owner: FEAT-01KPQ08YH16WZ
-content_hash: abb0b13732106fbb298851b4c70e167347fd92f8ae7f39fe1738ea5d4e84df4c
+approved_by: sambeau
+approved_at: "2026-04-21T03:44:39Z"
+content_hash: 7e6d629f1fd626c279d58b1b2cddf1810e73c80c08de3e51cccf704204b7be21
 created: "2026-04-21T03:43:36Z"
 created_by: sambeau
-updated: "2026-04-21T03:43:36Z"
+updated: "2026-04-21T03:44:39Z"
