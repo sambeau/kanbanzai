@@ -2,7 +2,7 @@ id: FEAT-01KPPG2MYSG6A
 slug: doc-approve-status-patch
 name: doc approve patches Status in source file
 parent: P24-retro-recommendations
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Make doc(action: approve) patch the Status field in the document's own Markdown file as a side effect of approval, so the file and the .kbz/state/ record stay in sync. Source: REC-03."
 design: FEAT-01KPPG2MYSG6A/design-p24-doc-approve-status-patch
@@ -10,3 +10,9 @@ spec: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch
 dev_plan: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch
 created: "2026-04-20T22:27:18Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: All 4 tasks completed; PatchStatusField unit tests (7) and ApproveDocument integration tests (4) pass; go test ./... passed on feature branch. Atomic write via WriteFileAtomic confirmed. Orchestrated review by P24 implementation pipeline.
+    timestamp: "2026-04-21T03:42:57+01:00"
+    to_status: done
