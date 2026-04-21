@@ -2,9 +2,11 @@ id: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs
 path: work/design/p25-impl-workflow-docs.md
 type: design
 title: "Design: Implementation workflow documentation improvements"
-status: draft
+status: approved
 owner: FEAT-01KPQ08YH16WZ
-content_hash: 84575d4007c0e38b336746433a0264c8e77c637a2518bdf21ccf3aa8d7e1facd
+approved_by: sambeau
+approved_at: "2026-04-21T03:39:33Z"
+content_hash: 7a518165120e2771a86804211d265901eb398059d725ad375ddfdcdd010db601
 created: "2026-04-21T03:16:57Z"
 created_by: sambeau
-updated: "2026-04-21T03:16:57Z"
+updated: "2026-04-21T03:39:33Z"
