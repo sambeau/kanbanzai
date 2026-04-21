@@ -3,8 +3,15 @@ parent_feature: FEAT-01KPQ08Y989P8
 slug: write-tests-for-verification-propagation
 name: Write tests for task verification propagation
 summary: "Write unit and integration tests for AggregateTaskVerification (all AC-001 to AC-015): passed/partial/none status, wont_do exclusion, overwrite, best-effort on write failure, MCP response key, VerificationPassedGate partial warning, VerificationExistsGate after aggregation."
-status: active
+status: done
+files_planned:
+  - internal/service/verification_test.go
+  - internal/mcp/finish_verification_test.go
+  - internal/merge/gates_test.go
+completed: "2026-04-21T08:22:07Z"
 claimed_at: "2026-04-21T04:55:07Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-21T04:55:07Z"
 dispatched_by: sambeau
+completion_summary: "Wrote 12 unit/integration tests for task verification propagation: 6 service tests for AggregateTaskVerification (AllPassed, Partial, None, WontDo, WontDoExcludedFromSummary, Overwrites) in new verification_test.go; 4 MCP tests (AggregatesOnLastTask, BatchDefersAggregation, WriteFailureDoesNotFailFinish, ResponseContainsAggregationKey) in new finish_verification_test.go; 2 gate tests (Partial→Warning, None→Failed) appended to gates_test.go."
+verification: go test ./internal/service/... ./internal/merge/... ./internal/mcp/... — all pass; all 12 new tests confirmed green
