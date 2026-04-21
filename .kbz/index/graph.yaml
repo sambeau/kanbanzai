@@ -1,4 +1,4 @@
-updated_at: 2026-04-21T02:36:44.478825Z
+updated_at: 2026-04-21T02:48:48.848227Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -63790,3 +63790,33 @@ edges:
       to: AGENTS.md
       to_type: document
       edge_type: LINKS_TO
+    - from: PROJECT/report-p24-implementation-retro
+      from_type: document
+      to: PROJECT/report-p24-implementation-retro#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p24-implementation-retro#1
+      from_type: section
+      to: PROJECT/report-p24-implementation-retro#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p24-implementation-retro#1.1
+      from_type: section
+      to: PROJECT/report-p24-implementation-retro#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p24-implementation-retro#1
+      from_type: section
+      to: PROJECT/report-p24-implementation-retro#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p24-implementation-retro#1.2
+      from_type: section
+      to: PROJECT/report-p24-implementation-retro#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p24-implementation-retro#1
+      from_type: section
+      to: P24-retro-recommendations
+      to_type: entity_ref
+      edge_type: REFERENCES

@@ -1,0 +1,49 @@
+document_id: PROJECT/report-p24-implementation-retro
+document_path: work/reports/p24-implementation-retro.md
+content_hash: 2cdcdbe517e7e76aaafd942874b1dc7ccfed8aee02d9d3a74f31c5ebae84fecf
+indexed_at: 2026-04-21T02:48:48.848227Z
+sections:
+    - path: "1"
+      level: 1
+      title: P24 Implementation Retrospective
+      byte_offset: 0
+      byte_count: 985
+      word_count: 138
+      content_hash: 2cdcdbe517e7e76aaafd942874b1dc7ccfed8aee02d9d3a74f31c5ebae84fecf
+      children:
+        - path: "1.1"
+          level: 2
+          title: Themes
+          byte_offset: 196
+          byte_count: 475
+          word_count: 67
+          content_hash: 80ec34348ca310f6cf16859db31de924d62e06fb839ef063d32093d18c217bc6
+          children:
+            - path: 1.1.1
+              level: 3
+              title: '1. workflow-friction: Shell string escaping in python3 -c with embedded YAML/Go co...'
+              byte_offset: 207
+              byte_count: 464
+              word_count: 65
+              content_hash: ae04d62a3ae64cc10571f571af25765b0d28124606fe57422ff4eee3534d07f6
+        - path: "1.2"
+          level: 2
+          title: What Worked Well
+          byte_offset: 671
+          byte_count: 314
+          word_count: 42
+          content_hash: 81f81abb1fefa0275576931d026212692dbcb52e1ef2fcbfec8e9e7fdfd81570
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'worked-well: Narrowing exclusion checks to Type == ''open_critical_bug'' pr...'
+              byte_offset: 692
+              byte_count: 293
+              word_count: 38
+              content_hash: 1b7bd6702f6ebbe10a49c6b0a4aff3623dfb767b18180c6608226a4eb8c583fa
+entity_refs:
+    - entity_id: P24-retro-recommendations
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 82
+classified: false
