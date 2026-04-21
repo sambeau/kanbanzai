@@ -1,0 +1,6 @@
+id: TASK-01KPQ2TNZVD27
+parent_feature: FEAT-01KPQ08YH16WZ
+slug: update-orchestrate-skill-with-sizing-rule
+name: Update orchestrate-development SKILL.md with sizing rule
+summary: "Edit .kbz/skills/orchestrate-development/SKILL.md to add per-task sizing rule in Phase 3 (>3 tasks + >300-line files threshold) with batch-dispatch exemption for small/doc-only features, and anti-pattern entry. Coordinate with FEAT-01KPQ08YKHNS9 Task 1 edits to same file."
+status: queued
