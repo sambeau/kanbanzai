@@ -2,9 +2,11 @@ id: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware
 path: work/design/p25-decompose-devplan-aware.md
 type: design
 title: "Design: Dev-plan-aware task grouping in decompose propose"
-status: draft
+status: approved
 owner: FEAT-01KPQ08YBJ5AK
-content_hash: d139608c2c764abd093f65a62336009431ba1ea5226da4d85fd59ef10938bde4
+approved_by: sambeau
+approved_at: "2026-04-21T03:39:33Z"
+content_hash: 88782354502c29bcd0363b4321be88413dee4ff58b1f36ba66c2111120d70def
 created: "2026-04-21T03:21:57Z"
 created_by: sambeau
-updated: "2026-04-21T03:21:57Z"
+updated: "2026-04-21T03:39:33Z"
