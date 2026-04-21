@@ -142,7 +142,7 @@ func (s *DecomposeService) DecomposeFeature(input DecomposeInput) (DecomposeResu
 
 	// 6. Gate: spec must contain parseable acceptance criteria.
 	if len(spec.acceptanceCriteria) == 0 {
-		return DecomposeResult{}, fmt.Errorf("no acceptance criteria found in spec %q — ensure the spec uses checkbox items (- [ ] ...), numbered items, or bold-identifier lines (**AC-NN.** text) within an Acceptance Criteria section", specDocID)
+		return DecomposeResult{}, fmt.Errorf("%s", buildZeroCriteriaDiagnostic(specDocID, content, spec))
 	}
 
 	// 7. Generate proposal by applying embedded guidance.
@@ -371,9 +371,16 @@ func parseSpecStructure(content string) specStructure {
 				inTableData = false
 			}
 
-			// Bold-identifier pattern: **XX-NN.** text
-			// Extracted as "XX-NN: text" to preserve the identifier prefix.
-			if m := reBoldIdent.FindStringSubmatch(trimmed); m != nil {
+			// Bold-identifier pattern: **XX-NN.** text (also handles "- **XX-NN.** text").
+			// Strip optional leading list marker before matching.
+			bare := trimmed
+			for _, pfx := range []string{"- ", "* ", "+ "} {
+				if strings.HasPrefix(bare, pfx) {
+					bare = bare[len(pfx):]
+					break
+				}
+			}
+			if m := reBoldIdent.FindStringSubmatch(bare); m != nil {
 				criterion := m[1] + "-" + m[2] + ": " + m[3]
 				spec.acceptanceCriteria = append(spec.acceptanceCriteria, acceptanceCriterion{
 					text:     criterion,
@@ -404,6 +411,51 @@ func isAcceptanceCriteriaSection(title string) bool {
 		strings.Contains(lower, "acceptance") ||
 		strings.Contains(lower, "requirements") ||
 		strings.Contains(lower, "criteria")
+}
+
+// buildZeroCriteriaDiagnostic returns a detailed error message when no
+// acceptance criteria could be parsed from the spec. It reports section count
+// and titles, and whether bold-identifier lines were found inside or outside
+// Acceptance Criteria sections, with a concrete remediation suggestion.
+func buildZeroCriteriaDiagnostic(specDocID string, content string, spec specStructure) string {
+	var boldInside, boldOutside int
+	inAC := false
+	for _, line := range strings.Split(content, "\n") {
+		trimmed := strings.TrimSpace(line)
+		if m := reHeader.FindStringSubmatch(trimmed); m != nil {
+			inAC = isAcceptanceCriteriaSection(strings.TrimSpace(m[2]))
+			continue
+		}
+		bare := trimmed
+		for _, pfx := range []string{"- ", "* ", "+ "} {
+			if strings.HasPrefix(bare, pfx) {
+				bare = bare[len(pfx):]
+				break
+			}
+		}
+		if reBoldIdent.MatchString(bare) {
+			if inAC {
+				boldInside++
+			} else {
+				boldOutside++
+			}
+		}
+	}
+
+	var sb strings.Builder
+	sb.WriteString(fmt.Sprintf("no acceptance criteria found in spec %q", specDocID))
+	sb.WriteString(fmt.Sprintf("\n  sections (%d):", len(spec.sections)))
+	for _, sec := range spec.sections {
+		sb.WriteString(fmt.Sprintf("\n    - %s (level %d)", sec.title, sec.level))
+	}
+	if boldOutside > 0 {
+		sb.WriteString(fmt.Sprintf("\n  found %d bold-identifier line(s) outside an Acceptance Criteria section", boldOutside))
+		sb.WriteString("\n  remediation: move bold-identifier lines into a section with 'Acceptance Criteria' in the heading")
+	} else {
+		sb.WriteString("\n  no bold-identifier lines found anywhere in the document")
+		sb.WriteString("\n  remediation: add an 'Acceptance Criteria' section with checkbox items (- [ ] ...), numbered items, or bold-identifier lines (**AC-NN.** text)")
+	}
+	return sb.String()
 }
 
 // ---------------------------------------------------------------------------

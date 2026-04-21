@@ -1105,3 +1105,28 @@ func TestAsmLoadDocumentPointers_LearnedFromEntityID(t *testing.T) {
 		t.Error("expected at least one document pointer for learnedFrom-based entity ID, got 0")
 	}
 }
+
+func TestAsmExtractCriteria_ListItemBoldIdent_Normalised(t *testing.T) {
+	// Before fix: "- **AC-01.** text" is stripped to "**AC-01.** text" by the
+	// generic list-marker path and added with raw bold markers. After fix:
+	// the stripped text is re-matched against boldIdentifierRe, producing
+	// "AC-01: text" in canonical form.
+	t.Parallel()
+	sections := []asmSpecSection{{
+		document: "spec.md",
+		section:  "Acceptance Criteria",
+		content:  "- **AC-01.** The system must validate inputs.\n- **AC-02.** The system must log failures.",
+	}}
+	got := asmExtractCriteria(sections)
+	if len(got) != 2 {
+		t.Fatalf("len(criteria) = %d, want 2; got: %v", len(got), got)
+	}
+	want0 := "AC-01: The system must validate inputs."
+	want1 := "AC-02: The system must log failures."
+	if got[0] != want0 {
+		t.Errorf("criteria[0] = %q, want %q", got[0], want0)
+	}
+	if got[1] != want1 {
+		t.Errorf("criteria[1] = %q, want %q", got[1], want1)
+	}
+}

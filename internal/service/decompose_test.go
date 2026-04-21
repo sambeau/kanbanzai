@@ -2010,3 +2010,75 @@ func TestReviewProposal_BackwardCompatibility(t *testing.T) {
 		}
 	}
 }
+
+func TestParseSpecStructure_ListItemBoldIdent(t *testing.T) {
+	// Before fix: reBoldIdent requires line to start with "**"; a line starting
+	// with "- " never matches, so acceptanceCriteria is empty. This test FAILS
+	// (0 criteria) before the fix and PASSES (2 criteria) after.
+	content := `# Spec
+
+## Acceptance Criteria
+
+- **AC-01.** The system must reject requests without auth tokens.
+- **AC-02.** The system must return HTTP 401 in that case.
+`
+	spec := parseSpecStructure(content)
+	if len(spec.acceptanceCriteria) != 2 {
+		t.Fatalf("acceptanceCriteria len = %d, want 2; got: %v",
+			len(spec.acceptanceCriteria), spec.acceptanceCriteria)
+	}
+	want0 := "AC-01: The system must reject requests without auth tokens."
+	if spec.acceptanceCriteria[0].text != want0 {
+		t.Errorf("criteria[0] = %q, want %q", spec.acceptanceCriteria[0].text, want0)
+	}
+	want1 := "AC-02: The system must return HTTP 401 in that case."
+	if spec.acceptanceCriteria[1].text != want1 {
+		t.Errorf("criteria[1] = %q, want %q", spec.acceptanceCriteria[1].text, want1)
+	}
+}
+
+func TestDecomposeFeature_RichDiagnostic_BoldOutsideSection(t *testing.T) {
+	t.Parallel()
+	// Spec has bold-ident lines but they are OUTSIDE an AC section.
+	// Before fix: error is generic, does not mention bold-idents outside AC section.
+	// After fix: error mentions "outside an Acceptance Criteria section".
+	specContent := `# Feature Spec
+
+## Design Details
+
+**AC-01.** The system MUST handle requests.
+**AC-02.** The system MUST respond within 200ms.
+`
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+	_, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err == nil {
+		t.Fatal("expected error when no AC criteria parsed, got nil")
+	}
+	if !contains(err.Error(), "outside an Acceptance Criteria section") {
+		t.Errorf("error = %q\nwant it to mention bold-idents outside AC section", err.Error())
+	}
+}
+
+func TestDecomposeFeature_RichDiagnostic_NoBoldIdents(t *testing.T) {
+	t.Parallel()
+	// Spec has sections but no bold-ident lines and no checkboxes.
+	// Before fix: error is generic. After fix: error mentions "no bold-identifier lines".
+	specContent := `# Feature Spec
+
+## Overview
+
+This feature does X and Y.
+
+## Design
+
+The design approach is Z.
+`
+	svc, featureID, _ := setupDecomposeTest(t, specContent)
+	_, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	if err == nil {
+		t.Fatal("expected error when no AC criteria parsed, got nil")
+	}
+	if !contains(err.Error(), "no bold-identifier lines") {
+		t.Errorf("error = %q\nwant it to mention no bold-identifier lines", err.Error())
+	}
+}

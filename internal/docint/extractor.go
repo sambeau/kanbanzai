@@ -20,6 +20,10 @@ var entityPatterns = []struct {
 // Plan ID pattern: letter + digits + hyphen + lowercase slug, e.g. "P1-basic-ui".
 var planIDPattern = regexp.MustCompile(`\b[A-Z]\d+-[a-z][-a-z0-9]+\b`)
 
+// acBoldIdentLineRe matches bold-identifier lines in their two forms:
+// bare: **XX-NN.** text, or list-prefixed: - **XX-NN.** text
+var acBoldIdentLineRe = regexp.MustCompile(`(?m)^(?:-\s+)?\*\*[A-Z]+-\d+\.\*\*\s+`)
+
 // Markdown link to .md file: [text](path.md) or [text](path/to/file.md)
 var mdLinkPattern = regexp.MustCompile(`\[([^\]]*)\]\(([^)]*\.md(?:#[^)]*)?)\)`)
 
@@ -47,7 +51,7 @@ func ExtractPatterns(content []byte, sections []Section) ExtractResult {
 	result.FrontMatter = extractFrontMatter(content)
 	result.EntityRefs = extractEntityRefs(content, flat)
 	result.CrossDocLinks = extractCrossDocLinks(content, flat)
-	result.ConventionalRoles = extractConventionalRoles(sections)
+	result.ConventionalRoles = extractConventionalRoles(content, sections)
 	return result
 }
 
@@ -200,8 +204,13 @@ func extractCrossDocLinks(content []byte, flat []flatSectionView) []CrossDocLink
 }
 
 // extractConventionalRoles walks the section tree and classifies headings.
-func extractConventionalRoles(sections []Section) []ConventionalRole {
+// For sections with no heading-based role, it scans the section content for
+// bold-identifier lines (AC pattern) and assigns role "requirement" with
+// confidence "medium" when found.
+func extractConventionalRoles(content []byte, sections []Section) []ConventionalRole {
 	var roles []ConventionalRole
+	assigned := map[string]bool{}
+
 	var walk func([]Section)
 	walk = func(ss []Section) {
 		for i := range ss {
@@ -212,11 +221,34 @@ func extractConventionalRoles(sections []Section) []ConventionalRole {
 					Role:        string(role),
 					Confidence:  "high",
 				})
+				assigned[s.Path] = true
 			}
 			walk(s.Children)
 		}
 	}
 	walk(sections)
+
+	// Content scan: for sections without a heading-based role, check whether
+	// the section content contains bold-identifier lines (AC pattern).
+	var scanSections func([]Section)
+	scanSections = func(ss []Section) {
+		for i := range ss {
+			s := &ss[i]
+			if !assigned[s.Path] && s.ByteCount > 0 {
+				chunk := content[s.ByteOffset : s.ByteOffset+s.ByteCount]
+				if acBoldIdentLineRe.Match(chunk) {
+					roles = append(roles, ConventionalRole{
+						SectionPath: s.Path,
+						Role:        "requirement",
+						Confidence:  "medium",
+					})
+				}
+			}
+			scanSections(s.Children)
+		}
+	}
+	scanSections(sections)
+
 	return roles
 }
 

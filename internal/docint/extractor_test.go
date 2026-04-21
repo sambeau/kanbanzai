@@ -576,3 +576,98 @@ DEC-050 might affect timeline.
 		t.Error("missing conventional role 'risk' for 'Risks'")
 	}
 }
+
+func TestAcBoldIdentLineRe_BothForms(t *testing.T) {
+	// Bare form: **AC-01.** text (no list prefix)
+	if !acBoldIdentLineRe.MatchString("**AC-01.** some criterion text") {
+		t.Error("bare bold-ident line should match")
+	}
+	// List-prefixed form: - **AC-01.** text
+	if !acBoldIdentLineRe.MatchString("- **AC-01.** some criterion text") {
+		t.Error("list-prefixed bold-ident line should match")
+	}
+	// Non-matching: plain text
+	if acBoldIdentLineRe.MatchString("just plain text") {
+		t.Error("plain text should not match")
+	}
+	// Non-matching: lowercase prefix
+	if acBoldIdentLineRe.MatchString("**ac-01.** lowercase prefix should not match") {
+		t.Error("lowercase prefix should not match")
+	}
+}
+
+func TestExtractConventionalRoles_ACContentInNonACSection(t *testing.T) {
+	// A section with a non-conventional heading but containing bold-ident lines
+	// in content should be assigned role "requirement" with confidence "medium".
+	content := []byte(`# Implementation Details
+
+- **AC-01.** The system MUST do X.
+- **AC-02.** The system MUST do Y.
+`)
+	sections := ParseStructure(content)
+	roles := extractConventionalRoles(content, sections)
+
+	found := false
+	for _, r := range roles {
+		if r.Role == "requirement" && r.Confidence == "medium" {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Errorf("expected medium-confidence requirement role from content scan; got %+v", roles)
+	}
+	for _, r := range roles {
+		if r.Confidence == "high" {
+			t.Errorf("unexpected high-confidence role for non-conventional heading: %+v", r)
+		}
+	}
+}
+
+func TestExtractConventionalRoles_NoDuplicateRole(t *testing.T) {
+	// A section whose heading already matched a conventional role should NOT
+	// receive a second entry from the content scan.
+	content := []byte(`# Document
+
+## Requirements
+
+**AC-01.** The system MUST do X.
+**AC-02.** The system MUST do Y.
+`)
+	sections := ParseStructure(content)
+	roles := extractConventionalRoles(content, sections)
+
+	// Find the path of the "Requirements" section.
+	var reqPath string
+	var findPath func([]Section)
+	findPath = func(ss []Section) {
+		for _, s := range ss {
+			if s.Title == "Requirements" {
+				reqPath = s.Path
+			}
+			findPath(s.Children)
+		}
+	}
+	findPath(sections)
+
+	if reqPath == "" {
+		t.Fatal("could not find Requirements section")
+	}
+
+	// Count roles for that specific section path.
+	count := 0
+	for _, r := range roles {
+		if r.SectionPath == reqPath {
+			count++
+		}
+	}
+	if count != 1 {
+		t.Errorf("expected exactly 1 role for Requirements section %q, got %d: %+v", reqPath, count, roles)
+	}
+	// Verify the one we have is high confidence (heading match, not content scan).
+	for _, r := range roles {
+		if r.SectionPath == reqPath && r.Confidence != "high" {
+			t.Errorf("heading-based role should have high confidence, got %q", r.Confidence)
+		}
+	}
+}

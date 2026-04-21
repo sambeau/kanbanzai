@@ -488,6 +488,28 @@ func asmExtractCriteria(sections []asmSpecSection) []string {
 				continue
 			}
 
+			// Also handle list-prefixed bold-identifier: "- **XX-NN.** text".
+			// Strip a list marker and re-apply boldIdentifierRe to the bare text.
+			{
+				stripped := trimmed
+				for _, marker := range []string{"- ", "* ", "+ ", "\u2022 "} {
+					if strings.HasPrefix(stripped, marker) {
+						stripped = strings.TrimSpace(stripped[len(marker):])
+						break
+					}
+				}
+				if stripped != trimmed {
+					if m := boldIdentifierRe.FindStringSubmatch(stripped); m != nil {
+						prefix, num, criterionText := m[1], m[2], m[3]
+						criterion := prefix + "-" + num + ": " + criterionText
+						if isAcceptanceSection || hasRFC2119Keyword(criterionText) {
+							addCriterion(criterion)
+						}
+						continue
+					}
+				}
+			}
+
 			// Strip list marker to get the bare text.
 			text := trimmed
 			for _, marker := range []string{"- ", "* ", "+ ", "• "} {
