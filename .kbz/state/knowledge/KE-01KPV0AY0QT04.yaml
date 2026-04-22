@@ -1,0 +1,18 @@
+id: KE-01KPV0AY0QT04
+tier: 3
+topic: plan-execution-quality-p27-doc-intel-adoption
+scope: project
+content: "P27 (Document Intelligence Adoption) is an example of a well-executed pure-skill-change plan: 4 features, 6 design fixes, all delivered with 0 blocking findings across feature reviews, all tests passing after merge. Key success factors: (1) the design document was specific and prescriptive — every fix described exact tool calls, BECAUSE clauses, and checklist item wording, leaving minimal interpretation to implementers; (2) fixes were decomposed cleanly into independent features with no cross-feature dependencies; (3) the instrumentation feature (FEAT-01KPTHB66Y8TM) was a real Go code change mixed with no skill changes, keeping it isolated. The plan's primary non-blocking gap was the kbzinit managed-marker regression at merge time, caught and fixed in the same session."
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - P27
+  - plan-quality
+  - worked-well
+created: "2026-04-22T16:28:24Z"
+created_by: sambeau
+updated: "2026-04-22T16:28:24Z"

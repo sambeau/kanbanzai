@@ -1,0 +1,19 @@
+id: KE-01KPV0AKAGFH0
+tier: 3
+topic: kbzinit-dual-write-regression-risk
+scope: project
+content: "The P27 corpus-hygiene feature (FEAT-01KPTHB61WPT0) introduced a regression at merge time: the kanbanzai-documents and kanbanzai-getting-started embedded skill copies in internal/kbzinit/ lost their managed-marker comment headers because the feature rewrote frontmatter using YAML key-value pairs instead of the comment form expected by kbzinit's transformSkillContent and hasLine functions. The dual-write rule in AGENTS.md was followed (copies were updated) but the format transformation was not tested. Fix was applied in commit ff5b940. Future skill changes should verify that the kbzinit embedded copies retain the '# kanbanzai-managed: true' and '# kanbanzai-version: dev' comment markers, and that existing integration tests (TestP12_Integration_NewProject) are run against the worktree before merging."
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - P27
+  - kbzinit
+  - dual-write
+  - regression
+created: "2026-04-22T16:28:14Z"
+created_by: sambeau
+updated: "2026-04-22T16:28:14Z"

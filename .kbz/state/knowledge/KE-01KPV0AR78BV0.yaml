@@ -1,0 +1,19 @@
+id: KE-01KPV0AR78BV0
+tier: 3
+topic: spec-scope-gap-for-kbzinit-embedded-copies
+scope: project
+content: "Feature specs that modify .agents/skills/ files should explicitly list the corresponding internal/kbzinit/skills/ embedded copies in their In Scope section and NFR constraints. In P27, the corpus-hygiene spec (FEAT-01KPTHB61WPT0) omitted kbzinit copies from NFR-001's scope, even though the dual-write rule in AGENTS.md requires them. The implementation correctly updated both, but the spec gap means future reviewers cannot cite the spec as authority for the kbzinit requirement. Template addition: whenever a spec lists .agents/skills/kanbanzai-<name>/SKILL.md in scope, it must also list internal/kbzinit/skills/<name>/SKILL.md."
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - P27
+  - spec-quality
+  - kbzinit
+  - scope
+created: "2026-04-22T16:28:19Z"
+created_by: sambeau
+updated: "2026-04-22T16:28:19Z"
