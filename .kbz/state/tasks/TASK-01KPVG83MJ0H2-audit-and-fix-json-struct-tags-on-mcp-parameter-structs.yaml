@@ -1,0 +1,6 @@
+id: TASK-01KPVG83MJ0H2
+parent_feature: FEAT-01KPVDDYSEK8P
+slug: audit-and-fix-json-struct-tags-on-mcp-parameter-structs
+name: Audit and fix json struct tags on MCP parameter structs
+summary: "Search internal/ for structs decoded via req.RequireString + json.Unmarshal. For each found struct, add json: tags to every exported field that has a yaml: tag but no json: tag, using the snake_case key already expected by callers. Do not touch structs outside this pattern. List the audited structs in a comment in the test file added by T3. Covers REQ-007, REQ-008, AC-007."
+status: queued
