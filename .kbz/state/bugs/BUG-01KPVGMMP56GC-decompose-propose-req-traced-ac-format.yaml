@@ -1,0 +1,11 @@
+id: BUG-01KPVGMMP56GC
+slug: decompose-propose-req-traced-ac-format
+name: decompose propose rejects REQ-traced AC format
+status: reported
+severity: medium
+priority: medium
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-04-22T21:13:20Z"
+observed: "When a spec uses `**AC-001 (REQ-001):** Given … When … Then …` format, decompose(action: propose) either returns an error (no items parsed) or returns a proposal with the wrong number of tasks with wrong names derived from numbered sub-items inside requirement descriptions."
+expected: "decompose(action: propose) parses `**AC-NNN (REQ-NNN):**` as a valid AC entry, treating the `(REQ-NNN)` portion as an optional traceability annotation and not as part of the identifier. The proposal correctly derives tasks from the spec's AC count and content regardless of whether ACs include REQ-reference suffixes."

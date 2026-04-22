@@ -1,0 +1,18 @@
+id: KE-01KPVGKJ13QPH
+tier: 2
+topic: decompose-propose-ac-format-limitation
+scope: project
+content: "decompose(action: propose) cannot parse the `**AC-001 (REQ-001):**` acceptance criteria format (REQ-reference in the AC identifier). It only recognises three AC formats: `**AC-NN.**` (period terminator, no REQ reference), numbered list items (`1. ...`), and checkbox items (`- [ ] ...`). When it encounters the `**AC-001 (REQ-001):**` format it either errors entirely (no parseable items) or misidentifies numbered sub-items inside requirement descriptions as tasks, producing wrong-count, wrong-name proposals that fail all 5 validation points.\n\nThis format is common in retrospective and iterative specs where ACs trace back to existing requirements (the `(REQ-NNN)` suffix is the traceability link). Greenfield specs that use `**AC-NN.**` (no REQ reference) work fine.\n\n**Workaround:** Skip `decompose(action: propose)` and create tasks directly via `entity(action: create, type: task, parent_feature: \"FEAT-...\", name: \"...\", summary: \"...\", depends_on: [...])`. Create tasks in dependency order so IDs are available for `depends_on` wiring. The manual path produces identical results; the only loss is the automated proposal step.\n\n**Root cause (BUG-01KPVG...):** The AC parser regex does not account for the `(REQ-NNN)` suffix in the identifier segment. Filed as a tracked defect."
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 90
+tags:
+  - decompose
+  - ac-format
+  - workaround
+  - iterative-workflow
+created: "2026-04-22T21:12:44Z"
+created_by: sambeau
+updated: "2026-04-22T21:12:44Z"
