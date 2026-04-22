@@ -2,9 +2,11 @@ id: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow
 path: work/spec/p28-doc-intel-register-workflow.md
 type: specification
 title: "Specification: Doc-Intel Register Workflow Friction"
-status: draft
+status: approved
 owner: FEAT-01KPVDDYSEK8P
-content_hash: 0f354d91fddca05665317d648f47a6858150774b2289e63eb330d1d10bab53ba
+approved_by: sambeau
+approved_at: "2026-04-22T20:48:07Z"
+content_hash: 62bc9e9d0bf7a5c370596de3569471673fa8dff355110d7c7e987e00e337469f
 created: "2026-04-22T20:37:23Z"
 created_by: sambeau
-updated: "2026-04-22T20:37:23Z"
+updated: "2026-04-22T20:48:07Z"
