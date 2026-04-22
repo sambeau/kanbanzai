@@ -117,6 +117,7 @@ Copy this checklist and track your progress:
 ### Phase 1: Read the Dev-Plan
 
 1. Call `status` with the feature ID to get the current state of all tasks.
+1a. Call `knowledge(action: "list")` with feature-area tags and `status: "confirmed"` to surface project-level knowledge before dispatching any sub-agents. Review all returned entries. Note any that describe pitfalls, architectural constraints, or patterns relevant to this feature. Carry these entries forward: include them in each `handoff` tool call via the `instructions` parameter so sub-agents benefit from accumulated knowledge without having to rediscover it.
 2. Read the dev-plan document linked from the feature entity. Understand the full task graph — which tasks exist, what each produces, and how they connect.
 3. Note any tasks already completed from prior sessions. Build a running record of what is done and what remains.
 4. IF the dev-plan is missing or the feature has no tasks → STOP. The feature is not ready for orchestration.
@@ -182,6 +183,13 @@ After all tasks reach a terminal state, the feature must be explicitly advanced 
 3. **Create a PR if a worktree exists.** If the feature has a worktree, call `pr(action: "create", entity_id: "FEAT-xxx")` and then `merge(action: "check", entity_id: "FEAT-xxx")` followed by `merge(action: "execute", entity_id: "FEAT-xxx")`. If there is no worktree (work was committed directly to the main branch), `merge` and `pr` will return `not_applicable` — this is expected; skip these steps.
 
 4. **Record a completion summary.** Call `finish` (or leave a completion note in the task) summarising what was implemented and any relevant observations.
+
+4a. **Knowledge curation pass (primary curation mechanism for this feature).** Call `knowledge(action: "list")` with `status: "contributed"` and `tier: 2` to retrieve all tier 2 knowledge entries contributed during this feature's development. For each returned entry, apply one of three dispositions:
+   - `knowledge(action: "confirm", id: "KE-xxx")` — entry proved accurate during the feature.
+   - `knowledge(action: "flag", id: "KE-xxx", reason: "...")` — entry proved inaccurate or misleading.
+   - `knowledge(action: "retire", id: "KE-xxx", reason: "...")` — entry has been superseded by architectural changes made during this feature.
+
+   **Tier 3 entries:** Do NOT call `confirm` on tier 3 entries. Tier 3 entries are self-pruning and direct confirmation bypasses the promotion signal. Instead, for tier 3 entries that proved valuable, call `knowledge(action: "promote", id: "KE-xxx")` to elevate them to tier 2.
 
 5. **Clean up worktrees.** If a worktree was created, run `worktree(action: "remove", entity_id: "FEAT-xxx")` after merging.
 
