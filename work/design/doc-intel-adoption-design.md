@@ -1,4 +1,4 @@
-# Design: Document Intelligence Adoption Fixes
+# Design: Document Intelligence Adoption and Integration
 
 | Field         | Value                                                                     |
 |---------------|---------------------------------------------------------------------------|
@@ -14,555 +14,704 @@
 
 ## 1. Purpose
 
-The Document Intelligence Usage Report (April 2026) identified two critical failures in
-how agents interact with the `doc_intel` and `knowledge` systems:
+### 1.1 The problem: design amnesia at scale
 
-1. **Layer 3 AI classification has never run.** 332 of 334 registered documents have no
-   semantic classification. Concept search returns zero results. The richest query
-   capabilities — concept-based retrieval, rationale extraction, role-based search
-   across non-standard headings — are entirely unavailable.
+As a project grows to hundreds of features and tens of design documents, a failure
+mode emerges that has nothing to do with code quality or test coverage. New designs are
+written without awareness of related prior work. Features are built in isolation.
+Decisions made six months ago are re-made, sometimes differently. The project becomes
+less homogeneous over time — not because any individual decision was wrong, but because
+each decision was made without adequate context about what came before.
 
-2. **Knowledge entries are never retrieved via the API.** All 59 knowledge entries have
-   `use_count: 0`. Agents are writing knowledge but not reading it. The closed loop —
-   contribute on task completion, consume on the next task — is broken at the consumption
-   end.
+This is **design amnesia at scale**. The knowledge was never lost — it is all stored in
+workflow documents. But no single agent has read the whole corpus, so no single agent
+can answer: *"What have we already decided about this? How does this feature relate to
+that one? Why don't we already do it this way?"*
 
-A third supporting issue compounds both: there is **no instrumentation** on how the
-system is used, making it impossible to detect regressions in adoption or to identify
-which documents and knowledge entries are most valuable.
+The human project owner becomes the only source of continuity. At more than ~100
+features, that continuity begins to break down.
 
-These are **adoption failures**, not technical failures. The infrastructure exists. The
-batch classification protocol is defined. Knowledge entries have been contributed. The
-problem is that skills do not mandate the behaviours needed to use the system, so agents
-skip those steps without realising they are skipping them.
+The `doc_intel` system exists to solve this problem. It is **institutional memory made
+queryable**: a structured, classified index of every design decision, requirement, and
+rationale in the project corpus, accessible in seconds rather than requiring an agent to
+read dozens of documents.
 
-This document complements `doc-intel-enhancement-design.md`, which addresses the
-technical infrastructure (FTS5 search, SQLite graph, concept alias resolution). That
-design makes the system more capable. This design makes agents actually use it.
+### 1.2 Why classification — not grep — is the mechanism
 
-### 1.1 Scope
+A grep-based corpus search could partially address this problem, but it fails at the
+critical case: the **unknown unknowns**. An architect designing a new feature knows their
+problem domain but not what the existing corpus says about it. Grep requires the
+searcher to already know the vocabulary. A classified concept graph surfaces relevant
+prior work that the architect did not know to search for.
+
+Concept-based retrieval answers questions grep cannot:
+- *"What other features touch this same architectural concept, even if they use
+  different terminology?"*
+- *"What decisions have been made that constrain the approach I'm considering?"*
+- *"What is the full landscape of prior work on this topic?"*
+
+These are the questions that prevent design amnesia. None of them are answerable by
+text matching alone. They require semantic classification — concepts, roles (decision,
+rationale, requirement), and typed graph edges between sections and entities.
+
+This reframes why Layer 3 classification matters. It is not primarily an instrumentation
+improvement or a token-efficiency optimisation. **It is the primary retrieval mechanism
+for design continuity.** Without a populated concept registry, the corpus cannot answer
+design questions.
+
+### 1.3 The current state is a paradox
+
+The Document Intelligence Usage Report (April 2026) found that 332 of 334 registered
+documents have no Layer 3 classification, the concept registry is empty, and all 59
+knowledge entries have `use_count: 0`. The infrastructure is correct and well-designed.
+The data is almost entirely absent.
+
+This is the paradox: the system that is meant to prevent design amnesia cannot be used
+until the corpus is classified, and the corpus is not being classified because no
+workflow step mandates it.
+
+This document defines how to break that loop.
+
+### 1.4 Scope
 
 **In scope:**
 
-- Skill changes to mandate knowledge retrieval before task start
-- Skill changes to mandate knowledge confirmation after task completion
-- Classification trigger added to the review pipeline prerequisites
-- Repositioning of the batch classification protocol in `kanbanzai-documents` skill
+- Mandatory corpus consultation during the design stage (`write-design`, `write-spec`)
+- Design document template: required Related Work section
+- Corpus completeness: session-start audit, batch registration, onboarding procedure
+- Classification as a mandatory step at registration, at review, and before design begins
+- Mandatory knowledge retrieval at implementation time
 - Access instrumentation for `doc_intel` and `knowledge` tools
-- Plan close-out knowledge confirmation step in `orchestrate-development`
+- Plan close-out knowledge curation
 
 **Out of scope:**
 
 - Technical infrastructure changes (FTS5, SQLite, concept aliases — see enhancement design)
-- Changes to the `doc_intel` tool's action surface beyond access logging
-- Changes to how context packets are assembled by `next`
-- Automated classification (classification remains agent-driven)
-- Embedding-based or vector search (evaluate after enhancement design)
+- Automated or pipeline-driven classification (classification remains agent-driven)
+- Changes to the `doc_intel` tool action surface beyond access logging
+- Embedding-based semantic search (evaluate after enhancement design)
+
+### 1.5 Relationship to existing designs
+
+`doc-intel-enhancement-design.md` defines five technical improvements: FTS5 full-text
+search, SQLite graph storage, batch classification protocol, knowledge↔document
+cross-queries, and concept alias resolution. Those changes make the system more
+capable. This design makes agents use it — and specifically, use it at the moments that
+matter most for design continuity.
+
+The two designs are complementary and sequentially dependent in one direction: concept
+search (`find(concept: ...)`) requires both the technical enhancement and the
+classification data this design mandates. FTS search and SQLite migration can ship
+independently of this design.
 
 ---
 
 ## 2. Root Cause Analysis
 
-Understanding why adoption failed is required to design fixes that hold.
+### 2.1 The primary gap: design stage has no corpus consultation mandate
 
-### 2.1 Why knowledge is not consumed
+The `write-design` and `write-spec` skills contain no requirement to consult the
+existing corpus before writing. An architect can produce a complete design document
+without calling a single `doc_intel` tool. This is the most critical gap: the design
+stage is where decisions with long-term consequences are made, and it is entirely
+unconnected to the accumulated design knowledge in the corpus.
 
-The `kanbanzai-agents` skill mandates knowledge **contribution** (`finish` retrospective
-signals, `knowledge contribute`) but does not mandate knowledge **consumption**
-(`knowledge list`). The checklist in `implement-task` and the Phase 1 procedure in
-`implement-task` are both silent on knowledge retrieval.
+Implementation-stage agents (reading specs to write code) are secondary. The problem
+of design amnesia lives upstream, at the moment a new design is being written.
 
-Context assembly via `next(id)` surfaces knowledge entries automatically in the context
-packet. But this is passive delivery — the context packet is bounded and may not surface
-entries whose tags or scope do not match the task's file prefix. An agent doing active
-work (e.g. a cross-cutting concern, a refactor, a review) will not receive relevant
-knowledge unless it explicitly queries for it.
+### 2.2 The corpus cannot be trusted to be complete
 
-Furthermore, **`use_count` is only incremented by explicit API calls** (`knowledge list`,
-`knowledge get`), not by context packet inclusion. So even if entries were surfaced in
-context packets, the system cannot distinguish between "agent saw this and acted on it"
-and "agent received this passively and ignored it".
+Nine files are on disk but unregistered. Four registered files are missing from disk.
+The session-start checklist in `kanbanzai-getting-started` does not mandate a corpus
+integrity check. An agent beginning a corpus search has no assurance that the search
+is complete — the documents it finds may not represent everything that exists.
 
-The skill-authoring research identifies the root mechanic: advisory instructions ("you
-may call `knowledge list`") do not produce reliable behaviour. Only checklist items with
-concrete tool call sequences produce consistent compliance (Anthropic, Effective Context
-Engineering, 2025; MetaGPT, ICLR 2024). The fix is to make knowledge retrieval a
-**required checklist step with an explicit tool call pattern**, not an optional
-recommendation.
+This problem is compounded when Kanbanzai is adopted on an existing project with
+pre-existing documentation. Those documents are entirely invisible to `doc_intel` until
+registered and classified. A corpus that is partially indexed is worse than one that is
+fully indexed, because it creates false confidence: the agent searches, finds nothing
+relevant, and proceeds — not realising the relevant document was never registered.
 
-### 2.2 Why Layer 3 classification is not running
+### 2.3 Layer 3 classification is absent from all mandatory workflows
 
-The batch classification protocol exists in the `kanbanzai-documents` skill and the
-`doc-intel-enhancement-design.md`. The problem is structural:
+The batch classification protocol exists in `kanbanzai-documents`, but it is positioned
+at the end of a long skill (receiving less attention due to the U-shaped attention curve
+established by Liu et al., "Lost in the Middle", 2024) and is framed as a reference
+section rather than an obligation.
 
-- The batch classification section appears at the **end** of the `kanbanzai-documents`
-  skill. Research on U-shaped attention in transformers (Liu et al., "Lost in the Middle",
-  2024) predicts that content at the end of a long skill receives less attention than
-  content at the beginning. A protocol placed in the final section of a long skill will
-  be read less frequently than one placed in the body.
+There is no mandatory trigger in the feature lifecycle. The `orchestrate-review` skill
+does not classify documents before dispatching reviewers. The `write-design` skill does
+not classify the design it produces. Classification is purely discretionary — and
+discretionary tasks are skipped under time pressure.
 
-- There is **no trigger** in the feature lifecycle. Classification has no mandatory
-  integration point — it is a discretionary task that requires an agent to
-  spontaneously decide to run it. Discretionary tasks with no enforcement are skipped
-  under time pressure.
+### 2.4 Knowledge is not consumed at implementation time
 
-- The `orchestrate-review` skill's Step 1 (verify prerequisites) checks for a spec and
-  confirms the feature is in `reviewing` status, but does **not** trigger classification
-  of the feature's documents. This is the highest-leverage integration point: a reviewer
-  agent needs semantically rich outlines, and the feature's documents are known at review
-  time.
+`kanbanzai-agents` mandates knowledge contribution but not consumption. The `use_count`
+for all 59 knowledge entries is zero. Context packets surface entries passively via
+`next`, but `use_count` only increments on explicit API calls — so even entries that
+appear in context packets register no usage. The feedback loop (contribute → consume →
+confirm → increase confidence) is broken at the consumption step.
 
-### 2.3 Why instrumentation is absent
+### 2.5 Instrumentation is absent
 
-Access instrumentation was never designed. The usage report cannot answer "which document
-sections are most consulted" or "how often is the knowledge base accessed" because no
-counters exist. This is not a retroactive failure — it was an omission in the original
-system design. Without instrumentation, future regressions in adoption will go undetected
-until a usage audit catches them.
+There are no access counters on `doc_intel` reads or `knowledge` retrievals. This means
+adoption regressions are invisible until a full corpus audit is conducted — an expensive
+and periodic operation rather than a continuous signal.
 
 ---
 
-## 3. Fix 1: Mandatory Knowledge Retrieval in Skills
+## 3. Fix 1: Design-Stage Corpus Consultation Mandate
 
 ### 3.1 Problem
 
-Agents contribute knowledge but never read it. No skill mandates consumption.
+Designs are written in isolation. The `write-design` and `write-spec` skills contain no
+corpus consultation phase. The document template has no Required Work section. New
+features can be designed without any awareness of related prior decisions.
 
 ### 3.2 Solution
 
-Add an explicit, required knowledge retrieval step to three skill files:
+Four complementary mechanisms, ordered from most to least immediate:
 
-1. `implement-task/SKILL.md` — pre-task Phase 1
-2. `orchestrate-development/SKILL.md` — Phase 1 (Read the Dev-Plan)
-3. `.agents/skills/kanbanzai-agents/SKILL.md` — Task Lifecycle Checklist
+1. **`write-design` skill: mandatory discovery phase** before any content is written
+2. **Design document template: required "Related Work" section** that cannot be empty
+3. **`reviewer-conformance` skill: blocking check** for substantive Related Work
+4. **`write-spec` skill: cross-reference check** for consistency with related specs
 
-The step follows a fixed pattern: query `knowledge list` with relevant tags, then review
-the results before beginning any implementation work. This is a checklist item, not an
-advisory note, so it cannot be silently skipped.
+Together these form a complete enforcement chain: the architect is required to search,
+required to document what they find, and the reviewer is required to verify they did.
 
-### 3.3 Changes to `implement-task/SKILL.md`
+### 3.3 Changes to `write-design/SKILL.md`
 
-**Checklist addition** (after "Read the context packet" step):
-
-```
-- [ ] Called `knowledge list` with tags relevant to this task's domain — reviewed entries before writing any code
-```
-
-**Phase 1 addition** (after step 1, claim the task):
+Add **Phase 0: Corpus Discovery** as the first phase, before any content is written:
 
 ```
-1a. Call `knowledge(action: "list", tags: ["<domain>", "<feature-area>"])` using tags
-    derived from the task's feature area (e.g. "storage", "cli", "review", "doc-intel").
-    Review all returned entries before proceeding. If an entry describes a known pitfall
-    or anti-pattern relevant to this task, note it.
-    BECAUSE: Knowledge entries record hard-won discoveries from previous tasks —
-    pitfalls, workarounds, policy decisions. An agent that skips this step re-discovers
-    the same problems and makes the same mistakes, wasting cycles that the knowledge
-    system was built to prevent.
-```
+Phase 0: Corpus Discovery
 
-**Post-task Phase 4 addition** (in the `finish` call guidance):
+Before writing a single line of design content, search the corpus for
+existing work that relates to this feature. This phase is not optional.
 
-```
-When calling finish, also call:
-  knowledge(action: "confirm", id: "<KE-id>")
-for any knowledge entry that proved accurate and useful during this task.
-  knowledge(action: "flag", id: "<KE-id>")
-for any entry that was inaccurate or misleading.
-BECAUSE: Confirmation and flagging are how the knowledge base self-curates.
-Entries that are consistently confirmed gain higher confidence scores and are
-prioritised in future context packets. Entries that are consistently flagged
-are automatically retired.
-```
+1. Search by concept. For each primary concept in this feature, call:
+     doc_intel(action: "search", query: "<concept>")
+   and for classified documents:
+     doc_intel(action: "find", concept: "<concept>")
+   Note: if concept search returns no results, the corpus may be
+   unclassified — fall back to FTS search and grep.
 
-**BAD example addition:**
+2. Search by related entity. If the feature relates to known features,
+   find all documents that reference them:
+     doc_intel(action: "find", entity_id: "<FEAT-xxx>")
 
-```
-BAD: Implement without consulting knowledge
-  Agent claims TASK-212 (add FTS5 search to doc_intel).
-  Proceeds directly to implementation.
-  Spends 40 minutes debugging a SQLite FTS5 gotcha with the tokeniser.
+3. Search for prior decisions. For each related document found, extract
+   its decisions:
+     doc_intel(action: "find", role: "decision", scope: "<DOC-xxx>")
 
-WHY BAD: Knowledge entry KE-01KPNN describes this exact issue with a
-workaround, contributed by a previous agent during P23. The knowledge was
-available; the agent never checked.
+4. Synthesise. Produce a list of: related documents, relevant decisions
+   that constrain this design, and open questions raised by prior work.
 
-GOOD: Consult knowledge before implementing
-  Agent claims TASK-212.
-  Calls knowledge(action: "list", tags: ["doc-intel", "sqlite", "storage"]).
-  Finds KE-01KPNN: "SQLite FTS5 with the unicode61 tokeniser requires
-  explicit column filters when queries include punctuation..."
-  Notes the workaround before opening any source files.
-  Implementation avoids the known gotcha entirely.
-```
+5. Write the Related Work section of the design document from this
+   synthesis BEFORE writing any other section.
 
-### 3.4 Changes to `orchestrate-development/SKILL.md`
-
-**Phase 1 addition** (after reading the dev-plan):
-
-```
-1a. Before dispatching any tasks, call:
-    knowledge(action: "list", tags: ["<feature-area>"], status: "confirmed")
-    and review the confirmed entries relevant to this feature's domain.
-    BECAUSE: Confirmed knowledge entries record architectural patterns,
-    anti-patterns, and policy decisions that apply across all tasks in the
-    feature. Distributing this knowledge to sub-agents via their handoff
-    prompts prevents repeated mistakes across the task graph.
-1b. Surface relevant entries to sub-agents by including them in the
-    `instructions` parameter of `handoff(task_id, instructions: "...")`.
-```
-
-**Phase 6 Close-Out addition** (after step 4, record completion summary):
-
-```
-4a. Confirm tier 2 knowledge entries contributed during this feature's
-    development. Call `knowledge(action: "list", status: "contributed", tier: 2)`
-    and for each entry that proved accurate, call `knowledge(action: "confirm")`.
-    BECAUSE: Tier 2 entries start as "contributed" and only become trusted
-    references after confirmation. An uncurated knowledge base accumulates noise
-    alongside signal; the confirmation pass at feature close-out is the primary
-    curation mechanism.
-```
-
-### 3.5 Changes to `kanbanzai-agents/SKILL.md`
-
-**Task Lifecycle Checklist addition:**
-
-```
-- [ ] Called `knowledge list` with domain-relevant tags before starting implementation
-- [ ] Confirmed accurate knowledge entries and flagged inaccurate ones after completing the task
-```
-
-**Context Assembly section update:**
-
-Replace the current passive description of knowledge surfacing with an active retrieval
-requirement:
-
-```
-After calling `next(id)` to claim a task, actively query the knowledge base:
-  knowledge(action: "list", tags: ["<domain>", "<feature-area>"])
-The context packet surfaces the highest-ranked matching entries automatically,
-but active querying finds entries the automatic matching may miss — especially
-for cross-cutting concerns or tasks whose file scope spans multiple domains.
-
-After completing the task:
-- Call knowledge(action: "confirm") on entries that proved accurate and useful.
-- Call knowledge(action: "flag") on entries that were inaccurate or misleading.
-These signals are how the knowledge base self-curates. Skipping them degrades
-the base for every future agent.
-```
-
----
-
-## 4. Fix 2: Classification Trigger in the Review Pipeline
-
-### 4.1 Problem
-
-Layer 3 classification has no mandatory trigger in the feature lifecycle. The batch
-protocol exists but is discretionary, placed at the end of a long skill, and rarely
-executed.
-
-### 4.2 Solution
-
-Two changes:
-
-1. Add a mandatory classification step to `orchestrate-review/SKILL.md` Step 1
-   (verify prerequisites). Before dispatching review sub-agents, classify the feature's
-   documents. This ensures reviewer agents operate on semantically enriched outlines.
-
-2. Promote the batch classification protocol within `kanbanzai-documents/SKILL.md` from
-   its current end-of-file position to a more prominent location, and reframe it as an
-   **active obligation** rather than a reference section.
-
-### 4.3 Changes to `orchestrate-review/SKILL.md`
-
-**Step 1 addition** (after confirming spec exists, before step 2 decompose):
-
-```
-1b. Classify any unclassified documents owned by the feature.
-    i.   Call doc_intel(action: "pending") and filter for documents whose
-         owner matches this feature's ID.
-    ii.  For each unclassified feature document, run the classification
-         protocol:
-         a. doc_intel(action: "guide", id: "DOC-xxx") — get outline + content hash
-         b. Read any sections needed to assign roles
-         c. doc_intel(action: "classify", id: "DOC-xxx", content_hash: "...", ...)
-    iii. Classification is not a blocking prerequisite — if context budget is
-         exhausted before all documents are classified, proceed with reviewing.
-         Prioritise: specification first, design second, dev-plan third.
-    BECAUSE: Reviewer sub-agents use doc_intel to navigate documents. Layer 3
-    classification enables role-based search (find all requirements, find all
-    decisions) and produces richer guides. A reviewer working on an unclassified
-    corpus falls back to structural navigation only, missing the semantic layer
-    that identifies rationale, constraints, and design decisions.
+BECAUSE: A design written without corpus consultation may duplicate
+prior work, contradict existing decisions, or miss the context that
+explains why the current approach is the way it is. At project scale,
+these omissions compound into the fragmentation and inconsistency that
+make large projects unmaintainable. The Related Work section is the
+primary mechanism for preventing this.
 ```
 
 **Checklist addition:**
 
 ```
-- [ ] Classified unclassified feature documents (or confirmed context budget insufficient)
+- [ ] Conducted corpus discovery (concept search, entity search, decision extraction)
+- [ ] Wrote Related Work section before writing any design content
+- [ ] Cross-referenced at least one prior decision that constrains this design, OR
+      attested that corpus search found no related work
 ```
 
-### 4.4 Changes to `kanbanzai-documents/SKILL.md`
+### 3.4 Design document template update
 
-**Move** the "Batch Classification Protocol" section from its current end-of-file
-position to immediately after the "Registration" section — placing it where agents
-encounter it before they have mentally committed to finishing the registration workflow.
+Add a **Required: Related Work** section to `work/templates/specification-prompt-template.md`
+and the equivalent design template. The section must contain one of:
 
-**Rename** the section from "Batch Classification Protocol" to
-**"Classification (Layer 3)"** and reframe its opening to be action-oriented:
-
+**Option A — Related work found:**
 ```
-## Classification (Layer 3)
+## Related Work
 
-**After registering a document, classify it immediately if you have the
-document content in context.** Do not defer classification to a batch run.
+### Prior designs and specifications consulted
+- [Design title](path/to/design.md) — [how it relates to this design]
+- [Spec title](path/to/spec.md) — [how it relates]
 
-The `doc register` response includes a `classification_nudge` indicating which
-`doc_intel` calls to make. Follow it before moving to the next task.
+### Decisions that constrain this design
+- [Decision summary] (from [document], §[section]) — [how it applies here]
 
-BECAUSE: Layer 3 classification is what enables concept search, role-based
-retrieval, and semantic guides. Documents classified at registration time
-remain classified as long as content does not change. Documents deferred to
-batch runs accumulate as a growing backlog that is never fully cleared — as
-the corpus grows, the backlog grows faster than batch runs can clear it.
+### How this design extends or diverges from prior work
+[Narrative explaining relationship to the above]
 ```
 
-**Add to the Document Creation Checklist:**
+**Option B — No related work found:**
+```
+## Related Work
+
+Corpus search conducted for concepts: [X, Y, Z].
+Entity search conducted for: [FEAT-xxx, FEAT-yyy] (if applicable).
+No directly related prior work found in the classified corpus.
+```
+
+Option B is a valid answer. An empty or missing Related Work section is not. A design
+that skips this section entirely is incomplete regardless of the quality of its other
+content.
+
+### 3.5 Changes to `reviewer-conformance/SKILL.md`
+
+Add a **blocking check** for Related Work section quality:
 
 ```
-- [ ] Classified the document with doc_intel(action: "classify") if content was in context
+Related Work Section Check (blocking):
+- [ ] Related Work section is present in the design document
+- [ ] Section contains either substantive cross-references OR an explicit
+      "no related work found" attestation with search evidence
+- [ ] If related documents exist in the corpus that clearly relate to this
+      design, the design engages with them — it does not ignore them silently
+
+A design that omits Related Work entirely, or that contains placeholder
+text ("TBD", "N/A") without supporting evidence, is REJECTED. This is a
+blocking finding.
+
+BECAUSE: The Related Work section is the primary enforcement mechanism
+for design continuity at scale. A system that does not enforce it provides
+false assurance — the corpus grows but its influence on new work approaches
+zero. An ignored Related Work requirement is worse than no requirement, because
+it creates the appearance of a functioning system.
+```
+
+### 3.6 Changes to `write-spec/SKILL.md`
+
+Add a **cross-reference check** at the start of specification writing:
+
+```
+Before writing specification content, verify:
+1. The design document for this feature has a substantive Related Work section.
+   If not, the design is incomplete — STOP and flag this to the orchestrator.
+2. Search for specifications of features identified in the Related Work section:
+     doc_intel(action: "find", role: "requirement", scope: "<DOC-related-spec>")
+   Identify any requirements in adjacent specs that this spec must be consistent with.
+3. Note deliberate divergences. If this spec takes a different approach than an
+   adjacent spec, document why in the spec's design rationale section.
+
+BECAUSE: Specifications that are unaware of related specs produce inconsistent
+behaviour across features. A user encountering two features that handle the same
+concept differently will correctly perceive the project as unfinished.
 ```
 
 ---
 
-## 5. Fix 3: Access Instrumentation
+## 4. Fix 2: Corpus Completeness and Onboarding
 
-### 5.1 Problem
+### 4.1 Problem
 
-The system cannot answer:
-- How often is the knowledge base accessed?
-- Which document sections are most consulted?
-- Which knowledge entries are actually useful (vs. merely contributed)?
-- Is adoption improving or degrading after these fixes are deployed?
+The corpus cannot be trusted to be complete. Unregistered documents are invisible to
+`doc_intel`, making corpus searches silently incomplete. When Kanbanzai is adopted on
+an existing project, the entire pre-existing documentation corpus starts as invisible.
 
-Without instrumentation, these questions are permanently unanswerable, and future
-adoption failures will require another full audit to detect.
+A partial index is worse than no index for design consultation: the architect searches,
+finds nothing, and concludes there is no related work — not realising the most relevant
+document was never registered.
 
-### 5.2 Solution
+### 4.2 Solution
 
-Add lightweight access counters and timestamps to both systems.
+Two mechanisms: a **session-start integrity check** for ongoing hygiene, and an
+**onboarding procedure** for new or existing projects. Both use existing tools
+(`doc audit`, `doc import`); what they add is mandatory integration into the workflow.
 
-### 5.3 Knowledge base instrumentation
+### 4.3 Session-start integrity check
 
-**New fields on `KnowledgeEntry`:**
+Add a mandatory step to `kanbanzai-getting-started/SKILL.md`:
 
-| Field               | Type      | Description                                        |
-|---------------------|-----------|----------------------------------------------------|
-| `last_accessed_at`  | timestamp | Set on every `knowledge list` or `knowledge get` call that returns this entry |
-| `recent_use_count`  | int       | Rolling 30-day window count of accesses. Separate from `use_count` (all-time). |
+```
+Corpus Integrity Check (at every session start):
 
-**Behaviour:**
+1. Call doc(action: "audit") and review the output.
+2. If audit shows files on disk but not registered:
+     Call doc(action: "import", path: "work")
+   to register all unregistered documents in configured roots.
+3. If audit shows registered files missing from disk: flag these as stale
+   records — call doc(action: "delete", id: "DOC-xxx") for each.
+4. After any batch registration, run a classification pass on newly
+   registered documents (see Fix 3).
 
-- `knowledge(action: "list", ...)` increments `recent_use_count` and sets
-  `last_accessed_at` for every entry included in the response.
-- `knowledge(action: "get", id: "KE-xxx")` increments `recent_use_count` and sets
-  `last_accessed_at` for the retrieved entry.
-- `recent_use_count` is decremented by a daily TTL sweep that removes accesses older
-  than 30 days from the rolling window. The simplest implementation is to store a list
-  of access timestamps and compute the count on read.
-- `knowledge(action: "list")` default output surfaces `recent_use_count` alongside
-  `use_count` so agents can distinguish active entries from stale ones.
+BECAUSE: An incomplete corpus produces false negatives in design searches.
+An architect who searches and finds nothing relevant may proceed without
+knowing that the most relevant design document simply was not registered.
+The integrity check takes seconds and removes this uncertainty.
+```
 
-**New `knowledge(action: "list")` sort option:**
+### 4.4 New project onboarding
 
-Add `sort: "recent"` to surface entries accessed most frequently in the last 30 days.
-This is the recommended sort order for pre-task knowledge queries, because it surfaces
-entries that recent agents found useful.
+When Kanbanzai is initialised on a project for the first time (no prior `.kbz/`
+directory), the getting-started skill should run the onboarding procedure:
 
-### 5.4 Document intelligence instrumentation
+```
+1. Configure document roots in .kbz/config.yaml to cover all directories
+   containing project documentation.
+2. Run doc(action: "import", path: "<each-root>") for each configured root.
+3. Verify with doc(action: "audit") — target: 0 unregistered files.
+4. Run batch classification, prioritised by document type:
+   a. Specifications first (most structured, highest retrieval value)
+   b. Designs second (decisions, rationale, architectural context)
+   c. Dev-plans third (task-oriented, lower discovery value)
+   d. Research and reports last
+   Estimate: ~5–10 minutes per document for classification, including
+   guide + section reads + classify call. A 50-document corpus requires
+   roughly 4–8 hours of agent time for full classification.
+5. After classification, validate with:
+     doc_intel(action: "find", role: "decision")
+   If this returns results, the concept registry is populated and design
+   consultation is functional.
+```
 
-**New fields on `DocumentIndex` (per document):**
+### 4.5 Existing project adoption
 
-| Field               | Type      | Description                                        |
-|---------------------|-----------|----------------------------------------------------|
-| `access_count`      | int       | Cumulative count of `outline`, `section`, `guide`, `find`, `search` calls |
-| `last_accessed_at`  | timestamp | Timestamp of the most recent access to this document |
+When Kanbanzai is added to an existing project that already has documentation outside
+standard `work/` directories (README files, architecture docs, decision logs, API
+specs), the onboarding procedure must account for non-standard locations:
 
-**New fields on `SectionIndex` (per section, stored in the document index file):**
+```
+1. Audit the repository for documentation files not covered by configured roots:
+     find . -name "*.md" | grep -v ".kbz"
+2. Decide which documents should be in the corpus. Not all markdown files
+   need to be registered — only those containing design decisions, specifications,
+   architectural rationale, or requirements.
+3. Add additional roots to .kbz/config.yaml as needed.
+4. Register and classify as per §4.4.
+```
 
-| Field               | Type      | Description                                        |
-|---------------------|-----------|----------------------------------------------------|
-| `access_count`      | int       | Count of `section` calls targeting this section path |
-| `last_accessed_at`  | timestamp | Timestamp of the most recent `section` read        |
-
-**Behaviour:**
-
-- `doc_intel(action: "outline", id: "DOC-xxx")` increments the document-level
-  `access_count` and updates `last_accessed_at`.
-- `doc_intel(action: "guide", id: "DOC-xxx")` increments document-level counter.
-- `doc_intel(action: "section", id: "DOC-xxx", section_path: "3.2")` increments
-  both the document-level counter and the section-level counter for path `3.2`.
-- `doc_intel(action: "find", ...)` and `doc_intel(action: "search", ...)` increment
-  counters for every document that appears in the result set.
-- Counter updates are written lazily — they are not committed to disk on every call.
-  A flush every N calls or on process shutdown is acceptable. Counts are approximate.
-
-**Storage:** Document-level counters live in the per-document index file
-(`.kbz/index/docs/<doc-id>.yaml`). Section-level counters live in the same file under
-each section entry. If SQLite storage is adopted per the enhancement design, counters
-move to the SQLite `sections` table.
-
-**New `doc(action: "audit")` output field:**
-
-Extend the audit report with a "Most Accessed Documents" table showing the top 10
-documents by `access_count` in the last 30 days. This makes the instrumentation
-actionable — admins can see what the corpus is actually used for.
-
-### 5.5 What instrumentation does not track
-
-- Individual agent identity (no per-agent attribution — privacy and simplicity)
-- Query content (what search terms were used — too verbose)
-- Latency per call (out of scope for this design)
+The key principle: **the corpus should be complete enough that a designer can trust a
+negative result**. If searching for a concept returns nothing, it should mean "this has
+not been addressed" — not "this might have been addressed in an unregistered document."
 
 ---
 
-## 6. Fix 4: Plan Close-Out Knowledge Confirmation
+## 5. Fix 3: Classification as the Primary Retrieval Mechanism
+
+### 5.1 Reframing
+
+The prior adoption design framed Layer 3 classification as an operational improvement —
+better search results, more informative guides. This undersells it.
+
+Classification is the mechanism that makes the corpus answer design questions. Without
+it, `find(concept: "X")` always returns zero results, and design consultation degrades
+to grep. With it, an architect can discover every document in the corpus that engages
+with a concept — including documents that use different vocabulary — in a single tool
+call.
+
+The classification investment compounds: a document classified once remains classified
+until its content changes, and every subsequent design query benefits.
+
+### 5.2 Classification on registration (primary mechanism)
+
+When an agent registers a document it has just written, it has the document content in
+context. This is the lowest-cost moment to classify — no additional reads are required.
+
+The `kanbanzai-documents` skill changes from Fix 2 of the original design apply here:
+move the classification section earlier in the skill, reframe it as an active
+obligation, and add it to the Document Creation Checklist as a required step.
+
+The `doc register` response already includes a `classification_nudge`. This nudge
+should be treated as a mandatory instruction, not an optional suggestion.
+
+### 5.3 Classification before design begins (highest-value trigger)
+
+The most valuable moment to classify a document is before a related design begins.
+When a feature enters the `designing` stage, add a pre-design step:
+
+```
+Before writing any design content, verify that the corpus documents most
+relevant to this feature are classified. Call doc_intel(action: "pending")
+and classify any related unclassified documents using the priority order:
+specification → design → dev-plan.
+
+BECAUSE: An unclassified corpus produces false negatives in concept search.
+Classifying related documents before starting design work ensures the
+discovery phase (Fix 1, Phase 0) operates on a complete semantic index.
+```
+
+### 5.4 Classification at review (existing trigger, reframed)
+
+The change to `orchestrate-review/SKILL.md` described in the previous design version
+remains valid: classify the feature's documents as a Step 1 prerequisite before
+dispatching reviewers. This is now understood as part of the classification pipeline
+rather than a standalone reviewer concern — the review classification ensures the
+classified corpus is current for the next design that may reference this feature's work.
+
+### 5.5 Batch classification for the existing backlog
+
+The 332 currently unclassified documents represent a one-time debt. Clearing this
+backlog unlocks concept search across the full project history. The batch procedure
+from `kanbanzai-documents` applies, with a recommended sequencing:
+
+First pass: all approved specifications and designs (the highest-value documents for
+design consultation). This alone, covering roughly 170 documents, would make the
+concept registry substantive and enable the primary design-continuity use case.
+
+Second pass: dev-plans and reports. Lower priority — these are useful for knowledge
+extraction but less often the subject of cross-feature design consultation.
+
+---
+
+## 6. Fix 4: Mandatory Knowledge Retrieval at Implementation Time
 
 ### 6.1 Problem
 
-All 59 knowledge entries have `use_count: 0` and `status: contributed`. No agent has
-ever called `knowledge(action: "confirm")`. The knowledge base is an append-only log
-rather than a curated, confidence-weighted reference.
+Agents contribute knowledge but never read it. No skill mandates consumption. The
+`use_count` is 0 for all 59 entries.
 
 ### 6.2 Solution
 
-Add a mandatory knowledge confirmation pass to `orchestrate-development/SKILL.md`
-Phase 6 (Close-Out) and to the plan review checklist in `review-plan/SKILL.md`.
+Add explicit, required knowledge retrieval steps to `implement-task/SKILL.md`,
+`orchestrate-development/SKILL.md`, and `kanbanzai-agents/SKILL.md`.
 
-This was described in section 3.4 above for the feature close-out. The plan close-out
-equivalent:
+### 6.3 Changes to `implement-task/SKILL.md`
 
-### 6.3 Changes to plan review workflow
+**Phase 1 addition** (after claiming the task):
 
-When a plan transitions to complete, the orchestrator should:
+```
+1a. Call knowledge(action: "list", tags: ["<domain>", "<feature-area>"]) using
+    tags derived from the task's feature area. Review all returned entries before
+    proceeding. Note any entries describing known pitfalls for this task's domain.
+    BECAUSE: Knowledge entries record hard-won discoveries from previous tasks.
+    An agent that skips this step re-discovers the same problems from scratch.
+```
 
-1. Call `knowledge(action: "list", status: "contributed", tier: 2)` to retrieve all
-   unconfirmed tier 2 entries.
-2. For each entry whose topic is relevant to this plan's work, review the content.
-3. Call `knowledge(action: "confirm")` for accurate entries.
-4. Call `knowledge(action: "flag")` for entries that proved inaccurate.
-5. Call `knowledge(action: "retire", reason: "superseded by ...")` for entries that are
-   no longer relevant due to architectural changes delivered in this plan.
+**Phase 4 addition** (in the finish call):
 
-This pass transforms the knowledge base from a write-only retrospective log into a
-curated reference that accumulates confidence over time.
+```
+Call knowledge(action: "confirm", id: "<KE-id>") for entries that proved accurate.
+Call knowledge(action: "flag", id: "<KE-id>") for entries that were inaccurate.
+BECAUSE: Confirmation is how the knowledge base self-curates. Unflagged inaccurate
+entries continue to mislead future agents indefinitely.
+```
 
-### 6.4 Tier 3 entries
+**Checklist additions:**
+```
+- [ ] Called knowledge list with domain-relevant tags before writing any code
+- [ ] Confirmed accurate and flagged inaccurate knowledge entries after task completion
+```
 
-Tier 3 entries (session-level, 30-day TTL) do not require a confirmation pass at plan
-close-out. They are self-pruning. An agent that finds a tier 3 entry useful should
-contribute a tier 2 entry with the same content — `knowledge(action: "promote")` does
-this in one call.
+### 6.4 Changes to `orchestrate-development/SKILL.md`
+
+**Phase 1 addition** (after reading the dev-plan):
+```
+1a. Call knowledge(action: "list", tags: ["<feature-area>"], status: "confirmed")
+    and surface relevant entries to sub-agents via handoff instructions.
+```
+
+**Phase 6 Close-Out addition:**
+```
+4a. Confirm tier 2 knowledge entries contributed during this feature's development.
+    Call knowledge(action: "list", status: "contributed", tier: 2) and confirm
+    accurate entries. This is the primary knowledge curation mechanism.
+```
+
+### 6.5 Changes to `kanbanzai-agents/SKILL.md`
+
+Add knowledge retrieval and confirmation to the Task Lifecycle Checklist and update
+the Context Assembly section to mandate active querying after `next(id)` rather than
+relying solely on the context packet's passive surfacing.
 
 ---
 
-## 7. What Changes
+## 7. Fix 5: Access Instrumentation
 
-### 7.1 Skill files
+### 7.1 Problem
+
+Adoption regressions are invisible. The system cannot answer "how often is the
+knowledge base accessed?" or "which document sections are most consulted?". Future
+failures will require another full corpus audit to detect.
+
+### 7.2 Knowledge base instrumentation
+
+**New fields on `KnowledgeEntry`:**
+
+| Field              | Type      | Description                                                    |
+|--------------------|-----------|----------------------------------------------------------------|
+| `last_accessed_at` | timestamp | Updated on every `list` or `get` call that returns this entry  |
+| `recent_use_count` | int       | Rolling 30-day access count, separate from all-time `use_count`|
+
+Add `sort: "recent"` to `knowledge list` to surface entries most accessed in the last
+30 days — the recommended default for pre-task knowledge queries.
+
+### 7.3 Document intelligence instrumentation
+
+**New fields on `DocumentIndex`:** `access_count` (cumulative) and `last_accessed_at`.
+
+**New fields on `SectionIndex`:** `access_count` (per-section `section` calls) and
+`last_accessed_at`.
+
+Increment document-level counters on `outline`, `guide`, `find`, `search`. Increment
+section-level counters on `section`. Updates are written lazily; counts are approximate.
+
+**`doc(action: "audit")` extension:** add a "Most Accessed Documents" table (top 10 by
+30-day access count) to make the instrumentation actionable without requiring a
+separate query.
+
+---
+
+## 8. Fix 6: Plan Close-Out Knowledge Curation
+
+### 8.1 Problem
+
+All knowledge entries remain in `contributed` status. The knowledge base is an
+append-only log rather than a confidence-weighted reference.
+
+### 8.2 Solution
+
+Add a mandatory confirmation pass to `orchestrate-development` Phase 6 Close-Out and
+to the plan review workflow:
+
+```
+At plan close-out:
+1. Call knowledge(action: "list", status: "contributed", tier: 2)
+2. For each relevant entry: confirm (accurate), flag (inaccurate), or
+   retire (superseded by architectural changes in this plan)
+3. Tier 3 entries are self-pruning — promote valuable ones to tier 2
+   via knowledge(action: "promote") rather than confirming them.
+```
+
+---
+
+## 9. What Changes
+
+### 9.1 Skill files
 
 | File | Change |
 |------|--------|
-| `.kbz/skills/implement-task/SKILL.md` | Add `knowledge list` step to Phase 1 and checklist; add `knowledge confirm/flag` to Phase 4; add BAD/GOOD example for knowledge usage |
-| `.kbz/skills/orchestrate-development/SKILL.md` | Add `knowledge list` to Phase 1; add knowledge confirmation pass to Phase 6 Close-Out |
-| `.agents/skills/kanbanzai-agents/SKILL.md` | Add knowledge retrieval and confirmation to Task Lifecycle Checklist; update Context Assembly section |
-| `.kbz/skills/orchestrate-review/SKILL.md` | Add classification step to Step 1 prerequisites and checklist |
-| `.agents/skills/kanbanzai-documents/SKILL.md` | Move "Batch Classification Protocol" section earlier (after Registration); rename and reframe as an active obligation; add classification step to Document Creation Checklist |
+| `.kbz/skills/write-design/SKILL.md` | Add Phase 0 corpus discovery; add Related Work to checklist |
+| `.kbz/skills/write-spec/SKILL.md` | Add cross-reference check at phase start |
+| `.kbz/roles/reviewer-conformance.yaml` or skill | Add Related Work blocking check |
+| `.agents/skills/kanbanzai-getting-started/SKILL.md` | Add corpus integrity check; add onboarding procedure |
+| `.kbz/skills/orchestrate-review/SKILL.md` | Add classification step to Step 1; add checklist item |
+| `.agents/skills/kanbanzai-documents/SKILL.md` | Promote classification section; reframe as active obligation; add to checklist |
+| `.kbz/skills/implement-task/SKILL.md` | Add knowledge list to Phase 1; add confirm/flag to Phase 4; add checklist items |
+| `.kbz/skills/orchestrate-development/SKILL.md` | Add knowledge list to Phase 1; add confirmation pass to Phase 6 |
+| `.agents/skills/kanbanzai-agents/SKILL.md` | Add retrieval/confirmation to Task Lifecycle Checklist; update Context Assembly |
 
-### 7.2 Go code changes (server)
+### 9.2 Document templates
+
+| File | Change |
+|------|--------|
+| `work/templates/specification-prompt-template.md` | Add Required: Related Work section with Option A / Option B structure |
+| Design template (if separate) | Same Related Work requirement |
+
+### 9.3 Go code changes (server)
 
 | Component | Change |
 |-----------|--------|
-| `internal/knowledge/store.go` | Add `LastAccessedAt` and `RecentUseCount` fields to `KnowledgeEntry`; increment on `List` and `Get` |
-| `internal/knowledge/surfacer.go` | Add `sort: "recent"` option to `List` |
+| `internal/knowledge/store.go` | Add `LastAccessedAt` and `RecentUseCount`; increment on `List` and `Get` |
+| `internal/knowledge/surfacer.go` | Add `sort: "recent"` option |
 | `internal/docint/index.go` | Add `AccessCount` and `LastAccessedAt` to `DocumentIndex` and `SectionIndex` |
-| `internal/service/intelligence.go` | Increment document and section counters on `Outline`, `Guide`, `Section`, `Find`, `Search` |
-| `internal/service/document.go` | Extend audit report with "Most Accessed" table |
+| `internal/service/intelligence.go` | Increment counters on `Outline`, `Guide`, `Section`, `Find`, `Search` |
+| `internal/service/document.go` | Extend audit with "Most Accessed" table |
 
-### 7.3 No changes
+### 9.4 No changes
 
-- The `doc_intel` tool's action surface (no new actions required by this design)
-- The `doc` tool's action surface
-- The context assembly pipeline in `internal/service/context.go`
-- The classification schema or `classify` action
+- `doc_intel` tool action surface
+- `doc` tool action surface (beyond audit output)
+- Context assembly pipeline in `internal/service/context.go`
+- Classification schema or `classify` action
 
 ---
 
-## 8. Phasing
+## 10. Phasing
 
-### Phase 1: Skill changes (immediate — no code required)
+### Phase 1: Skill and template changes (immediate — no code required)
 
-Update the five skill files listed in §7.1. This is the highest-leverage change
-because it directly addresses the adoption failures for agents acting on any task
-from this point forward. No new code needs to ship before these changes take effect.
+Update all skill files and document templates. This is the highest-leverage change
+because it takes effect immediately for every agent on every task from this point
+forward. The design-stage mandate (Fix 1) and corpus integrity check (Fix 2) are both
+purely textual changes.
 
-Expected outcome: agents begin calling `knowledge list` before tasks and `knowledge
-confirm/flag` after tasks. Classification begins to accumulate at review time.
+Concurrently: run the session-start corpus integrity check, register the 9 unregistered
+files via `doc import`, and begin the batch classification backlog starting with approved
+specifications and designs.
+
+Expected outcome within two active plans: new designs contain Related Work sections.
+Classification coverage reaches >50% of approved specs and designs.
 
 ### Phase 2: Access instrumentation (1 week)
 
-Implement the `LastAccessedAt` and `RecentUseCount` fields on `KnowledgeEntry` and
-the `AccessCount` fields on `DocumentIndex` and `SectionIndex`. Update the audit
-report.
+Implement `LastAccessedAt`, `RecentUseCount` on `KnowledgeEntry` and `AccessCount` on
+`DocumentIndex`/`SectionIndex`. Update the audit report.
 
-Expected outcome: the system can answer "how often is the knowledge base accessed"
-and "which document sections are most consulted". Adoption regressions become visible
-without requiring a full corpus audit.
+Expected outcome: adoption is continuously measurable. Regressions are visible without
+requiring a full corpus audit.
 
-### Phase 3: Close-out confirmation integration (after Phase 1 is running)
+### Phase 3: Validate and tighten (after Phase 1 is running)
 
-After skills are updated and agents begin confirming knowledge entries, validate that
-`use_count` and `status: confirmed` are increasing. If not, this indicates a gap
-between the skill mandate and actual agent behaviour — investigate and tighten the
-constraint.
+Review two completed plans to assess:
+- Are Related Work sections substantive or pro-forma?
+- Is classification running at registration?
+- Is `use_count` for knowledge entries increasing?
 
-The `knowledge(action: "prune")` command can be run at plan boundaries to retire
-tier 3 entries past their TTL and compact the knowledge base.
+If any of these signals are negative, identify the gap (skill instruction vs. actual
+behaviour) and tighten the relevant constraint — moving from advisory language to
+checklist items, or from checklist items to stage-gate enforcement.
 
 ---
 
-## 9. What This Design Is Not
+## 11. What This Design Is Not
 
-1. **Not a replacement for the enhancement design.** FTS5 search, SQLite graph migration,
-   and concept alias resolution are covered by `doc-intel-enhancement-design.md`. This
-   document is about adoption, not capability.
+1. **Not a replacement for the enhancement design.** FTS5 search, SQLite graph
+   migration, and concept alias resolution are covered by `doc-intel-enhancement-design.md`.
+   That design makes the system more capable. This design makes agents use it correctly.
 
 2. **Not automated classification.** Classification remains agent-driven. This design
-   adds the mandatory trigger points; it does not replace agent judgement with a pipeline.
+   adds mandatory trigger points and ensures the corpus is complete enough to classify.
+   It does not replace agent judgement with a pipeline.
 
-3. **Not a specification.** Exact field names, error messages, schema migrations, and
-   test cases belong in the feature specification. This document defines what to build
-   and why.
+3. **Not a specification.** Field names, error messages, schema migrations, and test
+   cases belong in the feature specification. This document defines what to build and why.
 
-4. **Not a guarantee.** Skill changes reduce the probability of agents skipping steps;
-   they do not eliminate it. The instrumentation in Phase 2 is the feedback mechanism
-   that detects when adoption regresses despite the skill mandates.
+4. **Not a guarantee.** Skill changes and template requirements reduce the probability
+   of agents skipping steps; they do not eliminate it. Instrumentation (Phase 2) and
+   reviewer enforcement (Fix 1 §3.5) are the feedback mechanisms that detect and correct
+   drift.
 
 ---
 
-## 10. Success Criteria
+## 12. Success Criteria
 
-After all three phases are complete, the following should be true:
+The primary test is behavioural, not metric: **can a designer, beginning a new feature,
+quickly and reliably discover what the existing corpus already knows about their problem
+domain?**
 
-1. `knowledge(action: "list")` returns entries with non-zero `recent_use_count` for
-   the most frequently used tier 2 entries.
-2. At least 50% of tier 2 knowledge entries have `status: confirmed` following a plan
-   close-out that includes the confirmation pass.
-3. Layer 3 classification coverage reaches ≥50% of approved specifications and designs
-   within two active development plans.
-4. `doc(action: "audit")` surfaces a non-empty "Most Accessed Documents" table showing
-   the corpus sections agents are relying on most.
-5. A reviewer agent can call `doc_intel(action: "find", role: "decision")` on a feature's
-   design document and receive classified decision sections, not zero results.
-6. The next Document Intelligence Usage Report can answer: "How often is the knowledge
-   base accessed?" and "Which document sections are most consulted?"
+Specific criteria:
+
+1. **Design continuity.** New design documents contain a substantive Related Work section
+   with at least one cross-reference to prior work, OR an explicit "no related work
+   found" attestation with evidence of the search conducted.
+
+2. **Concept search functional.** `doc_intel(action: "find", concept: "X")` returns
+   results for at least three concepts introduced in the project. An architect can answer
+   "what else in the corpus touches this concept?" without reading full documents.
+
+3. **Corpus completeness.** `doc(action: "audit")` shows <5% unregistered files in
+   configured document roots. A designer can trust that a negative corpus search result
+   means "not addressed" rather than "not registered."
+
+4. **Classification coverage.** >80% of approved specifications and designs have Layer 3
+   classification. The concept registry contains entries. `find(role: "decision")` returns
+   substantive results across the project corpus.
+
+5. **Conformance enforcement.** The reviewer-conformance check for Related Work catches
+   at least one design that omits meaningful cross-references in the first two plans
+   after these changes ship. If zero designs are ever rejected on this criterion, the
+   enforcement is not functioning.
+
+6. **Knowledge feedback loop closed.** At least 30% of tier 2 knowledge entries reach
+   `status: confirmed` following the first plan close-out that includes the confirmation
+   pass. `recent_use_count` is non-zero for entries that appear in task context packets.
+
+7. **Observable adoption.** The next Document Intelligence Usage Report can answer:
+   "How often is the knowledge base accessed?", "Which document sections are most
+   consulted?", and "Are designs being written with corpus awareness?" — from
+   instrumentation data, without requiring a manual audit.

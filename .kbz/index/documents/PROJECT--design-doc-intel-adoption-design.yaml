@@ -1,0 +1,381 @@
+document_id: PROJECT/design-doc-intel-adoption-design
+document_path: work/design/doc-intel-adoption-design.md
+content_hash: 539cdbcf57512e7524b7669fb4f075065396fd76be43c663e545b711f81ec571
+indexed_at: 2026-04-22T10:45:59.265187Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Document Intelligence Adoption Fixes'
+      byte_offset: 0
+      byte_count: 26409
+      word_count: 3523
+      content_hash: 539cdbcf57512e7524b7669fb4f075065396fd76be43c663e545b711f81ec571
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 900
+          byte_count: 2407
+          word_count: 332
+          content_hash: 84fe618f2d6e44a1b7943b09ddb388b572ad70e28f2330b9994a33ca72eec425
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 1.1 Scope
+              byte_offset: 2465
+              byte_count: 842
+              word_count: 112
+              content_hash: 15d83efe9bcdeb5a5990ede88d319e40c8e491696778e93d459ab0fb7b8ac17f
+        - path: "1.2"
+          level: 2
+          title: 2. Root Cause Analysis
+          byte_offset: 3307
+          byte_count: 3284
+          word_count: 478
+          content_hash: da3165428aef8e74edbab971a54382b497aceff7a089bc8214c33860849cf3c2
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Why knowledge is not consumed
+              byte_offset: 3408
+              byte_count: 1508
+              word_count: 212
+              content_hash: 5f3a9650ae80174cf3d9356f9246f5427800c1731f4b21d7859e894000b198ba
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Why Layer 3 classification is not running
+              byte_offset: 4916
+              byte_count: 1241
+              word_count: 184
+              content_hash: 50c245d78f89dc562a393ab64bebefeea8143322fb25eb00f36964b29770d27b
+            - path: 1.2.3
+              level: 3
+              title: 2.3 Why instrumentation is absent
+              byte_offset: 6157
+              byte_count: 434
+              word_count: 66
+              content_hash: 7f48b34708a36e7351d858fb7c80d2b36986efd70335bea72416d91caee9c070
+        - path: "1.3"
+          level: 2
+          title: '3. Fix 1: Mandatory Knowledge Retrieval in Skills'
+          byte_offset: 6591
+          byte_count: 5377
+          word_count: 713
+          content_hash: 69d812f608bb9c8e74b4726a0130869aae45b855a817e9e0588aa50e7d1dcd75
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Problem
+              byte_offset: 6645
+              byte_count: 96
+              word_count: 14
+              content_hash: 6e950ac7da4352eecdfb69929e53c96d45c4791d1c06ad2e341193f8d4077edf
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Solution
+              byte_offset: 6741
+              byte_count: 514
+              word_count: 70
+              content_hash: d22bb799eb0710c58b7bf60f53a2b413c987bab4c5dba22e43c5c38e137235b5
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Changes to `implement-task/SKILL.md`
+              byte_offset: 7255
+              byte_count: 2292
+              word_count: 309
+              content_hash: 7e81a68308ee6228479b2b52560b3c29c7cdd93c1cea0cb13e456e31bb6b79d3
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Changes to `orchestrate-development/SKILL.md`
+              byte_offset: 9547
+              byte_count: 1307
+              word_count: 161
+              content_hash: 5757f25f9c9b32b8e5fe2c0d79508dbd013f127784c723d84a2bde34820c4064
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Changes to `kanbanzai-agents/SKILL.md`
+              byte_offset: 10854
+              byte_count: 1114
+              word_count: 150
+              content_hash: 6d7d9fcba092950aafa675ff8285e271dd355a0532f6bba3cd0c0b025a0e75df
+        - path: "1.4"
+          level: 2
+          title: '4. Fix 2: Classification Trigger in the Review Pipeline'
+          byte_offset: 11968
+          byte_count: 3455
+          word_count: 464
+          content_hash: 5553db99225c893f59b104007a0977b1ee65c8a60ea6c4d29eb561333564dcf6
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Problem
+              byte_offset: 12028
+              byte_count: 196
+              word_count: 32
+              content_hash: a369c97b6532c71c23532a1a39248343504464f23f6cf2d010a1aa70a9600595
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Solution
+              byte_offset: 12224
+              byte_count: 520
+              word_count: 64
+              content_hash: 6fd1247d3b09748fb45affe5c0e9963dd9a8eb44e120ac080237c512c0c4f555
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Changes to `orchestrate-review/SKILL.md`
+              byte_offset: 12744
+              byte_count: 1368
+              word_count: 170
+              content_hash: 1097adfc4b79352af99113230be4c678e22d84e4f840dda33271e4b3a815296e
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Changes to `kanbanzai-documents/SKILL.md`
+              byte_offset: 14112
+              byte_count: 1311
+              word_count: 188
+              content_hash: bd9a51cbf18658d44426acd3907dbf7d56a38c4a56db521a30e51ab62ca1e35e
+        - path: "1.5"
+          level: 2
+          title: '5. Fix 3: Access Instrumentation'
+          byte_offset: 15423
+          byte_count: 4388
+          word_count: 560
+          content_hash: d8a2a8c0896a67cf04eda1316516733425a353c4d54df78eb61e2be14315cca4
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Problem
+              byte_offset: 15460
+              byte_count: 419
+              word_count: 61
+              content_hash: 8087d8bb9df6227b15a45de627fac3b32f87e26f84b9362bc9330aca58ad264a
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Solution
+              byte_offset: 15879
+              byte_count: 83
+              word_count: 12
+              content_hash: 40d2d8e30dd29cfada144be3706d4555f2b983f05c025f9f62358fad5c44a370
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Knowledge base instrumentation
+              byte_offset: 15962
+              byte_count: 1417
+              word_count: 176
+              content_hash: 7710c243e9351529c8ff1bf45e5933290e70037dbf8c894968f53466d05030ea
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Document intelligence instrumentation
+              byte_offset: 17379
+              byte_count: 2187
+              word_count: 265
+              content_hash: 94c9a9a9224e48c8d3a0b806d96f0db2af5d774186c16038b2cbeab5a9eadb98
+            - path: 1.5.5
+              level: 3
+              title: 5.5 What instrumentation does not track
+              byte_offset: 19566
+              byte_count: 245
+              word_count: 40
+              content_hash: e130f9cde85e937e07b7f158d5020007aeecf17c76a03dcad4f02ef501235db5
+        - path: "1.6"
+          level: 2
+          title: '6. Fix 4: Plan Close-Out Knowledge Confirmation'
+          byte_offset: 19811
+          byte_count: 1619
+          word_count: 234
+          content_hash: 9428f0f8af91d97fef638d003221ab82ce65a893ee1b833441adc0224ca1d18b
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Problem
+              byte_offset: 19863
+              byte_count: 242
+              word_count: 33
+              content_hash: 4edd897cc75077473a54010f060f3b20d0ee0bf45ae192f8b4d5290e864e9a72
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Solution
+              byte_offset: 20105
+              byte_count: 280
+              word_count: 37
+              content_hash: 16b1264ca7260a06660e1a6362329733a9f4e49b42298c3ef4c91aec5162cd34
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Changes to plan review workflow
+              byte_offset: 20385
+              byte_count: 740
+              word_count: 105
+              content_hash: 6e9e6deaa4a3474fdb7b6d30d159e9c28b90ce6e0e0ddec092a4d280902b216d
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Tier 3 entries
+              byte_offset: 21125
+              byte_count: 305
+              word_count: 51
+              content_hash: 2aacd733966bf46bc723fb572b74a94661b52e1cc94b6094098cb59f1aefdbda
+        - path: "1.7"
+          level: 2
+          title: 7. What Changes
+          byte_offset: 21430
+          byte_count: 1757
+          word_count: 227
+          content_hash: 625ddefcd6889c4eaf8c41a6776fdcfbeb2f02b54aab196378b6ff8d42b7f723
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Skill files
+              byte_offset: 21450
+              byte_count: 862
+              word_count: 109
+              content_hash: ff8a74c09465d8d12eaac4e50c4223f7375e0096b764fc1755a94f88567d74cd
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Go code changes (server)
+              byte_offset: 22312
+              byte_count: 620
+              word_count: 76
+              content_hash: 31b373f575b8c913d348fca40ee17fc8e20d335f9e329f6b21332010f53178e1
+            - path: 1.7.3
+              level: 3
+              title: 7.3 No changes
+              byte_offset: 22932
+              byte_count: 255
+              word_count: 38
+              content_hash: ff12e16e9d7754826da30c33a2555fb1c9df88d309e08fda34d8807903a2f80d
+        - path: "1.8"
+          level: 2
+          title: 8. Phasing
+          byte_offset: 23187
+          byte_count: 1407
+          word_count: 205
+          content_hash: 9100c8cc6b0cc64230eb1b19e4da87657c0fe0a76cf530ec8a13c46a943eb005
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 'Phase 1: Skill changes (immediate — no code required)'
+              byte_offset: 23202
+              byte_count: 474
+              word_count: 72
+              content_hash: c5f0fb387926d7b49cdb62dee86a769179e2a4a37976996037f4344555c1bc88
+            - path: 1.8.2
+              level: 3
+              title: 'Phase 2: Access instrumentation (1 week)'
+              byte_offset: 23676
+              byte_count: 428
+              word_count: 57
+              content_hash: e3eb4361d28a831ecb7af752463805d154a8e6704dd14264a950875f269635a8
+            - path: 1.8.3
+              level: 3
+              title: 'Phase 3: Close-out confirmation integration (after Phase 1 is running)'
+              byte_offset: 24104
+              byte_count: 490
+              word_count: 73
+              content_hash: 9016263950afbf0e851292c7a417334a3ab4a5c9f98f4c79b8cec5e088f2395c
+        - path: "1.9"
+          level: 2
+          title: 9. What This Design Is Not
+          byte_offset: 24594
+          byte_count: 867
+          word_count: 122
+          content_hash: 0c3a37022d3c74e8afacdf4994c842e8c63ee602f9c6135f5ef1b48a9750ca44
+        - path: "1.10"
+          level: 2
+          title: 10. Success Criteria
+          byte_offset: 25461
+          byte_count: 948
+          word_count: 134
+          content_hash: 9e30c92ccd829776553ef97fa23d3d0469240c14ab0d0eedac8df0f09b88411d
+entity_refs:
+    - entity_id: TASK-212
+      entity_type: task
+      section_path: 1.3.3
+      byte_offset: 8824
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.4.3
+      byte_offset: 13189
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.5.4
+      byte_offset: 18355
+cross_doc_links:
+    - target_path: work/reports/doc-intel-usage-report.md
+      link_text: work/reports/doc-intel-usage-report.md
+      section_path: "1"
+    - target_path: work/research/document-retrieval-for-ai-agents.md
+      link_text: work/research/document-retrieval-for-ai-agents.md
+      section_path: "1"
+    - target_path: work/research/skill-authoring-best-practices.md
+      link_text: work/research/skill-authoring-best-practices.md
+      section_path: "1"
+    - target_path: work/design/doc-intel-enhancement-design.md
+      link_text: work/design/doc-intel-enhancement-design.md
+      section_path: "1"
+    - target_path: doc-intel-enhancement-design.md
+      link_text: doc-intel-enhancement-design.md
+      section_path: "1.1"
+    - target_path: doc-intel-enhancement-design.md
+      link_text: doc-intel-enhancement-design.md
+      section_path: 1.2.2
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.3.2
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.2
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.3.2
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.3.3
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.4
+    - target_path: kanbanzai-agents/SKILL.md
+      link_text: kanbanzai-agents/SKILL.md
+      section_path: 1.3.5
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.4.2
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: 1.4.2
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.4.3
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: 1.4.4
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.6.2
+    - target_path: review-plan/SKILL.md
+      link_text: review-plan/SKILL.md
+      section_path: 1.6.2
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.7.1
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.7.1
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.7.1
+    - target_path: .kbz/skills/orchestrate-review/SKILL.md
+      link_text: .kbz/skills/orchestrate-review/SKILL.md
+      section_path: 1.7.1
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: 1.7.1
+    - target_path: doc-intel-enhancement-design.md
+      link_text: doc-intel-enhancement-design.md
+      section_path: "1.9"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.1.1
+      role: constraint
+      confidence: high
+classified: false

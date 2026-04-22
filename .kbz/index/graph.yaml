@@ -1,4 +1,4 @@
-updated_at: 2026-04-22T00:32:03.43999Z
+updated_at: 2026-04-22T10:45:59.265187Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -66895,3 +66895,1328 @@ edges:
       to: PROJECT/report-audit-codebase-2026-04#1.3
       to_type: section
       edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage
+      from_type: document
+      to: PROJECT/design-transition-history-storage#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage
+      from_type: document
+      to: PROJECT/design-transition-history-storage#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2.7
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2.7
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2.7
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2.7
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2.8
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2.8
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2.8
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#2.8
+      from_type: section
+      to: PROJECT/design-transition-history-storage#2.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage
+      from_type: document
+      to: PROJECT/design-transition-history-storage#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#3
+      from_type: section
+      to: PROJECT/design-transition-history-storage#3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#3
+      from_type: section
+      to: PROJECT/design-transition-history-storage#3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#3
+      from_type: section
+      to: PROJECT/design-transition-history-storage#3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage#3
+      from_type: section
+      to: PROJECT/design-transition-history-storage#3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-transition-history-storage
+      from_type: document
+      to: PROJECT/design-transition-history-storage#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison
+      from_type: document
+      to: PROJECT/research-state-backend-comparison#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison
+      from_type: document
+      to: PROJECT/research-state-backend-comparison#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison
+      from_type: document
+      to: PROJECT/research-state-backend-comparison#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison#3
+      from_type: section
+      to: PROJECT/research-state-backend-comparison#3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison#3
+      from_type: section
+      to: PROJECT/research-state-backend-comparison#3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison#3
+      from_type: section
+      to: PROJECT/research-state-backend-comparison#3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison#3
+      from_type: section
+      to: PROJECT/research-state-backend-comparison#3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison#3
+      from_type: section
+      to: PROJECT/research-state-backend-comparison#3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison#3
+      from_type: section
+      to: PROJECT/research-state-backend-comparison#3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison
+      from_type: document
+      to: PROJECT/research-state-backend-comparison#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison
+      from_type: document
+      to: PROJECT/research-state-backend-comparison#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison#5
+      from_type: section
+      to: PROJECT/research-state-backend-comparison#5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison#5
+      from_type: section
+      to: PROJECT/research-state-backend-comparison#5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison#5
+      from_type: section
+      to: PROJECT/research-state-backend-comparison#5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison#5
+      from_type: section
+      to: PROJECT/research-state-backend-comparison#5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison#5
+      from_type: section
+      to: PROJECT/research-state-backend-comparison#5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison
+      from_type: document
+      to: PROJECT/research-state-backend-comparison#6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-state-backend-comparison#2
+      from_type: section
+      to: work/design/transition-history-storage.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#2
+      from_type: section
+      to: work/design/centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#2
+      from_type: section
+      to: work/design/kanbanzai-1.0.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#2
+      from_type: section
+      to: work/design/public-schema-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#3.1
+      from_type: section
+      to: work/design/transition-history-storage.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#3.1
+      from_type: section
+      to: work/design/git-commit-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#3.2
+      from_type: section
+      to: work/design/centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#3.3
+      from_type: section
+      to: work/design/kanbanzai-1.0.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#3.3
+      from_type: section
+      to: work/design/public-schema-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#3.4
+      from_type: section
+      to: work/design/centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#3.4
+      from_type: section
+      to: work/design/agent-interaction-protocol.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#3.5
+      from_type: section
+      to: work/design/kanbanzai-1.0.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#3.5
+      from_type: section
+      to: work/design/public-schema-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#3.5
+      from_type: section
+      to: work/design/centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#3.6
+      from_type: section
+      to: work/design/centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#3.6
+      from_type: section
+      to: work/design/transition-history-storage.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-state-backend-comparison#5.1
+      from_type: section
+      to: transition-history-storage.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-centralized-state-server
+      from_type: document
+      to: PROJECT/design-centralized-state-server#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server
+      from_type: document
+      to: PROJECT/design-centralized-state-server#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.3
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.3
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.3
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.8
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.8
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.8
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.8
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.8
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.8.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.8
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.8.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.10
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.10.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.10
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.10.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.10
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.10.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#2.10
+      from_type: section
+      to: PROJECT/design-centralized-state-server#2.10.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server
+      from_type: document
+      to: PROJECT/design-centralized-state-server#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#3
+      from_type: section
+      to: PROJECT/design-centralized-state-server#3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#3
+      from_type: section
+      to: PROJECT/design-centralized-state-server#3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#3
+      from_type: section
+      to: PROJECT/design-centralized-state-server#3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server#3
+      from_type: section
+      to: PROJECT/design-centralized-state-server#3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-centralized-state-server
+      from_type: document
+      to: PROJECT/design-centralized-state-server#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report
+      from_type: document
+      to: PROJECT/report-document-intelligence-usage-report#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.4
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.4
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.4
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.4.3
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.4.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.4.3
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.4.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.4.3
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.4.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.4.3
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.4.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.4
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.4
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.6
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.6
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.6
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.7
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.8
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.8
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.11
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.11.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.13
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.14
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.15
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.16
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.17
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.17
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.17.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.18
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.19
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.20
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.21
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.22
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.23
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.24
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.25
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.26
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.26
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.26.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.26
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.26.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.26
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.26.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.26
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.26.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.27
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.27
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.27.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.27
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.27.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.27
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.27.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.27
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.27.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.28
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.29
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.30
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.31
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.32
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.33
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.34
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.34
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.34.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.34
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.34.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.34
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.34.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1.34
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.34.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.35
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.36
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.37
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.38
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.39
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.40
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.41
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-intelligence-usage-report#1
+      from_type: section
+      to: PROJECT/report-document-intelligence-usage-report#1.42
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report
+      from_type: document
+      to: PROJECT/report-doc-intel-usage-report#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.2
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.2
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.2
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.3
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.3
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.3
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.3
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.4
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.4
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.4
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.5
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.5
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.5
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.6
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.6
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.6
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.7
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.7
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.7
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.7
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.7
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.7.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1
+      from_type: section
+      to: PROJECT/report-doc-intel-usage-report#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-usage-report#1.4.3
+      from_type: section
+      to: FEAT-01KPNNYYXQSYW
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-usage-report#1.2.1
+      from_type: section
+      to: docs/user-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-usage-report#1.2.1
+      from_type: section
+      to: work/design/skills-system-redesign-v2.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-usage-report#1.2.2
+      from_type: section
+      to: work/design/document-intelligence-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-usage-report#1.7.5
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-usage-report#1.9
+      from_type: section
+      to: SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-usage-report#1.9
+      from_type: section
+      to: docs/user-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design
+      from_type: document
+      to: PROJECT/design-doc-intel-adoption-design#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.1
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.2
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.2
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.2
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.3
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.3
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.3
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.3
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.3
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.4
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.4
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.4
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.4
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.5
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.5
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.5
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.5
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.5
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.6
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.6
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.6
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.6
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.7
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.7
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.7
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.8
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.8
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.8
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: PROJECT/design-doc-intel-adoption-design#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-doc-intel-adoption-design#1.3.3
+      from_type: section
+      to: TASK-212
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-doc-intel-adoption-design#1.4.3
+      from_type: section
+      to: DOC-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-doc-intel-adoption-design#1.5.4
+      from_type: section
+      to: DOC-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: work/reports/doc-intel-usage-report.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: work/research/document-retrieval-for-ai-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: work/research/skill-authoring-best-practices.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1
+      from_type: section
+      to: work/design/doc-intel-enhancement-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.1
+      from_type: section
+      to: doc-intel-enhancement-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.2.2
+      from_type: section
+      to: doc-intel-enhancement-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.3.2
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.3.2
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.3.2
+      from_type: section
+      to: .agents/skills/kanbanzai-agents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.3.3
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.3.4
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.3.5
+      from_type: section
+      to: kanbanzai-agents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.4.2
+      from_type: section
+      to: orchestrate-review/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.4.2
+      from_type: section
+      to: kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.4.3
+      from_type: section
+      to: orchestrate-review/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.4.4
+      from_type: section
+      to: kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.6.2
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.6.2
+      from_type: section
+      to: review-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.7.1
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.7.1
+      from_type: section
+      to: .kbz/skills/orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.7.1
+      from_type: section
+      to: .agents/skills/kanbanzai-agents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.7.1
+      from_type: section
+      to: .kbz/skills/orchestrate-review/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.7.1
+      from_type: section
+      to: .agents/skills/kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-doc-intel-adoption-design#1.9
+      from_type: section
+      to: doc-intel-enhancement-design.md
+      to_type: document
+      edge_type: LINKS_TO
