@@ -2,9 +2,11 @@ id: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates
 path: work/spec/p28-skill-doc-updates.md
 type: specification
 title: "Specification: Skill Documentation Updates"
-status: draft
+status: approved
 owner: FEAT-01KPVDDYN855F
-content_hash: 8af522be6c8f72738710bddee60f435ea3d2c498c6406e70d764e9e1515b75b7
+approved_by: sambeau
+approved_at: "2026-04-22T20:48:07Z"
+content_hash: 7d5a77984f2dcd2aed4d6826a9d3c8f42449a46e69eaa912d5f24360b23ea7dd
 created: "2026-04-22T20:39:43Z"
 created_by: sambeau
-updated: "2026-04-22T20:39:43Z"
+updated: "2026-04-22T20:48:07Z"
