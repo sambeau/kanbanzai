@@ -2,9 +2,11 @@ id: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout
 path: work/spec/p28-worktree-creation-timeout.md
 type: specification
 title: "Specification: Worktree Creation Timeout Under Load"
-status: draft
+status: approved
 owner: FEAT-01KPVDDYZ3182
-content_hash: 93c0861250b07bbb5bab75d4c3b800098c2bf894a3e19a20c601ea856b878cd7
+approved_by: sambeau
+approved_at: "2026-04-22T20:48:07Z"
+content_hash: 3748d66518721ca08e5becf5dd0775dda246213721f1699fbbe88076e46a8d31
 created: "2026-04-22T20:37:24Z"
 created_by: sambeau
-updated: "2026-04-22T20:37:24Z"
+updated: "2026-04-22T20:48:07Z"
