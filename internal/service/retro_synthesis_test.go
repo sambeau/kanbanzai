@@ -553,6 +553,8 @@ func writeRetroKnowledgeRecord(
 func newRetroTestService(t *testing.T, root string) *RetroService {
 	t.Helper()
 	knowledgeSvc := NewKnowledgeService(root)
+	// Wait for background goroutines before TempDir cleanup runs.
+	t.Cleanup(knowledgeSvc.Close)
 	// entitySvc and docSvc are only needed for non-project scope and report mode.
 	return &RetroService{
 		knowledgeSvc: knowledgeSvc,
@@ -1089,6 +1091,7 @@ tags:%s
 func newRetroTestServiceWithEntities(t *testing.T, root string) *RetroService {
 	t.Helper()
 	knowledgeSvc := NewKnowledgeService(root)
+	t.Cleanup(knowledgeSvc.Close)
 	entitySvc := NewEntityService(root)
 	return &RetroService{
 		knowledgeSvc: knowledgeSvc,
@@ -1103,6 +1106,7 @@ func newRetroTestServiceWithEntities(t *testing.T, root string) *RetroService {
 func newRetroTestServiceWithReport(t *testing.T, root string) *RetroService {
 	t.Helper()
 	knowledgeSvc := NewKnowledgeService(root)
+	t.Cleanup(knowledgeSvc.Close)
 	entitySvc := NewEntityService(root)
 	docSvc := NewDocumentService(root, root)
 	return &RetroService{
@@ -1674,7 +1678,7 @@ func TestSynthesise_FeatureScope(t *testing.T) {
 		t.Fatalf("CreateFeature: %v", err)
 	}
 	taskResult, err := svc.entitySvc.CreateTask(CreateTaskInput{
-		Name: "test",
+		Name:          "test",
 		ParentFeature: featResult.ID,
 		Slug:          "scope-task",
 		Summary:       "Scope test task",
@@ -1728,7 +1732,7 @@ func TestSynthesise_FeatureScopeExcludesOtherFeature(t *testing.T) {
 		t.Fatalf("CreateFeature B: %v", err)
 	}
 	taskB, err := svc.entitySvc.CreateTask(CreateTaskInput{
-		Name: "test",
+		Name:          "test",
 		ParentFeature: featB.ID,
 		Slug:          "task-b",
 		Summary:       "Task under feature B",
@@ -1767,7 +1771,7 @@ func TestSynthesise_PlanScope(t *testing.T) {
 		t.Fatalf("CreateFeature: %v", err)
 	}
 	taskResult, err := svc.entitySvc.CreateTask(CreateTaskInput{
-		Name: "test",
+		Name:          "test",
 		ParentFeature: featResult.ID,
 		Slug:          "plan-scope-task",
 		Summary:       "Task under plan feature",
@@ -1819,7 +1823,7 @@ func TestSynthesise_PlanScopeExcludesOtherPlan(t *testing.T) {
 		t.Fatalf("CreateFeature B: %v", err)
 	}
 	taskB, err := svc.entitySvc.CreateTask(CreateTaskInput{
-		Name: "test",
+		Name:          "test",
 		ParentFeature: featB.ID,
 		Slug:          "task-plan-b",
 		Summary:       "Task under plan B",

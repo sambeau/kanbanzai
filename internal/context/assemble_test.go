@@ -25,6 +25,7 @@ conventions:
 `)
 	store := NewProfileStore(profileDir)
 	knowledgeSvc := service.NewKnowledgeService(stateDir)
+	t.Cleanup(knowledgeSvc.Close)
 
 	// T3 scoped to role
 	_, _, err := knowledgeSvc.Contribute(service.ContributeInput{
@@ -124,6 +125,7 @@ description: "Backend development role"
 `)
 	store := NewProfileStore(profileDir)
 	knowledgeSvc := service.NewKnowledgeService(stateDir)
+	t.Cleanup(knowledgeSvc.Close)
 	entitySvc := service.NewEntityService(stateDir)
 
 	// Write a task record directly to avoid the plan→feature→task creation chain.
@@ -200,6 +202,7 @@ description: "Test role"
 `)
 	store := NewProfileStore(profileDir)
 	knowledgeSvc := service.NewKnowledgeService(stateDir)
+	t.Cleanup(knowledgeSvc.Close)
 
 	t2Content := strings.Repeat("T2content.", 15) // 150 bytes of body
 	t3Content := strings.Repeat("T3content.", 15) // 150 bytes of body
@@ -281,6 +284,7 @@ description: "Test role"
 `)
 	store := NewProfileStore(profileDir)
 	knowledgeSvc := service.NewKnowledgeService(stateDir)
+	t.Cleanup(knowledgeSvc.Close)
 
 	body := strings.Repeat("Xcontent.", 20) // 180 bytes of body each
 
@@ -370,6 +374,7 @@ description: "Test role"
 `)
 	store := NewProfileStore(profileDir)
 	knowledgeSvc := service.NewKnowledgeService(stateDir)
+	t.Cleanup(knowledgeSvc.Close)
 
 	result, err := Assemble(AssemblyInput{Role: "be"}, store, knowledgeSvc, nil, nil)
 	if err != nil {
@@ -420,6 +425,7 @@ conventions:
 `)
 	store := NewProfileStore(profileDir)
 	knowledgeSvc := service.NewKnowledgeService(stateDir)
+	t.Cleanup(knowledgeSvc.Close)
 
 	result, err := Assemble(AssemblyInput{Role: "reviewer"}, store, knowledgeSvc, nil, nil)
 	if err != nil {
@@ -530,6 +536,7 @@ conventions:
 `)
 	store := NewProfileStore(profileDir)
 	knowledgeSvc := service.NewKnowledgeService(stateDir)
+	t.Cleanup(knowledgeSvc.Close)
 
 	// Collect the group ordering from multiple runs.
 	orderSeen := make(map[string]bool)
@@ -575,6 +582,7 @@ func TestAssemble_UnknownRole_ReturnsError(t *testing.T) {
 
 	store := NewProfileStore(profileDir)
 	knowledgeSvc := service.NewKnowledgeService(stateDir)
+	t.Cleanup(knowledgeSvc.Close)
 
 	_, err := Assemble(AssemblyInput{Role: "nonexistent"}, store, knowledgeSvc, nil, nil)
 	if err == nil {
@@ -594,6 +602,7 @@ description: "Test role"
 `)
 	store := NewProfileStore(profileDir)
 	knowledgeSvc := service.NewKnowledgeService(stateDir)
+	t.Cleanup(knowledgeSvc.Close)
 
 	// Create a Tier 2 entry with high confidence (will be included)
 	t2High, _, err := knowledgeSvc.Contribute(service.ContributeInput{

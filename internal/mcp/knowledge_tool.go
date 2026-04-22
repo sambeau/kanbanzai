@@ -87,6 +87,9 @@ func knowledgeTool(svc *service.KnowledgeService, repoPath string) server.Server
 		mcp.WithBoolean("include_retired",
 			mcp.Description("Include retired entries in list results (default: false)"),
 		),
+		mcp.WithString("sort",
+			mcp.Description("Sort order for list results: \"recent\" orders by descending recent_use_count (list)"),
+		),
 		// compact / prune
 		mcp.WithBoolean("dry_run",
 			mcp.Description("Simulate without making changes (compact, prune)"),
@@ -139,6 +142,7 @@ func knowledgeListAction(svc *service.KnowledgeService) ActionHandler {
 			MinConfidence:  req.GetFloat("min_confidence", 0),
 			Tags:           req.GetStringSlice("tags", nil),
 			IncludeRetired: req.GetBool("include_retired", false),
+			Sort:           req.GetString("sort", ""),
 		}
 
 		records, err := svc.List(filters)
@@ -148,7 +152,15 @@ func knowledgeListAction(svc *service.KnowledgeService) ActionHandler {
 
 		entries := make([]map[string]any, 0, len(records))
 		for _, rec := range records {
-			entries = append(entries, rec.Fields)
+			entry := make(map[string]any, len(rec.Fields)+1)
+			for k, v := range rec.Fields {
+				entry[k] = v
+			}
+			// FR-007: ensure recent_use_count is present in every entry.
+			if _, ok := entry["recent_use_count"]; !ok {
+				entry["recent_use_count"] = 0
+			}
+			entries = append(entries, entry)
 		}
 
 		return map[string]any{

@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/sambeau/kanbanzai/internal/docint"
@@ -42,6 +43,7 @@ type RoleMatch struct {
 type IntelligenceService struct {
 	indexStore *docint.IndexStore
 	repoRoot   string
+	wg         sync.WaitGroup // tracks background goroutines (FR-012 – FR-016)
 }
 
 // NewIntelligenceService creates a new IntelligenceService.
@@ -177,6 +179,8 @@ func (s *IntelligenceService) GetOutline(docID string) ([]docint.Section, error)
 	if err != nil {
 		return nil, fmt.Errorf("load document index: %w", err)
 	}
+	s.wg.Add(1)
+	go func() { defer s.wg.Done(); s.touchDocumentAccess(docID, "") }() // FR-012
 	return index.Sections, nil
 }
 
@@ -208,6 +212,8 @@ func (s *IntelligenceService) GetSection(docID, sectionPath string) (*docint.Sec
 		return section, nil, nil
 	}
 
+	s.wg.Add(1)
+	go func() { defer s.wg.Done(); s.touchDocumentAccess(docID, sectionPath) }() // FR-014
 	return section, content[start:end], nil
 }
 
@@ -230,6 +236,8 @@ func (s *IntelligenceService) FindByEntity(entityID string) ([]EntityDocMatch, e
 				SectionTitle: title,
 			})
 		}
+		s.wg.Add(1)
+		go func(m []EntityDocMatch) { defer s.wg.Done(); s.touchDistinctDocuments(m) }(matches) // FR-015
 		return matches, nil
 	}
 	log.Printf("warning: SQLite FindByEntity fallback for %s: %v", entityID, sqlErr)
@@ -257,6 +265,8 @@ func (s *IntelligenceService) FindByEntity(entityID string) ([]EntityDocMatch, e
 			}
 		}
 	}
+	s.wg.Add(1)
+	go func(m []EntityDocMatch) { defer s.wg.Done(); s.touchDistinctDocuments(m) }(matches) // FR-015
 	return matches, nil
 }
 
@@ -300,6 +310,25 @@ func (s *IntelligenceService) FindByConcept(concept string) ([]ConceptMatch, err
 			SectionTitle: title,
 			Relationship: "uses",
 		})
+	}
+
+	// FR-015: increment access counters for distinct documents in non-empty results.
+	if len(matches) > 0 {
+		docIDs := make([]string, 0, len(matches))
+		seen := make(map[string]bool)
+		for _, m := range matches {
+			if !seen[m.DocumentID] {
+				seen[m.DocumentID] = true
+				docIDs = append(docIDs, m.DocumentID)
+			}
+		}
+		s.wg.Add(1)
+		go func(ids []string) {
+			defer s.wg.Done()
+			for _, id := range ids {
+				s.touchDocumentAccess(id, "")
+			}
+		}(docIDs)
 	}
 
 	return matches, nil
@@ -364,6 +393,25 @@ func (s *IntelligenceService) FindByRole(role string, scope string) ([]RoleMatch
 				})
 			}
 		}
+	}
+
+	// FR-015: increment access counters for distinct documents in non-empty results.
+	if len(matches) > 0 {
+		seenDocs := make(map[string]bool)
+		var distinctIDs []string
+		for _, m := range matches {
+			if !seenDocs[m.DocumentID] {
+				seenDocs[m.DocumentID] = true
+				distinctIDs = append(distinctIDs, m.DocumentID)
+			}
+		}
+		s.wg.Add(1)
+		go func(ids []string) {
+			defer s.wg.Done()
+			for _, id := range ids {
+				s.touchDocumentAccess(id, "")
+			}
+		}(distinctIDs)
 	}
 
 	return matches, nil
@@ -479,6 +527,8 @@ func (s *IntelligenceService) GetDocumentIndex(docID string) (*docint.DocumentIn
 	if err != nil {
 		return nil, fmt.Errorf("load document index: %w", err)
 	}
+	s.wg.Add(1)
+	go func() { defer s.wg.Done(); s.touchDocumentAccess(docID, "") }() // FR-013
 	return index, nil
 }
 
@@ -507,7 +557,26 @@ func (s *IntelligenceService) GetImpact(sectionID string) ([]docint.GraphEdge, e
 
 // Search executes a full-text search over section content.
 func (s *IntelligenceService) Search(params docint.SearchParams) (int, []docint.SearchResult, error) {
-	return s.indexStore.SearchSections(params)
+	total, results, err := s.indexStore.SearchSections(params)
+	// FR-016: increment access counters for distinct documents in non-empty results.
+	if err == nil && len(results) > 0 {
+		seen := make(map[string]bool)
+		var distinctIDs []string
+		for _, r := range results {
+			if !seen[r.DocumentID] {
+				seen[r.DocumentID] = true
+				distinctIDs = append(distinctIDs, r.DocumentID)
+			}
+		}
+		s.wg.Add(1)
+		go func(ids []string) {
+			defer s.wg.Done()
+			for _, id := range ids {
+				s.touchDocumentAccess(id, "")
+			}
+		}(distinctIDs)
+	}
+	return total, results, err
 }
 
 // RebuildStats summarises the result of a full index rebuild.
@@ -573,9 +642,56 @@ func (s *IntelligenceService) RebuildIndex() (RebuildStats, error) {
 	return stats, nil
 }
 
-// Close closes the underlying index store (and its SQLite connection).
+// Wait waits for all background goroutine operations to complete without
+// closing the index store. Use in tests to ensure counter updates are
+// persisted before making assertions.
+func (s *IntelligenceService) Wait() {
+	s.wg.Wait()
+}
+
+// Close waits for all background goroutines to finish, then closes the
+// underlying index store (and its SQLite connection).
 func (s *IntelligenceService) Close() error {
+	s.wg.Wait()
 	return s.indexStore.Close()
+}
+
+// touchDocumentAccess increments AccessCount and updates LastAccessedAt for
+// the given document. If sectionPath is non-empty, also increments the
+// SectionAccess entry for that path. Errors are silently absorbed (NFR-002).
+// Must be called in a goroutine for non-blocking behaviour (NFR-001).
+func (s *IntelligenceService) touchDocumentAccess(docID string, sectionPath string) {
+	index, err := s.indexStore.LoadDocumentIndex(docID)
+	if err != nil {
+		return
+	}
+	now := time.Now().UTC()
+	index.AccessCount++
+	index.LastAccessedAt = &now
+
+	if sectionPath != "" {
+		if index.SectionAccess == nil {
+			index.SectionAccess = make(map[string]docint.SectionAccessInfo)
+		}
+		info := index.SectionAccess[sectionPath]
+		info.AccessCount++
+		info.LastAccessedAt = &now
+		index.SectionAccess[sectionPath] = info
+	}
+
+	s.indexStore.SaveDocumentIndex(index) //nolint:errcheck // best-effort
+}
+
+// touchDistinctDocuments increments access counters for every distinct
+// DocumentID found in a []EntityDocMatch result set (FR-015).
+func (s *IntelligenceService) touchDistinctDocuments(matches []EntityDocMatch) {
+	seen := make(map[string]bool)
+	for _, m := range matches {
+		if !seen[m.DocumentID] {
+			seen[m.DocumentID] = true
+			s.touchDocumentAccess(m.DocumentID, "")
+		}
+	}
 }
 
 // resolveDocPath resolves a document path relative to the repo root.

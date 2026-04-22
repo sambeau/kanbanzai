@@ -62,12 +62,10 @@ var docCommitPathsFunc = func(repoRoot, message string, extraPaths ...string) (b
 // need to change when a future action makes use of it. Currently all actions
 // call into docSvc directly.
 func DocTool(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, entitySvc *service.EntityService) []server.ServerTool {
-	// intelligenceSvc is intentionally not forwarded to docTool; no current action needs it.
-	_ = intelligenceSvc
-	return []server.ServerTool{docTool(docSvc, entitySvc)}
+	return []server.ServerTool{docTool(docSvc, intelligenceSvc, entitySvc)}
 }
 
-func docTool(docSvc *service.DocumentService, entitySvc *service.EntityService) server.ServerTool {
+func docTool(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, entitySvc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("doc",
 		mcp.WithReadOnlyHintAnnotation(false),
 		mcp.WithDestructiveHintAnnotation(false),
@@ -141,7 +139,7 @@ func docTool(docSvc *service.DocumentService, entitySvc *service.EntityService) 
 			"refresh":               docRefreshAction(docSvc),
 			"chain":                 docChainAction(docSvc),
 			"import":                docImportAction(docSvc),
-			"audit":                 docAuditAction(docSvc),
+			"audit":                 docAuditAction(docSvc, intelligenceSvc),
 			"evaluate":              docEvaluateAction(docSvc),
 			"record_false_positive": docRecordFalsePositiveAction(docSvc),
 		})
@@ -839,8 +837,11 @@ func docImportAction(docSvc *service.DocumentService) ActionHandler {
 // ─── audit ────────────────────────────────────────────────────────────────────
 
 // docAuditAction implements doc(action: "audit"). It is read-only: it walks
+// the configured directories and compares on-disk .md files against the
+// document store. When intelligenceSvc is non-nil, MostAccessed is populated
+// from the document index access counters (FR-020, FR-021).
 // document directories and compares against the store without modifying either.
-func docAuditAction(docSvc *service.DocumentService) ActionHandler {
+func docAuditAction(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		args, _ := req.Params.Arguments.(map[string]any)
 
@@ -852,7 +853,7 @@ func docAuditAction(docSvc *service.DocumentService) ActionHandler {
 			dirs = []string{p}
 		}
 
-		result, err := service.AuditDocuments(ctx, docSvc, docSvc.RepoRoot(), dirs, includeRegistered)
+		result, err := service.AuditDocuments(ctx, docSvc, docSvc.RepoRoot(), dirs, includeRegistered, intelligenceSvc)
 		if err != nil {
 			return nil, err
 		}
@@ -872,6 +873,12 @@ func docAuditAction(docSvc *service.DocumentService) ActionHandler {
 		// Include the registered list only when the flag was set (REQ-16).
 		if includeRegistered {
 			resp["registered"] = auditRegisteredToMaps(result.Registered)
+		}
+
+		// FR-021: render MostAccessed as a Markdown table when non-empty.
+		if len(result.MostAccessed) > 0 {
+			resp["most_accessed"] = auditMostAccessedToMaps(result.MostAccessed)
+			resp["most_accessed_table"] = service.RenderMostAccessedTable(result.MostAccessed)
 		}
 
 		return resp, nil
@@ -896,6 +903,22 @@ func auditMissingToMaps(records []service.MissingRecord) []map[string]any {
 			"path":   r.Path,
 			"doc_id": r.DocID,
 		}
+	}
+	return out
+}
+
+func auditMostAccessedToMaps(entries []service.AccessedDocumentEntry) []map[string]any {
+	out := make([]map[string]any, len(entries))
+	for i, e := range entries {
+		m := map[string]any{
+			"doc_id":       e.DocID,
+			"path":         e.Path,
+			"access_count": e.AccessCount,
+		}
+		if e.LastAccessedAt != nil {
+			m["last_accessed_at"] = e.LastAccessedAt.Format("2006-01-02T15:04:05Z")
+		}
+		out[i] = m
 	}
 	return out
 }

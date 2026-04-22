@@ -3,8 +3,10 @@ package service
 import (
 	"encoding/json"
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/sambeau/kanbanzai/internal/core"
@@ -35,6 +37,7 @@ type KnowledgeFilters struct {
 	Tags           []string
 	MinConfidence  float64
 	IncludeRetired bool
+	Sort           string // "recent" orders by descending recent_use_count (FR-006)
 }
 
 // FlaggedEntry represents a knowledge entry flagged as incorrect in a context report.
@@ -48,6 +51,7 @@ type KnowledgeService struct {
 	root  string
 	store *storage.KnowledgeStore
 	now   func() time.Time
+	wg    sync.WaitGroup // tracks background goroutines (FR-003, FR-004)
 }
 
 // NewKnowledgeService creates a new KnowledgeService.
@@ -175,16 +179,56 @@ func (s *KnowledgeService) LoadAllRaw() ([]storage.KnowledgeRecord, error) {
 }
 
 // Get returns a knowledge entry by ID.
+// Access counters are incremented best-effort in the background (FR-003).
 func (s *KnowledgeService) Get(id string) (storage.KnowledgeRecord, error) {
 	record, err := s.store.Load(id)
 	if err != nil {
 		return storage.KnowledgeRecord{}, err
 	}
+	s.wg.Add(1)
+	go func() {
+		defer s.wg.Done()
+		s.touchKnowledgeEntry(id)
+	}()
 	return record, nil
+}
+
+// Close waits for all background goroutines to finish. Call in tests to
+// prevent goroutines from outliving the temp directory.
+func (s *KnowledgeService) Close() {
+	s.wg.Wait()
+}
+
+// touchKnowledgeEntry increments recent_use_count and updates last_accessed_at
+// for the given entry. Uses lazy 30-day decay (FR-005). Errors are silently
+// absorbed (NFR-002).
+func (s *KnowledgeService) touchKnowledgeEntry(id string) {
+	record, err := s.store.Load(id)
+	if err != nil {
+		return
+	}
+	now := s.now()
+
+	// Lazy 30-day decay: if last_accessed_at is older than 30 days, reset count (FR-005).
+	var count int
+	if lastStr, ok := record.Fields["last_accessed_at"].(string); ok && lastStr != "" {
+		if t, parseErr := time.Parse(time.RFC3339, lastStr); parseErr == nil {
+			if now.Sub(t) <= 30*24*time.Hour {
+				count = knowledgeFieldInt(record.Fields, "recent_use_count")
+			}
+			// else: older than 30 days — reset to 0 (count stays 0)
+		}
+	}
+	count++
+
+	record.Fields["recent_use_count"] = count
+	record.Fields["last_accessed_at"] = now.Format(time.RFC3339)
+	s.store.Write(record) //nolint:errcheck // best-effort
 }
 
 // List returns knowledge entries matching the given filters.
 // By default, retired entries are excluded unless IncludeRetired is true.
+// Access counters are incremented best-effort in the background (FR-004).
 func (s *KnowledgeService) List(filters KnowledgeFilters) ([]storage.KnowledgeRecord, error) {
 	all, err := s.store.LoadAll()
 	if err != nil {
@@ -231,6 +275,30 @@ func (s *KnowledgeService) List(filters KnowledgeFilters) ([]storage.KnowledgeRe
 		}
 
 		result = append(result, rec)
+	}
+
+	// Sort by descending recent_use_count when requested (FR-006).
+	if filters.Sort == "recent" {
+		sort.Slice(result, func(i, j int) bool {
+			ci := knowledgeFieldInt(result[i].Fields, "recent_use_count")
+			cj := knowledgeFieldInt(result[j].Fields, "recent_use_count")
+			return ci > cj
+		})
+	}
+
+	// Best-effort access tracking in background (FR-004, NFR-001).
+	if len(result) > 0 {
+		ids := make([]string, len(result))
+		for i, rec := range result {
+			ids[i] = rec.ID
+		}
+		s.wg.Add(1)
+		go func() {
+			defer s.wg.Done()
+			for _, id := range ids {
+				s.touchKnowledgeEntry(id)
+			}
+		}()
 	}
 
 	return result, nil

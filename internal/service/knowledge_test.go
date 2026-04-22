@@ -14,6 +14,8 @@ func newTestKnowledgeService(t *testing.T) *KnowledgeService {
 	// Fix clock for determinism
 	fixed := time.Date(2024, 6, 1, 12, 0, 0, 0, time.UTC)
 	svc.now = func() time.Time { return fixed }
+	// Wait for background goroutines before TempDir cleanup runs.
+	t.Cleanup(svc.Close)
 	return svc
 }
 
