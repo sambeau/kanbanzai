@@ -11,6 +11,8 @@ description: >
 metadata:
   kanbanzai-managed: "true"
   version: "0.4.0"
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 ---
 
 # SKILL: Kanbanzai Documents

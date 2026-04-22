@@ -10,6 +10,8 @@ description: >
 metadata:
   kanbanzai-managed: "true"
   version: "0.4.0"
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 ---
 
 # SKILL: Kanbanzai Getting Started
@@ -235,6 +237,12 @@ an unregistered document."
 - **Detect:** Uncommitted `.kbz/state/` files visible in `git status` at session start.
 - **BECAUSE:** Store drift causes race conditions when parallel agents read stale entity state, leading to conflicting transitions and lost updates.
 - **Resolve:** Commit `.kbz/` files immediately. Do not stash, discard, or gitignore them.
+
+### Direct File Write to Workflow Roots
+
+- **Detect:** Agent uses `edit_file`, shell `echo`, or similar to write directly to `work/` document files or `.kbz/state/` entity records instead of using MCP tools.
+- **BECAUSE:** MCP tools (`doc`, `entity`, `finish`) enforce registration, lifecycle validation, and auto-commit. Writing files directly bypasses all of these guarantees, producing state that is inconsistent with the index.
+- **Resolve:** Use `edit_file` only for code files and non-managed markdown (e.g. `refs/`, `docs/`). Use `doc(action: "register")`, `entity`, and `finish` for all workflow state and document roots.
 
 ### Shell-Querying Workflow State Files
 
