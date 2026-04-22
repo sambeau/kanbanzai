@@ -2,8 +2,10 @@ id: PROJECT/design-doc-intel-adoption-design
 path: work/design/doc-intel-adoption-design.md
 type: design
 title: Document Intelligence Adoption Fixes
-status: draft
-content_hash: 2a086174a18bef4f624462bb06c19ffb592704313c8f1e8a8ee84c7bd31e69ed
+status: approved
+approved_by: sambeau
+approved_at: "2026-04-22T12:03:06Z"
+content_hash: c98015967a35dbf593a3ef86b96a9b9c47a224d4b5e89aa7c498fdb77e19e608
 created: "2026-04-22T10:45:59Z"
 created_by: sambeau
-updated: "2026-04-22T11:36:28Z"
+updated: "2026-04-22T12:03:06Z"
