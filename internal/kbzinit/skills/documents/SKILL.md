@@ -1,134 +1,387 @@
 ---
 name: kanbanzai-documents
 description: >
-  Use this skill whenever you create, edit, register, or approve any document in a
-  Kanbanzai-managed project, including files in work/design/, work/spec/, work/plan/,
-  work/dev/, work/research/, work/report/, work/review/, work/retro/, or any configured
-  document root. Activate even when document registration is not the primary goal of
-  the task — any file creation in a document root requires registration.
-# kanbanzai-managed: true
-# kanbanzai-version: dev
+  Use when creating, editing, registering, or approving documents in a
+  Kanbanzai-managed project. Activates for document types, placement,
+  registration with doc action register, approval workflow, content drift,
+  doc action refresh, or any question about document status, ownership,
+  or lifecycle. Use whenever any markdown file is created or modified in a
+  configured document root — even if the edit seems minor, registration
+  and refresh rules still apply.
+metadata:
+  kanbanzai-managed: "true"
+  version: "0.4.0"
 ---
+
+# SKILL: Kanbanzai Documents
 
 ## Purpose
 
-This skill covers document types, where to place them, how to register them, and the
-approval workflow. Every document placed in a configured root must be registered.
+Document types, where to place them, how to register them with the system,
+and the approval workflow that makes them authoritative.
+
+## When to Use
+
+- When creating any new document in a configured document root
+- When registering a document with `doc` action: `register`
+- When approving a document or checking whether it is ready for approval
+- When editing a document that has already been registered
+- When unsure which document type or directory to use
+
+## Vocabulary
+
+| Term | Definition |
+|------|------------|
+| **document record** | The YAML metadata file in `.kbz/state/documents/` that tracks a document's type, status, content hash, and ownership |
+| **content hash** | A hash of the document's file contents, recorded at registration and checked at approval to ensure what was reviewed is what gets approved |
+| **document type** | One of `design`, `specification`, `dev-plan`, `research`, `report`, or `policy` — determines how the system treats the document in lifecycle gates |
+| **document approval** | Calling `doc(action: "approve")` to transition a document from `draft` to `approved`, binding the approval to the current content hash |
+| **document registration** | Calling `doc(action: "register")` to create a document record, making the document visible to the workflow system |
+| **supersession** | Replacing an approved document with a newer version via `doc(action: "supersede")`, marking the old document as `superseded` |
+| **document drift** | The state where a registered document's file contents no longer match its stored content hash, typically after editing |
+| **hash refresh** | Calling `doc(action: "refresh")` to update a document record's content hash to match current file contents |
+| **document owner** | The parent Plan or Feature ID that a document is associated with, set via the `owner` field at registration |
+| **document chain** | The succession history of a document — its predecessors and replacements, retrieved via `doc(action: "chain")` |
+
+---
+
+## Document Creation Checklist
+
+Copy this checklist when creating any new document:
+
+- [ ] Determined the correct document type (design, specification, dev-plan, research, report, policy)
+- [ ] Placed the file in the correct directory for its type
+- [ ] Registered the document with `doc(action: register, path: "...", type: "...", title: "...", owner: "...")`
+- [ ] Verified registration with `doc(action: get, path: "...")`
+- [ ] Committed both the document file and the registration record together
+- [ ] Classified the document with doc_intel(action: "classify") if content was in context
+
+---
 
 ## Document Types and Locations
 
-| Type | Directory | Character | When to use |
-|---|---|---|---|
-| `design` | `work/design/` | Discursive prose | What to build and why — alternatives considered, decisions made, rationale recorded. No code. No acceptance criteria. |
-| `specification` | `work/spec/` | Terse and formal | Verifiable acceptance criteria distilled from an approved design. No code, no implementation notes, no prose that does not directly support a testable criterion. |
-| `plan` | `work/plan/` | Structured reference | Project planning: roadmaps, scope, decision logs |
-| `dev-plan` | `work/dev/` | Coordination | Task breakdown, dependency graph, parallelism analysis, file ownership, estimates. No implementation code. Interface stubs that define contracts between tasks are acceptable. Uses the approved specification as its basis. |
-| `research` | `work/research/` | Exploratory | Analysis, exploration, background reading |
-| `report` | `work/report/` | Evaluative | Audit reports, post-mortems, general reports |
-| `report` | `work/review/` | Evaluative | Review findings: bugs, deviations from spec, verdict |
-| `retrospective` | `work/retro/` | Reflective | Retrospective synthesis documents |
+Documents live in configured roots under the project's document directory
+(typically `work/`). Each root has a default type:
 
-Design decisions belong in `work/design/`, not `work/plan/`. If a document contains
-architecture, API shapes, data models, or technology choices, it is a design document.
+| Type | Typical directory | When to use |
+|---|---|---|
+| `design` | `work/design/` | Architecture, vision, approach decisions |
+| `specification` | `work/spec/` | Acceptance criteria, binding contracts |
+| `dev-plan` | `work/dev/` or `work/plan/` | Implementation plans, task breakdowns |
+| `research` | `work/research/` | Analysis, exploration, background |
+| `report` | `work/reports/` | Review reports, audits, post-mortems |
+| `policy` | `work/design/` | Standing rules, process definitions |
 
-Acceptance criteria belong in `work/spec/`, not `work/design/`. If you are writing
-verifiable pass/fail criteria, you are writing a specification, not a design.
+The actual roots and default types are defined in `.kbz/config.yaml` under
+`documents.roots`. Check the project configuration if the defaults above do
+not match.
 
-Task breakdowns and dependency graphs belong in `work/dev/`, not `work/spec/`. A
-specification that contains code or implementation notes has absorbed dev-plan content.
-A dev-plan that contains implementation code has absorbed implementing-agent work —
-write the interface, not the implementation.
+**Placement rule:** design content goes in design documents, not in planning
+documents. A document in `work/plan/` that contains "Decision:",
+"Architecture:", or "Technology Choice:" is a sign that design work is being
+done in the wrong place.
 
-## Registration Procedure
+---
 
-Every document placed in a configured root must be registered immediately after creation:
+## Registration
 
-    doc(action="register", path="work/design/my-doc.md", type="design", title="Human-readable title")
+Every document placed in a configured root must be registered with the system
+immediately after creation. Unregistered documents are invisible to document
+intelligence, entity extraction, approval workflow, and health checks.
 
-To batch-import an entire directory (idempotent, safe to repeat):
+### Registering a single document
 
-    doc(action="import", path="work")
+```
+doc(
+  action="register",
+  path="work/design/my-document.md",
+  type="design",
+  title="Human-Readable Title"
+)
+```
+
+The `type` must match the document root. The system generates a document ID
+from the path (e.g., `PROJECT/design-my-document`).
+
+### Batch import
+
+To catch unregistered documents or register many at once:
+
+```
+doc(action="import", path="work")
+```
+
+This is idempotent — already-registered documents are skipped. Safe to run
+at any time as a consistency check.
+
+### Verify registration
+
+```
+doc(action="get", id="PROJECT/design-my-document")
+```
+
+A document is properly registered when a YAML record exists in
+`.kbz/state/documents/` and `doc` action: `get` returns its metadata.
+
+---
+
+## Classification (Layer 3)
+
+After registering a document, classify it immediately if you have the document
+content in context. Do not defer classification to a batch run.
+
+The `doc register` response includes a `classification_nudge` — agents MUST
+follow it before moving to the next task.
+
+**Rationale:** Layer 3 classification enables concept search, role-based
+retrieval, and semantic guides. Documents deferred to batch runs accumulate as
+a growing backlog that is never fully cleared.
+
+### When to run this protocol
+
+- At the start of a new session, to ensure the corpus is up to date.
+- After a batch registration (`doc(action: "import")`), to catch newly added documents.
+- Periodically, to maintain classification coverage across the corpus.
+
+### Classification-on-registration convention
+
+When you register a document via `doc(action: "register")` and you have the document's
+content in context, **classify it immediately** — do not wait for a batch run.
+The register response includes a `classification_nudge` that tells you exactly which
+`doc_intel` calls to make.
+
+### Priority ordering
+
+Process documents in this order to maximise classification value per unit of effort:
+
+| Priority | Document type | Rationale |
+|----------|--------------|-----------|
+| 1 | Specifications | Most structured, highest value |
+| 2 | Designs | Narrative + decisions |
+| 3 | Dev-plans | Task-oriented, lower value |
+| 4 | Research/reports | Lowest priority |
+
+You MAY deviate from this ordering when context warrants it (e.g. a design needed
+immediately for a concept search query).
+
+### Step-by-step procedure
+
+1. **Get the pending list.** Call `doc_intel(action: "pending")` to retrieve all
+   document IDs that have no Layer 3 classifications yet.
+
+2. **Select a batch.** Choose documents to classify in the current session, applying
+   the priority ordering above. Size the batch to your available context budget.
+
+3. **For each document in the batch:**
+   1. Call `doc_intel(action: "guide", id: "DOC-xxx")` to get the section outline,
+      conventional roles, entity refs, and content hash.
+   2. Read the sections you need (use `doc_intel(action: "section", ...)` if the
+      document is large and you only need specific sections).
+   3. Produce classification objects for each section, assigning one or more roles
+      (e.g. `requirement`, `decision`, `rationale`, `context`, `procedure`).
+   4. Call `doc_intel(action: "classify", id: "DOC-xxx", content_hash: "...", ...)`
+      to submit the classifications.
+
+4. **Repeat** until the pending list is empty or your context budget is exhausted.
+   Re-call `doc_intel(action: "pending")` to confirm progress.
+
+### Anti-patterns
+
+- **Skipping `guide` before `classify`.** The `guide` response provides the content
+  hash required by `classify`. Never construct the content hash manually.
+- **Classifying without reading sections.** Classification requires understanding the
+  content. Do not assign roles without reading the relevant section text.
+- **Classifying the whole corpus in one pass.** Work in batches sized to your context
+  window. Quality drops when context is saturated.
+
+---
 
 ## Approval Workflow
 
 Documents follow a three-status lifecycle: **draft → approved → superseded**.
 
-- **Draft:** created, not yet approved. Cannot be used as a stage gate basis.
-- **Approved:** approved by a human. An approved design document allows Feature entity
-  creation. An approved specification allows task decomposition.
-- **Superseded:** replaced by a newer document. The superseding document becomes the
-  authoritative basis.
+1. Agent or human creates the document file.
+2. Agent registers it with `doc` action: `register` — status becomes `draft`.
+3. Human reviews the document and signals approval (verbally: "Approved",
+   "LGTM", or equivalent).
+4. Agent calls `doc` action: `approve` — status becomes `approved`.
+5. Approved documents are the authoritative basis for downstream work:
+   - Approved design → features can be created
+   - Approved specification → tasks can be decomposed
 
-Approval can be verbal; record it immediately:
+A draft document is a working document. An approved document is a contract.
 
-    doc(action="approve", id="DOC-...")
+### Auto-Approve for Agent-Authored Documents
+
+For agent-authored documents of types `dev-plan`, `research`, and `report`,
+registration and approval can be combined in a single call:
+
+```
+doc(action: "register", type: "dev-plan", auto_approve: true, path: "...", title: "...", owner: "...")
+```
+
+This registers the document and immediately approves it. The `auto_approve`
+flag is only honoured for types in the whitelist (`dev-plan`, `research`,
+`report`). Design documents and specifications always require explicit human
+approval.
+
+---
 
 ## Drift and Refresh
 
-If a document is edited after registration, its content hash becomes stale. Attempting
-to approve a drifted document will fail.
+When a document is registered, the system records a content hash. If the
+file is edited after registration, the hash becomes stale — this is called
+**drift**.
 
-Check drift status:
+- **`doc approve` auto-refreshes on hash mismatch.** If the file has drifted
+  since registration, `doc` action: `approve` automatically updates the hash
+  before approving — it no longer fails on mismatch.
+- **`doc refresh` is still available** for checking or correcting drift
+  outside the approval path (e.g. to detect whether a document has changed
+  since it was last registered).
+- **If an approved document is edited**, the approval is effectively void.
+  The content no longer matches what was approved. Notify the human and
+  re-approve after review.
 
-    doc(action="get", id="DOC-...")
-
-Refresh before approving:
-
-    doc(action="refresh", id="DOC-...")
+---
 
 ## Supersession
 
 When a document is replaced by a newer version:
 
 1. Create and register the new document.
-2. Call `doc(action="supersede", id="old-DOC-...", superseded_by="new-DOC-...")`.
+2. Call `doc` action: `supersede` on the old document, linking it to the new one.
+3. The old document's status becomes `superseded`.
 
-Do not silently amend an approved document. Any edit to an approved document requires
-creating a new document and superseding the old one.
+Superseded documents remain in the repository as historical records. They are
+no longer authoritative.
+
+---
+
+## Moving Documents
+
+To move a document file to a new path:
+
+1. Call `doc(action: "move", id: "DOC-xxx", new_path: "work/new-location/file.md")`
+2. The system moves the file, updates the record's path, recomputes the content hash, and commits atomically.
+3. If the new path implies a different document type, the type is updated automatically.
+
+**Note:** Approval status, owner, and cross-references are preserved across moves.
+
+---
+
+## Deleting Documents
+
+To delete a document:
+
+1. Call `doc(action: "delete", id: "DOC-xxx")` for draft documents.
+2. For approved documents, add `force: true`: `doc(action: "delete", id: "DOC-xxx", force: true)`
+3. The system removes the file, clears the entity's document reference, and commits atomically.
+
+**Note:** This operation is irreversible. Consider supersession instead if historical preservation matters.
+
+---
+
+## Anti-Patterns
+
+### Unregistered Document
+
+- **Detect:** A design, spec, or plan document exists on disk but has no
+  document record in `.kbz/state/documents/`.
+- **BECAUSE:** Unregistered documents are invisible to the workflow system —
+  stage gates can't check prerequisites, and other agents can't discover the
+  document through MCP tools.
+- **Resolve:** Call `doc(action: "register")` immediately after creating any
+  document.
+
+### Stale Content Hash
+
+- **Detect:** A registered document's file contents no longer match its stored
+  content hash (visible via `doc(action: "refresh")`).
+- **BECAUSE:** The file was edited after registration, so the stored hash no
+  longer matches disk.
+- **Note:** `doc(action: "approve")` now auto-refreshes the hash before
+  approving, so this no longer blocks approval. Use `doc(action: "refresh")`
+  explicitly if you need to check or update drift outside the approval path.
+
+### Silent Supersession
+
+- **Detect:** An approved document is edited directly instead of creating a
+  replacement and superseding.
+- **BECAUSE:** The approval is tied to the content hash. Editing voids the
+  approval silently — downstream consumers see "approved" but the content
+  has drifted.
+- **Resolve:** Create a new document, register it, and call
+  `doc(action: "supersede")` on the old one.
 
 ---
 
 ## Gotchas
 
-**Forgot to register:** The document is invisible to document intelligence, entity
-extraction, approval workflow, and health checks. Use `doc(action="import", path="work")`
-as a safety net to catch any unregistered files.
-
-**Editing after registration:** The content hash becomes stale and approval will fail.
-Always call `doc` with action: `refresh` after editing, before approving.
-
-**Design content in the wrong place:** Design decisions placed in `work/plan/` instead
-of `work/design/` bypass the approval gate. The system cannot enforce what it cannot find.
-
-**Blind retries:** If a tool call fails, read the error message before retrying. Most
-failures are caused by drift, missing records, or invalid state — not transient errors.
+- **Forgot to register.** If you create a file in `work/` and forget to call
+  `doc` action: `register`, the document is invisible to the system. Run
+  `doc(action="import", path="work")` as a safety net if unsure.
+- **Design in the wrong place.** Design decisions belong in `work/design/`,
+  not `work/plan/`. If a planning document contains architecture decisions,
+  move that content to a design document.
+- **Registering with the wrong type.** A specification registered as `design`
+  won't be found when the system checks for specification prerequisites.
+  Check the Document Types table — the type determines how the system treats
+  the document in lifecycle gates.
+- **Tool call fails.** If `doc` action: `register` or `doc` action: `approve`
+  returns an error, read the message — it explains the problem. Do not retry
+  with the same arguments. Fix the underlying issue first.
 
 ---
 
-## Dates and Timestamps
+## Commit Discipline
 
-Always call `now()` to get the current UTC datetime before writing any date field in
-document content. Never guess or invent a date.
+Document registration and approval are automatically committed by the MCP
+tools. Manual commits for document files are no longer required.
 
-    now(timezone="utc")
-    # returns e.g. "2026-03-26T15:44:49Z"
+If you create or edit a document file outside of an MCP tool (e.g. writing
+content directly to disk), commit the file itself using the standard commit
+format — the registration record will be handled by the tool when you call
+`doc(action: "register")`.
 
-Use full UTC ISO 8601 format (`YYYY-MM-DDTHH:MM:SSZ`) in document metadata headers:
+---
 
-    | Created | 2026-03-26T15:44:49Z |
-    | Updated | 2026-03-26T15:44:49Z |
+## Output Templates
 
-Or for design-doc frontmatter style:
+When producing specific document types, use these templates as structural
+guides:
 
-    - Date: 2026-03-26T15:44:49Z
+- **Specifications:** `work/templates/specification-prompt-template.md`
+- **Implementation plans:** `work/templates/implementation-plan-prompt-template.md`
+- **Reviews:** `work/templates/review-prompt-template.md`
 
-This format is unambiguous and lets any viewer convert to local time. The same UTC ISO
-8601 format is used by entity records in `.kbz/state/` — keeping document content
-consistent with entity metadata makes the project's timeline easy to reason about.
+---
+
+## Evaluation Criteria
+
+| # | Question | Weight |
+|---|----------|--------|
+| 1 | Was every new document registered via `doc(action: "register")` immediately after creation? | required |
+| 2 | Was `doc(action: "approve")` called immediately when approval was signalled? | required |
+| 3 | Were edited approved documents handled via supersession rather than direct edit? | high |
+| 4 | Was `doc(action: "refresh")` used to resolve content hash mismatches before re-approval? | high |
+
+---
+
+## Questions This Skill Answers
+
+- How do I register a new document?
+- How do I approve a document?
+- What do I do when approval fails with a hash mismatch?
+- How do I supersede an old document?
+- What document types does the system support?
+- When should I call `doc(action: "refresh")`?
+- How do I check if all specs for a plan are approved?
 
 ---
 
 ## Related
 
-- `kanbanzai-workflow` — how document approval gates interact with stage progression
-- `kanbanzai-agents` — task dispatch and knowledge contribution
+- `kanbanzai-getting-started` — session orientation
+- `kanbanzai-workflow` — stage gates that depend on document approval
+- `write-design` — the design process that produces design documents
