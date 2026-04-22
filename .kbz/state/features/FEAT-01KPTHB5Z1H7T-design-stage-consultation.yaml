@@ -2,7 +2,13 @@ id: FEAT-01KPTHB5Z1H7T
 slug: design-stage-consultation
 name: Design-stage corpus consultation
 parent: P27-doc-intel-adoption
-status: proposed
+status: specifying
 summary: "Add a mandatory Phase 0 corpus discovery to the write-design skill, a required Related Work section to design document templates, a cross-reference check to write-spec, and a blocking Related Work conformance check. Implements Fix 1 from the adoption design."
 created: "2026-04-22T12:06:24Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: designing
+    reason: "Plan-level design document (work/design/doc-intel-adoption-design.md, PROJECT/design-doc-intel-adoption-design, approved) covers this feature in full detail under Fix 1 (§3). No feature-level design document is required."
+    timestamp: "2026-04-22T13:07:22+01:00"
+    to_status: specifying
