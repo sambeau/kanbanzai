@@ -7,8 +7,9 @@ description: >
   beginning any new session. Also activates for "where do I start?", "what
   should I work on?", "what is the current state?". Skipping orientation leads
   to wasted effort and missed context.
-# kanbanzai-managed: true
-# kanbanzai-version: dev
+metadata:
+  kanbanzai-managed: "true"
+  version: "0.4.0"
 ---
 
 # SKILL: Kanbanzai Getting Started
@@ -43,6 +44,7 @@ Copy this checklist at the beginning of every session:
 
 - [ ] **Clean slate** — Run `git status`. If changes are coherent and complete, commit them now. If changes are incomplete or belong to a different task, inform the human and stop — do not stash. Never use `git stash` in a Kanbanzai project: stashed changes hide workflow state from other agents and are silently lost across worktree switches.
 - [ ] **Store check** — If `git status` shows uncommitted `.kbz/` files, commit them now. These are versioned project state, not ephemeral cache. Do not stash, discard, or `.gitignore` them.
+- [ ] **Corpus integrity check** — Call `doc(action: "audit")` and review its output before proceeding. If audit shows files on disk not registered → call `doc(action: "import", path: "work")` to register all unregistered documents. If audit shows registered records whose files are missing from disk → call `doc(action: "delete", id: "DOC-xxx")` for each stale record. After any batch registration, run a classification pass on newly registered documents (see the Classification (Layer 3) section in `kanbanzai-documents`) before proceeding. *Rationale: an incomplete corpus produces false negatives in design searches, and a designer who finds no results cannot distinguish "not addressed" from "not registered".*
 - [ ] **Read project context** — Read `AGENTS.md` if you have not this session.
 - [ ] **Check the work queue** — Call `next()` to see what is ready.
 - [ ] **Claim your task** — Call `next(id: "TASK-xxx")` to get full context for your chosen task.
@@ -86,6 +88,26 @@ was interrupted before the auto-commit could run. They are rare but consequentia
 stale state causes parallel agents to read incorrect entity status and produce
 conflicting transitions.
 
+### Corpus integrity check
+
+Call `doc(action: "audit")` at the start of each session and review its output:
+
+- **Unregistered files** — Files on disk in configured roots that have no document record.
+  If found: call `doc(action: "import", path: "work")` to register all unregistered
+  documents in a single batch operation.
+- **Stale records** — Registered document records whose files are missing from disk.
+  If found: call `doc(action: "delete", id: "DOC-xxx")` for each stale record to remove
+  the orphaned reference.
+
+After any batch registration triggered by the integrity check, run a classification pass
+on the newly registered documents before proceeding. Follow the Classification (Layer 3)
+section in `kanbanzai-documents` for the step-by-step procedure.
+
+**Rationale:** An incomplete corpus produces false negatives in design searches. A designer
+who searches for an architectural decision and finds no results cannot distinguish "this has
+not been addressed" from "this was addressed in an unregistered document." Classification
+ensures concept search returns accurate results.
+
 ### Read the project context
 
 Check whether an `AGENTS.md` exists in the repository root. If it does, read
@@ -119,6 +141,81 @@ procedure to follow. The task-execution skills themselves live in
 
 ---
 
+## New-Project Onboarding
+
+Applies when Kanbanzai is initialised for the first time in a repository with no
+prior `.kbz/` directory.
+
+### Steps
+
+1. **Configure document roots.** Add your document directories to `.kbz/config.yaml`
+   under `documents.roots`. Typically these include `work/design/`, `work/spec/`,
+   `work/dev/`, `work/research/`, and `work/reports/`.
+
+2. **Import all documents.** For each configured root, run:
+   ```
+   doc(action: "import", path: "<each-root>")
+   ```
+   This registers all existing documents in that root. The import is idempotent —
+   running it multiple times is safe.
+
+3. **Verify with audit.** Call `doc(action: "audit")` and confirm zero unregistered
+   files remain. Resolve any residual gaps before proceeding.
+
+4. **Run batch classification.** Classify all registered documents in priority order:
+   - Specifications first (most structured, highest value for concept search)
+   - Designs second (narrative + architectural decisions)
+   - Dev-plans third (task-oriented)
+   - Research and reports last (lowest priority)
+
+   Follow the Classification (Layer 3) section in `kanbanzai-documents` for the
+   step-by-step procedure.
+
+5. **Validate the concept registry.** Call:
+   ```
+   doc_intel(action: "find", role: "decision")
+   ```
+   If results are returned, the concept registry is populated and classification
+   was successful. If no results are returned, re-check that documents were classified
+   (not just registered).
+
+**Time estimate:** Approximately 5–10 minutes per document for classification. For a
+50-document corpus, expect approximately 4–8 hours of elapsed time.
+
+---
+
+## Existing-Project Adoption
+
+Applies when Kanbanzai is added to a project that already has documents outside
+standard `work/` directories.
+
+### Steps
+
+1. **Audit the repository for markdown files.** Identify files not covered by your
+   configured roots:
+   ```
+   find . -name "*.md" | grep -v ".kbz"
+   ```
+   Review the output for design decisions, specifications, architectural rationale,
+   and requirements documents.
+
+2. **Decide which documents belong in the corpus.** Not all markdown files are
+   workflow documents. Include: design decisions, specifications, architectural
+   rationale, requirements. Exclude: README files, changelogs, generated documentation,
+   and transient notes.
+
+3. **Add additional roots as needed.** If documents are found outside standard
+   directories, add those directories to `.kbz/config.yaml` under `documents.roots`.
+
+4. **Register and classify.** Follow the New-Project Onboarding procedure (above)
+   to import, verify, and classify all documents.
+
+**Key principle:** The corpus must be complete enough that a negative search result
+means "this has not been addressed" rather than "this might have been addressed in
+an unregistered document."
+
+---
+
 ## Anti-Patterns
 
 ### Skipping Orientation
@@ -138,19 +235,6 @@ procedure to follow. The task-execution skills themselves live in
 - **Detect:** Uncommitted `.kbz/state/` files visible in `git status` at session start.
 - **BECAUSE:** Store drift causes race conditions when parallel agents read stale entity state, leading to conflicting transitions and lost updates.
 - **Resolve:** Commit `.kbz/` files immediately. Do not stash, discard, or gitignore them.
-
-### Direct File Writes Bypassing MCP Tools
-
-- **Detect:** Agent uses `edit_file`, shell `echo`, or `create_file` to write
-  directly to `work/` document files or `.kbz/state/` entity records instead
-  of using MCP tools.
-- **BECAUSE:** MCP tools (`doc`, `entity`, `finish`) enforce registration,
-  lifecycle validation, and auto-commit. Writing files directly bypasses all
-  of these guarantees, producing state that is inconsistent with the index and
-  invisible to other agents.
-- **Resolve:** Use `edit_file` only for code files and non-managed markdown
-  (e.g. `refs/`, `docs/`). Use `doc(action: "register")`, `entity`, and
-  `finish` for all workflow state and document roots.
 
 ### Shell-Querying Workflow State Files
 
