@@ -2,7 +2,7 @@ id: FEAT-01KPVDDYVETV5
 slug: plan-lifecycle-proposed-active
 name: Plan lifecycle proposed-to-active gap
 parent: P28-doc-intel-polish-workflow-reliability
-status: specifying
+status: dev-planning
 summary: "Fix the gap where a plan at `proposed` cannot jump to `active` when its features are already mid-lifecycle from a prior session. Either add a direct proposed → active transition to the state machine, or — if a hard state-machine change is undesirable — document the step-through-designing workaround with override justification in kanbanzai-workflow. Sources: P27 Issue 1."
 spec: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active
 created: "2026-04-22T20:17:15Z"

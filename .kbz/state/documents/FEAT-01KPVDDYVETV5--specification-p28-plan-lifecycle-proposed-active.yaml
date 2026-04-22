@@ -2,9 +2,11 @@ id: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active
 path: work/spec/p28-plan-lifecycle-proposed-active.md
 type: specification
 title: "Specification: Plan Lifecycle Proposed-to-Active Transition"
-status: draft
+status: approved
 owner: FEAT-01KPVDDYVETV5
-content_hash: 98c0088bef71c8972fb3dbaa84231a92b545876e47e63903bd07b540d94cffad
+approved_by: sambeau
+approved_at: "2026-04-22T20:48:07Z"
+content_hash: dbb7ed402029c4274033f0bc4a3b361f3797bd6eb8a4f90a2b13103aa14e5a9b
 created: "2026-04-22T20:39:52Z"
 created_by: sambeau
-updated: "2026-04-22T20:39:52Z"
+updated: "2026-04-22T20:48:07Z"
