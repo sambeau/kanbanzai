@@ -2,7 +2,7 @@ id: FEAT-01KPTHB61WPT0
 slug: corpus-hygiene-classification
 name: Corpus hygiene and classification pipeline
 parent: P27-doc-intel-adoption
-status: developing
+status: done
 summary: "Add a mandatory session-start corpus integrity check to kanbanzai-getting-started, a new-project and existing-project onboarding procedure, and reframe Layer 3 classification from a discretionary batch task to an active obligation in kanbanzai-documents and orchestrate-review. Implements Fix 2 and Fix 3."
 spec: FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene
 created: "2026-04-22T12:06:24Z"
