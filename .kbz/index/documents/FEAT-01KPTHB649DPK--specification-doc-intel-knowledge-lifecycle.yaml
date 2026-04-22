@@ -1,0 +1,213 @@
+document_id: FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle
+document_path: work/spec/doc-intel-knowledge-lifecycle.md
+content_hash: 377f20e15959d7d43f1cbda6492ee7b47bcd09e051aef9b55ac8e8841b2baba3
+indexed_at: 2026-04-22T12:20:40.470857Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Knowledge Lifecycle Mandate'
+      byte_offset: 0
+      byte_count: 15976
+      word_count: 2146
+      content_hash: 377f20e15959d7d43f1cbda6492ee7b47bcd09e051aef9b55ac8e8841b2baba3
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 654
+          byte_count: 1548
+          word_count: 220
+          content_hash: b4cfb61027de4511b25270e36e201ea40b93c70ed886091bc965a29e6d38990d
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Prior designs and specifications consulted
+              byte_offset: 671
+              byte_count: 309
+              word_count: 37
+              content_hash: e3bb2e53b3cf017f3fd74ff3da290db2efe10c8096071f94eec7a3e4f160c40e
+            - path: 1.1.2
+              level: 3
+              title: Decisions that constrain this specification
+              byte_offset: 980
+              byte_count: 866
+              word_count: 125
+              content_hash: 5eb5b1440dc47844bc25d5f5243f033547e71ac6d10f3f6e53ea6a320578c785
+            - path: 1.1.3
+              level: 3
+              title: How this specification extends prior work
+              byte_offset: 1846
+              byte_count: 356
+              word_count: 55
+              content_hash: b68e6ded065ff99660aac27ed6d657434d235e4dbe909664481753151cbe4774
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 2202
+          byte_count: 894
+          word_count: 127
+          content_hash: 88188a42891ea3b94191bfc240a7f377d70ec7f73c16019ffd693dfa8c53fe18
+        - path: "1.3"
+          level: 2
+          title: Scope
+          byte_offset: 3096
+          byte_count: 1486
+          word_count: 194
+          content_hash: a5e1f631a8fbe7dc27da1b53bea47617ed079b29496a11be9866ad00fda4e2ea
+          children:
+            - path: 1.3.1
+              level: 3
+              title: In scope
+              byte_offset: 3106
+              byte_count: 898
+              word_count: 102
+              content_hash: 23352df4a3fde6b41e8f9023e7973bdfed508e5cd2715d9552435903c58aeab3
+            - path: 1.3.2
+              level: 3
+              title: Out of scope
+              byte_offset: 4004
+              byte_count: 578
+              word_count: 90
+              content_hash: a075a47e07144772d7096b4de38ee8116c87deb765774c81104a73d379b8e825
+        - path: "1.4"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 4582
+          byte_count: 5376
+          word_count: 752
+          content_hash: 73da28b433593712997ba648a3dd041c541d9744baee4e27e0ae7e4ec04313f3
+          children:
+            - path: 1.4.1
+              level: 3
+              title: implement-task/SKILL.md
+              byte_offset: 4610
+              byte_count: 2461
+              word_count: 358
+              content_hash: 4a1d51a0b89e1f2c344bd87c95771e1e5770a1e727cfa97c2847f7b44d45632e
+            - path: 1.4.2
+              level: 3
+              title: orchestrate-development/SKILL.md
+              byte_offset: 7071
+              byte_count: 1733
+              word_count: 240
+              content_hash: 7285d18605e22d9da580e0ea942ebd0a048a27d3f30009f9233da59259825198
+            - path: 1.4.3
+              level: 3
+              title: kanbanzai-agents/SKILL.md
+              byte_offset: 8804
+              byte_count: 1154
+              word_count: 151
+              content_hash: 6537d55c9b36a0a3401e771f128fbff2422ee1abd7882e80e86f2c5f57e4c4de
+        - path: "1.5"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 9958
+          byte_count: 1247
+          word_count: 149
+          content_hash: 0fb656498c61f48eea106bfb4f4cd774bb3d3cc9be60e6dce6882ad307e5d3ff
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 11205
+          byte_count: 3129
+          word_count: 433
+          content_hash: 11e6ed170fd76e4a24a555f32df3c76f475d35e4ab2896b35ab954c9a9b2fcd5
+        - path: "1.7"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 14334
+          byte_count: 1642
+          word_count: 231
+          content_hash: 4a83cb5cebf046149d04d7d097a5e2bb9fb23602c2ad4ea27d3b80349bd5436e
+entity_refs:
+    - entity_id: FEAT-01KPTHB649DPK
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 266
+cross_doc_links:
+    - target_path: ../design/doc-intel-adoption-design.md
+      link_text: 'Design: Document Intelligence Adoption and Integration'
+      section_path: 1.1.1
+    - target_path: work/design/doc-intel-adoption-design.md
+      link_text: work/design/doc-intel-adoption-design.md
+      section_path: "1"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.1.2
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.3.1
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.3.1
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.3.1
+    - target_path: write-design/SKILL.md
+      link_text: write-design/SKILL.md
+      section_path: 1.3.2
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.4.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.4.2
+    - target_path: kanbanzai-agents/SKILL.md
+      link_text: kanbanzai-agents/SKILL.md
+      section_path: 1.4.3
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.5"
+    - target_path: kanbanzai-agents/SKILL.md
+      link_text: kanbanzai-agents/SKILL.md
+      section_path: "1.5"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.5"
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.6"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.6"
+    - target_path: kanbanzai-agents/SKILL.md
+      link_text: kanbanzai-agents/SKILL.md
+      section_path: "1.6"
+    - target_path: work/design/doc-intel-adoption-design.md
+      link_text: work/design/doc-intel-adoption-design.md
+      section_path: "1.7"
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.7"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: 1.1.2
+      role: decision
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+classified: false

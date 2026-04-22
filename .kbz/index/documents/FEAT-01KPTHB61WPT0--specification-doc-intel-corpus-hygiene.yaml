@@ -1,0 +1,256 @@
+document_id: FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene
+document_path: work/spec/doc-intel-corpus-hygiene.md
+content_hash: a6d8ff015d36830e1388f176866b2b5a5649bf133615492003d6bf4ccc5bbf75
+indexed_at: 2026-04-22T12:15:08.83866Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Corpus Hygiene and Classification Pipeline'
+      byte_offset: 0
+      byte_count: 15657
+      word_count: 2109
+      content_hash: a6d8ff015d36830e1388f176866b2b5a5649bf133615492003d6bf4ccc5bbf75
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 298
+          byte_count: 832
+          word_count: 105
+          content_hash: 7c3bb8b55a7602d4c34ad2fdcbbc32f398b5646ea28c542d9aacc8ae6d99b687
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 1130
+          byte_count: 1596
+          word_count: 200
+          content_hash: 04e3200895fa13b8df7dbd10c8c27695ebca48a2840e17504a21c0973d209813
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 1140
+              byte_count: 1028
+              word_count: 125
+              content_hash: c9d0adca41cae10d2c0ee1b58ef35d4729ab535dd793f87ba0812aabfd8f0e07
+            - path: 1.2.2
+              level: 3
+              title: Out of scope
+              byte_offset: 2168
+              byte_count: 558
+              word_count: 73
+              content_hash: acfa3c0471cc5cc63cc0622352ea12f762f11ad26de19d2812bc531bf0a514a9
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2726
+          byte_count: 6096
+          word_count: 814
+          content_hash: 89568c159494381dc5b610387d4f61892bc07e18bc46681f1898b3479d00f3f6
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Getting-started: corpus integrity check'
+              byte_offset: 2754
+              byte_count: 1293
+              word_count: 178
+              content_hash: 0b8acebf0d9b65d5129e3121a84c5872955a58f4828ad5c9f0d900156965b146
+            - path: 1.3.2
+              level: 3
+              title: 'Getting-started: new-project onboarding'
+              byte_offset: 4047
+              byte_count: 1026
+              word_count: 135
+              content_hash: 53d0c7d68ef184b26effc3911b521b1c245b85dafdd809d9a1227714f8687da7
+            - path: 1.3.3
+              level: 3
+              title: 'Getting-started: existing-project adoption'
+              byte_offset: 5073
+              byte_count: 982
+              word_count: 134
+              content_hash: ff6f6e565481fb2f64569412e53d0832046b1b814b0c5ba7e0065aaace2485b7
+            - path: 1.3.4
+              level: 3
+              title: 'Documents: classification section relocation and reframing'
+              byte_offset: 6055
+              byte_count: 1057
+              word_count: 144
+              content_hash: b755eb923dd3d46d647978e43a5aa6b674451278ea41b59854a4817ada5355a8
+            - path: 1.3.5
+              level: 3
+              title: 'Documents: creation checklist update'
+              byte_offset: 7112
+              byte_count: 254
+              word_count: 31
+              content_hash: 30e313c4722ac716062cc4537f369c61c0f758c79f76085cd878aea54db6aae7
+            - path: 1.3.6
+              level: 3
+              title: 'Orchestrate-review: classification prerequisite'
+              byte_offset: 7366
+              byte_count: 1456
+              word_count: 189
+              content_hash: 0bb410fd657a5c5bf624c0e353e893c44c84adfdd2e685c35caf9be2fcf54234
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 8822
+          byte_count: 1392
+          word_count: 196
+          content_hash: b5513acd4e3844486aff84fbd081e2122c27ba2fdb1dfbe61b1648eee6fb2a69
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 10214
+          byte_count: 3269
+          word_count: 460
+          content_hash: 0e7136d401c5813a1a34d17d11a0fadf97f31fa138034a1a64febe5ee5c82971
+        - path: "1.6"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 13483
+          byte_count: 2174
+          word_count: 301
+          content_hash: 337720700f2c11c128176eec5c5458ae29456d4d1790d2588249617fe39d004f
+entity_refs:
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 118
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.3.1
+      byte_offset: 3464
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.3.6
+      byte_offset: 7807
+cross_doc_links:
+    - target_path: work/design/doc-intel-adoption-design.md
+      link_text: work/design/doc-intel-adoption-design.md
+      section_path: "1"
+    - target_path: kanbanzai-getting-started/SKILL.md
+      link_text: kanbanzai-getting-started/SKILL.md
+      section_path: "1.1"
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: "1.1"
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/orchestrate-review/SKILL.md
+      link_text: .kbz/skills/orchestrate-review/SKILL.md
+      section_path: 1.2.1
+    - target_path: write-design/SKILL.md
+      link_text: write-design/SKILL.md
+      section_path: 1.2.2
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.2.2
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.2.2
+    - target_path: kanbanzai-agents/SKILL.md
+      link_text: kanbanzai-agents/SKILL.md
+      section_path: 1.2.2
+    - target_path: reviewer-conformance/SKILL.md
+      link_text: reviewer-conformance/SKILL.md
+      section_path: 1.2.2
+    - target_path: kanbanzai-getting-started/SKILL.md
+      link_text: kanbanzai-getting-started/SKILL.md
+      section_path: 1.3.1
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: 1.3.4
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: 1.3.5
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.3.6
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: "1.4"
+    - target_path: kanbanzai-getting-started/SKILL.md
+      link_text: kanbanzai-getting-started/SKILL.md
+      section_path: "1.5"
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: "1.5"
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: "1.5"
+    - target_path: work/design/doc-intel-adoption-design.md
+      link_text: work/design/doc-intel-adoption-design.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+classified: true
+classified_at: 2026-04-22T12:20:02.659014Z
+classified_by: claude-sonnet-4-5
+classifier_version: "20251101"
+classifications:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: requirement
+      confidence: high
+    - section_path: 1.3.2
+      role: requirement
+      confidence: high
+    - section_path: 1.3.3
+      role: requirement
+      confidence: high
+    - section_path: 1.3.4
+      role: requirement
+      confidence: high
+    - section_path: 1.3.5
+      role: requirement
+      confidence: high
+    - section_path: 1.3.6
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high

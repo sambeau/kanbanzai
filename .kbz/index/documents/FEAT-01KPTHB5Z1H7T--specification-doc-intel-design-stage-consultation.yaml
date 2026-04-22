@@ -1,0 +1,233 @@
+document_id: FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation
+document_path: work/spec/doc-intel-design-stage-consultation.md
+content_hash: 4b381727de84074badc6cb8076979a83a3705d2bfbffed62a7a6c7a7df609824
+indexed_at: 2026-04-22T12:17:05.433101Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Design-Stage Corpus Consultation'
+      byte_offset: 0
+      byte_count: 14152
+      word_count: 1928
+      content_hash: 4b381727de84074badc6cb8076979a83a3705d2bfbffed62a7a6c7a7df609824
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 682
+          byte_count: 1208
+          word_count: 159
+          content_hash: 77bbd657978fc2f3b90f362d4dbbeb66d950cf96cdece9bc000dfe4b377111b4
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Prior designs and specifications consulted
+              byte_offset: 699
+              byte_count: 272
+              word_count: 30
+              content_hash: 21d3adfbbe9330de56ee1aa27880aba1c62e7c2d0570d83e5dad694d97bb82dc
+            - path: 1.1.2
+              level: 3
+              title: Decisions that constrain this specification
+              byte_offset: 971
+              byte_count: 651
+              word_count: 84
+              content_hash: 0505b044c6c050062bc08c6c96231f042281a594ca313b81c7b48270ca7002f4
+            - path: 1.1.3
+              level: 3
+              title: How this specification extends prior work
+              byte_offset: 1622
+              byte_count: 268
+              word_count: 42
+              content_hash: 44df5a8b09a89a4821452182cb33bae53d50b6ec9f9e33a1d0498f1257afb4b1
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 1890
+          byte_count: 736
+          word_count: 104
+          content_hash: a5f37f9985772b999753b96aaeb1dcac55ce8b2048d934c646a31301eb4ac644
+        - path: "1.3"
+          level: 2
+          title: Scope
+          byte_offset: 2626
+          byte_count: 791
+          word_count: 107
+          content_hash: d62b49dfb452ccc2475fdc2d3620d26b00851cbb3be9522551b0b37ed4734253
+          children:
+            - path: 1.3.1
+              level: 3
+              title: In scope
+              byte_offset: 2636
+              byte_count: 334
+              word_count: 36
+              content_hash: e9433eedde392da2ea6263462d3b4618c7a0618ba4f97020638d8afefc8da0a3
+            - path: 1.3.2
+              level: 3
+              title: Out of scope
+              byte_offset: 2970
+              byte_count: 447
+              word_count: 69
+              content_hash: 1d05f08790533aa80a2d2f61054cfb0745ffe91fda692d5f46fb4b3b77ba8ff1
+        - path: "1.4"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 3417
+          byte_count: 5808
+          word_count: 837
+          content_hash: f3566deb58a987f58a5f9b81f6f5f16baba50051a93e10608d897a4bfcd6328c
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Group A — `write-design/SKILL.md`: Phase 0 Corpus Discovery'
+              byte_offset: 3445
+              byte_count: 2281
+              word_count: 335
+              content_hash: aa8eb867bc59e6a6f82c374ac685ba645c9a0aa4f10f5fb0469be685e94ef73e
+            - path: 1.4.2
+              level: 3
+              title: 'Group B — `work/templates/specification-prompt-template.md`: Required Related Work Section'
+              byte_offset: 5726
+              byte_count: 1128
+              word_count: 170
+              content_hash: b5cf55d3a198ccc13e39e99e9e251b2cc709087b9848b090e56725abbca3517c
+            - path: 1.4.3
+              level: 3
+              title: 'Group C — `.kbz/roles/reviewer-conformance.yaml`: Blocking Related Work Check'
+              byte_offset: 6854
+              byte_count: 1315
+              word_count: 192
+              content_hash: ccb03fb805c24e29c02a9454ecf567a142683adb859d54118191dfbac04a41a0
+            - path: 1.4.4
+              level: 3
+              title: 'Group D — `write-spec/SKILL.md`: Cross-Reference Check'
+              byte_offset: 8169
+              byte_count: 1056
+              word_count: 137
+              content_hash: 039d243df59e63c3d6c0e133a87b83afe6a2818d349af5b3c77a8d7c338d3dd1
+        - path: "1.5"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 9225
+          byte_count: 898
+          word_count: 108
+          content_hash: 3d32500648750d59998dafa4f6ad01134a0d9368400b24e1a0fd8aa187ed4f34
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 10123
+          byte_count: 2622
+          word_count: 387
+          content_hash: ac51b000c197c27f980ee449f0ae8b43865280ad619da8b2deb26b61865f6b8b
+        - path: "1.7"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 12745
+          byte_count: 1407
+          word_count: 190
+          content_hash: e4fb17857af702b3e5d9f285829c3525ecb9dcce5d1cfd5e64ac7defb9a8ae49
+entity_refs:
+    - entity_id: FEAT-01KPTHB5Z1H7T
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 279
+    - entity_id: FEAT-01KPTHB5Z1H7T
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1929
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 4542
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.4.1
+      byte_offset: 4726
+    - entity_id: DOC-related
+      entity_type: document
+      section_path: 1.4.4
+      byte_offset: 8774
+cross_doc_links:
+    - target_path: ../design/doc-intel-adoption-design.md
+      link_text: 'Design: Document Intelligence Adoption and Integration'
+      section_path: 1.1.1
+    - target_path: work/design/doc-intel-adoption-design.md
+      link_text: work/design/doc-intel-adoption-design.md
+      section_path: "1"
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.1.2
+    - target_path: reviewer-conformance/SKILL.md
+      link_text: reviewer-conformance/SKILL.md
+      section_path: 1.1.2
+    - target_path: .kbz/skills/write-design/SKILL.md
+      link_text: .kbz/skills/write-design/SKILL.md
+      section_path: 1.3.1
+    - target_path: .kbz/skills/write-spec/SKILL.md
+      link_text: .kbz/skills/write-spec/SKILL.md
+      section_path: 1.3.1
+    - target_path: work/templates/specification-prompt-template.md
+      link_text: work/templates/specification-prompt-template.md
+      section_path: 1.3.1
+    - target_path: write-design/SKILL.md
+      link_text: write-design/SKILL.md
+      section_path: 1.4.1
+    - target_path: work/templates/specification-prompt-template.md
+      link_text: work/templates/specification-prompt-template.md
+      section_path: 1.4.2
+    - target_path: write-spec/SKILL.md
+      link_text: write-spec/SKILL.md
+      section_path: 1.4.4
+    - target_path: .kbz/skills/write-design/SKILL.md
+      link_text: .kbz/skills/write-design/SKILL.md
+      section_path: "1.5"
+    - target_path: .kbz/skills/write-spec/SKILL.md
+      link_text: .kbz/skills/write-spec/SKILL.md
+      section_path: "1.5"
+    - target_path: work/templates/specification-prompt-template.md
+      link_text: work/templates/specification-prompt-template.md
+      section_path: "1.5"
+    - target_path: write-design/SKILL.md
+      link_text: write-design/SKILL.md
+      section_path: "1.6"
+    - target_path: work/templates/specification-prompt-template.md
+      link_text: work/templates/specification-prompt-template.md
+      section_path: "1.6"
+    - target_path: write-spec/SKILL.md
+      link_text: write-spec/SKILL.md
+      section_path: "1.6"
+    - target_path: work/design/doc-intel-adoption-design.md
+      link_text: work/design/doc-intel-adoption-design.md
+      section_path: "1.7"
+    - target_path: reviewer-conformance/SKILL.md
+      link_text: reviewer-conformance/SKILL.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: 1.1.2
+      role: decision
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+classified: false

@@ -1,0 +1,203 @@
+document_id: PROJECT/design-transition-history-storage
+document_path: work/design/transition-history-storage.md
+content_hash: 543dc3bdde0fc3d4f77c47adb11c9a0b7df4c7aef56bf4285a77ed12498e1479
+indexed_at: 2026-04-22T01:50:41.423587Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem and Motivation
+      byte_offset: 113
+      byte_count: 1850
+      word_count: 273
+      content_hash: b81d77aa3a7c5c029e0d8aa4c8bbb7520725c09debdbc1128aea7cf2f82f4349
+    - path: "2"
+      level: 2
+      title: Design
+      byte_offset: 1963
+      byte_count: 7217
+      word_count: 1048
+      content_hash: a9952e0358c28c126f233000f1e5cf59676daaaf9910629aaa45452e9803c73b
+      children:
+        - path: "2.1"
+          level: 3
+          title: Overview
+          byte_offset: 1974
+          byte_count: 777
+          word_count: 108
+          content_hash: 1e2bee6847960ea639b42c3259c5e41a5c0c975913842427b259511d79008c61
+        - path: "2.2"
+          level: 3
+          title: Storage model
+          byte_offset: 2751
+          byte_count: 1283
+          word_count: 165
+          content_hash: 8db2de434e031abeae44c3d41e8b127e802d545b3284323708cba5a1923c1891
+        - path: "2.3"
+          level: 3
+          title: Authority and consistency
+          byte_offset: 4034
+          byte_count: 705
+          word_count: 113
+          content_hash: 123385417978c1065de9a4c03e6ead87b2f94f9217339a77d1151442efede5e9
+        - path: "2.4"
+          level: 3
+          title: Commit granularity
+          byte_offset: 4739
+          byte_count: 795
+          word_count: 109
+          content_hash: 508d0281d28f4491748f5629412846d5c563b2488720b64c751a5e5acd31ce38
+        - path: "2.5"
+          level: 3
+          title: Query model
+          byte_offset: 5534
+          byte_count: 739
+          word_count: 113
+          content_hash: 576b9d3f342d45ce81c10ee7ad7f07b37951f2350b626e89599ede3dbfb92d0e
+        - path: "2.6"
+          level: 3
+          title: Health and repair
+          byte_offset: 6273
+          byte_count: 761
+          word_count: 124
+          content_hash: 72b7604d3ea23cf9c61efde64e2c1a9810623439e0862418bd92af93132f30bd
+        - path: "2.7"
+          level: 3
+          title: Migration strategy
+          byte_offset: 7034
+          byte_count: 1112
+          word_count: 161
+          content_hash: ec96f87c55c5f297ad2ee1b266a6666617c657e1a815ad72823583ac4dea9028
+          children:
+            - path: 2.7.1
+              level: 4
+              title: 'Phase 1: dual-write for new transitions'
+              byte_offset: 7105
+              byte_count: 219
+              word_count: 33
+              content_hash: 6f087b6d6314233a7f7b3f46c089f88110c83cab0d6df25cba56737dc12e9774
+            - path: 2.7.2
+              level: 4
+              title: 'Phase 2: switch history consumers'
+              byte_offset: 7324
+              byte_count: 242
+              word_count: 36
+              content_hash: 1b7aee8f91164c5deb3927a3ef2d353d96ddcedef1617ca516fbabc6c5c28305
+            - path: 2.7.3
+              level: 4
+              title: 'Phase 3: reduce commit noise'
+              byte_offset: 7566
+              byte_count: 192
+              word_count: 24
+              content_hash: dd9d59fe2769d30dd2bcd4c6ad4ed14b1eb8721337a52c7d5bba08fc379fabc8
+            - path: 2.7.4
+              level: 4
+              title: 'Phase 4: optional indexing'
+              byte_offset: 7758
+              byte_count: 388
+              word_count: 59
+              content_hash: 904816554f433ea82a3b0748d7fb42793cfb5b0e1b60d25239d1b5ec4f0fe3dc
+        - path: "2.8"
+          level: 3
+          title: Failure modes and handling
+          byte_offset: 8146
+          byte_count: 1034
+          word_count: 153
+          content_hash: a1346a9b7fa50840515c4485f0a1fefbf9b7729eab9f9835fdbafa17717d1fce
+          children:
+            - path: 2.8.1
+              level: 4
+              title: Partial write risk
+              byte_offset: 8257
+              byte_count: 243
+              word_count: 38
+              content_hash: 62f1cc5b3edfad5d45239429e24f562a2f0758ba054ef42bd0f757b1b350f82c
+            - path: 2.8.2
+              level: 4
+              title: Merge conflicts on transition logs
+              byte_offset: 8500
+              byte_count: 280
+              word_count: 39
+              content_hash: da4b8c7ab87103a89498b5698e20c13a55884ec58858f50d2f4371be508f2c0b
+            - path: 2.8.3
+              level: 4
+              title: Log growth
+              byte_offset: 8780
+              byte_count: 181
+              word_count: 27
+              content_hash: ea72eb89167e8d164e218fef15388994fd3a3194e53fa0584dc9c04ccda39683
+            - path: 2.8.4
+              level: 4
+              title: Query cost
+              byte_offset: 8961
+              byte_count: 219
+              word_count: 33
+              content_hash: 8507bb2f9b49d28e25173324222b1cd760c4c53ef12846852046c66d2070e26c
+    - path: "3"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 9180
+      byte_count: 3161
+      word_count: 463
+      content_hash: 0dfbf56520f2a15efff158e43e3d311d4f6b49b96005659e4c15a9b38848b1e1
+      children:
+        - path: "3.1"
+          level: 3
+          title: 'Alternative 1: Keep Git commits as the primary transition log'
+          byte_offset: 9208
+          byte_count: 795
+          word_count: 122
+          content_hash: 2bac218976b9bb1f732b06aa4c3a93e6a3370e68ccb913978112e50d15cee882
+        - path: "3.2"
+          level: 3
+          title: 'Alternative 2: Store transition history on the entity YAML record'
+          byte_offset: 10003
+          byte_count: 901
+          word_count: 135
+          content_hash: 8f067804c8aadcefc7b26b89e68c2bc611666f653a746a4fe95bdf04ece85726
+        - path: "3.3"
+          level: 3
+          title: 'Alternative 3: Use SQLite as canonical transition storage'
+          byte_offset: 10904
+          byte_count: 745
+          word_count: 107
+          content_hash: f1c56f299d8240acef0a90536a9d56e4611099d2ea24b7ce3b0c314fc5c51123
+        - path: "3.4"
+          level: 3
+          title: 'Alternative 4: Use Postgres or another shared database'
+          byte_offset: 11649
+          byte_count: 692
+          word_count: 96
+          content_hash: f4aa4369cf80996a99351bb839e2ffafd492231c8fc41fcc654f91ab5a107596
+    - path: "4"
+      level: 2
+      title: Decisions
+      byte_offset: 12341
+      byte_count: 2262
+      word_count: 306
+      content_hash: 0f6e538db5e86632c45e638fa988a89ccd326cbe42b9a84acb90db09400e5bc9
+conventional_roles:
+    - section_path: "2.1"
+      role: narrative
+      confidence: high
+    - section_path: 2.8.1
+      role: risk
+      confidence: high
+    - section_path: "3"
+      role: alternative
+      confidence: high
+    - section_path: "3.1"
+      role: alternative
+      confidence: high
+    - section_path: "3.2"
+      role: alternative
+      confidence: high
+    - section_path: "3.3"
+      role: alternative
+      confidence: high
+    - section_path: "3.4"
+      role: alternative
+      confidence: high
+    - section_path: "4"
+      role: decision
+      confidence: high
+classified: false

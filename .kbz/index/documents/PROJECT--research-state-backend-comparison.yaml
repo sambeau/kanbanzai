@@ -1,0 +1,192 @@
+document_id: PROJECT/research-state-backend-comparison
+document_path: work/research/state-backend-comparison.md
+content_hash: b05bb414e94f3d4b0e27802a069103d3b42d343f23a9f3fce64a712419116779
+indexed_at: 2026-04-22T01:50:41.959885Z
+sections:
+    - path: "1"
+      level: 2
+      title: Research Question
+      byte_offset: 113
+      byte_count: 598
+      word_count: 84
+      content_hash: bca9bb17828a9e917a9477ed0bdaa1ff1ae1de16f120a7465b3cac63e6ab99f0
+    - path: "2"
+      level: 2
+      title: Scope and Methodology
+      byte_offset: 711
+      byte_count: 1019
+      word_count: 128
+      content_hash: 8386bc4b68b58127b87e4863ea16fb5faf243194e61f2dec78f403d1ebd98e96
+    - path: "3"
+      level: 2
+      title: Findings
+      byte_offset: 1730
+      byte_count: 5211
+      word_count: 694
+      content_hash: 552a6e8a3e23cf36669f028569e967f66c03c8ee5c60fcf4493fe419a13b3d9f
+      children:
+        - path: "3.1"
+          level: 3
+          title: 'Finding 1: The Git-native evolution path is the lower-risk response to the current problem'
+          byte_offset: 1743
+          byte_count: 861
+          word_count: 119
+          content_hash: cc187a959571089d04ea4fbd9f64c4afa94617604e82cbe76847653d61a01415
+        - path: "3.2"
+          level: 3
+          title: 'Finding 2: A centralized backend solves a broader class of problems than the current one, but at materially higher cost'
+          byte_offset: 2604
+          byte_count: 749
+          word_count: 100
+          content_hash: 51853739afe49cd21a6535ba9623f32f1dd16de1b46ae726774c0b41692478e0
+        - path: "3.3"
+          level: 3
+          title: 'Finding 3: The current product identity strongly favors keeping Git-native mode as a first-class option'
+          byte_offset: 3353
+          byte_count: 842
+          word_count: 117
+          content_hash: 87be56712f6bb9785ffa24b2a18291a4fcf2c5c082bacc676e0356af81028deb
+        - path: "3.4"
+          level: 3
+          title: 'Finding 4: Supporting both backends is plausible only with strict authority boundaries'
+          byte_offset: 4195
+          byte_count: 835
+          word_count: 108
+          content_hash: 4f6fa94a4baec63ea3c2c95c70ead393962562e19a258869fe5b81405c97fe66
+        - path: "3.5"
+          level: 3
+          title: 'Finding 5: The Git-native evolution path preserves offline, portability, and inspectability advantages that a centralized backend weakens'
+          byte_offset: 5030
+          byte_count: 1038
+          word_count: 130
+          content_hash: e19406042baa3d8378b0e3224639f3b9c66301d37097e26cb448f7e41a91da1b
+        - path: "3.6"
+          level: 3
+          title: 'Finding 6: The centralized backend path is strategically valuable if Kanbanzai wants to serve larger teams, but it is not required to solve the current issue'
+          byte_offset: 6068
+          byte_count: 873
+          word_count: 118
+          content_hash: 6720467a04b75e7fead15e13c13eb7a537dad56995fd6aafec9823101966a044
+    - path: "4"
+      level: 2
+      title: Trade-Off Analysis
+      byte_offset: 6941
+      byte_count: 1136
+      word_count: 158
+      content_hash: da599b9669d4525e034db4286383d0fe88288c4a5f6926e1a8fa51252b814b84
+    - path: "5"
+      level: 2
+      title: Recommendations
+      byte_offset: 8077
+      byte_count: 2889
+      word_count: 404
+      content_hash: ff211a79db232cdebf8c8ff70033888746c07428e8e7d4f205b4e844ed0a88c8
+      children:
+        - path: "5.1"
+          level: 3
+          title: 'Recommendation 1: Treat Git-native evolution as the primary near-term direction'
+          byte_offset: 8097
+          byte_count: 616
+          word_count: 85
+          content_hash: f7920e6e73d3583d21e19b8430d384a5ad438156e118f608d880afc82a376ed6
+        - path: "5.2"
+          level: 3
+          title: 'Recommendation 2: Treat centralized state as a strategic expansion path, not the default answer to commit noise'
+          byte_offset: 8713
+          byte_count: 648
+          word_count: 93
+          content_hash: c1497f1e0b953d666ac04e58a6158dcb219c93ded39af90e2e33bffa38a153a8
+        - path: "5.3"
+          level: 3
+          title: 'Recommendation 3: If centralized mode is pursued, require one canonical backend per project'
+          byte_offset: 9361
+          byte_count: 462
+          word_count: 66
+          content_hash: 92a104e7e502e6f29276e8ebe5827ab5763fa95f3b4ae5264a502f0a1b40ab0f
+        - path: "5.4"
+          level: 3
+          title: 'Recommendation 4: If centralized mode remains strategically interesting, invest next in backend-neutral service boundaries'
+          byte_offset: 9823
+          byte_count: 637
+          word_count: 82
+          content_hash: dfd377a82d5ca835a4ba1b1789a64114b6c2825f0607031dbf2fa291accedbcc
+        - path: "5.5"
+          level: 3
+          title: 'Recommendation 5: Do not retire the Git-native model without an explicit product-positioning decision'
+          byte_offset: 10460
+          byte_count: 506
+          word_count: 76
+          content_hash: 68de1da4b19d52b9fdb60d7aed1a4ac65b5f0459db6e3f29d496e9afeb90b09a
+    - path: "6"
+      level: 2
+      title: Limitations
+      byte_offset: 10966
+      byte_count: 497
+      word_count: 75
+      content_hash: ce35e86af9d0f7d2e926f43ef0e698a16e8809c6124fe8b3dd1b934da4db0846
+cross_doc_links:
+    - target_path: work/design/transition-history-storage.md
+      link_text: work/design/transition-history-storage.md
+      section_path: "2"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "2"
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "2"
+    - target_path: work/design/public-schema-interface.md
+      link_text: work/design/public-schema-interface.md
+      section_path: "2"
+    - target_path: work/design/transition-history-storage.md
+      link_text: work/design/transition-history-storage.md
+      section_path: "3.1"
+    - target_path: work/design/git-commit-policy.md
+      link_text: work/design/git-commit-policy.md
+      section_path: "3.1"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "3.2"
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "3.3"
+    - target_path: work/design/public-schema-interface.md
+      link_text: work/design/public-schema-interface.md
+      section_path: "3.3"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "3.4"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "3.4"
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "3.5"
+    - target_path: work/design/public-schema-interface.md
+      link_text: work/design/public-schema-interface.md
+      section_path: "3.5"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "3.5"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "3.6"
+    - target_path: work/design/transition-history-storage.md
+      link_text: work/design/transition-history-storage.md
+      section_path: "3.6"
+    - target_path: transition-history-storage.md
+      link_text: transition-history-storage.md
+      section_path: "5.1"
+conventional_roles:
+    - section_path: "1"
+      role: question
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+    - section_path: "3.1"
+      role: risk
+      confidence: high
+    - section_path: "5.5"
+      role: decision
+      confidence: high
+classified: false

@@ -1,0 +1,534 @@
+document_id: PROJECT/report-document-intelligence-usage-report
+document_path: work/reports/document-intelligence-usage-report.md
+content_hash: f4ff8b4ccd83b3c1ed215a3c6f682c77596ef0015481dcfc08068dabb30fc866
+indexed_at: 2026-04-22T10:09:03.118271Z
+sections:
+    - path: "1"
+      level: 1
+      title: Document Intelligence Usage Report
+      byte_offset: 0
+      byte_count: 21093
+      word_count: 3107
+      content_hash: f4ff8b4ccd83b3c1ed215a3c6f682c77596ef0015481dcfc08068dabb30fc866
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 38
+          byte_count: 595
+          word_count: 92
+          content_hash: ae419580b4b9b9440375696cc2895b4baf9822c0f0287f9b9b9c438c1bf8b9d7
+        - path: "1.2"
+          level: 2
+          title: Executive Summary
+          byte_offset: 633
+          byte_count: 1184
+          word_count: 165
+          content_hash: bb10cf5085a77d68a3097b91e0966a0a498d5fce3cb20c46069b0c55a3a15f03
+        - path: "1.3"
+          level: 2
+          title: Scope and Evidence Basis
+          byte_offset: 1817
+          byte_count: 398
+          word_count: 48
+          content_hash: 675f5dc4d98bf0f30ae33ca2f1c937fa1aaa6f78c764a2b6ecb6f6be2ccdbea6
+        - path: "1.4"
+          level: 2
+          title: 1. What information has been stored?
+          byte_offset: 2215
+          byte_count: 3489
+          word_count: 505
+          content_hash: df8bae111518a14ae43d665942b328167dd2404e99b41244567a01e56f9f1ec2
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 1.1 Registered document corpus
+              byte_offset: 2256
+              byte_count: 498
+              word_count: 74
+              content_hash: d597afeb292e989fea7eca49b1e23a78f67765e8502946f59402ddf5ddaab40e
+            - path: 1.4.2
+              level: 3
+              title: 1.2 Document Intelligence index coverage
+              byte_offset: 2754
+              byte_count: 279
+              word_count: 35
+              content_hash: 2a8ee0ec471ec9f36d1d195dbe4affc1128ad388d592120c58f674a8df3f513c
+            - path: 1.4.3
+              level: 3
+              title: 1.3 Stored per-document intelligence
+              byte_offset: 3033
+              byte_count: 1924
+              word_count: 279
+              content_hash: 04b05c4bf1e3e614232ffa4ee9a07fa89d6ff6b99fe8fcb88c2da2d142eea7ce
+              children:
+                - path: 1.4.3.1
+                  level: 4
+                  title: 'Layer 1: Structural skeleton'
+                  byte_offset: 3158
+                  byte_count: 426
+                  word_count: 69
+                  content_hash: 1ec3d14fa261ef6769a56c31c5cf50321159dde82155afa1078d6e861bc93f2f
+                - path: 1.4.3.2
+                  level: 4
+                  title: 'Layer 2: Pattern-based extraction'
+                  byte_offset: 3584
+                  byte_count: 341
+                  word_count: 46
+                  content_hash: 2104cc1cb1d77d90179ea21213fd640bd3101f5813d11e07dfdf6a7b2d32072d
+                - path: 1.4.3.3
+                  level: 4
+                  title: 'Layer 3: Classification fields'
+                  byte_offset: 3925
+                  byte_count: 640
+                  word_count: 89
+                  content_hash: 6c2a80c88bdb13af72dfb4c323409726161eed29b9f1aa3cc967cac4d447ac34
+                - path: 1.4.3.4
+                  level: 4
+                  title: 'Layer 4: Graph representation'
+                  byte_offset: 4565
+                  byte_count: 392
+                  word_count: 58
+                  content_hash: feffd777627cb52a92d86f4c02a67a1937cc0782b7f12cd2acb54e2193537ae1
+            - path: 1.4.4
+              level: 3
+              title: 1.4 Search-oriented storage
+              byte_offset: 4957
+              byte_count: 303
+              word_count: 46
+              content_hash: d3e38c7f687c9482ab14958362ae8cfc0bc9254f61f18ea71f23b1927c281c15
+            - path: 1.4.5
+              level: 3
+              title: 1.5 Summary of what is stored
+              byte_offset: 5260
+              byte_count: 444
+              word_count: 64
+              content_hash: 72e9c00c7c04cabb2dc6860b99f5d1f0cf5a26b260ab079b83046fe8d5bf7415
+        - path: "1.5"
+          level: 2
+          title: 2. How useful is the information it has stored?
+          byte_offset: 5704
+          byte_count: 52
+          word_count: 10
+          content_hash: f84bfef820781e09734850326f71ff5168deffb8438885df83a032c78f5514da
+        - path: "1.6"
+          level: 2
+          title: 2.1 Strong usefulness areas
+          byte_offset: 5756
+          byte_count: 1128
+          word_count: 157
+          content_hash: 811862e7d4ee2316a5ea686494ef64a0ccf2f3b16522ddb25fa14f2186fb0de4
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Structural usefulness: high'
+              byte_offset: 5788
+              byte_count: 291
+              word_count: 41
+              content_hash: a8fb15bb64b82459a016dfb5433371034d80210b2acd9bcaf2972d20c5dcc8e6
+            - path: 1.6.2
+              level: 3
+              title: 'Relationship usefulness: high'
+              byte_offset: 6079
+              byte_count: 467
+              word_count: 65
+              content_hash: 25dcebbe3471cc4bc1f5c78c1eae9c1a05e7f48f1e149f3bc51099622a7c3f9d
+            - path: 1.6.3
+              level: 3
+              title: 'Search usefulness: potentially high'
+              byte_offset: 6546
+              byte_count: 338
+              word_count: 46
+              content_hash: 6d14095b9df325a4de6243d70aaab06cbaf0fe55974aee4b6f2155cb1d2aad1d
+        - path: "1.7"
+          level: 2
+          title: 2.2 Moderate usefulness areas
+          byte_offset: 6884
+          byte_count: 615
+          word_count: 90
+          content_hash: 6c2694d64470e80007bf0755a7829ac41b4500d6a7b167a7327edd6a91f27b8a
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 'Conventional role tagging: moderate to high'
+              byte_offset: 6918
+              byte_count: 581
+              word_count: 85
+              content_hash: 5d8a8131391c30e8ae4225c4ad27b4451e45270ef89222fcc8c2c41cd90c5881
+        - path: "1.8"
+          level: 2
+          title: 2.3 Weak usefulness areas
+          byte_offset: 7499
+          byte_count: 983
+          word_count: 140
+          content_hash: ab602b40085e9289f28ddc198f9601ec45f9e78072cdbce7c8efb57b80f6e79a
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 'AI classification usefulness: currently limited'
+              byte_offset: 7529
+              byte_count: 310
+              word_count: 44
+              content_hash: b64332affa57e2bd999703d0d7eafaddd5913c97035672a7ef5a25e7c57b0325
+            - path: 1.8.2
+              level: 3
+              title: 'Measured usefulness: currently unanswerable'
+              byte_offset: 7839
+              byte_count: 643
+              word_count: 91
+              content_hash: 3a3918509ecc098b8ffc1d695e5fdb780cea8ef24c9275e080d3a287734c27fa
+        - path: "1.9"
+          level: 2
+          title: 2.4 Overall usefulness judgment
+          byte_offset: 8482
+          byte_count: 399
+          word_count: 51
+          content_hash: ac3d611328eacb9447861a32edbdee9ac615babe4eb41ab93f77d17e737523e2
+        - path: "1.10"
+          level: 2
+          title: 3. How regularly is new information added?
+          byte_offset: 8881
+          byte_count: 47
+          word_count: 8
+          content_hash: e9887fbbdb0445a7331cac44ecd7b381d9223323ae877cd5e71bae198142b572
+        - path: "1.11"
+          level: 2
+          title: 3.1 Document registration activity
+          byte_offset: 8928
+          byte_count: 769
+          word_count: 118
+          content_hash: fdaa4dda2c214e6978b9be109b44dba7bdddf96e1e55f9c53a9474a635120142
+          children:
+            - path: 1.11.1
+              level: 3
+              title: Interpretation
+              byte_offset: 9481
+              byte_count: 216
+              word_count: 31
+              content_hash: 758cd0f8d731993ec2170520135a1ecf952d3dbf588e65a0d2548efcff382cb8
+        - path: "1.12"
+          level: 2
+          title: 3.2 Indexing cadence
+          byte_offset: 9697
+          byte_count: 343
+          word_count: 46
+          content_hash: 9d9554f09ac3590ac84ebecc46284da25b48210f6aa2579213f5ece43a9027a0
+        - path: "1.13"
+          level: 2
+          title: 3.3 Classification cadence
+          byte_offset: 10040
+          byte_count: 375
+          word_count: 51
+          content_hash: d91ff64b433d7751b01e6c083d5203ffd8e1a5235aebddfbebaef3ce8d31e423
+        - path: "1.14"
+          level: 2
+          title: 3.4 Answer
+          byte_offset: 10415
+          byte_count: 234
+          word_count: 34
+          content_hash: 83eccfa661a57549ab03b50c9f356f4df3bade36c72b5d0dd6ac19ec684addaf
+        - path: "1.15"
+          level: 2
+          title: 4. How regularly is information accessed?
+          byte_offset: 10649
+          byte_count: 46
+          word_count: 7
+          content_hash: cd894a98812c93ba3aa9ce33f37c45f3d5627c6aa568f251b9b8761a46fcbb21
+        - path: "1.16"
+          level: 2
+          title: 4.1 What we can measure
+          byte_offset: 10695
+          byte_count: 332
+          word_count: 54
+          content_hash: c261091cef8e5eada49678a156614d3c9659cc3ce1c8e09dacddba33f4e520d1
+        - path: "1.17"
+          level: 2
+          title: 4.2 Interpretation
+          byte_offset: 11027
+          byte_count: 836
+          word_count: 128
+          content_hash: 5a14acebd649c5fee4946fa6847648539d4041f37959441dba0e993df5273b82
+          children:
+            - path: 1.17.1
+              level: 3
+              title: What this likely means
+              byte_offset: 11310
+              byte_count: 553
+              word_count: 81
+              content_hash: 42f854af8baf1fcb77d9d6dd523a04522fbfeb0484860cbd13ec56f2eb454c53
+        - path: "1.18"
+          level: 2
+          title: 4.3 What we cannot currently answer confidently
+          byte_offset: 11863
+          byte_count: 468
+          word_count: 70
+          content_hash: a0d019cd3d2af55d553ab93a7a77a67c097b76c5faab30878eace66f85f65d32
+        - path: "1.19"
+          level: 2
+          title: 4.4 Answer
+          byte_offset: 12331
+          byte_count: 269
+          word_count: 42
+          content_hash: 62c5725f4a18f76cc224eac74118a9dcba45be5391f478dc8983a5b1544ba41e
+        - path: "1.20"
+          level: 2
+          title: 5. How often does information expire?
+          byte_offset: 12600
+          byte_count: 42
+          word_count: 7
+          content_hash: 845d9b0c71527d5e636cd2aad096ee6e788bd2f2b42eaf7687d9a2e535b0bf67
+        - path: "1.21"
+          level: 2
+          title: 5.1 Current state
+          byte_offset: 12642
+          byte_count: 430
+          word_count: 63
+          content_hash: 1c2fce88dc68f94cbd4296cb34b73e79c7798e552b2fb96309d39536f08b6671
+        - path: "1.22"
+          level: 2
+          title: 5.2 What does expire today?
+          byte_offset: 13072
+          byte_count: 553
+          word_count: 91
+          content_hash: 81899f0f7754d37d8726606705f4bfc29c5f151cffcb9a8371e7aa46a22bc429
+        - path: "1.23"
+          level: 2
+          title: 5.3 Freshness vs expiry
+          byte_offset: 13625
+          byte_count: 350
+          word_count: 50
+          content_hash: 059af33c2e69c9da0a02c9b1864c2b3d80e77c2d94013b15ac9fe7b6edcf4b18
+        - path: "1.24"
+          level: 2
+          title: 5.4 Answer
+          byte_offset: 13975
+          byte_count: 261
+          word_count: 41
+          content_hash: 0ef3aba2a14dac08c99a8e3fba661acbc33370080c638fbc2b2d2e2d529cb195
+        - path: "1.25"
+          level: 2
+          title: Effectiveness Assessment
+          byte_offset: 14236
+          byte_count: 29
+          word_count: 3
+          content_hash: ee74f798a36c7ba5e32af388f4cf0f7b80e43bda842542fa74d8a14f2271492d
+        - path: "1.26"
+          level: 2
+          title: What is working well
+          byte_offset: 14265
+          byte_count: 615
+          word_count: 96
+          content_hash: 0235be9701253a0022b11c13662e23076e27073a5b728df3cb92cbdc9a3afd21
+          children:
+            - path: 1.26.1
+              level: 3
+              title: 1. The storage model is strong
+              byte_offset: 14290
+              byte_count: 153
+              word_count: 26
+              content_hash: c4b5de623a4c64cac739f8ae47f220a1f48c99833b38db7a510b945d196b8a06
+            - path: 1.26.2
+              level: 3
+              title: 2. Coverage is substantial
+              byte_offset: 14443
+              byte_count: 132
+              word_count: 20
+              content_hash: 580695f717c16e48edeca24332ba8815f4056292854f462d6c471ca062491548
+            - path: 1.26.3
+              level: 3
+              title: 3. Relationship extraction is already valuable
+              byte_offset: 14575
+              byte_count: 145
+              word_count: 19
+              content_hash: d1f5a3489d998dfa52722d499ee23b9a67285386e5c24ad0a1d22d55637053f6
+            - path: 1.26.4
+              level: 3
+              title: 4. Search and graph capabilities are implemented in a scalable way
+              byte_offset: 14720
+              byte_count: 160
+              word_count: 26
+              content_hash: b12fcca699f11e4c7a2fecc9566d2a0a0588bf6dd682101fbef81bd61b98e43f
+        - path: "1.27"
+          level: 2
+          title: What is limiting effectiveness today
+          byte_offset: 14880
+          byte_count: 591
+          word_count: 93
+          content_hash: 3b74cb2778ccf59b33515b4ab3284ed70111bc90c609bebeba2ca9a9b54ab10f
+          children:
+            - path: 1.27.1
+              level: 3
+              title: 1. Rich semantic classification appears under-populated
+              byte_offset: 14921
+              byte_count: 144
+              word_count: 20
+              content_hash: 036515c2e6da6c2a33047db5473089c781a12b1d2462580cfb8678c849c83c12
+            - path: 1.27.2
+              level: 3
+              title: 2. Usage telemetry is weak
+              byte_offset: 15065
+              byte_count: 178
+              word_count: 30
+              content_hash: 5bb7f07e663472fdd3f0d42684bf06850c626e2917ec103a4429304e250bd0be
+            - path: 1.27.3
+              level: 3
+              title: 3. Access evidence is too sparse
+              byte_offset: 15243
+              byte_count: 111
+              word_count: 18
+              content_hash: a8c8ac43cd668a511d2aee31d19e301d0516470e6d6cbf086b45a6a3f200ef7e
+            - path: 1.27.4
+              level: 3
+              title: 4. Long-term analysis is constrained
+              byte_offset: 15354
+              byte_count: 117
+              word_count: 19
+              content_hash: 93b45246e19209b2f24152d5eeed626b593ee824ebca3bdb5ee9c2d28115b3fa
+        - path: "1.28"
+          level: 2
+          title: Direct Answers
+          byte_offset: 15471
+          byte_count: 19
+          word_count: 3
+          content_hash: 56d75c611b7c5e18ff6315108712021e093e59e388a09a25ad73212bb0c6168c
+        - path: "1.29"
+          level: 2
+          title: 1. What information has been stored?
+          byte_offset: 15490
+          byte_count: 462
+          word_count: 65
+          content_hash: 06e9c9db0844102381d08b25c259d2c724c39a062198d5b6d4a46ef1eb51f740
+        - path: "1.30"
+          level: 2
+          title: 2. How useful is the information it has stored?
+          byte_offset: 15952
+          byte_count: 392
+          word_count: 56
+          content_hash: afa03d75c7c3d5121ccf2a76b3b8d3903601976d0e39a21e0b008f47b6fce378
+        - path: "1.31"
+          level: 2
+          title: 3. How regularly is new information added?
+          byte_offset: 16344
+          byte_count: 316
+          word_count: 49
+          content_hash: f7c1424cdc0cb7d7ecfb0fd87bfb30a4639936ba38914c3ddd3b895dd4ae81df
+        - path: "1.32"
+          level: 2
+          title: 4. How regularly is information accessed?
+          byte_offset: 16660
+          byte_count: 295
+          word_count: 48
+          content_hash: 2af7c1c59b92f2bf1cd70462735dce5dd4295534d51f5aed392ae44a738d70ba
+        - path: "1.33"
+          level: 2
+          title: 5. How often does information expire?
+          byte_offset: 16955
+          byte_count: 283
+          word_count: 44
+          content_hash: 010ac0705b2ae51bf6da4eadf056becbfb6863d442b21b8d862d783543ac0ba0
+        - path: "1.34"
+          level: 2
+          title: What is currently unanswerable?
+          byte_offset: 17238
+          byte_count: 806
+          word_count: 124
+          content_hash: 5b6aef1726e9fff42f19fcc3c216dbff7eba5a619b3fb5ce84a6184ecedf1d64
+          children:
+            - path: 1.34.1
+              level: 3
+              title: A. Which stored information is actually most used?
+              byte_offset: 17343
+              byte_count: 144
+              word_count: 25
+              content_hash: f44a5a611af6f98629af06579b42b8c36b0e7a893bb7dcc015ab470f0e2453d5
+            - path: 1.34.2
+              level: 3
+              title: B. Which queries are successful?
+              byte_offset: 17487
+              byte_count: 177
+              word_count: 28
+              content_hash: 3d78a2cffff32852d45b6b214b7a0574cad340d36e298e3ad12bcb6ea8a196aa
+            - path: 1.34.3
+              level: 3
+              title: C. Whether Document Intelligence improves workflow outcomes
+              byte_offset: 17664
+              byte_count: 219
+              word_count: 32
+              content_hash: 1d11ad119e01d06176d7130555c3395323e8810aff7699d9002ce279f14b51d7
+            - path: 1.34.4
+              level: 3
+              title: D. How often semantic classification is refreshed after document edits
+              byte_offset: 17883
+              byte_count: 161
+              word_count: 24
+              content_hash: aa5d390b0964bde6770eec79943f3a353cf43e7a7c2e1ae10b1a88f460c5e4fa
+        - path: "1.35"
+          level: 2
+          title: Recommendations for Future Measurement
+          byte_offset: 18044
+          byte_count: 43
+          word_count: 5
+          content_hash: 257a01c011ebca69ebbef413ab3f2c6abc7df900b28204fcdf09913ea871140e
+        - path: "1.36"
+          level: 2
+          title: 1. Add document-intelligence access telemetry
+          byte_offset: 18087
+          byte_count: 423
+          word_count: 68
+          content_hash: 42a292ed416022274f9c608785354122d3b63a5abff490ded35d1bbd08a35a69
+        - path: "1.37"
+          level: 2
+          title: 2. Add effectiveness metrics, not just usage metrics
+          byte_offset: 18510
+          byte_count: 329
+          word_count: 52
+          content_hash: 8d625e7290f80b8893810adc7082720634eed334a8d77076bef1a71b00580a67
+        - path: "1.38"
+          level: 2
+          title: 3. Add classification coverage metrics
+          byte_offset: 18839
+          byte_count: 304
+          word_count: 44
+          content_hash: 19f35ae8be1d43bbb641a42db588facdd9928952df475991631e10d5e4454025
+        - path: "1.39"
+          level: 2
+          title: 4. Extend retention for analysis data
+          byte_offset: 19143
+          byte_count: 254
+          word_count: 37
+          content_hash: fc819913383d70639c841eb1237aafcb430954449e5eee142b39b85abc833659
+        - path: "1.40"
+          level: 2
+          title: 5. Add quality evaluation loops
+          byte_offset: 19397
+          byte_count: 326
+          word_count: 49
+          content_hash: e9b932b8697faa4a102a446266023708aaa7440c078857fd272df58b5fc56ade
+        - path: "1.41"
+          level: 2
+          title: 6. Add a periodic health/effectiveness report
+          byte_offset: 19723
+          byte_count: 291
+          word_count: 46
+          content_hash: c3e810b9de859522c0d55f2fe19e3802549a0fd92793e213d03ee7260dbb0dfb
+        - path: "1.42"
+          level: 2
+          title: Final Conclusion
+          byte_offset: 20014
+          byte_count: 1079
+          word_count: 152
+          content_hash: e29dc0393dcdaf9d8d2f7195f9a3822a9477f80507c98ec69637841bb725e632
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.4.5
+      role: narrative
+      confidence: high
+classified: false

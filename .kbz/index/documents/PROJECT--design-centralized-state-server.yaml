@@ -1,0 +1,250 @@
+document_id: PROJECT/design-centralized-state-server
+document_path: work/design/centralized-state-server.md
+content_hash: 5a5f45a9f0aab4d1e68009b9b6ec0828dec5a5eff509d48de62e12a4be7dcc9a
+indexed_at: 2026-04-22T01:50:42.440944Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem and Motivation
+      byte_offset: 113
+      byte_count: 2255
+      word_count: 330
+      content_hash: 97b9e4cac15b272a6eaa5f83b74b4bafcdc6b8bac026b22bb36164fa85ab5b21
+    - path: "2"
+      level: 2
+      title: Design
+      byte_offset: 2368
+      byte_count: 11016
+      word_count: 1605
+      content_hash: 7b3cf7b3db01261f87135e32dc5e77cc00fd40989b256585b8b9a1a0a9c200b7
+      children:
+        - path: "2.1"
+          level: 3
+          title: Overview
+          byte_offset: 2379
+          byte_count: 928
+          word_count: 142
+          content_hash: 0d66124c818233fc28871f901b610392641bc915746b5674726236b22c8f338e
+        - path: "2.2"
+          level: 3
+          title: Recommended centralized architecture
+          byte_offset: 3307
+          byte_count: 801
+          word_count: 114
+          content_hash: 88d5e4039808f565bbc8f1589ce1ccb8de95ed7bd659bb930ca3b9f1ce40dc1d
+        - path: "2.3"
+          level: 3
+          title: Canonical model options
+          byte_offset: 4108
+          byte_count: 1459
+          word_count: 208
+          content_hash: ad140c02923f5c907f41d28b547237bfedc0431472dcbaa16c87bcd384e3ff7d
+          children:
+            - path: 2.3.1
+              level: 4
+              title: 'Model A: Git remains canonical; database is derived'
+              byte_offset: 4179
+              byte_count: 388
+              word_count: 57
+              content_hash: d48345b902b484cd9911e0cb9ef0890d34216329f41506315f09061309da5f3d
+            - path: 2.3.2
+              level: 4
+              title: 'Model B: Database becomes canonical; Git state becomes projection/export'
+              byte_offset: 4567
+              byte_count: 377
+              word_count: 49
+              content_hash: f617e11d10e685f9f6ad1009b77f1ef590e80fe011ef989020057ceae9d793b8
+            - path: 2.3.3
+              level: 4
+              title: 'Model C: Dual canonical modes, selected per project'
+              byte_offset: 4944
+              byte_count: 623
+              word_count: 92
+              content_hash: bf948c38bc8cb899a88595ab1e017d4204e7b6c1e8d2491d3e6819094a59fce9
+        - path: "2.4"
+          level: 3
+          title: Why PostgreSQL as the reference centralized backend
+          byte_offset: 5567
+          byte_count: 784
+          word_count: 118
+          content_hash: 53edab419d3d32368f561031233bbdb37666e65b13667451cc1d210810f2db58
+        - path: "2.5"
+          level: 3
+          title: Data model in centralized mode
+          byte_offset: 6351
+          byte_count: 754
+          word_count: 109
+          content_hash: 794d4316200a049c3e62d0a60ce664258e3199d7d5dd505ad9e4791d14fcb08a
+        - path: "2.6"
+          level: 3
+          title: Repository relationship in centralized mode
+          byte_offset: 7105
+          byte_count: 927
+          word_count: 134
+          content_hash: a84191a12d61df35fdf4b09e11a948549a1001dfb844aa4813ec3b4ba660678b
+        - path: "2.7"
+          level: 3
+          title: Could both possibilities be supported?
+          byte_offset: 8032
+          byte_count: 889
+          word_count: 138
+          content_hash: 44f5ac6ba429d967263c8fc7753b5394c3f11b38f9dd6da01ccee32367412d36
+        - path: "2.8"
+          level: 3
+          title: What transformation would be required?
+          byte_offset: 8921
+          byte_count: 2458
+          word_count: 352
+          content_hash: b825a2c12207c58e301d2079bee1036f4c7253aacc0408a9e156d561ed0e2ff4
+          children:
+            - path: 2.8.1
+              level: 4
+              title: 'Stage 1: isolate persistence behind interfaces'
+              byte_offset: 9037
+              byte_count: 564
+              word_count: 78
+              content_hash: 62bb6bed062a08ab4c09c30e33b77126c58b2c811ca64a4249e8dcd88a64cc5b
+            - path: 2.8.2
+              level: 4
+              title: 'Stage 2: define canonical database schema and migration rules'
+              byte_offset: 9601
+              byte_count: 427
+              word_count: 62
+              content_hash: 046ab8840b26fea801cdc0df655a357c9136a8ad3154aab1dd1462ac99b19dd8
+            - path: 2.8.3
+              level: 4
+              title: 'Stage 3: implement centralized backend in parallel with file backend'
+              byte_offset: 10028
+              byte_count: 299
+              word_count: 45
+              content_hash: fa44480265b8b9efb306f74fc6f635e414fedf2e1cb4665c1d77e59d864e2a39
+            - path: 2.8.4
+              level: 4
+              title: 'Stage 4: add migration tooling'
+              byte_offset: 10327
+              byte_count: 344
+              word_count: 49
+              content_hash: 5fc7cc76815f42270219764d73614eca27fee735d5918af84b898e7f0f13d46c
+            - path: 2.8.5
+              level: 4
+              title: 'Stage 5: adapt surrounding features'
+              byte_offset: 10671
+              byte_count: 342
+              word_count: 49
+              content_hash: 6ada8a273d630d0c95c831bdaf4ec41542dab90cab4920a63b5007c3e16deadd
+            - path: 2.8.6
+              level: 4
+              title: 'Stage 6: decide product positioning'
+              byte_offset: 11013
+              byte_count: 366
+              word_count: 53
+              content_hash: 2ae823e4e9392a5c672dab8d4842da75c28ae8d6749798bf309d81d2e8955422
+        - path: "2.9"
+          level: 3
+          title: Operational model in centralized mode
+          byte_offset: 11379
+          byte_count: 593
+          word_count: 85
+          content_hash: 01ad487c3e9c3323f11878d066b325141039003dcee4b337b42b27aded1cffa7
+        - path: "2.10"
+          level: 3
+          title: Failure modes and handling
+          byte_offset: 11972
+          byte_count: 1412
+          word_count: 203
+          content_hash: a0c8b69b0548349b484a67b29fa489ba176a9d54fed096eeaaf9ba24abafa8c6
+          children:
+            - path: 2.10.1
+              level: 4
+              title: Server unavailable
+              byte_offset: 12055
+              byte_count: 312
+              word_count: 50
+              content_hash: 055900c78f5d15957b33d2cbf0e085cc7ce53f0a624ad0f7f225a7a23e85492f
+            - path: 2.10.2
+              level: 4
+              title: Network partition or offline work
+              byte_offset: 12367
+              byte_count: 288
+              word_count: 38
+              content_hash: 7621b7817d3abf9273868a4e342e643a6583c59e33349a000c11ed1e04003591
+            - path: 2.10.3
+              level: 4
+              title: Drift between code/documents and workflow state
+              byte_offset: 12655
+              byte_count: 455
+              word_count: 65
+              content_hash: 1a1d7bf799cc1db903a97049720255807da301b7ee46bf5df1a501fd0007d851
+            - path: 2.10.4
+              level: 4
+              title: Migration ambiguity
+              byte_offset: 13110
+              byte_count: 274
+              word_count: 38
+              content_hash: 38bb4751e6d5f0f2337a665f018df16876ad1c3649f2b29a03cb2968042a0d1f
+    - path: "3"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 13384
+      byte_count: 2901
+      word_count: 410
+      content_hash: 750385d36c9d200b366d7238eadc86dc12db98f0556ff6abbd6f0bfd6e81627d
+      children:
+        - path: "3.1"
+          level: 3
+          title: 'Alternative 1: Stay fully Git-native and improve the file model'
+          byte_offset: 13412
+          byte_count: 785
+          word_count: 115
+          content_hash: f94094f2fefb6b56a2cc72ca94c5b38b7939155d5c6142758ce5878debbe5a7b
+        - path: "3.2"
+          level: 3
+          title: 'Alternative 2: Add a centralized database as a derived cache only'
+          byte_offset: 14197
+          byte_count: 627
+          word_count: 89
+          content_hash: 7d51e0e81c9b6c8d7bb00dda18525f3f909d3bb98e5afdbc8931e2275ff29b35
+        - path: "3.3"
+          level: 3
+          title: 'Alternative 3: Move entirely to centralized canonical state and remove Git-native mode'
+          byte_offset: 14824
+          byte_count: 704
+          word_count: 98
+          content_hash: c0320a4af8e4a104fc414be48e0663e17bfd3928b37753c7dc807ff46672819c
+        - path: "3.4"
+          level: 3
+          title: 'Alternative 4: Support both backends, selected per project'
+          byte_offset: 15528
+          byte_count: 757
+          word_count: 105
+          content_hash: 9f3794f02f97c09b218a0796b551112c414b1c0ca849498101d3a34751fe2d31
+    - path: "4"
+      level: 2
+      title: Decisions
+      byte_offset: 16285
+      byte_count: 2456
+      word_count: 318
+      content_hash: 461d8c5b44a942a0247fe3c1ed49ba288aa4cc8236c39bb794607862666cad7b
+conventional_roles:
+    - section_path: "2.1"
+      role: narrative
+      confidence: high
+    - section_path: "3"
+      role: alternative
+      confidence: high
+    - section_path: "3.1"
+      role: alternative
+      confidence: high
+    - section_path: "3.2"
+      role: alternative
+      confidence: high
+    - section_path: "3.3"
+      role: alternative
+      confidence: high
+    - section_path: "3.4"
+      role: alternative
+      confidence: high
+    - section_path: "4"
+      role: decision
+      confidence: high
+classified: false
