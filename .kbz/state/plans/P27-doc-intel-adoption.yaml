@@ -1,0 +1,8 @@
+id: P27-doc-intel-adoption
+slug: doc-intel-adoption
+name: Document Intelligence Adoption
+status: proposed
+summary: "Make doc_intel and knowledge systems actually used by agents, by mandating corpus consultation at design time, ensuring corpus completeness, and closing the knowledge feedback loop. Addresses design amnesia at scale."
+created: "2026-04-22T12:05:04Z"
+created_by: sambeau
+updated: "2026-04-22T12:05:04Z"
