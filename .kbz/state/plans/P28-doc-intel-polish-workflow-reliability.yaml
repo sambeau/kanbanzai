@@ -1,8 +1,8 @@
 id: P28-doc-intel-polish-workflow-reliability
 slug: doc-intel-polish-workflow-reliability
 name: Doc-Intel Polish and Workflow Reliability
-status: proposed
+status: designing
 summary: "Addresses findings from the doc-intel Layer 3 classification pilot and the P27 implementation retrospective. Structured as three sequential sprints: skill documentation updates (markdown only), doc-intel tool enhancements, and workflow infrastructure fixes (lifecycle gap, decompose dev-plan registration, worktree performance)."
 created: "2026-04-22T20:16:41Z"
 created_by: sambeau
-updated: "2026-04-22T20:16:41Z"
+updated: "2026-04-22T20:18:11Z"
