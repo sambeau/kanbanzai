@@ -1,0 +1,68 @@
+document_id: PROJECT/report-audit-codebase-2026-04
+document_path: work/reviews/audit-codebase-2026-04.md
+content_hash: 3b08f3a695bef39ef6b3686ff8988f1d300a27b346007e450dcbfcb7f9ac0d91
+indexed_at: 2026-04-22T00:32:03.43999Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Quality Audit: Kanbanzai Codebase'
+      byte_offset: 0
+      byte_count: 9188
+      word_count: 1052
+      content_hash: 3b08f3a695bef39ef6b3686ff8988f1d300a27b346007e450dcbfcb7f9ac0d91
+      children:
+        - path: "1.1"
+          level: 2
+          title: Dimensions
+          byte_offset: 281
+          byte_count: 7770
+          word_count: 897
+          content_hash: e1c37d6a1f49f323348389038783f085702326bef8f6325235398447e559b46e
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 'test_health: has_findings → clean (fixed during audit)'
+              byte_offset: 296
+              byte_count: 2149
+              word_count: 203
+              content_hash: 78e7658b909e25eebdbb4e0c911fdbef2831943f24e37a0063aa758cbbaef6ce
+            - path: 1.1.2
+              level: 3
+              title: 'static_analysis: clean_with_notes'
+              byte_offset: 2445
+              byte_count: 582
+              word_count: 72
+              content_hash: 4711f17f6a8de8571de23021c1c41d1a6627d626e1f92acbbf709a9690326b79
+            - path: 1.1.3
+              level: 3
+              title: 'structural_quality: has_findings'
+              byte_offset: 3027
+              byte_count: 4045
+              word_count: 495
+              content_hash: 76f510d335c2c3cbeb1645c7f10678f5b81fbbf8a824947af284a196aba10484
+            - path: 1.1.4
+              level: 3
+              title: 'style_conformance: clean_with_notes'
+              byte_offset: 7072
+              byte_count: 979
+              word_count: 125
+              content_hash: 026b0c4b686b8442274553a3048a56882e032c2b6a5f62b2f2cc9e8aa28f2ab6
+        - path: "1.2"
+          level: 2
+          title: Finding Summary
+          byte_offset: 8051
+          byte_count: 132
+          word_count: 19
+          content_hash: 11ddaf0aaf37e4c6d84147b0bad686f418cbf87f394b6f174080ecf841cbfce1
+        - path: "1.3"
+          level: 2
+          title: Next Actions
+          byte_offset: 8183
+          byte_count: 1005
+          word_count: 99
+          content_hash: 469992dccc63399e9c7027faf5faf166be720c46ba5f1954ee326a37ebefd573
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+classified: false

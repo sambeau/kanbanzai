@@ -51,19 +51,71 @@ Findings (all resolved):
 
 ---
 
-### static_analysis: clean_with_notes
+### static_analysis: has_findings
 
-Summary: go vet — 0 findings. staticcheck — not installed (gap noted).
+Summary: go vet — 0 findings. staticcheck — 260 findings total after install.
+Triaged into: 3 production unused-code (U1000), 4 test unused-code (U1000),
+6 code-quality improvements (S1005/S1016/S1017/S1039), and 245 systematic
+capitalized-error-string violations (ST1005) across internal/mcp/.
 
 Findings:
 
-- [minor] tooling-gap: staticcheck is not installed in this environment.
-    staticcheck catches a wider set of correctness issues than go vet (deprecated
-    API usage, redundant nil checks, incorrect format strings, unreachable cases).
-    (location: environment — no source file)
-    Recommendation: install staticcheck (`go install
-    honnef.co/go/tools/cmd/staticcheck@latest`) and add to CI. Run
-    `staticcheck ./...` as a pre-merge gate.
+- [major] U1000: guidanceRules — var declared but never used in production
+    decompose service. Non-trivial: the variable is populated with rule data
+    that is silently discarded.
+    (location: internal/service/decompose.go:566)
+    Recommendation: either wire guidanceRules into the decompose logic or
+    delete it and its population code.
+
+- [minor] U1000: rebuildIndexUsageText — unexported const declared but never
+    referenced in production code.
+    (location: cmd/kanbanzai/rebuild.go:12)
+    Recommendation: delete.
+
+- [minor] U1000: path field — struct field declared but never read or written
+    in production code.
+    (location: internal/docint/parser.go:163)
+    Recommendation: delete the field; verify no JSON/YAML deserialisation
+    depends on it.
+
+- [minor] S1039: unnecessary fmt.Sprintf — plain string literal passed to
+    fmt.Sprintf with no format verbs.
+    (locations: internal/mcp/handoff_tool.go:110,
+     internal/service/gate_errors.go:81, :91, :110)
+    Recommendation: replace with the string literal directly.
+
+- [minor] S1017: conditional TrimPrefix/TrimSuffix should be unconditional —
+    staticcheck recommends replacing `if strings.HasPrefix(s, p) { s =
+    strings.TrimPrefix(s, p) }` with a single `strings.TrimPrefix` call.
+    (locations: internal/service/decompose.go:1167, :1170)
+    Recommendation: apply the simpler unconditional form.
+
+- [minor] S1005: unnecessary blank identifier assignment.
+    (location: internal/kbzinit/init.go:370)
+    Recommendation: remove the assignment.
+
+- [minor] S1016: should use type conversion instead of struct literal when
+    converting AntiPattern to AntiPatternEntry.
+    (location: internal/context/pipeline.go:384)
+    Recommendation: replace struct literal with type conversion.
+
+- [minor] U1000 (test helpers): four unused test helper functions.
+    (locations: cmd/kanbanzai/main_test.go:666 captureStdout,
+     internal/git/branch_test.go:39 addCommitsToMain,
+     internal/mcp/doc_intel_tool_test.go:69 writeKnowledgeFile,
+     internal/mcp/status_tool_test.go:89 callStatus)
+    Recommendation: delete or wire up to a test case.
+
+- [minor] ST1005 (systematic): 245 error strings start with a capital letter
+    or end with punctuation across all internal/mcp/ tool files. Go convention
+    (ST1005) requires lowercase, unpunctuated error strings. However, MCP tool
+    error messages are user-facing responses returned directly to AI agents;
+    capitalisation may be intentional for readability at that boundary.
+    (location: internal/mcp/*.go — pervasive)
+    Recommendation: decide once whether MCP error strings are "Go errors" (fix
+    to lowercase) or "user-facing messages" (suppress ST1005 for internal/mcp/
+    via a staticcheck config). Either way, make it consistent and document the
+    decision. Do not fix piecemeal.
 
 ---
 
@@ -169,9 +221,9 @@ Findings:
 ## Finding Summary
 
   Critical: 4  (all resolved during audit — see test_health)
-  Major:    2
-  Minor:    6
-  Total:    12
+  Major:    3  (AllStates, CheckProfileHealth, guidanceRules)
+  Minor:    13
+  Total:    20
 
 ---
 
@@ -188,13 +240,34 @@ Findings:
      (internal/validate/phase2b_health.go:127) — verify superseded by health
      system, then delete.
 
-  4. [minor] Install staticcheck and add to CI as a pre-merge gate.
+  4. [major] Investigate guidanceRules unused var in decompose service
+     (internal/service/decompose.go:566) — wire up or delete along with its
+     population code.
 
-  5. [minor] Review and delete confirmed minor dead code cluster:
-     FindGitRoot, HasCommits (internal/kbzinit/git.go),
-     DefaultCheckOptions (internal/health/check.go:38),
-     DeriveGraphProject (internal/config/user.go:151),
-     NewCompositeTransitionHook (internal/service/status_transition_hook.go:65).
+  5. [minor] Add staticcheck to CI as a pre-merge gate. It is now installed
+     at ~/go/bin/staticcheck.
 
-  6. [minor] Resolve CheckDependencyCycles dead assignment
-     (internal/health/phase4a.go:69) — implement or remove.
+  6. [minor] Decide and document the ST1005 policy for internal/mcp/ error
+     strings (245 violations): either lowercase them (Go convention) or add a
+     staticcheck config suppressing ST1005 for that package (user-facing
+     messages). Do not fix piecemeal.
+
+  7. [minor] Delete minor production dead code: rebuildIndexUsageText
+     (cmd/kanbanzai/rebuild.go:12), path field
+     (internal/docint/parser.go:163).
+
+  8. [minor] Apply small staticcheck fixes: S1039 fmt.Sprintf (4 locations),
+     S1017 TrimPrefix/TrimSuffix (decompose.go:1167-1170), S1005
+     (kbzinit/init.go:370), S1016 (context/pipeline.go:384).
+
+  9. [minor] Delete 4 unused test helpers: captureStdout, addCommitsToMain,
+     writeKnowledgeFile, callStatus.
+
+  10. [minor] Review and delete confirmed minor dead code cluster:
+      FindGitRoot, HasCommits (internal/kbzinit/git.go),
+      DefaultCheckOptions (internal/health/check.go:38),
+      DeriveGraphProject (internal/config/user.go:151),
+      NewCompositeTransitionHook (internal/service/status_transition_hook.go:65).
+
+  11. [minor] Resolve CheckDependencyCycles dead assignment
+      (internal/health/phase4a.go:69) — implement or remove.

@@ -72,6 +72,7 @@ Always read the skill specified by the stage binding before starting work.
 | **check-docs** | `.kbz/skills/check-docs/SKILL.md` | doc-publishing (check stage) |
 | **style-docs** | `.kbz/skills/style-docs/SKILL.md` | doc-publishing (style stage) |
 | **copyedit-docs** | `.kbz/skills/copyedit-docs/SKILL.md` | doc-publishing (copyedit stage) |
+| **audit-codebase** | `.kbz/skills/audit-codebase/SKILL.md` | auditing (on-demand) |
 
 ### How to use the system
 
