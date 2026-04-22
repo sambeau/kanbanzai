@@ -2,9 +2,11 @@ id: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workfl
 path: work/design/p28-doc-intel-polish-workflow-reliability.md
 type: design
 title: "P28 Design: Doc-Intel Polish and Workflow Reliability"
-status: draft
+status: approved
 owner: P28-doc-intel-polish-workflow-reliability
-content_hash: 4fd1716e79404947e4260ef1f3fba314fb81e286427f7c9cc69993667853ec9b
+approved_by: sambeau
+approved_at: "2026-04-22T20:32:21Z"
+content_hash: 7cbe26e3cf09ef68bf644d8742a2fa12ece915937afe0645db31189e4a88eb43
 created: "2026-04-22T20:25:53Z"
 created_by: sambeau
-updated: "2026-04-22T20:25:53Z"
+updated: "2026-04-22T20:32:21Z"
