@@ -1,0 +1,6 @@
+id: TASK-01KPTJYA27V7H
+parent_feature: FEAT-01KPTHB66Y8TM
+slug: instrumentation-tests
+name: Access instrumentation tests
+summary: "Unit tests for all three areas — knowledge access tracking (Get/List increment, sort:recent, 30-day decay), doc intel counter increments (outline/guide/section/find/search), and audit Most Accessed population and table rendering"
+status: queued

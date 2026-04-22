@@ -1,0 +1,6 @@
+id: TASK-01KPTJYA23Z8P
+parent_feature: FEAT-01KPTHB66Y8TM
+slug: instrumentation-fr-001-008-knowledge-access-tracking
+name: Knowledge entry access tracking
+summary: "Add RecentUseCount and LastAccessedAt to KnowledgeEntry (internal/storage/knowledge_store.go); increment on KnowledgeService.Get and .List (internal/service/knowledge.go); add Sort field to KnowledgeFilters with sort:recent support; expose new fields in MCP tool output"
+status: queued

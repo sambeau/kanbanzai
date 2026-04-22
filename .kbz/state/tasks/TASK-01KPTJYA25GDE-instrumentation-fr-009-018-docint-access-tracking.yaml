@@ -1,0 +1,6 @@
+id: TASK-01KPTJYA25GDE
+parent_feature: FEAT-01KPTHB66Y8TM
+slug: instrumentation-fr-009-018-docint-access-tracking
+name: Document and section access tracking
+summary: "Add AccessCount and LastAccessedAt to DocumentIndex; add SectionAccessInfo map for section-level counters (internal/docint/types.go); increment document-level in GetOutline, guide, Find*, Search; increment section-level in GetSection (internal/service/intelligence.go); lazy non-fatal writes; backward-compat YAML load"
+status: queued
