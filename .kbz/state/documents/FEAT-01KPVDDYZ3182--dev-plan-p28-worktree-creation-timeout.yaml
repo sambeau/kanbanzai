@@ -1,0 +1,12 @@
+id: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout
+path: work/dev-plan/p28-worktree-creation-timeout.md
+type: dev-plan
+title: "Dev Plan: Worktree Creation Timeout Under Load"
+status: approved
+owner: FEAT-01KPVDDYZ3182
+approved_by: sambeau
+approved_at: "2026-04-22T20:59:57Z"
+content_hash: cbe84395c7b638a7820bb9ff97c768f867bb89514925973a2821962c396d7285
+created: "2026-04-22T20:59:57Z"
+created_by: sambeau
+updated: "2026-04-22T20:59:57Z"
