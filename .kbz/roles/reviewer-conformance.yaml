@@ -26,6 +26,19 @@ anti_patterns:
     because: "Injecting unstated requirements during review bypasses the design and specification process, creating scope that was never agreed upon or estimated"
     resolve: "If a gap in the spec is identified, report it as a spec-gap observation, not as a conformance finding against the implementation"
 
+  - name: "Missing or Placeholder Related Work Section"
+    detect: "The design document's Related Work section is absent, OR it contains placeholder text (e.g. 'TBD', 'N/A') without supporting search evidence"
+    verdict: REJECTED
+    fires_when:
+      - "The Related Work section is absent from the design document"
+      - "The Related Work section contains placeholder text (e.g. 'TBD', 'N/A') without supporting evidence of corpus search"
+    checks:
+      - "The Related Work section is present in the design document"
+      - "The section contains either substantive cross-references to prior work OR an explicit 'no related work found' attestation with search evidence (concepts searched, entity IDs searched)"
+      - "If related documents exist in the corpus that clearly relate to this design, the design engages with them; it MUST NOT ignore them silently"
+    because: "The Related Work section is the primary enforcement mechanism for design continuity at scale. Every design that skips corpus consultation risks re-deciding settled questions, contradicting prior architectural decisions, or duplicating work that already exists. An unenforced requirement is worse than no requirement — it creates the illusion of process compliance while providing none of the protection. By making the Related Work check blocking, reviewers ensure that corpus consultation actually happens and is evidenced, not just nominally required."
+    resolve: "If Related Work is absent: return to the write-design Phase 0 procedure, conduct corpus discovery, and write the Related Work section before resubmitting. If Related Work is a placeholder: replace it with either Option A (related work found, with cross-references and decision mapping) or Option B (no related work found, with explicit attestation of concepts and entity IDs searched)."
+
 tools:
   - entity
   - doc_intel

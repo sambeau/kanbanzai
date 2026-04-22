@@ -79,6 +79,17 @@ constraint_level: high
 
 ## Procedure
 
+### Cross-Reference Check
+
+**This step is required** and must be completed before any specification content is written.
+
+**BECAUSE:** Adjacent features share boundaries, shared data structures, and overlapping invariants. A specification written without consulting related specifications can introduce requirements that contradict or silently diverge from established behaviour in neighbouring features. Cross-referencing before writing prevents inconsistency from being baked in from the start — it is far cheaper to align at this stage than to reconcile conflicting specifications during review or implementation.
+
+1. **Verify the Related Work section.** Open the approved design document for this feature and confirm it contains a substantive Related Work section (not empty, not "TBD", not "N/A" without evidence). If the Related Work section is absent or is a placeholder, STOP and flag this to the orchestrator — the design must be updated before specification can proceed.
+2. **Search related specs.** For each feature identified in the Related Work section of the design, retrieve its specification and extract its requirements: `doc_intel(action: "find", role: "requirement", scope: "<DOC-related-spec>")`.
+3. **Identify consistency constraints.** Review the requirements found in Step 2. Identify any requirements in adjacent specifications that the current specification must be consistent with — shared data shapes, error contracts, lifecycle rules, or behavioural invariants that span features.
+4. **Note deliberate divergences.** If this specification takes an approach that differs from an adjacent specification, document the reason explicitly in the current specification. A divergence without a documented reason is indistinguishable from an oversight.
+
 ### Step 1: Read the Design
 
 1. Obtain the approved design document for this feature.

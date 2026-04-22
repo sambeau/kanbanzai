@@ -97,6 +97,58 @@ If the human acknowledges a risk and decides to proceed anyway, accept the decis
 
 ## Procedure
 
+### Phase 0: Corpus Discovery
+
+**This phase is non-optional.** Before writing any design content, consult the document corpus to understand prior decisions, related designs, and constraints that will shape this design.
+
+**BECAUSE:** Designing in isolation from prior work creates design debt, contradictions, and redundant decisions. Corpus consultation before design begins ensures that the design builds on — or deliberately diverges from — what already exists, with the divergence documented. An undiscovered prior decision is a decision that gets made twice.
+
+#### Pre-Discovery Classification Check
+
+Before any corpus discovery calls, ensure the corpus is classified:
+
+1. Call `doc_intel(action: "pending")` to list any documents awaiting classification.
+2. For each unclassified document that appears relevant to this feature, call `doc_intel(action: "classify", ...)` to classify it.
+3. Classified documents are searchable; unclassified documents may not appear in concept or entity searches.
+
+#### Step 0.1: Concept Search
+
+For each primary concept in the feature scope:
+
+1. Call `doc_intel(action: "search", query: "<concept>")` — FTS search across the classified corpus.
+2. Call `doc_intel(action: "find", concept: "<concept>")` — graph-based concept lookup.
+3. **Fallback:** If both calls return no results, fall back to FTS search (`doc_intel(action: "search")`) with broader terms and to `grep` across the repository. The corpus may be unclassified or the concept may be expressed differently in prior documents.
+
+#### Step 0.2: Entity Search
+
+For each known related feature or entity:
+
+1. Call `doc_intel(action: "find", entity_id: "<FEAT-xxx>")` to find all documents that reference the related feature.
+
+#### Step 0.3: Decision Extraction
+
+For each related document found in Steps 0.1 and 0.2:
+
+1. Call `doc_intel(action: "find", role: "decision", scope: "<DOC-xxx>")` to extract recorded decisions from that document.
+2. Note decisions that constrain the current design's solution space.
+
+#### Step 0.4: Synthesis
+
+Produce the following before writing any design section:
+
+- **(a) Related documents** — list of documents found, with their type and relevance to this feature.
+- **(b) Relevant decisions** — decisions from prior documents that constrain this design, with source document and section.
+- **(c) Open questions raised by prior work** — questions the prior documents leave open that this design must address or acknowledge.
+
+#### Step 0.5: Write Related Work Section
+
+From the synthesis in Step 0.4, write the **Related Work** section of the design document BEFORE writing any other design section (Problem and Motivation, Design, Alternatives Considered, Decisions).
+
+The Related Work section must take one of two forms:
+
+- **Option A — Related work found:** List prior designs/specs consulted with relationship description; list decisions that constrain this design with source document and section; narrative on how this design extends or diverges from prior work.
+- **Option B — No related work found:** List concepts searched, entity IDs searched (where applicable), and include an explicit attestation: "No directly related prior work was found in the corpus."
+
 ### Step 1: Establish Context
 
 1. Read the agreed scope and any preceding research or planning discussion.
@@ -275,6 +327,12 @@ Each decision entry:
 - If `doc(action: "approve")` fails due to content hash drift, call `doc(action: "refresh")` first to re-sync.
 
 **Next steps after design.** Use `work/templates/specification-prompt-template.md` for the specification. See the `kanbanzai-documents` skill for the full registration and approval procedure.
+
+## Checklist
+
+- [ ] Conducted corpus discovery (concept search, entity search, decision extraction)
+- [ ] Wrote Related Work section before writing any design content
+- [ ] Cross-referenced at least one prior decision that constrains this design, OR attested that corpus search found no related work
 
 ## Evaluation Criteria
 
