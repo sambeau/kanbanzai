@@ -1,0 +1,429 @@
+document_id: P27-doc-intel-adoption/report-review-doc-intel-adoption
+document_path: work/reviews/review-doc-intel-adoption.md
+content_hash: e29cb9c5216fd59699d1d5d1bd21e9267877483c0e7b8eb49d6fc2e2284ac3ec
+indexed_at: 2026-04-22T16:31:32.339582Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Plan Review: Document Intelligence Adoption (P27)'
+      byte_offset: 0
+      byte_count: 22971
+      word_count: 2922
+      content_hash: e29cb9c5216fd59699d1d5d1bd21e9267877483c0e7b8eb49d6fc2e2284ac3ec
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Verdict
+          byte_offset: 188
+          byte_count: 465
+          word_count: 68
+          content_hash: 1635811a6075415e24a436d8132a8cd1ea3ce5a2eb3e66d74e9f1ab958616200
+        - path: "1.2"
+          level: 2
+          title: 2. Feature Census
+          byte_offset: 653
+          byte_count: 470
+          word_count: 71
+          content_hash: 1b6cb6931717c4781ff056f14b4eba31fc767a8330012f24869db864c7f7d20c
+        - path: "1.3"
+          level: 2
+          title: 3. Fix-to-Feature Traceability Matrix
+          byte_offset: 1123
+          byte_count: 2426
+          word_count: 280
+          content_hash: 703c449e8d2233bafebf9bd575eeeaf0fc04129261f0cbc5a2c95998f08193aa
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Fix-to-artefact mapping summary
+              byte_offset: 1899
+              byte_count: 1650
+              word_count: 155
+              content_hash: c49b163a7580e117ab25a43823d12c7618b5aca68e3afb22d301e90717fa403c
+        - path: "1.4"
+          level: 2
+          title: 4. Spec Conformance Summary
+          byte_offset: 3549
+          byte_count: 5947
+          word_count: 718
+          content_hash: bfd20bd0664a94826d0ef022affb2343c98162cdedc6873d63b86063fcfaf33e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: FEAT-01KPTHB5Z1H7T — Design-Stage Corpus Consultation
+              byte_offset: 3581
+              byte_count: 1290
+              word_count: 157
+              content_hash: 13daecb1d82bd98c80d2b88a584bd725862475a60c20df8f59e85754490d08ae
+            - path: 1.4.2
+              level: 3
+              title: FEAT-01KPTHB61WPT0 — Corpus Hygiene and Classification Pipeline
+              byte_offset: 4871
+              byte_count: 1367
+              word_count: 160
+              content_hash: 098c3d6b96b3d321f8066eb9c421b5332e11fa7a93cc40a75aaba8cf9326eb5c
+            - path: 1.4.3
+              level: 3
+              title: FEAT-01KPTHB649DPK — Knowledge Lifecycle Mandate
+              byte_offset: 6238
+              byte_count: 1509
+              word_count: 196
+              content_hash: a44ae45a74dea4f6cd72af50f5c111a6b13828ee8e9232d8bb5fb85f0ac783de
+            - path: 1.4.4
+              level: 3
+              title: FEAT-01KPTHB66Y8TM — Doc Intel Access Instrumentation
+              byte_offset: 7747
+              byte_count: 1749
+              word_count: 200
+              content_hash: 857c616c3145880266250b32885ad71a65162883733a50139e67f23d880c0cfc
+        - path: "1.5"
+          level: 2
+          title: 5. Documentation Currency Check
+          byte_offset: 9496
+          byte_count: 2715
+          word_count: 373
+          content_hash: 455e880b1856bec291b380707b8c3d5f9bdd403df48e26ea7d0eb46f5280afa6
+          children:
+            - path: 1.5.1
+              level: 3
+              title: AGENTS.md
+              byte_offset: 9532
+              byte_count: 1017
+              word_count: 145
+              content_hash: 3be73d68254791ffa6244b75dd0ad9219b9ccdb92d37d5c624ea605cb6cb2e4a
+            - path: 1.5.2
+              level: 3
+              title: Spec document status fields
+              byte_offset: 10549
+              byte_count: 698
+              word_count: 87
+              content_hash: 9148deaa8b5e8810e59c566a659f7552077f9a1a9a465b0104f295295a39fef9
+            - path: 1.5.3
+              level: 3
+              title: write-design/SKILL.md Output Format section
+              byte_offset: 11247
+              byte_count: 635
+              word_count: 97
+              content_hash: 22cc911e99da1077430a541125ae1c8451a612d5ca11964ff6f021a2cf87c1bf
+            - path: 1.5.4
+              level: 3
+              title: orchestrate-review/SKILL.md version field
+              byte_offset: 11882
+              byte_count: 329
+              word_count: 39
+              content_hash: dacd46203a7160e87c2424a43d62afa64f6e515db0d2d55028601cb05c20a080
+        - path: "1.6"
+          level: 2
+          title: 6. Cross-Cutting Check Results
+          byte_offset: 12211
+          byte_count: 1316
+          word_count: 195
+          content_hash: 03c1419e46a84c199d82a18bb8295dcce25f5c501bf08d0799560e63b3f1ea3f
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Post-merge regression detail
+              byte_offset: 12718
+              byte_count: 809
+              word_count: 99
+              content_hash: 7b623e71fc8be52ebeccd6d6000503546e9fe3c6551eb1429d458704a32a33e6
+        - path: "1.7"
+          level: 2
+          title: 7. Scope Reductions and Deviations
+          byte_offset: 13527
+          byte_count: 1308
+          word_count: 180
+          content_hash: 9cea8f8d9f79184436c3c4e9d420bd8d1916a1bad1b7c4b1423752731d7def63
+        - path: "1.8"
+          level: 2
+          title: 8. Open Follow-Up Items
+          byte_offset: 14835
+          byte_count: 4128
+          word_count: 469
+          content_hash: 54c3aa5390d104d398bd0eb1df437ea16a49edfd35851ad7039efa58c2120a60
+          children:
+            - path: 1.8.1
+              level: 3
+              title: High priority
+              byte_offset: 14974
+              byte_count: 1317
+              word_count: 149
+              content_hash: 8df1b37b3bbc7452ddabf0ccdc1e514d077faf664f7c4f1daedf8eb97557ac1c
+            - path: 1.8.2
+              level: 3
+              title: Medium priority
+              byte_offset: 16291
+              byte_count: 987
+              word_count: 110
+              content_hash: 1c759a010485098fc5f4441470e714f836f92a267201f081db97c30cb7d915ec
+            - path: 1.8.3
+              level: 3
+              title: Low priority
+              byte_offset: 17278
+              byte_count: 1685
+              word_count: 190
+              content_hash: fcb0aedaca0d600bef49032bad39a4745b127c47dd940f0011895f1181944a59
+        - path: "1.9"
+          level: 2
+          title: 9. Retrospective Observations
+          byte_offset: 18963
+          byte_count: 4008
+          word_count: 548
+          content_hash: 5b066766f2ce1c565b23789a65e5be2f80cfe765e6ec0b5c142a669bbf4f7347
+          children:
+            - path: 1.9.1
+              level: 3
+              title: What worked well
+              byte_offset: 19158
+              byte_count: 1603
+              word_count: 226
+              content_hash: 3c83258bf48c8ec6ed937d78810835bb803527c4fa3be53c9baf68bc7b0b918f
+            - path: 1.9.2
+              level: 3
+              title: What created friction
+              byte_offset: 20761
+              byte_count: 1278
+              word_count: 173
+              content_hash: 6df86d298388c09ea113b66c60d941e2987cbf0c44100d277b6a9ee77b37b124
+            - path: 1.9.3
+              level: 3
+              title: What to change for future plans
+              byte_offset: 22039
+              byte_count: 932
+              word_count: 128
+              content_hash: ffd08fd17af77a14e0ecef3a1b2469515bf62e91345b3c3a5710a28f54e34d7c
+entity_refs:
+    - entity_id: FEAT-01KPTHB5Z1H7T
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 745
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 809
+    - entity_id: FEAT-01KPTHB649DPK
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 877
+    - entity_id: FEAT-01KPTHB66Y8TM
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 943
+    - entity_id: FEAT-01KPTHB5Z1H7T
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 1305
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 1413
+    - entity_id: FEAT-01KPTHB649DPK
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 1613
+    - entity_id: FEAT-01KPTHB66Y8TM
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 1690
+    - entity_id: FEAT-01KPTHB5Z1H7T
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 3585
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: 1.4.2
+      byte_offset: 4875
+    - entity_id: FEAT-01KPTHB649DPK
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 6242
+    - entity_id: FEAT-01KPTHB66Y8TM
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 7751
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 12786
+    - entity_id: FEAT-01KPTHB5Z1H7T
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 14013
+    - entity_id: FEAT-01KPTHB649DPK
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 14432
+    - entity_id: FEAT-01KPTHB5Z1H7T
+      entity_type: feature
+      section_path: 1.8.1
+      byte_offset: 15074
+    - entity_id: FEAT-01KPTHB649DPK
+      entity_type: feature
+      section_path: 1.8.1
+      byte_offset: 15626
+    - entity_id: FEAT-01KPTHB66Y8TM
+      entity_type: feature
+      section_path: 1.8.1
+      byte_offset: 15962
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: 1.8.2
+      byte_offset: 16704
+    - entity_id: FEAT-01KPTHB649DPK
+      entity_type: feature
+      section_path: 1.8.2
+      byte_offset: 17020
+    - entity_id: FEAT-01KPTHB66Y8TM
+      entity_type: feature
+      section_path: 1.8.3
+      byte_offset: 17381
+    - entity_id: FEAT-01KPTHB5Z1H7T
+      entity_type: feature
+      section_path: 1.8.3
+      byte_offset: 18300
+    - entity_id: FEAT-01KPTHB649DPK
+      entity_type: feature
+      section_path: 1.8.3
+      byte_offset: 18687
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: 1.9.1
+      byte_offset: 19838
+    - entity_id: FEAT-01KPTHB649DPK
+      entity_type: feature
+      section_path: 1.9.1
+      byte_offset: 20026
+    - entity_id: FEAT-01KPTHB66Y8TM
+      entity_type: feature
+      section_path: 1.9.1
+      byte_offset: 20095
+    - entity_id: P27-doc-intel-adoption
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 62
+cross_doc_links:
+    - target_path: write-design/SKILL.md
+      link_text: write-design/SKILL.md
+      section_path: 1.3.1
+    - target_path: write-spec/SKILL.md
+      link_text: write-spec/SKILL.md
+      section_path: 1.3.1
+    - target_path: work/templates/specification-prompt-template.md
+      link_text: work/templates/specification-prompt-template.md
+      section_path: 1.3.1
+    - target_path: kanbanzai-getting-started/SKILL.md
+      link_text: kanbanzai-getting-started/SKILL.md
+      section_path: 1.3.1
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: 1.3.1
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.3.1
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.3.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.1
+    - target_path: kanbanzai-agents/SKILL.md
+      link_text: kanbanzai-agents/SKILL.md
+      section_path: 1.3.1
+    - target_path: work/reviews/review-FEAT-01KPTHB5Z1H7T-design-stage-consultation.md
+      link_text: work/reviews/review-FEAT-01KPTHB5Z1H7T-design-stage-consultation.md
+      section_path: 1.4.1
+    - target_path: write-design/SKILL.md
+      link_text: write-design/SKILL.md
+      section_path: 1.4.1
+    - target_path: spec/doc-intel-design-stage-consultation.md
+      link_text: spec/doc-intel-design-stage-consultation.md
+      section_path: 1.4.1
+    - target_path: work/reviews/review-FEAT-01KPTHB61WPT0-corpus-hygiene-classification.md
+      link_text: work/reviews/review-FEAT-01KPTHB61WPT0-corpus-hygiene-classification.md
+      section_path: 1.4.2
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.4.2
+    - target_path: work/reviews/review-FEAT-01KPTHB649DPK-knowledge-lifecycle-mandate.md
+      link_text: work/reviews/review-FEAT-01KPTHB649DPK-knowledge-lifecycle-mandate.md
+      section_path: 1.4.3
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.4.3
+    - target_path: work/reviews/review-FEAT-01KPTHB66Y8TM-doc-intel-instrumentation.md
+      link_text: work/reviews/review-FEAT-01KPTHB66Y8TM-doc-intel-instrumentation.md
+      section_path: 1.4.4
+    - target_path: kanbanzai-getting-started/SKILL.md
+      link_text: kanbanzai-getting-started/SKILL.md
+      section_path: 1.5.1
+    - target_path: work/spec/doc-intel-corpus-hygiene.md
+      link_text: work/spec/doc-intel-corpus-hygiene.md
+      section_path: 1.5.2
+    - target_path: work/spec/doc-intel-access-instrumentation.md
+      link_text: work/spec/doc-intel-access-instrumentation.md
+      section_path: 1.5.2
+    - target_path: doc-intel-design-stage-consultation.md
+      link_text: doc-intel-design-stage-consultation.md
+      section_path: 1.5.2
+    - target_path: doc-intel-knowledge-lifecycle.md
+      link_text: doc-intel-knowledge-lifecycle.md
+      section_path: 1.5.2
+    - target_path: reviewer-conformance/SKILL.md
+      link_text: reviewer-conformance/SKILL.md
+      section_path: "1.7"
+    - target_path: write-design/SKILL.md
+      link_text: write-design/SKILL.md
+      section_path: 1.8.1
+    - target_path: .kbz/skills/write-design/SKILL.md
+      link_text: .kbz/skills/write-design/SKILL.md
+      section_path: 1.8.1
+    - target_path: specification-prompt-template.md
+      link_text: specification-prompt-template.md
+      section_path: 1.8.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.8.1
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.8.1
+    - target_path: work/spec/doc-intel-corpus-hygiene.md
+      link_text: work/spec/doc-intel-corpus-hygiene.md
+      section_path: 1.8.2
+    - target_path: work/spec/doc-intel-access-instrumentation.md
+      link_text: work/spec/doc-intel-access-instrumentation.md
+      section_path: 1.8.2
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.8.2
+    - target_path: .kbz/skills/orchestrate-review/SKILL.md
+      link_text: .kbz/skills/orchestrate-review/SKILL.md
+      section_path: 1.8.2
+    - target_path: .kbz/skills/review-plan/SKILL.md
+      link_text: .kbz/skills/review-plan/SKILL.md
+      section_path: 1.8.2
+    - target_path: work/spec/doc-intel-design-stage-consultation.md
+      link_text: work/spec/doc-intel-design-stage-consultation.md
+      section_path: 1.8.3
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.8.3
+    - target_path: internal/kbzinit/skills/<name>/SKILL.md
+      link_text: internal/kbzinit/skills/<name>/SKILL.md
+      section_path: 1.9.2
+    - target_path: .agents/skills/kanbanzai-<name>/SKILL.md
+      link_text: .agents/skills/kanbanzai-<name>/SKILL.md
+      section_path: 1.9.3
+    - target_path: internal/kbzinit/skills/<name>/SKILL.md
+      link_text: internal/kbzinit/skills/<name>/SKILL.md
+      section_path: 1.9.3
+conventional_roles:
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: constraint
+      confidence: high
+classified: false

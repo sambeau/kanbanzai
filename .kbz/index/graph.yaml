@@ -1,4 +1,4 @@
-updated_at: 2026-04-22T12:21:41.947471Z
+updated_at: 2026-04-22T16:31:32.339582Z
 edges:
     - from: PROJECT/design-agent-interaction-protocol
       from_type: document
@@ -68883,5 +68883,460 @@ edges:
     - from: FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation#1.7.1
       from_type: section
       to: work/design/doc-intel-adoption-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption
+      from_type: document
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.6
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9
+      from_type: section
+      to: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.2
+      from_type: section
+      to: FEAT-01KPTHB5Z1H7T
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.2
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.2
+      from_type: section
+      to: FEAT-01KPTHB649DPK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.2
+      from_type: section
+      to: FEAT-01KPTHB66Y8TM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3
+      from_type: section
+      to: FEAT-01KPTHB5Z1H7T
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3
+      from_type: section
+      to: FEAT-01KPTHB649DPK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3
+      from_type: section
+      to: FEAT-01KPTHB66Y8TM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.1
+      from_type: section
+      to: FEAT-01KPTHB5Z1H7T
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.2
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.3
+      from_type: section
+      to: FEAT-01KPTHB649DPK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.4
+      from_type: section
+      to: FEAT-01KPTHB66Y8TM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.6.1
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.7
+      from_type: section
+      to: FEAT-01KPTHB5Z1H7T
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.7
+      from_type: section
+      to: FEAT-01KPTHB649DPK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.1
+      from_type: section
+      to: FEAT-01KPTHB5Z1H7T
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.1
+      from_type: section
+      to: FEAT-01KPTHB649DPK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.1
+      from_type: section
+      to: FEAT-01KPTHB66Y8TM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.2
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.2
+      from_type: section
+      to: FEAT-01KPTHB649DPK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.3
+      from_type: section
+      to: FEAT-01KPTHB66Y8TM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.3
+      from_type: section
+      to: FEAT-01KPTHB5Z1H7T
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.3
+      from_type: section
+      to: FEAT-01KPTHB649DPK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9.1
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9.1
+      from_type: section
+      to: FEAT-01KPTHB649DPK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9.1
+      from_type: section
+      to: FEAT-01KPTHB66Y8TM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1
+      from_type: section
+      to: P27-doc-intel-adoption
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3.1
+      from_type: section
+      to: write-design/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3.1
+      from_type: section
+      to: write-spec/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3.1
+      from_type: section
+      to: work/templates/specification-prompt-template.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3.1
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3.1
+      from_type: section
+      to: kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3.1
+      from_type: section
+      to: orchestrate-review/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3.1
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3.1
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.3.1
+      from_type: section
+      to: kanbanzai-agents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.1
+      from_type: section
+      to: work/reviews/review-FEAT-01KPTHB5Z1H7T-design-stage-consultation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.1
+      from_type: section
+      to: write-design/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.1
+      from_type: section
+      to: spec/doc-intel-design-stage-consultation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.2
+      from_type: section
+      to: work/reviews/review-FEAT-01KPTHB61WPT0-corpus-hygiene-classification.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.2
+      from_type: section
+      to: orchestrate-review/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.3
+      from_type: section
+      to: work/reviews/review-FEAT-01KPTHB649DPK-knowledge-lifecycle-mandate.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.3
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.4.4
+      from_type: section
+      to: work/reviews/review-FEAT-01KPTHB66Y8TM-doc-intel-instrumentation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5.1
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5.2
+      from_type: section
+      to: work/spec/doc-intel-corpus-hygiene.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5.2
+      from_type: section
+      to: work/spec/doc-intel-access-instrumentation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5.2
+      from_type: section
+      to: doc-intel-design-stage-consultation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.5.2
+      from_type: section
+      to: doc-intel-knowledge-lifecycle.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.7
+      from_type: section
+      to: reviewer-conformance/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.1
+      from_type: section
+      to: write-design/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.1
+      from_type: section
+      to: .kbz/skills/write-design/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.1
+      from_type: section
+      to: specification-prompt-template.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.1
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.1
+      from_type: section
+      to: .kbz/skills/orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.2
+      from_type: section
+      to: work/spec/doc-intel-corpus-hygiene.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.2
+      from_type: section
+      to: work/spec/doc-intel-access-instrumentation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.2
+      from_type: section
+      to: orchestrate-review/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.2
+      from_type: section
+      to: .kbz/skills/orchestrate-review/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.2
+      from_type: section
+      to: .kbz/skills/review-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.3
+      from_type: section
+      to: work/spec/doc-intel-design-stage-consultation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.8.3
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9.2
+      from_type: section
+      to: internal/kbzinit/skills/<name>/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9.3
+      from_type: section
+      to: .agents/skills/kanbanzai-<name>/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P27-doc-intel-adoption/report-review-doc-intel-adoption#1.9.3
+      from_type: section
+      to: internal/kbzinit/skills/<name>/SKILL.md
       to_type: document
       edge_type: LINKS_TO
