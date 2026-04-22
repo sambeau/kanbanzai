@@ -1,0 +1,6 @@
+id: TASK-01KPTJXJPM1FG
+parent_feature: FEAT-01KPTHB5Z1H7T
+slug: design-stage-fr-004-008-search-steps-synthesis
+name: Phase 0 search steps and synthesis
+summary: "Phase 0 Steps 1-4 specify concept search (FTS and find), entity search, decision extraction (find role decision), synthesis, with an unclassified-corpus fallback"
+status: queued
