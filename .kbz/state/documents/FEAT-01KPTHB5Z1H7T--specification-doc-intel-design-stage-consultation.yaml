@@ -2,9 +2,11 @@ id: FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation
 path: work/spec/doc-intel-design-stage-consultation.md
 type: specification
 title: Design-Stage Corpus Consultation
-status: draft
+status: approved
 owner: FEAT-01KPTHB5Z1H7T
-content_hash: 4b381727de84074badc6cb8076979a83a3705d2bfbffed62a7a6c7a7df609824
+approved_by: sambeau
+approved_at: "2026-04-22T12:30:03Z"
+content_hash: bc7492627e99149080e2dfd3c522f2f598c5ada01101f9cd62be27af563b9117
 created: "2026-04-22T12:17:05Z"
 created_by: sambeau
-updated: "2026-04-22T12:17:05Z"
+updated: "2026-04-22T12:30:03Z"
