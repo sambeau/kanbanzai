@@ -100,12 +100,12 @@ func (e ConceptIntroEntry) MarshalYAML() (interface{}, error) {
 
 // Classification represents an agent-provided fragment classification (Layer 3).
 type Classification struct {
-	SectionPath   string             `yaml:"section_path"`
-	Role          string             `yaml:"role"`                     // From FragmentRole taxonomy
-	Confidence    string             `yaml:"confidence"`               // "high", "medium", "low"
-	Summary       string             `yaml:"summary,omitempty"`        // One-line characterisation
+	SectionPath   string              `yaml:"section_path"`
+	Role          string              `yaml:"role"`                     // From FragmentRole taxonomy
+	Confidence    string              `yaml:"confidence"`               // "high", "medium", "low"
+	Summary       string              `yaml:"summary,omitempty"`        // One-line characterisation
 	ConceptsIntro []ConceptIntroEntry `yaml:"concepts_intro,omitempty"` // Concepts this section introduces
-	ConceptsUsed  []string           `yaml:"concepts_used,omitempty"`  // Concepts this section uses
+	ConceptsUsed  []string            `yaml:"concepts_used,omitempty"`  // Concepts this section uses
 }
 
 // ClassificationSubmission is the input for Layer 3 classification.
@@ -116,6 +116,12 @@ type ClassificationSubmission struct {
 	ModelVersion    string           `yaml:"model_version"`
 	ClassifiedAt    time.Time        `yaml:"classified_at"`
 	Classifications []Classification `yaml:"classifications"`
+}
+
+// SectionAccessInfo holds access counters for a specific document section.
+type SectionAccessInfo struct {
+	AccessCount    int        `yaml:"access_count,omitempty"`
+	LastAccessedAt *time.Time `yaml:"last_accessed_at,omitempty"`
 }
 
 // DocumentIndex is the persistent per-document index file (Layers 1-3).
@@ -133,6 +139,11 @@ type DocumentIndex struct {
 	EntityRefs        []EntityRef        `yaml:"entity_refs,omitempty"`
 	CrossDocLinks     []CrossDocLink     `yaml:"cross_doc_links,omitempty"`
 	ConventionalRoles []ConventionalRole `yaml:"conventional_roles,omitempty"`
+
+	// Access tracking (Layer 5 — instrumentation)
+	AccessCount    int                          `yaml:"access_count,omitempty"`
+	LastAccessedAt *time.Time                   `yaml:"last_accessed_at,omitempty"`
+	SectionAccess  map[string]SectionAccessInfo `yaml:"section_access,omitempty"`
 
 	// Layer 3 (populated by agent classification)
 	Classified        bool             `yaml:"classified"`

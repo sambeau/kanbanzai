@@ -47,7 +47,7 @@ func writeDocFile(t *testing.T, repoRoot, relPath, content string) {
 // callDoc invokes the doc tool with the given args and returns the parsed JSON map.
 func callDoc(t *testing.T, env *docToolEnv, args map[string]any) map[string]any {
 	t.Helper()
-	tool := docTool(env.docSvc, nil)
+	tool := docTool(env.docSvc, nil, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -1614,7 +1614,7 @@ func TestDocTool_Approve_AutoCommit_FailureDoesNotBlockResult(t *testing.T) {
 // inheritance tests) and returns the parsed JSON map.
 func callDocWithEntitySvc(t *testing.T, env *docToolEnv, entitySvc *service.EntityService, args map[string]any) map[string]any {
 	t.Helper()
-	tool := docTool(env.docSvc, entitySvc)
+	tool := docTool(env.docSvc, nil, entitySvc)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {

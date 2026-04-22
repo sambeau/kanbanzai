@@ -19,7 +19,9 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
+	"time"
 
 	"github.com/sambeau/kanbanzai/internal/config"
 )
@@ -82,6 +84,14 @@ type AuditSummary struct {
 	Missing int `json:"missing"`
 }
 
+// AccessedDocumentEntry holds access tracking data for an audited document (FR-019).
+type AccessedDocumentEntry struct {
+	DocID          string     `json:"doc_id"`
+	Path           string     `json:"path"`
+	AccessCount    int        `json:"access_count"`
+	LastAccessedAt *time.Time `json:"last_accessed_at,omitempty"`
+}
+
 // AuditResult is the full output of an AuditDocuments call.
 type AuditResult struct {
 	// Unregistered lists files found on disk with no matching store record.
@@ -93,6 +103,10 @@ type AuditResult struct {
 	// Registered lists files with matching store records.
 	// Only populated when includeRegistered is true; nil otherwise.
 	Registered []RegisteredFile `json:"registered,omitempty"`
+	// MostAccessed lists up to 10 documents ordered by descending AccessCount.
+	// Documents with AccessCount == 0 or nil LastAccessedAt are excluded.
+	// Only populated when an IntelligenceService is provided to AuditDocuments.
+	MostAccessed []AccessedDocumentEntry `json:"most_accessed,omitempty"`
 	// Summary contains aggregate counts.
 	Summary AuditSummary `json:"summary"`
 }
@@ -112,6 +126,10 @@ type AuditResult struct {
 // When includeRegistered is true, the Registered field of the returned
 // AuditResult is populated with registered files.
 //
+// An optional IntelligenceService may be passed as a variadic argument; when
+// present, AuditResult.MostAccessed is populated with up to 10 documents
+// ordered by descending AccessCount (FR-020).
+//
 // The returned AuditResult always satisfies:
 //
 //	Summary.Registered + Summary.Unregistered == Summary.TotalOnDisk
@@ -121,6 +139,7 @@ func AuditDocuments(
 	repoRoot string,
 	dirs []string,
 	includeRegistered bool,
+	intelligenceSvc ...*IntelligenceService,
 ) (*AuditResult, error) {
 	result := &AuditResult{
 		Unregistered: []UnregisteredFile{},
@@ -292,5 +311,66 @@ func AuditDocuments(
 		}
 	}
 
+	// FR-020: populate MostAccessed when an IntelligenceService is provided.
+	if len(intelligenceSvc) > 0 && intelligenceSvc[0] != nil {
+		result.MostAccessed = collectMostAccessed(intelligenceSvc[0], 10)
+	}
+
 	return result, nil
+}
+
+// collectMostAccessed queries the index store for all document indexes and
+// returns up to limit entries ordered by descending AccessCount, excluding
+// documents with AccessCount == 0 or nil LastAccessedAt (FR-020).
+func collectMostAccessed(svc *IntelligenceService, limit int) []AccessedDocumentEntry {
+	docIDs, err := svc.indexStore.ListDocumentIndexes()
+	if err != nil {
+		return nil
+	}
+
+	var entries []AccessedDocumentEntry
+	for _, docID := range docIDs {
+		index, err := svc.indexStore.LoadDocumentIndex(docID)
+		if err != nil {
+			continue
+		}
+		if index.AccessCount == 0 || index.LastAccessedAt == nil {
+			continue
+		}
+		entries = append(entries, AccessedDocumentEntry{
+			DocID:          index.DocumentID,
+			Path:           index.DocumentPath,
+			AccessCount:    index.AccessCount,
+			LastAccessedAt: index.LastAccessedAt,
+		})
+	}
+
+	sort.Slice(entries, func(i, j int) bool {
+		return entries[i].AccessCount > entries[j].AccessCount
+	})
+
+	if len(entries) > limit {
+		entries = entries[:limit]
+	}
+	return entries
+}
+
+// RenderMostAccessedTable renders MostAccessed entries as a Markdown table (FR-021).
+// Returns an empty string when entries is empty.
+func RenderMostAccessedTable(entries []AccessedDocumentEntry) string {
+	if len(entries) == 0 {
+		return ""
+	}
+	var b strings.Builder
+	b.WriteString("## Most Accessed Documents\n\n")
+	b.WriteString("| Rank | Path | Access Count | Last Accessed |\n")
+	b.WriteString("|------|------|--------------|---------------|\n")
+	for i, e := range entries {
+		lastAccessed := "—"
+		if e.LastAccessedAt != nil {
+			lastAccessed = e.LastAccessedAt.Format("2006-01-02")
+		}
+		fmt.Fprintf(&b, "| %d | %s | %d | %s |\n", i+1, e.Path, e.AccessCount, lastAccessed)
+	}
+	return b.String()
 }

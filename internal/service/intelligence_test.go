@@ -59,6 +59,7 @@ func TestIngestDocument(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 
 	index, err := svc.IngestDocument("test-doc", docPath)
 	if err != nil {
@@ -127,6 +128,7 @@ func TestClassifyDocument(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 
 	index, err := svc.IngestDocument("test-doc", docPath)
 	if err != nil {
@@ -198,6 +200,7 @@ func TestClassifyDocument_ValidationError(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 
 	index, err := svc.IngestDocument("test-doc", docPath)
 	if err != nil {
@@ -228,6 +231,7 @@ func TestGetOutline(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
 		t.Fatalf("IngestDocument: %v", err)
 	}
@@ -255,6 +259,7 @@ func TestGetSection(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
 		t.Fatalf("IngestDocument: %v", err)
 	}
@@ -280,6 +285,7 @@ func TestGetSection_NotFound(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
 		t.Fatalf("IngestDocument: %v", err)
 	}
@@ -297,6 +303,7 @@ func TestFindByEntity(t *testing.T) {
 	docPath2 := writeTestDoc(t, tmp, "docs/spec.md", testMarkdown2)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	if _, err := svc.IngestDocument("doc-design", docPath1); err != nil {
 		t.Fatalf("IngestDocument doc-design: %v", err)
 	}
@@ -332,6 +339,7 @@ func TestFindByEntity_NoMatch(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
 		t.Fatalf("IngestDocument: %v", err)
 	}
@@ -351,6 +359,7 @@ func TestGetPendingClassification(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 
 	// Ingest without classifying
 	index, err := svc.IngestDocument("test-doc", docPath)
@@ -400,6 +409,7 @@ func TestAnalyzeGaps(t *testing.T) {
 	stateRoot := filepath.Join(tmp, "state")
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	docSvc := NewDocumentService(stateRoot, tmp)
 
 	// Create a document file that can be submitted
@@ -445,6 +455,7 @@ func TestAnalyzeGaps_AllPresent(t *testing.T) {
 	stateRoot := filepath.Join(tmp, "state")
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	docSvc := NewDocumentService(stateRoot, tmp)
 
 	// Create document files
@@ -489,6 +500,7 @@ func TestFindByRole(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", content)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
 		t.Fatalf("IngestDocument: %v", err)
 	}
@@ -515,6 +527,7 @@ func TestFindByRole_WithScope(t *testing.T) {
 	docPath2 := writeTestDoc(t, tmp, "docs/b.md", content)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	if _, err := svc.IngestDocument("doc-a", docPath1); err != nil {
 		t.Fatalf("IngestDocument doc-a: %v", err)
 	}
@@ -552,6 +565,7 @@ func TestFindByRole_DeduplicatesWhenLayer2And3Agree(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", content)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	index, err := svc.IngestDocument("test-doc", docPath)
 	if err != nil {
 		t.Fatalf("IngestDocument: %v", err)
@@ -606,6 +620,7 @@ func TestGetImpact(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
 		t.Fatalf("IngestDocument: %v", err)
 	}
@@ -626,6 +641,7 @@ func TestFindByConcept(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	index, err := svc.IngestDocument("test-doc", docPath)
 	if err != nil {
 		t.Fatalf("IngestDocument: %v", err)
@@ -697,6 +713,7 @@ func TestTraceEntity(t *testing.T) {
 	planPath := writeTestDoc(t, tmp, "docs/plan.md", planContent)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 
 	// Ingest in reverse order to test sorting
 	if _, err := svc.IngestDocument("doc-plan", planPath); err != nil {
@@ -760,6 +777,7 @@ func TestIngestDocument_SQLite_FTSRowsCreated(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
 		t.Fatalf("IngestDocument: %v", err)
 	}
@@ -779,6 +797,7 @@ func TestIngestDocument_SQLite_ReIngestReplacesFTS(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
 		t.Fatalf("first IngestDocument: %v", err)
 	}
@@ -808,6 +827,7 @@ func TestIngestDocument_SQLite_EdgeCount(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	idx, err := svc.IngestDocument("test-doc", docPath)
 	if err != nil {
 		t.Fatalf("IngestDocument: %v", err)
@@ -830,6 +850,7 @@ func TestIngestDocument_SQLite_EntityRefCount(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	idx, err := svc.IngestDocument("test-doc", docPath)
 	if err != nil {
 		t.Fatalf("IngestDocument: %v", err)
@@ -851,6 +872,7 @@ func TestFindByEntity_SQLite(t *testing.T) {
 	docPath2 := writeTestDoc(t, tmp, "docs/spec.md", testMarkdown2)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	if _, err := svc.IngestDocument("doc-design", docPath1); err != nil {
 		t.Fatalf("IngestDocument doc-design: %v", err)
 	}
@@ -880,6 +902,7 @@ func TestGetImpact_SQLite(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 	if _, err := svc.IngestDocument("test-doc", docPath); err != nil {
 		t.Fatalf("IngestDocument: %v", err)
 	}
@@ -909,6 +932,7 @@ func TestRebuildIndex_RoundTrip(t *testing.T) {
 	docPath2 := writeTestDoc(t, tmp, "docs/spec.md", testMarkdown2)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 
 	if _, err := svc.IngestDocument("test-doc-1", docPath1); err != nil {
 		t.Fatalf("IngestDocument 1: %v", err)
@@ -970,6 +994,7 @@ func TestClassifyDocument_SQLite_EdgesDualWrite(t *testing.T) {
 	docPath := writeTestDoc(t, tmp, "docs/design.md", testMarkdown)
 
 	svc := NewIntelligenceService(indexRoot, tmp)
+	t.Cleanup(func() { svc.Close() }) //nolint:errcheck
 
 	idx, err := svc.IngestDocument("test-doc", docPath)
 	if err != nil {
