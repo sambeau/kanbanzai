@@ -51,11 +51,13 @@ Copy this checklist when starting any task:
 
 - [ ] Claimed the task with `next(id: "TASK-xxx")` — context assembled
 - [ ] Read the assembled context (spec sections, knowledge entries, file paths)
+- [ ] Called knowledge(action: "list") with domain-relevant tags before starting implementation
 - [ ] Confirmed the parent feature is in the correct lifecycle state
 - [ ] Implemented the changes
 - [ ] Ran tests (`go test ./...`) and they pass
 - [ ] Committed with a properly formatted message (see Commit Message Format)
 - [ ] Completed the task with `finish(task_id: "TASK-xxx", summary: "...", verification: "...")`
+- [ ] Confirmed accurate and flagged inaccurate knowledge entries after task completion
 - [ ] Included retrospective observations if any friction was encountered
 
 ---
@@ -67,6 +69,11 @@ Before beginning any task, assemble context by claiming it:
 1. Call `next` with a task ID to claim the task and receive a context packet
    containing role instructions, relevant knowledge entries, design context,
    and task details.
+1a. **REQUIREMENT:** Actively call `knowledge(action: "list")` with tags relevant to
+   this task's domain, subsystem, and implementation area. Do not rely solely on the
+   context packet's automatic knowledge surfacing — automatic matching may miss
+   cross-cutting concerns and entries relevant to tasks that span multiple domains.
+   Active querying is a required step, not a suggestion.
 2. The packet is byte-budgeted and prioritised — it contains what matters
    most for this task and role.
 3. To generate a prompt for a sub-agent instead, call `handoff` with the

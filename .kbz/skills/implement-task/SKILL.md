@@ -136,6 +136,7 @@ Copy this checklist and track your progress:
 - [ ] Claimed the task with `next(id: "TASK-xxx")`
 - [ ] Confirmed whether this task runs inside a worktree — if yes, use `terminal` + heredoc for Go files, `python3 -c` for Markdown/YAML, NOT `edit_file`
 - [ ] Read the context packet — spec sections, knowledge entries, file paths
+- [ ] Called knowledge list with domain-relevant tags before writing any code
 - [ ] Listed all acceptance criteria for this task
 - [ ] Confirmed file scope — which files to create or modify
 - [ ] Implemented changes incrementally with commits at logical checkpoints
@@ -146,6 +147,7 @@ Copy this checklist and track your progress:
 - [ ] Verified each acceptance criterion is met
 - [ ] If any test failed intermittently (passed on retry without code change), filed a BUG entity before proceeding
 - [ ] Completed the task with `finish` including summary and verification
+- [ ] Confirmed accurate and flagged inaccurate knowledge entries after task completion
 ```
 
 ## Procedure
@@ -153,6 +155,7 @@ Copy this checklist and track your progress:
 ### Phase 1: Read Spec and Acceptance Criteria
 
 1. Claim the task with `next(id: "TASK-xxx")`. Read the full context packet.
+1a. Call `knowledge(action: "list")` with tags derived from this task's feature area (e.g. the domain, the subsystem, the Go package being modified). Review all returned entries. Note any entry that describes a known pitfall, anti-pattern, or constraint relevant to this task. **BECAUSE** knowledge entries record hard-won discoveries from previous tasks and an agent that skips this step risks re-discovering the same problems from scratch.
 2. List every acceptance criterion for this task explicitly.
 3. Note the file scope — which files you are expected to create or modify.
 4. IF any acceptance criterion is ambiguous, incomplete, or contradictory → STOP. Report the ambiguity. Do not infer intent. The cost of asking is low; the cost of guessing wrong compounds through review and rework.
@@ -188,6 +191,8 @@ Copy this checklist and track your progress:
    - Files modified
    - Verification performed — which criteria were checked and how
    - Assumption flags and any retrospective observations
+5. For each knowledge entry that proved accurate and useful during this task, call `knowledge(action: "confirm", id: "KE-xxx")`.
+6. For each knowledge entry that proved inaccurate or misleading, call `knowledge(action: "flag", id: "KE-xxx", reason: "...")`. **BECAUSE** confirmation is the mechanism by which the knowledge base self-curates, and unflagged inaccurate entries continue to mislead future agents indefinitely.
 
 ## Examples
 
@@ -244,6 +249,39 @@ Assumption flagged: no jitter.
 ```
 
 WHY GOOD: Every implementation choice cites a spec requirement. The jitter assumption is explicitly flagged rather than silently decided. All code paths have tests — happy path, exhaustion, timing, logging, and the no-retry edge case. Scope is exactly what the task requires.
+
+### BAD: Skipping knowledge retrieval and re-discovering a known issue
+
+```
+Task: TASK-103 — Add rate limiting to the webhook endpoint
+
+Implementation:
+  Added token-bucket limiter in webhook handler. Chose 100 req/s limit.
+  Ran into an issue: the rate limiter state was being reset on every
+  request because it was initialized inside the handler function instead
+  of at package level. Spent 2 hours debugging before finding the fix.
+```
+
+WHY BAD: The root cause of the wasted time was the ABSENCE of a `knowledge list` call at the start of the task. The knowledge base contained an entry tagged `["rate-limiting", "go"]` stating: "Rate limiter instances must be initialised at package scope, not inside handlers — handler-scoped initialisers reset on every request." The agent re-discovered this known pitfall from scratch, spending 2 hours on an issue that a 30-second knowledge check would have prevented.
+
+### GOOD: Using knowledge retrieval to avoid a known pitfall
+
+```
+Task: TASK-103 — Add rate limiting to the webhook endpoint
+
+Phase 1 — Knowledge retrieval:
+  Called knowledge(action: "list", tags: ["rate-limiting", "go", "webhook"]).
+  Found entry KE-0047: "Rate limiter instances must be initialised at package
+  scope, not inside handlers — handler-scoped initialisers reset on every
+  request." Noted: initialise limiter at package level, not inside handler.
+
+Phase 2 — Implementation:
+  Declared token-bucket limiter as a package-level var in webhook_handler.go.
+  Chose 100 req/s limit per spec §5.1.
+  Handler references the package-level instance — no per-request reinitialisation.
+```
+
+WHY GOOD: The agent called `knowledge list` with domain-relevant tags before writing any implementation code. Finding KE-0047 prevented the per-request reinitialisation mistake before it could be made. The knowledge retrieval step took seconds; the avoided debugging session would have taken hours.
 
 ## Evaluation Criteria
 
