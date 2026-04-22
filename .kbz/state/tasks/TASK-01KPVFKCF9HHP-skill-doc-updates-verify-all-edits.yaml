@@ -1,0 +1,6 @@
+id: TASK-01KPVFKCF9HHP
+parent_feature: FEAT-01KPVDDYN855F
+slug: skill-doc-updates-verify-all-edits
+name: Verify all three skill-file edits
+summary: "Inspect all three modified skill files against AC-001 through AC-010; confirm concise-output instruction, atomicity statement, re-dispatch instruction, resume-plan sections, transitional labels, file scope, and no duplication with FEAT-01KPTHB61WPT0"
+status: queued
