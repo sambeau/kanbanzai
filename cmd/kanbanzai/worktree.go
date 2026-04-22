@@ -124,7 +124,7 @@ func runWorktreeCreate(args []string, deps dependencies) error {
 
 	// Check if worktree already exists
 	existing, err := store.GetByEntityID(entityID)
-	if err == nil && existing.ID != "" {
+	if err == nil && existing != nil && existing.ID != "" {
 		return fmt.Errorf("worktree already exists for entity %s: %s", entityID, existing.ID)
 	}
 
