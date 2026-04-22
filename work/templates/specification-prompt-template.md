@@ -21,12 +21,16 @@ Read and understand the design document: {{DESIGN_DOCUMENT}}
 
 **Required sections in the specification:**
 
-1. **Overview** — one-paragraph summary of what is being specified
-2. **Scope** — what is in scope and what is explicitly excluded
-3. **Functional Requirements** — numbered, testable requirements (FR-001, FR-002, ...)
-4. **Non-Functional Requirements** — performance, compatibility, constraints
-5. **Acceptance Criteria** — how each requirement will be verified
-6. **Dependencies and Assumptions** — what must be true for this spec to be valid
+1. **Related Work** — prior designs, specs, and decisions consulted before writing this specification. Two valid forms:
+   - **Option A — Related work found:** (1) list of prior designs/specs consulted with a description of the relationship to this spec; (2) list of decisions from prior documents that constrain this specification, with source document and section; (3) a narrative on how this specification extends or deliberately diverges from prior work.
+   - **Option B — No related work found:** (1) concepts searched; (2) entity IDs searched (where applicable); (3) explicit attestation: "No directly related prior work was found in the corpus."
+   - **An empty or absent Related Work section is NOT a valid answer.**
+2. **Overview** — one-paragraph summary of what is being specified
+3. **Scope** — what is in scope and what is explicitly excluded
+4. **Functional Requirements** — numbered, testable requirements (FR-001, FR-002, ...)
+5. **Non-Functional Requirements** — performance, compatibility, constraints
+6. **Acceptance Criteria** — how each requirement will be verified
+7. **Dependencies and Assumptions** — what must be true for this spec to be valid
 
 **Example of a well-formed requirement:**
 
