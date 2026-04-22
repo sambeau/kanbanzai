@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPTHB61WPT0
 slug: corpus-hygiene-fr-001-005-integrity-check
 name: Getting-started corpus integrity check
 summary: "kanbanzai-getting-started/SKILL.md gains corpus integrity check in Session Start Checklist and procedure — doc audit, doc import on unregistered, doc delete on stale, classification pass after batch registration, and false-negative rationale"
-status: queued
+status: done

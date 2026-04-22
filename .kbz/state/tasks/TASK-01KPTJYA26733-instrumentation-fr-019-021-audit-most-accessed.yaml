@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPTHB66Y8TM
 slug: instrumentation-fr-019-021-audit-most-accessed
 name: Doc audit Most Accessed Documents table
 summary: "Add MostAccessed field to AuditResult (internal/service/doc_audit.go); AuditDocuments populates top-10 by descending 30-day access count; doc(action:audit) MCP response renders Most Accessed Documents markdown table when non-empty"
-status: queued
+status: done

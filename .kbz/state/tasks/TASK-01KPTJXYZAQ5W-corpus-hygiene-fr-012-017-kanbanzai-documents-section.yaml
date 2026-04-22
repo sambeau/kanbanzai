@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPTHB61WPT0
 slug: corpus-hygiene-fr-012-017-kanbanzai-documents-section
 name: kanbanzai-documents classification section
 summary: "kanbanzai-documents/SKILL.md: classification section moved after Registration; renamed Classification (Layer 3); opens with immediate-classify imperative; classification_nudge mandatory; deferred-backlog rationale; Document Creation Checklist gains classification checkbox"
-status: queued
+status: done

@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPTHB61WPT0
 slug: corpus-hygiene-fr-018-023-orchestrate-review-step
 name: orchestrate-review classification sub-step
 summary: "orchestrate-review/SKILL.md Step 1 gains sub-step 1b — pending filtered to feature, guide-read-classify per document, non-blocking with context-budget qualifier, priority order, rationale; checklist gains matching item"
-status: queued
+status: done
