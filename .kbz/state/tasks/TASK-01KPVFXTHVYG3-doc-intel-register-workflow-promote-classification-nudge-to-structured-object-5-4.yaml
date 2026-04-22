@@ -1,0 +1,6 @@
+id: TASK-01KPVFXTHVYG3
+parent_feature: FEAT-01KPVDDYSEK8P
+slug: doc-intel-register-workflow-promote-classification-nudge-to-structured-object-5-4
+name: "Promote `classification_nudge` to structured object (§5.4)"
+summary: "Promote `classification_nudge` to structured object (§5.4)"
+status: queued
