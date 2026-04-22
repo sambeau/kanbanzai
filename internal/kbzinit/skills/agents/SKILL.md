@@ -7,9 +7,8 @@ description: >
   format, knowledge management, context packets, or hand-off between
   agents. Use this skill for every task — it defines how agents interact
   with the workflow system.
-metadata:
-  kanbanzai-managed: "true"
-  version: "0.3.0"
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 ---
 
 # SKILL: Kanbanzai Agents

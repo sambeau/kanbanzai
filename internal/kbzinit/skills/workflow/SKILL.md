@@ -7,9 +7,8 @@ description: >
   approval requirements, or uncertainty about proceeding. Use even when the
   agent is confident — workflow gates exist precisely for the cases where
   confidence is misplaced.
-metadata:
-  kanbanzai-managed: "true"
-  version: "0.3.0"
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 ---
 
 # SKILL: Kanbanzai Workflow
@@ -139,6 +138,11 @@ Stop and ask the human when any of these conditions are true:
   belongs to.
 - **Scope change.** The work has drifted beyond the scope of the task,
   feature, or plan you were given.
+- **Direct writes to `.kbz/state/` or `work/` without MCP tools.** You are
+  about to write workflow state or document files directly using `edit_file`
+  or shell commands instead of MCP tools (`entity`, `doc`, `finish`). Direct
+  writes bypass lifecycle validation, registration, and auto-commit, producing
+  state that is inconsistent with the index and invisible to other agents.
 
 When the emergency brake fires, stop and ask. Do not proceed with a guess.
 The cost of asking is low. The cost of building the wrong thing is high.
