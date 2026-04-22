@@ -2,9 +2,11 @@ id: FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene
 path: work/spec/doc-intel-corpus-hygiene.md
 type: specification
 title: Corpus Hygiene and Classification Pipeline
-status: draft
+status: approved
 owner: FEAT-01KPTHB61WPT0
+approved_by: sambeau
+approved_at: "2026-04-22T12:30:03Z"
 content_hash: a6d8ff015d36830e1388f176866b2b5a5649bf133615492003d6bf4ccc5bbf75
 created: "2026-04-22T12:15:08Z"
 created_by: sambeau
-updated: "2026-04-22T12:15:08Z"
+updated: "2026-04-22T12:30:03Z"
