@@ -5,5 +5,6 @@ parent: P28-doc-intel-polish-workflow-reliability
 status: dev-planning
 summary: "When decompose(action: apply) creates tasks it should also register an auto-approved skeleton dev-plan document on the feature, so the dev-planning → developing gate passes without requiring a manual override. The skeleton document represents the task breakdown as the planning artifact. This affects every plan that uses the decompose workflow. Sources: P27 Issue 2."
 spec: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration
+dev_plan: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration
 created: "2026-04-22T20:17:15Z"
 created_by: sambeau
