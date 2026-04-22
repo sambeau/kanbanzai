@@ -4,6 +4,7 @@ name: Knowledge lifecycle mandate
 parent: P27-doc-intel-adoption
 status: specifying
 summary: "Add mandatory knowledge retrieval before implementation tasks and mandatory confirm/flag after task completion to implement-task, orchestrate-development, and kanbanzai-agents. Add plan close-out knowledge curation pass to orchestrate-development Phase 6. Implements Fix 4 and Fix 6."
+spec: FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle
 created: "2026-04-22T12:06:24Z"
 created_by: sambeau
 overrides:
