@@ -2,7 +2,7 @@ id: FEAT-01KPTHB66Y8TM
 slug: doc-intel-instrumentation
 name: Doc intel access instrumentation
 parent: P27-doc-intel-adoption
-status: dev-planning
+status: developing
 summary: "Add LastAccessedAt and RecentUseCount fields to KnowledgeEntry, AccessCount and LastAccessedAt to DocumentIndex and SectionIndex, increment counters on all read paths, add sort-by-recent to knowledge list, and extend doc audit with a Most Accessed table. Implements Fix 5."
 spec: FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation
 created: "2026-04-22T12:06:24Z"
@@ -13,3 +13,8 @@ overrides:
     reason: Plan-level design document covers this feature under Fix 5 (§7). No feature-level design document is required.
     timestamp: "2026-04-22T13:09:08+01:00"
     to_status: specifying
+  -
+    from_status: dev-planning
+    reason: Tasks were decomposed directly from approved specs in the dev-planning session. No separate dev-plan document was produced; the task breakdown in the system serves as the implementation plan.
+    timestamp: "2026-04-22T13:52:19+01:00"
+    to_status: developing
