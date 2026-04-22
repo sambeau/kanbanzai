@@ -2,7 +2,7 @@ id: FEAT-01KPVDDYX73WB
 slug: decompose-dev-plan-registration
 name: Decompose registers dev-plan at apply time
 parent: P28-doc-intel-polish-workflow-reliability
-status: dev-planning
+status: developing
 summary: "When decompose(action: apply) creates tasks it should also register an auto-approved skeleton dev-plan document on the feature, so the dev-planning → developing gate passes without requiring a manual override. The skeleton document represents the task breakdown as the planning artifact. This affects every plan that uses the decompose workflow. Sources: P27 Issue 2."
 spec: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration
 dev_plan: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration
