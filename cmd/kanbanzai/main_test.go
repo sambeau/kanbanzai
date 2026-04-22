@@ -663,14 +663,6 @@ func TestParseFlags(t *testing.T) {
 	}
 }
 
-func captureStdout(t *testing.T, fn func()) string {
-	t.Helper()
-
-	fn()
-
-	return currentTestStdout.String()
-}
-
 func testDependencies() (dependencies, *bytes.Buffer) {
 	return testDependenciesWithService(newFakeEntityService())
 }

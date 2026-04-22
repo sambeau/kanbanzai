@@ -160,7 +160,6 @@ func stripTrailingHashes(title string) string {
 type flatSection struct {
 	level      int
 	title      string
-	path       string
 	byteOffset int
 	byteCount  int
 	wordCount  int

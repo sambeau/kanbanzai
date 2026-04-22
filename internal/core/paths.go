@@ -45,7 +45,7 @@ func CheckInitComplete() error {
 	sentinel := filepath.Join(kbzDir, InitCompleteFile)
 	if _, err := os.Stat(sentinel); os.IsNotExist(err) {
 		return fmt.Errorf(
-			"Partial initialisation detected: a previous 'kanbanzai init' did not complete successfully. " +
+			"partial initialisation detected: a previous 'kanbanzai init' did not complete successfully. " +
 				"Re-run 'kanbanzai init' to complete setup, or remove the '.kbz/' directory and start over",
 		)
 	}

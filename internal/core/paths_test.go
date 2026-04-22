@@ -98,8 +98,8 @@ func TestCheckInitComplete_PartialInit(t *testing.T) {
 	}
 
 	msg := err.Error()
-	if !contains(msg, "Partial initialisation detected") {
-		t.Errorf("error message missing 'Partial initialisation detected': %s", msg)
+	if !contains(msg, "partial initialisation detected") {
+		t.Errorf("error message missing 'partial initialisation detected': %s", msg)
 	}
 	if !contains(msg, "kanbanzai init") {
 		t.Errorf("error message missing recovery action 'kanbanzai init': %s", msg)

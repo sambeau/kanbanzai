@@ -35,16 +35,6 @@ func checkoutBranch(t *testing.T, repo, branchName string) {
 	runGit(t, repo, "checkout", branchName)
 }
 
-// addCommitsToMain adds n commits to main branch.
-func addCommitsToMain(t *testing.T, repo string, n int) {
-	t.Helper()
-	checkoutBranch(t, repo, "main")
-	for i := 0; i < n; i++ {
-		createFile(t, repo, "main_file.txt", "content "+string(rune('A'+i)))
-		commitFile(t, repo, "main_file.txt", "Main commit")
-	}
-}
-
 // TestGetBranchLastCommit tests getting the last commit on a branch.
 func TestGetBranchLastCommit_ValidBranch(t *testing.T) {
 	t.Parallel()

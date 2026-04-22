@@ -367,7 +367,7 @@ func (i *Initializer) validateExistingConfig(opts Options, kbzDir, configPath st
 	}
 
 	// Extract and check the schema version.
-	versionRaw, _ := raw["version"]
+	versionRaw := raw["version"]
 	configVersion := fmt.Sprintf("%v", versionRaw)
 	if configVersion == "<nil>" || configVersion == "" {
 		configVersion = "0"

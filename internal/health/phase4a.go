@@ -34,7 +34,6 @@ func CheckDependencyCycles(tasks []map[string]any) CategoryResult {
 	)
 
 	colors := make(map[string]color, len(allTaskIDs))
-	parent := make(map[string]string) // for path reconstruction
 	reported := make(map[string]struct{})
 
 	var detectCycle func(node string)
@@ -54,7 +53,6 @@ func CheckDependencyCycles(tasks []map[string]any) CategoryResult {
 					Message:  fmt.Sprintf("dependency cycle detected: %s → %s", node, dep),
 				})
 			} else if colors[dep] == white {
-				parent[dep] = node
 				detectCycle(dep)
 			}
 		}
@@ -66,9 +64,6 @@ func CheckDependencyCycles(tasks []map[string]any) CategoryResult {
 			detectCycle(id)
 		}
 	}
-
-	// parent is used in cycle path reconstruction (future enhancement).
-	_ = parent
 
 	return result
 }

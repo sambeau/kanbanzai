@@ -409,46 +409,6 @@ func ValidNextStates(kind EntityKind, from string) []string {
 	return states
 }
 
-// AllStates returns all known states for the given entity kind.
-func AllStates(kind EntityKind) []string {
-	var states []string
-	seen := make(map[string]bool)
-
-	// Add entry state
-	if entry, ok := entryStates[kind]; ok {
-		states = append(states, entry)
-		seen[entry] = true
-	}
-
-	// Add states from transitions
-	if transitions, ok := allowedTransitions[kind]; ok {
-		for from := range transitions {
-			if !seen[from] {
-				states = append(states, from)
-				seen[from] = true
-			}
-			for to := range transitions[from] {
-				if !seen[to] {
-					states = append(states, to)
-					seen[to] = true
-				}
-			}
-		}
-	}
-
-	// Add terminal states
-	if terminals, ok := terminalStates[kind]; ok {
-		for state := range terminals {
-			if !seen[state] {
-				states = append(states, state)
-				seen[state] = true
-			}
-		}
-	}
-
-	return states
-}
-
 // DependencyTerminalStates returns the set of task states that satisfy a dependency.
 // A task in one of these states is considered "resolved" as a dependency.
 func DependencyTerminalStates() map[string]struct{} {

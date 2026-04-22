@@ -9,14 +9,6 @@ import (
 	"github.com/sambeau/kanbanzai/internal/service"
 )
 
-const rebuildIndexUsageText = `Usage: kbz rebuild-index
-
-Rebuilds the SQLite document intelligence index from all per-document YAML index files.
-Deletes the existing database and recreates it from scratch.
-
-This command is useful after upgrading Kanbanzai or when the SQLite database is missing or corrupted.
-`
-
 // runRebuildIndex rebuilds the SQLite document intelligence index.
 func runRebuildIndex(_ []string, deps dependencies) error {
 	out := deps.stdout

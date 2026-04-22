@@ -84,24 +84,6 @@ func createStatusTestTask(t *testing.T, entitySvc *service.EntityService, parent
 	return result.ID
 }
 
-// callStatus invokes the status tool directly (not via MCP transport) and
-// returns the parsed JSON response. Passes nil for the worktree store.
-func callStatus(t *testing.T, entitySvc *service.EntityService, docSvc *service.DocumentService, id string) map[string]any {
-	t.Helper()
-	tool := statusTool(entitySvc, docSvc, nil, "", 0)
-	req := makeRequest(map[string]any{"id": id})
-	result, err := tool.Handler(context.Background(), req)
-	if err != nil {
-		t.Fatalf("status handler error: %v", err)
-	}
-	text := extractText(t, result)
-	var parsed map[string]any
-	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
-		t.Fatalf("parse status result: %v\nraw: %s", err, text)
-	}
-	return parsed
-}
-
 // ─── inferIDType tests ────────────────────────────────────────────────────────
 
 func TestInferIDType_Empty(t *testing.T) {

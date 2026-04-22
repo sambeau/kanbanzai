@@ -381,12 +381,7 @@ func (p *Pipeline) stepResolveRole(state *PipelineState) error {
 
 	// Start building merged anti-patterns from role.
 	for _, ap := range resolved.AntiPatterns {
-		state.MergedAnti = append(state.MergedAnti, AntiPatternEntry{
-			Name:    ap.Name,
-			Detect:  ap.Detect,
-			Because: ap.Because,
-			Resolve: ap.Resolve,
-		})
+		state.MergedAnti = append(state.MergedAnti, AntiPatternEntry(ap))
 	}
 
 	return nil

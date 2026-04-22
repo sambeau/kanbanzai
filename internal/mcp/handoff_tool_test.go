@@ -968,7 +968,7 @@ func TestRenderHandoffPrompt_SectionOrder(t *testing.T) {
 // AC-07: When handoff is called, the commitStateFunc is invoked before context
 // assembly begins. This test verifies the call happens by injecting a stub.
 func TestHandoff_PreDispatchCommit_CalledBeforeAssembly(t *testing.T) {
-	t.Parallel()
+	// Not parallel: modifies package-level commitStateFunc.
 	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "pre-commit")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
@@ -994,7 +994,7 @@ func TestHandoff_PreDispatchCommit_CalledBeforeAssembly(t *testing.T) {
 // proceeds normally — the failure must not prevent context assembly or
 // the prompt being returned.
 func TestHandoff_PreDispatchCommit_FailureDoesNotBlockHandoff(t *testing.T) {
-	t.Parallel()
+	// Not parallel: modifies package-level commitStateFunc.
 	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "commit-fail")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
@@ -1022,7 +1022,7 @@ func TestHandoff_PreDispatchCommit_FailureDoesNotBlockHandoff(t *testing.T) {
 
 // The repoRoot passed to commitStateFunc must be "." (the server default).
 func TestHandoff_PreDispatchCommit_UsesRepoRootDot(t *testing.T) {
-	t.Parallel()
+	// Not parallel: modifies package-level commitStateFunc.
 	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "repo-root")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")

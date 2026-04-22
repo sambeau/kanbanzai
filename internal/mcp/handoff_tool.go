@@ -107,8 +107,7 @@ func handoffTool(
 	handler := func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		taskID, err := req.RequireString("task_id")
 		if err != nil {
-			return mcp.NewToolResultError(fmt.Sprintf(
-				"Cannot generate handoff prompt: task_id is required.\n\nTo resolve:\n  Provide a task_id parameter (e.g. TASK-xxx) for the task to hand off.")), nil
+			return mcp.NewToolResultError("Cannot generate handoff prompt: task_id is required.\n\nTo resolve:\n  Provide a task_id parameter (e.g. TASK-xxx) for the task to hand off."), nil
 		}
 		role := strings.TrimSpace(req.GetString("role", ""))
 		instructions := strings.TrimSpace(req.GetString("instructions", ""))

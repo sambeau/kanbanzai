@@ -562,16 +562,6 @@ func buildZeroCriteriaDiagnostic(specDocID string, content string, spec specStru
 // Proposal generation
 // ---------------------------------------------------------------------------
 
-// guidanceRules are the six embedded decomposition guidance rules from §6.5.
-var guidanceRules = []string{
-	"vertical-slice-first",
-	"one-ac-per-task",
-	"size-soft-limit-8",
-	"explicit-dependencies",
-	"role-assignment",
-	"test-tasks-explicit",
-}
-
 // generateProposal builds a task proposal from the parsed spec structure,
 // applying the embedded decomposition guidance rules.
 func generateProposal(spec specStructure, featureSlug, context string, maxTasksPerFeature int) (Proposal, []string) {
@@ -1164,12 +1154,8 @@ func isTableSeparatorRow(line string) bool {
 // parseTableRow extracts non-empty cell values from a markdown table data row.
 func parseTableRow(line string) []string {
 	line = strings.TrimSpace(line)
-	if strings.HasPrefix(line, "|") {
-		line = line[1:]
-	}
-	if strings.HasSuffix(line, "|") {
-		line = line[:len(line)-1]
-	}
+	line = strings.TrimPrefix(line, "|")
+	line = strings.TrimSuffix(line, "|")
 	parts := strings.Split(line, "|")
 	var cells []string
 	for _, p := range parts {

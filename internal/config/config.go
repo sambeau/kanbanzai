@@ -400,8 +400,8 @@ func checkSchemaVersionBoundary(cfg *Config) error {
 	// AC-5: schema major version newer than binary — refuse to operate.
 	if cfgMajor > binaryMajor {
 		return fmt.Errorf(
-			"schema_version %s in config.yaml is newer than the version this binary supports (%s).\n"+
-				"Please upgrade the kanbanzai binary to continue.",
+			"schema_version %s in config.yaml is newer than the version this binary supports (%s) — "+
+				"please upgrade the kanbanzai binary to continue",
 			cfg.SchemaVersion, BinarySupportedSchemaVersion,
 		)
 	}

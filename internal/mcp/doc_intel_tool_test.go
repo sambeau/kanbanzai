@@ -66,37 +66,6 @@ func contributeKnowledge(t *testing.T, svc *service.KnowledgeService, topic, con
 	return rec.ID
 }
 
-func writeKnowledgeFile(t *testing.T, stateRoot, id, topic, content, scope, learnedFrom, status string, tags []string) {
-	t.Helper()
-	dir := filepath.Join(stateRoot, "knowledge")
-	if err := os.MkdirAll(dir, 0o755); err != nil {
-		t.Fatalf("mkdir knowledge: %v", err)
-	}
-	tagsYAML := ""
-	for _, tag := range tags {
-		tagsYAML += "\n  - " + tag
-	}
-	learnedFromYAML := ""
-	if learnedFrom != "" {
-		learnedFromYAML = "\nlearned_from: " + learnedFrom
-	}
-	yml := "id: " + id + "\n" +
-		"topic: " + topic + "\n" +
-		"content: " + content + "\n" +
-		"scope: " + scope + "\n" +
-		"status: " + status + "\n" +
-		"tier: 3\n" +
-		"confidence: 0.5\n" +
-		"use_count: 0\n" +
-		"miss_count: 0\n" +
-		learnedFromYAML +
-		"\ntags:" + tagsYAML + "\n"
-	path := filepath.Join(dir, id+".yaml")
-	if err := os.WriteFile(path, []byte(yml), 0o644); err != nil {
-		t.Fatalf("write knowledge file: %v", err)
-	}
-}
-
 // ─── tests ────────────────────────────────────────────────────────────────────
 
 // TestDocIntelFind_EntityID_BackwardCompat verifies that existing response fields

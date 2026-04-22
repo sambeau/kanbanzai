@@ -78,7 +78,7 @@ func recoverySteps(featureID, from, to string, gate GateResult, nonTerminalTasks
 func designGateRecovery(featureID string) []string {
 	return []string{
 		fmt.Sprintf(`Check for pending documents: doc(action: "list", owner: %q, pending: true)`, featureID),
-		fmt.Sprintf(`Approve an existing draft design document: doc(action: "approve", id: "DOC-...")`),
+		`Approve an existing draft design document: doc(action: "approve", id: "DOC-...")`,
 		fmt.Sprintf(`Register a new design document: doc(action: "register", path: "work/design/...", type: "design", owner: %q, title: "Design: ...")`, featureID),
 	}
 }
@@ -88,7 +88,7 @@ func designGateRecovery(featureID string) []string {
 func specGateRecovery(featureID string) []string {
 	return []string{
 		fmt.Sprintf(`Check for pending documents: doc(action: "list", owner: %q, pending: true)`, featureID),
-		fmt.Sprintf(`Approve an existing draft specification: doc(action: "approve", id: "DOC-...")`),
+		`Approve an existing draft specification: doc(action: "approve", id: "DOC-...")`,
 		fmt.Sprintf(`Register a new specification: doc(action: "register", path: "work/spec/...", type: "specification", owner: %q, title: "Specification: ...")`, featureID),
 	}
 }
@@ -107,7 +107,7 @@ func devPlanGateRecovery(featureID, reason string) []string {
 	}
 	return []string{
 		fmt.Sprintf(`Check for pending documents: doc(action: "list", owner: %q, pending: true)`, featureID),
-		fmt.Sprintf(`Approve an existing draft dev-plan: doc(action: "approve", id: "DOC-...")`),
+		`Approve an existing draft dev-plan: doc(action: "approve", id: "DOC-...")`,
 		fmt.Sprintf(`Register a new dev-plan: doc(action: "register", path: "work/plan/...", type: "dev-plan", owner: %q, title: "Implementation Plan: ...")`, featureID),
 	}
 }

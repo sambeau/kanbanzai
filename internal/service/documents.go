@@ -438,12 +438,12 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 		}
 		if doc.QualityEvaluation == nil {
 			return DocumentResult{}, fmt.Errorf(
-				"Cannot approve document %s: quality evaluation required but no quality evaluation found.\n\nTo resolve:\n1. Run the quality evaluation skill on the document.\n2. Attach the result: doc(action: \"evaluate\", id: \"%s\", evaluation: {...})\n3. Retry approval: doc(action: \"approve\", id: \"%s\")",
+				"cannot approve document %s: quality evaluation required but no quality evaluation found.\n\nTo resolve:\n1. Run the quality evaluation skill on the document.\n2. Attach the result: doc(action: \"evaluate\", id: \"%s\", evaluation: {...})\n3. Retry approval: doc(action: \"approve\", id: \"%s\")",
 				input.ID, input.ID, input.ID)
 		}
 		if !doc.QualityEvaluation.Pass {
 			var sb strings.Builder
-			fmt.Fprintf(&sb, "Cannot approve document %s: quality evaluation did not pass (pass=false, overall_score=%g).\n\nDimension scores:\n", input.ID, doc.QualityEvaluation.OverallScore)
+			fmt.Fprintf(&sb, "cannot approve document %s: quality evaluation did not pass (pass=false, overall_score=%g).\n\nDimension scores:\n", input.ID, doc.QualityEvaluation.OverallScore)
 			dimKeys := make([]string, 0, len(doc.QualityEvaluation.Dimensions))
 			for k := range doc.QualityEvaluation.Dimensions {
 				dimKeys = append(dimKeys, k)
@@ -457,7 +457,7 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 		}
 		if doc.QualityEvaluation.OverallScore < threshold {
 			return DocumentResult{}, fmt.Errorf(
-				"Cannot approve document %s: quality score %g is below threshold %g.\n\nTo resolve, re-evaluate and re-attach: doc(action: \"evaluate\", id: \"%s\", evaluation: {...})",
+				"cannot approve document %s: quality score %g is below threshold %g.\n\nTo resolve, re-evaluate and re-attach: doc(action: \"evaluate\", id: \"%s\", evaluation: {...})",
 				input.ID, doc.QualityEvaluation.OverallScore, threshold, input.ID)
 		}
 	}
