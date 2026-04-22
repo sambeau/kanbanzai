@@ -238,8 +238,8 @@ cross_doc_links:
     - target_path: .agents/skills/kanbanzai-*/SKILL.md
       link_text: .agents/skills/kanbanzai-*/SKILL.md
       section_path: 1.3.7
-access_count: 1
-last_accessed_at: 2026-04-22T18:38:14.442666Z
+access_count: 2
+last_accessed_at: 2026-04-22T20:20:01.802997Z
 classified: true
 classified_at: 2026-04-22T18:52:30.176717Z
 classified_by: claude-sonnet-4-6

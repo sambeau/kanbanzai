@@ -294,8 +294,15 @@ conventional_roles:
     - section_path: "1.4"
       role: decision
       confidence: high
-access_count: 2
-last_accessed_at: 2026-04-22T18:04:47.332258Z
+access_count: 6
+last_accessed_at: 2026-04-22T20:21:00.061245Z
+section_access:
+    1.2.1:
+        access_count: 1
+        last_accessed_at: 2026-04-22T20:20:59.474573Z
+    1.2.1.3:
+        access_count: 1
+        last_accessed_at: 2026-04-22T20:21:00.061245Z
 classified: true
 classified_at: 2026-04-22T18:08:53.58975Z
 classified_by: claude-sonnet-4-6

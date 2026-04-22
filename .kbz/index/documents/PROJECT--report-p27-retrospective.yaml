@@ -1,0 +1,196 @@
+document_id: PROJECT/report-p27-retrospective
+document_path: work/retro/p27-retrospective.md
+content_hash: e7b87106a796869372d54507a1a808d879f42a3a964b16f6f18754f7adba85c1
+indexed_at: 2026-04-22T20:09:57.819059Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Retrospective: P27 — Document Intelligence Adoption'
+      byte_offset: 0
+      byte_count: 9413
+      word_count: 1403
+      content_hash: e7b87106a796869372d54507a1a808d879f42a3a964b16f6f18754f7adba85c1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Executive Summary
+          byte_offset: 263
+          byte_count: 721
+          word_count: 107
+          content_hash: 6f980bdaae50a8b9f439db491b535dc31c714298fe57bf045db47ddddeb318e3
+        - path: "1.2"
+          level: 2
+          title: 'Issue 1: Plan lifecycle gap — `proposed` → `active` (Significant)'
+          byte_offset: 984
+          byte_count: 1689
+          word_count: 253
+          content_hash: e179e78944da2182b8fbea8443cd6cf5bde84ddcb59529f19393e59039e299d3
+          children:
+            - path: 1.2.1
+              level: 3
+              title: What happened
+              byte_offset: 1058
+              byte_count: 622
+              word_count: 93
+              content_hash: 84f7746844e2cbc37d850a3792572dc5fa19f251e68fcd683d0f169e1ab60af3
+            - path: 1.2.2
+              level: 3
+              title: Root cause
+              byte_offset: 1680
+              byte_count: 255
+              word_count: 39
+              content_hash: 748f7b1fd9d41d4b2f5d46f006c300a4feb0b90dc443825af97b42b183051928
+            - path: 1.2.3
+              level: 3
+              title: Consequences
+              byte_offset: 1935
+              byte_count: 416
+              word_count: 68
+              content_hash: 0730f141b3e74cdc0d272618222edfc6af83f4f58196461a809f863034681837
+            - path: 1.2.4
+              level: 3
+              title: Recommendation
+              byte_offset: 2351
+              byte_count: 322
+              word_count: 42
+              content_hash: d93155d0c19156caa41ccd762d1eabb6386f0594c89dbe427fd9ec82414ea64a
+        - path: "1.3"
+          level: 2
+          title: 'Issue 2: `decompose` creates tasks but no dev-plan document (Significant)'
+          byte_offset: 2673
+          byte_count: 1750
+          word_count: 261
+          content_hash: 626edfe552de329536d42961a98cb0588b34db6b22ce7adff6970cef8d9035d6
+          children:
+            - path: 1.3.1
+              level: 3
+              title: What happened
+              byte_offset: 2751
+              byte_count: 449
+              word_count: 66
+              content_hash: 53fa723e547d2b8600b283002acfc5aea670f5ef445a5bd0a1d9d1f511ed65aa
+            - path: 1.3.2
+              level: 3
+              title: Root cause
+              byte_offset: 3200
+              byte_count: 300
+              word_count: 44
+              content_hash: a13d638b7f7720f41b7a43d27056102d0f1752e06da0e7214b0b2511721ca60f
+            - path: 1.3.3
+              level: 3
+              title: Consequences
+              byte_offset: 3500
+              byte_count: 369
+              word_count: 60
+              content_hash: fd3ff8ad93460b6bc23cd8ddeb9f1881b5bbb4ffeeb92884ebfa5eed507088cf
+            - path: 1.3.4
+              level: 3
+              title: Recommendation
+              byte_offset: 3869
+              byte_count: 554
+              word_count: 80
+              content_hash: e112e7969f079e1841cdd45f9e7a2dde4a4e5d0a9a6f12c0a97dff378e39b02b
+        - path: "1.4"
+          level: 2
+          title: 'Issue 3: `worktree(action: create)` times out under large worktree counts (Significant)'
+          byte_offset: 4423
+          byte_count: 1672
+          word_count: 250
+          content_hash: da0d2b00cf99dee560ae05ad0e64893b29f6064725637c91a7e13139b4f425bf
+          children:
+            - path: 1.4.1
+              level: 3
+              title: What happened
+              byte_offset: 4515
+              byte_count: 594
+              word_count: 93
+              content_hash: beb5ed6411b6f82eed9f1624f72d957a8f5b227c685c56a7b361f9c88ffbb1a5
+            - path: 1.4.2
+              level: 3
+              title: Root cause
+              byte_offset: 5109
+              byte_count: 261
+              word_count: 37
+              content_hash: 702ab2fbd4d9d97e919ce7c0f48aa55878371eb3a4e740b100fa3bc9cff4c256
+            - path: 1.4.3
+              level: 3
+              title: Consequences
+              byte_offset: 5370
+              byte_count: 322
+              word_count: 52
+              content_hash: 16c4a655847bdb80d1fe6a2349a9b09d06a23e4400e8c7f53fb3ddc7f7c33e34
+            - path: 1.4.4
+              level: 3
+              title: Recommendation
+              byte_offset: 5692
+              byte_count: 403
+              word_count: 56
+              content_hash: b979960639e0b28b880e1fc7866b9c48b99f4afd7243a97bedbacbd39b4c624b
+        - path: "1.5"
+          level: 2
+          title: 'Issue 4: "Ready to develop" handoff omits invisible setup steps (Moderate)'
+          byte_offset: 6095
+          byte_count: 2125
+          word_count: 322
+          content_hash: 64fa5ae8fe43c9c6234506f5f91fd7fb59f642c7d17994d730d895c5eaaa0b6c
+          children:
+            - path: 1.5.1
+              level: 3
+              title: What happened
+              byte_offset: 6174
+              byte_count: 746
+              word_count: 117
+              content_hash: 835232b9a428307af92f85f4f7a837da20d54d33593c12e8947cae5f6c501ff4
+            - path: 1.5.2
+              level: 3
+              title: Root cause
+              byte_offset: 6920
+              byte_count: 259
+              word_count: 44
+              content_hash: c4993af79d86f69c58097a9fbb0ba1ec66f8e7a23ecd27c81ce967d8c45188ac
+            - path: 1.5.3
+              level: 3
+              title: Consequences
+              byte_offset: 7179
+              byte_count: 420
+              word_count: 62
+              content_hash: c51f223d3c96898c46047a2224ba2bb535855e6d238d00aa37931a2f089a3a40
+            - path: 1.5.4
+              level: 3
+              title: Recommendation
+              byte_offset: 7599
+              byte_count: 621
+              word_count: 87
+              content_hash: 4cf238b7acd53908ba9ffbccfc57bf369f087028af8b0e6903b0a96fb399fb52
+        - path: "1.6"
+          level: 2
+          title: What Worked Well
+          byte_offset: 8220
+          byte_count: 386
+          word_count: 55
+          content_hash: 859ab88a78d8f3a933e22149409d86e5b363ee64f74104e142328a05c3bb94a8
+        - path: "1.7"
+          level: 2
+          title: Recommendations for Next Iteration
+          byte_offset: 8606
+          byte_count: 807
+          word_count: 125
+          content_hash: 7ce938d8986cfafe134bf901f472c27a92f26ae99857a97101ec03bb4c285f3f
+entity_refs:
+    - entity_id: P27-doc-intel-adoption
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 67
+cross_doc_links:
+    - target_path: SKILL.md
+      link_text: " SKILL.md that explicitly\ncovers the step-through-designing workaround and explains why the override is safe in this context.\n\n---\n\n## Issue 2: "
+      section_path: 1.2.4
+    - target_path: SKILL.md
+      link_text: |4
+         SKILL.md and
+      section_path: 1.5.4
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

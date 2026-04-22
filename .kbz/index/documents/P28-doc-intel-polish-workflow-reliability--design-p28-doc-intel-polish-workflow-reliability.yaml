@@ -1,0 +1,213 @@
+document_id: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability
+document_path: work/design/p28-doc-intel-polish-workflow-reliability.md
+content_hash: 4fd1716e79404947e4260ef1f3fba314fb81e286427f7c9cc69993667853ec9b
+indexed_at: 2026-04-22T20:25:53.37127Z
+sections:
+    - path: "1"
+      level: 2
+      title: Related Work
+      byte_offset: 390
+      byte_count: 2717
+      word_count: 358
+      content_hash: f239202945e207f6ad663e48279d4266726f33244d8c93e05dfe1329a27d1ee2
+      children:
+        - path: "1.1"
+          level: 3
+          title: Prior documents consulted
+          byte_offset: 407
+          byte_count: 1264
+          word_count: 155
+          content_hash: 1cfbca3d963adc5d38cafe6bb9033ca9760416eedb8768f28ce40f27ab4a7fde
+        - path: "1.2"
+          level: 3
+          title: Constraining decisions
+          byte_offset: 1671
+          byte_count: 1142
+          word_count: 160
+          content_hash: 88507c0f4c81fe17b40d8b3f521eae9a894859109727993cfc2040142a9e8fa7
+        - path: "1.3"
+          level: 3
+          title: Open questions from prior work
+          byte_offset: 2813
+          byte_count: 294
+          word_count: 40
+          content_hash: e4c7d6b5cfb4bdf23480dc0a881044ead4bf879c520f91007a6a4e9f7f4d7478
+    - path: "2"
+      level: 2
+      title: Problem and Motivation
+      byte_offset: 3107
+      byte_count: 2988
+      word_count: 421
+      content_hash: 4225cec7fa4e825e79f6fd6d4c8f51e0d14050567c9ce459507bcf2e63bd0ad6
+    - path: "3"
+      level: 2
+      title: Design
+      byte_offset: 6095
+      byte_count: 8262
+      word_count: 1135
+      content_hash: 8fd497df210f14492829774ee148666dacf82cd775ca657f268129fb1bd1e4a4
+      children:
+        - path: "3.1"
+          level: 3
+          title: Sprint 0 — Skill documentation updates
+          byte_offset: 6232
+          byte_count: 2054
+          word_count: 289
+          content_hash: 1c5dbadbebbecdb573dbcde2a18299125a7b9087e2d141d421c4f9692808537b
+        - path: "3.2"
+          level: 3
+          title: Sprint 1 — Doc-intel tool enhancements
+          byte_offset: 8286
+          byte_count: 3272
+          word_count: 424
+          content_hash: ea646f981e3d7126e1b68aa0f594c6e76f4e6cc93ee2f330d4002936ee5cc0a6
+        - path: "3.3"
+          level: 3
+          title: Sprint 2 — Workflow infrastructure fixes
+          byte_offset: 11558
+          byte_count: 2799
+          word_count: 402
+          content_hash: 067ae839fc7d51926ff982db653f997f207393bd807a494cbf7eb6a3f2c8e4a0
+    - path: "4"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 14357
+      byte_count: 2579
+      word_count: 380
+      content_hash: 8572a6bc3dc7393f0becf3956c3b4c224a27d3bf5ccf10098f767042ad1c4da3
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Alternative A: Merge Sprint 0 into Sprints 1 and 2'
+          byte_offset: 14385
+          byte_count: 473
+          word_count: 72
+          content_hash: 1530fae8951556495282cdf6a2cd026b337bc16c00e5e50ec4f49624411e2a9f
+        - path: "4.2"
+          level: 3
+          title: 'Alternative B: Fix the plan lifecycle gap with documentation only'
+          byte_offset: 14858
+          byte_count: 559
+          word_count: 79
+          content_hash: f811b0d7ab1fe8f2fc32f9e4bc985887cb49eca41ae3be3faf494820de33669d
+        - path: "4.3"
+          level: 3
+          title: 'Alternative C: Add a `decomposed: true` feature flag instead of a skeleton dev-plan'
+          byte_offset: 15417
+          byte_count: 546
+          word_count: 84
+          content_hash: 7cdd06fdb665ef03fab9b53b918bdb8aeb59bf98643daa9df20ad0e2ef57e39c
+        - path: "4.4"
+          level: 3
+          title: 'Alternative D: Make the `pending` response include full section outlines'
+          byte_offset: 15963
+          byte_count: 472
+          word_count: 72
+          content_hash: ece274a7dc70e31c61b4d4de4099d1d19d797d041cefaa26eb2b5ab7b59f0c60
+        - path: "4.5"
+          level: 3
+          title: 'Alternative E: Do all doc-intel enhancements in one feature'
+          byte_offset: 16435
+          byte_count: 501
+          word_count: 70
+          content_hash: 3fb18c4fe2148e67eab02279a171f9c2e13901404acf56b5cb4c4bab54f18d80
+    - path: "5"
+      level: 2
+      title: Decisions
+      byte_offset: 16936
+      byte_count: 4030
+      word_count: 575
+      content_hash: 78bb3299f3910461334a73d40801ccea8b50797ca7e551c18e7f1cf006d9b35d
+    - path: "6"
+      level: 2
+      title: Dependencies
+      byte_offset: 20966
+      byte_count: 1214
+      word_count: 171
+      content_hash: e68dc06e9b2aa75295851b6dab55bbaf63ad16ff790ccc98b69ffec53015a1e7
+entity_refs:
+    - entity_id: FEAT-01KN83QN0VAFG
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 772
+    - entity_id: FEAT-01KPNNYYXQSYW
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1075
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1362
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 2874
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: "3.1"
+      byte_offset: 7136
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: "6"
+      byte_offset: 21780
+    - entity_id: P28-doc-intel-polish-workflow-reliability
+      entity_type: plan
+      section_path: ""
+      byte_offset: 331
+cross_doc_links:
+    - target_path: kanbanzai-getting-started/SKILL.md
+      link_text: kanbanzai-getting-started/SKILL.md
+      section_path: "1.1"
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: "3.1"
+    - target_path: kanbanzai-getting-started/SKILL.md
+      link_text: kanbanzai-getting-started/SKILL.md
+      section_path: "3.1"
+    - target_path: kanbanzai-workflow/SKILL.md
+      link_text: kanbanzai-workflow/SKILL.md
+      section_path: "3.1"
+    - target_path: work/dev-plan/<feature-slug>-decomposed.md
+      link_text: work/dev-plan/<feature-slug>-decomposed.md
+      section_path: "3.3"
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: "6"
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: "6"
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: "6"
+conventional_roles:
+    - section_path: "1.2"
+      role: decision
+      confidence: high
+    - section_path: "1.3"
+      role: question
+      confidence: high
+    - section_path: "4"
+      role: alternative
+      confidence: high
+    - section_path: "4.1"
+      role: alternative
+      confidence: high
+    - section_path: "4.2"
+      role: alternative
+      confidence: high
+    - section_path: "4.3"
+      role: alternative
+      confidence: high
+    - section_path: "4.4"
+      role: alternative
+      confidence: high
+    - section_path: "4.5"
+      role: alternative
+      confidence: high
+    - section_path: "5"
+      role: decision
+      confidence: high
+classified: false

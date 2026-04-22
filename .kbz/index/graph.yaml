@@ -1,4 +1,4 @@
-updated_at: 2026-04-22T19:14:18.933955Z
+updated_at: 2026-04-22T20:59:57.619629Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -69733,5 +69733,1170 @@ edges:
     - from: PROJECT/report-doc-intel-layer3-classification-pilot#1.3.2
       from_type: section
       to: .agents/skills/kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-p27-retrospective
+      from_type: document
+      to: PROJECT/report-p27-retrospective#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.2
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.2
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.2
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.2
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.5
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.5
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.5
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1.5
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-p27-retrospective#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-p27-retrospective#1
+      from_type: section
+      to: P27-doc-intel-adoption
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-p27-retrospective#1.2.4
+      from_type: section
+      to: SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-p27-retrospective#1.5.4
+      from_type: section
+      to: SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability
+      from_type: document
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability
+      from_type: document
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability
+      from_type: document
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#3
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#3
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#3
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability
+      from_type: document
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#4
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#4
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#4
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#4
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#4
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability
+      from_type: document
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability
+      from_type: document
+      to: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1.1
+      from_type: section
+      to: FEAT-01KN83QN0VAFG
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1.1
+      from_type: section
+      to: FEAT-01KPNNYYXQSYW
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1.1
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1.3
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#3.1
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#6
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1.1
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#1.1
+      from_type: section
+      to: kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#3.1
+      from_type: section
+      to: .agents/skills/kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#3.1
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#3.1
+      from_type: section
+      to: kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#3.3
+      from_type: section
+      to: work/dev-plan/<feature-slug>-decomposed.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#6
+      from_type: section
+      to: .agents/skills/kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#6
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability#6
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment
+      from_type: document
+      to: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1.2
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1.2
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment#1.1
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration
+      from_type: document
+      to: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1.2
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1.2
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1.1
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1.2.1
+      from_type: section
+      to: work/dev-plan/<feature-slug>-decomposed.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration#1.4
+      from_type: section
+      to: work/dev-plan/<feature-slug>-decomposed.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow
+      from_type: document
+      to: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1.2
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1.2
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout
+      from_type: document
+      to: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1.2
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1.2
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout#1.1
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates
+      from_type: document
+      to: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1
+      from_type: section
+      to: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1
+      from_type: section
+      to: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2
+      from_type: section
+      to: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2
+      from_type: section
+      to: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1
+      from_type: section
+      to: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1
+      from_type: section
+      to: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1
+      from_type: section
+      to: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.1
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2.2
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.3
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.4
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.5
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.1
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.1
+      from_type: section
+      to: kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.1
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.1
+      from_type: section
+      to: kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2.1
+      from_type: section
+      to: kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2.1
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2.1
+      from_type: section
+      to: kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2.2
+      from_type: section
+      to: .agents/skills/kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2.2
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2.2
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.2.2
+      from_type: section
+      to: kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.3
+      from_type: section
+      to: kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.4
+      from_type: section
+      to: kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.4
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.4
+      from_type: section
+      to: kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.5
+      from_type: section
+      to: kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates#1.5
+      from_type: section
+      to: kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active
+      from_type: document
+      to: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1.2
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1.2
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1.1
+      from_type: section
+      to: FEAT-01KPVDDYN855F
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active#1.1
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates
+      from_type: document
+      to: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1
+      from_type: section
+      to: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1
+      from_type: section
+      to: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2
+      from_type: section
+      to: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2
+      from_type: section
+      to: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2
+      from_type: section
+      to: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2
+      from_type: section
+      to: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1
+      from_type: section
+      to: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1
+      from_type: section
+      to: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1
+      from_type: section
+      to: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1
+      from_type: section
+      to: FEAT-01KPVDDYN855F
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.1
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2.1
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2.4
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.4
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.5
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.1
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.1
+      from_type: section
+      to: work/spec/p28-skill-doc-updates.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.1
+      from_type: section
+      to: .agents/skills/kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.1
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.1
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2.1
+      from_type: section
+      to: .agents/skills/kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2.2
+      from_type: section
+      to: .agents/skills/kanbanzai-getting-started/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates#1.2.3
+      from_type: section
+      to: .agents/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment
+      from_type: document
+      to: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.3
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.3
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.3
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.3
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.2
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment#1.2
+      from_type: section
+      to: work/spec/p28-doc-intel-guide-enrichment.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow
+      from_type: document
+      to: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.3
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.3
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.3
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.3
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.2
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow#1.2
+      from_type: section
+      to: work/spec/p28-doc-intel-register-workflow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active
+      from_type: document
+      to: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.2
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.2
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.2
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.2
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active#1.1
+      from_type: section
+      to: work/spec/p28-plan-lifecycle-proposed-active.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration
+      from_type: document
+      to: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.2
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.2
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.2
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.2
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#
+      from_type: section
+      to: FEAT-01KPVDDYX73WB
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.1
+      from_type: section
+      to: work/dev-plan/<feature-slug>-decomposed.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.1
+      from_type: section
+      to: work/spec/p28-decompose-dev-plan-registration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.2.2
+      from_type: section
+      to: work/dev-plan/<feature-slug>-decomposed.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.2.4
+      from_type: section
+      to: work/dev-plan/<slug>-decomposed.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.4
+      from_type: section
+      to: -decomposed.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration#1.5
+      from_type: section
+      to: work/dev-plan/<slug>-decomposed.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout
+      from_type: document
+      to: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.2
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.2
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.2
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.2
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout#1.1
+      from_type: section
+      to: work/spec/p28-worktree-creation-timeout.md
       to_type: document
       edge_type: LINKS_TO

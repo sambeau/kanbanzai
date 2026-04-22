@@ -1,10 +1,17 @@
 | Field  | Value                                                                 |
 |--------|-----------------------------------------------------------------------|
 | Date   | 2026-04-22                                                            |
-| Status | Draft                                                                 |
+| Status | approved |
 | Author | spec-author                                                           |
 
 # Specification: Doc-Intel Guide Enrichment
+
+## Overview
+
+This specification covers three additive enrichments to the `doc_intel` tool: adding a
+`section_count` field to `pending` response entries, and adding `taxonomy` and
+`suggested_classifications` blocks to `guide` responses, corresponding to §5.1, §5.2, and
+§5.3 of the P28 design document.
 
 ## Problem Statement
 
@@ -22,6 +29,8 @@ The current `doc_intel` tool returns insufficient metadata in two key responses:
   pre-populated classification hints, requiring agents to infer roles from scratch for every
   section.
 
+## Scope
+
 **In scope:**
 - Adding `section_count` to each entry in the `pending` response.
 - Adding a `taxonomy` block to the `guide` response.
@@ -36,9 +45,7 @@ The current `doc_intel` tool returns insufficient metadata in two key responses:
 
 ---
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 **REQ-001 — `pending` response includes `section_count`**
 `doc_intel(action: "pending")` must return a `section_count` integer field on each document
@@ -101,7 +108,7 @@ The existing fields `id`, `outline`, `entity_refs`, `extraction_hints`, and `con
 must remain present and unchanged in the `guide` response. No existing field may be
 renamed, removed, or have its type changed.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 **REQ-NF-001 — `pending` response latency overhead**
 The addition of `section_count` must not increase the p95 latency of `doc_intel(action:

@@ -1,7 +1,30 @@
+## Overview
+
+P28 addresses ten specific gaps surfaced by two post-P27 evidence sources: the doc-intel Layer 3 classification pilot (339 documents, April 2026) and the P27 implementation retrospective. The gaps span three layers — skill documentation, doc-intel tool responses, and workflow infrastructure — and are addressed in three sequential sprints ordered by risk and dependency.
+
+## Goals and Non-Goals
+
+**Goals**
+- Document the concise-output instruction and classify atomicity guarantee in the classification skill
+- Add a "Resume plan" checklist to the getting-started and workflow skills
+- Enrich `doc_intel guide` and `pending` responses with taxonomy, section counts, and suggested classifications
+- Reduce the `doc register → classify` workflow from three tool calls to two
+- Audit MCP parameter structs for missing `json:` tags
+- Add a direct `proposed → active` plan lifecycle transition (conditioned on in-flight features)
+- Make `decompose(action: apply)` register an auto-approved skeleton dev-plan document
+- Fix `worktree(action: create)` timeouts under large worktree counts
+
+**Non-Goals**
+- Changes to the Layer 3 classification data model or storage format
+- Server-side enforcement of classification after registration (classification remains a convention)
+- Automatic or server-triggered lifecycle transitions based on feature state
+- New MCP tool actions beyond the changes described above
+- Changes to any skill file not listed in the Dependencies section
+
 | Field  | Value                                              |
 |--------|----------------------------------------------------|
 | Date   | 2026-04-22                                         |
-| Status | Draft                                              |
+| Status | approved |
 | Author | architect (Claude Sonnet 4.6)                      |
 | Plan   | P28-doc-intel-polish-workflow-reliability          |
 

@@ -1,0 +1,94 @@
+document_id: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active
+document_path: work/dev-plan/p28-plan-lifecycle-proposed-active.md
+content_hash: 4fd62d9bba0e1d384a3fcca3bc9b5fb7f2aecb206b7a2e0b3b12e23a98254f22
+indexed_at: 2026-04-22T20:59:52.048118Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Plan Lifecycle Proposed-to-Active Gap'
+      byte_offset: 0
+      byte_count: 8655
+      word_count: 1251
+      content_hash: 4fd62d9bba0e1d384a3fcca3bc9b5fb7f2aecb206b7a2e0b3b12e23a98254f22
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 225
+          byte_count: 923
+          word_count: 128
+          content_hash: 611b6ec1539f2c44785acf43f3df1b633e481f03286b1c2dccc3fa5fc7662e92
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1148
+          byte_count: 4725
+          word_count: 644
+          content_hash: 9f68484541b053355345755d7fc93274e890c1a3d7e604b9ddabbd86ba253497
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Add `proposed → active` transition and precondition check'
+              byte_offset: 1167
+              byte_count: 1047
+              word_count: 143
+              content_hash: 1e3c5951f02a26bf095fc80d4a6cb05a5f6552435f9adb1ddea343296a982b27
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Rejection error and system-generated override record'
+              byte_offset: 2214
+              byte_count: 1214
+              word_count: 167
+              content_hash: ce507c0f486e5ddb4013acd0a599adb256ab50fab9181842365ce31d6e33a05e
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Unit tests for transition, rejection, and override record'
+              byte_offset: 3428
+              byte_count: 1542
+              word_count: 206
+              content_hash: 4dffc362dfa3dd6d0a39d63a3625804bf72b8f98cb25f855eb4d22703d3c8777
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Integration tests and latency verification'
+              byte_offset: 4970
+              byte_count: 903
+              word_count: 125
+              content_hash: d3c53dcc6e438ce6116392bb6d488385014d17410642811d14148195ae48ecc8
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 5873
+          byte_count: 353
+          word_count: 48
+          content_hash: 520421176de282a5241ebad8bd2458f840e33a31b5bf6af1c423975d74b8d832
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 6226
+          byte_count: 1143
+          word_count: 179
+          content_hash: 5631ee291bd71375972f126c6364246a2569398822ca36d9e4b8b46df2fd53ab
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 7369
+          byte_count: 1286
+          word_count: 230
+          content_hash: d50570646eeee8951ede6f5828672d139eabbe4f67f0223156d7217e0cdca31c
+entity_refs:
+    - entity_id: FEAT-01KPVDDYVETV5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 64
+cross_doc_links:
+    - target_path: work/spec/p28-plan-lifecycle-proposed-active.md
+      link_text: work/spec/p28-plan-lifecycle-proposed-active.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+classified: false

@@ -1,10 +1,18 @@
 | Field  | Value       |
 |--------|-------------|
 | Date   | 2026-04-22  |
-| Status | Draft       |
+| Status | approved |
 | Author | spec-author |
 
 # Specification: Skill Documentation Updates
+
+## Overview
+
+This specification defines the markdown-only updates to three `.agents/skills/` files required
+by Sprint 0 of the P28 plan (doc-intel polish and workflow reliability). It covers a
+concise-output instruction and atomicity guarantee for the `kanbanzai-documents` classification
+skill, and new "Resuming an in-flight plan" guidance in the `kanbanzai-getting-started` and
+`kanbanzai-workflow` skills.
 
 ## Problem Statement
 
@@ -15,6 +23,8 @@ This specification covers the three skill-file updates required by Sprint 0 of t
 
 **Parent design document:**
 `P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability`
+
+## Scope
 
 **In scope:**
 
@@ -33,9 +43,7 @@ This specification covers the three skill-file updates required by Sprint 0 of t
 
 ---
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 **REQ-001 — Concise-output instruction in classification skill**
 
@@ -94,7 +102,7 @@ exactly this order:
 Steps 2 and 3 of the resume-plan checklist (REQ-005) MUST be labelled as transitional with a
 note that each step becomes unnecessary once the corresponding P28 Sprint 2 fixes are merged.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 **REQ-NF-001 — File scope**
 

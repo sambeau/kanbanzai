@@ -1,13 +1,20 @@
 | Field  | Value                                                                 |
 |--------|-----------------------------------------------------------------------|
 | Date   | 2025-07-14                                                            |
-| Status | Draft                                                                 |
+| Status | approved |
 | Author | spec-author                                                           |
 
 # Specification: Doc-Intel Register Workflow Friction
 
 **Feature:** FEAT-01KPVDDYSEK8P  
 **Design reference:** P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability
+
+## Overview
+
+This specification covers two friction points in the doc-intel registration and classification
+workflow: enhancing the `classification_nudge` field returned by `doc(action: "register")` to
+include `content_hash` and section outline (reducing a three-call workflow to two), and auditing
+and fixing missing `json:` tags on MCP parameter structs to prevent silent field-mapping failures.
 
 ## Problem Statement
 
@@ -29,6 +36,8 @@ tags, causing silent field-mapping failures when the struct was decoded via
 `req.RequireString` + `json.Unmarshal`. The same pattern may exist in other parameter
 structs. A targeted audit and a companion regression test are needed.
 
+## Scope
+
 **In scope:**
 - Enhancing the `classification_nudge` field returned by `doc(action: "register")` (single
   and batch) to a structured object.
@@ -43,9 +52,7 @@ structs. A targeted audit and a companion regression test are needed.
 
 ---
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 **REQ-001 — Structured `classification_nudge` object.**  
 `doc(action: "register")` MUST return `classification_nudge` as a structured object
@@ -92,7 +99,7 @@ A Go test MUST assert, at runtime, that every exported field of each struct iden
 REQ-007 has a non-empty `json:` struct tag. The test MUST fail if a new exported field is
 added to any of those structs without a `json:` tag.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 **REQ-NF-001 — Registration response latency.**  
 The p99 latency of `doc(action: "register")` for a document with up to 50 sections MUST

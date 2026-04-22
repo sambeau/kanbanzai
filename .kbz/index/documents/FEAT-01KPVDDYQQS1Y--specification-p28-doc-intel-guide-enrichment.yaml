@@ -1,0 +1,85 @@
+document_id: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment
+document_path: work/spec/p28-doc-intel-guide-enrichment.md
+content_hash: 1f5b525c6823ed65710f7ae76f951e57a6d3f54ed8e6777cc7aacc5d99dc11d6
+indexed_at: 2026-04-22T20:36:25.244582Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Doc-Intel Guide Enrichment'
+      byte_offset: 416
+      byte_count: 11930
+      word_count: 1618
+      content_hash: 501ab2e0dd77d28a0b070351060ac840c255645483cb551213864383175cfddb
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 461
+          byte_count: 1408
+          word_count: 188
+          content_hash: 2742b05068a40c52d62f5ede9bd0f51a47b0105cb8073f7800646794206f794d
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 1869
+          byte_count: 4566
+          word_count: 623
+          content_hash: 85698309b63889e91a5c8bb75d4de3441ae64c1e172564b988e048a62ff27748
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 1886
+              byte_count: 3516
+              word_count: 473
+              content_hash: 131f10d5a44981998dc60808312ed998263cbc75b8e8c437237344576a3d9bc0
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 5402
+              byte_count: 1033
+              word_count: 148
+              content_hash: bb1ac875d64d01abcce79af704d367a95e7d66d72b208abe5cc693f4f8472760
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 6435
+          byte_count: 825
+          word_count: 115
+          content_hash: 7c42b65b8a4c2dba686069d0c2cec0d0b0202e8f1b87928d9f3389d88af85371
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 7260
+          byte_count: 3095
+          word_count: 407
+          content_hash: 604aee685563ea19b4ab5bbcd83b20cb7e46612a4707fdc1b720de92e9ad1ad5
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 10355
+          byte_count: 1991
+          word_count: 280
+          content_hash: 52b3f8f37a89f7eff9cb2a37e6c9967fc10b93f55ec2017e1da4c437b02b8edc
+entity_refs:
+    - entity_id: P28-doc-intel-polish-workflow-reliability
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 658
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

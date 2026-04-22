@@ -1,10 +1,17 @@
 | Field  | Value                                              |
 |--------|----------------------------------------------------|
 | Date   | 2025-07-14                                         |
-| Status | Draft                                              |
+| Status | approved |
 | Author | spec-author                                        |
 
 # Specification: Worktree Creation Timeout Under Load
+
+## Overview
+
+This specification covers the reliability failure in `worktree(action: create)` when a
+repository has approximately 34 or more existing worktrees, defining requirements for
+root-cause investigation, exponential-backoff retry logic, improved error messaging on
+exhaustion, and tool-description updates to document the `terminal` fallback procedure.
 
 ## Problem Statement
 
@@ -16,6 +23,8 @@ multiple features require worktrees before agent dispatch.
 
 **Parent design document:** `P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability`
 (§Sprint 2, Issue 3).
+
+## Scope
 
 **In scope:**
 - Root-cause investigation and targeted fix for the `worktree(action: create)` timeout.
@@ -32,9 +41,7 @@ multiple features require worktrees before agent dispatch.
 
 ---
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 **REQ-001** — Root-cause investigation  
 The implementation must profile and identify which of the following is the primary cause of the
@@ -68,7 +75,7 @@ The source file(s) where the root-cause fix is applied must include a code comme
 which root cause was identified and why the chosen fix addresses it. The comment must be present
 adjacent to the fix, not in a separate documentation file.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 **REQ-NF-001** — Total retry budget  
 The total elapsed time for `worktree(action: create)` across all retry attempts must not exceed

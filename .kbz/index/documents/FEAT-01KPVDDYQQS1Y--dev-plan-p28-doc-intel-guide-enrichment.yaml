@@ -1,0 +1,108 @@
+document_id: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment
+document_path: work/dev-plan/p28-doc-intel-guide-enrichment.md
+content_hash: add507f79fa9dc0a6e9033a5f2d7eefed7c5a249bd3a2aa90b4e92abdd2d04c1
+indexed_at: 2026-04-22T20:55:27.803752Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Doc-Intel Guide Enrichment'
+      byte_offset: 0
+      byte_count: 8291
+      word_count: 1114
+      content_hash: add507f79fa9dc0a6e9033a5f2d7eefed7c5a249bd3a2aa90b4e92abdd2d04c1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 210
+          byte_count: 263
+          word_count: 32
+          content_hash: ff5f2ee8b18d8d8bc0e362add4093318c35ee4d8ea7191c4ea9f2df40b01fb9c
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 473
+          byte_count: 964
+          word_count: 117
+          content_hash: 64ccf4ba97c8ba051ec1861c4ec85a7ad5fd6d43e824948970ba6e9c1bdafc66
+        - path: "1.3"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1437
+          byte_count: 3885
+          word_count: 510
+          content_hash: 07289f9c33001ffd15e0aca143c9258d6fea60bfb4c7845bd9721ca9b4171458
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Task 1: Add `section_count` to `pending` response'
+              byte_offset: 1456
+              byte_count: 588
+              word_count: 86
+              content_hash: 613f45dbe59575d223473505b80d8225de269195959a7867a6f196b0d160a78a
+            - path: 1.3.2
+              level: 3
+              title: 'Task 2: Add `taxonomy` block to `guide` response'
+              byte_offset: 2044
+              byte_count: 699
+              word_count: 92
+              content_hash: 1c276d9911b87c6b0e73b7f84959489d2dfa4f41d3c6659ddf4daf9986a929de
+            - path: 1.3.3
+              level: 3
+              title: 'Task 3: Add `suggested_classifications` to `guide` response'
+              byte_offset: 2743
+              byte_count: 909
+              word_count: 117
+              content_hash: a78d3346dfbe70f34df8077550a19024bde03424ccdd636558a04692dc2823e8
+            - path: 1.3.4
+              level: 3
+              title: 'Task 4: Tests for all three enrichments'
+              byte_offset: 3652
+              byte_count: 1670
+              word_count: 212
+              content_hash: 04ddb10c9128c0bb8f5ad0f8de2050f1d8fe58f5ae1cadfae3d33ad4babf2a68
+        - path: "1.4"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 5322
+          byte_count: 561
+          word_count: 62
+          content_hash: ceb6d2db25f7db4874d3abfef50bfa290bb8bddf9d3d3786549654bbf1408fbf
+        - path: "1.5"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 5883
+          byte_count: 1168
+          word_count: 173
+          content_hash: c753361c43dee91f3e22d3a84e81d4f959fb68abe8c1e3b8df68cc21f4643296
+        - path: "1.6"
+          level: 2
+          title: Verification Approach
+          byte_offset: 7051
+          byte_count: 1240
+          word_count: 199
+          content_hash: ee18e678b8ff82625502b0128a6e1aced8d2a97e82be62f2ca2a3978df1909e7
+entity_refs:
+    - entity_id: FEAT-01KPVDDYQQS1Y
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 53
+    - entity_id: P28-doc-intel-polish-workflow-reliability
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 556
+cross_doc_links:
+    - target_path: work/spec/p28-doc-intel-guide-enrichment.md
+      link_text: work/spec/p28-doc-intel-guide-enrichment.md
+      section_path: "1.2"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: risk
+      confidence: high
+classified: false

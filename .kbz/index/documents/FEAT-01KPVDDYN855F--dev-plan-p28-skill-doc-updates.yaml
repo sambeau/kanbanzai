@@ -1,0 +1,136 @@
+document_id: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates
+document_path: work/dev-plan/p28-skill-doc-updates.md
+content_hash: 40ab7cd81c646607845ff5a06ca2f58a9fae9552ba744f092436cd3908004aee
+indexed_at: 2026-04-22T20:55:26.460218Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Skill Documentation Updates'
+      byte_offset: 0
+      byte_count: 7524
+      word_count: 1000
+      content_hash: 40ab7cd81c646607845ff5a06ca2f58a9fae9552ba744f092436cd3908004aee
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 202
+          byte_count: 973
+          word_count: 105
+          content_hash: e4212b415f79880fd65b09d73db5768b919b47346f699329e2d6524b5a3a4240
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1175
+          byte_count: 4093
+          word_count: 530
+          content_hash: 490eb2fca660da5a3158e3e94f09886e723de876b35849f1852dfc901d1f4b32
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Add concise-output instruction and atomicity guarantee to kanbanzai-documents SKILL.md'
+              byte_offset: 1194
+              byte_count: 1223
+              word_count: 145
+              content_hash: 7586d0c69f86edeffecc7050db6c6ac40c3905774f15d2e0bc16962b5db4770f
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Add "Resuming an in-flight plan" section to kanbanzai-getting-started SKILL.md'
+              byte_offset: 2417
+              byte_count: 1095
+              word_count: 148
+              content_hash: a6652a5f5e6bc232c841920787e2d9e9c8f9cc3836911acd9c8258abc8b96c65
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Add "Resuming an in-flight plan" coverage to kanbanzai-workflow SKILL.md'
+              byte_offset: 3512
+              byte_count: 779
+              word_count: 102
+              content_hash: 257d8c81c6befbba0520a1df54bd99fb09b79f2fa2390060d32f73cf8e1a11bf
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Verify all three skill-file edits'
+              byte_offset: 4291
+              byte_count: 977
+              word_count: 132
+              content_hash: 54fea12511e4f59f2c02cfc78d5cc36e4789ce4d90ff8725cf908021b333d957
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 5268
+          byte_count: 326
+          word_count: 47
+          content_hash: 40df0628c7114feafb60ea40aa31ad5a156b91533aa084735bcd36f203f494f4
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 5594
+          byte_count: 716
+          word_count: 108
+          content_hash: a84e59908928b2550c88f0464e6e363648a5289da4c862acdcf9f6a783cf1aba
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 6310
+          byte_count: 1214
+          word_count: 189
+          content_hash: ffdf20ab54d2191cac19b961f3b7d2dba0654f7ef30a80f09a17b786cb39daf2
+entity_refs:
+    - entity_id: FEAT-01KPVDDYN855F
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 54
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1053
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: 1.2.1
+      byte_offset: 2023
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: 1.2.4
+      byte_offset: 4933
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 5741
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 7329
+    - entity_id: P28-doc-intel-polish-workflow-reliability
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 453
+cross_doc_links:
+    - target_path: work/spec/p28-skill-doc-updates.md
+      link_text: work/spec/p28-skill-doc-updates.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.2
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.2.3
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+classified: false

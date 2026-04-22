@@ -1,14 +1,23 @@
 | Field  | Value       |
 |--------|-------------|
 | Date   | 2026-04-22  |
-| Status | Draft       |
+| Status | approved |
 | Author | spec-author |
 
 # Specification: Decompose Dev-Plan Registration
 
+## Overview
+
+This specification defines automatic generation, registration, and auto-approval of a
+skeleton dev-plan document when `decompose(action: "apply")` successfully creates tasks,
+eliminating the need for a manual `doc approve` call to pass the `dev-planning → developing`
+gate.
+
 ## Problem Statement
 
 This specification covers the automatic registration and auto-approval of a skeleton dev-plan document when `decompose(action: "apply")` successfully creates tasks. It references the parent design document `P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability`, §Sprint 2 (Issue 2) and Decision D3.
+
+## Scope
 
 **In scope:**
 - Generating and writing a skeleton dev-plan document during `decompose(action: "apply")`.
@@ -23,9 +32,7 @@ This specification covers the automatic registration and auto-approval of a skel
 - Modifying or enriching existing non-skeleton dev-plan documents.
 - Any UI or CLI presentation changes beyond the response note.
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 **REQ-001** — When `decompose(action: "apply")` successfully creates one or more tasks for a feature, the server MUST generate a skeleton dev-plan document, write it to `work/dev-plan/<feature-slug>-decomposed.md`, register it with `type: "dev-plan"` owned by the feature, and immediately mark it `approved`.
 
@@ -43,7 +50,7 @@ This specification covers the automatic registration and auto-approval of a skel
 
 **REQ-006** — If `decompose(action: "apply")` fails to create any tasks (zero tasks created), the server MUST NOT generate or register a skeleton dev-plan document.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 **REQ-NF-001** — The additional skeleton generation, write, registration, and approval steps MUST complete within 500 ms added latency over the baseline `decompose(action: "apply")` execution time, measured on a warm server under no load.
 

@@ -1206,8 +1206,8 @@ conventional_roles:
     - section_path: "1.26"
       role: narrative
       confidence: high
-access_count: 2
-last_accessed_at: 2026-04-22T18:25:18.939917Z
+access_count: 3
+last_accessed_at: 2026-04-22T20:19:45.689423Z
 classified: true
 classified_at: 2026-04-22T18:31:52.198968Z
 classified_by: claude-sonnet-4-6

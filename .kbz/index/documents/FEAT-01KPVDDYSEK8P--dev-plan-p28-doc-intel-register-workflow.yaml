@@ -1,0 +1,108 @@
+document_id: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow
+document_path: work/dev-plan/p28-doc-intel-register-workflow.md
+content_hash: 3cc88bb3e880a5ecd94dd63c347b1dd981d284ac9c1f9b0bc60a83f5e24874cb
+indexed_at: 2026-04-22T20:59:50.731921Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Doc-Intel Register Workflow Friction'
+      byte_offset: 0
+      byte_count: 7415
+      word_count: 1099
+      content_hash: 3cc88bb3e880a5ecd94dd63c347b1dd981d284ac9c1f9b0bc60a83f5e24874cb
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 221
+          byte_count: 516
+          word_count: 68
+          content_hash: 7f2a0e2a546a45bb141975721323436f8a437bf4bd509c10c27be321400b9aec
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 737
+          byte_count: 501
+          word_count: 69
+          content_hash: 6d90d9c34d7d4c57782a08d60d351a76a7b9eb3a81ccbed46a498ff34c53f55e
+        - path: "1.3"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1238
+          byte_count: 3882
+          word_count: 544
+          content_hash: fe8c85bb9356c1a92b92ad6b7037696396bd274499ed9ea50b8a4b8aaeae7420
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Task 1: Promote `classification_nudge` to structured object (§5.4)'
+              byte_offset: 1257
+              byte_count: 1166
+              word_count: 152
+              content_hash: 41b9f48e6cf1b54c04509673a5059301d184d9fab096b26bbb2853922d34e279
+            - path: 1.3.2
+              level: 3
+              title: 'Task 2: Audit and fix `json:` tags on MCP parameter structs (§5.5)'
+              byte_offset: 2423
+              byte_count: 825
+              word_count: 127
+              content_hash: 8fadfcf804f5e7553a7c4c8c23e639cfdc72b558f5f3991853856b0c2c06833a
+            - path: 1.3.3
+              level: 3
+              title: 'Task 3: Add `json:` tag regression test (§5.5)'
+              byte_offset: 3248
+              byte_count: 658
+              word_count: 109
+              content_hash: ccba10ea2129df2129741bcad395a1daac7580079f7ebad986268581c00138cb
+            - path: 1.3.4
+              level: 3
+              title: 'Task 4: Unit tests for enhanced `classification_nudge` (§5.4)'
+              byte_offset: 3906
+              byte_count: 1214
+              word_count: 153
+              content_hash: afa35ef99255c2c8787d050b926f05e87ec40a4d97a50bab93109ff8e0305695
+        - path: "1.4"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 5120
+          byte_count: 330
+          word_count: 57
+          content_hash: e57b3524eb1bfae3b2c6e2f945a6f72509cf394abbe0bf52964fca51e9049c6c
+        - path: "1.5"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 5450
+          byte_count: 861
+          word_count: 141
+          content_hash: eccb67586f8e8955a8383cbc9b4e1e92135ff915c0b7b5f98de49874241d048d
+        - path: "1.6"
+          level: 2
+          title: Verification Approach
+          byte_offset: 6311
+          byte_count: 1104
+          word_count: 198
+          content_hash: 03cb3936f9bf720e6a6b8b776ea1802fe419981fbb9ddc3df090fbbd0f79ee69
+entity_refs:
+    - entity_id: FEAT-01KPVDDYSEK8P
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 63
+    - entity_id: FEAT-01KPVDDYSEK8P
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 854
+cross_doc_links:
+    - target_path: work/spec/p28-doc-intel-register-workflow.md
+      link_text: work/spec/p28-doc-intel-register-workflow.md
+      section_path: "1.2"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: risk
+      confidence: high
+classified: false

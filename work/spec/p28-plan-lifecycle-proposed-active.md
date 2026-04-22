@@ -1,10 +1,17 @@
 | Field  | Value       |
 |--------|-------------|
 | Date   | 2026-04-22  |
-| Status | Draft       |
+| Status | approved |
 | Author | spec-author |
 
 # Specification: Plan Lifecycle Proposed-to-Active Transition
+
+## Overview
+
+This specification defines the `proposed → active` shortcut transition for the plan state
+machine, added as Sprint 2, Issue 1 of the P28 plan (doc-intel polish and workflow
+reliability). It covers the precondition check, rejection behaviour, and system-generated
+override record that enable direct resumption of plans whose features are already mid-lifecycle.
 
 ## Problem Statement
 
@@ -20,6 +27,8 @@ gate violations rather than the routine resume operations they are.
 
 **Parent design document:**
 `P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability`
+
+## Scope
 
 **In scope:**
 
@@ -42,9 +51,7 @@ gate violations rather than the routine resume operations they are.
 
 ---
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 **REQ-001 — Direct `proposed → active` transition**
 
@@ -89,7 +96,7 @@ The gate check that applies when transitioning a plan from `designing` to `activ
 requires an approved design document to be registered against the plan — MUST NOT be weakened,
 removed, or bypassed by the introduction of the `proposed → active` shortcut.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 **REQ-NF-001 — System-generated override record distinguishability**
 
