@@ -289,4 +289,110 @@ conventional_roles:
     - section_path: 1.5.3
       role: narrative
       confidence: high
-classified: false
+access_count: 1
+last_accessed_at: 2026-04-22T18:38:05.503757Z
+classified: true
+classified_at: 2026-04-22T18:43:31.322007Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+      summary: 'P17 plan review: changes_required — 7 of 8 features have blocking findings, 24 total'
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+      summary: 'Summary verdict: changes_required; test coverage systematic absence; 24 blocking across plan'
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+      summary: 'Per-feature verdicts table: blocking and non-blocking counts per feature'
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+      summary: 'Per-dimension verdicts: spec conformance fail, test adequacy fail, others pass with notes'
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+      summary: 'Blocking findings: 24 findings across 7 features requiring rework'
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+      summary: 'mandatory-stage-gates B-01/B-02: advance-path override_reason bypass; missing integration test'
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+      summary: 'tool-description-audit B-03–B-06: error template gaps; no token budget test; no agent test session records; missing tool scenarios'
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+      summary: 'stage-aware-context-assembly B-07–B-10: stage content flags not actuated; SpecMode ignored; handler-level tests missing'
+    - section_path: 1.4.4
+      role: risk
+      confidence: high
+      summary: 'review-rework-loop B-11–B-15: zero tests for any FR-001–FR-010 behaviour'
+    - section_path: 1.4.5
+      role: risk
+      confidence: high
+      summary: 'document-structural-checks B-16–B-20: AC check at wrong gate; missing spec check at dev-planning; cross-ref blind to plan design; RecordFalsePositive unreachable; quality eval gate untested'
+    - section_path: 1.4.6
+      role: risk
+      confidence: high
+      summary: 'action-pattern-logging B-21–B-23: nil StageFeatureLookup kills two metrics; stage logged post-transition; required scenario fields not validated'
+    - section_path: 1.4.7
+      role: risk
+      confidence: high
+      summary: 'binding-registry-gate-integration B-24: KnownFields(true) kills extensibility path'
+    - section_path: "1.5"
+      role: risk
+      confidence: high
+      summary: 'Non-blocking findings: selected notable issues per feature'
+    - section_path: 1.5.1
+      role: risk
+      confidence: medium
+      summary: 'mandatory-stage-gates non-blocking: checkpoint_id not serialised; allGatedStages missing done; no benchmarks'
+    - section_path: 1.5.2
+      role: risk
+      confidence: medium
+      summary: 'tool-description-audit non-blocking: inconsistent error templates on P2/P3 handlers; scenario count exceeds FR-011 upper bound'
+    - section_path: 1.5.3
+      role: risk
+      confidence: medium
+      summary: 'stage-aware-context-assembly non-blocking: lifecycle validation bypassed in pipeline path; blank feature status silent; dead StageConfig fields'
+    - section_path: 1.5.4
+      role: risk
+      confidence: medium
+      summary: 'review-rework-loop non-blocking: checkpoint DI bypass; cap-block not propagated from registry gates; PersistFeatureBlockedReason error discarded'
+    - section_path: 1.5.5
+      role: risk
+      confidence: medium
+      summary: 'decomposition-quality-validation non-blocking: regex compiled on every call; byte cast for rune; double-finding; stale type comment'
+    - section_path: 1.5.6
+      role: risk
+      confidence: medium
+      summary: 'document-structural-checks non-blocking: generic recovery steps; empty AC section passes; silent promotion state load failure'
+    - section_path: 1.5.7
+      role: risk
+      confidence: medium
+      summary: 'action-pattern-logging non-blocking: false positive on error token; omitempty on required fields; os.Exit bypasses deferred cleanup'
+    - section_path: 1.5.8
+      role: risk
+      confidence: medium
+      summary: 'binding-registry-gate-integration non-blocking: stale cache on re-load failure; lazy init not eager; ValidateBinding not called; test global mutation; pre-existing status tool task-count bug'
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+      summary: 'Reviewer unit breakdown: 8 sub-agents, specs reviewed, files per feature'
+    - section_path: "1.7"
+      role: rationale
+      confidence: high
+      summary: 'Remediation priorities: tier 1 safety/correctness, tier 2 missing MCP surface, tier 3 test coverage'
+    - section_path: 1.7.1
+      role: constraint
+      confidence: high
+      summary: Must fix before any feature transitions to done — 14 blocking items in priority order
+    - section_path: 1.7.2
+      role: narrative
+      confidence: high
+      summary: decomposition-quality-validation may transition to done immediately

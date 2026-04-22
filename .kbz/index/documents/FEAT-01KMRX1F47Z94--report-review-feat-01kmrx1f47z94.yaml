@@ -121,4 +121,49 @@ conventional_roles:
     - section_path: "1.7"
       role: decision
       confidence: high
-classified: false
+access_count: 1
+last_accessed_at: 2026-04-22T18:25:58.725627Z
+classified: true
+classified_at: 2026-04-22T18:35:25.421122Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: decision
+      confidence: high
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+    - section_path: 1.5.1
+      role: narrative
+      confidence: medium
+    - section_path: 1.5.2
+      role: narrative
+      confidence: medium
+    - section_path: 1.5.3
+      role: narrative
+      confidence: high
+    - section_path: 1.5.4
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: decision
+      confidence: high

@@ -245,4 +245,94 @@ conventional_roles:
     - section_path: "1.1"
       role: narrative
       confidence: high
-classified: false
+access_count: 1
+last_accessed_at: 2026-04-22T18:38:30.521883Z
+classified: true
+classified_at: 2026-04-22T18:49:24.920947Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.1.1
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.1
+      role: narrative
+      confidence: high
+    - section_path: 1.2.2
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+    - section_path: 1.3.2
+      role: narrative
+      confidence: high
+    - section_path: 1.3.3
+      role: narrative
+      confidence: high
+    - section_path: 1.3.4
+      role: narrative
+      confidence: high
+    - section_path: 1.3.5
+      role: narrative
+      confidence: high
+    - section_path: 1.3.6
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+    - section_path: 1.5.1
+      role: narrative
+      confidence: high
+    - section_path: 1.5.2
+      role: decision
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+    - section_path: 1.6.1
+      role: narrative
+      confidence: high
+    - section_path: 1.6.2
+      role: decision
+      confidence: high
+    - section_path: "1.7"
+      role: requirement
+      confidence: high
+    - section_path: 1.7.1
+      role: requirement
+      confidence: high
+    - section_path: 1.7.2
+      role: requirement
+      confidence: high
+    - section_path: 1.7.3
+      role: requirement
+      confidence: high
+    - section_path: 1.7.4
+      role: requirement
+      confidence: high
+    - section_path: 1.7.5
+      role: requirement
+      confidence: high
+    - section_path: 1.7.6
+      role: requirement
+      confidence: medium
+    - section_path: "1.8"
+      role: decision
+      confidence: high

@@ -52,4 +52,25 @@ cross_doc_links:
     - target_path: work/design/fresh-install-experience.md
       link_text: work/design/fresh-install-experience.md
       section_path: "1"
-classified: false
+access_count: 1
+last_accessed_at: 2026-04-22T18:05:04.628246Z
+classified: true
+classified_at: 2026-04-22T18:06:26.240912Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: decision
+      confidence: high
+    - section_path: "1.3"
+      role: assumption
+      confidence: high

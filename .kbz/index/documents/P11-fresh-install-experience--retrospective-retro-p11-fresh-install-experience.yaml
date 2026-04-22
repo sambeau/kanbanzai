@@ -103,4 +103,54 @@ conventional_roles:
     - section_path: "1.5"
       role: narrative
       confidence: high
-classified: false
+access_count: 1
+last_accessed_at: 2026-04-22T18:38:03.639793Z
+classified: true
+classified_at: 2026-04-22T18:42:27.197464Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+      summary: 'P11 retrospective: 13 tasks done, 6 bugs found post-delivery'
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+      summary: 'Overview: P11 scope, outcomes, bugs found during real-world testing'
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+      summary: 'What worked well: entity structure, commit discipline, design doc as anchor, review process'
+    - section_path: "1.3"
+      role: risk
+      confidence: high
+      summary: 'Friction points: 5 process gaps identified during P11'
+    - section_path: 1.3.1
+      role: risk
+      confidence: high
+      summary: Spec described happy path only — edge cases unspecified, wrong 'new vs existing' signal
+    - section_path: 1.3.2
+      role: risk
+      confidence: high
+      summary: Install-experience features resist spec-based review — smoke test required
+    - section_path: 1.3.3
+      role: risk
+      confidence: high
+      summary: Design doc contained wrong third-party format (Zed context_servers) — propagated everywhere
+    - section_path: 1.3.4
+      role: risk
+      confidence: high
+      summary: Interactive prompt UX never designed — empty input errored rather than defaulting
+    - section_path: 1.3.5
+      role: risk
+      confidence: high
+      summary: _managed block written to Zed-schema-validated file, causing editor linter error
+    - section_path: "1.4"
+      role: rationale
+      confidence: high
+      summary: '5 process improvement suggestions: edge-case ACs, smoke-test gate, verify 3rd-party formats, precise naming, distinguish owned files'
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+      summary: 'Summary table: 9 bugs (3 pre-run, 6 post-review), root cause breakdown'

@@ -179,4 +179,86 @@ conventional_roles:
     - section_path: 1.3.4
       role: narrative
       confidence: high
-classified: false
+access_count: 1
+last_accessed_at: 2026-04-22T18:38:05.086314Z
+classified: true
+classified_at: 2026-04-22T18:43:05.744433Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+      summary: 'P16 review: Pass with findings — core infrastructure correct, rework items identified'
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+      summary: 'Summary: core infrastructure correct, 1 confirmed bug, 2 design gaps, content/lifecycle hygiene issues'
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+      summary: 'Feature status table: all 12 features in developing, 4 with warnings'
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+      summary: Criterion-by-criterion spec conformance for all 12 features
+    - section_path: 1.3.1
+      role: requirement
+      confidence: high
+      summary: 'role-system: all 6 criteria met'
+    - section_path: 1.3.2
+      role: requirement
+      confidence: high
+      summary: 'skill-system: all 6 criteria met'
+    - section_path: 1.3.3
+      role: requirement
+      confidence: high
+      summary: 'binding-registry: all 5 criteria met'
+    - section_path: 1.3.4
+      role: requirement
+      confidence: high
+      summary: 'context-assembly-pipeline: 4 of 6 criteria met; progressive loading and taskID bug are gaps'
+    - section_path: 1.3.5
+      role: requirement
+      confidence: high
+      summary: 'knowledge-auto-surfacing: 6 of 8 criteria met; role tag matching gap and dead SkillName field'
+    - section_path: 1.3.6
+      role: requirement
+      confidence: high
+      summary: 'freshness-tracking: all 6 criteria met'
+    - section_path: 1.3.7
+      role: requirement
+      confidence: high
+      summary: 'base-and-authoring-role-content: 2 of 3 criteria met; base.yaml identity wrong'
+    - section_path: 1.3.8
+      role: requirement
+      confidence: high
+      summary: 'review-role-content: 2 of 3 criteria met; reviewer-security tools list is duplicate of parent'
+    - section_path: 1.3.9
+      role: requirement
+      confidence: high
+      summary: 'document-authoring-skill-content: all criteria met; write-spec constraint_level question'
+    - section_path: 1.3.10
+      role: requirement
+      confidence: high
+      summary: 'implementation-skill-content / review-skill-content: all criteria met'
+    - section_path: 1.3.11
+      role: requirement
+      confidence: high
+      summary: 'migration-and-backward-compat: 3 of 6 criteria met; CLI and health checker still use old paths'
+    - section_path: "1.4"
+      role: narrative
+      confidence: high
+      summary: 'Documentation currency: spec registration gap (0 of 12 registered), stage-bindings notes missing'
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+      summary: 'Cross-cutting checks: go test passes, pre-existing races, uncommitted P17 changes'
+    - section_path: "1.6"
+      role: risk
+      confidence: high
+      summary: '12 findings: 3 significant (taskID bug, role tag design gap, CLI path gap), 7 minor, 2 informational'
+    - section_path: "1.7"
+      role: decision
+      confidence: high
+      summary: 'Verdict: Pass with findings — required items before done, recommended items, deferred items'

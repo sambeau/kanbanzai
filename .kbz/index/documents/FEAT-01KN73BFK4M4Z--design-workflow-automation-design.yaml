@@ -347,4 +347,133 @@ conventional_roles:
     - section_path: 1.4.6
       role: constraint
       confidence: high
-classified: false
+access_count: 2
+last_accessed_at: 2026-04-22T18:04:48.028026Z
+classified: true
+classified_at: 2026-04-22T18:09:06.520959Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.1.1
+      role: narrative
+      confidence: high
+    - section_path: 1.1.2
+      role: narrative
+      confidence: high
+    - section_path: 1.1.3
+      role: narrative
+      confidence: high
+    - section_path: 1.1.4
+      role: risk
+      confidence: high
+    - section_path: "1.2"
+      role: decision
+      confidence: high
+    - section_path: 1.2.1
+      role: decision
+      confidence: high
+    - section_path: 1.2.1.1
+      role: narrative
+      confidence: high
+    - section_path: 1.2.1.2
+      role: decision
+      confidence: high
+    - section_path: 1.2.1.3
+      role: decision
+      confidence: high
+    - section_path: 1.2.1.4
+      role: decision
+      confidence: high
+    - section_path: 1.2.1.5
+      role: risk
+      confidence: high
+    - section_path: 1.2.2
+      role: decision
+      confidence: high
+    - section_path: 1.2.2.1
+      role: narrative
+      confidence: high
+    - section_path: 1.2.2.2
+      role: decision
+      confidence: high
+    - section_path: 1.2.2.3
+      role: decision
+      confidence: high
+    - section_path: 1.2.2.4
+      role: decision
+      confidence: high
+    - section_path: 1.2.2.5
+      role: decision
+      confidence: high
+    - section_path: 1.2.2.6
+      role: decision
+      confidence: high
+    - section_path: 1.2.2.7
+      role: decision
+      confidence: high
+    - section_path: 1.2.3
+      role: decision
+      confidence: high
+    - section_path: 1.2.3.1
+      role: narrative
+      confidence: high
+    - section_path: 1.2.3.2
+      role: decision
+      confidence: high
+    - section_path: 1.2.3.3
+      role: decision
+      confidence: high
+    - section_path: 1.2.3.4
+      role: risk
+      confidence: high
+    - section_path: 1.2.4
+      role: decision
+      confidence: high
+    - section_path: 1.2.4.1
+      role: narrative
+      confidence: high
+    - section_path: 1.2.4.2
+      role: decision
+      confidence: high
+    - section_path: "1.3"
+      role: alternative
+      confidence: high
+    - section_path: 1.3.1
+      role: alternative
+      confidence: high
+    - section_path: 1.3.2
+      role: alternative
+      confidence: high
+    - section_path: 1.3.3
+      role: alternative
+      confidence: high
+    - section_path: 1.3.4
+      role: alternative
+      confidence: high
+    - section_path: "1.4"
+      role: decision
+      confidence: high
+    - section_path: 1.4.1
+      role: decision
+      confidence: high
+    - section_path: 1.4.2
+      role: decision
+      confidence: high
+    - section_path: 1.4.3
+      role: decision
+      confidence: high
+    - section_path: 1.4.4
+      role: decision
+      confidence: high
+    - section_path: 1.4.5
+      role: decision
+      confidence: high
+    - section_path: 1.4.6
+      role: constraint
+      confidence: high

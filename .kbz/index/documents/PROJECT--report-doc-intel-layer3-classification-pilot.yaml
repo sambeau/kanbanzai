@@ -1,0 +1,218 @@
+document_id: PROJECT/report-doc-intel-layer3-classification-pilot
+document_path: work/reports/doc-intel-layer3-classification-pilot.md
+content_hash: 9e00177350f1d9e685237ed9b5f94d55733b00317a9dc4f3c8202f2e86e5dcb9
+indexed_at: 2026-04-22T19:12:51.163638Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Doc-Intel Layer 3 Classification: Pilot Lessons'
+      byte_offset: 0
+      byte_count: 15528
+      word_count: 2177
+      content_hash: 9e00177350f1d9e685237ed9b5f94d55733b00317a9dc4f3c8202f2e86e5dcb9
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Executive Summary
+          byte_offset: 362
+          byte_count: 791
+          word_count: 125
+          content_hash: 18f942ad9ba9f3e416ed4de4fd412adfe63c2d88894f0fb49fb9bf4473914ace
+        - path: "1.2"
+          level: 2
+          title: 2. Background
+          byte_offset: 1153
+          byte_count: 493
+          word_count: 70
+          content_hash: 9daf0c39206101b32f0f47697cefc3d0ba40ac9ac3eba87a2163cb40e0d11664
+        - path: "1.3"
+          level: 2
+          title: 3. Bugs Discovered and Fixed
+          byte_offset: 1646
+          byte_count: 3064
+          word_count: 406
+          content_hash: da1fbb69d3bbacbd2ea75e7a8db4b58086c795c4024e94de8e6d2ecb67d1c07e
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Missing JSON tags on `Classification` struct
+              byte_offset: 1679
+              byte_count: 1872
+              word_count: 247
+              content_hash: d46da00a18efac1e9c899ddcf85f4fe0f8f77e158b1f0b8f5a4e1a5c0df20265
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Invalid role examples in `kanbanzai-documents` skill
+              byte_offset: 3551
+              byte_count: 1159
+              word_count: 153
+              content_hash: 6ede687ead8a0994069fe218a9e40bd98b5722bdcf0876e408ce25ab296bc471
+        - path: "1.4"
+          level: 2
+          title: 4. Process Insights
+          byte_offset: 4710
+          byte_count: 3207
+          word_count: 469
+          content_hash: 4f7ef6dffc4ec37f3bfa7c089181b516bb9c4c694ddcfdfcc59c6d5d99e67e9b
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Effective batch size is section-count-driven, not document-count-driven
+              byte_offset: 4734
+              byte_count: 1433
+              word_count: 202
+              content_hash: 8d1153d906ba06362727e95e0f0e8b79ecbfde8f23e7f97a41b9e1d01d24c089
+            - path: 1.4.2
+              level: 3
+              title: 4.2 The "concise output" instruction is load-bearing for bulk operations
+              byte_offset: 6167
+              byte_count: 848
+              word_count: 126
+              content_hash: 8f85a773ffe616001383ae8698e6237490e7f6537ca2fff06e0ca2cb73a0df02
+            - path: 1.4.3
+              level: 3
+              title: 4.3 `classify` calls are atomic; batch failures are fully recoverable
+              byte_offset: 7015
+              byte_count: 902
+              word_count: 137
+              content_hash: 5ef2f6979f05b3e3936891bc7605afdef31f80cee344b650c395649f7cc1a999
+        - path: "1.5"
+          level: 2
+          title: 5. Enhancement Recommendations
+          byte_offset: 7917
+          byte_count: 5592
+          word_count: 783
+          content_hash: 3ae4d351c3ce98550d19a145e8745f2a2bd1eec29cc03942a9cee2fa6fe6db81
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Add section count to the `pending` response
+              byte_offset: 7952
+              byte_count: 874
+              word_count: 130
+              content_hash: b002eff5b7b324aaeae37bf88903d6adcd6fa23084effd30687793239914259c
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Embed the role taxonomy in the `guide` response
+              byte_offset: 8826
+              byte_count: 1196
+              word_count: 171
+              content_hash: 32bd715be13d55a5303b13a5e7b9a9dad8e723a950fd8da864f744863d8b8424
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Support outline-only classification for well-structured documents
+              byte_offset: 10022
+              byte_count: 1631
+              word_count: 214
+              content_hash: 591b3598d18ba7e9dcc1d6403175aa5ed7d2f865e9d4b477db5981d1e28ca5c8
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Include `content_hash` and outline in the register classification nudge
+              byte_offset: 11653
+              byte_count: 1029
+              word_count: 140
+              content_hash: 5fc6794336ccb89a5d9522eb1444f4019fd07290645a83ff899f832bd877f162
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Audit MCP parameter structs for missing JSON tags
+              byte_offset: 12682
+              byte_count: 827
+              word_count: 124
+              content_hash: 2b17844d5d0fa42ed779ec864086aa758f354e90241c2d1cb0d47245c8c19da6
+        - path: "1.6"
+          level: 2
+          title: 6. Priority Summary
+          byte_offset: 13509
+          byte_count: 621
+          word_count: 125
+          content_hash: 104493802302dfd175f03c381a9cefb665be2f7e4cf062149eb2900f820217ce
+        - path: "1.7"
+          level: 2
+          title: '7. Appendix: Batch Strategy Reference'
+          byte_offset: 14130
+          byte_count: 1398
+          word_count: 151
+          content_hash: 64a036f8ccd37188d159821c21415637a94a6aab70ecf2399ae121cd4dca303f
+entity_refs:
+    - entity_id: FEAT-level
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 4839
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: 1.3.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.2
+      role: example
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-22T19:13:36.261923Z
+classified: true
+classified_at: 2026-04-22T19:14:18.833959Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: rationale
+      confidence: high
+    - section_path: 1.3.1
+      role: rationale
+      confidence: high
+    - section_path: 1.3.2
+      role: rationale
+      confidence: high
+    - section_path: "1.4"
+      role: rationale
+      confidence: high
+    - section_path: 1.4.1
+      role: rationale
+      confidence: high
+    - section_path: 1.4.2
+      role: rationale
+      confidence: high
+    - section_path: 1.4.3
+      role: rationale
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: 1.5.1
+      role: requirement
+      confidence: high
+    - section_path: 1.5.2
+      role: requirement
+      confidence: high
+    - section_path: 1.5.3
+      role: requirement
+      confidence: high
+    - section_path: 1.5.4
+      role: requirement
+      confidence: high
+    - section_path: 1.5.5
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: example
+      confidence: high

@@ -189,4 +189,61 @@ conventional_roles:
     - section_path: "5.5"
       role: decision
       confidence: high
-classified: false
+access_count: 1
+last_accessed_at: 2026-04-22T18:38:47.951157Z
+classified: true
+classified_at: 2026-04-22T18:44:43.164898Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: question
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+    - section_path: "3"
+      role: rationale
+      confidence: high
+    - section_path: "3.1"
+      role: rationale
+      confidence: high
+    - section_path: "3.2"
+      role: rationale
+      confidence: high
+    - section_path: "3.3"
+      role: rationale
+      confidence: high
+    - section_path: "3.4"
+      role: rationale
+      confidence: high
+    - section_path: "3.5"
+      role: rationale
+      confidence: high
+    - section_path: "3.6"
+      role: rationale
+      confidence: high
+    - section_path: "4"
+      role: alternative
+      confidence: high
+    - section_path: "5"
+      role: requirement
+      confidence: high
+    - section_path: "5.1"
+      role: requirement
+      confidence: high
+    - section_path: "5.2"
+      role: requirement
+      confidence: high
+    - section_path: "5.3"
+      role: requirement
+      confidence: high
+    - section_path: "5.4"
+      role: requirement
+      confidence: high
+    - section_path: "5.5"
+      role: decision
+      confidence: high
+    - section_path: "6"
+      role: constraint
+      confidence: high

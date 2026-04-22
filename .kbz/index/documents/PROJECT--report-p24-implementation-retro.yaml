@@ -46,4 +46,25 @@ entity_refs:
       entity_type: plan
       section_path: "1"
       byte_offset: 82
-classified: false
+access_count: 1
+last_accessed_at: 2026-04-22T18:38:32.452267Z
+classified: true
+classified_at: 2026-04-22T18:50:05.269632Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.1.1
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.1
+      role: narrative
+      confidence: high

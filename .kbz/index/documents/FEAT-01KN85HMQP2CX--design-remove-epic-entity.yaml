@@ -32,4 +32,16 @@ conventional_roles:
     - section_path: "1.1"
       role: narrative
       confidence: high
-classified: false
+access_count: 2
+last_accessed_at: 2026-04-22T18:04:46.724799Z
+classified: true
+classified_at: 2026-04-22T18:08:38.960945Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high

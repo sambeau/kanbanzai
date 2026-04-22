@@ -247,4 +247,103 @@ conventional_roles:
     - section_path: "4"
       role: decision
       confidence: high
-classified: false
+access_count: 2
+last_accessed_at: 2026-04-22T18:13:52.130076Z
+classified: true
+classified_at: 2026-04-22T18:22:05.33435Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "2"
+      role: narrative
+      confidence: high
+    - section_path: "2.1"
+      role: narrative
+      confidence: high
+    - section_path: "2.2"
+      role: decision
+      confidence: high
+    - section_path: "2.3"
+      role: narrative
+      confidence: high
+    - section_path: 2.3.1
+      role: alternative
+      confidence: high
+    - section_path: 2.3.2
+      role: alternative
+      confidence: high
+    - section_path: 2.3.3
+      role: decision
+      confidence: high
+    - section_path: "2.4"
+      role: rationale
+      confidence: high
+    - section_path: "2.5"
+      role: requirement
+      confidence: high
+    - section_path: "2.6"
+      role: requirement
+      confidence: high
+    - section_path: "2.7"
+      role: question
+      confidence: high
+    - section_path: "2.8"
+      role: narrative
+      confidence: high
+    - section_path: 2.8.1
+      role: requirement
+      confidence: high
+    - section_path: 2.8.2
+      role: requirement
+      confidence: high
+    - section_path: 2.8.3
+      role: requirement
+      confidence: high
+    - section_path: 2.8.4
+      role: requirement
+      confidence: high
+    - section_path: 2.8.5
+      role: requirement
+      confidence: high
+    - section_path: 2.8.6
+      role: decision
+      confidence: high
+    - section_path: "2.9"
+      role: narrative
+      confidence: high
+    - section_path: "2.10"
+      role: risk
+      confidence: high
+    - section_path: 2.10.1
+      role: risk
+      confidence: high
+    - section_path: 2.10.2
+      role: risk
+      confidence: high
+    - section_path: 2.10.3
+      role: risk
+      confidence: high
+    - section_path: 2.10.4
+      role: risk
+      confidence: high
+    - section_path: "3"
+      role: alternative
+      confidence: high
+    - section_path: "3.1"
+      role: alternative
+      confidence: high
+    - section_path: "3.2"
+      role: alternative
+      confidence: high
+    - section_path: "3.3"
+      role: alternative
+      confidence: high
+    - section_path: "3.4"
+      role: alternative
+      confidence: high
+    - section_path: "4"
+      role: decision
+      confidence: high

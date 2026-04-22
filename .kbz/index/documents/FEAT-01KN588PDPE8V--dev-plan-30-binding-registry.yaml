@@ -151,4 +151,78 @@ conventional_roles:
     - section_path: 1.4.4
       role: narrative
       confidence: high
-classified: false
+access_count: 1
+last_accessed_at: 2026-04-22T18:05:25.230413Z
+classified: true
+classified_at: 2026-04-22T18:09:19.391197Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+      summary: Introduction and metadata for the binding registry implementation plan
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+      summary: Overview of the four-layer architecture and approach for the binding registry
+    - section_path: 1.1.1
+      role: constraint
+      confidence: high
+      summary: 'Scope boundaries: in scope and out of scope for the binding registry feature'
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+      summary: Container section for the five task descriptions
+    - section_path: 1.2.1
+      role: definition
+      confidence: high
+      summary: Defines the Go structs for StageBinding, Prerequisites, and related binding model types
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+      summary: Requirements for YAML loader with duplicate key detection
+    - section_path: 1.2.3
+      role: requirement
+      confidence: high
+      summary: Requirements for stage and cross-reference validation logic
+    - section_path: 1.2.4
+      role: requirement
+      confidence: high
+      summary: Requirements for binding registry and stage lookup API
+    - section_path: 1.2.5
+      role: requirement
+      confidence: high
+      summary: Requirements for integration tests and benchmarks
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+      summary: Dependency graph showing task ordering and parallelism constraints
+    - section_path: "1.4"
+      role: definition
+      confidence: high
+      summary: Container section for interface contracts between tasks
+    - section_path: 1.4.1
+      role: definition
+      confidence: high
+      summary: Binding model types contract shared from Task 1 to Tasks 2, 3, 4, 5
+    - section_path: 1.4.2
+      role: definition
+      confidence: high
+      summary: Loader output contract shared from Task 2 to Tasks 3, 4
+    - section_path: 1.4.3
+      role: definition
+      confidence: high
+      summary: Validation API contract shared from Task 3 to Task 4
+    - section_path: 1.4.4
+      role: definition
+      confidence: high
+      summary: Registry API contract shared from Task 4 to Task 5 and future context assembly
+    - section_path: 1.4.5
+      role: definition
+      confidence: high
+      summary: Cross-feature RoleChecker interface contract shared with gate integration
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+      summary: Traceability matrix mapping spec requirements to implementing tasks

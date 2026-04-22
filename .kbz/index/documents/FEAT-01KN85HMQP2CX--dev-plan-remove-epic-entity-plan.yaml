@@ -67,4 +67,28 @@ conventional_roles:
     - section_path: "1.1"
       role: narrative
       confidence: high
-classified: false
+access_count: 1
+last_accessed_at: 2026-04-22T18:06:03.106599Z
+classified: true
+classified_at: 2026-04-22T18:11:58.643697Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: definition
+      confidence: medium
+    - section_path: "1.5"
+      role: narrative
+      confidence: high

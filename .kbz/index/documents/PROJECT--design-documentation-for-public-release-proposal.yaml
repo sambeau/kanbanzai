@@ -118,4 +118,58 @@ sections:
           byte_count: 865
           word_count: 145
           content_hash: 8b1f0b78f514380bef518d8267b83a9f08f307a52492cbde0dd889a3c4c9e6f7
-classified: false
+access_count: 2
+last_accessed_at: 2026-04-22T18:14:02.348543Z
+classified: true
+classified_at: 2026-04-22T18:21:10.10486Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: requirement
+      confidence: high
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: 1.2.3
+      role: requirement
+      confidence: high
+    - section_path: 1.2.3.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.3.2
+      role: requirement
+      confidence: high
+    - section_path: 1.2.3.3
+      role: requirement
+      confidence: high
+    - section_path: 1.2.3.4
+      role: requirement
+      confidence: high
+    - section_path: 1.2.4
+      role: requirement
+      confidence: high
+    - section_path: 1.2.5
+      role: requirement
+      confidence: high
+    - section_path: 1.2.6
+      role: requirement
+      confidence: high
+    - section_path: 1.2.7
+      role: requirement
+      confidence: high
+    - section_path: 1.2.8
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high

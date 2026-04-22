@@ -29,4 +29,19 @@ cross_doc_links:
     - target_path: AGENTS.md
       link_text: AGENTS.md
       section_path: "1.1"
-classified: false
+access_count: 2
+last_accessed_at: 2026-04-22T18:25:14.173593Z
+classified: true
+classified_at: 2026-04-22T18:30:09.35115Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: requirement
+      confidence: high
+    - section_path: "1.2"
+      role: requirement
+      confidence: high

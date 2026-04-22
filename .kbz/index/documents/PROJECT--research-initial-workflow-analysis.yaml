@@ -961,4 +961,394 @@ conventional_roles:
     - section_path: "1.40"
       role: narrative
       confidence: high
-classified: false
+access_count: 1
+last_accessed_at: 2026-04-22T18:38:45.662175Z
+classified: true
+classified_at: 2026-04-22T18:44:15.291482Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.1
+      role: narrative
+      confidence: high
+    - section_path: 1.2.2
+      role: narrative
+      confidence: high
+    - section_path: 1.2.3
+      role: narrative
+      confidence: high
+    - section_path: 1.2.4
+      role: rationale
+      confidence: high
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: alternative
+      confidence: high
+    - section_path: 1.4.2
+      role: alternative
+      confidence: high
+    - section_path: 1.4.3
+      role: decision
+      confidence: high
+    - section_path: "1.5"
+      role: alternative
+      confidence: high
+    - section_path: 1.5.1
+      role: alternative
+      confidence: high
+    - section_path: 1.5.2
+      role: alternative
+      confidence: high
+    - section_path: 1.5.3
+      role: decision
+      confidence: high
+    - section_path: "1.6"
+      role: alternative
+      confidence: high
+    - section_path: 1.6.1
+      role: alternative
+      confidence: high
+    - section_path: 1.6.2
+      role: alternative
+      confidence: high
+    - section_path: 1.6.3
+      role: decision
+      confidence: high
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+    - section_path: 1.7.1
+      role: narrative
+      confidence: high
+    - section_path: 1.7.2
+      role: decision
+      confidence: high
+    - section_path: "1.8"
+      role: decision
+      confidence: high
+    - section_path: "1.9"
+      role: requirement
+      confidence: high
+    - section_path: 1.9.1
+      role: requirement
+      confidence: high
+    - section_path: "1.10"
+      role: requirement
+      confidence: high
+    - section_path: "1.11"
+      role: requirement
+      confidence: high
+    - section_path: 1.11.1
+      role: definition
+      confidence: high
+    - section_path: 1.11.2
+      role: definition
+      confidence: high
+    - section_path: 1.11.3
+      role: definition
+      confidence: high
+    - section_path: 1.11.4
+      role: definition
+      confidence: high
+    - section_path: 1.11.5
+      role: requirement
+      confidence: high
+    - section_path: 1.11.6
+      role: definition
+      confidence: high
+    - section_path: 1.11.7
+      role: constraint
+      confidence: high
+    - section_path: "1.12"
+      role: definition
+      confidence: high
+    - section_path: 1.12.1
+      role: definition
+      confidence: high
+    - section_path: 1.12.2
+      role: definition
+      confidence: high
+    - section_path: 1.12.3
+      role: definition
+      confidence: high
+    - section_path: "1.13"
+      role: narrative
+      confidence: high
+    - section_path: "1.14"
+      role: requirement
+      confidence: high
+    - section_path: "1.15"
+      role: requirement
+      confidence: high
+    - section_path: 1.15.1
+      role: definition
+      confidence: high
+    - section_path: 1.15.2
+      role: definition
+      confidence: high
+    - section_path: 1.15.3
+      role: definition
+      confidence: high
+    - section_path: 1.15.4
+      role: definition
+      confidence: high
+    - section_path: 1.15.5
+      role: definition
+      confidence: high
+    - section_path: "1.16"
+      role: requirement
+      confidence: high
+    - section_path: "1.17"
+      role: requirement
+      confidence: high
+    - section_path: "1.18"
+      role: requirement
+      confidence: high
+    - section_path: "1.19"
+      role: requirement
+      confidence: high
+    - section_path: "1.20"
+      role: requirement
+      confidence: high
+    - section_path: "1.21"
+      role: definition
+      confidence: high
+    - section_path: 1.21.1
+      role: example
+      confidence: high
+    - section_path: 1.21.2
+      role: narrative
+      confidence: high
+    - section_path: "1.22"
+      role: requirement
+      confidence: high
+    - section_path: "1.23"
+      role: requirement
+      confidence: high
+    - section_path: 1.23.1
+      role: requirement
+      confidence: high
+    - section_path: 1.23.2
+      role: rationale
+      confidence: high
+    - section_path: "1.24"
+      role: narrative
+      confidence: high
+    - section_path: "1.25"
+      role: requirement
+      confidence: high
+    - section_path: "1.26"
+      role: alternative
+      confidence: high
+    - section_path: 1.26.1
+      role: alternative
+      confidence: high
+    - section_path: 1.26.2
+      role: alternative
+      confidence: high
+    - section_path: 1.26.3
+      role: alternative
+      confidence: high
+    - section_path: "1.27"
+      role: narrative
+      confidence: high
+    - section_path: "1.28"
+      role: decision
+      confidence: high
+    - section_path: 1.28.1
+      role: definition
+      confidence: high
+    - section_path: 1.28.2
+      role: definition
+      confidence: high
+    - section_path: 1.28.3
+      role: definition
+      confidence: high
+    - section_path: 1.28.4
+      role: definition
+      confidence: high
+    - section_path: "1.29"
+      role: requirement
+      confidence: high
+    - section_path: 1.29.1
+      role: definition
+      confidence: high
+    - section_path: 1.29.2
+      role: narrative
+      confidence: high
+    - section_path: 1.29.3
+      role: definition
+      confidence: high
+    - section_path: 1.29.4
+      role: narrative
+      confidence: high
+    - section_path: 1.29.5
+      role: definition
+      confidence: high
+    - section_path: 1.29.6
+      role: definition
+      confidence: high
+    - section_path: 1.29.7
+      role: narrative
+      confidence: high
+    - section_path: "1.30"
+      role: narrative
+      confidence: high
+    - section_path: 1.30.1
+      role: definition
+      confidence: high
+    - section_path: 1.30.2
+      role: definition
+      confidence: high
+    - section_path: 1.30.3
+      role: definition
+      confidence: high
+    - section_path: 1.30.4
+      role: definition
+      confidence: high
+    - section_path: "1.31"
+      role: narrative
+      confidence: high
+    - section_path: "1.32"
+      role: requirement
+      confidence: high
+    - section_path: 1.32.1
+      role: requirement
+      confidence: high
+    - section_path: 1.32.2
+      role: requirement
+      confidence: high
+    - section_path: 1.32.3
+      role: requirement
+      confidence: high
+    - section_path: 1.32.4
+      role: requirement
+      confidence: high
+    - section_path: 1.32.5
+      role: requirement
+      confidence: high
+    - section_path: "1.33"
+      role: narrative
+      confidence: high
+    - section_path: "1.34"
+      role: decision
+      confidence: high
+    - section_path: 1.34.1
+      role: definition
+      confidence: high
+    - section_path: 1.34.2
+      role: definition
+      confidence: high
+    - section_path: 1.34.3
+      role: narrative
+      confidence: high
+    - section_path: 1.34.4
+      role: definition
+      confidence: high
+    - section_path: 1.34.5
+      role: rationale
+      confidence: high
+    - section_path: "1.35"
+      role: narrative
+      confidence: high
+    - section_path: "1.36"
+      role: narrative
+      confidence: high
+    - section_path: "1.37"
+      role: narrative
+      confidence: high
+    - section_path: 1.37.1
+      role: narrative
+      confidence: high
+    - section_path: 1.37.2
+      role: narrative
+      confidence: high
+    - section_path: 1.37.3
+      role: narrative
+      confidence: high
+    - section_path: "1.38"
+      role: requirement
+      confidence: high
+    - section_path: "1.39"
+      role: requirement
+      confidence: high
+    - section_path: 1.39.1
+      role: example
+      confidence: high
+    - section_path: "1.40"
+      role: narrative
+      confidence: high
+    - section_path: "1.41"
+      role: requirement
+      confidence: high
+    - section_path: "1.42"
+      role: alternative
+      confidence: high
+    - section_path: 1.42.1
+      role: alternative
+      confidence: high
+    - section_path: 1.42.2
+      role: alternative
+      confidence: high
+    - section_path: 1.42.3
+      role: alternative
+      confidence: high
+    - section_path: 1.42.4
+      role: alternative
+      confidence: high
+    - section_path: 1.42.5
+      role: alternative
+      confidence: high
+    - section_path: 1.42.6
+      role: alternative
+      confidence: high
+    - section_path: 1.42.7
+      role: alternative
+      confidence: high
+    - section_path: "1.43"
+      role: constraint
+      confidence: high
+    - section_path: "1.44"
+      role: requirement
+      confidence: high
+    - section_path: 1.44.1
+      role: requirement
+      confidence: high
+    - section_path: 1.44.2
+      role: requirement
+      confidence: high
+    - section_path: 1.44.3
+      role: requirement
+      confidence: high
+    - section_path: 1.44.4
+      role: requirement
+      confidence: high
+    - section_path: 1.44.5
+      role: requirement
+      confidence: high
+    - section_path: 1.44.6
+      role: requirement
+      confidence: high
+    - section_path: 1.44.7
+      role: requirement
+      confidence: high
+    - section_path: 1.44.8
+      role: requirement
+      confidence: high
+    - section_path: "1.45"
+      role: decision
+      confidence: high

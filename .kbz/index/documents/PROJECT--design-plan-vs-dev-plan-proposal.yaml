@@ -47,4 +47,28 @@ sections:
               byte_count: 299
               word_count: 48
               content_hash: d160d5142962c769c98356a5e42ed30c259c9b263a6aeaf3950967195836756b
-classified: false
+access_count: 2
+last_accessed_at: 2026-04-22T18:25:13.768813Z
+classified: true
+classified_at: 2026-04-22T18:30:05.785042Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: decision
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.1
+      role: narrative
+      confidence: high
+    - section_path: 1.2.2
+      role: decision
+      confidence: high
+    - section_path: 1.2.3
+      role: constraint
+      confidence: high
