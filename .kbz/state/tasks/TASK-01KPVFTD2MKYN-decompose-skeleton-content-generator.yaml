@@ -1,0 +1,6 @@
+id: TASK-01KPVFTD2MKYN
+parent_feature: FEAT-01KPVDDYX73WB
+slug: decompose-skeleton-content-generator
+name: Implement skeleton dev-plan content generator
+summary: "Build the buildSkeletonDevPlan helper that generates skeleton Markdown from feature metadata and task list, conforming to REQ-002 structure"
+status: queued
