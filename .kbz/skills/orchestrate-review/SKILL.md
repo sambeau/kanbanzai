@@ -106,6 +106,7 @@ constraint_level: medium
 ```
 Copy this checklist and track your progress:
 - [ ] Identified all files changed in the feature
+- [ ] Classified unclassified feature documents (or confirmed context budget insufficient)
 - [ ] Grouped files into review units by functional boundary
 - [ ] Selected specialist reviewers based on change scope
 - [ ] Dispatched each sub-agent with review-code skill + reviewer role + scope
@@ -124,7 +125,23 @@ Copy this checklist and track your progress:
 
 ### Step 1: Verify prerequisites
 
-1. Confirm the feature is in `reviewing` status.
+1a. Confirm the feature is in `reviewing` status.
+1b. Classify unclassified feature documents. Call `doc_intel(action: "pending")` and
+    filter results for documents owned by the feature under review. For each unclassified
+    document, process in priority order (specification → design → dev-plan):
+    1. Call `doc_intel(action: "guide", id: "DOC-xxx")` to get the section outline
+       and content hash.
+    2. Read the sections needed to understand the document content.
+    3. Call `doc_intel(action: "classify", id: "DOC-xxx", content_hash: "...", ...)`
+       to submit the classifications.
+
+    **Classification is NOT a blocking prerequisite.** If context budget is exhausted,
+    MUST proceed with reviewing anyway.
+
+    **Rationale:** Reviewer sub-agents use `doc_intel` to navigate documents. Layer 3
+    classification enables role-based search and produces richer guides. An unclassified
+    corpus forces reviewers to fall back to structural navigation only, missing decision
+    and rationale fragments that classification would have surfaced.
 2. Locate the specification document(s) for the feature.
 3. Identify all files changed in the feature (use the worktree diff or
    file list from the feature entity).
