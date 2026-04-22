@@ -177,10 +177,40 @@ immediately for a concept search query).
       conventional roles, entity refs, and content hash.
    2. Read the sections you need (use `doc_intel(action: "section", ...)` if the
       document is large and you only need specific sections).
-   3. Produce classification objects for each section, assigning one or more roles
-      (e.g. `requirement`, `decision`, `rationale`, `context`, `procedure`).
-   4. Call `doc_intel(action: "classify", id: "DOC-xxx", content_hash: "...", ...)`
+   3. Produce a classification object for each section in the outline, assigning a
+      role from the taxonomy below.
+   4. Call `doc_intel(action: "classify", id: "DOC-xxx", content_hash: "...", model_name: "...", model_version: "...", classifications: "[...]")`
       to submit the classifications.
+
+   **Classification object format** (`classifications` is a JSON-encoded string):
+   ```json
+   [
+     {"section_path": "1",   "role": "narrative",    "confidence": "high"},
+     {"section_path": "1.1", "role": "requirement",  "confidence": "high"},
+     {"section_path": "1.2", "role": "rationale",    "confidence": "medium"}
+   ]
+   ```
+
+   **Valid roles** (choose the one that best describes the section's primary content):
+
+   | Role | When to use |
+   |------|-------------|
+   | `requirement` | Acceptance criteria, must/shall/must-not statements, ACs |
+   | `decision` | A choice that was made, an ADR, a "we will do X" statement |
+   | `rationale` | Explanation of *why* — motivation, problem statement, purpose |
+   | `constraint` | Scope boundaries, in-scope/out-of-scope, deferred items, exclusions |
+   | `assumption` | Things assumed true that haven't been verified |
+   | `risk` | Identified risks or mitigations |
+   | `question` | Open questions, TBDs |
+   | `definition` | Glossary entries, term definitions, data schemas |
+   | `example` | Worked examples, sample code, sample payloads |
+   | `alternative` | Options considered but not chosen |
+   | `narrative` | Everything else — introductions, summaries, front matter, file lists |
+
+   **Valid confidence values:** `"high"`, `"medium"`, `"low"`
+
+   **Optional fields per object:** `summary` (one-line description), `concepts_intro`
+   (array of concept names introduced), `concepts_used` (array of concept names referenced).
 
 4. **Repeat** until the pending list is empty or your context budget is exhausted.
    Re-call `doc_intel(action: "pending")` to confirm progress.

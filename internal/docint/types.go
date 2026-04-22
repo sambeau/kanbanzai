@@ -58,8 +58,8 @@ type FrontMatter struct {
 //	  - name: concept-name
 //	    aliases: [alt-form, another-form]
 type ConceptIntroEntry struct {
-	Name    string   // canonical concept name
-	Aliases []string // alternative forms (optional)
+	Name    string   `json:"name"`              // canonical concept name
+	Aliases []string `json:"aliases,omitempty"` // alternative forms (optional)
 }
 
 // UnmarshalYAML implements yaml.Unmarshaler.
@@ -100,12 +100,12 @@ func (e ConceptIntroEntry) MarshalYAML() (interface{}, error) {
 
 // Classification represents an agent-provided fragment classification (Layer 3).
 type Classification struct {
-	SectionPath   string              `yaml:"section_path"`
-	Role          string              `yaml:"role"`                     // From FragmentRole taxonomy
-	Confidence    string              `yaml:"confidence"`               // "high", "medium", "low"
-	Summary       string              `yaml:"summary,omitempty"`        // One-line characterisation
-	ConceptsIntro []ConceptIntroEntry `yaml:"concepts_intro,omitempty"` // Concepts this section introduces
-	ConceptsUsed  []string            `yaml:"concepts_used,omitempty"`  // Concepts this section uses
+	SectionPath   string              `yaml:"section_path"             json:"section_path"`
+	Role          string              `yaml:"role"                     json:"role"`       // From FragmentRole taxonomy
+	Confidence    string              `yaml:"confidence"               json:"confidence"` // "high", "medium", "low"
+	Summary       string              `yaml:"summary,omitempty"        json:"summary,omitempty"`
+	ConceptsIntro []ConceptIntroEntry `yaml:"concepts_intro,omitempty" json:"concepts_intro,omitempty"` // Concepts this section introduces
+	ConceptsUsed  []string            `yaml:"concepts_used,omitempty"  json:"concepts_used,omitempty"`  // Concepts this section uses
 }
 
 // ClassificationSubmission is the input for Layer 3 classification.

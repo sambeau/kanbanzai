@@ -63,7 +63,14 @@ func docIntelTool(intelligenceSvc *service.IntelligenceService, docRecordSvc *se
 			mcp.Description("Version of the LLM that produced the classifications — required for classify"),
 		),
 		mcp.WithString("classifications",
-			mcp.Description("JSON array of classification objects with section_path, role, confidence, etc. — required for classify"),
+			mcp.Description(
+				"JSON array of classification objects — required for classify. "+
+					"Each object must have: section_path (string, from the guide outline), "+
+					"role (string, one of: requirement, decision, rationale, constraint, assumption, risk, question, definition, example, alternative, narrative), "+
+					"confidence (string, one of: high, medium, low). "+
+					"Optional fields: summary (string), concepts_intro (array of {name, aliases?}), concepts_used (array of strings). "+
+					"Example: [{\"section_path\":\"1.1\",\"role\":\"requirement\",\"confidence\":\"high\"},{\"section_path\":\"1.2\",\"role\":\"rationale\",\"confidence\":\"medium\"}]",
+			),
 		),
 		// find — exactly one of concept, entity_id, or role must be provided
 		mcp.WithString("concept",
