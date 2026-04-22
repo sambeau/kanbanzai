@@ -4,3 +4,6 @@ slug: decompose-skeleton-unit-tests
 name: Unit tests for content generator and idempotency
 summary: "Cover buildSkeletonDevPlan output shape, idempotency branches (no plan / skeleton / non-skeleton), zero-tasks path, and response note field (REQ-NF-002, REQ-NF-003)"
 status: queued
+depends_on:
+  - TASK-01KPVFTD2MKYN
+  - TASK-01KPVFTD550JX

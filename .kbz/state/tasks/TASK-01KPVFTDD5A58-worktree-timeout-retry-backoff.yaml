@@ -4,3 +4,5 @@ slug: worktree-timeout-retry-backoff
 name: Implement exponential-backoff retry and error message
 summary: "Wrap git worktree add in 3-attempt retry (2s/4s/8s backoff), enforce 30s total budget, return exhausted-retry error with underlying error text, attempt count, and fallback command (REQ-002, REQ-003)"
 status: queued
+depends_on:
+  - TASK-01KPVFTDB71F7
