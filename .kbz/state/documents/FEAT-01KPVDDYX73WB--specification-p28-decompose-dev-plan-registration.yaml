@@ -2,9 +2,11 @@ id: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration
 path: work/spec/p28-decompose-dev-plan-registration.md
 type: specification
 title: "Specification: Decompose Dev-Plan Registration"
-status: draft
+status: approved
 owner: FEAT-01KPVDDYX73WB
-content_hash: 165d8fb685b7966e6ba2ac322e08a313eba6ae819db0443b03d16d1e4b4ac79d
+approved_by: sambeau
+approved_at: "2026-04-22T20:48:07Z"
+content_hash: 41c125d3b36e4be526ab1df00caeaa76e98c5e159b1f4ad55d968766a89206a1
 created: "2026-04-22T20:36:26Z"
 created_by: sambeau
-updated: "2026-04-22T20:36:26Z"
+updated: "2026-04-22T20:48:07Z"
