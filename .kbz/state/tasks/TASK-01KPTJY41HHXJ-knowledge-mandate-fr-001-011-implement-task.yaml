@@ -1,0 +1,6 @@
+id: TASK-01KPTJY41HHXJ
+parent_feature: FEAT-01KPTHB649DPK
+slug: knowledge-mandate-fr-001-011-implement-task
+name: implement-task knowledge retrieval mandate
+summary: "implement-task/SKILL.md: Phase 1 step 1a requires knowledge list with tags and BECAUSE clause; Phase 4 gains confirm and flag steps with BECAUSE; checklist gains two items; BAD/GOOD example pair added"
+status: queued
