@@ -1,0 +1,6 @@
+id: TASK-01KPVFJSRP9X6
+parent_feature: FEAT-01KPVDDYQQS1Y
+slug: doc-intel-enrichment-section-count-pending
+name: Add section_count field to pending response
+summary: "Extend the pending response struct with SectionCount and populate it from the Layer 1 index in the pending handler (REQ-001, REQ-002)"
+status: queued
