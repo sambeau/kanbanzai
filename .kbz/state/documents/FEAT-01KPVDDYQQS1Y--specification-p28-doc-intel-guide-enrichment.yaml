@@ -2,9 +2,11 @@ id: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment
 path: work/spec/p28-doc-intel-guide-enrichment.md
 type: specification
 title: "Specification: Doc-Intel Guide Enrichment"
-status: draft
+status: approved
 owner: FEAT-01KPVDDYQQS1Y
-content_hash: 1f5b525c6823ed65710f7ae76f951e57a6d3f54ed8e6777cc7aacc5d99dc11d6
+approved_by: sambeau
+approved_at: "2026-04-22T20:48:07Z"
+content_hash: c4a2082c39fc5b7013f8f62ad4eceb1fe68ae2909fef0221e4abfb1a990d9ebb
 created: "2026-04-22T20:36:25Z"
 created_by: sambeau
-updated: "2026-04-22T20:36:25Z"
+updated: "2026-04-22T20:48:07Z"
