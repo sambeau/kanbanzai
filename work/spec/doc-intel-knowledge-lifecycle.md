@@ -4,7 +4,7 @@
 |---------------|----------------------------------------------------------------------------------|
 | Feature       | FEAT-01KPTHB649DPK                                                               |
 | Design source | `work/design/doc-intel-adoption-design.md` §6 (Fix 4) and §8 (Fix 6)            |
-| Status        | draft                                                                            |
+| Status | approved |
 | Author        | Spec-author task                                                                 |
 
 ## Related Work

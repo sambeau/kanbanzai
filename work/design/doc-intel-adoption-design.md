@@ -1,9 +1,46 @@
 # Design: Document Intelligence Adoption and Integration
 
+## Overview
+
+Kanbanzai's document intelligence system (`doc_intel`) provides a classified, graph-backed
+index of every design document, specification, and decision in a project's corpus. Its
+purpose is to prevent **design amnesia at scale**: as a project grows to hundreds of
+features, no single agent has read the whole corpus, and new designs are routinely written
+without awareness of prior decisions, adjacent features, or existing patterns. The system
+exists to make the corpus queryable so that architects can discover relevant prior work
+before writing a single line of a new design.
+
+The system is architecturally sound and the infrastructure is in place. This design
+addresses two compounding failures identified in the Document Intelligence Usage Report
+(April 2026): the corpus is not being classified (making concept-based retrieval
+non-functional), and agents do not consult the corpus before designing (making the system
+unused even when it is functional). It also adds corpus completeness guarantees and
+access instrumentation so adoption can be measured and regressions detected.
+
+## Goals and Non-Goals
+
+**Goals:**
+- Mandate corpus consultation during the design stage so new features are written with
+  awareness of related prior decisions, adjacent features, and existing patterns
+- Ensure the corpus is complete and trustworthy: unregistered and unclassified documents
+  produce false negatives that are worse than no index at all
+- Establish Layer 3 classification as a routine part of the document lifecycle, not a
+  discretionary batch task
+- Close the knowledge feedback loop: agents should retrieve and confirm knowledge entries,
+  not only contribute them
+- Instrument adoption so regressions are visible without requiring a full corpus audit
+
+**Non-Goals:**
+- Building new technical retrieval infrastructure (covered by `doc-intel-enhancement-design.md`)
+- Automated or pipeline-driven classification (classification remains agent-driven)
+- Embedding-based semantic search (evaluate after the enhancement design ships)
+- Changes to the `doc_intel` or `doc` tool action surface beyond access logging
+
+
 | Field         | Value                                                                     |
 |---------------|---------------------------------------------------------------------------|
 | Date          | 2026-04-23                                                                |
-| Status        | Draft                                                                     |
+| Status | approved |
 | Author        | Architecture task                                                         |
 | Based on      | `work/reports/doc-intel-usage-report.md`                                  |
 | Research      | `work/research/document-retrieval-for-ai-agents.md` (Option A)            |
@@ -11,6 +48,8 @@
 | Complements   | `work/design/doc-intel-enhancement-design.md` (technical infrastructure)  |
 
 ---
+
+## Design
 
 ## 1. Purpose
 
@@ -578,6 +617,73 @@ At plan close-out:
 ```
 
 ---
+
+## Alternatives Considered
+
+### A. Automated classification pipeline
+
+Run Layer 3 classification via a background process triggered on document registration,
+rather than requiring agents to call `doc_intel classify` explicitly.
+
+**Why not chosen:** Classification requires reading and understanding section content to
+assign roles and extract concepts — it is an act of interpretation, not parsing. An
+automated pipeline could call an LLM, but it would run without the registering agent's
+context (why this section was written, what it relates to), producing lower-quality
+classifications. The current approach — classifying at registration when the author has
+full context — produces better results. Automation should be considered if classification
+coverage stalls despite skill mandates, not as the first mechanism.
+
+### B. Programmatic stage-gate enforcement
+
+Block features from advancing from `designing` to `specifying` unless a `doc_intel`
+consultation record is attached to the feature entity.
+
+**Why not chosen in full:** Stage-gate enforcement requires a code change to the
+lifecycle engine. Skill changes and template requirements can ship immediately and cover
+the common case. The conformance reviewer blocking check (§3.5) provides enforcement at
+review time without requiring lifecycle changes. If skill-based enforcement proves
+insufficient after Phase 3 validation, a programmatic gate is a natural next step — the
+design is structured to make that escalation easy.
+
+### C. Advisory corpus consultation (no mandate)
+
+Leave the design-stage consultation as an optional recommended practice rather than a
+mandatory checklist item with a reviewer blocking check.
+
+**Why not chosen:** The usage report is unambiguous: advisory instructions do not produce
+reliable behaviour. All 59 knowledge entries have `use_count: 0` despite the system being
+designed to have them consumed. An advisory Related Work section would be skipped as
+reliably as knowledge retrieval was. The cost of a false signal — a system that appears
+to enforce corpus consultation but does not — is higher than the cost of no mandate.
+
+### D. Dedicated onboarding CLI command
+
+Build a `kanbanzai import-docs` command that handles the full corpus onboarding workflow
+(scan, register, classify, verify) in a single invocation.
+
+**Why not chosen:** The existing `doc audit` and `doc import` tools already provide the
+necessary capabilities. Adding them to the `kanbanzai-getting-started` skill as mandatory
+steps is sufficient for the current need and avoids adding a new command surface. A
+dedicated command becomes worth building if the onboarding procedure proves cumbersome at
+very large corpus sizes (>500 documents).
+
+## Dependencies
+
+| Dependency | Type | Required for |
+|------------|------|-------------|
+| `doc-intel-enhancement-design.md` — FTS5 search | Technical | Fix 1 Phase 0 concept search fallback when classification is absent; full concept search once classification runs |
+| `doc-intel-enhancement-design.md` — SQLite graph | Technical | Performance of `find`, `impact`, and cross-document queries at 1,000+ documents |
+| Existing `doc` tool (`register`, `import`, `audit`) | Existing infrastructure | Fix 2 corpus completeness |
+| Existing `doc_intel` tool (`classify`, `guide`, `find`, `search`, `pending`) | Existing infrastructure | Fix 1 discovery phase; Fix 3 classification triggers |
+| Existing `knowledge` tool (`list`, `confirm`, `flag`, `promote`) | Existing infrastructure | Fix 4 knowledge mandate |
+| `work/templates/specification-prompt-template.md` | Existing document | Fix 1 Related Work template addition |
+| `.kbz/roles/reviewer-conformance.yaml` | Existing role file | Fix 1 blocking conformance check |
+
+The enhancement design's FTS5 search is a soft dependency for Fix 1: corpus discovery
+degrades gracefully to grep-based search when FTS is unavailable, but the full
+"unknown unknowns" discovery capability requires both FTS and populated concept nodes.
+The fixes in this design are sequenced so that the skill changes in Phase 1 deliver value
+even before the enhancement design ships.
 
 ## 9. What Changes
 
