@@ -2,7 +2,7 @@ id: FEAT-01KPVDDYN855F
 slug: skill-doc-updates
 name: Skill documentation updates
 parent: P28-doc-intel-polish-workflow-reliability
-status: proposed
+status: specifying
 summary: "Pure markdown updates to three skill files. Document the concise-output instruction and classify atomicity/recovery procedure in the classification skill. Add a 'Resume plan' checklist to kanbanzai-getting-started and kanbanzai-workflow covering: commit orphaned changes, advance plan lifecycle, override decompose dev-plan gates, confirm worktrees. Sources: Pilot §4.2, §4.3; P27 Issue 4."
 created: "2026-04-22T20:17:15Z"
 created_by: sambeau
