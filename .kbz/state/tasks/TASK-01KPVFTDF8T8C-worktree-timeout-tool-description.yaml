@@ -1,0 +1,6 @@
+id: TASK-01KPVFTDF8T8C
+parent_feature: FEAT-01KPVDDYZ3182
+slug: worktree-timeout-tool-description
+name: Update worktree tool description with fallback
+summary: "Add terminal + git worktree add + worktree(action: update) fallback documentation to the worktree MCP tool description (REQ-004)"
+status: queued
