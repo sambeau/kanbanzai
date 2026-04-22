@@ -13,11 +13,18 @@ Which state-backend direction is the better fit for Kanbanzai at this stage:
 
 This report is intended to inform architectural direction, not immediate implementation. The decision it supports is whether Kanbanzai should continue optimizing the Git-native model as the primary path, begin designing for dual-mode support, or plan a larger product shift toward centralized state.
 
+This memo compares the two competing design documents directly:
+
+- `work/design/transition-history-storage.md` — Git-native evolution via per-entity JSONL transition logs and coarser workflow commits
+- `work/design/centralized-state-server.md` — centralized database-backed canonical state as an alternative backend
+
+It should be read alongside those two designs rather than as a standalone replacement for them.
+
 ## Scope and Methodology
 
 **In scope:**
 - comparison of the two newly drafted design directions
-- implications for Git-native fidelity, operational complexity, concurrency, auditability, offline support, migration cost, and product positioning
+- implications for Git-native fidelity, operational complexity, concurrency, auditability, migration cost, and product positioning
 - whether both approaches can coexist in one product
 - what confidence level is justified by the available evidence
 
@@ -36,6 +43,14 @@ This report is intended to inform architectural direction, not immediate impleme
   - `work/design/public-schema-interface.md`
 - synthesis against the project's stated identity as a Git-native workflow system and the known pain point of noisy workflow commits
 
+**Primary sources reviewed:**
+- `work/design/transition-history-storage.md`
+- `work/design/centralized-state-server.md`
+- `work/design/git-commit-policy.md`
+- `work/design/kanbanzai-1.0.md`
+- `work/design/public-schema-interface.md`
+- `work/design/agent-interaction-protocol.md`
+
 ## Findings
 
 ### Finding 1: The Git-native evolution path is the lower-risk response to the current problem
@@ -45,8 +60,8 @@ The immediate problem under discussion is noisy Git history caused by using comm
 This is a narrower and more proportional response than introducing a centralized state server. It changes storage shape and commit granularity, but it does not require a new deployment model, a new operational surface, or a redefinition of what Git means in Kanbanzai.
 
 Source:
-- `work/design/transition-history-storage.md` — primary, current draft
-- `work/design/git-commit-policy.md` — primary, current design policy
+- `work/design/transition-history-storage.md` — primary, current draft; see Overview, Goals and Non-Goals, and Dependencies
+- `work/design/git-commit-policy.md` — primary, current design policy; see the sections on commit history supporting review and diagnosis, and workflow-state-only commits
 
 Evidence grade: primary / current
 
@@ -56,10 +71,10 @@ Confidence: high
 
 The centralized-state design addresses not only commit noise, but also real-time coordination, stronger concurrency control, richer queries, and team-shared canonical state. Those are real benefits, but they are broader than the problem that triggered this investigation.
 
-This means centralized state is not merely an alternative implementation of transition history. It is a larger architectural move with consequences for deployment, operations, offline behaviour, and product identity.
+This means centralized state is not merely an alternative implementation of transition history. It is a larger architectural move with consequences for deployment, operations, service reachability, and product identity.
 
 Source:
-- `work/design/centralized-state-server.md` — primary, current draft
+- `work/design/centralized-state-server.md` — primary, current draft; see Overview, Goals and Non-Goals, Recommended approach, and Operational model in centralized mode
 
 Evidence grade: primary / current
 
@@ -72,8 +87,9 @@ Existing design documents describe Kanbanzai as a Git-native workflow system and
 A centralized canonical backend is therefore compatible with Kanbanzai only if it is introduced as an explicit expansion of the product model, not as a silent substitution. Retiring Git-native mode would be a product repositioning, not a storage refactor.
 
 Source:
-- `work/design/kanbanzai-1.0.md` — primary, historical design basis
-- `work/design/public-schema-interface.md` — primary, current design note
+- `work/design/kanbanzai-1.0.md` — primary, historical design basis; see the discussion of Git as transport and the viewer as a separate product
+- `work/design/public-schema-interface.md` — primary, current design note; see the viewer assumptions about committed state visibility and independent clones
+- `work/design/centralized-state-server.md` — primary, current draft; see Repository relationship in centralized mode and Dependencies
 
 Evidence grade: primary / mixed recency
 
@@ -86,29 +102,31 @@ The centralized-state design correctly identifies that dual support is feasible 
 A permanent dual-write model would create ambiguity, drift risk, and difficult repair semantics. A backend abstraction with per-project selection is plausible; simultaneous canonical file and database state is not.
 
 Source:
-- `work/design/centralized-state-server.md` — primary, current draft
-- `work/design/agent-interaction-protocol.md` — primary, current design principle on canonical records
+- `work/design/centralized-state-server.md` — primary, current draft; see Could both possibilities be supported?, What transformation would be required?, and Decisions
+- `work/design/agent-interaction-protocol.md` — primary, current design principle on canonical records; see the sections on canonical records and using the workflow system for canonical changes
+- `work/design/transition-history-storage.md` — primary, current draft; see Authority and consistency and Dependencies
 
 Evidence grade: primary / current
 
 Confidence: high
 
-### Finding 5: The Git-native evolution path preserves offline, portability, and inspectability advantages that a centralized backend weakens
+### Finding 5: The Git-native evolution path preserves portability and inspectability advantages that a centralized backend weakens
 
-The Git-native model keeps state transparent in repository files, works naturally offline, and allows read-only consumers to synchronize through Git alone. These are meaningful strengths, especially for small teams, local-first workflows, and low-ops adoption.
+The Git-native model keeps state transparent in repository files and allows read-only consumers to synchronize through Git alone. These are meaningful strengths, especially for small teams and low-ops adoption. Offline operation is not treated as a decision factor here because Kanbanzai is specifically for agentic workflows, and agentic development already assumes online access to AI systems.
 
 A centralized backend weakens all three:
 
-- offline mutation becomes difficult or unsupported
 - inspectability shifts from files to service/database tooling
-- portability now depends on service availability and backup/export discipline
+- portability now depends more on service availability and backup/export discipline
+- service reachability becomes a more explicit operational dependency
 
 These trade-offs may be acceptable for some teams, but they are genuine losses relative to the current model.
 
 Source:
-- `work/design/kanbanzai-1.0.md` — primary, historical design basis
-- `work/design/public-schema-interface.md` — primary, current design note
-- `work/design/centralized-state-server.md` — primary, current draft
+- `work/design/kanbanzai-1.0.md` — primary, historical design basis; see the discussion of Git-native transport and viewer separation
+- `work/design/public-schema-interface.md` — primary, current design note; see the sections on committed-state visibility and viewer freshness
+- `work/design/centralized-state-server.md` — primary, current draft; see Repository relationship in centralized mode, Operational model in centralized mode, and Failure modes and handling
+- `work/design/transition-history-storage.md` — primary, current draft; see Recommended approach, Query model, and Failure modes and handling
 
 Evidence grade: primary / mixed recency
 
@@ -126,8 +144,8 @@ The centralized design is best understood as a strategic expansion path. It beco
 None of those conditions are necessary to solve the current commit-noise problem. They are conditions under which Kanbanzai may outgrow a purely Git-native model.
 
 Source:
-- `work/design/centralized-state-server.md` — primary, current draft
-- `work/design/transition-history-storage.md` — primary, current draft
+- `work/design/centralized-state-server.md` — primary, current draft; see Problem and Motivation, Recommended approach, and What transformation would be required?
+- `work/design/transition-history-storage.md` — primary, current draft; see Problem and Motivation, Recommended approach, and Migration strategy
 
 Evidence grade: primary / current
 
@@ -135,12 +153,11 @@ Confidence: medium-high
 
 ## Trade-Off Analysis
 
-| Criterion | Git-native evolution (`transition-history-storage`) | Centralized backend (`centralized-state-server`) |
-|-----------|------------------------------------------------------|--------------------------------------------------|
+| Criterion | Git-native evolution (`work/design/transition-history-storage.md`) | Centralized backend (`work/design/centralized-state-server.md`) |
+|-----------|--------------------------------------------------------------------|----------------------------------------------------------------|
 | **Solves current commit-noise problem directly** | Strong | Indirect / over-broad |
 | **Preserves Git-native identity** | Strong | Weak unless dual-mode |
 | **Operational complexity** | Low | High |
-| **Offline/local-first support** | Strong | Weak |
 | **Human inspectability** | Strong | Medium–weak |
 | **Real-time shared coordination** | Weak–medium | Strong |
 | **Concurrency control** | Medium | Strong |
@@ -161,7 +178,7 @@ Confidence: medium-high
 - **Based on:** Findings 1, 3, and 5
 - **Conditions:** Applies if the immediate goal is to reduce Git noise while preserving Kanbanzai's current product identity and operating model.
 
-This is the most proportional response to the problem that triggered the investigation. It solves the specific pain without forcing a broader architectural commitment.
+This is the most proportional response to the problem that triggered the investigation. It solves the specific pain without forcing a broader architectural commitment. For the concrete design, see `work/design/transition-history-storage.md`.
 
 ### Recommendation 2: Treat centralized state as a strategic expansion path, not the default answer to commit noise
 
@@ -170,7 +187,7 @@ This is the most proportional response to the problem that triggered the investi
 - **Based on:** Findings 2 and 6
 - **Conditions:** Applies unless there is already a clear product decision to target centrally coordinated team deployments as the primary use case.
 
-This keeps the option alive without conflating two different decisions: fixing commit history versus redefining the product topology.
+This keeps the option alive without conflating two different decisions: fixing commit history versus redefining the product topology. For the concrete alternative, see `work/design/centralized-state-server.md`.
 
 ### Recommendation 3: If centralized mode is pursued, require one canonical backend per project
 
@@ -179,7 +196,7 @@ This keeps the option alive without conflating two different decisions: fixing c
 - **Based on:** Finding 4
 - **Conditions:** Applies to any future dual-mode architecture.
 
-This is the key guardrail that makes dual-mode support plausible rather than chaotic.
+This is the key guardrail that makes dual-mode support plausible rather than chaotic. Both design documents now assume this boundary explicitly.
 
 ### Recommendation 4: If centralized mode remains strategically interesting, invest next in backend-neutral service boundaries
 
@@ -188,7 +205,7 @@ This is the key guardrail that makes dual-mode support plausible rather than cha
 - **Based on:** Findings 2, 4, and 6
 - **Conditions:** Applies if the team wants to preserve the option of centralized mode without committing to it immediately.
 
-This creates optionality. It improves the architecture even if Kanbanzai remains Git-native for the foreseeable future.
+This creates optionality. It improves the architecture even if Kanbanzai remains Git-native for the foreseeable future. It is also the clearest shared prerequisite between `work/design/transition-history-storage.md` and `work/design/centralized-state-server.md`.
 
 ### Recommendation 5: Do not retire the Git-native model without an explicit product-positioning decision
 
@@ -197,7 +214,15 @@ This creates optionality. It improves the architecture even if Kanbanzai remains
 - **Based on:** Findings 3 and 5
 - **Conditions:** Applies if future work begins to assume a server-backed default.
 
-The evidence does not support treating this as a mere implementation detail. It changes what Kanbanzai is.
+The evidence does not support treating this as a mere implementation detail. It changes what Kanbanzai is. That distinction is reflected directly in the competing design documents: one preserves the current Git-native model, while the other proposes an explicit expansion beyond it.
+
+## Related Documents
+
+- `work/design/transition-history-storage.md` — Git-native evolution path recommended for the near term
+- `work/design/centralized-state-server.md` — centralized backend alternative kept as a strategic option
+- `work/design/git-commit-policy.md` — commit-history quality constraints that motivated the investigation
+- `work/design/kanbanzai-1.0.md` — Git-native product framing
+- `work/design/public-schema-interface.md` — viewer assumptions tied to committed state visibility
 
 ## Limitations
 

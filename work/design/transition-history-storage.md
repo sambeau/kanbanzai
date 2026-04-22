@@ -4,6 +4,29 @@
 | Status | Draft |
 | Author | GPT-5.4 |
 
+## Overview
+
+This design proposes a Git-native evolution of Kanbanzai's workflow-state model: keep YAML entity records as the source of truth for current state, add per-entity JSONL transition logs as the canonical history of lifecycle changes, and reduce Git noise by moving from per-transition commits to milestone-based workflow flushes.
+
+This document is one side of a deliberate design comparison. The competing centralized alternative is described in `work/design/centralized-state-server.md`, and the comparative assessment of the two directions is captured in `work/research/state-backend-comparison.md`.
+
+## Goals and Non-Goals
+
+### Goals
+
+- Preserve Kanbanzai's Git-native storage model for canonical workflow state.
+- Separate semantic transition history from Git commit history.
+- Reduce noisy workflow-only commits that obscure code changes.
+- Keep transition history append-only, inspectable, and queryable.
+- Preserve a migration path to optional derived indexing without changing canonical storage.
+
+### Non-Goals
+
+- Introduce a shared centralized database as canonical state for this design direction.
+- Redesign lifecycle state machines or workflow semantics.
+- Require SQLite or any other database as part of the first implementation.
+- Eliminate the possibility of a future centralized backend; that alternative is evaluated separately in `work/design/centralized-state-server.md`.
+
 ## Problem and Motivation
 
 Kanbanzai currently derives much of its lifecycle transition history from Git commit history and, more recently, auto-commits workflow state after many MCP operations. This gives the system a durable audit trail, but it also creates a poor review experience: commit history becomes dominated by low-level workflow transitions rather than coherent code changes.
@@ -26,7 +49,7 @@ Kanbanzai should preserve its Git-native model while separating these concerns. 
 
 ## Design
 
-### Overview
+### Recommended approach
 
 Introduce a **canonical append-only transition log stored as JSONL files in the repository**, while keeping the existing YAML entity records as the source of truth for current state. Git remains the transport and durability mechanism for project state, but it no longer serves as the primary semantic event log for lifecycle transitions.
 
@@ -36,6 +59,8 @@ This design has four parts:
 2. **Canonical transition history is written to per-entity JSONL files** under `.kbz/state/transitions/`.
 3. **Git commits become coarser-grained snapshots** of workflow state rather than one-commit-per-transition events.
 4. **Optional SQLite indexing remains a future optimisation**, not part of the canonical storage model.
+
+This is intentionally the Git-native side of the broader state-backend decision. The competing centralized approach is documented in `work/design/centralized-state-server.md`, while `work/research/state-backend-comparison.md` explains why this design is the lower-risk near-term response to the current commit-noise problem.
 
 ### Storage model
 
@@ -158,7 +183,7 @@ Backfill from historical Git commits is optional and best-effort. Existing entit
 
 ### Failure modes and handling
 
-This design introduces several failure modes that must be handled explicitly.
+This design introduces several failure modes that must be handled explicitly. Several of these are the inverse trade-offs of the centralized alternative in `work/design/centralized-state-server.md`: this design preserves inspectability and Git-native transport, but it accepts continued dependence on repository-local files and Git merge behavior.
 
 #### Partial write risk
 
@@ -240,11 +265,20 @@ Scanning JSONL files is acceptable at current scale. If it becomes slow, the der
 
 **What it makes harder:**
 - requires infrastructure and operations
-- weakens offline and repo-local workflows
+- weakens repository-local workflows
 - shifts Kanbanzai away from its Git-native identity
 - turns a storage refinement into a product-architecture change
 
-**Why rejected:** This is disproportionate to the problem being solved. It may become appropriate only if Kanbanzai intentionally evolves into a centrally hosted workflow platform.
+**Why rejected:** This is disproportionate to the problem being solved. It may become appropriate only if Kanbanzai intentionally evolves into a centrally hosted workflow platform. That broader direction is explored in `work/design/centralized-state-server.md`, and the comparative recommendation is captured in `work/research/state-backend-comparison.md`.
+
+## Dependencies
+
+This design depends on and should remain aligned with:
+
+- `work/design/git-commit-policy.md` for the requirement that commit history remain understandable and useful for review and diagnosis
+- `work/design/transition-log-design.md` for the earlier on-entity transition-history concept that this document refines toward per-entity JSONL logs
+- `work/design/centralized-state-server.md` for the competing centralized alternative
+- `work/research/state-backend-comparison.md` for the comparative recommendation and trade-off framing
 
 ## Decisions
 

@@ -4,9 +4,32 @@
 | Status | Draft |
 | Author | GPT-5.4 |
 
+## Overview
+
+This design proposes a centralized-state alternative for Kanbanzai: store canonical workflow state for a team's project in a shared database-backed state server, while keeping the repository focused on code, documents, and configuration.
+
+This document is the competing alternative to the Git-native evolution described in `work/design/transition-history-storage.md`. The comparative assessment of the two directions is captured in `work/research/state-backend-comparison.md`.
+
+## Goals and Non-Goals
+
+### Goals
+
+- Evaluate whether a shared centralized state server is a better fit for some Kanbanzai deployments.
+- Describe how Kanbanzai could support a database-backed canonical backend without immediate forced abandonment of the Git-native model.
+- Examine whether both Git-native and centralized backends could coexist in one product.
+- Describe the transformation required to move from file-backed canonical state to database-backed canonical state.
+- Make the operational, architectural, and product-positioning trade-offs explicit.
+
+### Non-Goals
+
+- Replace the Git-native model by default in this design alone.
+- Define a full production database schema or migration implementation plan.
+- Design a hosted multi-tenant SaaS security model.
+- Assume that centralized state is required to solve the current commit-noise problem; that narrower problem is addressed by `work/design/transition-history-storage.md`.
+
 ## Problem and Motivation
 
-Kanbanzai is currently designed as a Git-native workflow system. Canonical project state lives in repository files under `.kbz/state/`, and Git acts as both transport and durability boundary for collaboration. This model has strong properties: it is transparent, portable, offline-friendly, and easy to inspect. It also aligns with the current viewer model, where read-only consumers can stay in sync simply by pulling from Git.
+Kanbanzai is currently designed as a Git-native workflow system. Canonical project state lives in repository files under `.kbz/state/`, and Git acts as both transport and durability boundary for collaboration. This model has strong properties: it is transparent, portable, and easy to inspect. It also aligns with the current viewer model, where read-only consumers can stay in sync simply by pulling from Git.
 
 However, the Git-native model also imposes constraints that become more visible as the system scales from a single developer or a small number of cooperating agents toward a team-wide, multi-user workflow system.
 
@@ -30,7 +53,7 @@ The goal is not to assume that the Git-native model is wrong. The goal is to eva
 
 ## Design
 
-### Overview
+### Recommended approach
 
 Introduce a **centralized state server mode** in which canonical workflow state for a project is stored in a shared database and accessed through the Kanbanzai MCP server and CLI. The existing Git-native file store remains a supported mode, at least during transition and likely long-term if dual-mode support proves tractable.
 
@@ -42,6 +65,8 @@ The design therefore has to answer four architectural questions:
 2. **How does the server relate to Git and the repository?**
 3. **Can both storage models coexist without constant ambiguity?**
 4. **How does Kanbanzai migrate from one model to the other?**
+
+This is intentionally the centralized side of the broader state-backend decision. The Git-native alternative is documented in `work/design/transition-history-storage.md`, and the comparative recommendation is captured in `work/research/state-backend-comparison.md`.
 
 ### Recommended centralized architecture
 
@@ -261,7 +286,7 @@ These are not reasons to reject centralized mode, but they are real costs. The G
 
 ### Failure modes and handling
 
-A centralized design changes the failure profile.
+A centralized design changes the failure profile. Several of these are the inverse trade-offs of the Git-native alternative in `work/design/transition-history-storage.md`: centralized state improves real-time coordination and shared authority, but it introduces service availability, network dependence, and operational burden that the Git-native model largely avoids.
 
 #### Server unavailable
 
@@ -273,14 +298,15 @@ Mitigation:
 - clear local caching rules
 - operational runbooks and health checks
 
-#### Network partition or offline work
+#### Network partition or service reachability
 
-Git-native mode works naturally offline. Centralized mode does not.
+A centralized backend introduces dependence on service reachability. Git-native mode keeps workflow state in repository files, while centralized mode requires the shared state service to be reachable for canonical reads and writes.
 
 Mitigation:
 
-- define whether offline operation is unsupported, read-only, or queue-based
-- avoid pretending centralized mode preserves all offline properties of Git-native mode
+- define degraded behavior when the state service is unreachable
+- make read-only versus read-write failure modes explicit
+- avoid treating service-backed state as if it had the same local availability characteristics as repository-backed state
 
 #### Drift between code/documents and workflow state
 
@@ -310,7 +336,7 @@ Mitigation:
 
 **What it makes easier:**
 - preserves current product identity
-- keeps offline and portable workflows
+- keeps portable, repository-local workflows
 - avoids new infrastructure
 - keeps repository-local transparency
 
@@ -347,7 +373,7 @@ Mitigation:
 
 **What it makes harder:**
 - abandons the Git-native value proposition
-- breaks offline/local-first assumptions
+- weakens repository-local simplicity
 - makes small-project adoption heavier
 - turns migration into a one-way product rewrite
 
@@ -368,6 +394,15 @@ Mitigation:
 - risks conceptual complexity in documentation and support
 
 **Why chosen:** This is the best balance of flexibility and continuity, provided the system enforces one canonical backend per project and avoids permanent dual-write ambiguity.
+
+## Dependencies
+
+This design depends on and should remain aligned with:
+
+- `work/design/kanbanzai-1.0.md` for the Git-native product framing and the role of Git as transport in the current model
+- `work/design/public-schema-interface.md` for the current viewer assumptions and the implications of committed versus uncommitted state visibility
+- `work/design/transition-history-storage.md` for the competing Git-native evolution path
+- `work/research/state-backend-comparison.md` for the comparative recommendation and trade-off framing
 
 ## Decisions
 
