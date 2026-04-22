@@ -4,5 +4,6 @@ name: Doc-intel register workflow friction
 parent: P28-doc-intel-polish-workflow-reliability
 status: specifying
 summary: "Two improvements to reduce round-trips in the classify-on-register workflow. (1) Include content_hash and section outline directly in the classification_nudge returned by doc register, shrinking the workflow from 3 tool calls to 2 (§5.4). (2) Audit all MCP parameter structs that are decoded via json.Unmarshal to ensure they have explicit json: tags alongside any yaml: tags; add a test or vet check to prevent future drift (§5.5). Sources: Pilot §5.4, §5.5."
+spec: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow
 created: "2026-04-22T20:17:15Z"
 created_by: sambeau
