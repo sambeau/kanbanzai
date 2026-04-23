@@ -2,9 +2,11 @@ id: FEAT-01KPX5CW0QSM7/specification-p32-concept-tagging-approval-gate
 path: work/spec/p32-concept-tagging-approval-gate.md
 type: specification
 title: "P32: Concept Tagging Approval Gate"
-status: draft
+status: approved
 owner: FEAT-01KPX5CW0QSM7
-content_hash: 41a5d9c8a0ff66bc5e816fe433e54ce5986f7e76f455f46374c52e72b2ccde32
+approved_by: sambeau
+approved_at: "2026-04-23T15:03:18Z"
+content_hash: 699a8c3f11dbabcc82fd33a936b070d9466ac099e754fc036ba1dace04f602c3
 created: "2026-04-23T14:59:16Z"
 created_by: sambeau
-updated: "2026-04-23T15:03:09Z"
+updated: "2026-04-23T15:03:18Z"
