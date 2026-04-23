@@ -2,7 +2,18 @@ id: FEAT-01KPRFCXNMNKM
 slug: strategic-merge-checkpoints
 name: Strategic Merge Checkpoint Research
 parent: P26-workflow-scaling
-status: designing
+status: specifying
 summary: "Investigate whether cohort-based merge checkpoints during development would prevent drift and reduce merge complexity at plan completion, and design what first-class tooling support would look like."
 created: "2026-04-21T16:53:55Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: designing
+    reason: This is a pure research task — the task itself IS the research/design output. No separate design or spec document is warranted for a single-task research feature.
+    timestamp: "2026-04-23T15:37:23+01:00"
+    to_status: developing
+  -
+    from_status: designing
+    reason: Research feature — no separate design document needed; skipping design approval gate.
+    timestamp: "2026-04-23T15:37:33+01:00"
+    to_status: specifying
