@@ -1,4 +1,4 @@
-updated_at: 2026-04-23T01:16:48.268762Z
+updated_at: 2026-04-23T03:59:49.352138Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -70938,5 +70938,320 @@ edges:
     - from: FEAT-01KPVDDYN855F/report-review-feat-01kpvddyn855f-skill-doc-updates#1
       from_type: section
       to: P28-doc-intel-polish-workflow-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow
+      from_type: document
+      to: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.3
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.3
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.2
+      from_type: section
+      to: TASK-01KPVFXTHVYG3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.2
+      from_type: section
+      to: TASK-01KPVG83MJ0H2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.2
+      from_type: section
+      to: TASK-01KPVG85SXVXZ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.2
+      from_type: section
+      to: TASK-01KPVG9AQNE3J
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow#1.5
+      from_type: section
+      to: TASK-01KPVG83MJ0H2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout
+      from_type: document
+      to: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1.2
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1.2
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1
+      from_type: section
+      to: FEAT-01KPVDDYZ3182
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1.1
+      from_type: section
+      to: TASK-01KPVFTDB71F7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1.1
+      from_type: section
+      to: TASK-01KPVFTDF8T8C
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1.1
+      from_type: section
+      to: TASK-01KPVFTDD5A58
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout#1.1
+      from_type: section
+      to: TASK-01KPVFTDH4JWS
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active
+      from_type: document
+      to: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1.2
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1.2
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active#1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration
+      from_type: document
+      to: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1.2
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1.2
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration#1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment
+      from_type: document
+      to: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.3
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.3
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.4
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.2
+      from_type: section
+      to: TASK-01KPVFJSRP9X6
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.2
+      from_type: section
+      to: TASK-01KPVFJV74YA4
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.2
+      from_type: section
+      to: TASK-01KPVFJW8CGJK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.2
+      from_type: section
+      to: TASK-01KPVFKEH5G9N
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.5
+      from_type: section
+      to: TASK-01KPVFJSRP9X6
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.5
+      from_type: section
+      to: TASK-01KPVFJV74YA4
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.5
+      from_type: section
+      to: TASK-01KPVFJW8CGJK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment#1.5
+      from_type: section
+      to: TASK-01KPVFKEH5G9N
       to_type: entity_ref
       edge_type: REFERENCES

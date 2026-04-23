@@ -1,0 +1,116 @@
+document_id: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment
+document_path: work/reports/review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment.md
+content_hash: 2d5dc7629425ddc7e06443cf2146b0a2dbf7ab170ca763c1e5b76c7840723564
+indexed_at: 2026-04-23T03:59:49.352138Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Doc-Intel Guide Enrichment (FEAT-01KPVDDYQQS1Y)'
+      byte_offset: 0
+      byte_count: 3162
+      word_count: 441
+      content_hash: 2d5dc7629425ddc7e06443cf2146b0a2dbf7ab170ca763c1e5b76c7840723564
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 230
+          byte_count: 780
+          word_count: 104
+          content_hash: e25bc44086f5389e392c4bd261a1cf1448a21cea00194ed6dc854318f2daed0e
+        - path: "1.2"
+          level: 2
+          title: Tasks Reviewed
+          byte_offset: 1010
+          byte_count: 422
+          word_count: 69
+          content_hash: c854c9d0615c82cafee1b15ea412db38933d0bdc86fca33493c69d41c2801879
+        - path: "1.3"
+          level: 2
+          title: Findings
+          byte_offset: 1432
+          byte_count: 64
+          word_count: 9
+          content_hash: da8906fd5997e62674b7d904167e3918cbe6630779b6bdc185c1e34dba407eb4
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Blocking
+              byte_offset: 1445
+              byte_count: 21
+              word_count: 3
+              content_hash: 49e4d21b91bc8c1b14b4a64bc376147f55e3c7968d6949cf78f3de72b4cd17f7
+            - path: 1.3.2
+              level: 3
+              title: Non-Blocking
+              byte_offset: 1466
+              byte_count: 30
+              word_count: 4
+              content_hash: 453650e6418faf09f9e67f73560fc0e1402fe204ee9ce270bde9040aebc06fed
+        - path: "1.4"
+          level: 2
+          title: Merge Evidence
+          byte_offset: 1496
+          byte_count: 718
+          word_count: 95
+          content_hash: ad78a2246449d392ddf4eb876b3dbe3a8e68fd230909316e3e227e435c214ee7
+        - path: "1.5"
+          level: 2
+          title: Spec Traceability
+          byte_offset: 2214
+          byte_count: 758
+          word_count: 108
+          content_hash: 868474adbc78bbc6ea179b330cddd6f54c2950a4976ea6689344731b16f6ece5
+        - path: "1.6"
+          level: 2
+          title: Conclusion
+          byte_offset: 2972
+          byte_count: 190
+          word_count: 32
+          content_hash: 2333b8a4f167f0f5e34092cfe44d1676d5ff4d8847fa6a96e05738ca29a9574d
+entity_refs:
+    - entity_id: FEAT-01KPVDDYQQS1Y
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 45
+    - entity_id: FEAT-01KPVDDYQQS1Y
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 1608
+    - entity_id: TASK-01KPVFJSRP9X6
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1101
+    - entity_id: TASK-01KPVFJV74YA4
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1184
+    - entity_id: TASK-01KPVFJW8CGJK
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1260
+    - entity_id: TASK-01KPVFKEH5G9N
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1347
+    - entity_id: TASK-01KPVFJSRP9X6
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 2351
+    - entity_id: TASK-01KPVFJV74YA4
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 2500
+    - entity_id: TASK-01KPVFJW8CGJK
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 2650
+    - entity_id: TASK-01KPVFKEH5G9N
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 2931
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

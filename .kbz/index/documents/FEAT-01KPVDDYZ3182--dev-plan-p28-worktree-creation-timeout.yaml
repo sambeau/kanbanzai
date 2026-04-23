@@ -95,4 +95,10 @@ conventional_roles:
     - section_path: "1.4"
       role: risk
       confidence: high
+access_count: 7
+last_accessed_at: 2026-04-23T03:31:34.141162Z
+section_access:
+    "1":
+        access_count: 3
+        last_accessed_at: 2026-04-23T03:13:36.676597Z
 classified: false

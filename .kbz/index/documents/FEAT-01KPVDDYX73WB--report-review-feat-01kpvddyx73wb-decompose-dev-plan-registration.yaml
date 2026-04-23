@@ -1,0 +1,73 @@
+document_id: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration
+document_path: work/reports/review-feat-01kpvddyx73wb-decompose-dev-plan-registration.md
+content_hash: 960ae0d23dee4e166f09eb7a92734b337a3b883f568116b9af1549ecca32704a
+indexed_at: 2026-04-23T03:53:54.404552Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Decompose Dev-Plan Registration (FEAT-01KPVDDYX73WB)'
+      byte_offset: 0
+      byte_count: 2316
+      word_count: 181
+      content_hash: 960ae0d23dee4e166f09eb7a92734b337a3b883f568116b9af1549ecca32704a
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 90
+          byte_count: 345
+          word_count: 42
+          content_hash: ba1b173dfbd9cc6c2d95aa272a6a90bde13d62c482b5231d362f1338c08159ba
+        - path: "1.2"
+          level: 2
+          title: Findings
+          byte_offset: 435
+          byte_count: 57
+          word_count: 8
+          content_hash: 0e60052cb5a29422e920929ae27b5c099b2c04ace404fa477211be150cfb35eb
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Blocking: None'
+              byte_offset: 448
+              byte_count: 20
+              word_count: 3
+              content_hash: a5ace628deec70395409b79aa2bcf2ca09d19a6de9c6fb32af187b756826b387
+            - path: 1.2.2
+              level: 3
+              title: 'Non-Blocking: None'
+              byte_offset: 468
+              byte_count: 24
+              word_count: 3
+              content_hash: 0cdc5a0e2c3925d5d43eff27e96f85964e29788b296f47bcdda3a19695e95b0d
+        - path: "1.3"
+          level: 2
+          title: Test Evidence
+          byte_offset: 492
+          byte_count: 1219
+          word_count: 68
+          content_hash: 43512662b3f413d343d711321bda2991722e7e7090cc2b4e569c3f41be95ed50
+        - path: "1.4"
+          level: 2
+          title: AC Coverage
+          byte_offset: 1711
+          byte_count: 555
+          word_count: 46
+          content_hash: c4dd6811f663dc834a4ed0f827e078804782fc5f70279d8eeab27d43de7fa75f
+        - path: "1.5"
+          level: 2
+          title: Conclusion
+          byte_offset: 2266
+          byte_count: 50
+          word_count: 8
+          content_hash: 6383d5fdf7a728065e6438641d408a54ba2011040ea2a2adc2e6dc057562edcd
+entity_refs:
+    - entity_id: FEAT-01KPVDDYX73WB
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 50
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

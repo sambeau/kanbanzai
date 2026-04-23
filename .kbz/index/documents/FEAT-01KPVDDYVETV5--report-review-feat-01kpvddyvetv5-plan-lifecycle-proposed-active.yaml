@@ -1,0 +1,66 @@
+document_id: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active
+document_path: work/reports/review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active.md
+content_hash: 36509cb848077a4466b6b0cb028688f6726e977b8693647ad0e1c93b9d61520b
+indexed_at: 2026-04-23T03:48:01.180551Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Plan Lifecycle Proposed-to-Active (FEAT-01KPVDDYVETV5)'
+      byte_offset: 0
+      byte_count: 3729
+      word_count: 358
+      content_hash: 36509cb848077a4466b6b0cb028688f6726e977b8693647ad0e1c93b9d61520b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 92
+          byte_count: 1085
+          word_count: 131
+          content_hash: 45da7c15c8e56dcdd6282e5913ed833a320bde2dcf975765835b69e322fd66ae
+        - path: "1.2"
+          level: 2
+          title: Findings
+          byte_offset: 1177
+          byte_count: 510
+          word_count: 74
+          content_hash: d4b94a6f5a86ee46e05f26887a0042bdc74dd45279347c72c74386748e2125fa
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Blocking: None'
+              byte_offset: 1190
+              byte_count: 20
+              word_count: 3
+              content_hash: a5ace628deec70395409b79aa2bcf2ca09d19a6de9c6fb32af187b756826b387
+            - path: 1.2.2
+              level: 3
+              title: Non-Blocking
+              byte_offset: 1210
+              byte_count: 477
+              word_count: 69
+              content_hash: 59763b5a07dc82850295d3504415575a988bc62bbd062d038b753894c070086a
+        - path: "1.3"
+          level: 2
+          title: Test Evidence
+          byte_offset: 1687
+          byte_count: 1747
+          word_count: 99
+          content_hash: 7d47e133e4d59fc10b231dd5b8f4198afe34a9e8419fddb99d2c40ad939a5418
+        - path: "1.4"
+          level: 2
+          title: Conclusion
+          byte_offset: 3434
+          byte_count: 295
+          word_count: 45
+          content_hash: a8d70160f1e4aaaccc42bb7b904be51e19f19254fcbc1486c5dffb4c9d9a9d58
+entity_refs:
+    - entity_id: FEAT-01KPVDDYVETV5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 52
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

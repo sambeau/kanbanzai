@@ -1,0 +1,102 @@
+document_id: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow
+document_path: work/reports/review-feat-01kpvddysek8p-doc-intel-register-workflow.md
+content_hash: a387f6db70cb0ff8156883f518b002f596de53b824125b3432144235ec739d95
+indexed_at: 2026-04-23T02:44:23.440961Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Doc-Intel Register Workflow Friction (FEAT-01KPVDDYSEK8P)'
+      byte_offset: 0
+      byte_count: 3320
+      word_count: 410
+      content_hash: a387f6db70cb0ff8156883f518b002f596de53b824125b3432144235ec739d95
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 246
+          byte_count: 639
+          word_count: 88
+          content_hash: 77a05bc19527b87ae85849bb2b9b50cf0c2341efacc68df935d525af82f99b0d
+        - path: "1.2"
+          level: 2
+          title: Tasks Reviewed
+          byte_offset: 885
+          byte_count: 440
+          word_count: 73
+          content_hash: 75646c26a7cf9e0d70fbe08714bf70d82f0f279cac9004cfcc740a9dbd371f0b
+        - path: "1.3"
+          level: 2
+          title: Findings
+          byte_offset: 1325
+          byte_count: 64
+          word_count: 9
+          content_hash: da8906fd5997e62674b7d904167e3918cbe6630779b6bdc185c1e34dba407eb4
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Blocking
+              byte_offset: 1338
+              byte_count: 21
+              word_count: 3
+              content_hash: 49e4d21b91bc8c1b14b4a64bc376147f55e3c7968d6949cf78f3de72b4cd17f7
+            - path: 1.3.2
+              level: 3
+              title: Non-Blocking
+              byte_offset: 1359
+              byte_count: 30
+              word_count: 4
+              content_hash: 453650e6418faf09f9e67f73560fc0e1402fe204ee9ce270bde9040aebc06fed
+        - path: "1.4"
+          level: 2
+          title: Test Evidence
+          byte_offset: 1389
+          byte_count: 765
+          word_count: 57
+          content_hash: b5cb85aec6addc53810f5ece43f5abbd98910d4910bfeb8c8d3b32ad7a27ad9a
+        - path: "1.5"
+          level: 2
+          title: Spec Traceability
+          byte_offset: 2154
+          byte_count: 1068
+          word_count: 144
+          content_hash: e7e04de5f8acce3b5de65ba6a3d939699d745142448e40334b41e7e242f425b0
+        - path: "1.6"
+          level: 2
+          title: Conclusion
+          byte_offset: 3222
+          byte_count: 98
+          word_count: 14
+          content_hash: b38af72d512d9a33349b1147f1c36af5b654e25409e10a754e955dd78a543b9a
+entity_refs:
+    - entity_id: FEAT-01KPVDDYSEK8P
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 55
+    - entity_id: TASK-01KPVFXTHVYG3
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 976
+    - entity_id: TASK-01KPVG83MJ0H2
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1067
+    - entity_id: TASK-01KPVG85SXVXZ
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1162
+    - entity_id: TASK-01KPVG9AQNE3J
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1246
+    - entity_id: TASK-01KPVG83MJ0H2
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 2924
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 15
+last_accessed_at: 2026-04-23T03:43:42.973879Z
+classified: false
