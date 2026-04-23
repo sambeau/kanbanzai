@@ -1,8 +1,9 @@
 id: P31-lifecycle-gate-hardening
 slug: lifecycle-gate-hardening
 name: Lifecycle Gate Hardening
-status: proposed
+status: designing
 summary: "Enforce review report existence at merge for features in reviewing status, and surface orphaned reviewing features as a warning in the status dashboard, preventing lifecycle orphans that become invisible until plan close."
+design: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening
 created: "2026-04-23T11:46:22Z"
 created_by: sambeau
-updated: "2026-04-23T11:46:22Z"
+updated: "2026-04-23T11:52:01Z"
