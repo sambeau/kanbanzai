@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPVDDYZ3182
 slug: worktree-timeout-tool-description
 name: Update worktree tool description with fallback
 summary: "Add terminal + git worktree add + worktree(action: update) fallback documentation to the worktree MCP tool description (REQ-004)"
-status: active
+status: done
+files_planned:
+  - internal/mcp/worktree_tool.go
+completed: "2026-04-23T03:08:02Z"
 claimed_at: "2026-04-23T02:49:43Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T02:49:43Z"
 dispatched_by: sambeau
+completion_summary: "Updated worktree tool description to document the timeout fallback. On timeout, callers are instructed to: (1) run `git worktree add <path> -b <branch>` via terminal; (2) call worktree(action: update, entity_id: ...) to register the record. Description budget test still passes (within 800-char limit)."
+verification: "TestToolDescriptions_TokenBudget pass. TestWorktree* all pass."
