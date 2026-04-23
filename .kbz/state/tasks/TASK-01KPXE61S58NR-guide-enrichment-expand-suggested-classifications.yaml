@@ -1,0 +1,6 @@
+id: TASK-01KPXE61S58NR
+parent_feature: FEAT-01KPX5CVVY357
+slug: guide-enrichment-expand-suggested-classifications
+name: Expand suggested_classifications coverage
+summary: "Add Problem and Motivation, Decisions, Design, Overview/Summary, Requirements/Goals, Risk/Risks, Definition/Glossary heading patterns to suggested_classifications"
+status: queued

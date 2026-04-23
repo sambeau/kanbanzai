@@ -1,0 +1,6 @@
+id: TASK-01KPXE61RS3YH
+parent_feature: FEAT-01KPX5CVVY357
+slug: guide-enrichment-split-title-on-delimiters
+name: Split each title on delimiters
+summary: "Implement the normalising lexical pass that splits section titles on /, -, and whitespace characters for concepts_suggested derivation"
+status: queued

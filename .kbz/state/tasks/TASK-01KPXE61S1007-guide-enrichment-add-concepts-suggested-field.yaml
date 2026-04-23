@@ -1,0 +1,6 @@
+id: TASK-01KPXE61S1007
+parent_feature: FEAT-01KPX5CVVY357
+slug: guide-enrichment-add-concepts-suggested-field
+name: Add concepts_suggested field to guide response
+summary: "Add concepts_suggested field (section_path, section_title, suggested_concepts) to docIntelGuideAction response, omitting entries where no concepts are derivable"
+status: queued

@@ -1,0 +1,6 @@
+id: TASK-01KPXE61RX6S2
+parent_feature: FEAT-01KPX5CVVY357
+slug: guide-enrichment-strip-stop-words
+name: Strip stop words from concept tokens
+summary: Implement stop word removal from concept token list
+status: queued
