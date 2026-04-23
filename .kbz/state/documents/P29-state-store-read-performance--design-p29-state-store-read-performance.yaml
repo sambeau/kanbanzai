@@ -2,9 +2,11 @@ id: P29-state-store-read-performance/design-p29-state-store-read-performance
 path: work/design/p29-state-store-read-performance.md
 type: design
 title: "Design: State Store Read Path Performance (P29)"
-status: draft
+status: approved
 owner: P29-state-store-read-performance
-content_hash: 14428d880089055e2ba4bb2f5c210018fec4197085437d1e341bfef49b4ce7ed
+approved_by: sambeau
+approved_at: "2026-04-23T15:51:53Z"
+content_hash: 106c270689e3a15b4b12ca13c9b5ff19719fb7dc7998b6dc05c986bda01ac358
 created: "2026-04-23T11:49:53Z"
 created_by: sambeau
-updated: "2026-04-23T11:52:28Z"
+updated: "2026-04-23T15:51:53Z"
