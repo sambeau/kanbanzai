@@ -2,9 +2,11 @@ id: P32-doc-intel-classification-pipeline-hardening/design-p32-doc-intel-classif
 path: work/design/p32-doc-intel-classification-pipeline-hardening.md
 type: design
 title: "P32: Doc-Intel Classification Pipeline Hardening — Pipeline Enrichment and Approval Gate"
-status: draft
+status: approved
 owner: P32-doc-intel-classification-pipeline-hardening
-content_hash: 301694a029329688b26f264244e4c9c4ff6646027e096f26f5ff0434792a8340
+approved_by: sambeau
+approved_at: "2026-04-23T14:53:35Z"
+content_hash: a1f832f00cbc84d18f6425aa6f5961612a96e69611a411da92c8584265ccb38d
 created: "2026-04-23T14:48:23Z"
 created_by: sambeau
-updated: "2026-04-23T14:48:23Z"
+updated: "2026-04-23T14:53:35Z"
