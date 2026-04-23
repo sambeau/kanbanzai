@@ -3,8 +3,14 @@ parent_feature: FEAT-01KPVDDYN855F
 slug: skill-doc-updates-edit-kanbanzai-getting-started
 name: Edit kanbanzai-getting-started SKILL.md resume section
 summary: Add Resuming an in-flight plan four-step checklist section to .agents/skills/kanbanzai-getting-started/SKILL.md
-status: active
+status: done
+files_planned:
+  - .agents/skills/kanbanzai-getting-started/SKILL.md
+  - internal/kbzinit/skills/getting-started/SKILL.md
+completed: "2026-04-23T01:11:18Z"
 claimed_at: "2026-04-23T00:54:53Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T00:54:53Z"
 dispatched_by: sambeau
+completion_summary: "Added \"Resuming an in-flight plan\" four-step checklist section to .agents/skills/kanbanzai-getting-started/SKILL.md and its kbzinit embedded copy (internal/kbzinit/skills/getting-started/SKILL.md). Section appended at end of file covering: (1) commit orphaned .kbz/ changes, (2) check plan lifecycle state with P28 Sprint 2 transitional note, (3) confirm dev-plan documents with P28 Sprint 2 transitional note, (4) confirm worktrees for in-flight features. Both files updated in a single commit."
+verification: "grep confirmed section heading present at line 282 (.agents) and line 290 (kbzinit). kbzinit markers '# kanbanzai-managed: true' and '# kanbanzai-version: dev' confirmed present at lines 13-14. git diff --name-only main...HEAD shows only owned files modified by this task. AC-004: section with heading exists with numbered list. AC-006: four steps in correct order. AC-007: steps 2 and 3 each carry '(Transitional — becomes unnecessary after P28 Sprint 2 merges.)' note. AC-008: diff clean.\""
