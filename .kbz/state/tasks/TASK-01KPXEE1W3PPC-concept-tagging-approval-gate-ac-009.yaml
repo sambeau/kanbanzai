@@ -3,4 +3,6 @@ parent_feature: FEAT-01KPX5CW0QSM7
 slug: concept-tagging-approval-gate-ac-009
 name: AC-009 Document status unchanged after blocked approval
 summary: AC-009 document status unchanged on gate block
-status: ready
+status: done
+completed: "2026-04-23T16:41:55Z"
+completion_summary: AC-009 covered by TestApproveGate_AC009_StatusUnchangedAfterBlock — document status remains draft after blocked approval

@@ -3,4 +3,9 @@ parent_feature: FEAT-01KPX5CW0QSM7
 slug: concept-tagging-approval-gate-tests
 name: Write tests for the approval gate
 summary: Write tests for the concept-tagging approval gate
-status: ready
+status: done
+files_planned:
+  - internal/mcp/doc_tool_gate_test.go
+completed: "2026-04-23T16:41:55Z"
+completion_summary: Written doc_tool_gate_test.go with 11 test functions covering all ACs; all pass with go test ./internal/mcp/ -run TestApproveGate
+verification: All 11 gate tests pass

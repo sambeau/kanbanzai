@@ -3,4 +3,6 @@ parent_feature: FEAT-01KPX5CW0QSM7
 slug: concept-tagging-approval-gate-ac-001
 name: AC-001 Gate skipped for out-of-scope document types
 summary: AC-001 gate skip for out-of-scope document types
-status: ready
+status: done
+completed: "2026-04-23T16:41:54Z"
+completion_summary: AC-001 covered by TestApproveGate_AC001_NonGatedTypes — policy/report/research types approved successfully when classified without concepts_intro

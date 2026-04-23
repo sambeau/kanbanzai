@@ -3,4 +3,6 @@ parent_feature: FEAT-01KPX5CW0QSM7
 slug: concept-tagging-approval-gate-ac-006
 name: AC-006 Error response includes correct content_hash
 summary: AC-006 error response content_hash correctness
-status: ready
+status: done
+completed: "2026-04-23T16:41:54Z"
+completion_summary: AC-006 covered by TestApproveGate_AC006_ContentHashMatchesEntry — content_hash in error response matches last GetClassifications entry

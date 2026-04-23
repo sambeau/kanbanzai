@@ -3,4 +3,6 @@ parent_feature: FEAT-01KPX5CW0QSM7
 slug: concept-tagging-approval-gate-ac-008
 name: AC-008 GetClassifications returns empty slice for unknown
 summary: AC-008 GetClassifications empty-slice contract
-status: ready
+status: done
+completed: "2026-04-23T16:41:55Z"
+completion_summary: AC-008 covered by TestApproveGate_AC008_GetClassificationsEmptySlice — GetClassifications returns non-nil empty slice with nil error for unknown doc

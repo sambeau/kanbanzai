@@ -3,8 +3,16 @@ parent_feature: FEAT-01KPX5CW0QSM7
 slug: concept-tagging-approval-gate-functional-requirements
 name: Implement gate functional requirements REQ-001 to REQ-003
 summary: Implement Functional Requirements (3 criteria)
-status: active
+status: done
+files_planned:
+  - internal/docint/types.go
+  - internal/service/intelligence.go
+  - internal/mcp/doc_tool.go
+  - internal/mcp/doc_tool_gate_test.go
+completed: "2026-04-23T16:41:54Z"
 claimed_at: "2026-04-23T16:18:12Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T16:18:12Z"
 dispatched_by: sambeau
+completion_summary: "Implemented concept-tagging approval gate: added ClassificationEntry to docint/types.go, GetClassifications to IntelligenceService, gate logic in docApproveOne blocking specification/design/dev-plan when classified without concepts_intro, and comprehensive tests in doc_tool_gate_test.go covering all 11 ACs"
+verification: "go test ./internal/mcp/ -run TestApproveGate: all 11 AC tests pass"
