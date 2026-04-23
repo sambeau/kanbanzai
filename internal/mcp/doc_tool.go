@@ -36,6 +36,7 @@ import (
 	"github.com/mark3labs/mcp-go/server"
 
 	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/docint"
 	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
@@ -54,6 +55,44 @@ var docCommitFunc = func(repoRoot, message string) (bool, error) {
 // Package-level variable for test injection. (FR-B01, FR-B13, FR-B19).
 var docCommitPathsFunc = func(repoRoot, message string, extraPaths ...string) (bool, error) {
 	return git.CommitStateAndPaths(repoRoot, message, extraPaths...)
+}
+
+// classificationNudgeSection is one entry in the classification_nudge outline.
+type classificationNudgeSection struct {
+	Path      string                       `json:"path"`
+	Title     string                       `json:"title"`
+	Level     int                          `json:"level"`
+	WordCount int                          `json:"word_count"`
+	Children  []classificationNudgeSection `json:"children,omitempty"`
+}
+
+// classificationNudge is the structured classification guidance returned by doc(action: "register").
+// The message field is serialised first per REQ-NF-003.
+type classificationNudge struct {
+	Message     string                       `json:"message"`
+	ContentHash string                       `json:"content_hash"`
+	Outline     []classificationNudgeSection `json:"outline"`
+}
+
+// buildNudgeSections converts a slice of docint.Section into classificationNudgeSection items.
+func buildNudgeSections(sections []docint.Section) []classificationNudgeSection {
+	if len(sections) == 0 {
+		return nil
+	}
+	result := make([]classificationNudgeSection, 0, len(sections))
+	for _, s := range sections {
+		ns := classificationNudgeSection{
+			Path:      s.Path,
+			Title:     s.Title,
+			Level:     s.Level,
+			WordCount: s.WordCount,
+		}
+		if len(s.Children) > 0 {
+			ns.Children = buildNudgeSections(s.Children)
+		}
+		result = append(result, ns)
+	}
+	return result
 }
 
 // DocTool returns the consolidated `doc` MCP tool registered in the core group.
@@ -126,7 +165,7 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		return DispatchAction(ctx, req, map[string]ActionHandler{
-			"register":              docRegisterAction(docSvc),
+			"register":              docRegisterAction(docSvc, intelligenceSvc),
 			"approve":               docApproveAction(docSvc),
 			"move":                  docMoveAction(docSvc),
 			"delete":                docDeleteAction(docSvc),
@@ -150,7 +189,7 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 
 // ─── register ─────────────────────────────────────────────────────────────────
 
-func docRegisterAction(docSvc *service.DocumentService) ActionHandler {
+func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
@@ -168,7 +207,7 @@ func docRegisterAction(docSvc *service.DocumentService) ActionHandler {
 				if _, has := doc["created_by"]; !has && topCreatedBy != "" {
 					doc["created_by"] = topCreatedBy
 				}
-				return docRegisterOne(docSvc, doc)
+				return docRegisterOne(docSvc, intelligenceSvc, doc)
 			})
 		}
 
@@ -176,12 +215,12 @@ func docRegisterAction(docSvc *service.DocumentService) ActionHandler {
 		if docArgStr(args, "path") == "" {
 			return nil, fmt.Errorf("Cannot register document: path is missing.\n\nTo resolve:\n  Provide path: doc(action: \"register\", path: \"work/spec/foo.md\", type: \"...\", title: \"...\")")
 		}
-		_, result, err := docRegisterOne(docSvc, args)
+		_, result, err := docRegisterOne(docSvc, intelligenceSvc, args)
 		return result, err
 	}
 }
 
-func docRegisterOne(docSvc *service.DocumentService, args map[string]any) (string, any, error) {
+func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, args map[string]any) (string, any, error) {
 	path := docArgStr(args, "path")
 	docType := docArgStr(args, "type")
 	title := docArgStr(args, "title")
@@ -225,10 +264,21 @@ func docRegisterOne(docSvc *service.DocumentService, args map[string]any) (strin
 		log.Printf("[doc] WARNING: auto-commit after register %s failed: %v", result.ID, commitErr)
 	}
 
-	nudge := fmt.Sprintf(
+	nudgeMsg := fmt.Sprintf(
 		"Layer 3 classification pending for %s.\nCall doc_intel(action: \"guide\", id: \"%s\") then read the section outline.\nThen call doc_intel(action: \"classify\", id: \"%s\", content_hash: \"...\", ...) to classify.",
 		result.ID, result.ID, result.ID,
 	)
+	var outline []classificationNudgeSection
+	if intelligenceSvc != nil {
+		if index, indexErr := intelligenceSvc.GetDocumentIndex(result.ID); indexErr == nil {
+			outline = buildNudgeSections(index.Sections)
+		}
+	}
+	nudge := classificationNudge{
+		Message:     nudgeMsg,
+		ContentHash: result.ContentHash,
+		Outline:     outline,
+	}
 	out := map[string]any{
 		"document":             docRecordToMap(result),
 		"classification_nudge": nudge,

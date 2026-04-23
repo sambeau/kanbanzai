@@ -1918,19 +1918,31 @@ func TestDocTool_Register_Single_ClassificationNudge(t *testing.T) {
 		"title":  "Nudge Specification",
 	})
 
-	nudge, ok := resp["classification_nudge"].(string)
-	if !ok || nudge == "" {
-		t.Fatalf("expected classification_nudge string field, got: %v", resp)
+	nudge, ok := resp["classification_nudge"].(map[string]any)
+	if !ok || nudge == nil {
+		t.Fatalf("expected classification_nudge object field, got: %v", resp)
 	}
 
-	// Nudge must contain the actual document ID.
+	// Nudge must have message, content_hash, and outline keys.
+	msg, _ := nudge["message"].(string)
+	if msg == "" {
+		t.Errorf("expected classification_nudge.message to be non-empty")
+	}
+	if _, ok := nudge["content_hash"]; !ok {
+		t.Errorf("expected classification_nudge.content_hash to be present")
+	}
+	if _, ok := nudge["outline"]; !ok {
+		t.Errorf("expected classification_nudge.outline to be present")
+	}
+
+	// Message must contain the actual document ID.
 	doc, _ := resp["document"].(map[string]any)
 	docID, _ := doc["id"].(string)
 	if docID == "" {
 		t.Fatal("expected document.id to be set")
 	}
-	if !strings.Contains(nudge, docID) {
-		t.Errorf("nudge %q does not contain document ID %q", nudge, docID)
+	if !strings.Contains(msg, docID) {
+		t.Errorf("nudge.message %q does not contain document ID %q", msg, docID)
 	}
 }
 
@@ -1961,10 +1973,20 @@ func TestDocTool_Register_Batch_ClassificationNudge(t *testing.T) {
 			t.Fatalf("result[%d] missing data field: %v", i, item)
 		}
 
-		nudge, ok := data["classification_nudge"].(string)
-		if !ok || nudge == "" {
-			t.Errorf("result[%d] missing classification_nudge, got data: %v", i, data)
+		nudge, ok := data["classification_nudge"].(map[string]any)
+		if !ok || nudge == nil {
+			t.Errorf("result[%d] missing classification_nudge object, got data: %v", i, data)
 			continue
+		}
+		msg, _ := nudge["message"].(string)
+		if msg == "" {
+			t.Errorf("result[%d] classification_nudge.message is empty", i)
+		}
+		if _, ok := nudge["content_hash"]; !ok {
+			t.Errorf("result[%d] classification_nudge missing content_hash", i)
+		}
+		if _, ok := nudge["outline"]; !ok {
+			t.Errorf("result[%d] classification_nudge missing outline", i)
 		}
 
 		doc, _ := data["document"].(map[string]any)
@@ -1973,8 +1995,8 @@ func TestDocTool_Register_Batch_ClassificationNudge(t *testing.T) {
 			t.Errorf("result[%d] document.id is empty", i)
 			continue
 		}
-		if !strings.Contains(nudge, docID) {
-			t.Errorf("result[%d] nudge %q does not contain document ID %q", i, nudge, docID)
+		if !strings.Contains(msg, docID) {
+			t.Errorf("result[%d] nudge.message %q does not contain document ID %q", i, msg, docID)
 		}
 	}
 }
