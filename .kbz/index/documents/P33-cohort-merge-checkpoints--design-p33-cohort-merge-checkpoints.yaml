@@ -1,0 +1,252 @@
+document_id: P33-cohort-merge-checkpoints/design-p33-cohort-merge-checkpoints
+document_path: work/design/p33-cohort-merge-checkpoints.md
+content_hash: 83648df775fbb65cfcc86ad5bd6ffe39704c229feb1e415f3ec16079567514de
+indexed_at: 2026-04-23T14:55:43.996086Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Cohort-Based Merge Checkpoints (P33)'
+      byte_offset: 0
+      byte_count: 13494
+      word_count: 1924
+      content_hash: 83648df775fbb65cfcc86ad5bd6ffe39704c229feb1e415f3ec16079567514de
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 286
+          byte_count: 570
+          word_count: 87
+          content_hash: 602f47657d1ddf7dd795858c2ba522c6d75c12b6971adc2a0f0cec2deccb3136
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 856
+          byte_count: 969
+          word_count: 144
+          content_hash: ad01858e8e58ef237c3804a8cdb31d681bd8d685d2ae4d503c50ae6bef79fb81
+        - path: "1.3"
+          level: 2
+          title: Dependencies
+          byte_offset: 1825
+          byte_count: 431
+          word_count: 43
+          content_hash: b23c4f6355e1b3e403447c49d678d3d236180ec29f632829da20d5b4117f98e6
+        - path: "1.4"
+          level: 2
+          title: Related Work
+          byte_offset: 2256
+          byte_count: 1743
+          word_count: 241
+          content_hash: 856f528a07fe31daf0a2348a48c8d3dd8516162e319347d3f03252acf6d0738b
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Prior documents consulted
+              byte_offset: 2273
+              byte_count: 623
+              word_count: 74
+              content_hash: 383bbb7c8f21b222b0a99bf408aeed8c3f2d9ecb9eb8c06a6504e6a0972fd4a7
+            - path: 1.4.2
+              level: 3
+              title: Decisions that constrain this design
+              byte_offset: 2896
+              byte_count: 677
+              word_count: 99
+              content_hash: c1c380a14ba5af05a186bcb6610d3428de33983684c3141b20e1a7d81c1c7e29
+            - path: 1.4.3
+              level: 3
+              title: Open questions from prior work
+              byte_offset: 3573
+              byte_count: 426
+              word_count: 65
+              content_hash: 488c803533006a42cf46094f577e3094731cfb936b14fb24c7eb4c30f1b77b88
+        - path: "1.5"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 3999
+          byte_count: 1850
+          word_count: 284
+          content_hash: 6e5ad52f0ade6e867e13d463a3c1dcbb03ece130ef240b7250f068d7266eb427
+        - path: "1.6"
+          level: 2
+          title: Design
+          byte_offset: 5849
+          byte_count: 4410
+          word_count: 621
+          content_hash: 6011e50580ecec334eb184467fbe0ea040068e86202d6ce36f6df4b05196e2f7
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Enhancement 1: Feature-level conflict analysis (conflict tool)'
+              byte_offset: 5860
+              byte_count: 1366
+              word_count: 188
+              content_hash: 1ccfef28e0ca292c35b230ca0fb4c4d5967f5198dc0d9a26f7d03bcf1b742840
+            - path: 1.6.2
+              level: 3
+              title: 'Enhancement 2: Merge schedule in dev-plan template and decompose warning'
+              byte_offset: 7226
+              byte_count: 1508
+              word_count: 208
+              content_hash: 26a558a8fddc9969ea61a56a05119ac67c691f7e7e5f17236b744a45a7a3463c
+            - path: 1.6.3
+              level: 3
+              title: 'Enhancement 3: Cohort-aware orchestrate-development skill'
+              byte_offset: 8734
+              byte_count: 1525
+              word_count: 223
+              content_hash: 31c9c41d1b22a823b943184e0115a940335f58cfef2eedfeedc04763c1acda74
+        - path: "1.7"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 10259
+          byte_count: 1982
+          word_count: 283
+          content_hash: c95813ddfb5fd192f3c27367bfb9bf0796c1a9dfbea1a56f0b78d7d204657e1d
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 'Alternative 1: Automatic cohort inference in decompose'
+              byte_offset: 10287
+              byte_count: 539
+              word_count: 73
+              content_hash: 8217230423b24aba72d3803a480b3fd8c36d5ee8e2341e6efb99969055f8a6c4
+            - path: 1.7.2
+              level: 3
+              title: 'Alternative 2: Cohort field on feature entity'
+              byte_offset: 10826
+              byte_count: 469
+              word_count: 68
+              content_hash: d2f547d68f5cebf907759b20a6382a8102a7ee7b75d8bf02da15c3e4765a60c1
+            - path: 1.7.3
+              level: 3
+              title: 'Alternative 3: Server-enforced cohort gates (blocking worktree creation for cohort N+1)'
+              byte_offset: 11295
+              byte_count: 538
+              word_count: 77
+              content_hash: c650ed42c8faf46e224cb2a4cea6de177221179fba738a54c8ee2ca9c39367b6
+            - path: 1.7.4
+              level: 3
+              title: 'Alternative 4: Status quo — do nothing'
+              byte_offset: 11833
+              byte_count: 408
+              word_count: 62
+              content_hash: 2d3d4b3dc5826a2eb89fe19896a80eb3cddd2883838c57399186213a17c89551
+        - path: "1.8"
+          level: 2
+          title: Decisions
+          byte_offset: 12241
+          byte_count: 1253
+          word_count: 186
+          content_hash: c429d9204c07218c1d100da9ca711fa85a9107f273a3ef7c7af61c6eded508a9
+entity_refs:
+    - entity_id: FEAT-A
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 9664
+    - entity_id: FEAT-B
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 9672
+    - entity_id: FEAT-C
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 9680
+    - entity_id: FEAT-D
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 9700
+    - entity_id: FEAT-E
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 9708
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: "1.8"
+      byte_offset: 12321
+    - entity_id: DEC-002
+      entity_type: decision
+      section_path: "1.8"
+      byte_offset: 12537
+    - entity_id: DEC-003
+      entity_type: decision
+      section_path: "1.8"
+      byte_offset: 12759
+    - entity_id: DEC-004
+      entity_type: decision
+      section_path: "1.8"
+      byte_offset: 13002
+    - entity_id: DEC-005
+      entity_type: decision
+      section_path: "1.8"
+      byte_offset: 13239
+    - entity_id: P33-cohort-merge-checkpoints
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 249
+cross_doc_links:
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: "1.2"
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: "1.3"
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: "1.3"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "1.3"
+    - target_path: work/research/cohort-merge-checkpoints.md
+      link_text: work/research/cohort-merge-checkpoints.md
+      section_path: 1.4.1
+    - target_path: work/design/p25-orchestration-docs.md
+      link_text: work/design/p25-orchestration-docs.md
+      section_path: 1.4.1
+    - target_path: work/design/p29-state-store-read-performance.md
+      link_text: work/design/p29-state-store-read-performance.md
+      section_path: 1.4.1
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: 1.6.2
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: 1.6.2
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.6.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.4.2
+      role: decision
+      confidence: high
+    - section_path: 1.4.3
+      role: question
+      confidence: high
+    - section_path: "1.7"
+      role: alternative
+      confidence: high
+    - section_path: 1.7.1
+      role: alternative
+      confidence: high
+    - section_path: 1.7.2
+      role: alternative
+      confidence: high
+    - section_path: 1.7.3
+      role: alternative
+      confidence: high
+    - section_path: 1.7.4
+      role: alternative
+      confidence: high
+    - section_path: "1.8"
+      role: decision
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T14:55:44.451678Z
+classified: false

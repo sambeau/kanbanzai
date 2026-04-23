@@ -1,0 +1,162 @@
+document_id: P32-doc-intel-classification-pipeline-hardening/design-p32-doc-intel-classification-pipeline-hardening
+document_path: work/design/p32-doc-intel-classification-pipeline-hardening.md
+content_hash: 301694a029329688b26f264244e4c9c4ff6646027e096f26f5ff0434792a8340
+indexed_at: 2026-04-23T14:48:23.410373Z
+sections:
+    - path: "1"
+      level: 2
+      title: Related Work
+      byte_offset: 362
+      byte_count: 1836
+      word_count: 224
+      content_hash: 7df59434bd62abd33ffd1ab7552d3f72ff124946acdba3e79ce4df2ce5da62fc
+      children:
+        - path: "1.1"
+          level: 3
+          title: Prior documents consulted
+          byte_offset: 379
+          byte_count: 476
+          word_count: 52
+          content_hash: dead64e5ff0a6b1b32b1d701aae5a88afdcb0854db6a6ebb427ea00c4c8bd77b
+        - path: "1.2"
+          level: 3
+          title: Constraining decisions
+          byte_offset: 855
+          byte_count: 929
+          word_count: 115
+          content_hash: 96886f90290369411569d1a148e5a1bfbde7d6717cc6c2dd182389f1ce4146e4
+        - path: "1.3"
+          level: 3
+          title: Open questions resolved by the investigation
+          byte_offset: 1784
+          byte_count: 414
+          word_count: 54
+          content_hash: ed7ff41c6501a15678f7fcd20b9f40832d4797f0ba68fdee29b7aff2b302fbce
+    - path: "2"
+      level: 2
+      title: Problem and Motivation
+      byte_offset: 2198
+      byte_count: 2324
+      word_count: 316
+      content_hash: 3db3d6f024057876552af0d25bcd497e8d1dc3a70f74f3be313afd76625ab8b6
+    - path: "3"
+      level: 2
+      title: Design
+      byte_offset: 4522
+      byte_count: 5694
+      word_count: 725
+      content_hash: 4a0a401129a11c179d1d663405403e97db72cf1aba4910a3d35ab5527e6dbedc
+      children:
+        - path: "3.1"
+          level: 3
+          title: Overview
+          byte_offset: 4533
+          byte_count: 1757
+          word_count: 243
+          content_hash: adaf11ad61d9ab9bd188a2afd39f6c5ddf569d011c394f3303e73031200a3e09
+        - path: "3.2"
+          level: 3
+          title: Component responsibilities
+          byte_offset: 6290
+          byte_count: 2998
+          word_count: 348
+          content_hash: 31936295755814a60e5d8944fa06e3a0be53cccd538366e6e37952fb3af34b3a
+        - path: "3.3"
+          level: 3
+          title: Failure modes
+          byte_offset: 9288
+          byte_count: 928
+          word_count: 132
+          content_hash: 3a92f21e1247e71fa48332438d29db44391cf2a861438b8c1d9c0218267c76ea
+    - path: "4"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 10216
+      byte_count: 2955
+      word_count: 390
+      content_hash: bfc8d2bf3baa281e54914fd61b6ad2b30e22365755421d9ab911fc1842d9a300
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Alternative A: Enforce concept tagging at classify time'
+          byte_offset: 10244
+          byte_count: 677
+          word_count: 88
+          content_hash: 44c73d6cc14921352af823771a0a1fabca88863011bab6606e612029f41cd65d
+        - path: "4.2"
+          level: 3
+          title: 'Alternative B: Add concepts_suggested to the register nudge only'
+          byte_offset: 10921
+          byte_count: 918
+          word_count: 127
+          content_hash: f425925873c6209e0a00eb74c6855855ff11e531284ecfbd77a99011d3c8866c
+        - path: "4.3"
+          level: 3
+          title: 'Alternative C: Populate concepts automatically from headings without agent involvement'
+          byte_offset: 11839
+          byte_count: 754
+          word_count: 95
+          content_hash: 469730e39c21ba29374662d8b6367e985a3de02f5013a4007ce34f97a2a8e15b
+        - path: "4.4"
+          level: 3
+          title: 'Alternative D: Do nothing — rely on stronger skill guidance'
+          byte_offset: 12593
+          byte_count: 578
+          word_count: 77
+          content_hash: 13b509c515ecc9bfeaa770230a6bf6dc260be3b81085f3bbb3e880fd4f928c9b
+    - path: "5"
+      level: 2
+      title: Decisions
+      byte_offset: 13171
+      byte_count: 2724
+      word_count: 372
+      content_hash: 4dab57f6d099c21783dbfc931dcc6d232b0280ccf017a56fe526a29018f5861c
+entity_refs:
+    - entity_id: P32-doc-intel-classification-pipeline-hardening
+      entity_type: plan
+      section_path: ""
+      byte_offset: 311
+cross_doc_links:
+    - target_path: work/research/doc-intel-recurring-issues-investigation.md
+      link_text: work/research/doc-intel-recurring-issues-investigation.md
+      section_path: "1.1"
+    - target_path: work/design/doc-intel-adoption-design.md
+      link_text: work/design/doc-intel-adoption-design.md
+      section_path: "1.1"
+    - target_path: work/design/p28-doc-intel-polish-workflow-reliability.md
+      link_text: work/design/p28-doc-intel-polish-workflow-reliability.md
+      section_path: "1.1"
+    - target_path: SKILL.md
+      link_text: ' SKILL.md to more forcefully require '
+      section_path: "4.4"
+conventional_roles:
+    - section_path: "1.2"
+      role: decision
+      confidence: high
+    - section_path: "1.3"
+      role: question
+      confidence: high
+    - section_path: "3.1"
+      role: narrative
+      confidence: high
+    - section_path: "4"
+      role: alternative
+      confidence: high
+    - section_path: "4.1"
+      role: alternative
+      confidence: high
+    - section_path: "4.2"
+      role: alternative
+      confidence: high
+    - section_path: "4.3"
+      role: alternative
+      confidence: high
+    - section_path: "4.4"
+      role: alternative
+      confidence: high
+    - section_path: "5"
+      role: decision
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T14:48:23.850353Z
+classified: false

@@ -3,7 +3,7 @@
 | Field  | Value                    |
 |--------|--------------------------|
 | Date   | 2026-06-17               |
-| Status | Draft                    |
+| Status | approved |
 | Author | Claude Sonnet 4.6        |
 | Plan   | P33-cohort-merge-checkpoints |
 

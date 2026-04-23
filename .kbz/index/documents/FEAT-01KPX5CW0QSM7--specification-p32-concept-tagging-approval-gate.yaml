@@ -1,0 +1,96 @@
+document_id: FEAT-01KPX5CW0QSM7/specification-p32-concept-tagging-approval-gate
+document_path: work/spec/p32-concept-tagging-approval-gate.md
+content_hash: 1037c33f9e0e22d43a79c95a5a8f18f3246f71f53f9980282b09bb0c2bc7cd1a
+indexed_at: 2026-04-23T14:59:16.017296Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Concept Tagging Approval Gate'
+      byte_offset: 416
+      byte_count: 13044
+      word_count: 1751
+      content_hash: 7eaf32b3c75702cf3b8548160699d59430309f4ec005398a822d8fc37c9a5f5d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 591
+          byte_count: 374
+          word_count: 48
+          content_hash: 1d6e5832ee6c63adf58b323bfef8b57f3ca45b0e9cad0d4627056d80b55769b5
+        - path: "1.2"
+          level: 2
+          title: Problem Statement
+          byte_offset: 965
+          byte_count: 866
+          word_count: 117
+          content_hash: 0f81517b0d83651432c59e3221cc0baca6fd1927a47b4ece88e3cfba1e6454d8
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 1831
+          byte_count: 3617
+          word_count: 512
+          content_hash: 4f1b72474d68bfdc01b9acbc350558f45cf9052f842ca66fb7958e59fba47ed3
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 5448
+          byte_count: 1081
+          word_count: 150
+          content_hash: 8cb789933feba144d39fe3c340c20da999610adc57a3d5dbec5e7612f9fa65ef
+        - path: "1.5"
+          level: 2
+          title: Constraints
+          byte_offset: 6529
+          byte_count: 1084
+          word_count: 148
+          content_hash: b6845d08dfbdf5f2ed84b93e453897637c31f0fa2d24f68e1de2832cbda2916e
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 7613
+          byte_count: 3066
+          word_count: 422
+          content_hash: e3b6110ea98c71c566c3327e627f6d1f6b13db4234c0939763d22e84246b0d9b
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 10679
+          byte_count: 2781
+          word_count: 342
+          content_hash: ef97f3674710f7d54c3c726047e8c6643b23acc080248ae6a2291554e45e465f
+entity_refs:
+    - entity_id: FEAT-01KPX5CW0QSM7
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 477
+cross_doc_links:
+    - target_path: work/design/p32-doc-intel-classification-pipeline-hardening.md
+      link_text: work/design/p32-doc-intel-classification-pipeline-hardening.md
+      section_path: "1"
+    - target_path: work/spec/p28-doc-intel-register-workflow.md
+      link_text: work/spec/p28-doc-intel-register-workflow.md
+      section_path: "1.2"
+    - target_path: work/spec/p28-doc-intel-register-workflow.md
+      link_text: work/spec/p28-doc-intel-register-workflow.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T14:59:16.554014Z
+classified: false

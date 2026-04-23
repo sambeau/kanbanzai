@@ -1,0 +1,239 @@
+document_id: FEAT-01KPRFCXNMNKM/research-cohort-merge-checkpoints
+document_path: work/research/cohort-merge-checkpoints.md
+content_hash: 4c2ee4f09401e4e26a860a7b33df24f0c00f0013a6230237683d50cf9b665eb0
+indexed_at: 2026-04-23T14:44:53.280802Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Research: Cohort-Based Merge Checkpoints'
+      byte_offset: 0
+      byte_count: 20752
+      word_count: 2999
+      content_hash: 4c2ee4f09401e4e26a860a7b33df24f0c00f0013a6230237683d50cf9b665eb0
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Executive Summary
+          byte_offset: 147
+          byte_count: 877
+          word_count: 124
+          content_hash: 5a6d1eb3f1a3bc7f3278c1ce19b8a6bbd73b5fd96d458fbf6e16ff7ca2861cde
+        - path: "1.2"
+          level: 2
+          title: 2. Problem Statement
+          byte_offset: 1024
+          byte_count: 1416
+          word_count: 211
+          content_hash: b268e15278f50607d58dc3d6f9c8569c9cfd06bb2ab588ed826574430e9da9cf
+        - path: "1.3"
+          level: 2
+          title: 3. Historical Evidence
+          byte_offset: 2440
+          byte_count: 3159
+          word_count: 428
+          content_hash: bf45dbfd1c3e450527b2d97e83d65a755ab230cb5fe2005a14e819f06aeaddd2
+          children:
+            - path: 1.3.1
+              level: 3
+              title: P3 — kanbanzai-1.0 (8 features)
+              byte_offset: 2467
+              byte_count: 1227
+              word_count: 157
+              content_hash: d6d8162b054bcf65258909ec3732b1978b1ec68ce6b02120f930534e89578675
+            - path: 1.3.2
+              level: 3
+              title: P27 — doc-intel-adoption (4 features, 20 tasks)
+              byte_offset: 3694
+              byte_count: 811
+              word_count: 101
+              content_hash: 43c2bfc73fee78fa62ef9e94372c2578651b54435ce2072f543b761d27854b86
+            - path: 1.3.3
+              level: 3
+              title: P26 — workflow-scaling (created but not evidenced in git history)
+              byte_offset: 4505
+              byte_count: 216
+              word_count: 35
+              content_hash: c67455dd76986c214b8b5e141e562cfcd33c58e7699d652ea30be6f2042b6835
+            - path: 1.3.4
+              level: 3
+              title: Branch count
+              byte_offset: 4721
+              byte_count: 283
+              word_count: 44
+              content_hash: f7cbb3232d4ea5d8149611c1bff81ef08a7699449d8c88c840607a2e68b6294b
+            - path: 1.3.5
+              level: 3
+              title: Summary
+              byte_offset: 5004
+              byte_count: 595
+              word_count: 87
+              content_hash: 93eb9b30f4259ba6c0dd510ac4aa58ae5e379f40913a85feb86605d81f97c39c
+        - path: "1.4"
+          level: 2
+          title: 4. What a Cohort Looks Like
+          byte_offset: 5599
+          byte_count: 2150
+          word_count: 336
+          content_hash: 997fbf78c0f1316348e2fa86bca273d029ed41c866bf28dc4a8e991ab466d74e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Grouping criteria
+              byte_offset: 5847
+              byte_count: 603
+              word_count: 101
+              content_hash: 9520b4d40a4d18f0e890f8456b7ab61ee0913241f7402d6ea9d8b8b2bb10c244
+            - path: 1.4.2
+              level: 3
+              title: Cohort boundaries
+              byte_offset: 6450
+              byte_count: 374
+              word_count: 62
+              content_hash: ad72581620283a1ced7b8bb1a6b726b0b2f2b4e7a0a362e26bee48cb6d79ecf0
+            - path: 1.4.3
+              level: 3
+              title: What triggers a checkpoint
+              byte_offset: 6824
+              byte_count: 338
+              word_count: 56
+              content_hash: c29fc7dd6dfcb990d3ad5ef556a530a2d6f9fd0467489e6a41a7da49af3b3fa6
+            - path: 1.4.4
+              level: 3
+              title: 'Example: P3 with cohorts'
+              byte_offset: 7162
+              byte_count: 587
+              word_count: 72
+              content_hash: 62c7e4537f0fa8c5c597a546f348a961ab0a9a17867b299e9e8b67f604a213df
+        - path: "1.5"
+          level: 2
+          title: 5. Tooling Gap Analysis
+          byte_offset: 7749
+          byte_count: 4938
+          word_count: 719
+          content_hash: a74361ce0d5e37c2d35c85febd00bffca3e37ff1322daa1cc1069f94fd5ffe20
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Conflict Tool
+              byte_offset: 7777
+              byte_count: 1778
+              word_count: 250
+              content_hash: 3231759448a98a6d56c04c3dae62583d45cb95b1525fe25ad126bf907c1b261f
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Decompose / Dev-Planning
+              byte_offset: 9555
+              byte_count: 1694
+              word_count: 246
+              content_hash: 90deab21f84bc481fffba763bcf48adc77b335be418b30c348869e146a1424b9
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Orchestration Skill
+              byte_offset: 11249
+              byte_count: 1438
+              word_count: 218
+              content_hash: 0e8e91dabe4f731ef7373ab3231d64ab2b714a4f6f252fda123732aecdd6a6f2
+        - path: "1.6"
+          level: 2
+          title: 6. Harmful Pre-Merge Cases
+          byte_offset: 12687
+          byte_count: 1775
+          word_count: 270
+          content_hash: a415beb519dd19475e080815b72ef1d5a330cb5dba100f75770146fc2901d9e7
+        - path: "1.7"
+          level: 2
+          title: 7. Orchestrator Experience
+          byte_offset: 14462
+          byte_count: 2345
+          word_count: 342
+          content_hash: 87c1d20c16766133f439625082185449dce5cf11d6f528b97220642eb3fef280
+        - path: "1.8"
+          level: 2
+          title: 8. Recommendation
+          byte_offset: 16807
+          byte_count: 1962
+          word_count: 266
+          content_hash: baab019f13ab1b279dab856221efad5732acc7be5fda6e20abb6eda01d81230d
+        - path: "1.9"
+          level: 2
+          title: 9. Open Questions
+          byte_offset: 18769
+          byte_count: 1983
+          word_count: 290
+          content_hash: 2dc18b5f9e9202e1910a063db765cb9ce8204197dc0f7a5ceb4c5e2812150466
+entity_refs:
+    - entity_id: FEAT-01KPR
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 75
+    - entity_id: FEAT-A
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1860
+    - entity_id: FEAT-01KMKRQWF0FCH
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2769
+    - entity_id: FEAT-01KMKRQT9QCPR
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2861
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2968
+    - entity_id: FEAT-01KPVDDYZ3182
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 4185
+    - entity_id: FEAT-A
+      entity_type: feature
+      section_path: 1.5.1
+      byte_offset: 8255
+    - entity_id: FEAT-B
+      entity_type: feature
+      section_path: 1.5.1
+      byte_offset: 8266
+    - entity_id: FEAT-A
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 15234
+    - entity_id: FEAT-B
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 15242
+    - entity_id: FEAT-C
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 15260
+    - entity_id: FEAT-D
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 15271
+    - entity_id: TASK-01KPR
+      entity_type: task
+      section_path: "1"
+      byte_offset: 105
+cross_doc_links:
+    - target_path: write-dev-plan/SKILL.md
+      link_text: write-dev-plan/SKILL.md
+      section_path: 1.5.2
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: "1.8"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.5
+      role: narrative
+      confidence: high
+    - section_path: 1.4.4
+      role: example
+      confidence: high
+    - section_path: "1.9"
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T14:44:53.946661Z
+classified: false

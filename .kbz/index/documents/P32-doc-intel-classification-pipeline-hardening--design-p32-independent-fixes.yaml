@@ -1,0 +1,183 @@
+document_id: P32-doc-intel-classification-pipeline-hardening/design-p32-independent-fixes
+document_path: work/design/p32-independent-fixes.md
+content_hash: d1cb77ef6a53f5f919256e088dc6e977cf5bfd6becfdede81af3cf89a43c831b
+indexed_at: 2026-04-23T14:48:38.138861Z
+sections:
+    - path: "1"
+      level: 2
+      title: Related Work
+      byte_offset: 362
+      byte_count: 1331
+      word_count: 179
+      content_hash: 1c9d4aea41aee1f773ba7c8b25094f29a50cfebc27adc00bfb00f8f75d6d547e
+      children:
+        - path: "1.1"
+          level: 3
+          title: Prior documents consulted
+          byte_offset: 379
+          byte_count: 480
+          word_count: 58
+          content_hash: e247eb1b003bf6f37e21bfb2957104b2e4de25e7daf135341903fdc12fe1000e
+        - path: "1.2"
+          level: 3
+          title: Constraining decisions
+          byte_offset: 859
+          byte_count: 717
+          word_count: 100
+          content_hash: d66cbac6f4df0d4374856331a1563bd9fa79647d518a4b827e44b1481310effc
+        - path: "1.3"
+          level: 3
+          title: Open questions from prior work
+          byte_offset: 1576
+          byte_count: 117
+          word_count: 18
+          content_hash: 4bfeba384543362e9b7f556632df219a375ad0e3402b6426f538262f54bf9566
+    - path: "2"
+      level: 2
+      title: Problem and Motivation
+      byte_offset: 1693
+      byte_count: 2268
+      word_count: 343
+      content_hash: 75dc3417b8aaee64c587927e28bef55aa44a2e197d9db3fdcbd839fd4c5243fb
+      children:
+        - path: "2.1"
+          level: 3
+          title: Fix 1 — CLI doc register identity resolution
+          byte_offset: 1720
+          byte_count: 927
+          word_count: 136
+          content_hash: 5ffd76d60aaac49fd16b9e4dbab446f13de2132cf53f4af696a2378a287778d7
+        - path: "2.2"
+          level: 3
+          title: Fix 2 — MCP parameter struct JSON tag audit
+          byte_offset: 2647
+          byte_count: 1314
+          word_count: 203
+          content_hash: b986d49cca43e929c8e8e3c65a186551d2c346542abf6bd61a84f1ba7d39a5b5
+    - path: "3"
+      level: 2
+      title: Design
+      byte_offset: 3961
+      byte_count: 2410
+      word_count: 366
+      content_hash: 12b517c3611688c6315a35ef7352f827ba1eb4afdc8eb85a354f0b0d4f30ea5c
+      children:
+        - path: "3.1"
+          level: 3
+          title: Fix 1 — CLI doc register identity resolution
+          byte_offset: 3972
+          byte_count: 807
+          word_count: 110
+          content_hash: 8cf1fa5c2f636b7931dc449221fbb0a70da71fa9ece62e5abb3003c347cfcb8c
+        - path: "3.2"
+          level: 3
+          title: Fix 2 — MCP parameter struct JSON tag audit
+          byte_offset: 4779
+          byte_count: 1250
+          word_count: 195
+          content_hash: 9e47ae34c63198b7175af5b6071fd20b5a0593f9ecde5f602211654f92de36a0
+        - path: "3.3"
+          level: 3
+          title: Scope boundary
+          byte_offset: 6029
+          byte_count: 342
+          word_count: 59
+          content_hash: e5e23edde7460d2df6f2ca1b09d181a4530e521677df721e79f827d766e435ad
+    - path: "4"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 6371
+      byte_count: 2148
+      word_count: 324
+      content_hash: 71bf5983092e62020e4cd63b359c82421996c705f0dca14fbf233d21eaf82a22
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Alternative A (Fix 1): Add ResolveIdentity to SubmitDocument at the service layer'
+          byte_offset: 6399
+          byte_count: 677
+          word_count: 100
+          content_hash: b3b88b075953bfed3bdecf93f3bb9ef5b5413d6a0f8c3aa9269b977fb2f49a05
+        - path: "4.2"
+          level: 3
+          title: 'Alternative B (Fix 1): Make --by optional with a warning instead of auto-resolving'
+          byte_offset: 7076
+          byte_count: 466
+          word_count: 68
+          content_hash: 34ead03848d993e5658c73a32a70adab65944b5cc59df1ab0c278073db56e6fe
+        - path: "4.3"
+          level: 3
+          title: 'Alternative C (Fix 2): Use go vet / staticcheck instead of a test'
+          byte_offset: 7542
+          byte_count: 534
+          word_count: 86
+          content_hash: 7be5d446baa2529644d244dcf8f4b944316bb1075390f932e2274e8a4ba70d3a
+        - path: "4.4"
+          level: 3
+          title: 'Alternative D (Fix 2): Audit only and add no regression protection'
+          byte_offset: 8076
+          byte_count: 443
+          word_count: 67
+          content_hash: eed1a5d261ee02c8aa34e79addf08131f6b9a124168b8ba4abe180bfc65688b4
+    - path: "5"
+      level: 2
+      title: Decisions
+      byte_offset: 8519
+      byte_count: 1968
+      word_count: 307
+      content_hash: bf64ab03de8067cb899f32bf5a077fc0c0764e8676e0c0ac6f22c8f939304ca1
+entity_refs:
+    - entity_id: FEAT-1
+      entity_type: feature
+      section_path: "3.3"
+      byte_offset: 6171
+    - entity_id: FEAT-2
+      entity_type: feature
+      section_path: "3.3"
+      byte_offset: 6179
+    - entity_id: FEAT-3
+      entity_type: feature
+      section_path: "3.3"
+      byte_offset: 6187
+    - entity_id: P32-doc-intel-classification-pipeline-hardening
+      entity_type: plan
+      section_path: ""
+      byte_offset: 311
+cross_doc_links:
+    - target_path: work/research/doc-intel-recurring-issues-investigation.md
+      link_text: work/research/doc-intel-recurring-issues-investigation.md
+      section_path: "1.1"
+    - target_path: work/design/p28-doc-intel-polish-workflow-reliability.md
+      link_text: work/design/p28-doc-intel-polish-workflow-reliability.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: decision
+      confidence: high
+    - section_path: "1.3"
+      role: question
+      confidence: high
+    - section_path: "3.3"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: alternative
+      confidence: high
+    - section_path: "4.1"
+      role: alternative
+      confidence: high
+    - section_path: "4.2"
+      role: alternative
+      confidence: high
+    - section_path: "4.3"
+      role: alternative
+      confidence: high
+    - section_path: "4.4"
+      role: alternative
+      confidence: high
+    - section_path: "5"
+      role: decision
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T14:48:38.519645Z
+classified: false

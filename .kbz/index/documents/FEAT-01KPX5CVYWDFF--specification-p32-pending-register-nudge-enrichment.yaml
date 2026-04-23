@@ -1,0 +1,108 @@
+document_id: FEAT-01KPX5CVYWDFF/specification-p32-pending-register-nudge-enrichment
+document_path: work/spec/p32-pending-register-nudge-enrichment.md
+content_hash: abc5d8debe92f4f7b485819dbe7d16b2f7a7b16477ac4baf02e00a64abf31478
+indexed_at: 2026-04-23T14:59:33.538689Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: P32 Pending and Register Nudge Response Enrichment'
+      byte_offset: 416
+      byte_count: 14730
+      word_count: 1952
+      content_hash: 5f4c20f9d0c442ebcdd3e393d675516cc59ffb9c1c53aa068a725d0844e5cd9f
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 607
+          byte_count: 725
+          word_count: 98
+          content_hash: 031f931abaf4a1339781b632b694ff280b055a93474d5ba1aa3d9d2cdfdd59dd
+        - path: "1.2"
+          level: 2
+          title: Problem Statement
+          byte_offset: 1332
+          byte_count: 2640
+          word_count: 328
+          content_hash: c235d093d5878b6c5ab9f58f55d6da33f70631c932ce2112ef39334c68aee721
+        - path: "1.3"
+          level: 2
+          title: Requirements
+          byte_offset: 3972
+          byte_count: 4025
+          word_count: 539
+          content_hash: 115c48e219ce7fed86036d6dda0fbbc2b91124b36f5fcd257f64e5ac01cf1f38
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 3989
+              byte_count: 3163
+              word_count: 421
+              content_hash: 4f2bc47add6e1cdfc09e377ab3c8a4ed91654b0e0fa3d8a080995d44e72b43f2
+            - path: 1.3.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 7152
+              byte_count: 845
+              word_count: 116
+              content_hash: 9e44f5221557919eb5a13a3c4589f4fd368f5fe0148346441e4b0e7add650e07
+        - path: "1.4"
+          level: 2
+          title: Constraints
+          byte_offset: 7997
+          byte_count: 1143
+          word_count: 158
+          content_hash: e9c20ba04060c975e371c1bb11485402b314598f0e3db068ab604df7d0c7f1f9
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 9140
+          byte_count: 3479
+          word_count: 450
+          content_hash: 7572013a2a1246c8fea64e9ad0542290d80acb3c1ce9e444aee306cbd1b0db16
+        - path: "1.6"
+          level: 2
+          title: Verification Plan
+          byte_offset: 12619
+          byte_count: 2527
+          word_count: 365
+          content_hash: 2c71fd3c0b7ff0737f4fe4c78a8266fb53766ae484f6d2243531ef7569bc104d
+entity_refs:
+    - entity_id: FEAT-01KPX5CVYWDFF
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 498
+    - entity_id: P28-specified
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 8633
+cross_doc_links:
+    - target_path: work/design/p32-doc-intel-classification-pipeline-hardening.md
+      link_text: work/design/p32-doc-intel-classification-pipeline-hardening.md
+      section_path: "1"
+    - target_path: work/design/p32-doc-intel-classification-pipeline-hardening.md
+      link_text: work/design/p32-doc-intel-classification-pipeline-hardening.md
+      section_path: "1.2"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.1
+      role: requirement
+      confidence: high
+    - section_path: 1.3.2
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T14:59:34.004254Z
+classified: false
