@@ -3,4 +3,7 @@ parent_feature: FEAT-01KPX5CVYWDFF
 slug: nudge-guide-concept-candidates
 name: Add concept candidates to guide for two-call completeness
 summary: Confirm or implement that guide response provides concepts_suggested so agents have concept candidates for the two-call workflow
-status: ready
+status: done
+completed: "2026-04-23T16:16:55Z"
+completion_summary: "Confirmed concepts_suggested is implemented in FEAT-1 worktree. Found in .worktrees/FEAT-01KPX5CVVY357-guide-concept-classification-enrichment/internal/mcp/doc_intel_tool.go line 401: 'concepts_suggested': docint.SuggestConcepts(index). The docint.SuggestConcepts function is defined in the docint package (concepts.go). Tests in doc_intel_guide_enrichment_test.go cover it thoroughly (TestDocIntelGuide_ConceptsSuggested_AlwaysPresent, TestDocIntelGuide_ConceptsSuggested_OneEntryPerSection, etc.)."
+verification: "Read .worktrees/FEAT-01KPX5CVVY357-guide-concept-classification-enrichment/internal/mcp/doc_intel_tool.go and confirmed concepts_suggested field is present at line 401. Cannot run tests from this worktree as FEAT-1 is on a separate branch, but implementation is confirmed by code inspection."

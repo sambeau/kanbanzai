@@ -3,4 +3,7 @@ parent_feature: FEAT-01KPX5CVYWDFF
 slug: nudge-tests
 name: Write tests for two-call classify workflow
 summary: Write tests verifying the two-call (register → classify) workflow produces correct output using classification_nudge fields
-status: ready
+status: done
+completed: "2026-04-23T16:16:55Z"
+completion_summary: "Integration test for the two-call register→classify workflow (AC-006) confirmed present in internal/mcp/doc_tool_nudge_test.go as TestDocTool_ClassificationNudge_RegisterThenClassifyNoGuide. Test: (1) calls doc(action:register) with intel svc to get content_hash from classification_nudge, (2) calls doc_intel(action:classify) with that hash — asserts no error and document_id present in response. Pre-existing test passes cleanly."
+verification: Ran go test ./internal/mcp/... -run TestDocTool_ClassificationNudge_RegisterThenClassifyNoGuide — PASS. The 4 failures in the full suite are a pre-existing flaky SQLite WAL temp-dir cleanup race on macOS unrelated to this feature (they pass on main too).

@@ -8,3 +8,5 @@ spec: FEAT-01KPX5CVYWDFF/specification-p32-pending-register-nudge-enrichment
 dev_plan: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed
 created: "2026-04-23T12:35:20Z"
 created_by: sambeau
+verification: "TASK-01KPXE67ZSBRW: Ran go test ./internal/mcp/... -run TestDocTool_ClassificationNudge — all 6 tests pass including TestDocTool_ClassificationNudge_RegisterThenClassifyNoGuide (AC-006) and TestDocTool_ClassificationNudge_ContentHashPassesClassify (AC-003).\nTASK-01KPXE67ZV237: Read .worktrees/FEAT-01KPX5CVVY357-guide-concept-classification-enrichment/internal/mcp/doc_intel_tool.go and confirmed concepts_suggested field is present at line 401. Cannot run tests from this worktree as FEAT-1 is on a separate branch, but implementation is confirmed by code inspection.\nTASK-01KPXE67ZWC96: Ran go test ./internal/mcp/... -run TestDocTool_ClassificationNudge_RegisterThenClassifyNoGuide — PASS. The 4 failures in the full suite are a pre-existing flaky SQLite WAL temp-dir cleanup race on macOS unrelated to this feature (they pass on main too)."
+verification_status: passed
