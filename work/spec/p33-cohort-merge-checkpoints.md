@@ -1,7 +1,7 @@
 | Field  | Value                                         |
 |--------|-----------------------------------------------|
 | Date   | 2026-04-23                                    |
-| Status | Draft                                         |
+| Status | approved |
 | Author | spec-author                                   |
 
 # Specification: Cohort-Based Merge Checkpoints (P33)

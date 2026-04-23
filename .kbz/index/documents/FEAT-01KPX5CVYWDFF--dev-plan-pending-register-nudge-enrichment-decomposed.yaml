@@ -1,0 +1,49 @@
+document_id: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed
+document_path: work/dev-plan/pending-register-nudge-enrichment-decomposed.md
+content_hash: 988da1e9ad20b921aa9c2a7cdac65ae176bffea936a810c4d107abc5a90efc30
+indexed_at: 2026-04-23T15:09:00.398885Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Pending and Register Nudge Response Enrichment (Decomposed)'
+      byte_offset: 0
+      byte_count: 921
+      word_count: 129
+      content_hash: 988da1e9ad20b921aa9c2a7cdac65ae176bffea936a810c4d107abc5a90efc30
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 239
+          byte_count: 158
+          word_count: 21
+          content_hash: d3f281c149ad6fb2c84bc4150b1847d27f8ed65e0a1ba0e5e4f4d7f25523d78c
+        - path: "1.2"
+          level: 2
+          title: Tasks
+          byte_offset: 397
+          byte_count: 524
+          word_count: 70
+          content_hash: e048848c6cafd8b964e692eddb7588d6154d84ac28ae4a9f8b5ee6a64ef9e35c
+entity_refs:
+    - entity_id: FEAT-01KPX5CVYWDFF
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 125
+    - entity_id: TASK-01KPXE67ZSBRW
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 454
+    - entity_id: TASK-01KPXE67ZV237
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 617
+    - entity_id: TASK-01KPXE67ZWC96
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 771
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

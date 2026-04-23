@@ -1,4 +1,4 @@
-updated_at: 2026-04-23T14:59:33.538689Z
+updated_at: 2026-04-23T15:15:57.107831Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -76278,5 +76278,545 @@ edges:
     - from: FEAT-01KPX5CVYWDFF/specification-p32-pending-register-nudge-enrichment#1.2
       from_type: section
       to: work/design/p32-doc-intel-classification-pipeline-hardening.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix
+      from_type: document
+      to: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix
+      from_type: document
+      to: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#2
+      from_type: section
+      to: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#2
+      from_type: section
+      to: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix
+      from_type: document
+      to: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix
+      from_type: document
+      to: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix
+      from_type: document
+      to: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#
+      from_type: section
+      to: FEAT-01KPX5CW2PTMD
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#
+      from_type: section
+      to: P32-doc-intel-classification-pipeline-hardening
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#1
+      from_type: section
+      to: work/design/p32-independent-fixes.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix#3
+      from_type: section
+      to: p32-independent-fixes.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit
+      from_type: document
+      to: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit
+      from_type: document
+      to: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit#2
+      from_type: section
+      to: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit#2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit#2
+      from_type: section
+      to: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit#2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit
+      from_type: document
+      to: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit
+      from_type: document
+      to: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit
+      from_type: document
+      to: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit#
+      from_type: section
+      to: FEAT-01KPX5CW4R82P
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit#
+      from_type: section
+      to: P32-doc-intel-classification-pipeline-hardening
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit#
+      from_type: section
+      to: work/design/p32-independent-fixes.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed
+      from_type: document
+      to: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1
+      from_type: section
+      to: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1
+      from_type: section
+      to: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1
+      from_type: section
+      to: FEAT-01KPX5CW2PTMD
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE3P4BVW4
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE3P4D4FW
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE3P4E5FK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE3P4GPD5
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE3P4J0PY
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE3P4K7Y7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE3P4MDCM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE3P4NB1T
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed
+      from_type: document
+      to: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1
+      from_type: section
+      to: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1
+      from_type: section
+      to: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1
+      from_type: section
+      to: FEAT-01KPX5CVVY357
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE61RS3YH
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE61RX6S2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE61RYD8D
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE61RZ5BP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE61S0WS8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE61S1007
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE61S58NR
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE61S5QMQ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed
+      from_type: document
+      to: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed#1
+      from_type: section
+      to: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed#1
+      from_type: section
+      to: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed#1
+      from_type: section
+      to: FEAT-01KPX5CVYWDFF
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE67ZSBRW
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE67ZV237
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXE67ZWC96
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed
+      from_type: document
+      to: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1
+      from_type: section
+      to: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1
+      from_type: section
+      to: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1
+      from_type: section
+      to: FEAT-01KPX5CW0QSM7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1VSDJ4
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1VVSW2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1VWA2W
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1VXY0Q
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1VY40H
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1VZQ5G
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1W0RMG
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1W1XAV
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1W2ZBF
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1W3PPC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1W4T24
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1W5ZF5
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed#1.2
+      from_type: section
+      to: TASK-01KPXEE1W67G9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints
+      from_type: document
+      to: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.6
+      from_type: section
+      to: FEAT-A
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.6
+      from_type: section
+      to: FEAT-B
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.2
+      from_type: section
+      to: DEC-001
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.2
+      from_type: section
+      to: DEC-002
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.2
+      from_type: section
+      to: DEC-003
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.2
+      from_type: section
+      to: DEC-004
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.2
+      from_type: section
+      to: DEC-005
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.1
+      from_type: section
+      to: work/research/cohort-merge-checkpoints.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.1
+      from_type: section
+      to: work/design/p33-cohort-merge-checkpoints.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.1
+      from_type: section
+      to: work/design/p25-orchestration-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.1
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.1
+      from_type: section
+      to: work/design/p29-state-store-read-performance.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.1
+      from_type: section
+      to: work/spec/p25-orchestration-docs.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.1.3
+      from_type: section
+      to: work/spec/3.0-decomposition-quality-validation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.3
+      from_type: section
+      to: work/templates/implementation-plan-prompt-template.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.3
+      from_type: section
+      to: .kbz/skills/write-dev-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.3
+      from_type: section
+      to: .kbz/skills/orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.3
+      from_type: section
+      to: write-dev-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.3
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.4
+      from_type: section
+      to: work/templates/implementation-plan-prompt-template.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.4
+      from_type: section
+      to: .kbz/skills/write-dev-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.4
+      from_type: section
+      to: .kbz/skills/orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.6
+      from_type: section
+      to: work/templates/implementation-plan-prompt-template.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.6
+      from_type: section
+      to: .kbz/skills/write-dev-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.6
+      from_type: section
+      to: .kbz/skills/orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.7
+      from_type: section
+      to: work/templates/implementation-plan-prompt-template.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.7
+      from_type: section
+      to: .kbz/skills/write-dev-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.7
+      from_type: section
+      to: .kbz/skills/orchestrate-development/SKILL.md
       to_type: document
       edge_type: LINKS_TO

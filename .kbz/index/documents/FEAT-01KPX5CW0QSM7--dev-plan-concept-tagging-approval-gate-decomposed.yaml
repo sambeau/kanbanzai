@@ -1,0 +1,89 @@
+document_id: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed
+document_path: work/dev-plan/concept-tagging-approval-gate-decomposed.md
+content_hash: c77ff64f21d939b606d80fd98f167bd27595a3e553e8b6146226b92da489825a
+indexed_at: 2026-04-23T15:13:16.308647Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Concept Tagging Approval Gate (Decomposed)'
+      byte_offset: 0
+      byte_count: 1346
+      word_count: 193
+      content_hash: c77ff64f21d939b606d80fd98f167bd27595a3e553e8b6146226b92da489825a
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 222
+          byte_count: 158
+          word_count: 21
+          content_hash: d3f281c149ad6fb2c84bc4150b1847d27f8ed65e0a1ba0e5e4f4d7f25523d78c
+        - path: "1.2"
+          level: 2
+          title: Tasks
+          byte_offset: 380
+          byte_count: 966
+          word_count: 136
+          content_hash: a4d413ce15504212797c300848c001a46c73677107630c7a5a98bbef27994f85
+entity_refs:
+    - entity_id: FEAT-01KPX5CW0QSM7
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 108
+    - entity_id: TASK-01KPXEE1VSDJ4
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 437
+    - entity_id: TASK-01KPXEE1VVSW2
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 509
+    - entity_id: TASK-01KPXEE1VWA2W
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 583
+    - entity_id: TASK-01KPXEE1VXY0Q
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 652
+    - entity_id: TASK-01KPXEE1VY40H
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 722
+    - entity_id: TASK-01KPXEE1VZQ5G
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 801
+    - entity_id: TASK-01KPXEE1W0RMG
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 857
+    - entity_id: TASK-01KPXEE1W1XAV
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 929
+    - entity_id: TASK-01KPXEE1W2ZBF
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 997
+    - entity_id: TASK-01KPXEE1W3PPC
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1069
+    - entity_id: TASK-01KPXEE1W4T24
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1141
+    - entity_id: TASK-01KPXEE1W5ZF5
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1200
+    - entity_id: TASK-01KPXEE1W67G9
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1272
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

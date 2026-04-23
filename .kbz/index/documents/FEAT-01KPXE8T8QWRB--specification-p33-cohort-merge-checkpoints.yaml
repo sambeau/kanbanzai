@@ -1,0 +1,202 @@
+document_id: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints
+document_path: work/spec/p33-cohort-merge-checkpoints.md
+content_hash: dba197cfdb615422d6f3fed76f208a66ba8b237f3ab749bab5b3b63c8b91549c
+indexed_at: 2026-04-23T15:15:57.107831Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Cohort-Based Merge Checkpoints (P33)'
+      byte_offset: 296
+      byte_count: 18675
+      word_count: 2618
+      content_hash: 5c5f565597ea556977af2c3081af888047c8c52e8297026d41ae119c39931116
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 351
+          byte_count: 2616
+          word_count: 355
+          content_hash: b232ff43d76e9f7aac3a643ca9eced2d3a901277649dd1ff8193652e10710fdc
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Prior documents consulted
+              byte_offset: 368
+              byte_count: 1015
+              word_count: 118
+              content_hash: 8e6474fce495baaa005a5bbae8c105c8a5f8dfa546fbd7666c95a06c18214262
+            - path: 1.1.2
+              level: 3
+              title: Decisions that constrain this specification
+              byte_offset: 1383
+              byte_count: 947
+              word_count: 144
+              content_hash: 4ddac229130058fee3a4fd434b0c1cd685724826c289271b9742f0403b527291
+            - path: 1.1.3
+              level: 3
+              title: Relationship to prior work
+              byte_offset: 2330
+              byte_count: 637
+              word_count: 90
+              content_hash: f9b4fe7ecddaf39fe635b93e0cf480d49aaa5b2e5e17ad925ab2b29dc8af5a22
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 2967
+          byte_count: 665
+          word_count: 95
+          content_hash: c855ed4380eea42f7beb252297592225ad2b837b81b77feda65b18b0cfd216a4
+        - path: "1.3"
+          level: 2
+          title: Scope
+          byte_offset: 3632
+          byte_count: 1556
+          word_count: 216
+          content_hash: 93e8f3bdefeaa89aed79cfeb709edd97f5df5de491f52f8410e9b92f11eb886c
+        - path: "1.4"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 5188
+          byte_count: 5323
+          word_count: 764
+          content_hash: 24efdd2700dce3ca341e9d95556604a9aa68aba28bb08a21abcbe8b3a639be6a
+        - path: "1.5"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 10511
+          byte_count: 1936
+          word_count: 273
+          content_hash: 2dad6edfa34f397a5aabcbc862b5fcfed36e70b03a36c232c2c9b4f7875fae5c
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 12447
+          byte_count: 5004
+          word_count: 703
+          content_hash: ed3708997787ab456fc04551e41bb8d02c73f821a54b383ce14f44630aad7b93
+        - path: "1.7"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 17451
+          byte_count: 1520
+          word_count: 206
+          content_hash: 7c7071bb1ec60edeeb415b460439fd4a1c4da8d530e088cf8a7678796919cdae
+entity_refs:
+    - entity_id: FEAT-A
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 13107
+    - entity_id: FEAT-B
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 13115
+    - entity_id: DEC-001
+      entity_type: decision
+      section_path: 1.1.2
+      byte_offset: 1614
+    - entity_id: DEC-002
+      entity_type: decision
+      section_path: 1.1.2
+      byte_offset: 1781
+    - entity_id: DEC-003
+      entity_type: decision
+      section_path: 1.1.2
+      byte_offset: 1934
+    - entity_id: DEC-004
+      entity_type: decision
+      section_path: 1.1.2
+      byte_offset: 2073
+    - entity_id: DEC-005
+      entity_type: decision
+      section_path: 1.1.2
+      byte_offset: 2214
+cross_doc_links:
+    - target_path: work/research/cohort-merge-checkpoints.md
+      link_text: work/research/cohort-merge-checkpoints.md
+      section_path: 1.1.1
+    - target_path: work/design/p33-cohort-merge-checkpoints.md
+      link_text: work/design/p33-cohort-merge-checkpoints.md
+      section_path: 1.1.1
+    - target_path: work/design/p25-orchestration-docs.md
+      link_text: work/design/p25-orchestration-docs.md
+      section_path: 1.1.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.1.1
+    - target_path: work/design/p29-state-store-read-performance.md
+      link_text: work/design/p29-state-store-read-performance.md
+      section_path: 1.1.1
+    - target_path: work/spec/p25-orchestration-docs.md
+      link_text: work/spec/p25-orchestration-docs.md
+      section_path: 1.1.1
+    - target_path: work/spec/3.0-decomposition-quality-validation.md
+      link_text: work/spec/3.0-decomposition-quality-validation.md
+      section_path: 1.1.3
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: "1.3"
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: "1.3"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "1.3"
+    - target_path: write-dev-plan/SKILL.md
+      link_text: write-dev-plan/SKILL.md
+      section_path: "1.3"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.3"
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: "1.4"
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: "1.4"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "1.4"
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: "1.6"
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: "1.6"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "1.6"
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: "1.7"
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: "1.7"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: 1.1.2
+      role: decision
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T15:15:57.529279Z
+classified: false

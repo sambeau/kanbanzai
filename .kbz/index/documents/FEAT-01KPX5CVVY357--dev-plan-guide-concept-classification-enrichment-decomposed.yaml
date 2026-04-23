@@ -1,0 +1,69 @@
+document_id: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed
+document_path: work/dev-plan/guide-concept-classification-enrichment-decomposed.md
+content_hash: 3268eccde7f63404b543cdd7137e947fbaa4bb20ce000cb552aa4d1cb88e596c
+indexed_at: 2026-04-23T15:08:54.192177Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Guide Response Concept and Classification Enrichment (Decomposed)'
+      byte_offset: 0
+      byte_count: 1457
+      word_count: 189
+      content_hash: 3268eccde7f63404b543cdd7137e947fbaa4bb20ce000cb552aa4d1cb88e596c
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 245
+          byte_count: 158
+          word_count: 21
+          content_hash: d3f281c149ad6fb2c84bc4150b1847d27f8ed65e0a1ba0e5e4f4d7f25523d78c
+        - path: "1.2"
+          level: 2
+          title: Tasks
+          byte_offset: 403
+          byte_count: 1054
+          word_count: 130
+          content_hash: c39b9ea9c73d9faed431f251b51c04f6d06158b96098297bed54abdaf6c69180
+entity_refs:
+    - entity_id: FEAT-01KPX5CVVY357
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 131
+    - entity_id: TASK-01KPXE61RS3YH
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 460
+    - entity_id: TASK-01KPXE61RX6S2
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 620
+    - entity_id: TASK-01KPXE61RYD8D
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 697
+    - entity_id: TASK-01KPXE61RZ5BP
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 763
+    - entity_id: TASK-01KPXE61S0WS8
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 853
+    - entity_id: TASK-01KPXE61S1007
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 952
+    - entity_id: TASK-01KPXE61S58NR
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1138
+    - entity_id: TASK-01KPXE61S5QMQ
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1326
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

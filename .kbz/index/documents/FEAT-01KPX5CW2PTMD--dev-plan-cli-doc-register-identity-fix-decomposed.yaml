@@ -1,0 +1,69 @@
+document_id: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed
+document_path: work/dev-plan/cli-doc-register-identity-fix-decomposed.md
+content_hash: aa79691a108b9fa4779163cc2547722d2599c48b75f25ba92c0cc04e42b5f89e
+indexed_at: 2026-04-23T15:07:36.642358Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: CLI doc register Identity Resolution Fix (Decomposed)'
+      byte_offset: 0
+      byte_count: 2667
+      word_count: 410
+      content_hash: aa79691a108b9fa4779163cc2547722d2599c48b75f25ba92c0cc04e42b5f89e
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 233
+          byte_count: 158
+          word_count: 21
+          content_hash: d3f281c149ad6fb2c84bc4150b1847d27f8ed65e0a1ba0e5e4f4d7f25523d78c
+        - path: "1.2"
+          level: 2
+          title: Tasks
+          byte_offset: 391
+          byte_count: 2276
+          word_count: 351
+          content_hash: 21f93a689954d67386a3ddb14acf2c5407aa942d29d9162741e9cca6f5f120e4
+entity_refs:
+    - entity_id: FEAT-01KPX5CW2PTMD
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 119
+    - entity_id: TASK-01KPXE3P4BVW4
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 448
+    - entity_id: TASK-01KPXE3P4D4FW
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 731
+    - entity_id: TASK-01KPXE3P4E5FK
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1087
+    - entity_id: TASK-01KPXE3P4GPD5
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1401
+    - entity_id: TASK-01KPXE3P4J0PY
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1776
+    - entity_id: TASK-01KPXE3P4K7Y7
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1972
+    - entity_id: TASK-01KPXE3P4MDCM
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 2271
+    - entity_id: TASK-01KPXE3P4NB1T
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 2570
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

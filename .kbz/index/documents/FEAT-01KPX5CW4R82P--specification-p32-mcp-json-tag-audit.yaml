@@ -1,0 +1,87 @@
+document_id: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit
+document_path: work/spec/p32-mcp-json-tag-audit.md
+content_hash: 6f16b980b11ab17e4dec8b545e3755d36eb9ade7e70d6aecfc17dbde1cc5e766
+indexed_at: 2026-04-23T15:00:08.714907Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem Statement
+      byte_offset: 596
+      byte_count: 1825
+      word_count: 262
+      content_hash: d42745fc7ea1d858b5f6786c62eb6d3b0327c12db567e485d36e26733f60aefb
+    - path: "2"
+      level: 2
+      title: Requirements
+      byte_offset: 2421
+      byte_count: 2202
+      word_count: 334
+      content_hash: 0a37e8ab7d2e96f99973e6b63b399503433141c57546f10e2c4057d1f0f3dae3
+      children:
+        - path: "2.1"
+          level: 3
+          title: Functional Requirements
+          byte_offset: 2438
+          byte_count: 1382
+          word_count: 210
+          content_hash: c039bd27485e055da8cce7d819f79bf697de2d3614aed713602f974d7397fe55
+        - path: "2.2"
+          level: 3
+          title: Non-Functional Requirements
+          byte_offset: 3820
+          byte_count: 803
+          word_count: 122
+          content_hash: d10646c1a1bbbc20c2fdbc4f7cc0396cbb6a79b1f29b2f1c09f8bcb80328dfae
+    - path: "3"
+      level: 2
+      title: Constraints
+      byte_offset: 4623
+      byte_count: 819
+      word_count: 133
+      content_hash: 0a9fc1bf799731708e3d859ab6715878e028f98be9d51bb63b1f09170533b030
+    - path: "4"
+      level: 2
+      title: Acceptance Criteria
+      byte_offset: 5442
+      byte_count: 1725
+      word_count: 254
+      content_hash: 0c6d78f3ff287f981b7b4492be0efd358cf3d9e1a3a56e90060dcea3c33fd191
+    - path: "5"
+      level: 2
+      title: Verification Plan
+      byte_offset: 7167
+      byte_count: 1610
+      word_count: 182
+      content_hash: e53fbc48e233f644c688c0fa6ecacffb5be5358db7e21fe5fa9133f3943f363e
+entity_refs:
+    - entity_id: FEAT-01KPX5CW4R82P
+      entity_type: feature
+      section_path: ""
+      byte_offset: 396
+    - entity_id: P32-doc-intel-classification-pipeline-hardening
+      entity_type: plan
+      section_path: ""
+      byte_offset: 331
+cross_doc_links:
+    - target_path: work/design/p32-independent-fixes.md
+      link_text: work/design/p32-independent-fixes.md
+      section_path: ""
+conventional_roles:
+    - section_path: "2"
+      role: requirement
+      confidence: high
+    - section_path: "2.1"
+      role: requirement
+      confidence: high
+    - section_path: "2.2"
+      role: requirement
+      confidence: high
+    - section_path: "3"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T15:00:09.055943Z
+classified: false

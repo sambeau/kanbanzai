@@ -1,0 +1,90 @@
+document_id: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix
+document_path: work/spec/p32-cli-doc-register-identity-fix.md
+content_hash: 81d13feaff680e63b751816d19f7fa2f38465e62facd5f3a474c62be4e04ac40
+indexed_at: 2026-04-23T14:59:42.850785Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem Statement
+      byte_offset: 463
+      byte_count: 1593
+      word_count: 220
+      content_hash: 3f439e57bedd3cb1ef8e3b8c40169b946bfbefb92a3e42e9652a0d220627d811
+    - path: "2"
+      level: 2
+      title: Requirements
+      byte_offset: 2056
+      byte_count: 1466
+      word_count: 219
+      content_hash: 9be7c829ff9c0b409113bd995273b1c185d5aa45552b124a2a7ae4bc9e1a1985
+      children:
+        - path: "2.1"
+          level: 3
+          title: Functional Requirements
+          byte_offset: 2073
+          byte_count: 902
+          word_count: 137
+          content_hash: 4f11e8c332d63a8300078a7f9b2441910159d8444bcb04d0911c4d448072d32b
+        - path: "2.2"
+          level: 3
+          title: Non-Functional Requirements
+          byte_offset: 2975
+          byte_count: 547
+          word_count: 80
+          content_hash: 7627cd3e7d3ac477cd1d7d0023c9699b2366c6c2f5dd19b6de929bf53fc8a2ae
+    - path: "3"
+      level: 2
+      title: Constraints
+      byte_offset: 3522
+      byte_count: 777
+      word_count: 114
+      content_hash: 3ec1f1a5a0d1d0ade68f0905952eb4dd9d8062dd9677c900efdeaf82663c667b
+    - path: "4"
+      level: 2
+      title: Acceptance Criteria
+      byte_offset: 4299
+      byte_count: 2025
+      word_count: 313
+      content_hash: 0d06c849e737d15de6de124883a7e6db2dcc1846fd41850c10fbaeb702eae667
+    - path: "5"
+      level: 2
+      title: Verification Plan
+      byte_offset: 6324
+      byte_count: 1673
+      word_count: 226
+      content_hash: 5f3492c80e5c524ee596a86f649270675a03593114d4e897b6ef2fa3cf7e1519
+entity_refs:
+    - entity_id: FEAT-01KPX5CW2PTMD
+      entity_type: feature
+      section_path: ""
+      byte_offset: 396
+    - entity_id: P32-doc-intel-classification-pipeline-hardening
+      entity_type: plan
+      section_path: ""
+      byte_offset: 331
+cross_doc_links:
+    - target_path: work/design/p32-independent-fixes.md
+      link_text: work/design/p32-independent-fixes.md
+      section_path: "1"
+    - target_path: p32-independent-fixes.md
+      link_text: p32-independent-fixes.md
+      section_path: "3"
+conventional_roles:
+    - section_path: "2"
+      role: requirement
+      confidence: high
+    - section_path: "2.1"
+      role: requirement
+      confidence: high
+    - section_path: "2.2"
+      role: requirement
+      confidence: high
+    - section_path: "3"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T14:59:43.137997Z
+classified: false
