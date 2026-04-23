@@ -263,7 +263,11 @@ func TestMatchSuggestedRole(t *testing.T) {
 		// No match
 		{"no match", "Introduction", "", false},
 		{"empty", "", "", false},
-		{"goals-and-non-goals via goals prefix", "Goals and Non-Goals", RoleRequirement, true},
+		// "Goals and Non-Goals" starts with "Goals " (space), triggering the "goals"
+		// prefix entry → RoleRequirement. This is a known approximation: prefix-based
+		// classification is inherently coarse, and agents are expected to review and
+		// refine suggested classifications before accepting them.
+		{"goals-and-non-goals (prefix-match approximation)", "Goals and Non-Goals", RoleRequirement, true},
 		// REQ-106 prefix-match entries
 		{"goals prefix", "Goals Overview", RoleRequirement, true},
 		{"requirements prefix", "Requirements Overview", RoleRequirement, true},
