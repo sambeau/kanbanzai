@@ -3,8 +3,11 @@ parent_feature: FEAT-01KPVDDYSEK8P
 slug: audit-and-fix-json-struct-tags-on-mcp-parameter-structs
 name: Audit and fix json struct tags on MCP parameter structs
 summary: "Search internal/ for structs decoded via req.RequireString + json.Unmarshal. For each found struct, add json: tags to every exported field that has a yaml: tag but no json: tag, using the snake_case key already expected by callers. Do not touch structs outside this pattern. List the audited structs in a comment in the test file added by T3. Covers REQ-007, REQ-008, AC-007."
-status: active
+status: done
+completed: "2026-04-23T01:39:59Z"
 claimed_at: "2026-04-23T01:21:58Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T01:21:58Z"
 dispatched_by: sambeau
+completion_summary: "Audited all structs in internal/ decoded via req.RequireString + json.Unmarshal pattern. Found exactly one: docint.Classification (in docIntelClassifyAction, classified via req.RequireString(\"classifications\") + json.Unmarshal). All six exported fields of Classification already carry both yaml: and json: tags. ConceptIntroEntry (nested field) also has json: tags. No code changes required. Audit result documented for T3 regression test."
+verification: "Reviewed internal/docint/types.go Classification struct — all exported fields have json: tags. No compilation issues."
