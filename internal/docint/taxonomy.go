@@ -186,6 +186,11 @@ var suggestedClassTable = []struct {
 	{"out of scope", RoleConstraint},
 	{"in scope", RoleConstraint},
 	{"non-goals", RoleConstraint},
+	{"goals", RoleRequirement},
+	{"requirements", RoleRequirement},
+	{"summary", RoleNarrative},
+	{"decisions", RoleDecision},
+	{"design", RoleDecision},
 	{"alternative", RoleAlternative},
 	{"assumption", RoleAssumption},
 	{"assumptions", RoleAssumption},
@@ -218,10 +223,11 @@ func normaliseHeading(title string) string {
 	return strings.ToLower(strings.Join(strings.Fields(strings.TrimSpace(title)), " "))
 }
 
-// matchSuggestedRole checks a heading title against the REQ-007 pattern table.
-// Returns the matched role and true if a match is found.
+// matchSuggestedRole checks a heading title against the REQ-007 exact table and
+// the REQ-106 prefix table. Returns the matched role and true if a match is found.
 func matchSuggestedRole(title string) (FragmentRole, bool) {
 	normalized := normaliseHeading(title)
+	// Exact-match table (REQ-007).
 	for _, entry := range suggestedClassTable {
 		if normalized == entry.keyword {
 			return entry.role, true
@@ -234,7 +240,8 @@ func matchSuggestedRole(title string) (FragmentRole, bool) {
 	if reDPattern.MatchString(title) {
 		return RoleDecision, true
 	}
-	return "", false
+	// Prefix-match table (REQ-106).
+	return matchSuggestedRolePrefix(title)
 }
 
 // SuggestClassifications returns heading-pattern derived classification hints for all
@@ -284,6 +291,117 @@ func collectSuggestions(sections []Section, seen map[string]bool, result *[]Sugg
 		}
 		if len(s.Children) > 0 {
 			collectSuggestions(s.Children, seen, result)
+		}
+	}
+}
+
+// suggestedClassPrefixTable maps normalised heading prefixes to roles per REQ-106.
+// Entries are matched by case-insensitive prefix comparison after normaliseHeading().
+// Longer prefixes appear first to ensure more specific patterns win.
+var suggestedClassPrefixTable = []struct {
+	prefix string
+	role   FragmentRole
+}{
+	{"problem and motivation", RoleRationale},
+	{"overview", RoleNarrative},
+	{"risk", RoleRisk},
+	{"definition", RoleDefinition},
+	{"glossary", RoleDefinition},
+}
+
+// matchSuggestedRolePrefix checks a heading title against the REQ-106 prefix table.
+// Returns the matched role and true if a match is found.
+func matchSuggestedRolePrefix(title string) (FragmentRole, bool) {
+	normalized := normaliseHeading(title)
+	for _, entry := range suggestedClassPrefixTable {
+		if normalized == entry.prefix || strings.HasPrefix(normalized, entry.prefix+" ") || strings.HasPrefix(normalized, entry.prefix+"/") || strings.HasPrefix(normalized, entry.prefix+"-") {
+			return entry.role, true
+		}
+	}
+	return "", false
+}
+
+// stopWords is the fixed set of words excluded from concept derivation (REQ-104).
+var stopWords = map[string]bool{
+	"a": true, "an": true, "the": true,
+	"of": true, "in": true, "on": true, "at": true, "to": true, "for": true,
+	"with": true, "by": true, "from": true, "as": true,
+	"and": true, "or": true, "but": true,
+	"it": true, "its": true,
+	"is": true, "are": true, "was": true, "were": true, "be": true, "been": true,
+	"have": true, "has": true,
+}
+
+// titleSplitter splits on slash, hyphen, and whitespace for concept token extraction.
+var titleSplitter = regexp.MustCompile(`[\s/\-]+`)
+
+// deriveConcepts applies the lexical pipeline to a single title string and returns
+// the resulting tokens (REQ-104, tasks 1-5).
+func deriveConcepts(title string) []string {
+	raw := titleSplitter.Split(title, -1)
+	seen := make(map[string]bool)
+	var out []string
+	for _, tok := range raw {
+		tok = strings.TrimSpace(tok)
+		if len(tok) < 2 {
+			continue
+		}
+		lower := strings.ToLower(tok)
+		if stopWords[lower] {
+			continue
+		}
+		titled := strings.ToUpper(tok[:1]) + tok[1:]
+		if !seen[titled] {
+			seen[titled] = true
+			out = append(out, titled)
+		}
+	}
+	return out
+}
+
+// ConceptSuggestion holds per-section concept name candidates (REQ-102).
+type ConceptSuggestion struct {
+	SectionPath      string   `json:"section_path"`
+	SectionTitle     string   `json:"section_title"`
+	SuggestedConcepts []string `json:"suggested_concepts"`
+}
+
+// SuggestConcepts derives concept candidates for each section in the document index
+// using a lexical pass over section titles and their ancestor titles (REQ-101–104).
+// The result is always non-nil (REQ-101). Sections yielding no tokens are omitted (REQ-103).
+func SuggestConcepts(index *DocumentIndex) []ConceptSuggestion {
+	var result []ConceptSuggestion
+	collectConceptSuggestions(index.Sections, nil, &result)
+	if result == nil {
+		return []ConceptSuggestion{}
+	}
+	return result
+}
+
+// collectConceptSuggestions recursively walks sections, tracking ancestor titles.
+func collectConceptSuggestions(sections []Section, ancestors []string, result *[]ConceptSuggestion) {
+	for _, s := range sections {
+		// Build combined title: ancestors + current title (REQ-104).
+		allTitles := append(ancestors, s.Title)
+		seen := make(map[string]bool)
+		var tokens []string
+		for _, title := range allTitles {
+			for _, tok := range deriveConcepts(title) {
+				if !seen[tok] {
+					seen[tok] = true
+					tokens = append(tokens, tok)
+				}
+			}
+		}
+		if len(tokens) > 0 {
+			*result = append(*result, ConceptSuggestion{
+				SectionPath:      s.Path,
+				SectionTitle:     s.Title,
+				SuggestedConcepts: tokens,
+			})
+		}
+		if len(s.Children) > 0 {
+			collectConceptSuggestions(s.Children, allTitles, result)
 		}
 	}
 }

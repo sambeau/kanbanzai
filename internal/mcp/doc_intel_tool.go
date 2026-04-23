@@ -398,6 +398,7 @@ func docIntelGuideAction(svc *service.IntelligenceService) ActionHandler {
 				"confidence": []string{"high", "medium", "low"},
 			},
 			"suggested_classifications": docint.SuggestClassifications(index),
+			"concepts_suggested":         docint.SuggestConcepts(index),
 		}, nil
 	}
 }
