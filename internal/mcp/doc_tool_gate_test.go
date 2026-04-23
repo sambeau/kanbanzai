@@ -47,29 +47,6 @@ func callDocApproveWithIntel(t *testing.T, env *docToolEnv, intelSvc *service.In
 	return parsed
 }
 
-// callDocApproveExpectError calls doc(action:"approve") and returns the parsed
-// JSON response map. Use this when the gate is expected to block the approval.
-// WithSideEffects always returns nil Go error; gate blocks are embedded in the
-// JSON response as resp["error"]["message"] (code "internal_error").
-func callDocApproveExpectError(t *testing.T, env *docToolEnv, intelSvc *service.IntelligenceService, docID string) map[string]any {
-	t.Helper()
-	tool := docTool(env.docSvc, intelSvc, nil)
-	req := makeRequest(map[string]any{
-		"action": "approve",
-		"id":     docID,
-	})
-	result, err := tool.Handler(context.Background(), req)
-	if err != nil {
-		t.Fatalf("unexpected handler-level error: %v", err)
-	}
-	text := extractText(t, result)
-	var parsed map[string]any
-	if jsonErr := json.Unmarshal([]byte(text), &parsed); jsonErr != nil {
-		t.Fatalf("unmarshal approve response: %v\nraw: %s", jsonErr, text)
-	}
-	return parsed
-}
-
 // registerAndIngestDoc creates a file, registers it, and returns the doc ID
 // plus the content hash from the classification nudge (populated by auto-ingest).
 func registerAndIngestDoc(t *testing.T, env *docToolEnv, relPath, docType, title, content string) (docID, contentHash string) {
@@ -142,7 +119,7 @@ func TestApproveGate_AC001_NonGatedTypes(t *testing.T) {
 			resp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
 
 			// Must NOT return concept_tagging_required.
-			if errCode, _ := resp["error_code"].(string); errCode == "concept_tagging_required" {
+			if errCode, _ := resp["error"].(string); errCode == "concept_tagging_required" {
 				t.Errorf("type %q must not be gated, got concept_tagging_required", docType)
 			}
 			doc, _ := resp["document"].(map[string]any)
@@ -169,7 +146,7 @@ func TestApproveGate_AC002_NoClassifications(t *testing.T) {
 
 	resp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
 
-	if errCode, _ := resp["error_code"].(string); errCode == "concept_tagging_required" {
+	if errCode, _ := resp["error"].(string); errCode == "concept_tagging_required" {
 		t.Errorf("zero classifications must not trigger gate")
 	}
 	doc, _ := resp["document"].(map[string]any)
@@ -201,7 +178,7 @@ func TestApproveGate_AC003_ConceptsIntroPresent(t *testing.T) {
 
 	resp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
 
-	if errCode, _ := resp["error_code"].(string); errCode == "concept_tagging_required" {
+	if errCode, _ := resp["error"].(string); errCode == "concept_tagging_required" {
 		t.Errorf("concepts_intro present — gate must not fire")
 	}
 	doc, _ := resp["document"].(map[string]any)
@@ -230,20 +207,17 @@ func TestApproveGate_AC004_SpecificationBlocked(t *testing.T) {
 	classifyDocForGate(t, env, docID, contentHash,
 		`[{"section_path":"1","role":"requirement","confidence":"high"}]`)
 
-	resp := callDocApproveExpectError(t, env, env.intelSvc, docID)
-	errObj, _ := resp["error"].(map[string]any)
-	if errObj == nil {
-		t.Fatalf("expected gate to block approval; response has no error field: %v", resp)
+	resp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+	errCode, _ := resp["error"].(string)
+	if errCode != "concept_tagging_required" {
+		t.Fatalf("expected concept_tagging_required gate block; got resp: %v", resp)
 	}
-	message, _ := errObj["message"].(string)
-	if !strings.Contains(message, "concept_tagging_required") {
-		t.Fatalf("expected concept_tagging_required in error message; got: %q", message)
-	}
+	message, _ := resp["message"].(string)
 	if !strings.Contains(message, "concepts_intro") {
-		t.Errorf("error message must mention concepts_intro; got: %q", message)
+		t.Errorf("message must mention concepts_intro; got: %q", message)
 	}
 	if !strings.Contains(message, docID) {
-		t.Errorf("error message must contain docID %q; got: %q", docID, message)
+		t.Errorf("message must contain docID %q; got: %q", docID, message)
 	}
 }
 
@@ -285,17 +259,14 @@ func TestApproveGate_AC005_DevPlanBlocked(t *testing.T) {
 	classifyDocForGate(t, env, docID, contentHash,
 		`[{"section_path":"1","role":"requirement","confidence":"high"}]`)
 
-	blockResp := callDocApproveExpectError(t, env, env.intelSvc, docID)
-	blockErrObj, _ := blockResp["error"].(map[string]any)
-	if blockErrObj == nil {
-		t.Fatalf("expected gate to block dev-plan approval; response has no error field: %v", blockResp)
+	blockResp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+	blockErrCode, _ := blockResp["error"].(string)
+	if blockErrCode != "concept_tagging_required" {
+		t.Fatalf("expected concept_tagging_required gate block for dev-plan; got resp: %v", blockResp)
 	}
-	blockMsg, _ := blockErrObj["message"].(string)
-	if !strings.Contains(blockMsg, "concept_tagging_required") {
-		t.Fatalf("expected concept_tagging_required for dev-plan; got: %q", blockMsg)
-	}
+	blockMsg, _ := blockResp["message"].(string)
 	if !strings.Contains(blockMsg, docID) {
-		t.Errorf("error message must contain docID %q; got: %q", docID, blockMsg)
+		t.Errorf("message must contain docID %q; got: %q", docID, blockMsg)
 	}
 }
 
@@ -316,24 +287,27 @@ func TestApproveGate_AC006_ContentHashMatchesEntry(t *testing.T) {
 	classifyDocForGate(t, env, docID, contentHash,
 		`[{"section_path":"1","role":"requirement","confidence":"high"}]`)
 
-	blockResp := callDocApproveExpectError(t, env, env.intelSvc, docID)
-	blockErrObj, _ := blockResp["error"].(map[string]any)
-	if blockErrObj == nil {
-		t.Fatalf("expected gate to fire; response has no error field: %v", blockResp)
+	blockResp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+	if errCode, _ := blockResp["error"].(string); errCode != "concept_tagging_required" {
+		t.Fatalf("expected gate to fire; got resp: %v", blockResp)
 	}
-	if msg, _ := blockErrObj["message"].(string); !strings.Contains(msg, "concept_tagging_required") {
-		t.Fatalf("expected concept_tagging_required in gate error; got: %q", msg)
+	responseHash, _ := blockResp["content_hash"].(string)
+	if responseHash == "" {
+		t.Fatal("content_hash must be non-empty in gate response")
 	}
 
-	// The error no longer carries content_hash inline; verify classification
-	// entries exist independently (the gate fired because entries were present
-	// but had no concepts_intro).
+	// Verify hash matches the last entry from GetClassifications.
 	entries, err := env.intelSvc.GetClassifications(docID)
 	if err != nil {
 		t.Fatalf("GetClassifications error: %v", err)
 	}
 	if len(entries) == 0 {
 		t.Fatal("expected classification entries in index")
+	}
+	lastEntry := entries[len(entries)-1]
+	if responseHash != lastEntry.ContentHash {
+		t.Errorf("content_hash in gate response = %q, want %q (from last classification entry)",
+			responseHash, lastEntry.ContentHash)
 	}
 }
 
@@ -356,7 +330,7 @@ func TestApproveGate_AC007_NilIntelService(t *testing.T) {
 	// Pass nil intel service — gate must be skipped entirely (REQ-007).
 	resp := callDocApproveWithIntel(t, env, nil, docID)
 
-	if errCode, _ := resp["error_code"].(string); errCode == "concept_tagging_required" {
+	if errCode, _ := resp["error"].(string); errCode == "concept_tagging_required" {
 		t.Errorf("nil intel service must skip gate; got concept_tagging_required")
 	}
 	doc, _ := resp["document"].(map[string]any)
@@ -411,13 +385,9 @@ func TestApproveGate_AC009_StatusUnchangedAfterBlock(t *testing.T) {
 	statusBefore := before.Status
 
 	// Attempt approval — gate should block.
-	blockResp := callDocApproveExpectError(t, env, env.intelSvc, docID)
-	blockErrObj, _ := blockResp["error"].(map[string]any)
-	if blockErrObj == nil {
-		t.Fatalf("expected gate to fire; response has no error field: %v", blockResp)
-	}
-	if msg, _ := blockErrObj["message"].(string); !strings.Contains(msg, "concept_tagging_required") {
-		t.Fatalf("expected concept_tagging_required; got: %q", msg)
+	blockResp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+	if errCode, _ := blockResp["error"].(string); errCode != "concept_tagging_required" {
+		t.Fatalf("expected gate to fire; got resp: %v", blockResp)
 	}
 
 	// Status must be unchanged.
@@ -448,20 +418,16 @@ func TestApproveGate_AC010_RetrySucceedsAfterClassify(t *testing.T) {
 	classifyDocForGate(t, env, docID, contentHash,
 		`[{"section_path":"1","role":"requirement","confidence":"high"}]`)
 
-	resp1 := callDocApproveExpectError(t, env, env.intelSvc, docID)
-	errObj1, _ := resp1["error"].(map[string]any)
-	if errObj1 == nil {
-		t.Fatalf("expected first approve to be blocked; response has no error field: %v", resp1)
-	}
-	if msg1, _ := errObj1["message"].(string); !strings.Contains(msg1, "concept_tagging_required") {
-		t.Fatalf("expected concept_tagging_required on first approve; got: %q", msg1)
+	resp1 := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+	if errCode1, _ := resp1["error"].(string); errCode1 != "concept_tagging_required" {
+		t.Fatalf("expected first approve to be blocked; got resp: %v", resp1)
 	}
 
 	// Re-classify with concepts_intro.
 	classifyDocForGate(t, env, docID, contentHash,
 		`[{"section_path":"1","role":"requirement","confidence":"high","concepts_intro":[{"name":"my-concept"}]}]`)
 
-	// Retry approve — must succeed (callDocApproveWithIntel fatalfs on error).
+	// Retry approve — must succeed.
 	resp2 := callDocApproveWithIntel(t, env, env.intelSvc, docID)
 	doc, _ := resp2["document"].(map[string]any)
 	if doc == nil {
@@ -500,8 +466,8 @@ func TestApproveGate_AC011_NilServiceIdenticalBehavior(t *testing.T) {
 			// Pass nil intel service.
 			approveResp := callDocApproveWithIntel(t, env, nil, docID)
 
-			if errCode, _ := approveResp["error_code"].(string); errCode != "" {
-				t.Errorf("nil intel service must produce no error_code; got %q", errCode)
+			if errCode, _ := approveResp["error"].(string); errCode != "" {
+				t.Errorf("nil intel service must produce no gate error; got %q", errCode)
 			}
 			approvedDoc, _ := approveResp["document"].(map[string]any)
 			if approvedDoc == nil {

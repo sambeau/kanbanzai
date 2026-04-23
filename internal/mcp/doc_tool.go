@@ -357,12 +357,21 @@ func docApproveOne(ctx context.Context, docSvc *service.DocumentService, intelSv
 					}
 				}
 				if !hasIntro {
-					blockMsg := fmt.Sprintf(
-						"concept_tagging_required: document %s cannot be approved until at least one classified section has concepts_intro populated. "+
-							"Call doc_intel(action: \"guide\", id: \"%s\") to see concept suggestions, then classify with concepts_intro.",
-						docID, docID,
-					)
-					return docID, nil, fmt.Errorf("%s", blockMsg)
+					// Use content_hash from the last entry (most recent classification).
+					contentHash := entries[len(entries)-1].ContentHash
+					// The "error" string key is detected by extractToolResultError so
+					// that ExecuteBatch correctly marks this item as failed, not
+					// succeeded. The full payload (including content_hash) is returned
+					// to single-path callers so they can classify without a guide call.
+					return docID, map[string]any{
+						"error":        "concept_tagging_required",
+						"document_id":  docID,
+						"content_hash": contentHash,
+						"message": fmt.Sprintf(
+							`At least one classified section must have concepts_intro populated. Call doc_intel(action: "guide", id: "%s") to see concept suggestions, then doc_intel(action: "classify", ...) with concepts_intro on at least one section.`,
+							docID,
+						),
+					}, nil
 				}
 			}
 		}
