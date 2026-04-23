@@ -123,16 +123,32 @@ func (s *Store) Get(wtID string) (Record, error) {
 
 // GetByEntityID returns the active worktree record associated with the given entity ID.
 // Returns (nil, nil) if no active worktree is associated with the entity.
+//
+// Root cause: git worktree list performs O(n) disk reads across all worktree
+// admin files. With 34+ worktrees this exceeds the MCP tool timeout budget.
+// Fix: scan records with early termination — stop at the first active match
+// instead of loading all N records unconditionally via List().
 func (s *Store) GetByEntityID(entityID string) (*Record, error) {
-	records, err := s.List()
+	dir := filepath.Join(s.root, WorktreesDir)
+	entries, err := os.ReadDir(dir)
 	if err != nil {
-		return nil, err
+		if errors.Is(err, os.ErrNotExist) {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("read worktrees directory: %w", err)
 	}
 
-	for _, r := range records {
-		if r.Status == StatusActive && r.EntityID == entityID {
-			rec := r
-			return &rec, nil
+	for _, entry := range entries {
+		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".yaml") {
+			continue
+		}
+		wtID := strings.TrimSuffix(entry.Name(), ".yaml")
+		record, err := s.Get(wtID)
+		if err != nil {
+			continue // skip unreadable records
+		}
+		if record.Status == StatusActive && record.EntityID == entityID {
+			return &record, nil
 		}
 	}
 

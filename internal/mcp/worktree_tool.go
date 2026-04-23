@@ -37,7 +37,9 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 				"Call AFTER entity(action: create) establishes the feature or bug. "+
 				"Do NOT use for branch health checks — use branch for that. "+
 				"Actions: create, get, list, remove, update. "+
-				"entity_id is required for create, get, remove, and update; optional filter for list.",
+				"entity_id is required for create, get, remove, and update; optional filter for list. "+
+				"On timeout, fall back: (1) `git worktree add <path> -b <branch>` via terminal; "+
+				"(2) worktree(action: update, entity_id: ...) to register the record manually.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),
@@ -81,6 +83,10 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 
 // ─── create ──────────────────────────────────────────────────────────────────
 
+// worktreeCreateSleepFunc is the sleep function used between retry attempts.
+// Override in tests to avoid real delays.
+var worktreeCreateSleepFunc = time.Sleep
+
 func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityService, gitOps *worktree.Git, repoRoot string) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
@@ -105,8 +111,10 @@ func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityServic
 		}
 
 		// Check if a worktree already exists for this entity.
+		// GetByEntityID uses early-termination scan (see store.GetByEntityID for
+		// root cause comment — fixes O(n) scan that caused timeouts with 34+ worktrees).
 		existing, existErr := store.GetByEntityID(entityID)
-		if existErr == nil && existing.ID != "" {
+		if existErr == nil && existing != nil && existing.ID != "" {
 			return inlineErr("worktree_exists",
 				fmt.Sprintf("worktree %s already exists for entity %s", existing.ID, entityID))
 		}
@@ -135,8 +143,12 @@ func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityServic
 		// Generate worktree path.
 		wtPath := worktree.GenerateWorktreePath(entityID, slug)
 
-		// Create the git worktree with a new branch.
-		if err := gitOps.CreateWorktreeNewBranch(wtPath, branchName, ""); err != nil {
+		// Create the git worktree with exponential-backoff retry to handle transient
+		// lock-file contention with 34+ worktrees (sleep is injectable for tests).
+		addFn := func(p, b string) error {
+			return gitOps.CreateWorktreeNewBranch(p, b, "")
+		}
+		if err := worktreeAddWithRetry(addFn, wtPath, branchName, worktreeCreateSleepFunc); err != nil {
 			return inlineErr("git_error", fmt.Sprintf("git worktree create failed: %v", err))
 		}
 
@@ -182,6 +194,74 @@ func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityServic
 		}
 		return resp, nil
 	}
+}
+
+// worktreeAddWithRetry calls addFn with exponential-backoff retry to handle
+// transient git lock-file contention under load.
+//
+// Policy (REQ-002, REQ-003):
+//   - Up to 3 attempts, backoff 2s → 4s → 8s (doubling).
+//   - 30s total budget ceiling: aborts before sleeping if the sleep would push
+//     elapsed past 30s.
+//   - Retries only on lock/timeout errors; non-retryable errors return immediately.
+//   - On exhaustion: wraps the final error with "3 attempts" and the manual
+//     fallback command `git worktree add <path> -b <branch>`.
+func worktreeAddWithRetry(addFn func(path, branch string) error, path, branch string, sleep func(time.Duration)) error {
+	const (
+		maxAttempts  = 3
+		totalBudget  = 30 * time.Second
+		initialDelay = 2 * time.Second
+	)
+
+	var lastErr error
+	delay := initialDelay
+	var elapsed time.Duration
+
+	for attempt := 1; attempt <= maxAttempts; attempt++ {
+		err := addFn(path, branch)
+		if err == nil {
+			return nil
+		}
+		lastErr = err
+
+		// Non-retryable errors (permission denied, already exists, etc.) fail immediately.
+		if !isRetryableWorktreeError(err) {
+			return err
+		}
+
+		// After the last attempt there is nothing left to sleep before.
+		if attempt == maxAttempts {
+			break
+		}
+
+		// Abort early if sleeping would push elapsed past the total budget.
+		if elapsed+delay > totalBudget {
+			break
+		}
+
+		sleep(delay)
+		elapsed += delay
+		delay *= 2
+	}
+
+	return fmt.Errorf(
+		"%v; worktree add failed after 3 attempts — "+
+			"fallback: git worktree add %s -b %s",
+		lastErr, path, branch,
+	)
+}
+
+// isRetryableWorktreeError reports whether err warrants a retry of the worktree
+// add operation. Returns true for git lock contention and timeout errors.
+func isRetryableWorktreeError(err error) bool {
+	if err == nil {
+		return false
+	}
+	s := strings.ToLower(err.Error())
+	return strings.Contains(s, "unable to obtain lock") ||
+		strings.Contains(s, "lock") ||
+		strings.Contains(s, "timeout") ||
+		strings.Contains(s, "context deadline exceeded")
 }
 
 // ─── get ──────────────────────────────────────────────────────────────────────
@@ -302,6 +382,10 @@ func worktreeRemoveAction(store *worktree.Store, gitOps *worktree.Git) ActionHan
 					fmt.Sprintf("no worktree found for entity %s", entityID))
 			}
 			return nil, fmt.Errorf("Cannot remove worktree for %s: storage read failed: %w.\n\nTo resolve:\n  Check file permissions in .kbz/state/worktrees/ and retry", entityID, err)
+		}
+		if record == nil {
+			return inlineErr("no_worktree",
+				fmt.Sprintf("no worktree found for entity %s", entityID))
 		}
 
 		// Remove the git worktree.
