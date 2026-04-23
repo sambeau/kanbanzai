@@ -3,6 +3,6 @@ parent_feature: FEAT-01KPVDDYZ3182
 slug: worktree-timeout-retry-tests
 name: Tests for retry logic and error message content
 summary: "Unit tests without live repo: verify attempt count, backoff sequence (2s/4s/8s), all three error fields on exhaustion, no sleep on first-attempt success (REQ-NF-001, REQ-NF-003)"
-status: queued
+status: ready
 depends_on:
   - TASK-01KPVFTDD5A58
