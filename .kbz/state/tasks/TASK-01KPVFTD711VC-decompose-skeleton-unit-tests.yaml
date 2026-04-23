@@ -3,7 +3,11 @@ parent_feature: FEAT-01KPVDDYX73WB
 slug: decompose-skeleton-unit-tests
 name: Unit tests for content generator and idempotency
 summary: "Cover buildSkeletonDevPlan output shape, idempotency branches (no plan / skeleton / non-skeleton), zero-tasks path, and response note field (REQ-NF-002, REQ-NF-003)"
-status: ready
+status: active
 depends_on:
   - TASK-01KPVFTD2MKYN
   - TASK-01KPVFTD550JX
+claimed_at: "2026-04-23T03:04:42Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-23T03:04:42Z"
+dispatched_by: sambeau

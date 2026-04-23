@@ -3,8 +3,14 @@ parent_feature: FEAT-01KPVDDYZ3182
 slug: worktree-timeout-root-cause-fix
 name: Investigate and fix worktree create root cause
 summary: "Profile git worktree list and lock contention with 30+ worktrees, identify root cause, apply targeted fix with adjacent code comment (REQ-001, REQ-005)"
-status: active
+status: done
+files_planned:
+  - internal/worktree/store.go
+  - internal/mcp/worktree_tool.go
+completed: "2026-04-23T03:05:53Z"
 claimed_at: "2026-04-23T02:49:43Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T02:49:43Z"
 dispatched_by: sambeau
+completion_summary: "Root cause: store.GetByEntityID called store.List() reading all N worktree YAML records on every create call. With 34+ worktrees this O(n) scan exceeds MCP timeout. Fix: replaced List() with early-termination directory scan that stops at first active match. Also fixed latent nil pointer dereference on existing.ID. Root cause comment added in store.go adjacent to GetByEntityID."
+verification: "go test ./internal/mcp/... -run TestWorktree: 10/10 pass. TestToolDescriptions_TokenBudget: pass. go build ./internal/...: clean."
