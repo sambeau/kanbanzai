@@ -3,6 +3,16 @@ parent_feature: FEAT-01KPVDDYX73WB
 slug: decompose-skeleton-apply-integration
 name: Integrate skeleton generation into decompose apply
 summary: "Call content generator in DecomposeApply, write file, register and auto-approve doc, add response note, enforce idempotency (REQ-001, REQ-003, REQ-004, REQ-005, REQ-006)"
-status: ready
+status: done
 depends_on:
   - TASK-01KPVFTD2MKYN
+files_planned:
+  - internal/service/decompose_skeleton.go
+  - internal/mcp/decompose_tool.go
+completed: "2026-04-23T03:04:20Z"
+claimed_at: "2026-04-23T02:59:07Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-23T02:59:07Z"
+dispatched_by: sambeau
+completion_summary: "Added WriteSkeletonDevPlan method to DecomposeService in decompose_skeleton.go with full idempotency handling: creates new skeleton (AutoApprove=true), overwrites existing skeleton (RefreshDocument+ApproveDocument), or skips when a non-skeleton dev-plan exists. Updated decomposeApply in decompose_tool.go to accept decomposeSvc, build SkeletonTask list from created tasks, call WriteSkeletonDevPlan after task creation, and include skeleton_dev_plan note in response. All existing tests pass."
+verification: "go test ./... -count=1 passes, all packages green"
