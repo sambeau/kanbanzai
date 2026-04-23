@@ -4,17 +4,18 @@ topic: phase-4b-implementation-order
 scope: project
 content: "Recommended Phase 4b implementation order: (1) automatic dependency unblocking — additive StatusTransitionHook change, no new tools; (2) feature decomposition — core new capability, most complex track; (3) worker review — depends on document intelligence; (4) conflict domain analysis — git-history analysis, can run in parallel with review; (5) slice analysis — builds on decomposition; (6) incident/RCA — independent entity track, can run last."
 learned_from: TASK-01KMJVK9V8NKS
-status: contributed
+status: retired
 use_count: 0
 miss_count: 0
 confidence: "0.5"
 ttl_days: 90
+deprecated_reason: P4b delivered; implementation order is historical planning record for completed work.
 tags:
   - phase-4b
   - implementation
   - planning
 created: "2026-03-25T17:09:49Z"
 created_by: unknown
-updated: "2026-03-25T17:09:49Z"
-last_accessed_at: "2026-04-23T11:39:58Z"
-recent_use_count: 49
+updated: "2026-04-23T12:43:34Z"
+last_accessed_at: "2026-04-23T12:41:58Z"
+recent_use_count: 50

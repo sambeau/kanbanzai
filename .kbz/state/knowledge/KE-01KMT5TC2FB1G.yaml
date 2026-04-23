@@ -3,11 +3,12 @@ tier: 2
 topic: docint-does-not-classify-ac-pattern-as-acceptance-criteria
 scope: project
 content: "internal/docint does not classify **AC-NN.** paragraph fragments as acceptance criteria. This is the root cause of decompose propose failing to find ACs in our spec format — not index staleness, and not the spec being draft. The index has content for the spec, but that content is not tagged as acceptance criteria, so decompose propose finds nothing to work with and falls back to section headers. The fix belongs in internal/docint (teach the classifier to recognise the **AC-NN.** pattern) not in decompose propose (a regex workaround in the wrong layer). Until this is fixed, decompose propose cannot be used with our spec format at all — tasks must be created manually. This is a significant tool-gap that affects every feature decomposition."
-status: contributed
+status: retired
 use_count: 0
 miss_count: 0
 confidence: "0.5"
 ttl_days: 90
+deprecated_reason: "Superseded by KE-01KPVGKJ13QPH. The **AC-NN.** format now works; only the (REQ-NNN) suffix variant remains broken. This entry's claim that decompose cannot be used at all is no longer accurate."
 tags:
   - docint
   - decompose
@@ -16,6 +17,6 @@ tags:
   - classifier
 created: "2026-03-28T12:13:35Z"
 created_by: sambeau
-updated: "2026-03-28T12:13:35Z"
-last_accessed_at: "2026-04-23T11:39:58Z"
-recent_use_count: 49
+updated: "2026-04-23T12:43:35Z"
+last_accessed_at: "2026-04-23T12:41:58Z"
+recent_use_count: 50

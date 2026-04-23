@@ -3,7 +3,7 @@ tier: 2
 topic: p7-retro-git-stash-destroys-mcp-state
 scope: project
 content: "During P7 implementation, a sub-agent followed AGENTS.md instructions to \"stash uncommitted changes before starting new work.\" The stash captured .kbz/state/ changes made by MCP tool calls (doc approve, entity transition, next) from the main agent, reverting feature statuses from developing→specifying, spec statuses from approved→draft, and task statuses from ready→queued. The stash was never popped, so the state was permanently lost. Root cause: .kbz/state/ is tracked in git for this project, MCP tool calls modify these files without committing, and the AGENTS.md stash instruction doesn't exclude .kbz/state/. The main agent's in-session explanation (\"stale MCP binary\" / \"sub-agents writing state\") was wrong — it was the git stash that caused the reversion."
-status: contributed
+status: confirmed
 use_count: 0
 miss_count: 0
 confidence: "0.5"
@@ -15,6 +15,6 @@ tags:
   - mcp-state
 created: "2026-03-28T13:11:00Z"
 created_by: sambeau
-updated: "2026-03-28T13:11:00Z"
-last_accessed_at: "2026-04-23T11:39:58Z"
-recent_use_count: 53
+updated: "2026-04-23T12:45:27Z"
+last_accessed_at: "2026-04-23T12:41:58Z"
+recent_use_count: 54

@@ -3,7 +3,7 @@ tier: 2
 topic: flaky-tests-policy
 scope: project
 content: "Flaky or race-detected test failures must never be dismissed as \"pre-existing\" and moved past. They must be filed as a BUG entity so they appear in status health reports. Rationale: a flaky test that was once passing is a signal of a real race or timing problem that may mask regressions. The fact that it was previously ignored does not make it safe to ignore again — it makes it more urgent to fix. When an agent encounters a flaky test during CI verification, the required action is: (1) note it explicitly in the task completion summary, (2) file a BUG entity if one does not already exist, (3) do NOT mark the task done as if tests are green when they are not unconditionally green."
-status: contributed
+status: confirmed
 use_count: 0
 miss_count: 0
 confidence: "0.5"
@@ -15,6 +15,6 @@ tags:
   - agent-behaviour
 created: "2026-04-02T23:11:12Z"
 created_by: sambeau
-updated: "2026-04-02T23:11:12Z"
-last_accessed_at: "2026-04-23T11:39:58Z"
-recent_use_count: 48
+updated: "2026-04-23T12:46:06Z"
+last_accessed_at: "2026-04-23T12:41:58Z"
+recent_use_count: 49

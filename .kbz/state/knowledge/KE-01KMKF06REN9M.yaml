@@ -4,7 +4,7 @@ topic: feature-decomposition-sizing-guidelines
 scope: project
 content: "Decomposition best practice: Features should decompose into 8-15 tasks. Fewer than 5 suggests insufficient breakdown; more than 20 suggests the feature is too large or decomposition is too granular. Use slice_analysis to identify vertical slices before decomposing. Each task should be independently testable and deliver a coherent unit of value."
 learned_from: P1-phase-4-orchestration
-status: contributed
+status: confirmed
 use_count: 0
 miss_count: 0
 confidence: "0.5"
@@ -15,6 +15,6 @@ tags:
   - best-practices
 created: "2026-03-25T21:39:23Z"
 created_by: sambeau
-updated: "2026-03-25T21:39:23Z"
-last_accessed_at: "2026-04-23T11:39:58Z"
-recent_use_count: 49
+updated: "2026-04-23T12:44:48Z"
+last_accessed_at: "2026-04-23T12:41:58Z"
+recent_use_count: 50

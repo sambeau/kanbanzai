@@ -3,11 +3,12 @@ tier: 2
 topic: p19-c4-standalone-bug-gap
 scope: project
 content: P19 spec C4 (bug warnings in status) only surfaces open high/critical bugs that are linked to an in-flight feature. Standalone bugs — those not attached to any feature — are not covered. This means a high-severity bug filed against a general code area (e.g. a race condition in the build info package) will remain invisible in all status outputs even after P19 ships. The original design intent included standalone bugs as a first-class concept; this gap appears to be an oversight in the C4 wording rather than a deliberate decision. Needs review before P19 is closed.
-status: contributed
+status: retired
 use_count: 0
 miss_count: 0
 confidence: "0.5"
 ttl_days: 90
+deprecated_reason: Gap closed. Standalone high bugs now surface in status attention items (confirmed by BUG-01KN87EEF2G49 appearing as a warning in current status output).
 tags:
   - p19
   - spec-gap
@@ -16,6 +17,6 @@ tags:
   - attention-items
 created: "2026-04-02T23:15:55Z"
 created_by: sambeau
-updated: "2026-04-02T23:15:55Z"
-last_accessed_at: "2026-04-23T11:39:58Z"
-recent_use_count: 48
+updated: "2026-04-23T12:43:40Z"
+last_accessed_at: "2026-04-23T12:41:58Z"
+recent_use_count: 49

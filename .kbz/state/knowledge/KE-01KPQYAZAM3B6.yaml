@@ -3,7 +3,7 @@ tier: 2
 topic: review-bug-filing-policy
 scope: project
 content: "Reviews and agents should NOT proactively file bug reports for issues they encounter that are outside their current task scope — this is a scope decision for the human. The correct action is to note the issue in the review report (or task completion summary) and let the human decide whether to file a bug. Exceptions: (1) the implement-task skill explicitly requires filing a BUG entity for any intermittent test failure observed during that task's own test run, because the agent has direct evidence and the cost of not recording it is high; (2) if a human explicitly asks the agent to file a bug (as in this case), do so. The default posture is: surface findings, defer filing to the human."
-status: contributed
+status: confirmed
 use_count: 0
 miss_count: 0
 confidence: "0.5"
@@ -16,6 +16,6 @@ tags:
   - policy
 created: "2026-04-21T11:55:45Z"
 created_by: sambeau
-updated: "2026-04-21T11:55:45Z"
-last_accessed_at: "2026-04-23T11:39:58Z"
-recent_use_count: 52
+updated: "2026-04-23T12:46:10Z"
+last_accessed_at: "2026-04-23T12:41:58Z"
+recent_use_count: 53

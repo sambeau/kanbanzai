@@ -4,7 +4,7 @@ topic: error-handling-conventions
 scope: developer
 content: "Error handling convention: service layer returns (result, error). MCP tools convert errors to mcp.NewToolResultError() or mcp.NewToolResultErrorFromErr(). Never panic. Use fmt.Errorf(\"context: %w\", err) for error wrapping. CLI commands print error.Error() to stderr and return non-zero exit code. No stack traces to end users."
 learned_from: P2-phase-1-kernel
-status: contributed
+status: confirmed
 use_count: 0
 miss_count: 0
 confidence: "0.5"
@@ -14,6 +14,6 @@ tags:
   - conventions
 created: "2026-03-25T21:38:58Z"
 created_by: sambeau
-updated: "2026-03-25T21:38:58Z"
-last_accessed_at: "2026-04-23T11:39:58Z"
-recent_use_count: 49
+updated: "2026-04-23T12:44:14Z"
+last_accessed_at: "2026-04-23T12:41:58Z"
+recent_use_count: 50
