@@ -5,5 +5,6 @@ parent: P32-doc-intel-classification-pipeline-hardening
 status: dev-planning
 summary: "Audit all MCP parameter structs that (a) have yaml: tags and (b) are decoded from JSON tool parameters via json.Unmarshal. Any exported field missing an explicit json: tag is a silent deserialization vulnerability — the same class of bug as the Classification struct fix in the Layer 3 pilot. Add a Go test or go vet check to prevent regression. Classification and ConceptIntroEntry are already fixed; this audits the remainder."
 spec: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit
+dev_plan: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan
 created: "2026-04-23T12:35:20Z"
 created_by: sambeau
