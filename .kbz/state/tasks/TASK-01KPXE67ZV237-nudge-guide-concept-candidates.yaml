@@ -1,0 +1,6 @@
+id: TASK-01KPXE67ZV237
+parent_feature: FEAT-01KPX5CVYWDFF
+slug: nudge-guide-concept-candidates
+name: Add concept candidates to guide for two-call completeness
+summary: Confirm or implement that guide response provides concepts_suggested so agents have concept candidates for the two-call workflow
+status: queued
