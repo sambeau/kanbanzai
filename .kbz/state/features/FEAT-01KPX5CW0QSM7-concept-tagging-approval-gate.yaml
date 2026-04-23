@@ -2,7 +2,7 @@ id: FEAT-01KPX5CW0QSM7
 slug: concept-tagging-approval-gate
 name: Concept Tagging Approval Gate
 parent: P32-doc-intel-classification-pipeline-hardening
-status: proposed
+status: specifying
 summary: "Add a server-side check to doc approve that requires at least one classified section with concepts_intro populated for specification, design, and dev-plan document types. Escalates concept tagging from soft constraint (advisory nudge, currently ignored) to hard constraint (ℋ — approval blocked until met). Small server-side change, no new tool actions. Answers RG-2: enforce at approve time, not classify time, to avoid disrupting backlog batch runs."
 created: "2026-04-23T12:35:20Z"
 created_by: sambeau
