@@ -3,6 +3,15 @@ parent_feature: FEAT-01KPVDDYVETV5
 slug: plan-lifecycle-proposed-active-rejection-error-and-system-generated-override-record
 name: Rejection error and system-generated override record
 summary: Rejection error and system-generated override record
-status: ready
+status: done
 depends_on:
   - TASK-01KPVFY051XFC
+files_planned:
+  - internal/service/plans.go
+completed: "2026-04-23T03:15:32Z"
+claimed_at: "2026-04-23T03:14:18Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-23T03:14:18Z"
+dispatched_by: sambeau
+completion_summary: "Rejection error with 'use proposed → designing instead' directive and system-generated override record 'proposed → active shortcut: N feature(s) in post-designing state at transition time' are both implemented in plans.go UpdatePlanStatus (delivered as part of T1 implementation). The 'proposed → active shortcut:' prefix is hardcoded. Override record is written to the plan's YAML overrides key, same format as feature override records."
+verification: "go test ./internal/validate/... ./internal/service/... -count=1: all pass."
