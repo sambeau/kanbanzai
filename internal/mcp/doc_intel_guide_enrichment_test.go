@@ -159,21 +159,21 @@ func TestDocIntelGuide_ConceptsSuggested_AncestorTitles(t *testing.T) {
 // ─── AC-104: all-stop-word section omitted ────────────────────────────────────
 
 func TestDocIntelGuide_ConceptsSuggested_AllStopWords_Omitted(t *testing.T) {
-	// "In and Of" normalises to all stop words
+	// "In and Of" normalises entirely to stop words; the section must be absent.
 	markdown := "# Doc\n\n## In and Of\n\nContent.\n"
 	svc := setupGuideEnv(t, "cs-stopwords", markdown)
 	out := callGuide(t, svc, "cs-stopwords")
 
 	cs := extractConceptsSuggested(t, out)
+
+	// The "In and Of" section must be absent from concepts_suggested.
 	for _, entry := range cs {
 		if entry["section_title"] == "In and Of" {
-			concepts := suggestedConceptsFor(t, entry)
-			if len(concepts) == 0 {
-				t.Error("entry with empty suggested_concepts must not appear in concepts_suggested")
-			}
+			t.Error("expected 'In and Of' to be absent from concepts_suggested (all tokens are stop words), but it was present")
 		}
 	}
-	// Also verify no entry has an empty suggested_concepts list
+
+	// Also verify no entry has an empty suggested_concepts list.
 	for _, entry := range cs {
 		concepts := suggestedConceptsFor(t, entry)
 		if len(concepts) == 0 {

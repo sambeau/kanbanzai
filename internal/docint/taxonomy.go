@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"unicode"
 )
 
 // FragmentRole defines the valid roles for document fragment classification.
@@ -67,6 +68,7 @@ func ValidateClassification(c Classification) error {
 
 // conventionalRoleKeywords maps heading keywords to fragment roles.
 // Used by Layer 2 pattern-based extraction.
+// Non-Goals → RoleConstraint: exclusions are scope constraints, not requirements (see suggestedClassTable comment).
 var conventionalRoleKeywords = map[string]FragmentRole{
 	"decision":                RoleDecision,
 	"decisions":               RoleDecision,
@@ -185,6 +187,9 @@ var suggestedClassTable = []struct {
 	{"acceptance criteria", RoleRequirement},
 	{"out of scope", RoleConstraint},
 	{"in scope", RoleConstraint},
+	// Non-Goals maps to RoleConstraint (not RoleRequirement): non-goals are scope
+	// constraints that explicitly exclude functionality, not positive requirements.
+	// This conflicts with an ambiguous reading of REQ-004; we treat them as constraints.
 	{"non-goals", RoleConstraint},
 	{"goals", RoleRequirement},
 	{"requirements", RoleRequirement},
@@ -302,11 +307,15 @@ var suggestedClassPrefixTable = []struct {
 	prefix string
 	role   FragmentRole
 }{
-	{"problem and motivation", RoleRationale},
-	{"overview", RoleNarrative},
-	{"risk", RoleRisk},
+	{"requirements", RoleRequirement},
 	{"definition", RoleDefinition},
+	{"decisions", RoleDecision},
+	{"overview", RoleNarrative},
 	{"glossary", RoleDefinition},
+	{"summary", RoleNarrative},
+	{"design", RoleDecision},
+	{"goals", RoleRequirement},
+	{"risk", RoleRisk},
 }
 
 // matchSuggestedRolePrefix checks a heading title against the REQ-106 prefix table.
@@ -350,7 +359,8 @@ func deriveConcepts(title string) []string {
 		if stopWords[lower] {
 			continue
 		}
-		titled := strings.ToUpper(tok[:1]) + tok[1:]
+		runes := []rune(tok)
+		titled := string(unicode.ToUpper(runes[0])) + string(runes[1:])
 		if !seen[titled] {
 			seen[titled] = true
 			out = append(out, titled)
@@ -361,8 +371,8 @@ func deriveConcepts(title string) []string {
 
 // ConceptSuggestion holds per-section concept name candidates (REQ-102).
 type ConceptSuggestion struct {
-	SectionPath      string   `json:"section_path"`
-	SectionTitle     string   `json:"section_title"`
+	SectionPath       string   `json:"section_path"`
+	SectionTitle      string   `json:"section_title"`
 	SuggestedConcepts []string `json:"suggested_concepts"`
 }
 
@@ -382,21 +392,27 @@ func SuggestConcepts(index *DocumentIndex) []ConceptSuggestion {
 func collectConceptSuggestions(sections []Section, ancestors []string, result *[]ConceptSuggestion) {
 	for _, s := range sections {
 		// Build combined title: ancestors + current title (REQ-104).
-		allTitles := append(ancestors, s.Title)
-		seen := make(map[string]bool)
-		var tokens []string
-		for _, title := range allTitles {
-			for _, tok := range deriveConcepts(title) {
-				if !seen[tok] {
-					seen[tok] = true
-					tokens = append(tokens, tok)
+		// Use a safe copy to avoid sharing the backing array with the caller's slice.
+		allTitles := make([]string, len(ancestors)+1)
+		copy(allTitles, ancestors)
+		allTitles[len(ancestors)] = s.Title
+
+		// Only include this section if its own title yields at least one token (REQ-103).
+		// Ancestor tokens enrich the concept list but do not determine inclusion.
+		if ownTokens := deriveConcepts(s.Title); len(ownTokens) > 0 {
+			seen := make(map[string]bool)
+			var tokens []string
+			for _, title := range allTitles {
+				for _, tok := range deriveConcepts(title) {
+					if !seen[tok] {
+						seen[tok] = true
+						tokens = append(tokens, tok)
+					}
 				}
 			}
-		}
-		if len(tokens) > 0 {
 			*result = append(*result, ConceptSuggestion{
-				SectionPath:      s.Path,
-				SectionTitle:     s.Title,
+				SectionPath:       s.Path,
+				SectionTitle:      s.Title,
 				SuggestedConcepts: tokens,
 			})
 		}
