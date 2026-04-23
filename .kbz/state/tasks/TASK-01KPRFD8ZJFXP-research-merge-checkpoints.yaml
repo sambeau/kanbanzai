@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPRFCXNMNKM
 slug: research-merge-checkpoints
 name: Research cohort-based merge checkpoints
 summary: "Investigate cohort-based merge checkpoints as a strategy for preventing worktree drift and reducing merge complexity at plan completion.\n\nResearch questions:\n1. At what plan size / feature count does ad-hoc file-scope discipline break down? Are there historical plans in this project that would have benefited from explicit merge ordering?\n2. What does a 'cohort' look like in practice — how should features be grouped, and what triggers a merge checkpoint between cohorts?\n3. How does the existing conflict tool's file-overlap analysis need to be extended (if at all) to operate at the feature level rather than task level?\n4. What changes are needed in the decompose / dev-planning stage to produce a merge schedule as part of the plan output?\n5. Are there cases where pre-merging is harmful (e.g. partially complete features, feature flags needed)?\n6. What would the orchestrator experience look like — how does an agent know it has hit a merge checkpoint and what does it do?\n\nDeliverable: a research document with findings and a concrete recommendation: either (a) the current approach is sufficient and no tooling change is needed, or (b) a design sketch for cohort/checkpoint support with the minimal set of changes to decompose, dev-planning, and orchestration skills."
-status: active
+status: done
+files_planned:
+  - work/research/cohort-merge-checkpoints.md
+completed: "2026-04-23T14:45:57Z"
 claimed_at: "2026-04-23T14:38:04Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T14:38:04Z"
 dispatched_by: sambeau
+completion_summary: "Completed research into cohort-based merge checkpoints. Analysed historical plans P3, P27, P28 for evidence of drift; reviewed the conflict tool implementation and orchestration skill. Produced and registered research document at work/research/cohort-merge-checkpoints.md."
+verification: Research document registered as FEAT-01KPRFCXNMNKM/research-cohort-merge-checkpoints and approved.
