@@ -100,7 +100,6 @@ func classifyDocForGate(t *testing.T, env *docToolEnv, docID, contentHash, class
 func TestApproveGate_AC001_NonGatedTypes(t *testing.T) {
 	t.Parallel()
 	for _, docType := range []string{"policy", "report", "research"} {
-		docType := docType
 		t.Run(docType, func(t *testing.T) {
 			t.Parallel()
 			env := setupDocToolTest(t)
@@ -443,7 +442,6 @@ func TestApproveGate_AC010_RetrySucceedsAfterClassify(t *testing.T) {
 func TestApproveGate_AC011_NilServiceIdenticalBehavior(t *testing.T) {
 	t.Parallel()
 	for _, docType := range []string{"specification", "design", "dev-plan", "policy", "report", "research"} {
-		docType := docType
 		t.Run(docType, func(t *testing.T) {
 			t.Parallel()
 			env := setupDocToolTest(t)
@@ -572,7 +570,6 @@ func TestApproveGate_BatchWithBlockedDoc(t *testing.T) {
 func TestApproveGate_AutoApproveDisabledForGatedTypes(t *testing.T) {
 	t.Parallel()
 	for _, docType := range []string{"specification", "design", "dev-plan"} {
-		docType := docType
 		t.Run(docType, func(t *testing.T) {
 			t.Parallel()
 			env := setupDocToolTest(t)
