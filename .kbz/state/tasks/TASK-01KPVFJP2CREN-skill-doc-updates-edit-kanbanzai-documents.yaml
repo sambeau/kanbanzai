@@ -3,4 +3,14 @@ parent_feature: FEAT-01KPVDDYN855F
 slug: skill-doc-updates-edit-kanbanzai-documents
 name: Edit kanbanzai-documents SKILL.md classification section
 summary: Add concise-output instruction and atomicity guarantee to the Classification (Layer 3) section of .agents/skills/kanbanzai-documents/SKILL.md
-status: ready
+status: done
+files_planned:
+  - .agents/skills/kanbanzai-documents/SKILL.md
+  - internal/kbzinit/skills/documents/SKILL.md
+completed: "2026-04-23T00:58:44Z"
+claimed_at: "2026-04-23T00:54:26Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-23T00:54:26Z"
+dispatched_by: sambeau
+completion_summary: "Added concise-output instruction (Addition A) and atomicity guarantee statement (Addition B) to the Classification (Layer 3) section of kanbanzai-documents/SKILL.md. Both additions were inserted between the `### Priority ordering` and `### Step-by-step procedure` sub-sections. Dual-write applied: identical changes made to internal/kbzinit/skills/documents/SKILL.md, which retains its `# kanbanzai-managed: true` and `# kanbanzai-version: dev` comment markers. Committed in a single commit."
+verification: "AC-001: Bold concise-output instruction present in Classification section. AC-002: Atomicity statement explicitly names `classify` persistence and `doc_intel(action: \\\"pending\\\")` as authoritative after failure. AC-003: Statement explicitly instructs calling `doc_intel(action: \\\"pending\\\")` before re-dispatching. AC-008: `git diff --name-only main...HEAD` shows only the two owned files. AC-009: No duplication of pre-existing sentences. AC-010: Step-by-step procedure, priority-ordering table, and anti-patterns sub-sections byte-for-byte unchanged."
