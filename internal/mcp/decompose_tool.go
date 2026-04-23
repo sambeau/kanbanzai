@@ -62,7 +62,7 @@ func decomposeTool(decomposeSvc *service.DecomposeService, entitySvc *service.En
 		return DispatchAction(ctx, req, map[string]ActionHandler{
 			"propose": decomposePropose(decomposeSvc),
 			"review":  decomposeReview(decomposeSvc),
-			"apply":   decomposeApply(entitySvc),
+			"apply":   decomposeApply(entitySvc, decomposeSvc),
 			"slice":   decomposeSlice(decomposeSvc),
 		})
 	})
@@ -127,7 +127,7 @@ func decomposeReview(svc *service.DecomposeService) ActionHandler {
 
 // ─── apply ───────────────────────────────────────────────────────────────────
 
-func decomposeApply(entitySvc *service.EntityService) ActionHandler {
+func decomposeApply(entitySvc *service.EntityService, decomposeSvc *service.DecomposeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
 
@@ -153,10 +153,11 @@ func decomposeApply(entitySvc *service.EntityService) ActionHandler {
 
 		// Pass 1: create all tasks; build slug→ID map for dependency resolution.
 		type createdTask struct {
-			ID     string
-			Slug   string
-			Status string
-			DepsOn []string // raw slug-based depends_on from the proposal
+			ID      string
+			Slug    string
+			Status  string
+			DepsOn  []string // raw slug-based depends_on from the proposal
+			Summary string   // task summary for skeleton dev plan
 		}
 
 		slugToID := make(map[string]string, len(proposal.Tasks))
@@ -176,10 +177,11 @@ func decomposeApply(entitySvc *service.EntityService) ActionHandler {
 			slugToID[pt.Slug] = result.ID
 			status, _ := result.State["status"].(string)
 			created = append(created, createdTask{
-				ID:     result.ID,
-				Slug:   pt.Slug,
-				Status: status,
-				DepsOn: pt.DependsOn,
+				ID:      result.ID,
+				Slug:    pt.Slug,
+				Status:  status,
+				DepsOn:  pt.DependsOn,
+				Summary: pt.Summary,
 			})
 		}
 
@@ -243,11 +245,36 @@ func decomposeApply(entitySvc *service.EntityService) ActionHandler {
 			log.Printf("[decompose] WARNING: auto-commit after apply for %s failed: %v", featureID, commitErr)
 		}
 
-		return map[string]any{
+		// Write skeleton dev plan (REQ-001, REQ-003, REQ-004, REQ-006).
+		// Only run when tasks were actually created; best-effort (log on failure).
+		resp := map[string]any{
 			"feature_id":    featureID,
 			"tasks_created": tasksOut,
 			"total_created": len(tasksOut),
-		}, nil
+		}
+
+		if len(tasksOut) > 0 && decomposeSvc != nil {
+			skeletonTasks := make([]service.SkeletonTask, len(created))
+			for i, ct := range created {
+				skeletonTasks[i] = service.SkeletonTask{
+					ID:      ct.ID,
+					Summary: ct.Summary,
+				}
+			}
+			skeletonResult, skErr := decomposeSvc.WriteSkeletonDevPlan(featureID, skeletonTasks)
+			if skErr != nil {
+				log.Printf("[decompose] WARNING: failed to write skeleton dev plan for %s: %v", featureID, skErr)
+			} else if skeletonResult.Action != "skipped" {
+				// Include note in response (REQ-005).
+				resp["skeleton_dev_plan"] = map[string]string{
+					"doc_id":   skeletonResult.DocID,
+					"path":     skeletonResult.FilePath,
+					"action":   skeletonResult.Action,
+				}
+			}
+		}
+
+		return resp, nil
 	}
 }
 
