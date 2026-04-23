@@ -244,6 +244,13 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 
 	autoApprove, _ := args["auto_approve"].(bool)
 
+	// auto_approve is not permitted for gated document types (REQ-001): the
+	// concept-tagging gate in docApproveOne cannot run at register time because
+	// no classifications exist yet. Callers must approve separately.
+	if autoApprove && gatedDocTypes[docType] {
+		autoApprove = false
+	}
+
 	result, err := docSvc.SubmitDocument(service.SubmitDocumentInput{
 		Path:        path,
 		Type:        docType,
@@ -333,6 +340,11 @@ func docApproveOne(ctx context.Context, docSvc *service.DocumentService, intelSv
 	// Concept-tagging approval gate (REQ-004, REQ-010).
 	// Gate is skipped when intelSvc is nil (REQ-007).
 	if intelSvc != nil {
+		// Gate is fail-open: if GetDocument or GetClassifications returns an error,
+		// the gate is skipped and the document proceeds to approval. This is intentional:
+		// store I/O errors should not permanently block approvals (transient failures
+		// would require human intervention). Document-not-found and classification-not-found
+		// are both treated as "no gate needed."
 		doc, docErr := docSvc.GetDocument(docID, false)
 		if docErr == nil && gatedDocTypes[doc.Type] {
 			entries, classErr := intelSvc.GetClassifications(docID)
@@ -345,17 +357,12 @@ func docApproveOne(ctx context.Context, docSvc *service.DocumentService, intelSv
 					}
 				}
 				if !hasIntro {
-					// Use content_hash from the last entry (most recent classification).
-					contentHash := entries[len(entries)-1].ContentHash
-					return docID, map[string]any{
-						"error_code":  "concept_tagging_required",
-						"document_id": docID,
-						"content_hash": contentHash,
-						"message": fmt.Sprintf(
-							`At least one classified section must have concepts_intro populated. Call doc_intel(action: "guide", id: "%s") to see concept suggestions, then doc_intel(action: "classify", ...) with concepts_intro on at least one section.`,
-							docID,
-						),
-					}, nil
+					blockMsg := fmt.Sprintf(
+						"concept_tagging_required: document %s cannot be approved until at least one classified section has concepts_intro populated. "+
+							"Call doc_intel(action: \"guide\", id: \"%s\") to see concept suggestions, then classify with concepts_intro.",
+						docID, docID,
+					)
+					return docID, nil, fmt.Errorf("%s", blockMsg)
 				}
 			}
 		}
