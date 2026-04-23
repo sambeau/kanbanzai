@@ -3,4 +3,13 @@ parent_feature: FEAT-01KPVDDYX73WB
 slug: decompose-skeleton-content-generator
 name: Implement skeleton dev-plan content generator
 summary: "Build the buildSkeletonDevPlan helper that generates skeleton Markdown from feature metadata and task list, conforming to REQ-002 structure"
-status: ready
+status: done
+files_planned:
+  - internal/service/decompose_skeleton.go
+completed: "2026-04-23T02:58:48Z"
+claimed_at: "2026-04-23T02:56:53Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-23T02:56:53Z"
+dispatched_by: sambeau
+completion_summary: "Created internal/service/decompose_skeleton.go with SkeletonTask struct and buildSkeletonDevPlan pure helper function. The helper generates REQ-002-conformant Markdown with header table (Feature, Created, Method, Status), Overview section, and Tasks table. UTF-8 validity is explicitly guarded. Builds cleanly."
+verification: go build ./internal/service/... passes

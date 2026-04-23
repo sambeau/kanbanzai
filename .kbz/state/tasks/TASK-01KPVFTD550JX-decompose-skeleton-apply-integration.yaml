@@ -3,6 +3,6 @@ parent_feature: FEAT-01KPVDDYX73WB
 slug: decompose-skeleton-apply-integration
 name: Integrate skeleton generation into decompose apply
 summary: "Call content generator in DecomposeApply, write file, register and auto-approve doc, add response note, enforce idempotency (REQ-001, REQ-003, REQ-004, REQ-005, REQ-006)"
-status: queued
+status: ready
 depends_on:
   - TASK-01KPVFTD2MKYN
