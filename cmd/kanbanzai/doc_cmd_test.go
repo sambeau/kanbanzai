@@ -134,7 +134,25 @@ func TestDocUsageText_ContainsByFlag(t *testing.T) {
 	}
 }
 
-// TestRunDocRegister_ByFlagIsOptional_ErrorIsFromResolveIdentity verifies AC-004 and
+// TestRunDocApprove_ByFlagAcceptsEmptyWithoutHardcodedError verifies that
+// runDocApprove calls config.ResolveIdentity rather than passing the raw --by
+// value directly. When --by is omitted, the error (if any) must come from
+// ResolveIdentity or the service layer, not a hard-coded "approver is required" check.
+func TestRunDocApprove_ByFlagAcceptsEmptyWithoutHardcodedError(t *testing.T) {
+	t.Parallel()
+
+	var buf bytes.Buffer
+	deps := dependencies{stdout: &buf, stdin: strings.NewReader("")}
+
+	// Omit --by. The command will reach config.ResolveIdentity.
+	// The resulting error (if any) must NOT contain "approver is required".
+	err := runDocApprove([]string{"DOC-nonexistent"}, deps)
+	if err != nil && strings.Contains(err.Error(), "approver is required") {
+		t.Errorf("got old hard-coded error %q; expected identity resolution via config.ResolveIdentity", err.Error())
+	}
+}
+
+// TestRunDocRegister_ByFlagAcceptsEmptyWithoutHardcodedError verifies AC-004 and
 // AC-007: when --by is omitted and identity cannot be resolved, the error comes
 // directly from config.ResolveIdentity with no extra wrapping (we check the known
 // error substrings that ResolveIdentity produces).
