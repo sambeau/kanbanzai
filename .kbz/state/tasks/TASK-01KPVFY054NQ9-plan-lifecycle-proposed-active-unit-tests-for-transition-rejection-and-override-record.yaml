@@ -3,11 +3,11 @@ parent_feature: FEAT-01KPVDDYVETV5
 slug: plan-lifecycle-proposed-active-unit-tests-for-transition-rejection-and-override-record
 name: "Unit tests for transition, rejection, and override record"
 summary: "Unit tests for transition, rejection, and override record"
-status: ready
+status: active
 depends_on:
   - TASK-01KPVFY051XFC
   - TASK-01KPVFY053ED8
-claimed_at: "2026-04-23T03:15:56Z"
+claimed_at: "2026-04-23T03:32:50Z"
 dispatched_to: unspecified
-dispatched_at: "2026-04-23T03:15:56Z"
+dispatched_at: "2026-04-23T03:32:50Z"
 dispatched_by: sambeau

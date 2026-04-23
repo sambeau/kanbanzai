@@ -3,10 +3,10 @@ parent_feature: FEAT-01KPVDDYX73WB
 slug: decompose-skeleton-integration-test
 name: Integration test for decompose apply skeleton
 summary: "End-to-end: skeleton created and approved on first apply, updated on second, non-skeleton preserved, gate passes, latency within 500ms (AC-001 through AC-008)"
-status: ready
+status: active
 depends_on:
   - TASK-01KPVFTD711VC
-claimed_at: "2026-04-23T03:10:24Z"
+claimed_at: "2026-04-23T03:31:51Z"
 dispatched_to: unspecified
-dispatched_at: "2026-04-23T03:10:24Z"
+dispatched_at: "2026-04-23T03:31:51Z"
 dispatched_by: sambeau

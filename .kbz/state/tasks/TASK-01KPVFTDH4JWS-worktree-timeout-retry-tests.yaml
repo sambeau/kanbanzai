@@ -3,10 +3,15 @@ parent_feature: FEAT-01KPVDDYZ3182
 slug: worktree-timeout-retry-tests
 name: Tests for retry logic and error message content
 summary: "Unit tests without live repo: verify attempt count, backoff sequence (2s/4s/8s), all three error fields on exhaustion, no sleep on first-attempt success (REQ-NF-001, REQ-NF-003)"
-status: ready
+status: done
 depends_on:
   - TASK-01KPVFTDD5A58
-claimed_at: "2026-04-23T03:13:36Z"
+files_planned:
+  - internal/mcp/worktree_retry_test.go
+completed: "2026-04-23T03:37:34Z"
+claimed_at: "2026-04-23T03:31:34Z"
 dispatched_to: unspecified
-dispatched_at: "2026-04-23T03:13:36Z"
+dispatched_at: "2026-04-23T03:31:34Z"
 dispatched_by: sambeau
+completion_summary: "Wrote unit tests for worktreeAddWithRetry in internal/mcp/worktree_retry_test.go covering all required ACs: 2-failures-then-success (3 calls, 2s+4s delays), first-attempt success (1 call, no sleep), 3-consecutive-failures error message (underlying text + \"3 attempts\" + \"git worktree add\"), total sleep ≤30s budget, non-retryable error short-circuits, backoff doubling sequence, and schema stability for get/list/remove actions. All 9 tests pass."
+verification: go test ./internal/mcp/... -run TestWorktreeRetry -v -count=1 → 9/9 PASS in 0.438s. No live git repo required for retry unit tests; schema tests use t.TempDir().
