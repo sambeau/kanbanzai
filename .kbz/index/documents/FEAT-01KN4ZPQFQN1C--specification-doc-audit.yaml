@@ -156,16 +156,25 @@ conventional_roles:
     - section_path: "1.7"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:14:41.432187Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:49.756343Z
 classified: true
-classified_at: 2026-04-22T17:21:31.341163Z
+classified_at: 2026-04-23T12:55:57.386627Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: doc-audit
+          aliases:
+            - doc audit action
+            - document store reconciliation
+        - name: document-store
+          aliases:
+            - document store
+            - store records
     - section_path: "1.1"
       role: rationale
       confidence: high
@@ -184,6 +193,15 @@ classifications:
     - section_path: "1.4"
       role: definition
       confidence: high
+      concepts_intro:
+        - name: default-document-directories
+          aliases:
+            - document directories
+            - directory-to-type mapping
+        - name: type-inference
+          aliases:
+            - inferred type
+            - directory-to-type
     - section_path: "1.5"
       role: requirement
       confidence: high
@@ -193,6 +211,15 @@ classifications:
     - section_path: 1.5.2
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: unregistered-file
+          aliases:
+            - unregistered
+            - file not in store
+        - name: missing-record
+          aliases:
+            - missing
+            - store record with no file
     - section_path: 1.5.3
       role: requirement
       confidence: high

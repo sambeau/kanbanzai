@@ -140,19 +140,40 @@ conventional_roles:
     - section_path: "1.6"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:15:02.925917Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:43.08963Z
 classified: true
-classified_at: 2026-04-22T17:20:11.9942Z
+classified_at: 2026-04-23T12:56:28.930163Z
 classified_by: claude-sonnet-4-6
-classifier_version: "20251101"
+classifier_version: "2025-07-30"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: mandatory-stage-gate
+          aliases:
+            - stage gate enforcement
+            - gate prerequisite
+            - mandatory gate
+        - name: gate-prerequisite-table
+          aliases:
+            - gated transitions table
+            - nine gated transitions
+        - name: override-mechanism
+          aliases:
+            - gate override
+            - override parameter
+            - bypass gate
     - section_path: "1.1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: override-logging
+          aliases:
+            - override record
+            - override persistence
+            - health flagging
     - section_path: "1.2"
       role: constraint
       confidence: high
@@ -168,15 +189,41 @@ classifications:
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: single-step-gate-enforcement
+          aliases:
+            - single-step transition gate
+            - advance gate parity
     - section_path: 1.3.2
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: gate-prerequisite-table
+          aliases:
+            - complete gate table
+            - designing-to-done gates
+        - name: rework-transition-gate
+          aliases:
+            - needs-rework gate
+            - rework lifecycle gate
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: override-mechanism
+          aliases:
+            - override boolean
+            - override_reason parameter
+            - agent override policy
     - section_path: 1.3.4
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: actionable-error-message
+          aliases:
+            - gate failure error template
+            - recovery step
+            - To resolve section
     - section_path: "1.4"
       role: requirement
       confidence: high

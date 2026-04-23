@@ -1,0 +1,342 @@
+document_id: PROJECT/research-doc-intel-recurring-issues-investigation
+document_path: work/research/doc-intel-recurring-issues-investigation.md
+content_hash: 02fc80bcf047e28515a29258f2c790a6bb834a2706ef2cdd3d8aed7a98f5abc1
+indexed_at: 2026-04-23T12:01:20.116211Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Doc-Intel Recurring Issues: Investigation'
+      byte_offset: 0
+      byte_count: 37936
+      word_count: 5392
+      content_hash: 02fc80bcf047e28515a29258f2c790a6bb834a2706ef2cdd3d8aed7a98f5abc1
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Summary of Findings
+          byte_offset: 843
+          byte_count: 4443
+          word_count: 631
+          content_hash: af096382599f85040a058818f48f68b8aa63dd8d181a290b083beb8fc4b56bba
+        - path: "1.2"
+          level: 2
+          title: 2. Failure Inventory
+          byte_offset: 5286
+          byte_count: 3908
+          word_count: 601
+          content_hash: ee9c4c7b2015a13b6614aa3cfd932c31e3d5793b176bfda63e21ea483973d206
+        - path: "1.3"
+          level: 2
+          title: 3. Cluster Analysis
+          byte_offset: 9194
+          byte_count: 10393
+          word_count: 1483
+          content_hash: eef4b1ff03163a5c836e7076f18fe7cd0c767f2cba7682bcc61c0e7c21d46d0e
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Cluster C1: Voluntary-Step Compliance Failures'
+              byte_offset: 9218
+              byte_count: 2924
+              word_count: 406
+              content_hash: 60e5a2cdaaae5cfe37244fe64122748aa34c598eb47ac4ea605e6e13bae46690
+            - path: 1.3.2
+              level: 3
+              title: 'Cluster C2: Tool Information Gap'
+              byte_offset: 12142
+              byte_count: 2919
+              word_count: 439
+              content_hash: 1ed7420065855ce29a414d568ae7d5bae79f39b4e5046b92cc5b769d3db80cef
+            - path: 1.3.3
+              level: 3
+              title: 'Cluster C3: Fixed Implementation Bugs'
+              byte_offset: 15061
+              byte_count: 1258
+              word_count: 172
+              content_hash: f52b8bbfa68888a17b3841e59b680487992d48b251e76d14ac5ffd84e2e341a1
+            - path: 1.3.4
+              level: 3
+              title: 'Cluster C4: CLI Identity Resolution Bug'
+              byte_offset: 16319
+              byte_count: 1229
+              word_count: 174
+              content_hash: d9a9430d2667db413e8fda989962114ee464cffb891ebb3896d9345514333287
+            - path: 1.3.5
+              level: 3
+              title: 'Cluster C5: Corpus Coverage Gap'
+              byte_offset: 17548
+              byte_count: 1122
+              word_count: 161
+              content_hash: 87a1de955f5af62144909ae23bf5f0db9923c1995d935a303c59ac311557dcf5
+            - path: 1.3.6
+              level: 3
+              title: 'Cluster C6: Observability Gaps'
+              byte_offset: 18670
+              byte_count: 917
+              word_count: 127
+              content_hash: 125f3184a76b9f43f7a225850218ffee85289f6260f24ca6e2a814ceaba1bdcf
+        - path: "1.4"
+          level: 2
+          title: 4. Architectural Diagnosis
+          byte_offset: 19587
+          byte_count: 4329
+          word_count: 613
+          content_hash: f21ad71ce100fa6aad99effdd6b5e5d35e39f6fc998f937fc172bade36b672d8
+          children:
+            - path: 1.4.1
+              level: 3
+              title: The Voluntary-Step Architecture
+              byte_offset: 19618
+              byte_count: 4298
+              word_count: 609
+              content_hash: 032d1f064446b55fa2accbab88b00a2f4c4523734c1283188c67934dc297c3c3
+        - path: "1.5"
+          level: 2
+          title: 5. Planning Recommendation
+          byte_offset: 23916
+          byte_count: 4410
+          word_count: 652
+          content_hash: e3ef018831bdf36db6de601d6d8c7ec19325c37d0917192c078938a2b59bca3f
+          children:
+            - path: 1.5.1
+              level: 3
+              title: The CLI bug is independent — one task, not one plan
+              byte_offset: 23947
+              byte_count: 277
+              word_count: 51
+              content_hash: 62e49606aad45a2cd4464b20e2d31579aa7eb304efe762ab2495baff26b38e0f
+            - path: 1.5.2
+              level: 3
+              title: The corpus backlog is independent — an operational campaign
+              byte_offset: 24224
+              byte_count: 502
+              word_count: 73
+              content_hash: 65737457e0448b244c9667ce6c95b51661deb850d872d86485148ce4e18f0164
+            - path: 1.5.3
+              level: 3
+              title: The knowledge close-out is an immediate operational action
+              byte_offset: 24726
+              byte_count: 526
+              word_count: 89
+              content_hash: a7438f880570a6e6c293deba9430499cc1bbe121524d72d38615eabe18cf8b2c
+            - path: 1.5.4
+              level: 3
+              title: Clusters C1 and C2 must be one plan
+              byte_offset: 25252
+              byte_count: 3074
+              word_count: 435
+              content_hash: 9782e114e4146f64eb2a67008282ceb01e4713847cf1753727331298202a3911
+        - path: "1.6"
+          level: 2
+          title: 6. Research Gaps
+          byte_offset: 28326
+          byte_count: 5711
+          word_count: 803
+          content_hash: 81e0f44438682eb396cb115f254f48c351d772074f5cbc5e1c0d38ce2808dcf4
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'RG-1: Quality of server-suggested concept extraction'
+              byte_offset: 28347
+              byte_count: 2128
+              word_count: 289
+              content_hash: aac30d6408707663fc563439bc0ab359fc390719a96ced296b6a2da478f71fab
+            - path: 1.6.2
+              level: 3
+              title: 'RG-2: Optimal enforcement point for concept tagging'
+              byte_offset: 30475
+              byte_count: 2139
+              word_count: 294
+              content_hash: 57dc47ed87906d870ee92fd892c9c08d399a5c7ef609ac4063d4ee9a36966135
+            - path: 1.6.3
+              level: 3
+              title: 'RG-3: Knowledge confirmation structural recurrence'
+              byte_offset: 32614
+              byte_count: 1423
+              word_count: 216
+              content_hash: 695c1ea90cc04865eb516c5d2fbd8a460ddd0e9ae39c4eb51f5742f851796f26
+        - path: "1.7"
+          level: 2
+          title: 7. Recommended Next Actions
+          byte_offset: 34037
+          byte_count: 3899
+          word_count: 554
+          content_hash: 5d145e0a5be2d030a4b745a79ff10e31368775c2c1733b119cf9ade179926b47
+cross_doc_links:
+    - target_path: skill-authoring-best-practices.md
+      link_text: skill-authoring-best-practices.md
+      section_path: "1.1"
+    - target_path: skill-authoring-best-practices.md
+      link_text: skill-authoring-best-practices.md
+      section_path: 1.3.1
+    - target_path: document-retrieval-for-ai-agents.md
+      link_text: document-retrieval-for-ai-agents.md
+      section_path: 1.3.2
+    - target_path: skill-authoring-best-practices.md
+      link_text: skill-authoring-best-practices.md
+      section_path: 1.4.1
+    - target_path: document-retrieval-for-ai-agents.md
+      link_text: document-retrieval-for-ai-agents.md
+      section_path: 1.5.4
+    - target_path: document-retrieval-for-ai-agents.md
+      link_text: document-retrieval-for-ai-agents.md
+      section_path: 1.6.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T12:01:20.613544Z
+classified: true
+classified_at: 2026-04-23T12:01:44.962385Z
+classified_by: claude-sonnet-4-5
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: rationale
+      confidence: high
+      concepts_intro:
+        - name: voluntary-step architecture
+          aliases:
+            - advisory-first architecture
+            - advisory inline step
+        - name: compliance failure
+          aliases:
+            - agent compliance gap
+            - step-skipping
+        - name: tool information gap
+          aliases:
+            - classify loop round-trip gap
+        - name: architectural gap
+          aliases:
+            - structural root cause
+    - section_path: "1.2"
+      role: definition
+      confidence: high
+      concepts_intro:
+        - name: failure inventory
+          aliases:
+            - failure taxonomy
+            - gap catalogue
+    - section_path: "1.3"
+      role: rationale
+      confidence: high
+    - section_path: 1.3.1
+      role: rationale
+      confidence: high
+      concepts_intro:
+        - name: enrichment step
+          aliases:
+            - voluntary enrichment
+            - inline enrichment
+        - name: advisory instruction
+          aliases:
+            - skill mandate
+            - soft constraint
+        - name: hard constraint
+          aliases:
+            - tool-level enforcement
+            - stage-gate enforcement
+        - name: concept tagging
+          aliases:
+            - concepts_intro
+            - concept registry population
+    - section_path: 1.3.2
+      role: rationale
+      confidence: high
+      concepts_intro:
+        - name: classify-on-register
+          aliases:
+            - register-time classification
+            - registration nudge
+        - name: self-contained classify loop
+          aliases:
+            - round-trip elimination
+    - section_path: 1.3.3
+      role: rationale
+      confidence: high
+    - section_path: 1.3.4
+      role: rationale
+      confidence: high
+      concepts_intro:
+        - name: CLI identity resolution
+          aliases:
+            - doc register CLI bug
+    - section_path: 1.3.5
+      role: rationale
+      confidence: high
+      concepts_intro:
+        - name: pre-pilot backlog
+          aliases:
+            - corpus coverage gap
+            - unindexed backlog
+    - section_path: 1.3.6
+      role: rationale
+      confidence: high
+    - section_path: "1.4"
+      role: decision
+      confidence: high
+    - section_path: 1.4.1
+      role: rationale
+      confidence: high
+      concepts_intro:
+        - name: voluntary-step architecture
+          aliases:
+            - advisory-first architecture
+        - name: enforcement escalation
+          aliases:
+            - advisory to enforced transition
+            - soft to hard constraint escalation
+    - section_path: "1.5"
+      role: decision
+      confidence: high
+    - section_path: 1.5.1
+      role: decision
+      confidence: high
+    - section_path: 1.5.2
+      role: decision
+      confidence: high
+    - section_path: 1.5.3
+      role: decision
+      confidence: high
+    - section_path: 1.5.4
+      role: decision
+      confidence: high
+      concepts_intro:
+        - name: classification pipeline hardening
+          aliases:
+            - C1+C2 plan
+            - compliance enforcement plan
+    - section_path: "1.6"
+      role: question
+      confidence: high
+    - section_path: 1.6.1
+      role: question
+      confidence: high
+      concepts_intro:
+        - name: concepts_suggested
+          aliases:
+            - server-suggested concepts
+            - concept extraction quality
+    - section_path: 1.6.2
+      role: question
+      confidence: high
+      concepts_intro:
+        - name: enforcement point
+          aliases:
+            - concept tagging enforcement trigger
+            - approval-time vs classify-time enforcement
+    - section_path: 1.6.3
+      role: question
+      confidence: high
+      concepts_intro:
+        - name: knowledge confirmation gate
+          aliases:
+            - plan-lifecycle enforcement
+            - close-out enforcement
+    - section_path: "1.7"
+      role: requirement
+      confidence: high

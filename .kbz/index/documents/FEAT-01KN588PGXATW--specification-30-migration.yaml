@@ -328,16 +328,31 @@ conventional_roles:
     - section_path: 1.6.2
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:15:02.25661Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:42.166688Z
 classified: true
-classified_at: 2026-04-22T17:20:07.620976Z
+classified_at: 2026-04-23T12:56:08.445238Z
 classified_by: claude-sonnet-4-6
-classifier_version: "20251101"
+classifier_version: "2025-07-30"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: role-directory-relocation
+          aliases:
+            - context/roles migration
+            - .kbz/roles relocation
+        - name: skill-splitting
+          aliases:
+            - monolithic skill split
+            - skill restructure
+            - type-specific skills
+        - name: backward-compatibility-contract
+          aliases:
+            - transition period
+            - old path retention
+            - BC contract
     - section_path: "1.1"
       role: narrative
       confidence: high
@@ -356,15 +371,30 @@ classifications:
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: canonical-role-location
+          aliases:
+            - role file relocation
+            - new role path
     - section_path: 1.3.2
       role: requirement
       confidence: high
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: developer-role-rename
+          aliases:
+            - implementer-go rename
+            - developer restructure
     - section_path: 1.3.4
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: reviewer-role-split
+          aliases:
+            - specialist reviewer subtypes
+            - reviewer specialization
     - section_path: 1.3.5
       role: requirement
       confidence: high
@@ -377,6 +407,11 @@ classifications:
     - section_path: 1.3.8
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: stage-bindings-file
+          aliases:
+            - stage-bindings.yaml
+            - new stage bindings
     - section_path: 1.3.9
       role: requirement
       confidence: high
@@ -398,6 +433,11 @@ classifications:
     - section_path: 1.3.15
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: old-file-retirement
+          aliases:
+            - file retirement
+            - deprecated file removal
     - section_path: "1.4"
       role: requirement
       confidence: high

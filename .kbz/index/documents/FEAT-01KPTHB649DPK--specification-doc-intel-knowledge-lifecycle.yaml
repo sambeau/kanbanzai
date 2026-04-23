@@ -210,11 +210,11 @@ conventional_roles:
     - section_path: "1.7"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:30:06.607722Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:19:04.305306Z
 classified: true
-classified_at: 2026-04-22T17:35:51.695098Z
-classified_by: claude-sonnet-4-6
+classified_at: 2026-04-23T12:23:47.622685Z
+classified_by: claude-sonnet-4-5
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
@@ -235,6 +235,19 @@ classifications:
     - section_path: "1.2"
       role: rationale
       confidence: high
+      concepts_intro:
+        - name: knowledge feedback loop
+          aliases:
+            - knowledge lifecycle
+            - knowledge consumption pattern
+        - name: knowledge retrieval mandate
+          aliases:
+            - knowledge list before coding
+            - active knowledge querying
+        - name: use_count
+          aliases:
+            - knowledge entry use count
+            - zero use count
     - section_path: "1.3"
       role: constraint
       confidence: high
@@ -250,12 +263,48 @@ classifications:
     - section_path: 1.4.1
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: knowledge confirm
+          aliases:
+            - 'knowledge(action: confirm)'
+            - confirm knowledge entry
+        - name: knowledge flag
+          aliases:
+            - 'knowledge(action: flag)'
+            - flag knowledge entry
+        - name: BECAUSE rationale clause
+          aliases:
+            - because clause
+            - rationale clause in skill
     - section_path: 1.4.2
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: plan close-out
+          aliases:
+            - Phase 6 close-out
+            - orchestrate-development close-out
+            - knowledge curation pass
+        - name: tier 2 knowledge entry
+          aliases:
+            - tier-2 entry
+            - knowledge tier 2
+        - name: knowledge retire
+          aliases:
+            - 'knowledge(action: retire)'
+            - superseded entry
     - section_path: 1.4.3
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: context assembly
+          aliases:
+            - automatic knowledge surfacing
+            - context packet knowledge
+        - name: cross-cutting concern
+          aliases:
+            - multi-domain task
+            - cross-domain knowledge
     - section_path: "1.5"
       role: requirement
       confidence: high

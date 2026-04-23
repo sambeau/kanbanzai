@@ -81,25 +81,55 @@ conventional_roles:
     - section_path: "1.6"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:30:00.822055Z
+access_count: 2
+last_accessed_at: 2026-04-23T13:03:57.359318Z
 classified: true
-classified_at: 2026-04-22T17:35:14.223713Z
-classified_by: claude-sonnet-4-6
+classified_at: 2026-04-23T13:05:29.742108Z
+classified_by: claude-sonnet-4-5
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: proposed-task-name-population
+          aliases:
+            - ProposedTask Name field
+            - empty task name bug
+        - name: validate-name-constraint
+          aliases:
+            - ValidateName
+            - 60-char limit
+            - no colon rule
     - section_path: "1.1"
       role: rationale
       confidence: high
+      concepts_intro:
+        - name: decompose-apply-validation-failure
+          aliases:
+            - CreateTask validation
+            - name must not be empty
+        - name: derive-task-name-helper
+          aliases:
+            - deriveTaskName
+            - positional fallback
     - section_path: "1.2"
       role: constraint
       confidence: high
     - section_path: "1.3"
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: ac-format-handling
+          aliases:
+            - checkbox AC
+            - numbered-list AC
+            - bold-identifier AC
+            - AC-NN format
+        - name: bold-identifier-prefix-strip
+          aliases:
+            - '[A-Z]+-\d+: prefix'
+            - colon removal
     - section_path: "1.4"
       role: requirement
       confidence: high

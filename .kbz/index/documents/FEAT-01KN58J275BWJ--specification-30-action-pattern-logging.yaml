@@ -146,49 +146,108 @@ conventional_roles:
     - section_path: "1.5"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:44.493317Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:50.574403Z
 classified: true
-classified_at: 2026-04-22T17:32:43.385711Z
+classified_at: 2026-04-23T12:56:42.590784Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      summary: Root document node for action pattern logging and metrics specification.
     - section_path: "1.1"
       role: narrative
       confidence: high
+      summary: 'Overview: JSON lines log of MCP tool invocations, stage-level workflow metrics CLI, evaluation suite framework for measuring 3.0 workflow goal attainment.'
+      concepts_intro:
+        - name: action-pattern-logging
+          aliases:
+            - MCP tool invocation log
+            - JSON lines log
+            - structured tool log
+        - name: stage-level-workflow-metrics
+          aliases:
+            - workflow health metrics
+            - kbz metrics CLI
+            - time-per-stage
+        - name: evaluation-suite-framework
+          aliases:
+            - representative workflow scenarios
+            - agent-driven evaluation
+            - eval suite
     - section_path: "1.2"
       role: constraint
       confidence: high
     - section_path: 1.2.1
       role: constraint
       confidence: high
+      summary: 'In scope: JSON lines log format, log file management, stage-level metrics, CLI command, evaluation suite structure.'
     - section_path: 1.2.2
       role: constraint
       confidence: high
+      summary: 'Exclusions: dashboards, alerting, CI integration, review_cycle implementation, structural check implementation, hard tool filtering, log shipping, metric persistence.'
     - section_path: "1.3"
       role: requirement
       confidence: high
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      summary: 'FR-001 through FR-008: log infrastructure — every tool invocation produces one JSON lines entry with required fields (timestamp, tool, action, entity_id, stage, success, error_type); error classification; entity_id extraction; stage field resolution; log file management with date-based rotation and 30-day retention; gitignore exclusion.'
+      concepts_intro:
+        - name: json-lines-log-format
+          aliases:
+            - JSONL log
+            - structured log entry
+            - log schema
+        - name: error-type-classification
+          aliases:
+            - error_type field
+            - gate_failure
+            - validation_error
+            - internal_error
+        - name: log-file-rotation
+          aliases:
+            - date-based log rotation
+            - 30-day retention
+            - actions-YYYY-MM-DD.jsonl
     - section_path: 1.3.2
       role: requirement
       confidence: high
+      summary: 'FR-006 through FR-008: log files in .kbz/logs/, named actions-YYYY-MM-DD.jsonl, auto-created, auto-cleaned after 30 days on startup, excluded from git.'
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      summary: 'FR-009 through FR-012: kbz metrics CLI computes time-per-stage, revision cycle count, gate failure rate, structural check pass rate, tool subset compliance; supports date-range and feature filters; outputs text or JSON.'
+      concepts_intro:
+        - name: tool-subset-compliance-metric
+          aliases:
+            - stage tool compliance
+            - tool call compliance rate
+        - name: gate-failure-rate
+          aliases:
+            - gate failure count
+            - error rate by type
     - section_path: 1.3.4
       role: requirement
       confidence: high
+      summary: 'FR-013 through FR-016: evaluation suite at work/evaluation/ with README, scenario schema (task description, expected tool sequence, decision point), 5-10 scenarios, invocation documentation.'
+      concepts_intro:
+        - name: evaluation-scenario
+          aliases:
+            - workflow scenario
+            - agent test scenario
+            - representative scenario
     - section_path: 1.3.5
       role: requirement
       confidence: high
+      summary: 'FR-017 through FR-018: logging behaviour — log writes must be non-blocking relative to tool call response; log failure must not prevent tool from returning its result.'
     - section_path: "1.4"
       role: requirement
       confidence: high
+      summary: Non-functional requirements for logging performance, atomicity, startup cleanup, and schema extensibility.
     - section_path: "1.5"
       role: assumption
-      confidence: high
+      confidence: medium
+      summary: 'Dependencies and assumptions: entity timestamps for time-per-stage, binding registry for tool subset compliance, review_cycle counter as data source.'

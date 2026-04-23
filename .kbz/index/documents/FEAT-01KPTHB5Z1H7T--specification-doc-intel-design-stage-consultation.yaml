@@ -230,11 +230,11 @@ conventional_roles:
     - section_path: "1.7"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:30:06.00434Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:19:03.602556Z
 classified: true
-classified_at: 2026-04-22T17:35:47.565837Z
-classified_by: claude-sonnet-4-6
+classified_at: 2026-04-23T12:23:40.545423Z
+classified_by: claude-sonnet-4-5
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
@@ -255,6 +255,17 @@ classifications:
     - section_path: "1.2"
       role: rationale
       confidence: high
+      concepts_intro:
+        - name: corpus consultation
+          aliases:
+            - design-stage corpus discovery
+            - prior work search
+        - name: enforcement chain
+          aliases:
+            - workflow enforcement pipeline
+        - name: design continuity
+          aliases:
+            - cross-design consistency
     - section_path: "1.3"
       role: constraint
       confidence: high
@@ -270,15 +281,51 @@ classifications:
     - section_path: 1.4.1
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: corpus discovery
+          aliases:
+            - Phase 0
+            - pre-design corpus search
+        - name: concept search
+          aliases:
+            - doc_intel find concept
+            - semantic search
+        - name: pre-discovery classification check
+          aliases:
+            - classify before search
+        - name: FTS fallback
+          aliases:
+            - full-text search fallback
     - section_path: 1.4.2
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: required related work section
+          aliases:
+            - related work attestation
+            - related work template
+        - name: no related work attestation
+          aliases:
+            - negative search attestation
     - section_path: 1.4.3
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: blocking conformance check
+          aliases:
+            - reviewer-conformance blocking
+            - REJECTED verdict
+        - name: conformance reviewer
+          aliases:
+            - reviewer-conformance role
     - section_path: 1.4.4
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: cross-reference check
+          aliases:
+            - spec cross-reference
+            - adjacent specification consistency
     - section_path: "1.5"
       role: requirement
       confidence: high

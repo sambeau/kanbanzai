@@ -214,16 +214,27 @@ conventional_roles:
     - section_path: 1.6.2
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:45.872991Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:51.189396Z
 classified: true
-classified_at: 2026-04-22T17:33:02.79483Z
+classified_at: 2026-04-23T12:56:22.543019Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: workflow-state-automation
+          aliases:
+            - auto-commit
+            - state persistence automation
+        - name: four-pillars
+          aliases:
+            - pillar A
+            - pillar B
+            - pillar C
+            - pillar D
     - section_path: "1.1"
       role: narrative
       confidence: high
@@ -242,15 +253,36 @@ classifications:
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: parameterised-state-commit
+          aliases:
+            - CommitStateWithMessage
+            - CommitStateAndPaths
+            - auto-commit function
+        - name: best-effort-commit
+          aliases:
+            - non-blocking commit
+            - commit failure tolerance
     - section_path: 1.3.2
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: atomic-document-file-operations
+          aliases:
+            - doc move
+            - doc delete
+            - doc register enhancements
     - section_path: 1.3.2.1
       role: requirement
       confidence: high
     - section_path: 1.3.2.2
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: auto-approve
+          aliases:
+            - auto_approve flag
+            - register with approval
     - section_path: 1.3.2.3
       role: requirement
       confidence: high
@@ -260,9 +292,20 @@ classifications:
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: dev-plan-approval-decoupling
+          aliases:
+            - approval decoupling
+            - dev-plan cascade removal
     - section_path: 1.3.4
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: document-section-validation
+          aliases:
+            - section validation
+            - required sections
+            - stage-bindings required sections
     - section_path: "1.4"
       role: requirement
       confidence: high

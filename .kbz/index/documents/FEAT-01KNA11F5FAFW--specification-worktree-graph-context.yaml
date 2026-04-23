@@ -89,16 +89,25 @@ conventional_roles:
     - section_path: "1.5"
       role: requirement
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:47.687685Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:52.556308Z
 classified: true
-classified_at: 2026-04-22T17:33:22.197276Z
+classified_at: 2026-04-23T12:56:43.971259Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: worktree-graph-context
+          aliases:
+            - GraphProject
+            - graph project awareness
+        - name: codebase-memory-integration
+          aliases:
+            - codebase_memory_mcp
+            - graph project field
     - section_path: "1.1"
       role: narrative
       confidence: high
@@ -108,6 +117,19 @@ classifications:
     - section_path: "1.3"
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: graph-project-field
+          aliases:
+            - GraphProject field
+            - worktree.Record GraphProject
+        - name: code-graph-section
+          aliases:
+            - '## Code Graph'
+            - handoff code graph injection
+        - name: missing-graph-index-attention
+          aliases:
+            - missing_graph_index
+            - attention item info
     - section_path: "1.4"
       role: requirement
       confidence: high

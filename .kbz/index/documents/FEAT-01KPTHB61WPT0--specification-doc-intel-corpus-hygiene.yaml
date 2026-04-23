@@ -213,19 +213,38 @@ conventional_roles:
     - section_path: "1.6"
       role: assumption
       confidence: high
-access_count: 2
-last_accessed_at: 2026-04-22T20:21:32.490215Z
+access_count: 3
+last_accessed_at: 2026-04-23T12:19:05.288409Z
 section_access:
     "1":
         access_count: 1
         last_accessed_at: 2026-04-22T20:21:32.490215Z
 classified: true
-classified_at: 2026-04-22T12:20:02.659014Z
+classified_at: 2026-04-23T12:24:38.114012Z
 classified_by: claude-sonnet-4-5
 classifier_version: "20251101"
 classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
     - section_path: "1.1"
       role: narrative
+      confidence: high
+      concepts_intro:
+        - name: corpus hygiene
+          aliases:
+            - document corpus completeness
+            - corpus maintenance
+        - name: classification pipeline
+          aliases:
+            - Layer 3 classification pipeline
+            - classify-on-register pipeline
+        - name: session-start corpus check
+          aliases:
+            - corpus integrity check
+            - pre-task corpus audit
+    - section_path: "1.2"
+      role: constraint
       confidence: high
     - section_path: 1.2.1
       role: constraint
@@ -233,24 +252,60 @@ classifications:
     - section_path: 1.2.2
       role: constraint
       confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: corpus integrity check
+          aliases:
+            - doc audit
+            - session-start audit
+        - name: false negative search result
+          aliases:
+            - corpus false negative
+            - missing registration causes false negative
     - section_path: 1.3.2
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: new-project onboarding
+          aliases:
+            - corpus onboarding
+            - initial classification campaign
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: existing-project adoption
+          aliases:
+            - retroactive corpus registration
+            - brownfield adoption
     - section_path: 1.3.4
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: classify-on-register
+          aliases:
+            - registration-time classification
+            - classification nudge
+        - name: classification as immediate obligation
+          aliases:
+            - non-deferrable classification
+            - first-class classification
     - section_path: 1.3.5
       role: requirement
       confidence: high
     - section_path: 1.3.6
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: classification prerequisite
+          aliases:
+            - review-stage classification gate
+            - classify before review
     - section_path: "1.4"
       role: constraint
       confidence: high

@@ -106,19 +106,37 @@ conventional_roles:
     - section_path: "1.6"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:30:02.81922Z
+access_count: 2
+last_accessed_at: 2026-04-23T13:03:53.894761Z
 classified: true
-classified_at: 2026-04-22T17:35:24.956551Z
-classified_by: claude-sonnet-4-6
+classified_at: 2026-04-23T13:04:57.329313Z
+classified_by: claude-sonnet-4-5
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: agentic-review-auto-advance
+          aliases:
+            - reviewing stage auto-advance
+            - opt-out review gate
+        - name: require-human-review-flag
+          aliases:
+            - require_human_review
+            - MergeConfig flag
     - section_path: "1.1"
       role: rationale
       confidence: high
+      concepts_intro:
+        - name: advance-feature-status
+          aliases:
+            - AdvanceFeatureStatus
+            - advance stop state
+        - name: task-verification-gate
+          aliases:
+            - checkAllTasksHaveVerification
+            - verification prerequisite
     - section_path: "1.2"
       role: constraint
       confidence: high
@@ -131,6 +149,15 @@ classifications:
     - section_path: "1.3"
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: advance-config
+          aliases:
+            - AdvanceConfig
+            - RequiresHumanReview func
+        - name: stop-state-conditional-logic
+          aliases:
+            - advanceStopStates
+            - halt-state branch
     - section_path: "1.4"
       role: requirement
       confidence: high

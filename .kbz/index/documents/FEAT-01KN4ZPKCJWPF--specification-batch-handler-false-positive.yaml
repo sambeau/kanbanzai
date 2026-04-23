@@ -128,16 +128,25 @@ conventional_roles:
     - section_path: "1.5"
       role: requirement
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:14:41.330051Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:48.415988Z
 classified: true
-classified_at: 2026-04-22T17:21:09.799102Z
+classified_at: 2026-04-23T12:55:34.081909Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: batch-handler
+          aliases:
+            - ExecuteBatch
+            - BatchItemHandler
+        - name: tool-result-error-pattern
+          aliases:
+            - inline error
+            - mcp inline error
     - section_path: "1.1"
       role: rationale
       confidence: high
@@ -147,6 +156,11 @@ classifications:
     - section_path: 1.2.1
       role: rationale
       confidence: high
+      concepts_intro:
+        - name: false-positive-success
+          aliases:
+            - inflated success count
+            - silent overcount
     - section_path: 1.2.2
       role: constraint
       confidence: high
@@ -156,6 +170,14 @@ classifications:
     - section_path: "1.3"
       role: assumption
       confidence: high
+      concepts_intro:
+        - name: item-result
+          aliases:
+            - ItemResult
+            - ErrorDetail
+        - name: mcp-convention
+          aliases:
+            - tool result convention
     - section_path: "1.4"
       role: requirement
       confidence: high

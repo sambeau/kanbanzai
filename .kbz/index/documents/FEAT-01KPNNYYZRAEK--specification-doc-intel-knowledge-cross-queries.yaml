@@ -189,64 +189,106 @@ conventional_roles:
     - section_path: 1.6.2
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:49.623387Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:54:06.710801Z
 classified: true
-classified_at: 2026-04-22T17:33:41.002085Z
+classified_at: 2026-04-23T12:58:37.224915Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      summary: 'Specification for cross-system query capabilities between doc_intel and the knowledge base: find(entity_id) includes related knowledge, and context assembly surfaces document pointers.'
+      concepts_intro:
+        - name: knowledge-document-cross-query
+          aliases:
+            - cross-system-query
+            - doc-intel-knowledge-integration
+        - name: context-assembly
+          aliases:
+            - assembly-pipeline
+            - asmLoadKnowledge
+        - name: document-pointers
+          aliases:
+            - section-pointers
+            - lightweight-document-references
     - section_path: "1.1"
       role: narrative
       confidence: high
+      summary: 'Two additive integration directions: find(entity_id) enhanced with related_knowledge field; context assembly pipeline surfaces document section pointers alongside knowledge entries.'
+      concepts_intro:
+        - name: related-knowledge
+          aliases:
+            - related-knowledge-field
+            - entity-knowledge-match
     - section_path: "1.2"
       role: constraint
       confidence: high
     - section_path: 1.2.1
       role: constraint
       confidence: high
+      summary: 'In scope: find(entity_id) related knowledge, context assembly document pointers, additive response format changes, read-only cross-system access.'
     - section_path: 1.2.2
       role: constraint
       confidence: high
+      summary: 'Out of scope: bidirectional persistent links, merged search, knowledge scoring changes, find(concept)/find(role) changes, knowledge MCP tool changes.'
     - section_path: "1.3"
       role: requirement
       confidence: high
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      summary: find(entity_id) must return related_knowledge array matched by learned_from, tags, and scope via entity_refs table; retired entries excluded; deduplicated; includes knowledge_matches count; existing fields unchanged; injectable knowledge store dependency.
+      concepts_intro:
+        - name: learned-from-matching
+          aliases:
+            - learned-from-field
+        - name: tag-based-matching
+          aliases:
+            - entity-type-prefix-match
+        - name: scope-to-document-matching
+          aliases:
+            - scope-entity-refs-match
     - section_path: 1.3.2
       role: requirement
       confidence: high
+      summary: Context assembly must include document pointers when knowledge entries reference entities in indexed documents; pointers include doc path and section path but not full content; step runs after asmLoadKnowledge; knowledge surfacing algorithm unchanged.
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      summary: All response format changes are additive; no existing fields renamed, removed, or retyped.
     - section_path: "1.4"
       role: requirement
       confidence: high
+      summary: 'NFRs: each document pointer ~20 tokens; find(entity_id) total response under 50ms; knowledge query must not degrade existing lookup latency.'
     - section_path: "1.5"
       role: requirement
       confidence: high
     - section_path: 1.5.1
       role: requirement
       confidence: high
+      summary: 'Direction 1 AC checklist: related_knowledge array, learned_from/tag/scope matching, retired exclusion, format, deduplication, count field, existing fields unchanged, injectable dependency.'
     - section_path: 1.5.2
       role: requirement
       confidence: high
+      summary: 'Direction 2 AC checklist: pointers appear when referenced, include path+section, no full content, step ordering, knowledge algorithm unchanged.'
     - section_path: 1.5.3
       role: requirement
       confidence: high
+      summary: 'Response format AC: all changes additive.'
     - section_path: 1.5.4
       role: requirement
       confidence: high
+      summary: 'NFR AC: token cost ≤30 per pointer; response ≤50ms.'
     - section_path: "1.6"
       role: assumption
       confidence: high
     - section_path: 1.6.1
       role: narrative
       confidence: high
+      summary: 'Dependencies: SQLite entity_refs table (Enhancement 2 Phase 1), knowledge query interface injectable into docIntelFindAction, intelligence service already available in assembly pipeline.'
     - section_path: 1.6.2
       role: assumption
       confidence: high
+      summary: Knowledge entries in YAML under .kbz/state/knowledge/; learned_from is single string; entity type prefix derivable from ID format; entity_refs index provides sub-millisecond lookup.

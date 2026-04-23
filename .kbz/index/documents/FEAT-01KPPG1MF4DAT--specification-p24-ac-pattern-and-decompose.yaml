@@ -101,34 +101,76 @@ conventional_roles:
     - section_path: "1.4"
       role: requirement
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:55.550556Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:54:09.178524Z
 classified: true
-classified_at: 2026-04-22T17:34:48.26659Z
+classified_at: 2026-04-23T13:00:47.05629Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      summary: Specification for fixing AC bold-identifier pattern recognition at two layers (docint extractor and decompose/assembly) and improving zero-criteria diagnostic in DecomposeFeature.
+      concepts_intro:
+        - name: ac-bold-identifier
+          aliases:
+            - bold-identifier-pattern
+            - list-item-bold-ident
+        - name: extract-conventional-roles
+          aliases:
+            - extractConventionalRoles
+            - content-based-ac-detection
+        - name: verify-then-fix-test
+          aliases:
+            - red-green-test-pattern
     - section_path: "1.1"
       role: rationale
       confidence: high
+      summary: 'Layer A: extractConventionalRoles uses heading keywords only, missing sections with non-standard headings but AC body content. Layer B: parseSpecStructure and asmExtractCriteria regexes require line to begin with ** but list-item form starts with - causing match failure.'
+      concepts_intro:
+        - name: heading-based-role-assignment
+          aliases:
+            - conventional-role-extraction
+            - layer-2-classification
+        - name: parse-spec-structure
+          aliases:
+            - parseSpecStructure
+            - spec-criteria-parser
+        - name: asm-extract-criteria
+          aliases:
+            - asmExtractCriteria
+            - assembly-criteria-extraction
     - section_path: "1.2"
-      role: requirement
+      role: constraint
       confidence: high
+      summary: 'In scope: content-based AC detection in extractor, acBoldIdentLineRe regex, list-item fix in parseSpecStructure and asmExtractCriteria, buildZeroCriteriaDiagnostic helper, three verify-then-fix tests. Out of scope: non-standard bold variants, sequential validation, persistence changes, decompose review/apply changes, new FragmentRole constants, Layer 3 reclassification.'
     - section_path: 1.2.1
-      role: requirement
+      role: constraint
       confidence: high
+      summary: 'In scope items: content param on extractConventionalRoles, acBoldIdentLineRe, content scan for unassigned sections, list-item fixes in parseSpecStructure and asmExtractCriteria, three verify-then-fix tests.'
     - section_path: 1.2.2
-      role: requirement
+      role: constraint
       confidence: high
+      summary: 'Out of scope: non-standard bold variants, sequential/duplicate validation, persistence changes, decompose review/apply, new FragmentRole constants, Layer 3.'
     - section_path: "1.3"
       role: constraint
       confidence: high
+      summary: 'Constraints: DEP-001 FEAT-01KN4ZPCMJ1FP and DEP-002 FEAT-01KMT must be merged; Section.ByteOffset and ByteCount populated by Layer 1 parser; ASM-001/ASM-002 on bold-pattern and RFC 2119 keyword definitions.'
     - section_path: "1.4"
       role: requirement
       confidence: high
+      summary: '12 functional requirements: content param on extractConventionalRoles, acBoldIdentLineRe package-level regex matching bare and list-item forms, content-scan for unassigned sections at medium confidence, no-duplicate guard, list-marker stripping in parseSpecStructure and asmExtractCriteria, canonical XX-NN:text output, buildZeroCriteriaDiagnostic helper with section count/titles/bold counts/remediation, three verify-then-fix tests. NFRs: deterministic (no LLM), ByteOffset/ByteCount bounds, existing tests pass, heading roles high/content-based roles medium.'
+      concepts_intro:
+        - name: acBoldIdentLineRe
+          aliases:
+            - ac-bold-ident-regex
+            - bold-identifier-regex
+        - name: build-zero-criteria-diagnostic
+          aliases:
+            - buildZeroCriteriaDiagnostic
+            - zero-criteria-error-helper
     - section_path: "1.5"
-      role: narrative
+      role: requirement
       confidence: high
+      summary: '8 acceptance criteria: non-AC-headed section with AC body gets requirement/medium, no duplicate from content scan, regex matches bare and list-item not single-asterisk, parseSpecStructure extracts canonical criteria, asmExtractCriteria emits canonical without bold markers, rich diagnostic with bold-outside count, all three verify-then-fix tests pass.'

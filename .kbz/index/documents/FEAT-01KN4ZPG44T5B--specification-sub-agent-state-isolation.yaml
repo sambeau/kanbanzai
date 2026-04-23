@@ -131,22 +131,36 @@ conventional_roles:
     - section_path: "1.6"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:14:41.289808Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:49.337545Z
 classified: true
-classified_at: 2026-04-22T17:20:54.626267Z
+classified_at: 2026-04-23T12:55:49.411838Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: sub-agent-state-isolation
+          aliases:
+            - pre-dispatch commit
+            - state protection
+        - name: handoff-tool
+          aliases:
+            - handoff
+            - sub-agent dispatch
     - section_path: "1.1"
       role: rationale
       confidence: high
     - section_path: "1.2"
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: best-effort-safeguard
+          aliases:
+            - non-blocking commit
+            - commit failure tolerance
     - section_path: "1.3"
       role: constraint
       confidence: high
@@ -162,6 +176,11 @@ classifications:
     - section_path: 1.4.1
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: pre-dispatch-state-commit
+          aliases:
+            - protective commit
+            - .kbz/state commit
     - section_path: 1.4.2
       role: requirement
       confidence: high

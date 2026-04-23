@@ -255,19 +255,42 @@ conventional_roles:
     - section_path: 1.6.2
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:14:56.939951Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:32.903469Z
 classified: true
-classified_at: 2026-04-22T17:19:14.246736Z
-classified_by: claude-sonnet-4-6
+classified_at: 2026-04-23T12:55:09.259864Z
+classified_by: claude-sonnet-4-5
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: knowledge-auto-surfacing
+          aliases:
+            - auto-surfacing
+            - automatic knowledge selection
+        - name: context-assembly-step-7
+          aliases:
+            - step 7
+            - knowledge integration point
+        - name: lean-constraint
+          aliases:
+            - n=5-beats-n=19
+            - entry cap
     - section_path: "1.1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: matching-criteria
+          aliases:
+            - file path matching
+            - tag matching
+            - always entries
+            - recency weighting
+        - name: surfaced-entry-formatting
+          aliases:
+            - Always/Never X BECAUSE Y directive
     - section_path: "1.2"
       role: constraint
       confidence: high
@@ -283,45 +306,100 @@ classifications:
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: file-path-matching
+          aliases:
+            - scope prefix matching
+            - directory overlap
     - section_path: 1.3.2
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: tag-matching
+          aliases:
+            - role domain tags
+            - domain tag overlap
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: always-entries
+          aliases:
+            - always-tagged entries
+            - project-scoped entries
     - section_path: 1.3.4
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: recency-weighting
+          aliases:
+            - last confirmation timestamp
+            - recency weight
     - section_path: 1.3.5
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: recency-weighted-confidence-score
+          aliases:
+            - composite score
+            - confidence plus recency
     - section_path: 1.3.6
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: entry-cap
+          aliases:
+            - 10-entry cap
+            - hard cap
     - section_path: 1.3.7
       role: requirement
       confidence: high
     - section_path: 1.3.8
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: always-never-directive-format
+          aliases:
+            - Always/Never X BECAUSE Y
+            - directive formatting
     - section_path: 1.3.9
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: context-position-8
+          aliases:
+            - position 8
+            - rising-attention zone placement
     - section_path: 1.3.10
       role: requirement
       confidence: high
     - section_path: 1.3.11
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: deduplication
+          aliases:
+            - cross-criteria deduplication
+            - single-occurrence guarantee
     - section_path: 1.3.12
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: health-compaction-recommendation
+          aliases:
+            - compaction trigger
+            - consecutive cap-hits
     - section_path: 1.3.13
       role: requirement
       confidence: high
     - section_path: 1.3.14
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: retired-entry-filtering
+          aliases:
+            - status filtering
+            - retired status exclusion
     - section_path: "1.4"
       role: requirement
       confidence: high

@@ -1,2 +1,3085 @@
-updated_at: 2026-04-23T11:38:53.312499Z
-concepts: []
+updated_at: 2026-04-23T13:06:47.108758Z
+concepts:
+    - name: voluntary-step-architecture
+      aliases:
+        - advisory-first-architecture
+        - advisory-inline-step
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.1
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.4.1
+    - name: compliance-failure
+      aliases:
+        - agent-compliance-gap
+        - step-skipping
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.1
+    - name: tool-information-gap
+      aliases:
+        - classify-loop-round-trip-gap
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.1
+    - name: architectural-gap
+      aliases:
+        - structural-root-cause
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.1
+    - name: failure-inventory
+      aliases:
+        - failure-taxonomy
+        - gap-catalogue
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.2
+    - name: enrichment-step
+      aliases:
+        - voluntary-enrichment
+        - inline-enrichment
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.3.1
+    - name: advisory-instruction
+      aliases:
+        - skill-mandate
+        - soft-constraint
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.3.1
+    - name: hard-constraint
+      aliases:
+        - tool-level-enforcement
+        - stage-gate-enforcement
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.3.1
+    - name: concept-tagging
+      aliases:
+        - concepts-intro
+        - concept-registry-population
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.3.1
+    - name: classify-on-register
+      aliases:
+        - register-time-classification
+        - registration-nudge
+        - registration-time-classification
+        - classification-nudge
+        - register-nudge
+        - classification-prompt
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.3.2
+        - FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene#1.3.4
+        - FEAT-01KPNNYYXQSYW/specification-doc-intel-batch-classification#1
+    - name: self-contained-classify-loop
+      aliases:
+        - round-trip-elimination
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.3.2
+    - name: cli-identity-resolution
+      aliases:
+        - doc-register-cli-bug
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.3.4
+    - name: pre-pilot-backlog
+      aliases:
+        - corpus-coverage-gap
+        - unindexed-backlog
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.3.5
+    - name: enforcement-escalation
+      aliases:
+        - advisory-to-enforced-transition
+        - soft-to-hard-constraint-escalation
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.4.1
+    - name: classification-pipeline-hardening
+      aliases:
+        - c1+c2-plan
+        - compliance-enforcement-plan
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.5.4
+    - name: concepts-suggested
+      aliases:
+        - server-suggested-concepts
+        - concept-extraction-quality
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.6.1
+    - name: enforcement-point
+      aliases:
+        - concept-tagging-enforcement-trigger
+        - approval-time-vs-classify-time-enforcement
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.6.2
+    - name: knowledge-confirmation-gate
+      aliases:
+        - plan-lifecycle-enforcement
+        - close-out-enforcement
+      introduced_in:
+        - PROJECT/research-doc-intel-recurring-issues-investigation#1.6.3
+    - name: corpus-consultation
+      aliases:
+        - design-stage-corpus-discovery
+        - prior-work-search
+      introduced_in:
+        - FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation#1.2
+    - name: enforcement-chain
+      aliases:
+        - workflow-enforcement-pipeline
+      introduced_in:
+        - FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation#1.2
+    - name: design-continuity
+      aliases:
+        - cross-design-consistency
+      introduced_in:
+        - FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation#1.2
+    - name: corpus-discovery
+      aliases:
+        - phase-0
+        - pre-design-corpus-search
+      introduced_in:
+        - FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation#1.4.1
+    - name: concept-search
+      aliases:
+        - doc-intel-find-concept
+        - semantic-search
+      introduced_in:
+        - FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation#1.4.1
+    - name: pre-discovery-classification-check
+      aliases:
+        - classify-before-search
+      introduced_in:
+        - FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation#1.4.1
+    - name: fts-fallback
+      aliases:
+        - full-text-search-fallback
+      introduced_in:
+        - FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation#1.4.1
+    - name: required-related-work-section
+      aliases:
+        - related-work-attestation
+        - related-work-template
+      introduced_in:
+        - FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation#1.4.2
+    - name: no-related-work-attestation
+      aliases:
+        - negative-search-attestation
+      introduced_in:
+        - FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation#1.4.2
+    - name: blocking-conformance-check
+      aliases:
+        - reviewer-conformance-blocking
+        - rejected-verdict
+      introduced_in:
+        - FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation#1.4.3
+    - name: conformance-reviewer
+      aliases:
+        - reviewer-conformance-role
+      introduced_in:
+        - FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation#1.4.3
+    - name: cross-reference-check
+      aliases:
+        - spec-cross-reference
+        - adjacent-specification-consistency
+      introduced_in:
+        - FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation#1.4.4
+    - name: knowledge-feedback-loop
+      aliases:
+        - knowledge-lifecycle
+        - knowledge-consumption-pattern
+      introduced_in:
+        - FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle#1.2
+    - name: knowledge-retrieval-mandate
+      aliases:
+        - knowledge-list-before-coding
+        - active-knowledge-querying
+      introduced_in:
+        - FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle#1.2
+    - name: use-count
+      aliases:
+        - knowledge-entry-use-count
+        - zero-use-count
+      introduced_in:
+        - FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle#1.2
+    - name: knowledge-confirm
+      aliases:
+        - knowledge(action:-confirm)
+        - confirm-knowledge-entry
+      introduced_in:
+        - FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle#1.4.1
+    - name: knowledge-flag
+      aliases:
+        - knowledge(action:-flag)
+        - flag-knowledge-entry
+      introduced_in:
+        - FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle#1.4.1
+    - name: because-rationale-clause
+      aliases:
+        - because-clause
+        - rationale-clause-in-skill
+      introduced_in:
+        - FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle#1.4.1
+    - name: plan-close-out
+      aliases:
+        - phase-6-close-out
+        - orchestrate-development-close-out
+        - knowledge-curation-pass
+      introduced_in:
+        - FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle#1.4.2
+    - name: tier-2-knowledge-entry
+      aliases:
+        - tier-2-entry
+        - knowledge-tier-2
+      introduced_in:
+        - FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle#1.4.2
+    - name: knowledge-retire
+      aliases:
+        - knowledge(action:-retire)
+        - superseded-entry
+      introduced_in:
+        - FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle#1.4.2
+    - name: context-assembly
+      aliases:
+        - automatic-knowledge-surfacing
+        - context-packet-knowledge
+        - assembly-pipeline
+        - asmloadknowledge
+      introduced_in:
+        - FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle#1.4.3
+        - FEAT-01KPNNYYZRAEK/specification-doc-intel-knowledge-cross-queries#1
+    - name: cross-cutting-concern
+      aliases:
+        - multi-domain-task
+        - cross-domain-knowledge
+      introduced_in:
+        - FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle#1.4.3
+    - name: corpus-hygiene
+      aliases:
+        - document-corpus-completeness
+        - corpus-maintenance
+      introduced_in:
+        - FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene#1.1
+    - name: classification-pipeline
+      aliases:
+        - layer-3-classification-pipeline
+        - classify-on-register-pipeline
+      introduced_in:
+        - FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene#1.1
+    - name: session-start-corpus-check
+      aliases:
+        - corpus-integrity-check
+        - pre-task-corpus-audit
+        - doc-audit
+        - session-start-audit
+        - doc-audit-action
+        - document-store-reconciliation
+      introduced_in:
+        - FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene#1.1
+        - FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene#1.3.1
+        - FEAT-01KN4ZPQFQN1C/specification-doc-audit#1
+    - name: false-negative-search-result
+      aliases:
+        - corpus-false-negative
+        - missing-registration-causes-false-negative
+      introduced_in:
+        - FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene#1.3.1
+    - name: new-project-onboarding
+      aliases:
+        - corpus-onboarding
+        - initial-classification-campaign
+      introduced_in:
+        - FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene#1.3.2
+    - name: existing-project-adoption
+      aliases:
+        - retroactive-corpus-registration
+        - brownfield-adoption
+      introduced_in:
+        - FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene#1.3.3
+    - name: classification-as-immediate-obligation
+      aliases:
+        - non-deferrable-classification
+        - first-class-classification
+      introduced_in:
+        - FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene#1.3.4
+    - name: classification-prerequisite
+      aliases:
+        - review-stage-classification-gate
+        - classify-before-review
+      introduced_in:
+        - FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene#1.3.6
+    - name: handoff-mandate
+      aliases:
+        - always-use-handoff
+        - handoff(task-id)-rule
+      introduced_in:
+        - FEAT-01KPQ08YKHNS9/specification-p25-orchestration-docs#1.1
+    - name: manual-prompt-composition-anti-pattern
+      aliases:
+        - manual-composition
+        - hand-crafted-sub-agent-prompt
+      introduced_in:
+        - FEAT-01KPQ08YKHNS9/specification-p25-orchestration-docs#1.1
+    - name: dual-write-rule
+      aliases:
+        - embedded-skill-dual-write
+        - kbzinit-dual-write
+      introduced_in:
+        - FEAT-01KPQ08YKHNS9/specification-p25-orchestration-docs#1.1
+    - name: graph-project-context
+      aliases:
+        - codebase-memory-mcp-graph-project
+        - graph-project-name-in-handoff
+      introduced_in:
+        - FEAT-01KPQ08YKHNS9/specification-p25-orchestration-docs#1.3.1
+    - name: embedded-skill-files
+      aliases:
+        - kbzinit-embedded-skills
+        - internal/kbzinit/skills
+      introduced_in:
+        - FEAT-01KPQ08YKHNS9/specification-p25-orchestration-docs#1.3.3
+    - name: never-stash-rule
+      aliases:
+        - git-stash-prohibition
+        - no-stash-discipline
+      introduced_in:
+        - FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.1
+    - name: workflow-hygiene
+      aliases:
+        - agent-workflow-discipline
+        - session-hygiene
+      introduced_in:
+        - FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.1
+    - name: commit-workflow-state
+      aliases:
+        - orphaned-state-files-commit
+        - kbz-state-commit
+      introduced_in:
+        - FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.1
+    - name: worktree-switch-data-loss
+      aliases:
+        - stash-data-loss-on-worktree-switch
+        - cross-worktree-state-loss
+      introduced_in:
+        - FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.1
+    - name: orphaned-workflow-state-file
+      aliases:
+        - orphaned-kbz-state
+        - uncommitted-state-file
+      introduced_in:
+        - FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.2
+    - name: worktree-file-editing
+      aliases:
+        - edit-file-worktree-limitation
+        - python3-c-worktree-pattern
+        - worktree-file-write
+        - python3-c-workaround
+      introduced_in:
+        - FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.3
+        - FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs#1.3.1
+    - name: shell-querying-anti-pattern
+      aliases:
+        - direct-state-file-access
+        - cat-kbz-state-anti-pattern
+      introduced_in:
+        - FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.4
+    - name: intermittent-test-failure
+      aliases:
+        - flaky-test
+        - unreported-flaky-test
+        - bug-entity-for-intermittent-failure
+      introduced_in:
+        - FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs#1.2.1.5
+    - name: agent-onboarding
+      aliases:
+        - skill-discovery
+        - agent-orientation
+      introduced_in:
+        - P12-agent-onboarding/specification-agent-onboarding#1
+    - name: skill-discovery-gap
+      aliases:
+        - missing-skill-installation
+        - agents-not-finding-skills
+      introduced_in:
+        - P12-agent-onboarding/specification-agent-onboarding#1
+    - name: agents.md-generation
+      aliases:
+        - kbz-init-agents.md
+        - managed-agents.md
+      introduced_in:
+        - P12-agent-onboarding/specification-agent-onboarding#1.3
+    - name: managed-marker
+      aliases:
+        - kanbanzai-managed-marker
+        - v1-managed-comment
+      introduced_in:
+        - P12-agent-onboarding/specification-agent-onboarding#1.3
+    - name: version-aware-conflict-logic
+      aliases:
+        - managed-file-conflict-resolution
+        - init-conflict-detection
+      introduced_in:
+        - P12-agent-onboarding/specification-agent-onboarding#1.3.4
+    - name: copilot-instructions-generation
+      aliases:
+        - github-copilot-instructions
+        - copilot-instructions.md
+      introduced_in:
+        - P12-agent-onboarding/specification-agent-onboarding#1.4
+    - name: skill-content-embedding
+      aliases:
+        - skill-file-embedding
+        - kbzinit-skill-update
+      introduced_in:
+        - P12-agent-onboarding/specification-agent-onboarding#1.5
+    - name: specification-skill
+      aliases:
+        - kanbanzai-specification-skill
+        - spec-authoring-skill
+      introduced_in:
+        - P12-agent-onboarding/specification-agent-onboarding#1.6
+    - name: mcp-orientation-breadcrumb
+      aliases:
+        - status-tool-breadcrumb
+        - next-tool-orientation
+      introduced_in:
+        - P12-agent-onboarding/specification-agent-onboarding#1.7
+    - name: review-skill-composition-model
+      aliases:
+        - composition-model
+        - skill-plus-role-composition
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1
+    - name: attention-curve-section-ordering
+      aliases:
+        - attention-curve
+        - section-ordering
+        - body-section-order
+        - attention-zones
+        - high-attention-zone
+        - rising-attention-zone
+        - vocabulary-first
+        - evaluation-criteria-last
+        - skill.md-section-order
+        - attention-curve-format
+        - identity-first-recency-last
+        - context-packet-ordering
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.3.1
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.16
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.4
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.4
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.5.1
+    - name: review-unit-decomposition
+      aliases:
+        - review-unit
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1
+    - name: review-code-skill
+      aliases:
+        - review-code
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.1
+    - name: orchestrate-review-skill
+      aliases:
+        - orchestrate-review
+        - remediation-phase
+        - review-document-creation
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.1
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.1
+    - name: review-plan-skill
+      aliases:
+        - review-plan
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.1
+    - name: specialist-reviewer-composition
+      aliases:
+        - reviewer-role-lens
+        - expertise-lens
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.1
+    - name: vocabulary-first-placement
+      aliases:
+        - vocabulary-first
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.3.1
+    - name: skill-frontmatter
+      aliases:
+        - skill.md-frontmatter
+        - frontmatter-fields
+        - yaml-frontmatter-block
+        - constraint-level
+        - triggers-field
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.3.2
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.14
+    - name: constraint-level
+      aliases:
+        - low-medium-high-constraint
+        - constraint-level-enum
+        - skill-constraint-level
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.3.2
+        - FEAT-01KN588PDBW85/specification-30-skill-system#1.1
+    - name: vocabulary-payload
+      aliases:
+        - task-specific-vocabulary
+        - 15-year-practitioner-test
+        - domain-specific-vocabulary
+        - 15-30-terms
+        - vocabulary-field
+        - domain-vocabulary
+        - knowledge-activation
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.3.4
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.5
+        - FEAT-01KN588PCVN4Y/specification-30-role-system#1
+    - name: per-dimension-outcome-scale
+      aliases:
+        - pass-pass-with-notes-concern-fail
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.3.4
+    - name: finding-classification
+      aliases:
+        - blocking-non-blocking
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.3.4
+    - name: rubber-stamp-review
+      aliases:
+        - fm-3.1
+        - sycophancy-anti-pattern
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.3.5
+    - name: spec-anchor
+      aliases:
+        - missing-spec-anchor
+        - spec-requirement-citation
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.3.5
+    - name: evaluation-criteria
+      aliases:
+        - gradable-questions
+        - weighted-evaluation-criteria
+        - gradable-question
+        - llm-as-judge
+        - 0.0-1.0-score
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.3.10
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.8
+    - name: retrieval-anchors
+      aliases:
+        - questions-this-skill-answers
+        - retrieval-anchor-section
+        - natural-language-retrieval
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.3.11
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.2.4
+    - name: adaptive-composition
+      aliases:
+        - parallel-specialist-dispatch
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.3.13
+    - name: novelty-test
+      aliases:
+        - 15-year-practitioner-test
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.4.1
+    - name: composition-model-integrity
+      aliases:
+        - no-duplication-across-composition-layers
+        - no-cross-layer-duplication
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.4.3
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.4.6
+    - name: uncertainty-protocol
+      aliases:
+        - uncertainty-handling
+      introduced_in:
+        - FEAT-01KN588PGJNM0/specification-30-review-skill-content#1.4.5
+    - name: reviewer-role-inheritance-hierarchy
+      aliases:
+        - reviewer-inheritance
+        - specialist-reviewer-hierarchy
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1
+    - name: additive-merge-constraint
+      aliases:
+        - additive-merge
+        - additional-content-constraint
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1
+    - name: role-composition-model
+      aliases:
+        - role-plus-skill-composition
+        - expertise-lens
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1
+    - name: reviewer-base-role
+      aliases:
+        - reviewer-role
+        - base-review-role
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.1
+    - name: specialist-reviewer-roles
+      aliases:
+        - reviewer-conformance
+        - reviewer-quality
+        - reviewer-security
+        - reviewer-testing
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.1
+    - name: domain-vocabulary-layering
+      aliases:
+        - domain-specific-vocabulary
+        - vocabulary-layering
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.1
+    - name: common-role-schema
+      aliases:
+        - role-schema
+        - role-yaml-schema
+        - id-identity-vocabulary-anti-patterns-tools-fields
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.1
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.1
+    - name: three-level-inheritance-chain
+      aliases:
+        - specialist-reviewer-base-inheritance-chain
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.1
+    - name: foundational-review-vocabulary
+      aliases:
+        - shared-review-vocabulary
+        - reviewer-base-vocabulary
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.2
+    - name: fifteen-year-practitioner-test
+      aliases:
+        - 15-year-practitioner-test
+        - practitioner-vocabulary-test
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.2
+    - name: rubber-stamp-approval-anti-pattern
+      aliases:
+        - rubber-stamp-approval
+        - mast-fm-3.1
+        - sycophancy
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.3
+    - name: dimension-bleed-anti-pattern
+      aliases:
+        - dimension-bleed
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.3
+    - name: prose-commentary-anti-pattern
+      aliases:
+        - prose-commentary
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.3
+    - name: conformance-verification-vocabulary
+      aliases:
+        - requirements-verification-vocabulary
+        - acceptance-criteria-traceability
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.4
+    - name: code-quality-analysis-vocabulary
+      aliases:
+        - quality-analysis-vocabulary
+        - cyclomatic-complexity
+        - error-handling-chain
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.6
+    - name: security-analysis-vocabulary
+      aliases:
+        - security-vocabulary
+        - owasp
+        - threat-modelling
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.8
+    - name: testing-analysis-vocabulary
+      aliases:
+        - testing-vocabulary
+        - test-coverage
+        - mutation-testing
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.10
+    - name: tool-subset-declaration
+      aliases:
+        - tool-subset
+        - role-tool-constraints
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.12
+    - name: no-content-duplication-across-inheritance
+      aliases:
+        - no-duplication
+        - additive-inheritance
+        - additional-content-only
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.13
+    - name: stage-association
+      aliases:
+        - stage-binding
+        - reviewing-stage-association
+        - stage-binding-lookup
+        - binding-registry
+        - stage-bindings.yaml
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.3.14
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.4
+        - FEAT-01KN588PDPE8V/specification-30-binding-registry#1
+    - name: identity-field-constraints
+      aliases:
+        - identity-field
+        - no-superlatives
+        - real-job-title
+        - under-50-tokens
+      introduced_in:
+        - FEAT-01KN588PFG6GY/specification-30-review-role-content#1.4.5
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.6
+    - name: base-role
+      aliases:
+        - project-wide-base
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1
+    - name: authoring-roles
+      aliases:
+        - authoring-layer
+        - document-producing-roles
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1
+    - name: orchestrator-role
+      aliases:
+        - orchestrator
+        - coordination-role
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1
+    - name: role-taxonomy
+      aliases:
+        - 3.0-role-taxonomy
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.1
+    - name: professional-identity
+      aliases:
+        - agent-identity
+        - role-identity-field
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.1
+    - name: token-budget-constraint
+      aliases:
+        - token-budget
+        - always-loaded-context
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.1
+    - name: project-identity-statement
+      aliases:
+        - project-identity
+        - kanbanzai-identity
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.2
+    - name: hard-constraints
+      aliases:
+        - spec-is-law
+        - no-scope-creep
+        - deterministic-yaml-serialisation
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.2
+    - name: orientation-convention
+      aliases:
+        - session-start-convention
+        - status-then-next
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.3
+    - name: flattery-prompting-anti-pattern
+      aliases:
+        - flattery-prompting
+        - prism-superlatives-finding
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.4
+    - name: silent-scope-expansion-anti-pattern
+      aliases:
+        - silent-scope-expansion
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.4
+    - name: progressive-disclosure-layer-1
+      aliases:
+        - always-loaded-context
+        - layer-1-context
+        - 200-300-token-budget
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.5
+    - name: vocabulary-field-constraints
+      aliases:
+        - domain-vocabulary
+        - 15-year-practitioner-test
+        - 5-to-30-terms
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.7
+    - name: anti-pattern-field-structure
+      aliases:
+        - name-detect-because-resolve
+        - anti-pattern-schema
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.8
+    - name: architect-role
+      aliases:
+        - architect
+        - system-decomposition
+        - vertical-slice-analysis
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.9
+    - name: spec-author-role
+      aliases:
+        - spec-author
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.10
+    - name: implementer-role
+      aliases:
+        - implementer
+        - implementer-go
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.11
+    - name: researcher-role
+      aliases:
+        - researcher
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.12
+    - name: documenter-role
+      aliases:
+        - documenter
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.13
+    - name: orchestrator-role-content
+      aliases:
+        - orchestrator-vocabulary
+        - coordination-vocabulary
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.14
+    - name: orchestrator-anti-patterns
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.15
+    - name: orchestrator-hard-constraints
+      aliases:
+        - no-direct-implementation
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.3.16
+    - name: no-implementation-leakage
+      aliases:
+        - role-vs-skill-boundary
+      introduced_in:
+        - FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content#1.4.5
+    - name: context-assembly-pipeline
+      aliases:
+        - assembly-pipeline
+        - 10-step-pipeline
+        - context-assembly
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1
+        - FEAT-01KN588PETZQE/specification-30-freshness-tracking#1
+    - name: attention-curve-ordering
+      aliases:
+        - attention-curve-output-ordering
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1
+    - name: token-budget-management
+      aliases:
+        - token-budget
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1
+    - name: progressive-disclosure
+      aliases:
+        - progressive-disclosure-layers
+        - layer-1
+        - layer-2
+        - layer-3
+        - layer-4
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.1
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.18
+    - name: tool-subset-guidance
+      aliases:
+        - tool-subset-soft-filtering
+        - soft-tool-filtering
+        - stage-tool-list
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.1
+        - FEAT-01KN58J25K4QD/specification-30-stage-aware-context-assembly#1.3.5
+    - name: stage-resolution
+      aliases:
+        - task-to-stage-resolution
+        - lifecycle-stage
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.3
+    - name: stage-specific-inclusion-exclusion
+      aliases:
+        - inclusion/exclusion-strategy
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.5
+    - name: orchestration-metadata
+      aliases:
+        - orchestration-pattern
+        - effort-budget
+        - single-agent
+        - orchestrator-workers
+        - orchestration-field
+        - effort-expectations
+        - tool-call-budget
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.6
+        - FEAT-01KN588PDPE8V/specification-30-binding-registry#1.1
+        - FEAT-01KN58J25K4QD/specification-30-stage-aware-context-assembly#1.1
+    - name: role-inheritance
+      aliases:
+        - role-resolution-with-inheritance
+        - inherits-field
+        - role-chain
+        - inheritance-resolution
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.7
+        - FEAT-01KN588PCVN4Y/specification-30-role-system#1
+    - name: vocabulary-merging
+      aliases:
+        - vocabulary-merge
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.7
+    - name: skill-loading
+      aliases:
+        - skill-file-loading
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.8
+    - name: anti-pattern-merging
+      aliases:
+        - anti-pattern-merge
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.10
+    - name: knowledge-auto-surfacing
+      aliases:
+        - knowledge-entry-integration
+        - knowledge-subsystem
+        - auto-surfacing
+        - automatic-knowledge-selection
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.11
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1
+    - name: token-budget-estimation
+      aliases:
+        - token-count-estimation
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.13
+    - name: output-section-ordering
+      aliases:
+        - fixed-section-order
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.16
+    - name: recency-bias-ordering
+      aliases:
+        - within-section-recency-bias
+        - most-critical-item-last
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.17
+    - name: token-budget-threshold
+      aliases:
+        - budget-threshold
+        - context-window-budget
+      introduced_in:
+        - FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline#1.3.18
+    - name: implement-task-skill
+      aliases:
+        - implement-task
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1
+    - name: orchestrate-development-skill
+      aliases:
+        - orchestrate-development
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1
+    - name: decompose-feature-skill
+      aliases:
+        - decompose-feature
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1
+    - name: attention-curve-skill-format
+      aliases:
+        - attention-curve-format
+        - skill.md-format
+        - attention-curve-skill.md-format
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.1
+    - name: lean-implementation-skill
+      aliases:
+        - deliberately-lean
+        - defer-to-role
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.1
+    - name: context-compaction-techniques
+      aliases:
+        - context-compaction
+        - multi-task-coordination
+        - three-context-compaction-techniques
+        - rolling-summary
+        - selective-verbosity
+        - handoff-packet
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.1
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.8
+    - name: decomposition-validation-investment
+      aliases:
+        - decomposition-validation
+        - strongest-predictor-of-downstream-success
+        - validation-investment
+        - upstream-quality-gate
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.1
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.10
+    - name: three-implementation-skills
+      aliases:
+        - implement-task-orchestrate-development-decompose-feature
+        - three-skills
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.1
+    - name: stage-alignment
+      aliases:
+        - stage-binding
+        - developing-dev-planning-stage
+        - lifecycle-stage-binding
+        - stage-to-skill-mapping
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.2
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.2
+    - name: paired-role-declaration
+      aliases:
+        - paired-role
+        - roles-frontmatter-field
+        - paired-role-binding
+        - stage-bound-skill
+        - skill-role-pairing
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.3
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.1
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.3
+    - name: lean-procedure
+      aliases:
+        - minimal-procedure
+        - read-implement-test-verify
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.5
+    - name: coordination-procedure
+      aliases:
+        - orchestrate-development-procedure
+        - multi-task-coordination-procedure
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.7
+    - name: orchestration-vocabulary
+      aliases:
+        - orchestrate-development-vocabulary
+        - coordination-terms
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.9
+    - name: vertical-slicing
+      aliases:
+        - vertical-slice
+        - vertical-slicing-vocabulary
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.12
+    - name: story-point-sizing
+      aliases:
+        - sizing
+        - story-points
+        - modified-fibonacci
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.12
+    - name: frontmatter-completeness
+      aliases:
+        - frontmatter
+        - name-description-triggers-roles-stage-constraint-level
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.13
+    - name: bad-vs-good-examples
+      aliases:
+        - bad-good-why-examples
+        - example-pairs
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.14
+    - name: gradable-evaluation-criteria
+      aliases:
+        - gradable-questions
+        - evaluation-criteria-as-questions
+      introduced_in:
+        - FEAT-01KN588PG7HA3/specification-30-implementation-skill-content#1.3.15
+    - name: context-assembly-step-7
+      aliases:
+        - step-7
+        - knowledge-integration-point
+      introduced_in:
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1
+    - name: lean-constraint
+      aliases:
+        - n=5-beats-n=19
+        - entry-cap
+        - 10-entry-cap
+        - hard-cap
+      introduced_in:
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.3.6
+    - name: matching-criteria
+      aliases:
+        - file-path-matching
+        - tag-matching
+        - always-entries
+        - recency-weighting
+        - scope-prefix-matching
+        - directory-overlap
+        - role-domain-tags
+        - domain-tag-overlap
+        - always-tagged-entries
+        - project-scoped-entries
+        - last-confirmation-timestamp
+        - recency-weight
+      introduced_in:
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.1
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.3.1
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.3.2
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.3.3
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.3.4
+    - name: surfaced-entry-formatting
+      aliases:
+        - always/never-x-because-y-directive
+      introduced_in:
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.1
+    - name: recency-weighted-confidence-score
+      aliases:
+        - composite-score
+        - confidence-plus-recency
+      introduced_in:
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.3.5
+    - name: always-never-directive-format
+      aliases:
+        - always/never-x-because-y
+        - directive-formatting
+      introduced_in:
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.3.8
+    - name: context-position-8
+      aliases:
+        - position-8
+        - rising-attention-zone-placement
+      introduced_in:
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.3.9
+    - name: deduplication
+      aliases:
+        - cross-criteria-deduplication
+        - single-occurrence-guarantee
+      introduced_in:
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.3.11
+    - name: health-compaction-recommendation
+      aliases:
+        - compaction-trigger
+        - consecutive-cap-hits
+      introduced_in:
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.3.12
+    - name: retired-entry-filtering
+      aliases:
+        - status-filtering
+        - retired-status-exclusion
+      introduced_in:
+        - FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing#1.3.14
+    - name: document-authoring-skill
+      aliases:
+        - authoring-skill.md
+        - write-design
+        - write-spec
+        - write-dev-plan
+        - write-research
+        - update-docs
+      introduced_in:
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1
+    - name: gate-checkable-template
+      aliases:
+        - gate-checkable-output-template
+      introduced_in:
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1
+    - name: validation-script
+      aliases:
+        - structural-verification-script
+      introduced_in:
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1
+    - name: skill-replacement
+      aliases:
+        - replace-document-creation
+        - five-authoring-skills
+      introduced_in:
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.1
+    - name: skill-anti-pattern
+      aliases:
+        - authoring-anti-pattern
+        - named-anti-pattern
+        - detect/because/resolve
+      introduced_in:
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.6
+    - name: bad-vs-good-example
+      aliases:
+        - bad/good-example-pair
+        - why-bad/why-good
+        - recency-bias-example-ordering
+      introduced_in:
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.7
+    - name: specification-template
+      aliases:
+        - write-spec-output-format
+        - 5-section-spec-template
+      introduced_in:
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.9
+    - name: dev-plan-template
+      aliases:
+        - write-dev-plan-output-format
+        - 5-section-dev-plan-template
+      introduced_in:
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.10
+    - name: design-document-template
+      aliases:
+        - write-design-output-format
+        - 4-section-design-template
+      introduced_in:
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.11
+    - name: cross-reference-requirement
+      aliases:
+        - predecessor-document-reference
+        - document-chain
+      introduced_in:
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.12
+    - name: retrieval-anchor
+      aliases:
+        - questions-this-skill-answers
+        - skill-selection-query
+      introduced_in:
+        - FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content#1.3.15
+    - name: batch-handler
+      aliases:
+        - executebatch
+        - batchitemhandler
+      introduced_in:
+        - FEAT-01KN4ZPKCJWPF/specification-batch-handler-false-positive#1
+    - name: tool-result-error-pattern
+      aliases:
+        - inline-error
+        - mcp-inline-error
+      introduced_in:
+        - FEAT-01KN4ZPKCJWPF/specification-batch-handler-false-positive#1
+    - name: false-positive-success
+      aliases:
+        - inflated-success-count
+        - silent-overcount
+      introduced_in:
+        - FEAT-01KN4ZPKCJWPF/specification-batch-handler-false-positive#1.2.1
+    - name: item-result
+      aliases:
+        - itemresult
+        - errordetail
+      introduced_in:
+        - FEAT-01KN4ZPKCJWPF/specification-batch-handler-false-positive#1.3
+    - name: mcp-convention
+      aliases:
+        - tool-result-convention
+      introduced_in:
+        - FEAT-01KN4ZPKCJWPF/specification-batch-handler-false-positive#1.3
+    - name: freshness-tracking
+      aliases:
+        - last-verified
+        - staleness-tracking
+      introduced_in:
+        - FEAT-01KN588PETZQE/specification-30-freshness-tracking#1
+    - name: staleness-window
+      aliases:
+        - staleness-threshold
+        - configurable-window
+      introduced_in:
+        - FEAT-01KN588PETZQE/specification-30-freshness-tracking#1
+    - name: last-verified-field
+      aliases:
+        - last-verified
+        - iso-8601-timestamp-field
+      introduced_in:
+        - FEAT-01KN588PETZQE/specification-30-freshness-tracking#1.3.1
+    - name: stale-role-detection
+      aliases:
+        - staleness-detection
+        - health-tool-staleness-check
+      introduced_in:
+        - FEAT-01KN588PETZQE/specification-30-freshness-tracking#1.3.3
+    - name: never-verified-detection
+      aliases:
+        - absent-last-verified
+        - unverified-file-detection
+      introduced_in:
+        - FEAT-01KN588PETZQE/specification-30-freshness-tracking#1.3.5
+    - name: configurable-staleness-window
+      aliases:
+        - staleness-window
+        - stale-threshold-days
+      introduced_in:
+        - FEAT-01KN588PETZQE/specification-30-freshness-tracking#1.3.6
+    - name: refresh-mechanism
+      aliases:
+        - last-verified-refresh
+        - profile-refresh-action
+      introduced_in:
+        - FEAT-01KN588PETZQE/specification-30-freshness-tracking#1.3.10
+    - name: document-refresh-alignment
+      aliases:
+        - doc-refresh-conceptual-alignment
+      introduced_in:
+        - FEAT-01KN588PETZQE/specification-30-freshness-tracking#1.3.12
+    - name: bold-identifier-pattern
+      aliases:
+        - '**ac-nn.**'
+        - '**xx-nn.**'
+      introduced_in:
+        - FEAT-01KN4ZPCMJ1FP/specification-docint-ac-pattern-recognition#1
+    - name: acceptance-criteria-extraction
+      aliases:
+        - asmextractcriteria
+        - criteria-extractor
+      introduced_in:
+        - FEAT-01KN4ZPCMJ1FP/specification-docint-ac-pattern-recognition#1
+    - name: rfc-2119-keywords
+      aliases:
+        - must
+        - should
+        - may
+        - rfc-2119
+      introduced_in:
+        - FEAT-01KN4ZPCMJ1FP/specification-docint-ac-pattern-recognition#1.3
+    - name: section-role-classification
+      aliases:
+        - classifier-role
+        - acceptance-criteria-section
+      introduced_in:
+        - FEAT-01KN4ZPCMJ1FP/specification-docint-ac-pattern-recognition#1.3
+    - name: context-sensitive-extraction
+      aliases:
+        - context-sensitive-rules
+        - role-gated-extraction
+      introduced_in:
+        - FEAT-01KN4ZPCMJ1FP/specification-docint-ac-pattern-recognition#1.4.2
+    - name: skill-system
+      aliases:
+        - skill-package
+        - skill.md
+      introduced_in:
+        - FEAT-01KN588PDBW85/specification-30-skill-system#1
+    - name: skill-directory-layout
+      aliases:
+        - .kbz/skills
+        - skill-directory-structure
+      introduced_in:
+        - FEAT-01KN588PDBW85/specification-30-skill-system#1
+    - name: frontmatter-schema
+      aliases:
+        - skill.md-frontmatter
+        - yaml-frontmatter
+      introduced_in:
+        - FEAT-01KN588PDBW85/specification-30-skill-system#1
+    - name: attention-curve-optimized-sequence
+      aliases:
+        - section-ordering
+        - body-section-sequence
+      introduced_in:
+        - FEAT-01KN588PDBW85/specification-30-skill-system#1.1
+    - name: dual-register-description
+      aliases:
+        - expert-description
+        - natural-description
+        - description-subfields
+      introduced_in:
+        - FEAT-01KN588PDBW85/specification-30-skill-system#1.3
+    - name: evaluation-criteria-format
+      aliases:
+        - gradable-questions
+        - weighted-criteria
+        - llm-as-judge
+      introduced_in:
+        - FEAT-01KN588PDBW85/specification-30-skill-system#1.3
+    - name: reference-file-constraint
+      aliases:
+        - references/-subdirectory
+        - one-level-deep-reference
+      introduced_in:
+        - FEAT-01KN588PDBW85/specification-30-skill-system#1.3
+    - name: script-injection-convention
+      aliases:
+        - scripts/-subdirectory
+        - output-only-context-injection
+      introduced_in:
+        - FEAT-01KN588PDBW85/specification-30-skill-system#1.3
+    - name: sub-agent-state-isolation
+      aliases:
+        - pre-dispatch-commit
+        - state-protection
+      introduced_in:
+        - FEAT-01KN4ZPG44T5B/specification-sub-agent-state-isolation#1
+    - name: handoff-tool
+      aliases:
+        - handoff
+        - sub-agent-dispatch
+      introduced_in:
+        - FEAT-01KN4ZPG44T5B/specification-sub-agent-state-isolation#1
+    - name: best-effort-safeguard
+      aliases:
+        - non-blocking-commit
+        - commit-failure-tolerance
+      introduced_in:
+        - FEAT-01KN4ZPG44T5B/specification-sub-agent-state-isolation#1.2
+    - name: pre-dispatch-state-commit
+      aliases:
+        - protective-commit
+        - .kbz/state-commit
+      introduced_in:
+        - FEAT-01KN4ZPG44T5B/specification-sub-agent-state-isolation#1.4.1
+    - name: one-stage-one-binding-invariant
+      aliases:
+        - stage-uniqueness
+        - single-binding-per-stage
+      introduced_in:
+        - FEAT-01KN588PDPE8V/specification-30-binding-registry#1
+    - name: stage-lookup-api
+      aliases:
+        - stage-lookup
+        - binding-lookup-function
+      introduced_in:
+        - FEAT-01KN588PDPE8V/specification-30-binding-registry#1
+    - name: prerequisites-declaration
+      aliases:
+        - prerequisites-field
+        - document-prerequisite
+        - task-prerequisite
+      introduced_in:
+        - FEAT-01KN588PDPE8V/specification-30-binding-registry#1.1
+    - name: sub-agents-structure
+      aliases:
+        - sub-agents-field
+        - multi-agent-topology
+      introduced_in:
+        - FEAT-01KN588PDPE8V/specification-30-binding-registry#1.3
+    - name: document-template-structure
+      aliases:
+        - document-template-field
+        - required-sections-declaration
+      introduced_in:
+        - FEAT-01KN588PDPE8V/specification-30-binding-registry#1.3
+    - name: role-fallback-resolution
+      aliases:
+        - parent-role-fallback
+        - hyphen-segment-fallback
+      introduced_in:
+        - FEAT-01KN588PDPE8V/specification-30-binding-registry#1.3
+    - name: document-store
+      aliases:
+        - store-records
+      introduced_in:
+        - FEAT-01KN4ZPQFQN1C/specification-doc-audit#1
+    - name: default-document-directories
+      aliases:
+        - document-directories
+        - directory-to-type-mapping
+      introduced_in:
+        - FEAT-01KN4ZPQFQN1C/specification-doc-audit#1.4
+    - name: type-inference
+      aliases:
+        - inferred-type
+        - directory-to-type
+      introduced_in:
+        - FEAT-01KN4ZPQFQN1C/specification-doc-audit#1.4
+    - name: unregistered-file
+      aliases:
+        - unregistered
+        - file-not-in-store
+      introduced_in:
+        - FEAT-01KN4ZPQFQN1C/specification-doc-audit#1.5.2
+    - name: missing-record
+      aliases:
+        - missing
+        - store-record-with-no-file
+      introduced_in:
+        - FEAT-01KN4ZPQFQN1C/specification-doc-audit#1.5.2
+    - name: role-system
+      aliases:
+        - agent-role
+        - role-file
+        - yaml-role-schema
+      introduced_in:
+        - FEAT-01KN588PCVN4Y/specification-30-role-system#1
+    - name: anti-pattern-definition
+      aliases:
+        - anti-patterns-field
+        - detect-because-resolve
+        - anti-pattern-object
+      introduced_in:
+        - FEAT-01KN588PCVN4Y/specification-30-role-system#1.1
+    - name: mcp-tool-subset-declaration
+      aliases:
+        - tools-field
+        - role-tool-list
+        - mcp-tool-declaration
+      introduced_in:
+        - FEAT-01KN588PCVN4Y/specification-30-role-system#1.1
+    - name: cycle-detection
+      aliases:
+        - circular-inheritance
+        - inheritance-cycle
+        - cycle-rejection
+      introduced_in:
+        - FEAT-01KN588PCVN4Y/specification-30-role-system#1.3
+    - name: field-merge-semantics
+      aliases:
+        - vocabulary-concatenation
+        - tools-union
+        - identity-non-inheritance
+      introduced_in:
+        - FEAT-01KN588PCVN4Y/specification-30-role-system#1.3
+    - name: strict-yaml-parsing
+      aliases:
+        - knownfields
+        - unknown-field-rejection
+        - forward-compatibility
+      introduced_in:
+        - FEAT-01KN588PCVN4Y/specification-30-role-system#1.3
+    - name: stage-aware-context-assembly
+      aliases:
+        - lifecycle-conscious-assembly
+        - stage-specific-assembly
+      introduced_in:
+        - FEAT-01KN58J25K4QD/specification-30-stage-aware-context-assembly#1.1
+    - name: orchestration-pattern-signalling
+      aliases:
+        - single-agent-signal
+        - orchestrator-workers-signal
+      introduced_in:
+        - FEAT-01KN58J25K4QD/specification-30-stage-aware-context-assembly#1.1
+    - name: filesystem-output-convention
+      aliases:
+        - output-convention
+        - sub-agent-output-convention
+      introduced_in:
+        - FEAT-01KN58J25K4QD/specification-30-stage-aware-context-assembly#1.1
+    - name: lifecycle-state-validation
+      aliases:
+        - feature-state-validation
+        - pre-assembly-validation
+      introduced_in:
+        - FEAT-01KN58J25K4QD/specification-30-stage-aware-context-assembly#1.3.1
+    - name: stage-to-allowed-states-mapping
+      aliases:
+        - lifecycle-state-allowlist
+        - terminal-state-rejection
+      introduced_in:
+        - FEAT-01KN58J25K4QD/specification-30-stage-aware-context-assembly#1.3.3
+    - name: stage-specific-assembly-strategy
+      aliases:
+        - content-inclusion/exclusion-table
+        - stage-content-matrix
+      introduced_in:
+        - FEAT-01KN58J25K4QD/specification-30-stage-aware-context-assembly#1.3.5
+    - name: dry-run-mode
+      aliases:
+        - dry-run
+        - commit-suppression-mode
+      introduced_in:
+        - FEAT-01KN4ZPTQSZT5/specification-doc-import-dry-run#1
+    - name: doc-import
+      aliases:
+        - doc-import-action
+        - document-registration-import
+      introduced_in:
+        - FEAT-01KN4ZPTQSZT5/specification-doc-import-dry-run#1
+    - name: inference-pipeline
+      aliases:
+        - type-inference
+        - title-extraction
+        - owner-inference
+      introduced_in:
+        - FEAT-01KN4ZPTQSZT5/specification-doc-import-dry-run#1.4.2
+    - name: would-import-response
+      aliases:
+        - would-import
+        - would-skip
+        - dry-run-response-format
+      introduced_in:
+        - FEAT-01KN4ZPTQSZT5/specification-doc-import-dry-run#1.4.3
+    - name: role-directory-relocation
+      aliases:
+        - context/roles-migration
+        - .kbz/roles-relocation
+      introduced_in:
+        - FEAT-01KN588PGXATW/specification-30-migration#1
+    - name: skill-splitting
+      aliases:
+        - monolithic-skill-split
+        - skill-restructure
+        - type-specific-skills
+      introduced_in:
+        - FEAT-01KN588PGXATW/specification-30-migration#1
+    - name: backward-compatibility-contract
+      aliases:
+        - transition-period
+        - old-path-retention
+        - bc-contract
+      introduced_in:
+        - FEAT-01KN588PGXATW/specification-30-migration#1
+    - name: canonical-role-location
+      aliases:
+        - role-file-relocation
+        - new-role-path
+      introduced_in:
+        - FEAT-01KN588PGXATW/specification-30-migration#1.3.1
+    - name: developer-role-rename
+      aliases:
+        - implementer-go-rename
+        - developer-restructure
+      introduced_in:
+        - FEAT-01KN588PGXATW/specification-30-migration#1.3.3
+    - name: reviewer-role-split
+      aliases:
+        - specialist-reviewer-subtypes
+        - reviewer-specialization
+      introduced_in:
+        - FEAT-01KN588PGXATW/specification-30-migration#1.3.4
+    - name: stage-bindings-file
+      aliases:
+        - stage-bindings.yaml
+        - new-stage-bindings
+      introduced_in:
+        - FEAT-01KN588PGXATW/specification-30-migration#1.3.8
+    - name: old-file-retirement
+      aliases:
+        - file-retirement
+        - deprecated-file-removal
+      introduced_in:
+        - FEAT-01KN588PGXATW/specification-30-migration#1.3.15
+    - name: workflow-state-automation
+      aliases:
+        - auto-commit
+        - state-persistence-automation
+      introduced_in:
+        - FEAT-01KN73BFK4M4Z/specification-workflow-automation-spec#1
+    - name: four-pillars
+      aliases:
+        - pillar-a
+        - pillar-b
+        - pillar-c
+        - pillar-d
+      introduced_in:
+        - FEAT-01KN73BFK4M4Z/specification-workflow-automation-spec#1
+    - name: parameterised-state-commit
+      aliases:
+        - commitstatewithmessage
+        - commitstateandpaths
+        - auto-commit-function
+      introduced_in:
+        - FEAT-01KN73BFK4M4Z/specification-workflow-automation-spec#1.3.1
+    - name: best-effort-commit
+      aliases:
+        - non-blocking-commit
+        - commit-failure-tolerance
+      introduced_in:
+        - FEAT-01KN73BFK4M4Z/specification-workflow-automation-spec#1.3.1
+    - name: atomic-document-file-operations
+      aliases:
+        - doc-move
+        - doc-delete
+        - doc-register-enhancements
+      introduced_in:
+        - FEAT-01KN73BFK4M4Z/specification-workflow-automation-spec#1.3.2
+    - name: auto-approve
+      aliases:
+        - auto-approve-flag
+        - register-with-approval
+      introduced_in:
+        - FEAT-01KN73BFK4M4Z/specification-workflow-automation-spec#1.3.2.2
+    - name: dev-plan-approval-decoupling
+      aliases:
+        - approval-decoupling
+        - dev-plan-cascade-removal
+      introduced_in:
+        - FEAT-01KN73BFK4M4Z/specification-workflow-automation-spec#1.3.3
+    - name: document-section-validation
+      aliases:
+        - section-validation
+        - required-sections
+        - stage-bindings-required-sections
+      introduced_in:
+        - FEAT-01KN73BFK4M4Z/specification-workflow-automation-spec#1.3.4
+    - name: structural-check
+      aliases:
+        - document-structural-check
+        - structural-validation
+      introduced_in:
+        - FEAT-01KN58J26RSB6/specification-30-document-structural-checks#1
+    - name: quality-evaluation-hook
+      aliases:
+        - quality-evaluation-record
+        - llm-as-judge-hook
+        - quality-evaluation-structural-hook
+      introduced_in:
+        - FEAT-01KN58J26RSB6/specification-30-document-structural-checks#1
+    - name: promotion-demotion-mechanism
+      aliases:
+        - check-promotion
+        - hard-gate-promotion
+        - demotion-on-false-positive
+      introduced_in:
+        - FEAT-01KN58J26RSB6/specification-30-document-structural-checks#1
+    - name: document-intelligence-parser
+      aliases:
+        - docint
+        - parsestructure
+        - internal/docint
+      introduced_in:
+        - FEAT-01KN58J26RSB6/specification-30-document-structural-checks#1.1
+    - name: stage-gate-structural-check-execution
+      aliases:
+        - check-at-gate-transition
+        - gate-triggered-check
+      introduced_in:
+        - FEAT-01KN58J26RSB6/specification-30-document-structural-checks#1.3.1
+    - name: required-section-definition
+      aliases:
+        - section-requirement-table
+        - hardcoded-required-sections
+      introduced_in:
+        - FEAT-01KN58J26RSB6/specification-30-document-structural-checks#1.3.2
+    - name: cross-reference-validation
+      aliases:
+        - design-cross-reference-check
+        - spec-to-design-reference
+      introduced_in:
+        - FEAT-01KN58J26RSB6/specification-30-document-structural-checks#1.3.3
+    - name: acceptance-criteria-detection
+      aliases:
+        - acceptance-criteria-presence-check
+      introduced_in:
+        - FEAT-01KN58J26RSB6/specification-30-document-structural-checks#1.3.4
+    - name: check-result-structure
+      aliases:
+        - checkresult-schema
+        - structural-check-result-object
+      introduced_in:
+        - FEAT-01KN58J26RSB6/specification-30-document-structural-checks#1.3.5
+    - name: warning-and-hard-gate-modes
+      aliases:
+        - warning-mode
+        - hard-gate-mode
+        - enforcement-level
+      introduced_in:
+        - FEAT-01KN58J26RSB6/specification-30-document-structural-checks#1.3.6
+    - name: consecutive-clean-pass-counter
+      aliases:
+        - consecutive-passes
+        - promotion-threshold-counter
+      introduced_in:
+        - FEAT-01KN58J26RSB6/specification-30-document-structural-checks#1.3.7
+    - name: quality-evaluation-approval-gate
+      aliases:
+        - quality-evaluation-prerequisite
+        - require-quality-evaluation-flag
+        - approval-quality-gate
+      introduced_in:
+        - FEAT-01KN58J26RSB6/specification-30-document-structural-checks#1.3.8
+    - name: review-cycle-counter
+      aliases:
+        - review-cycle-field
+        - cycle-counter
+      introduced_in:
+        - FEAT-01KN58J2606B0/specification-30-review-rework-loop#1.1
+    - name: iteration-cap
+      aliases:
+        - max-review-cycles
+        - review-cap
+        - blocking-cap
+      introduced_in:
+        - FEAT-01KN58J2606B0/specification-30-review-rework-loop#1.1
+    - name: focused-re-review-signal
+      aliases:
+        - re-review-signal
+        - re-review-context-adjustment
+      introduced_in:
+        - FEAT-01KN58J2606B0/specification-30-review-rework-loop#1.1
+    - name: cap-reached-blocking
+      aliases:
+        - iteration-cap-blocking
+        - review-cap-enforcement
+        - blocked-state-at-cap
+      introduced_in:
+        - FEAT-01KN58J2606B0/specification-30-review-rework-loop#1.3.5
+    - name: automatic-checkpoint-creation
+      aliases:
+        - system-checkpoint
+        - cap-triggered-checkpoint
+      introduced_in:
+        - FEAT-01KN58J2606B0/specification-30-review-rework-loop#1.3.6
+    - name: mandatory-stage-gate
+      aliases:
+        - stage-gate-enforcement
+        - gate-prerequisite
+        - mandatory-gate
+      introduced_in:
+        - FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates#1
+    - name: gate-prerequisite-table
+      aliases:
+        - gated-transitions-table
+        - nine-gated-transitions
+        - complete-gate-table
+        - designing-to-done-gates
+      introduced_in:
+        - FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates#1
+        - FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates#1.3.2
+    - name: override-mechanism
+      aliases:
+        - gate-override
+        - override-parameter
+        - bypass-gate
+        - override-boolean
+        - override-reason-parameter
+        - agent-override-policy
+      introduced_in:
+        - FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates#1
+        - FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates#1.3.3
+    - name: override-logging
+      aliases:
+        - override-record
+        - override-persistence
+        - health-flagging
+      introduced_in:
+        - FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates#1.1
+    - name: single-step-gate-enforcement
+      aliases:
+        - single-step-transition-gate
+        - advance-gate-parity
+      introduced_in:
+        - FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates#1.3.1
+    - name: rework-transition-gate
+      aliases:
+        - needs-rework-gate
+        - rework-lifecycle-gate
+      introduced_in:
+        - FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates#1.3.2
+    - name: actionable-error-message
+      aliases:
+        - gate-failure-error-template
+        - recovery-step
+        - to-resolve-section
+      introduced_in:
+        - FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates#1.3.4
+    - name: lifecycle-integrity
+      aliases:
+        - premature-closure
+        - stranded-completion
+        - entity-lifecycle-consistency
+      introduced_in:
+        - FEAT-01KN83QN0VAFG/specification-lifecycle-integrity#1
+    - name: three-pillars
+      aliases:
+        - lifecycle-gates
+        - auto-advance
+        - proactive-status
+        - feature-auto-advance
+        - plan-auto-advance
+        - automatic-transition
+      introduced_in:
+        - FEAT-01KN83QN0VAFG/specification-lifecycle-integrity#1
+        - FEAT-01KN83QN0VAFG/specification-lifecycle-integrity#1.2.1.2
+    - name: lifecycle-gate
+      aliases:
+        - transition-gate
+        - child-state-gate
+        - blocking-non-terminal-tasks
+      introduced_in:
+        - FEAT-01KN83QN0VAFG/specification-lifecycle-integrity#1.2.1.1
+    - name: attention-item
+      aliases:
+        - attentionitem
+        - structured-attention
+        - proactive-status
+        - status-attention
+      introduced_in:
+        - FEAT-01KN83QN0VAFG/specification-lifecycle-integrity#1.2.1.3
+        - FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1
+    - name: stale-reviewing-detection
+      aliases:
+        - stale-reviewing-days
+        - reviewing-threshold
+      introduced_in:
+        - FEAT-01KN83QN0VAFG/specification-lifecycle-integrity#1.2.1.3
+    - name: role-scoped-tool-hints
+      aliases:
+        - tool-hints
+        - tool-hint-injection
+      introduced_in:
+        - FEAT-01KNA11F3BBMP/specification-role-tool-hints#1
+    - name: per-machine-config
+      aliases:
+        - local.yaml
+        - config.yaml
+        - local-override
+      introduced_in:
+        - FEAT-01KNA11F3BBMP/specification-role-tool-hints#1
+    - name: hint-config-parsing
+      aliases:
+        - tool-hints-field
+        - opaque-string-hints
+      introduced_in:
+        - FEAT-01KNA11F3BBMP/specification-role-tool-hints#1.3.1
+    - name: hint-merge-strategy
+      aliases:
+        - per-key-merge
+        - local-overrides-project
+      introduced_in:
+        - FEAT-01KNA11F3BBMP/specification-role-tool-hints#1.3.2
+    - name: role-inheritance-resolution
+      aliases:
+        - inherits-chain
+        - ancestor-hint-lookup
+      introduced_in:
+        - FEAT-01KNA11F3BBMP/specification-role-tool-hints#1.3.3
+    - name: handoff-hint-injection
+      aliases:
+        - '##-available-tools-section'
+        - 3.0-pipeline-injection
+      introduced_in:
+        - FEAT-01KNA11F3BBMP/specification-role-tool-hints#1.3.4
+    - name: action-pattern-logging
+      aliases:
+        - mcp-tool-invocation-log
+        - json-lines-log
+        - structured-tool-log
+      introduced_in:
+        - FEAT-01KN58J275BWJ/specification-30-action-pattern-logging#1.1
+    - name: stage-level-workflow-metrics
+      aliases:
+        - workflow-health-metrics
+        - kbz-metrics-cli
+        - time-per-stage
+      introduced_in:
+        - FEAT-01KN58J275BWJ/specification-30-action-pattern-logging#1.1
+    - name: evaluation-suite-framework
+      aliases:
+        - representative-workflow-scenarios
+        - agent-driven-evaluation
+        - eval-suite
+      introduced_in:
+        - FEAT-01KN58J275BWJ/specification-30-action-pattern-logging#1.1
+    - name: json-lines-log-format
+      aliases:
+        - jsonl-log
+        - structured-log-entry
+        - log-schema
+      introduced_in:
+        - FEAT-01KN58J275BWJ/specification-30-action-pattern-logging#1.3.1
+    - name: error-type-classification
+      aliases:
+        - error-type-field
+        - gate-failure
+        - validation-error
+        - internal-error
+      introduced_in:
+        - FEAT-01KN58J275BWJ/specification-30-action-pattern-logging#1.3.1
+    - name: log-file-rotation
+      aliases:
+        - date-based-log-rotation
+        - 30-day-retention
+        - actions-yyyy-mm-dd.jsonl
+      introduced_in:
+        - FEAT-01KN58J275BWJ/specification-30-action-pattern-logging#1.3.1
+    - name: tool-subset-compliance-metric
+      aliases:
+        - stage-tool-compliance
+        - tool-call-compliance-rate
+      introduced_in:
+        - FEAT-01KN58J275BWJ/specification-30-action-pattern-logging#1.3.3
+    - name: gate-failure-rate
+      aliases:
+        - gate-failure-count
+        - error-rate-by-type
+      introduced_in:
+        - FEAT-01KN58J275BWJ/specification-30-action-pattern-logging#1.3.3
+    - name: evaluation-scenario
+      aliases:
+        - workflow-scenario
+        - agent-test-scenario
+        - representative-scenario
+      introduced_in:
+        - FEAT-01KN58J275BWJ/specification-30-action-pattern-logging#1.3.4
+    - name: worktree-graph-context
+      aliases:
+        - graphproject
+        - graph-project-awareness
+      introduced_in:
+        - FEAT-01KNA11F5FAFW/specification-worktree-graph-context#1
+    - name: codebase-memory-integration
+      aliases:
+        - codebase-memory-mcp
+        - graph-project-field
+        - graphproject-field
+        - worktree.record-graphproject
+      introduced_in:
+        - FEAT-01KNA11F5FAFW/specification-worktree-graph-context#1
+        - FEAT-01KNA11F5FAFW/specification-worktree-graph-context#1.3
+    - name: code-graph-section
+      aliases:
+        - '##-code-graph'
+        - handoff-code-graph-injection
+      introduced_in:
+        - FEAT-01KNA11F5FAFW/specification-worktree-graph-context#1.3
+    - name: missing-graph-index-attention
+      aliases:
+        - missing-graph-index
+        - attention-item-info
+      introduced_in:
+        - FEAT-01KNA11F5FAFW/specification-worktree-graph-context#1.3
+    - name: aci-description-principles
+      aliases:
+        - agent-computer-interface-design
+        - aci-principles
+        - tool-description-design
+      introduced_in:
+        - FEAT-01KN58J257X02/specification-30-tool-description-audit#1.1
+    - name: actionable-error-template
+      aliases:
+        - three-part-error-template
+        - what-why-what-next-error-format
+      introduced_in:
+        - FEAT-01KN58J257X02/specification-30-tool-description-audit#1.1
+    - name: agent-driven-testing
+      aliases:
+        - description-testing
+        - tool-selection-testing
+        - agent-scenario-testing
+      introduced_in:
+        - FEAT-01KN58J257X02/specification-30-tool-description-audit#1.1
+    - name: when-to-use-first-sentence
+      aliases:
+        - tool-description-opener
+        - use-when-framing
+      introduced_in:
+        - FEAT-01KN58J257X02/specification-30-tool-description-audit#1.3.1
+    - name: negative-guidance
+      aliases:
+        - do-not-use-guidance
+        - use-instead-framing
+        - anti-pattern-guidance
+      introduced_in:
+        - FEAT-01KN58J257X02/specification-30-tool-description-audit#1.3.1
+    - name: workflow-position-sequencing
+      aliases:
+        - call-after/call-before
+        - tool-ordering
+        - sequence-language
+      introduced_in:
+        - FEAT-01KN58J257X02/specification-30-tool-description-audit#1.3.1
+    - name: token-budget-compliance
+      aliases:
+        - 200-token-limit
+        - cl100k-base-tokeniser
+        - description-token-budget
+      introduced_in:
+        - FEAT-01KN58J257X02/specification-30-tool-description-audit#1.3.1
+    - name: user-guide
+      aliases:
+        - hub-document
+      introduced_in:
+        - FEAT-01KP8T4HQMEA3/specification-user-guide#1
+    - name: public-documentation-set
+      aliases:
+        - documentation-collection
+      introduced_in:
+        - FEAT-01KP8T4HQMEA3/specification-user-guide#1
+    - name: editorial-pipeline
+      aliases:
+        - five-stage-pipeline
+        - write-edit-check-style-copyedit
+      introduced_in:
+        - FEAT-01KP8T4HQMEA3/specification-user-guide#1
+    - name: documentation-hub
+      aliases:
+        - orientation-document
+      introduced_in:
+        - FEAT-01KP8T4HQMEA3/specification-user-guide#1.1
+    - name: production-order
+      aliases:
+        - document-production-sequence
+      introduced_in:
+        - FEAT-01KP8T4HQMEA3/specification-user-guide#1.1
+    - name: collaboration-model
+      aliases:
+        - human-agent-collaboration
+      introduced_in:
+        - FEAT-01KP8T4HQMEA3/specification-user-guide#1.3.1
+    - name: stage-gate-workflow
+      aliases:
+        - lifecycle-stages
+        - feature-lifecycle
+      introduced_in:
+        - FEAT-01KP8T4HQMEA3/specification-user-guide#1.3.1
+    - name: knowledge-system
+      aliases:
+        - knowledge-entries
+        - knowledge-base
+      introduced_in:
+        - FEAT-01KP8T4HQMEA3/specification-user-guide#1.3.1
+    - name: mcp-server
+      aliases:
+        - model-context-protocol-server
+      introduced_in:
+        - FEAT-01KP8T4HQMEA3/specification-user-guide#1.3.1
+    - name: inverted-pyramid
+      aliases:
+        - inverted-pyramid-structure
+      introduced_in:
+        - FEAT-01KP8T4HQMEA3/specification-user-guide#1.3.2
+    - name: registry-driven-gate-lookup
+      aliases:
+        - binding-registry-prerequisite-lookup
+        - registry-gate-source
+        - stage-bindings-prerequisites
+      introduced_in:
+        - FEAT-01KN58J27H83N/specification-30-binding-registry-gate-integration#1.1
+    - name: mtime-based-cache-invalidation
+      aliases:
+        - file-mtime-cache
+        - hot-reload
+        - binding-registry-cache
+      introduced_in:
+        - FEAT-01KN58J27H83N/specification-30-binding-registry-gate-integration#1.1
+    - name: override-policy
+      aliases:
+        - agent-override-policy
+        - checkpoint-override-policy
+        - gate-override-type
+      introduced_in:
+        - FEAT-01KN58J27H83N/specification-30-binding-registry-gate-integration#1.1
+    - name: hardcoded-gate-fallback
+      aliases:
+        - prereq.go-fallback
+        - fallback-gate-definitions
+      introduced_in:
+        - FEAT-01KN58J27H83N/specification-30-binding-registry-gate-integration#1.1
+    - name: documents-prerequisite-type
+      aliases:
+        - document-gate-prerequisite
+        - type+status-document-check
+      introduced_in:
+        - FEAT-01KN58J27H83N/specification-30-binding-registry-gate-integration#1.3.1
+    - name: tasks-prerequisite-type
+      aliases:
+        - task-gate-prerequisite
+        - min-count-prerequisite
+        - all-terminal-prerequisite
+      introduced_in:
+        - FEAT-01KN58J27H83N/specification-30-binding-registry-gate-integration#1.3.1
+    - name: prerequisite-evaluator
+      aliases:
+        - gate-evaluator
+        - evaluator-dispatch
+        - prerequisite-framework
+      introduced_in:
+        - FEAT-01KN58J27H83N/specification-30-binding-registry-gate-integration#1.3.1
+    - name: checkpoint-override-flow
+      aliases:
+        - checkpoint-gated-override
+        - pending-checkpoint-gate
+        - human-approval-gate
+      introduced_in:
+        - FEAT-01KN58J27H83N/specification-30-binding-registry-gate-integration#1.3.4
+    - name: evaluation-baseline
+      aliases:
+        - evaluation-scenario
+        - before-data
+        - workflow-evaluation
+      introduced_in:
+        - FEAT-01KN4ZPXXEG1F/specification-evaluation-baseline#1
+    - name: scenario-file
+      aliases:
+        - eval-yaml
+        - scenario-yaml
+      introduced_in:
+        - FEAT-01KN4ZPXXEG1F/specification-evaluation-baseline#1
+    - name: scenario-schema
+      aliases:
+        - starting-state
+        - expected-pattern
+        - success-criteria
+      introduced_in:
+        - FEAT-01KN4ZPXXEG1F/specification-evaluation-baseline#1.4.2
+    - name: scenario-category
+      aliases:
+        - happy-path
+        - gate-failure
+        - review-rework-loop
+        - edge-case
+      introduced_in:
+        - FEAT-01KN4ZPXXEG1F/specification-evaluation-baseline#1.4.4
+    - name: baseline-measurement
+      aliases:
+        - baseline-record
+        - measurement-record
+        - run-record
+      introduced_in:
+        - FEAT-01KN4ZPXXEG1F/specification-evaluation-baseline#1.6
+    - name: sqlite-backed-storage
+      aliases:
+        - sqlite-index
+        - docint-db
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1
+    - name: bm25-full-text-search
+      aliases:
+        - fts5-search
+        - full-text-search
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1
+    - name: dual-write-strategy
+      aliases:
+        - yaml-source-of-truth
+        - derived-index
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1
+    - name: doc-intel
+      aliases:
+        - document-intelligence
+        - document-intelligence-subsystem
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1
+    - name: wal-mode
+      aliases:
+        - write-ahead-logging
+        - journal-mode-wal
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1.3.1
+    - name: lazy-initialisation
+      aliases:
+        - on-demand-creation
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1.3.1
+    - name: fts5-virtual-table
+      aliases:
+        - sections-fts
+        - fts5-table
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1.3.2
+    - name: porter-stemming
+      aliases:
+        - porter-tokeniser
+        - unicode61-tokeniser
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1.3.2
+    - name: search-action
+      aliases:
+        - doc-intel-search
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1.3.3
+    - name: post-filter
+      aliases:
+        - post-filtering
+        - doc-type-filter
+        - role-filter
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1.3.3
+    - name: graph-edges-table
+      aliases:
+        - edges-table
+        - sqlite-edges
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1.3.4
+    - name: entity-refs-table
+      aliases:
+        - entity-references-table
+        - sqlite-entity-refs
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1.3.5
+    - name: query-migration
+      aliases:
+        - yaml-to-sqlite-migration
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1.3.6
+    - name: rebuild-index
+      aliases:
+        - index-rebuild-command
+        - full-reindex
+      introduced_in:
+        - FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search#1.3.7
+    - name: decomposition-quality-validation
+      aliases:
+        - structural-validation-checks
+        - decompose-review-checks
+        - proposal-validation
+      introduced_in:
+        - FEAT-01KN58J26CH63/specification-30-decomposition-quality-validation#1.1
+    - name: error-vs-warning-severity
+      aliases:
+        - blocking-finding
+        - non-blocking-finding
+        - severity-classification
+      introduced_in:
+        - FEAT-01KN58J26CH63/specification-30-decomposition-quality-validation#1.1
+    - name: propose-review-apply-pipeline
+      aliases:
+        - decompose-pipeline
+        - proposal-pipeline
+        - apply-gate
+      introduced_in:
+        - FEAT-01KN58J26CH63/specification-30-decomposition-quality-validation#1.1
+    - name: description-present-check
+      aliases:
+        - empty-description-finding
+        - summary-presence-check
+      introduced_in:
+        - FEAT-01KN58J26CH63/specification-30-decomposition-quality-validation#1.3
+    - name: dependencies-declared-check
+      aliases:
+        - undeclared-dependency-finding
+        - slug-cross-reference-check
+      introduced_in:
+        - FEAT-01KN58J26CH63/specification-30-decomposition-quality-validation#1.3
+    - name: single-agent-sizing-check
+      aliases:
+        - multi-agent-sizing-finding
+        - action-verb-coordinating-separator-heuristic
+      introduced_in:
+        - FEAT-01KN58J26CH63/specification-30-decomposition-quality-validation#1.3
+    - name: testing-coverage-check
+      aliases:
+        - missing-test-coverage-finding
+        - testing-keyword-check
+      introduced_in:
+        - FEAT-01KN58J26CH63/specification-30-decomposition-quality-validation#1.3
+    - name: orphan-task-check
+      aliases:
+        - orphan-task-finding
+        - disconnected-dependency-graph-node
+      introduced_in:
+        - FEAT-01KN58J26CH63/specification-30-decomposition-quality-validation#1.3
+    - name: batch-classification
+      aliases:
+        - classification-at-scale
+        - corpus-classification
+      introduced_in:
+        - FEAT-01KPNNYYXQSYW/specification-doc-intel-batch-classification#1
+    - name: layer-3-classification
+      aliases:
+        - agent-classification
+        - llm-classification
+      introduced_in:
+        - FEAT-01KPNNYYXQSYW/specification-doc-intel-batch-classification#1
+    - name: batch-classification-workflow
+      aliases:
+        - classification-workflow-protocol
+      introduced_in:
+        - FEAT-01KPNNYYXQSYW/specification-doc-intel-batch-classification#1.3.5
+    - name: classification-budget
+      aliases:
+        - agent-budget
+      introduced_in:
+        - FEAT-01KPNNYYXQSYW/specification-doc-intel-batch-classification#1.3.5
+    - name: classification-priority-ordering
+      aliases:
+        - document-type-priority
+      introduced_in:
+        - FEAT-01KPNNYYXQSYW/specification-doc-intel-batch-classification#1.3.6
+    - name: concept-alias-resolution
+      aliases:
+        - alias-resolution
+        - concept-alias
+      introduced_in:
+        - FEAT-01KPNNYZ1ZSS6/specification-doc-intel-concept-aliases#1
+    - name: concept-registry
+      aliases:
+        - conceptregistry
+        - concept-store
+      introduced_in:
+        - FEAT-01KPNNYZ1ZSS6/specification-doc-intel-concept-aliases#1
+    - name: find-concept
+      aliases:
+        - findconcept
+        - concept-lookup
+      introduced_in:
+        - FEAT-01KPNNYZ1ZSS6/specification-doc-intel-concept-aliases#1
+    - name: canonical-concept-name
+      aliases:
+        - canonical-name
+        - concept-canonical
+      introduced_in:
+        - FEAT-01KPNNYZ1ZSS6/specification-doc-intel-concept-aliases#1.1
+    - name: extended-concepts-intro-format
+      aliases:
+        - concepts-intro-object-form
+        - concepts-intro-extended
+      introduced_in:
+        - FEAT-01KPNNYZ1ZSS6/specification-doc-intel-concept-aliases#1.3.1
+    - name: alias-normalisation
+      aliases:
+        - normalizeconcept
+        - concept-normalisation
+      introduced_in:
+        - FEAT-01KPNNYZ1ZSS6/specification-doc-intel-concept-aliases#1.3.3
+    - name: alias-deduplication
+      aliases:
+        - alias-uniqueness
+      introduced_in:
+        - FEAT-01KPNNYZ1ZSS6/specification-doc-intel-concept-aliases#1.3.5
+    - name: alias-accumulation
+      aliases:
+        - alias-merging
+        - multi-agent-alias-accumulation
+      introduced_in:
+        - FEAT-01KPNNYZ1ZSS6/specification-doc-intel-concept-aliases#1.3.6
+    - name: knowledge-document-cross-query
+      aliases:
+        - cross-system-query
+        - doc-intel-knowledge-integration
+      introduced_in:
+        - FEAT-01KPNNYYZRAEK/specification-doc-intel-knowledge-cross-queries#1
+    - name: document-pointers
+      aliases:
+        - section-pointers
+        - lightweight-document-references
+      introduced_in:
+        - FEAT-01KPNNYYZRAEK/specification-doc-intel-knowledge-cross-queries#1
+    - name: related-knowledge
+      aliases:
+        - related-knowledge-field
+        - entity-knowledge-match
+      introduced_in:
+        - FEAT-01KPNNYYZRAEK/specification-doc-intel-knowledge-cross-queries#1.1
+    - name: learned-from-matching
+      aliases:
+        - learned-from-field
+      introduced_in:
+        - FEAT-01KPNNYYZRAEK/specification-doc-intel-knowledge-cross-queries#1.3.1
+    - name: tag-based-matching
+      aliases:
+        - entity-type-prefix-match
+      introduced_in:
+        - FEAT-01KPNNYYZRAEK/specification-doc-intel-knowledge-cross-queries#1.3.1
+    - name: scope-to-document-matching
+      aliases:
+        - scope-entity-refs-match
+      introduced_in:
+        - FEAT-01KPNNYYZRAEK/specification-doc-intel-knowledge-cross-queries#1.3.1
+    - name: standalone-bug
+      aliases:
+        - unlinked-bug
+        - featureless-bug
+      introduced_in:
+        - FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1
+    - name: synthesise-project
+      aliases:
+        - synthesiseproject
+        - project-level-status
+      introduced_in:
+        - FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1
+    - name: origin-feature
+      aliases:
+        - origin-feature-linkage
+        - bug-feature-link
+      introduced_in:
+        - FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.1
+    - name: severity-threshold
+      aliases:
+        - high-critical-severity
+        - bug-severity-filter
+      introduced_in:
+        - FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.2.1
+    - name: resolved-status-skip-list
+      aliases:
+        - closed-statuses
+        - resolved-bug-statuses
+      introduced_in:
+        - FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility#1.2.1
+    - name: optional-github-pr-gate
+      aliases:
+        - pr-gate
+        - require-github-pr
+      introduced_in:
+        - FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1
+    - name: merge-config
+      aliases:
+        - mergeconfig
+        - .kbz/config.yaml-merge-section
+      introduced_in:
+        - FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1
+    - name: merge-gate
+      aliases:
+        - merge-gate-check
+        - merge-execute-gate
+      introduced_in:
+        - FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1
+    - name: two-track-pr-policy
+      aliases:
+        - pr-required-track
+        - pr-optional-track
+      introduced_in:
+        - FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.2.1
+    - name: pr-gate-failure
+      aliases:
+        - pr-gate-key
+        - blocking-pr-gate
+      introduced_in:
+        - FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr#1.2.1
+    - name: status-field-patch
+      aliases:
+        - patchstatusfield
+        - status-patching
+      introduced_in:
+        - FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1
+    - name: content-hash-resync
+      aliases:
+        - hash-resynchronisation
+        - post-patch-hash-refresh
+      introduced_in:
+        - FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1
+    - name: best-effort-patch
+      aliases:
+        - non-blocking-patch
+      introduced_in:
+        - FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1
+    - name: atomic-file-write
+      aliases:
+        - writefileatomic
+        - crash-safe-write
+        - temp-rename-atomic-write
+      introduced_in:
+        - FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.2.1
+        - FEAT-01KPQ08Y47522/specification-p25-write-file-tool#1
+    - name: pipe-table-status-format
+      aliases:
+        - markdown-table-status
+        - bullet-list-status
+        - bare-yaml-status
+      introduced_in:
+        - FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch#1.2.1
+    - name: ac-bold-identifier
+      aliases:
+        - bold-identifier-pattern
+        - list-item-bold-ident
+      introduced_in:
+        - FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1
+    - name: extract-conventional-roles
+      aliases:
+        - extractconventionalroles
+        - content-based-ac-detection
+      introduced_in:
+        - FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1
+    - name: verify-then-fix-test
+      aliases:
+        - red-green-test-pattern
+      introduced_in:
+        - FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1
+    - name: heading-based-role-assignment
+      aliases:
+        - conventional-role-extraction
+        - layer-2-classification
+      introduced_in:
+        - FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.1
+    - name: parse-spec-structure
+      aliases:
+        - parsespecstructure
+        - spec-criteria-parser
+      introduced_in:
+        - FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.1
+    - name: asm-extract-criteria
+      aliases:
+        - asmextractcriteria
+        - assembly-criteria-extraction
+      introduced_in:
+        - FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.1
+    - name: acboldidentlinere
+      aliases:
+        - ac-bold-ident-regex
+        - bold-identifier-regex
+      introduced_in:
+        - FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.4
+    - name: build-zero-criteria-diagnostic
+      aliases:
+        - buildzerocriteriadiagnostic
+        - zero-criteria-error-helper
+      introduced_in:
+        - FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose#1.4
+    - name: access-instrumentation
+      aliases:
+        - access-tracking
+        - usage-instrumentation
+      introduced_in:
+        - FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation#1
+    - name: recent-use-count
+      aliases:
+        - rolling-30-day-count
+        - access-counter
+      introduced_in:
+        - FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation#1
+    - name: document-index-access-count
+      aliases:
+        - documentindex.accesscount
+        - doc-level-counter
+      introduced_in:
+        - FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation#1
+    - name: lazy-counter-write
+      aliases:
+        - deferred-flush
+        - background-counter-flush
+      introduced_in:
+        - FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation#1.1
+    - name: approximate-counter
+      aliases:
+        - approximate-access-count
+        - best-effort-counter
+      introduced_in:
+        - FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation#1.1
+    - name: section-access-info
+      aliases:
+        - sectionaccessinfo
+        - per-section-access-data
+      introduced_in:
+        - FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation#1.3.1
+    - name: knowledge-record-fields
+      aliases:
+        - knowledgerecord.fields
+        - knowledge-entry-fields
+      introduced_in:
+        - FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation#1.3.1
+    - name: knowledge-base-instrumentation
+      aliases:
+        - knowledge-access-tracking
+      introduced_in:
+        - FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation#1.4.1
+    - name: sort-recent
+      aliases:
+        - sort-by-recent
+        - descending-recent-use-count
+      introduced_in:
+        - FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation#1.4.1
+    - name: document-intelligence-instrumentation
+      aliases:
+        - doc-intel-access-tracking
+        - intelligence-service-instrumentation
+      introduced_in:
+        - FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation#1.4.2
+    - name: audit-report-extension
+      aliases:
+        - most-accessed-documents
+        - audit-result-most-accessed
+      introduced_in:
+        - FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation#1.4.3
+    - name: epic-entity-removal
+      aliases:
+        - remove-epic
+        - epic-deprecation
+      introduced_in:
+        - FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1
+    - name: entity-kind
+      aliases:
+        - entitykind
+        - entity-type
+      introduced_in:
+        - FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1
+    - name: plan-entity
+      aliases:
+        - plan
+        - plan-replacement-for-epic
+      introduced_in:
+        - FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1.1
+    - name: entity-service-interface
+      aliases:
+        - entityservice
+        - createepic
+      introduced_in:
+        - FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1.3
+    - name: storage-field-ordering
+      aliases:
+        - recordfromentity
+        - epicfields
+      introduced_in:
+        - FEAT-01KN85HMQP2CX/specification-remove-epic-entity#1.3
+    - name: skill-file-documentation
+      aliases:
+        - skill.md
+        - task-execution-skill
+      introduced_in:
+        - FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs#1
+    - name: agent-workflow-gap
+      aliases:
+        - workflow-gap
+        - post-mortem-finding
+      introduced_in:
+        - FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs#1
+    - name: heredoc-file-write
+      aliases:
+        - heredoc
+        - cat-heredoc
+        - goeof
+      introduced_in:
+        - FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs#1.1
+    - name: decompose-manual-fallback
+      aliases:
+        - manual-entity-creation
+        - decompose-propose-failure
+        - empty-task-names
+        - structurally-uncorrectable-proposal
+      introduced_in:
+        - FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs#1.1
+        - FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs#1.3.5
+    - name: heredoc-delimiter-collision
+      aliases:
+        - goeof-delimiter
+        - delimiter-truncation
+      introduced_in:
+        - FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs#1.3.2
+    - name: entity-create-fallback
+      aliases:
+        - entity-action-create
+        - manual-task-creation
+      introduced_in:
+        - FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs#1.3.6
+    - name: per-task-sub-agent-sizing
+      aliases:
+        - one-sub-agent-per-task
+        - large-file-feature-dispatch
+      introduced_in:
+        - FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs#1.3.8
+    - name: anti-pattern-oversized-dispatch
+      aliases:
+        - over-sized-dispatch
+        - multiple-large-file-tasks-per-agent
+      introduced_in:
+        - FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs#1.3.10
+    - name: agentic-review-auto-advance
+      aliases:
+        - reviewing-stage-auto-advance
+        - opt-out-review-gate
+      introduced_in:
+        - FEAT-01KPQ08YE4399/specification-p25-agentic-review-auto-advance#1
+    - name: require-human-review-flag
+      aliases:
+        - require-human-review
+        - mergeconfig-flag
+      introduced_in:
+        - FEAT-01KPQ08YE4399/specification-p25-agentic-review-auto-advance#1
+    - name: advance-feature-status
+      aliases:
+        - advancefeaturestatus
+        - advance-stop-state
+      introduced_in:
+        - FEAT-01KPQ08YE4399/specification-p25-agentic-review-auto-advance#1.1
+    - name: task-verification-gate
+      aliases:
+        - checkalltaskshaveverification
+        - verification-prerequisite
+      introduced_in:
+        - FEAT-01KPQ08YE4399/specification-p25-agentic-review-auto-advance#1.1
+    - name: advance-config
+      aliases:
+        - advanceconfig
+        - requireshumanreview-func
+      introduced_in:
+        - FEAT-01KPQ08YE4399/specification-p25-agentic-review-auto-advance#1.3
+    - name: stop-state-conditional-logic
+      aliases:
+        - advancestopstates
+        - halt-state-branch
+      introduced_in:
+        - FEAT-01KPQ08YE4399/specification-p25-agentic-review-auto-advance#1.3
+    - name: task-verification-aggregation
+      aliases:
+        - aggregatetaskverification
+        - verification-propagation
+      introduced_in:
+        - FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification#1
+    - name: verification-merge-gate
+      aliases:
+        - verificationexistsgate
+        - verificationpassedgate
+        - verification-exists
+      introduced_in:
+        - FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification#1
+    - name: feature-verification-fields
+      aliases:
+        - verification
+        - verification-status
+        - feature-entity-verification
+      introduced_in:
+        - FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification#1.1
+    - name: finish-tool
+      aliases:
+        - finish()
+        - finishone
+        - completetask
+      introduced_in:
+        - FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification#1.1
+    - name: aggregation-trigger-condition
+      aliases:
+        - all-terminal-check
+        - last-task-completion
+      introduced_in:
+        - FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification#1.3.1
+    - name: batch-finish-aggregation
+      aliases:
+        - batch-mode-deferral
+        - finish-batch
+      introduced_in:
+        - FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification#1.3.2
+    - name: verification-summary-format
+      aliases:
+        - per-task-summary-line
+        - task-id:-verification-text
+      introduced_in:
+        - FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification#1.3.3
+    - name: verification-status-derivation
+      aliases:
+        - passed-partial-none
+        - verification-status-values
+      introduced_in:
+        - FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification#1.3.4
+    - name: best-effort-aggregation
+      aliases:
+        - non-blocking-aggregation
+        - write-failure-tolerance
+      introduced_in:
+        - FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification#1.3.7
+    - name: dispatch-service-method
+      aliases:
+        - dispatchservice
+        - aggregatetaskverification-method
+      introduced_in:
+        - FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification#1.3.11
+    - name: devplan-aware-decompose
+      aliases:
+        - dev-plan-aware-task-grouping
+        - decompose-propose-dev-plan
+      introduced_in:
+        - FEAT-01KPQ08YBJ5AK/specification-p25-decompose-devplan-aware#1
+    - name: task-breakdown-section
+      aliases:
+        - '##-task-breakdown'
+        - dev-plan-task-source
+      introduced_in:
+        - FEAT-01KPQ08YBJ5AK/specification-p25-decompose-devplan-aware#1
+    - name: ac-heuristic-fallback
+      aliases:
+        - acceptance-criteria-heuristic
+        - ac-based-grouping
+      introduced_in:
+        - FEAT-01KPQ08YBJ5AK/specification-p25-decompose-devplan-aware#1.1
+    - name: dev-plan-discovery
+      aliases:
+        - direct-dev-plan-reference
+        - owner-query-fallback
+      introduced_in:
+        - FEAT-01KPQ08YBJ5AK/specification-p25-decompose-devplan-aware#1.1
+    - name: proposed-task-struct
+      aliases:
+        - proposedtask
+        - name-slug-summary-rationale-covers-estimate-dependson
+      introduced_in:
+        - FEAT-01KPQ08YBJ5AK/specification-p25-decompose-devplan-aware#1.3
+    - name: dependency-resolution
+      aliases:
+        - task-n-reference
+        - slug-resolution
+        - dependson-mapping
+      introduced_in:
+        - FEAT-01KPQ08YBJ5AK/specification-p25-decompose-devplan-aware#1.3
+    - name: write-file-mcp-tool
+      aliases:
+        - write-file
+        - worktree-safe-file-writing
+      introduced_in:
+        - FEAT-01KPQ08Y47522/specification-p25-write-file-tool#1
+    - name: shell-quoting-failure
+      aliases:
+        - python3-c-quoting
+        - heredoc-workaround
+        - mcp-tool-as-replacement
+      introduced_in:
+        - FEAT-01KPQ08Y47522/specification-p25-write-file-tool#1.1
+    - name: worktree-path-resolution
+      aliases:
+        - entity-id-path-root
+        - worktree-directory-root
+      introduced_in:
+        - FEAT-01KPQ08Y47522/specification-p25-write-file-tool#1.1
+    - name: path-traversal-prevention
+      aliases:
+        - filepath.clean
+        - escaped-path-rejection
+      introduced_in:
+        - FEAT-01KPQ08Y47522/specification-p25-write-file-tool#1.2.1
+    - name: worktree-store-lookup
+      aliases:
+        - getbyentityid
+        - worktree.store
+      introduced_in:
+        - FEAT-01KPQ08Y47522/specification-p25-write-file-tool#1.2.1
+    - name: mcp-tool-registration
+      aliases:
+        - groupgit
+        - newserverwithconfig
+        - writefiletool-constructor
+      introduced_in:
+        - FEAT-01KPQ08Y47522/specification-p25-write-file-tool#1.3
+    - name: proposed-task-name-population
+      aliases:
+        - proposedtask-name-field
+        - empty-task-name-bug
+      introduced_in:
+        - FEAT-01KPQ08Y71A8V/specification-p25-fix-decompose-empty-names#1
+    - name: validate-name-constraint
+      aliases:
+        - validatename
+        - 60-char-limit
+        - no-colon-rule
+      introduced_in:
+        - FEAT-01KPQ08Y71A8V/specification-p25-fix-decompose-empty-names#1
+    - name: decompose-apply-validation-failure
+      aliases:
+        - createtask-validation
+        - name-must-not-be-empty
+      introduced_in:
+        - FEAT-01KPQ08Y71A8V/specification-p25-fix-decompose-empty-names#1.1
+    - name: derive-task-name-helper
+      aliases:
+        - derivetaskname
+        - positional-fallback
+      introduced_in:
+        - FEAT-01KPQ08Y71A8V/specification-p25-fix-decompose-empty-names#1.1
+    - name: ac-format-handling
+      aliases:
+        - checkbox-ac
+        - numbered-list-ac
+        - bold-identifier-ac
+        - ac-nn-format
+      introduced_in:
+        - FEAT-01KPQ08Y71A8V/specification-p25-fix-decompose-empty-names#1.3
+    - name: bold-identifier-prefix-strip
+      aliases:
+        - '[a-z]+-\d+:-prefix'
+        - colon-removal
+      introduced_in:
+        - FEAT-01KPQ08Y71A8V/specification-p25-fix-decompose-empty-names#1.3
+    - name: agent-instructions-consolidation
+      aliases:
+        - skill-consolidation
+        - instruction-file-migration
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1
+    - name: kbz-skills-system
+      aliases:
+        - .kbz/skills
+        - task-execution-skill
+        - skill.md
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1
+    - name: skill-migration
+      aliases:
+        - retire-overlapping-skill
+        - migrate-unique-content
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.1
+    - name: system-skill-upgrade
+      aliases:
+        - retained-system-skill
+        - structural-quality-upgrade
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.1
+    - name: claude-md-bootstrap
+      aliases:
+        - claude.md
+        - bootstrap-entry-point
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.1
+    - name: skill-retirement
+      aliases:
+        - delete-agents/skills-directory
+        - retire-kanbanzai-code-review
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.1
+    - name: review-edge-case-playbook
+      aliases:
+        - missing-specification-edge-case
+        - partial-implementation-edge-case
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.1.1
+    - name: human-checkpoint-trigger
+      aliases:
+        - checkpoint-ambiguous-findings
+        - high-stakes-checkpoint
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.1.4
+    - name: design-with-ambition-stance
+      aliases:
+        - design-with-ambition
+        - human-agent-role-contract
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.1.13
+    - name: write-design-skill
+      aliases:
+        - write-design
+        - kanbanzai-design-migration
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.1.13
+    - name: risk-escalation-tiers
+      aliases:
+        - minor-significant-security-risk-tier
+        - 3-tier-risk-model
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.1.14
+    - name: skill-structural-upgrade
+      aliases:
+        - vocabulary-section
+        - anti-pattern-structured-format
+        - evaluation-criteria
+        - retrieval-anchors
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.2
+    - name: skill-vocabulary-section
+      aliases:
+        - domain-specific-terms
+        - 15-year-practitioner-test
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.2.1
+    - name: detect-because-resolve-format
+      aliases:
+        - detect-because-resolve
+        - structured-anti-pattern
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.2.2
+    - name: store-commit-discipline
+      aliases:
+        - .kbz/state-commit
+        - versioned-project-state
+        - store-neglect
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.3
+    - name: store-neglect-anti-pattern
+      aliases:
+        - store-neglect
+        - parallel-agent-coordination-failure
+        - fm-2.2-fm-2.5
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.3.4
+    - name: agents-md-cleanup
+      aliases:
+        - agents.md-deduplication
+        - pre-task-checklist-cleanup
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.4
+    - name: claude-md-file
+      aliases:
+        - claude.md
+        - bootstrap-file
+        - claude-code-entry-point
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.4.9
+    - name: context-assembly-ordering
+      aliases:
+        - attention-curve-ordering
+        - assemble.go-ordering
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.5
+    - name: effort-budget-metadata
+      aliases:
+        - handoff-effort-budget
+        - stage-bindings-effort
+      introduced_in:
+        - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.5.2

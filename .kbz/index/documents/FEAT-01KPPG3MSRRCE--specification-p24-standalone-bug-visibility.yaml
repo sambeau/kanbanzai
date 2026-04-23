@@ -93,34 +93,68 @@ conventional_roles:
     - section_path: "1.4"
       role: requirement
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:57.42765Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:54:08.158645Z
 classified: true
-classified_at: 2026-04-22T17:34:55.927037Z
+classified_at: 2026-04-23T12:59:09.826428Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      summary: Specification for surfacing open standalone bugs (no origin_feature) as attention items in the project-level status tool output.
+      concepts_intro:
+        - name: standalone-bug
+          aliases:
+            - unlinked-bug
+            - featureless-bug
+        - name: attention-item
+          aliases:
+            - AttentionItem
+            - status-attention
+        - name: synthesise-project
+          aliases:
+            - synthesiseProject
+            - project-level-status
     - section_path: "1.1"
       role: rationale
       confidence: high
+      summary: P19 wired bug attention items only for feature-linked bugs; standalone bugs with no origin_feature are invisible in every status call. This spec closes the coverage gap.
+      concepts_intro:
+        - name: origin-feature
+          aliases:
+            - origin-feature-linkage
+            - bug-feature-link
     - section_path: "1.2"
       role: requirement
       confidence: high
     - section_path: 1.2.1
       role: requirement
       confidence: high
+      summary: '7 functional requirements: synthesiseProject appends AttentionItems for bugs that are standalone (no origin_feature), open (not done/closed/not-planned/duplicate/wont-fix), and high/critical severity; Type=open_critical_bug, Severity=warning, with formatted Message; block runs after generateProjectAttention and health-check; feature-linked bugs excluded; resolved/low/medium bugs excluded; standalone bugs only in synthesiseProject not plan/feature scope.'
+      concepts_intro:
+        - name: severity-threshold
+          aliases:
+            - high-critical-severity
+            - bug-severity-filter
+        - name: resolved-status-skip-list
+          aliases:
+            - closed-statuses
+            - resolved-bug-statuses
     - section_path: 1.2.2
       role: requirement
       confidence: high
+      summary: 'NFRs: bug listing error must not fail status call (best-effort); AttentionItem struct not modified; change is purely additive.'
     - section_path: "1.3"
       role: constraint
       confidence: high
+      summary: Resolved status skip list and severity threshold must match existing synthesiseFeature behaviour; type constant open_critical_bug reused; no changes to generateProjectAttention, generateFeatureAttention, or synthesisePlan.
     - section_path: "1.4"
       role: requirement
       confidence: high
+      summary: 12 acceptance criteria covering standalone high/critical bugs surfaced, message format with empty name fallback, feature-linked bugs excluded, resolved statuses excluded, medium/low excluded, ordering constraint, plan/feature scope exclusion, and bug-listing error resilience.
     - section_path: "1.5"
       role: narrative
       confidence: high
+      summary: 'Verification plan with 12 rows: unit tests for AC-001 through AC-012 plus inspection for AC-010/AC-011.'

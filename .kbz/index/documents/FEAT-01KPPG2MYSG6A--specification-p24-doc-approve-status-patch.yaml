@@ -96,37 +96,67 @@ conventional_roles:
     - section_path: "1.6"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:56.255815Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:54:07.632595Z
 classified: true
-classified_at: 2026-04-22T17:34:53.424274Z
+classified_at: 2026-04-23T13:00:16.822553Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      summary: Specification for patching the Status field in Markdown source files when doc approve is called, keeping file content consistent with the document record store.
+      concepts_intro:
+        - name: status-field-patch
+          aliases:
+            - PatchStatusField
+            - status-patching
+        - name: content-hash-resync
+          aliases:
+            - hash-resynchronisation
+            - post-patch-hash-refresh
+        - name: best-effort-patch
+          aliases:
+            - non-blocking-patch
     - section_path: "1.1"
       role: rationale
       confidence: high
+      summary: 'doc approve updates the record to approved but leaves the Markdown source showing Status: Draft, causing a visible inconsistency. Defines PatchStatusField and integration with ApproveDocument.'
     - section_path: "1.2"
       role: requirement
       confidence: high
     - section_path: 1.2.1
       role: requirement
       confidence: high
+      summary: '13 functional requirements: PatchStatusField reads and replaces first matching Status line in three formats (pipe-table, bullet-list, bare-YAML); returns (patched bool, err error); uses WriteFileAtomic; ApproveDocument calls it best-effort and re-syncs content hash on success.'
+      concepts_intro:
+        - name: atomic-file-write
+          aliases:
+            - WriteFileAtomic
+            - crash-safe-write
+        - name: pipe-table-status-format
+          aliases:
+            - markdown-table-status
+            - bullet-list-status
+            - bare-yaml-status
     - section_path: 1.2.2
       role: requirement
       confidence: high
+      summary: 'NFRs: patch is best-effort (approval never blocked), WriteFileAtomic mandatory, independently testable without service layer, applied in service layer not MCP handler.'
     - section_path: "1.3"
       role: constraint
       confidence: high
+      summary: 'Out of scope: adding Status to files without it, patching on supersession/refresh, normalising whitespace, stripping Status fields, special batch-approve handling.'
     - section_path: "1.4"
       role: requirement
       confidence: high
+      summary: 12 acceptance criteria covering all three format matches, case-insensitivity, no-field no-op, first-match-only, file-not-found error, full approve round-trip, patch failure approval success, no-field no-warning, hash-refresh failure approval success, and WriteFileAtomic usage.
     - section_path: "1.5"
       role: narrative
       confidence: high
+      summary: Verification plan table mapping each AC to specific unit and integration test names in fsutil and service packages.
     - section_path: "1.6"
       role: assumption
       confidence: high
+      summary: 'Dependencies: WriteFileAtomic in internal/fsutil/atomic.go, ComputeContentHash in internal/storage, DocumentToRecord in scope. Assumptions: regexp sufficient, UTF-8 encoding, first Status line is always metadata declaration.'

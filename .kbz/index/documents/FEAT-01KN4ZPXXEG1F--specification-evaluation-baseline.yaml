@@ -164,16 +164,26 @@ conventional_roles:
     - section_path: "1.9"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:14:42.451696Z
+access_count: 3
+last_accessed_at: 2026-04-23T12:57:03.198245Z
 classified: true
-classified_at: 2026-04-22T17:22:04.814715Z
+classified_at: 2026-04-23T12:57:33.409581Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: evaluation-baseline
+          aliases:
+            - evaluation scenario
+            - before-data
+            - workflow evaluation
+        - name: scenario-file
+          aliases:
+            - eval YAML
+            - scenario YAML
     - section_path: "1.1"
       role: rationale
       confidence: high
@@ -198,18 +208,37 @@ classifications:
     - section_path: 1.4.2
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: scenario-schema
+          aliases:
+            - starting_state
+            - expected_pattern
+            - success_criteria
     - section_path: 1.4.3
       role: requirement
       confidence: high
     - section_path: 1.4.4
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: scenario-category
+          aliases:
+            - happy path
+            - gate failure
+            - review-rework loop
+            - edge case
     - section_path: "1.5"
       role: requirement
       confidence: high
     - section_path: "1.6"
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: baseline-measurement
+          aliases:
+            - baseline record
+            - measurement record
+            - run record
     - section_path: "1.7"
       role: constraint
       confidence: high

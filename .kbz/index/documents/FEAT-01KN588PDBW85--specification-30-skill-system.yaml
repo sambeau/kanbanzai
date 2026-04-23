@@ -99,19 +99,41 @@ conventional_roles:
     - section_path: "1.5"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:14:54.638694Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:40.726247Z
 classified: true
-classified_at: 2026-04-22T17:19:00.363448Z
+classified_at: 2026-04-23T12:55:43.089139Z
 classified_by: claude-sonnet-4-6
-classifier_version: "20251101"
+classifier_version: "2025-07-30"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: skill-system
+          aliases:
+            - skill package
+            - SKILL.md
+        - name: skill-directory-layout
+          aliases:
+            - .kbz/skills
+            - skill directory structure
+        - name: frontmatter-schema
+          aliases:
+            - SKILL.md frontmatter
+            - YAML frontmatter
     - section_path: "1.1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: attention-curve-optimized-sequence
+          aliases:
+            - section ordering
+            - body section sequence
+        - name: constraint-level
+          aliases:
+            - constraint_level enum
+            - skill constraint level
     - section_path: "1.2"
       role: constraint
       confidence: high
@@ -124,6 +146,25 @@ classifications:
     - section_path: "1.3"
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: dual-register-description
+          aliases:
+            - expert description
+            - natural description
+            - description subfields
+        - name: evaluation-criteria-format
+          aliases:
+            - gradable questions
+            - weighted criteria
+            - LLM-as-judge
+        - name: reference-file-constraint
+          aliases:
+            - references/ subdirectory
+            - one-level-deep reference
+        - name: script-injection-convention
+          aliases:
+            - scripts/ subdirectory
+            - output-only context injection
     - section_path: "1.4"
       role: requirement
       confidence: high

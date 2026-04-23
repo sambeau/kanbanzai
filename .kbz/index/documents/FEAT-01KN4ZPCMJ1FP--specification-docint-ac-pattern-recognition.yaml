@@ -151,16 +151,25 @@ conventional_roles:
     - section_path: "1.6"
       role: requirement
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:14:41.228108Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:48.828418Z
 classified: true
-classified_at: 2026-04-22T17:20:38.870677Z
+classified_at: 2026-04-23T12:55:41.091782Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: bold-identifier-pattern
+          aliases:
+            - '**AC-NN.**'
+            - '**XX-NN.**'
+        - name: acceptance-criteria-extraction
+          aliases:
+            - asmExtractCriteria
+            - criteria extractor
     - section_path: "1.1"
       role: rationale
       confidence: high
@@ -176,6 +185,17 @@ classifications:
     - section_path: "1.3"
       role: assumption
       confidence: high
+      concepts_intro:
+        - name: rfc-2119-keywords
+          aliases:
+            - MUST
+            - SHOULD
+            - MAY
+            - RFC 2119
+        - name: section-role-classification
+          aliases:
+            - classifier role
+            - acceptance-criteria section
     - section_path: "1.4"
       role: requirement
       confidence: high
@@ -184,7 +204,12 @@ classifications:
       confidence: high
     - section_path: 1.4.2
       role: requirement
-      confidence: medium
+      confidence: high
+      concepts_intro:
+        - name: context-sensitive-extraction
+          aliases:
+            - context-sensitive rules
+            - role-gated extraction
     - section_path: 1.4.3
       role: requirement
       confidence: high

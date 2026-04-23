@@ -138,16 +138,27 @@ conventional_roles:
     - section_path: "1.4"
       role: requirement
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:46.307821Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:51.526332Z
 classified: true
-classified_at: 2026-04-22T17:33:07.599619Z
+classified_at: 2026-04-23T12:56:29.10648Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: lifecycle-integrity
+          aliases:
+            - premature closure
+            - stranded completion
+            - entity lifecycle consistency
+        - name: three-pillars
+          aliases:
+            - lifecycle gates
+            - auto-advance
+            - proactive status
     - section_path: "1.1"
       role: rationale
       confidence: high
@@ -160,12 +171,34 @@ classifications:
     - section_path: 1.2.1.1
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: lifecycle-gate
+          aliases:
+            - transition gate
+            - child-state gate
+            - blocking non-terminal tasks
     - section_path: 1.2.1.2
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: auto-advance
+          aliases:
+            - feature auto-advance
+            - plan auto-advance
+            - automatic transition
     - section_path: 1.2.1.3
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: attention-item
+          aliases:
+            - AttentionItem
+            - structured attention
+            - proactive status
+        - name: stale-reviewing-detection
+          aliases:
+            - stale_reviewing_days
+            - reviewing threshold
     - section_path: 1.2.2
       role: requirement
       confidence: high

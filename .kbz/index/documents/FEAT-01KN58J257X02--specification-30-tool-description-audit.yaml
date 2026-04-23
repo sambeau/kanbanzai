@@ -157,55 +157,102 @@ conventional_roles:
     - section_path: 1.6.2
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:15:04.258504Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:51.099837Z
 classified: true
-classified_at: 2026-04-22T17:20:16.962165Z
+classified_at: 2026-04-23T12:57:02.732715Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      summary: Root document node for MCP tool description audit specification.
     - section_path: "1.1"
       role: narrative
       confidence: high
+      summary: 'Overview: audit and rewrite all MCP tool descriptions to follow ACI principles and all non-gate error messages to follow three-part actionable error template; goal is first-attempt correct tool selection and error recovery without retry loops.'
+      concepts_intro:
+        - name: aci-description-principles
+          aliases:
+            - agent-computer interface design
+            - ACI principles
+            - tool description design
+        - name: actionable-error-template
+          aliases:
+            - three-part error template
+            - what-why-what-next error format
+        - name: agent-driven-testing
+          aliases:
+            - description testing
+            - tool selection testing
+            - agent scenario testing
     - section_path: "1.2"
       role: constraint
       confidence: high
     - section_path: 1.2.1
       role: constraint
       confidence: high
+      summary: 'In scope: rewriting WithDescription strings, parameter descriptions where ambiguous, non-gate error messages, agent-driven test scenarios, prioritised audit order, token-budget compliance.'
     - section_path: 1.2.2
       role: constraint
       confidence: high
+      summary: 'Exclusions: gate-failure error messages (mandatory-stage-gates), tool logic changes, hard tool filtering, new tools or parameters, skill content.'
     - section_path: "1.3"
       role: requirement
       confidence: high
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      summary: 'FR-001 through FR-005: ACI description principles — when-to-use first sentence, negative guidance, workflow position sequencing, parameter relationships, 200-token budget per tool.'
+      concepts_intro:
+        - name: when-to-use-first-sentence
+          aliases:
+            - tool description opener
+            - use-when framing
+        - name: negative-guidance
+          aliases:
+            - do-not-use guidance
+            - use-instead framing
+            - anti-pattern guidance
+        - name: workflow-position-sequencing
+          aliases:
+            - call-after/call-before
+            - tool ordering
+            - sequence language
+        - name: token-budget-compliance
+          aliases:
+            - 200-token limit
+            - cl100k_base tokeniser
+            - description token budget
     - section_path: 1.3.2
       role: constraint
       confidence: high
+      summary: 'FR-006 through FR-007: full tool surface (22 tools) must be audited; priority order: P1 high-frequency, P2 decision-point, P3 query and support.'
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      summary: 'FR-008 through FR-010: three-part actionable error template for all non-gate errors in all tool handlers; covers finish, doc, decompose, entity(create) as priority targets, then all remaining handlers.'
     - section_path: 1.3.4
       role: requirement
       confidence: high
+      summary: 'FR-011 through FR-014: agent-driven test scenarios (5–10), covering five representative workflow patterns; testing per priority tier before tier is considered complete; results recorded with scenario ID, observed sequence, pass/fail, description changes.'
     - section_path: "1.4"
       role: requirement
       confidence: high
+      summary: Non-functional requirements for description correctness, idempotency of rewrite, token verification tooling.
     - section_path: "1.5"
       role: requirement
       confidence: high
+      summary: Acceptance criteria table consolidating verification approach for all FRs.
     - section_path: "1.6"
       role: assumption
       confidence: high
     - section_path: 1.6.1
       role: assumption
       confidence: high
+      summary: 'Dependencies: MCP server tool registration, existing error return sites, tokenisation library.'
     - section_path: 1.6.2
       role: assumption
       confidence: high
+      summary: 'Assumptions: agent-driven testing uses a real LLM session; description rewrites are the only change; existing gate-failure messages remain unchanged.'

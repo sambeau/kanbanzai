@@ -215,11 +215,11 @@ conventional_roles:
     - section_path: "1.6"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:58.040191Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:19:49.097321Z
 classified: true
-classified_at: 2026-04-22T17:35:00.755816Z
-classified_by: claude-sonnet-4-6
+classified_at: 2026-04-23T12:25:36.679537Z
+classified_by: claude-sonnet-4-5
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
@@ -228,6 +228,19 @@ classifications:
     - section_path: "1.1"
       role: rationale
       confidence: high
+      concepts_intro:
+        - name: never stash rule
+          aliases:
+            - git stash prohibition
+            - no stash discipline
+        - name: workflow hygiene
+          aliases:
+            - agent workflow discipline
+            - session hygiene
+        - name: commit workflow state
+          aliases:
+            - orphaned state files commit
+            - kbz state commit
     - section_path: "1.2"
       role: requirement
       confidence: high
@@ -237,18 +250,44 @@ classifications:
     - section_path: 1.2.1.1
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: worktree switch data loss
+          aliases:
+            - stash data loss on worktree switch
+            - cross-worktree state loss
     - section_path: 1.2.1.2
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: orphaned workflow state file
+          aliases:
+            - orphaned kbz state
+            - uncommitted state file
     - section_path: 1.2.1.3
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: worktree file editing
+          aliases:
+            - edit_file worktree limitation
+            - python3 -c worktree pattern
     - section_path: 1.2.1.4
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: shell-querying anti-pattern
+          aliases:
+            - direct state file access
+            - cat kbz state anti-pattern
     - section_path: 1.2.1.5
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: intermittent test failure
+          aliases:
+            - flaky test
+            - unreported flaky test
+            - BUG entity for intermittent failure
     - section_path: 1.2.2
       role: requirement
       confidence: high

@@ -268,97 +268,158 @@ conventional_roles:
     - section_path: 1.6.2
       role: assumption
       confidence: high
-access_count: 2
-last_accessed_at: 2026-04-23T11:39:40.07656Z
+access_count: 3
+last_accessed_at: 2026-04-23T12:53:49.756755Z
 classified: true
-classified_at: 2026-04-22T17:20:27.793969Z
+classified_at: 2026-04-23T12:56:02.476006Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      summary: Root document node for stage-aware context assembly specification.
     - section_path: "1.1"
       role: narrative
       confidence: high
+      summary: Overview of stage-aware context assembly — lifecycle-conscious handoff and next tools, orchestration signals, effort budgets, tool subset guidance, and filesystem-output convention.
+      concepts_intro:
+        - name: stage-aware-context-assembly
+          aliases:
+            - lifecycle-conscious assembly
+            - stage-specific assembly
+        - name: orchestration-pattern-signalling
+          aliases:
+            - single-agent signal
+            - orchestrator-workers signal
+        - name: effort-budget
+          aliases:
+            - effort expectations
+            - tool-call budget
+        - name: filesystem-output-convention
+          aliases:
+            - output convention
+            - sub-agent output convention
     - section_path: "1.2"
       role: constraint
       confidence: high
     - section_path: 1.2.1
       role: constraint
       confidence: high
+      summary: 'In-scope items: lifecycle validation, stage-specific content strategy, orchestration signals, effort budgets, tool subset guidance, filesystem-output convention, hardcoded stage config, finish summary limit.'
     - section_path: 1.2.2
       role: constraint
       confidence: high
+      summary: 'Exclusions: hard tool filtering, binding registry reading, role/skill content, gate enforcement, assembly pipeline mechanics.'
     - section_path: "1.3"
       role: requirement
       confidence: high
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      summary: 'FR-001: handoff must validate parent feature lifecycle state before assembling context.'
+      concepts_intro:
+        - name: lifecycle-state-validation
+          aliases:
+            - feature state validation
+            - pre-assembly validation
     - section_path: 1.3.2
       role: requirement
       confidence: high
+      summary: 'FR-002: next tool in claim mode performs same lifecycle state validation as handoff; task must not be transitioned to active on failure.'
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      summary: 'FR-003: hardcoded mapping from task context to allowed parent feature states; simplified heuristic for 3.0 rejects terminal and pre-work states.'
+      concepts_intro:
+        - name: stage-to-allowed-states-mapping
+          aliases:
+            - lifecycle state allowlist
+            - terminal state rejection
     - section_path: 1.3.4
       role: requirement
       confidence: high
+      summary: 'FR-004: actionable error messages for validation failures — three-part template: what failed, why, what to do next.'
     - section_path: 1.3.5
       role: requirement
       confidence: high
+      summary: 'FR-005: assembly pipeline varies included/excluded content by lifecycle stage using a defined inclusion/exclusion table.'
+      concepts_intro:
+        - name: stage-specific-assembly-strategy
+          aliases:
+            - content inclusion/exclusion table
+            - stage content matrix
+        - name: tool-subset-guidance
+          aliases:
+            - soft tool filtering
+            - stage tool list
     - section_path: 1.3.6
       role: requirement
       confidence: high
+      summary: 'FR-006: orchestration pattern text (single-agent vs orchestrator-workers) embedded in high-attention zone of assembled context.'
     - section_path: 1.3.7
       role: requirement
       confidence: high
+      summary: 'FR-007: effort budget section in high-attention zone with hardcoded per-stage values and do-not-skip warning.'
     - section_path: 1.3.8
       role: requirement
       confidence: high
+      summary: 'FR-008: tools-for-this-task section with primary and excluded tool lists; advisory only, not a hard filter.'
     - section_path: 1.3.9
       role: requirement
       confidence: high
+      summary: 'FR-009: filesystem-output convention section included only for orchestrator-workers stages.'
     - section_path: 1.3.10
       role: requirement
       confidence: high
+      summary: 'FR-010: finish tool enforces 500-character limit on summary field with actionable error on breach.'
     - section_path: 1.3.11
       role: requirement
       confidence: high
+      summary: 'FR-011: all stage configuration co-located in a single Go source file as hardcoded constants for future binding registry replacement.'
     - section_path: 1.3.12
       role: requirement
       confidence: high
+      summary: 'FR-012: handoff prompt rendering includes stage-aware sections in specified order in the high-attention zone.'
     - section_path: 1.3.13
       role: requirement
       confidence: high
+      summary: 'FR-013: next tool claim-mode structured response includes new stage-aware fields (orchestration_pattern, effort_budget, tool_subset, output_convention, feature_stage).'
     - section_path: 1.3.14
       role: requirement
       confidence: high
+      summary: 'FR-014: graceful degradation when parent feature is missing — falls back to non-stage-aware assembly with stage_aware: false metadata.'
     - section_path: "1.4"
       role: requirement
       confidence: high
     - section_path: 1.4.1
       role: requirement
       confidence: high
+      summary: 'NFR-001: stage-aware logic must not increase handoff/next latency by more than 50ms p95.'
     - section_path: 1.4.2
       role: requirement
       confidence: high
+      summary: 'NFR-002: no changes to existing tool call signatures; backward compatible.'
     - section_path: 1.4.3
       role: requirement
       confidence: high
+      summary: 'NFR-003: hardcoded data structure shape must match binding registry schema for future drop-in replacement.'
     - section_path: 1.4.4
       role: requirement
       confidence: high
+      summary: 'NFR-004: each stage-aware behaviour must be independently unit-testable.'
     - section_path: "1.5"
       role: requirement
       confidence: high
+      summary: Consolidated verification table mapping each FR/NFR to its verification method.
     - section_path: "1.6"
       role: assumption
       confidence: high
     - section_path: 1.6.1
       role: assumption
       confidence: high
+      summary: 'Dependencies: feature lifecycle model, existing assembly pipeline integration points, entity service API.'
     - section_path: 1.6.2
       role: assumption
       confidence: high
+      summary: 'Assumptions: binding registry will replace hardcoded config; context assembly pipeline feature defines mechanics; actionable error template is project-wide; tool subset guidance is advisory for 3.0.'

@@ -89,19 +89,46 @@ conventional_roles:
     - section_path: "1.5"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:14:53.683961Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:41.743062Z
 classified: true
-classified_at: 2026-04-22T17:18:55.547244Z
+classified_at: 2026-04-23T12:55:57.739611Z
 classified_by: claude-sonnet-4-6
-classifier_version: "20251101"
+classifier_version: "2025-07-30"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: role-system
+          aliases:
+            - agent role
+            - role file
+            - YAML role schema
+        - name: role-inheritance
+          aliases:
+            - inherits field
+            - role chain
+            - inheritance resolution
+        - name: vocabulary-payload
+          aliases:
+            - vocabulary field
+            - domain vocabulary
+            - knowledge activation
     - section_path: "1.1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: anti-pattern-definition
+          aliases:
+            - anti_patterns field
+            - detect-because-resolve
+            - anti-pattern object
+        - name: mcp-tool-subset-declaration
+          aliases:
+            - tools field
+            - role tool list
+            - MCP tool declaration
     - section_path: "1.2"
       role: constraint
       confidence: high
@@ -114,6 +141,22 @@ classifications:
     - section_path: "1.3"
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: cycle-detection
+          aliases:
+            - circular inheritance
+            - inheritance cycle
+            - cycle rejection
+        - name: field-merge-semantics
+          aliases:
+            - vocabulary concatenation
+            - tools union
+            - identity non-inheritance
+        - name: strict-yaml-parsing
+          aliases:
+            - KnownFields
+            - unknown field rejection
+            - forward compatibility
     - section_path: "1.4"
       role: requirement
       confidence: high

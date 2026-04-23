@@ -99,37 +99,82 @@ conventional_roles:
     - section_path: "1.6"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:43.622614Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:51.915784Z
 classified: true
-classified_at: 2026-04-22T17:32:31.04304Z
+classified_at: 2026-04-23T12:57:39.436718Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      summary: Root document node for decomposition quality validation specification.
     - section_path: "1.1"
       role: narrative
       confidence: high
+      summary: 'Overview: five structural validation checks in decompose(action: review); errors block apply, warnings surface to orchestrator; deterministic heuristics; additive to existing review checks.'
+      concepts_intro:
+        - name: decomposition-quality-validation
+          aliases:
+            - structural validation checks
+            - decompose review checks
+            - proposal validation
+        - name: error-vs-warning-severity
+          aliases:
+            - blocking finding
+            - non-blocking finding
+            - severity classification
+        - name: propose-review-apply-pipeline
+          aliases:
+            - decompose pipeline
+            - proposal pipeline
+            - apply gate
     - section_path: "1.2"
       role: constraint
       confidence: high
     - section_path: 1.2.1
       role: constraint
       confidence: high
+      summary: 'In scope: five new structural checks in decompose review, error/warning severity, blocking on error, warning surfacing, deterministic heuristics, severity field in review output.'
     - section_path: 1.2.2
       role: constraint
       confidence: high
+      summary: 'Exclusions: propose/apply/slice action changes, LLM-based quality assessment, gap analysis (existing), semantic analysis beyond pattern-matching, Proposal/ProposedTask input struct changes.'
     - section_path: "1.3"
       role: requirement
       confidence: high
+      summary: 'FR-001 through FR-009: five checks (description-present/error, dependencies-declared/warning, single-agent-sizing/warning, testing-coverage/warning, no-orphan-tasks/warning); severity field on all findings; existing types mapped to error or warning; combined status logic (fail/warn/pass); additive — existing checks unchanged.'
+      concepts_intro:
+        - name: description-present-check
+          aliases:
+            - empty-description finding
+            - summary presence check
+        - name: dependencies-declared-check
+          aliases:
+            - undeclared-dependency finding
+            - slug cross-reference check
+        - name: single-agent-sizing-check
+          aliases:
+            - multi-agent-sizing finding
+            - action-verb coordinating-separator heuristic
+        - name: testing-coverage-check
+          aliases:
+            - missing-test-coverage finding
+            - testing keyword check
+        - name: orphan-task-check
+          aliases:
+            - orphan-task finding
+            - disconnected dependency graph node
     - section_path: "1.4"
       role: requirement
       confidence: high
+      summary: 'Non-functional requirements: deterministic output, no performance regression on review, check independence.'
     - section_path: "1.5"
       role: requirement
       confidence: high
+      summary: Acceptance criteria table for all FRs including edge cases for each heuristic.
     - section_path: "1.6"
       role: assumption
       confidence: high
+      summary: 'Dependencies and assumptions: decompose tool review action integration point, existing GapAnalysis and cycle detection logic, Proposal struct fields.'

@@ -202,52 +202,101 @@ conventional_roles:
     - section_path: "1.7"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:48.021866Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:54:03.017072Z
 classified: true
-classified_at: 2026-04-22T17:33:26.926577Z
+classified_at: 2026-04-23T12:57:08.005329Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      summary: Specification for the Kanbanzai User Guide hub document, covering orientation content and cross-references to all public documentation.
+      concepts_intro:
+        - name: user-guide
+          aliases:
+            - hub-document
+        - name: public-documentation-set
+          aliases:
+            - documentation-collection
+        - name: editorial-pipeline
+          aliases:
+            - five-stage-pipeline
+            - write-edit-check-style-copyedit
     - section_path: "1.1"
       role: narrative
       confidence: high
+      summary: Defines the User Guide as the hub document providing high-level orientation to Kanbanzai, linking to all other documents without duplicating content.
+      concepts_intro:
+        - name: documentation-hub
+          aliases:
+            - orientation-document
+        - name: production-order
+          aliases:
+            - document-production-sequence
     - section_path: "1.2"
       role: constraint
       confidence: high
     - section_path: 1.2.1
       role: constraint
       confidence: high
+      summary: Single Markdown file at docs/user-guide.md covering every major subsystem at orientation depth with cross-references and editorial pipeline processing.
     - section_path: 1.2.2
       role: constraint
       confidence: high
+      summary: Excludes installation, setup, tutorials, detailed workflow methodology, tool parameters, agent-facing instructions, and diagrams beyond Write stage.
     - section_path: "1.3"
       role: requirement
       confidence: high
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      summary: '13 functional requirements defining mandatory sections: system overview, collaboration model, stage-gate workflow, document types, approvals, bugs, orchestration, knowledge, retrospectives, concurrency, MCP server, state/storage, and where-to-go-next.'
+      concepts_intro:
+        - name: collaboration-model
+          aliases:
+            - human-agent-collaboration
+        - name: stage-gate-workflow
+          aliases:
+            - lifecycle-stages
+            - feature-lifecycle
+        - name: knowledge-system
+          aliases:
+            - knowledge-entries
+            - knowledge-base
+        - name: mcp-server
+          aliases:
+            - model-context-protocol-server
     - section_path: 1.3.2
       role: requirement
       confidence: high
+      summary: 'Structural requirements: inverted pyramid structure, purpose/audience opening, and descriptive section headings.'
+      concepts_intro:
+        - name: inverted-pyramid
+          aliases:
+            - inverted-pyramid-structure
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      summary: 'Cross-reference requirements: links to every named document in the public set, using planned file paths for not-yet-produced documents.'
     - section_path: 1.3.4
       role: constraint
       confidence: high
+      summary: 'Exclusion requirements: no installation instructions, no detailed workflow stage descriptions, no tool parameter tables, no agent-facing instructions.'
     - section_path: "1.4"
       role: requirement
       confidence: high
+      summary: Non-functional requirements covering target audience, plain prose style, scannability, editorial pipeline compliance, factual accuracy, AI-artifact freedom, and reading time.
     - section_path: "1.5"
       role: requirement
       confidence: high
+      summary: 20 acceptance criteria mapped to functional and non-functional requirements, covering all mandatory sections, structure, cross-references, editorial pipeline stages, and prohibited content.
     - section_path: "1.6"
       role: narrative
       confidence: high
+      summary: Verification plan table mapping each AC to an inspection or automated method.
     - section_path: "1.7"
       role: assumption
       confidence: high
+      summary: Dependencies on approved design doc, editorial pipeline infrastructure, styleguides, stable implementation, and assumption that linked documents need not exist at production time.

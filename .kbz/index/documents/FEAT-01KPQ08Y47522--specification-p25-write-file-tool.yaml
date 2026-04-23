@@ -98,31 +98,65 @@ conventional_roles:
     - section_path: "1.6"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:59.599238Z
+access_count: 2
+last_accessed_at: 2026-04-23T13:03:55.41026Z
 classified: true
-classified_at: 2026-04-22T17:35:07.513781Z
-classified_by: claude-sonnet-4-6
+classified_at: 2026-04-23T13:05:22.944363Z
+classified_by: claude-sonnet-4-5
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: write-file-mcp-tool
+          aliases:
+            - write_file
+            - worktree-safe file writing
+        - name: atomic-file-write
+          aliases:
+            - WriteFileAtomic
+            - temp-rename atomic write
     - section_path: "1.1"
       role: rationale
       confidence: high
+      concepts_intro:
+        - name: shell-quoting-failure
+          aliases:
+            - python3 -c quoting
+            - heredoc workaround
+            - MCP tool as replacement
+        - name: worktree-path-resolution
+          aliases:
+            - entity_id path root
+            - worktree directory root
     - section_path: "1.2"
       role: constraint
       confidence: high
     - section_path: 1.2.1
       role: constraint
       confidence: high
+      concepts_intro:
+        - name: path-traversal-prevention
+          aliases:
+            - filepath.Clean
+            - escaped path rejection
+        - name: worktree-store-lookup
+          aliases:
+            - GetByEntityID
+            - worktree.Store
     - section_path: 1.2.2
       role: constraint
       confidence: high
     - section_path: "1.3"
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: mcp-tool-registration
+          aliases:
+            - GroupGit
+            - newServerWithConfig
+            - WriteFileTool constructor
     - section_path: "1.4"
       role: requirement
       confidence: high

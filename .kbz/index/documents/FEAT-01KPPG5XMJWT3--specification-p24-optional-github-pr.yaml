@@ -105,34 +105,63 @@ conventional_roles:
     - section_path: "1.4"
       role: requirement
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:58.74805Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:54:08.869397Z
 classified: true
-classified_at: 2026-04-22T17:35:03.424674Z
+classified_at: 2026-04-23T12:59:24.185421Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      summary: Specification for an optional GitHub PR gate in the Kanbanzai merge workflow, controlled by require_github_pr in MergeConfig.
+      concepts_intro:
+        - name: optional-github-pr-gate
+          aliases:
+            - pr-gate
+            - require-github-pr
+        - name: merge-config
+          aliases:
+            - MergeConfig
+            - .kbz/config.yaml-merge-section
+        - name: merge-gate
+          aliases:
+            - merge-gate-check
+            - merge-execute-gate
     - section_path: "1.1"
       role: rationale
       confidence: high
+      summary: Adds require_github_pr field so projects can enforce PR existence before merge; default false preserves AI-agent-only workflow; true makes merge fail without an open PR.
     - section_path: "1.2"
       role: requirement
       confidence: high
     - section_path: 1.2.1
       role: requirement
       confidence: high
+      summary: '8 functional requirements: RequireGitHubPR *bool field with omitempty YAML tag; RequiresGitHubPR() helper; merge check non-blocking when false/nil; blocking pr_gate failure when true and no open PR; blocking when PR not open; execute blocked consistently; two skill files updated with two-track PR policy.'
+      concepts_intro:
+        - name: two-track-pr-policy
+          aliases:
+            - pr-required-track
+            - pr-optional-track
+        - name: pr-gate-failure
+          aliases:
+            - pr_gate-key
+            - blocking-pr-gate
     - section_path: 1.2.2
       role: requirement
       confidence: high
+      summary: 'NFRs: missing field treated as false (no behaviour change for existing projects); field in config.yaml not local.yaml; no new MCP tool parameters.'
     - section_path: "1.3"
       role: constraint
       confidence: high
+      summary: pr tool and GitHub API unchanged; no new Go dependencies; *bool pointer pattern follows existing PostMergeInstall; require_github_pr is project-level committed policy.
     - section_path: "1.4"
       role: requirement
       confidence: high
+      summary: 11 acceptance criteria covering YAML unmarshal, RequiresGitHubPR helper, merge check pass when nil, pr_gate failures when true and no/non-open PR, execute blocked, no regression for existing configs, skill file two-track note readable by agents.
     - section_path: "1.5"
       role: narrative
       confidence: high
+      summary: 'Verification plan: YAML unmarshal tests, unit tests for helper method, integration tests for gate behaviour, regression test, inspection of updated skill files.'

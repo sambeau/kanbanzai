@@ -310,11 +310,11 @@ conventional_roles:
     - section_path: 1.6.2
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:30:05.168457Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:19:47.617842Z
 classified: true
-classified_at: 2026-04-22T17:35:37.512246Z
-classified_by: claude-sonnet-4-6
+classified_at: 2026-04-23T12:24:49.300742Z
+classified_by: claude-sonnet-4-5
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
@@ -323,6 +323,19 @@ classifications:
     - section_path: "1.1"
       role: rationale
       confidence: high
+      concepts_intro:
+        - name: handoff mandate
+          aliases:
+            - always use handoff
+            - handoff(task_id) rule
+        - name: manual prompt composition anti-pattern
+          aliases:
+            - manual composition
+            - hand-crafted sub-agent prompt
+        - name: dual-write rule
+          aliases:
+            - embedded skill dual-write
+            - kbzinit dual-write
     - section_path: "1.2"
       role: constraint
       confidence: high
@@ -338,20 +351,30 @@ classifications:
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: graph project context
+          aliases:
+            - codebase-memory-mcp graph project
+            - graph project name in handoff
     - section_path: 1.3.2
       role: requirement
       confidence: high
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: embedded skill files
+          aliases:
+            - kbzinit embedded skills
+            - internal/kbzinit/skills
     - section_path: 1.3.4
       role: requirement
       confidence: high
     - section_path: 1.3.5
-      role: requirement
+      role: constraint
       confidence: high
     - section_path: 1.3.6
-      role: constraint
+      role: requirement
       confidence: high
     - section_path: 1.3.7
       role: requirement

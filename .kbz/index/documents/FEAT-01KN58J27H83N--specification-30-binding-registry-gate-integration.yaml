@@ -143,52 +143,105 @@ conventional_roles:
     - section_path: "1.6"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:44.981636Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:51.602361Z
 classified: true
-classified_at: 2026-04-22T17:32:46.320405Z
+classified_at: 2026-04-23T12:57:26.28938Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      summary: Root document node for binding registry gate integration specification.
     - section_path: "1.1"
       role: narrative
       confidence: high
+      summary: 'Overview: replaces hardcoded gate prerequisites with binding-registry-driven lookup; mtime-based cache; fallback to hardcoded gates; override_policy (agent vs checkpoint) sourced from registry.'
+      concepts_intro:
+        - name: registry-driven-gate-lookup
+          aliases:
+            - binding registry prerequisite lookup
+            - registry gate source
+            - stage-bindings prerequisites
+        - name: mtime-based-cache-invalidation
+          aliases:
+            - file mtime cache
+            - hot-reload
+            - binding registry cache
+        - name: override-policy
+          aliases:
+            - agent override policy
+            - checkpoint override policy
+            - gate override type
+        - name: hardcoded-gate-fallback
+          aliases:
+            - prereq.go fallback
+            - fallback gate definitions
     - section_path: "1.2"
       role: constraint
       confidence: high
     - section_path: 1.2.1
       role: constraint
       confidence: high
+      summary: 'In scope: reading prerequisites from registry, prerequisite evaluator, mtime cache, override_policy sourcing, checkpoint override policy, fallback, coexistence, source logging.'
     - section_path: 1.2.2
       role: constraint
       confidence: high
+      summary: 'Exclusions: registry schema definition, registry content changes, hardcoded gate logic, context assembly registry reading, action pattern logging for override analysis.'
     - section_path: "1.3"
       role: requirement
       confidence: high
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      summary: 'FR-001 through FR-004: registry-driven prerequisite lookup — documents prerequisite type (type + status), tasks prerequisite type (min_count or all_terminal), extensible evaluator with type-key dispatch, unknown type causes gate failure.'
+      concepts_intro:
+        - name: documents-prerequisite-type
+          aliases:
+            - document gate prerequisite
+            - type+status document check
+        - name: tasks-prerequisite-type
+          aliases:
+            - task gate prerequisite
+            - min_count prerequisite
+            - all_terminal prerequisite
+        - name: prerequisite-evaluator
+          aliases:
+            - gate evaluator
+            - evaluator dispatch
+            - prerequisite framework
     - section_path: 1.3.2
       role: requirement
       confidence: high
+      summary: 'FR-005 through FR-007: cache read at startup, mtime stat on each gate-consulting call, re-read on mtime change, concurrent-access safe (no data races under Go race detector).'
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      summary: 'FR-008 through FR-009: fallback to hardcoded prereq.go definitions when registry absent/malformed/missing stage entry; gate result includes source indicator (registry vs hardcoded); health tool can report migration progress.'
     - section_path: 1.3.4
       role: requirement
       confidence: high
+      summary: 'FR-010 through FR-014: override_policy from registry (agent or checkpoint); agent policy allows immediate transition + override logged; checkpoint policy creates pending checkpoint, blocks feature until human responds; advance halts at checkpoint-policy gate.'
+      concepts_intro:
+        - name: checkpoint-override-flow
+          aliases:
+            - checkpoint-gated override
+            - pending checkpoint gate
+            - human-approval gate
     - section_path: 1.3.5
       role: requirement
       confidence: high
+      summary: 'FR-015 through FR-016: registry evaluation invoked at same point as current CheckFeatureGate; same path for single-step and advance mode; error messages do not expose gate source (registry vs hardcoded).'
     - section_path: "1.4"
       role: requirement
       confidence: high
+      summary: Non-functional requirements for cache performance, correctness of fallback, race safety, and health reporting accuracy.
     - section_path: "1.5"
       role: requirement
       confidence: high
+      summary: Acceptance criteria table covering all FRs with verification methods.
     - section_path: "1.6"
       role: assumption
       confidence: high
+      summary: 'Dependencies and assumptions: binding registry schema feature, hardcoded prereq.go as fallback, mandatory-stage-gates feature for gate enforcement mechanics, checkpoint store API.'

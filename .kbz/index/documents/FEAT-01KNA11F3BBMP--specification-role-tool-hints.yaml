@@ -145,16 +145,26 @@ conventional_roles:
     - section_path: "1.5"
       role: requirement
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T17:29:47.270911Z
+access_count: 2
+last_accessed_at: 2026-04-23T12:53:52.116261Z
 classified: true
-classified_at: 2026-04-22T17:33:15.660287Z
+classified_at: 2026-04-23T12:56:37.3435Z
 classified_by: claude-sonnet-4-6
 classifier_version: "20251101"
 classifications:
     - section_path: "1"
       role: narrative
       confidence: high
+      concepts_intro:
+        - name: role-scoped-tool-hints
+          aliases:
+            - tool_hints
+            - tool hint injection
+        - name: per-machine-config
+          aliases:
+            - local.yaml
+            - config.yaml
+            - local override
     - section_path: "1.1"
       role: narrative
       confidence: high
@@ -167,15 +177,35 @@ classifications:
     - section_path: 1.3.1
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: hint-config-parsing
+          aliases:
+            - tool_hints field
+            - opaque string hints
     - section_path: 1.3.2
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: hint-merge-strategy
+          aliases:
+            - per-key merge
+            - local overrides project
     - section_path: 1.3.3
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: role-inheritance-resolution
+          aliases:
+            - inherits chain
+            - ancestor hint lookup
     - section_path: 1.3.4
       role: requirement
       confidence: high
+      concepts_intro:
+        - name: handoff-hint-injection
+          aliases:
+            - '## Available Tools section'
+            - 3.0 pipeline injection
     - section_path: 1.3.5
       role: requirement
       confidence: high
