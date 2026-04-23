@@ -2,9 +2,11 @@ id: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichme
 path: work/reports/review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment.md
 type: report
 title: "Review Report: Doc-Intel Guide Enrichment"
-status: draft
+status: approved
 owner: FEAT-01KPVDDYQQS1Y
+approved_by: sambeau
+approved_at: "2026-04-23T04:00:19Z"
 content_hash: 2d5dc7629425ddc7e06443cf2146b0a2dbf7ab170ca763c1e5b76c7840723564
 created: "2026-04-23T03:59:49Z"
 created_by: sambeau
-updated: "2026-04-23T03:59:49Z"
+updated: "2026-04-23T04:00:19Z"
