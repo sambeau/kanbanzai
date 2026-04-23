@@ -3,11 +3,17 @@ parent_feature: FEAT-01KPVDDYX73WB
 slug: decompose-skeleton-unit-tests
 name: Unit tests for content generator and idempotency
 summary: "Cover buildSkeletonDevPlan output shape, idempotency branches (no plan / skeleton / non-skeleton), zero-tasks path, and response note field (REQ-NF-002, REQ-NF-003)"
-status: active
+status: done
 depends_on:
   - TASK-01KPVFTD2MKYN
   - TASK-01KPVFTD550JX
+files_planned:
+  - internal/service/decompose_skeleton_test.go
+  - internal/service/decompose_skeleton.go
+completed: "2026-04-23T03:09:58Z"
 claimed_at: "2026-04-23T03:04:42Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T03:04:42Z"
 dispatched_by: sambeau
+completion_summary: "Added 10 unit tests covering buildSkeletonDevPlan output shape and all WriteSkeletonDevPlan idempotency branches (no plan→created, skeleton→updated count=1, non-skeleton→skipped, zero tasks→skipped). Also added zero-task guard to WriteSkeletonDevPlan (REQ-006). All 10 pass, full suite green."
+verification: "go test ./internal/service/... -run TestBuildSkeleton|TestWriteSkeleton -v -count=1: 10/10 PASS; go test ./... -count=1: all green"
