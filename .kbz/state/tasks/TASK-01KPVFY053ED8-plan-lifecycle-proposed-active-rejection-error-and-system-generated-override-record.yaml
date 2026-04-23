@@ -3,6 +3,6 @@ parent_feature: FEAT-01KPVDDYVETV5
 slug: plan-lifecycle-proposed-active-rejection-error-and-system-generated-override-record
 name: Rejection error and system-generated override record
 summary: Rejection error and system-generated override record
-status: queued
+status: ready
 depends_on:
   - TASK-01KPVFY051XFC

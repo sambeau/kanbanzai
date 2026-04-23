@@ -3,8 +3,15 @@ parent_feature: FEAT-01KPVDDYVETV5
 slug: plan-lifecycle-proposed-active-add-proposed-active-transition-and-precondition-check
 name: "Add `proposed → active` transition and precondition check"
 summary: "Add `proposed → active` transition and precondition check"
-status: active
+status: done
+files_planned:
+  - internal/validate/lifecycle.go
+  - internal/validate/lifecycle_test.go
+  - internal/service/plans.go
+completed: "2026-04-23T03:13:57Z"
 claimed_at: "2026-04-23T02:51:28Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T02:51:28Z"
 dispatched_by: sambeau
+completion_summary: "Added proposed→active arc to plan state machine (lifecycle.go) with precondition comment. Added countPostDesigningFeaturesForPlan helper in plans.go. Wired precondition into UpdatePlanStatus: rejects with directive error if no qualifying features, appends system-generated override record on success. Added planOverridesFromState and overrideRecordsToAny helpers. Updated lifecycle_test.go for new arc."
+verification: "go test ./internal/validate/... ./internal/service/... -count=1: all pass."
