@@ -3,6 +3,15 @@ parent_feature: FEAT-01KPVDDYVETV5
 slug: plan-lifecycle-proposed-active-integration-tests-and-latency-verification
 name: Integration tests and latency verification
 summary: Integration tests and latency verification
-status: ready
+status: done
 depends_on:
   - TASK-01KPVFY054NQ9
+files_planned:
+  - internal/service/plans_shortcut_integration_test.go
+completed: "2026-04-23T03:46:44Z"
+claimed_at: "2026-04-23T03:43:42Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-23T03:43:42Z"
+dispatched_by: sambeau
+completion_summary: "Added plans_shortcut_integration_test.go with 3 integration tests covering AC-011 (latency ≤ 2s), AC-012 (fresh-state: no stale cache, N reflects newly-qualified feature), and end-to-end regression for the proposed→designing→active path. All 3 pass; internal/service package green."
+verification: go test ./internal/service/... -run TestPlanShortcutIntegration -v -count=1 — all 3 pass in under 2s
