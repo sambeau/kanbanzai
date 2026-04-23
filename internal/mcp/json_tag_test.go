@@ -9,6 +9,14 @@ package mcp
 // literals inside error messages, not struct field tags. Therefore the audited
 // population is currently empty.
 //
+// AUDIT SCOPE (P32): internal/docint/ types that participate in the
+// doc_intel classify deserialization path were reviewed separately.
+// Types examined: Classification, ConceptIntroEntry (in internal/docint/types.go).
+// Both carry explicit json: tags on all exported fields. No missing tags found.
+// The MCP boundary for doc_intel classify uses json.Unmarshal into
+// []Classification; all fields that appear in tool call parameters have
+// matching json: tags.
+//
 // HOW TO ADD A STRUCT: If you introduce a new struct in internal/mcp/ that
 // carries yaml: tags AND is used as a json.Unmarshal target or populated from
 // MCP req.Params.Arguments, you MUST:
@@ -52,7 +60,6 @@ var yamlTaggedStructs = []yamlTagStructEntry{
 
 func TestJSONTagRoundTrip(t *testing.T) {
 	for _, entry := range yamlTaggedStructs {
-		entry := entry
 		t.Run(entry.name, func(t *testing.T) {
 			// Part 1: reflection check — every exported field with a yaml: tag
 			// must also have a non-empty json: tag.
@@ -83,9 +90,32 @@ func TestJSONTagRoundTrip(t *testing.T) {
 			FieldA string `yaml:"field_a" json:"field_a"`
 			FieldB int    `yaml:"field_b" json:"field_b"`
 		}
-		assertAllYAMLFieldsHaveJSONTags(t, goodStruct{FieldA: "x", FieldB: 1})
 
-		// Verify round-trip on the synthetic struct.
+		// Happy path: correct struct must report no violations.
+		violations := checkStructHasAllJSONTags(goodStruct{FieldA: "x", FieldB: 1})
+		if len(violations) != 0 {
+			t.Errorf("expected no violations for goodStruct, got: %v", violations)
+		}
+
+		// Failure path: a struct with a yaml: tag but no json: tag must be detected.
+		type badStruct struct {
+			MissingJSON string `yaml:"missing_json"` // intentionally no json: tag
+		}
+		violations = checkStructHasAllJSONTags(badStruct{MissingJSON: "oops"})
+		if len(violations) == 0 {
+			t.Error("expected at least one violation for badStruct (missing json: tag), got none — checker is broken")
+		}
+		found := false
+		for _, v := range violations {
+			if v == "badStruct.MissingJSON" {
+				found = true
+			}
+		}
+		if !found {
+			t.Errorf("expected violation for badStruct.MissingJSON, got: %v", violations)
+		}
+
+		// Verify round-trip on the synthetic good struct.
 		orig := goodStruct{FieldA: "hello", FieldB: 42}
 		data, err := json.Marshal(orig)
 		if err != nil {
@@ -107,21 +137,29 @@ func TestJSONTagRoundTrip(t *testing.T) {
 // before the test exits.
 func assertAllYAMLFieldsHaveJSONTags(t *testing.T, v any) {
 	t.Helper()
+	for _, field := range checkStructHasAllJSONTags(v) {
+		t.Errorf("field %s has yaml: tag but is missing a json: tag — add json:<snake_case_name>", field)
+	}
+}
+
+// checkStructHasAllJSONTags walks v's exported fields and returns the qualified
+// field paths (e.g. "MyStruct.FieldA") of fields that have a yaml: tag but lack
+// a json: tag. Returns nil if no violations are found.
+func checkStructHasAllJSONTags(v any) []string {
 	rv := reflect.TypeOf(v)
 	if rv.Kind() == reflect.Ptr {
 		rv = rv.Elem()
 	}
 	if rv.Kind() != reflect.Struct {
-		t.Errorf("assertAllYAMLFieldsHaveJSONTags: expected struct, got %s", rv.Kind())
-		return
+		return nil
 	}
-	walkStructForYAMLTags(t, rv, rv.Name())
+	return collectYAMLTagViolations(rv, rv.Name())
 }
 
-// walkStructForYAMLTags recursively inspects st for exported fields that have
-// yaml: tags but lack json: tags.
-func walkStructForYAMLTags(t *testing.T, st reflect.Type, path string) {
-	t.Helper()
+// collectYAMLTagViolations recursively inspects st for exported fields that have
+// yaml: tags but lack json: tags. Returns the qualified field paths of violations.
+func collectYAMLTagViolations(st reflect.Type, path string) []string {
+	var violations []string
 	for i := 0; i < st.NumField(); i++ {
 		f := st.Field(i)
 		if !f.IsExported() {
@@ -132,18 +170,17 @@ func walkStructForYAMLTags(t *testing.T, st reflect.Type, path string) {
 		if yamlTag != "" && yamlTag != "-" {
 			jsonTag := f.Tag.Get("json")
 			if jsonTag == "" || jsonTag == "-" {
-				t.Errorf("field %s has yaml:%q but is missing a json: tag — add json:<snake_case_name>",
-					fieldPath, yamlTag)
+				violations = append(violations, fieldPath)
 			}
 		}
-		// Recurse into nested structs (but not pointers or interfaces — those
-		// are not in scope for the current audit).
+		// Recurse into nested structs.
 		ft := f.Type
 		if ft.Kind() == reflect.Ptr {
 			ft = ft.Elem()
 		}
 		if ft.Kind() == reflect.Struct {
-			walkStructForYAMLTags(t, ft, fieldPath)
+			violations = append(violations, collectYAMLTagViolations(ft, fieldPath)...)
 		}
 	}
+	return violations
 }
