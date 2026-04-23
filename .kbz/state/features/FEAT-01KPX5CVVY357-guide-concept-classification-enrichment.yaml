@@ -1,0 +1,8 @@
+id: FEAT-01KPX5CVVY357
+slug: guide-concept-classification-enrichment
+name: Guide Response Concept and Classification Enrichment
+parent: P32-doc-intel-classification-pipeline-hardening
+status: proposed
+summary: "Add heading-based concept suggestions to the doc_intel guide response (concepts_suggested field derived from section title analysis) and expand suggested_classifications coverage to all heading-deterministic sections. Answers RG-1: server suggestions should be heading-based, not entity-ref-based. Experiment confirmed ~56% of concepts are derivable from headings; entity refs contribute nothing useful."
+created: "2026-04-23T12:35:20Z"
+created_by: sambeau
