@@ -3,4 +3,11 @@ parent_feature: FEAT-01KPVDDYN855F
 slug: skill-doc-updates-verify-all-edits
 name: Verify all three skill-file edits
 summary: "Inspect all three modified skill files against AC-001 through AC-010; confirm concise-output instruction, atomicity statement, re-dispatch instruction, resume-plan sections, transitional labels, file scope, and no duplication with FEAT-01KPTHB61WPT0"
-status: ready
+status: done
+completed: "2026-04-23T01:15:19Z"
+claimed_at: "2026-04-23T01:13:44Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-23T01:13:44Z"
+dispatched_by: sambeau
+completion_summary: Inspected all three modified skill files; all 10 ACs pass. kbzinit integration test passes.
+verification: AC-001 through AC-010 verified by inspection; git diff shows expected 6 files; kbzinit integration test (TestP12_Integration_NewProject) passes in 0.13s. No fixes were needed.
