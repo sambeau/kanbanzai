@@ -3,4 +3,15 @@ parent_feature: FEAT-01KPVDDYQQS1Y
 slug: doc-intel-enrichment-tests
 name: Tests for all three doc-intel enrichments
 summary: "Write unit, integration, and benchmark tests covering AC-001 through AC-011 for section_count, taxonomy, and suggested_classifications enrichments in internal/docint/"
-status: ready
+status: done
+files_planned:
+  - internal/docint/taxonomy_test.go
+  - internal/service/intelligence_test.go
+  - internal/mcp/doc_intel_guide_pending_test.go
+completed: "2026-04-23T01:56:03Z"
+claimed_at: "2026-04-23T01:41:41Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-23T01:41:41Z"
+dispatched_by: sambeau
+completion_summary: "Added tests for all three enrichments. Taxonomy unit tests cover normaliseHeading, matchSuggestedRole (all REQ-007 entries), SuggestClassifications (empty, AC-005 acceptance criteria, AC-006 front matter, AC-007 alternatives, regex, children, dedup, confidence invariant). MCP handler tests cover AC-001 through AC-009. Benchmarks for AC-010 and AC-011. Fixed countSections redeclaration by removing test-file duplicate. All tests pass."
+verification: go test ./internal/docint/... ./internal/service/... -timeout 120s -count=1 all pass. New MCP handler tests all pass.
