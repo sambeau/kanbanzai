@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPVDDYSEK8P
 slug: unit-tests-for-enhanced-classification-nudge
 name: Unit tests for enhanced classification nudge
 summary: "Write unit and benchmark tests for the structured classification_nudge: (AC-001) assert nudge is a JSON object with message, content_hash, outline fields; (AC-002) message equals previous instructional string; (AC-003) content_hash passes to doc_intel classify without hash-mismatch error; (AC-004) outline deep-equals doc_intel guide response sections; (AC-005) batch-register 3 docs, each result has structured nudge; (AC-006) register+classify in 2 calls with no intermediate guide call; (AC-009) p99 latency delta ≤ 50 ms over 100 invocations with 50-section fixture. Covers REQ-001 through REQ-006, REQ-NF-001."
-status: active
+status: done
+files_planned:
+  - internal/mcp/doc_tool_nudge_test.go
+completed: "2026-04-23T02:39:07Z"
 claimed_at: "2026-04-23T02:03:53Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T02:03:53Z"
 dispatched_by: sambeau
+completion_summary: "Added unit and benchmark tests for structured classification_nudge in doc_tool_nudge_test.go. 6 unit tests cover AC-001 through AC-006; benchmark covers AC-009 (p99 delta ≤ 50ms). New helpers: callDocWithIntel, callDocIntelAction, makeFiftySectionContent. Benchmark measures delta between baseline (nil intel svc) and enhanced (intel svc) with identical IngestDocument overhead; delta ~0ms."
+verification: "go test ./internal/mcp/... -run TestDocTool_ClassificationNudge -v: all 6 tests PASS. BenchmarkDocTool_Register_50Sections -benchtime 100x: delta-p99-ms=0, PASS."

@@ -1,0 +1,17 @@
+id: KE-01KPW39640YG9
+tier: 3
+topic: retro-task-01kpvg85sxvxz
+scope: project
+content: "[moderate] tool-friction: Terminal heredoc failed for multi-line Go code with embedded quotes; write_file with entity_id was the correct tool Suggestion: Update task instructions to allow write_file for worktree file creation"
+learned_from: TASK-01KPVG85SXVXZ
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - tool-friction
+created: "2026-04-23T02:39:07Z"
+created_by: unknown
+updated: "2026-04-23T02:39:07Z"
