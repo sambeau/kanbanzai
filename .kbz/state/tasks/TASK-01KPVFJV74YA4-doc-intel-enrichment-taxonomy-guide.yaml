@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPVDDYQQS1Y
 slug: doc-intel-enrichment-taxonomy-guide
 name: Add taxonomy block to guide response
 summary: "Extend the guide response struct with a taxonomy object (roles derived from FragmentRole constants, confidence array) in the guide handler (REQ-003, REQ-004)"
-status: active
+status: done
+files_planned:
+  - internal/mcp/doc_intel_tool.go
+completed: "2026-04-23T01:32:05Z"
 claimed_at: "2026-04-23T01:21:30Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T01:21:30Z"
 dispatched_by: sambeau
+completion_summary: "Added taxonomy block to guide response. The guide handler now includes taxonomy: {roles: [...all 11 fragment roles...], confidence: [\"high\", \"medium\", \"low\"]} derived from docint.AllRoles() and the ValidConfidence constants. All existing guide response fields (document_id, document_path, content_hash, classified, outline, entity_refs, extraction_hints) are preserved unchanged (REQ-009)."
+verification: go build ./... passes cleanly. Taxonomy block verified in doc_intel_tool.go at the guide handler return statement.
