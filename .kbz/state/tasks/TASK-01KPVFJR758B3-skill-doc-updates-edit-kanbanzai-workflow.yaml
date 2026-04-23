@@ -3,8 +3,14 @@ parent_feature: FEAT-01KPVDDYN855F
 slug: skill-doc-updates-edit-kanbanzai-workflow
 name: Edit kanbanzai-workflow SKILL.md resume-plan coverage
 summary: Add Resuming an in-flight plan coverage to .agents/skills/kanbanzai-workflow/SKILL.md
-status: active
+status: done
+files_planned:
+  - .agents/skills/kanbanzai-workflow/SKILL.md
+  - internal/kbzinit/skills/workflow/SKILL.md
+completed: "2026-04-23T00:59:40Z"
 claimed_at: "2026-04-23T00:55:13Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T00:55:13Z"
 dispatched_by: sambeau
+completion_summary: "Added \"Resuming an in-flight plan\" section to kanbanzai-workflow/SKILL.md with all four required steps: (1) commit orphaned .kbz/ changes, (2) check plan lifecycle state [transitional, P28 Sprint 2], (3) confirm dev-plan documents [transitional, P28 Sprint 2], (4) confirm worktrees. Dual-wrote to internal/kbzinit/skills/workflow/SKILL.md in the same commit. Verified kbzinit copy retains both managed-marker comments."
+verification: "AC-005: All four steps present directly in kanbanzai-workflow/SKILL.md (Option A). AC-006: Steps in correct order — git status → proposed lifecycle → dev-plan doc → worktree. AC-007: Steps 2 and 3 labelled '(Transitional — unnecessary after P28 Sprint 2 merges)'. AC-008: git diff --name-only main...HEAD shows only this task's owned files plus parallel-agent kanbanzai-documents files. kbzinit managed markers confirmed present."
