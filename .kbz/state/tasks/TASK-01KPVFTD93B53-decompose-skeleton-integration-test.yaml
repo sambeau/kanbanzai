@@ -3,10 +3,15 @@ parent_feature: FEAT-01KPVDDYX73WB
 slug: decompose-skeleton-integration-test
 name: Integration test for decompose apply skeleton
 summary: "End-to-end: skeleton created and approved on first apply, updated on second, non-skeleton preserved, gate passes, latency within 500ms (AC-001 through AC-008)"
-status: active
+status: done
 depends_on:
   - TASK-01KPVFTD711VC
+files_planned:
+  - internal/service/decompose_integration_test.go
+completed: "2026-04-23T03:52:32Z"
 claimed_at: "2026-04-23T03:31:51Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T03:31:51Z"
 dispatched_by: sambeau
+completion_summary: "Integration test for decompose apply skeleton lifecycle. Covers AC-001 (first apply creates approved doc + file), AC-007 (second apply is idempotent, count stays 1), AC-003 (manual dev-plan preserved, no duplicate), gate test (dev-planning→developing passes after WriteSkeletonDevPlan+task, no manual doc approve needed), and AC-008 benchmark. All 4 functional tests pass."
+verification: "go test ./internal/service/... -run TestDecomposeIntegration -v -count=1: all 4 pass. Full suite ok 1.157s."
