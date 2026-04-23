@@ -1,8 +1,9 @@
 id: P33-cohort-merge-checkpoints
 slug: cohort-merge-checkpoints
 name: Cohort-Based Merge Checkpoints
-status: proposed
+status: designing
 summary: "Add a lightweight cohort model to prevent worktree drift at scale: feature-level conflict analysis in the conflict tool, a Merge Schedule section in the dev-plan template with a decompose quality warning, and cohort-aware phases in the orchestrate-development skill. Three additive changes; no entity schema changes; no server-enforced gates."
+design: P33-cohort-merge-checkpoints/design-p33-cohort-merge-checkpoints
 created: "2026-04-23T14:55:30Z"
 created_by: sambeau
-updated: "2026-04-23T14:55:30Z"
+updated: "2026-04-23T14:55:43Z"
