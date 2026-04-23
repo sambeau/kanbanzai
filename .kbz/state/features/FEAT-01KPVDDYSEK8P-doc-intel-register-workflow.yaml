@@ -2,9 +2,12 @@ id: FEAT-01KPVDDYSEK8P
 slug: doc-intel-register-workflow
 name: Doc-intel register workflow friction
 parent: P28-doc-intel-polish-workflow-reliability
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "Two improvements to reduce round-trips in the classify-on-register workflow. (1) Include content_hash and section outline directly in the classification_nudge returned by doc register, shrinking the workflow from 3 tool calls to 2 (§5.4). (2) Audit all MCP parameter structs that are decoded via json.Unmarshal to ensure they have explicit json: tags alongside any yaml: tags; add a test or vet check to prevent future drift (§5.5). Sources: Pilot §5.4, §5.5."
 spec: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow
 dev_plan: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow
 created: "2026-04-22T20:17:15Z"
 created_by: sambeau
+verification: "TASK-01KPVFXTHVYG3: go build ./... passes; TestDocTool_Register_Single_ClassificationNudge and TestDocTool_Register_Batch_ClassificationNudge both pass\nTASK-01KPVG83MJ0H2: Reviewed internal/docint/types.go Classification struct — all exported fields have json: tags. No compilation issues.\nTASK-01KPVG85SXVXZ: go test ./internal/mcp/... -run TestDocTool_ClassificationNudge -v: all 6 tests PASS. BenchmarkDocTool_Register_50Sections -benchtime 100x: delta-p99-ms=0, PASS.\nTASK-01KPVG9AQNE3J: go test ./internal/mcp/... -run TestJSONStructTags -v -count=1\n=== RUN   TestJSONStructTags\n=== PAUSE TestJSONStructTags\n=== CONT  TestJSONStructTags\n--- PASS: TestJSONStructTags (0.00s)\nPASS\nok  \\tgithub.com/sambeau/kanbanzai/internal/mcp\\t0.320s"
+verification_status: passed
