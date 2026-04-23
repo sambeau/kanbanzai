@@ -3,8 +3,11 @@ parent_feature: FEAT-01KPX5CW4R82P
 slug: mcp-parameter-struct-json-audit-ac-001-given-the-complete-set-of-structs
 name: "Given the complete set of structs in `internal/mcp/` that"
 summary: "AC-001: Given the complete set of structs in `internal/mcp/` that carry `yaml:` tags and are used as JSON deserialization targets (excluding `Classification` and `ConceptIntroEntry`), when each exported field is inspected, then every such field has an explicit `json:\"<snake_case_name>\"` tag whose value matches the corresponding `yaml:` tag name."
-status: active
+status: done
+completed: "2026-04-23T15:39:05Z"
 claimed_at: "2026-04-23T15:25:32Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T15:25:32Z"
 dispatched_by: sambeau
+completion_summary: "Audited all structs in internal/mcp/ for yaml: struct tags. Found zero structs with yaml: tags — all yaml: occurrences in the package are string literals in error messages (e.g. .kbz/local.yaml references). No fields need json: tags added."
+verification: "grep -rn 'yaml:' internal/mcp/ --include='*.go' — only string literals found, no struct field tags"

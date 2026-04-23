@@ -3,4 +3,7 @@ parent_feature: FEAT-01KPX5CW4R82P
 slug: audit-yaml-tagged-structs-for-missing-json-tags
 name: Audit yaml-tagged structs for missing json tags
 summary: "AC-001: Inspect every exported field in every yaml-tagged struct in internal/mcp/ used as a JSON deserialization target (excluding Classification and ConceptIntroEntry) and add explicit json snake_case tags where missing, matching the yaml tag name."
-status: ready
+status: done
+completed: "2026-04-23T15:39:05Z"
+completion_summary: "No json: tags needed — audit (T1) found zero yaml:-tagged structs in internal/mcp/. AC-001 is satisfied vacuously: the complete set of yaml:-tagged structs is empty."
+verification: "Inspection confirmed no exported fields in internal/mcp/ have yaml: struct tags"
