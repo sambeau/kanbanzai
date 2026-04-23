@@ -1,0 +1,6 @@
+id: TASK-01KPXF6RW7A44
+parent_feature: FEAT-01KPXE8T8QWRB
+slug: template-and-write-dev-plan-skill
+name: Dev-plan template and write-dev-plan skill update
+summary: "Add a ## Merge Schedule section to work/templates/implementation-plan-prompt-template.md (table with Cohort/Features/Gate condition columns, prose stating it is required for plans with more than 3 features, cohort size 3–5, and conflict check guidance). Add a cohort-authoring checklist item to .kbz/skills/write-dev-plan/SKILL.md under the quality-checks section. Pure documentation — no Go changes."
+status: queued
