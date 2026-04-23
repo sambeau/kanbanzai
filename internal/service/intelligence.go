@@ -39,6 +39,21 @@ type RoleMatch struct {
 	Summary      string `json:"summary,omitempty"`
 }
 
+// PendingDocEntry represents a document that is indexed but not yet classified.
+type PendingDocEntry struct {
+	ID           string
+	SectionCount int
+}
+
+// countSections recursively counts all sections (including children) from Layer 1.
+func countSections(sections []docint.Section) int {
+	n := len(sections)
+	for _, s := range sections {
+		n += countSections(s.Children)
+	}
+	return n
+}
+
 // IntelligenceService coordinates document intelligence operations (Layers 1-4).
 type IntelligenceService struct {
 	indexStore *docint.IndexStore
@@ -417,21 +432,25 @@ func (s *IntelligenceService) FindByRole(role string, scope string) ([]RoleMatch
 	return matches, nil
 }
 
-// GetPendingClassification returns document IDs that are indexed but not classified.
-func (s *IntelligenceService) GetPendingClassification() ([]string, error) {
+// GetPendingClassification returns entries for documents that are indexed but not classified.
+// Each entry includes the document ID and its Layer 1 section count.
+func (s *IntelligenceService) GetPendingClassification() ([]PendingDocEntry, error) {
 	docIDs, err := s.indexStore.ListDocumentIndexes()
 	if err != nil {
 		return nil, fmt.Errorf("list document indexes: %w", err)
 	}
 
-	var pending []string
+	var pending []PendingDocEntry
 	for _, id := range docIDs {
 		index, err := s.indexStore.LoadDocumentIndex(id)
 		if err != nil {
 			continue
 		}
 		if !index.Classified {
-			pending = append(pending, id)
+			pending = append(pending, PendingDocEntry{
+				ID:           id,
+				SectionCount: countSections(index.Sections),
+			})
 		}
 	}
 

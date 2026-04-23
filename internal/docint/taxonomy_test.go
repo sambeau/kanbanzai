@@ -191,3 +191,278 @@ func TestMatchConventionalRole(t *testing.T) {
 		})
 	}
 }
+
+// ─── SuggestClassifications tests ─────────────────────────────────────────────
+
+func TestNormaliseHeading(t *testing.T) {
+	tests := []struct {
+		input string
+		want  string
+	}{
+		{"Overview", "overview"},
+		{"Acceptance Criteria", "acceptance criteria"},
+		{"  Risks  ", "risks"},
+		{"Multiple   Spaces", "multiple spaces"},
+		{"UPPERCASE", "uppercase"},
+		{"Mixed\tTab", "mixed tab"},
+		{"", ""},
+	}
+	for _, tt := range tests {
+		t.Run(tt.input, func(t *testing.T) {
+			got := normaliseHeading(tt.input)
+			if got != tt.want {
+				t.Errorf("normaliseHeading(%q) = %q, want %q", tt.input, got, tt.want)
+			}
+		})
+	}
+}
+
+func TestMatchSuggestedRole(t *testing.T) {
+	tests := []struct {
+		name     string
+		title    string
+		wantRole FragmentRole
+		wantOK   bool
+	}{
+		// Static table entries
+		{"acceptance criteria", "Acceptance Criteria", RoleRequirement, true},
+		{"purpose", "Purpose", RoleRationale, true},
+		{"motivation", "Motivation", RoleRationale, true},
+		{"problem statement", "Problem Statement", RoleRationale, true},
+		{"problem and motivation", "Problem and Motivation", RoleRationale, true},
+		{"scope", "Scope", RoleConstraint, true},
+		{"in scope", "In Scope", RoleConstraint, true},
+		{"out of scope", "Out of Scope", RoleConstraint, true},
+		{"deferred", "Deferred", RoleConstraint, true},
+		{"excluded", "Excluded", RoleConstraint, true},
+		{"non-goals", "Non-Goals", RoleConstraint, true},
+		{"glossary", "Glossary", RoleDefinition, true},
+		{"definitions", "Definitions", RoleDefinition, true},
+		{"reference table", "Reference Table", RoleDefinition, true},
+		{"definition", "Definition", RoleDefinition, true},
+		{"example", "Example", RoleExample, true},
+		{"sample", "Sample", RoleExample, true},
+		{"alternatives considered", "Alternatives Considered", RoleAlternative, true},
+		{"alternative", "Alternative", RoleAlternative, true},
+		{"overview", "Overview", RoleNarrative, true},
+		{"background", "Background", RoleNarrative, true},
+		{"executive summary", "Executive Summary", RoleNarrative, true},
+		{"decision", "Decision", RoleDecision, true},
+		{"risk", "Risk", RoleRisk, true},
+		{"risks", "Risks", RoleRisk, true},
+		{"assumption", "Assumption", RoleAssumption, true},
+		{"assumptions", "Assumptions", RoleAssumption, true},
+		// Case insensitivity
+		{"lower case", "acceptance criteria", RoleRequirement, true},
+		{"upper case", "OVERVIEW", RoleNarrative, true},
+		// Regex patterns
+		{"AC-1 regex", "AC-1", RoleRequirement, true},
+		{"AC-001 regex", "AC-001: User login", RoleRequirement, true},
+		{"D1: regex", "D1: Use PostgreSQL", RoleDecision, true},
+		{"D42: regex", "D42: Caching strategy", RoleDecision, true},
+		// No match
+		{"no match", "Introduction", "", false},
+		{"empty", "", "", false},
+		{"partial match no entry", "Goals and Non-Goals", "", false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotRole, gotOK := matchSuggestedRole(tt.title)
+			if gotOK != tt.wantOK {
+				t.Errorf("matchSuggestedRole(%q) ok=%v, want %v", tt.title, gotOK, tt.wantOK)
+			}
+			if gotOK && gotRole != tt.wantRole {
+				t.Errorf("matchSuggestedRole(%q) role=%q, want %q", tt.title, gotRole, tt.wantRole)
+			}
+		})
+	}
+}
+
+func TestSuggestClassifications_Empty(t *testing.T) {
+	// AC-004: no recognisable headings → empty (non-nil) slice
+	index := &DocumentIndex{
+		Sections: []Section{
+			{Path: "1", Title: "Introduction", Level: 1},
+			{Path: "2", Title: "Conclusion", Level: 1},
+		},
+	}
+	result := SuggestClassifications(index)
+	if result == nil {
+		t.Error("SuggestClassifications returned nil, want empty slice")
+	}
+	if len(result) != 0 {
+		t.Errorf("expected 0 suggestions, got %d: %v", len(result), result)
+	}
+}
+
+func TestSuggestClassifications_AcceptanceCriteria(t *testing.T) {
+	// AC-005: "Acceptance Criteria" section → requirement, high
+	index := &DocumentIndex{
+		Sections: []Section{
+			{Path: "1", Title: "Introduction", Level: 1},
+			{Path: "2", Title: "Acceptance Criteria", Level: 1},
+			{Path: "3", Title: "Summary", Level: 1},
+		},
+	}
+	result := SuggestClassifications(index)
+	found := false
+	for _, s := range result {
+		if s.SectionPath == "2" {
+			found = true
+			if s.Role != "requirement" {
+				t.Errorf("AC section role = %q, want %q", s.Role, "requirement")
+			}
+			if s.Confidence != "high" {
+				t.Errorf("AC section confidence = %q, want %q", s.Confidence, "high")
+			}
+			break
+		}
+	}
+	if !found {
+		t.Error("expected suggestion for section 2 (Acceptance Criteria), not found")
+	}
+}
+
+func TestSuggestClassifications_AlternativesConsidered(t *testing.T) {
+	// AC-007: "Alternatives Considered" → alternative, high
+	index := &DocumentIndex{
+		Sections: []Section{
+			{Path: "1", Title: "Design", Level: 1},
+			{Path: "2", Title: "Alternatives Considered", Level: 1},
+		},
+	}
+	result := SuggestClassifications(index)
+	found := false
+	for _, s := range result {
+		if s.SectionPath == "2" {
+			found = true
+			if s.Role != "alternative" {
+				t.Errorf("alt section role = %q, want %q", s.Role, "alternative")
+			}
+			if s.Confidence != "high" {
+				t.Errorf("alt section confidence = %q, want %q", s.Confidence, "high")
+			}
+			break
+		}
+	}
+	if !found {
+		t.Error("expected suggestion for section 2 (Alternatives Considered), not found")
+	}
+}
+
+func TestSuggestClassifications_FrontMatter(t *testing.T) {
+	// AC-006: front-matter key-value section → narrative for first section
+	index := &DocumentIndex{
+		FrontMatter: &FrontMatter{Type: "design", Status: "draft"},
+		Sections: []Section{
+			{Path: "1", Title: "My Design Document", Level: 1},
+			{Path: "2", Title: "Scope", Level: 1},
+		},
+	}
+	result := SuggestClassifications(index)
+	found := false
+	for _, s := range result {
+		if s.SectionPath == "1" && s.Role == "narrative" {
+			found = true
+			if s.Confidence != "high" {
+				t.Errorf("front matter section confidence = %q, want %q", s.Confidence, "high")
+			}
+			break
+		}
+	}
+	if !found {
+		t.Error("expected narrative suggestion for first section with front matter, not found")
+	}
+}
+
+func TestSuggestClassifications_RegexPatterns(t *testing.T) {
+	// REQ-008 regex patterns: AC-\d+ → requirement, D\d+: → decision
+	index := &DocumentIndex{
+		Sections: []Section{
+			{Path: "1", Title: "AC-001: User must log in", Level: 2},
+			{Path: "2", Title: "D1: Use PostgreSQL", Level: 2},
+			{Path: "3", Title: "AC-42", Level: 2},
+		},
+	}
+	result := SuggestClassifications(index)
+	roleFor := make(map[string]string)
+	for _, s := range result {
+		roleFor[s.SectionPath] = s.Role
+	}
+	if roleFor["1"] != "requirement" {
+		t.Errorf("AC-001 section role = %q, want requirement", roleFor["1"])
+	}
+	if roleFor["2"] != "decision" {
+		t.Errorf("D1: section role = %q, want decision", roleFor["2"])
+	}
+	if roleFor["3"] != "requirement" {
+		t.Errorf("AC-42 section role = %q, want requirement", roleFor["3"])
+	}
+}
+
+func TestSuggestClassifications_Children(t *testing.T) {
+	// Section headings in children are also matched.
+	index := &DocumentIndex{
+		Sections: []Section{
+			{
+				Path:  "1",
+				Title: "Context",
+				Level: 1,
+				Children: []Section{
+					{Path: "1.1", Title: "Assumptions", Level: 2},
+					{Path: "1.2", Title: "No match here", Level: 2},
+				},
+			},
+		},
+	}
+	result := SuggestClassifications(index)
+	found := false
+	for _, s := range result {
+		if s.SectionPath == "1.1" && s.Role == "assumption" {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Error("expected assumption suggestion for child section 1.1")
+	}
+}
+
+func TestSuggestClassifications_NoDuplicates(t *testing.T) {
+	// Front matter + heading pattern on the same section should not produce duplicates.
+	index := &DocumentIndex{
+		FrontMatter: &FrontMatter{Type: "design"},
+		Sections: []Section{
+			{Path: "1", Title: "Overview", Level: 1}, // matches both front-matter and overview→narrative
+			{Path: "2", Title: "Scope", Level: 1},
+		},
+	}
+	result := SuggestClassifications(index)
+	// Count how many times section "1" appears
+	count := 0
+	for _, s := range result {
+		if s.SectionPath == "1" {
+			count++
+		}
+	}
+	if count != 1 {
+		t.Errorf("section 1 appears %d times in suggestions, want 1", count)
+	}
+}
+
+func TestSuggestClassifications_AllConfidenceHigh(t *testing.T) {
+	// AC-004: every entry must have confidence:"high"
+	index := &DocumentIndex{
+		Sections: []Section{
+			{Path: "1", Title: "Assumptions", Level: 1},
+			{Path: "2", Title: "Glossary", Level: 1},
+			{Path: "3", Title: "Acceptance Criteria", Level: 1},
+		},
+	}
+	result := SuggestClassifications(index)
+	for _, s := range result {
+		if s.Confidence != "high" {
+			t.Errorf("entry %q has confidence=%q, want high", s.SectionPath, s.Confidence)
+		}
+	}
+}

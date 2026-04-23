@@ -375,8 +375,8 @@ func TestGetPendingClassification(t *testing.T) {
 	if len(pending) != 1 {
 		t.Fatalf("expected 1 pending, got %d", len(pending))
 	}
-	if pending[0] != "test-doc" {
-		t.Errorf("pending[0] = %q, want %q", pending[0], "test-doc")
+	if pending[0].ID != "test-doc" {
+		t.Errorf("pending[0].ID = %q, want %q", pending[0].ID, "test-doc")
 	}
 
 	// Classify the document
@@ -916,14 +916,6 @@ func TestGetImpact_SQLite(t *testing.T) {
 	}
 }
 
-// countSections recursively counts all sections (including children).
-func countSections(sections []docint.Section) int {
-	n := len(sections)
-	for _, s := range sections {
-		n += countSections(s.Children)
-	}
-	return n
-}
 
 func TestRebuildIndex_RoundTrip(t *testing.T) {
 	tmp := t.TempDir()

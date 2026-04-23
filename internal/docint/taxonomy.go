@@ -2,6 +2,7 @@ package docint
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 )
 
@@ -159,4 +160,130 @@ func MatchConventionalRole(headingTitle string) (FragmentRole, bool) {
 	}
 
 	return "", false
+}
+
+// SuggestedClassification is a heading-pattern derived classification hint (REQ-005).
+type SuggestedClassification struct {
+	SectionPath string `json:"section_path"`
+	Title       string `json:"title"`
+	Role        string `json:"role"`
+	Confidence  string `json:"confidence"`
+}
+
+// suggestedClassTable maps normalised heading keywords to roles per REQ-007.
+// Entries are matched by exact equality after normaliseHeading().
+var suggestedClassTable = []struct {
+	keyword string
+	role    FragmentRole
+}{
+	// Longer phrases first to avoid shorter substring matches from shadowing them.
+	{"alternatives considered", RoleAlternative},
+	{"problem and motivation", RoleRationale},
+	{"problem statement", RoleRationale},
+	{"executive summary", RoleNarrative},
+	{"reference table", RoleDefinition},
+	{"acceptance criteria", RoleRequirement},
+	{"out of scope", RoleConstraint},
+	{"in scope", RoleConstraint},
+	{"non-goals", RoleConstraint},
+	{"alternative", RoleAlternative},
+	{"assumption", RoleAssumption},
+	{"assumptions", RoleAssumption},
+	{"background", RoleNarrative},
+	{"decision", RoleDecision},
+	{"deferred", RoleConstraint},
+	{"definition", RoleDefinition},
+	{"definitions", RoleDefinition},
+	{"excluded", RoleConstraint},
+	{"example", RoleExample},
+	{"glossary", RoleDefinition},
+	{"motivation", RoleRationale},
+	{"overview", RoleNarrative},
+	{"purpose", RoleRationale},
+	{"risk", RoleRisk},
+	{"risks", RoleRisk},
+	{"sample", RoleExample},
+	{"scope", RoleConstraint},
+}
+
+// reACPattern matches heading titles that identify acceptance-criteria sections (REQ-007).
+var reACPattern = regexp.MustCompile(`AC-\d+`)
+
+// reDPattern matches heading titles that identify decision sections (REQ-007).
+var reDPattern = regexp.MustCompile(`D\d+:`)
+
+// normaliseHeading lowercases a heading title and collapses all whitespace to
+// single spaces. Used for case-insensitive normalised-whitespace matching (REQ-008).
+func normaliseHeading(title string) string {
+	return strings.ToLower(strings.Join(strings.Fields(strings.TrimSpace(title)), " "))
+}
+
+// matchSuggestedRole checks a heading title against the REQ-007 pattern table.
+// Returns the matched role and true if a match is found.
+func matchSuggestedRole(title string) (FragmentRole, bool) {
+	normalized := normaliseHeading(title)
+	for _, entry := range suggestedClassTable {
+		if normalized == entry.keyword {
+			return entry.role, true
+		}
+	}
+	// Regex patterns are applied to the original title (REQ-008).
+	if reACPattern.MatchString(title) {
+		return RoleRequirement, true
+	}
+	if reDPattern.MatchString(title) {
+		return RoleDecision, true
+	}
+	return "", false
+}
+
+// SuggestClassifications returns heading-pattern derived classification hints for all
+// sections in the document index per REQ-007. The result is always non-nil (REQ-006).
+// The handler must never write these suggestions to the classification store (REQ-008).
+func SuggestClassifications(index *DocumentIndex) []SuggestedClassification {
+	seen := make(map[string]bool)
+	var result []SuggestedClassification
+
+	// Walk all sections recursively and apply heading-pattern matching.
+	collectSuggestions(index.Sections, seen, &result)
+
+	// Front matter special case: if the document has a key-value metadata table
+	// in its first section, suggest narrative for that section (REQ-007).
+	if index.FrontMatter != nil && len(index.Sections) > 0 {
+		first := index.Sections[0]
+		if !seen[first.Path] {
+			seen[first.Path] = true
+			result = append(result, SuggestedClassification{
+				SectionPath: first.Path,
+				Title:       first.Title,
+				Role:        string(RoleNarrative),
+				Confidence:  "high",
+			})
+		}
+	}
+
+	if result == nil {
+		return []SuggestedClassification{}
+	}
+	return result
+}
+
+// collectSuggestions recursively walks a section tree and appends matched entries.
+func collectSuggestions(sections []Section, seen map[string]bool, result *[]SuggestedClassification) {
+	for _, s := range sections {
+		if !seen[s.Path] {
+			if role, ok := matchSuggestedRole(s.Title); ok {
+				seen[s.Path] = true
+				*result = append(*result, SuggestedClassification{
+					SectionPath: s.Path,
+					Title:       s.Title,
+					Role:        string(role),
+					Confidence:  "high",
+				})
+			}
+		}
+		if len(s.Children) > 0 {
+			collectSuggestions(s.Children, seen, result)
+		}
+	}
 }

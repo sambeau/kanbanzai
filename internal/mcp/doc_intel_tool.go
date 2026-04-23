@@ -379,6 +379,12 @@ func docIntelGuideAction(svc *service.IntelligenceService) ActionHandler {
 			})
 		}
 
+		allRoles := docint.AllRoles()
+		roleStrings := make([]string, len(allRoles))
+		for i, r := range allRoles {
+			roleStrings[i] = string(r)
+		}
+
 		return map[string]any{
 			"document_id":      documentID,
 			"document_path":    index.DocumentPath,
@@ -387,6 +393,11 @@ func docIntelGuideAction(svc *service.IntelligenceService) ActionHandler {
 			"outline":          outline,
 			"entity_refs":      entityRefs,
 			"extraction_hints": extractionHints(index),
+			"taxonomy": map[string]any{
+				"roles":      roleStrings,
+				"confidence": []string{"high", "medium", "low"},
+			},
+			"suggested_classifications": docint.SuggestClassifications(index),
 		}, nil
 	}
 }
@@ -400,9 +411,17 @@ func docIntelPendingAction(svc *service.IntelligenceService) ActionHandler {
 			return nil, fmt.Errorf("Cannot list pending classifications: %w.\n\nTo resolve:\n  Check that the document index is intact and re-index if necessary", err)
 		}
 
+		entries := make([]map[string]any, 0, len(pending))
+		for _, e := range pending {
+			entries = append(entries, map[string]any{
+				"id":            e.ID,
+				"section_count": e.SectionCount,
+			})
+		}
+
 		return map[string]any{
-			"count":        len(pending),
-			"document_ids": pending,
+			"count":    len(pending),
+			"documents": entries,
 		}, nil
 	}
 }
