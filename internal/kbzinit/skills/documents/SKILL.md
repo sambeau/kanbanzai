@@ -166,6 +166,10 @@ Process documents in this order to maximise classification value per unit of eff
 You MAY deviate from this ordering when context warrants it (e.g. a design needed
 immediately for a concept search query).
 
+**Be concise — no commentary between documents, just run the tools. Report only final counts.**
+
+**Atomicity guarantee:** `classify` calls commit to the persistent index as they succeed — a batch failure does not roll back previously classified documents. After any batch failure, `doc_intel(action: "pending")` is the authoritative ground truth for which documents have already been classified. **Always call `doc_intel(action: "pending")` before re-dispatching a failed batch** to avoid re-classifying documents that were already successfully classified.
+
 ### Step-by-step procedure
 
 1. **Get the pending list.** Call `doc_intel(action: "pending")` to retrieve all

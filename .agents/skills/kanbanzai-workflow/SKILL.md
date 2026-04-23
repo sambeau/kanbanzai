@@ -106,6 +106,36 @@ flaw is discovered. Moving backwards is normal. Skipping forward is not.
 ## Feature Close-Out Trigger
 
 When `status` (with no ID or with a feature ID) shows the attention item `"FEAT-xxx has N/N tasks done — ready to advance to reviewing"`, the close-out checklist applies. Follow the procedure in `.kbz/skills/orchestrate-development/SKILL.md` Phase 6.
+---
+
+## Resuming an in-flight plan
+
+When returning to a plan that was already in progress, follow these four
+steps before dispatching new work or making state changes:
+
+1. **Commit orphaned `.kbz/` changes** — run `git status` in the repository
+   root. If any files under `.kbz/` appear as modified or untracked, commit
+   them before proceeding. MCP tool calls write state directly to disk; if
+   the previous session ended without a commit, those changes will be
+   overwritten by the next operation.
+
+2. **Check the plan lifecycle state** *(Transitional — unnecessary after P28
+   Sprint 2 merges)* — call `entity(action: "get", id: "PLAN-xxx")`. If the
+   plan status is `proposed`, advance it to `active` using the two-step
+   override: call `entity(action: "transition")` twice with `override: true`
+   and a brief `override_reason` on each call.
+
+3. **Confirm dev-plan documents** *(Transitional — unnecessary after P28
+   Sprint 2 merges)* — for each feature under the plan, call
+   `entity(action: "get", id: "FEAT-xxx")` and verify `has_dev_plan` is
+   `true`. If a feature is missing its dev plan, apply the gate override
+   (`override: true, override_reason: "..."`) before claiming tasks.
+
+4. **Confirm worktrees** — call `worktree(action: "get", entity_id:
+   "FEAT-xxx")` for each in-flight feature. If no worktree record exists,
+   create one with `worktree(action: "create", entity_id: "FEAT-xxx")`. If
+   the MCP tool times out, fall back to `terminal` with
+   `git worktree add .worktrees/FEAT-xxx feature/FEAT-xxx-slug`.
 
 ---
 

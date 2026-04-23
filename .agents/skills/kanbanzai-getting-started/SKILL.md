@@ -277,3 +277,16 @@ an unregistered document."
 - `kanbanzai-agents` — context assembly, commits, task dispatch, knowledge
 - `kanbanzai-planning` — how to run a planning conversation
 - `write-design` — how to collaborate on design documents
+
+
+## Resuming an in-flight plan
+
+When returning to a plan started in a previous session, run this checklist before dispatching any sub-agents:
+
+1. **Commit orphaned `.kbz/` changes.** Run `git status` in the main repository. If any files under `.kbz/state/`, `.kbz/index/`, or `.kbz/context/` appear as modified or untracked, commit them immediately: `git add .kbz/ && git commit -m "chore(state): commit orphaned workflow state"`. Do not stash or discard these files — they are versioned project state.
+
+2. **Check the plan lifecycle state.** *(Transitional — becomes unnecessary after P28 Sprint 2 merges.)* Call `status(id: "P<N>-<slug>")`. If the plan shows `proposed`, call `entity(action: "transition", id: "P<N>-<slug>", status: "designing", override: true, override_reason: "Resuming in-flight plan; bypassing designing stage gate")`, then `entity(action: "transition", id: "P<N>-<slug>", status: "active")`.
+
+3. **Confirm dev-plan documents for each feature.** *(Transitional — becomes unnecessary after P28 Sprint 2 merges.)* For each feature at `dev-planning` or later, call `status(id: "FEAT-xxx")` and check `has_dev_plan`. If `false`, apply the gate override: `entity(action: "transition", id: "FEAT-xxx", status: "developing", override: true, override_reason: "Resuming in-flight plan; dev-plan document registered separately")`.
+
+4. **Confirm worktrees for in-flight features.** For each feature at `developing`, call `worktree(action: "get", entity_id: "FEAT-xxx")`. If no worktree exists, create one. If `worktree(action: "create")` times out, fall back to: `terminal(cd: "<repo-root>", command: "git worktree add -b <branch-name> .worktrees/<path> main")`, then write the YAML state file manually to `.kbz/state/worktrees/WT-<id>.yaml`.
