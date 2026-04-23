@@ -3,8 +3,14 @@ parent_feature: FEAT-01KPVDDYSEK8P
 slug: doc-intel-register-workflow-promote-classification-nudge-to-structured-object-5-4
 name: "Promote `classification_nudge` to structured object (§5.4)"
 summary: "Promote `classification_nudge` to structured object (§5.4)"
-status: active
+status: done
+files_planned:
+  - internal/mcp/doc_tool.go
+  - internal/mcp/doc_tool_test.go
+completed: "2026-04-23T01:40:28Z"
 claimed_at: "2026-04-23T01:21:58Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T01:21:58Z"
 dispatched_by: sambeau
+completion_summary: "Promoted classification_nudge to structured object with message, content_hash, outline fields. Added classificationNudge/classificationNudgeSection types and buildNudgeSections helper. Updated docRegisterAction and docRegisterOne to accept intelligenceSvc for index lookup. Updated existing tests to check object shape."
+verification: go build ./... passes; TestDocTool_Register_Single_ClassificationNudge and TestDocTool_Register_Batch_ClassificationNudge both pass
