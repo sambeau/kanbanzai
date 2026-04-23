@@ -124,8 +124,13 @@ When `status` shows an attention item like `"FEAT-xxx has N/N tasks done — rea
    - If `require_github_pr: false` (default, AI-agent workflow): call
      `merge(action: "check")` then `merge(action: "execute")` directly.
      The `pr` step is optional.
-   If the tools return `not_applicable` (no worktree), skip these steps.
+   If the tools return `not_applicable` (no worktree), skip the `pr` and `merge` calls — but you **must still delete the branch manually** (see step 4).
 3. **Clean up**: `worktree(action: "remove", entity_id: "FEAT-xxx")` if applicable.
+4. **Delete the feature branch.** This is mandatory regardless of how the merge was performed.
+   - If `merge(action: "execute")` ran, it deletes the branch automatically — verify with `git branch | grep FEAT-xxx` (expect no output).
+   - If no worktree existed and merge returned `not_applicable`, the branch was **not** automatically deleted. Run `git branch -d feature/FEAT-xxx` (or `git branch -D` if squash history causes a refusal). Do not skip this step.
+
+> **Why this is non-negotiable:** An existing branch means unmerged work to any human reading `git branch`. If a branch is left behind, any files committed to it but omitted from the squash merge commit are permanently lost with no visible signal. This has caused repeated incidents at sprint boundaries.
 
 For the full close-out procedure, see `.kbz/skills/orchestrate-development/SKILL.md` Phase 6.
 

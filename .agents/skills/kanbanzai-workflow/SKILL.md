@@ -106,6 +106,13 @@ flaw is discovered. Moving backwards is normal. Skipping forward is not.
 ## Feature Close-Out Trigger
 
 When `status` (with no ID or with a feature ID) shows the attention item `"FEAT-xxx has N/N tasks done — ready to advance to reviewing"`, the close-out checklist applies. Follow the procedure in `.kbz/skills/orchestrate-development/SKILL.md` Phase 6.
+
+> **Branch hygiene is mandatory.** Every feature branch **must** be deleted after its work lands on `main`, regardless of how the merge was performed. Orphaned branches are invisible to humans and make sprint boundaries unauditable. If a branch exists, it signals unmerged work — this assumption must hold without exception.
+>
+> At close-out, after merging:
+> - Run `git branch | grep FEAT-xxx` and confirm no output.
+> - If the branch still exists, delete it: `git branch -d feature/FEAT-xxx` (or `-D` if squash history causes a refusal).
+> - Do not end the session with a feature branch still present.
 ---
 
 ## Resuming an in-flight plan

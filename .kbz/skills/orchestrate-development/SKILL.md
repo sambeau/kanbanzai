@@ -180,7 +180,11 @@ After all tasks reach a terminal state, the feature must be explicitly advanced 
 
 2. **Transition the feature.** Call `entity(action: "transition", id: "FEAT-xxx", status: "reviewing")`.
 
-3. **Create a PR if a worktree exists.** If the feature has a worktree, call `pr(action: "create", entity_id: "FEAT-xxx")` and then `merge(action: "check", entity_id: "FEAT-xxx")` followed by `merge(action: "execute", entity_id: "FEAT-xxx")`. If there is no worktree (work was committed directly to the main branch), `merge` and `pr` will return `not_applicable` — this is expected; skip these steps.
+3. **Merge and delete the branch.** This step is mandatory regardless of how work was committed.
+   - **If a worktree exists:** call `pr(action: "create", entity_id: "FEAT-xxx")` (if `require_github_pr: true`), then `merge(action: "check", entity_id: "FEAT-xxx")`, then `merge(action: "execute", entity_id: "FEAT-xxx")`. The `merge execute` tool deletes the branch automatically (`delete_branch` defaults to `true`) — verify it did so.
+   - **If no worktree exists** (work was committed directly to the main branch): `merge` and `pr` will return `not_applicable`. In this case you **must** manually delete the feature branch: run `git branch -d feature/FEAT-xxx` (or `git branch -D` if git refuses due to squash history). **Do not skip this step.** Orphaned branches accumulate silently and are painful to audit later.
+
+   > **Why this matters:** When branches are not deleted after merging, they appear unmerged at sprint boundaries, making it impossible for humans to tell what has and hasn't landed. Files committed to the branch but not included in the squash merge commit will be permanently lost. This has caused repeated incidents.
 
 4. **Record a completion summary.** Call `finish` (or leave a completion note in the task) summarising what was implemented and any relevant observations.
 
@@ -191,7 +195,9 @@ After all tasks reach a terminal state, the feature must be explicitly advanced 
 
    **Tier 3 entries:** Do NOT call `confirm` on tier 3 entries. Tier 3 entries are self-pruning and direct confirmation bypasses the promotion signal. Instead, for tier 3 entries that proved valuable, call `knowledge(action: "promote", id: "KE-xxx")` to elevate them to tier 2.
 
-5. **Clean up worktrees.** If a worktree was created, run `worktree(action: "remove", entity_id: "FEAT-xxx")` after merging.
+5. **Clean up worktrees.** If a worktree was created, run `worktree(action: "remove", entity_id: "FEAT-xxx")` after merging. Confirm with `git worktree list` that the worktree directory is gone.
+
+6. **Verify branch is gone.** Run `git branch | grep FEAT-xxx` and confirm no output. If the branch still exists, delete it now. A feature is not truly closed out until its branch is absent from `git branch`.
 
 ## Output Format
 
