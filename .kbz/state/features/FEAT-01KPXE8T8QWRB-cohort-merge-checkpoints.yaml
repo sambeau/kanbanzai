@@ -2,7 +2,7 @@ id: FEAT-01KPXE8T8QWRB
 slug: cohort-merge-checkpoints
 name: Cohort-Based Merge Checkpoints
 parent: P33-cohort-merge-checkpoints
-status: specifying
+status: dev-planning
 summary: "Implement the three enhancements from the P33 design: (1) feature-level conflict analysis with drift_days in the conflict tool, (2) Merge Schedule section in the dev-plan template with a decompose quality warning, (3) cohort-aware Phase 0 and checkpoint step in the orchestrate-development skill."
 design: P33-cohort-merge-checkpoints/design-p33-cohort-merge-checkpoints
 spec: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints

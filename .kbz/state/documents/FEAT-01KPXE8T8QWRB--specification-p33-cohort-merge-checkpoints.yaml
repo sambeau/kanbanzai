@@ -2,9 +2,11 @@ id: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints
 path: work/spec/p33-cohort-merge-checkpoints.md
 type: specification
 title: Cohort-Based Merge Checkpoints Specification
-status: draft
+status: approved
 owner: FEAT-01KPXE8T8QWRB
-content_hash: dba197cfdb615422d6f3fed76f208a66ba8b237f3ab749bab5b3b63c8b91549c
+approved_by: sambeau
+approved_at: "2026-04-23T15:16:06Z"
+content_hash: f9175bc670d1c643e6e1c01cafa004b9fb3754dafd202f17374e6128705f4e9f
 created: "2026-04-23T15:15:57Z"
 created_by: sambeau
-updated: "2026-04-23T15:15:57Z"
+updated: "2026-04-23T15:16:06Z"
