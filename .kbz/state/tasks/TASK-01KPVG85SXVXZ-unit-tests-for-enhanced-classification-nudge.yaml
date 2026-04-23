@@ -3,7 +3,7 @@ parent_feature: FEAT-01KPVDDYSEK8P
 slug: unit-tests-for-enhanced-classification-nudge
 name: Unit tests for enhanced classification nudge
 summary: "Write unit and benchmark tests for the structured classification_nudge: (AC-001) assert nudge is a JSON object with message, content_hash, outline fields; (AC-002) message equals previous instructional string; (AC-003) content_hash passes to doc_intel classify without hash-mismatch error; (AC-004) outline deep-equals doc_intel guide response sections; (AC-005) batch-register 3 docs, each result has structured nudge; (AC-006) register+classify in 2 calls with no intermediate guide call; (AC-009) p99 latency delta ≤ 50 ms over 100 invocations with 50-section fixture. Covers REQ-001 through REQ-006, REQ-NF-001."
-status: active
+status: ready
 claimed_at: "2026-04-23T01:41:00Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T01:41:00Z"
