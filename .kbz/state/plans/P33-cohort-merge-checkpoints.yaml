@@ -6,4 +6,4 @@ summary: "Add a lightweight cohort model to prevent worktree drift at scale: fea
 design: P33-cohort-merge-checkpoints/design-p33-cohort-merge-checkpoints
 created: "2026-04-23T14:55:30Z"
 created_by: sambeau
-updated: "2026-04-23T14:55:59Z"
+updated: "2026-04-23T14:56:17Z"
