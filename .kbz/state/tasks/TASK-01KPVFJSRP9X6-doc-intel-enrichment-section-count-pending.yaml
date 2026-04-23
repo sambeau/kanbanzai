@@ -3,4 +3,15 @@ parent_feature: FEAT-01KPVDDYQQS1Y
 slug: doc-intel-enrichment-section-count-pending
 name: Add section_count field to pending response
 summary: "Extend the pending response struct with SectionCount and populate it from the Layer 1 index in the pending handler (REQ-001, REQ-002)"
-status: ready
+status: done
+files_planned:
+  - internal/service/intelligence.go
+  - internal/service/intelligence_test.go
+  - internal/mcp/doc_intel_tool.go
+completed: "2026-04-23T01:32:02Z"
+claimed_at: "2026-04-23T01:21:30Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-23T01:21:30Z"
+dispatched_by: sambeau
+completion_summary: "Added section_count field to pending response. Added PendingDocEntry struct with ID and SectionCount fields to service/intelligence.go. Modified GetPendingClassification to return []PendingDocEntry (populating SectionCount via countSections recursive helper from Layer 1 index). Updated intelligence_test.go to use .ID field accessor. Pending handler in doc_intel_tool.go now outputs documents array with {id, section_count} objects."
+verification: go build ./... passes cleanly. Existing TestGetPendingClassification test updated to use new struct accessor.

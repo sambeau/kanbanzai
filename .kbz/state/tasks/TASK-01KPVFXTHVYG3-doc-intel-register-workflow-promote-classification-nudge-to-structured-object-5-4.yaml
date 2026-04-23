@@ -3,4 +3,8 @@ parent_feature: FEAT-01KPVDDYSEK8P
 slug: doc-intel-register-workflow-promote-classification-nudge-to-structured-object-5-4
 name: "Promote `classification_nudge` to structured object (§5.4)"
 summary: "Promote `classification_nudge` to structured object (§5.4)"
-status: ready
+status: active
+claimed_at: "2026-04-23T01:21:58Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-23T01:21:58Z"
+dispatched_by: sambeau
