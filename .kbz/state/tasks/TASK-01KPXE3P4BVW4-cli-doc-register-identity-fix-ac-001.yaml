@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPX5CW2PTMD
 slug: cli-doc-register-identity-fix-ac-001
 name: AC-001 local.yaml user field resolves identity
 summary: "AC-001: (REQ-001) Given `.kbz/local.yaml` contains `user: alice` and `--by` is not supplied, when `kbz doc register` is invoked with a valid path, type, and title, then the document is registered with `created_by: alice` and the command exits with status 0."
-status: queued
+status: ready

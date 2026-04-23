@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPX5CW2PTMD
 slug: cli-doc-register-identity-fix-ac-005
 name: AC-005 help output lists --by flag
 summary: "AC-005: (REQ-005) Given `kbz doc register --help` is invoked, then the output includes `--by` in the flags list with a description indicating it is the identity override."
-status: queued
+status: ready

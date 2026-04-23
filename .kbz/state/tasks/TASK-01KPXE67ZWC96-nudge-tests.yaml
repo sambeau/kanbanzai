@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPX5CVYWDFF
 slug: nudge-tests
 name: Write tests for two-call classify workflow
 summary: Write tests verifying the two-call (register → classify) workflow produces correct output using classification_nudge fields
-status: queued
+status: ready

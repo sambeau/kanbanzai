@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPX5CW0QSM7
 slug: concept-tagging-approval-gate-ac-009
 name: AC-009 Document status unchanged after blocked approval
 summary: AC-009 document status unchanged on gate block
-status: queued
+status: ready

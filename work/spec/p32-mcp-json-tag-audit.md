@@ -1,7 +1,7 @@
 | Field  | Value                                              |
 |--------|----------------------------------------------------|
 | Date   | 2026-04-23                                         |
-| Status | Draft                                              |
+| Status | approved |
 | Author | spec-author                                        |
 | Plan   | P32-doc-intel-classification-pipeline-hardening    |
 | Feature | FEAT-01KPX5CW4R82P mcp-parameter-struct-json-audit |
@@ -9,13 +9,19 @@
 > This specification implements the design described in
 > `work/design/p32-independent-fixes.md` — Fix 2: MCP parameter struct JSON tag audit.
 
-## Problem Statement
+## Overview
 
 MCP tool parameters are transmitted as JSON and decoded via `json.Unmarshal`. Go's default JSON decoder performs case-insensitive matching, but snake_case JSON keys (e.g. `section_path`) do not match CamelCase Go field names (e.g. `SectionPath`) unless an explicit `json:"section_path"` tag is present. When the tag is absent, the field is silently populated with its zero value — no error is returned, no warning is emitted.
 
+This specification covers the systematic audit of all MCP parameter structs in `internal/mcp/` that carry `yaml:` tags, the addition of any missing `json:` tags, and the introduction of a round-trip regression test that will catch this class of defect mechanically going forward.
+
+## Problem Statement
+
 Structs in `internal/mcp/` that carry `yaml:` tags are the highest-risk population: they were written for YAML state storage first and later reused as JSON deserialization targets. The `Classification` struct had exactly this defect during the P28 Layer 3 pilot — `SectionPath` was always empty because only a `yaml:"section_path"` tag was present. `Classification` and `ConceptIntroEntry` were fixed in P28.
 
-This specification covers the systematic audit of all remaining MCP parameter structs in `internal/mcp/` that carry `yaml:` tags, the addition of any missing `json:` tags, and the introduction of a round-trip regression test that will catch this class of defect mechanically going forward.
+Without a systematic audit and a regression test, new structs introduced in future features risk repeating this silent deserialization failure.
+
+## Scope
 
 **Included in scope:**
 - Exported struct fields in structs within `internal/mcp/` that carry one or more `yaml:` tags and are used as targets of `json.Unmarshal` or populated from MCP `req.Params.Arguments`
@@ -29,9 +35,7 @@ This specification covers the systematic audit of all remaining MCP parameter st
 
 ---
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 - **REQ-001:** Every exported field in every struct within `internal/mcp/` that (a) carries at least one `yaml:` struct tag and (b) is used as a JSON deserialization target must have an explicit `json:"<snake_case_field_name>"` tag.
 
@@ -43,7 +47,7 @@ This specification covers the systematic audit of all remaining MCP parameter st
 
 - **REQ-005:** The regression test must be runnable via `go test ./internal/mcp/...` with no additional flags or environment variables.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 - **REQ-NF-001:** The audit must produce zero false negatives — every exported field in a `yaml:`-tagged struct that is a JSON deserialization target must be inspected. Manual inspection is acceptable; partial inspection is not.
 
@@ -66,17 +70,17 @@ This specification covers the systematic audit of all remaining MCP parameter st
 
 ## Acceptance Criteria
 
-- **AC-001 (REQ-001, REQ-002):** Given the complete set of structs in `internal/mcp/` that carry `yaml:` tags and are used as JSON deserialization targets (excluding `Classification` and `ConceptIntroEntry`), when each exported field is inspected, then every such field has an explicit `json:"<snake_case_name>"` tag whose value matches the corresponding `yaml:` tag name.
+- **AC-001.** Given the complete set of structs in `internal/mcp/` that carry `yaml:` tags and are used as JSON deserialization targets (excluding `Classification` and `ConceptIntroEntry`), when each exported field is inspected, then every such field has an explicit `json:"<snake_case_name>"` tag whose value matches the corresponding `yaml:` tag name.
 
-- **AC-002 (REQ-003):** Given a representative set of MCP parameter structs populated with non-zero values for every exported field, when the struct is marshalled to JSON and then unmarshalled into a zero-value instance of the same type, then the unmarshalled instance is equal to the original (i.e. no field is lost or zeroed).
+- **AC-002.** Given a representative set of MCP parameter structs populated with non-zero values for every exported field, when the struct is marshalled to JSON and then unmarshalled into a zero-value instance of the same type, then the unmarshalled instance is equal to the original (i.e. no field is lost or zeroed).
 
-- **AC-003 (REQ-004):** Given a struct in `internal/mcp/` that carries `yaml:` tags but has one or more exported fields missing `json:` tags, when `go test ./internal/mcp/...` is executed, then the regression test fails with an output that identifies the offending struct and field.
+- **AC-003.** Given a struct in `internal/mcp/` that carries `yaml:` tags but has one or more exported fields missing `json:` tags, when `go test ./internal/mcp/...` is executed, then the regression test fails with an output that identifies the offending struct and field.
 
-- **AC-004 (REQ-005):** Given a clean checkout of the repository with no environment customisation, when `go test ./internal/mcp/...` is run, then the regression test passes with exit code 0 and completes without error.
+- **AC-004.** Given a clean checkout of the repository with no environment customisation, when `go test ./internal/mcp/...` is run, then the regression test passes with exit code 0 and completes without error.
 
-- **AC-005 (REQ-NF-002):** Given the full `internal/mcp/` test suite, when `go test -v -run TestJSONTagRoundTrip ./internal/mcp/...` is executed, then the test function completes in under 1 second.
+- **AC-005.** Given the full `internal/mcp/` test suite, when `go test -v -run TestJSONTagRoundTrip ./internal/mcp/...` is executed, then the test function completes in under 1 second.
 
-- **AC-006 (REQ-NF-003):** Given the existing MCP integration tests or manual verification, when MCP tool calls that exercise the audited structs are made with their existing snake_case parameter names, then the tool calls produce the same results as before the `json:` tags were added.
+- **AC-006.** Given the existing MCP integration tests or manual verification, when MCP tool calls that exercise the audited structs are made with their existing snake_case parameter names, then the tool calls produce the same results as before the `json:` tags were added.
 
 ---
 

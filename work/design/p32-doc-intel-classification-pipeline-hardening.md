@@ -1,9 +1,35 @@
 | Field  | Value                                          |
 |--------|------------------------------------------------|
 | Date   | 2026-04-23                                     |
-| Status | Draft                                          |
+| Status | approved |
 | Author | sambeau                                        |
 | Plan   | P32-doc-intel-classification-pipeline-hardening |
+
+## Overview
+
+This design addresses Clusters C1 and C2 from the doc-intel recurring issues investigation: voluntary-step compliance failures and tool information gaps in the classify-on-register pipeline. It specifies three coordinated server-side changes — heading-based concept suggestions in the `guide` response, expanded `suggested_classifications` coverage, and a concept-tagging approval gate — that together escalate concept tagging from advisory to enforced for specification, design, and dev-plan documents.
+
+## Goals and Non-Goals
+
+**Goals**
+- Add `concepts_suggested` (heading-derived concept candidates) to the `doc_intel guide` response
+- Expand `suggested_classifications` to cover all heading-deterministic section patterns
+- Block `doc approve` for specification, design, and dev-plan documents that have been classified but have no `concepts_intro`-populated sections
+- Reduce the classify-on-register friction so agents can produce a high-quality classify call using only the `guide` output
+
+**Non-Goals**
+- Auto-populating `concepts_intro` without agent involvement
+- Enforcing concept tagging at classify time (would break batch backlog runs)
+- Changes to the `doc_intel classify` action interface
+- Enforcing concept tagging on document types other than specification, design, and dev-plan
+- Changes to the state store schema or classification data model
+
+## Dependencies
+
+- `internal/mcp/doc_intel_tool.go` — `docIntelGuideAction` and supporting helpers
+- `internal/mcp/doc_tool.go` — `docApproveOne`
+- `internal/docint/` — `IntelligenceService`, classification index read path
+- No new tool actions; no schema migrations required
 
 ## Related Work
 

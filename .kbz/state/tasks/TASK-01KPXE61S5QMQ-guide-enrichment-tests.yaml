@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPX5CVVY357
 slug: guide-enrichment-tests
 name: Write tests for guide concept enrichment
 summary: Write unit tests for concepts_suggested derivation and expanded suggested_classifications heading patterns
-status: queued
+status: ready

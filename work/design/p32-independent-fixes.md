@@ -1,9 +1,32 @@
 | Field  | Value                                          |
 |--------|------------------------------------------------|
 | Date   | 2026-04-23                                     |
-| Status | Draft                                          |
+| Status | approved |
 | Author | sambeau                                        |
 | Plan   | P32-doc-intel-classification-pipeline-hardening |
+
+## Overview
+
+This design covers two independent point fixes that share no code path and have no ordering dependency on the pipeline enrichment features (FEAT-1, FEAT-2, FEAT-3). Fix 1 adds a `config.ResolveIdentity` call to the CLI `doc register` command so that `--by` is optional when identity is resolvable from `.kbz/local.yaml` or git config. Fix 2 audits all MCP parameter structs in `internal/mcp/` that carry `yaml:` tags for missing `json:` tags — the same class of silent deserialization bug fixed in the `Classification` struct during P28 — and adds a regression test.
+
+## Goals and Non-Goals
+
+**Goals**
+- Make `kbz doc register` auto-resolve identity from `.kbz/local.yaml` / `git config user.name` when `--by` is omitted, matching the behaviour of the MCP tool and other CLI commands
+- Audit all `internal/mcp/` parameter structs with `yaml:` tags for missing `json:` tags
+- Add a round-trip regression test that will fail if a future struct gains a `yaml:` tag without a `json:` tag
+
+**Non-Goals**
+- Changes to `service.SubmitDocument` or any other service-layer method
+- Changes to the MCP `doc(action: "register")` tool (already correct)
+- Expanding the JSON tag audit beyond `internal/mcp/` structs
+- Fixing any struct deserialization bugs outside the known `yaml:`-tagged population
+
+## Dependencies
+
+- `cmd/kanbanzai/doc_cmd.go` — `runDocRegister` (Fix 1)
+- `internal/mcp/` — parameter structs with `yaml:` tags (Fix 2)
+- `config.ResolveIdentity` — already imported by other commands in the same package
 
 ## Related Work
 

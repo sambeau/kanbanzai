@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPX5CW0QSM7
 slug: concept-tagging-approval-gate-ac-007
 name: AC-007 Gate skipped when intelligence service is nil
 summary: AC-007 nil intelligence service skips gate
-status: queued
+status: ready

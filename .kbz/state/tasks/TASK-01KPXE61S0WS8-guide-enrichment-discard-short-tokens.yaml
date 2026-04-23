@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPX5CVVY357
 slug: guide-enrichment-discard-short-tokens
 name: Discard short concept tokens
 summary: Discard any concept token shorter than two characters after normalisation
-status: queued
+status: ready

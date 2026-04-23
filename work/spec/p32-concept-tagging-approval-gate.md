@@ -1,7 +1,7 @@
 | Field  | Value                                                                 |
 |--------|-----------------------------------------------------------------------|
 | Date   | 2026-04-23                                                            |
-| Status | Draft                                                                 |
+| Status | approved |
 | Author | spec-author                                                           |
 
 # Specification: Concept Tagging Approval Gate
@@ -31,6 +31,24 @@ Prior attempts to address this through advisory skill guidance produced no measu
 improvement in concept tagging compliance (P27 investigation). A hard gate at approval
 time is required. The approve action is the correct enforcement point: it is deliberate,
 non-batched, and the last gate before a document becomes permanent.
+
+---
+
+## Scope
+
+**In scope:**
+- Adding a concept-tagging gate to `doc(action: "approve")` for document types `specification`, `design`, and `dev-plan`.
+- Adding a `GetClassifications` method to the `IntelligenceService` interface.
+- Returning a structured `concept_tagging_required` error when the gate fires.
+- Skipping the gate when the intelligence service is nil.
+
+**Out of scope:**
+- Document types `policy`, `report`, and `research` — these pass through the existing approval flow unchanged.
+- Documents with zero classification entries — the existing `classification_nudge` mechanism covers these.
+- Changes to any MCP tool actions, tool names, or tool parameters.
+- Changes to the `doc_intel` classification or guide flows.
+- Any UI or client-side changes.
+- Modifications to the underlying Layer 1 index schema.
 
 ---
 
@@ -154,20 +172,20 @@ re-evaluate on each approve call and MUST NOT cache a previous blocked result.
 
 ## Acceptance Criteria
 
-**AC-001 (REQ-001, REQ-009):** Given a document of type `policy`, `report`, or `research`
+**AC-001.** (REQ-001, REQ-009) Given a document of type `policy`, `report`, or `research`
 that has been classified with no `concepts_intro`, when `doc(action: "approve")` is
 called, then the document is approved successfully and no `concept_tagging_required`
 error is returned.
 
-**AC-002 (REQ-002):** Given a document of type `specification` with zero classification
+**AC-002.** (REQ-002) Given a document of type `specification` with zero classification
 entries in the index, when `doc(action: "approve")` is called, then the document is
 approved successfully and no `concept_tagging_required` error is returned.
 
-**AC-003 (REQ-003, REQ-004):** Given a document of type `design` that has classification
+**AC-003.** (REQ-003, REQ-004) Given a document of type `design` that has classification
 entries and at least one entry with a non-empty `concepts_intro`, when
 `doc(action: "approve")` is called, then the document is approved successfully.
 
-**AC-004 (REQ-004, REQ-005, REQ-006):** Given a document of type `specification` that has
+**AC-004.** (REQ-004, REQ-005, REQ-006) Given a document of type `specification` that has
 at least one classification entry and no entry with a non-empty `concepts_intro`, when
 `doc(action: "approve")` is called, then:
 - The response contains an error with `error_code: "concept_tagging_required"`
@@ -175,33 +193,33 @@ at least one classification entry and no entry with a non-empty `concepts_intro`
 - The response `message` contains the instruction text from REQ-006
 - The document status is NOT changed to approved
 
-**AC-005 (REQ-004, REQ-005):** Given a document of type `dev-plan` that has at least one
+**AC-005.** (REQ-004, REQ-005) Given a document of type `dev-plan` that has at least one
 classification entry and no entry with a non-empty `concepts_intro`, when
 `doc(action: "approve")` is called, then the response contains
 `error_code: "concept_tagging_required"` and the document is not approved.
 
-**AC-006 (REQ-005):** Given that the gate fires for a document, when the error response
+**AC-006.** (REQ-005) Given that the gate fires for a document, when the error response
 is inspected, then `content_hash` matches the `content_hash` present in the document's
 most recent classification index entry.
 
-**AC-007 (REQ-007):** Given the intelligence service is nil (not configured), when
+**AC-007.** (REQ-007) Given the intelligence service is nil (not configured), when
 `doc(action: "approve")` is called for a `specification` document that would otherwise
 trigger the gate, then the document is approved successfully (gate is skipped).
 
-**AC-008 (REQ-008):** Given the `IntelligenceService` interface, when `GetClassifications`
+**AC-008.** (REQ-008) Given the `IntelligenceService` interface, when `GetClassifications`
 is called with a document ID that has no classification entries, then it returns an empty
 slice and a nil error (not an error).
 
-**AC-009 (REQ-010):** Given the gate fires, when the document status is inspected
+**AC-009.** (REQ-010) Given the gate fires, when the document status is inspected
 immediately after the failed approval, then the status is identical to its status before
 the approve call was made (not partially mutated).
 
-**AC-010 (REQ-NF-003):** Given a `doc(action: "approve")` call that was blocked by the
+**AC-010.** (REQ-NF-003) Given a `doc(action: "approve")` call that was blocked by the
 gate, when the agent calls `doc_intel(action: "classify")` with `concepts_intro` populated
 on at least one section, and then retries `doc(action: "approve")`, then the retry
 succeeds and the document is approved.
 
-**AC-011 (REQ-NF-002):** Given a project where the intelligence service is not
+**AC-011.** (REQ-NF-002) Given a project where the intelligence service is not
 initialised, when `doc(action: "approve")` is called for any document type, then the
 behaviour is identical to the pre-feature baseline (no errors, no gate, no latency
 increase).

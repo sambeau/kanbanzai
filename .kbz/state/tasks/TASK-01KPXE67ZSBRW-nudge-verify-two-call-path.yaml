@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPX5CVYWDFF
 slug: nudge-verify-two-call-path
 name: Verify two-call classify-on-register path
 summary: Verify and document that the register response classification_nudge (content_hash + outline) already enables a two-call classify workflow
-status: queued
+status: ready

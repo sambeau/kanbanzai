@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPX5CW0QSM7
 slug: concept-tagging-approval-gate-ac-011
 name: AC-011 Approval unchanged when intel service absent
 summary: AC-011 backward compatibility no intel service
-status: queued
+status: ready

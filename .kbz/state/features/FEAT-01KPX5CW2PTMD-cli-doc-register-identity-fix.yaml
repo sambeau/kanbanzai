@@ -2,7 +2,7 @@ id: FEAT-01KPX5CW2PTMD
 slug: cli-doc-register-identity-fix
 name: CLI doc register Identity Resolution Fix
 parent: P32-doc-intel-classification-pipeline-hardening
-status: dev-planning
+status: developing
 summary: "Fix the doc register CLI command to call config.ResolveIdentity(\"\") — the same helper already used by worktree create and other commands — so that created_by is auto-resolved from .kbz/local.yaml or git config user.name without requiring the --by flag. One-line fix. Eliminates the six-attempt registration friction documented in the P27 retrospective."
 spec: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix
 dev_plan: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed

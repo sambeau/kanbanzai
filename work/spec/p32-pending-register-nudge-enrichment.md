@@ -1,7 +1,7 @@
 | Field  | Value                                                                 |
 |--------|-----------------------------------------------------------------------|
 | Date   | 2026-04-23                                                            |
-| Status | Draft                                                                 |
+| Status | approved |
 | Author | spec-author                                                           |
 
 # Specification: P32 Pending and Register Nudge Response Enrichment
@@ -48,6 +48,10 @@ document content in context* — the existing scenario for which P28's enriched 
 response was designed. For cold-context agents, the recommended path remains three calls,
 but the `guide` response is now richer.
 
+---
+
+## Scope
+
 **In scope:**
 - Confirming and specifying the constraints under which the two-call classify-on-register
   path (`register` → `classify`) produces a valid, concept-tagged classification.
@@ -67,9 +71,7 @@ but the `guide` response is now richer.
 
 ---
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 **REQ-001 — Two-call classify-on-register path is self-sufficient**  
 An agent that has document content in context at registration time MUST be able to complete
@@ -126,7 +128,7 @@ any pre-existing field in the `guide` response: `id`, `outline`, `entity_refs`,
 `extraction_hints`, `content_hash`, `classified`, `suggested_classifications`, and
 `taxonomy`.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 **REQ-NF-001 — `guide` response latency overhead for `concepts_suggested`**  
 The addition of `concepts_suggested` MUST NOT increase the p95 latency of

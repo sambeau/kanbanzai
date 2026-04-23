@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPX5CW4R82P
 slug: write-json-round-trip-regression-test
 name: Write JSON round-trip regression test for MCP param structs
 summary: "AC-002 + AC-003 + AC-004 + AC-005: Create TestJSONTagRoundTrip in internal/mcp/ that marshals representative MCP param structs to JSON and unmarshals back, asserting all fields survive the round-trip; include reflection-based check that fails if any yaml-tagged exported field lacks a json tag; test must pass via go test ./internal/mcp/... and complete in under 1 second."
-status: queued
+status: ready

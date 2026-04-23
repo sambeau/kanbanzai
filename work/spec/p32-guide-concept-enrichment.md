@@ -1,7 +1,7 @@
 | Field  | Value                                                                              |
 |--------|------------------------------------------------------------------------------------|
 | Date   | 2026-04-23                                                                         |
-| Status | Draft                                                                              |
+| Status | approved |
 | Author | spec-author                                                                        |
 
 # Specification: P32 Guide Response Concept and Classification Enrichment
@@ -16,6 +16,22 @@ response, corresponding to §C2a and §C2b of the P32 design document
   heading-derived concept name candidates to assist agents during classification preparation.
 - **C2b** — Expand the existing `suggested_classifications` array (introduced in P28) to
   cover all heading-deterministic sections beyond the two patterns already handled.
+
+---
+
+## Scope
+
+**In scope:**
+- Adding a `concepts_suggested` array to the `guide` response (C2a).
+- Expanding the `suggested_classifications` array with additional heading-pattern → role mappings (C2b).
+- All changes confined to `internal/mcp/doc_intel_tool.go` and any helper functions it calls.
+
+**Out of scope:**
+- Changes to `classify`, `outline`, `section`, `find`, `trace`, `impact`, `search`, or `pending` actions.
+- Changes to `internal/docint/types.go` or the classification store schema.
+- Changes to how classifications are stored, validated, or auto-applied.
+- Any UI or client-side changes.
+- Modifications to the underlying Layer 1 index schema.
 
 ---
 

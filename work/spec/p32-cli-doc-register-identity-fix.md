@@ -1,21 +1,27 @@
 | Field  | Value                                              |
 |--------|----------------------------------------------------|
 | Date   | 2026-04-23                                         |
-| Status | Draft                                              |
+| Status | approved |
 | Author | spec-author                                        |
 | Plan   | P32-doc-intel-classification-pipeline-hardening    |
 | Feature | FEAT-01KPX5CW2PTMD — CLI doc register Identity Resolution Fix |
 
-## Problem Statement
+# Specification: CLI doc register Identity Resolution Fix
+
+## Overview
 
 This specification covers the fix for `kbz doc register` failing with `created_by is required` when the `--by` flag is omitted, even when the user's identity is resolvable from `.kbz/local.yaml` or `git config user.name`.
 
-> This specification implements the design described in
-> `work/design/p32-independent-fixes.md` — section "Fix 1 — CLI doc register identity resolution".
+## Problem Statement
 
 The root cause is that `runDocRegister` in `cmd/kanbanzai/doc_cmd.go` passes the raw `--by` value (empty string when omitted) directly to `docSvc.SubmitDocument`, bypassing `config.ResolveIdentity`. The MCP `doc(action: "register")` tool already calls `config.ResolveIdentity` and succeeds without an explicit identity argument. This asymmetry causes the CLI to fail in the common case where a user's identity is already configured but `--by` is not supplied.
 
 The fix is a single call to `config.ResolveIdentity(createdBy)` added to `runDocRegister` after flag parsing, matching the pattern used by `runWorktreeCreate`, `runMergeRun`, and `runImport`.
+
+> This specification implements the design described in
+> `work/design/p32-independent-fixes.md` — section "Fix 1 — CLI doc register identity resolution".
+
+## Scope
 
 **In scope:**
 - Identity resolution behaviour of `kbz doc register` when `--by` is omitted
@@ -28,11 +34,7 @@ The fix is a single call to `config.ResolveIdentity(createdBy)` added to `runDoc
 - Any other CLI command's identity resolution
 - Fix 2 of the same design document (MCP JSON tag audit — covered by a separate specification)
 
----
-
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 - **REQ-001:** When `--by` is omitted and a `user` field is present in `.kbz/local.yaml`, `kbz doc register` MUST use that value as `created_by` without error.
 
@@ -44,13 +46,11 @@ The fix is a single call to `config.ResolveIdentity(createdBy)` added to `runDoc
 
 - **REQ-005:** The `--by` flag MUST remain present in the command's help text as an optional flag for explicit identity override.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 - **REQ-NF-001:** The identity resolution step MUST add no observable latency beyond the time taken by `git config user.name` lookup (a single subprocess call), which must complete within 500 ms on any supported platform under normal conditions.
 
 - **REQ-NF-002:** The error message returned when identity cannot be resolved MUST be the same message already produced by `config.ResolveIdentity` for this failure mode, with no additional wrapping, so that the failure reason is immediately clear to the user.
-
----
 
 ## Constraints
 
@@ -61,25 +61,21 @@ The fix is a single call to `config.ResolveIdentity(createdBy)` added to `runDoc
 - This specification does NOT cover the MCP JSON tag audit (Fix 2 of `p32-independent-fixes.md`).
 - This specification does NOT cover identity resolution for any CLI command other than `doc register`.
 
----
-
 ## Acceptance Criteria
 
-- **AC-001 (REQ-001):** Given `.kbz/local.yaml` contains `user: alice` and `--by` is not supplied, when `kbz doc register` is invoked with a valid path, type, and title, then the document is registered with `created_by: alice` and the command exits with status 0.
+- **AC-001.** (REQ-001) Given `.kbz/local.yaml` contains `user: alice` and `--by` is not supplied, when `kbz doc register` is invoked with a valid path, type, and title, then the document is registered with `created_by: alice` and the command exits with status 0.
 
-- **AC-002 (REQ-002):** Given `.kbz/local.yaml` does not contain a `user` field (or the file is absent) and `git config user.name` returns `bob`, and `--by` is not supplied, when `kbz doc register` is invoked with a valid path, type, and title, then the document is registered with `created_by: bob` and the command exits with status 0.
+- **AC-002.** (REQ-002) Given `.kbz/local.yaml` does not contain a `user` field (or the file is absent) and `git config user.name` returns `bob`, and `--by` is not supplied, when `kbz doc register` is invoked with a valid path, type, and title, then the document is registered with `created_by: bob` and the command exits with status 0.
 
-- **AC-003 (REQ-003):** Given `.kbz/local.yaml` contains `user: alice` and `git config user.name` returns `bob`, when `kbz doc register` is invoked with `--by carol` and a valid path, type, and title, then the document is registered with `created_by: carol` and the command exits with status 0.
+- **AC-003.** (REQ-003) Given `.kbz/local.yaml` contains `user: alice` and `git config user.name` returns `bob`, when `kbz doc register` is invoked with `--by carol` and a valid path, type, and title, then the document is registered with `created_by: carol` and the command exits with status 0.
 
-- **AC-004 (REQ-004):** Given `.kbz/local.yaml` does not contain a `user` field (or is absent) and `git config user.name` returns an empty value or error, and `--by` is not supplied, when `kbz doc register` is invoked, then the command exits with a non-zero status, prints an error indicating identity could not be resolved, and no document is registered.
+- **AC-004.** (REQ-004) Given `.kbz/local.yaml` does not contain a `user` field (or is absent) and `git config user.name` returns an empty value or error, and `--by` is not supplied, when `kbz doc register` is invoked, then the command exits with a non-zero status, prints an error indicating identity could not be resolved, and no document is registered.
 
-- **AC-005 (REQ-005):** Given `kbz doc register --help` is invoked, then the output includes `--by` in the flags list with a description indicating it is the identity override.
+- **AC-005.** (REQ-005) Given `kbz doc register --help` is invoked, then the output includes `--by` in the flags list with a description indicating it is the identity override.
 
-- **AC-006 (REQ-NF-001):** Given a system under normal load where `git config user.name` responds within 500 ms, when `kbz doc register` is invoked without `--by`, then the command completes within the same time budget as before the fix plus the `git config` subprocess duration.
+- **AC-006.** (REQ-NF-001) Given a system under normal load where `git config user.name` responds within 500 ms, when `kbz doc register` is invoked without `--by`, then the command completes within the same time budget as before the fix plus the `git config` subprocess duration.
 
-- **AC-007 (REQ-NF-002):** Given identity cannot be resolved, when `kbz doc register` returns an error, then the error text is the unmodified message from `config.ResolveIdentity` with no additional prefix or wrapping beyond what `runDocRegister` already applies to other errors.
-
----
+- **AC-007.** (REQ-NF-002) Given identity cannot be resolved, when `kbz doc register` returns an error, then the error text is the unmodified message from `config.ResolveIdentity` with no additional prefix or wrapping beyond what `runDocRegister` already applies to other errors.
 
 ## Verification Plan
 
