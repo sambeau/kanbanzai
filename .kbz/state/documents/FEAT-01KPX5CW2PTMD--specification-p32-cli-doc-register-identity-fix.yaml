@@ -2,9 +2,11 @@ id: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix
 path: work/spec/p32-cli-doc-register-identity-fix.md
 type: specification
 title: "P32: CLI doc register Identity Resolution Fix"
-status: draft
+status: approved
 owner: FEAT-01KPX5CW2PTMD
-content_hash: 81d13feaff680e63b751816d19f7fa2f38465e62facd5f3a474c62be4e04ac40
+approved_by: sambeau
+approved_at: "2026-04-23T15:03:50Z"
+content_hash: da28255c767e046818d8078a8e0301b68ba28cf42c4a1a1520db9265756793a4
 created: "2026-04-23T14:59:42Z"
 created_by: sambeau
-updated: "2026-04-23T14:59:42Z"
+updated: "2026-04-23T15:03:50Z"
