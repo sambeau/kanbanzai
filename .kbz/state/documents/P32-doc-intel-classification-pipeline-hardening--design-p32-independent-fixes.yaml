@@ -1,0 +1,10 @@
+id: P32-doc-intel-classification-pipeline-hardening/design-p32-independent-fixes
+path: work/design/p32-independent-fixes.md
+type: design
+title: "P32: Doc-Intel Classification Pipeline Hardening — Independent Fixes (CLI Identity + JSON Tag Audit)"
+status: draft
+owner: P32-doc-intel-classification-pipeline-hardening
+content_hash: d1cb77ef6a53f5f919256e088dc6e977cf5bfd6becfdede81af3cf89a43c831b
+created: "2026-04-23T14:48:38Z"
+created_by: sambeau
+updated: "2026-04-23T14:48:38Z"
