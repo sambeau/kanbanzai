@@ -1,8 +1,9 @@
 id: P32-doc-intel-classification-pipeline-hardening
 slug: doc-intel-classification-pipeline-hardening
 name: Doc-Intel Classification Pipeline Hardening
-status: proposed
+status: designing
 summary: "Close the classify-on-register compliance gap by improving tool affordance (heading-based concept suggestions in guide, section count in pending, content_hash in register nudge) and escalating concept tagging from advisory to enforced via a doc-approve stage gate. Addresses Clusters C1 and C2 from the doc-intel recurring issues investigation as a single coherent plan. Also includes the CLI identity resolution fix (C4) and MCP parameter struct audit (C3 follow-on)."
+design: P32-doc-intel-classification-pipeline-hardening/design-p32-doc-intel-classification-pipeline-hardening
 created: "2026-04-23T12:34:36Z"
 created_by: sambeau
-updated: "2026-04-23T12:34:36Z"
+updated: "2026-04-23T14:48:23Z"

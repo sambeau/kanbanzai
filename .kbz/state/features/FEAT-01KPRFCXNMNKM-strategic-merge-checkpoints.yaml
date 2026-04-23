@@ -27,3 +27,5 @@ overrides:
     reason: Research feature — task already exists; no dev-plan document needed.
     timestamp: "2026-04-23T15:37:56+01:00"
     to_status: developing
+verification: "TASK-01KPRFD8ZJFXP: Research document registered as FEAT-01KPRFCXNMNKM/research-cohort-merge-checkpoints and approved."
+verification_status: passed
