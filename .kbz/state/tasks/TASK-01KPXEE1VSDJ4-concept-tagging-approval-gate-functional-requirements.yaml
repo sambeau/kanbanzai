@@ -3,8 +3,8 @@ parent_feature: FEAT-01KPX5CW0QSM7
 slug: concept-tagging-approval-gate-functional-requirements
 name: Implement gate functional requirements REQ-001 to REQ-003
 summary: Implement Functional Requirements (3 criteria)
-status: ready
-claimed_at: "2026-04-23T15:25:31Z"
+status: active
+claimed_at: "2026-04-23T16:18:12Z"
 dispatched_to: unspecified
-dispatched_at: "2026-04-23T15:25:31Z"
+dispatched_at: "2026-04-23T16:18:12Z"
 dispatched_by: sambeau
