@@ -823,8 +823,12 @@ conventional_roles:
     - section_path: 1.16.3
       role: decision
       confidence: high
-access_count: 2
-last_accessed_at: 2026-04-22T18:13:51.379649Z
+access_count: 5
+last_accessed_at: 2026-04-23T11:40:26.247612Z
+section_access:
+    1.2.5:
+        access_count: 1
+        last_accessed_at: 2026-04-23T11:40:26.247612Z
 classified: true
 classified_at: 2026-04-22T18:21:41.764414Z
 classified_by: claude-sonnet-4-6

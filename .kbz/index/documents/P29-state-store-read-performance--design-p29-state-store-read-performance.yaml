@@ -1,0 +1,188 @@
+document_id: P29-state-store-read-performance/design-p29-state-store-read-performance
+document_path: work/design/p29-state-store-read-performance.md
+content_hash: ed39e58e490c5b23f6c654b48075d09d7177a967a17780b2b6a82843c0a3e372
+indexed_at: 2026-04-23T11:49:53.012063Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: State Store Read Path Performance (P29)'
+      byte_offset: 0
+      byte_count: 18505
+      word_count: 2770
+      content_hash: ed39e58e490c5b23f6c654b48075d09d7177a967a17780b2b6a82843c0a3e372
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 293
+          byte_count: 2571
+          word_count: 358
+          content_hash: 777ac9f1cb45b9fdb9449308ed19805d6b8cf5e800119416cd17ff2bb0ac92a3
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Prior documents consulted
+              byte_offset: 310
+              byte_count: 1144
+              word_count: 145
+              content_hash: 77c171b5dfe2d42a94443ac107a3537a241d10ad849d3267b92d02015f4ecc6f
+            - path: 1.1.2
+              level: 3
+              title: Decisions that constrain this design
+              byte_offset: 1454
+              byte_count: 895
+              word_count: 136
+              content_hash: 48310050c212efc0278bf74e4478046f4f3b448e36cd01f078012f273feb12d9
+            - path: 1.1.3
+              level: 3
+              title: Open questions from prior work
+              byte_offset: 2349
+              byte_count: 515
+              word_count: 74
+              content_hash: b4eaf5f63a72b0a41b6c6db7f3746b3487d6dfd453b4ac8904a92344c983014a
+        - path: "1.2"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 2864
+          byte_count: 2101
+          word_count: 316
+          content_hash: b59d1f618e81a717043895e73153a41ec2694266ffbb65eba0b7f909140cc44e
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 4965
+          byte_count: 6585
+          word_count: 992
+          content_hash: 89ce04d667c8e4657509cd51e5d8613abb072421d783380696a22f7a013ff03b
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Overview
+              byte_offset: 4976
+              byte_count: 1084
+              word_count: 159
+              content_hash: e7e5e0e88c54bf197395c5e5ba0c1d2ea58da5fc981d5abcaab93296a16ecc30
+            - path: 1.3.2
+              level: 3
+              title: Component responsibilities
+              byte_offset: 6060
+              byte_count: 3396
+              word_count: 502
+              content_hash: d239952ab50418834d4e1c28a2c365f42d76c34a01b6ac76ddcb61eed9794ceb
+            - path: 1.3.3
+              level: 3
+              title: 'Consistency model: write-through with fallback reads'
+              byte_offset: 9456
+              byte_count: 871
+              word_count: 133
+              content_hash: 6a8ffb768459a9f5ce6d0065d064d4866af6a5cab3683cecf701f76355bc61ca
+            - path: 1.3.4
+              level: 3
+              title: Failure modes
+              byte_offset: 10327
+              byte_count: 604
+              word_count: 101
+              content_hash: 5c4ebf9b42229cd30320f5b998e6c413708c47270b34f67ec3e440c5d417b122
+            - path: 1.3.5
+              level: 3
+              title: What this design does NOT change
+              byte_offset: 10931
+              byte_count: 619
+              word_count: 95
+              content_hash: 51a3b9475503bf884956d0ce1e5bf8367c7e4e91dc98b025aef30775433b7c22
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 11550
+          byte_count: 3948
+          word_count: 601
+          content_hash: 77692dbd03e21ce14531be9353a62d6e0ca9ff7cea83e3c1c4e5e52ab738c0fb
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Alternative 1: In-memory map index (skip SQLite)'
+              byte_offset: 11578
+              byte_count: 1107
+              word_count: 164
+              content_hash: bbe4c5f71ace1fe1f18a3f201402a0cd6f2665c963c8b00a667efd8fd87cafea
+            - path: 1.4.2
+              level: 3
+              title: 'Alternative 2: Rebuild cache on every server start, remove filesystem fallback'
+              byte_offset: 12685
+              byte_count: 950
+              word_count: 145
+              content_hash: 4ee1a76f29ae483de91e1b16fc98b8cd51db3420c619efed6cdabf71357af1c3
+            - path: 1.4.3
+              level: 3
+              title: 'Alternative 3: Add a lookup index file (e.g., `.kbz/state/tasks/.index.json`)'
+              byte_offset: 13635
+              byte_count: 982
+              word_count: 146
+              content_hash: 61cd7ab44442cd92aebba27de9db66a22ff240a922a4fdc343227e0bcad9b61d
+            - path: 1.4.4
+              level: 3
+              title: 'Alternative 4: Status quo — do nothing'
+              byte_offset: 14617
+              byte_count: 881
+              word_count: 143
+              content_hash: 954fb80f1cc659f8658ddbbeb8ea8295168b76d05c3cd3900501d820b05c5279
+        - path: "1.5"
+          level: 2
+          title: Decisions
+          byte_offset: 15498
+          byte_count: 3007
+          word_count: 466
+          content_hash: c34dd000e1bd189726ec91f5205e47f1cc84ce9f1311002ac22bba19bb5d6d22
+entity_refs:
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 3413
+    - entity_id: P29-state-store-read-performance
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 252
+cross_doc_links:
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: 1.1.1
+    - target_path: work/research/p28-issues-investigation.md
+      link_text: work/research/p28-issues-investigation.md
+      section_path: 1.1.1
+    - target_path: work/reports/retro-p28-doc-intel-polish-workflow-reliability.md
+      link_text: work/reports/retro-p28-doc-intel-polish-workflow-reliability.md
+      section_path: 1.1.1
+    - target_path: work/dev-plan/p28-worktree-creation-timeout.md
+      link_text: work/dev-plan/p28-worktree-creation-timeout.md
+      section_path: 1.1.1
+conventional_roles:
+    - section_path: 1.1.2
+      role: decision
+      confidence: high
+    - section_path: 1.1.3
+      role: question
+      confidence: high
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: alternative
+      confidence: high
+    - section_path: 1.4.2
+      role: alternative
+      confidence: high
+    - section_path: 1.4.3
+      role: alternative
+      confidence: high
+    - section_path: 1.4.4
+      role: alternative
+      confidence: high
+    - section_path: "1.5"
+      role: decision
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T11:49:53.45031Z
+classified: false

@@ -1,0 +1,337 @@
+document_id: PROJECT/research-p28-issues-investigation
+document_path: work/research/p28-issues-investigation.md
+content_hash: 199383538123654e367062d7bb0639980c9254f94c5741a24cd2563a48763fc0
+indexed_at: 2026-04-23T11:33:57.45212Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Research: P28 Issues Investigation'
+      byte_offset: 0
+      byte_count: 30330
+      word_count: 4161
+      content_hash: 199383538123654e367062d7bb0639980c9254f94c5741a24cd2563a48763fc0
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Executive Summary
+          byte_offset: 200
+          byte_count: 1152
+          word_count: 166
+          content_hash: 6b4aeb5c822fee615a6a0bb18263e779956a816b80b8af866dace905c395f8e8
+        - path: "1.2"
+          level: 2
+          title: 2. Issue Clusters
+          byte_offset: 1352
+          byte_count: 7270
+          word_count: 967
+          content_hash: 8397cf30f8f89bc87ca0333148b88f34e8bcfee0214584d44cc955072a1932f8
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Cluster A: State-Persistence O(n) Scan'
+              byte_offset: 1374
+              byte_count: 3541
+              word_count: 470
+              content_hash: 77020647cae178db40bbb6cd3a8fe90c0c89550dfe510956d7b6620687ee2c7a
+            - path: 1.2.2
+              level: 3
+              title: 'Cluster B: Agent Prompt Inflation'
+              byte_offset: 4915
+              byte_count: 2707
+              word_count: 345
+              content_hash: cdef56b8c052ba268a814251ccc1c2e2011082faa438e7025265010641497af5
+            - path: 1.2.3
+              level: 3
+              title: 'Cluster C: Lifecycle Gate Hygiene (isolated)'
+              byte_offset: 7622
+              byte_count: 1000
+              word_count: 148
+              content_hash: 99ee96cd91404fb38efee15fd5b89c60808c3c634e7d06d7d79e506c151a0ba5
+        - path: "1.3"
+          level: 2
+          title: 3. Architectural Assessment
+          byte_offset: 8622
+          byte_count: 4763
+          word_count: 684
+          content_hash: b6c0dbaf485cf3d13c2d3b1ca8520e67964aa0887f363c73e9a67891131d0e88
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Layer: State Persistence (flat-file store + entity service read path)'
+              byte_offset: 8654
+              byte_count: 2352
+              word_count: 354
+              content_hash: bc8bc98e09e15b4df46e675f894c6edda6c591c7f1d4d0c80bf5baf4c0b293f6
+            - path: 1.3.2
+              level: 3
+              title: 'Layer: Agent Prompt System (pipeline skill assembly)'
+              byte_offset: 11006
+              byte_count: 2379
+              word_count: 326
+              content_hash: 8eb1e3f3504eba70c5ca1043a1e7fabbd14f9acc41a8f8f7b6cfcdb1695b2f3a
+        - path: "1.4"
+          level: 2
+          title: 4. Connection Assessment
+          byte_offset: 13385
+          byte_count: 1394
+          word_count: 200
+          content_hash: 51a7974d2d5595d0ad09da5524a1c136350b77dbb692ce4d3facb98ba2d732a9
+        - path: "1.5"
+          level: 2
+          title: 5. Plan Structure Recommendation
+          byte_offset: 14779
+          byte_count: 3379
+          word_count: 460
+          content_hash: 5b24ee5587b06492b99c97e9126baaae3f5645e797e9f64d283d522477847910
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Plan A — State Store Read Path Performance
+              byte_offset: 15038
+              byte_count: 1057
+              word_count: 140
+              content_hash: 04f54927a25796ee5c5f2e612e3b56c47eaed5685f34a3fe67c8a64a4ef0905a
+            - path: 1.5.2
+              level: 3
+              title: Plan B — Handoff Skill Assembly and Prompt Hygiene
+              byte_offset: 16095
+              byte_count: 1254
+              word_count: 168
+              content_hash: cada78c7fe0fcb692263bfd71ebc4f75e2aec755d0af5ce3198a21ef9a5cd276
+            - path: 1.5.3
+              level: 3
+              title: Plan C — Lifecycle Gate Hardening (lower priority)
+              byte_offset: 17349
+              byte_count: 809
+              word_count: 117
+              content_hash: 5343ddc248425a0e9c1b6c0bed15c43597cae7e5b84f1c54379d4a3026ba47f5
+        - path: "1.6"
+          level: 2
+          title: 6. Research Gaps
+          byte_offset: 18158
+          byte_count: 3771
+          word_count: 571
+          content_hash: 013023a6a2e8fe20e6d17d7a7e5fbabc99988166da0cdb05182c506883c1f170
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Gap 1: MCP client timeout budget'
+              byte_offset: 18179
+              byte_count: 773
+              word_count: 121
+              content_hash: 5537dd408a6897e28711ae8ce183d4b8f2f51d5d93af6efd459421031cd66729
+            - path: 1.6.2
+              level: 3
+              title: 'Gap 2: Cache completeness at server startup'
+              byte_offset: 18952
+              byte_count: 869
+              word_count: 147
+              content_hash: 3062caafd2fe85f053b3ec9458c9bb5b1c15e98916e13c5edbe1155f9f474768
+            - path: 1.6.3
+              level: 3
+              title: 'Gap 3: Pipeline sub-agent skill selection — design intent'
+              byte_offset: 19821
+              byte_count: 1326
+              word_count: 192
+              content_hash: 14260b60726bb7e3ab98c27d42357e8d663a49983a3b481d05008a5c86a3f953
+            - path: 1.6.4
+              level: 3
+              title: 'Gap 4: Token size of orchestrate-development vs implement-task skill'
+              byte_offset: 21147
+              byte_count: 782
+              word_count: 107
+              content_hash: bb0a399e55f1f941c03b5d53617ce8f376bc5c007dc637dba58a36b23081633d
+        - path: "1.7"
+          level: 2
+          title: 7. Recommendation on Further Research
+          byte_offset: 21929
+          byte_count: 1268
+          word_count: 202
+          content_hash: 8a176e9456a41b117b8f26609d793c296e549423e5e04bc8b3c746fad609a27f
+        - path: "1.8"
+          level: 2
+          title: 8. Code Evidence Appendix
+          byte_offset: 23197
+          byte_count: 7133
+          word_count: 875
+          content_hash: a1764e05bffd077a68c11794b0e32c9e264455c72c3153a4aca6bf89a19df17f
+          children:
+            - path: 1.8.1
+              level: 3
+              title: A1 — `List()` performs full-directory scan with no cache consultation
+              byte_offset: 23227
+              byte_count: 935
+              word_count: 106
+              content_hash: dcd3435264783124911627eea57ebf7ea816ff769e8010c76922811365b8b289
+            - path: 1.8.2
+              level: 3
+              title: A2 — `ResolvePrefix()` also performs a full-directory scan
+              byte_offset: 24162
+              byte_count: 955
+              word_count: 97
+              content_hash: 20fb45ad10c2025f9f2b02b682de3e4669492465041ef03ec6cd8316600d73a2
+            - path: 1.8.3
+              level: 3
+              title: A3 — `Get()` falls through to `ResolvePrefix()` when slug is absent
+              byte_offset: 25117
+              byte_count: 421
+              word_count: 56
+              content_hash: 03d9f663b251d8b0ad9f2bd67d1e6b4965afa70a7bdeaf41c9ec495f5db0095a
+            - path: 1.8.4
+              level: 3
+              title: A4 — `nextClaimMode` calls `Get` with empty slug, triggering `ResolvePrefix` scan
+              byte_offset: 25538
+              byte_count: 400
+              word_count: 52
+              content_hash: 6b3dae8e2ac07da1a232d544889c1488744f1a4c6c0e4fb4d8ca957ef3353269
+            - path: 1.8.5
+              level: 3
+              title: A5 — `dependency_hook.go` calls `List("task")` on every terminal-state transition
+              byte_offset: 25938
+              byte_count: 462
+              word_count: 48
+              content_hash: 6adcaf0ddd18f008b1de2bfb5d0313cf2f9b29118767ced3725065191a327c06
+            - path: 1.8.6
+              level: 3
+              title: A6 — `WorkQueue()` calls `List("task")` as its first operation
+              byte_offset: 26400
+              byte_count: 388
+              word_count: 46
+              content_hash: 9b79f9eabb6f1d3b5c5e83ff9aa6a2da8a9e32dfe81942ab488f30cf1f8e49ed
+            - path: 1.8.7
+              level: 3
+              title: A7 — Cache is populated on writes but never consulted on reads
+              byte_offset: 26788
+              byte_count: 562
+              word_count: 82
+              content_hash: c11958306713728264a21d4e25a58f319025af9ba047f50b9a047ec7991c7308
+            - path: 1.8.8
+              level: 3
+              title: A8 — `stepLoadSkill` ignores the `role` parameter
+              byte_offset: 27350
+              byte_count: 829
+              word_count: 109
+              content_hash: afa3560658405b04486c41b9c6225f304ed109a85d848dc7c0da16ee147c2f53
+            - path: 1.8.9
+              level: 3
+              title: A9 — `developing` stage binding maps to `orchestrate-development`; sub-agent skill exists but is not loaded
+              byte_offset: 28179
+              byte_count: 568
+              word_count: 56
+              content_hash: 6c5726a31af92ee9bf3dc14e3e7b5cad73f09af6e9f518056c30aebd3aa34555
+            - path: 1.8.10
+              level: 3
+              title: A10 — `implement-task/SKILL.md` still recommends heredoc as the primary method
+              byte_offset: 28747
+              byte_count: 799
+              word_count: 110
+              content_hash: d35652b0c74b20f7b8814b13026d882ee3993b13c180689ca85abe32eb82e947
+            - path: 1.8.11
+              level: 3
+              title: A11 — File counts (measured 2026-04-23)
+              byte_offset: 29546
+              byte_count: 194
+              word_count: 25
+              content_hash: 465324168f7c2f429c0bc9698e6d2e4516041ad2b937c0dc45e83118fec1befd
+            - path: 1.8.12
+              level: 3
+              title: 'A12 — Architectural design intent: cache for fast reads (not yet wired)'
+              byte_offset: 29740
+              byte_count: 590
+              word_count: 83
+              content_hash: 4c55fde38232be09897af2c330115cdd9ebe4e57e4628656f0774c597ce59d91
+entity_refs:
+    - entity_id: FEAT-01KPVDDYQQS1Y
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 7699
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 9809
+cross_doc_links:
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.2.2
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.4"
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.5.2
+    - target_path: SKILL.md
+      link_text: "\nSKILL.md still recommends heredoc. The file-scope boundaries for both plans are clear and\nnon-overlapping. The only pre-design measurement that would improve Plan A's design is\nconfirming cache completeness at startup (Gap 2) — this is a 10-minute code read, not a\nresearch spike, and can be the first task of Plan A's dev plan rather than a blocker to\nwriting the design document.\n\n**Cluster C (lifecycle gate)** can also proceed to design without further research; the\nscope is narrow and the fix strategy is unambiguous.\n\nThe four gaps identified are inputs to the design documents, not blockers to writing them.\nGap 1 (MCP timeout budget) and Gap 2 (cache warmth) should be answered in the first\nimplementation task of Plan A. Gap 3 (pipeline sub-agent skill intent) is a design\ndecision to be recorded in the Plan B design document. Gap 4 (token size) is a\none-command measurement that can be done during design or implementation.\n\n---\n\n## 8. Code Evidence Appendix\n\n### A1 — "
+      section_path: "1.7"
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.8.10
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md §7.1
+      section_path: 1.8.12
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 5
+last_accessed_at: 2026-04-23T11:39:40.08016Z
+classified: true
+classified_at: 2026-04-23T11:38:53.311331Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+      summary: 'Executive summary: five of seven issues cluster into two root causes — O(n) scan and prompt inflation'
+    - section_path: 1.2.1
+      role: risk
+      confidence: high
+      summary: 'Cluster A root cause: O(n) full-directory scan in entity service List/Get/ResolvePrefix bypassing SQLite cache'
+    - section_path: 1.2.2
+      role: risk
+      confidence: high
+      summary: 'Cluster B root cause: handoff pipeline stepLoadSkill ignores role parameter, always loads orchestrate-development'
+    - section_path: 1.2.3
+      role: risk
+      confidence: medium
+      summary: 'Cluster C: lifecycle gate gap allows orphaned reviewing state'
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+      summary: 'State persistence layer: O(n) scaling, cache write-only, breaking point already reached at 447 tasks'
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+      summary: 'Agent prompt system: stepLoadSkill ignores role, orchestrate-development always loaded for sub-agents'
+    - section_path: "1.4"
+      role: decision
+      confidence: high
+      summary: Issues are NOT independent; five share two root causes
+    - section_path: 1.5.1
+      role: requirement
+      confidence: high
+      summary: 'Plan A scope: wire SQLite cache into List/Get/ResolvePrefix read paths'
+    - section_path: 1.5.2
+      role: requirement
+      confidence: high
+      summary: 'Plan B scope: fix stepLoadSkill to use sub_agents.skills for sub-agent roles; fix implement-task SKILL.md heredoc'
+    - section_path: 1.5.3
+      role: requirement
+      confidence: medium
+      summary: 'Plan C scope: lifecycle gate hardening for reviewing state'
+    - section_path: 1.6.1
+      role: question
+      confidence: high
+      summary: 'Unknown: MCP client timeout threshold value'
+    - section_path: 1.6.2
+      role: question
+      confidence: high
+      summary: 'Unknown: is SQLite cache warm at server startup?'
+    - section_path: 1.6.3
+      role: question
+      confidence: high
+      summary: 'Unknown: design intent for sub_agents.skills field in stage binding'
+    - section_path: 1.6.4
+      role: question
+      confidence: medium
+      summary: 'Unknown: actual token count of orchestrate-development vs implement-task skills'

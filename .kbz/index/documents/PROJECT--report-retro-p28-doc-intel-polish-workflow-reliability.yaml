@@ -1,0 +1,44 @@
+document_id: PROJECT/report-retro-p28-doc-intel-polish-workflow-reliability
+document_path: work/reports/retro-p28-doc-intel-polish-workflow-reliability.md
+content_hash: 1444fbd5f80363a54da44e93a19520d8e981e314910b38279e42a73efc0a87df
+indexed_at: 2026-04-23T10:30:41.463115Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Retrospective: P28 — Doc-Intel Polish and Workflow Reliability'
+      byte_offset: 0
+      byte_count: 647
+      word_count: 88
+      content_hash: 1444fbd5f80363a54da44e93a19520d8e981e314910b38279e42a73efc0a87df
+      children:
+        - path: "1.1"
+          level: 2
+          title: Themes
+          byte_offset: 244
+          byte_count: 403
+          word_count: 54
+          content_hash: a49e9b5c30e538245ba37fd40446f324522dde09d8181c4193b35c11c808d0b3
+          children:
+            - path: 1.1.1
+              level: 3
+              title: '1. tool-friction: Terminal heredoc failed for multi-line Go code with embedded...'
+              byte_offset: 255
+              byte_count: 392
+              word_count: 52
+              content_hash: c187e9942646636ada322a7a2b6f9b87fd11964fda63c69c81501088b10934bb
+entity_refs:
+    - entity_id: P28-doc-intel-polish-workflow-reliability
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 114
+access_count: 1
+last_accessed_at: 2026-04-23T11:38:19.504566Z
+classified: true
+classified_at: 2026-04-23T11:38:53.311318Z
+classified_by: claude-sonnet-4-6
+classifier_version: "20251101"
+classifications:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+      summary: 'P28 retrospective: seven issues identified spanning O(n) scan timeouts, prompt inflation, heredoc recurrence, lifecycle orphan'

@@ -1,0 +1,352 @@
+document_id: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene
+document_path: work/design/p30-handoff-skill-assembly-prompt-hygiene.md
+content_hash: dceae627f6ba6589a1a14c4c9aca06c74ea3ae75cc5e614e15909e2f5aa726f1
+indexed_at: 2026-04-23T11:52:00.862651Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Handoff Skill Assembly and Prompt Hygiene'
+      byte_offset: 0
+      byte_count: 22371
+      word_count: 3126
+      content_hash: dceae627f6ba6589a1a14c4c9aca06c74ea3ae75cc5e614e15909e2f5aa726f1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 329
+          byte_count: 881
+          word_count: 117
+          content_hash: 70574c5ac814c948a4b801df513c777a782b29b942caa2a69cd893eaee6a5430
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1210
+          byte_count: 818
+          word_count: 108
+          content_hash: a5438b02a5402bb22f9104617553025235153f7ae020da33c2629c151af90e37
+        - path: "1.3"
+          level: 2
+          title: Dependencies
+          byte_offset: 2028
+          byte_count: 366
+          word_count: 54
+          content_hash: 1b53f7c55f3bde3e8cae5ec32b11826b2418227e4d8a100a9c534b3ebf9f2ff0
+        - path: "1.4"
+          level: 2
+          title: Related Work
+          byte_offset: 2394
+          byte_count: 2639
+          word_count: 362
+          content_hash: cb6318ebf0c14613e65577024bfd0a0b801df64c338b7ef0ab2b36ac1c3857cc
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Prior documents consulted
+              byte_offset: 2411
+              byte_count: 956
+              word_count: 107
+              content_hash: ea12dd4b971423ebdf2901b026f4cf1e5f3f03a4301e9440c1d7a65f4263d130
+            - path: 1.4.2
+              level: 3
+              title: Relevant decisions constraining this design
+              byte_offset: 3367
+              byte_count: 933
+              word_count: 147
+              content_hash: e6684b355e4a343c6f56fa78032372b83435dfd65adf394e1f8a9141a0180df2
+            - path: 1.4.3
+              level: 3
+              title: Open questions raised by prior work
+              byte_offset: 4300
+              byte_count: 733
+              word_count: 105
+              content_hash: ffd802045c6577d70ce6195c1db2a6b6c4f2cfd51c9b093ad24e20c9ae5b9953
+        - path: "1.5"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 5033
+          byte_count: 3570
+          word_count: 506
+          content_hash: d985a7dcf3c5c54cccaa5e0c820cea26aa577b4dd007f0f6b1bfd75ab27bff02
+          children:
+            - path: 1.5.1
+              level: 3
+              title: The wrong skill is loaded for every implementer sub-agent
+              byte_offset: 5060
+              byte_count: 2113
+              word_count: 291
+              content_hash: b8b23817943cdf15285df3506f5ae43e110bfbb1166864e5804828420015bd3e
+            - path: 1.5.2
+              level: 3
+              title: The heredoc recommendation is still in the skill file
+              byte_offset: 7173
+              byte_count: 1430
+              word_count: 211
+              content_hash: ccb7ab9ab494a0113900bfc87298de273f66668fc527a064ccfa8345d5ceec8a
+        - path: "1.6"
+          level: 2
+          title: Design
+          byte_offset: 8603
+          byte_count: 5317
+          word_count: 735
+          content_hash: 477f419623f2184588cef0123af228812ae461ca49b2cd61697aa539d8835a0d
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Component overview
+              byte_offset: 8614
+              byte_count: 538
+              word_count: 67
+              content_hash: ebb84c3acefc3939d5f84d0a75e66b5a80eef94f2ca859de2e971ef8a5a73d36
+            - path: 1.6.2
+              level: 3
+              title: 'Sub-component 1: Sub-agent skill routing in the pipeline'
+              byte_offset: 9152
+              byte_count: 2569
+              word_count: 331
+              content_hash: 86dabdc1ab1c5a5c16d814431f1cf045edfdb62caedfb22f6e267c509bd1349d
+              children:
+                - path: 1.6.2.1
+                  level: 4
+                  title: Principle
+                  byte_offset: 9214
+                  byte_count: 203
+                  word_count: 31
+                  content_hash: d66ebb3519a90f4bb4e54585ade4ca519d686bed880eda768cfd5400b60e1fd7
+                - path: 1.6.2.2
+                  level: 4
+                  title: Binding schema (existing, no change required)
+                  byte_offset: 9417
+                  byte_count: 507
+                  word_count: 61
+                  content_hash: 41d54292906fc6193d7fc9081f2c45516c43bc9705bb62e50ed8c395a9e09f8c
+                - path: 1.6.2.3
+                  level: 4
+                  title: '`stepLoadSkill` change'
+                  byte_offset: 9924
+                  byte_count: 861
+                  word_count: 95
+                  content_hash: d931cfbe90bd6c4e8645e3e506540fc5f35b9ebb0a3e70f341ef1fa114e7b80b
+                - path: 1.6.2.4
+                  level: 4
+                  title: Binding struct update
+                  byte_offset: 10785
+                  byte_count: 354
+                  word_count: 50
+                  content_hash: 05c2f14ce04608202323ded1d98b9f98ee2b1515a49cfaf472aa9978a6bed39e
+                - path: 1.6.2.5
+                  level: 4
+                  title: Fallback behaviour
+                  byte_offset: 11139
+                  byte_count: 260
+                  word_count: 35
+                  content_hash: 26f5b58046cf5b9af0c986ac2f29869ff37e1fa9ff08ccccd4f836fe6ce1adf2
+                - path: 1.6.2.6
+                  level: 4
+                  title: Error handling
+                  byte_offset: 11399
+                  byte_count: 322
+                  word_count: 50
+                  content_hash: 2672b621ce6dcb782b82361c4f6a0ffda28a0110f69912921420246affa3b71e
+            - path: 1.6.3
+              level: 3
+              title: 'Sub-component 2: `implement-task/SKILL.md` correction'
+              byte_offset: 11721
+              byte_count: 1636
+              word_count: 247
+              content_hash: 1ef777dc61cad1173e3755c90a1ee109adefe627d88efcd4bb9313cfa5dd02bf
+              children:
+                - path: 1.6.3.1
+                  level: 4
+                  title: Current state
+                  byte_offset: 11780
+                  byte_count: 208
+                  word_count: 28
+                  content_hash: a83b76746a08fcadb5d8ac58a033c66305d1e59311bf7037fe6be31a5c4d7694
+                - path: 1.6.3.2
+                  level: 4
+                  title: Required changes
+                  byte_offset: 11988
+                  byte_count: 867
+                  word_count: 133
+                  content_hash: 7532a94f93b5c6aaac5c8db7c0c1e0fefdc0324517d3fee50c25b396d92b0d7b
+                - path: 1.6.3.3
+                  level: 4
+                  title: Rationale for removal (not deprecation)
+                  byte_offset: 12855
+                  byte_count: 502
+                  word_count: 81
+                  content_hash: 2bb82ee640f2d6784c848aee05368a16af2900fbd0832fab0d2bdeb24e8e1da7
+            - path: 1.6.4
+              level: 3
+              title: What this design does NOT change
+              byte_offset: 13357
+              byte_count: 563
+              word_count: 88
+              content_hash: d8e61ff645a544ef2095e786e01345303844ad6e5b980fd0d7e18de266a8919e
+        - path: "1.7"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 13920
+          byte_count: 3977
+          word_count: 560
+          content_hash: d0428b6fe4a94e4e3fbecdf0fd7f97ef402e1958fe49f7d3ae5874ce44da20cd
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 'Alternative A: Caller passes skill name explicitly as a `handoff` parameter'
+              byte_offset: 13948
+              byte_count: 1161
+              word_count: 165
+              content_hash: 8ccb6df0704f3e429b81522ed3da974c8bf420b5e6327ad7eceb022a5e85a029
+            - path: 1.7.2
+              level: 3
+              title: 'Alternative B: Stage binding drives skill selection automatically, using sub_agents block (recommended)'
+              byte_offset: 15109
+              byte_count: 1022
+              word_count: 138
+              content_hash: 92ba40946854d3d965ea85a11e6bf844e701fda93bf2021d416c9fc49f359d45
+            - path: 1.7.3
+              level: 3
+              title: 'Alternative C: Introduce a separate `sub_agent_handoff` tool'
+              byte_offset: 16131
+              byte_count: 868
+              word_count: 127
+              content_hash: b227ed86ebaf7061fd3c59464b4a0dceb35ce4ebcb361958d60b3aa711be0ca4
+            - path: 1.7.4
+              level: 3
+              title: 'Alternative D: Strong warning + knowledge entry (status quo improvement)'
+              byte_offset: 16999
+              byte_count: 898
+              word_count: 127
+              content_hash: 1de9cb8b145e1e7ea6d88a75460c8b4c218105f587fa1bdf50594947cf0e07b0
+        - path: "1.8"
+          level: 2
+          title: Decisions
+          byte_offset: 17897
+          byte_count: 4474
+          word_count: 646
+          content_hash: bbf9ba8551757d3773a5aeade55767168de3f25be5540631dfe244ecf55ccad6
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 'Decision 1: Sub-agent skill selection is driven by the binding''s `sub_agents` block, not by a new caller parameter'
+              byte_offset: 17911
+              byte_count: 1539
+              word_count: 210
+              content_hash: 117631604545390f654056db9f142374f6f666c0b99d3ca43fd3d9250fd1da10
+            - path: 1.8.2
+              level: 3
+              title: 'Decision 2: Heredoc is removed from `implement-task/SKILL.md`, not deprecated with a warning'
+              byte_offset: 19450
+              byte_count: 1918
+              word_count: 290
+              content_hash: 3fe39b9505aafbad4d1c103795d0b436f2fbffdfeb6af0dea4d5c9d3bb49ab5c
+            - path: 1.8.3
+              level: 3
+              title: 'Decision 3: The `stage-bindings.yaml` schema and file content are not modified'
+              byte_offset: 21368
+              byte_count: 1003
+              word_count: 144
+              content_hash: a41da15df6544e691b57e71b7b4bcb02eb302fd0977798d0ce8665d1f329d9c7
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.6.3.2
+      byte_offset: 12185
+    - entity_id: P30-handoff-skill-assembly-prompt-hygiene
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 279
+cross_doc_links:
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.1"
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.2"
+    - target_path: work/research/p28-issues-investigation.md
+      link_text: work/research/p28-issues-investigation.md
+      section_path: 1.4.1
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.4.1
+    - target_path: work/reports/retro-p28-doc-intel-polish-workflow-reliability.md
+      link_text: work/reports/retro-p28-doc-intel-polish-workflow-reliability.md
+      section_path: 1.4.1
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: 1.4.1
+    - target_path: work/spec/3.0-stage-aware-context-assembly.md
+      link_text: work/spec/3.0-stage-aware-context-assembly.md
+      section_path: 1.4.1
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.4.3
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.5.2
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.6.1
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.6.3
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.6.3.1
+    - target_path: SKILL.md
+      link_text: ' SKILL.md to include a note: "When dispatching implementers, pass '
+      section_path: 1.7.4
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.8.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.4.2
+      role: decision
+      confidence: high
+    - section_path: 1.4.3
+      role: question
+      confidence: high
+    - section_path: 1.6.1
+      role: narrative
+      confidence: high
+    - section_path: 1.6.3.3
+      role: rationale
+      confidence: high
+    - section_path: "1.7"
+      role: alternative
+      confidence: high
+    - section_path: 1.7.1
+      role: alternative
+      confidence: high
+    - section_path: 1.7.2
+      role: alternative
+      confidence: high
+    - section_path: 1.7.3
+      role: alternative
+      confidence: high
+    - section_path: 1.7.4
+      role: alternative
+      confidence: high
+    - section_path: "1.8"
+      role: decision
+      confidence: high
+    - section_path: 1.8.1
+      role: decision
+      confidence: high
+    - section_path: 1.8.2
+      role: decision
+      confidence: high
+    - section_path: 1.8.3
+      role: decision
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T11:52:01.218836Z
+classified: false

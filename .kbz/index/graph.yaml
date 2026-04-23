@@ -1,4 +1,4 @@
-updated_at: 2026-04-23T03:59:49.352138Z
+updated_at: 2026-04-23T11:52:01.746665Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -71255,3 +71255,998 @@ edges:
       to: TASK-01KPVFKEH5G9N
       to_type: entity_ref
       edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective
+      from_type: document
+      to: PROJECT/report-doc-intel-p27-retrospective#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.3
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.4
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.5
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.5
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.5
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.6
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.6
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.6
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.6
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.6
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: PROJECT/report-doc-intel-p27-retrospective#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: FEAT-01KPTHB5Z1H7T
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: FEAT-01KPTHB649DPK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: FEAT-01KPTHB66Y8TM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.3.1
+      from_type: section
+      to: FEAT-01KP8T4HXPEAY
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.3.1
+      from_type: section
+      to: FEAT-01KMRX1HG8BAX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.3.1
+      from_type: section
+      to: FEAT-01KPVDDYSEK8P
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.3.1
+      from_type: section
+      to: FEAT-01KN588PGJNM0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.3.1
+      from_type: section
+      to: FEAT-01KPVDDYX73WB
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.3.1
+      from_type: section
+      to: FEAT-01KPVDDYVETV5
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.3.3
+      from_type: section
+      to: FEAT-01KPNNYZ1ZSS6
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.4.1
+      from_type: section
+      to: FEAT-01KPTHB61WPT0
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.4.1
+      from_type: section
+      to: FEAT-01KPNNYYXQSYW
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1
+      from_type: section
+      to: P27-doc-intel-adoption
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.4.1
+      from_type: section
+      to: work/design/p28-doc-intel-polish-workflow-reliability.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-p27-retrospective#1.4.5
+      from_type: section
+      to: p28-doc-intel-polish-workflow-reliability.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-p28-issues-investigation
+      from_type: document
+      to: PROJECT/research-p28-issues-investigation#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.2
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.2
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.2
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.3
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.3
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.5
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.5
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.5
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.6
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.6
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.6
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.6
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.8
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.8
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.8
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.8
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.8
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.8
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.8
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.8
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.8
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.8
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.8
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.8
+      from_type: section
+      to: PROJECT/research-p28-issues-investigation#1.8.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-p28-issues-investigation#1.2.3
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/research-p28-issues-investigation#1.3.1
+      from_type: section
+      to: TASK-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/research-p28-issues-investigation#1.2.2
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-p28-issues-investigation#1.4
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-p28-issues-investigation#1.5.2
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-p28-issues-investigation#1.7
+      from_type: section
+      to: SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-p28-issues-investigation#1.8.10
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-p28-issues-investigation#1.8.12
+      from_type: section
+      to: work/design/workflow-design-basis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-retro-p28-doc-intel-polish-workflow-reliability
+      from_type: document
+      to: PROJECT/report-retro-p28-doc-intel-polish-workflow-reliability#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-p28-doc-intel-polish-workflow-reliability#1
+      from_type: section
+      to: PROJECT/report-retro-p28-doc-intel-polish-workflow-reliability#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-p28-doc-intel-polish-workflow-reliability#1.1
+      from_type: section
+      to: PROJECT/report-retro-p28-doc-intel-polish-workflow-reliability#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-retro-p28-doc-intel-polish-workflow-reliability#1
+      from_type: section
+      to: P28-doc-intel-polish-workflow-reliability
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance
+      from_type: document
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.1
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.1
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.1
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.3
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.3
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.3
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.3
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.3
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.4
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.4
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.4
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.4
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1
+      from_type: section
+      to: P29-state-store-read-performance/design-p29-state-store-read-performance#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.2
+      from_type: section
+      to: TASK-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1
+      from_type: section
+      to: P29-state-store-read-performance
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.1.1
+      from_type: section
+      to: work/design/workflow-design-basis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.1.1
+      from_type: section
+      to: work/research/p28-issues-investigation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.1.1
+      from_type: section
+      to: work/reports/retro-p28-doc-intel-polish-workflow-reliability.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P29-state-store-read-performance/design-p29-state-store-read-performance#1.1.1
+      from_type: section
+      to: work/dev-plan/p28-worktree-creation-timeout.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene
+      from_type: document
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.5
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.5
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.3
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.3
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.3
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.7
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.7
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.7
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.7
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.8
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.8
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.8
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.3.2
+      from_type: section
+      to: FEAT-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.1
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.2
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4.1
+      from_type: section
+      to: work/research/p28-issues-investigation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4.1
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4.1
+      from_type: section
+      to: work/reports/retro-p28-doc-intel-polish-workflow-reliability.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4.1
+      from_type: section
+      to: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4.1
+      from_type: section
+      to: work/spec/3.0-stage-aware-context-assembly.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.4.3
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.5.2
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.1
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.3
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.6.3.1
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.7.4
+      from_type: section
+      to: SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene#1.8.2
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening
+      from_type: document
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.7
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.7
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.7
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.7
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.8
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.8
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.8
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.8
+      from_type: section
+      to: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1.1
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.5
+      from_type: section
+      to: FEAT-01KPVDDYQQS1Y
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6.2
+      from_type: section
+      to: FEAT-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6.3
+      from_type: section
+      to: FEAT-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.6.4
+      from_type: section
+      to: FEAT-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1
+      from_type: section
+      to: P31-lifecycle-gate-hardening
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1.1
+      from_type: section
+      to: work/design/workflow-design-basis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1.1
+      from_type: section
+      to: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1.1
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1.1
+      from_type: section
+      to: work/research/p28-issues-investigation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening#1.1.1
+      from_type: section
+      to: work/reports/retro-p28-doc-intel-polish-workflow-reliability.md
+      to_type: document
+      edge_type: LINKS_TO

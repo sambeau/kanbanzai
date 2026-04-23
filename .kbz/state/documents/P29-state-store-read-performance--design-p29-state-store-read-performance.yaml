@@ -4,7 +4,7 @@ type: design
 title: "Design: State Store Read Path Performance (P29)"
 status: draft
 owner: P29-state-store-read-performance
-content_hash: ed39e58e490c5b23f6c654b48075d09d7177a967a17780b2b6a82843c0a3e372
+content_hash: 14428d880089055e2ba4bb2f5c210018fec4197085437d1e341bfef49b4ce7ed
 created: "2026-04-23T11:49:53Z"
 created_by: sambeau
-updated: "2026-04-23T11:49:53Z"
+updated: "2026-04-23T11:52:28Z"

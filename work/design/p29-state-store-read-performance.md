@@ -9,6 +9,37 @@
 
 ---
 
+## Overview
+
+The entity service's read path (`List()`, `Get()`, `ResolvePrefix()`) performs a full
+directory scan on every call, reading every YAML file of the requested entity type from
+disk. A SQLite cache already exists and is populated on every write, but is never
+consulted on reads. This design wires that cache into the read path and ensures it is
+warm at server startup, converting O(n) disk scans into O(1) SQL lookups.
+
+## Goals and Non-Goals
+
+**Goals:**
+- Wire the existing SQLite cache into `List()` and `Get()` / `ResolvePrefix()` read paths
+- Ensure the cache is rebuilt at server startup so post-restart tool calls hit a warm cache
+- Eliminate O(n) full-directory scans as the common-case code path for task, feature, and bug reads
+- Maintain filesystem fallback correctness when the cache is cold, nil, or returns an error
+
+**Non-Goals:**
+- Restructuring or replacing the YAML flat-file canonical store
+- Caching the worktree store (`internal/worktree/store.go`) — out of scope for this plan
+- Changing any MCP tool's public API or response format
+- Addressing prompt inflation or lifecycle gate issues (P30, P31)
+
+## Dependencies
+
+- `internal/cache` — existing SQLite cache package; may need a `ListByType` method added
+- `internal/service/entities.go` — primary change target for read path wiring
+- `internal/mcp/server.go` — startup sequence change to call `RebuildCache()`
+- No external dependencies; no schema migrations required
+
+---
+
 ## Related Work
 
 ### Prior documents consulted
