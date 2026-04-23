@@ -1,0 +1,489 @@
+package mcp
+
+// Tests for the concept-tagging approval gate added to doc(action: "approve").
+// Covers all 11 ACs from work/spec/p32-concept-tagging-approval-gate.md.
+//
+// AC-001: policy/report/research types pass through gate
+// AC-002: spec with zero classifications → passes
+// AC-003: design with concepts_intro populated → passes
+// AC-004: specification, classifications, no concepts_intro → blocked
+// AC-005: dev-plan, classifications, no concepts_intro → blocked
+// AC-006: error content_hash matches classification entry
+// AC-007: nil intel service → gate skipped, approval succeeds
+// AC-008: GetClassifications returns empty slice (not error) for unknown doc
+// AC-009: document status unchanged after blocked approval
+// AC-010: retry after classify with concepts_intro succeeds
+// AC-011: nil intel service = identical to pre-feature behavior
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"strings"
+	"testing"
+
+	"github.com/sambeau/kanbanzai/internal/docint"
+	"github.com/sambeau/kanbanzai/internal/service"
+)
+
+// callDocApproveWithIntel calls doc(action:"approve") with the given
+// intelligence service (may be nil to test the nil-guard path, REQ-007).
+func callDocApproveWithIntel(t *testing.T, env *docToolEnv, intelSvc *service.IntelligenceService, docID string) map[string]any {
+	t.Helper()
+	tool := docTool(env.docSvc, intelSvc, nil)
+	req := makeRequest(map[string]any{
+		"action": "approve",
+		"id":     docID,
+	})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("doc approve handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("unmarshal approve response: %v\nraw: %s", err, text)
+	}
+	return parsed
+}
+
+// registerAndIngestDoc creates a file, registers it, and returns the doc ID
+// plus the content hash from the classification nudge (populated by auto-ingest).
+func registerAndIngestDoc(t *testing.T, env *docToolEnv, relPath, docType, title, content string) (docID, contentHash string) {
+	t.Helper()
+	writeDocFile(t, env.repoRoot, relPath, content)
+	resp := callDocWithIntel(t, env, map[string]any{
+		"action": "register",
+		"path":   relPath,
+		"type":   docType,
+		"title":  title,
+	})
+	doc, ok := resp["document"].(map[string]any)
+	if !ok {
+		t.Fatalf("register: expected document field, got: %v", resp)
+	}
+	docID, _ = doc["id"].(string)
+	if docID == "" {
+		t.Fatalf("register: document.id is empty; response: %v", resp)
+	}
+	nudge, _ := resp["classification_nudge"].(map[string]any)
+	contentHash, _ = nudge["content_hash"].(string)
+	return docID, contentHash
+}
+
+// classifyDocForGate calls doc_intel(action:"classify") with the given JSON classifications string.
+func classifyDocForGate(t *testing.T, env *docToolEnv, docID, contentHash, classificationsJSON string) {
+	t.Helper()
+	resp := callDocIntelAction(t, env, map[string]any{
+		"action":          "classify",
+		"id":              docID,
+		"content_hash":    contentHash,
+		"model_name":      "test-model",
+		"model_version":   "1.0",
+		"classifications": classificationsJSON,
+	})
+	if errVal, hasErr := resp["error"]; hasErr {
+		t.Fatalf("classify returned error: %v", errVal)
+	}
+}
+
+// ─── AC-001: non-gated types (policy, report, research) pass through ─────────
+
+func TestApproveGate_AC001_NonGatedTypes(t *testing.T) {
+	t.Parallel()
+	for _, docType := range []string{"policy", "report", "research"} {
+		docType := docType
+		t.Run(docType, func(t *testing.T) {
+			t.Parallel()
+			env := setupDocToolTest(t)
+			env.docSvc.SetIntelligenceService(env.intelSvc)
+
+			relPath := fmt.Sprintf("work/docs/ac001-%s.md", docType)
+			content := fmt.Sprintf("# AC001 %s\n\n## Section\n\nContent here.\n", docType)
+			docID, contentHash := registerAndIngestDoc(t, env, relPath, docType, "AC001 "+docType, content)
+
+			if contentHash != "" {
+				// Classify with no concepts_intro — would block if this were a gated type.
+				classifyDocForGate(t, env, docID, contentHash,
+					`[{"section_path":"1","role":"requirement","confidence":"high"}]`)
+			}
+
+			resp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+
+			// Must NOT return concept_tagging_required.
+			if errCode, _ := resp["error_code"].(string); errCode == "concept_tagging_required" {
+				t.Errorf("type %q must not be gated, got concept_tagging_required", docType)
+			}
+			doc, _ := resp["document"].(map[string]any)
+			if doc == nil {
+				t.Fatalf("expected document in response; got: %v", resp)
+			}
+			if doc["status"] != "approved" {
+				t.Errorf("status = %q, want approved", doc["status"])
+			}
+		})
+	}
+}
+
+// ─── AC-002: specification with zero classifications passes ──────────────────
+
+func TestApproveGate_AC002_NoClassifications(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+	env.docSvc.SetIntelligenceService(env.intelSvc)
+
+	docID, _ := registerAndIngestDoc(t, env, "work/spec/ac002.md", "specification", "AC002",
+		"# AC002\n\n## Section\n\nContent.\n")
+	// No classify call — zero classification entries.
+
+	resp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+
+	if errCode, _ := resp["error_code"].(string); errCode == "concept_tagging_required" {
+		t.Errorf("zero classifications must not trigger gate")
+	}
+	doc, _ := resp["document"].(map[string]any)
+	if doc == nil {
+		t.Fatalf("expected document in response; got: %v", resp)
+	}
+	if doc["status"] != "approved" {
+		t.Errorf("status = %q, want approved", doc["status"])
+	}
+}
+
+// ─── AC-003: design with concepts_intro populated passes ─────────────────────
+
+func TestApproveGate_AC003_ConceptsIntroPresent(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+	env.docSvc.SetIntelligenceService(env.intelSvc)
+
+	docID, contentHash := registerAndIngestDoc(t, env, "work/design/ac003.md", "design", "AC003",
+		"# AC003\n\n## Section A\n\nContent.\n")
+
+	if contentHash == "" {
+		t.Skip("no content_hash from ingest — intel service not active")
+	}
+
+	// Classify with concepts_intro — gate must NOT fire.
+	classifyDocForGate(t, env, docID, contentHash,
+		`[{"section_path":"1","role":"requirement","confidence":"high","concepts_intro":[{"name":"my-concept"}]}]`)
+
+	resp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+
+	if errCode, _ := resp["error_code"].(string); errCode == "concept_tagging_required" {
+		t.Errorf("concepts_intro present — gate must not fire")
+	}
+	doc, _ := resp["document"].(map[string]any)
+	if doc == nil {
+		t.Fatalf("expected document in response; got: %v", resp)
+	}
+	if doc["status"] != "approved" {
+		t.Errorf("status = %q, want approved", doc["status"])
+	}
+}
+
+// ─── AC-004: specification, classifications, no concepts_intro → blocked ─────
+
+func TestApproveGate_AC004_SpecificationBlocked(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+	env.docSvc.SetIntelligenceService(env.intelSvc)
+
+	docID, contentHash := registerAndIngestDoc(t, env, "work/spec/ac004.md", "specification", "AC004",
+		"# AC004\n\n## Section\n\nContent.\n")
+
+	if contentHash == "" {
+		t.Skip("no content_hash — intel service did not ingest")
+	}
+
+	classifyDocForGate(t, env, docID, contentHash,
+		`[{"section_path":"1","role":"requirement","confidence":"high"}]`)
+
+	resp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+
+	errCode, _ := resp["error_code"].(string)
+	if errCode != "concept_tagging_required" {
+		t.Fatalf("expected concept_tagging_required, got resp: %v", resp)
+	}
+	if resp["document_id"] != docID {
+		t.Errorf("document_id = %v, want %v", resp["document_id"], docID)
+	}
+	hash, _ := resp["content_hash"].(string)
+	if hash == "" {
+		t.Error("content_hash must be non-empty in gate error")
+	}
+	msg, _ := resp["message"].(string)
+	if !strings.Contains(msg, "concepts_intro") {
+		t.Errorf("message must mention concepts_intro; got: %q", msg)
+	}
+	if !strings.Contains(msg, docID) {
+		t.Errorf("message must contain docID %q; got: %q", docID, msg)
+	}
+}
+
+// ─── AC-005: dev-plan, classifications, no concepts_intro → blocked ───────────
+
+func TestApproveGate_AC005_DevPlanBlocked(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+	env.docSvc.SetIntelligenceService(env.intelSvc)
+
+	// Register dev-plan without auto_approve so it stays as draft.
+	writeDocFile(t, env.repoRoot, "work/plan/ac005.md", "# AC005\n\n## Section\n\nContent.\n")
+	resp := callDocWithIntel(t, env, map[string]any{
+		"action": "register",
+		"path":   "work/plan/ac005.md",
+		"type":   "dev-plan",
+		"title":  "AC005",
+	})
+	doc, _ := resp["document"].(map[string]any)
+	docID, _ := doc["id"].(string)
+	if docID == "" {
+		t.Fatalf("register: document.id is empty; response: %v", resp)
+	}
+	nudge, _ := resp["classification_nudge"].(map[string]any)
+	contentHash, _ := nudge["content_hash"].(string)
+	if contentHash == "" {
+		t.Skip("no content_hash — intel service did not ingest")
+	}
+
+	// If auto-approved, we can't test the gate. Check current status.
+	current, err := env.docSvc.GetDocument(docID, false)
+	if err != nil {
+		t.Fatalf("GetDocument: %v", err)
+	}
+	if current.Status == "approved" {
+		t.Skip("dev-plan auto-approved during register — gate test requires draft status")
+	}
+
+	classifyDocForGate(t, env, docID, contentHash,
+		`[{"section_path":"1","role":"requirement","confidence":"high"}]`)
+
+	approveResp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+
+	errCode, _ := approveResp["error_code"].(string)
+	if errCode != "concept_tagging_required" {
+		t.Fatalf("expected concept_tagging_required for dev-plan; got: %v", approveResp)
+	}
+	if approveResp["document_id"] != docID {
+		t.Errorf("document_id = %v, want %v", approveResp["document_id"], docID)
+	}
+}
+
+// ─── AC-006: error content_hash matches classification entry ─────────────────
+
+func TestApproveGate_AC006_ContentHashMatchesEntry(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+	env.docSvc.SetIntelligenceService(env.intelSvc)
+
+	docID, contentHash := registerAndIngestDoc(t, env, "work/spec/ac006.md", "specification", "AC006",
+		"# AC006\n\n## Section\n\nContent.\n")
+
+	if contentHash == "" {
+		t.Skip("no content_hash — intel service did not ingest")
+	}
+
+	classifyDocForGate(t, env, docID, contentHash,
+		`[{"section_path":"1","role":"requirement","confidence":"high"}]`)
+
+	resp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+
+	if errCode, _ := resp["error_code"].(string); errCode != "concept_tagging_required" {
+		t.Fatalf("expected gate to fire; got resp: %v", resp)
+	}
+	responseHash, _ := resp["content_hash"].(string)
+	if responseHash == "" {
+		t.Fatal("content_hash must be non-empty in gate response")
+	}
+
+	// Verify hash matches the last entry from GetClassifications.
+	entries, err := env.intelSvc.GetClassifications(docID)
+	if err != nil {
+		t.Fatalf("GetClassifications error: %v", err)
+	}
+	if len(entries) == 0 {
+		t.Fatal("expected classification entries in index")
+	}
+	lastEntry := entries[len(entries)-1]
+	if responseHash != lastEntry.ContentHash {
+		t.Errorf("content_hash in gate error = %q, want %q (from last classification entry)",
+			responseHash, lastEntry.ContentHash)
+	}
+}
+
+// ─── AC-007: nil intel service — gate skipped ────────────────────────────────
+
+func TestApproveGate_AC007_NilIntelService(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+	env.docSvc.SetIntelligenceService(env.intelSvc)
+
+	docID, contentHash := registerAndIngestDoc(t, env, "work/spec/ac007.md", "specification", "AC007",
+		"# AC007\n\n## Section\n\nContent.\n")
+
+	if contentHash != "" {
+		// Classify with no concepts_intro — would block with a real intel service.
+		classifyDocForGate(t, env, docID, contentHash,
+			`[{"section_path":"1","role":"requirement","confidence":"high"}]`)
+	}
+
+	// Pass nil intel service — gate must be skipped entirely (REQ-007).
+	resp := callDocApproveWithIntel(t, env, nil, docID)
+
+	if errCode, _ := resp["error_code"].(string); errCode == "concept_tagging_required" {
+		t.Errorf("nil intel service must skip gate; got concept_tagging_required")
+	}
+	doc, _ := resp["document"].(map[string]any)
+	if doc == nil {
+		t.Fatalf("expected document in response; got: %v", resp)
+	}
+	if doc["status"] != "approved" {
+		t.Errorf("status = %q, want approved", doc["status"])
+	}
+}
+
+// ─── AC-008: GetClassifications returns empty slice for unknown doc ───────────
+
+func TestApproveGate_AC008_GetClassificationsEmptySlice(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+
+	entries, err := env.intelSvc.GetClassifications("DOC-DOES-NOT-EXIST")
+	if err != nil {
+		t.Errorf("GetClassifications must return nil error for unknown doc; got: %v", err)
+	}
+	if entries == nil {
+		t.Error("GetClassifications must return non-nil empty slice, not nil")
+	}
+	if len(entries) != 0 {
+		t.Errorf("GetClassifications must return empty slice, got %d entries", len(entries))
+	}
+}
+
+// ─── AC-009: document status unchanged after blocked approval ────────────────
+
+func TestApproveGate_AC009_StatusUnchangedAfterBlock(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+	env.docSvc.SetIntelligenceService(env.intelSvc)
+
+	docID, contentHash := registerAndIngestDoc(t, env, "work/spec/ac009.md", "specification", "AC009",
+		"# AC009\n\n## Section\n\nContent.\n")
+
+	if contentHash == "" {
+		t.Skip("no content_hash — intel service did not ingest")
+	}
+
+	classifyDocForGate(t, env, docID, contentHash,
+		`[{"section_path":"1","role":"requirement","confidence":"high"}]`)
+
+	// Record status before attempted approval.
+	before, err := env.docSvc.GetDocument(docID, false)
+	if err != nil {
+		t.Fatalf("GetDocument before: %v", err)
+	}
+	statusBefore := before.Status
+
+	// Attempt approval — gate should block.
+	resp := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+	if errCode, _ := resp["error_code"].(string); errCode != "concept_tagging_required" {
+		t.Fatalf("expected gate to fire; got resp: %v", resp)
+	}
+
+	// Status must be unchanged.
+	after, err := env.docSvc.GetDocument(docID, false)
+	if err != nil {
+		t.Fatalf("GetDocument after: %v", err)
+	}
+	if after.Status != statusBefore {
+		t.Errorf("status changed from %q to %q after blocked approval", statusBefore, after.Status)
+	}
+}
+
+// ─── AC-010: retry after classify with concepts_intro succeeds ───────────────
+
+func TestApproveGate_AC010_RetrySucceedsAfterClassify(t *testing.T) {
+	t.Parallel()
+	env := setupDocToolTest(t)
+	env.docSvc.SetIntelligenceService(env.intelSvc)
+
+	docID, contentHash := registerAndIngestDoc(t, env, "work/spec/ac010.md", "specification", "AC010",
+		"# AC010\n\n## Section\n\nContent.\n")
+
+	if contentHash == "" {
+		t.Skip("no content_hash — intel service did not ingest")
+	}
+
+	// First classify: no concepts_intro → gate fires.
+	classifyDocForGate(t, env, docID, contentHash,
+		`[{"section_path":"1","role":"requirement","confidence":"high"}]`)
+
+	resp1 := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+	if errCode, _ := resp1["error_code"].(string); errCode != "concept_tagging_required" {
+		t.Fatalf("expected first approve to be blocked; got resp: %v", resp1)
+	}
+
+	// Re-classify with concepts_intro.
+	classifyDocForGate(t, env, docID, contentHash,
+		`[{"section_path":"1","role":"requirement","confidence":"high","concepts_intro":[{"name":"my-concept"}]}]`)
+
+	// Retry approve — must succeed.
+	resp2 := callDocApproveWithIntel(t, env, env.intelSvc, docID)
+	if errCode, _ := resp2["error_code"].(string); errCode == "concept_tagging_required" {
+		t.Fatalf("retry must succeed after classify with concepts_intro; got blocked again")
+	}
+	doc, _ := resp2["document"].(map[string]any)
+	if doc == nil {
+		t.Fatalf("expected document in retry response; got: %v", resp2)
+	}
+	if doc["status"] != "approved" {
+		t.Errorf("status = %q, want approved", doc["status"])
+	}
+}
+
+// ─── AC-011: nil intel service = identical to pre-feature behavior ───────────
+
+func TestApproveGate_AC011_NilServiceIdenticalBehavior(t *testing.T) {
+	t.Parallel()
+	for _, docType := range []string{"specification", "design", "dev-plan", "policy", "report", "research"} {
+		docType := docType
+		t.Run(docType, func(t *testing.T) {
+			t.Parallel()
+			env := setupDocToolTest(t)
+			// No intelligence service set on docSvc.
+
+			relPath := fmt.Sprintf("work/docs/ac011-%s.md", docType)
+			writeDocFile(t, env.repoRoot, relPath, "# AC011\n\nContent.\n")
+			regResp := callDoc(t, env, map[string]any{
+				"action": "register",
+				"path":   relPath,
+				"type":   docType,
+				"title":  "AC011 " + docType,
+			})
+			doc, _ := regResp["document"].(map[string]any)
+			docID, _ := doc["id"].(string)
+			if docID == "" {
+				t.Fatalf("register: document.id is empty; response: %v", regResp)
+			}
+
+			// Pass nil intel service.
+			approveResp := callDocApproveWithIntel(t, env, nil, docID)
+
+			if errCode, _ := approveResp["error_code"].(string); errCode != "" {
+				t.Errorf("nil intel service must produce no error_code; got %q", errCode)
+			}
+			approvedDoc, _ := approveResp["document"].(map[string]any)
+			if approvedDoc == nil {
+				t.Fatalf("expected document in approve response; got: %v", approveResp)
+			}
+			if approvedDoc["status"] != "approved" {
+				t.Errorf("status = %q, want approved", approvedDoc["status"])
+			}
+		})
+	}
+}
+
+// Compile-time checks: ensure the gate test uses real types.
+var _ []docint.ClassificationEntry
+var _ *service.IntelligenceService

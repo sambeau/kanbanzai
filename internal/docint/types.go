@@ -108,6 +108,15 @@ type Classification struct {
 	ConceptsUsed  []string            `yaml:"concepts_used,omitempty"  json:"concepts_used,omitempty"`  // Concepts this section uses
 }
 
+// ClassificationEntry pairs a document's content hash with one of its
+// classification records. It is the element type returned by
+// IntelligenceService.GetClassifications and used by the concept-tagging
+// approval gate to evaluate REQ-002, REQ-003, and REQ-005 (content_hash).
+type ClassificationEntry struct {
+	ContentHash    string         `json:"content_hash"`
+	Classification Classification `json:"classification"`
+}
+
 // ClassificationSubmission is the input for Layer 3 classification.
 type ClassificationSubmission struct {
 	DocumentID      string           `yaml:"document_id"`
