@@ -2,9 +2,11 @@ id: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-
 path: work/reports/review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active.md
 type: report
 title: "Review Report: Plan Lifecycle Proposed-to-Active"
-status: draft
+status: approved
 owner: FEAT-01KPVDDYVETV5
+approved_by: sambeau
+approved_at: "2026-04-23T03:48:19Z"
 content_hash: 36509cb848077a4466b6b0cb028688f6726e977b8693647ad0e1c93b9d61520b
 created: "2026-04-23T03:48:01Z"
 created_by: sambeau
-updated: "2026-04-23T03:48:01Z"
+updated: "2026-04-23T03:48:19Z"
