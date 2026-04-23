@@ -3,11 +3,16 @@ parent_feature: FEAT-01KPVDDYVETV5
 slug: plan-lifecycle-proposed-active-unit-tests-for-transition-rejection-and-override-record
 name: "Unit tests for transition, rejection, and override record"
 summary: "Unit tests for transition, rejection, and override record"
-status: active
+status: done
 depends_on:
   - TASK-01KPVFY051XFC
   - TASK-01KPVFY053ED8
+files_planned:
+  - internal/service/plans_shortcut_test.go
+completed: "2026-04-23T03:43:25Z"
 claimed_at: "2026-04-23T03:32:50Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-23T03:32:50Z"
 dispatched_by: sambeau
+completion_summary: "Added plans_shortcut_test.go with 10 unit tests covering all AC-001–AC-010 scenarios. Tests cover shortcut success (one/mixed qualifying features), rejection (all designing, all proposed, no features), override record content and prefix, and regression tests for proposed→designing and designing→active. All 10 pass; internal/service package green. Pre-existing internal/mcp failure is unrelated."
+verification: go test ./internal/service/... -run TestPlanShortcut -v -count=1 — all 10 pass
