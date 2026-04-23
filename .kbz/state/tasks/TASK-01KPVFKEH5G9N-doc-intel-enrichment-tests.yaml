@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPVDDYQQS1Y
 slug: doc-intel-enrichment-tests
 name: Tests for all three doc-intel enrichments
 summary: "Write unit, integration, and benchmark tests covering AC-001 through AC-011 for section_count, taxonomy, and suggested_classifications enrichments in internal/docint/"
-status: queued
+status: ready

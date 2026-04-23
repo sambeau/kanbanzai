@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPVDDYVETV5
 slug: plan-lifecycle-proposed-active-add-proposed-active-transition-and-precondition-check
 name: "Add `proposed → active` transition and precondition check"
 summary: "Add `proposed → active` transition and precondition check"
-status: queued
+status: ready

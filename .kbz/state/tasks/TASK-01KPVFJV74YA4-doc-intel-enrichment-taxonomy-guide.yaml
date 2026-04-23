@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPVDDYQQS1Y
 slug: doc-intel-enrichment-taxonomy-guide
 name: Add taxonomy block to guide response
 summary: "Extend the guide response struct with a taxonomy object (roles derived from FragmentRole constants, confidence array) in the guide handler (REQ-003, REQ-004)"
-status: queued
+status: ready

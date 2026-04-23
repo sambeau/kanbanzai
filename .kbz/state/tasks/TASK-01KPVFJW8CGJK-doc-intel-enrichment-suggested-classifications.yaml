@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPVDDYQQS1Y
 slug: doc-intel-enrichment-suggested-classifications
 name: Add suggested_classifications to guide response
 summary: "Extend guide response with suggested_classifications array; implement heading-pattern table per REQ-007 with case-insensitive normalised-whitespace matching (REQ-005, REQ-006, REQ-007, REQ-008)"
-status: queued
+status: ready

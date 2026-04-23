@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPVDDYZ3182
 slug: worktree-timeout-root-cause-fix
 name: Investigate and fix worktree create root cause
 summary: "Profile git worktree list and lock contention with 30+ worktrees, identify root cause, apply targeted fix with adjacent code comment (REQ-001, REQ-005)"
-status: queued
+status: ready

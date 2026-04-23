@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPVDDYN855F
 slug: skill-doc-updates-edit-kanbanzai-documents
 name: Edit kanbanzai-documents SKILL.md classification section
 summary: Add concise-output instruction and atomicity guarantee to the Classification (Layer 3) section of .agents/skills/kanbanzai-documents/SKILL.md
-status: queued
+status: ready

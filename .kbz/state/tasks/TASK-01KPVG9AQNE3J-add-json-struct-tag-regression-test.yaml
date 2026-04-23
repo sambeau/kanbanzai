@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPVDDYSEK8P
 slug: add-json-struct-tag-regression-test
 name: Add json struct tag regression test
 summary: "Write a Go test using reflect to iterate over every exported field of each struct identified in T2 and assert a non-empty json: struct tag is present. The test must fail with a message naming the struct and field when a tag is missing or empty, and must compile and complete in under 2 seconds in go test ./... . List the audited structs in a comment at the top of the test. Covers REQ-009, REQ-NF-002, AC-008."
-status: queued
+status: ready
