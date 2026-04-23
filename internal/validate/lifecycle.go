@@ -61,10 +61,14 @@ var terminalStates = map[EntityKind]map[string]struct{}{
 
 var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 	// Plan lifecycle: proposed → designing → active → reviewing → done
+	// Shortcut: proposed → active (guarded by precondition in service layer — at least one
+	// feature must be in a post-designing state; the service layer enforces this and writes
+	// a system-generated override record on success).
 	// Terminal: superseded, cancelled (from any non-terminal)
 	EntityPlan: {
 		string(model.PlanStatusProposed): {
 			string(model.PlanStatusDesigning):  {},
+			string(model.PlanStatusActive):     {}, // shortcut: precondition enforced in service layer
 			string(model.PlanStatusSuperseded): {},
 			string(model.PlanStatusCancelled):  {},
 		},

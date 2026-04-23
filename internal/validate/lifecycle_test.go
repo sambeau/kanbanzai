@@ -252,6 +252,13 @@ func TestCanTransition(t *testing.T) {
 			want: true,
 		},
 		{
+			name: "plan proposed to active (shortcut — arc exists at validate layer)",
+			kind: EntityPlan,
+			from: "proposed",
+			to:   "active",
+			want: true,
+		},
+		{
 			name: "plan designing to active",
 			kind: EntityPlan,
 			from: "designing",
@@ -873,10 +880,10 @@ func TestValidNextStates(t *testing.T) {
 		wantStates []string
 	}{
 		{
-			name:       "plan proposed has designing, cancelled, superseded",
+			name:       "plan proposed has active, designing, cancelled, superseded",
 			kind:       EntityPlan,
 			from:       "proposed",
-			wantStates: []string{"cancelled", "designing", "superseded"},
+			wantStates: []string{"active", "cancelled", "designing", "superseded"},
 		},
 		{
 			name:       "plan active has reviewing, cancelled, superseded",

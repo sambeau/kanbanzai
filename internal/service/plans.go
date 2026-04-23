@@ -182,6 +182,31 @@ func (s *EntityService) UpdatePlanStatus(id, slug, newStatus string) (ListResult
 		return ListResult{}, err
 	}
 
+	// proposed → active shortcut: precondition — at least one feature must be in a
+	// post-designing state (specifying, dev-planning, developing, reviewing, done).
+	if currentStatus == string(model.PlanStatusProposed) && newStatus == string(model.PlanStatusActive) {
+		n, err := s.countPostDesigningFeaturesForPlan(id)
+		if err != nil {
+			return ListResult{}, fmt.Errorf("checking post-designing features: %w", err)
+		}
+		if n == 0 {
+			return ListResult{}, fmt.Errorf(
+				"proposed → active shortcut requires at least one feature in post-designing state " +
+					"(specifying, dev-planning, developing, reviewing, or done); " +
+					"use proposed → designing instead",
+			)
+		}
+		// Append system-generated override record to the plan's audit trail.
+		existing := planOverridesFromState(result.State)
+		or := model.OverrideRecord{
+			FromStatus: currentStatus,
+			ToStatus:   newStatus,
+			Reason:     fmt.Sprintf("proposed → active shortcut: %d feature(s) in post-designing state at transition time", n),
+			Timestamp:  s.now(),
+		}
+		result.State["overrides"] = overrideRecordsToAny(append(existing, or))
+	}
+
 	// Update status and updated timestamp
 	result.State["status"] = newStatus
 	result.State["updated"] = s.now().Format(time.RFC3339)
@@ -337,6 +362,79 @@ func (s *EntityService) listPlanIDs() ([]string, error) {
 	}
 
 	return ids, nil
+}
+
+// countPostDesigningFeaturesForPlan returns the number of features belonging to planID
+// that are in a post-designing state (specifying, dev-planning, developing, reviewing, done).
+// It short-circuits on the first qualifying feature for O(1) happy-path performance, but
+// returns the full count for the override record message.
+func (s *EntityService) countPostDesigningFeaturesForPlan(planID string) (int, error) {
+	postDesigning := map[string]struct{}{
+		string(model.FeatureStatusSpecifying):  {},
+		string(model.FeatureStatusDevPlanning): {},
+		string(model.FeatureStatusDeveloping):  {},
+		string(model.FeatureStatusReviewing):   {},
+		string(model.FeatureStatusDone):        {},
+	}
+
+	features, err := s.List("feature")
+	if err != nil {
+		return 0, err
+	}
+
+	count := 0
+	for _, f := range features {
+		if stringFromState(f.State, "parent") != planID {
+			continue
+		}
+		status := stringFromState(f.State, "status")
+		if _, ok := postDesigning[status]; ok {
+			count++
+		}
+	}
+	return count, nil
+}
+
+// planOverridesFromState extracts override records stored in a plan's state map.
+func planOverridesFromState(state map[string]any) []model.OverrideRecord {
+	rawSlice, ok := state["overrides"].([]any)
+	if !ok || len(rawSlice) == 0 {
+		return nil
+	}
+	result := make([]model.OverrideRecord, 0, len(rawSlice))
+	for _, item := range rawSlice {
+		m, ok := item.(map[string]any)
+		if !ok {
+			continue
+		}
+		fromStatus, _ := m["from_status"].(string)
+		toStatus, _ := m["to_status"].(string)
+		reason, _ := m["reason"].(string)
+		tsStr, _ := m["timestamp"].(string)
+		ts, _ := time.Parse(time.RFC3339, tsStr)
+		result = append(result, model.OverrideRecord{
+			FromStatus: fromStatus,
+			ToStatus:   toStatus,
+			Reason:     reason,
+			Timestamp:  ts,
+		})
+	}
+	return result
+}
+
+// overrideRecordsToAny converts a slice of OverrideRecord to []any for YAML storage,
+// using the same wire format as feature override records.
+func overrideRecordsToAny(records []model.OverrideRecord) []any {
+	out := make([]any, len(records))
+	for i, r := range records {
+		out[i] = map[string]any{
+			"from_status": r.FromStatus,
+			"to_status":   r.ToStatus,
+			"reason":      r.Reason,
+			"timestamp":   r.Timestamp.Format(time.RFC3339),
+		}
+	}
+	return out
 }
 
 // planFields converts a Plan entity to a map of fields for storage.
