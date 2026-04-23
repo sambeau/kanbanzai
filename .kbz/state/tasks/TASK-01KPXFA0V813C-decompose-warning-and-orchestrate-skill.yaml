@@ -1,0 +1,6 @@
+id: TASK-01KPXFA0V813C
+parent_feature: FEAT-01KPXE8T8QWRB
+slug: decompose-warning-and-orchestrate-skill
+name: Decompose warning and orchestrate-development skill
+summary: "In internal/service/decompose.go, after dev-plan resolution, add a non-blocking warning to Proposal.Warnings when the parent plan has more than 3 features and the dev-plan content does not contain a ## Merge Schedule heading. Warning must not prevent proposal generation. In .kbz/skills/orchestrate-development/SKILL.md, insert Phase 0 (Cohort Setup, 5 steps) before Phase 1, and add step 7 (cohort checkpoint) after step 6 in Phase 6 Close-Out."
+status: queued
