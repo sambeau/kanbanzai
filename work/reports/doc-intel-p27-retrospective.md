@@ -379,6 +379,69 @@ on a problem first addressed in P8 will find nothing in the corpus without this.
 
 ---
 
+## Observed Friction: Document Registration During This Report
+
+This report was produced in the same session as the P27 implementation handoff.
+Registering the finished report document surfaced a concrete UX friction point worth
+recording directly, because it is exactly the kind of barrier that causes agents to
+defer or skip document registration in practice.
+
+### What happened
+
+After writing the report to `work/reports/doc-intel-p27-retrospective.md`, the
+following sequence of attempts was required to register it:
+
+1. `kanbanzai doc register --path work/reports/...` → `unknown flag "work/reports/..."`
+   (the path is a positional argument, not a flag)
+2. `kanbanzai doc register work/reports/... --type report --title "..."` →
+   `created_by is required`
+3. `kanbanzai doc register ... --created-by sambeau` → `unknown flag "--created-by"`
+4. `kanbanzai doc register ... --created_by sambeau` → `unknown flag "--created_by"`
+5. Inspected `kanbanzai doc register --help` — the help text shows `--by <user>`
+   with the note "auto-resolved if omitted", but the bare command errors with
+   `created_by is required`, meaning auto-resolution is not working from the CLI.
+6. Gave up on the CLI and called the MCP `doc` tool with explicit `created_by`.
+   Registration succeeded on the first attempt.
+
+Six attempts to register one document. The underlying cause is a mismatch between
+the CLI flag name (`--by`), the internal field name (`created_by`), and the
+auto-resolution behaviour (documented as working, not actually working when invoked
+from a shell context without a running MCP server).
+
+### Why this matters
+
+P27 Fix 2 added a session-start corpus integrity check that calls `doc(action:
+"import")` for unregistered files, and Fix 3 mandated that agents classify documents
+at registration time. Both fixes assume that `doc register` is low-friction enough
+to be done routinely. The sequence above suggests it is not.
+
+An agent that hits `created_by is required` on the first attempt, then gets
+`unknown flag` errors on two flag-format guesses, may simply give up — or
+conclude that registration is broken and skip it. The P28 evidence (20 documents
+pending classification, nudge deferred) is consistent with this being a real failure
+mode, not just an isolated incident.
+
+### Specific defects
+
+| Symptom | Likely cause |
+|---|---|
+| `--path` not recognised as a flag | Positional argument not documented in the error message, only in full help |
+| `created_by is required` when `--by` is documented as auto-resolved | Auto-resolution reads from `.kbz/local.yaml` or git config via the MCP server's identity resolution path; the CLI does not invoke the same resolution |
+| `--created-by` and `--created_by` both rejected | The correct flag `--by` uses a different prefix convention from every other multi-word flag in the CLI |
+
+### Recommendation for next sprint
+
+The `doc register` CLI command should resolve identity the same way the MCP tool
+does — reading `.kbz/local.yaml` and falling back to `git config user.name`.
+This is a one-line fix (call the existing `config.ResolveIdentity("")` helper that
+is already used by `worktree create` and other commands). The `--by` flag should
+remain available as an override but should not be required. Until this is fixed,
+agents working outside an active MCP session cannot register documents without
+supplying identity manually, which creates a systematic gap in registration coverage
+for any CLI-driven workflow step.
+
+---
+
 ## Metrics Available for the Next Sprint Retrospective
 
 P27 Fix 5 makes the following metrics continuously available for P29:
