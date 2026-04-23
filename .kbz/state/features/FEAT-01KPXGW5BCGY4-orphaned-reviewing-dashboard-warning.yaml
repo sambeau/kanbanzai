@@ -1,0 +1,8 @@
+id: FEAT-01KPXGW5BCGY4
+slug: orphaned-reviewing-dashboard-warning
+name: Orphaned reviewing feature dashboard warning
+parent: P31-lifecycle-gate-hardening
+status: proposed
+summary: "Add OrphanedReviewingFeatureCheck to the status tool's attention item assembler, surfacing features in reviewing status with no registered review report as warning-severity items at project, plan, and feature scope."
+created: "2026-04-23T15:55:55Z"
+created_by: sambeau
