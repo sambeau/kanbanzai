@@ -1,0 +1,10 @@
+id: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit
+path: work/spec/p32-mcp-json-tag-audit.md
+type: specification
+title: "P32: MCP Parameter Struct JSON Tag Audit"
+status: draft
+owner: FEAT-01KPX5CW4R82P
+content_hash: 6f16b980b11ab17e4dec8b545e3755d36eb9ade7e70d6aecfc17dbde1cc5e766
+created: "2026-04-23T15:00:08Z"
+created_by: sambeau
+updated: "2026-04-23T15:00:08Z"
