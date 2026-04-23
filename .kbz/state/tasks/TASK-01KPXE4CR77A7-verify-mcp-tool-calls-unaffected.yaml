@@ -1,0 +1,6 @@
+id: TASK-01KPXE4CR77A7
+parent_feature: FEAT-01KPX5CW4R82P
+slug: verify-mcp-tool-calls-unaffected
+name: Verify existing MCP tool calls unaffected by new json tags
+summary: "AC-006: Confirm via MCP integration tests or manual verification that tool calls using the audited structs with existing snake_case parameter names produce the same results after json tags are added."
+status: queued
