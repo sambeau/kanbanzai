@@ -3,4 +3,9 @@ parent_feature: FEAT-01KPX5CVVY357
 slug: guide-enrichment-discard-short-tokens
 name: Discard short concept tokens
 summary: Discard any concept token shorter than two characters after normalisation
-status: ready
+status: done
+files_planned:
+  - internal/docint/taxonomy.go
+completed: "2026-04-23T15:39:21Z"
+completion_summary: Added len(tok) < 2 check in deriveConcepts() to discard tokens shorter than 2 characters
+verification: go test ./internal/mcp/... - all tests pass

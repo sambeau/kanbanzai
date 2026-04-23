@@ -3,4 +3,9 @@ parent_feature: FEAT-01KPX5CVVY357
 slug: guide-enrichment-title-case-tokens
 name: Title-case concept tokens
 summary: Title-case each normalised concept token
-status: ready
+status: done
+files_planned:
+  - internal/docint/taxonomy.go
+completed: "2026-04-23T15:39:20Z"
+completion_summary: "Added title-casing of each token in deriveConcepts() using strings.ToUpper(tok[:1]) + tok[1:]"
+verification: go test ./internal/mcp/... - AC-103 tokens are title-cased

@@ -3,4 +3,9 @@ parent_feature: FEAT-01KPX5CVVY357
 slug: guide-enrichment-expand-suggested-classifications
 name: Expand suggested_classifications coverage
 summary: "Add Problem and Motivation, Decisions, Design, Overview/Summary, Requirements/Goals, Risk/Risks, Definition/Glossary heading patterns to suggested_classifications"
-status: ready
+status: done
+files_planned:
+  - internal/docint/taxonomy.go
+completed: "2026-04-23T15:39:21Z"
+completion_summary: "Added decisions, design, summary, goals, requirements to suggestedClassTable (exact match) and suggestedClassPrefixTable (prefix match for problem and motivation, overview, risk, definition, glossary) with matchSuggestedRolePrefix fallback in matchSuggestedRole"
+verification: go test ./internal/docint/... - all taxonomy tests pass including existing partial_match_no_entry test

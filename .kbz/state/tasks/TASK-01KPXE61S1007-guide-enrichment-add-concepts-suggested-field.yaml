@@ -3,4 +3,10 @@ parent_feature: FEAT-01KPX5CVVY357
 slug: guide-enrichment-add-concepts-suggested-field
 name: Add concepts_suggested field to guide response
 summary: "Add concepts_suggested field (section_path, section_title, suggested_concepts) to docIntelGuideAction response, omitting entries where no concepts are derivable"
-status: ready
+status: done
+files_planned:
+  - internal/docint/taxonomy.go
+  - internal/mcp/doc_intel_tool.go
+completed: "2026-04-23T15:39:21Z"
+completion_summary: "Added ConceptSuggestion type, SuggestConcepts(), collectConceptSuggestions() in taxonomy.go; wired concepts_suggested into docIntelGuideAction response in doc_intel_tool.go"
+verification: go test ./internal/mcp/... - AC-101 through AC-104 pass

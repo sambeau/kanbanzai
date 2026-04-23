@@ -3,4 +3,9 @@ parent_feature: FEAT-01KPX5CVVY357
 slug: guide-enrichment-tests
 name: Write tests for guide concept enrichment
 summary: Write unit tests for concepts_suggested derivation and expanded suggested_classifications heading patterns
-status: ready
+status: done
+files_planned:
+  - internal/mcp/doc_intel_guide_enrichment_test.go
+completed: "2026-04-23T15:39:21Z"
+completion_summary: "Wrote doc_intel_guide_enrichment_test.go with 14 tests covering AC-101 through AC-114: concepts_suggested field presence, one-entry-per-section, ancestor title tokens, stop word omission, all 7 new classification patterns, P28 regression, field completeness"
+verification: "go test ./internal/mcp/... -run 'Guide|Concepts' - all 14 new tests pass"

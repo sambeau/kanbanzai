@@ -3,4 +3,9 @@ parent_feature: FEAT-01KPX5CVVY357
 slug: guide-enrichment-deduplicate-tokens
 name: Deduplicate concept token list
 summary: Deduplicate concept token list preserving first-occurrence order
-status: ready
+status: done
+files_planned:
+  - internal/docint/taxonomy.go
+completed: "2026-04-23T15:39:21Z"
+completion_summary: Added deduplication with first-occurrence order using a seen map in deriveConcepts() and collectConceptSuggestions()
+verification: go test ./internal/mcp/... - AC-103 no duplicate tokens
