@@ -2,9 +2,12 @@ id: FEAT-01KPVDDYN855F
 slug: skill-doc-updates
 name: Skill documentation updates
 parent: P28-doc-intel-polish-workflow-reliability
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "Pure markdown updates to three skill files. Document the concise-output instruction and classify atomicity/recovery procedure in the classification skill. Add a 'Resume plan' checklist to kanbanzai-getting-started and kanbanzai-workflow covering: commit orphaned changes, advance plan lifecycle, override decompose dev-plan gates, confirm worktrees. Sources: Pilot §4.2, §4.3; P27 Issue 4."
 spec: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates
 dev_plan: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates
 created: "2026-04-22T20:17:15Z"
 created_by: sambeau
+verification: "TASK-01KPVFJP2CREN: AC-001: Bold concise-output instruction present in Classification section. AC-002: Atomicity statement explicitly names `classify` persistence and `doc_intel(action: \\\"pending\\\")` as authoritative after failure. AC-003: Statement explicitly instructs calling `doc_intel(action: \\\"pending\\\")` before re-dispatching. AC-008: `git diff --name-only main...HEAD` shows only the two owned files. AC-009: No duplication of pre-existing sentences. AC-010: Step-by-step procedure, priority-ordering table, and anti-patterns sub-sections byte-for-byte unchanged.\nTASK-01KPVFJQ7W1RN: grep confirmed section heading present at line 282 (.agents) and line 290 (kbzinit). kbzinit markers '# kanbanzai-managed: true' and '# kanbanzai-version: dev' confirmed present at lines 13-14. git diff --name-only main...HEAD shows only owned files modified by this task. AC-004: section with heading exists with numbered list. AC-006: four steps in correct order. AC-007: steps 2 and 3 each carry '(Transitional — becomes unnecessary after P28 Sprint 2 merges.)' note. AC-008: diff clean.\"\nTASK-01KPVFJR758B3: AC-005: All four steps present directly in kanbanzai-workflow/SKILL.md (Option A). AC-006: Steps in correct order — git status → proposed lifecycle → dev-plan doc → worktree. AC-007: Steps 2 and 3 labelled '(Transitional — unnecessary after P28 Sprint 2 merges)'. AC-008: git diff --name-only main...HEAD shows only this task's owned files plus parallel-agent kanbanzai-documents files. kbzinit managed markers confirmed present.\nTASK-01KPVFKCF9HHP: AC-001 through AC-010 verified by inspection; git diff shows expected 6 files; kbzinit integration test (TestP12_Integration_NewProject) passes in 0.13s. No fixes were needed."
+verification_status: passed
