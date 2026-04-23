@@ -1,0 +1,283 @@
+document_id: PROJECT/report-doc-intel-p27-retrospective
+document_path: work/reports/doc-intel-p27-retrospective.md
+content_hash: 7aadf4b8435d2798d0d679b86a5dab6cff0871d8063fec14136e554657af51a6
+indexed_at: 2026-04-23T11:26:22.364498Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Report: P27 Doc-Intel Adoption — Retrospective and Sprint Planning Input'
+      byte_offset: 0
+      byte_count: 21358
+      word_count: 2981
+      content_hash: 7aadf4b8435d2798d0d679b86a5dab6cff0871d8063fec14136e554657af51a6
+      children:
+        - path: "1.1"
+          level: 2
+          title: Executive Summary
+          byte_offset: 962
+          byte_count: 1050
+          word_count: 157
+          content_hash: 5612cf12fc4f0de25c52c68c13465cdef33cc68e5adfce4d4ae043bf17cbac42
+        - path: "1.2"
+          level: 2
+          title: 'Background: P27 Goals and Success Criteria'
+          byte_offset: 2012
+          byte_count: 584
+          word_count: 86
+          content_hash: 74769cb8cef334b846b569dcfc9eca68047897b158d3dfcb14945d973f42ce72
+        - path: "1.3"
+          level: 2
+          title: Instrumentation Data (P27 Fix 5)
+          byte_offset: 2596
+          byte_count: 2806
+          word_count: 355
+          content_hash: 654325d7d826337ec2bfae422a94f4c8ab2894269366b6cbe83437d16dcbe1a5
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Document access counts
+              byte_offset: 2765
+              byte_count: 1110
+              word_count: 120
+              content_hash: f0974c67fd746c850c867fa239f7af7f592b37861dcbf742ff2c47d685d9f1ac
+            - path: 1.3.2
+              level: 3
+              title: Knowledge entry access
+              byte_offset: 3875
+              byte_count: 679
+              word_count: 99
+              content_hash: 8c70d56fa0cebb52b550e36ee5d33dbd33f8e899fc242aa7c2415ef4cef54630
+            - path: 1.3.3
+              level: 3
+              title: Concept registry
+              byte_offset: 4554
+              byte_count: 505
+              word_count: 62
+              content_hash: a8e1ba7442a96babdcc7a48035f39eb163e2c06b8ad547362c663babd125ec56
+            - path: 1.3.4
+              level: 3
+              title: FTS search
+              byte_offset: 5059
+              byte_count: 343
+              word_count: 47
+              content_hash: 002d95beba86377715cf191a98b2d4e51c4f5f34bb07be1e05294d6169bfe6e8
+        - path: "1.4"
+          level: 2
+          title: 'P27 Success Criteria: Verdict by Criterion'
+          byte_offset: 5402
+          byte_count: 6905
+          word_count: 972
+          content_hash: 7bc22ea8f230d75198ef5597dbe2057dbcd592f76cb07ca5aee7e50704e83a4e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'SC-1: Design Continuity — ✅ Working'
+              byte_offset: 5449
+              byte_count: 990
+              word_count: 125
+              content_hash: 1e15f2c9670f4742012e2c303e82eac989a754a3595f7429d02d22eb0849152e
+            - path: 1.4.2
+              level: 3
+              title: 'SC-2: Concept Search Functional — ❌ Not operational'
+              byte_offset: 6439
+              byte_count: 1135
+              word_count: 159
+              content_hash: e6cb42174762410612245ab659b667e67b547b0d6ac33135c7b6142d86c5f2a3
+            - path: 1.4.3
+              level: 3
+              title: 'SC-3: Corpus Completeness — ⚠️ Partially met'
+              byte_offset: 7574
+              byte_count: 1049
+              word_count: 149
+              content_hash: ca59aaf9e41fb40fe8bd7318ad575b1fccd3b6d02ab1e6087eb22a7fb877ec13
+            - path: 1.4.4
+              level: 3
+              title: 'SC-4: Classification Coverage — ⚠️ Partially met'
+              byte_offset: 8623
+              byte_count: 1238
+              word_count: 175
+              content_hash: 395a83f77b802441a492b241338cbf1c372f73bf21f32f8ec351bfb50cc6bc2b
+            - path: 1.4.5
+              level: 3
+              title: 'SC-5: Conformance Enforcement — ⚠️ Insufficient data'
+              byte_offset: 9861
+              byte_count: 603
+              word_count: 84
+              content_hash: f281f8706d0c6edf1e6b6a63012cb8eaf5824ffa5229778736c1db3653080dc4
+            - path: 1.4.6
+              level: 3
+              title: 'SC-6: Knowledge Feedback Loop — ❌ Not met'
+              byte_offset: 10464
+              byte_count: 1045
+              word_count: 157
+              content_hash: 34889d3cd0c2f049c9b5abd0fffa68e927f8a11d3d2f0dbf0fbf650ad125ec61
+            - path: 1.4.7
+              level: 3
+              title: 'SC-7: Observable Adoption — ✅ Now possible'
+              byte_offset: 11509
+              byte_count: 798
+              word_count: 116
+              content_hash: 1b8c66c8bb6ca6d7dddc6907cfc9bab76c1e5feb11e287056ac355fc1d8e7a7c
+        - path: "1.5"
+          level: 2
+          title: Root Cause Analysis of Remaining Gaps
+          byte_offset: 12307
+          byte_count: 2867
+          word_count: 428
+          content_hash: 6bd6c97abcf662176fca3273387942e4874574f53e98f8c19b0fb102d2e18031
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Why is the concept registry empty?
+              byte_offset: 12349
+              byte_count: 977
+              word_count: 145
+              content_hash: 65b5367063c212bfc85e631f555b1fd4015a09f479aa2215b8433042eac443de
+            - path: 1.5.2
+              level: 3
+              title: Why is classification shallow at registration time?
+              byte_offset: 13326
+              byte_count: 934
+              word_count: 132
+              content_hash: 26bf3de7eb2fa6aff71629c65db92b3f04e821c9ee8d3cc5f3ab57a57071a934
+            - path: 1.5.3
+              level: 3
+              title: Why are knowledge entries unconfirmed?
+              byte_offset: 14260
+              byte_count: 914
+              word_count: 144
+              content_hash: 43482b0d7707a2ac01a09fbe62c448ee255b92a6da50df9f66b6b4883931e1fb
+        - path: "1.6"
+          level: 2
+          title: What Should Change for the Next Sprint
+          byte_offset: 15174
+          byte_count: 3819
+          word_count: 541
+          content_hash: bbc4923b33cefefc552448a4e9cf87aa6db6fbeb1cdf8536f76934baa24be496
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Priority 1: Backfill the concept registry (1–2 days)'
+              byte_offset: 15217
+              byte_count: 994
+              word_count: 134
+              content_hash: 690b7cb6285f617bf03019da5c5fab4d7762ee5995192f7f1b28b20d2ce2cb0c
+            - path: 1.6.2
+              level: 3
+              title: 'Priority 2: Add concept guidance to the classify skill and guide response'
+              byte_offset: 16211
+              byte_count: 731
+              word_count: 102
+              content_hash: 2e912f79aa25c23e25e94aeeb58fe59949333f27abf2d95fdb4449047e318265
+            - path: 1.6.3
+              level: 3
+              title: 'Priority 3: Run the P28 knowledge confirmation close-out'
+              byte_offset: 16942
+              byte_count: 676
+              word_count: 90
+              content_hash: 9ad684babf4f627d93c4cc0664fea4e850c824100ef70e2426144180cd90adf5
+            - path: 1.6.4
+              level: 3
+              title: 'Priority 4: Programmatic enforcement for design-stage classification'
+              byte_offset: 17618
+              byte_count: 746
+              word_count: 113
+              content_hash: 444a72f44141816418f837b50cfdfb9066b0831d851c42c3e7f62c3cbad346cb
+            - path: 1.6.5
+              level: 3
+              title: 'Priority 5: Index the pre-pilot backlog'
+              byte_offset: 18364
+              byte_count: 629
+              word_count: 94
+              content_hash: e27286779134c25c5991daad45a3a84e58f5e5424e4b917b59900d3b4467c022
+        - path: "1.7"
+          level: 2
+          title: Metrics Available for the Next Sprint Retrospective
+          byte_offset: 18993
+          byte_count: 1174
+          word_count: 172
+          content_hash: 7e63c3445f9bb1652dd3ead58845ce2c21c6137ea199d50789d096ae95a37eea
+        - path: "1.8"
+          level: 2
+          title: Summary Table
+          byte_offset: 20167
+          byte_count: 1191
+          word_count: 196
+          content_hash: c7c8bda503777bffb18e5418bd25b8d7e059c97880b99872c3441ab9c45ce74f
+entity_refs:
+    - entity_id: FEAT-01KPTHB5Z1H7T
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 798
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 818
+    - entity_id: FEAT-01KPTHB649DPK
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 838
+    - entity_id: FEAT-01KPTHB66Y8TM
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 884
+    - entity_id: FEAT-01KP8T4HXPEAY
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2976
+    - entity_id: FEAT-01KMRX1HG8BAX
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 3028
+    - entity_id: FEAT-01KPVDDYSEK8P
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 3091
+    - entity_id: FEAT-01KN588PGJNM0
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 3182
+    - entity_id: FEAT-01KPVDDYX73WB
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 3264
+    - entity_id: FEAT-01KPVDDYVETV5
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 3410
+    - entity_id: FEAT-01KPNNYZ1ZSS6
+      entity_type: feature
+      section_path: 1.3.3
+      byte_offset: 4884
+    - entity_id: FEAT-01KPTHB61WPT0
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 5851
+    - entity_id: FEAT-01KPNNYYXQSYW
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 5912
+    - entity_id: P27-doc-intel-adoption
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 710
+cross_doc_links:
+    - target_path: work/design/p28-doc-intel-polish-workflow-reliability.md
+      link_text: work/design/p28-doc-intel-polish-workflow-reliability.md
+      section_path: 1.4.1
+    - target_path: p28-doc-intel-polish-workflow-reliability.md
+      link_text: p28-doc-intel-polish-workflow-reliability.md
+      section_path: 1.4.5
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.8"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T11:26:22.943773Z
+classified: false
