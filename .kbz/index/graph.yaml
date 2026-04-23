@@ -1,4 +1,4 @@
-updated_at: 2026-04-23T15:15:57.107831Z
+updated_at: 2026-04-23T15:25:39.801165Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -76816,6 +76816,231 @@ edges:
       to_type: document
       edge_type: LINKS_TO
     - from: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints#1.7
+      from_type: section
+      to: .kbz/skills/orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan
+      from_type: document
+      to: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1
+      from_type: section
+      to: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1
+      from_type: section
+      to: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1
+      from_type: section
+      to: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1
+      from_type: section
+      to: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1
+      from_type: section
+      to: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1
+      from_type: section
+      to: FEAT-01KPX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1.2
+      from_type: section
+      to: TASK-01KPXE3VRGBQF
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1.2
+      from_type: section
+      to: TASK-01KPXE45XV5A5
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan#1.2
+      from_type: section
+      to: TASK-01KPXE4CR77A7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints
+      from_type: document
+      to: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: FEAT-01KPX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.3
+      from_type: section
+      to: FEAT-01KPX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.4
+      from_type: section
+      to: FEAT-A
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.4
+      from_type: section
+      to: FEAT-B
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.4
+      from_type: section
+      to: FEAT-C
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.4
+      from_type: section
+      to: FEAT-D
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.4
+      from_type: section
+      to: FEAT-E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#
+      from_type: section
+      to: P33-cohort-merge-checkpoints
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: work/spec/p33-cohort-merge-checkpoints.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1
+      from_type: section
+      to: work/design/p33-cohort-merge-checkpoints.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.1
+      from_type: section
+      to: write-dev-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.1
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.2
+      from_type: section
+      to: work/spec/p33-cohort-merge-checkpoints.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.3
+      from_type: section
+      to: work/templates/implementation-plan-prompt-template.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.3
+      from_type: section
+      to: .kbz/skills/write-dev-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.3
+      from_type: section
+      to: work/spec/p33-cohort-merge-checkpoints.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.3
+      from_type: section
+      to: implementation-plan-prompt-template.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.4
+      from_type: section
+      to: .kbz/skills/orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.4
+      from_type: section
+      to: work/spec/p33-cohort-merge-checkpoints.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.4.4
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.5
+      from_type: section
+      to: work/templates/implementation-plan-prompt-template.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.5
+      from_type: section
+      to: .kbz/skills/write-dev-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints#1.5
       from_type: section
       to: .kbz/skills/orchestrate-development/SKILL.md
       to_type: document

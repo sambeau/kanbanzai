@@ -1,0 +1,180 @@
+document_id: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints
+document_path: work/dev-plan/p33-cohort-merge-checkpoints.md
+content_hash: 1e92e451805ea6dca30fc4ffe23fe6184501bbd33c09566a150cd83e637ea583
+indexed_at: 2026-04-23T15:25:39.801165Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Cohort-Based Merge Checkpoints (P33)'
+      byte_offset: 433
+      byte_count: 16206
+      word_count: 2037
+      content_hash: 392702e7137739dcd42a71e312145428060543722c3d6de64523649f5cfe41ed
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 638
+          byte_count: 949
+          word_count: 131
+          content_hash: 52aac9841553b0ecbd8989fbb9814f490f5add3d67eeb57595464537a23b38d0
+        - path: "1.2"
+          level: 2
+          title: Interface Contract
+          byte_offset: 1587
+          byte_count: 548
+          word_count: 72
+          content_hash: e51d402762ce5e698d0f9b410f6ee69f35724d5da48c652f6b16f537c5de6648
+        - path: "1.3"
+          level: 2
+          title: Merge Schedule
+          byte_offset: 2135
+          byte_count: 338
+          word_count: 56
+          content_hash: 2ab51eabba2e154381a6ceda4f5e818b094b98ad7268127f6400c77cfc405307
+        - path: "1.4"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 2473
+          byte_count: 11823
+          word_count: 1427
+          content_hash: 78c731deb0e76a86821e3581e49a4f98fc08ed50be9ff46500e72c26616ee34b
+          children:
+            - path: 1.4.1
+              level: 3
+              title: T1 — Extend BranchLookup with GetBranchCreatedAt
+              byte_offset: 2492
+              byte_count: 1395
+              word_count: 153
+              content_hash: 91a7c9ef1341a80773ddc7beb3383c6ab3a65c23bd4711fd0ddddf8a23d82cd4
+            - path: 1.4.2
+              level: 3
+              title: T2 — Feature-level conflict analysis (service + MCP tool)
+              byte_offset: 3887
+              byte_count: 4060
+              word_count: 458
+              content_hash: eeecc660dba8575e1921e52ba2836c35ea3f1a7dd27a1933ada91c01472d4056
+            - path: 1.4.3
+              level: 3
+              title: T3 — Dev-plan template and write-dev-plan skill update
+              byte_offset: 7947
+              byte_count: 2059
+              word_count: 247
+              content_hash: d86d20ca9510dfe9efc71d343f009d1ac895051819280603f2a6d45991c56437
+            - path: 1.4.4
+              level: 3
+              title: T4 — Decompose warning and orchestrate-development skill update
+              byte_offset: 10006
+              byte_count: 4290
+              word_count: 566
+              content_hash: 55a3d6ada5391d1bb243db144c54a513262ab37584075cea444f325e3b54149a
+        - path: "1.5"
+          level: 2
+          title: File Ownership (conflict prevention)
+          byte_offset: 14296
+          byte_count: 819
+          word_count: 83
+          content_hash: 52bc7b6abe626b4449d8adeba5651143fdc0d5e688518f172ebbe4ca2e301fe2
+        - path: "1.6"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 15115
+          byte_count: 377
+          word_count: 52
+          content_hash: b2746cf93afd8cd6e41c636ca58bdaffca5fa959b398911d168014a476734d3b
+        - path: "1.7"
+          level: 2
+          title: Acceptance Criteria Cross-Reference
+          byte_offset: 15492
+          byte_count: 1147
+          word_count: 203
+          content_hash: 923c4ed2981ba91e9c368aba202f2e0c08e4693c0daeac1d6109a21d6ebbcec0
+entity_refs:
+    - entity_id: FEAT-01KPX
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 496
+    - entity_id: FEAT-01KPX
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 2238
+    - entity_id: FEAT-A
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 13252
+    - entity_id: FEAT-B
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 13260
+    - entity_id: FEAT-C
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 13278
+    - entity_id: FEAT-D
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 13289
+    - entity_id: FEAT-E
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 13297
+    - entity_id: P33-cohort-merge-checkpoints
+      entity_type: plan
+      section_path: ""
+      byte_offset: 371
+cross_doc_links:
+    - target_path: work/spec/p33-cohort-merge-checkpoints.md
+      link_text: work/spec/p33-cohort-merge-checkpoints.md
+      section_path: "1"
+    - target_path: work/design/p33-cohort-merge-checkpoints.md
+      link_text: work/design/p33-cohort-merge-checkpoints.md
+      section_path: "1"
+    - target_path: write-dev-plan/SKILL.md
+      link_text: write-dev-plan/SKILL.md
+      section_path: "1.1"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.1"
+    - target_path: work/spec/p33-cohort-merge-checkpoints.md
+      link_text: work/spec/p33-cohort-merge-checkpoints.md
+      section_path: 1.4.2
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: 1.4.3
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: 1.4.3
+    - target_path: work/spec/p33-cohort-merge-checkpoints.md
+      link_text: work/spec/p33-cohort-merge-checkpoints.md
+      section_path: 1.4.3
+    - target_path: implementation-plan-prompt-template.md
+      link_text: implementation-plan-prompt-template.md
+      section_path: 1.4.3
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.4.4
+    - target_path: work/spec/p33-cohort-merge-checkpoints.md
+      link_text: work/spec/p33-cohort-merge-checkpoints.md
+      section_path: 1.4.4
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.4.4
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: "1.5"
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: "1.5"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T15:25:40.268927Z
+classified: false

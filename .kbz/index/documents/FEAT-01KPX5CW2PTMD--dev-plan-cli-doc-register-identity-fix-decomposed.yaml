@@ -66,4 +66,10 @@ conventional_roles:
     - section_path: "1.1"
       role: narrative
       confidence: high
+access_count: 1
+last_accessed_at: 2026-04-23T15:25:32.22197Z
+section_access:
+    "1":
+        access_count: 1
+        last_accessed_at: 2026-04-23T15:25:32.22197Z
 classified: false
