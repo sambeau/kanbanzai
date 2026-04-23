@@ -33,9 +33,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/sambeau/kanbanzai/internal/id"
 	"strings"
 	"sync"
+
+	"github.com/sambeau/kanbanzai/internal/id"
 
 	"github.com/mark3labs/mcp-go/mcp"
 )
@@ -71,6 +72,16 @@ const (
 	// accepted and stored as a knowledge entry (e.g. from the retrospective
 	// parameter in finish). See work/spec/workflow-retrospective.md §6.2.
 	SideEffectRetroSignalContributed SideEffectType = "retrospective_signal_contributed"
+
+	// SideEffectFeatureAutoAdvanced reports that a feature was automatically
+	// transitioned from developing or needs-rework to reviewing because its last
+	// non-terminal task reached a terminal state.
+	SideEffectFeatureAutoAdvanced SideEffectType = "feature_auto_advanced"
+
+	// SideEffectPlanAutoAdvanced reports that a plan was automatically
+	// transitioned from active to done because its last non-terminal feature
+	// reached a terminal state.
+	SideEffectPlanAutoAdvanced SideEffectType = "plan_auto_advanced"
 )
 
 // SideEffect describes a single cascade event that occurred as a result of

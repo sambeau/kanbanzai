@@ -623,6 +623,24 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			if preResult, preErr := entitySvc.Get("plan", entityID, ""); preErr == nil {
 				planFromStatus, _ = preResult.State["status"].(string)
 			}
+
+			// Lifecycle gate: block terminal plan transitions when non-terminal features exist.
+			isPlanTerminalTarget := newStatus == string(model.PlanStatusDone) ||
+				newStatus == "cancelled" || newStatus == "superseded"
+			if isPlanTerminalTarget && !override {
+				count, countErr := entitySvc.CountNonTerminalFeatures(entityID)
+				if countErr == nil && count > 0 {
+					return map[string]any{
+						"error": fmt.Sprintf("cannot transition plan %s to %q: %d non-terminal feature(s) must be resolved first", entityID, newStatus, count),
+						"gate_failed": map[string]any{
+							"from_status": planFromStatus,
+							"to_status":   newStatus,
+							"reason":      fmt.Sprintf("%d non-terminal feature(s)", count),
+						},
+					}, nil
+				}
+			}
+
 			result, err := entitySvc.UpdatePlanStatus(entityID, slug, newStatus)
 			if err != nil {
 				return entityTransitionError(entitySvc, "plan", entityID, newStatus, err), nil
@@ -640,6 +658,32 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 		// structuralChecks holds any structural check results from the gate evaluation,
 		// to be included in the response when the transition succeeds.
 		var structuralChecks interface{}
+
+		// Feature entities: lifecycle gate for terminal transitions (AC-001 through AC-005).
+		// Block done/superseded/cancelled when non-terminal tasks exist.
+		if entityType == "feature" && !override {
+			isFeatureTerminalTarget := newStatus == string(model.FeatureStatusDone) ||
+				newStatus == string(model.FeatureStatusSuperseded) ||
+				newStatus == string(model.FeatureStatusCancelled)
+			if isFeatureTerminalTarget {
+				preResult, preErr := entitySvc.Get("feature", entityID, "")
+				var currentStatusForGate string
+				if preErr == nil {
+					currentStatusForGate, _ = preResult.State["status"].(string)
+				}
+				count, countErr := entitySvc.CountNonTerminalTasks(entityID)
+				if countErr == nil && count > 0 {
+					return map[string]any{
+						"error": fmt.Sprintf("cannot transition feature %s to %q: %d non-terminal task(s) must be resolved first", entityID, newStatus, count),
+						"gate_failed": map[string]any{
+							"from_status": currentStatusForGate,
+							"to_status":   newStatus,
+							"reason":      fmt.Sprintf("%d non-terminal task(s)", count),
+						},
+					}, nil
+				}
+			}
+		}
 
 		// Feature entities on Phase 2 transitions: evaluate the stage gate (FR-001).
 		if entityType == "feature" {
@@ -819,6 +863,91 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			resp["structural_checks"] = structuralChecks
 		}
 
+		// Auto-advance: when a task reaches a terminal state, check whether all
+		// sibling tasks are done and auto-advance the parent feature to reviewing.
+		if entityType == "task" {
+			isTaskTerminal := newStatus == string(model.TaskStatusDone) ||
+				newStatus == string(model.TaskStatusNotPlanned) ||
+				newStatus == "duplicate"
+			if isTaskTerminal {
+				parentFeatureID := ""
+				if taskResult, taskErr := entitySvc.Get("task", entityID, ""); taskErr == nil {
+					parentFeatureID, _ = taskResult.State["parent_feature"].(string)
+				}
+				if parentFeatureID != "" {
+					// Capture feature status before the advance fires.
+					featFromStatus := "developing"
+					if preFeat, preFeatErr := entitySvc.Get("feature", parentFeatureID, ""); preFeatErr == nil {
+						if s, _ := preFeat.State["status"].(string); s != "" {
+							featFromStatus = s
+						}
+					}
+					advanced, advErr := entitySvc.MaybeAutoAdvanceFeature(parentFeatureID)
+					if advanced {
+						PushSideEffect(ctx, SideEffect{
+							Type:       SideEffectFeatureAutoAdvanced,
+							EntityID:   parentFeatureID,
+							EntityType: "feature",
+							FromStatus: featFromStatus,
+							ToStatus:   string(model.FeatureStatusReviewing),
+							Trigger:    fmt.Sprintf("all tasks for %s are terminal", parentFeatureID),
+						})
+						// Also check whether the feature's parent plan can auto-advance.
+						planID := entitySvc.FeatureParentPlan(parentFeatureID)
+						if planID != "" {
+							planAdvanced, planAdvErr := entitySvc.MaybeAutoAdvancePlan(planID)
+							if planAdvanced {
+								PushSideEffect(ctx, SideEffect{
+									Type:       SideEffectPlanAutoAdvanced,
+									EntityID:   planID,
+									EntityType: "plan",
+									FromStatus: string(model.PlanStatusActive),
+									ToStatus:   string(model.PlanStatusDone),
+									Trigger:    fmt.Sprintf("all features for %s are terminal", planID),
+								})
+							} else if planAdvErr != nil {
+								log.Printf("[entity] WARNING: plan auto-advance check for %s failed: %v", planID, planAdvErr)
+							}
+						}
+					} else if advErr != nil {
+						// Surface the auto-advance failure as a warning side effect (AC-017).
+						PushSideEffect(ctx, SideEffect{
+							Type:       SideEffectFeatureAutoAdvanced,
+							EntityID:   parentFeatureID,
+							EntityType: "feature",
+							Trigger:    fmt.Sprintf("auto-advance failed: %v", advErr),
+						})
+					}
+				}
+			}
+		}
+
+		// Auto-advance: when a feature reaches a terminal state, check whether all
+		// sibling features are terminal and auto-advance the parent plan to done.
+		if entityType == "feature" {
+			isFeatureTerminal := newStatus == string(model.FeatureStatusDone) ||
+				newStatus == string(model.FeatureStatusSuperseded) ||
+				newStatus == string(model.FeatureStatusCancelled)
+			if isFeatureTerminal {
+				planID := entitySvc.FeatureParentPlan(entityID)
+				if planID != "" {
+					planAdvanced, planAdvErr := entitySvc.MaybeAutoAdvancePlan(planID)
+					if planAdvanced {
+						PushSideEffect(ctx, SideEffect{
+							Type:       SideEffectPlanAutoAdvanced,
+							EntityID:   planID,
+							EntityType: "plan",
+							FromStatus: string(model.PlanStatusActive),
+							ToStatus:   string(model.PlanStatusDone),
+							Trigger:    fmt.Sprintf("all features for %s are terminal", planID),
+						})
+					} else if planAdvErr != nil {
+						log.Printf("[entity] WARNING: plan auto-advance check for %s failed: %v", planID, planAdvErr)
+					}
+				}
+			}
+		}
+
 		// Auto-commit the entity's state file after transition (FR-A11). Best-effort.
 		transitionCommitMsg := fmt.Sprintf("workflow(%s): transition %s \u2192 %s", entityID, fromStatusBeforeTransition, newStatus)
 		if _, commitErr := entityCommitFunc(".", transitionCommitMsg); commitErr != nil {
@@ -846,16 +975,16 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 	}
 	if gateRouter != nil {
 		advCfg.CheckGate = func(from, to string, f *model.Feature, ds *service.DocumentService, es *service.EntityService) service.GateResult {
-				routerCtx := buildGateEvalContext(f, ds, es)
-				routerResult := gateRouter.CheckGate(from, to, routerCtx)
-				if routerResult.Source == "registry" {
-					return service.GateResult{
-						Stage:     routerResult.Stage,
-						Satisfied: routerResult.Satisfied,
-						Reason:    routerResult.Reason,
-					}
+			routerCtx := buildGateEvalContext(f, ds, es)
+			routerResult := gateRouter.CheckGate(from, to, routerCtx)
+			if routerResult.Source == "registry" {
+				return service.GateResult{
+					Stage:     routerResult.Stage,
+					Satisfied: routerResult.Satisfied,
+					Reason:    routerResult.Reason,
 				}
-				return service.CheckTransitionGate(from, to, f, ds, es)
+			}
+			return service.CheckTransitionGate(from, to, f, ds, es)
 		}
 		advCfg.OverridePolicy = func(to string) string {
 			return gateRouter.OverridePolicy(to)
