@@ -1,0 +1,6 @@
+id: TASK-01KPXECJ2PVFE
+parent_feature: FEAT-01KPX5CW0QSM7
+slug: concept-tagging-approval-gate-ac-001-req-001-req-009-given-a-document
+name: AC-001 Gate skipped for out-of-scope document types
+summary: AC-001 gate skip for out-of-scope document types
+status: queued

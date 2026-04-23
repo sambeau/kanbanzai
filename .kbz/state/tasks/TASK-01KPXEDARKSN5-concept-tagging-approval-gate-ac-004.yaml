@@ -1,0 +1,6 @@
+id: TASK-01KPXEDARKSN5
+parent_feature: FEAT-01KPX5CW0QSM7
+slug: concept-tagging-approval-gate-ac-004
+name: AC-004 Gate fires and returns concept_tagging_required
+summary: AC-004 gate fires with concept_tagging_required error
+status: queued

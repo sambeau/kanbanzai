@@ -1,0 +1,6 @@
+id: TASK-01KPXEE1VXY0Q
+parent_feature: FEAT-01KPX5CW0QSM7
+slug: concept-tagging-approval-gate-ac-003
+name: AC-003 Gate skipped when concepts_intro is present
+summary: AC-003 gate skip when concepts_intro present
+status: queued

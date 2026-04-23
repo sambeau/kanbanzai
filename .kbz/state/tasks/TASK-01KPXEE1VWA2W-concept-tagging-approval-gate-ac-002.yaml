@@ -1,0 +1,6 @@
+id: TASK-01KPXEE1VWA2W
+parent_feature: FEAT-01KPX5CW0QSM7
+slug: concept-tagging-approval-gate-ac-002
+name: AC-002 Gate skipped when document has no classifications
+summary: AC-002 gate skip for unclassified documents
+status: queued

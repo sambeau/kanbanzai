@@ -1,0 +1,6 @@
+id: TASK-01KPXEE1W67G9
+parent_feature: FEAT-01KPX5CW0QSM7
+slug: concept-tagging-approval-gate-tests
+name: Write tests for the approval gate
+summary: Write tests for the concept-tagging approval gate
+status: queued
