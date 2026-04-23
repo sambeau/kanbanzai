@@ -2,7 +2,9 @@ id: WT-01KPVP2C7YBA8
 entity_id: FEAT-01KPVDDYQQS1Y
 branch: feature/FEAT-01KPVDDYQQS1Y-doc-intel-guide-enrichment
 path: .worktrees/FEAT-01KPVDDYQQS1Y-doc-intel-guide-enrichment
-status: active
+status: merged
 created: "2026-04-22T21:30:00Z"
 created_by: sambeau
+merged_at: "2026-04-23T01:57:06Z"
+cleanup_after: "2026-04-30T01:57:06Z"
 graph_project: Users-samphillips-Dev-kanbanzai
