@@ -1,0 +1,6 @@
+id: TASK-01KPXE3P4NB1T
+parent_feature: FEAT-01KPX5CW2PTMD
+slug: cli-doc-register-identity-fix-tests
+name: Write tests for doc register identity fix
+summary: Write tests for cli-doc-register-identity-fix covering all AC scenarios.
+status: queued

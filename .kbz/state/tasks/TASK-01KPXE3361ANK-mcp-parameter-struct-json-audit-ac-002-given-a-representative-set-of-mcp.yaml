@@ -1,0 +1,6 @@
+id: TASK-01KPXE3361ANK
+parent_feature: FEAT-01KPX5CW4R82P
+slug: mcp-parameter-struct-json-audit-ac-002-given-a-representative-set-of-mcp
+name: Given a representative set of MCP parameter structs
+summary: "AC-002: Given a representative set of MCP parameter structs populated with non-zero values for every exported field, when the struct is marshalled to JSON and then unmarshalled into a zero-value instance of the same type, then the unmarshalled instance is equal to the original (i.e. no field is lost or zeroed)."
+status: queued

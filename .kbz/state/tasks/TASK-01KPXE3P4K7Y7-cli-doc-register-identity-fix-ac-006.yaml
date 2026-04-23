@@ -1,0 +1,6 @@
+id: TASK-01KPXE3P4K7Y7
+parent_feature: FEAT-01KPX5CW2PTMD
+slug: cli-doc-register-identity-fix-ac-006
+name: AC-006 no observable latency regression
+summary: "AC-006: (REQ-NF-001) Given a system under normal load where `git config user.name` responds within 500 ms, when `kbz doc register` is invoked without `--by`, then the command completes within the same time budget as before the fix plus the `git config` subprocess duration."
+status: queued

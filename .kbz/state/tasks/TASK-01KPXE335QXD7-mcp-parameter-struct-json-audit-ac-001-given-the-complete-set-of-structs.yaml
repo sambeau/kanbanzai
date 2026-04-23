@@ -1,0 +1,6 @@
+id: TASK-01KPXE335QXD7
+parent_feature: FEAT-01KPX5CW4R82P
+slug: mcp-parameter-struct-json-audit-ac-001-given-the-complete-set-of-structs
+name: "Given the complete set of structs in `internal/mcp/` that"
+summary: "AC-001: Given the complete set of structs in `internal/mcp/` that carry `yaml:` tags and are used as JSON deserialization targets (excluding `Classification` and `ConceptIntroEntry`), when each exported field is inspected, then every such field has an explicit `json:\"<snake_case_name>\"` tag whose value matches the corresponding `yaml:` tag name."
+status: queued

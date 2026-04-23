@@ -1,0 +1,6 @@
+id: TASK-01KPXE3P4GPD5
+parent_feature: FEAT-01KPX5CW2PTMD
+slug: cli-doc-register-identity-fix-ac-004
+name: AC-004 unresolvable identity returns error
+summary: "AC-004: (REQ-004) Given `.kbz/local.yaml` does not contain a `user` field (or is absent) and `git config user.name` returns an empty value or error, and `--by` is not supplied, when `kbz doc register` is invoked, then the command exits with a non-zero status, prints an error indicating identity could not be resolved, and no document is registered."
+status: queued
