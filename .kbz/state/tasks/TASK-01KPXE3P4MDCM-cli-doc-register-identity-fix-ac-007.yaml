@@ -3,4 +3,8 @@ parent_feature: FEAT-01KPX5CW2PTMD
 slug: cli-doc-register-identity-fix-ac-007
 name: AC-007 error message passes through unmodified
 summary: "AC-007: (REQ-NF-002) Given identity cannot be resolved, when `kbz doc register` returns an error, then the error text is the unmodified message from `config.ResolveIdentity` with no additional prefix or wrapping beyond what `runDocRegister` already applies to other errors."
-status: ready
+status: done
+files_planned:
+  - cmd/kanbanzai/doc_cmd.go
+completed: "2026-04-23T15:33:13Z"
+completion_summary: "AC-007 satisfied: error from config.ResolveIdentity returned directly with 'return err', no wrapping"

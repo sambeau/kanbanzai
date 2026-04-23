@@ -3,4 +3,8 @@ parent_feature: FEAT-01KPX5CW2PTMD
 slug: cli-doc-register-identity-fix-ac-003
 name: AC-003 explicit --by flag overrides resolved identity
 summary: "AC-003: (REQ-003) Given `.kbz/local.yaml` contains `user: alice` and `git config user.name` returns `bob`, when `kbz doc register` is invoked with `--by carol` and a valid path, type, and title, then the document is registered with `created_by: carol` and the command exits with status 0."
-status: ready
+status: done
+files_planned:
+  - cmd/kanbanzai/doc_cmd.go
+completed: "2026-04-23T15:33:13Z"
+completion_summary: "AC-003 satisfied: explicit --by value passed to ResolveIdentity wins over local.yaml and git config"

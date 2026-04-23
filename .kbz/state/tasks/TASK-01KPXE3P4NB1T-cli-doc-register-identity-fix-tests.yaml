@@ -3,4 +3,9 @@ parent_feature: FEAT-01KPX5CW2PTMD
 slug: cli-doc-register-identity-fix-tests
 name: Write tests for doc register identity fix
 summary: Write tests for cli-doc-register-identity-fix covering all AC scenarios.
-status: ready
+status: done
+files_planned:
+  - cmd/kanbanzai/doc_cmd_test.go
+completed: "2026-04-23T15:33:13Z"
+completion_summary: "Tests written covering flag parsing, optional --by, help text, and error path verification; all tests pass"
+verification: go test ./cmd/kanbanzai/... passes; full go test ./... passes (one pre-existing flaky TempDir cleanup test in internal/mcp unrelated to this change)
