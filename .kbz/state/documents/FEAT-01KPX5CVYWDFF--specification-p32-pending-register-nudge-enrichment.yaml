@@ -2,9 +2,11 @@ id: FEAT-01KPX5CVYWDFF/specification-p32-pending-register-nudge-enrichment
 path: work/spec/p32-pending-register-nudge-enrichment.md
 type: specification
 title: "P32: Pending and Register Nudge Response Enrichment"
-status: draft
+status: approved
 owner: FEAT-01KPX5CVYWDFF
-content_hash: abc5d8debe92f4f7b485819dbe7d16b2f7a7b16477ac4baf02e00a64abf31478
+approved_by: sambeau
+approved_at: "2026-04-23T15:03:35Z"
+content_hash: 8a59c7d8127367f51bc26bb3acd69ec0acd4f0e7c985893ca8569c75a82c9b6d
 created: "2026-04-23T14:59:33Z"
 created_by: sambeau
-updated: "2026-04-23T14:59:33Z"
+updated: "2026-04-23T15:03:35Z"
