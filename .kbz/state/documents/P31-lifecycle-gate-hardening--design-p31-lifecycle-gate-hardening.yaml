@@ -2,9 +2,11 @@ id: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening
 path: work/design/p31-lifecycle-gate-hardening.md
 type: design
 title: "Design: Lifecycle Gate Hardening (P31)"
-status: draft
+status: approved
 owner: P31-lifecycle-gate-hardening
-content_hash: 4c28eae432d159f34dafe89c5fe761de6da027763c06641a4f181304ffdfc294
+approved_by: sambeau
+approved_at: "2026-04-23T15:53:19Z"
+content_hash: 3495c8d8119dfb0e09098d5ee4399547a721f26bfc21691df284d3d2d371d7d3
 created: "2026-04-23T11:52:01Z"
 created_by: sambeau
-updated: "2026-04-23T11:52:01Z"
+updated: "2026-04-23T15:53:19Z"
