@@ -1,0 +1,59 @@
+document_id: FEAT-01KPVDDYN855F/report-review-feat-01kpvddyn855f-skill-doc-updates
+document_path: work/reports/review-feat-01kpvddyn855f-skill-doc-updates.md
+content_hash: f50a3ac29c67cabe49a9aeb59bbda6639b656427afd43f0298c39021b80bb4bb
+indexed_at: 2026-04-23T01:16:48.268762Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Skill Documentation Updates (FEAT-01KPVDDYN855F)'
+      byte_offset: 0
+      byte_count: 2024
+      word_count: 285
+      content_hash: f50a3ac29c67cabe49a9aeb59bbda6639b656427afd43f0298c39021b80bb4bb
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 295
+          byte_count: 339
+          word_count: 38
+          content_hash: 68dc28ff58c2bebbc0f75ec43fe02afac3a4b9a32c15506e8e0e9bb32305f6af
+        - path: "1.2"
+          level: 2
+          title: AC Verification
+          byte_offset: 634
+          byte_count: 1212
+          word_count: 193
+          content_hash: 114273a7efa3d58368c4325facc7728838724d63c4f0af36f145fad4f8a04f04
+        - path: "1.3"
+          level: 2
+          title: Findings
+          byte_offset: 1846
+          byte_count: 136
+          word_count: 21
+          content_hash: 3210a704a9699cda7643f2e2e6e13f686a2a3efefd26ee875209abb6d46a8624
+        - path: "1.4"
+          level: 2
+          title: Conclusion
+          byte_offset: 1982
+          byte_count: 42
+          word_count: 7
+          content_hash: fbecdafd714f568d00a16fcb0a626e5fc5964142656ee3c56ec5f14b2ee98cbf
+entity_refs:
+    - entity_id: FEAT-01KPVDDYN855F
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 46
+    - entity_id: TASK-01KPVFKCF9HHP
+      entity_type: task
+      section_path: "1"
+      byte_offset: 221
+    - entity_id: P28-doc-intel-polish-workflow-reliability
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 143
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false
