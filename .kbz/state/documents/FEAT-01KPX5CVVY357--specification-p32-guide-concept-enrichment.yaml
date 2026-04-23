@@ -2,9 +2,11 @@ id: FEAT-01KPX5CVVY357/specification-p32-guide-concept-enrichment
 path: work/spec/p32-guide-concept-enrichment.md
 type: specification
 title: "P32: Guide Response Concept and Classification Enrichment"
-status: draft
+status: approved
 owner: FEAT-01KPX5CVVY357
-content_hash: 4d2eb30b89565545d6ceaa259fd6f86698b3b435e8df4a04c5da9f5b0d7b59ef
+approved_by: sambeau
+approved_at: "2026-04-23T15:03:11Z"
+content_hash: dd1d74b6c39a2610ccfe9b755f820291199642e302cfd08ffcac1ad606192623
 created: "2026-04-23T14:58:56Z"
 created_by: sambeau
-updated: "2026-04-23T14:58:56Z"
+updated: "2026-04-23T15:03:11Z"
