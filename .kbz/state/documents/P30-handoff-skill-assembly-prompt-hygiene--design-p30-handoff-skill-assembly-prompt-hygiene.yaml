@@ -2,9 +2,11 @@ id: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-
 path: work/design/p30-handoff-skill-assembly-prompt-hygiene.md
 type: design
 title: "Design: Handoff Skill Assembly and Prompt Hygiene (P30)"
-status: draft
+status: approved
 owner: P30-handoff-skill-assembly-prompt-hygiene
-content_hash: dceae627f6ba6589a1a14c4c9aca06c74ea3ae75cc5e614e15909e2f5aa726f1
+approved_by: sambeau
+approved_at: "2026-04-23T15:54:43Z"
+content_hash: 00216fa7f6b32d21137f0eb12f3c6da4b149a61465fb06ed0412be095f395f46
 created: "2026-04-23T11:52:00Z"
 created_by: sambeau
-updated: "2026-04-23T11:52:00Z"
+updated: "2026-04-23T15:54:43Z"
