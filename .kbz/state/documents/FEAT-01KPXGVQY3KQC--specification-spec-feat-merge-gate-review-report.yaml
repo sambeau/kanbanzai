@@ -2,9 +2,11 @@ id: FEAT-01KPXGVQY3KQC/specification-spec-feat-merge-gate-review-report
 path: work/specs/spec-feat-merge-gate-review-report.md
 type: specification
 title: "Specification: Non-bypassable merge gate for review report"
-status: draft
+status: approved
 owner: FEAT-01KPXGVQY3KQC
-content_hash: fcf52acae370f60a49e846ced9013ed09a037f30cde4b1bc99c2ead96641c1d7
+approved_by: sambeau
+approved_at: "2026-04-23T16:33:17Z"
+content_hash: 4fb80a26eb536d6d95d56197bf4ede564dac3a88c9d37ce87494efa064a603d3
 created: "2026-04-23T16:01:07Z"
 created_by: sambeau
-updated: "2026-04-23T16:01:07Z"
+updated: "2026-04-23T16:33:17Z"
