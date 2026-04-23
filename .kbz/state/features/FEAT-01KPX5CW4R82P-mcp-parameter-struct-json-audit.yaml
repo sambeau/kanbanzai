@@ -2,7 +2,7 @@ id: FEAT-01KPX5CW4R82P
 slug: mcp-parameter-struct-json-audit
 name: MCP Parameter Struct JSON Tag Audit
 parent: P32-doc-intel-classification-pipeline-hardening
-status: needs-rework
+status: developing
 review_cycle: 1
 summary: "Audit all MCP parameter structs that (a) have yaml: tags and (b) are decoded from JSON tool parameters via json.Unmarshal. Any exported field missing an explicit json: tag is a silent deserialization vulnerability — the same class of bug as the Classification struct fix in the Layer 3 pilot. Add a Go test or go vet check to prevent regression. Classification and ConceptIntroEntry are already fixed; this audits the remainder."
 spec: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit
