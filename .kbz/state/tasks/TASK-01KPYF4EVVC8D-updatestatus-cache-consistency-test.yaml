@@ -1,0 +1,6 @@
+id: TASK-01KPYF4EVVC8D
+parent_feature: FEAT-01KPXH0WSTHAM
+slug: updatestatus-cache-consistency-test
+name: Test UpdateStatus cache consistency on terminal transitions
+summary: "Write unit tests in internal/service/entities_test.go verifying that UpdateStatus calls cacheUpsertFromResult for all status transitions including terminal states (done, cancelled). After transition, cache.LookupByID must return found=true with the updated status. cache.Delete must never be called. Covers FR-006 and its acceptance criteria."
+status: queued
