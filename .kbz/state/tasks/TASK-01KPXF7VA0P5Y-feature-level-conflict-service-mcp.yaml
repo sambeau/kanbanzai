@@ -3,8 +3,15 @@ parent_feature: FEAT-01KPXE8T8QWRB
 slug: feature-level-conflict-service-mcp
 name: Feature-level conflict analysis service and MCP tool
 summary: "Add feature_ids mode to ConflictService.Check: add FeatureIDs field to ConflictCheckInput, add FeatureConflictInfo/FeatureConflictPairResult/FeatureConflictResult types, implement checkFeatures method (resolve tasks per feature, aggregate files_planned, run analyzePair, compute drift_days via GetBranchCreatedAt). Return error when both task_ids and feature_ids are supplied. Wire into conflict_tool.go: add feature_ids as optional MCP parameter, make task_ids non-required, dispatch to feature path when feature_ids present, update tool description. Add tests in internal/service/conflict_feature_test.go covering AC-001 through AC-008 and AC-016/AC-017."
-status: active
+status: done
+files_planned:
+  - internal/service/conflict.go
+  - internal/mcp/conflict_tool.go
+  - internal/service/conflict_feature_test.go
+completed: "2026-04-24T11:50:22Z"
 claimed_at: "2026-04-24T11:24:27Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-24T11:24:27Z"
 dispatched_by: sambeau
+completion_summary: "Added feature_ids mode to ConflictService: new FeatureConflictInfo/PairResult/Result types, CheckFeatures method aggregating tasks' files_planned and populating DriftDays via GetBranchCreatedAt. Updated ConflictCheckInput with FeatureIDs and mutual exclusivity check in Check. Wired feature_ids as optional array parameter in conflict_tool.go (both modes mutually exclusive). Added buildFeatureConflictJSON helper. Created conflict_feature_test.go covering AC-001 through AC-008."
+verification: "go test ./internal/service/... ./internal/mcp/... passed; AC-001 through AC-008 covered. All 16 conflict tests pass. Only pre-existing SQLite contention flaky tests fail in parallel runs (same class as BUG-01KN87EEF2G49), all pass in isolation."
