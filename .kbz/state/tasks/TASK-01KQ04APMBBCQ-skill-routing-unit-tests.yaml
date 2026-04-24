@@ -1,0 +1,6 @@
+id: TASK-01KQ04APMBBCQ
+parent_feature: FEAT-01KQ049NBSQAR
+slug: skill-routing-unit-tests
+name: Skill routing unit tests
+summary: "Add unit tests to internal/context/pipeline_test.go covering AC-001 through AC-006 and AC-012: sub-agent role match loads correct skill, orchestrator falls through to primary, nil SubAgents loads primary without error, out-of-bounds index returns pipelineError, first prefix match wins, empty role loads primary, deterministic output on repeated calls."
+status: queued
