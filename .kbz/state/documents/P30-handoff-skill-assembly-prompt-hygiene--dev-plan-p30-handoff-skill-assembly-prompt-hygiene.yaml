@@ -2,9 +2,11 @@ id: P30-handoff-skill-assembly-prompt-hygiene/dev-plan-p30-handoff-skill-assembl
 path: work/dev-plan/p30-handoff-skill-assembly-prompt-hygiene.md
 type: dev-plan
 title: "Dev Plan: Handoff Skill Assembly and Prompt Hygiene (P30)"
-status: draft
+status: approved
 owner: P30-handoff-skill-assembly-prompt-hygiene
-content_hash: c660a4edb2030b94db5ec9369d86f709c32c356ae001a0ea50102cd82464d5d2
+approved_by: sambeau
+approved_at: "2026-04-24T16:13:43Z"
+content_hash: 52e92d3adb715d5092ead580a532dcba98a708dc4214b28d0ff66163bef6bf98
 created: "2026-04-24T16:13:06Z"
 created_by: sambeau
-updated: "2026-04-24T16:13:06Z"
+updated: "2026-04-24T16:13:43Z"
