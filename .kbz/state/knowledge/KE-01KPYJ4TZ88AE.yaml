@@ -1,0 +1,17 @@
+id: KE-01KPYJ4TZ88AE
+tier: 3
+topic: retro-task-01kpyevmxg632-2
+scope: project
+content: "[moderate] workflow-friction: Working directly on main instead of feature worktrees. Worktrees were set up but not used because the workflow had already drifted. Implementation is clean but the feature branches now need to be reconciled or abandoned. Suggestion: Add a check in the pre-task checklist: if a worktree exists for the active feature, verify you are inside it before making any code changes."
+learned_from: TASK-01KPYEVMXG632
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - workflow-friction
+created: "2026-04-24T01:37:22Z"
+created_by: unknown
+updated: "2026-04-24T01:37:22Z"
