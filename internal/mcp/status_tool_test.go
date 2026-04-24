@@ -3,7 +3,9 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
@@ -1896,5 +1898,91 @@ func TestSynthesiseProject_StandaloneBug_ListError_Ignored(t *testing.T) {
 		if item.Type == "open_critical_bug" {
 			t.Errorf("unexpected open_critical_bug item when List(bug) errors: %v", item)
 		}
+	}
+}
+
+// ─── generateOrphanedReviewingAttention ──────────────────────────────────────
+
+func TestGenerateOrphanedReviewingAttention_NilDocSvc(t *testing.T) {
+	t.Parallel()
+	items := generateOrphanedReviewingAttention([]reviewingCandidate{
+		{ID: "FEAT-001", DisplayID: "FEAT-01KPX-001", Slug: "my-feature"},
+	}, nil)
+	if len(items) != 0 {
+		t.Errorf("expected 0 items with nil docSvc, got %d", len(items))
+	}
+}
+
+func TestGenerateOrphanedReviewingAttention_EmptyCandidates(t *testing.T) {
+	t.Parallel()
+	items := generateOrphanedReviewingAttention(nil, nil)
+	if len(items) != 0 {
+		t.Errorf("expected 0 items for empty candidates, got %d", len(items))
+	}
+}
+
+func TestGenerateOrphanedReviewingAttention_WithReports_NoItems(t *testing.T) {
+	t.Parallel()
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := service.NewDocumentService(stateRoot, repoRoot)
+
+	// Create the report file on disk first (DocumentService checks path existence).
+	reportPath := filepath.Join(repoRoot, "work", "reports", "test.md")
+	if err := os.MkdirAll(filepath.Dir(reportPath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(reportPath, []byte("# Test Report"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	_, err := docSvc.SubmitDocument(service.SubmitDocumentInput{
+		Path:      "work/reports/test.md",
+		Type:      "report",
+		Title:     "Test Review Report",
+		Owner:     "FEAT-001",
+		CreatedBy: "test",
+	})
+	if err != nil {
+		t.Fatalf("register doc: %v", err)
+	}
+
+	items := generateOrphanedReviewingAttention([]reviewingCandidate{
+		{ID: "FEAT-001", DisplayID: "FEAT-01KPX-001", Slug: "my-feature"},
+	}, docSvc)
+	if len(items) != 0 {
+		t.Errorf("expected 0 items (report exists), got %d", len(items))
+	}
+}
+
+func TestGenerateOrphanedReviewingAttention_NoReports_EmitsWarning(t *testing.T) {
+	t.Parallel()
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := service.NewDocumentService(stateRoot, repoRoot)
+
+	candidate := reviewingCandidate{
+		ID:        "FEAT-001TESTORPHAN",
+		DisplayID: "FEAT-01KPX-ORPHAN",
+		Slug:      "orphaned-feature",
+	}
+	items := generateOrphanedReviewingAttention([]reviewingCandidate{candidate}, docSvc)
+
+	if len(items) != 1 {
+		t.Fatalf("expected 1 attention item, got %d", len(items))
+	}
+	item := items[0]
+	if item.Severity != "warning" {
+		t.Errorf("severity: got %q, want %q", item.Severity, "warning")
+	}
+	if item.Type != "orphaned_reviewing" {
+		t.Errorf("type: got %q, want %q", item.Type, "orphaned_reviewing")
+	}
+	if item.EntityID != candidate.ID {
+		t.Errorf("entity_id: got %q, want %q", item.EntityID, candidate.ID)
+	}
+	wantMsg := fmt.Sprintf("Feature %s (%s) is in 'reviewing' status with no registered review report", candidate.DisplayID, candidate.Slug)
+	if item.Message != wantMsg {
+		t.Errorf("message: got %q, want %q", item.Message, wantMsg)
 	}
 }

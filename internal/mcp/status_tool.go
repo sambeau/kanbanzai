@@ -442,6 +442,21 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 		}
 	}
 
+	// Orphaned reviewing check (FEAT-01KPXGW5BCGY4): surface features stuck in
+	// reviewing with no report document.
+	var reviewingCandidates []reviewingCandidate
+	for _, f := range allFeatures {
+		fstatus, _ := f.State["status"].(string)
+		if fstatus == "reviewing" {
+			reviewingCandidates = append(reviewingCandidates, reviewingCandidate{
+				ID:        f.ID,
+				DisplayID: id.FormatFullDisplay(f.ID),
+				Slug:      f.Slug,
+			})
+		}
+	}
+	attention = append(attention, generateOrphanedReviewingAttention(reviewingCandidates, docSvc)...)
+
 	return &projectOverview{
 		Scope:     "project",
 		Plans:     summaries,
@@ -624,6 +639,20 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 
 	attention := generatePlanAttention(featureSummaries, docGaps, planDisplayID, planStatus, allFeaturesFinished, len(features))
 	health := buildHealthSummary(entitySvc)
+
+	// Orphaned reviewing check (FEAT-01KPXGW5BCGY4).
+	var reviewingCandidates []reviewingCandidate
+	for _, f := range features {
+		fstatus, _ := f.State["status"].(string)
+		if fstatus == "reviewing" {
+			reviewingCandidates = append(reviewingCandidates, reviewingCandidate{
+				ID:        f.ID,
+				DisplayID: id.FormatFullDisplay(f.ID),
+				Slug:      f.Slug,
+			})
+		}
+	}
+	attention = append(attention, generateOrphanedReviewingAttention(reviewingCandidates, docSvc)...)
 
 	return &planDashboard{
 		Scope: "plan",
@@ -844,6 +873,16 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 	attention := generateFeatureAttention(tasks, docs, taskSummary.total, feat.ID, featDisplayID, fstatus, fUpdated, inheritedHasSpec, inheritedHasDevPlan, staleReviewingDays, openBugs, hasActiveWorktree, worktreeGraphProject)
 	if fblockedReason != "" {
 		attention = append([]AttentionItem{{Type: "stalled_task", Severity: "warning", EntityID: feat.ID, DisplayID: featDisplayID, Message: "BLOCKED: " + fblockedReason}}, attention...)
+	}
+
+	// Orphaned reviewing check (FEAT-01KPXGW5BCGY4).
+	if fstatus == "reviewing" {
+		candidates := []reviewingCandidate{{
+			ID:        feat.ID,
+			DisplayID: featDisplayID,
+			Slug:      feat.Slug,
+		}}
+		attention = append(attention, generateOrphanedReviewingAttention(candidates, docSvc)...)
 	}
 
 	d := &featureDetail{
@@ -1406,6 +1445,42 @@ func generateTaskAttention(task taskFullInfo, deps []depInfo) []AttentionItem {
 
 // hasDocType reports whether the slice contains a document of the given type
 // with a non-superseded status.
+// reviewingCandidate is a minimal feature descriptor used by the orphaned-reviewing check.
+type reviewingCandidate struct {
+	ID        string
+	DisplayID string
+	Slug      string
+}
+
+// generateOrphanedReviewingAttention checks candidates (features in reviewing status)
+// for the absence of a registered report document. It emits a warning AttentionItem
+// for each feature that has no report.
+//
+// Fail-open: doc service nil or per-feature errors are silently skipped (FR-009, NFR-002).
+// Early-exit: returns nil immediately when candidates is empty (FR-008).
+func generateOrphanedReviewingAttention(candidates []reviewingCandidate, docSvc *service.DocumentService) []AttentionItem {
+	if len(candidates) == 0 || docSvc == nil {
+		return nil
+	}
+	var items []AttentionItem
+	for _, c := range candidates {
+		docs, err := docSvc.ListDocuments(service.DocumentFilters{Owner: c.ID, Type: "report"})
+		if err != nil {
+			continue // fail-open (NFR-002)
+		}
+		if len(docs) == 0 {
+			items = append(items, AttentionItem{
+				Type:      "orphaned_reviewing",
+				Severity:  "warning",
+				EntityID:  c.ID,
+				DisplayID: c.DisplayID,
+				Message:   fmt.Sprintf("Feature %s (%s) is in 'reviewing' status with no registered review report", c.DisplayID, c.Slug),
+			})
+		}
+	}
+	return items
+}
+
 func hasDocType(docs []service.DocumentResult, docType string) bool {
 	for _, d := range docs {
 		if d.Type == docType && d.Status != "superseded" {
