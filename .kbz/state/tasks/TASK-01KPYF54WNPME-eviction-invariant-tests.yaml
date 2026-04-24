@@ -3,6 +3,15 @@ parent_feature: FEAT-01KPXH0WSTHAM
 slug: eviction-invariant-tests
 name: Write cache eviction invariant tests
 summary: "Write unit tests in internal/service/entities_test.go covering: (1) slug-rename in UpdateEntity leaves no stale cache row — LookupByID returns new slug (FR-003), (2) nil-cache entity operations complete without panic (FR-004), (3) cache.Delete is the correct eviction API for future hard-delete paths — test cache.Delete directly to confirm LookupByID returns found=false (FR-001, FR-002)."
-status: ready
+status: done
 depends_on:
   - TASK-01KPYF4EVVC8D
+files_planned:
+  - internal/service/entities_cache_test.go
+completed: "2026-04-24T01:16:57Z"
+claimed_at: "2026-04-24T01:12:37Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-24T01:12:37Z"
+dispatched_by: sambeau
+completion_summary: "Added 6 new tests to internal/service/entities_cache_test.go covering FR-003 (slug rename upserts cache row with new slug), FR-004 (UpdateEntity/Get/List all complete without panic when cache is nil), and FR-001/FR-002 (cache.Delete evicts a row, Delete on non-existent row returns nil). All tests use a real SQLite-backed cache and pass alongside the full service test suite."
+verification: go test ./internal/service/... passed
