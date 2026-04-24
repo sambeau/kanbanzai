@@ -1,0 +1,6 @@
+id: TASK-01KPYFG1CNA1K
+parent_feature: FEAT-01KPXGVQY3KQC
+slug: merge-gate-integration-tests
+name: Integration and regression tests
+summary: "Integration tests covering AC-002 (override rejected when Bypassable false), AC-006 (existing gate override still accepted), AC-007 (exact error message wording). Regression tests for non-reviewing features."
+status: queued
