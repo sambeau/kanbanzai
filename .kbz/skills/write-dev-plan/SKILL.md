@@ -335,6 +335,7 @@ Map acceptance criteria to verification methods:
 6. Are tasks granular enough that each has a single clear deliverable? Weight: high.
 7. Does the plan identify the critical path through the dependency graph? Weight: high.
 8. Are effort estimates provided for each task and differentiated by complexity? Weight: medium.
+- [ ] If the plan has more than 3 features: add a `## Merge Schedule` section grouping features into cohorts of 3–5. Use `conflict(action: "check", feature_ids: [...])` to verify no intra-cohort file overlap before publishing the dev-plan.
 
 ## Questions This Skill Answers
 

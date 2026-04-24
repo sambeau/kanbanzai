@@ -3,15 +3,18 @@ package service
 import (
 	"fmt"
 	"strings"
+	"time"
 )
 
 type BranchLookup interface {
 	GetBranchForEntity(entityID string) (branch string, err error)
 	GetFilesOnBranch(repoRoot, branch string) ([]string, error)
+	GetBranchCreatedAt(entityID string) (time.Time, error)
 }
 
 type ConflictCheckInput struct {
-	TaskIDs []string
+	TaskIDs    []string
+	FeatureIDs []string
 }
 
 type FileOverlapDimension struct {
@@ -50,6 +53,28 @@ type ConflictCheckResult struct {
 	Pairs       []ConflictPairResult
 }
 
+type FeatureConflictInfo struct {
+	FeatureID    string
+	FilesPlanned []string
+	NoFileData   bool
+	DriftDays    *int // nil when no worktree record exists
+}
+
+type FeatureConflictPairResult struct {
+	FeatureA       string
+	FeatureB       string
+	Risk           string
+	Dimensions     ConflictDimensions
+	Recommendation string
+}
+
+type FeatureConflictResult struct {
+	FeatureIDs  []string
+	OverallRisk string
+	Pairs       []FeatureConflictPairResult
+	Features    []FeatureConflictInfo
+}
+
 type ConflictService struct {
 	entitySvc    *EntityService
 	branchLookup BranchLookup
@@ -76,6 +101,9 @@ type taskConflictInfo struct {
 }
 
 func (s *ConflictService) Check(input ConflictCheckInput) (ConflictCheckResult, error) {
+	if len(input.FeatureIDs) > 0 && len(input.TaskIDs) > 0 {
+		return ConflictCheckResult{}, fmt.Errorf("task_ids and feature_ids are mutually exclusive")
+	}
 	if len(input.TaskIDs) < 2 {
 		return ConflictCheckResult{}, fmt.Errorf("conflict_domain_check requires at least two task IDs")
 	}
@@ -116,6 +144,78 @@ func (s *ConflictService) Check(input ConflictCheckInput) (ConflictCheckResult, 
 			pair := s.analyzePair(tasks[i], tasks[j], tasks)
 			result.OverallRisk = maxRisk(result.OverallRisk, pair.Risk)
 			result.Pairs = append(result.Pairs, pair)
+		}
+	}
+
+	return result, nil
+}
+
+// CheckFeatures checks conflict risk across a set of features by aggregating
+// their tasks' files_planned and comparing branch drift.
+func (s *ConflictService) CheckFeatures(featureIDs []string) (FeatureConflictResult, error) {
+	return s.checkFeatures(featureIDs)
+}
+
+func (s *ConflictService) checkFeatures(featureIDs []string) (FeatureConflictResult, error) {
+	allTasks, err := s.entitySvc.List("task")
+	if err != nil {
+		return FeatureConflictResult{}, fmt.Errorf("list tasks: %w", err)
+	}
+
+	featureInfos := make([]FeatureConflictInfo, 0, len(featureIDs))
+	for _, fid := range featureIDs {
+		var filesPlanned []string
+		for _, t := range allTasks {
+			if stringFromState(t.State, "parent_feature") == fid {
+				fps := stringSliceFromState(t.State, "files_planned")
+				filesPlanned = append(filesPlanned, fps...)
+			}
+		}
+
+		info := FeatureConflictInfo{
+			FeatureID:    fid,
+			FilesPlanned: filesPlanned,
+			NoFileData:   len(filesPlanned) == 0,
+		}
+
+		if s.branchLookup != nil {
+			if createdAt, err := s.branchLookup.GetBranchCreatedAt(fid); err == nil {
+				days := int(time.Since(createdAt).Hours() / 24)
+				info.DriftDays = &days
+			}
+		}
+
+		featureInfos = append(featureInfos, info)
+	}
+
+	// Build synthetic taskConflictInfo entries for pair analysis.
+	// id and parentFeature are both set to the feature ID so that
+	// checkFileOverlap can look up branches via GetBranchForEntity.
+	fakeTasks := make([]taskConflictInfo, len(featureInfos))
+	for i, info := range featureInfos {
+		fakeTasks[i] = taskConflictInfo{
+			id:            info.FeatureID,
+			parentFeature: info.FeatureID,
+			filesPlanned:  info.FilesPlanned,
+		}
+	}
+
+	var result FeatureConflictResult
+	result.FeatureIDs = featureIDs
+	result.OverallRisk = "none"
+	result.Features = featureInfos
+
+	for i := 0; i < len(fakeTasks)-1; i++ {
+		for j := i + 1; j < len(fakeTasks); j++ {
+			pair := s.analyzePair(fakeTasks[i], fakeTasks[j], fakeTasks)
+			result.OverallRisk = maxRisk(result.OverallRisk, pair.Risk)
+			result.Pairs = append(result.Pairs, FeatureConflictPairResult{
+				FeatureA:       pair.TaskA,
+				FeatureB:       pair.TaskB,
+				Risk:           pair.Risk,
+				Dimensions:     pair.Dimensions,
+				Recommendation: pair.Recommendation,
+			})
 		}
 	}
 

@@ -114,6 +114,23 @@ Copy this checklist and track your progress:
 
 ## Procedure
 
+### Phase 0: Cohort Setup _(plans with more than 3 features only)_
+
+Skip this phase entirely if the plan has 3 or fewer features.
+
+1. Read the dev-plan's `## Merge Schedule` block. If a merge schedule is present, treat
+   its cohort groupings as authoritative — record them and proceed to Phase 1 for
+   cohort-1 features only.
+2. If no merge schedule exists, call `conflict(action: "check", feature_ids: [...])` for
+   all features in the plan to identify file-scope overlap.
+3. Group features into cohorts based on the results: features with no file overlap may be
+   parallelised (same cohort); overlapping features must be serialised (different cohorts).
+   Target cohort size: 3–5 features.
+4. Record the cohort plan in the session: "Cohort 1: FEAT-A, FEAT-B. Cohort 2: FEAT-C,
+   FEAT-D, FEAT-E."
+5. Create worktrees only for cohort-1 features. Do not create worktrees for later cohorts
+   until the preceding cohort's merge checkpoint is confirmed clean.
+
 ### Phase 1: Read the Dev-Plan
 
 1. Call `status` with the feature ID to get the current state of all tasks.
@@ -198,6 +215,12 @@ After all tasks reach a terminal state, the feature must be explicitly advanced 
 5. **Clean up worktrees.** If a worktree was created, run `worktree(action: "remove", entity_id: "FEAT-xxx")` after merging. Confirm with `git worktree list` that the worktree directory is gone.
 
 6. **Verify branch is gone.** Run `git branch | grep FEAT-xxx` and confirm no output. If the branch still exists, delete it now. A feature is not truly closed out until its branch is absent from `git branch`.
+
+7. **Cohort checkpoint.** If this plan has a merge schedule with multiple cohorts, check
+   whether cohort-N+1 features exist. If so, return to Phase 0 for cohort N+1. Do not
+   create cohort-N+1 worktrees until the cohort-N merge checkpoint is confirmed clean:
+   no open feature branches from cohort N remain (`git branch | grep FEAT` returns only
+   cohort-N+1 or later branches).
 
 ## Output Format
 
