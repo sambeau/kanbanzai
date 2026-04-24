@@ -1,0 +1,6 @@
+id: TASK-01KPYEQEM249T
+parent_feature: FEAT-01KPXGW5BCGY4
+slug: add-orphan-helper
+name: Add reviewingCandidate type and orphan helper
+summary: Add reviewingCandidate type and generateOrphanedReviewingAttention helper to status_tool.go
+status: queued
