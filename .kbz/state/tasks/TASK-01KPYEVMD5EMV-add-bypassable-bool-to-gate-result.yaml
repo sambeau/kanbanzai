@@ -1,0 +1,6 @@
+id: TASK-01KPYEVMD5EMV
+parent_feature: FEAT-01KPXGVQY3KQC
+slug: add-bypassable-bool-to-gate-result
+name: Add Bypassable bool to GateResult
+summary: Add a Bypassable bool field to the gate result type used across all gate conditions.
+status: queued
