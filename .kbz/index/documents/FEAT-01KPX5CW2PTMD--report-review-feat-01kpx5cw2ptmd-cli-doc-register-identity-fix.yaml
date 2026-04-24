@@ -1,0 +1,143 @@
+document_id: FEAT-01KPX5CW2PTMD/report-review-feat-01kpx5cw2ptmd-cli-doc-register-identity-fix
+document_path: work/reports/review-feat-01kpx5cw2ptmd-cli-doc-register-identity-fix.md
+content_hash: aba4af786cd6119d3dd34e40f95b51700551c8fe39a772c3186c0fcbd89d7850
+indexed_at: 2026-04-24T00:39:08.33612Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: CLI doc register Identity Resolution Fix (FEAT-01KPX5CW2PTMD)'
+      byte_offset: 0
+      byte_count: 3977
+      word_count: 536
+      content_hash: aba4af786cd6119d3dd34e40f95b51700551c8fe39a772c3186c0fcbd89d7850
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 254
+          byte_count: 446
+          word_count: 62
+          content_hash: 49dcd7a2d9d70c7b62dc0049750fe1e9e1a44a3ce0933e877f96837641639011
+        - path: "1.2"
+          level: 2
+          title: Review Rounds
+          byte_offset: 700
+          byte_count: 993
+          word_count: 138
+          content_hash: 6668b2d7e3d5b17d21607011f983f56aec313ad1c0284dd8737d318f64dc30b2
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Round 1 — Initial review (needs-rework)
+              byte_offset: 718
+              byte_count: 431
+              word_count: 60
+              content_hash: 9b99d94163f5e1a881e016a921888b8ff46f6968b30af35a486d6b8e326e0101
+            - path: 1.2.2
+              level: 3
+              title: Round 2 — Re-review (needs-rework)
+              byte_offset: 1149
+              byte_count: 284
+              word_count: 39
+              content_hash: 7ab405421bd2e31db4f09af62c5f86a2dba8bc655a23145bf391a0e87b7da7a6
+            - path: 1.2.3
+              level: 3
+              title: Round 3 — Final review (approved)
+              byte_offset: 1433
+              byte_count: 260
+              word_count: 36
+              content_hash: 9d40e07ef1407a299824c2dd901a64676598f75b6a225ec41b3ccda9d3c79f2a
+        - path: "1.3"
+          level: 2
+          title: Tasks Reviewed
+          byte_offset: 1693
+          byte_count: 739
+          word_count: 119
+          content_hash: 3dcede278ba985c138bbadc4488dd2e214ed2501ca0eb087f8621e187a9a9435
+        - path: "1.4"
+          level: 2
+          title: Findings
+          byte_offset: 2432
+          byte_count: 88
+          word_count: 13
+          content_hash: f4a07ea9f52771d8f46089764ebb49cc9a9e7facdb9170df7caebb577966ec80
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Blocking
+              byte_offset: 2445
+              byte_count: 45
+              word_count: 7
+              content_hash: a302566ab1d4b7321a26f8e36b87ba13b38235e541a23f6242c6d85667f05e31
+            - path: 1.4.2
+              level: 3
+              title: Non-Blocking
+              byte_offset: 2490
+              byte_count: 30
+              word_count: 4
+              content_hash: 453650e6418faf09f9e67f73560fc0e1402fe204ee9ce270bde9040aebc06fed
+        - path: "1.5"
+          level: 2
+          title: Test Evidence
+          byte_offset: 2520
+          byte_count: 535
+          word_count: 55
+          content_hash: 8d8d92b21188bdd261f4149a307657535a956f518a118738dbef0dd36102eaf3
+        - path: "1.6"
+          level: 2
+          title: Spec Traceability
+          byte_offset: 3055
+          byte_count: 744
+          word_count: 96
+          content_hash: 27d067973c56e2511f36eb317a4e78cb5e2cdcc52d57128c13526c68e9cc4d3e
+        - path: "1.7"
+          level: 2
+          title: Conclusion
+          byte_offset: 3799
+          byte_count: 178
+          word_count: 27
+          content_hash: 2c9ae0519c30b0f52c4757d9a0bbd4725ff4b4021604b1a1df138308b0733bc1
+entity_refs:
+    - entity_id: FEAT-01KPX5CW2PTMD
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 59
+    - entity_id: TASK-01KPXE3P4BVW4
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 1770
+    - entity_id: TASK-01KPXE3P4D4FW
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 1857
+    - entity_id: TASK-01KPXE3P4E5FK
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 1938
+    - entity_id: TASK-01KPXE3P4GPD5
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 2018
+    - entity_id: TASK-01KPXE3P4J0PY
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 2103
+    - entity_id: TASK-01KPXE3P4K7Y7
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 2187
+    - entity_id: TASK-01KPXE3P4MDCM
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 2271
+    - entity_id: TASK-01KPXE3P4NB1T
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 2366
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-24T00:39:08.64196Z
+classified: false

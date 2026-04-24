@@ -1,0 +1,111 @@
+document_id: FEAT-01KPX5CW0QSM7/report-review-feat-01kpx5cw0qsm7-concept-tagging-approval-gate
+document_path: work/reports/review-feat-01kpx5cw0qsm7-concept-tagging-approval-gate.md
+content_hash: 671f0fffc9b0bd50dc0923621046597e79dc36a4ca0cc049c9bc3e680d466672
+indexed_at: 2026-04-24T00:39:06.73889Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Concept Tagging Approval Gate (FEAT-01KPX5CW0QSM7)'
+      byte_offset: 0
+      byte_count: 4519
+      word_count: 559
+      content_hash: 671f0fffc9b0bd50dc0923621046597e79dc36a4ca0cc049c9bc3e680d466672
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 243
+          byte_count: 547
+          word_count: 73
+          content_hash: de7762fe932a1fa1ee64a9c4b6004bbdc8234a28a87a4215515a2e65bce8bfa7
+        - path: "1.2"
+          level: 2
+          title: Review Rounds
+          byte_offset: 790
+          byte_count: 1247
+          word_count: 183
+          content_hash: 573cf7a6cc4b77a1ff1f618ab30a7c343545874c7d40d0acaf2ca61f08e5951f
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Round 1 — Findings
+              byte_offset: 808
+              byte_count: 459
+              word_count: 71
+              content_hash: b8d9070cacf39d45344364221524f509a72eb25c565be89c8415d1b0441b2c81
+            - path: 1.2.2
+              level: 3
+              title: Round 2 — Findings
+              byte_offset: 1267
+              byte_count: 371
+              word_count: 60
+              content_hash: c4e742a9cd8389b801ad2edd479a3694b9fd7684d1c70b21949532a50aa73e40
+            - path: 1.2.3
+              level: 3
+              title: Round 3 — Findings
+              byte_offset: 1638
+              byte_count: 399
+              word_count: 49
+              content_hash: 168e748e7030ce4c22e12a12890ac84c7305528c99e6e6335d362360ee804ca1
+        - path: "1.3"
+          level: 2
+          title: Tasks Reviewed
+          byte_offset: 2037
+          byte_count: 218
+          word_count: 34
+          content_hash: 82d303b8d69baea930fc278bdbf9a2a2b8c4e117e7f5315ae6198bfa929c4061
+        - path: "1.4"
+          level: 2
+          title: Findings
+          byte_offset: 2255
+          byte_count: 100
+          word_count: 14
+          content_hash: 14f8c3ec1d1aa563c3042648fa293eb3e4a1e757b290cbdd1f77d37be9fa5ec5
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Blocking
+              byte_offset: 2268
+              byte_count: 57
+              word_count: 8
+              content_hash: 788c049420b3c08b012bf8b6ef027dbbb2fb417efa1d650ea1272b4ed0a82e0c
+            - path: 1.4.2
+              level: 3
+              title: Non-Blocking
+              byte_offset: 2325
+              byte_count: 30
+              word_count: 4
+              content_hash: 453650e6418faf09f9e67f73560fc0e1402fe204ee9ce270bde9040aebc06fed
+        - path: "1.5"
+          level: 2
+          title: Test Evidence
+          byte_offset: 2355
+          byte_count: 818
+          word_count: 61
+          content_hash: a42f917acef87da51b1253634310bce1067a62436eaa0a4fd6faa9b9b09a42ec
+        - path: "1.6"
+          level: 2
+          title: Spec Traceability
+          byte_offset: 3173
+          byte_count: 1053
+          word_count: 127
+          content_hash: 330a15f85e55aef4977dab6600156c9b4a3fe3d88a9879193d6eee8cfa3ad2d6
+        - path: "1.7"
+          level: 2
+          title: Conclusion
+          byte_offset: 4226
+          byte_count: 293
+          word_count: 43
+          content_hash: 9d6abaaeaca2dc271d8a5cac58eda69600c78e8f83f0d9be45719dd3cf45ff0f
+entity_refs:
+    - entity_id: FEAT-01KPX5CW0QSM7
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 48
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-24T00:39:07.03469Z
+classified: false
