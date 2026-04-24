@@ -2,9 +2,11 @@ id: P30-handoff-skill-assembly-prompt-hygiene/specification-p30-handoff-skill-as
 path: work/spec/p30-handoff-skill-assembly-prompt-hygiene.md
 type: specification
 title: "Specification: Handoff Skill Assembly and Prompt Hygiene (P30)"
-status: draft
+status: approved
 owner: P30-handoff-skill-assembly-prompt-hygiene
-content_hash: 037ac18721ad660a66788579e44e1625631c3e51c88ffe6db27a071a4f3daf01
+approved_by: sambeau
+approved_at: "2026-04-24T16:11:56Z"
+content_hash: 44c82873a5c9503b98dd458a769ba79f295b4ccf8d79dc1a9a866e9edb0818d4
 created: "2026-04-24T15:58:03Z"
 created_by: sambeau
-updated: "2026-04-24T15:58:03Z"
+updated: "2026-04-24T16:11:56Z"
