@@ -3,10 +3,15 @@ parent_feature: FEAT-01KPXH0F5GFNV
 slug: list-cache-fast-path
 name: Implement List() cache fast path in EntityService
 summary: "In EntityService.List(), when cache is non-nil and IsWarm for the entity type, call cache.ListByType, deserialise fields_json for each row and return results without any filepath.Glob. If a row's fields_json is corrupt, return an error (do not silently omit). On cache error (logged, not returned) or cold cache, fall back to existing filepath.Glob path. Covers FR-004, FR-005, FR-006, FR-007, NFR-002."
-status: active
+status: done
 depends_on:
   - TASK-01KPYF4C6FFDF
+files_planned:
+  - internal/service/entities.go
+completed: "2026-04-24T01:35:45Z"
 claimed_at: "2026-04-24T01:32:46Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-24T01:32:46Z"
 dispatched_by: sambeau
+completion_summary: "Added cache fast path to EntityService.List(). When s.cache != nil and IsWarm(entityType) returns true, calls cache.ListByType(entityType) and deserialises each row's FieldsJSON into a map[string]any, building ListResult entries with the row's FilePath as the Path. Corrupt FieldsJSON returns an error immediately (no partial results). Empty result set on a warm cache is valid and returned as-is. ListByType error silently falls through to the existing filepath.Glob path."
+verification: go test ./internal/service/... passed (1.249s)
