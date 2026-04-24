@@ -3,11 +3,16 @@ parent_feature: FEAT-01KPXH0F5GFNV
 slug: cache-first-read-path-tests
 name: Write cache-first read path tests
 summary: "Write unit tests in internal/service/entities_test.go and internal/cache/cache_test.go covering all ACs: Get fast path (AC-001), Get fallback on miss (AC-002), nil-cache fallback (AC-003), cache-error fallback (AC-004), List fast path (AC-005), cold-type fallback (AC-006), nil-cache List (AC-007), ListByType error fallback (AC-008), corrupt fields_json error (AC-009), IsWarm after Upsert (AC-010), IsWarm cold returns false (AC-011), IsWarm after Rebuild (AC-012), result equivalence (AC-013, AC-014)."
-status: active
+status: done
 depends_on:
   - TASK-01KPYF54MRS0C
   - TASK-01KPYF6049P5K
+files_planned:
+  - internal/service/entities_cache_read_test.go
+completed: "2026-04-24T01:53:16Z"
 claimed_at: "2026-04-24T01:36:36Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-24T01:36:36Z"
 dispatched_by: sambeau
+completion_summary: "Created internal/service/entities_cache_read_test.go with 12 test functions covering the full cache-first read path: Get fast path (warm cache, cache miss fallback, nil cache, cold type), List fast path (warm cache, empty warm cache returns empty not fallback, nil cache, cold type, corrupt fields_json returns error, ListByType error falls back to filesystem), IsWarm integration test via RebuildCache, and result equivalence tests for both Get and List comparing cache vs filesystem results."
+verification: "go test ./internal/cache/... ./internal/service/... passed (cache: 0.255s, service: 1.293s). mcp failure is pre-existing flaky TempDir cleanup in TestHandoff_ProjectScopedKnowledgeWithNoRole, confirmed passing in isolation on main."
