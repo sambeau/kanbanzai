@@ -213,6 +213,24 @@ func (s *DecomposeService) DecomposeFeature(input DecomposeInput) (DecomposeResu
 				// Slice enrichment runs on all paths.
 				proposal.SliceDetails = analyzeSlices(spec, content)
 
+				// Merge schedule check: warn when plan has >3 features and dev-plan lacks ## Merge Schedule.
+				if parentPlan, _ := feat.State["parent"].(string); parentPlan != "" {
+					feats, _ := s.entitySvc.List("feature")
+					planFeatureCount := 0
+					for _, f := range feats {
+						if fp, _ := f.State["parent"].(string); fp == parentPlan {
+							planFeatureCount++
+						}
+					}
+					if planFeatureCount > 3 && !strings.Contains(dpContent, "## Merge Schedule") {
+						proposal.Warnings = append(proposal.Warnings, fmt.Sprintf(
+							"plan has %d features but dev-plan has no ## Merge Schedule section; "+
+								"consider adding cohort groupings to prevent worktree drift",
+							planFeatureCount,
+						))
+					}
+				}
+
 				return DecomposeResult{
 					FeatureID:       feat.ID,
 					FeatureSlug:     featureSlug,
