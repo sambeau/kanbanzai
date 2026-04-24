@@ -1,0 +1,6 @@
+id: TASK-01KPYF54WNPME
+parent_feature: FEAT-01KPXH0WSTHAM
+slug: eviction-invariant-tests
+name: Write cache eviction invariant tests
+summary: "Write unit tests in internal/service/entities_test.go covering: (1) slug-rename in UpdateEntity leaves no stale cache row — LookupByID returns new slug (FR-003), (2) nil-cache entity operations complete without panic (FR-004), (3) cache.Delete is the correct eviction API for future hard-delete paths — test cache.Delete directly to confirm LookupByID returns found=false (FR-001, FR-002)."
+status: queued
