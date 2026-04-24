@@ -4,3 +4,5 @@ slug: wire-orphaned-check-into-feature-scope
 name: Wire orphaned check into feature scope status
 summary: Wire OrphanedReviewingFeatureCheck into synthesiseFeature to surface warnings at feature scope.
 status: queued
+depends_on:
+  - TASK-01KPYEVMQ1M0B
