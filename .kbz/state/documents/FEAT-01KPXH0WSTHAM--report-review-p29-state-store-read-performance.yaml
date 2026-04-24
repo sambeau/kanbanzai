@@ -1,0 +1,10 @@
+id: FEAT-01KPXH0WSTHAM/report-review-p29-state-store-read-performance
+path: work/reviews/review-p29-state-store-read-performance.md
+type: report
+title: "Review: P29 cache eviction on entity delete"
+status: draft
+owner: FEAT-01KPXH0WSTHAM
+content_hash: ddcad5a94cbad052c189f2ad1d5b00d0bf7211abfaf3c8fa607f138d8580747b
+created: "2026-04-24T10:36:30Z"
+created_by: sambeau
+updated: "2026-04-24T10:36:30Z"

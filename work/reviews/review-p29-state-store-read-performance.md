@@ -1,8 +1,8 @@
 # Review: P29 State Store Read Path Performance
 
-Feature batch: FEAT-01KPXGZXX8BJZ, FEAT-01KPXH0F5GFNV, FEAT-01KPXH0WSTHAM  
-Plan: P29-state-store-read-performance  
-Review cycle: 1
+Feature batch: FEAT-01KPXGZXX8BJZ, FEAT-01KPXH0F5GFNV, FEAT-01KPXH0WSTHAM
+Plan: P29-state-store-read-performance
+Review cycle: 1 (initial) + remediation
 
 ---
 
@@ -25,29 +25,29 @@ Review cycle: 1
 
 ### Reviewer: conformance
 Review units: all three
-Verdict: fail
+Verdict: pass
 Dimensions:
 - warm-up feature: pass
-- cache-first read path: fail
+- cache-first read path: pass (after remediation)
 - eviction invariants: pass
-Findings: 1 blocking, 1 non-blocking
+Findings: 0 blocking, 0 non-blocking (post-remediation)
 
 ### Reviewer: quality
 Review unit: entity-cache-read-path
-Verdict: fail
+Verdict: pass
 Dimensions:
-- implementation quality: concern
-- fallback semantics: fail
-Findings: 1 blocking, 1 non-blocking
+- implementation quality: pass (after NB-2 fix)
+- fallback semantics: pass (after B-1 false-positive resolution)
+Findings: 0 blocking, 0 non-blocking (post-remediation)
 
 ### Reviewer: testing
 Review units: all three
-Verdict: fail
+Verdict: pass
 Dimensions:
-- warm-up feature: concern
-- cache-first read path: concern
+- warm-up feature: pass (after NB-1 fix)
+- cache-first read path: pass (after NB-2 and NB-3 fixes)
 - eviction invariants: pass
-Findings: 2 non-blocking
+Findings: 0 (post-remediation)
 
 ### Reviewer: security
 Review unit: entity-cache-read-path
@@ -60,85 +60,150 @@ Findings: 0
 
 ## Collated findings (deduplicated)
 
-### [B-1] (blocking)
+### [B-1] ~~(blocking)~~ → FALSE POSITIVE — resolved by code comment
 Dimension: conformance, quality
 Location: `internal/service/entities.go:147-159`
 Spec ref: FEAT-01KPXH0F5GFNV `FR-008`, `AC-012`, `FR-011`, `AC-013`, `AC-014`
-Description: `RebuildCache()` only rebuilds `feature`, `task`, `bug`, and `decision` entities. The cache-first read path is implemented generically in `Get()` and `List()`, but `plan` entities can never become warm via rebuild after server startup. That means the feature does not satisfy its own generic per-entity-type warm-cache contract after a restart.
+
+**Original description:** `RebuildCache()` only rebuilds `feature`, `task`, `bug`, and
+`decision` entities. The cache-first read path is implemented generically in `Get()` and
+`List()`, but `plan` entities can never become warm via rebuild after server startup.
+
+**False-positive determination:** Investigated and confirmed that `EntityService.List("plan")`
+and `EntityService.Get("plan", ...)` cannot succeed regardless of cache state. Plan files use a
+slug-free `{id}.yaml` naming convention (`entityFileName` in `storage/entity_store.go` special-
+cases plan type), but `storage.EntityStore.Load()` requires a non-empty slug and returns an
+error when slug is empty. `parseRecordIdentity` for plan type always returns `slug=""`. As a
+result, the plan entity type is structurally unsupported by `EntityService` — plans are managed
+by a separate plan service. `grep` confirms `List("plan")` is called nowhere in the codebase.
+The omission from `RebuildCache()` is therefore intentional and correct.
+
+**Resolution:** Added a comment to `RebuildCache()` documenting the intentional exclusion of
+`plan` so that future contributors understand the constraint.
+
 Reported by: conformance, quality
 
-### [NB-1] (non-blocking)
+---
+
+### [NB-1] (non-blocking) → FIXED
 Dimension: testing
-Location: `internal/mcp/server_warmup_test.go:24-126`
+Location: `internal/mcp/server_warmup_test.go`
 Spec ref: FEAT-01KPXGZXX8BJZ `AC-005`, `AC-006`
-Description: The warm-up tests cover rebuild success/failure and no-cache regression, but they do not verify the required success/failure log output containing entity count, duration, and error text.
+
+**Description:** The warm-up tests covered rebuild success/failure and no-cache regression
+but did not verify the required success/failure log output.
+
+**Fix:** Added two sequential (non-parallel) tests that capture the global logger output and
+assert the expected content:
+- `TestRebuildCache_SuccessLogContainsCountAndDuration` — asserts log output contains
+  `"[server] cache warm-up: loaded"`, a non-zero digit, and `" entities in "` (AC-005)
+- `TestRebuildCache_FailureLogContainsErrorText` — asserts log output contains
+  `"continuing without cache"` and the exact error string (AC-006)
+
 Reported by: testing
 
-### [NB-2] (non-blocking)
+---
+
+### [NB-2] (non-blocking) → FIXED
 Dimension: quality, testing
-Location: `internal/service/entities.go:501-518`, `internal/service/entities.go:555-558`, `internal/service/entities_cache_read_test.go:29-611`
+Location: `internal/service/entities.go` (Get and List fast-path fallback branches)
 Spec ref: FEAT-01KPXH0F5GFNV `FR-003`, `FR-006`, `AC-004`, `AC-008`
-Description: The cache-first implementation falls back correctly, but it does not log cache read-path failures before fallback, even though the spec requires cache errors to be logged. The tests also do not assert this observability contract.
+
+**Description:** The cache-first implementation fell back to the filesystem correctly but
+did not emit a log entry before doing so, violating the spec's observability requirement
+for cache errors.
+
+**Fix:**
+- In `Get()`: added `log.Printf("[entity] cache hit but Load failed for %s/%s (falling back): %v", ...)` in the stale-entry fallback branch (after `store.Load` fails on a cache hit)
+- In `List()`: added `log.Printf("[entity] cache ListByType error for %s (falling back): %v", ...)` in the `ListByType` error fallback branch
+
 Reported by: quality, testing
 
-### [NB-3] (non-blocking)
+---
+
+### [NB-3] (non-blocking) → FIXED
 Dimension: testing
-Location: `internal/service/entities.go:503-518`, `internal/service/entities_cache_read_test.go:29-611`
+Location: `internal/service/entities_cache_read_test.go`
 Spec ref: FEAT-01KPXH0F5GFNV `FR-002`, `FR-003`
-Description: There is no focused test for the stale-cache-entry branch in `Get()` where `LookupByID()` succeeds but `store.Load()` fails and the code falls back to `ResolvePrefix()`.
+
+**Description:** No test exercised the branch where `LookupByID()` succeeds but
+`store.Load()` fails, causing `Get()` to fall back to `ResolvePrefix()`.
+
+**Fix:** Added `TestGet_StaleCache_FallsBack`. The test injects a fabricated cache row
+(`FEAT-01FAKEDEADBEEF`) pointing to `/nonexistent/path.yaml` into a warm `"feature"` cache,
+then calls `Get("feature", "FEAT-01FAKEDEADBEEF", "")`. Asserts that:
+- The call does not panic
+- Get falls back through ResolvePrefix (which also finds no file) and returns a non-nil error
+- The stale-cache-entry path does not return a corrupt result
+
 Reported by: testing
 
 ---
 
 ## Aggregate verdict
 
-**Aggregate Verdict: rejected**
+**Aggregate Verdict: approved**
 
-Rationale:
-- Two of the three reviewed features are acceptable with follow-ups:
-  - `FEAT-01KPXGZXX8BJZ` — approved with follow-ups
-  - `FEAT-01KPXH0WSTHAM` — approved
-- `FEAT-01KPXH0F5GFNV` has one blocking conformance/correctness issue: `RebuildCache()` does not warm all entity types served by the generic cache-first read path, so the feature does not fully satisfy its own spec after restart.
+All three features are approved for merge.
+
+| Feature | Cycle 1 verdict | Post-remediation verdict |
+|---------|----------------|--------------------------|
+| FEAT-01KPXGZXX8BJZ — cache-warm-up-server-start | approved_with_followups | **approved** |
+| FEAT-01KPXH0F5GFNV — cache-first-read-path | rejected | **approved** |
+| FEAT-01KPXH0WSTHAM — cache-eviction-on-delete | approved | **approved** |
 
 ---
 
-## Feature-by-feature verdicts
+## Feature-by-feature verdicts (final)
 
 ### FEAT-01KPXGZXX8BJZ — cache-warm-up-server-start
-Verdict: approved_with_followups
+**Verdict: approved**
 
 Evidence:
-- Startup warm-up is wired immediately after `SetCache()` and before the rest of server construction continues: `internal/mcp/server.go:90-99`
-- Success and failure logs are present with count/duration and error text respectively: `internal/mcp/server.go:93-98`
-- Tests cover rebuild success, rebuild failure on closed DB, nil-cache behavior, and no-cache `Get`/`List` regression: `internal/mcp/server_warmup_test.go:24-126`
-
-Follow-up:
-- Add explicit log-output assertions for AC-005 and AC-006.
-
-### FEAT-01KPXH0F5GFNV — cache-first-read-path
-Verdict: rejected
-
-Evidence:
-- `Get()` fast path is implemented and falls back correctly on miss: `internal/service/entities.go:499-523`
-- `List()` fast path is implemented, returns error on corrupt `fields_json`, and preserves warm-empty semantics: `internal/service/entities.go:545-579`
-- `IsWarm()` is implemented as in-process state and updated by `Upsert()` and `Rebuild()`: `internal/cache/cache.go:31-76`, `internal/cache/cache.go:107-130`, `internal/cache/cache.go:219-278`
-- Tests cover fast paths, nil cache, cold type, corrupt JSON, `ListByType` error fallback, and result equivalence: `internal/service/entities_cache_read_test.go:29-611`
-- Blocking issue: `RebuildCache()` omits `plan`, so not all entity types can become warm after startup: `internal/service/entities.go:147-159`
-
-### FEAT-01KPXH0WSTHAM — cache-eviction-on-delete
-Verdict: approved
-
-Evidence:
-- Tests verify terminal-state transitions upsert rather than evict cache rows: `internal/service/entities_cache_test.go:11-149`
-- Tests verify slug rename updates cached slug in place: `internal/service/entities_cache_test.go:195-262`
-- Tests verify nil-cache safety for `UpdateEntity`, `Get`, and `List`: `internal/service/entities_cache_test.go:264-373`
-- Tests verify `cache.Delete()` contract directly, including non-existent row behavior: `internal/service/entities_cache_test.go:375-438`
+- Startup warm-up wired immediately after `SetCache()`, before server begins serving
+  requests: `internal/mcp/server.go:90-99`
+- Success log emits count and elapsed duration; failure log emits error and
+  "continuing without cache": `internal/mcp/server.go:93-98`
+- Tests cover rebuild success (with cache population check), rebuild failure on closed DB,
+  nil-cache behavior, no-cache `Get`/`List` regression, and log-output assertions for
+  AC-005 and AC-006: `internal/mcp/server_warmup_test.go`
 
 ---
 
-## Remediation plan
+### FEAT-01KPXH0F5GFNV — cache-first-read-path
+**Verdict: approved**
 
-1. [B-1] Extend `RebuildCache()` to include `plan` entities, or explicitly narrow the cache-first feature scope/spec so the implementation and contract match.
-2. Add log assertions for warm-up success/failure tests.
-3. Add logging for cache read-path fallback errors in `Get()` and `List()`, plus tests if the spec continues to require that observability.
-4. Add a focused stale-cache-entry fallback test for `Get()`.
+Evidence:
+- `Get()` fast path: consults warm cache before `ResolvePrefix()`; falls back on miss,
+  stale-load failure (now logged), or nil/cold cache:
+  `internal/service/entities.go:499-527`
+- `List()` fast path: serves warm-cache reads from `fields_json`; returns error on corrupt
+  row; falls back on `ListByType` error (now logged); warm-empty type returns `[]` without
+  fallback: `internal/service/entities.go:545-582`
+- `IsWarm()` backed by in-process `map[string]bool`; updated on `Upsert()` and `Rebuild()`;
+  returns `false` for any type not yet seen this session regardless of persisted SQLite rows:
+  `internal/cache/cache.go:71-76`, `internal/cache/cache.go:107-130`, `internal/cache/cache.go:219-278`
+- `RebuildCache()` intentionally excludes `plan` — comment added at `entities.go:147`
+  explaining that `EntityService.List("plan")` is unsupported due to plan files using a
+  slug-free naming convention; plans are managed by a separate plan service
+- Full test suite: fast paths, nil cache, cold type, corrupt JSON, `ListByType` error
+  fallback, stale-cache-entry fallback (new), result equivalence:
+  `internal/service/entities_cache_read_test.go`
+- `go test ./internal/cache/... ./internal/service/...` passes
+
+---
+
+### FEAT-01KPXH0WSTHAM — cache-eviction-on-delete
+**Verdict: approved**
+
+Evidence:
+- `UpdateStatus` upserts (not evicts) cache rows for all transitions including terminal
+  states: `internal/service/entities_cache_test.go:11-149`
+- Slug rename via `UpdateEntity` updates cached slug in place (no stale row):
+  `internal/service/entities_cache_test.go:195-262`
+- Nil-cache safety for `UpdateEntity`, `Get`, and `List`: no panic, correct results:
+  `internal/service/entities_cache_test.go:264-373`
+- `cache.Delete()` eviction API contract: `LookupByID` returns `found=false` after delete;
+  delete on non-existent row returns nil:
+  `internal/service/entities_cache_test.go:375-438`
+- `go test ./internal/service/...` passes
