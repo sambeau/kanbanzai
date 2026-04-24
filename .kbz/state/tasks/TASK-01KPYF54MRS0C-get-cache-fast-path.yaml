@@ -3,6 +3,6 @@ parent_feature: FEAT-01KPXH0F5GFNV
 slug: get-cache-fast-path
 name: Implement Get() cache fast path in EntityService
 summary: "In EntityService.Get(), when slug==\"\" and cache is non-nil and IsWarm for the entity type, call cache.LookupByID to resolve slug and filePath, then call store.Load directly. On cache miss or cache error (logged, not returned), fall back to existing ResolvePrefix path. Covers FR-001, FR-002, FR-003, NFR-001."
-status: queued
+status: ready
 depends_on:
   - TASK-01KPYF4C6FFDF

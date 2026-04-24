@@ -3,4 +3,14 @@ parent_feature: FEAT-01KPXH0F5GFNV
 slug: iswarm-add-to-cache
 name: Add IsWarm per-type tracking to cache.Cache
 summary: "Add an IsWarm(entityType string) bool method to internal/cache/cache.go backed by an in-process set (no SQL). Mark a type warm whenever Upsert or Rebuild is called for it. IsWarm returns false for any type not yet seen in the current process session, even if the SQLite file contains rows from a prior session. Covers FR-008, FR-009, NFR-005."
-status: ready
+status: done
+files_planned:
+  - internal/cache/cache.go
+  - internal/cache/cache_test.go
+completed: "2026-04-24T01:07:21Z"
+claimed_at: "2026-04-24T01:03:51Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-24T01:03:51Z"
+dispatched_by: sambeau
+completion_summary: "Added IsWarm(entityType string) bool method to Cache struct, backed by an in-process warm map[string]bool field. The field is initialised in Open, set to true in Upsert (after successful SQL exec) and in Rebuild (after successful commit, for all entity types seen in the records). Added four unit tests covering false-before-upsert, true-after-upsert, true-after-rebuild, and false-for-unseen-type."
+verification: "go test ./internal/cache/... passed (0.372s, all tests including 4 new IsWarm tests)"
