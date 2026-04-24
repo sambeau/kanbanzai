@@ -3,7 +3,7 @@ parent_feature: FEAT-01KPXGVQY3KQC
 slug: unit-tests-review-report-exists-gate
 name: Unit tests for ReviewReportExistsGate
 summary: "Unit tests covering all AC scenarios: blocked with and without override, passes on draft and approved report, skipped when not reviewing, fail-open."
-status: queued
+status: ready
 depends_on:
   - TASK-01KPYEVMMEA35
   - TASK-01KPYEVMPZ9TA

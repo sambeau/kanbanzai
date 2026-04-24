@@ -3,6 +3,10 @@ parent_feature: FEAT-01KPXH0F5GFNV
 slug: list-cache-fast-path
 name: Implement List() cache fast path in EntityService
 summary: "In EntityService.List(), when cache is non-nil and IsWarm for the entity type, call cache.ListByType, deserialise fields_json for each row and return results without any filepath.Glob. If a row's fields_json is corrupt, return an error (do not silently omit). On cache error (logged, not returned) or cold cache, fall back to existing filepath.Glob path. Covers FR-004, FR-005, FR-006, FR-007, NFR-002."
-status: ready
+status: active
 depends_on:
   - TASK-01KPYF4C6FFDF
+claimed_at: "2026-04-24T01:32:46Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-24T01:32:46Z"
+dispatched_by: sambeau

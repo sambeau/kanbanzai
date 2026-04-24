@@ -3,6 +3,15 @@ parent_feature: FEAT-01KPXGVQY3KQC
 slug: wire-review-report-exists-gate-into-default-gates
 name: Wire ReviewReportExistsGate into DefaultGates
 summary: Register ReviewReportExistsGate in DefaultGates and add NonBypassableBlockingFailures helper to support override rejection logic.
-status: ready
+status: done
 depends_on:
   - TASK-01KPYEVMMEA35
+files_planned:
+  - internal/merge/checker.go
+completed: "2026-04-24T01:33:38Z"
+claimed_at: "2026-04-24T01:32:45Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-24T01:32:45Z"
+dispatched_by: sambeau
+completion_summary: "Added ReviewReportExistsGate{} as first gate in DefaultGates() and added NonBypassableBlockingFailures() helper that filters blocking failures where Bypassable is false."
+verification: go test ./internal/merge/... passes; TestDefaultGates confirms 8 gates in correct order

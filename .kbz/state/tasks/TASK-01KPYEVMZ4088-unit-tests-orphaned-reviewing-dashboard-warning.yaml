@@ -3,9 +3,19 @@ parent_feature: FEAT-01KPXGW5BCGY4
 slug: unit-tests-orphaned-reviewing-dashboard-warning
 name: Unit tests for orphaned reviewing dashboard warning
 summary: "Unit tests covering all AC scenarios: project/plan/feature scope, scope isolation, skip when no reviewing features, graceful degradation on service unavailability."
-status: ready
+status: done
 depends_on:
   - TASK-01KPYEVMQ1M0B
   - TASK-01KPYEVMRTCY7
   - TASK-01KPYEVMV9XWX
   - TASK-01KPYEVMWMZ8F
+files_planned:
+  - internal/mcp/status_tool.go
+  - internal/mcp/status_tool_test.go
+completed: "2026-04-24T01:33:38Z"
+claimed_at: "2026-04-24T01:32:45Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-24T01:32:45Z"
+dispatched_by: sambeau
+completion_summary: "Unit tests for generateOrphanedReviewingAttention covering: nil docSvc returns nil, empty candidates returns nil, reviewing feature with existing report returns no items, reviewing feature with no report emits warning AttentionItem with correct type/severity/EntityID/message."
+verification: go test ./internal/mcp/... -run TestGenerateOrphaned passes all 4 tests
