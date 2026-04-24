@@ -3,6 +3,15 @@ parent_feature: FEAT-01KPXGW5BCGY4
 slug: wire-orphaned-check-into-feature-scope
 name: Wire orphaned check into feature scope status
 summary: Wire OrphanedReviewingFeatureCheck into synthesiseFeature to surface warnings at feature scope.
-status: ready
+status: done
 depends_on:
   - TASK-01KPYEVMQ1M0B
+files_planned:
+  - internal/mcp/status_tool.go
+completed: "2026-04-24T01:31:47Z"
+claimed_at: "2026-04-24T01:30:39Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-24T01:30:39Z"
+dispatched_by: sambeau
+completion_summary: "Wired OrphanedReviewingFeatureCheck into synthesiseFeature: checks if fstatus == reviewing, builds single-element candidate slice, appends result to attention after existing generateFeatureAttention call."
+verification: go test ./internal/mcp/... -run TestGenerateOrphaned passes
