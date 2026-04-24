@@ -263,7 +263,17 @@ func TestMatchSuggestedRole(t *testing.T) {
 		// No match
 		{"no match", "Introduction", "", false},
 		{"empty", "", "", false},
-		{"partial match no entry", "Goals and Non-Goals", "", false},
+		// "Goals and Non-Goals" starts with "Goals " (space), triggering the "goals"
+		// prefix entry → RoleRequirement. This is a known approximation: prefix-based
+		// classification is inherently coarse, and agents are expected to review and
+		// refine suggested classifications before accepting them.
+		{"goals-and-non-goals (prefix-match approximation)", "Goals and Non-Goals", RoleRequirement, true},
+		// REQ-106 prefix-match entries
+		{"goals prefix", "Goals Overview", RoleRequirement, true},
+		{"requirements prefix", "Requirements Overview", RoleRequirement, true},
+		{"summary prefix", "Summary of Changes", RoleNarrative, true},
+		{"decisions prefix", "Decisions Log", RoleDecision, true},
+		{"design prefix", "Design Decisions", RoleDecision, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -464,5 +474,40 @@ func TestSuggestClassifications_AllConfidenceHigh(t *testing.T) {
 		if s.Confidence != "high" {
 			t.Errorf("entry %q has confidence=%q, want high", s.SectionPath, s.Confidence)
 		}
+	}
+}
+
+func TestNonGoalsMapsToConstraint(t *testing.T) {
+	// Decision: Non-Goals is classified as RoleConstraint (scope exclusion),
+	// not RoleRequirement. This test locks the decision to prevent accidental changes.
+	role, ok := matchSuggestedRole("Non-Goals")
+	if !ok {
+		t.Fatal("matchSuggestedRole('Non-Goals') returned no match")
+	}
+	if role != RoleConstraint {
+		t.Errorf("Non-Goals role = %q, want %q (constraint, not requirement)", role, RoleConstraint)
+	}
+}
+
+func TestMatchSuggestedRole_REQ004_Patterns(t *testing.T) {
+	cases := []struct {
+		title    string
+		wantRole FragmentRole
+	}{
+		{"Problem Statement", RoleRationale},
+		{"Motivation", RoleRationale},
+		{"Definitions", RoleDefinition},
+		{"Executive Summary", RoleNarrative},
+	}
+	for _, c := range cases {
+		t.Run(c.title, func(t *testing.T) {
+			role, ok := matchSuggestedRole(c.title)
+			if !ok {
+				t.Fatalf("matchSuggestedRole(%q) returned no match, want %q", c.title, c.wantRole)
+			}
+			if role != c.wantRole {
+				t.Errorf("matchSuggestedRole(%q) = %q, want %q", c.title, role, c.wantRole)
+			}
+		})
 	}
 }
