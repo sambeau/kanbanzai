@@ -5,5 +5,6 @@ parent: P29-state-store-read-performance
 status: dev-planning
 summary: "Call RebuildCache() immediately after SetCache() in internal/mcp/server.go so the SQLite cache is always warm before the first tool call is handled. Failure is best-effort: log and continue without cache rather than aborting startup."
 spec: FEAT-01KPXGZXX8BJZ/specification-feat-01kpxgzxx8bjz-cache-warm-up-server-start
+dev_plan: FEAT-01KPXGZXX8BJZ/dev-plan-feat-01kpxgzxx8bjz-cache-warm-up-server-start
 created: "2026-04-23T15:57:59Z"
 created_by: sambeau
