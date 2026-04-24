@@ -4,3 +4,7 @@ slug: integration-regression-tests-merge-gate
 name: Integration and regression tests for merge gate
 summary: "Integration and regression tests verifying the full merge gate chain: non-bypassable block, existing gates still bypassable, fail-open."
 status: queued
+depends_on:
+  - TASK-01KPYEVMFD8P9
+  - TASK-01KPYEVMSK63Y
+  - TASK-01KPYEVMV29H3
