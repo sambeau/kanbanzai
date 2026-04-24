@@ -1,0 +1,6 @@
+id: TASK-01KQ04APFJ52E
+parent_feature: FEAT-01KQ049NBSQAR
+slug: sub-agent-skill-routing
+name: Sub-agent skill routing
+summary: "Modify stepLoadSkill in internal/context/pipeline.go to check whether the caller's role prefix-matches any entry in state.Binding.SubAgents.Roles before falling through to the primary skill. When matched at index i, load SubAgents.Skills[i]. Return pipelineError if index exceeds skills array length. Preserve fallback to Skills[0] for non-matching roles, empty roles, and nil SubAgents. Covers FR-001 through FR-006, NFR-001, NFR-002, NFR-003, NFR-005."
+status: queued

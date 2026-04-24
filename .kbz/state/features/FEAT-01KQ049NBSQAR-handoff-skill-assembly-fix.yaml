@@ -2,7 +2,7 @@ id: FEAT-01KQ049NBSQAR
 slug: handoff-skill-assembly-fix
 name: Handoff Skill Assembly Fix
 parent: P30-handoff-skill-assembly-prompt-hygiene
-status: proposed
+status: dev-planning
 summary: "Fix stepLoadSkill to route sub-agent skill selection through the binding's sub_agents block, and replace heredoc with write_file in implement-task/SKILL.md."
 created: "2026-04-24T16:13:49Z"
 created_by: sambeau
