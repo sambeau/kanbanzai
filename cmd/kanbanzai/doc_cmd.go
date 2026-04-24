@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/core"
 	"github.com/sambeau/kanbanzai/internal/service"
 )
@@ -52,7 +53,7 @@ func runDocRegister(args []string, deps dependencies) error {
 	path := args[0]
 	remaining := args[1:]
 
-	var docType, title, owner, createdBy string
+	var docType, title, owner, createdByRaw string
 
 	for i := 0; i < len(remaining); i++ {
 		switch remaining[i] {
@@ -79,7 +80,7 @@ func runDocRegister(args []string, deps dependencies) error {
 				return fmt.Errorf("--by requires a value")
 			}
 			i++
-			createdBy = remaining[i]
+			createdByRaw = remaining[i]
 		default:
 			return fmt.Errorf("unknown flag %q\n\nUsage: kbz doc register <path> [flags]", remaining[i])
 		}
@@ -90,6 +91,11 @@ func runDocRegister(args []string, deps dependencies) error {
 	}
 	if title == "" {
 		return fmt.Errorf("--title is required\n\nUsage: kbz doc register <path> --type <type> --title <title>")
+	}
+
+	createdBy, err := config.ResolveIdentity(createdByRaw)
+	if err != nil {
+		return err
 	}
 
 	stateRoot := core.StatePath()
@@ -137,13 +143,18 @@ func runDocApprove(args []string, deps dependencies) error {
 		}
 	}
 
+	resolvedBy, err := config.ResolveIdentity(approvedBy)
+	if err != nil {
+		return err
+	}
+
 	stateRoot := core.StatePath()
 	repoRoot := "."
 	docSvc := service.NewDocumentService(stateRoot, repoRoot)
 
 	result, err := docSvc.ApproveDocument(service.ApproveDocumentInput{
 		ID:         docID,
-		ApprovedBy: approvedBy,
+		ApprovedBy: resolvedBy,
 	})
 	if err != nil {
 		return err
