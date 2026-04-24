@@ -675,6 +675,29 @@ func (s *IntelligenceService) Close() error {
 	return s.indexStore.Close()
 }
 
+// GetClassifications returns all classification entries for the given document.
+// Each entry pairs the document's current content_hash with one Classification.
+// Returns an empty (non-nil) slice when the document has no classification entries
+// or has not been indexed — never returns an error for the "no entries" case (REQ-008).
+func (s *IntelligenceService) GetClassifications(docID string) ([]docint.ClassificationEntry, error) {
+	index, err := s.indexStore.LoadDocumentIndex(docID)
+	if err != nil {
+		// Document not indexed yet — treat as zero classifications (REQ-002, REQ-008).
+		return []docint.ClassificationEntry{}, nil
+	}
+	if len(index.Classifications) == 0 {
+		return []docint.ClassificationEntry{}, nil
+	}
+	entries := make([]docint.ClassificationEntry, len(index.Classifications))
+	for i, c := range index.Classifications {
+		entries[i] = docint.ClassificationEntry{
+			ContentHash:    index.ContentHash,
+			Classification: c,
+		}
+	}
+	return entries, nil
+}
+
 // touchDocumentAccess increments AccessCount and updates LastAccessedAt for
 // the given document. If sectionPath is non-empty, also increments the
 // SectionAccess entry for that path. Errors are silently absorbed (NFR-002).

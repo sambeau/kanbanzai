@@ -166,7 +166,7 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		return DispatchAction(ctx, req, map[string]ActionHandler{
 			"register":              docRegisterAction(docSvc, intelligenceSvc),
-			"approve":               docApproveAction(docSvc),
+			"approve":               docApproveAction(docSvc, intelligenceSvc),
 			"move":                  docMoveAction(docSvc),
 			"delete":                docDeleteAction(docSvc),
 			"get":                   docGetAction(docSvc),
@@ -244,6 +244,13 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 
 	autoApprove, _ := args["auto_approve"].(bool)
 
+	// auto_approve is not permitted for gated document types (REQ-001): the
+	// concept-tagging gate in docApproveOne cannot run at register time because
+	// no classifications exist yet. Callers must approve separately.
+	if autoApprove && gatedDocTypes[docType] {
+		autoApprove = false
+	}
+
 	result, err := docSvc.SubmitDocument(service.SubmitDocumentInput{
 		Path:        path,
 		Type:        docType,
@@ -291,7 +298,7 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 
 // ─── approve ──────────────────────────────────────────────────────────────────
 
-func docApproveAction(docSvc *service.DocumentService) ActionHandler {
+func docApproveAction(docSvc *service.DocumentService, intelSvc *service.IntelligenceService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
@@ -302,7 +309,7 @@ func docApproveAction(docSvc *service.DocumentService) ActionHandler {
 			items, _ := args["ids"].([]any)
 			return ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
 				docID, _ := item.(string)
-				return docApproveOne(ctx, docSvc, docID, approvedByRaw)
+				return docApproveOne(ctx, docSvc, intelSvc, docID, approvedByRaw)
 			})
 		}
 
@@ -311,15 +318,63 @@ func docApproveAction(docSvc *service.DocumentService) ActionHandler {
 		if docID == "" {
 			return nil, fmt.Errorf("Cannot approve document: id is missing.\n\nTo resolve:\n  Provide the document record ID: doc(action: \"approve\", id: \"DOC-...\")")
 		}
-		_, result, err := docApproveOne(ctx, docSvc, docID, approvedByRaw)
+		_, result, err := docApproveOne(ctx, docSvc, intelSvc, docID, approvedByRaw)
 		return result, err
 	}
 }
 
-func docApproveOne(ctx context.Context, docSvc *service.DocumentService, docID, approvedByRaw string) (string, any, error) {
+// gatedDocTypes is the set of document types subject to the concept-tagging
+// approval gate (REQ-001).
+var gatedDocTypes = map[string]bool{
+	"specification": true,
+	"design":        true,
+	"dev-plan":      true,
+}
+
+func docApproveOne(ctx context.Context, docSvc *service.DocumentService, intelSvc *service.IntelligenceService, docID, approvedByRaw string) (string, any, error) {
 	approvedBy, err := config.ResolveIdentity(approvedByRaw)
 	if err != nil {
 		return docID, nil, err
+	}
+
+	// Concept-tagging approval gate (REQ-004, REQ-010).
+	// Gate is skipped when intelSvc is nil (REQ-007).
+	if intelSvc != nil {
+		// Gate is fail-open: if GetDocument or GetClassifications returns an error,
+		// the gate is skipped and the document proceeds to approval. This is intentional:
+		// store I/O errors should not permanently block approvals (transient failures
+		// would require human intervention). Document-not-found and classification-not-found
+		// are both treated as "no gate needed."
+		doc, docErr := docSvc.GetDocument(docID, false)
+		if docErr == nil && gatedDocTypes[doc.Type] {
+			entries, classErr := intelSvc.GetClassifications(docID)
+			if classErr == nil && len(entries) > 0 {
+				hasIntro := false
+				for _, e := range entries {
+					if len(e.Classification.ConceptsIntro) > 0 {
+						hasIntro = true
+						break
+					}
+				}
+				if !hasIntro {
+					// Use content_hash from the last entry (most recent classification).
+					contentHash := entries[len(entries)-1].ContentHash
+					// The "error" string key is detected by extractToolResultError so
+					// that ExecuteBatch correctly marks this item as failed, not
+					// succeeded. The full payload (including content_hash) is returned
+					// to single-path callers so they can classify without a guide call.
+					return docID, map[string]any{
+						"error":        "concept_tagging_required",
+						"document_id":  docID,
+						"content_hash": contentHash,
+						"message": fmt.Sprintf(
+							`At least one classified section must have concepts_intro populated. Call doc_intel(action: "guide", id: "%s") to see concept suggestions, then doc_intel(action: "classify", ...) with concepts_intro on at least one section.`,
+							docID,
+						),
+					}, nil
+				}
+			}
+		}
 	}
 
 	result, err := docSvc.ApproveDocument(service.ApproveDocumentInput{
