@@ -1,0 +1,6 @@
+id: TASK-01KPYEVMZ4088
+parent_feature: FEAT-01KPXGW5BCGY4
+slug: unit-tests-orphaned-reviewing-dashboard-warning
+name: Unit tests for orphaned reviewing dashboard warning
+summary: "Unit tests covering all AC scenarios: project/plan/feature scope, scope isolation, skip when no reviewing features, graceful degradation on service unavailability."
+status: queued
