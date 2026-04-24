@@ -45,6 +45,7 @@ func TestCheckMergeReadiness_NoWorktree_NotApplicable(t *testing.T) {
 		context.Background(),
 		store,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		thresholds,
 		nil,
@@ -80,6 +81,7 @@ func TestCheckMergeReadiness_InvalidEntityID_ReturnsError(t *testing.T) {
 		context.Background(),
 		store,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		thresholds,
 		nil,
@@ -102,6 +104,7 @@ func TestCheckMergeReadiness_InvalidEntityID_PlainString_ReturnsError(t *testing
 		context.Background(),
 		store,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		thresholds,
 		nil,
@@ -124,6 +127,7 @@ func TestCheckMergeReadiness_StoreError_Propagated(t *testing.T) {
 		context.Background(),
 		store,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		thresholds,
 		nil,
@@ -147,6 +151,7 @@ func TestExecuteMerge_NoWorktree_Skipped(t *testing.T) {
 	result, err := executeMerge(
 		store,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		thresholds,
 		nil,
@@ -181,6 +186,7 @@ func TestExecuteMerge_NoWorktree_BugEntity_Skipped(t *testing.T) {
 	result, err := executeMerge(
 		store,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		thresholds,
 		nil,
@@ -209,6 +215,7 @@ func TestExecuteMerge_InvalidEntityID_ReturnsError(t *testing.T) {
 	_, err := executeMerge(
 		store,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		thresholds,
 		nil,
@@ -234,6 +241,7 @@ func TestExecuteMerge_StoreError_Propagated(t *testing.T) {
 	_, err := executeMerge(
 		store,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		thresholds,
 		nil,
@@ -259,7 +267,7 @@ func TestMergeCheckAction_NoWorktree_NotApplicable(t *testing.T) {
 	thresholds := git.BranchThresholds{}
 	localConfig := (*config.LocalConfig)(nil)
 
-	tool := mergeTool(store, entitySvc, t.TempDir(), thresholds, localConfig)
+	tool := mergeTool(store, entitySvc, nil, t.TempDir(), thresholds, localConfig)
 
 	req := makeRequest(map[string]any{
 		"action":    "check",
@@ -289,7 +297,7 @@ func TestMergeExecuteAction_NoWorktree_Skipped(t *testing.T) {
 	mergeCommitFunc = func(_, _ string) (bool, error) { return false, nil }
 	t.Cleanup(func() { mergeCommitFunc = old })
 
-	tool := mergeTool(store, entitySvc, t.TempDir(), thresholds, localConfig)
+	tool := mergeTool(store, entitySvc, nil, t.TempDir(), thresholds, localConfig)
 
 	req := makeRequest(map[string]any{
 		"action":    "execute",

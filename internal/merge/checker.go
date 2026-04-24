@@ -4,6 +4,7 @@ package merge
 // Blocking gates are evaluated first, followed by warning gates.
 func DefaultGates() []Gate {
 	return []Gate{
+		ReviewReportExistsGate{},
 		EntityDoneGate{},
 		TasksCompleteGate{},
 		VerificationExistsGate{},
@@ -87,6 +88,18 @@ func BlockingFailures(results []GateResult) []GateResult {
 	var failures []GateResult
 	for _, r := range results {
 		if r.Severity == GateSeverityBlocking && r.Status == GateStatusFailed {
+			failures = append(failures, r)
+		}
+	}
+	return failures
+}
+
+// NonBypassableBlockingFailures returns all blocking gates that failed and
+// cannot be bypassed with override: true (i.e. Bypassable == false).
+func NonBypassableBlockingFailures(results []GateResult) []GateResult {
+	var failures []GateResult
+	for _, r := range results {
+		if r.Severity == GateSeverityBlocking && r.Status == GateStatusFailed && !r.Bypassable {
 			failures = append(failures, r)
 		}
 	}

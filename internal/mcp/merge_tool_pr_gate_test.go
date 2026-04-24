@@ -106,6 +106,7 @@ func TestMergeCheck_RequireGitHubPR_Nil_PassesWithoutPR(t *testing.T) {
 		context.Background(),
 		store,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		thresholds,
 		nil, // no localConfig → no GitHub token → PR block skipped
@@ -137,6 +138,7 @@ func TestMergeCheck_RequireGitHubPR_True_NoPR_Fails(t *testing.T) {
 		context.Background(),
 		wtStore,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		git.BranchThresholds{},
 		localCfg,
@@ -183,6 +185,7 @@ func TestMergeCheck_RequireGitHubPR_True_NonOpenPR_Fails(t *testing.T) {
 		context.Background(),
 		wtStore,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		git.BranchThresholds{},
 		localCfg,
@@ -232,11 +235,12 @@ func TestMergeExecute_RequireGitHubPR_True_NoPR_Blocked(t *testing.T) {
 	_, err := executeMerge(
 		wtStore,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		git.BranchThresholds{},
 		localCfg,
 		entityID,
-		true,  // override standard gates so PR gate is reached
+		true, // override standard gates so PR gate is reached
 		"bypassing standard gates for PR gate test",
 		worktree.MergeStrategySquash,
 		true,
@@ -263,6 +267,7 @@ func TestMergeCheck_RequireGitHubPR_Absent_NoNewFailures(t *testing.T) {
 		context.Background(),
 		store,
 		entitySvc,
+		nil, // docSvc
 		t.TempDir(),
 		thresholds,
 		nil,

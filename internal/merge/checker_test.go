@@ -9,12 +9,13 @@ import (
 func TestDefaultGates(t *testing.T) {
 	gates := DefaultGates()
 
-	if len(gates) != 7 {
-		t.Errorf("DefaultGates: got %d gates, want 7", len(gates))
+	if len(gates) != 8 {
+		t.Errorf("DefaultGates: got %d gates, want 8", len(gates))
 	}
 
 	// Verify order and names
 	expectedNames := []string{
+		"review_report_exists",
 		"entity_done",
 		"tasks_complete",
 		"verification_exists",
@@ -69,8 +70,8 @@ func TestCheckGates_AllPassing(t *testing.T) {
 	if result.OverallStatus != OverallStatusPassed {
 		t.Errorf("OverallStatus: got %q, want %q", result.OverallStatus, OverallStatusPassed)
 	}
-	if len(result.Gates) != 7 {
-		t.Errorf("Gates: got %d, want 7", len(result.Gates))
+	if len(result.Gates) != 8 {
+		t.Errorf("Gates: got %d, want 8", len(result.Gates))
 	}
 
 	for _, g := range result.Gates {
@@ -423,6 +424,155 @@ func TestBlockingFailures_PreservesOrder(t *testing.T) {
 	for i, name := range expected {
 		if got[i].Name != name {
 			t.Errorf("failure[%d]: got %q, want %q", i, got[i].Name, name)
+		}
+	}
+}
+
+// ─── Integration: full gate chain with ReviewReportExistsGate ────────────────
+
+func TestCheckGates_ReviewingFeature_NoReport_Blocked(t *testing.T) {
+	t.Parallel()
+	ctx := GateContext{
+		EntityID: "FEAT-REVIEWING-001",
+		Branch:   "feature/FEAT-REVIEWING-001",
+		RepoPath: "/repo",
+		Entity: map[string]any{
+			"status": "reviewing",
+		},
+		DocSvc:          &stubDocService{docs: nil},
+		ConflictChecker: func(_, _, _ string) (bool, error) { return false, nil },
+		BranchStatusChecker: func(_ string, _ string, _ git.BranchThresholds) (git.BranchStatus, error) {
+			return git.BranchStatus{}, nil
+		},
+		DefaultBranchDetector: func(_ string) (string, error) { return "main", nil },
+	}
+
+	result := CheckGates(ctx)
+
+	if result.OverallStatus != OverallStatusBlocked {
+		t.Errorf("overall_status: got %q, want %q", result.OverallStatus, OverallStatusBlocked)
+	}
+
+	// ReviewReportExistsGate must be blocked and non-bypassable.
+	nonBypassable := NonBypassableBlockingFailures(result.Gates)
+	if len(nonBypassable) == 0 {
+		t.Fatal("expected at least one non-bypassable blocking failure")
+	}
+	found := false
+	for _, g := range nonBypassable {
+		if g.Name == "review_report_exists" {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Error("review_report_exists gate not in NonBypassableBlockingFailures results")
+	}
+}
+
+func TestCheckGates_ReviewingFeature_WithReport_ReviewGatePasses(t *testing.T) {
+	t.Parallel()
+	ctx := GateContext{
+		EntityID: "FEAT-REVIEWING-002",
+		Branch:   "feature/FEAT-REVIEWING-002",
+		RepoPath: "/repo",
+		Entity: map[string]any{
+			"status":              "reviewing",
+			"verification":        "Reviewed",
+			"verification_status": "passed",
+		},
+		DocSvc: &stubDocService{docs: []DocRecord{
+			{ID: "rpt-1", Type: "report", Owner: "FEAT-REVIEWING-002", Status: "draft"},
+		}},
+		ConflictChecker: func(_, _, _ string) (bool, error) { return false, nil },
+		BranchStatusChecker: func(_ string, _ string, _ git.BranchThresholds) (git.BranchStatus, error) {
+			return git.BranchStatus{}, nil
+		},
+		DefaultBranchDetector: func(_ string) (string, error) { return "main", nil },
+	}
+
+	result := CheckGates(ctx)
+
+	// EntityDoneGate will still block (reviewing != done), but ReviewReportExistsGate must pass.
+	for _, g := range result.Gates {
+		if g.Name == "review_report_exists" {
+			if g.Status != GateStatusPassed {
+				t.Errorf("review_report_exists: got %v, want passed", g.Status)
+			}
+			return
+		}
+	}
+	t.Error("review_report_exists gate not found in results")
+}
+
+func TestCheckGates_ExistingGates_AreBypassable(t *testing.T) {
+	t.Parallel()
+	// Feature in "done" state should have all gates pass except possibly
+	// doc service gates, and all results should have Bypassable: true.
+	ctx := GateContext{
+		EntityID: "FEAT-DONE-001",
+		Branch:   "feature/FEAT-DONE-001",
+		RepoPath: "/repo",
+		Entity: map[string]any{
+			"status":              "done",
+			"verification":        "All tests pass",
+			"verification_status": "passed",
+		},
+		Tasks: []map[string]any{
+			{"id": "TASK-001", "status": "done"},
+		},
+		ConflictChecker: func(_, _, _ string) (bool, error) { return false, nil },
+		BranchStatusChecker: func(_ string, _ string, _ git.BranchThresholds) (git.BranchStatus, error) {
+			return git.BranchStatus{}, nil
+		},
+		DefaultBranchDetector: func(_ string) (string, error) { return "main", nil },
+	}
+
+	result := CheckGates(ctx)
+
+	for _, g := range result.Gates {
+		if g.Name == "review_report_exists" {
+			continue // This gate sets Bypassable: true for non-reviewing features too.
+		}
+		if !g.Bypassable {
+			t.Errorf("gate %q: Bypassable should be true for existing gates (regression)", g.Name)
+		}
+	}
+}
+
+func TestCheckGates_NilDocSvc_ReviewingGateFailsOpen(t *testing.T) {
+	t.Parallel()
+	ctx := GateContext{
+		EntityID: "FEAT-REVIEWING-003",
+		Branch:   "feature/FEAT-REVIEWING-003",
+		RepoPath: "/repo",
+		Entity: map[string]any{
+			"status": "reviewing",
+		},
+		DocSvc:          nil, // no doc service
+		ConflictChecker: func(_, _, _ string) (bool, error) { return false, nil },
+		BranchStatusChecker: func(_ string, _ string, _ git.BranchThresholds) (git.BranchStatus, error) {
+			return git.BranchStatus{}, nil
+		},
+		DefaultBranchDetector: func(_ string) (string, error) { return "main", nil },
+	}
+
+	result := CheckGates(ctx)
+
+	// review_report_exists must pass (fail-open) — should NOT be in non-bypassable list.
+	nonBypassable := NonBypassableBlockingFailures(result.Gates)
+	for _, g := range nonBypassable {
+		if g.Name == "review_report_exists" {
+			t.Error("review_report_exists must fail-open when DocSvc is nil, but it appears as non-bypassable blocking failure")
+		}
+	}
+
+	// The gate result itself must be Pass.
+	for _, g := range result.Gates {
+		if g.Name == "review_report_exists" {
+			if g.Status != GateStatusPassed {
+				t.Errorf("review_report_exists: got %v, want passed (fail-open with nil DocSvc)", g.Status)
+			}
 		}
 	}
 }

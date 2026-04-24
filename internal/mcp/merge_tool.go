@@ -32,21 +32,45 @@ var getPRStatusFunc = getPRStatus
 // loadPRConfigFunc loads the project config for PR gate checks. Package-level variable for test injection.
 var loadPRConfigFunc = config.LoadOrDefault
 
+// mergeDocServiceAdapter adapts *service.DocumentService to merge.DocService.
+type mergeDocServiceAdapter struct {
+	svc *service.DocumentService
+}
+
+func (a *mergeDocServiceAdapter) ListDocuments(filters merge.DocFilters) ([]merge.DocRecord, error) {
+	results, err := a.svc.ListDocuments(service.DocumentFilters{Owner: filters.Owner, Type: filters.Type})
+	if err != nil {
+		return nil, err
+	}
+	records := make([]merge.DocRecord, len(results))
+	for i, r := range results {
+		records[i] = merge.DocRecord{
+			ID:     r.ID,
+			Status: r.Status,
+			Type:   r.Type,
+			Owner:  r.Owner,
+		}
+	}
+	return records, nil
+}
+
 // MergeTool returns the 2.0 consolidated merge tool.
 // It consolidates merge_readiness_check and merge_execute (spec §19.2).
 func MergeTool(
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
+	docSvc *service.DocumentService,
 	repoPath string,
 	thresholds git.BranchThresholds,
 	localConfig *config.LocalConfig,
 ) []server.ServerTool {
-	return []server.ServerTool{mergeTool(worktreeStore, entitySvc, repoPath, thresholds, localConfig)}
+	return []server.ServerTool{mergeTool(worktreeStore, entitySvc, docSvc, repoPath, thresholds, localConfig)}
 }
 
 func mergeTool(
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
+	docSvc *service.DocumentService,
 	repoPath string,
 	thresholds git.BranchThresholds,
 	localConfig *config.LocalConfig,
@@ -92,8 +116,8 @@ func mergeTool(
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		return DispatchAction(ctx, req, map[string]ActionHandler{
-			"check":   mergeCheckAction(worktreeStore, entitySvc, repoPath, thresholds, localConfig),
-			"execute": mergeExecuteAction(worktreeStore, entitySvc, repoPath, thresholds, localConfig),
+			"check":   mergeCheckAction(worktreeStore, entitySvc, docSvc, repoPath, thresholds, localConfig),
+			"execute": mergeExecuteAction(worktreeStore, entitySvc, docSvc, repoPath, thresholds, localConfig),
 		})
 	})
 
@@ -105,6 +129,7 @@ func mergeTool(
 func mergeCheckAction(
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
+	docSvc *service.DocumentService,
 	repoPath string,
 	thresholds git.BranchThresholds,
 	localConfig *config.LocalConfig,
@@ -115,7 +140,7 @@ func mergeCheckAction(
 			return nil, fmt.Errorf("Cannot check merge readiness: entity_id is missing.\n\nTo resolve:\n  Provide entity_id: merge(action: \"check\", entity_id: \"FEAT-...\")")
 		}
 
-		result, err := checkMergeReadiness(ctx, worktreeStore, entitySvc, repoPath, thresholds, localConfig, entityID)
+		result, err := checkMergeReadiness(ctx, worktreeStore, entitySvc, docSvc, repoPath, thresholds, localConfig, entityID)
 		if err != nil {
 			return nil, err
 		}
@@ -129,6 +154,7 @@ func mergeCheckAction(
 func mergeExecuteAction(
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
+	docSvc *service.DocumentService,
 	repoPath string,
 	thresholds git.BranchThresholds,
 	localConfig *config.LocalConfig,
@@ -155,7 +181,7 @@ func mergeExecuteAction(
 			return inlineErr("invalid_parameter", err.Error())
 		}
 
-		result, err := executeMerge(worktreeStore, entitySvc, repoPath, thresholds, localConfig, entityID, override, overrideReason, strategy, deleteBranch)
+		result, err := executeMerge(worktreeStore, entitySvc, docSvc, repoPath, thresholds, localConfig, entityID, override, overrideReason, strategy, deleteBranch)
 		if err != nil {
 			return nil, err
 		}
@@ -175,6 +201,7 @@ func checkMergeReadiness(
 	ctx context.Context,
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
+	docSvc *service.DocumentService,
 	repoPath string,
 	thresholds git.BranchThresholds,
 	localConfig *config.LocalConfig,
@@ -220,6 +247,10 @@ func checkMergeReadiness(
 	}
 
 	// Build gate context
+	var docSvcForGate merge.DocService
+	if docSvc != nil {
+		docSvcForGate = &mergeDocServiceAdapter{svc: docSvc}
+	}
 	gateCtx := merge.GateContext{
 		RepoPath:   repoPath,
 		EntityID:   entityID,
@@ -227,6 +258,7 @@ func checkMergeReadiness(
 		Entity:     entity.State,
 		Tasks:      tasks,
 		Thresholds: thresholds,
+		DocSvc:     docSvcForGate,
 	}
 
 	// Check all gates
@@ -270,6 +302,7 @@ func checkMergeReadiness(
 func executeMerge(
 	worktreeStore *worktree.Store,
 	entitySvc *service.EntityService,
+	docSvc *service.DocumentService,
 	repoPath string,
 	thresholds git.BranchThresholds,
 	localConfig *config.LocalConfig,
@@ -320,6 +353,10 @@ func executeMerge(
 	}
 
 	// Build gate context
+	var docSvcForGate merge.DocService
+	if docSvc != nil {
+		docSvcForGate = &mergeDocServiceAdapter{svc: docSvc}
+	}
 	gateCtx := merge.GateContext{
 		RepoPath:   repoPath,
 		EntityID:   entityID,
@@ -327,19 +364,38 @@ func executeMerge(
 		Entity:     entity.State,
 		Tasks:      tasks,
 		Thresholds: thresholds,
+		DocSvc:     docSvcForGate,
 	}
 
 	// Check all gates
 	gateResult := merge.CheckGates(gateCtx)
 
-	// Check if merge is allowed
-	if gateResult.OverallStatus == merge.OverallStatusBlocked && !override {
-		failures := merge.BlockingFailures(gateResult.Gates)
-		var msgs []string
-		for _, f := range failures {
-			msgs = append(msgs, f.Message)
+	// Check if merge is allowed (FR-008: non-bypassable gates cannot be skipped with override).
+	if gateResult.OverallStatus == merge.OverallStatusBlocked {
+		// Non-bypassable failures always block — even override: true cannot bypass them.
+		nonBypassable := merge.NonBypassableBlockingFailures(gateResult.Gates)
+		if len(nonBypassable) > 0 {
+			return nil, fmt.Errorf(
+				"Cannot merge %s: feature is in 'reviewing' status but no review report is registered.\n\n"+
+					"To resolve:\n"+
+					"  1. Run the review: handoff(task_id: ...) with role: reviewer-conformance (and\n"+
+					"     other reviewer roles per the developing stage binding).\n"+
+					"  2. Register the report: doc(action: register, type: report, owner: %s, ...).\n"+
+					"  3. Retry merge(action: execute, entity_id: %s).\n\n"+
+					"If the feature was reviewed but the report was not registered, register it now.\n"+
+					"This gate cannot be bypassed with override: true — a report must exist.",
+				entityID, entityID, entityID,
+			)
 		}
-		return nil, fmt.Errorf("Cannot merge %s: blocking merge gates failed: %v.\n\nTo resolve:\n  Fix the failing gates shown above, or use override: true with an override_reason to bypass", entityID, msgs)
+
+		if !override {
+			failures := merge.BlockingFailures(gateResult.Gates)
+			var msgs []string
+			for _, f := range failures {
+				msgs = append(msgs, f.Message)
+			}
+			return nil, fmt.Errorf("Cannot merge %s: blocking merge gates failed: %v.\n\nTo resolve:\n  Fix the failing gates shown above, or use override: true with an override_reason to bypass", entityID, msgs)
+		}
 	}
 
 	// Enforce PR gate when require_github_pr is true.

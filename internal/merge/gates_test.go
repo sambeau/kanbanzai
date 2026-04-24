@@ -737,3 +737,143 @@ func TestVerificationPassedGate_None(t *testing.T) {
 		t.Errorf("Message: got %q, want %q", result.Message, wantMsg)
 	}
 }
+
+// ─── ReviewReportExistsGate ───────────────────────────────────────────────────
+
+func TestReviewReportExistsGate_Interface(t *testing.T) {
+	var _ Gate = ReviewReportExistsGate{}
+}
+
+// stubDocService is a test double for merge.DocService.
+type stubDocService struct {
+	docs []DocRecord
+	err  error
+}
+
+func (s *stubDocService) ListDocuments(filters DocFilters) ([]DocRecord, error) {
+	if s.err != nil {
+		return nil, s.err
+	}
+	var out []DocRecord
+	for _, d := range s.docs {
+		if (filters.Owner == "" || d.Owner == filters.Owner) &&
+			(filters.Type == "" || d.Type == filters.Type) {
+			out = append(out, d)
+		}
+	}
+	return out, nil
+}
+
+func TestReviewReportExistsGate_NotReviewing_AlwaysPasses(t *testing.T) {
+	t.Parallel()
+	for _, status := range []string{"developing", "done", "proposed", "specifying", ""} {
+		status := status
+		t.Run("status="+status, func(t *testing.T) {
+			t.Parallel()
+			ctx := GateContext{
+				EntityID: "FEAT-001",
+				Entity:   map[string]any{"status": status},
+				// DocSvc intentionally nil — gate must not call it
+			}
+			result := ReviewReportExistsGate{}.Check(ctx)
+			if result.Status != GateStatusPassed {
+				t.Errorf("status=%q: got %v, want passed", status, result.Status)
+			}
+			if !result.Bypassable {
+				t.Errorf("status=%q: expected Bypassable=true for non-reviewing pass", status)
+			}
+		})
+	}
+}
+
+func TestReviewReportExistsGate_Reviewing_NoReport_Blocked(t *testing.T) {
+	t.Parallel()
+	ctx := GateContext{
+		EntityID: "FEAT-002",
+		Entity:   map[string]any{"status": "reviewing"},
+		DocSvc:   &stubDocService{docs: nil},
+	}
+	result := ReviewReportExistsGate{}.Check(ctx)
+	if result.Status != GateStatusFailed {
+		t.Errorf("got status %v, want failed", result.Status)
+	}
+	if result.Bypassable {
+		t.Error("expected Bypassable=false for blocked result")
+	}
+	if result.Severity != GateSeverityBlocking {
+		t.Errorf("got severity %v, want blocking", result.Severity)
+	}
+}
+
+func TestReviewReportExistsGate_Reviewing_WithDraftReport_Passes(t *testing.T) {
+	t.Parallel()
+	ctx := GateContext{
+		EntityID: "FEAT-003",
+		Entity:   map[string]any{"status": "reviewing"},
+		DocSvc: &stubDocService{docs: []DocRecord{
+			{ID: "doc1", Type: "report", Owner: "FEAT-003", Status: "draft"},
+		}},
+	}
+	result := ReviewReportExistsGate{}.Check(ctx)
+	if result.Status != GateStatusPassed {
+		t.Errorf("got status %v, want passed", result.Status)
+	}
+}
+
+func TestReviewReportExistsGate_Reviewing_WithApprovedReport_Passes(t *testing.T) {
+	t.Parallel()
+	ctx := GateContext{
+		EntityID: "FEAT-004",
+		Entity:   map[string]any{"status": "reviewing"},
+		DocSvc: &stubDocService{docs: []DocRecord{
+			{ID: "doc2", Type: "report", Owner: "FEAT-004", Status: "approved"},
+		}},
+	}
+	result := ReviewReportExistsGate{}.Check(ctx)
+	if result.Status != GateStatusPassed {
+		t.Errorf("got status %v, want passed", result.Status)
+	}
+}
+
+func TestReviewReportExistsGate_DocServiceError_FailsOpen(t *testing.T) {
+	t.Parallel()
+	ctx := GateContext{
+		EntityID: "FEAT-005",
+		Entity:   map[string]any{"status": "reviewing"},
+		DocSvc:   &stubDocService{err: errors.New("service unavailable")},
+	}
+	result := ReviewReportExistsGate{}.Check(ctx)
+	// Fail-open: must pass even when doc service errors.
+	if result.Status != GateStatusPassed {
+		t.Errorf("got status %v, want passed (fail-open)", result.Status)
+	}
+}
+
+func TestReviewReportExistsGate_NilDocService_FailsOpen(t *testing.T) {
+	t.Parallel()
+	ctx := GateContext{
+		EntityID: "FEAT-006",
+		Entity:   map[string]any{"status": "reviewing"},
+		DocSvc:   nil,
+	}
+	result := ReviewReportExistsGate{}.Check(ctx)
+	if result.Status != GateStatusPassed {
+		t.Errorf("got status %v, want passed (fail-open for nil DocSvc)", result.Status)
+	}
+}
+
+func TestNonBypassableBlockingFailures(t *testing.T) {
+	results := []GateResult{
+		{Name: "g1", Status: GateStatusFailed, Severity: GateSeverityBlocking, Bypassable: true},
+		{Name: "g2", Status: GateStatusFailed, Severity: GateSeverityBlocking, Bypassable: false},
+		{Name: "g3", Status: GateStatusPassed, Severity: GateSeverityBlocking, Bypassable: false},
+		{Name: "g4", Status: GateStatusFailed, Severity: GateSeverityWarning, Bypassable: false},
+	}
+	got := NonBypassableBlockingFailures(results)
+	if len(got) != 1 {
+		t.Fatalf("expected 1, got %d: %v", len(got), got)
+	}
+	if got[0].Name != "g2" {
+		t.Errorf("expected g2, got %q", got[0].Name)
+	}
+}

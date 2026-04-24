@@ -2,6 +2,7 @@ package merge
 
 import (
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/sambeau/kanbanzai/internal/git"
@@ -50,6 +51,10 @@ type GateContext struct {
 	// DefaultBranchDetector allows injection of default branch detection for testing.
 	// If nil, uses git.GetDefaultBranch.
 	DefaultBranchDetector func(repoPath string) (string, error)
+
+	// DocSvc provides access to the document store for gate evaluation.
+	// If nil, gates that require it fail open.
+	DocSvc DocService
 }
 
 // TasksCompleteGate checks that all tasks are done or wont_do.
@@ -65,9 +70,10 @@ func (g TasksCompleteGate) Severity() GateSeverity {
 
 func (g TasksCompleteGate) Check(ctx GateContext) GateResult {
 	result := GateResult{
-		Name:     g.Name(),
-		Severity: g.Severity(),
-		Status:   GateStatusPassed,
+		Name:       g.Name(),
+		Severity:   g.Severity(),
+		Status:     GateStatusPassed,
+		Bypassable: true,
 	}
 
 	if len(ctx.Tasks) == 0 {
@@ -119,9 +125,10 @@ func (g VerificationExistsGate) Severity() GateSeverity {
 
 func (g VerificationExistsGate) Check(ctx GateContext) GateResult {
 	result := GateResult{
-		Name:     g.Name(),
-		Severity: g.Severity(),
-		Status:   GateStatusPassed,
+		Name:       g.Name(),
+		Severity:   g.Severity(),
+		Status:     GateStatusPassed,
+		Bypassable: true,
 	}
 
 	verification := toString(ctx.Entity["verification"])
@@ -146,9 +153,10 @@ func (g VerificationPassedGate) Severity() GateSeverity {
 
 func (g VerificationPassedGate) Check(ctx GateContext) GateResult {
 	result := GateResult{
-		Name:     g.Name(),
-		Severity: g.Severity(),
-		Status:   GateStatusPassed,
+		Name:       g.Name(),
+		Severity:   g.Severity(),
+		Status:     GateStatusPassed,
+		Bypassable: true,
 	}
 
 	status := toString(ctx.Entity["verification_status"])
@@ -183,9 +191,10 @@ func (g BranchNotStaleGate) Severity() GateSeverity {
 
 func (g BranchNotStaleGate) Check(ctx GateContext) GateResult {
 	result := GateResult{
-		Name:     g.Name(),
-		Severity: g.Severity(),
-		Status:   GateStatusPassed,
+		Name:       g.Name(),
+		Severity:   g.Severity(),
+		Status:     GateStatusPassed,
+		Bypassable: true,
 	}
 
 	if ctx.Branch == "" {
@@ -244,9 +253,10 @@ func (g NoConflictsGate) Severity() GateSeverity {
 
 func (g NoConflictsGate) Check(ctx GateContext) GateResult {
 	result := GateResult{
-		Name:     g.Name(),
-		Severity: g.Severity(),
-		Status:   GateStatusPassed,
+		Name:       g.Name(),
+		Severity:   g.Severity(),
+		Status:     GateStatusPassed,
+		Bypassable: true,
 	}
 
 	if ctx.Branch == "" {
@@ -313,9 +323,10 @@ func (g HealthCheckCleanGate) Check(ctx GateContext) GateResult {
 	// TODO: wire up entity-scoped health check results here.
 	// Placeholder: always passes — see comment on HealthCheckCleanGate.
 	return GateResult{
-		Name:     g.Name(),
-		Severity: g.Severity(),
-		Status:   GateStatusPassed,
+		Name:       g.Name(),
+		Severity:   g.Severity(),
+		Status:     GateStatusPassed,
+		Bypassable: true,
 	}
 }
 
@@ -336,9 +347,10 @@ func (g EntityDoneGate) Severity() GateSeverity {
 
 func (g EntityDoneGate) Check(ctx GateContext) GateResult {
 	result := GateResult{
-		Name:     g.Name(),
-		Severity: g.Severity(),
-		Status:   GateStatusPassed,
+		Name:       g.Name(),
+		Severity:   g.Severity(),
+		Status:     GateStatusPassed,
+		Bypassable: true,
 	}
 
 	status := toString(ctx.Entity["status"])
@@ -365,6 +377,72 @@ func (g EntityDoneGate) Check(ctx GateContext) GateResult {
 	}
 
 	return result
+}
+
+// ReviewReportExistsGate checks that a feature in reviewing status has at least
+// one registered report document. This gate is non-bypassable: override: true
+// cannot skip it (FR-007, FR-008 in spec FEAT-01KPXGVQY3KQC).
+type ReviewReportExistsGate struct{}
+
+func (g ReviewReportExistsGate) Name() string {
+	return "review_report_exists"
+}
+
+func (g ReviewReportExistsGate) Severity() GateSeverity {
+	return GateSeverityBlocking
+}
+
+func (g ReviewReportExistsGate) Check(ctx GateContext) GateResult {
+	// Only activate for reviewing features (FR-002).
+	status := toString(ctx.Entity["status"])
+	if status != "reviewing" {
+		return GateResult{
+			Name:       g.Name(),
+			Severity:   g.Severity(),
+			Status:     GateStatusPassed,
+			Bypassable: true,
+		}
+	}
+
+	// Fail-open: no doc service → pass with a log warning (FR-011, FR-012).
+	if ctx.DocSvc == nil {
+		log.Printf("[merge gate] WARNING: ReviewReportExistsGate: DocSvc is nil, failing open for %s", ctx.EntityID)
+		return GateResult{
+			Name:       g.Name(),
+			Severity:   g.Severity(),
+			Status:     GateStatusPassed,
+			Bypassable: true,
+		}
+	}
+
+	docs, err := ctx.DocSvc.ListDocuments(DocFilters{Owner: ctx.EntityID, Type: "report"})
+	if err != nil {
+		// Fail-open on service error (FR-011, FR-012).
+		log.Printf("[merge gate] WARNING: ReviewReportExistsGate: document service error for %s: %v — failing open", ctx.EntityID, err)
+		return GateResult{
+			Name:       g.Name(),
+			Severity:   g.Severity(),
+			Status:     GateStatusPassed,
+			Bypassable: true,
+		}
+	}
+
+	if len(docs) == 0 {
+		return GateResult{
+			Name:       g.Name(),
+			Severity:   g.Severity(),
+			Status:     GateStatusFailed,
+			Bypassable: false, // non-bypassable (FR-007)
+			Message:    fmt.Sprintf("feature %s is in 'reviewing' status but no review report is registered", ctx.EntityID),
+		}
+	}
+
+	return GateResult{
+		Name:       g.Name(),
+		Severity:   g.Severity(),
+		Status:     GateStatusPassed,
+		Bypassable: true,
+	}
 }
 
 // toString extracts a string from an any value, returning "" if nil or not a string.

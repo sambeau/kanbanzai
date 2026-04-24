@@ -34,6 +34,11 @@ type GateResult struct {
 	// Message provides a human-readable explanation.
 	// Empty if the gate passed.
 	Message string
+
+	// Bypassable indicates whether override: true can bypass this gate when it
+	// returns a blocking failure. All existing gates set this to true.
+	// Only ReviewReportExistsGate sets it to false.
+	Bypassable bool
 }
 
 // GateCheckResult is the combined result of all gate checks.
@@ -60,3 +65,22 @@ const OverallStatusWarnings = "warnings"
 
 // OverallStatusBlocked indicates at least one blocking gate failed.
 const OverallStatusBlocked = "blocked"
+
+// DocService is the minimal interface for document store access during gate evaluation.
+type DocService interface {
+	ListDocuments(filters DocFilters) ([]DocRecord, error)
+}
+
+// DocRecord is a minimal document record for gate evaluation.
+type DocRecord struct {
+	ID     string
+	Status string
+	Type   string
+	Owner  string
+}
+
+// DocFilters specifies filters for listing documents.
+type DocFilters struct {
+	Owner string
+	Type  string
+}
