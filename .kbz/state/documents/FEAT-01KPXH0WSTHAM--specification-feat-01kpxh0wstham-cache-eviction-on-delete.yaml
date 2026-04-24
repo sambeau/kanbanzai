@@ -2,11 +2,11 @@ id: FEAT-01KPXH0WSTHAM/specification-feat-01kpxh0wstham-cache-eviction-on-delete
 path: work/specs/feat-01kpxh0wstham-cache-eviction-on-delete.md
 type: specification
 title: "Specification: Cache Eviction on Entity Delete (FEAT-01KPXH0WSTHAM)"
-status: approved
+status: draft
 owner: FEAT-01KPXH0WSTHAM
 approved_by: sambeau
 approved_at: "2026-04-23T16:33:23Z"
-content_hash: 0e69cf7bbbfdba91c6cc6d4217319c4c261f235a864785e1f0c34545ec12b47e
+content_hash: 2e91ab151ba8dd12c6f9cdd04070ae98e12566b50be7d35480c3ed3ad6732969
 created: "2026-04-23T16:29:50Z"
 created_by: sambeau
-updated: "2026-04-23T16:33:23Z"
+updated: "2026-04-24T00:38:44Z"

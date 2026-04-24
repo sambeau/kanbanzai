@@ -1,0 +1,6 @@
+id: TASK-01KPYES6NYDZC
+parent_feature: FEAT-01KPXGVQY3KQC
+slug: merge-gate-review-report-add-bypassable-bool-to-merge-gateresult
+name: "Add `Bypassable bool` to `merge.GateResult`"
+summary: "Add `Bypassable bool` to `merge.GateResult`"
+status: queued
