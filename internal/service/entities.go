@@ -499,6 +499,24 @@ func (s *EntityService) Get(entityType, entityID, slug string) (GetResult, error
 		return GetResult{}, fmt.Errorf("entity id is required")
 	}
 	if slug == "" {
+		// Cache fast path: when cache is warm for this type, resolve slug without
+		// a directory scan. Fall through to ResolvePrefix on miss or Load error.
+		if s.cache != nil && s.cache.IsWarm(entityType) {
+			if cachedSlug, _, found := s.cache.LookupByID(entityType, entityID); found {
+				record, err := s.store.Load(entityType, entityID, cachedSlug)
+				if err == nil {
+					return GetResult{
+						Type:  record.Type,
+						ID:    record.ID,
+						Slug:  record.Slug,
+						Path:  filepath.Join(s.root, entityDirectory(record.Type), entityFileName(record.ID, record.Slug)),
+						State: record.Fields,
+					}, nil
+				}
+				// Load failed (stale cache entry) — fall through to ResolvePrefix
+			}
+			// Cache miss — fall through to ResolvePrefix
+		}
 		resolvedID, resolvedSlug, err := s.ResolvePrefix(entityType, entityID)
 		if err != nil {
 			return GetResult{}, err
