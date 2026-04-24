@@ -3,7 +3,19 @@ parent_feature: FEAT-01KPXGVQY3KQC
 slug: thread-docsvc-enforce-non-bypassable-override
 name: Thread docSvc and enforce non-bypassable override
 summary: Thread docSvc through the merge tool and update override logic to reject override true when a blocking gate has Bypassable false.
-status: ready
+status: done
 depends_on:
   - TASK-01KPYEVMHSPW2
   - TASK-01KPYEVMPZ9TA
+files_planned:
+  - internal/mcp/merge_tool.go
+  - internal/mcp/server.go
+  - internal/mcp/merge_tool_test.go
+  - internal/mcp/merge_tool_pr_gate_test.go
+completed: "2026-04-24T01:35:22Z"
+claimed_at: "2026-04-24T01:34:24Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-24T01:34:24Z"
+dispatched_by: sambeau
+completion_summary: "Added docSvc *service.DocumentService parameter to MergeTool/mergeTool/mergeCheckAction/mergeExecuteAction/checkMergeReadiness/executeMerge. Added mergeDocServiceAdapter wrapping service.DocumentService. Updated override logic in executeMerge to check NonBypassableBlockingFailures before bypassable gate override. Updated server.go to pass docRecordSvc. Updated test files to pass nil for docSvc."
+verification: go build ./... passes; go test ./internal/mcp/... -run TestMerge passes

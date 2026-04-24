@@ -3,7 +3,16 @@ parent_feature: FEAT-01KPXGVQY3KQC
 slug: unit-tests-review-report-exists-gate
 name: Unit tests for ReviewReportExistsGate
 summary: "Unit tests covering all AC scenarios: blocked with and without override, passes on draft and approved report, skipped when not reviewing, fail-open."
-status: ready
+status: done
 depends_on:
   - TASK-01KPYEVMMEA35
   - TASK-01KPYEVMPZ9TA
+files_planned:
+  - internal/merge/gates_test.go
+completed: "2026-04-24T01:35:22Z"
+claimed_at: "2026-04-24T01:34:24Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-24T01:34:24Z"
+dispatched_by: sambeau
+completion_summary: "Added 8 unit tests for ReviewReportExistsGate (Interface check, not-reviewing always passes for 5 statuses, blocked when no report, passes on draft report, passes on approved report, fails open on service error, fails open on nil DocSvc) plus TestNonBypassableBlockingFailures. stubDocService test double defined in test file."
+verification: go test ./internal/merge/... -run TestReviewReport passes; TestNonBypassable passes
