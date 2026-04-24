@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPXGW5BCGY4
 slug: wire-orphan-check-plan
 name: Wire orphaned reviewing check into synthesisePlan
 summary: "Wire OrphanedReviewingFeatureCheck into synthesisePlan for plan-scope status() calls, reusing docsPerFeature."
-status: queued
+status: not-planned
