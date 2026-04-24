@@ -2,7 +2,9 @@ id: WT-01KPYG77ZMK3N
 entity_id: FEAT-01KPXH0WSTHAM
 branch: feature/FEAT-01KPXH0WSTHAM-cache-eviction-on-delete
 path: .worktrees/FEAT-01KPXH0WSTHAM-cache-eviction-on-delete
-status: active
+status: merged
 created: "2026-04-24T01:03:44Z"
 created_by: sambeau
+merged_at: "2026-04-24T11:08:08Z"
+cleanup_after: "2026-05-01T11:08:08Z"
 graph_project: Users-samphillips-Dev-kanbanzai
