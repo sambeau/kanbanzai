@@ -3,8 +3,15 @@ parent_feature: FEAT-01KPXE8T8QWRB
 slug: extend-branch-lookup-created-at
 name: Extend BranchLookup with GetBranchCreatedAt
 summary: "Add GetBranchCreatedAt(entityID string) (time.Time, error) to the service.BranchLookup interface in internal/service/conflict.go, and implement it on worktreeBranchLookup in internal/mcp/server.go. The implementation reads the worktree record's creation timestamp via worktree.Store.GetByEntityID. Also add a mock implementation of the new method to the test helpers for use by T2."
-status: active
+status: done
+files_planned:
+  - internal/service/conflict.go
+  - internal/mcp/server.go
+  - internal/service/conflict_test.go
+completed: "2026-04-24T11:23:16Z"
 claimed_at: "2026-04-24T11:12:51Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-24T11:12:51Z"
 dispatched_by: sambeau
+completion_summary: "Added GetBranchCreatedAt to BranchLookup interface in conflict.go (with time import). Implemented on worktreeBranchLookup in server.go via worktree.Store.GetByEntityID — returns record.Created, worktree.ErrNotFound when no active worktree, or store error. Added mockBranchLookup struct with all three BranchLookup methods to conflict_test.go for T2 use."
+verification: go test -count=1 ./internal/service/... passed (1.283s). go build ./internal/service/... ./internal/mcp/... clean. Pre-existing flaky test in mcp package (SQLite lock contention) is unrelated to these changes.
