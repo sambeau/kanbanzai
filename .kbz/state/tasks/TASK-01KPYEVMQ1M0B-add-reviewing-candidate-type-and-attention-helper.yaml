@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPXGW5BCGY4
 slug: add-reviewing-candidate-type-and-attention-helper
 name: Add reviewingCandidate type and attention helper
 summary: Add the reviewingCandidate struct and generateOrphanedReviewingAttention helper that queries the doc store and builds the attention item.
-status: active
+status: done
+files_planned:
+  - internal/mcp/status_tool.go
+completed: "2026-04-24T01:29:36Z"
 claimed_at: "2026-04-24T00:51:31Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-24T00:51:31Z"
 dispatched_by: sambeau
+completion_summary: "Added reviewingCandidate struct and generateOrphanedReviewingAttention helper to status_tool.go. Helper queries docSvc for report documents per candidate, emits warning AttentionItem for each feature with no report. Fail-open on nil docSvc or service errors."
+verification: go test ./internal/mcp/... -run TestGenerateOrphaned passes

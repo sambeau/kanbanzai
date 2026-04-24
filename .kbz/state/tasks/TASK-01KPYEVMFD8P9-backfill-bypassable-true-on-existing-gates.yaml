@@ -3,6 +3,6 @@ parent_feature: FEAT-01KPXGVQY3KQC
 slug: backfill-bypassable-true-on-existing-gates
 name: Backfill Bypassable true on existing gates
 summary: "Set Bypassable: true on all existing gate conditions so their override behaviour is unchanged."
-status: queued
+status: ready
 depends_on:
   - TASK-01KPYEVMD5EMV

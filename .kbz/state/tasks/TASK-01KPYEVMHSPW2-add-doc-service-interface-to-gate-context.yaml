@@ -3,8 +3,14 @@ parent_feature: FEAT-01KPXGVQY3KQC
 slug: add-doc-service-interface-to-gate-context
 name: Add DocService interface to GateContext
 summary: Add a DocService interface and DocSvc field to GateContext so gates can query the document store.
-status: active
+status: done
+files_planned:
+  - internal/merge/gate.go
+  - internal/merge/gates.go
+completed: "2026-04-24T01:29:36Z"
 claimed_at: "2026-04-24T00:51:31Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-24T00:51:31Z"
 dispatched_by: sambeau
+completion_summary: "Added DocService interface, DocRecord, DocFilters types to gate.go; added DocSvc DocService field to GateContext in gates.go so gates can query the document store."
+verification: go test ./internal/merge/... passes

@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPXGVQY3KQC
 slug: add-bypassable-bool-to-gate-result
 name: Add Bypassable bool to GateResult
 summary: Add a Bypassable bool field to the gate result type used across all gate conditions.
-status: active
+status: done
+files_planned:
+  - internal/merge/gate.go
+completed: "2026-04-24T01:29:36Z"
 claimed_at: "2026-04-24T00:51:31Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-24T00:51:31Z"
 dispatched_by: sambeau
+completion_summary: "Added Bypassable bool field to GateResult in internal/merge/gate.go (FR-006, NFR-002). Zero value false is overridden by backfill in T3."
+verification: go test ./internal/merge/... passes

@@ -3,6 +3,6 @@ parent_feature: FEAT-01KPXGW5BCGY4
 slug: wire-orphaned-check-into-plan-scope
 name: Wire orphaned check into plan scope status
 summary: Wire OrphanedReviewingFeatureCheck into synthesisePlan to surface warnings at plan scope.
-status: queued
+status: ready
 depends_on:
   - TASK-01KPYEVMQ1M0B

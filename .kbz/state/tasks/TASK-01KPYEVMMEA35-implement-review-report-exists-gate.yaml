@@ -3,7 +3,7 @@ parent_feature: FEAT-01KPXGVQY3KQC
 slug: implement-review-report-exists-gate
 name: Implement ReviewReportExistsGate
 summary: "Implement ReviewReportExistsGate: queries docSvc for report documents owned by the feature, returns Blocked with Bypassable false if none exist, Pass otherwise. Fail-open on service errors."
-status: queued
+status: ready
 depends_on:
   - TASK-01KPYEVMD5EMV
   - TASK-01KPYEVMHSPW2
