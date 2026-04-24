@@ -1,0 +1,6 @@
+id: TASK-01KPYEWFR13ZG
+parent_feature: FEAT-01KPXGVQY3KQC
+slug: add-docservice-to-gatecontext
+name: Add DocService interface and DocSvc to GateContext
+summary: Add DocService interface and DocSvc field to GateContext so ReviewReportExistsGate can call docRecordSvc.List().
+status: queued
