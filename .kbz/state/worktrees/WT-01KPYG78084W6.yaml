@@ -2,7 +2,9 @@ id: WT-01KPYG78084W6
 entity_id: FEAT-01KPXGZXX8BJZ
 branch: feature/FEAT-01KPXGZXX8BJZ-cache-warm-up-server-start
 path: .worktrees/FEAT-01KPXGZXX8BJZ-cache-warm-up-server-start
-status: active
+status: merged
 created: "2026-04-24T01:03:44Z"
 created_by: sambeau
+merged_at: "2026-04-24T11:09:04Z"
+cleanup_after: "2026-05-01T11:09:04Z"
 graph_project: Users-samphillips-Dev-kanbanzai
