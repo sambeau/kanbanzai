@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPXE8T8QWRB
 slug: extend-branch-lookup-created-at
 name: Extend BranchLookup with GetBranchCreatedAt
 summary: "Add GetBranchCreatedAt(entityID string) (time.Time, error) to the service.BranchLookup interface in internal/service/conflict.go, and implement it on worktreeBranchLookup in internal/mcp/server.go. The implementation reads the worktree record's creation timestamp via worktree.Store.GetByEntityID. Also add a mock implementation of the new method to the test helpers for use by T2."
-status: queued
+status: ready
