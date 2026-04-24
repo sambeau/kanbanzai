@@ -2,7 +2,7 @@ id: FEAT-01KPX5CVYWDFF
 slug: pending-register-nudge-enrichment
 name: Pending and Register Nudge Response Enrichment
 parent: P32-doc-intel-classification-pipeline-hardening
-status: reviewing
+status: done
 review_cycle: 2
 summary: "Add section_count (or small/medium/large bucket) to the doc_intel pending response so agents can right-size batches without trial-and-error. Include content_hash and section outline in the doc register classification_nudge payload, reducing the classify-on-register workflow from 3 tool calls (register → guide → classify) to 2 (register → classify)."
 spec: FEAT-01KPX5CVYWDFF/specification-p32-pending-register-nudge-enrichment
