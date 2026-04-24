@@ -1,7 +1,7 @@
 id: BUG-01KN87EEF2G49
 slug: build-info-race-detected
 name: Race detected failures in build info package
-status: reproduced
+status: planned
 severity: high
 priority: high
 type: implementation-defect
