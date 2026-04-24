@@ -4,3 +4,6 @@ slug: unit-tests-review-report-exists-gate
 name: Unit tests for ReviewReportExistsGate
 summary: "Unit tests covering all AC scenarios: blocked with and without override, passes on draft and approved report, skipped when not reviewing, fail-open."
 status: queued
+depends_on:
+  - TASK-01KPYEVMMEA35
+  - TASK-01KPYEVMPZ9TA
