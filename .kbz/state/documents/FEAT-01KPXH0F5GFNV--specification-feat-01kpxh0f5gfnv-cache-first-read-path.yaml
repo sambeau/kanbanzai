@@ -2,11 +2,11 @@ id: FEAT-01KPXH0F5GFNV/specification-feat-01kpxh0f5gfnv-cache-first-read-path
 path: work/specs/feat-01kpxh0f5gfnv-cache-first-read-path.md
 type: specification
 title: "Specification: Cache-First Read Path in EntityService (FEAT-01KPXH0F5GFNV)"
-status: approved
+status: draft
 owner: FEAT-01KPXH0F5GFNV
 approved_by: sambeau
 approved_at: "2026-04-23T16:33:23Z"
-content_hash: 8222e6c3c9c60896c5312ffb92fd1ece1bed257cb1f99b4eaf5f4ae91dc5d8d6
+content_hash: ed0d9034677c0995832639a11f48b9f637b44de60421bd2765d56b2d51320452
 created: "2026-04-23T16:25:36Z"
 created_by: sambeau
-updated: "2026-04-23T16:33:23Z"
+updated: "2026-04-24T00:43:05Z"
