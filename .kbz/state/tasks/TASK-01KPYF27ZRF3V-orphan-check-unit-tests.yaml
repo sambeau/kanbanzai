@@ -1,0 +1,6 @@
+id: TASK-01KPYF27ZRF3V
+parent_feature: FEAT-01KPXGW5BCGY4
+slug: orphan-check-unit-tests
+name: Unit tests for all acceptance criteria
+summary: "Write unit tests in status_tool_test.go covering AC-001 through AC-008: all three status scopes, draft report satisfies check, early exit, fail-open, multiple orphans, and N List() calls for N reviewing features."
+status: queued
