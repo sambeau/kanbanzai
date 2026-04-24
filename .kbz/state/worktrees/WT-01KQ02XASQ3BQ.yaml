@@ -1,0 +1,7 @@
+id: WT-01KQ02XASQ3BQ
+entity_id: BUG-01KN87EEF2G49
+branch: bug/BUG-01KN87EEF2G49-build-info-race-detected
+path: .worktrees/BUG-01KN87EEF2G49-build-info-race-detected
+status: active
+created: "2026-04-24T15:49:37Z"
+created_by: sambeau
