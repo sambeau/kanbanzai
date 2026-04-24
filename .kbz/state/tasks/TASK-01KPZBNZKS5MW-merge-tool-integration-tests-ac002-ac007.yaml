@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPXGVQY3KQC
 slug: merge-tool-integration-tests-ac002-ac007
 name: Add merge_tool integration tests for AC-002 and AC-007
 summary: "Add two integration tests in merge_tool_test.go covering the gaps identified in review NB-1: (1) TestExecuteMerge_ReviewingFeature_NoReport_OverrideRejected — verifies that executeMerge with override: true is rejected when ReviewReportExistsGate blocks (AC-002); (2) TestExecuteMerge_ReviewingFeature_DocServiceError_FailsOpen — verifies that executeMerge passes when the document service returns an error while the feature is in reviewing status (AC-007). Both tests require a stub DocumentService and a feature entity fixture in reviewing status. No production code changes needed."
-status: queued
+status: not-planned
