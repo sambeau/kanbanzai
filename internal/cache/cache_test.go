@@ -555,3 +555,65 @@ func TestRebuild_ClearsOldData(t *testing.T) {
 		t.Errorf("%s should exist after rebuild", planID3)
 	}
 }
+
+func TestIsWarm_FalseBeforeUpsert(t *testing.T) {
+	c := openTestCache(t)
+
+	if c.IsWarm("task") {
+		t.Error("IsWarm(\"task\") = true, want false for new cache")
+	}
+}
+
+func TestIsWarm_TrueAfterUpsert(t *testing.T) {
+	c := openTestCache(t)
+
+	if err := c.Upsert(EntityRow{
+		EntityType: "task",
+		ID:         testutil.TestTaskID,
+		Slug:       "my-task",
+		FieldsJSON: `{}`,
+	}); err != nil {
+		t.Fatalf("upsert: %v", err)
+	}
+
+	if !c.IsWarm("task") {
+		t.Error("IsWarm(\"task\") = false, want true after Upsert")
+	}
+}
+
+func TestIsWarm_TrueAfterRebuild(t *testing.T) {
+	c := openTestCache(t)
+
+	_, err := c.Rebuild([]RebuildRecord{
+		{
+			EntityType: "task",
+			ID:         testutil.TestTaskID,
+			Slug:       "my-task",
+			Fields:     map[string]any{"id": testutil.TestTaskID},
+		},
+	})
+	if err != nil {
+		t.Fatalf("rebuild: %v", err)
+	}
+
+	if !c.IsWarm("task") {
+		t.Error("IsWarm(\"task\") = false, want true after Rebuild")
+	}
+}
+
+func TestIsWarm_FalseForUnseenType(t *testing.T) {
+	c := openTestCache(t)
+
+	if err := c.Upsert(EntityRow{
+		EntityType: "task",
+		ID:         testutil.TestTaskID,
+		Slug:       "my-task",
+		FieldsJSON: `{}`,
+	}); err != nil {
+		t.Fatalf("upsert: %v", err)
+	}
+
+	if c.IsWarm("feature") {
+		t.Error("IsWarm(\"feature\") = true, want false for unseen type")
+	}
+}

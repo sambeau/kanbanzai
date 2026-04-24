@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"sort"
@@ -150,6 +151,9 @@ func (s *EntityService) RebuildCache() (int, error) {
 	}
 
 	var records []cache.RebuildRecord
+	// plan is intentionally excluded: EntityService.List("plan") is unsupported
+	// because plan files use a slug-free naming convention ({id}.yaml) that the
+	// generic load path cannot handle. Plans are managed by a separate plan service.
 	for _, kind := range []string{
 		string(model.EntityKindFeature),
 		string(model.EntityKindTask),
@@ -499,6 +503,25 @@ func (s *EntityService) Get(entityType, entityID, slug string) (GetResult, error
 		return GetResult{}, fmt.Errorf("entity id is required")
 	}
 	if slug == "" {
+		// Cache fast path: when cache is warm for this type, resolve slug without
+		// a directory scan. Fall through to ResolvePrefix on miss or Load error.
+		if s.cache != nil && s.cache.IsWarm(entityType) {
+			if cachedSlug, _, found := s.cache.LookupByID(entityType, entityID); found {
+				record, err := s.store.Load(entityType, entityID, cachedSlug)
+				if err == nil {
+					return GetResult{
+						Type:  record.Type,
+						ID:    record.ID,
+						Slug:  record.Slug,
+						Path:  filepath.Join(s.root, entityDirectory(record.Type), entityFileName(record.ID, record.Slug)),
+						State: record.Fields,
+					}, nil
+				}
+				// Load failed (stale cache entry) — fall through to ResolvePrefix
+				log.Printf("[entity] cache hit but Load failed for %s/%s (falling back): %v", entityType, entityID, err)
+			}
+			// Cache miss — fall through to ResolvePrefix
+		}
 		resolvedID, resolvedSlug, err := s.ResolvePrefix(entityType, entityID)
 		if err != nil {
 			return GetResult{}, err
@@ -528,6 +551,32 @@ func (s *EntityService) List(entityType string) ([]ListResult, error) {
 	entityType = strings.ToLower(strings.TrimSpace(entityType))
 	if entityType == "" {
 		return nil, fmt.Errorf("entity type is required")
+	}
+
+	// Cache fast path: when cache is warm for this type, serve from SQLite
+	// instead of scanning the filesystem. Corrupt fields_json returns an error;
+	// ListByType error falls through to filepath.Glob.
+	if s.cache != nil && s.cache.IsWarm(entityType) {
+		rows, err := s.cache.ListByType(entityType)
+		if err == nil {
+			results := make([]ListResult, 0, len(rows))
+			for _, row := range rows {
+				var fields map[string]any
+				if err := json.Unmarshal([]byte(row.FieldsJSON), &fields); err != nil {
+					return nil, fmt.Errorf("list %s: corrupt cache entry for %s: %w", entityType, row.ID, err)
+				}
+				results = append(results, ListResult{
+					Type:  row.EntityType,
+					ID:    row.ID,
+					Slug:  row.Slug,
+					Path:  row.FilePath,
+					State: fields,
+				})
+			}
+			return results, nil
+		}
+		// ListByType error — fall through to filesystem path
+		log.Printf("[entity] cache ListByType error for %s (falling back): %v", entityType, err)
 	}
 
 	dir := filepath.Join(s.root, entityDirectory(entityType))

@@ -37,6 +37,7 @@ type EntityRow struct {
 type Cache struct {
 	db   *sql.DB
 	path string
+	warm map[string]bool
 }
 
 // Open opens or creates a cache database at the given directory.
@@ -58,7 +59,7 @@ func Open(cacheDir string) (*Cache, error) {
 		return nil, fmt.Errorf("set WAL mode: %w", err)
 	}
 
-	c := &Cache{db: db, path: dbPath}
+	c := &Cache{db: db, path: dbPath, warm: make(map[string]bool)}
 	if err := c.ensureSchema(); err != nil {
 		db.Close()
 		return nil, err
@@ -78,6 +79,13 @@ func (c *Cache) Close() error {
 // Path returns the path to the cache database file.
 func (c *Cache) Path() string {
 	return c.path
+}
+
+// IsWarm reports whether the given entity type has been populated in the cache
+// during this process session (via Upsert or Rebuild). Returns false for any
+// type not yet seen, even if the SQLite file contains rows from a prior session.
+func (c *Cache) IsWarm(entityType string) bool {
+	return c.warm[entityType]
 }
 
 func (c *Cache) ensureSchema() error {
@@ -136,6 +144,7 @@ ON CONFLICT(entity_type, id) DO UPDATE SET
 	if err != nil {
 		return fmt.Errorf("upsert entity %s %s: %w", row.EntityType, row.ID, err)
 	}
+	c.warm[row.EntityType] = true
 	return nil
 }
 
@@ -258,6 +267,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 	defer stmt.Close()
 
 	count := 0
+	seenTypes := make(map[string]bool)
 	for _, rec := range records {
 		status := stringFromFields(rec.Fields, "status")
 		title := stringFromFields(rec.Fields, "title")
@@ -276,11 +286,16 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 		); err != nil {
 			return count, fmt.Errorf("insert %s %s: %w", rec.EntityType, rec.ID, err)
 		}
+		seenTypes[rec.EntityType] = true
 		count++
 	}
 
 	if err := tx.Commit(); err != nil {
 		return 0, fmt.Errorf("commit rebuild: %w", err)
+	}
+
+	for entityType := range seenTypes {
+		c.warm[entityType] = true
 	}
 
 	return count, nil
