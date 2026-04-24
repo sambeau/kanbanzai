@@ -1,0 +1,6 @@
+id: TASK-01KPYEVMSK63Y
+parent_feature: FEAT-01KPXGVQY3KQC
+slug: thread-docsvc-enforce-non-bypassable-override
+name: Thread docSvc and enforce non-bypassable override
+summary: Thread docSvc through the merge tool and update override logic to reject override true when a blocking gate has Bypassable false.
+status: queued

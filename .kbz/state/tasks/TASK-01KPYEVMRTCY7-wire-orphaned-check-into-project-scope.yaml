@@ -1,0 +1,6 @@
+id: TASK-01KPYEVMRTCY7
+parent_feature: FEAT-01KPXGW5BCGY4
+slug: wire-orphaned-check-into-project-scope
+name: Wire orphaned check into project scope status
+summary: Wire OrphanedReviewingFeatureCheck into synthesiseProject to surface warnings at project scope.
+status: queued
