@@ -1,0 +1,6 @@
+id: TASK-01KPYF4V0SQQS
+parent_feature: FEAT-01KPXGVQY3KQC
+slug: thread-docsvc-merge-tool
+name: Thread docSvc through merge tool
+summary: "Thread docSvc through merge_tool.go and server.go; enforce non-bypassable override rejection when gate result has Bypassable: false and override: true is set."
+status: queued
