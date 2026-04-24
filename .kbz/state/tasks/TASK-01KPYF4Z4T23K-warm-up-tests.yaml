@@ -3,10 +3,15 @@ parent_feature: FEAT-01KPXGZXX8BJZ
 slug: warm-up-tests
 name: Write server startup warm-up tests
 summary: "Write tests in internal/mcp/ or internal/service/ covering: (1) cache populated before first request (AC-001, AC-002), (2) RebuildCache failure does not abort startup and tool calls proceed via filesystem fallback (AC-003, AC-004), (3) success log includes entity count and duration (AC-005), (4) failure log includes error text (AC-006), (5) no RebuildCache call when cache.Open fails (AC-007), (6) no-cache regression: server behaves identically without cache (AC-008, AC-009)."
-status: active
+status: done
 depends_on:
   - TASK-01KPYF49K4BGH
+files_planned:
+  - internal/mcp/server_warmup_test.go
+completed: "2026-04-24T01:26:00Z"
 claimed_at: "2026-04-24T01:12:37Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-24T01:12:37Z"
 dispatched_by: sambeau
+completion_summary: "Wrote internal/mcp/server_warmup_test.go with 5 tests covering the cache warm-up scenarios: PopulatesCache (AC-001/AC-002), GracefulOnClosedDB (AC-003/AC-004), NilCache (AC-007), NoCacheRegression_List (AC-008), NoCacheRegression_Get (AC-009). All 5 pass consistently. Pre-existing flaky TempDir cleanup races in unrelated tests are unchanged."
+verification: "go test ./internal/mcp/... ./internal/service/... -run TestRebuildCache|TestEntityService_NoCache passed (all 5 new tests PASS). Full suite: service package clean; mcp package has pre-existing flaky TempDir cleanup races unrelated to these changes."

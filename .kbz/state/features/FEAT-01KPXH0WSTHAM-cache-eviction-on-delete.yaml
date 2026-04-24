@@ -8,3 +8,5 @@ spec: FEAT-01KPXH0WSTHAM/specification-feat-01kpxh0wstham-cache-eviction-on-dele
 dev_plan: FEAT-01KPXH0WSTHAM/dev-plan-feat-01kpxh0wstham-cache-eviction-on-delete
 created: "2026-04-23T15:58:30Z"
 created_by: sambeau
+verification: "TASK-01KPYF4EVVC8D: go test ./internal/service/... passed (all existing tests + 3 new cache tests)\nTASK-01KPYF54WNPME: go test ./internal/service/... passed"
+verification_status: passed
