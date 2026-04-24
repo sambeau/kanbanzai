@@ -25,9 +25,11 @@ func setupDocToolTest(t *testing.T) *docToolEnv {
 	stateRoot := t.TempDir()
 	repoRoot := t.TempDir()
 	indexRoot := t.TempDir()
+	intelSvc := service.NewIntelligenceService(indexRoot, repoRoot)
+	t.Cleanup(func() { _ = intelSvc.Close() })
 	return &docToolEnv{
 		docSvc:   service.NewDocumentService(stateRoot, repoRoot),
-		intelSvc: service.NewIntelligenceService(indexRoot, repoRoot),
+		intelSvc: intelSvc,
 		repoRoot: repoRoot,
 	}
 }

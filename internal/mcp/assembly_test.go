@@ -966,6 +966,7 @@ func TestAsmLoadDocumentPointers_EmptyKnowledge(t *testing.T) {
 	repoRoot := t.TempDir()
 	indexRoot := filepath.Join(t.TempDir(), "index")
 	svc := service.NewIntelligenceService(indexRoot, repoRoot)
+	t.Cleanup(func() { _ = svc.Close() })
 
 	got := asmLoadDocumentPointers(svc, nil)
 	if got != nil {
@@ -984,6 +985,7 @@ func TestAsmLoadDocumentPointers_NonEntityScope(t *testing.T) {
 	repoRoot := t.TempDir()
 	indexRoot := filepath.Join(t.TempDir(), "index")
 	svc := service.NewIntelligenceService(indexRoot, repoRoot)
+	t.Cleanup(func() { _ = svc.Close() })
 
 	knowledge := []asmKnowledgeEntry{
 		{topic: "t1", content: "c1", scope: "project"},
@@ -1025,6 +1027,7 @@ func TestAsmLoadDocumentPointers_EntityScopeNoIndex(t *testing.T) {
 	repoRoot := t.TempDir()
 	indexRoot := filepath.Join(t.TempDir(), "index")
 	svc := service.NewIntelligenceService(indexRoot, repoRoot)
+	t.Cleanup(func() { _ = svc.Close() })
 
 	knowledge := []asmKnowledgeEntry{
 		{topic: "t1", content: "c1", scope: "TASK-01TESTNOINDEX00001"},
@@ -1044,6 +1047,7 @@ func TestAsmLoadDocumentPointers_EntityScopeWithIndex(t *testing.T) {
 	repoRoot := t.TempDir()
 	indexRoot := filepath.Join(t.TempDir(), "index")
 	svc := service.NewIntelligenceService(indexRoot, repoRoot)
+	t.Cleanup(func() { _ = svc.Close() })
 
 	entityID := "FEAT-ASMPTRENTITY001"
 
@@ -1079,6 +1083,7 @@ func TestAsmLoadDocumentPointers_LearnedFromEntityID(t *testing.T) {
 	repoRoot := t.TempDir()
 	indexRoot := filepath.Join(t.TempDir(), "index")
 	svc := service.NewIntelligenceService(indexRoot, repoRoot)
+	t.Cleanup(func() { _ = svc.Close() })
 
 	entityID := "FEAT-ASMLEARNFROM0001"
 

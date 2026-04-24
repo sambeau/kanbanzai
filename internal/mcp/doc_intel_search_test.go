@@ -21,8 +21,10 @@ func setupDocIntelSearch(t *testing.T) *docIntelSearchEnv {
 	t.Helper()
 	repoRoot := t.TempDir()
 	indexRoot := filepath.Join(t.TempDir(), "index")
+	intelSvc := service.NewIntelligenceService(indexRoot, repoRoot)
+	t.Cleanup(func() { _ = intelSvc.Close() })
 	return &docIntelSearchEnv{
-		intelSvc: service.NewIntelligenceService(indexRoot, repoRoot),
+		intelSvc: intelSvc,
 		repoRoot: repoRoot,
 	}
 }
