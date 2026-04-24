@@ -1,0 +1,6 @@
+id: TASK-01KPYF2A5GN90
+parent_feature: FEAT-01KPXGVQY3KQC
+slug: implement-review-report-exists-gate
+name: Implement ReviewReportExistsGate
+summary: "Implement ReviewReportExistsGate: calls docRecordSvc.List(owner=featureID, type=report), returns Blocked{Bypassable:false} if empty, Pass if any result, Pass+log warning on error."
+status: queued
