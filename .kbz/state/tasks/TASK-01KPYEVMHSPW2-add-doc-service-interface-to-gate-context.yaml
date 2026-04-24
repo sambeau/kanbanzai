@@ -1,0 +1,6 @@
+id: TASK-01KPYEVMHSPW2
+parent_feature: FEAT-01KPXGVQY3KQC
+slug: add-doc-service-interface-to-gate-context
+name: Add DocService interface to GateContext
+summary: Add a DocService interface and DocSvc field to GateContext so gates can query the document store.
+status: queued
