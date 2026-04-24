@@ -3,4 +3,4 @@ parent_feature: FEAT-01KPXGVQY3KQC
 slug: wire-gate-into-defaultgates
 name: Wire gate into DefaultGates and add helper
 summary: Register ReviewReportExistsGate in DefaultGates() for reviewing-stage features; add NonBypassableBlockingFailures helper to the merge checker.
-status: queued
+status: not-planned
