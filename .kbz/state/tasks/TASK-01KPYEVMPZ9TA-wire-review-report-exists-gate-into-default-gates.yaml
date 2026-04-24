@@ -1,0 +1,6 @@
+id: TASK-01KPYEVMPZ9TA
+parent_feature: FEAT-01KPXGVQY3KQC
+slug: wire-review-report-exists-gate-into-default-gates
+name: Wire ReviewReportExistsGate into DefaultGates
+summary: Register ReviewReportExistsGate in DefaultGates and add NonBypassableBlockingFailures helper to support override rejection logic.
+status: queued

@@ -1,0 +1,6 @@
+id: TASK-01KPYEVMQ1M0B
+parent_feature: FEAT-01KPXGW5BCGY4
+slug: add-reviewing-candidate-type-and-attention-helper
+name: Add reviewingCandidate type and attention helper
+summary: Add the reviewingCandidate struct and generateOrphanedReviewingAttention helper that queries the doc store and builds the attention item.
+status: queued
