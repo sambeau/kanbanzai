@@ -3,10 +3,15 @@ parent_feature: FEAT-01KPXH0F5GFNV
 slug: get-cache-fast-path
 name: Implement Get() cache fast path in EntityService
 summary: "In EntityService.Get(), when slug==\"\" and cache is non-nil and IsWarm for the entity type, call cache.LookupByID to resolve slug and filePath, then call store.Load directly. On cache miss or cache error (logged, not returned), fall back to existing ResolvePrefix path. Covers FR-001, FR-002, FR-003, NFR-001."
-status: active
+status: done
 depends_on:
   - TASK-01KPYF4C6FFDF
+files_planned:
+  - internal/service/entities.go
+completed: "2026-04-24T01:32:10Z"
 claimed_at: "2026-04-24T01:12:37Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-24T01:12:37Z"
 dispatched_by: sambeau
+completion_summary: "Added cache fast path to EntityService.Get(). When slug==\"\" and s.cache is non-nil and IsWarm(entityType) is true, LookupByID is called. On hit, store.Load is called directly with the cached slug, bypassing the ResolvePrefix directory scan. On cache miss or Load error, falls through to the existing ResolvePrefix path unchanged. Nil cache or cold type leaves the existing filesystem path completely unchanged."
+verification: go test ./internal/service/... passed (1.221s)
