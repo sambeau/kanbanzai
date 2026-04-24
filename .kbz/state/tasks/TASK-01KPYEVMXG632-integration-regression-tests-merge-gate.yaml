@@ -1,0 +1,6 @@
+id: TASK-01KPYEVMXG632
+parent_feature: FEAT-01KPXGVQY3KQC
+slug: integration-regression-tests-merge-gate
+name: Integration and regression tests for merge gate
+summary: "Integration and regression tests verifying the full merge gate chain: non-bypassable block, existing gates still bypassable, fail-open."
+status: queued
