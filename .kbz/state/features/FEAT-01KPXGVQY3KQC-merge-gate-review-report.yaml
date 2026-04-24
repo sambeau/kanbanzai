@@ -2,7 +2,7 @@ id: FEAT-01KPXGVQY3KQC
 slug: merge-gate-review-report
 name: Non-bypassable merge gate for review report
 parent: P31-lifecycle-gate-hardening
-status: developing
+status: reviewing
 summary: "Add ReviewReportExistsGate to the merge gate chain for reviewing-stage features, with a Bypassable bool field on the gate result type so the merge tool can reject override: true for this specific condition."
 spec: FEAT-01KPXGVQY3KQC/specification-spec-feat-merge-gate-review-report
 dev_plan: FEAT-01KPXGVQY3KQC/dev-plan-dev-plan-feat-merge-gate-review-report
