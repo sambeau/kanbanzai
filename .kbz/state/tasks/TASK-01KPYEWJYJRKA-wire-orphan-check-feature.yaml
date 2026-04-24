@@ -1,0 +1,6 @@
+id: TASK-01KPYEWJYJRKA
+parent_feature: FEAT-01KPXGW5BCGY4
+slug: wire-orphan-check-feature
+name: Wire orphaned reviewing check into synthesiseFeature
+summary: "Wire OrphanedReviewingFeatureCheck into synthesiseFeature for feature-scope status() calls, reusing pre-fetched docs."
+status: queued

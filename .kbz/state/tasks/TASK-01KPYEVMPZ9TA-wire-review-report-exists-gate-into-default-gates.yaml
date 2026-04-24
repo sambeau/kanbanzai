@@ -4,3 +4,5 @@ slug: wire-review-report-exists-gate-into-default-gates
 name: Wire ReviewReportExistsGate into DefaultGates
 summary: Register ReviewReportExistsGate in DefaultGates and add NonBypassableBlockingFailures helper to support override rejection logic.
 status: queued
+depends_on:
+  - TASK-01KPYEVMMEA35
