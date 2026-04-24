@@ -2,7 +2,8 @@ id: FEAT-01KPXH0F5GFNV
 slug: cache-first-read-path
 name: Cache-first read path in EntityService
 parent: P29-state-store-read-performance
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "Add cache-first fast paths to Get() and List() in internal/service/entities.go, falling back to filesystem on miss. Add ListByType() to internal/cache (or reuse an existing equivalent) for O(1) SQL-backed List() results. Includes IsWarm() or equivalent to avoid cold-cache ambiguity for always-populated entity types."
 spec: FEAT-01KPXH0F5GFNV/specification-feat-01kpxh0f5gfnv-cache-first-read-path
 dev_plan: FEAT-01KPXH0F5GFNV/dev-plan-feat-01kpxh0f5gfnv-cache-first-read-path
