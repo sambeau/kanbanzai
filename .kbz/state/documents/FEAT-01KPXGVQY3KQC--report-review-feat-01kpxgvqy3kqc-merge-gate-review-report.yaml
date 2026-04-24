@@ -2,9 +2,11 @@ id: FEAT-01KPXGVQY3KQC/report-review-feat-01kpxgvqy3kqc-merge-gate-review-report
 path: work/reviews/review-FEAT-01KPXGVQY3KQC-merge-gate-review-report.md
 type: report
 title: "Review: Non-bypassable Merge Gate for Review Report"
-status: draft
+status: approved
 owner: FEAT-01KPXGVQY3KQC
+approved_by: sambeau
+approved_at: "2026-04-24T09:03:25Z"
 content_hash: b778cc62922c0683dac9e51354284e74a5b4b0e5a681dc6486e3bf175721d89b
 created: "2026-04-24T08:28:59Z"
 created_by: sambeau
-updated: "2026-04-24T08:28:59Z"
+updated: "2026-04-24T09:03:25Z"

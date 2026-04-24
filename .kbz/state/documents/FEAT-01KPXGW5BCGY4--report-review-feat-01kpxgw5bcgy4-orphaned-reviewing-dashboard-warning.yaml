@@ -2,9 +2,11 @@ id: FEAT-01KPXGW5BCGY4/report-review-feat-01kpxgw5bcgy4-orphaned-reviewing-dashb
 path: work/reviews/review-FEAT-01KPXGW5BCGY4-orphaned-reviewing-dashboard-warning.md
 type: report
 title: "Review: Orphaned Reviewing Feature Dashboard Warning"
-status: draft
+status: approved
 owner: FEAT-01KPXGW5BCGY4
+approved_by: sambeau
+approved_at: "2026-04-24T09:03:25Z"
 content_hash: 462f32b254647d1977bcc21eddeee77dcc73f441ad17bc61218be8c8062cbae6
 created: "2026-04-24T08:29:00Z"
 created_by: sambeau
-updated: "2026-04-24T08:29:00Z"
+updated: "2026-04-24T09:03:25Z"
