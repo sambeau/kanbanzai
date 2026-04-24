@@ -1,0 +1,250 @@
+document_id: P33-cohort-merge-checkpoints/report-review-p33-cohort-merge-checkpoints
+document_path: work/reviews/review-p33-cohort-merge-checkpoints.md
+content_hash: 0081782780abdcd53b8afed3d1818048be14541536dd7331b965d966f365e8b7
+indexed_at: 2026-04-24T12:09:22.435884Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Plan Review: P33-cohort-merge-checkpoints — Cohort-Based Merge Checkpoints'
+      byte_offset: 0
+      byte_count: 8910
+      word_count: 1198
+      content_hash: 0081782780abdcd53b8afed3d1818048be14541536dd7331b965d966f365e8b7
+      children:
+        - path: "1.1"
+          level: 2
+          title: Plan Summary
+          byte_offset: 541
+          byte_count: 558
+          word_count: 74
+          content_hash: 9e367fcfc70f2045166422747e33fbb8647e721f8a1bb72fc9d81435f7fefa19
+        - path: "1.2"
+          level: 2
+          title: Feature Census
+          byte_offset: 1099
+          byte_count: 697
+          word_count: 102
+          content_hash: 796a966d9a13a910aea406876e5ddf36da7bfa3b11d3606f487b1233539286ea
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Task Breakdown
+              byte_offset: 1349
+              byte_count: 447
+              word_count: 65
+              content_hash: 60626681d7a386891c626782755161f69d402aa22dd8ca35c7a7f6260eef0878
+        - path: "1.3"
+          level: 2
+          title: Specification Conformance
+          byte_offset: 1796
+          byte_count: 2517
+          word_count: 331
+          content_hash: 10fe92d1c0ec81ba9760adf69229479ed8fed7329aff1f3bf143a6d44409f404
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Document Status
+              byte_offset: 1826
+              byte_count: 520
+              word_count: 55
+              content_hash: 9284fa26e17f7111c5ba25e764b667466e65767ccfe905ed67f629c7213622a5
+            - path: 1.3.2
+              level: 3
+              title: Acceptance Criteria Verification
+              byte_offset: 2346
+              byte_count: 1967
+              word_count: 273
+              content_hash: b06bb13b9578140aafdeb80d0a926b31ed2956f5802887dc0f60d3e81e5fd164
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 4313
+          byte_count: 766
+          word_count: 122
+          content_hash: 7b533e6fc0bb85d981c799e7eca714385492b70c68de625357215276589c853e
+        - path: "1.5"
+          level: 2
+          title: Documentation Currency
+          byte_offset: 5079
+          byte_count: 993
+          word_count: 121
+          content_hash: 37d97e2680852bd99728a5023a3127ed3d2729091d3f53334763237f653c1de1
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Files Modified by P33
+              byte_offset: 5106
+              byte_count: 723
+              word_count: 85
+              content_hash: 42357e39fa16e4cc8c6dbd3438dd8169b493ba95cf90ce0ed0678577c29cd148
+            - path: 1.5.2
+              level: 3
+              title: Currency Check
+              byte_offset: 5829
+              byte_count: 243
+              word_count: 33
+              content_hash: 4543bf1bdff0fc13c1eb39e7faeac61fa4d90522b8d58a93d32a9d3aadddb1d2
+        - path: "1.6"
+          level: 2
+          title: Cross-Cutting Checks
+          byte_offset: 6072
+          byte_count: 1131
+          word_count: 152
+          content_hash: e07f4502b13e1231daa20d2d97158507be426f88fa21f704931aa2f7eabb4764
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Test Suite
+              byte_offset: 6097
+              byte_count: 458
+              word_count: 61
+              content_hash: ca752872d636023ed5ba6376416b8398fa59bd185cc341413ef3b93eb0cd4b6a
+            - path: 1.6.2
+              level: 3
+              title: Health Check
+              byte_offset: 6555
+              byte_count: 357
+              word_count: 47
+              content_hash: 75b1609665debdf39eba01abc2ef042712f1a609dc67be5742bf120b593f60b0
+            - path: 1.6.3
+              level: 3
+              title: Working Tree
+              byte_offset: 6912
+              byte_count: 291
+              word_count: 41
+              content_hash: b46f71814bc60c2586dfd4db173acf535a455e2ebbea4fc9b0a459a0f772f335
+        - path: "1.7"
+          level: 2
+          title: Findings
+          byte_offset: 7203
+          byte_count: 358
+          word_count: 52
+          content_hash: 5d045ecf108ff14f68fa93052732bad0cd4a223b66c1a65e9a9e08c1d3ac4d60
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Blocking Findings
+              byte_offset: 7216
+              byte_count: 30
+              word_count: 4
+              content_hash: fcc827150e30c69dcff678ef03915b9d97f8018263f8d0240ad731b4fc48c29e
+            - path: 1.7.2
+              level: 3
+              title: Non-Blocking Findings
+              byte_offset: 7246
+              byte_count: 315
+              word_count: 46
+              content_hash: ca0f4c6561719a7f265f889a9a824a61c55b8acc3eb0554f444d89149329e831
+        - path: "1.8"
+          level: 2
+          title: Retrospective Observations
+          byte_offset: 7561
+          byte_count: 707
+          word_count: 94
+          content_hash: 46b12007805a56181304f8bfd4944dde7158cf9c9ddabede191b07ec4c796573
+          children:
+            - path: 1.8.1
+              level: 3
+              title: What Worked Well
+              byte_offset: 7592
+              byte_count: 392
+              word_count: 55
+              content_hash: fab987ee6454b28e5fa04b59798faf92e70b9aa7f2a5e4bcb46a32a2f53d7739
+            - path: 1.8.2
+              level: 3
+              title: Areas for Improvement
+              byte_offset: 7984
+              byte_count: 284
+              word_count: 36
+              content_hash: c309787a2e71a44f64e1cf1a3e6eac322f3b67af1aa2615fb9211274e2effcf4
+        - path: "1.9"
+          level: 2
+          title: Verdict
+          byte_offset: 8268
+          byte_count: 642
+          word_count: 105
+          content_hash: 13b8e268cd2ef4ba774e78c9003717a4ea8c1fc922cfc99ffacc6106d65aff1b
+entity_refs:
+    - entity_id: FEAT-01KPXE8T8QWRB
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1228
+    - entity_id: FEAT-01KPXE8T8QWRB
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2072
+    - entity_id: TASK-01KPXF5P24D7V
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 1427
+    - entity_id: TASK-01KPXF6RW7A44
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 1503
+    - entity_id: TASK-01KPXF7VA0P5Y
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 1585
+    - entity_id: TASK-01KPXFA0V813C
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 1670
+    - entity_id: BUG-01KN87EEF2G49
+      entity_type: bug
+      section_path: 1.7.2
+      byte_offset: 7427
+    - entity_id: BUG-01KN87EEF2G49
+      entity_type: bug
+      section_path: 1.8.2
+      byte_offset: 8123
+    - entity_id: P33-cohort-merge-checkpoints
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 15
+    - entity_id: P33-introduced
+      entity_type: plan
+      section_path: 1.6.1
+      byte_offset: 6526
+    - entity_id: P33-related
+      entity_type: plan
+      section_path: 1.7.2
+      byte_offset: 7451
+    - entity_id: P33-introduced
+      entity_type: plan
+      section_path: "1.9"
+      byte_offset: 8571
+cross_doc_links:
+    - target_path: work/design/p33-cohort-merge-checkpoints.md
+      link_text: work/design/p33-cohort-merge-checkpoints.md
+      section_path: 1.3.1
+    - target_path: work/spec/p33-cohort-merge-checkpoints.md
+      link_text: work/spec/p33-cohort-merge-checkpoints.md
+      section_path: 1.3.1
+    - target_path: work/dev-plan/p33-cohort-merge-checkpoints.md
+      link_text: work/dev-plan/p33-cohort-merge-checkpoints.md
+      section_path: 1.3.1
+    - target_path: work/reviews/review-feat-01kpxe8t8qwrb-cohort-merge-checkpoints.md
+      link_text: work/reviews/review-feat-01kpxe8t8qwrb-cohort-merge-checkpoints.md
+      section_path: 1.3.1
+    - target_path: work/templates/implementation-plan-prompt-template.md
+      link_text: work/templates/implementation-plan-prompt-template.md
+      section_path: 1.5.1
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: 1.5.1
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.5.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.2
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-24T12:09:22.919288Z
+classified: false
