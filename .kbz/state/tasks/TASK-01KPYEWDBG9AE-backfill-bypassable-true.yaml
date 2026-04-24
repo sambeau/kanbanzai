@@ -4,3 +4,5 @@ slug: backfill-bypassable-true
 name: Backfill Bypassable true on all existing gate conditions
 summary: "Update all existing gate conditions to explicitly set Bypassable: true, preserving current override behaviour. One-line change per gate."
 status: queued
+depends_on:
+  - TASK-01KPYEVMD5EMV
