@@ -73,3 +73,16 @@
   minimise serial bottlenecks
 
 **Skills:** Apply any relevant project skills ({{SKILLS_REFERENCE}})
+
+## Merge Schedule
+
+_Required when the plan has more than 3 features. Omit for plans with 3 or fewer features._
+
+Group features into cohorts of 3–5. Features within a cohort must have no file-scope
+overlap (verify with `conflict(action: "check", feature_ids: [...])`). All cohort-N
+features must be merged to main before cohort-N+1 work begins.
+
+| Cohort | Features | Gate condition |
+|--------|----------|----------------|
+| 1      |          |                |
+| 2      |          |                |
