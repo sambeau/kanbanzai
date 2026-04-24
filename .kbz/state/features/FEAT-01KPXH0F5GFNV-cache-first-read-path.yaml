@@ -8,3 +8,5 @@ spec: FEAT-01KPXH0F5GFNV/specification-feat-01kpxh0f5gfnv-cache-first-read-path
 dev_plan: FEAT-01KPXH0F5GFNV/dev-plan-feat-01kpxh0f5gfnv-cache-first-read-path
 created: "2026-04-23T15:58:16Z"
 created_by: sambeau
+verification: "TASK-01KPYF4C6FFDF: go test ./internal/cache/... passed (0.372s, all tests including 4 new IsWarm tests)\nTASK-01KPYF54MRS0C: go test ./internal/service/... passed (1.221s)\nTASK-01KPYF6049P5K: go test ./internal/service/... passed (1.249s)\nTASK-01KPYF6R1RC85: go test ./internal/cache/... ./internal/service/... passed (cache: 0.255s, service: 1.293s). mcp failure is pre-existing flaky TempDir cleanup in TestHandoff_ProjectScopedKnowledgeWithNoRole, confirmed passing in isolation on main."
+verification_status: passed
