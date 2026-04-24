@@ -1,0 +1,6 @@
+id: TASK-01KPYF49K4BGH
+parent_feature: FEAT-01KPXGZXX8BJZ
+slug: warm-up-wire-rebuild-cache
+name: Wire RebuildCache call into server startup
+summary: "In internal/mcp/server.go, call entitySvc.RebuildCache() immediately after entitySvc.SetCache(c) inside the cache-open success block. On success log the entity count and elapsed duration. On failure log the error and continue. Covers FR-001, FR-002, FR-003, FR-004, FR-005."
+status: queued
