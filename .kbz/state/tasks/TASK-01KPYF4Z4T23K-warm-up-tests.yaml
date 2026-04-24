@@ -3,6 +3,6 @@ parent_feature: FEAT-01KPXGZXX8BJZ
 slug: warm-up-tests
 name: Write server startup warm-up tests
 summary: "Write tests in internal/mcp/ or internal/service/ covering: (1) cache populated before first request (AC-001, AC-002), (2) RebuildCache failure does not abort startup and tool calls proceed via filesystem fallback (AC-003, AC-004), (3) success log includes entity count and duration (AC-005), (4) failure log includes error text (AC-006), (5) no RebuildCache call when cache.Open fails (AC-007), (6) no-cache regression: server behaves identically without cache (AC-008, AC-009)."
-status: queued
+status: ready
 depends_on:
   - TASK-01KPYF49K4BGH

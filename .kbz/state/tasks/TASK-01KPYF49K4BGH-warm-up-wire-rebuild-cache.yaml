@@ -3,8 +3,13 @@ parent_feature: FEAT-01KPXGZXX8BJZ
 slug: warm-up-wire-rebuild-cache
 name: Wire RebuildCache call into server startup
 summary: "In internal/mcp/server.go, call entitySvc.RebuildCache() immediately after entitySvc.SetCache(c) inside the cache-open success block. On success log the entity count and elapsed duration. On failure log the error and continue. Covers FR-001, FR-002, FR-003, FR-004, FR-005."
-status: active
+status: done
+files_planned:
+  - internal/mcp/server.go
+completed: "2026-04-24T01:11:40Z"
 claimed_at: "2026-04-24T01:03:51Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-24T01:03:51Z"
 dispatched_by: sambeau
+completion_summary: Added RebuildCache() call in internal/mcp/server.go immediately after entitySvc.SetCache(c) inside the cache-open success block. Logs entity count and elapsed time on success; logs error and continues on failure. time was already imported.
+verification: "go test ./internal/mcp/... passed (cached on second run; first run had a pre-existing flaky TempDir cleanup race in TestFinish_RetroStoredAsKnowledgeEntry, unrelated to this change)"
