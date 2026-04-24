@@ -91,6 +91,12 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	cacheDir := filepath.Join(core.InstanceRootDir, cache.CacheDir)
 	if c, err := cache.Open(cacheDir); err == nil {
 		entitySvc.SetCache(c)
+		start := time.Now()
+		if n, err := entitySvc.RebuildCache(); err != nil {
+			log.Printf("[server] cache warm-up failed (continuing without cache): %v", err)
+		} else {
+			log.Printf("[server] cache warm-up: loaded %d entities in %s", n, time.Since(start))
+		}
 	}
 
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
