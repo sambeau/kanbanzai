@@ -3,8 +3,14 @@ parent_feature: FEAT-01KPXE8T8QWRB
 slug: template-and-write-dev-plan-skill
 name: Dev-plan template and write-dev-plan skill update
 summary: "Add a ## Merge Schedule section to work/templates/implementation-plan-prompt-template.md (table with Cohort/Features/Gate condition columns, prose stating it is required for plans with more than 3 features, cohort size 3–5, and conflict check guidance). Add a cohort-authoring checklist item to .kbz/skills/write-dev-plan/SKILL.md under the quality-checks section. Pure documentation — no Go changes."
-status: active
+status: done
+files_planned:
+  - work/templates/implementation-plan-prompt-template.md
+  - .kbz/skills/write-dev-plan/SKILL.md
+completed: "2026-04-24T11:19:24Z"
 claimed_at: "2026-04-24T11:12:51Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-24T11:12:51Z"
 dispatched_by: sambeau
+completion_summary: "Added `## Merge Schedule` section to `work/templates/implementation-plan-prompt-template.md` and added a `- [ ]` cohort-authoring checklist item to the Evaluation Criteria section of `.kbz/skills/write-dev-plan/SKILL.md`. Both changes satisfy AC-009 and AC-010."
+verification: "Read both files after writing and confirmed: (1) template ends with the ## Merge Schedule section containing the required prose, the 3–5 cohort guidance, and the Cohort/Features/Gate condition table; (2) SKILL.md Evaluation Criteria section ends with the `- [ ]` checklist item referencing the ## Merge Schedule requirement and `conflict(action: \"check\", feature_ids: [...])` usage. Content matches spec requirements AC-009 and AC-010."
