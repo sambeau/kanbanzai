@@ -108,6 +108,53 @@ func TestGet_CacheMiss_FallsBack(t *testing.T) {
 	}
 }
 
+// TestGet_StaleCache_FallsBack verifies that when LookupByID returns a hit but
+// store.Load fails (e.g., the cached file path no longer exists), Get() falls
+// back to ResolvePrefix rather than returning a corrupt result. When the entity
+// also doesn't exist on disk, ErrNotFound is returned.
+func TestGet_StaleCache_FallsBack(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+	attachCache(t, svc)
+
+	planID := "P1-parent"
+	writeTestPlan(t, svc, planID)
+
+	// Create a real feature so the "feature" type becomes warm in the cache.
+	_, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "real feature",
+		Parent:    planID,
+		Summary:   "Warms the feature type in cache",
+		CreatedBy: "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+
+	// Inject a fabricated cache row for a non-existent entity, pointing to a
+	// file that doesn't exist on disk — simulating a stale cache entry.
+	if err := svc.cache.Upsert(cache.EntityRow{
+		EntityType: "feature",
+		ID:         "FEAT-01FAKEDEADBEEF",
+		Slug:       "nonexistent",
+		FilePath:   "/nonexistent/path.yaml",
+		FieldsJSON: `{}`,
+	}); err != nil {
+		t.Fatalf("cache.Upsert() stale row error = %v", err)
+	}
+
+	// LookupByID will find the stale row; store.Load will fail (file missing);
+	// Get should fall back to ResolvePrefix, which also fails (entity doesn't
+	// exist on disk) — expect a non-nil error rather than a corrupt result.
+	_, err = svc.Get("feature", "FEAT-01FAKEDEADBEEF", "")
+	if err == nil {
+		t.Fatal("Get() with stale cache entry returned nil error, want an error")
+	}
+}
+
 // TestGet_NilCache_UsesFilesystem verifies that Get() works correctly when no
 // cache is configured, using the standard ResolvePrefix filesystem path.
 func TestGet_NilCache_UsesFilesystem(t *testing.T) {

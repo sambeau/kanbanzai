@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"sort"
@@ -150,6 +151,9 @@ func (s *EntityService) RebuildCache() (int, error) {
 	}
 
 	var records []cache.RebuildRecord
+	// plan is intentionally excluded: EntityService.List("plan") is unsupported
+	// because plan files use a slug-free naming convention ({id}.yaml) that the
+	// generic load path cannot handle. Plans are managed by a separate plan service.
 	for _, kind := range []string{
 		string(model.EntityKindFeature),
 		string(model.EntityKindTask),
@@ -514,6 +518,7 @@ func (s *EntityService) Get(entityType, entityID, slug string) (GetResult, error
 					}, nil
 				}
 				// Load failed (stale cache entry) — fall through to ResolvePrefix
+				log.Printf("[entity] cache hit but Load failed for %s/%s (falling back): %v", entityType, entityID, err)
 			}
 			// Cache miss — fall through to ResolvePrefix
 		}
@@ -571,6 +576,7 @@ func (s *EntityService) List(entityType string) ([]ListResult, error) {
 			return results, nil
 		}
 		// ListByType error — fall through to filesystem path
+		log.Printf("[entity] cache ListByType error for %s (falling back): %v", entityType, err)
 	}
 
 	dir := filepath.Join(s.root, entityDirectory(entityType))
