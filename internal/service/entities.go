@@ -548,6 +548,31 @@ func (s *EntityService) List(entityType string) ([]ListResult, error) {
 		return nil, fmt.Errorf("entity type is required")
 	}
 
+	// Cache fast path: when cache is warm for this type, serve from SQLite
+	// instead of scanning the filesystem. Corrupt fields_json returns an error;
+	// ListByType error falls through to filepath.Glob.
+	if s.cache != nil && s.cache.IsWarm(entityType) {
+		rows, err := s.cache.ListByType(entityType)
+		if err == nil {
+			results := make([]ListResult, 0, len(rows))
+			for _, row := range rows {
+				var fields map[string]any
+				if err := json.Unmarshal([]byte(row.FieldsJSON), &fields); err != nil {
+					return nil, fmt.Errorf("list %s: corrupt cache entry for %s: %w", entityType, row.ID, err)
+				}
+				results = append(results, ListResult{
+					Type:  row.EntityType,
+					ID:    row.ID,
+					Slug:  row.Slug,
+					Path:  row.FilePath,
+					State: fields,
+				})
+			}
+			return results, nil
+		}
+		// ListByType error — fall through to filesystem path
+	}
+
 	dir := filepath.Join(s.root, entityDirectory(entityType))
 	entries, err := filepath.Glob(filepath.Join(dir, "*.yaml"))
 	if err != nil {
