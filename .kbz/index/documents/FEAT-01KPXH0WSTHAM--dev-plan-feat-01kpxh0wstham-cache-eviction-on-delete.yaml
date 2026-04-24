@@ -1,0 +1,124 @@
+document_id: FEAT-01KPXH0WSTHAM/dev-plan-feat-01kpxh0wstham-cache-eviction-on-delete
+document_path: work/dev-plans/feat-01kpxh0wstham-cache-eviction-on-delete.md
+content_hash: 59d58027c91db0ec78b2adb5bb472ad531a1f52ed02f764f359d9194e4feb27d
+indexed_at: 2026-04-24T00:49:12.519681Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Cache Eviction on Entity Delete (FEAT-01KPXH0WSTHAM)'
+      byte_offset: 0
+      byte_count: 3083
+      word_count: 356
+      content_hash: 59d58027c91db0ec78b2adb5bb472ad531a1f52ed02f764f359d9194e4feb27d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 586
+          byte_count: 405
+          word_count: 51
+          content_hash: 86419f754fa50db2dcf007d880078bdb269f529c84c071a39557968a10a704e0
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 991
+          byte_count: 1286
+          word_count: 157
+          content_hash: 8e96b249e81960b8188a3ac8f14e4e032455bb8fdae0e948c9e87162198b4d13
+          children:
+            - path: 1.2.1
+              level: 3
+              title: TASK-01KPYF4EVVC8D — Test UpdateStatus cache consistency on terminal transitions
+              byte_offset: 1010
+              byte_count: 531
+              word_count: 69
+              content_hash: 6bf1207a2803834ce61827ee70c3eb9c49fbe61f980d11db301eab904cde45a3
+            - path: 1.2.2
+              level: 3
+              title: TASK-01KPYF54WNPME — Write cache eviction invariant tests
+              byte_offset: 1541
+              byte_count: 736
+              word_count: 85
+              content_hash: 2b0c89bf8088e99d8635ad99396af0ba96365b6d0c985fd28bab679e3cbbba26
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 2277
+          byte_count: 146
+          word_count: 15
+          content_hash: eb7747b3a1a9f144be2cfc9244e1ffdbd9bcddb540e9eaf1864f87a0d2c6e92c
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 2423
+          byte_count: 450
+          word_count: 66
+          content_hash: 7755eee4bd794b8c3c0d7dadce2507d6ce1506c7358daa89e2d107299d815cba
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: No hard-delete path currently exists'
+              byte_offset: 2443
+              byte_count: 430
+              word_count: 63
+              content_hash: fcf1e518091f78a4a76d723396f2041cb63c020fb31822cba97d631967d9f415
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 2873
+          byte_count: 210
+          word_count: 29
+          content_hash: f1cc174dc563307b33744afaa801025ff45fb2c46eeecae0931b5a36d8cd9cf3
+entity_refs:
+    - entity_id: FEAT-01KPXH0WSTHAM
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 56
+    - entity_id: TASK-01KPYF4EVVC8D
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 1014
+    - entity_id: TASK-01KPYF54WNPME
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1545
+    - entity_id: TASK-01KPYF4EVVC8D
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1622
+    - entity_id: TASK-01KPYF4EVVC8D
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 2302
+    - entity_id: TASK-01KPYF54WNPME
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 2367
+    - entity_id: P29-state-store-read-performance
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 344
+cross_doc_links:
+    - target_path: work/specs/feat-01kpxh0wstham-cache-eviction-on-delete.md
+      link_text: work/specs/feat-01kpxh0wstham-cache-eviction-on-delete.md
+      section_path: "1"
+    - target_path: work/design/p29-state-store-read-performance.md
+      link_text: work/design/p29-state-store-read-performance.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+access_count: 3
+last_accessed_at: 2026-04-24T01:12:37.733842Z
+section_access:
+    "1":
+        access_count: 2
+        last_accessed_at: 2026-04-24T01:12:37.733842Z
+classified: false

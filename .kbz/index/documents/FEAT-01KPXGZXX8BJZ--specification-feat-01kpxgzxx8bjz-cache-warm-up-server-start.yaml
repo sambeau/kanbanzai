@@ -1,0 +1,169 @@
+document_id: FEAT-01KPXGZXX8BJZ/specification-feat-01kpxgzxx8bjz-cache-warm-up-server-start
+document_path: work/specs/feat-01kpxgzxx8bjz-cache-warm-up-server-start.md
+content_hash: 9ab97819e30ee4eb0dc9a41439754338cdbab2afe8f876fb3c375cd23c5e40e8
+indexed_at: 2026-04-23T16:07:16.743885Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Cache Warm-Up at Server Start'
+      byte_offset: 0
+      byte_count: 5831
+      word_count: 893
+      content_hash: 9ab97819e30ee4eb0dc9a41439754338cdbab2afe8f876fb3c375cd23c5e40e8
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Related Work
+          byte_offset: 153
+          byte_count: 458
+          word_count: 58
+          content_hash: d3c3d70160aade108ae71ef41871ca588b702fc31f0077b5fc4c32674aea8281
+        - path: "1.2"
+          level: 2
+          title: 2. Overview
+          byte_offset: 611
+          byte_count: 498
+          word_count: 83
+          content_hash: 101a369c63c0e397aa434d7c2337a1f1d5d814126a37e6b5bc7b2e72a982b177
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 1109
+          byte_count: 685
+          word_count: 101
+          content_hash: 3a263df4675df109eeac5ed623d8b1c852bfda208ce76d224467b6df87442803
+          children:
+            - path: 1.3.1
+              level: 3
+              title: In Scope
+              byte_offset: 1122
+              byte_count: 297
+              word_count: 48
+              content_hash: d35f7f554ab1c9e2edb2419e437dc7a77a73caf1ecf7b314ea916f3eb783f687
+            - path: 1.3.2
+              level: 3
+              title: Explicitly Excluded
+              byte_offset: 1419
+              byte_count: 375
+              word_count: 50
+              content_hash: 4f2bb382db55e7e68067373096674a2d08bfbb8622602523729e5513c18f850e
+        - path: "1.4"
+          level: 2
+          title: 4. Functional Requirements
+          byte_offset: 1794
+          byte_count: 1062
+          word_count: 169
+          content_hash: 30be00a501672131ad971aaa303c572b693ccbbbf686d9bf88d2b3f6675808e1
+        - path: "1.5"
+          level: 2
+          title: 5. Non-Functional Requirements
+          byte_offset: 2856
+          byte_count: 742
+          word_count: 104
+          content_hash: de6661cbdb21cc668a140036ed55d15efe143f1692f860234fb680388bacce11
+        - path: "1.6"
+          level: 2
+          title: 6. Acceptance Criteria
+          byte_offset: 3598
+          byte_count: 1442
+          word_count: 239
+          content_hash: 08940723ca2de29f78f930022b8e1747e5fddc34cf81ca489cfee3cce68613e7
+          children:
+            - path: 1.6.1
+              level: 3
+              title: FR-001
+              byte_offset: 3625
+              byte_count: 273
+              word_count: 45
+              content_hash: 69c72680f95539b06d1c3a8a461b2263179f0dd9b8a5140ed7f2e8923e61db51
+            - path: 1.6.2
+              level: 3
+              title: FR-002
+              byte_offset: 3898
+              byte_count: 278
+              word_count: 42
+              content_hash: f85bdc879bf184cff778140b46168bddcac80ec70c56278af955a280f37bd910
+            - path: 1.6.3
+              level: 3
+              title: FR-003
+              byte_offset: 4176
+              byte_count: 172
+              word_count: 29
+              content_hash: 4e7d2054105236d618c1f293588af34dafe54dfd0f7a0f58dfdec634d87e2602
+            - path: 1.6.4
+              level: 3
+              title: FR-004
+              byte_offset: 4348
+              byte_count: 214
+              word_count: 38
+              content_hash: e2b8730c92ba68ca539c920bfb796c1febb7a75bb73c4c97d64d033d0370246a
+            - path: 1.6.5
+              level: 3
+              title: FR-005
+              byte_offset: 4562
+              byte_count: 212
+              word_count: 36
+              content_hash: 0595380b7533c4a2d091ba412850644705e83e414d5ce31993592beb9ad8e44d
+            - path: 1.6.6
+              level: 3
+              title: NFR-001
+              byte_offset: 4774
+              byte_count: 154
+              word_count: 28
+              content_hash: ecf607802c1cb8e394d2c325a53a3ff216fb166a803cbab51cb2824d8e785e68
+            - path: 1.6.7
+              level: 3
+              title: NFR-003
+              byte_offset: 4928
+              byte_count: 112
+              word_count: 17
+              content_hash: 71d24b6fbea2566cc7f22fe40ffc5365c0fe9e8d229978d8ca8986f1ee2558af
+        - path: "1.7"
+          level: 2
+          title: 7. Dependencies and Assumptions
+          byte_offset: 5040
+          byte_count: 791
+          word_count: 125
+          content_hash: a70e8d1b10dff93ed68c1830f5eb30aa17ce195aa19434d44d790dfe9129ff04
+entity_refs:
+    - entity_id: FEAT-01KPXGZXX8BJZ
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 61
+    - entity_id: P29-state-store-read-performance
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 92
+cross_doc_links:
+    - target_path: work/design/p29-state-store-read-performance.md
+      link_text: work/design/p29-state-store-read-performance.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+access_count: 5
+last_accessed_at: 2026-04-24T01:12:37.735036Z
+section_access:
+    "1":
+        access_count: 2
+        last_accessed_at: 2026-04-24T01:12:37.735036Z
+classified: false

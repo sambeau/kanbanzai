@@ -1,0 +1,155 @@
+document_id: FEAT-01KPXH0WSTHAM/specification-feat-01kpxh0wstham-cache-eviction-on-delete
+document_path: work/specs/feat-01kpxh0wstham-cache-eviction-on-delete.md
+content_hash: c4f94f6aed3a13ba791dfc356e54ddccb1d5d84f5c93be136e1edb8238be94ca
+indexed_at: 2026-04-23T16:29:50.005884Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Cache Eviction on Entity Delete (FEAT-01KPXH0WSTHAM)'
+      byte_offset: 0
+      byte_count: 7883
+      word_count: 1154
+      content_hash: c4f94f6aed3a13ba791dfc356e54ddccb1d5d84f5c93be136e1edb8238be94ca
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 71
+          byte_count: 1337
+          word_count: 192
+          content_hash: 044e6a681d1b44534ce6e697aa4da85cc804ba1663b7afc5765a09c31ff63428
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Prior documents consulted
+              byte_offset: 88
+              byte_count: 427
+              word_count: 54
+              content_hash: dce65cd5677b11f92129a6cd0d29528ea7f6e7c4e012f3183830d0f4bd602415
+            - path: 1.1.2
+              level: 3
+              title: Decisions that constrain this specification
+              byte_offset: 515
+              byte_count: 545
+              word_count: 84
+              content_hash: 05c85ad36385cadeae50e74e6509e889405dfc1f568ad34dd47837039c125acf
+            - path: 1.1.3
+              level: 3
+              title: Relationship to prior work
+              byte_offset: 1060
+              byte_count: 348
+              word_count: 51
+              content_hash: ff0e770b2c590b17bcbc573c22e527446918ddebc0988eb15b1f0ae6f702eeda
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 1408
+          byte_count: 903
+          word_count: 133
+          content_hash: 0dc372183f5f16d199c4133e3b317900bfe85655b4f1856df47750926752dd19
+        - path: "1.3"
+          level: 2
+          title: Scope
+          byte_offset: 2311
+          byte_count: 1247
+          word_count: 176
+          content_hash: cb2948bf9135f42d94d1e35bb9e8a598e0185f283c9cd60492f607ad933fc688
+          children:
+            - path: 1.3.1
+              level: 3
+              title: In scope
+              byte_offset: 2321
+              byte_count: 629
+              word_count: 93
+              content_hash: fddedbbd42ecc9d706bf23e4ff1642e037d15c19efcff6eb73aed9e7c595f1d2
+            - path: 1.3.2
+              level: 3
+              title: Explicitly excluded
+              byte_offset: 2950
+              byte_count: 608
+              word_count: 81
+              content_hash: 8d60309034600f95472e655d85c1fb47e02a18305180a124622cbc081f6bfe81
+        - path: "1.4"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 3558
+          byte_count: 2428
+          word_count: 358
+          content_hash: 2cd79c2162d2c6cfb08a119a21a81a3ea56adbb88901660979c277d9a84d705a
+        - path: "1.5"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 5986
+          byte_count: 411
+          word_count: 62
+          content_hash: 22c445947a22ba58a529d2f0a6bc3af1b03c6ab2598d3283036f74d84c66d707
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria (summary)
+          byte_offset: 6397
+          byte_count: 572
+          word_count: 92
+          content_hash: 0f0955ee543eb3ddec1d3309c142113e16e9b1f424fd97ba779bddd0388d1e7f
+        - path: "1.7"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 6969
+          byte_count: 914
+          word_count: 133
+          content_hash: 716e8444bcb1643f405114a7799b5ea763e3a6633c38933d78a584386361e63b
+entity_refs:
+    - entity_id: FEAT-01KPXH0WSTHAM
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 50
+    - entity_id: FEAT-01KPXGZXX8BJZ
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 3008
+    - entity_id: FEAT-01KPXH0F5GFNV
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 3079
+    - entity_id: FEAT-01KPXH0F5GFNV
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 7673
+cross_doc_links:
+    - target_path: work/design/p29-state-store-read-performance.md
+      link_text: work/design/p29-state-store-read-performance.md
+      section_path: 1.1.1
+conventional_roles:
+    - section_path: 1.1.2
+      role: decision
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+access_count: 13
+last_accessed_at: 2026-04-24T01:36:36.550099Z
+section_access:
+    1.3.2:
+        access_count: 1
+        last_accessed_at: 2026-04-24T01:03:51.789736Z
+    "1.7":
+        access_count: 4
+        last_accessed_at: 2026-04-24T01:36:36.550099Z
+classified: false

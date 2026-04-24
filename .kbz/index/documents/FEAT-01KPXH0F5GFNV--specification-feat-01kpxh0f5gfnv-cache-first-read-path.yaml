@@ -1,0 +1,307 @@
+document_id: FEAT-01KPXH0F5GFNV/specification-feat-01kpxh0f5gfnv-cache-first-read-path
+document_path: work/specs/feat-01kpxh0f5gfnv-cache-first-read-path.md
+content_hash: 932f281d6044aa75acf018b3b5f336afc3d91303752559e153cf57e76365427c
+indexed_at: 2026-04-23T16:25:36.481104Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Cache-First Read Path in EntityService'
+      byte_offset: 0
+      byte_count: 12213
+      word_count: 1822
+      content_hash: 932f281d6044aa75acf018b3b5f336afc3d91303752559e153cf57e76365427c
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Related Work
+          byte_offset: 615
+          byte_count: 721
+          word_count: 92
+          content_hash: 9043fd7ab8c861bffadf32be4305c1c3d1fde798c08dc7956f2f40da6a0ecc5e
+        - path: "1.2"
+          level: 2
+          title: 2. Overview
+          byte_offset: 1336
+          byte_count: 757
+          word_count: 106
+          content_hash: 840bd34a361c0d76673a4bf8dd17eed38b382c8a0ce3e1d1a67dab8e7c41a2ff
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2093
+          byte_count: 1027
+          word_count: 156
+          content_hash: b6041f4790c46af51d0aa9d6950a4b524cbbaaf4ea2822d1cf10fc3978fbaaeb
+          children:
+            - path: 1.3.1
+              level: 3
+              title: In scope
+              byte_offset: 2106
+              byte_count: 619
+              word_count: 92
+              content_hash: 7f2567a673e82e6bec98adb0c26a9916dba3600de38ee30c35a4143e74aa11bd
+            - path: 1.3.2
+              level: 3
+              title: Explicitly excluded
+              byte_offset: 2725
+              byte_count: 395
+              word_count: 61
+              content_hash: e75ac2c3fadb609f75d2c04fa2665ca1acd582080fd8ea3faf49f9d75dd147d4
+        - path: "1.4"
+          level: 2
+          title: 4. Functional Requirements
+          byte_offset: 3120
+          byte_count: 3386
+          word_count: 542
+          content_hash: f2ee5d680cfc73c66e39f02adae2738de1de35f1cd9cd1689660fc620d8ef532
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'FR-001 — Get fast path: cache lookup before filesystem'
+              byte_offset: 3151
+              byte_count: 323
+              word_count: 54
+              content_hash: 69b1012633142f2021749ff575e0fb4e7c4918f8e3b1e5e399285e46c8fa7b52
+            - path: 1.4.2
+              level: 3
+              title: 'FR-002 — Get fallback: filesystem scan on cache miss'
+              byte_offset: 3474
+              byte_count: 354
+              word_count: 59
+              content_hash: cd573a90d7d50cb27c136db3a81d35946f5a2901b6fbd50047125889bb6adaaa
+            - path: 1.4.3
+              level: 3
+              title: 'FR-003 — Get fallback: filesystem scan on cache error'
+              byte_offset: 3828
+              byte_count: 274
+              word_count: 43
+              content_hash: 940a293186c71774113fd1627194e16cf3b51cf98ca5c72fd4a251d125df053f
+            - path: 1.4.4
+              level: 3
+              title: 'FR-004 — List fast path: cache query before filesystem'
+              byte_offset: 4102
+              byte_count: 329
+              word_count: 52
+              content_hash: accfcdf8d5a04935d8380a6f16fd832fe098cc17b86879d36d6de41fc6410c92
+            - path: 1.4.5
+              level: 3
+              title: 'FR-005 — List fallback: filesystem scan on cache miss'
+              byte_offset: 4431
+              byte_count: 290
+              word_count: 48
+              content_hash: 590c58902c468eeb9ae5d05c2ed6e8b855c02dd47de23bd33e4784a00bc11d06
+            - path: 1.4.6
+              level: 3
+              title: 'FR-006 — List fallback: filesystem scan on cache error'
+              byte_offset: 4721
+              byte_count: 255
+              word_count: 41
+              content_hash: d0ca05fed6aec8064827b90b4b94b606ab8a04d584296776042f63640dc0f6f5
+            - path: 1.4.7
+              level: 3
+              title: FR-007 — List error on corrupt fields_json
+              byte_offset: 4976
+              byte_count: 253
+              word_count: 39
+              content_hash: 3ca03329510dd75858d69e96dd27093e79091365d5f0cce2026cfc0a7bbcbc75
+            - path: 1.4.8
+              level: 3
+              title: 'FR-008 — Cache warmth tracking: IsWarm per entity type'
+              byte_offset: 5229
+              byte_count: 296
+              word_count: 48
+              content_hash: d3c2872c246f1bc8c99ea71db2dc0104900e4fe761307825317db7d02d259526
+            - path: 1.4.9
+              level: 3
+              title: 'FR-009 — Cache warmth tracking: cold type returns false'
+              byte_offset: 5525
+              byte_count: 286
+              word_count: 49
+              content_hash: a557c843b65063fd40da960170eb201e8766565553bdae4d7a0bbb7f92f8ad2d
+            - path: 1.4.10
+              level: 3
+              title: FR-010 — Downstream callers benefit automatically
+              byte_offset: 5811
+              byte_count: 244
+              word_count: 29
+              content_hash: 590b67e6bc6905c08f22f7dbbe07d42340b46de58f15186f7277202316bedc41
+            - path: 1.4.11
+              level: 3
+              title: FR-011 — No change to results when cache is warm
+              byte_offset: 6055
+              byte_count: 274
+              word_count: 51
+              content_hash: b953cab885221802c1e662399219031ba51852ce7ba9e4c53b7c2136ac26739d
+            - path: 1.4.12
+              level: 3
+              title: FR-012 — No change to write paths
+              byte_offset: 6329
+              byte_count: 177
+              word_count: 25
+              content_hash: 297c1c00a11116d38f0c6596d4df6379e15e193d7620ea582ebf293d2f29a9d7
+        - path: "1.5"
+          level: 2
+          title: 5. Non-Functional Requirements
+          byte_offset: 6506
+          byte_count: 1314
+          word_count: 215
+          content_hash: bf4eda5b9040ee5aaefa6623a0d50644e7c23d131ae46e4b43f6b65a5bd491fa
+          children:
+            - path: 1.5.1
+              level: 3
+              title: NFR-001 — Get complexity on warm cache
+              byte_offset: 6541
+              byte_count: 223
+              word_count: 38
+              content_hash: d3d39cd4f350d7be045d0fb969acb25745a0ecfc4ddf253b2eac1f2fdcf13533
+            - path: 1.5.2
+              level: 3
+              title: NFR-002 — List complexity on warm cache
+              byte_offset: 6764
+              byte_count: 298
+              word_count: 50
+              content_hash: 730d5e59c2cc0b45a38b03a4eade9a445fcc832a427fa02924832787e4c2e801
+            - path: 1.5.3
+              level: 3
+              title: NFR-003 — No regression on cold cache
+              byte_offset: 7062
+              byte_count: 204
+              word_count: 28
+              content_hash: fda8788a2846c1feaff4d67b64e3e774e530baccf799cf578db8239afceee5a4
+            - path: 1.5.4
+              level: 3
+              title: NFR-004 — Cache errors do not surface to callers
+              byte_offset: 7266
+              byte_count: 332
+              word_count: 55
+              content_hash: 39e7b276e51f1a6b0a30695ebd22c03634484c6f8c1b7b0b95339fa73c29a6c0
+            - path: 1.5.5
+              level: 3
+              title: NFR-005 — IsWarm is cheap
+              byte_offset: 7598
+              byte_count: 222
+              word_count: 40
+              content_hash: 8b02ffd68fd995f075851f3f5d0365ad2a10cfb3beb22f76397fb2c53f8e7fd8
+        - path: "1.6"
+          level: 2
+          title: 6. Acceptance Criteria
+          byte_offset: 7820
+          byte_count: 2654
+          word_count: 417
+          content_hash: 237b8fc1b01b6005f00b16e9bb4be0432438a258208a457659ac28881bc9896d
+          children:
+            - path: 1.6.1
+              level: 3
+              title: AC for FR-001 / FR-002 / FR-003 (Get path)
+              byte_offset: 7847
+              byte_count: 802
+              word_count: 124
+              content_hash: a16faa250cc9cce958f21d5417c05da47d32728256367baa71cacc4662d6bb52
+            - path: 1.6.2
+              level: 3
+              title: AC for FR-004 / FR-005 / FR-006 / FR-007 (List path)
+              byte_offset: 8649
+              byte_count: 926
+              word_count: 143
+              content_hash: 96fa71d740e3e385b65bdc2f0ab5088016b05a54f0d966ea5d673ab1403c62b0
+            - path: 1.6.3
+              level: 3
+              title: AC for FR-008 / FR-009 (IsWarm)
+              byte_offset: 9575
+              byte_count: 480
+              word_count: 71
+              content_hash: 9ff940988b4971f4637a0d8c75840a6c77291ad14be93857d30552ab07ddd42e
+            - path: 1.6.4
+              level: 3
+              title: AC for FR-011 (result equivalence)
+              byte_offset: 10055
+              byte_count: 419
+              word_count: 75
+              content_hash: 4b093cd676298dda567f9cd48ebd626a3a64d2f69d9d3de8436b523ffc9e1e5f
+        - path: "1.7"
+          level: 2
+          title: 7. Dependencies and Assumptions
+          byte_offset: 10474
+          byte_count: 1739
+          word_count: 247
+          content_hash: 0a5aca495d71e800d75cb0c3a83244989f0f7e6dd2477f1af2c4b7079841cad7
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Dependencies
+              byte_offset: 10510
+              byte_count: 777
+              word_count: 102
+              content_hash: 37d3ecec51aba7c0dd74ae6ece416586921cfd0e31a5360e0e3d96079d3a8fd4
+            - path: 1.7.2
+              level: 3
+              title: Assumptions
+              byte_offset: 11287
+              byte_count: 926
+              word_count: 140
+              content_hash: 91f4fbfa1036ce7bddbde282ae810b88a05cbca15e6c73ddbff8438b811ae9ba
+entity_refs:
+    - entity_id: FEAT-01KPXH0F5GFNV
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 211
+    - entity_id: TASK-001
+      entity_type: task
+      section_path: 1.6.1
+      byte_offset: 7977
+    - entity_id: TASK-999
+      entity_type: task
+      section_path: 1.6.1
+      byte_offset: 8175
+    - entity_id: P29-state-store-read-performance
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 280
+cross_doc_links:
+    - target_path: work/design/p29-state-store-read-performance.md
+      link_text: work/design/p29-state-store-read-performance.md
+      section_path: "1"
+    - target_path: work/design/p29-state-store-read-performance.md
+      link_text: work/design/p29-state-store-read-performance.md
+      section_path: "1.1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1.1"
+    - target_path: work/research/p28-issues-investigation.md
+      link_text: work/research/p28-issues-investigation.md
+      section_path: "1.1"
+    - target_path: work/reports/retro-p28-doc-intel-polish-workflow-reliability.md
+      link_text: work/reports/retro-p28-doc-intel-polish-workflow-reliability.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+    - section_path: 1.7.2
+      role: assumption
+      confidence: high
+access_count: 8
+last_accessed_at: 2026-04-24T01:36:36.548896Z
+section_access:
+    "1":
+        access_count: 3
+        last_accessed_at: 2026-04-24T01:36:36.548896Z
+classified: false

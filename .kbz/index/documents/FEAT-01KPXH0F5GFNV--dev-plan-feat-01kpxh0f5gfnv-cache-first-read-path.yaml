@@ -1,0 +1,116 @@
+document_id: FEAT-01KPXH0F5GFNV/dev-plan-feat-01kpxh0f5gfnv-cache-first-read-path
+document_path: work/dev-plans/feat-01kpxh0f5gfnv-cache-first-read-path.md
+content_hash: ae6f5f4bf708e2fae4949c90b173034278a0ded513812ad71d86b1825c3a9529
+indexed_at: 2026-04-24T00:49:11.986871Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Cache-First Read Path in EntityService (FEAT-01KPXH0F5GFNV)'
+      byte_offset: 0
+      byte_count: 7834
+      word_count: 1024
+      content_hash: ae6f5f4bf708e2fae4949c90b173034278a0ded513812ad71d86b1825c3a9529
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 430
+          byte_count: 657
+          word_count: 80
+          content_hash: 06b6ba0f2f7934e57dbfdfd52876686ee086393a43d5a5118342d1e790490776
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1087
+          byte_count: 5215
+          word_count: 691
+          content_hash: c896e981b4073b87ec78f0ed65a71567da50692b30564da6889bfbe4fd2333a0
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Task 1 — Add `IsWarm` per-type tracking to `cache.Cache` (TASK-01KPYF4C6FFDF)
+              byte_offset: 1106
+              byte_count: 1096
+              word_count: 162
+              content_hash: 9132af83126c35db58b22b2e512a298a3ad344b5cba37fa0bb2acdddae8197a5
+            - path: 1.2.2
+              level: 3
+              title: Task 2 — Implement `Get()` cache fast path (TASK-01KPYF54MRS0C)
+              byte_offset: 2202
+              byte_count: 1232
+              word_count: 180
+              content_hash: 35f5a811a33cbdcee328c5c2980ec497c94be789230d90384c249d274047f39a
+            - path: 1.2.3
+              level: 3
+              title: Task 3 — Implement `List()` cache fast path (TASK-01KPYF6049P5K)
+              byte_offset: 3434
+              byte_count: 1510
+              word_count: 196
+              content_hash: f89f7a33f95df8ebdeb1658587b488275af59e613fec80900d4e2e5e033088cb
+            - path: 1.2.4
+              level: 3
+              title: Task 4 — Write cache-first read path tests (TASK-01KPYF6R1RC85)
+              byte_offset: 4944
+              byte_count: 1358
+              word_count: 150
+              content_hash: 21348724a744f84e2bda29a9f19f85981aea1d81e46b98c418ac4a7143d437d4
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 6302
+          byte_count: 293
+          word_count: 50
+          content_hash: de74a4da9a949ee590ef4d52d762f1b874ee45ff0c190e5242b15338997c69da
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 6595
+          byte_count: 969
+          word_count: 131
+          content_hash: 2079e3f97ec3f76c92404a5a5765ead3e27d576a00f5fdee8a83ae661ca7b3c7
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 7564
+          byte_count: 270
+          word_count: 40
+          content_hash: 748730899aea150f4afbdde75cee58135dfd0185d7d836e3a22d6c3783bac4de
+entity_refs:
+    - entity_id: FEAT-01KPXH0F5GFNV
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 63
+    - entity_id: TASK-01KPYF4C6FFDF
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 1170
+    - entity_id: TASK-01KPYF54MRS0C
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 2252
+    - entity_id: TASK-01KPYF6049P5K
+      entity_type: task
+      section_path: 1.2.3
+      byte_offset: 3485
+    - entity_id: TASK-01KPYF6R1RC85
+      entity_type: task
+      section_path: 1.2.4
+      byte_offset: 4994
+    - entity_id: P29-state-store-read-performance
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 300
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+access_count: 7
+last_accessed_at: 2026-04-24T01:36:36.550233Z
+section_access:
+    "1":
+        access_count: 4
+        last_accessed_at: 2026-04-24T01:36:36.550233Z
+classified: false

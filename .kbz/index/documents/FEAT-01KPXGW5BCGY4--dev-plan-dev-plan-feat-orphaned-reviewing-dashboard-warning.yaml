@@ -1,0 +1,164 @@
+document_id: FEAT-01KPXGW5BCGY4/dev-plan-dev-plan-feat-orphaned-reviewing-dashboard-warning
+document_path: work/dev-plans/dev-plan-feat-orphaned-reviewing-dashboard-warning.md
+content_hash: a2cc28650e6903fb8e6665ff0bc5014ca44415bd1c1552d15aefc417501a3149
+indexed_at: 2026-04-24T00:35:02.635638Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Orphaned Reviewing Feature Dashboard Warning'
+      byte_offset: 396
+      byte_count: 13460
+      word_count: 1812
+      content_hash: 55f6d7f56de00f7e9d0844ac02bb31d097f950b1463c7bc8492d7e6355f38cd8
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 454
+          byte_count: 936
+          word_count: 113
+          content_hash: 477a61ec43e63038e4dc08b11261cc82a551a914a14a01ce45066e390e0ae493
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1390
+          byte_count: 7295
+          word_count: 904
+          content_hash: ca565df29ed1ed4a16094d287885b3a12d5a9d4da4e9b7a554e46b17b97c4e8c
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Add `reviewingCandidate` type and `generateOrphanedReviewingAttention` helper'
+              byte_offset: 1409
+              byte_count: 1914
+              word_count: 214
+              content_hash: 6a48ea11723cde2b2efc886537d00db52150c949f6dd7fd600583004f0a28069
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Wire orphaned reviewing check into `synthesiseProject` (project scope)'
+              byte_offset: 3323
+              byte_count: 1003
+              word_count: 121
+              content_hash: 319566fa4acb9954647270bc09d4e201b05f0bb93102ec72e01e1a8132929ae9
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Wire orphaned reviewing check into `synthesisePlan` (plan scope)'
+              byte_offset: 4326
+              byte_count: 1060
+              word_count: 136
+              content_hash: e191b2c80b4d514dcd37400e62d6ef238ce64aa92a788a6ba364e5a42abcb74d
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Wire orphaned reviewing check into `synthesiseFeature` (feature scope)'
+              byte_offset: 5386
+              byte_count: 1118
+              word_count: 143
+              content_hash: b2c830471453eb069fb3c1ec35d6f2804e097c987c0ed4db1b32abe16e945483
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Unit tests for all acceptance criteria'
+              byte_offset: 6504
+              byte_count: 2181
+              word_count: 287
+              content_hash: e1cf770d58a51581cd45d26a69dc10864223f2752588a1ba1de88837a7af97cd
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 8685
+          byte_count: 647
+          word_count: 121
+          content_hash: 3ce5858ba9ea6bb4e03b3491c94c67f09612dbeeffc18943857d613234539883
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 9332
+          byte_count: 3012
+          word_count: 425
+          content_hash: b29a35edf92a746072fbfad68f49ce06a576e220673d71bd13efd6c7169352be
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: Redundant `docSvc` calls at plan or feature scope violating REQ-NF-001'
+              byte_offset: 9352
+              byte_count: 785
+              word_count: 103
+              content_hash: 9d2fad908b6392c68440d7657e2d036843d46a54a24828583042e3a95ba6b139
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: `docSvc == nil` not guarded at feature scope, causing silent false positive'
+              byte_offset: 10137
+              byte_count: 616
+              word_count: 94
+              content_hash: 5865a53eeff76c7762919eae1a2d0941e2d6407e60437e552c95b6616cee6229
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Message format divergence across scopes'
+              byte_offset: 10753
+              byte_count: 715
+              word_count: 111
+              content_hash: 839337b8ec35f175f83758ce3d48ca072a6f8ec41c5cee39e98226ed1562e752
+            - path: 1.4.4
+              level: 3
+              title: 'Risk: `maxAttentionItems` cap suppressing orphaned reviewing items'
+              byte_offset: 11468
+              byte_count: 876
+              word_count: 114
+              content_hash: 65fc70962ba8766b2be961713799be267a9122db03f26bd83d3dfe5d756384e9
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 12344
+          byte_count: 1512
+          word_count: 241
+          content_hash: 2d2c6a1e8621765d27658bdf799c60550d826df952dc61e80b386ed4f5e99afa
+entity_refs:
+    - entity_id: FEAT-01KPXGW5BCGY4
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 588
+    - entity_id: FEAT-01KPXGVQY3KQC
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 912
+cross_doc_links:
+    - target_path: work/specs/spec-feat-orphaned-reviewing-dashboard-warning.md
+      link_text: work/specs/spec-feat-orphaned-reviewing-dashboard-warning.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: 1.2.3
+      role: constraint
+      confidence: high
+    - section_path: 1.2.4
+      role: constraint
+      confidence: high
+    - section_path: 1.2.5
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+    - section_path: 1.4.4
+      role: risk
+      confidence: high
+access_count: 17
+last_accessed_at: 2026-04-24T01:36:15.942253Z
+section_access:
+    "1.1":
+        access_count: 9
+        last_accessed_at: 2026-04-24T01:36:15.942253Z
+classified: false

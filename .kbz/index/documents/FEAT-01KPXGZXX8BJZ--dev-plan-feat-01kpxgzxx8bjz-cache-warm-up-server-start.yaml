@@ -1,0 +1,98 @@
+document_id: FEAT-01KPXGZXX8BJZ/dev-plan-feat-01kpxgzxx8bjz-cache-warm-up-server-start
+document_path: work/dev-plans/feat-01kpxgzxx8bjz-cache-warm-up-server-start.md
+content_hash: 634bff3876ebe4d6235e1948251f730a0fb13f6f634a34f779709600feee4180
+indexed_at: 2026-04-24T00:49:10.959708Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Cache Warm-Up at Server Start (FEAT-01KPXGZXX8BJZ)'
+      byte_offset: 0
+      byte_count: 3221
+      word_count: 419
+      content_hash: 634bff3876ebe4d6235e1948251f730a0fb13f6f634a34f779709600feee4180
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 498
+          byte_count: 316
+          word_count: 44
+          content_hash: 487d2cc86fefa2fa41cfec7b965ba1fb6c024e662c0ddf12f466cade124a803f
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 814
+          byte_count: 1294
+          word_count: 176
+          content_hash: 1b2056db5bff56ff46bb3162d9c35faaf2e47e543b99d6f510b28c99ec09143a
+          children:
+            - path: 1.2.1
+              level: 3
+              title: TASK-01KPY-F49K4BGH — Wire RebuildCache call into server startup
+              byte_offset: 833
+              byte_count: 525
+              word_count: 72
+              content_hash: fa5ab840f34cab996cec8673d915523bedd888f6188c8c2a9ea9018f1ebea3ff
+            - path: 1.2.2
+              level: 3
+              title: TASK-01KPY-F4Z4T23K — Write server startup warm-up tests
+              byte_offset: 1358
+              byte_count: 750
+              word_count: 101
+              content_hash: eba56e919269ffe00da0743fbe2b18ec9b3151f5efce2b2753c348ee4e927422
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 2108
+          byte_count: 119
+          word_count: 12
+          content_hash: 279758fc0f3f86becc6f2a3dc12c7fadf975d479ac5316d3365ee5a27924aaa0
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 2227
+          byte_count: 573
+          word_count: 89
+          content_hash: 10a93834e68f2ccafa18f745ea493b8227bf14b78a98c40ebaa42b8d04e082a9
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 2800
+          byte_count: 421
+          word_count: 60
+          content_hash: 1a5eb473a285e9fcacf76f65383bac73cd451e02ae18d09519fe006ba4ce9954
+entity_refs:
+    - entity_id: FEAT-01KPXGZXX8BJZ
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 54
+    - entity_id: TASK-01KPY
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 837
+    - entity_id: TASK-01KPY
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1362
+    - entity_id: TASK-01KPY
+      entity_type: task
+      section_path: "1.3"
+      byte_offset: 2133
+    - entity_id: P29-state-store-read-performance
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 294
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+access_count: 5
+last_accessed_at: 2026-04-24T01:12:37.736212Z
+section_access:
+    "1":
+        access_count: 2
+        last_accessed_at: 2026-04-24T01:12:37.736212Z
+classified: false
