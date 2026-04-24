@@ -2,7 +2,7 @@ id: FEAT-01KPXH0WSTHAM
 slug: cache-eviction-on-delete
 name: Cache eviction on entity delete
 parent: P29-state-store-read-performance
-status: dev-planning
+status: developing
 summary: Ensure all delete and terminal-state tombstone paths (UpdateStatus and any explicit delete codepaths) call a corresponding cache eviction so the cache never serves stale data after an entity is removed.
 spec: FEAT-01KPXH0WSTHAM/specification-feat-01kpxh0wstham-cache-eviction-on-delete
 dev_plan: FEAT-01KPXH0WSTHAM/dev-plan-feat-01kpxh0wstham-cache-eviction-on-delete
