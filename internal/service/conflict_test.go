@@ -1,6 +1,7 @@
 package service
 
 import (
+	"time"
 	"strings"
 	"testing"
 
@@ -340,4 +341,45 @@ func TestConflictCheck_TransitiveDependency(t *testing.T) {
 	if abPair.Dimensions.DependencyOrder.Risk != "high" {
 		t.Errorf("direct dependency (A→B) risk: got %q, want %q", abPair.Dimensions.DependencyOrder.Risk, "high")
 	}
+}
+
+// mockBranchLookup is a test double for service.BranchLookup.
+// Used by conflict_test.go and conflict_feature_test.go.
+type mockBranchLookup struct {
+	branches        map[string]string
+	branchFiles     map[string][]string
+	branchCreatedAt map[string]time.Time
+	branchErr       map[string]error
+	createdAtErr    map[string]error
+}
+
+func newMockBranchLookup() *mockBranchLookup {
+	return &mockBranchLookup{
+		branches:        make(map[string]string),
+		branchFiles:     make(map[string][]string),
+		branchCreatedAt: make(map[string]time.Time),
+		branchErr:       make(map[string]error),
+		createdAtErr:    make(map[string]error),
+	}
+}
+
+func (m *mockBranchLookup) GetBranchForEntity(entityID string) (string, error) {
+	if err, ok := m.branchErr[entityID]; ok {
+		return "", err
+	}
+	return m.branches[entityID], nil
+}
+
+func (m *mockBranchLookup) GetFilesOnBranch(repoRoot, branch string) ([]string, error) {
+	return m.branchFiles[branch], nil
+}
+
+func (m *mockBranchLookup) GetBranchCreatedAt(entityID string) (time.Time, error) {
+	if err, ok := m.createdAtErr[entityID]; ok {
+		return time.Time{}, err
+	}
+	if t, ok := m.branchCreatedAt[entityID]; ok {
+		return t, nil
+	}
+	return time.Time{}, nil
 }

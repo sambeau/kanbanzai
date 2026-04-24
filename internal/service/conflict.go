@@ -3,11 +3,13 @@ package service
 import (
 	"fmt"
 	"strings"
+	"time"
 )
 
 type BranchLookup interface {
 	GetBranchForEntity(entityID string) (branch string, err error)
 	GetFilesOnBranch(repoRoot, branch string) ([]string, error)
+	GetBranchCreatedAt(entityID string) (time.Time, error)
 }
 
 type ConflictCheckInput struct {
