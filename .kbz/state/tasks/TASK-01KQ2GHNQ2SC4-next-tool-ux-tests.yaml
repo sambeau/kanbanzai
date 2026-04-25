@@ -3,7 +3,7 @@ parent_feature: FEAT-01KQ2E0RHSNP1
 slug: next-tool-ux-tests
 name: Tests for Next tool UX improvements
 summary: "Unit tests in next_tool_test.go covering AC-001 through AC-009: active task returns context packet with reclaimed:true, dispatch metadata preserved, no hook re-fired, done/queued tasks still error, worktree_path present/absent correctly, combined active+worktree case, first-claim has no reclaimed field."
-status: queued
+status: ready
 depends_on:
   - TASK-01KQ2GHNGBR9E
   - TASK-01KQ2GHNKFYQ6
