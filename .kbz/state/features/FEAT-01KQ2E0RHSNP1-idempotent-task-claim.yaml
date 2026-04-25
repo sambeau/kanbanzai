@@ -1,0 +1,8 @@
+id: FEAT-01KQ2E0RHSNP1
+slug: idempotent-task-claim
+name: Idempotent Task Claim
+parent: P34-agent-workflow-ergonomics
+status: proposed
+summary: "Return the assembled context packet (with reclaimed: true) instead of an error when next(id: TASK-...) is called for a task already in active status. Preserves the existing dispatch metadata unchanged. Recovers gracefully from timeout-induced double-claims without introducing a new tool action or response variant."
+created: "2026-04-25T13:42:12Z"
+created_by: sambeau
