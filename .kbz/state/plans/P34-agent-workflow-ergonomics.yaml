@@ -1,0 +1,8 @@
+id: P34-agent-workflow-ergonomics
+slug: agent-workflow-ergonomics
+name: Agent Workflow Ergonomics
+status: proposed
+summary: "Address the five highest-priority friction points from the April 2026 retrospective: plan ID prefix shorthand resolution, task auto-promotion when a feature enters developing, idempotent next() claim after timeouts, worktree path surfacing in context packets, and decompose proposal quality (paired implementation+test tasks, supersession of prior task sets on re-apply)."
+created: "2026-04-25T13:10:31Z"
+created_by: sambeau
+updated: "2026-04-25T13:10:31Z"
