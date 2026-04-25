@@ -1,0 +1,17 @@
+id: KE-01KQ2JDTJR0PQ
+tier: 3
+topic: retro-task-01kq2gjxrjv5e
+scope: project
+content: "[minor] spec-ambiguity: Spec FR-002 listed paired test task fields but omitted Rationale, yet the existing invariant test required all tasks to have non-empty Rationale. Suggestion: Spec should include Rationale in the field list for paired test tasks."
+learned_from: TASK-01KQ2GJXRJV5E
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - spec-ambiguity
+created: "2026-04-25T14:59:15Z"
+created_by: unknown
+updated: "2026-04-25T14:59:15Z"

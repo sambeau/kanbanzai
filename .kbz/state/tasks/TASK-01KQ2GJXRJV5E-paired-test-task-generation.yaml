@@ -3,8 +3,13 @@ parent_feature: FEAT-01KQ2E0RNY261
 slug: paired-test-task-generation
 name: Paired test task generation in decompose
 summary: "In generateProposal (internal/service/decompose.go): remove hasTestTask loop and global Write-tests append. Add allCoversContainTest helper. After each impl task, if !allCoversContainTest(implTask.Covers), append paired test task with slug {impl-slug}-tests, name Test {impl-name}, DependsOn [{impl-slug}], matching Covers."
-status: active
+status: done
+files_planned:
+  - internal/service/decompose.go
+completed: "2026-04-25T14:59:15Z"
 claimed_at: "2026-04-25T14:41:11Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-25T14:41:11Z"
 dispatched_by: sambeau
+completion_summary: "Replaced global Write-tests catch-all with per-impl paired test tasks in generateProposal. Added allCoversContainTest helper. For each impl task (grouped and individual) a sibling test task is appended with slug {impl-slug}-tests, name via deriveTaskName for safe 60-char truncation, summary, rationale, DependsOn, and matching Covers. Removed hasTestTask loop and global Write-tests block."
+verification: "go build ./... passed. 4 old-behavior tests fail (TestGrouping_Thresholds, MixedSections, TestCompanionHasNoCovers, GuidanceApplied) — these test the removed global Write-tests logic and are expected to be updated by the separate test-update task."
