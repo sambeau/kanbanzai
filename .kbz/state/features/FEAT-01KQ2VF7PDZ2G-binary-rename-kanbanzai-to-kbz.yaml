@@ -1,0 +1,9 @@
+id: FEAT-01KQ2VF7PDZ2G
+slug: binary-rename-kanbanzai-to-kbz
+name: Binary rename kanbanzai to kbz
+parent: P36-kbz-cli-and-status
+status: proposed
+summary: "Rename the kanbanzai binary to kbz. Rename cmd/kanbanzai/ to cmd/kbz/, update Makefile, update mcp_config.go MCP config templates (with version bump), add a migration prompt to kbz init for projects with stale configs, and sweep all documentation references."
+design: work/design/kbz-cli-and-binary-rename.md
+created: "2026-04-25T17:37:18Z"
+created_by: sambeau
