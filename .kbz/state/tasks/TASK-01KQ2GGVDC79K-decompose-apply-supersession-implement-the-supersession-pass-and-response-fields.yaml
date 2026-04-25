@@ -3,8 +3,13 @@ parent_feature: FEAT-01KQ2E0RR40CD
 slug: decompose-apply-supersession-implement-the-supersession-pass-and-response-fields
 name: Implement the supersession pass and response fields
 summary: Implement the supersession pass and response fields
-status: active
+status: done
+files_planned:
+  - internal/mcp/decompose_tool.go
+completed: "2026-04-25T14:59:47Z"
 claimed_at: "2026-04-25T14:41:11Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-25T14:41:11Z"
 dispatched_by: sambeau
+completion_summary: "Added supersession pass to decomposeApply in internal/mcp/decompose_tool.go. Before Pass 1, lists all tasks for the feature, transitions queued tasks to not-planned (FR-003), counts superseded tasks, tracks in-progress tasks for warning. Added superseded_count (always, FR-005/NFR-002) and conditional warning (FR-006) to the response. Other-status tasks are untouched (FR-004). Pass does not block task creation (FR-007)."
+verification: go build ./... passed; go test ./internal/service/... passed; go test ./internal/mcp/... -run Decompose passed (all 3 tests); one unrelated pre-existing flaky test confirmed failing on main too
