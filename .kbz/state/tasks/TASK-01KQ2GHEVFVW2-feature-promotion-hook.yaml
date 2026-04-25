@@ -3,4 +3,8 @@ parent_feature: FEAT-01KQ2E0RFNBWZ
 slug: feature-promotion-hook
 name: Implement FeaturePromotionHook and wire into composite hook
 summary: Create internal/service/entity_lifecycle_hook.go with FeaturePromotionHook implementing StatusTransitionHook. Fires PromoteQueuedTasks when entityType=feature and toStatus=developing. Register in CompositeTransitionHook at server startup.
-status: ready
+status: active
+claimed_at: "2026-04-25T15:53:13Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-25T15:53:13Z"
+dispatched_by: sambeau

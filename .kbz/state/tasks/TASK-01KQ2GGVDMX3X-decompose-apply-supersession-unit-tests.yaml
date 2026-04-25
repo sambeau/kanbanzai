@@ -3,6 +3,10 @@ parent_feature: FEAT-01KQ2E0RR40CD
 slug: decompose-apply-supersession-unit-tests
 name: Unit tests
 summary: Unit tests
-status: ready
+status: active
 depends_on:
   - TASK-01KQ2GGVDC79K
+claimed_at: "2026-04-25T15:53:13Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-25T15:53:13Z"
+dispatched_by: sambeau
