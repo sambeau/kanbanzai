@@ -2,7 +2,8 @@ id: FEAT-01KQ2E0RNY261
 slug: decompose-paired-test-tasks
 name: Decompose Paired Test Tasks
 parent: P34-agent-workflow-ergonomics
-status: proposed
+status: specifying
 summary: "Replace the global single-catch-all Write tests task in decompose proposals with per-unit paired test tasks. Each implementation task (single-AC or grouped 2-4 ACs) gets a sibling test task immediately following it in the list, with an explicit DependsOn on its paired implementation slug. Exception: ACs whose text already mentions testing do not receive a paired test task."
+spec: FEAT-01KQ2E0RNY261/specification-feat-01kq2e0rny261-decompose-paired-test-tasks
 created: "2026-04-25T13:42:12Z"
 created_by: sambeau
