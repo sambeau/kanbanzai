@@ -3,11 +3,17 @@ parent_feature: FEAT-01KQ2E0RFNBWZ
 slug: task-auto-promotion-tests
 name: Tests for task auto-promotion
 summary: "Unit tests in entity_lifecycle_hook_test.go and entities_test.go covering all AC-001 through AC-008: dependency-free promotion, all-terminal deps, non-terminal deps skipped, ready tasks unchanged, non-developing transitions ignored, promotion failure does not block feature transition, idempotency, mixed tasks."
-status: active
+status: done
 depends_on:
   - TASK-01KQ2GHER1A6J
   - TASK-01KQ2GHEVFVW2
+files_planned:
+  - internal/service/promote_queued_tasks_test.go
+  - internal/service/feature_promotion_hook_test.go
+completed: "2026-04-25T17:25:44Z"
 claimed_at: "2026-04-25T16:25:30Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-25T16:25:30Z"
 dispatched_by: sambeau
+completion_summary: "Unit tests for task auto-promotion written and passing in promote_queued_tasks_test.go and feature_promotion_hook_test.go. AC-001 (NoDeps), AC-002 (AllDoneDeps), AC-003 (BlockedByQueued/mixed), AC-004 (AlreadyReady), AC-005 (NoFireOnOtherStatus/NoFireOnNonFeature), AC-006 (FailureIsolation), AC-007 (Idempotent), AC-008 (BlockedByQueued covers mixed case) all covered. All pass."
+verification: go test ./internal/service/... passes cleanly (ok in 1.282s)
