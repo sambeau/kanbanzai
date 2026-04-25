@@ -9,6 +9,49 @@
 
 ---
 
+## Overview
+
+This design addresses six recurring friction points identified across P30–P33 agent
+session retrospectives. All six are in the server's own MCP tool surface or its
+lifecycle logic — no external dependencies are required, and each change is
+independently deliverable.
+
+The six items span three subsystems: the entity lifecycle service (task promotion,
+idempotent claim), the context assembly pipeline (worktree path, plan prefix
+resolution), and the decompose service (proposal granularity, apply supersession).
+
+---
+
+## Goals and Non-Goals
+
+**Goals**
+
+- Enable shortened plan references (`P30`) to resolve correctly in `status()` and
+  `entity()` without any change to how full canonical IDs work.
+- Automatically promote dependency-free tasks from `queued` to `ready` when their
+  parent feature enters `developing`, eliminating the manual promotion step.
+- Make `next(id: TASK-...)` return the context packet rather than an error when the
+  task is already `active`, recovering cleanly from timeout-induced double-claims.
+- Surface the worktree filesystem path in the `next()` context packet so agents do
+  not need a separate `worktree(action: get)` call.
+- Replace the generic "Write tests" catch-all task in decompose proposals with
+  per-unit paired test tasks that have explicit scope and dependencies.
+- Make `decompose(action: apply)` supersede prior `queued` task sets on re-apply,
+  preventing stale task accumulation in the dashboard.
+
+**Non-Goals**
+
+- This design does not address the empty `spec_sections` context packet issue
+  (M-2) — that requires a separate investigation of the document intelligence
+  index state before a fix can be designed.
+- This design does not introduce a new semantic version numbering scheme for the
+  server binary.
+- This design does not change the `decompose` proposal's section-grouping heuristic
+  or its handling of specs with more than four ACs per section.
+- This design does not change the task lifecycle status names or add new statuses.
+
+---
+
 ## Related Work
 
 **Corpus concepts searched:** task lifecycle, auto-promote, queued, idempotent claim,
@@ -26,6 +69,17 @@ plan prefix, decompose proposal, worktree context assembly.
 
 No directly related prior work was found on plan ID prefix shorthand resolution or
 idempotent task claiming.
+
+---
+
+## Dependencies
+
+| Dependency | Type | Notes |
+|------------|------|-------|
+| P29 — State Store Read Path Performance | Runtime prerequisite | `ResolvePlanByNumber` (§1) and `PromoteQueuedTasks` (§2) both call cache-backed list operations. These are O(1) only after P29's SQLite cache is active. Both degrade gracefully to O(n) filesystem scans without P29, but P29 should be in the binary before this plan is deployed. |
+| `OnStatusTransition` hook (P19) | Code dependency | §2 (task auto-promotion) registers a new behaviour on the existing hook. The hook contract must be preserved: failures are best-effort and must not block the triggering transition. |
+| Worktree `Path` field (P21) | Code dependency | §4 relies on `wt.Path` being populated in the worktree record. This was added in P21 as part of the `write_file` entity_id support. |
+| Binary rebuild after P30 | Deployment note | P30's `stepLoadSkill` fix is in the repo but not the installed binary. A `go install` is required before starting this plan to ensure the correct skill is loaded in sub-agent handoffs. |
 
 ---
 

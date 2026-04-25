@@ -1,0 +1,160 @@
+document_id: P34-agent-workflow-ergonomics/design-design-p34-agent-workflow-ergonomics
+document_path: work/design/design-p34-agent-workflow-ergonomics.md
+content_hash: e87e6582f14844e8cdd306fe8743abfe4f55a97190128cebed9b15376724a9cc
+indexed_at: 2026-04-25T13:16:17.87209Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Agent Workflow Ergonomics (P34)'
+      byte_offset: 0
+      byte_count: 18629
+      word_count: 2660
+      content_hash: e87e6582f14844e8cdd306fe8743abfe4f55a97190128cebed9b15376724a9cc
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 307
+          byte_count: 1492
+          word_count: 219
+          content_hash: 709cf3e590aff29b18067812fa90b5ee56650556d9641abbab34f43dae9beb5d
+        - path: "1.2"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 1799
+          byte_count: 2874
+          word_count: 416
+          content_hash: 7026f9a081bd48a891912b0495445f44fa9d877a4c6cb4a1277bfcc3d5cf9bff
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 4673
+          byte_count: 6299
+          word_count: 896
+          content_hash: 19527efece37724d41291cfcc2135c592ea80fa4acbf93c4d55874f17c26b982
+          children:
+            - path: 1.3.1
+              level: 3
+              title: §1 · Plan prefix shorthand resolution
+              byte_offset: 4684
+              byte_count: 1265
+              word_count: 178
+              content_hash: c94cf3d367d1392bf4f5eb2dffa8ea6152f61017dfe3da4af3ab4b354f133672
+            - path: 1.3.2
+              level: 3
+              title: §2 · Task auto-promotion on `developing` transition
+              byte_offset: 5949
+              byte_count: 1128
+              word_count: 151
+              content_hash: 0963afc015af4b592e62d888ecfbb7756051de14fec2b145ff9e8cbd392755d4
+            - path: 1.3.3
+              level: 3
+              title: §3 · Idempotent task claim in `next()`
+              byte_offset: 7077
+              byte_count: 867
+              word_count: 128
+              content_hash: 827dd247240e5f070f4e898753a605b7283ba3091f92a04cfd520e9f7d1edd15
+            - path: 1.3.4
+              level: 3
+              title: §4 · Worktree path in context packet
+              byte_offset: 7944
+              byte_count: 551
+              word_count: 76
+              content_hash: 9d679d05ee505cdd69f8e7dbadd2a4b6254abb5703331ab7f79c901fcb70f232
+            - path: 1.3.5
+              level: 3
+              title: §5 · Decompose proposal quality — paired test tasks
+              byte_offset: 8495
+              byte_count: 1348
+              word_count: 196
+              content_hash: 252473eec4623aea03959a5d1e12189268bdcc349f42a3a7b83f56118bcc2766
+            - path: 1.3.6
+              level: 3
+              title: §6 · Decompose apply — supersede prior queued task sets
+              byte_offset: 9843
+              byte_count: 1129
+              word_count: 165
+              content_hash: 89bd78218400660d020593084d81d2ef68a847427c30522594bf448c25bbb311
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 10972
+          byte_count: 4331
+          word_count: 604
+          content_hash: 8b60084887a28266871fa4987fbebd7b03b26ae38244ce5fa8dbc578279add73
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'H-1: Full ID required vs. prefix shorthand'
+              byte_offset: 11000
+              byte_count: 832
+              word_count: 122
+              content_hash: 43148f6ce642831af3185166ab07ddb714df0280c68c165024ed1bcf37a676b2
+            - path: 1.4.2
+              level: 3
+              title: 'H-2: Task auto-promotion placement'
+              byte_offset: 11832
+              byte_count: 788
+              word_count: 106
+              content_hash: ba9023572a27e920a6f51fc3074deb5c2ed4f042875c041c415a59e2cb8fa3a3
+            - path: 1.4.3
+              level: 3
+              title: 'H-3: Recovery from timeout claim'
+              byte_offset: 12620
+              byte_count: 731
+              word_count: 106
+              content_hash: 59d312acbdd12db54c6f52823865f97a07c780a93ab3b87dbfa3fd0d8c5b852c
+            - path: 1.4.4
+              level: 3
+              title: 'H-4: Test task quality'
+              byte_offset: 13351
+              byte_count: 797
+              word_count: 116
+              content_hash: cb395d967867e00b48c027f6f19e708325371ea35bb0936c27924107e5c27786
+            - path: 1.4.5
+              level: 3
+              title: 'H-5: Worktree path omission'
+              byte_offset: 14148
+              byte_count: 395
+              word_count: 53
+              content_hash: d69bde0dd524a002430c8caf2fd7d1007ae23280dc11e754fcdfd11f6bcc3202
+            - path: 1.4.6
+              level: 3
+              title: 'M-1: Decompose apply supersession'
+              byte_offset: 14543
+              byte_count: 760
+              word_count: 98
+              content_hash: 15e6f33de59a5a10e0094575412e38e74993dc31fd3a8bf9c9f31c908a1047d1
+        - path: "1.5"
+          level: 2
+          title: Decisions
+          byte_offset: 15303
+          byte_count: 3326
+          word_count: 492
+          content_hash: 528e13a08090dbea856d69a172779030a0c8c723e3319d11bc350e9eaf4cf163
+entity_refs:
+    - entity_id: FEAT-3
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 4612
+    - entity_id: P34-agent-workflow-ergonomics
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 269
+    - entity_id: P30-handoff-skill-assembly-prompt-hygiene
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 2224
+conventional_roles:
+    - section_path: 1.3.4
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: "1.5"
+      role: decision
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-25T13:16:18.509699Z
+classified: false
