@@ -3,8 +3,14 @@ parent_feature: FEAT-01KQ2E0RB4P8A
 slug: resolve-plan-by-number
 name: Add ResolvePlanByNumber service method
 summary: "Add EntityService.ResolvePlanByNumber(cfg config.Config, prefix, number string) (id, slug string, err error) to internal/service/entities.go. Validates prefix via cfg.IsActivePrefix, scans via ListPlanIDs, returns full canonical ID."
-status: active
+status: done
+files_planned:
+  - internal/service/plans_resolve.go
+  - internal/service/plans_resolve_test.go
+completed: "2026-04-25T14:52:50Z"
 claimed_at: "2026-04-25T14:41:10Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-25T14:41:10Z"
 dispatched_by: sambeau
+completion_summary: "Added EntityService.ResolvePlanByNumber in plans_resolve.go. Validates prefix via cfg.IsActivePrefix (returning active prefix list on failure), scans listPlanIDs, matches via ParsePlanID decomposition. Tests cover: happy path (P1/P2/M1), AC-011 (valid prefix missing number), unknown prefix error, active prefix listing in error, retired prefix rejection."
+verification: go test ./internal/service/... passed (all 7 new subtests pass); go build ./... clean
