@@ -2,9 +2,11 @@ id: P34-agent-workflow-ergonomics/design-design-p34-agent-workflow-ergonomics
 path: work/design/design-p34-agent-workflow-ergonomics.md
 type: design
 title: "Design: Agent Workflow Ergonomics (P34)"
-status: draft
+status: approved
 owner: P34-agent-workflow-ergonomics
-content_hash: 9756671776a4c55ecc4274875b60d291a03cc0a059db70c25334bbc0cfd503e1
+approved_by: sambeau
+approved_at: "2026-04-25T13:41:15Z"
+content_hash: 54f38d92db6168a1d6391f0c6a66b33cc11e21dc393a8e131331c613d1d407d0
 created: "2026-04-25T13:16:17Z"
 created_by: sambeau
-updated: "2026-04-25T13:36:16Z"
+updated: "2026-04-25T13:41:15Z"
