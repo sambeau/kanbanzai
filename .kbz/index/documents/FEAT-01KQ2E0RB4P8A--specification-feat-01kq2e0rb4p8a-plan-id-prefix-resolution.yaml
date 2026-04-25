@@ -1,0 +1,139 @@
+document_id: FEAT-01KQ2E0RB4P8A/specification-feat-01kq2e0rb4p8a-plan-id-prefix-resolution
+document_path: work/spec/feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+content_hash: 0e57ef9ffd82e8bf109010c7b2ba14b8c613cd783ddd14b4c2336bdda28123a6
+indexed_at: 2026-04-25T13:59:28.21397Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Plan ID Prefix Resolution'
+      byte_offset: 0
+      byte_count: 9358
+      word_count: 1259
+      content_hash: 0e57ef9ffd82e8bf109010c7b2ba14b8c613cd783ddd14b4c2336bdda28123a6
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Related Work
+          byte_offset: 484
+          byte_count: 1027
+          word_count: 126
+          content_hash: ca8e1bfbe1b1437e37932fa4ba82d09372ed859084e30ff98b39bd5bec9a8545
+        - path: "1.2"
+          level: 2
+          title: 2. Overview
+          byte_offset: 1511
+          byte_count: 528
+          word_count: 76
+          content_hash: 0015b1c9f1a1cc3b3d536c5e8a3e2b1a865d77f3cd34043e110849f180cb41e5
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2039
+          byte_count: 897
+          word_count: 130
+          content_hash: 8f331dcf2ceaf8d7c9828cf2ab882e72391c2c177bff9d8c119858c6bbf1689f
+        - path: "1.4"
+          level: 2
+          title: 4. Functional Requirements
+          byte_offset: 2936
+          byte_count: 2888
+          word_count: 419
+          content_hash: 93487111a055aa4f27504e937127ce6ce732489f6fbbbb0f985b1eb19bc6c749
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Model predicate
+              byte_offset: 2967
+              byte_count: 927
+              word_count: 136
+              content_hash: 95a0b9968bfcf04033c88f854e5f0ea536beb8d85358fb77294fbc8f540d9efe
+            - path: 1.4.2
+              level: 3
+              title: Service method
+              byte_offset: 3894
+              byte_count: 859
+              word_count: 119
+              content_hash: 7905a0ebc98d1f8da858c4d0ff1c09cc5c6806b86b4c29d46747b565af05f408
+            - path: 1.4.3
+              level: 3
+              title: Tool integration
+              byte_offset: 4753
+              byte_count: 1071
+              word_count: 160
+              content_hash: cea159c1e6b0d5b54f8bbde1c9829009973c0dbc4359799a379eda2effadad17
+        - path: "1.5"
+          level: 2
+          title: 5. Non-Functional Requirements
+          byte_offset: 5824
+          byte_count: 677
+          word_count: 98
+          content_hash: 02f7734184ed97fddaeed22ba1931937e7be26efc6afc196bbb0f87d90ec1607
+        - path: "1.6"
+          level: 2
+          title: 6. Acceptance Criteria
+          byte_offset: 6501
+          byte_count: 1889
+          word_count: 239
+          content_hash: af8b354ac5f6b0fb4d70dc3e098b2afcad367fbbbe1fe88b076152d7d8d6e8f9
+        - path: "1.7"
+          level: 2
+          title: 7. Dependencies and Assumptions
+          byte_offset: 8390
+          byte_count: 968
+          word_count: 132
+          content_hash: 30909b54dd31b33b42095ff33fc010ee96cc1fd1d6b1931785d12410c547f901
+entity_refs:
+    - entity_id: FEAT-01KQ2E0RB4P8A
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 366
+    - entity_id: FEAT-01KQxxxxxx
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 7509
+    - entity_id: P34-agent-workflow-ergonomics
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 428
+    - entity_id: P34-agent-workflow-ergonomics
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 572
+    - entity_id: P30-slug
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 3514
+    - entity_id: P30-handoff-skill-assembly-prompt-hygiene
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 6596
+    - entity_id: P30-foo
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 7841
+cross_doc_links:
+    - target_path: work/design/design-p34-agent-workflow-ergonomics.md
+      link_text: work/design/design-p34-agent-workflow-ergonomics.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-25T13:59:28.783407Z
+classified: false

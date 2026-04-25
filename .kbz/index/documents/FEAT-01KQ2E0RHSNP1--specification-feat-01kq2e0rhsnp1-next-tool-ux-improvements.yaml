@@ -1,0 +1,119 @@
+document_id: FEAT-01KQ2E0RHSNP1/specification-feat-01kq2e0rhsnp1-next-tool-ux-improvements
+document_path: work/spec/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+content_hash: eae0dc016f3fc5305bfca127c9b92dac0f3d78d503c6b7d126669746a36664d5
+indexed_at: 2026-04-25T13:59:30.968356Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Next Tool UX Improvements'
+      byte_offset: 0
+      byte_count: 9203
+      word_count: 1310
+      content_hash: eae0dc016f3fc5305bfca127c9b92dac0f3d78d503c6b7d126669746a36664d5
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Related Work
+          byte_offset: 470
+          byte_count: 1198
+          word_count: 158
+          content_hash: 567b821beca0fc9e1e207b8f005ba55e6354a01d39a7a3e4d165184bc3e593e0
+        - path: "1.2"
+          level: 2
+          title: 2. Overview
+          byte_offset: 1668
+          byte_count: 663
+          word_count: 91
+          content_hash: 20bbd579a072cdc4d5758cab2e381e95cca23726fa8106310abba6871fbe6653
+        - path: "1.3"
+          level: 2
+          title: 3. Scope
+          byte_offset: 2331
+          byte_count: 959
+          word_count: 134
+          content_hash: c7dc2aeab86475221da3925ae228f87538abf92ff146aeb94ea68f05c5db5bf5
+        - path: "1.4"
+          level: 2
+          title: 4. Functional Requirements
+          byte_offset: 3290
+          byte_count: 1951
+          word_count: 293
+          content_hash: 96afaf1d5336f76887fb62cdee71f76a60d92b97a688ac3dc72db5dea23327fa
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Idempotent task claim
+              byte_offset: 3321
+              byte_count: 1172
+              word_count: 175
+              content_hash: b3713167b880b983c2d53183d34997a5788871c152f12d08218a9b11097325ed
+            - path: 1.4.2
+              level: 3
+              title: Worktree path in context packet
+              byte_offset: 4493
+              byte_count: 748
+              word_count: 114
+              content_hash: c500e1c2d3516ce73ed205128fbb53af7291493a3409800c5424ab924d60ca18
+        - path: "1.5"
+          level: 2
+          title: 5. Non-Functional Requirements
+          byte_offset: 5241
+          byte_count: 842
+          word_count: 127
+          content_hash: 1c501cfa8d2c13666d49f7d443a30790ea2f85f14dfe86e1d82885fad48f66fe
+        - path: "1.6"
+          level: 2
+          title: 6. Acceptance Criteria
+          byte_offset: 6083
+          byte_count: 1849
+          word_count: 275
+          content_hash: 7d447644686f0850544bb58743a1ad4501beff9d3bb26a204b37dd0c328287b6
+        - path: "1.7"
+          level: 2
+          title: 7. Dependencies and Assumptions
+          byte_offset: 7932
+          byte_count: 1271
+          word_count: 193
+          content_hash: ef0b703ef8592dec0904dd90858ed1702befe82b88141e542ffeea4df89094fe
+entity_refs:
+    - entity_id: FEAT-01KQ2E0RHSNP1
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 356
+    - entity_id: P34-agent-workflow-ergonomics
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 416
+    - entity_id: P34-agent-workflow-ergonomics
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 558
+cross_doc_links:
+    - target_path: work/design/design-p34-agent-workflow-ergonomics.md
+      link_text: work/design/design-p34-agent-workflow-ergonomics.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: 1.4.2
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-25T13:59:31.298221Z
+classified: false
