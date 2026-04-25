@@ -1,0 +1,260 @@
+document_id: PROJECT/design-p35-knowledge-system-effectiveness
+document_path: work/design/p35-knowledge-system-effectiveness.md
+content_hash: 0679c33211e7a96327f4a7ed6dfeb044f471097d71feb7d9508546ee64e20642
+indexed_at: 2026-04-25T14:52:09.23688Z
+sections:
+    - path: "1"
+      level: 2
+      title: Overview
+      byte_offset: 426
+      byte_count: 984
+      word_count: 146
+      content_hash: f84df092ab31c8e68c21955095a40cd8c3e220660ec5b4715c0e9b44e335d622
+    - path: "2"
+      level: 2
+      title: Goals and Non-Goals
+      byte_offset: 1410
+      byte_count: 1199
+      word_count: 174
+      content_hash: 20885c117bd60f36445b2b475037caea5240ad8aa621d377a9aeb756d93635ae
+    - path: "3"
+      level: 2
+      title: Related Work
+      byte_offset: 2609
+      byte_count: 4348
+      word_count: 573
+      content_hash: 5285bc8c72e98c6dce2ba1beb7d456abaa238749daf0c3494d7c220581cfa07d
+      children:
+        - path: "3.1"
+          level: 3
+          title: Prior documents consulted
+          byte_offset: 2626
+          byte_count: 2144
+          word_count: 263
+          content_hash: f9ab90f6e82f01c9f24d8f37ae96ef82b852bf3be7f5b928ff7947b3ec00c808
+        - path: "3.2"
+          level: 3
+          title: Constraining decisions
+          byte_offset: 4770
+          byte_count: 1471
+          word_count: 206
+          content_hash: 4db3eaf3ee56722d4ab277180d5957493796dfe3351d2f1182b1ca71fda0fa3a
+        - path: "3.3"
+          level: 3
+          title: Open questions from prior work
+          byte_offset: 6241
+          byte_count: 716
+          word_count: 101
+          content_hash: 13ab1bac950989a5e1feaca0f04c73898cf9140982d7f43af4f61f93dfd0e03f
+    - path: "4"
+      level: 2
+      title: Problem and Motivation
+      byte_offset: 6957
+      byte_count: 6279
+      word_count: 912
+      content_hash: c6933eba97c036f082e8b831b981e014eea952c5d32a76aa927a99f0d106c709
+      children:
+        - path: "4.1"
+          level: 3
+          title: 1. The `use_count = 0` finding is real but misdiagnosed
+          byte_offset: 6984
+          byte_count: 933
+          word_count: 141
+          content_hash: c80eab6e94e6000b0d6e5c57abeefb4f64423bdd06a477a6401e5a3b6a6d0a37
+        - path: "4.2"
+          level: 3
+          title: 2. The surfacer delivers the 10 most recently created entries, not the 10 most relevant
+          byte_offset: 7917
+          byte_count: 1529
+          word_count: 207
+          content_hash: e07b1736f2b45eda22f80875753689f21811896553194c4edb9438d79aa591d5
+        - path: "4.3"
+          level: 3
+          title: 3. ~50% of the knowledge pool is wrong content type for implementation context
+          byte_offset: 9446
+          byte_count: 1200
+          word_count: 172
+          content_hash: acd845233009c0bd02481896f82dbb434876944cafd6e6c188f3512bd6ebb778
+        - path: "4.4"
+          level: 3
+          title: '4. `scope: "project"` is used universally, eliminating all relevance filtering'
+          byte_offset: 10646
+          byte_count: 831
+          word_count: 123
+          content_hash: 18eb785556ee03b6ef9d2c953ba946f7c776e96622383a68d6c0f71fb8b652a2
+        - path: "4.5"
+          level: 3
+          title: 5. The knowledge base is attempting the wrong job for architectural knowledge
+          byte_offset: 11477
+          byte_count: 980
+          word_count: 147
+          content_hash: 06959f6f4e8fc470b2732e503c3d1829baf7d0286e010a0be98df99a63653d0c
+        - path: "4.6"
+          level: 3
+          title: 6. These problems will reproduce on a greenfield project
+          byte_offset: 12457
+          byte_count: 779
+          word_count: 118
+          content_hash: c9682c0410cc0fa94cad07c3be1dc7cf524e9e9706e57cff9b563a54a964d0a8
+    - path: "5"
+      level: 2
+      title: Design
+      byte_offset: 13236
+      byte_count: 7606
+      word_count: 1095
+      content_hash: 026a067d81b69307e181a0f3d2da4dfb0510a946d71ae9da25ad43dd931db54d
+      children:
+        - path: "5.1"
+          level: 3
+          title: 'Component 1: Delivery channel taxonomy'
+          byte_offset: 13336
+          byte_count: 1859
+          word_count: 253
+          content_hash: add9fb4256a6f457c4f391ed3f9f3bea8dfe6f4d93e3ea38e4a00e06e24468e1
+        - path: "5.2"
+          level: 3
+          title: 'Component 2: Scope specificity requirement for technical entries'
+          byte_offset: 15195
+          byte_count: 1121
+          word_count: 159
+          content_hash: b1a0cbdda0b99bf53c133f701d3f38167fe45cdf1d17b4ceaf13aacb47095d60
+        - path: "5.3"
+          level: 3
+          title: 'Component 3: Actionable entry format mandate'
+          byte_offset: 16316
+          byte_count: 1317
+          word_count: 193
+          content_hash: 1f9cc10847c43b918cdd6e9f3a46457f58fe9091656227ce4f6bd099c15262b1
+        - path: "5.4"
+          level: 3
+          title: 'Component 4: Activating the confirmation quality gate'
+          byte_offset: 17633
+          byte_count: 1274
+          word_count: 189
+          content_hash: 7a2610939f3532a100ee16127e1bad1ebaf5654407831805424640ef7cec7516
+        - path: "5.5"
+          level: 3
+          title: 'Component 5: Strategic boundary clarification — knowledge base vs doc_intel'
+          byte_offset: 18907
+          byte_count: 1935
+          word_count: 288
+          content_hash: 27684cf1a7dc7957be1c7ecee5657a2b7f32fef0c59dac2284ad94dbbbadaf3e
+    - path: "6"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 20842
+      byte_count: 4313
+      word_count: 640
+      content_hash: db6c6efb4abce71b86b7383afcbac05c9a89f2b712e56d6d07ec0c2953eccbb1
+      children:
+        - path: "6.1"
+          level: 3
+          title: A. Increase the surfacing cap from 10 to 20 entries
+          byte_offset: 20870
+          byte_count: 639
+          word_count: 103
+          content_hash: 1496c5fcd88ce6810155a5dff9ecf9b77ee654ebb1d83562a4e104a5225ea6d1
+        - path: "6.2"
+          level: 3
+          title: B. Replace passive delivery with explicit retrieval mandates
+          byte_offset: 21509
+          byte_count: 649
+          word_count: 96
+          content_hash: 6db93801cbc01300a6a5333be4aa785f2f167aabde15dd90a732112fbb1e2e32
+        - path: "6.3"
+          level: 3
+          title: C. Automatic LLM-based knowledge extraction from documents
+          byte_offset: 22158
+          byte_count: 719
+          word_count: 92
+          content_hash: 9e729ac64d097109a67eb2e202ab08a4abbb216f7e534fe6a5198d8e1ac04317
+        - path: "6.4"
+          level: 3
+          title: D. Replace the knowledge base with a structured ruleset
+          byte_offset: 22877
+          byte_count: 818
+          word_count: 121
+          content_hash: 64c0575720eebf095bc87d917507425341cc8b180800f7ec22298a298e103fdc
+        - path: "6.5"
+          level: 3
+          title: E. Keep the current system and rely on TTL to improve the pool over time
+          byte_offset: 23695
+          byte_count: 827
+          word_count: 130
+          content_hash: 91135281f18631ab562aeb10d057e093258355d2957680322b30cad2942cd0ba
+        - path: "6.6"
+          level: 3
+          title: F. Status quo — do nothing
+          byte_offset: 24522
+          byte_count: 633
+          word_count: 95
+          content_hash: aa2a44cd700c77f583bdbc2ca982d17f31eb6453b631fc8820c080d0ccc0ae07
+    - path: "7"
+      level: 2
+      title: Decisions
+      byte_offset: 25155
+      byte_count: 6240
+      word_count: 855
+      content_hash: 2b629daaf91c919b1dd2f283b4046dd3e88b005e6ad5170a647e87e813a25547
+    - path: "8"
+      level: 2
+      title: Dependencies
+      byte_offset: 31395
+      byte_count: 1455
+      word_count: 211
+      content_hash: 57de422e3df2ea26fba4ee354f2956c406fde92eb89c89e24df72dd3c473a26e
+entity_refs:
+    - entity_id: FEAT-01KPTHB66Y8TM
+      entity_type: feature
+      section_path: "3.1"
+      byte_offset: 4479
+cross_doc_links:
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "3.2"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "4.2"
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "8"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "8"
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: "8"
+    - target_path: reviewer-conformance/SKILL.md
+      link_text: reviewer-conformance/SKILL.md
+      section_path: "8"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+    - section_path: "3.2"
+      role: decision
+      confidence: high
+    - section_path: "3.3"
+      role: question
+      confidence: high
+    - section_path: "4.3"
+      role: narrative
+      confidence: high
+    - section_path: "4.4"
+      role: constraint
+      confidence: high
+    - section_path: "5.2"
+      role: requirement
+      confidence: high
+    - section_path: "6"
+      role: alternative
+      confidence: high
+    - section_path: "7"
+      role: decision
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-25T14:52:09.787784Z
+classified: false

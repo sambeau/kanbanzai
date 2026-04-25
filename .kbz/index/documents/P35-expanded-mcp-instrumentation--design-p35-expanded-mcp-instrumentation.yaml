@@ -1,0 +1,237 @@
+document_id: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
+document_path: work/design/p35-expanded-mcp-instrumentation.md
+content_hash: 237c2a2f29a188d871c46951594d83bfa6569df7391d9888c4ab0463bb1c657c
+indexed_at: 2026-04-25T15:41:25.050151Z
+sections:
+    - path: "1"
+      level: 2
+      title: Overview
+      byte_offset: 342
+      byte_count: 1863
+      word_count: 260
+      content_hash: 61ab1421ff35b0471998d65aa7ed37a2539d1613a58554c4fa0ec93d27a73590
+    - path: "2"
+      level: 2
+      title: Goals and Non-Goals
+      byte_offset: 2205
+      byte_count: 1813
+      word_count: 244
+      content_hash: 3162ca9d8cc6a53833d1a44b77493f45606d7b26ec1e335cf18639ce85dfe60f
+    - path: "3"
+      level: 2
+      title: Related Work
+      byte_offset: 4018
+      byte_count: 2242
+      word_count: 293
+      content_hash: af575ede6f7bc32065ceeb355a443f0ab8339d6df5d57046a04a3bb948d9c743
+      children:
+        - path: "3.1"
+          level: 3
+          title: Prior documents consulted
+          byte_offset: 4035
+          byte_count: 718
+          word_count: 83
+          content_hash: f049ea7bc0f7cffb004f649cd37c748e99543b27ef9d9eadf8bb02a34e2939f0
+        - path: "3.2"
+          level: 3
+          title: Constraining decisions
+          byte_offset: 4753
+          byte_count: 1061
+          word_count: 143
+          content_hash: 7fb41de41a7a7359db4dfef4064e059137d383a9483bb1f2820ea171a7979afd
+        - path: "3.3"
+          level: 3
+          title: Open questions from prior work
+          byte_offset: 5814
+          byte_count: 446
+          word_count: 64
+          content_hash: 7f531046d44c1c904aedaedcb5bd8e709d45b5004eae276c06305a10ee6b0bba
+    - path: "4"
+      level: 2
+      title: Problem and Motivation
+      byte_offset: 6260
+      byte_count: 4321
+      word_count: 630
+      content_hash: 3805b60fa3111f486a530c822c80f7a68b546ea1a0fc7eecd4561948a93c5c89
+      children:
+        - path: "4.1"
+          level: 3
+          title: 1. Version correlation is absent
+          byte_offset: 6287
+          byte_count: 962
+          word_count: 140
+          content_hash: a72f9329faa9f2c699329260fe13d4e7d46bc1bb6a63bcc625dd278f7e9d9481
+        - path: "4.2"
+          level: 3
+          title: 2. Zero-result list calls are a known-unknown
+          byte_offset: 7249
+          byte_count: 1206
+          word_count: 177
+          content_hash: 94468714cf319444d1de55ca71fa8fb8394377b1065bebc91f7d4cbeb297e45b
+        - path: "4.3"
+          level: 3
+          title: 3. Knowledge rejection is unlogged
+          byte_offset: 8455
+          byte_count: 707
+          word_count: 109
+          content_hash: 69b336bfc5e860b483167511205babe099d0c509bd38904571c0eb0ddcdb88b5
+        - path: "4.4"
+          level: 3
+          title: 4. Action distribution within multi-action tools is invisible
+          byte_offset: 9162
+          byte_count: 780
+          word_count: 104
+          content_hash: eb980d829d24bf248befb338b93430e8124129faa3945a64b22e74d959f2e102
+        - path: "4.5"
+          level: 3
+          title: 5. Document approval funnels are invisible
+          byte_offset: 9942
+          byte_count: 639
+          word_count: 96
+          content_hash: 99b6a3e1e4871bba300086cb0faed888751d4fa7a2a0d22371eaabf1f21db328
+    - path: "5"
+      level: 2
+      title: Design
+      byte_offset: 10581
+      byte_count: 6063
+      word_count: 838
+      content_hash: 1bf441f1af9bd5c8c44e595af38f27da33b5915eeb59c0c438c465769ddd822a
+      children:
+        - path: "5.1"
+          level: 3
+          title: 'Component 1: Version tagging in `Entry`'
+          byte_offset: 10592
+          byte_count: 1028
+          word_count: 149
+          content_hash: 125471a7cef9394b339ae5a6e15980c0e19ece4239563e2f7f0a504f0038fffb
+        - path: "5.2"
+          level: 3
+          title: 'Component 2: Sparse `extra` annotation map'
+          byte_offset: 11620
+          byte_count: 1594
+          word_count: 225
+          content_hash: 960ca7046e7138bd600897fef34b88878cd432038974130a94b9905d3a6684b7
+        - path: "5.3"
+          level: 3
+          title: 'Component 3: Initial annotation callers'
+          byte_offset: 13214
+          byte_count: 708
+          word_count: 90
+          content_hash: 4268c18c5d10f382af05455fc74e55da9111e38a43edfb878a8ff124e3374676
+        - path: "5.4"
+          level: 3
+          title: 'Component 4: Knowledge rejection capture'
+          byte_offset: 13922
+          byte_count: 643
+          word_count: 86
+          content_hash: 98a138d31d654c4fb85018199c2d04e631540c621c81a84720b9dec66071eed8
+        - path: "5.5"
+          level: 3
+          title: 'Component 5: New `ComputeMetrics` aggregations'
+          byte_offset: 14565
+          byte_count: 2079
+          word_count: 286
+          content_hash: 5817021bd2d9daa25880c5d8b4ef5209b60896005326cf9a3cfa36677b5caa20
+    - path: "6"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 16644
+      byte_count: 3880
+      word_count: 575
+      content_hash: 6bf7746274e4240027e8a56ebc3a993dbbd06268e90fb7cac91450b94a7a20fe
+      children:
+        - path: "6.1"
+          level: 3
+          title: A. OpenTelemetry or Prometheus
+          byte_offset: 16672
+          byte_count: 580
+          word_count: 78
+          content_hash: f1412ed197782361b61c7f8ff6aed553b0501f752cd6c476a04fd9f7e71fbe65
+        - path: "6.2"
+          level: 3
+          title: B. Add typed fields to `Entry` for every signal
+          byte_offset: 17252
+          byte_count: 773
+          word_count: 117
+          content_hash: cc83bc37bfd793620be2d994decf755f78be534cc8216390a3d8592a335c30d2
+        - path: "6.3"
+          level: 3
+          title: C. Write version to a session-start record only
+          byte_offset: 18025
+          byte_count: 944
+          word_count: 147
+          content_hash: fff4e8bdd9a61418caa1141d9195485acac50348a6e7b8e27525edbc45971700
+        - path: "6.4"
+          level: 3
+          title: D. Extend `ComputeMetrics` only — no schema changes
+          byte_offset: 18969
+          byte_count: 782
+          word_count: 118
+          content_hash: 663d12cd32f3ba388070ce1a2b93dc55a7e3c67176f7e354813924140a509f0c
+        - path: "6.5"
+          level: 3
+          title: E. Status quo
+          byte_offset: 19751
+          byte_count: 773
+          word_count: 112
+          content_hash: f75e67f0ca5febb920169b997afe2c509cec8a2cdbd88566df31fc767b44bd09
+    - path: "7"
+      level: 2
+      title: Decisions
+      byte_offset: 20524
+      byte_count: 3954
+      word_count: 563
+      content_hash: dd20ce27fcc4480c3b5036f89f516a3e442bf019709ee0fac3e4f6cb87101e84
+    - path: "8"
+      level: 2
+      title: Dependencies
+      byte_offset: 24478
+      byte_count: 987
+      word_count: 110
+      content_hash: e937feebe5921356dbd93657879954b44abad1efafe3ba5e67791122027cceb0
+entity_refs:
+    - entity_id: P35-expanded-mcp-instrumentation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 291
+cross_doc_links:
+    - target_path: kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1"
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "3.1"
+    - target_path: work/design/doc-intel-enhancement-design.md
+      link_text: work/design/doc-intel-enhancement-design.md
+      section_path: "3.1"
+    - target_path: work/design/transition-log-design.md
+      link_text: work/design/transition-log-design.md
+      section_path: "3.1"
+    - target_path: kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "3.2"
+    - target_path: kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "3.3"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+    - section_path: "3.2"
+      role: decision
+      confidence: high
+    - section_path: "3.3"
+      role: question
+      confidence: high
+    - section_path: "6"
+      role: alternative
+      confidence: high
+    - section_path: "7"
+      role: decision
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-25T15:41:25.594634Z
+classified: false

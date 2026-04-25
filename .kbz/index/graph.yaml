@@ -1,4 +1,4 @@
-updated_at: 2026-04-25T14:20:32.497713Z
+updated_at: 2026-04-25T15:41:25.050151Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -81333,5 +81333,345 @@ edges:
     - from: FEAT-01KQ2E0RR40CD/dev-plan-feat-01kq2e0rr40cd-decompose-apply-supersession#1.1
       from_type: section
       to: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-p35-knowledge-system-effectiveness
+      from_type: document
+      to: PROJECT/design-p35-knowledge-system-effectiveness#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness
+      from_type: document
+      to: PROJECT/design-p35-knowledge-system-effectiveness#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness
+      from_type: document
+      to: PROJECT/design-p35-knowledge-system-effectiveness#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#3
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#3
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#3
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness
+      from_type: document
+      to: PROJECT/design-p35-knowledge-system-effectiveness#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#4
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#4
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#4
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#4
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#4
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#4
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness
+      from_type: document
+      to: PROJECT/design-p35-knowledge-system-effectiveness#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#5
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#5
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#5
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#5
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#5
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness
+      from_type: document
+      to: PROJECT/design-p35-knowledge-system-effectiveness#6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#6
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#6
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#6
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#6
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#6
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#6
+      from_type: section
+      to: PROJECT/design-p35-knowledge-system-effectiveness#6.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness
+      from_type: document
+      to: PROJECT/design-p35-knowledge-system-effectiveness#7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness
+      from_type: document
+      to: PROJECT/design-p35-knowledge-system-effectiveness#8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#3.1
+      from_type: section
+      to: FEAT-01KPTHB66Y8TM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#3.2
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#4.2
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#8
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#8
+      from_type: section
+      to: orchestrate-development/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#8
+      from_type: section
+      to: kanbanzai-documents/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-p35-knowledge-system-effectiveness#8
+      from_type: section
+      to: reviewer-conformance/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
+      from_type: document
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
+      from_type: document
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
+      from_type: document
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
+      from_type: document
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#4
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#4
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#4
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#4
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#4
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
+      from_type: document
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#5
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#5
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#5
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#5
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#5
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
+      from_type: document
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#6
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#6
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#6
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#6
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#6
+      from_type: section
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
+      from_type: document
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
+      from_type: document
+      to: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#
+      from_type: section
+      to: P35-expanded-mcp-instrumentation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#1
+      from_type: section
+      to: kanbanzai-3.0-workflow-and-tooling-v2.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3.1
+      from_type: section
+      to: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3.1
+      from_type: section
+      to: work/design/doc-intel-enhancement-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3.1
+      from_type: section
+      to: work/design/transition-log-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3.2
+      from_type: section
+      to: kanbanzai-3.0-workflow-and-tooling-v2.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3.3
+      from_type: section
+      to: kanbanzai-3.0-workflow-and-tooling-v2.md
       to_type: document
       edge_type: LINKS_TO
