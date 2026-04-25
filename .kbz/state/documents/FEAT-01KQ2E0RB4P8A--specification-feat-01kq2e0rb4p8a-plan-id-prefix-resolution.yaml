@@ -2,9 +2,11 @@ id: FEAT-01KQ2E0RB4P8A/specification-feat-01kq2e0rb4p8a-plan-id-prefix-resolutio
 path: work/spec/feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
 type: specification
 title: "Specification: Plan ID Prefix Resolution"
-status: draft
+status: approved
 owner: FEAT-01KQ2E0RB4P8A
-content_hash: 0e57ef9ffd82e8bf109010c7b2ba14b8c613cd783ddd14b4c2336bdda28123a6
+approved_by: sambeau
+approved_at: "2026-04-25T14:04:55Z"
+content_hash: bf815310ea82d2024e75721fd447a37d649d5915b6855abc8f0f5f3863d8a4f0
 created: "2026-04-25T13:59:28Z"
 created_by: sambeau
-updated: "2026-04-25T13:59:28Z"
+updated: "2026-04-25T14:04:55Z"
