@@ -3,8 +3,13 @@ parent_feature: FEAT-01KQ049NBSQAR
 slug: replace-heredoc-with-write-file
 name: Replace heredoc with write_file
 summary: "In .kbz/skills/implement-task/SKILL.md: replace the heredoc section with write_file(entity_id: ...) as the sole recommended method for Go source files in a worktree context. Retain edit_file for non-worktree files. Remove all heredoc references including GOEOF and delimiter-collision warning. Update checklist. Remove python3 -c note if write_file covers all worktree scenarios. Covers FR-007 through FR-011, NFR-004."
-status: active
+status: done
+files_planned:
+  - .kbz/skills/implement-task/SKILL.md
+completed: "2026-04-25T11:36:44Z"
 claimed_at: "2026-04-24T16:18:07Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-24T16:18:07Z"
 dispatched_by: sambeau
+completion_summary: "Replaced the Worktree File Editing section in implement-task/SKILL.md: removed heredoc/GOEOF/python3-c instructions for all file types; introduced write_file(entity_id: ...) as the sole recommended method for worktree files; retained edit_file for main-project-root (non-worktree) files; updated checklist item accordingly."
+verification: grep for heredoc/GOEOF/python3 returns no matches. grep for write_file shows 6 occurrences across the new section and checklist.
