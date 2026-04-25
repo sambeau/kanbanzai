@@ -1,0 +1,6 @@
+id: TASK-01KQ2GHNGBR9E
+parent_feature: FEAT-01KQ2E0RHSNP1
+slug: idempotent-task-claim
+name: Idempotent task claim — reroute active branch
+summary: "In nextClaimMode (internal/mcp/next_tool.go), change the active-status case from returning an error to assembling and returning the full context packet with reclaimed:true. Introduce isReclaim flag; guard ValidateFeatureStage, DispatchTask, PushSideEffect, and task reload behind if !isReclaim. Do not overwrite dispatch metadata."
+status: queued
