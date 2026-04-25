@@ -3,8 +3,14 @@ parent_feature: FEAT-01KQ2E0RHSNP1
 slug: idempotent-task-claim
 name: Idempotent task claim — reroute active branch
 summary: "In nextClaimMode (internal/mcp/next_tool.go), change the active-status case from returning an error to assembling and returning the full context packet with reclaimed:true. Introduce isReclaim flag; guard ValidateFeatureStage, DispatchTask, PushSideEffect, and task reload behind if !isReclaim. Do not overwrite dispatch metadata."
-status: active
+status: done
+files_planned:
+  - internal/mcp/next_tool.go
+  - internal/mcp/next_tool_test.go
+completed: "2026-04-25T15:02:34Z"
 claimed_at: "2026-04-25T14:41:10Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-25T14:41:10Z"
 dispatched_by: sambeau
+completion_summary: "Modified nextClaimMode in internal/mcp/next_tool.go to implement idempotent task claiming. Added isReclaim flag; changed the active-status case from returning an error to setting isReclaim=true; guarded ValidateFeatureStage, DispatchTask, PushSideEffect, and task reload behind if !isReclaim; changed the return to include reclaimed: true only when isReclaim. Updated TestNext_ClaimByTaskID_AlreadyActive to verify the new behavior (success + reclaimed: true) instead of expecting an error."
+verification: go build ./... passed; go test ./internal/mcp/... passed (all tests green; one transient SQLite contention failure on first run confirmed pre-existing flakiness by re-run)
