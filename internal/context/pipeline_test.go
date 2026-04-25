@@ -535,6 +535,216 @@ func TestStepLoadSkill_NoSkillSpecified(t *testing.T) {
 	}
 }
 
+func TestStepLoadSkill_SubAgentRoleMatch(t *testing.T) {
+	t.Parallel()
+	p := &Pipeline{
+		Skills: &mockSkillResolver{
+			skills: map[string]*skill.Skill{
+				"implement-task": testSkill(),
+				"implement-task-go": {
+					Frontmatter: skill.SkillFrontmatter{
+						Name:            "implement-task-go",
+						Description:     skill.SkillDescription{Expert: "Go impl", Natural: "Go impl"},
+						Triggers:        []string{"implement go"},
+						Roles:           []string{"implementer-go"},
+						Stage:           "developing",
+						ConstraintLevel: "medium",
+					},
+				},
+			},
+		},
+	}
+	b := testBinding()
+	b.SubAgents = &binding.SubAgents{
+		Roles:    []string{"implementer"},
+		Skills:   []string{"implement-task-go"},
+		Topology: "parallel",
+	}
+	state := &PipelineState{
+		Input:   PipelineInput{Role: "implementer-go"},
+		Binding: b,
+	}
+	if err := p.stepLoadSkill(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Skill.Frontmatter.Name != "implement-task-go" {
+		t.Errorf("skill name = %q, want %q", state.Skill.Frontmatter.Name, "implement-task-go")
+	}
+}
+
+func TestStepLoadSkill_OrchestratorFallsThrough(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	b := testBinding()
+	b.SubAgents = &binding.SubAgents{
+		Roles:    []string{"implementer"},
+		Skills:   []string{"implement-task-sub"},
+		Topology: "parallel",
+	}
+	// orchestrator role does not prefix-match "implementer"
+	state := &PipelineState{
+		Input:   PipelineInput{Role: "orchestrator"},
+		Binding: b,
+	}
+	if err := p.stepLoadSkill(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Skill.Frontmatter.Name != "implement-task" {
+		t.Errorf("skill name = %q, want primary %q", state.Skill.Frontmatter.Name, "implement-task")
+	}
+}
+
+func TestStepLoadSkill_NilSubAgents(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	b := testBinding()
+	b.SubAgents = nil
+	state := &PipelineState{
+		Input:   PipelineInput{Role: "implementer-go"},
+		Binding: b,
+	}
+	if err := p.stepLoadSkill(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Skill.Frontmatter.Name != "implement-task" {
+		t.Errorf("skill name = %q, want primary %q", state.Skill.Frontmatter.Name, "implement-task")
+	}
+}
+
+func TestStepLoadSkill_SubAgentOutOfBounds(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	b := testBinding()
+	b.SubAgents = &binding.SubAgents{
+		Roles:    []string{"implementer"},
+		Skills:   []string{}, // empty — index 0 is out of range
+		Topology: "parallel",
+	}
+	state := &PipelineState{
+		Input:   PipelineInput{Role: "implementer-go"},
+		Binding: b,
+	}
+	err := p.stepLoadSkill(state)
+	if err == nil {
+		t.Fatal("expected error for out-of-bounds skill index")
+	}
+	if !strings.Contains(err.Error(), "step 6") {
+		t.Errorf("error should mention step 6: %v", err)
+	}
+	if !strings.Contains(err.Error(), "out of range") {
+		t.Errorf("error should mention out of range: %v", err)
+	}
+}
+
+func TestStepLoadSkill_FirstPrefixMatchWins(t *testing.T) {
+	t.Parallel()
+	p := &Pipeline{
+		Skills: &mockSkillResolver{
+			skills: map[string]*skill.Skill{
+				"implement-task": testSkill(),
+				"skill-first": {
+					Frontmatter: skill.SkillFrontmatter{
+						Name:            "skill-first",
+						Description:     skill.SkillDescription{Expert: "first", Natural: "first"},
+						Triggers:        []string{"first"},
+						Roles:           []string{"implementer"},
+						Stage:           "developing",
+						ConstraintLevel: "medium",
+					},
+				},
+				"skill-second": {
+					Frontmatter: skill.SkillFrontmatter{
+						Name:            "skill-second",
+						Description:     skill.SkillDescription{Expert: "second", Natural: "second"},
+						Triggers:        []string{"second"},
+						Roles:           []string{"implementer"},
+						Stage:           "developing",
+						ConstraintLevel: "medium",
+					},
+				},
+			},
+		},
+	}
+	b := testBinding()
+	b.SubAgents = &binding.SubAgents{
+		Roles:    []string{"impl", "implementer"},
+		Skills:   []string{"skill-first", "skill-second"},
+		Topology: "parallel",
+	}
+	// "implementer-go" prefix-matches "impl" first (index 0)
+	state := &PipelineState{
+		Input:   PipelineInput{Role: "implementer-go"},
+		Binding: b,
+	}
+	if err := p.stepLoadSkill(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Skill.Frontmatter.Name != "skill-first" {
+		t.Errorf("skill name = %q, want %q (first prefix match wins)", state.Skill.Frontmatter.Name, "skill-first")
+	}
+}
+
+func TestStepLoadSkill_EmptyRoleLoadsPrimary(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	b := testBinding()
+	b.SubAgents = &binding.SubAgents{
+		Roles:    []string{"implementer"},
+		Skills:   []string{"implement-task-sub"},
+		Topology: "parallel",
+	}
+	// Empty caller role — sub-agent routing is skipped
+	state := &PipelineState{
+		Input:   PipelineInput{Role: ""},
+		Binding: b,
+	}
+	if err := p.stepLoadSkill(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Skill.Frontmatter.Name != "implement-task" {
+		t.Errorf("skill name = %q, want primary %q", state.Skill.Frontmatter.Name, "implement-task")
+	}
+}
+
+func TestStepLoadSkill_Deterministic(t *testing.T) {
+	t.Parallel()
+	p := &Pipeline{
+		Skills: &mockSkillResolver{
+			skills: map[string]*skill.Skill{
+				"implement-task": testSkill(),
+				"implement-task-go": {
+					Frontmatter: skill.SkillFrontmatter{
+						Name:            "implement-task-go",
+						Description:     skill.SkillDescription{Expert: "Go impl", Natural: "Go impl"},
+						Triggers:        []string{"implement go"},
+						Roles:           []string{"implementer-go"},
+						Stage:           "developing",
+						ConstraintLevel: "medium",
+					},
+				},
+			},
+		},
+	}
+	b := testBinding()
+	b.SubAgents = &binding.SubAgents{
+		Roles:    []string{"implementer"},
+		Skills:   []string{"implement-task-go"},
+		Topology: "parallel",
+	}
+	for i := 0; i < 5; i++ {
+		state := &PipelineState{
+			Input:   PipelineInput{Role: "implementer-go"},
+			Binding: b,
+		}
+		if err := p.stepLoadSkill(state); err != nil {
+			t.Fatalf("run %d: unexpected error: %v", i, err)
+		}
+		if state.Skill.Frontmatter.Name != "implement-task-go" {
+			t.Errorf("run %d: skill name = %q, want %q", i, state.Skill.Frontmatter.Name, "implement-task-go")
+		}
+	}
+}
+
 // ─── Step 7: Knowledge Surfacing ──────────────────────────────────────────────
 
 func TestStepSurfaceKnowledge_WithEntries(t *testing.T) {

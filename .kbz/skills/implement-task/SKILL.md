@@ -82,59 +82,41 @@ constraint_level: medium
 
 ## Worktree File Editing
 
-> **Warning:** The `edit_file` tool does not work correctly inside Git worktrees.
-> It edits files in the main working tree, not the worktree's checked-out branch.
-> Using it inside a worktree produces silent incorrect edits or no-ops.
+> **Note:** The `edit_file` tool only operates on the main working tree. Do not
+> use it for files inside a Git worktree — it will silently edit the wrong
+> location. Use `write_file(entity_id: ...)` for all worktree file writes.
 
-When implementing tasks assigned to a worktree, write file content using the
-`terminal` tool with the pattern appropriate for the file type.
+When implementing tasks assigned to a worktree, use `write_file` with the
+`entity_id` parameter. This scopes the write to the worktree's directory
+automatically, regardless of file type.
 
-### Go source files — use heredoc (primary)
+### Worktree files — use `write_file` (all file types)
 
-Use a heredoc for Go source files. `GOEOF` is the standard delimiter for Go
-source; any unique uppercase string may substitute:
+Use `write_file(entity_id: ...)` for all files inside a worktree — Go source,
+Markdown, YAML, or any other type:
 
 ```
-terminal(
-  cd: "<worktree-path>",
-  command: "cat > path/to/file.go << 'GOEOF'\n<full file content>\nGOEOF"
+write_file(
+  entity_id: "FEAT-...",
+  path: "path/to/file.go",
+  content: "<full file content>"
 )
 ```
 
-> **Delimiter collision warning:** If the file content contains a line that is
-> exactly `GOEOF`, the heredoc will silently truncate at that line. Fix: choose
-> a different delimiter (e.g. `GOEOF2`, `ENDOFFILE`).
+The `entity_id` resolves to the worktree's root directory automatically. The
+`path` is relative to that root.
 
-**Why not `python3 -c` for Go files?** Python uses `'''` as its triple-quote
-string delimiter. If the Go source contains `'''` (e.g. in a raw string literal
-or comment), the Python triple-quote will collide and silently truncate or
-corrupt the file content.
+### Non-worktree files — use `edit_file`
 
-### Markdown and YAML files — use `python3 -c` (secondary)
-
-For Markdown (`.md`) and YAML (`.yaml`/`.yml`) files, use the `python3 -c`
-pattern. These formats do not use triple-quoted Go strings, so the collision
-risk does not apply:
-
-```
-terminal(
-  cd: "<worktree-path>",
-  command: "python3 -c \"
-import pathlib
-pathlib.Path('path/to/file.md').write_text('''<full file content>''')
-\""
-)
-```
-
-Confirm the worktree path before writing. It is available in the context
-packet returned by `next(id)` under `worktree.path`.
+For files in the main project root (not inside a worktree), use `edit_file` as
+normal.
 
 ## Checklist
 
 ```
 Copy this checklist and track your progress:
 - [ ] Claimed the task with `next(id: "TASK-xxx")`
-- [ ] Confirmed whether this task runs inside a worktree — if yes, use `terminal` + heredoc for Go files, `python3 -c` for Markdown/YAML, NOT `edit_file`
+- [ ] Confirmed whether this task runs inside a worktree — if yes, use `write_file(entity_id: ...)` for all file types, NOT `edit_file`
 - [ ] Read the context packet — spec sections, knowledge entries, file paths
 - [ ] Called knowledge list with domain-relevant tags before writing any code
 - [ ] Listed all acceptance criteria for this task

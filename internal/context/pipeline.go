@@ -390,9 +390,28 @@ func (p *Pipeline) stepResolveRole(state *PipelineState) error {
 // stepLoadSkill loads the skill and appends its vocabulary/anti-patterns (step 6).
 func (p *Pipeline) stepLoadSkill(state *PipelineState) error {
 	skillName := ""
-	if len(state.Binding.Skills) > 0 {
+
+	// If the caller specifies a role and the binding declares sub-agents, check
+	// whether the caller's role prefix-matches a sub-agent role entry (FR-001–FR-006).
+	if state.Input.Role != "" && state.Binding.SubAgents != nil {
+		for i, subRole := range state.Binding.SubAgents.Roles {
+			if strings.HasPrefix(state.Input.Role, subRole) {
+				if i >= len(state.Binding.SubAgents.Skills) {
+					return pipelineError(6, "skill-loading",
+						fmt.Sprintf("sub-agent skill index %d out of range (skills length: %d)", i, len(state.Binding.SubAgents.Skills)),
+						"ensure sub_agents.skills has at least as many entries as sub_agents.roles in stage-bindings.yaml")
+				}
+				skillName = state.Binding.SubAgents.Skills[i]
+				break
+			}
+		}
+	}
+
+	// Fall back to the binding's primary skill.
+	if skillName == "" && len(state.Binding.Skills) > 0 {
 		skillName = state.Binding.Skills[0]
 	}
+
 	if skillName == "" {
 		return pipelineError(6, "skill-loading",
 			fmt.Sprintf("no skill specified for stage %q", state.Stage),
