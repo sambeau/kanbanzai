@@ -157,8 +157,8 @@ conventional_roles:
     - section_path: 1.6.3
       role: risk
       confidence: high
-access_count: 3
-last_accessed_at: 2026-04-25T15:53:13.518717Z
+access_count: 4
+last_accessed_at: 2026-04-25T16:25:30.967612Z
 section_access:
     "1":
         access_count: 2
