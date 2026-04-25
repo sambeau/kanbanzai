@@ -2,9 +2,11 @@ id: FEAT-01KQ2E0RNY261/dev-plan-feat-01kq2e0rny261-decompose-paired-test-tasks
 path: work/plan/feat-01kq2e0rny261-decompose-paired-test-tasks.md
 type: dev-plan
 title: "Implementation Plan: Decompose Paired Test Tasks"
-status: draft
+status: approved
 owner: FEAT-01KQ2E0RNY261
-content_hash: 625288ac0465d89d3c01b67d8a2da4ad5e9be825e85eadb8217edebcfabac5a5
+approved_by: sambeau
+approved_at: "2026-04-25T14:23:25Z"
+content_hash: 0704af947a029364a2b4267a1599b7c85859c65033b0425847854c3df653022c
 created: "2026-04-25T14:20:32Z"
 created_by: sambeau
-updated: "2026-04-25T14:22:52Z"
+updated: "2026-04-25T14:23:25Z"
