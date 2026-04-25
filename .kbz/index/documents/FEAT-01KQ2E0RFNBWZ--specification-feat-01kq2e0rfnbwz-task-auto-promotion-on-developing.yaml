@@ -132,6 +132,10 @@ conventional_roles:
     - section_path: "1.7"
       role: assumption
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-25T13:59:29.607759Z
+access_count: 3
+last_accessed_at: 2026-04-25T14:41:10.851421Z
+section_access:
+    "1":
+        access_count: 1
+        last_accessed_at: 2026-04-25T14:41:10.851421Z
 classified: false
