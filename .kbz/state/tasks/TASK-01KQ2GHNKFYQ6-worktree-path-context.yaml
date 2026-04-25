@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQ2E0RHSNP1
 slug: worktree-path-context
 name: Worktree path in context packet
 summary: "In nextContextToMap (internal/mcp/next_tool.go), add if actx.worktreePath != \"\" { out[\"worktree_path\"] = actx.worktreePath }. Key is omitted entirely when empty, consistent with tool_hint and graph_project. No changes to assembly.go."
-status: queued
+status: ready

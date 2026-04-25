@@ -3,4 +3,8 @@ parent_feature: FEAT-01KQ2E0RFNBWZ
 slug: promote-queued-tasks
 name: Implement PromoteQueuedTasks
 summary: "Add PromoteQueuedTasks(featureID string) error to EntityService in internal/service/entities.go. Lists queued tasks for the feature, promotes those with empty or all-terminal depends_on to ready via UpdateStatus. Per-task failures are logged and do not abort the loop."
-status: queued
+status: active
+claimed_at: "2026-04-25T14:41:10Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-25T14:41:10Z"
+dispatched_by: sambeau

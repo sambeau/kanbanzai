@@ -3,6 +3,6 @@ parent_feature: FEAT-01KQ2E0RR40CD
 slug: decompose-apply-supersession-unit-tests
 name: Unit tests
 summary: Unit tests
-status: queued
+status: ready
 depends_on:
   - TASK-01KQ2GGVDC79K
