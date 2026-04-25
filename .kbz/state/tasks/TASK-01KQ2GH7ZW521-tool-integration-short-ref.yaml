@@ -1,0 +1,6 @@
+id: TASK-01KQ2GH7ZW521
+parent_feature: FEAT-01KQ2E0RB4P8A
+slug: tool-integration-short-ref
+name: Integrate short-ref resolution into entity and status tools
+summary: "Add ParseShortPlanRef+ResolvePlanByNumber pre-resolution step to entityGetAction, entityUpdateAction, entityTransitionAction in entity_tool.go and plan dispatch in status_tool.go. Pre-resolution fires only when ParseShortPlanRef returns ok=true."
+status: queued
