@@ -1,0 +1,6 @@
+id: TASK-01KQ2GH7VWRG5
+parent_feature: FEAT-01KQ2E0RB4P8A
+slug: resolve-plan-by-number
+name: Add ResolvePlanByNumber service method
+summary: "Add EntityService.ResolvePlanByNumber(cfg config.Config, prefix, number string) (id, slug string, err error) to internal/service/entities.go. Validates prefix via cfg.IsActivePrefix, scans via ListPlanIDs, returns full canonical ID."
+status: queued
