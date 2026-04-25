@@ -2,9 +2,11 @@ id: FEAT-01KQ2E0RFNBWZ/dev-plan-feat-01kq2e0rfnbwz-task-auto-promotion-on-develo
 path: work/plan/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
 type: dev-plan
 title: "Implementation Plan: Task Auto-Promotion on Developing"
-status: draft
+status: approved
 owner: FEAT-01KQ2E0RFNBWZ
-content_hash: 80def3192576a6ae4d0c1d79517052386c21ef53a75dc841a913ba2abdb35efc
+approved_by: sambeau
+approved_at: "2026-04-25T14:23:24Z"
+content_hash: e07bfc0b584d93d3924697f017685029d30ae1ffc41076748bc3b7d3ecddd302
 created: "2026-04-25T14:20:29Z"
 created_by: sambeau
-updated: "2026-04-25T14:20:29Z"
+updated: "2026-04-25T14:23:24Z"
