@@ -2,9 +2,10 @@
 # Usage: validate-spec-structure.sh <path-to-document>
 # Exit 0: all required sections and cross-references present
 # Exit 1: missing sections or cross-references (names printed to stdout)
-# Required sections: "Problem Statement", "Requirements", "Constraints",
-#                    "Acceptance Criteria", "Verification Plan"
-# Cross-reference check: Problem Statement must contain a reference to a
+# Required sections: "Overview", "Scope", "Functional Requirements",
+#                    "Non-Functional Requirements", "Acceptance Criteria",
+#                    "Verification Plan"
+# Cross-reference check: Overview must contain a reference to a
 #                        design document (path or document ID)
 # Dependencies: POSIX shell utilities only (grep, sed)
 # Runtime: < 5 seconds on files up to 2000 lines
@@ -21,24 +22,24 @@ fi
 
 missing=0
 
-# Check each required section heading (## or ### level)
-for section in "Problem Statement" "Requirements" "Constraints" "Acceptance Criteria" "Verification Plan"; do
-  if ! grep -qE "^#{1,3}[[:space:]]+${section}[[:space:]]*$" "$1"; then
+# Check each required section heading (## level only for top-level sections)
+for section in "Overview" "Scope" "Functional Requirements" "Non-Functional Requirements" "Acceptance Criteria" "Verification Plan"; do
+  if ! grep -qE "^##[[:space:]]+${section}[[:space:]]*$" "$1"; then
     echo "Missing section: ${section}"
     missing=1
   fi
 done
 
-# Cross-reference check: Problem Statement must reference a design document.
-# Extract content between Problem Statement heading and the next heading.
-problem_content=$(sed -n '/^#.*Problem Statement/,/^#/{/^#/d;p;}' "$1")
+# Cross-reference check: Overview must reference a design document.
+# Extract content between Overview heading and the next heading.
+overview_content=$(sed -n '/^##[[:space:]]*Overview[[:space:]]*$/,/^#/{/^#/d;p;}' "$1")
 
-if [ -z "$problem_content" ]; then
-  echo "Missing: Problem Statement section is empty"
+if [ -z "$overview_content" ]; then
+  echo "Missing: Overview section is empty"
   missing=1
 else
-  if ! printf '%s\n' "$problem_content" | grep -qiE '(design|DOC-|/design/)'; then
-    echo "Missing: Problem Statement does not reference a design document"
+  if ! printf '%s\n' "$overview_content" | grep -qiE '(design|DOC-|/design/)'; then
+    echo "Missing: Overview does not reference a design document"
     missing=1
   fi
 fi

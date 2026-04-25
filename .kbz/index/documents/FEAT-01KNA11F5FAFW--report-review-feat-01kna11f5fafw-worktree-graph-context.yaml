@@ -113,8 +113,8 @@ conventional_roles:
     - section_path: 1.4.1
       role: requirement
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T18:31:06.791352Z
+access_count: 2
+last_accessed_at: 2026-04-24T15:55:10.094105Z
 classified: true
 classified_at: 2026-04-22T18:32:58.261625Z
 classified_by: claude-sonnet-4-6

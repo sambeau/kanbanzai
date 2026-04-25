@@ -214,8 +214,8 @@ conventional_roles:
     - section_path: 1.6.2
       role: assumption
       confidence: high
-access_count: 2
-last_accessed_at: 2026-04-23T12:53:51.189396Z
+access_count: 3
+last_accessed_at: 2026-04-24T15:55:10.08611Z
 classified: true
 classified_at: 2026-04-23T12:56:22.543019Z
 classified_by: claude-sonnet-4-6

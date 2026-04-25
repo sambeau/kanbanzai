@@ -1,0 +1,160 @@
+document_id: FEAT-01KQ049NBSQAR/report-review-feat-01kq049nbsqar-handoff-skill-assembly-fix
+document_path: work/reviews/review-FEAT-01KQ049NBSQAR-handoff-skill-assembly-fix.md
+content_hash: d1451923e46efc41224196e883e3c3d895e6a9ba9796ddcea02d0578f2ee9bb1
+indexed_at: 2026-04-25T12:10:49.002476Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: Handoff Skill Assembly Fix'
+      byte_offset: 0
+      byte_count: 6224
+      word_count: 746
+      content_hash: d1451923e46efc41224196e883e3c3d895e6a9ba9796ddcea02d0578f2ee9bb1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 465
+          byte_count: 543
+          word_count: 67
+          content_hash: 7bb9784353b68dc245d37f5a1e6a1e8b02c324cb9c70190cad8d95ada54ada6a
+        - path: "1.2"
+          level: 2
+          title: Reviewers Dispatched
+          byte_offset: 1008
+          byte_count: 395
+          word_count: 53
+          content_hash: 8fe377e98c07214251b270f43d15dc087628106f8500cc400cde3cec3e7f2440
+        - path: "1.3"
+          level: 2
+          title: Review Units
+          byte_offset: 1403
+          byte_count: 1709
+          word_count: 187
+          content_hash: 309c05adf8f34e400d22ea2ee4e46c365841728382030036644d09b1c2367f11
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Unit 1: Sub-agent skill routing (`internal/context/pipeline.go`)'
+              byte_offset: 1420
+              byte_count: 526
+              word_count: 55
+              content_hash: 5a6d9ef53f323aecec73c5c9fdaefc0d4a0c2f70a91c6650991ab55b71716d24
+            - path: 1.3.2
+              level: 3
+              title: 'Unit 2: Skill routing tests (`internal/context/pipeline_test.go`)'
+              byte_offset: 1946
+              byte_count: 649
+              word_count: 69
+              content_hash: abdbf8d023654f63afbee8da5a51926a1b4e4e16529cf1d3b0cef533807e2d43
+            - path: 1.3.3
+              level: 3
+              title: 'Unit 3: Skill file update (`.kbz/skills/implement-task/SKILL.md`)'
+              byte_offset: 2595
+              byte_count: 517
+              word_count: 60
+              content_hash: 6faeddf1097415b14447ba347108dad26942a3bf914848f787be894590e7028d
+        - path: "1.4"
+          level: 2
+          title: Per-Dimension Verdicts
+          byte_offset: 3112
+          byte_count: 2659
+          word_count: 332
+          content_hash: c520852db93b1d192047cefe8c66e1c88886ea7dbc62db67f3adba0c3912d73a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Spec Conformance
+              byte_offset: 3139
+              byte_count: 1507
+              word_count: 171
+              content_hash: 2151f3e4411607a80cc43d5b49869f162a6062b89f76b4760e2b27656e7fd528
+            - path: 1.4.2
+              level: 3
+              title: Implementation Quality
+              byte_offset: 4646
+              byte_count: 444
+              word_count: 63
+              content_hash: 024df77eb9b001ced0b41a9e376aafd5e4b6f0f2b07331a47eec1d41af21d53d
+            - path: 1.4.3
+              level: 3
+              title: Test Adequacy
+              byte_offset: 5090
+              byte_count: 436
+              word_count: 63
+              content_hash: 726e653b347ae06800e9433021714b52110794323cc04c0f573791b06b116b88
+            - path: 1.4.4
+              level: 3
+              title: Security
+              byte_offset: 5526
+              byte_count: 245
+              word_count: 32
+              content_hash: 2c88243bffd8e112f932593f2927865a9e5194f438230916e8825b2fba473881
+        - path: "1.5"
+          level: 2
+          title: Collated Findings
+          byte_offset: 5771
+          byte_count: 89
+          word_count: 12
+          content_hash: 90f979f7c1112102e5fa32de07a209aaf73b6eabf9ed0086c445a39ad0c103a2
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Blocking Findings
+              byte_offset: 5793
+              byte_count: 29
+              word_count: 4
+              content_hash: 748326ad117d8474544b2d4837801b72d89373bf7c85656bf9bb753af307fc7b
+            - path: 1.5.2
+              level: 3
+              title: Non-Blocking Findings
+              byte_offset: 5822
+              byte_count: 38
+              word_count: 5
+              content_hash: 215361c5c1c655688f9c81e3813b7a3258e0288c112f4450aab36efa7c6f1bf4
+        - path: "1.6"
+          level: 2
+          title: Aggregate Verdict
+          byte_offset: 5860
+          byte_count: 126
+          word_count: 20
+          content_hash: af0437394985b2944b9fba636d45d73696c92faddee90bd76605a94eb057c0fb
+        - path: "1.7"
+          level: 2
+          title: Build Verification
+          byte_offset: 5986
+          byte_count: 238
+          word_count: 32
+          content_hash: 766f1f664dd878beaad7105f4a9fc31d481dc1bd82e850b8a91d0b9e999e24d1
+entity_refs:
+    - entity_id: FEAT-01KQ049NBSQAR
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 170
+    - entity_id: P30-handoff-skill-assembly-prompt-hygiene
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 236
+cross_doc_links:
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.3.3
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.4.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+    - section_path: 1.3.2
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-25T12:10:50.265457Z
+classified: false

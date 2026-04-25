@@ -203,8 +203,8 @@ conventional_roles:
     - section_path: "1.4"
       role: alternative
       confidence: high
-access_count: 2
-last_accessed_at: 2026-04-22T18:04:46.219419Z
+access_count: 3
+last_accessed_at: 2026-04-24T15:55:10.120522Z
 classified: true
 classified_at: 2026-04-22T18:08:36.938649Z
 classified_by: claude-sonnet-4-6

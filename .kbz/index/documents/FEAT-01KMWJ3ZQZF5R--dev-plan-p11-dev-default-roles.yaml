@@ -79,8 +79,8 @@ cross_doc_links:
     - target_path: work/spec/reviewer-context-profile-and-skill.md
       link_text: work/spec/reviewer-context-profile-and-skill.md
       section_path: "1"
-access_count: 1
-last_accessed_at: 2026-04-22T18:05:05.553483Z
+access_count: 2
+last_accessed_at: 2026-04-24T15:55:10.008689Z
 classified: true
 classified_at: 2026-04-22T18:06:34.011659Z
 classified_by: claude-sonnet-4-6

@@ -1,0 +1,63 @@
+document_id: FEAT-01KPXGVQY3KQC/report-review-feat-01kpxgvqy3kqc-merge-gate-review-report
+document_path: work/reviews/review-FEAT-01KPXGVQY3KQC-merge-gate-review-report.md
+content_hash: b778cc62922c0683dac9e51354284e74a5b4b0e5a681dc6486e3bf175721d89b
+indexed_at: 2026-04-24T08:28:59.573724Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: Non-bypassable Merge Gate for Review Report'
+      byte_offset: 0
+      byte_count: 6106
+      word_count: 688
+      content_hash: b778cc62922c0683dac9e51354284e74a5b4b0e5a681dc6486e3bf175721d89b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Per-Reviewer Summary
+          byte_offset: 248
+          byte_count: 1071
+          word_count: 101
+          content_hash: 6116f24aa230e818c59d982303b4a89448503f6a7a42391523ef956c0e8bf511
+        - path: "1.2"
+          level: 2
+          title: Collated Findings (deduplicated)
+          byte_offset: 1319
+          byte_count: 1251
+          word_count: 134
+          content_hash: c0f3d8cd1b0257c55af2e0f5505a1d3d90c081b6343e36c8830fd476252fd79b
+        - path: "1.3"
+          level: 2
+          title: Spec Conformance Summary
+          byte_offset: 2570
+          byte_count: 2014
+          word_count: 243
+          content_hash: 2ff4c76423d218048343f21cf98ab05cb9cb8972214988e8660e6d100c1bdc05
+        - path: "1.4"
+          level: 2
+          title: Notes
+          byte_offset: 4584
+          byte_count: 901
+          word_count: 122
+          content_hash: 599227f2aadcc5dcfcc960a7654ba48220f9ab905030d4246423ff7c9708b4fa
+        - path: "1.5"
+          level: 2
+          title: 'Aggregate Verdict: approved_with_followups'
+          byte_offset: 5485
+          byte_count: 621
+          word_count: 63
+          content_hash: 4f697c8a228f2642ebd6aa6868c9c076076b7367b7f604f008ab119c6e802b39
+entity_refs:
+    - entity_id: FEAT-01KPXGVQY3KQC
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 64
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-24T08:29:00.045367Z
+classified: false

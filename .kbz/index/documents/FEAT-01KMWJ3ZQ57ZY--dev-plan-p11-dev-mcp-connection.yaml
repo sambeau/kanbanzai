@@ -52,8 +52,8 @@ cross_doc_links:
     - target_path: work/design/fresh-install-experience.md
       link_text: work/design/fresh-install-experience.md
       section_path: "1"
-access_count: 1
-last_accessed_at: 2026-04-22T18:05:04.628246Z
+access_count: 2
+last_accessed_at: 2026-04-24T15:55:10.005697Z
 classified: true
 classified_at: 2026-04-22T18:06:26.240912Z
 classified_by: claude-sonnet-4-6

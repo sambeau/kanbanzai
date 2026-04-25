@@ -1,0 +1,196 @@
+document_id: FEAT-01KPXGZXX8BJZ/report-review-p29-state-store-read-performance
+document_path: work/reviews/review-p29-state-store-read-performance.md
+content_hash: ddcad5a94cbad052c189f2ad1d5b00d0bf7211abfaf3c8fa607f138d8580747b
+indexed_at: 2026-04-24T10:36:28.94022Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: P29 State Store Read Path Performance'
+      byte_offset: 0
+      byte_count: 8420
+      word_count: 963
+      content_hash: ddcad5a94cbad052c189f2ad1d5b00d0bf7211abfaf3c8fa607f138d8580747b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Review units
+          byte_offset: 208
+          byte_count: 391
+          word_count: 24
+          content_hash: 0c3c037e644f2b199c33b0350ef8303fb99452ca5da968a35205215712abaa5a
+        - path: "1.2"
+          level: 2
+          title: Per-reviewer summary
+          byte_offset: 599
+          byte_count: 886
+          word_count: 114
+          content_hash: b68e381c4a0660e37905b8099b4b52313f9f59ef7ea11cb0917e29e579f62094
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Reviewer: conformance'
+              byte_offset: 624
+              byte_count: 235
+              word_count: 31
+              content_hash: 021bf6d4cb6b99af93ac4460888afd657abedf943f32177a1757074c4ac3b622
+            - path: 1.2.2
+              level: 3
+              title: 'Reviewer: quality'
+              byte_offset: 859
+              byte_count: 254
+              word_count: 30
+              content_hash: 01c28ef793fce632c20a614b03ba02cd201cd3975383327a4dab3a690c2437a0
+            - path: 1.2.3
+              level: 3
+              title: 'Reviewer: testing'
+              byte_offset: 1113
+              byte_count: 231
+              word_count: 34
+              content_hash: 9afd68a6c1084543a14d574c6eb968e3f7bfadb0b45737d19d15eb3694257a2b
+            - path: 1.2.4
+              level: 3
+              title: 'Reviewer: security'
+              byte_offset: 1344
+              byte_count: 141
+              word_count: 16
+              content_hash: 7b8c2f12429f235bb3c658716132498b23633d1d2180cadee949d26361985f40
+        - path: "1.3"
+          level: 2
+          title: Collated findings (deduplicated)
+          byte_offset: 1485
+          byte_count: 3802
+          word_count: 467
+          content_hash: 35a0a27ce4e5117495ce7278758a99f7b117bba432be6c6ad56f8637d7f38a0c
+          children:
+            - path: 1.3.1
+              level: 3
+              title: '[B-1] ~~(blocking)~~ → FALSE POSITIVE — resolved by code comment'
+              byte_offset: 1522
+              byte_count: 1430
+              word_count: 173
+              content_hash: a631b2fc570c03c4020e3228f6e6b41e5d24fd24b26195cab6e46600c619de93
+            - path: 1.3.2
+              level: 3
+              title: '[NB-1] (non-blocking) → FIXED'
+              byte_offset: 2952
+              byte_count: 776
+              word_count: 90
+              content_hash: 0f81e149565fd2e900dcfac2590fa559d9b02702e06313044abae019a08ff2f4
+            - path: 1.3.3
+              level: 3
+              title: '[NB-2] (non-blocking) → FIXED'
+              byte_offset: 3728
+              byte_count: 785
+              word_count: 105
+              content_hash: 7e0de5c3babac739a32eb1997ab03c0d6061f0a7dd9f6d928bf9d1f4178f8e86
+            - path: 1.3.4
+              level: 3
+              title: '[NB-3] (non-blocking) → FIXED'
+              byte_offset: 4513
+              byte_count: 774
+              word_count: 95
+              content_hash: 8a806de6d8effa20f0c551fac8c17b17e26f724bee5c59839aa4e054c2befa8a
+        - path: "1.4"
+          level: 2
+          title: Aggregate verdict
+          byte_offset: 5287
+          byte_count: 466
+          word_count: 52
+          content_hash: eca16bc8d93e035763fd8d340e33a68bba985a17e32e5167272f8cb745343e3b
+        - path: "1.5"
+          level: 2
+          title: Feature-by-feature verdicts (final)
+          byte_offset: 5753
+          byte_count: 2667
+          word_count: 284
+          content_hash: 047942a7211d262adf591737e399fcc387c90501149627616688a2c4699585f0
+          children:
+            - path: 1.5.1
+              level: 3
+              title: FEAT-01KPXGZXX8BJZ — cache-warm-up-server-start
+              byte_offset: 5793
+              byte_count: 593
+              word_count: 65
+              content_hash: 30b8f21eaa5b0ded8df12d0e2beb326f62935652f3c7a4c01bbf2296486f1910
+            - path: 1.5.2
+              level: 3
+              title: FEAT-01KPXH0F5GFNV — cache-first-read-path
+              byte_offset: 6386
+              byte_count: 1309
+              word_count: 145
+              content_hash: 83f1067c1e4eaacac1091609015e48d8fcc978581fd87b05d901076f833cd47d
+            - path: 1.5.3
+              level: 3
+              title: FEAT-01KPXH0WSTHAM — cache-eviction-on-delete
+              byte_offset: 7695
+              byte_count: 725
+              word_count: 70
+              content_hash: 6589d99e10724b841d8aa9cf3fc1aab6c3bfce2a6a520f9da5f380c4eaf946ed
+entity_refs:
+    - entity_id: FEAT-01KPXGZXX8BJZ
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 64
+    - entity_id: FEAT-01KPXH0F5GFNV
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 84
+    - entity_id: FEAT-01KPXH0WSTHAM
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 104
+    - entity_id: FEAT-01KPXH0F5GFNV
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 1686
+    - entity_id: FEAT-01KPXGZXX8BJZ
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 3064
+    - entity_id: FEAT-01KPXH0F5GFNV
+      entity_type: feature
+      section_path: 1.3.3
+      byte_offset: 3886
+    - entity_id: FEAT-01KPXH0F5GFNV
+      entity_type: feature
+      section_path: 1.3.4
+      byte_offset: 4635
+    - entity_id: FEAT-01FAKEDEADBEEF
+      entity_type: feature
+      section_path: 1.3.4
+      byte_offset: 4917
+    - entity_id: FEAT-01KPXGZXX8BJZ
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 5501
+    - entity_id: FEAT-01KPXH0F5GFNV
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 5596
+    - entity_id: FEAT-01KPXH0WSTHAM
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 5671
+    - entity_id: FEAT-01KPXGZXX8BJZ
+      entity_type: feature
+      section_path: 1.5.1
+      byte_offset: 5797
+    - entity_id: FEAT-01KPXH0F5GFNV
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 6390
+    - entity_id: FEAT-01KPXH0WSTHAM
+      entity_type: feature
+      section_path: 1.5.3
+      byte_offset: 7699
+    - entity_id: P29-state-store-read-performance
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 129
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-24T10:36:30.023854Z
+classified: false

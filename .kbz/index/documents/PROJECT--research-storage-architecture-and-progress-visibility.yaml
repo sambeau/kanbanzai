@@ -1,0 +1,346 @@
+document_id: PROJECT/research-storage-architecture-and-progress-visibility
+document_path: work/research/storage-architecture-and-progress-visibility.md
+content_hash: 872bea35429490faf1de5fcdf4ef30550f24aecb2d522187dfb76334923030b3
+indexed_at: 2026-04-24T12:10:42.129872Z
+sections:
+    - path: "1"
+      level: 2
+      title: Research Question
+      byte_offset: 287
+      byte_count: 725
+      word_count: 99
+      content_hash: f295824385885a8c8d6b5a272f3d1f34a632bd18480a74c6515205c1248cb961
+    - path: "2"
+      level: 2
+      title: Executive Summary
+      byte_offset: 1012
+      byte_count: 1977
+      word_count: 269
+      content_hash: a3c30c6c914f7a8f9c92c0c279fbe715246ee2016a6c961c225262e729045db2
+    - path: "3"
+      level: 2
+      title: Scope and Methodology
+      byte_offset: 2989
+      byte_count: 2009
+      word_count: 237
+      content_hash: e554959774e173fe49c537a8398255aa1f96acd5a85100450d5e42dcaf8389d7
+    - path: "4"
+      level: 2
+      title: Findings
+      byte_offset: 4998
+      byte_count: 12608
+      word_count: 1720
+      content_hash: 3e3c45d4479e8a05f43989cf99e77326ab41f54eae42f30af83ede935917d1fc
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Finding 1: Commit-log noise is empirically confirmed and proportional to workflow activity, not entity volume'
+          byte_offset: 5011
+          byte_count: 1056
+          word_count: 143
+          content_hash: c111371bdaede79497fded0ad9ef198f05b0664d127be476e110dc285b9d1830
+        - path: "4.2"
+          level: 3
+          title: 'Finding 2: The current concurrency model does not exercise file-based scaling limits'
+          byte_offset: 6067
+          byte_count: 882
+          word_count: 101
+          content_hash: 0845db8dfcf7c838ccdaefb5191759c52c77f6f4d2a901bae06d09835771d413
+        - path: "4.3"
+          level: 3
+          title: 'Finding 3: A derived SQLite cache already exists and is actively doing query-acceleration work'
+          byte_offset: 6949
+          byte_count: 1124
+          word_count: 146
+          content_hash: 5955dc13cd61583875a046273efbf9d5811def09bd467229a9c1a3352654bc90
+        - path: "4.4"
+          level: 3
+          title: 'Finding 4: JSONL append-only logs have a known merge-conflict failure mode that requires explicit mitigation'
+          byte_offset: 8073
+          byte_count: 1350
+          word_count: 185
+          content_hash: 51f31b52b05511c7d23892d3110aa2ee694c65da5b705efb30550f945aaa548b
+        - path: "4.5"
+          level: 3
+          title: 'Finding 5: The comparable-system pattern is "local-canonical + optional service backend," not "file replacement"'
+          byte_offset: 9423
+          byte_count: 1209
+          word_count: 172
+          content_hash: 28516d2bac81c850a48cdbcaf02e09a6975b8e172e1af108f08a0caab2e881f6
+        - path: "4.6"
+          level: 3
+          title: 'Finding 6: Retiring Git as the canonical transport would break the viewer contract'
+          byte_offset: 10632
+          byte_count: 1070
+          word_count: 144
+          content_hash: a98661510639fbef524e9978cd276563b1683f67d935642444ca757d67df49f9
+        - path: "4.7"
+          level: 3
+          title: 'Finding 7: Operational burden of a Postgres backend is strictly additive and redefines the adoption surface'
+          byte_offset: 11702
+          byte_count: 948
+          word_count: 125
+          content_hash: 01df9f748aa5e13923d4edc872f351de5dc68e770f7acc46e339ff507f7cabfc
+        - path: "4.8"
+          level: 3
+          title: 'Finding 8: The prior comparison reaches the same conclusion but predates the cache and does not cite the JSONL merge-conflict failure'
+          byte_offset: 12650
+          byte_count: 958
+          word_count: 136
+          content_hash: e1c4025d926a59abb46c2862ac53bdf1c5ab95a11e9c60dd12927a2ca584a030
+        - path: "4.9"
+          level: 3
+          title: 'Finding 9: Cross-clone progress visibility is a distinct problem from concurrency, commit noise, or canonical authority'
+          byte_offset: 13608
+          byte_count: 1940
+          word_count: 273
+          content_hash: a343af24ff281a211b641f136ea38683faf38614e29728a64fa559e88e42763e
+        - path: "4.10"
+          level: 3
+          title: 'Finding 10: Hybrid patterns separate visibility from authority and cover the relevant trade-off space'
+          byte_offset: 15548
+          byte_count: 2058
+          word_count: 293
+          content_hash: 889967dd9dc98a80ee4747a4f664aab597eeed7bf5a917043000a2d0ffdc54d9
+    - path: "5"
+      level: 2
+      title: Trade-Off Matrix
+      byte_offset: 17606
+      byte_count: 1924
+      word_count: 393
+      content_hash: ffc22b77538006706b8b899d0dd558191c9e7ea819b04f9621d989b736b28b08
+    - path: "6"
+      level: 2
+      title: Recommendations
+      byte_offset: 19530
+      byte_count: 7553
+      word_count: 1029
+      content_hash: 27bce7762b6302a5e782e4d00f704cc92a67fba44ff8fc526302f2f3ebbf75d3
+      children:
+        - path: "6.1"
+          level: 3
+          title: 'Recommendation 1: Ship Git-native evolution as the immediate response to commit noise'
+          byte_offset: 19685
+          byte_count: 706
+          word_count: 91
+          content_hash: a4225251d3304a83c66bba0caf17cf090c1c422f8879fb1fd4ff51945f30a5c5
+        - path: "6.2"
+          level: 3
+          title: 'Recommendation 2: Add a custom JSONL merge driver as part of the evolution work'
+          byte_offset: 20391
+          byte_count: 719
+          word_count: 103
+          content_hash: 4038285dbda69caaa3d8540c33e64af8a183d18e4dd5b9ec49e6b145191d0857
+        - path: "6.3"
+          level: 3
+          title: 'Recommendation 3: Update the transition-history design to build on `internal/cache/` rather than proposing a new SQLite layer'
+          byte_offset: 21110
+          byte_count: 603
+          word_count: 78
+          content_hash: bdc52d5fed6f3ddb96139e041132d95d093c8e8808de70fbe887676fd29503ed
+        - path: "6.4"
+          level: 3
+          title: 'Recommendation 4: Adopt push-on-milestone + `--remote` aware status as the first visibility improvement (Hybrid C)'
+          byte_offset: 21713
+          byte_count: 791
+          word_count: 110
+          content_hash: abba9705a8159ec7a1b382bcf30528be02c081e8996637c6424f49dbc224c3fa
+        - path: "6.5"
+          level: 3
+          title: 'Recommendation 5: If Hybrid C proves insufficient, build Hybrid A (read-only aggregator) as a separate product'
+          byte_offset: 22504
+          byte_count: 955
+          word_count: 147
+          content_hash: b904dc0029d829f55e733cfd3311bda9d4477bc50903c663140d0c7e2075f876
+        - path: "6.6"
+          level: 3
+          title: 'Recommendation 6: Invest in backend-neutral service contracts as optionality insurance'
+          byte_offset: 23459
+          byte_count: 910
+          word_count: 116
+          content_hash: 393b67cf52ded1c695dd632578731a80aec1b40e836a68e3bb11bdbc01ccf75e
+        - path: "6.7"
+          level: 3
+          title: 'Recommendation 7: Treat a fully centralised backend as a strategic option, not a planned milestone'
+          byte_offset: 24369
+          byte_count: 647
+          word_count: 91
+          content_hash: e44fe99c617252a8ddba0f245d29857f92cce166bbbc59aae7e80e07fa18825d
+        - path: "6.8"
+          level: 3
+          title: 'Recommendation 8: Reframe the centralised-state design around two decoupled sub-problems'
+          byte_offset: 25016
+          byte_count: 853
+          word_count: 111
+          content_hash: d66283d91d6a20a445b30a01c310297396e43e88288c78e8c5076264046c8c6c
+        - path: "6.9"
+          level: 3
+          title: 'Recommendation 9: If centralised mode is ever pursued, enforce one canonical backend per project'
+          byte_offset: 25869
+          byte_count: 614
+          word_count: 78
+          content_hash: 827e26755f3b842d2e69e08070fbfccd2af76d7cbb35ab7a84b2961802d49f04
+        - path: "6.10"
+          level: 3
+          title: 'Recommendation 10: Defer Hybrid B (event mirror) until a specific pre-push-visibility requirement appears'
+          byte_offset: 26483
+          byte_count: 600
+          word_count: 87
+          content_hash: eae25d188aaff0ea22bc1bbd76e04fc6e2fc1c49848d65239c01e750302e85da
+    - path: "7"
+      level: 2
+      title: Risks and Mitigations
+      byte_offset: 27083
+      byte_count: 1550
+      word_count: 238
+      content_hash: d4de5ed846820e4b6a4a04367074123106b89623d9b7e3467f360afe4e335c86
+    - path: "8"
+      level: 2
+      title: Limitations
+      byte_offset: 28633
+      byte_count: 1210
+      word_count: 168
+      content_hash: e28646aa9f049cabe7353a48244d777bdc7a0ff64f9835e766f7d78f4b3df8fa
+    - path: "9"
+      level: 2
+      title: Next Steps
+      byte_offset: 29843
+      byte_count: 1971
+      word_count: 255
+      content_hash: 0389870693cdbf3f3f2615692267613768fd2ebd25ed7b2bdcd68ad096e6eaee
+    - path: "10"
+      level: 2
+      title: Related Documents
+      byte_offset: 31814
+      byte_count: 838
+      word_count: 83
+      content_hash: eb23824189e72f872011e285c16d832042fc3aba225a991fe779ea92e889c320
+entity_refs:
+    - entity_id: FEAT-01KPX5CVVY357
+      entity_type: feature
+      section_path: "4.1"
+      byte_offset: 5468
+    - entity_id: FEAT-X
+      entity_type: feature
+      section_path: "4.9"
+      byte_offset: 14136
+    - entity_id: BUG-01KPQY347TABX
+      entity_type: bug
+      section_path: "4.1"
+      byte_offset: 5447
+cross_doc_links:
+    - target_path: work/research/state-backend-comparison.md
+      link_text: work/research/state-backend-comparison.md
+      section_path: ""
+    - target_path: work/design/transition-history-storage.md
+      link_text: work/design/transition-history-storage.md
+      section_path: "3"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "3"
+    - target_path: work/design/public-schema-interface.md
+      link_text: work/design/public-schema-interface.md
+      section_path: "3"
+    - target_path: work/design/git-commit-policy.md
+      link_text: work/design/git-commit-policy.md
+      section_path: "3"
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "3"
+    - target_path: work/research/state-backend-comparison.md
+      link_text: work/research/state-backend-comparison.md
+      section_path: "3"
+    - target_path: work/design/transition-history-storage.md
+      link_text: work/design/transition-history-storage.md
+      section_path: "4.1"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "4.2"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "4.2"
+    - target_path: work/design/public-schema-interface.md
+      link_text: work/design/public-schema-interface.md
+      section_path: "4.3"
+    - target_path: work/design/transition-history-storage.md
+      link_text: work/design/transition-history-storage.md
+      section_path: "4.4"
+    - target_path: work/design/public-schema-interface.md
+      link_text: work/design/public-schema-interface.md
+      section_path: "4.6"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "4.6"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "4.7"
+    - target_path: work/research/state-backend-comparison.md
+      link_text: work/research/state-backend-comparison.md
+      section_path: "4.8"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "4.9"
+    - target_path: work/design/public-schema-interface.md
+      link_text: work/design/public-schema-interface.md
+      section_path: "4.9"
+    - target_path: work/design/transition-history-storage.md
+      link_text: work/design/transition-history-storage.md
+      section_path: "6.1"
+    - target_path: work/design/transition-history-storage.md
+      link_text: work/design/transition-history-storage.md
+      section_path: "6.3"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "6.6"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "6.7"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "6.8"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "6.9"
+    - target_path: work/design/transition-history-storage.md
+      link_text: work/design/transition-history-storage.md
+      section_path: "9"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "9"
+    - target_path: work/design/transition-history-storage.md
+      link_text: work/design/transition-history-storage.md
+      section_path: "10"
+    - target_path: work/design/centralized-state-server.md
+      link_text: work/design/centralized-state-server.md
+      section_path: "10"
+    - target_path: work/research/state-backend-comparison.md
+      link_text: work/research/state-backend-comparison.md
+      section_path: "10"
+    - target_path: work/design/public-schema-interface.md
+      link_text: work/design/public-schema-interface.md
+      section_path: "10"
+    - target_path: work/design/git-commit-policy.md
+      link_text: work/design/git-commit-policy.md
+      section_path: "10"
+    - target_path: work/design/kanbanzai-1.0.md
+      link_text: work/design/kanbanzai-1.0.md
+      section_path: "10"
+conventional_roles:
+    - section_path: "1"
+      role: question
+      confidence: high
+    - section_path: "2"
+      role: narrative
+      confidence: high
+    - section_path: "3"
+      role: constraint
+      confidence: high
+    - section_path: "6.10"
+      role: requirement
+      confidence: high
+    - section_path: "7"
+      role: risk
+      confidence: high
+access_count: 2
+last_accessed_at: 2026-04-24T15:55:10.344995Z
+classified: false

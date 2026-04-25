@@ -86,8 +86,8 @@ conventional_roles:
     - section_path: "1.4"
       role: requirement
       confidence: high
-access_count: 7
-last_accessed_at: 2026-04-23T10:49:16.505144Z
+access_count: 8
+last_accessed_at: 2026-04-24T15:55:10.153315Z
 section_access:
     "1.1":
         access_count: 3

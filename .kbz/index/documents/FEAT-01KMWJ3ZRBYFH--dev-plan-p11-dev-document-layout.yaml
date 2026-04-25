@@ -100,8 +100,8 @@ cross_doc_links:
     - target_path: work/README.md
       link_text: work/README.md
       section_path: 1.2.3
-access_count: 1
-last_accessed_at: 2026-04-22T18:05:06.053256Z
+access_count: 2
+last_accessed_at: 2026-04-24T15:55:10.010005Z
 classified: true
 classified_at: 2026-04-22T18:06:40.245666Z
 classified_by: claude-sonnet-4-6

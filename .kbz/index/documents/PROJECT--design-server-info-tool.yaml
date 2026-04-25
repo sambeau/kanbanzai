@@ -104,8 +104,8 @@ conventional_roles:
     - section_path: "1.5"
       role: question
       confidence: high
-access_count: 2
-last_accessed_at: 2026-04-22T18:25:14.147323Z
+access_count: 3
+last_accessed_at: 2026-04-24T15:55:10.257444Z
 classified: true
 classified_at: 2026-04-22T18:28:09.022406Z
 classified_by: claude-sonnet-4-6

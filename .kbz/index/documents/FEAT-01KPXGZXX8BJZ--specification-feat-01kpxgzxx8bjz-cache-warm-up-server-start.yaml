@@ -160,8 +160,8 @@ conventional_roles:
     - section_path: "1.7"
       role: assumption
       confidence: high
-access_count: 5
-last_accessed_at: 2026-04-24T01:12:37.735036Z
+access_count: 6
+last_accessed_at: 2026-04-24T15:55:10.166112Z
 section_access:
     "1":
         access_count: 2

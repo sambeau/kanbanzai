@@ -195,8 +195,8 @@ conventional_roles:
     - section_path: 1.2.1
       role: definition
       confidence: high
-access_count: 2
-last_accessed_at: 2026-04-22T18:13:39.128081Z
+access_count: 3
+last_accessed_at: 2026-04-24T15:55:09.984444Z
 classified: true
 classified_at: 2026-04-22T18:17:39.674483Z
 classified_by: claude-sonnet-4-6

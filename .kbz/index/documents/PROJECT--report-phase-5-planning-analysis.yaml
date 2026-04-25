@@ -279,8 +279,8 @@ conventional_roles:
     - section_path: 1.6.2
       role: risk
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T18:38:37.590279Z
+access_count: 2
+last_accessed_at: 2026-04-24T15:55:10.322465Z
 classified: true
 classified_at: 2026-04-22T18:45:45.169399Z
 classified_by: claude-sonnet-4-6

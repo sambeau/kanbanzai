@@ -275,8 +275,8 @@ conventional_roles:
     - section_path: "1.31"
       role: narrative
       confidence: high
-access_count: 5
-last_accessed_at: 2026-04-23T11:40:27.482276Z
+access_count: 6
+last_accessed_at: 2026-04-24T15:55:10.255577Z
 section_access:
     "1.2":
         access_count: 1
