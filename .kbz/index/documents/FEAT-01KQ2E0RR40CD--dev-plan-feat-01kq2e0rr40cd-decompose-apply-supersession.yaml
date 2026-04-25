@@ -1,0 +1,127 @@
+document_id: FEAT-01KQ2E0RR40CD/dev-plan-feat-01kq2e0rr40cd-decompose-apply-supersession
+document_path: work/plan/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+content_hash: 04fad19a0b7aa8e900cd8726a22f14228ee86a299cba8722c1490d1b1c72f744
+indexed_at: 2026-04-25T14:20:32.497713Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Decompose Apply Supersession'
+      byte_offset: 0
+      byte_count: 6515
+      word_count: 859
+      content_hash: 04fad19a0b7aa8e900cd8726a22f14228ee86a299cba8722c1490d1b1c72f744
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 738
+          byte_count: 624
+          word_count: 77
+          content_hash: 3677d4c72cc17580b34734a70b553feb585f0396c748d135e95e04ef23ba4f1c
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1362
+          byte_count: 1401
+          word_count: 176
+          content_hash: c3bf4fba7417a3509ae9e78b81e52b55c5920f4626dff2d5addb7fa392e55ff5
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Implement the supersession pass and response fields'
+              byte_offset: 1381
+              byte_count: 830
+              word_count: 105
+              content_hash: a29f831632c5cbebdb8a739a8b0fe2953491d833aaa649c9513cd50dde4aafda
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Unit tests'
+              byte_offset: 2211
+              byte_count: 552
+              word_count: 68
+              content_hash: 39113bef181451c7e47dc96277efa5ee110588b927fcba3a7ff2179efcabcb81
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 2763
+          byte_count: 295
+          word_count: 44
+          content_hash: 0486260717fbf58b05932ab8ef7aac8049a71da79351ba92790dee9e7bbcf3ff
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 3058
+          byte_count: 1405
+          word_count: 199
+          content_hash: 5982c28350cc6e57a054b2368c3cb51db3a8502ab3b80cfdcb6133b4abc67c12
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: `UpdateStatus` rejects `queued → not-planned`'
+              byte_offset: 3078
+              byte_count: 472
+              word_count: 62
+              content_hash: 732c8e1f4e71c2f705471abb76e75af2c6edf51a588f05909f6b82b13080a30a
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: Entity list performance during supersession pass'
+              byte_offset: 3550
+              byte_count: 394
+              word_count: 54
+              content_hash: ef96efa812309676ca06f19e1f8a64bcab3f5c8fdd6318dd6a5b8da85914ef05
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Supersession pass commits intermediate state if Pass 1 fails'
+              byte_offset: 3944
+              byte_count: 519
+              word_count: 80
+              content_hash: 5f97e00501dd7f0e68140c18d73322fc605f0b83657423a91b333c426de0a400
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 4463
+          byte_count: 988
+          word_count: 176
+          content_hash: 9f6ecce664dafce7cc038829a58ecf4a7696e095685378c1e6dbe2b1420599a1
+        - path: "1.6"
+          level: 2
+          title: Interface Contract
+          byte_offset: 5451
+          byte_count: 1064
+          word_count: 148
+          content_hash: d717ab84db1f6c8c56fb2a4f809268461598731ab32d63285c2deda9b5f40cbd
+entity_refs:
+    - entity_id: FEAT-01KQ2E0RR40CD
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 453
+    - entity_id: P34-agent-workflow-ergonomics
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 647
+cross_doc_links:
+    - target_path: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      link_text: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      section_path: "1"
+    - target_path: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      link_text: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-25T14:20:33.081806Z
+classified: false

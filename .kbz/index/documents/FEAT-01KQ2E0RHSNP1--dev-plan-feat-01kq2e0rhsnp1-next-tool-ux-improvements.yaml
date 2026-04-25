@@ -1,0 +1,162 @@
+document_id: FEAT-01KQ2E0RHSNP1/dev-plan-feat-01kq2e0rhsnp1-next-tool-ux-improvements
+document_path: work/plan/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+content_hash: 0da77e694cb5f30ea7c9d46cc6b7d34f43056870a3fb27f8fd5afc16d9791987
+indexed_at: 2026-04-25T14:20:30.443516Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Next Tool UX Improvements'
+      byte_offset: 0
+      byte_count: 13130
+      word_count: 1662
+      content_hash: 0da77e694cb5f30ea7c9d46cc6b7d34f43056870a3fb27f8fd5afc16d9791987
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Scope
+          byte_offset: 621
+          byte_count: 963
+          word_count: 115
+          content_hash: 12ebc4857e8170921e972e5dd35b464948f545ac18aa6e72ca8cc23baff4682e
+        - path: "1.2"
+          level: 2
+          title: 2. Interface Contracts
+          byte_offset: 1584
+          byte_count: 1202
+          word_count: 161
+          content_hash: edd32893963f361b23fca0fd13f55e3bb83238f093c3691ee4217c8adf66e11a
+          children:
+            - path: 1.2.1
+              level: 3
+              title: '`nextContextToMap` output map'
+              byte_offset: 1611
+              byte_count: 440
+              word_count: 59
+              content_hash: d464dea7afbcb7bf1121bf5cd7b03f64d529c014db46c4f6c28545d875eaa4db
+            - path: 1.2.2
+              level: 3
+              title: '`nextClaimMode` response (reclaim path)'
+              byte_offset: 2051
+              byte_count: 501
+              word_count: 65
+              content_hash: 89b99df379219c9ad75d91f4d18301f5513c1ec447a4b55f6c81c0d3c57e8d8d
+            - path: 1.2.3
+              level: 3
+              title: No changes to `assembleContext` or `assembledContext`
+              byte_offset: 2552
+              byte_count: 234
+              word_count: 33
+              content_hash: 7374bd786a05d40ddf56c233c75f98cc542fc5cfcd02ed89a1aacdfddad6e665
+        - path: "1.3"
+          level: 2
+          title: 3. Task Breakdown
+          byte_offset: 2786
+          byte_count: 623
+          word_count: 96
+          content_hash: c9e970629ade700f43fd9a17fe63e8933b6100272d956f3c231bfb4e7e9eccb8
+        - path: "1.4"
+          level: 2
+          title: 4. Task Details
+          byte_offset: 3409
+          byte_count: 6328
+          word_count: 780
+          content_hash: c56aa6725596ef0032bee82dff4c1d92c166eabc41bb0355e15373528c2896fb
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Task 1: Idempotent claim — reroute `active` branch'
+              byte_offset: 3429
+              byte_count: 2373
+              word_count: 319
+              content_hash: 4d3463d7db720cbb4d8325bcc65b0508d0526d0619226da0fc83950cc7f6a058
+            - path: 1.4.2
+              level: 3
+              title: 'Task 2: Worktree path — add field to `nextContextToMap`'
+              byte_offset: 5802
+              byte_count: 1340
+              word_count: 155
+              content_hash: 7f7244dd388f97465f8ac0cb1a2c64927c11b1f64b47877e271b2db9eacc84db
+            - path: 1.4.3
+              level: 3
+              title: 'Task 3: Tests'
+              byte_offset: 7142
+              byte_count: 2595
+              word_count: 302
+              content_hash: 6646e2cca79b5df0c02fe8a1284572442a8056255fc71a32567b6cc05aa6a068
+        - path: "1.5"
+          level: 2
+          title: 5. Dependency Graph
+          byte_offset: 9737
+          byte_count: 542
+          word_count: 87
+          content_hash: b7f9ea52a4af25d094b84f3432d3de2211635073e85f8f3289883d49a01bff82
+        - path: "1.6"
+          level: 2
+          title: 6. Risk Assessment
+          byte_offset: 10279
+          byte_count: 1167
+          word_count: 155
+          content_hash: 7778042cd86594a15bff687ce42fd03a6165610b5ac139e8042730dce0f199f9
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Risk: Reclaim path skips required validation'
+              byte_offset: 10302
+              byte_count: 622
+              word_count: 84
+              content_hash: d127daeee145f3b5a9abd03fd540880eb4d7cec47e06036ffe6fe4a167662253
+            - path: 1.6.2
+              level: 3
+              title: 'Risk: `actx.worktreePath` is not populated in integration tests'
+              byte_offset: 10924
+              byte_count: 522
+              word_count: 67
+              content_hash: 120e01e86e7a18175ec04ce23599ce64880e63bffdfb28f83d099d86c6213905
+        - path: "1.7"
+          level: 2
+          title: 7. Verification Approach
+          byte_offset: 11446
+          byte_count: 1684
+          word_count: 228
+          content_hash: 33f3f78ce643ff3aca555c1d20f51b6ef72648d7edd2b4f4fa50bb60e59cd054
+entity_refs:
+    - entity_id: FEAT-01KQ2E0RHSNP1
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 386
+    - entity_id: P34-agent-workflow-ergonomics
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 546
+cross_doc_links:
+    - target_path: work/spec/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+      link_text: work/spec/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+      section_path: "1"
+    - target_path: work/spec/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+      link_text: work/spec/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: narrative
+      confidence: high
+    - section_path: 1.2.3
+      role: narrative
+      confidence: high
+    - section_path: 1.4.2
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: risk
+      confidence: high
+    - section_path: 1.6.1
+      role: risk
+      confidence: high
+    - section_path: 1.6.2
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-25T14:20:30.96861Z
+classified: false

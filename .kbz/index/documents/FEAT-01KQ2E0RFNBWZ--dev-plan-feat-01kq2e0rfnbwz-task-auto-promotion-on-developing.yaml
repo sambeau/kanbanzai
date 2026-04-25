@@ -1,0 +1,162 @@
+document_id: FEAT-01KQ2E0RFNBWZ/dev-plan-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing
+document_path: work/plan/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+content_hash: 80def3192576a6ae4d0c1d79517052386c21ef53a75dc841a913ba2abdb35efc
+indexed_at: 2026-04-25T14:20:29.602779Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Task Auto-Promotion on Developing'
+      byte_offset: 0
+      byte_count: 11557
+      word_count: 1449
+      content_hash: 80def3192576a6ae4d0c1d79517052386c21ef53a75dc841a913ba2abdb35efc
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Scope
+          byte_offset: 795
+          byte_count: 746
+          word_count: 90
+          content_hash: 2d17d5ada776e99c849ebac638085dd4e07ed9ff007ab7cf282360d35de9fc84
+        - path: "1.2"
+          level: 2
+          title: 2. Interface Contracts
+          byte_offset: 1541
+          byte_count: 1374
+          word_count: 160
+          content_hash: 59486ada76c5f69c90f75143c7a53aa9d035e5bc05b3b3bac533c5677c38bcbb
+          children:
+            - path: 1.2.1
+              level: 3
+              title: '`PromoteQueuedTasks`'
+              byte_offset: 1568
+              byte_count: 443
+              word_count: 59
+              content_hash: 48900d19378ad6dbf706320e2c12127d9a63b04dedada32366fd0033d35b0e69
+            - path: 1.2.2
+              level: 3
+              title: '`FeaturePromotionHook`'
+              byte_offset: 2011
+              byte_count: 635
+              word_count: 65
+              content_hash: e7b83e3a33b6a60ed46648409f762aee39929e2d90aaaf709ab7992914348983
+            - path: 1.2.3
+              level: 3
+              title: Hook wiring
+              byte_offset: 2646
+              byte_count: 269
+              word_count: 32
+              content_hash: 0d646d4e772553d4f7e790690e237eb15aa9d495f197da3b1874fe4906bce16c
+        - path: "1.3"
+          level: 2
+          title: 3. Task Breakdown
+          byte_offset: 2915
+          byte_count: 763
+          word_count: 94
+          content_hash: d731fd03fecdf3a8ecaa3c2a1592938780b005c35eefc37ea72bd0978b017489
+        - path: "1.4"
+          level: 2
+          title: 4. Task Details
+          byte_offset: 3678
+          byte_count: 5680
+          word_count: 707
+          content_hash: cb649cff3f1d7025a825fcbdc3096a5d03b58a11d53e544a70b08b85580a1748
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Task 1: Implement `PromoteQueuedTasks`'
+              byte_offset: 3698
+              byte_count: 2021
+              word_count: 258
+              content_hash: e0945a14e1d0640d414a3bfc9ae5a2435d36fb0292243bf43e8fb2f13fe7af9b
+            - path: 1.4.2
+              level: 3
+              title: 'Task 2: Implement `FeaturePromotionHook` and wire'
+              byte_offset: 5719
+              byte_count: 1876
+              word_count: 229
+              content_hash: 3b08486c9d1745742513f9617374a01248304f02d77dd682883425ad1d36f507
+            - path: 1.4.3
+              level: 3
+              title: 'Task 3: Tests'
+              byte_offset: 7595
+              byte_count: 1763
+              word_count: 216
+              content_hash: 60fb21e5a7564540267ea45a95cbe84cb5c488e8d0e294d0abc2bfa2c1a0dba7
+        - path: "1.5"
+          level: 2
+          title: 5. Dependency Graph
+          byte_offset: 9358
+          byte_count: 257
+          word_count: 34
+          content_hash: 3d2771012506b4489d718d63fbf9bcfd41246ff51a61567ceb59ae2d35fa8622
+        - path: "1.6"
+          level: 2
+          title: 6. Risk Assessment
+          byte_offset: 9615
+          byte_count: 1069
+          word_count: 164
+          content_hash: a772a2ab8976c952b9c07dfdf94d9735c0fb94b0c9fb2a84f3f1b45d74a6926a
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Risk: Task listing returns non-cache-backed results'
+              byte_offset: 9638
+              byte_count: 403
+              word_count: 63
+              content_hash: f48fe1b23e93c04de7c969d688f8c06ee6e39320e815e94ebd05f2a4b93d5779
+            - path: 1.6.2
+              level: 3
+              title: 'Risk: `depends_on` entries reference unknown task IDs'
+              byte_offset: 10041
+              byte_count: 334
+              word_count: 49
+              content_hash: daa40782af241bcca48fcebd2f612dd369926afb61ffbb1ac3d69a377c30a238
+            - path: 1.6.3
+              level: 3
+              title: 'Risk: Hook wiring location not obvious'
+              byte_offset: 10375
+              byte_count: 309
+              word_count: 48
+              content_hash: ebc67451d78d5ea638668a4f366bb0a0dd2177717687caabd72bb4fdd114b085
+        - path: "1.7"
+          level: 2
+          title: 7. Verification Approach
+          byte_offset: 10684
+          byte_count: 873
+          word_count: 150
+          content_hash: ca2c64c2327f0d6fbb589e8bbb07bef37a6008024684e0a5705a05a34dec8841
+entity_refs:
+    - entity_id: FEAT-01KQ2E0RFNBWZ
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 434
+cross_doc_links:
+    - target_path: work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      link_text: work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      section_path: "1"
+    - target_path: work/design/design-p34-agent-workflow-ergonomics.md
+      link_text: work/design/design-p34-agent-workflow-ergonomics.md
+      section_path: "1"
+    - target_path: work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      link_text: work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: risk
+      confidence: high
+    - section_path: 1.6.1
+      role: risk
+      confidence: high
+    - section_path: 1.6.2
+      role: risk
+      confidence: high
+    - section_path: 1.6.3
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-25T14:20:30.119704Z
+classified: false

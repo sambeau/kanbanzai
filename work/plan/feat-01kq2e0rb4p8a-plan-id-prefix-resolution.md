@@ -3,7 +3,7 @@
 | Field   | Value                                                                    |
 |---------|--------------------------------------------------------------------------|
 | Date    | 2026-04-25                                                               |
-| Status  | Draft                                                                    |
+| Status | approved |
 | Author  | Architect                                                                |
 | Feature | FEAT-01KQ2E0RB4P8A (plan-id-prefix-resolution)                          |
 | Spec    | `work/spec/feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md`             |
@@ -11,7 +11,7 @@
 
 ---
 
-## 1. Scope
+## Overview
 
 This plan implements the requirements defined in
 `work/spec/feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md`
@@ -230,7 +230,7 @@ Critical path:   Task 1 → Task 3  (or Task 2 → Task 3, same length)
 
 ---
 
-## 7. Verification Approach
+## Traceability Matrix
 
 Run after all tasks are complete:
 

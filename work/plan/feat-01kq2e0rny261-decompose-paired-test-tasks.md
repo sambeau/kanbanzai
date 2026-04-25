@@ -3,14 +3,14 @@
 | Field   | Value                                                                      |
 |---------|----------------------------------------------------------------------------|
 | Date    | 2026-04-25                                                                 |
-| Status  | Draft                                                                      |
+| Status | approved |
 | Feature | FEAT-01KQ2E0RNY261 (decompose-paired-test-tasks)                           |
 | Spec    | `work/spec/feat-01kq2e0rny261-decompose-paired-test-tasks.md`              |
 | Plan    | P34-agent-workflow-ergonomics                                              |
 
 ---
 
-## 1. Scope
+## Overview
 
 This plan implements the requirements defined in
 `work/spec/feat-01kq2e0rny261-decompose-paired-test-tasks.md`. It covers two
@@ -41,7 +41,7 @@ the same two files and are delivered together.
 
 ---
 
-## 3. Interface Contract
+## Interface Contracts
 
 No exported function signatures change. `ProposedTask` already carries
 `DependsOn []string` and `Covers []string` fields; no struct changes are
@@ -226,7 +226,7 @@ Critical path: Task 1 → Task 2
 
 ---
 
-## 8. Acceptance Criteria Traceability
+## Traceability Matrix
 
 | Acceptance Criterion | Verification Method | Producing Task |
 |---------------------|---------------------|----------------|

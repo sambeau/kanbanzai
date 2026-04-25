@@ -3,14 +3,14 @@
 | Field   | Value                                                              |
 |---------|--------------------------------------------------------------------|
 | Date    | 2026-04-25                                                         |
-| Status  | Approved                                                           |
+| Status | approved |
 | Feature | FEAT-01KQ2E0RHSNP1 (idempotent-task-claim)                        |
 | Spec    | `work/spec/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md`       |
 | Plan    | P34-agent-workflow-ergonomics                                      |
 
 ---
 
-## 1. Scope
+## Overview
 
 This plan implements the requirements defined in
 `work/spec/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md`. It covers two
@@ -300,7 +300,7 @@ complete to cover AC-008 (combined reclaim + worktree_path case).
 
 ---
 
-## 7. Verification Approach
+## Traceability Matrix
 
 | Acceptance Criterion | Verification Method | Producing Task |
 |----------------------|---------------------|----------------|

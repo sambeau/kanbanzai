@@ -3,14 +3,14 @@
 | Field   | Value                                                                              |
 |---------|------------------------------------------------------------------------------------|
 | Date    | 2026-04-25                                                                         |
-| Status  | Draft                                                                              |
+| Status | approved |
 | Feature | FEAT-01KQ2E0RR40CD (decompose-apply-supersession)                                  |
 | Spec    | `work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md`                     |
 | Plan    | P34-agent-workflow-ergonomics                                                      |
 
 ---
 
-## Scope
+## Overview
 
 This plan implements the requirements defined in
 `work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md`. It covers the
@@ -104,7 +104,7 @@ is settled (pass structure, response keys). No parallelism available.
 
 ---
 
-## Verification Approach
+## Traceability Matrix
 
 | Acceptance Criterion | Verification Method | Producing Task |
 |----------------------|--------------------:|----------------|
@@ -128,7 +128,7 @@ go vet ./...
 
 ---
 
-## Interface Contract
+## Interface Contracts
 
 `decomposeApply` currently returns a `map[string]any` response. The supersession
 pass adds two new top-level keys to that map:

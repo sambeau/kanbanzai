@@ -1,0 +1,141 @@
+document_id: FEAT-01KQ2E0RNY261/dev-plan-feat-01kq2e0rny261-decompose-paired-test-tasks
+document_path: work/plan/feat-01kq2e0rny261-decompose-paired-test-tasks.md
+content_hash: 01eda2b161fa30ce736da25feeebdf1e83437cd41f8e378c8c7b648193187db7
+indexed_at: 2026-04-25T14:20:32.087676Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Decompose Paired Test Tasks'
+      byte_offset: 0
+      byte_count: 10183
+      word_count: 1428
+      content_hash: 01eda2b161fa30ce736da25feeebdf1e83437cd41f8e378c8c7b648193187db7
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Scope
+          byte_offset: 681
+          byte_count: 424
+          word_count: 51
+          content_hash: e89a027ae8a82809f512b32d7cc5e4d70bb8bbeca178f5ad89b8ffc7dce91fbe
+        - path: "1.2"
+          level: 2
+          title: 2. Implementation Approach
+          byte_offset: 1105
+          byte_count: 715
+          word_count: 106
+          content_hash: 5b53cb181fa067d06bd82ab654f200ccba9e7c3756bf82d6c26908ca27c44da2
+        - path: "1.3"
+          level: 2
+          title: 3. Interface Contract
+          byte_offset: 1820
+          byte_count: 659
+          word_count: 92
+          content_hash: 834e6f664931c83bcd19a3b9967cbd728af2717d96875f140f85f795ee45c48c
+        - path: "1.4"
+          level: 2
+          title: 4. Task Breakdown
+          byte_offset: 2479
+          byte_count: 319
+          word_count: 47
+          content_hash: d516bde4100f7e9f15063e56985b48237df3de2867d52bdeacd1756429083621
+        - path: "1.5"
+          level: 2
+          title: 5. Task Details
+          byte_offset: 2798
+          byte_count: 5228
+          word_count: 724
+          content_hash: 57f1329c366c28ee898872e83064ca4894a37aa623bb8e7d529816a1de53e9dd
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Task 1: Replace global catch-all with per-unit paired test task generation'
+              byte_offset: 2818
+              byte_count: 2895
+              word_count: 354
+              content_hash: de5b6aa87254e65917b5909b6f0144af079ec7c4514ece7a7a3d31f69091dd1d
+            - path: 1.5.2
+              level: 3
+              title: 'Task 2: Unit tests for paired test task generation'
+              byte_offset: 5713
+              byte_count: 2313
+              word_count: 366
+              content_hash: 285840be2429739a1af6c0fd0641c1c79526047fd40ec4521faf62e389da1f5d
+        - path: "1.6"
+          level: 2
+          title: 6. Dependency Graph
+          byte_offset: 8026
+          byte_count: 211
+          word_count: 39
+          content_hash: 4223f8805531c663d66a21ecf22d2d27c3afa3e1259ba1cd0a983dfbcf2b059f
+        - path: "1.7"
+          level: 2
+          title: 7. Risk Assessment
+          byte_offset: 8237
+          byte_count: 808
+          word_count: 123
+          content_hash: 47c266baee10718333b82a8af90db593dcc8519aa1a11c9e00b95e31ce32f8ee
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 'Risk: Existing tests assert the global catch-all pattern'
+              byte_offset: 8260
+              byte_count: 326
+              word_count: 49
+              content_hash: 26e8a4a66cfda5edb7298f129db15f6808ef69da9e1db3557f83d82e2b447f3d
+            - path: 1.7.2
+              level: 3
+              title: 'Risk: `Covers` is empty on some generated tasks'
+              byte_offset: 8586
+              byte_count: 459
+              word_count: 70
+              content_hash: df463c6e945e914bb23211626ea1b6ea87fb92deb65d42ed3acaa0454a3eefed
+        - path: "1.8"
+          level: 2
+          title: 8. Acceptance Criteria Traceability
+          byte_offset: 9045
+          byte_count: 917
+          word_count: 171
+          content_hash: 40cd867ba0c74b462c03beb1d7f4427e7b231aa02d2ea49b2bc575e607e69dd7
+        - path: "1.9"
+          level: 2
+          title: 9. Verification
+          byte_offset: 9962
+          byte_count: 221
+          word_count: 35
+          content_hash: 83d737733ab8b07bf872b410da5fbe90cf5af13b298ce8b31d94f486fe3f5531
+entity_refs:
+    - entity_id: FEAT-01KQ2E0RNY261
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 420
+    - entity_id: P34-agent-workflow-ergonomics
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 598
+cross_doc_links:
+    - target_path: work/spec/feat-01kq2e0rny261-decompose-paired-test-tasks.md
+      link_text: work/spec/feat-01kq2e0rny261-decompose-paired-test-tasks.md
+      section_path: "1"
+    - target_path: work/spec/feat-01kq2e0rny261-decompose-paired-test-tasks.md
+      link_text: work/spec/feat-01kq2e0rny261-decompose-paired-test-tasks.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.7"
+      role: risk
+      confidence: high
+    - section_path: 1.7.1
+      role: risk
+      confidence: high
+    - section_path: 1.7.2
+      role: risk
+      confidence: high
+    - section_path: "1.8"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-25T14:20:32.587405Z
+classified: false

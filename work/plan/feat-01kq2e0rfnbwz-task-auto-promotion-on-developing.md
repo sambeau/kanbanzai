@@ -3,7 +3,7 @@
 | Field   | Value                                                                        |
 |---------|------------------------------------------------------------------------------|
 | Date    | 2026-04-25                                                                   |
-| Status  | Draft                                                                        |
+| Status | approved |
 | Feature | FEAT-01KQ2E0RFNBWZ (task-auto-promotion-on-developing)                       |
 | Spec    | `work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md`          |
 | Design  | `work/design/design-p34-agent-workflow-ergonomics.md` §2                     |
@@ -11,7 +11,7 @@
 
 ---
 
-## 1. Scope
+## Overview
 
 This plan implements the requirements in
 `work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md`. It covers:
@@ -267,7 +267,7 @@ Critical path: Task 1 → Task 3
 
 ---
 
-## 7. Verification Approach
+## Traceability Matrix
 
 Run after all tasks complete:
 
