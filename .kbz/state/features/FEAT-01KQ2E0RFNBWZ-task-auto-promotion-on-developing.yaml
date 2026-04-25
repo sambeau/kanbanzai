@@ -1,0 +1,8 @@
+id: FEAT-01KQ2E0RFNBWZ
+slug: task-auto-promotion-on-developing
+name: Task Auto-Promotion on Developing
+parent: P34-agent-workflow-ergonomics
+status: proposed
+summary: "Automatically transition queued tasks with no unmet dependencies to ready when their parent feature enters developing. Implemented as a new PromoteQueuedTasks function triggered by the existing OnStatusTransition hook, consistent with how worktree auto-creation works. Tasks with unblocked depends_on are left for the existing dependency auto-promotion logic."
+created: "2026-04-25T13:42:12Z"
+created_by: sambeau
