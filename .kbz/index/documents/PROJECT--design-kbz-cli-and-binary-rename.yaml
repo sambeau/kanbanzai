@@ -1,0 +1,537 @@
+document_id: PROJECT/design-kbz-cli-and-binary-rename
+document_path: work/design/kbz-cli-and-binary-rename.md
+content_hash: 473c846502bdef4b5311d5f2703c9a3dad4bd69d5c329efb1a2f1051be06d83d
+indexed_at: 2026-04-25T17:35:02.046859Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: `kbz` Binary Rename and Status Command Extension'
+      byte_offset: 0
+      byte_count: 27772
+      word_count: 4213
+      content_hash: 473c846502bdef4b5311d5f2703c9a3dad4bd69d5c329efb1a2f1051be06d83d
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 593
+          byte_count: 682
+          word_count: 107
+          content_hash: d8fc1ebde0ebd5693f25d4350a5471d94ec501dd461838f601cd7be233951ed9
+        - path: "1.2"
+          level: 2
+          title: 2. Problem Statement
+          byte_offset: 1275
+          byte_count: 1539
+          word_count: 267
+          content_hash: c11804f2b6b214a84d4cadf26bc12a652ae8247ad3801040f88965ad9d9a620f
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 The naming inconsistency
+              byte_offset: 1300
+              byte_count: 563
+              word_count: 94
+              content_hash: 72744401757f3d84dc20457767db6d60ea8948f5380bb2fb9e2912b44d3bdfc2
+            - path: 1.2.2
+              level: 3
+              title: 2.2 The human status gap
+              byte_offset: 1863
+              byte_count: 951
+              word_count: 169
+              content_hash: ae1f77d5f204240eb493ffdd5bdb4d122571f1750c545752ee17c6367b113000
+        - path: "1.3"
+          level: 2
+          title: 3. Design Principles
+          byte_offset: 2814
+          byte_count: 1152
+          word_count: 180
+          content_hash: cbb1a9da28b335852c8377a9d1ee17884850e8d2672be88df773c2c70c98936b
+        - path: "1.4"
+          level: 2
+          title: '4. Part A: Binary Rename (`kanbanzai` → `kbz`)'
+          byte_offset: 3966
+          byte_count: 3125
+          word_count: 482
+          content_hash: 6c4ea93b053767b841d3c2595d24eec522d31ecf686868b384b2d7d7f3c803d2
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 What changes
+              byte_offset: 4019
+              byte_count: 655
+              word_count: 106
+              content_hash: 3a9edac6d66c2eab3619eced9f4b31ff60ed0b7de57777ef3c132616d6b5cee0
+            - path: 1.4.2
+              level: 3
+              title: 4.2 What does not change
+              byte_offset: 4674
+              byte_count: 1020
+              word_count: 158
+              content_hash: 50378d5f23c6a81055d84e0a1ee0171b0e327ee07f5f7948eaec32db637a2c47
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Migration approach
+              byte_offset: 5694
+              byte_count: 991
+              word_count: 153
+              content_hash: 3dfd3695cf8782448da1df8f1e73059c5d1a3493ae3ebde87b7df59932229a60
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Install instructions
+              byte_offset: 6685
+              byte_count: 406
+              word_count: 56
+              content_hash: bc19e0e407b4266f41d035f0444d9ff80ebd821106ed26b2e13be2c6629e83eb
+        - path: "1.5"
+          level: 2
+          title: '5. Part B: `kbz status` Extension'
+          byte_offset: 7091
+          byte_count: 10034
+          word_count: 1480
+          content_hash: e28eddb144d369bacc867b4eab29dcb926951233c17842f089e233e3c27afce1
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Command interface
+              byte_offset: 7129
+              byte_count: 1734
+              word_count: 290
+              content_hash: f23055b9fd9961016c95b011fb19a055f241e3232b9a1acb6b342914de58e4e3
+              children:
+                - path: 1.5.1.1
+                  level: 4
+                  title: Exit codes
+                  byte_offset: 8056
+                  byte_count: 807
+                  word_count: 142
+                  content_hash: 1bfd951dc0636c0e954b18481a901606de006f7cb66c7094791cef44b9fbd739
+            - path: 1.5.2
+              level: 3
+              title: 5.2 File path resolution
+              byte_offset: 8863
+              byte_count: 566
+              word_count: 100
+              content_hash: 0f2e6c639a33ee712ee023c9eb285dcbe28e831793604334950b25c23e8a00ac
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Path resolution for `kbz doc approve` and `kbz doc register`
+              byte_offset: 9429
+              byte_count: 554
+              word_count: 89
+              content_hash: 2e1be885c3626c3150d348bf49a659541746ec1b4fbd7962ab570b96d88dfcba
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Output formats
+              byte_offset: 9983
+              byte_count: 3401
+              word_count: 475
+              content_hash: 927e5f91fc13fa39222fb1211c151894f37a2170fe5645615f56a598d4432ad2
+              children:
+                - path: 1.5.4.1
+                  level: 4
+                  title: '`human` (default)'
+                  byte_offset: 10059
+                  byte_count: 486
+                  word_count: 82
+                  content_hash: 6846c14803180c8e76d054fef433e4c553057726cd764ca9996c8bec0ab02b6e
+                - path: 1.5.4.2
+                  level: 4
+                  title: '`plain` (`--format plain`)'
+                  byte_offset: 10545
+                  byte_count: 763
+                  word_count: 101
+                  content_hash: d4421b713d359bb3b50490d7c4e92d3bb5dc7764e99f44347708047ab71aa1d5
+                - path: 1.5.4.3
+                  level: 4
+                  title: '`json` (`--format json`)'
+                  byte_offset: 11308
+                  byte_count: 2076
+                  word_count: 281
+                  content_hash: 63fd069b29dc17793a1f585444febff4dced89ac773e5d26899b4f98d5f395b3
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Output content
+              byte_offset: 13384
+              byte_count: 2950
+              word_count: 382
+              content_hash: aae5655fc731464328cfed49eacf28a6953fb96ad2b9b55840c4d39c466db930
+              children:
+                - path: 1.5.5.1
+                  level: 4
+                  title: 5.5.1 Unregistered document
+                  byte_offset: 13472
+                  byte_count: 351
+                  word_count: 50
+                  content_hash: a2089111712d71058e4d0d2d3678b41381cff8d61747489d3059beba6016b766
+                - path: 1.5.5.2
+                  level: 4
+                  title: 5.5.2 Registered document (with owner entity)
+                  byte_offset: 13823
+                  byte_count: 867
+                  word_count: 113
+                  content_hash: 77e3c2a328bd8607fd86b5dec592ce7eb60de1f3d00677965af8e758f3fd6994
+                - path: 1.5.5.3
+                  level: 4
+                  title: 5.5.3 Direct feature lookup
+                  byte_offset: 14690
+                  byte_count: 537
+                  word_count: 63
+                  content_hash: 585c44dcb6a8e798ff4a5cf41f042d63c4c83056fb6393b080d2eb8e35227cea
+                - path: 1.5.5.4
+                  level: 4
+                  title: 5.5.4 Plan lookup
+                  byte_offset: 15227
+                  byte_count: 487
+                  word_count: 55
+                  content_hash: a283f653f909e9bbef8bf9f31cec3c72f36ee002a17026c79b481a3aedcc86f9
+                - path: 1.5.5.5
+                  level: 4
+                  title: 5.5.5 Project overview (no target)
+                  byte_offset: 15714
+                  byte_count: 620
+                  word_count: 87
+                  content_hash: 59b5880fb80cc730cc4882d59ea7a882f1375d5a324d9be7fd7ec05f200c9ab8
+            - path: 1.5.6
+              level: 3
+              title: 5.6 Visual conventions
+              byte_offset: 16334
+              byte_count: 791
+              word_count: 137
+              content_hash: 333f94ae20a1f515fe10d6ad76e031459184adba7611d024966c089f87d3bb19
+        - path: "1.6"
+          level: 2
+          title: 6. Non-Human Use Cases
+          byte_offset: 17125
+          byte_count: 2763
+          word_count: 433
+          content_hash: 0a9ff111b16f99005728d3f649d6daea39d8cf7c5ba564cef021d94a3ab6c0e3
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 AI agents in MCP sessions
+              byte_offset: 17152
+              byte_count: 360
+              word_count: 57
+              content_hash: c1fe28c7f1f1b40a4a2ea48154986934e6e878225750c1cc4cf75b784fa82db3
+            - path: 1.6.2
+              level: 3
+              title: 6.2 AI agents in shell-only contexts
+              byte_offset: 17512
+              byte_count: 589
+              word_count: 89
+              content_hash: 5d543c1f8f3aaadcbef45099d05ddda502ccc3c8d485db2c43fa51bffea3cedd
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Shell scripts and pre-commit hooks
+              byte_offset: 18101
+              byte_count: 921
+              word_count: 143
+              content_hash: dbe7a7288d9d22c55c5010bbd86f72be83aa6ea6540f7e3902ff615971893506
+            - path: 1.6.4
+              level: 3
+              title: 6.4 CI and reporting
+              byte_offset: 19022
+              byte_count: 866
+              word_count: 139
+              content_hash: d2ba1b549e183889565970d0d6a15d44358ad141f4cc6788fbe2f5c89b0d8b01
+        - path: "1.7"
+          level: 2
+          title: 7. Implementation Notes
+          byte_offset: 19888
+          byte_count: 1684
+          word_count: 256
+          content_hash: b8f89ab2e6898809e19a915b673ec6ec27fee88515ecec711ac2b8a095746902
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Service layer reuse
+              byte_offset: 19916
+              byte_count: 731
+              word_count: 103
+              content_hash: 8625042b25788a31a09a21dfb5b1b89cd80fb53fe2047c174eb4f4973f1c9c21
+            - path: 1.7.2
+              level: 3
+              title: 7.2 File path lookup
+              byte_offset: 20647
+              byte_count: 258
+              word_count: 35
+              content_hash: 8d5ea9172231b9d8236d90918139875c0f278c282ac63f9c1ed1a6acc6feb2bc
+            - path: 1.7.3
+              level: 3
+              title: 7.3 TTY detection
+              byte_offset: 20905
+              byte_count: 265
+              word_count: 44
+              content_hash: 603ab6e5ea74b1fe081b741f71545466ac9b21055789ce0f09106e71ea95057d
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Scope of this design
+              byte_offset: 21170
+              byte_count: 402
+              word_count: 70
+              content_hash: 6940c6f8e37d4f0c22c6deae0f3865d2b2801e088589c88c8b928541c322c521
+        - path: "1.8"
+          level: 2
+          title: 8. Decisions
+          byte_offset: 21572
+          byte_count: 4059
+          word_count: 620
+          content_hash: e8d2ab5cdc1b8cc27a2c53d7d5e977dc35d9b4d69fdfd5974d04b3c16626ab83
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 'D-1: One binary, renamed'
+              byte_offset: 21589
+              byte_count: 495
+              word_count: 71
+              content_hash: 4df66749f8f97d548d3670cf5741f0a0389f098389e66c35f16b443dd69b2759
+            - path: 1.8.2
+              level: 3
+              title: 'D-2: No deprecation period'
+              byte_offset: 22084
+              byte_count: 386
+              word_count: 64
+              content_hash: a216e736ae27d7ba52232f102e4697af91ee145c90a8fc63076a5010c496ba00
+            - path: 1.8.3
+              level: 3
+              title: 'D-3: MCP server name is stable'
+              byte_offset: 22470
+              byte_count: 383
+              word_count: 53
+              content_hash: 147701052372e41a00e3ce7b7d5fc7770d00ae3d6da037022e4f696e25c0a152
+            - path: 1.8.4
+              level: 3
+              title: 'D-4: Default output is human prose; machines opt in'
+              byte_offset: 22853
+              byte_count: 449
+              word_count: 72
+              content_hash: 4449798c321b15a011a38b5ef9e53a615c99406c752250b75193c14040800d08
+            - path: 1.8.5
+              level: 3
+              title: 'D-5: Agents prefer MCP tools; CLI JSON is for shell-only contexts'
+              byte_offset: 23302
+              byte_count: 499
+              word_count: 81
+              content_hash: 89bd313bf42ec04425b72bd993e8995e6f21e2763e7a529d687e51f90bc5fca0
+            - path: 1.8.6
+              level: 3
+              title: 'D-6: `kbz status` is a query tool; exit 0 for all successful queries'
+              byte_offset: 23801
+              byte_count: 603
+              word_count: 98
+              content_hash: db9a4ba1daf3af01faff90f87488d80a7b44d0dd9ee9622e2cee1f2f0dfc5ae2
+            - path: 1.8.7
+              level: 3
+              title: 'D-7: JSON schema is always array-wrapped for entity/document queries'
+              byte_offset: 24404
+              byte_count: 612
+              word_count: 86
+              content_hash: 1c2e347079f12ff52d85d619bb1418a2412bc93c4dfaa4c702a14af98f334215
+            - path: 1.8.8
+              level: 3
+              title: 'D-8: Project overview JSON contains summary counts, not full feature lists'
+              byte_offset: 25016
+              byte_count: 615
+              word_count: 92
+              content_hash: 7bcbd045fdedb46b23a61e2420a4532a2bfa348a96384486097482c864658e25
+        - path: "1.9"
+          level: 2
+          title: 9. Open Questions
+          byte_offset: 25631
+          byte_count: 1310
+          word_count: 207
+          content_hash: 12d8135e2e38158eeba1af66b729b657afb4d3968b6291607d8ac7921d493683
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 'Q-1: Should `kbz status` accept multiple targets?'
+              byte_offset: 25653
+              byte_count: 623
+              word_count: 92
+              content_hash: 5a61cd7255016bfffefc546aedba3c76365c272e58cdd4367f2c5f3fefabdc04
+            - path: 1.9.2
+              level: 3
+              title: 'Q-2: Should there be a `kbz status --watch` mode?'
+              byte_offset: 26276
+              byte_count: 253
+              word_count: 45
+              content_hash: 228c6a1b1deebb762dc2179c1e6fc5e2dd776d26a7a324a63afd2d5c88271ffd
+            - path: 1.9.3
+              level: 3
+              title: 'Q-3: `kbz doc approve` path resolution scope'
+              byte_offset: 26529
+              byte_count: 412
+              word_count: 66
+              content_hash: 4bce2de530e8011e41ba732a0bbe9530ec2e93ce51c20468a0ebe0beb141fe09
+        - path: "1.10"
+          level: 2
+          title: 10. Summary
+          byte_offset: 26941
+          byte_count: 831
+          word_count: 125
+          content_hash: d4e8c65901ef296a1f72ec5ce3a5fb93e883b02581fddfc5cc0bddf4ead2fa60
+entity_refs:
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.5.1
+      byte_offset: 7434
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.5.4.2
+      byte_offset: 10849
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.5.4.3
+      byte_offset: 12016
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.5.5.2
+      byte_offset: 14514
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.5.5.3
+      byte_offset: 14741
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.6.2
+      byte_offset: 17866
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 18325
+    - entity_id: BUG-007
+      entity_type: bug
+      section_path: 1.5.1
+      byte_offset: 7460
+    - entity_id: DOC-0012
+      entity_type: document
+      section_path: 1.5.3
+      byte_offset: 9585
+    - entity_id: DOC-0019
+      entity_type: document
+      section_path: 1.5.4.3
+      byte_offset: 12209
+    - entity_id: DOC-0023
+      entity_type: document
+      section_path: 1.5.4.3
+      byte_offset: 12308
+    - entity_id: DOC-0031
+      entity_type: document
+      section_path: 1.5.5.5
+      byte_offset: 16232
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.5.1
+      byte_offset: 7446
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.5.4.2
+      byte_offset: 10900
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.5.4.3
+      byte_offset: 12140
+    - entity_id: P1-main-plan
+      entity_type: plan
+      section_path: 1.5.4.3
+      byte_offset: 12865
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.5.5.2
+      byte_offset: 14130
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.5.5.3
+      byte_offset: 14829
+    - entity_id: P1-main-plan
+      entity_type: plan
+      section_path: 1.5.5.4
+      byte_offset: 15268
+    - entity_id: P1-main-plan
+      entity_type: plan
+      section_path: 1.5.5.5
+      byte_offset: 16026
+    - entity_id: P2-infrastructure
+      entity_type: plan
+      section_path: 1.5.5.5
+      byte_offset: 16084
+cross_doc_links:
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1"
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: "1"
+    - target_path: work/design/fresh-install-experience.md
+      link_text: work/design/fresh-install-experience.md
+      section_path: "1"
+    - target_path: work/design/interactive-help-system.md
+      link_text: work/design/interactive-help-system.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.1
+    - target_path: work/design/my-feature.md
+      link_text: work/design/my-feature.md
+      section_path: 1.5.1
+    - target_path: work/design/my-feature.md
+      link_text: |4
+        work/design/my-feature.md
+          Not registered with Kanbanzai.
+
+          To register:
+            kbz doc register work/design/my-feature.md --type design --title "My Feature"
+      section_path: 1.5.5.1
+    - target_path: work/design/my-feature.md
+      link_text: |4
+        work/design/my-feature.md
+          Title:   My Feature Design
+          Type:    design
+          Status:  approved
+
+        Feature  F-042 · my-feature                              developing
+          Plan:  P1-my-plan · main-plan
+
+          Documents
+            Design:    ✓  work/design/my-feature.md         approved
+            Spec:      ✓  work/spec/my-feature-spec.md      approved
+            Dev plan:  ✗  missing
+
+          Tasks  ● 1 active · 3 ready · 7 done  (11 total)
+
+          ⚠  No dev-plan document — agents cannot begin planning
+             Suggested: kbz doc register work/dev-plan/... --type dev-plan --owner FEAT-042
+      section_path: 1.5.5.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.5.5.5
+      role: narrative
+      confidence: high
+    - section_path: 1.6.2
+      role: narrative
+      confidence: high
+    - section_path: 1.7.4
+      role: constraint
+      confidence: high
+    - section_path: "1.8"
+      role: decision
+      confidence: high
+    - section_path: 1.8.5
+      role: narrative
+      confidence: high
+    - section_path: 1.8.8
+      role: narrative
+      confidence: high
+    - section_path: "1.9"
+      role: question
+      confidence: high
+    - section_path: 1.9.3
+      role: constraint
+      confidence: high
+    - section_path: "1.10"
+      role: narrative
+      confidence: high
+classified: false

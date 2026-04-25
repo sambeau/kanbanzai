@@ -1,4 +1,4 @@
-updated_at: 2026-04-25T15:41:25.050151Z
+updated_at: 2026-04-25T17:35:02.046859Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -81673,5 +81673,405 @@ edges:
     - from: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation#3.3
       from_type: section
       to: kanbanzai-3.0-workflow-and-tooling-v2.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-kbz-cli-and-binary-rename
+      from_type: document
+      to: PROJECT/design-kbz-cli-and-binary-rename#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.2
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.2
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.4
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.4
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.4
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.4
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.1
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.4
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.4
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.4
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.5.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.6
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.6
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.6
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.6
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.7
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.7
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.7
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.7
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.8.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.8.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.8.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.8.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.9
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.9
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.9
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: PROJECT/design-kbz-cli-and-binary-rename#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.1
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.4.2
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.4.3
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.2
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.3
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.6.2
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.6.3
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.1
+      from_type: section
+      to: BUG-007
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.3
+      from_type: section
+      to: DOC-0012
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.4.3
+      from_type: section
+      to: DOC-0019
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.4.3
+      from_type: section
+      to: DOC-0023
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.5
+      from_type: section
+      to: DOC-0031
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.1
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.4.2
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.4.3
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.4.3
+      from_type: section
+      to: P1-main-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.2
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.3
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.4
+      from_type: section
+      to: P1-main-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.5
+      from_type: section
+      to: P1-main-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.5
+      from_type: section
+      to: P2-infrastructure
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: work/design/document-centric-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: work/design/workflow-design-basis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: work/design/fresh-install-experience.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: work/design/interactive-help-system.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.4.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.1
+      from_type: section
+      to: work/design/my-feature.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.1
+      from_type: section
+      to: work/design/my-feature.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.2
+      from_type: section
+      to: work/design/my-feature.md
       to_type: document
       edge_type: LINKS_TO
