@@ -151,6 +151,35 @@ func decomposeApply(entitySvc *service.EntityService, decomposeSvc *service.Deco
 			return inlineErr("invalid_parameter", "Cannot apply decomposition proposal: proposal contains no tasks.\n\nTo resolve:\n  Re-run decompose(action: \"propose\", feature_id: \"FEAT-...\") to generate a proposal with tasks")
 		}
 
+		// Supersession pass: transition all existing queued tasks for this feature
+		// to not-planned before creating new tasks (FR-001, FR-002, FR-003).
+		supersededCount := 0
+		inProgressCount := 0
+
+		if allTasks, listErr := entitySvc.List("task"); listErr == nil {
+			for _, t := range allTasks {
+				pf, _ := t.State["parent_feature"].(string)
+				if pf != featureID {
+					continue
+				}
+				status, _ := t.State["status"].(string)
+				switch status {
+				case "queued":
+					// FR-003: supersede by transitioning to not-planned.
+					_, _ = entitySvc.UpdateStatus(service.UpdateStatusInput{
+						Type:   "task",
+						ID:     t.ID,
+						Slug:   t.Slug,
+						Status: "not-planned",
+					})
+					supersededCount++
+				case "active", "needs-rework":
+					// FR-006: collect in-progress count for warning.
+					inProgressCount++
+				}
+			}
+		}
+
 		// Pass 1: create all tasks; build slug→ID map for dependency resolution.
 		type createdTask struct {
 			ID      string
@@ -248,9 +277,15 @@ func decomposeApply(entitySvc *service.EntityService, decomposeSvc *service.Deco
 		// Write skeleton dev plan (REQ-001, REQ-003, REQ-004, REQ-006).
 		// Only run when tasks were actually created; best-effort (log on failure).
 		resp := map[string]any{
-			"feature_id":    featureID,
-			"tasks_created": tasksOut,
-			"total_created": len(tasksOut),
+			"feature_id":       featureID,
+			"tasks_created":    tasksOut,
+			"total_created":    len(tasksOut),
+			"superseded_count": supersededCount,
+		}
+
+		// FR-006: surface warning when in-progress tasks were preserved (NFR-002).
+		if inProgressCount > 0 {
+			resp["warning"] = fmt.Sprintf("%d task(s) in active/needs-rework status were preserved; verify they are still needed.", inProgressCount)
 		}
 
 		if len(tasksOut) > 0 && decomposeSvc != nil {
@@ -267,9 +302,9 @@ func decomposeApply(entitySvc *service.EntityService, decomposeSvc *service.Deco
 			} else if skeletonResult.Action != "skipped" {
 				// Include note in response (REQ-005).
 				resp["skeleton_dev_plan"] = map[string]string{
-					"doc_id":   skeletonResult.DocID,
-					"path":     skeletonResult.FilePath,
-					"action":   skeletonResult.Action,
+					"doc_id": skeletonResult.DocID,
+					"path":   skeletonResult.FilePath,
+					"action": skeletonResult.Action,
 				}
 			}
 		}
