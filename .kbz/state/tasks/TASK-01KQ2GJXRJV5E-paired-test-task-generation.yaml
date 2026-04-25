@@ -1,0 +1,6 @@
+id: TASK-01KQ2GJXRJV5E
+parent_feature: FEAT-01KQ2E0RNY261
+slug: paired-test-task-generation
+name: Paired test task generation in decompose
+summary: "In generateProposal (internal/service/decompose.go): remove hasTestTask loop and global Write-tests append. Add allCoversContainTest helper. After each impl task, if !allCoversContainTest(implTask.Covers), append paired test task with slug {impl-slug}-tests, name Test {impl-name}, DependsOn [{impl-slug}], matching Covers."
+status: queued
