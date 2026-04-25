@@ -715,6 +715,57 @@ func (s *EntityService) UpdateStatus(input UpdateStatusInput) (GetResult, error)
 	return result, nil
 }
 
+// PromoteQueuedTasks transitions any queued tasks for featureID to ready when
+// their dependencies (if any) are all in a terminal state. Tasks already in
+// any other status are untouched. Per-task failures are logged and do not
+// abort the loop.
+func (s *EntityService) PromoteQueuedTasks(featureID string) error {
+	allTasks, err := s.List("task")
+	if err != nil {
+		return fmt.Errorf("PromoteQueuedTasks %s: list tasks: %w", featureID, err)
+	}
+
+	// Build a status index for dependency checks.
+	taskStatuses := make(map[string]string, len(allTasks))
+	for _, t := range allTasks {
+		taskStatuses[t.ID] = stringFromState(t.State, "status")
+	}
+
+	for _, t := range allTasks {
+		if stringFromState(t.State, "parent_feature") != featureID {
+			continue
+		}
+		if stringFromState(t.State, "status") != "queued" {
+			continue
+		}
+
+		dependsOn := stringSliceFromState(t.State, "depends_on")
+		depStatuses := make(map[string]string, len(dependsOn))
+		for _, depID := range dependsOn {
+			if st, ok := taskStatuses[depID]; ok {
+				depStatuses[depID] = st
+			} else {
+				depStatuses[depID] = "" // unknown dep — treated as non-terminal
+			}
+		}
+
+		if err := validate.ValidateTaskQueuedToReady(dependsOn, depStatuses); err != nil {
+			continue
+		}
+
+		if _, err := s.UpdateStatus(UpdateStatusInput{
+			Type:   "task",
+			ID:     t.ID,
+			Slug:   t.Slug,
+			Status: "ready",
+		}); err != nil {
+			log.Printf("PromoteQueuedTasks: failed to promote task %s (%s): %v", t.ID, t.Slug, err)
+		}
+	}
+
+	return nil
+}
+
 // UpdateEntity updates fields of an existing entity for error correction.
 // It cannot change the id (immutable) or status (use UpdateStatus instead).
 func (s *EntityService) UpdateEntity(input UpdateEntityInput) (GetResult, error) {
