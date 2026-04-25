@@ -202,19 +202,14 @@ func nextClaimMode(
 		return nil, fmt.Errorf("Cannot claim task %s: task not found.\n\nTo resolve:\n  Verify the task ID with entity(action: \"list\", type: \"task\") or inspect the queue with next()", taskID)
 	}
 
+	isReclaim := false
 	status, _ := task.State["status"].(string)
 	switch status {
 	case "ready":
 		// Proceed to claim.
 	case "active":
-		// Already claimed — return error with existing dispatch metadata.
-		dispTo, _ := task.State["dispatched_to"].(string)
-		claimedAt, _ := task.State["claimed_at"].(string)
-		dispBy, _ := task.State["dispatched_by"].(string)
-		return nil, fmt.Errorf(
-			"Cannot claim task %s: already dispatched to %q at %s by %s.\n\nTo resolve:\n  Use handoff(task_id: %q) to generate a prompt for this active task, or pick another task from next()",
-			taskID, dispTo, claimedAt, dispBy, taskID,
-		)
+		// Already claimed — fall through and return context with reclaimed: true.
+		isReclaim = true
 	default:
 		return nil, fmt.Errorf(
 			"Cannot claim task %s: status is %q, but only \"ready\" tasks can be claimed.\n\nTo resolve:\n  Check task details with status(id: %q) and ensure prerequisites are met",
@@ -222,47 +217,53 @@ func nextClaimMode(
 		)
 	}
 
-	// Stage-aware lifecycle validation (FR-002).
+	// Stage-aware lifecycle validation — skipped on reclaim (FR-003, FR-004).
 	parentFeatureForValidation, _ := task.State["parent_feature"].(string)
-	featureStage, valErr := ValidateFeatureStage(parentFeatureForValidation, entitySvc)
-	if valErr != nil {
-		return nil, fmt.Errorf("Cannot claim task %s: %v", taskID, valErr)
+	var featureStage string
+	if !isReclaim {
+		var valErr error
+		featureStage, valErr = ValidateFeatureStage(parentFeatureForValidation, entitySvc)
+		if valErr != nil {
+			return nil, fmt.Errorf("Cannot claim task %s: %v", taskID, valErr)
+		}
 	}
 
-	// Determine dispatched_to and dispatched_by.
-	dispatchedTo := role
-	if dispatchedTo == "" {
-		dispatchedTo = "unspecified"
-	}
-	callerIdentity, _ := config.ResolveIdentity("")
-	if callerIdentity == "" {
-		callerIdentity = "mcp-session"
-	}
+	if !isReclaim {
+		// Determine dispatched_to and dispatched_by.
+		dispatchedTo := role
+		if dispatchedTo == "" {
+			dispatchedTo = "unspecified"
+		}
+		callerIdentity, _ := config.ResolveIdentity("")
+		if callerIdentity == "" {
+			callerIdentity = "mcp-session"
+		}
 
-	// Claim the task: ready → active, set dispatch metadata.
-	_, err = dispatchSvc.DispatchTask(service.DispatchInput{
-		TaskID:       taskID,
-		Role:         dispatchedTo,
-		DispatchedBy: callerIdentity,
-	})
-	if err != nil {
-		return nil, fmt.Errorf("Cannot claim task %s: dispatch failed: %w.\n\nTo resolve:\n  Check task status with status(id: %q) and retry", taskID, err, taskID)
-	}
+		// Claim the task: ready → active, set dispatch metadata.
+		_, err = dispatchSvc.DispatchTask(service.DispatchInput{
+			TaskID:       taskID,
+			Role:         dispatchedTo,
+			DispatchedBy: callerIdentity,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("Cannot claim task %s: dispatch failed: %w.\n\nTo resolve:\n  Check task status with status(id: %q) and retry", taskID, err, taskID)
+		}
 
-	// Report status transition as a side effect.
-	PushSideEffect(ctx, SideEffect{
-		Type:       SideEffectStatusTransition,
-		EntityID:   taskID,
-		EntityType: "task",
-		FromStatus: "ready",
-		ToStatus:   "active",
-		Trigger:    "Claimed via next",
-	})
+		// Report status transition as a side effect (FR-004).
+		PushSideEffect(ctx, SideEffect{
+			Type:       SideEffectStatusTransition,
+			EntityID:   taskID,
+			EntityType: "task",
+			FromStatus: "ready",
+			ToStatus:   "active",
+			Trigger:    "Claimed via next",
+		})
 
-	// Reload the task to get updated dispatch fields.
-	task, err = entitySvc.Get("task", taskID, "")
-	if err != nil {
-		return nil, fmt.Errorf("Cannot reload task %s after claim: %w.\n\nTo resolve:\n  The task was claimed successfully — use entity(action: \"get\", id: %q) to retrieve it", taskID, err, taskID)
+		// Reload the task to get updated dispatch fields.
+		task, err = entitySvc.Get("task", taskID, "")
+		if err != nil {
+			return nil, fmt.Errorf("Cannot reload task %s after claim: %w.\n\nTo resolve:\n  The task was claimed successfully — use entity(action: \"get\", id: %q) to retrieve it", taskID, err, taskID)
+		}
 	}
 
 	// Build parent feature info.
@@ -308,10 +309,14 @@ func nextClaimMode(
 		worktreeStore:   worktreeStore,
 	})
 
-	return map[string]any{
+	result := map[string]any{
 		"task":    taskOut,
 		"context": nextContextToMap(actx),
-	}, nil
+	}
+	if isReclaim {
+		result["reclaimed"] = true
+	}
+	return result, nil
 }
 
 // nextContextToMap converts an assembledContext to the structured map returned
@@ -420,6 +425,10 @@ func nextContextToMap(actx assembledContext) map[string]any {
 	}
 	// Graph project — always present (empty string when no worktree).
 	out["graph_project"] = actx.graphProject
+	// Worktree path — omitted when no active worktree (FR-006, FR-007).
+	if actx.worktreePath != "" {
+		out["worktree_path"] = actx.worktreePath
+	}
 	return out
 }
 

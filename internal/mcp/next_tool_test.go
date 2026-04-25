@@ -12,6 +12,7 @@ import (
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // ─── Test setup helpers ───────────────────────────────────────────────────────
@@ -529,26 +530,40 @@ func TestNext_ClaimByTaskID_AlreadyActive(t *testing.T) {
 	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "task-c3")
 	setNextTaskReady(t, entitySvc, taskID, taskSlug)
 
-	// Claim once.
-	callNext(t, entitySvc, dispatchSvc, map[string]any{"id": taskID})
+	// Claim once — first claim.
+	firstRaw := callNext(t, entitySvc, dispatchSvc, map[string]any{"id": taskID})
+	var firstResult map[string]any
+	if err := json.Unmarshal([]byte(firstRaw), &firstResult); err != nil {
+		t.Fatalf("parse first claim result: %v", err)
+	}
+	if _, hasErr := firstResult["error"]; hasErr {
+		t.Fatalf("unexpected error on first claim: %s", firstRaw)
+	}
+	// First claim must NOT include reclaimed (FR-002).
+	if _, ok := firstResult["reclaimed"]; ok {
+		t.Error("first claim must not include reclaimed key")
+	}
 
-	// Claim again — should return an error (AC #14).
+	// Claim again — should return context with reclaimed: true (FR-001, FR-002).
 	raw := callNext(t, entitySvc, dispatchSvc, map[string]any{"id": taskID})
 	var result map[string]any
 	if err := json.Unmarshal([]byte(raw), &result); err != nil {
-		t.Fatalf("parse result: %v", err)
+		t.Fatalf("parse reclaim result: %v", err)
 	}
-	errObj, hasErr := result["error"].(map[string]any)
-	if !hasErr {
-		t.Fatalf("expected error for already-claimed task, got: %s", raw)
+	if _, hasErr := result["error"]; hasErr {
+		t.Fatalf("expected success on reclaim, got error: %s", raw)
 	}
-	if errObj["code"] == nil {
-		t.Error("expected error.code")
+	// Must include reclaimed: true (FR-002).
+	reclaimed, _ := result["reclaimed"].(bool)
+	if !reclaimed {
+		t.Errorf("expected reclaimed: true in response, got: %s", raw)
 	}
-	// Error message should contain dispatch metadata.
-	msg, _ := errObj["message"].(string)
-	if msg == "" {
-		t.Error("expected non-empty error message with dispatch metadata")
+	// Must include task and context (FR-001).
+	if result["task"] == nil {
+		t.Error("expected task in reclaim response")
+	}
+	if result["context"] == nil {
+		t.Error("expected context in reclaim response")
 	}
 }
 
@@ -1119,5 +1134,104 @@ func TestNext_ClaimByTaskID_ProposedFeatureRejected(t *testing.T) {
 	}
 	if task.State["status"] != "ready" {
 		t.Errorf("task.status = %v after rejected claim, want \"ready\"", task.State["status"])
+	}
+}
+
+// ─── nextContextToMap — worktree_path field (FR-006, FR-007) ─────────────────
+
+// TestNextContextToMap_WithWorktreePath verifies that worktree_path is present
+// in the context map when actx.worktreePath is non-empty (FR-006).
+func TestNextContextToMap_WithWorktreePath(t *testing.T) {
+	t.Parallel()
+	actx := assembledContext{worktreePath: "/wt/feat-foo"}
+	out := nextContextToMap(actx)
+	val, ok := out["worktree_path"]
+	if !ok {
+		t.Fatal("worktree_path key missing when worktreePath is set")
+	}
+	if val != "/wt/feat-foo" {
+		t.Errorf("worktree_path = %q, want %q", val, "/wt/feat-foo")
+	}
+}
+
+// TestNextContextToMap_WithoutWorktreePath verifies that worktree_path is
+// omitted entirely when actx.worktreePath is empty (FR-007, NFR-002).
+func TestNextContextToMap_WithoutWorktreePath(t *testing.T) {
+	t.Parallel()
+	actx := assembledContext{worktreePath: ""}
+	out := nextContextToMap(actx)
+	if _, ok := out["worktree_path"]; ok {
+		t.Error("worktree_path key must be absent when worktreePath is empty")
+	}
+}
+
+// TestNextClaimMode_ActiveWithWorktree_BothFields verifies that when a task is
+// active and its parent feature has an active worktree record, the reclaim
+// response contains both reclaimed: true and context.worktree_path (FR-006).
+func TestNextClaimMode_ActiveWithWorktree_BothFields(t *testing.T) {
+	t.Parallel()
+	entitySvc, dispatchSvc := setupNextTest(t)
+
+	planID := createNextTestPlan(t, entitySvc, "wt-both-fields-plan")
+	featID := createNextTestFeature(t, entitySvc, planID, "wt-both-fields-feat")
+	advanceNextFeatureTo(t, entitySvc, featID, "developing")
+	taskID, taskSlug := createNextTestTask(t, entitySvc, featID, "wt-both-fields-task")
+	setNextTaskReady(t, entitySvc, taskID, taskSlug)
+
+	// Create an active worktree record for the feature.
+	wtRoot := t.TempDir()
+	wtStore := worktree.NewStore(wtRoot)
+	if _, err := wtStore.Create(worktree.Record{
+		EntityID:  featID,
+		Branch:    "feat-wt-both-fields",
+		Path:      "/wt/feat-wt-both-fields",
+		Status:    worktree.StatusActive,
+		Created:   time.Now().UTC(),
+		CreatedBy: "tester",
+	}); err != nil {
+		t.Fatalf("create worktree record: %v", err)
+	}
+
+	callWithWT := func(args map[string]any) map[string]any {
+		tool := nextTool(entitySvc, dispatchSvc, nil, nil, nil, nil, nil, nil, wtStore)
+		req := makeRequest(args)
+		result, err := tool.Handler(context.Background(), req)
+		if err != nil {
+			t.Fatalf("next handler error: %v", err)
+		}
+		text := extractText(t, result)
+		var parsed map[string]any
+		if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+			t.Fatalf("parse next result: %v\nraw: %s", err, text)
+		}
+		return parsed
+	}
+
+	// First claim: ready → active.
+	first := callWithWT(map[string]any{"id": taskID})
+	if _, hasErr := first["error"]; hasErr {
+		t.Fatalf("unexpected error on first claim: %v", first)
+	}
+
+	// Reclaim: task is already active — should return context with reclaimed: true.
+	result := callWithWT(map[string]any{"id": taskID})
+	if _, hasErr := result["error"]; hasErr {
+		t.Fatalf("unexpected error on reclaim: %v", result)
+	}
+
+	// Must have reclaimed: true.
+	reclaimed, _ := result["reclaimed"].(bool)
+	if !reclaimed {
+		t.Errorf("expected reclaimed: true in reclaim response")
+	}
+
+	// Must have context.worktree_path.
+	ctx, _ := result["context"].(map[string]any)
+	if ctx == nil {
+		t.Fatal("context field missing from reclaim response")
+	}
+	wtPath, _ := ctx["worktree_path"].(string)
+	if wtPath != "/wt/feat-wt-both-fields" {
+		t.Errorf("context.worktree_path = %q, want %q", wtPath, "/wt/feat-wt-both-fields")
 	}
 }
