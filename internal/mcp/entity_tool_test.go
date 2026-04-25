@@ -1657,3 +1657,105 @@ func TestEntity_Transition_AutoCommit_MessageFormat(t *testing.T) {
 		t.Errorf("commit message = %q; want it to contain from/to statuses", capturedMsg)
 	}
 }
+
+// ─── short plan ref resolution (FR-009, FR-011, FR-012) ──────────────────────
+
+func TestEntityGet_ShortPlanRef_HappyPath(t *testing.T) {
+	entitySvc := setupEntityToolTest(t)
+	planID := createEntityTestPlan(t, entitySvc, "short-ref-happy")
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action": "get",
+		"id":     "P1",
+	})
+
+	if errField, hasErr := result["error"]; hasErr {
+		t.Fatalf("unexpected error resolving P1: %v", errField)
+	}
+	entity, ok := result["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected entity in response, got: %v", result)
+	}
+	if entity["id"] != planID {
+		t.Errorf("entity.id = %q, want %q", entity["id"], planID)
+	}
+}
+
+func TestEntityGet_ShortPlanRef_UnknownPrefix(t *testing.T) {
+	entitySvc := setupEntityToolTest(t)
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action": "get",
+		"id":     "X1",
+	})
+
+	errField, hasErr := result["error"].(map[string]any)
+	if !hasErr {
+		t.Fatalf("expected error for unknown prefix X1, got: %v", result)
+	}
+	msg, _ := errField["message"].(string)
+	if !strings.Contains(msg, "unknown plan prefix") {
+		t.Errorf("error message = %q, want it to contain %q", msg, "unknown plan prefix")
+	}
+}
+
+func TestEntityGet_ShortPlanRef_NoMatchingPlan(t *testing.T) {
+	entitySvc := setupEntityToolTest(t)
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action": "get",
+		"id":     "P99",
+	})
+
+	errField, hasErr := result["error"].(map[string]any)
+	if !hasErr {
+		t.Fatalf("expected error for P99 (no matching plan), got: %v", result)
+	}
+	msg, _ := errField["message"].(string)
+	if !strings.Contains(msg, "no plan found") {
+		t.Errorf("error message = %q, want it to contain %q", msg, "no plan found")
+	}
+}
+
+func TestEntityGet_FullPlanIDPassThrough(t *testing.T) {
+	entitySvc := setupEntityToolTest(t)
+	planID := createEntityTestPlan(t, entitySvc, "short-ref-pass")
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action": "get",
+		"id":     planID,
+	})
+
+	if errField, hasErr := result["error"]; hasErr {
+		t.Fatalf("unexpected error for full plan ID %q: %v", planID, errField)
+	}
+	entity, ok := result["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected entity in response for full plan ID, got: %v", result)
+	}
+	if entity["id"] != planID {
+		t.Errorf("entity.id = %q, want %q", entity["id"], planID)
+	}
+}
+
+func TestEntityUpdate_ShortPlanRef_Resolves(t *testing.T) {
+	entitySvc := setupEntityToolTest(t)
+	planID := createEntityTestPlan(t, entitySvc, "short-ref-upd")
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":  "update",
+		"id":      "P1",
+		"summary": "updated via short ref",
+	})
+
+	if errField, hasErr := result["error"]; hasErr {
+		t.Fatalf("unexpected error updating via short ref P1: %v", errField)
+	}
+	entity, ok := result["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected entity in update response, got: %v", result)
+	}
+	if entity["id"] != planID {
+		t.Errorf("entity.id = %q, want %q", entity["id"], planID)
+	}
+}

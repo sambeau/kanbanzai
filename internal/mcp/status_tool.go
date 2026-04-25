@@ -85,6 +85,14 @@ func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		id := req.GetString("id", "")
 		id = strings.TrimSpace(id)
 
+		if resolved, resolveErr := resolveShortPlanRef(entitySvc, id); resolveErr != nil {
+			return ActionError("resolution_error",
+				fmt.Sprintf("Cannot resolve %q: %v.\n\nTo resolve:\n  Verify the plan prefix and number with entity(action: \"list\", type: \"plan\").", id, resolveErr),
+				nil), nil
+		} else {
+			id = resolved
+		}
+
 		var result any
 		var err error
 
