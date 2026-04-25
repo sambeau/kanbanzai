@@ -5,5 +5,6 @@ parent: P34-agent-workflow-ergonomics
 status: dev-planning
 summary: "Before creating new tasks in decompose(apply), transition all existing queued tasks for the feature to not-planned. Protect tasks in any other status (ready, active, done, etc.) and surface a warning when in-progress tasks are preserved. Report superseded_count in the response. Makes the decompose-apply cycle idempotent: running it three times on a feature produces exactly one queued task set."
 spec: FEAT-01KQ2E0RR40CD/specification-feat-01kq2e0rr40cd-decompose-apply-supersession
+dev_plan: FEAT-01KQ2E0RR40CD/dev-plan-feat-01kq2e0rr40cd-decompose-apply-supersession
 created: "2026-04-25T13:42:12Z"
 created_by: sambeau
