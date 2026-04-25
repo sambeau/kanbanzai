@@ -4,3 +4,5 @@ slug: decompose-paired-test-tasks-tests
 name: Tests for decompose paired test tasks
 summary: "Unit tests in decompose_test.go covering AC-001 through AC-008: 3 impl tasks produces 6 total, correct slug/name/DependsOn/Covers fields, exception when all ACs contain test, mixed ACs still generates paired task, no global Write-tests task, 4 impl tasks with 1 exception produces 7 tasks. Update any existing tests that assert the old catch-all pattern."
 status: queued
+depends_on:
+  - TASK-01KQ2GJXRJV5E
