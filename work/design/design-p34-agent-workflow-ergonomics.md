@@ -142,22 +142,37 @@ A short reference like `P30` has a prefix and number but no slug, so
 `IsPlanID("P30")` returns false.
 
 **New predicate:** `model.ParseShortPlanRef(s string) (prefix, number string, ok bool)`
-returns `ok = true` if `s` is exactly one uppercase letter followed by one or more
-digits and nothing else (no hyphen, no trailing characters). This is a fast lexical
+returns `ok = true` if `s` is exactly one non-digit Unicode rune followed by one or
+more digits and nothing else (no hyphen, no trailing characters). This matches the
+semantics of `ValidatePrefix` and `IsPlanID` exactly — any single non-digit rune is
+a valid prefix character, not just uppercase ASCII letters. This is a fast lexical
 check with no I/O.
 
-**New service method:** `EntityService.ResolvePlanByNumber(prefix, number string) (id, slug string, err error)`
-calls the cache-backed `ListPlanIDs()` (O(1) after P29) and scans for the plan
-whose `ParsePlanID` decomposition matches the given prefix and number. Sequential
-plan numbers are unique; ambiguity cannot occur.
+**New service method:** `EntityService.ResolvePlanByNumber(cfg config.Config, prefix, number string) (id, slug string, err error)`
+
+The method proceeds as follows:
+
+1. **Registry check:** Call `cfg.IsActivePrefix(prefix)`. If false, return a
+   descriptive error: `"unknown plan prefix %q — valid prefixes are: [P, ...]"`.
+   This rejects typos like `X30` immediately without scanning, and gives the user
+   a clear recovery path.
+2. **Scan:** Call the cache-backed `ListPlanIDs()` (O(1) after P29) and find the
+   plan whose `ParsePlanID` decomposition matches the given prefix and number.
+   Sequential plan numbers are unique per prefix; ambiguity cannot occur.
 
 **Integration:** The `entity` MCP tool and the `status` MCP tool both resolve
 input IDs before dispatching to the service layer. Both already call
 `entitySvc.ResolvePrefix` for ULID prefixes. The same pre-resolution step is
 extended: when `ParseShortPlanRef` succeeds on the input, call
-`ResolvePlanByNumber` and substitute the full canonical ID before proceeding.
+`ResolvePlanByNumber` (passing the loaded project config) and substitute the full
+canonical ID before proceeding.
 
-This is purely additive — all existing full-ID paths are unchanged.
+**Note on FEAT IDs:** Feature IDs are ULIDs (`FEAT-01KPXG...`), not sequential
+numbers, so no analogous short form exists. The existing `ResolvePrefix` already
+handles ULID prefix matching (e.g. `FEAT-01KPX` resolves today). No change is
+needed for feature ID resolution.
+
+This change is purely additive — all existing full-ID paths are unchanged.
 
 ---
 
@@ -290,11 +305,14 @@ same feature produces exactly one `queued` task set.
 
 ### H-1: Full ID required vs. prefix shorthand
 
-**Alternative A (chosen) — Accept short form, resolve server-side.** `P30` is
-resolved to the canonical full ID before the service call. Transparent to all
-callers.
-*Pros:* Natural syntax works everywhere without agent changes.
-*Cons:* Adds a scan of the plan list at resolution time — O(1) after P29's cache.
+**Alternative A (chosen) — Accept short form, resolve server-side, validate
+prefix against config registry.** `P30` is resolved to the canonical full ID
+before the service call. Transparent to all callers. Unknown prefixes (`X30`)
+are rejected immediately with a helpful error.
+*Pros:* Natural syntax works everywhere; typos get clear feedback; no agent
+changes required.
+*Cons:* `ResolvePlanByNumber` must receive the loaded config — a minor threading
+of the config object through the resolution call path.
 
 **Alternative B — Add a `plan_lookup(short_ref)` tool.** Agents call
 `plan_lookup("P30")` first, then use the result in subsequent calls.
@@ -304,6 +322,12 @@ directly from human context and will keep hitting errors.
 **Alternative C — Accept shorthand in `status` only, not `entity`.**
 *Rejected:* Inconsistent rules across tools are harder to learn and cause
 unexpected failures when agents switch tools.
+
+**Alternative D — Validate prefix using a hardcoded uppercase-ASCII check.**
+Simpler than config lookup, but wrong: `ValidatePrefix` allows any non-digit
+Unicode rune, and the config may contain non-ASCII or lowercase prefixes.
+Hardcoding ASCII would silently break valid custom-prefix projects.
+*Rejected.*
 
 ---
 
@@ -394,15 +418,22 @@ dashboards.**
 
 ## Decisions
 
-**Decision 1 — `ParseShortPlanRef` is a separate predicate; resolution lives at
-the MCP tool layer.**
+**Decision 1 — `ParseShortPlanRef` uses non-digit Unicode rune semantics;
+`ResolvePlanByNumber` validates against the config prefix registry.**
 *Context:* `ParsePlanID` is used throughout the codebase with an implicit
 assumption that a valid plan ID always contains a slug. Extending it to handle
 slug-less short refs would require all callers to handle the empty-slug case.
-*Rationale:* A new, separate predicate leaves existing call sites unchanged. The
-resolution step belongs at the MCP boundary, not in the model package.
-*Consequences:* Two small functions instead of one; the boundary is clear and
-the model package remains simple.
+`ValidatePrefix` (and by extension `IsPlanID`) allows any single non-digit
+Unicode rune as a prefix — not just uppercase ASCII letters.
+*Rationale:* `ParseShortPlanRef` stays consistent with existing prefix semantics
+rather than introducing a narrower subset. Validating the prefix against
+`cfg.IsActivePrefix` at resolution time provides clear, actionable error messages
+for unknown prefixes (typos, retired prefixes, cross-project IDs) without
+requiring the caller to know which prefixes are registered. The resolution step
+belongs at the MCP boundary; the model package predicate remains pure and fast.
+*Consequences:* `ResolvePlanByNumber` takes a `config.Config` parameter. The MCP
+tool handlers (entity, status) already load the project config for other purposes,
+so this is not a new dependency — it is a new argument to an existing call path.
 
 **Decision 2 — Task promotion runs in the existing `OnStatusTransition` hook,
 synchronously.**
