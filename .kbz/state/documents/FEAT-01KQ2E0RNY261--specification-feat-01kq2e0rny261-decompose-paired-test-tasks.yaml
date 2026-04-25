@@ -2,9 +2,11 @@ id: FEAT-01KQ2E0RNY261/specification-feat-01kq2e0rny261-decompose-paired-test-ta
 path: work/spec/feat-01kq2e0rny261-decompose-paired-test-tasks.md
 type: specification
 title: "Specification: Decompose Paired Test Tasks"
-status: draft
+status: approved
 owner: FEAT-01KQ2E0RNY261
-content_hash: 0158e9ebcf019e8e7465da6eaa2d3f08424094e087d97bd4c49ecb2a2688ca7b
+approved_by: sambeau
+approved_at: "2026-04-25T14:04:56Z"
+content_hash: 08417d8e5cb50ddecc4db92470ed8fe6ab0b5e8a6bce38118df3b242beea1398
 created: "2026-04-25T13:59:31Z"
 created_by: sambeau
-updated: "2026-04-25T13:59:31Z"
+updated: "2026-04-25T14:04:56Z"

@@ -2,9 +2,11 @@ id: FEAT-01KQ2E0RHSNP1/specification-feat-01kq2e0rhsnp1-next-tool-ux-improvement
 path: work/spec/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
 type: specification
 title: "Specification: Next Tool UX Improvements"
-status: draft
+status: approved
 owner: FEAT-01KQ2E0RHSNP1
-content_hash: eae0dc016f3fc5305bfca127c9b92dac0f3d78d503c6b7d126669746a36664d5
+approved_by: sambeau
+approved_at: "2026-04-25T14:04:56Z"
+content_hash: 9c00df28a43a9b718848746671008ed9e1e7893139505439a035175c4c0f17a7
 created: "2026-04-25T13:59:30Z"
 created_by: sambeau
-updated: "2026-04-25T13:59:30Z"
+updated: "2026-04-25T14:04:56Z"

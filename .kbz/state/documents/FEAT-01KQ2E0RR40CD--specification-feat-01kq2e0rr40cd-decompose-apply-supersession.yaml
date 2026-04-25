@@ -2,9 +2,11 @@ id: FEAT-01KQ2E0RR40CD/specification-feat-01kq2e0rr40cd-decompose-apply-superses
 path: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
 type: specification
 title: "Specification: Decompose Apply Supersession"
-status: draft
+status: approved
 owner: FEAT-01KQ2E0RR40CD
-content_hash: 882767097891793d18b51b768349578f3d19ab0c6d1d096392447e801e0a3f66
+approved_by: sambeau
+approved_at: "2026-04-25T14:04:56Z"
+content_hash: 45945be89d703d15232ce560d527a20035b9a44ea8a0d336698f30461fcb2dd7
 created: "2026-04-25T13:59:32Z"
 created_by: sambeau
-updated: "2026-04-25T13:59:32Z"
+updated: "2026-04-25T14:04:56Z"
