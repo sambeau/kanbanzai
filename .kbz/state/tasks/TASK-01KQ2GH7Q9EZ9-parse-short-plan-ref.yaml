@@ -1,0 +1,6 @@
+id: TASK-01KQ2GH7Q9EZ9
+parent_feature: FEAT-01KQ2E0RB4P8A
+slug: parse-short-plan-ref
+name: Add ParseShortPlanRef model predicate
+summary: "Add ParseShortPlanRef(s string) (prefix, number string, ok bool) to internal/model/entities.go. Pure lexical check: one non-digit Unicode rune followed by one or more digits and nothing else. Matches ValidatePrefix semantics."
+status: queued
