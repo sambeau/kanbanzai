@@ -3,8 +3,15 @@ parent_feature: FEAT-01KQ2E0RFNBWZ
 slug: feature-promotion-hook
 name: Implement FeaturePromotionHook and wire into composite hook
 summary: Create internal/service/entity_lifecycle_hook.go with FeaturePromotionHook implementing StatusTransitionHook. Fires PromoteQueuedTasks when entityType=feature and toStatus=developing. Register in CompositeTransitionHook at server startup.
-status: active
+status: done
+files_planned:
+  - internal/service/feature_promotion_hook.go
+  - internal/service/feature_promotion_hook_test.go
+  - internal/mcp/server.go
+completed: "2026-04-25T16:05:21Z"
 claimed_at: "2026-04-25T15:53:13Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-25T15:53:13Z"
 dispatched_by: sambeau
+completion_summary: "Created FeaturePromotionHook in internal/service/feature_promotion_hook.go implementing StatusTransitionHook. Fires PromoteQueuedTasks when entityType==feature and toStatus==developing (FR-001/FR-002). Errors logged, not returned (FR-003). Registered in CompositeTransitionHook at server startup in internal/mcp/server.go (DEP-001). Added 4 unit tests covering: fires on developing, no-op on other statuses, no-op on non-feature entities, error logging without propagation."
+verification: go test ./... passed — all 32 packages green. go build ./... clean.

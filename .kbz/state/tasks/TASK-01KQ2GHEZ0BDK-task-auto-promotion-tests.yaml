@@ -3,7 +3,7 @@ parent_feature: FEAT-01KQ2E0RFNBWZ
 slug: task-auto-promotion-tests
 name: Tests for task auto-promotion
 summary: "Unit tests in entity_lifecycle_hook_test.go and entities_test.go covering all AC-001 through AC-008: dependency-free promotion, all-terminal deps, non-terminal deps skipped, ready tasks unchanged, non-developing transitions ignored, promotion failure does not block feature transition, idempotency, mixed tasks."
-status: queued
+status: ready
 depends_on:
   - TASK-01KQ2GHER1A6J
   - TASK-01KQ2GHEVFVW2
