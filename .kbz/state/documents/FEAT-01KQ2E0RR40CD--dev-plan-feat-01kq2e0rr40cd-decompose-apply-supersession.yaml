@@ -2,9 +2,11 @@ id: FEAT-01KQ2E0RR40CD/dev-plan-feat-01kq2e0rr40cd-decompose-apply-supersession
 path: work/plan/feat-01kq2e0rr40cd-decompose-apply-supersession.md
 type: dev-plan
 title: "Implementation Plan: Decompose Apply Supersession"
-status: draft
+status: approved
 owner: FEAT-01KQ2E0RR40CD
-content_hash: 6365ebb42811e3b3819fa7fefae4e0ec750ef6e6aaf560bf9bd405323c8b64f8
+approved_by: sambeau
+approved_at: "2026-04-25T14:23:25Z"
+content_hash: ce0b3c6cf8406806c6ae352fd8788de925d5895871ccbf4d6f384e0edacb0ec2
 created: "2026-04-25T14:20:32Z"
 created_by: sambeau
-updated: "2026-04-25T14:22:52Z"
+updated: "2026-04-25T14:23:25Z"
