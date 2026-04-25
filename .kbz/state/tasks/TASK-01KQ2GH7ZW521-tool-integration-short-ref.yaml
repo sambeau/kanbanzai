@@ -3,11 +3,19 @@ parent_feature: FEAT-01KQ2E0RB4P8A
 slug: tool-integration-short-ref
 name: Integrate short-ref resolution into entity and status tools
 summary: "Add ParseShortPlanRef+ResolvePlanByNumber pre-resolution step to entityGetAction, entityUpdateAction, entityTransitionAction in entity_tool.go and plan dispatch in status_tool.go. Pre-resolution fires only when ParseShortPlanRef returns ok=true."
-status: active
+status: done
 depends_on:
   - TASK-01KQ2GH7Q9EZ9
   - TASK-01KQ2GH7VWRG5
+files_planned:
+  - internal/mcp/entity_tool.go
+  - internal/mcp/entity_tool_test.go
+  - internal/mcp/status_tool.go
+  - internal/mcp/status_tool_test.go
+completed: "2026-04-25T16:21:40Z"
 claimed_at: "2026-04-25T15:54:19Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-25T15:54:19Z"
 dispatched_by: sambeau
+completion_summary: "Added resolveShortPlanRef helper and wired it into entityGetAction, entityUpdateAction, entityTransitionAction in entity_tool.go and the status handler in status_tool.go. Helper uses config.LoadOrDefault() + entitySvc.ResolvePlanByNumber(). When ParseShortPlanRef returns ok=false, input passes through unchanged (FR-011). Errors from ResolvePlanByNumber are surfaced (FR-012). Added 7 tests covering happy path, unknown prefix, no matching plan, full ID pass-through, update and status resolution."
+verification: "go test ./internal/mcp/... passed (all 7 new tests pass, no regressions); go build ./... passed"
