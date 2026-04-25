@@ -2,7 +2,8 @@ id: FEAT-01KQ2E0RR40CD
 slug: decompose-apply-supersession
 name: Decompose Apply Supersession
 parent: P34-agent-workflow-ergonomics
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "Before creating new tasks in decompose(apply), transition all existing queued tasks for the feature to not-planned. Protect tasks in any other status (ready, active, done, etc.) and surface a warning when in-progress tasks are preserved. Report superseded_count in the response. Makes the decompose-apply cycle idempotent: running it three times on a feature produces exactly one queued task set."
 spec: FEAT-01KQ2E0RR40CD/specification-feat-01kq2e0rr40cd-decompose-apply-supersession
 dev_plan: FEAT-01KQ2E0RR40CD/dev-plan-feat-01kq2e0rr40cd-decompose-apply-supersession
