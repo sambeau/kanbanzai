@@ -3,10 +3,15 @@ parent_feature: FEAT-01KQ2E0RR40CD
 slug: decompose-apply-supersession-unit-tests
 name: Unit tests
 summary: Unit tests
-status: active
+status: done
 depends_on:
   - TASK-01KQ2GGVDC79K
+files_planned:
+  - internal/mcp/decompose_tool_test.go
+completed: "2026-04-25T16:20:58Z"
 claimed_at: "2026-04-25T15:53:13Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-25T15:53:13Z"
 dispatched_by: sambeau
+completion_summary: "Added unit tests for the decompose apply supersession pass in internal/mcp/decompose_tool_test.go. 10 tests covering all 8 acceptance criteria (AC-001 through AC-008) plus 2 supplementary invariant tests. All pass. Pre-existing test failures (TestHandoff_*, TestDocIntelFind_*) are unrelated to this change."
+verification: go test ./internal/mcp/... -run TestDecomposeApply — all 10 tests PASS. go build ./... — clean.
