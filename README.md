@@ -63,15 +63,7 @@ You make the design calls and approve at gates. Agents handle the mechanics betw
 
 Every feature progresses through a stage-gate lifecycle. Gates enforce prerequisites — approved documents, completed tasks, or registered reports — before work advances to the next stage.
 
-```mermaid
-flowchart LR
-    P["proposed"] --> Des["designing"]
-    Des -- "design approved" --> Spec["specifying"]
-    Spec -- "spec approved" --> Dev["dev-planning"]
-    Dev -- "dev plan approved + tasks created" --> Imp["developing"]
-    Imp -- "all tasks complete" --> Rev["reviewing"]
-    Rev -- "review report registered" --> D["done"]
-```
+<img width="505" height="533" alt="Kanbanzai Workflow Diagram" align="center" src="https://github.com/user-attachments/assets/ea1937f4-ee0f-4c2c-87de-0ab655bcc86c" />
 
 Agents cannot skip stages. A feature in **designing** cannot move to **developing** without an approved specification. This is deliberate — catching errors at design time costs less than catching them during implementation.
 
