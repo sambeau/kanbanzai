@@ -1,0 +1,8 @@
+id: FEAT-01KQ7YQKBDNAP
+slug: plan-entity-data-model-lifecycle
+name: Plan Entity Data Model and Lifecycle
+parent: P38-plans-and-batches
+status: proposed
+summary: "Introduce the new recursive plan entity type in the state store (.kbz/state/plans/). Define the planning lifecycle (idea → shaping → ready → active → done), add parent, depends_on, and order fields, and implement CRUD in the entity service."
+created: "2026-04-27T17:10:30Z"
+created_by: sambeau
