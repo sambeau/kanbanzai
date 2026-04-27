@@ -3,9 +3,19 @@ parent_feature: FEAT-01KQ7JDT11MH6
 slug: kbz-move-tests-covering-all-18-acceptance-criteria
 name: Tests covering all 18 acceptance criteria
 summary: Tests covering all 18 acceptance criteria
-status: ready
+status: done
 depends_on:
   - TASK-01KQ7PWS50F6Y
   - TASK-01KQ7PWS52VG3
   - TASK-01KQ7PWS55NWM
   - TASK-01KQ7PWS57AGV
+files_planned:
+  - cmd/kanbanzai/move_cmd.go
+  - cmd/kanbanzai/move_cmd_test.go
+completed: "2026-04-27T21:35:07Z"
+claimed_at: "2026-04-27T20:29:34Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-27T20:29:34Z"
+dispatched_by: sambeau
+completion_summary: "Created cmd/kanbanzai/move_cmd_test.go with 18 test functions covering all acceptance criteria (AC-001 through AC-018). Also fixed the --force parsing bug in runMove: the flag is now stripped from args before mode detection and forwarded to runMoveFeature. All 18 move tests pass; pre-existing flaky performance test (TestDisplayID_AC017_ResolutionPerformance) unaffected by these changes."
+verification: "go test ./cmd/kanbanzai/... -run 'TestModeDetection|TestRejectOutside|TestFileMove|TestReParent' — all 18 PASS. Full suite passes except pre-existing flaky TestDisplayID_AC017_ResolutionPerformance (passes in isolation)."
