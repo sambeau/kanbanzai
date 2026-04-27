@@ -29,6 +29,18 @@ Mode 2 arguments:
 `
 
 func runMove(args []string, deps dependencies) error {
+	// Extract --force flag before mode detection.
+	force := false
+	var filtered []string
+	for _, arg := range args {
+		if arg == "--force" {
+			force = true
+		} else {
+			filtered = append(filtered, arg)
+		}
+	}
+	args = filtered
+
 	if len(args) == 0 {
 		return fmt.Errorf("expected arguments\n\n%s", moveUsageText)
 	}
@@ -40,7 +52,7 @@ func runMove(args []string, deps dependencies) error {
 		}
 		stateRoot := core.StatePath()
 		repoRoot := "."
-		return runMoveFeature(args[0], args[1], false, stateRoot, repoRoot, deps)
+		return runMoveFeature(args[0], args[1], force, stateRoot, repoRoot, deps)
 	}
 
 	// Mode 1: requires exactly <src-path> <plan-id>
