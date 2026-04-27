@@ -3,8 +3,13 @@ parent_feature: FEAT-01KQ7JDT11MH6
 slug: kbz-move-add-gitmove-to-internal-git-git-go
 name: "Add `GitMove` to `internal/git/git.go`"
 summary: "Add `GitMove` to `internal/git/git.go`"
-status: active
+status: done
+files_planned:
+  - internal/git/git.go
+  - internal/service/documents.go
+completed: "2026-04-27T19:19:17Z"
 claimed_at: "2026-04-27T18:41:47Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-27T18:41:47Z"
 dispatched_by: sambeau
+completion_summary: "Added GitMove(repoRoot, src, dst string) error to internal/git/git.go using the existing runGitCmd helper pattern. Also added UpdateDocumentPathAndOwner service helper (needed by T2) since the kbz move flow does git mv first, then updates the record without touching the file on disk (unlike MoveDocument which uses os.Rename)."
