@@ -1,0 +1,6 @@
+id: TASK-01KQ7NBPBZ6PP
+parent_feature: FEAT-01KQ7JDSVMP4E
+slug: update-cli-mcp-output
+name: Update CLI output and MCP responses
+summary: "CLI: update printGetResult, printListResults, printCreateResult, printStatusUpdateResult to show display_id as primary identifier when present in state map. MCP: verify entity tool response builders pass display_id through from the state map (should be automatic once T1 is done)."
+status: queued
