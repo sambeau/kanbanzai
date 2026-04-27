@@ -1,0 +1,8 @@
+id: FEAT-01KQ7JDT511BZ
+slug: work-tree-migration
+name: Work tree migration
+parent: P37-file-names-and-actions
+status: proposed
+summary: "Migration tooling for the 430 existing work files. Script reads document records, resolves owner to plan, computes target path using canonical template, emits kbz move commands. Triage report lists 28 unregistered files with recommended actions. Bulk migration executed in one atomic commit. Cleanup commit removes now-empty old type-first folders. Depends on F2 doc-type-and-filename-enforcement, F3 kbz-move, F4 kbz-delete."
+created: "2026-04-27T13:35:26Z"
+created_by: sambeau
