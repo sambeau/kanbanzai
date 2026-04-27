@@ -3,5 +3,5 @@ parent_feature: FEAT-01KQ7JDT341E8
 slug: delete-cmd-tests
 name: Write delete command test suite
 summary: "Write cmd/kanbanzai/delete_cmd_test.go covering all 17 acceptance criteria. Unit tests (mock stdin/stdout, temp-dir DocumentStore, fake git subprocess): AC-001 through AC-005, AC-007, AC-008, AC-010 through AC-014, AC-017. Integration tests (real temp git repo or kbz binary subprocess): AC-006, AC-009, AC-015, AC-016. All tests must pass go test -race ./... and go vet ./..."
-status: queued
+status: ready
 estimate: "8"
