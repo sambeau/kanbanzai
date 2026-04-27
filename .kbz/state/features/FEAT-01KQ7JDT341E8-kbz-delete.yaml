@@ -2,8 +2,14 @@ id: FEAT-01KQ7JDT341E8
 slug: kbz-delete
 name: kbz delete command
 parent: P37-file-names-and-actions
-status: specifying
+status: dev-planning
 summary: "New CLI/MCP command: kbz delete <file> deletes a work file and its document record using git rm. --force required for approved documents. Reports what was deleted."
 spec: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete
 created: "2026-04-27T13:35:26Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: specifying
+    reason: "Specs approved by human owner. Documents use equivalent Problem Statement / Requirements / Constraints headings rather than the required Overview / Scope / Functional Requirements / Non-Functional Requirements naming convention, but the content is complete and user-approved."
+    timestamp: "2026-04-27T15:10:42+01:00"
+    to_status: dev-planning
