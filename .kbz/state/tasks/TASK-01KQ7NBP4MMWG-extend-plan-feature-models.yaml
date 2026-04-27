@@ -1,0 +1,6 @@
+id: TASK-01KQ7NBP4MMWG
+parent_feature: FEAT-01KQ7JDSVMP4E
+slug: extend-plan-feature-models
+name: Extend Plan and Feature models
+summary: Add next_feature_seq (int) to model.Plan and display_id (string) to model.Feature. Update planFields() to always serialise next_feature_seq. Update featureFields() to serialise display_id when non-empty. Update CreatePlan to initialise NextFeatureSeq to 1.
+status: queued
