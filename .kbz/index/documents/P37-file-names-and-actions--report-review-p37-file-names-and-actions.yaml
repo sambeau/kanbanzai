@@ -1,0 +1,192 @@
+document_id: P37-file-names-and-actions/report-review-p37-file-names-and-actions
+document_path: work/reviews/review-p37-file-names-and-actions.md
+content_hash: ab1858b8cbea00170834e61b3d27807d6355fd45612dfc7c96a79a1920f19a94
+indexed_at: 2026-04-27T23:28:15.138474Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Plan Review: P37 — File Names and Actions'
+      byte_offset: 0
+      byte_count: 18404
+      word_count: 2501
+      content_hash: ab1858b8cbea00170834e61b3d27807d6355fd45612dfc7c96a79a1920f19a94
+      children:
+        - path: "1.1"
+          level: 2
+          title: Feature Census
+          byte_offset: 367
+          byte_count: 984
+          word_count: 126
+          content_hash: 53e9a7f949392b77f5f2c99c0d666d34615a80e1fdee5e73771a5267d58e4951
+        - path: "1.2"
+          level: 2
+          title: Specification Approval
+          byte_offset: 1351
+          byte_count: 861
+          word_count: 76
+          content_hash: eec0e91d491e13495cfabfd1480426bfd5d4c10a3e82ec3a35def37aaf0ea73b
+        - path: "1.3"
+          level: 2
+          title: Spec Conformance Detail
+          byte_offset: 2212
+          byte_count: 8506
+          word_count: 1141
+          content_hash: f847204a7a2133914d4ab4d8159f9706731cfed312da374bafcd0a4302fffc8c
+          children:
+            - path: 1.3.1
+              level: 3
+              title: F1 — Plan-scoped feature display IDs (FEAT-01KQ7-JDSVMP4E)
+              byte_offset: 2240
+              byte_count: 2454
+              word_count: 302
+              content_hash: 5ba0679d57e8e235520e77a44ea353b1d74985551947b344be83d36dc734adf3
+            - path: 1.3.2
+              level: 3
+              title: F2 — Document type system and filename enforcement (FEAT-01KQ7-JDSZARPC)
+              byte_offset: 4694
+              byte_count: 2866
+              word_count: 373
+              content_hash: 1749e6c4b3518b12222329154262ca3feb00e24cab577c8248ba90164da10bcb
+            - path: 1.3.3
+              level: 3
+              title: F3 — kbz move command (FEAT-01KQ7-JDT11MH6)
+              byte_offset: 7560
+              byte_count: 2451
+              word_count: 359
+              content_hash: bdb4b0df78298b37dfd044d1712369c435f5bc1b9cc8c4d65458e8f758742175
+              children:
+                - path: 1.3.3.1
+                  level: 4
+                  title: Mode 1 (file move)
+                  byte_offset: 7759
+                  byte_count: 995
+                  word_count: 149
+                  content_hash: 5c5bf356c42e1ac99b0e6f36bee92bd99230c1e2c3f3f36bc6e33206de90b3ec
+                - path: 1.3.3.2
+                  level: 4
+                  title: Mode 2 (feature re-parent)
+                  byte_offset: 8754
+                  byte_count: 1257
+                  word_count: 179
+                  content_hash: 1693db3916fc5cd9286392d07713a4ca4f04dbec1578095c71e24df0a5111dba
+            - path: 1.3.4
+              level: 3
+              title: F4 — kbz delete command (FEAT-01KQ7-JDT341E8)
+              byte_offset: 10011
+              byte_count: 509
+              word_count: 73
+              content_hash: cd102d71b62b6a41677c7f865c29b3107b2a108a14f0d411ec26c81fb46b7bb1
+            - path: 1.3.5
+              level: 3
+              title: F5 — Work tree migration (FEAT-01KQ7-JDT511BZ)
+              byte_offset: 10520
+              byte_count: 198
+              word_count: 30
+              content_hash: 20c4c4da6a7851e5a82ce1f9e11a1765f7e862f7a5b60579c48bda36a3b63bbe
+        - path: "1.4"
+          level: 2
+          title: Documentation Currency
+          byte_offset: 10718
+          byte_count: 815
+          word_count: 113
+          content_hash: 09c1e99fc7201d73dc50d67dbc88fb314bfbc37c1c6e4de4a1c793698831a9a0
+        - path: "1.5"
+          level: 2
+          title: Cross-Cutting Checks
+          byte_offset: 11533
+          byte_count: 1031
+          word_count: 156
+          content_hash: 4b3bd811b8f6ccdd2fde3ceb02e60fd694e28613e89acd6dd6ccb3f5ba3914d3
+        - path: "1.6"
+          level: 2
+          title: Conformance Gaps
+          byte_offset: 12564
+          byte_count: 2740
+          word_count: 395
+          content_hash: 9151c3848b6b6ebd0557c3c9a6b728fdabbac40007896439b4d5b22804f029d5
+        - path: "1.7"
+          level: 2
+          title: Retrospective Observations
+          byte_offset: 15304
+          byte_count: 1648
+          word_count: 243
+          content_hash: bbb61fb8514f6bf1d9c5962e051ae35bcd0be5d30b96cd66decb236edd767f73
+        - path: "1.8"
+          level: 2
+          title: Verdict
+          byte_offset: 16952
+          byte_count: 1452
+          word_count: 207
+          content_hash: 1887fa231d3c3cc3a63b02868a525eb4fa5d62391c5378d383e4142399c2dd63
+entity_refs:
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 562
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1572
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 2284
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 4752
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: 1.3.3
+      byte_offset: 7589
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: 1.3.4
+      byte_offset: 10042
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: 1.3.5
+      byte_offset: 10552
+    - entity_id: FEAT-01KQ7JDT11MH6
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 12442
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 12734
+    - entity_id: FEAT-01KQ7JDT11MH6
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 14931
+    - entity_id: FEAT-01KQ7JDT11MH6
+      entity_type: feature
+      section_path: "1.8"
+      byte_offset: 17692
+    - entity_id: FEAT-01KQ7JDT341E8
+      entity_type: feature
+      section_path: "1.8"
+      byte_offset: 17924
+    - entity_id: P37-file-names-and-actions
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 158
+    - entity_id: F2-spec
+      entity_type: plan
+      section_path: 1.3.2
+      byte_offset: 5985
+    - entity_id: P37-relevant
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 11810
+cross_doc_links:
+    - target_path: work/design/p37-f4-spec-kbz-delete.md
+      link_text: work/design/p37-f4-spec-kbz-delete.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T23:28:16.245033Z
+classified: false

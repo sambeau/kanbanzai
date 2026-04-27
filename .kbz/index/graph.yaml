@@ -1,4 +1,4 @@
-updated_at: 2026-04-27T17:33:13.212712Z
+updated_at: 2026-04-27T23:28:15.138474Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -86563,5 +86563,165 @@ edges:
     - from: FEAT-01KQ7YQKEEHFY/specification-p38-f3-spec-batch-entity-rename-b-prefix#1.1
       from_type: section
       to: work/design/p38-f2-spec-plan-entity-data-model-lifecycle.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions
+      from_type: document
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.1
+      from_type: section
+      to: FEAT-01KQ7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.2
+      from_type: section
+      to: FEAT-01KQ7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.1
+      from_type: section
+      to: FEAT-01KQ7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.2
+      from_type: section
+      to: FEAT-01KQ7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: FEAT-01KQ7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.4
+      from_type: section
+      to: FEAT-01KQ7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.5
+      from_type: section
+      to: FEAT-01KQ7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.5
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.6
+      from_type: section
+      to: FEAT-01KQ7
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.6
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.8
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.8
+      from_type: section
+      to: FEAT-01KQ7JDT341E8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.3.2
+      from_type: section
+      to: F2-spec
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.5
+      from_type: section
+      to: P37-relevant
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.6
+      from_type: section
+      to: work/design/p37-f4-spec-kbz-delete.md
       to_type: document
       edge_type: LINKS_TO
