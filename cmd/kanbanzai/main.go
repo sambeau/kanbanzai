@@ -110,6 +110,8 @@ func run(args []string, deps dependencies) error {
 		return runEntity(args[1:], deps)
 	case "doc":
 		return runDoc(args[1:], deps)
+	case "delete":
+		return runDelete(args[1:], deps)
 	case "health":
 		return runHealth(deps)
 
