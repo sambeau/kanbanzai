@@ -2,7 +2,7 @@ id: FEAT-01KQ7YQKPT8HF
 slug: mcp-tools-status-dashboard-updates
 name: MCP Tools and Status Dashboard Updates
 parent: P38-plans-and-batches
-status: proposed
+status: specifying
 summary: "Update the entity tool to support plan CRUD with planning lifecycle. Update the status dashboard to render plan trees with recursive progress, batch dashboards, and project-level overview. Update all other affected MCP tools to recognise plan vs batch entities."
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
