@@ -2,9 +2,11 @@ id: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-superses
 path: work/reviews/review-FEAT-01KQ2E0RR40CD-decompose-apply-supersession.md
 type: report
 title: "Review: Decompose Apply Supersession"
-status: draft
+status: approved
 owner: FEAT-01KQ2E0RR40CD
+approved_by: sambeau
+approved_at: "2026-04-27T02:32:33Z"
 content_hash: 423faa9d98a6d8cd995e3b8d87e0c0fa57cbe860e198ae6742a3e0d253cbce1a
 created: "2026-04-27T02:31:35Z"
 created_by: sambeau
-updated: "2026-04-27T02:31:35Z"
+updated: "2026-04-27T02:32:33Z"

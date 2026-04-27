@@ -2,9 +2,11 @@ id: FEAT-01KQ2E0RNY261/report-review-feat-01kq2e0rny261-decompose-paired-test-ta
 path: work/reviews/review-FEAT-01KQ2E0RNY261-decompose-paired-test-tasks.md
 type: report
 title: "Review: Decompose Paired Test Tasks"
-status: draft
+status: approved
 owner: FEAT-01KQ2E0RNY261
+approved_by: sambeau
+approved_at: "2026-04-27T02:32:33Z"
 content_hash: 97c18ae2832c23c95b8dd2728e1528f33e3aca76a973fb1780541617e6df7f2b
 created: "2026-04-27T02:31:35Z"
 created_by: sambeau
-updated: "2026-04-27T02:31:35Z"
+updated: "2026-04-27T02:32:33Z"
