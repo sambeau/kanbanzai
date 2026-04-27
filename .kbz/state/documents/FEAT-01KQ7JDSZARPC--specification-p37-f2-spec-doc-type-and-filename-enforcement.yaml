@@ -2,9 +2,11 @@ id: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforceme
 path: work/design/p37-f2-spec-doc-type-and-filename-enforcement.md
 type: specification
 title: "P37-F2: Document Type System and Filename Enforcement Specification"
-status: draft
+status: approved
 owner: FEAT-01KQ7JDSZARPC
-content_hash: ca79525c51ba9f46b953621062fcd1e49df476f3a9bed48339ca07306eb08e3c
+approved_by: sambeau
+approved_at: "2026-04-27T14:32:00Z"
+content_hash: 8f12b3248645cff4f89d8e8802ed11860ea83dafdc3b499bf73c2df003026bd7
 created: "2026-04-27T13:52:07Z"
 created_by: sambeau
-updated: "2026-04-27T14:31:37Z"
+updated: "2026-04-27T14:32:00Z"
