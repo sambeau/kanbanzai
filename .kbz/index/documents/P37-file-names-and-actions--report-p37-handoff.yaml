@@ -1,0 +1,273 @@
+document_id: P37-file-names-and-actions/report-p37-handoff
+document_path: work/design/p37-handoff.md
+content_hash: 24786cf946947f80eb1d3d7eac6b6c0492de30e89ba4a37100dd1e0f53584773
+indexed_at: 2026-04-27T17:15:22.406794Z
+sections:
+    - path: "1"
+      level: 1
+      title: P37 File Names and Actions — Handoff
+      byte_offset: 0
+      byte_count: 14704
+      word_count: 1769
+      content_hash: 24786cf946947f80eb1d3d7eac6b6c0492de30e89ba4a37100dd1e0f53584773
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 336
+          byte_count: 332
+          word_count: 55
+          content_hash: 9e68532f9bff5661800a4619e4ca8b17f53d06100a66f3c70db975bffab44086
+        - path: "1.2"
+          level: 2
+          title: Feature Status
+          byte_offset: 668
+          byte_count: 674
+          word_count: 107
+          content_hash: 2258a014e46606103f2e81ec8aad5079d3945d33cda2caafee52c8a00b0e9e7c
+        - path: "1.3"
+          level: 2
+          title: What Was Completed This Session
+          byte_offset: 1342
+          byte_count: 6141
+          word_count: 667
+          content_hash: fb3f40f7c8f7f45c2cb13cc44a32214e75ac556ac75db554ccb925de51c39f36
+          children:
+            - path: 1.3.1
+              level: 3
+              title: F1 — Plan-scoped feature display IDs (FEAT-01KQ7JDSVMP4E)
+              byte_offset: 1378
+              byte_count: 2369
+              word_count: 264
+              content_hash: f673ddac6018bada8189b7fadac6e5ed72443389bb0983822360e7f260b01a13
+            - path: 1.3.2
+              level: 3
+              title: F4 — `kbz delete` command (FEAT-01KQ7JDT341E8)
+              byte_offset: 3747
+              byte_count: 1328
+              word_count: 158
+              content_hash: acaf5444c8c2156afc9eeb0e0fe8ac6d17baff9fc1985eb408ab2225459418c2
+            - path: 1.3.3
+              level: 3
+              title: F2 — Document type system and filename enforcement (FEAT-01KQ7JDSZARPC)
+              byte_offset: 5075
+              byte_count: 2408
+              word_count: 239
+              content_hash: 9c5561e9967c43af367eb65b9776144beab125e5e0562defbabb851edfd6f031
+        - path: "1.4"
+          level: 2
+          title: What Is Next
+          byte_offset: 7483
+          byte_count: 3726
+          word_count: 471
+          content_hash: c88d7150aca1100d405357e3c7fe7b2c0c25e9b7f54b7dd660f36c9857ab97be
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Immediate: complete F2 tests'
+              byte_offset: 7500
+              byte_count: 972
+              word_count: 101
+              content_hash: 7e14a79e456396b81f78d38064d3338fb9a033ffb085abb16f839b34bdb49afa
+            - path: 1.4.2
+              level: 3
+              title: Merge order for cohort 1
+              byte_offset: 8472
+              byte_count: 991
+              word_count: 118
+              content_hash: 74e8c8a6445952ad7fe83888ea91153b3cf713ba783f6abb445e76a3ddc6dfa2
+            - path: 1.4.3
+              level: 3
+              title: 'Cohort 2: F3 — `kbz move` command (FEAT-01KQ7JDT11MH6)'
+              byte_offset: 9463
+              byte_count: 1183
+              word_count: 166
+              content_hash: 0c1381bbb02d23bdf623ee265533d1a9c97ba4eb9c9a23decf78e0d1f5ebbdc2
+            - path: 1.4.4
+              level: 3
+              title: F5 deferred to P38
+              byte_offset: 10646
+              byte_count: 563
+              word_count: 82
+              content_hash: ceecf8e925889f263148a105f8b979cf9054382f4c4d9f8c1d5551ee11d756a4
+        - path: "1.5"
+          level: 2
+          title: Worktrees in Use
+          byte_offset: 11209
+          byte_count: 655
+          word_count: 59
+          content_hash: ace47ad95c74855f6749499aff65a5461fe102cad2b67c95c40264950f19437b
+        - path: "1.6"
+          level: 2
+          title: Known Issues and Notes
+          byte_offset: 11864
+          byte_count: 1714
+          word_count: 242
+          content_hash: 8074fdfece432997e78e0fc0d1b07f46c14590d31ab3250145cbda66d66ddbeb
+        - path: "1.7"
+          level: 2
+          title: Document Locations
+          byte_offset: 13578
+          byte_count: 1126
+          word_count: 133
+          content_hash: 82f13d0546b5736b5c0ecfda450ffb662cceae4ee3cc08ef5d9cf5570f7fd10d
+entity_refs:
+    - entity_id: FEAT-01KQ7JDSVMP4E
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 826
+    - entity_id: FEAT-01KQ7JDSZARPC
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 970
+    - entity_id: FEAT-01KQ7JDT341E8
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1187
+    - entity_id: FEAT-01KQ7JDSVMP4E
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 1422
+    - entity_id: FEAT-01KQ7JDT341E8
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 3780
+    - entity_id: FEAT-01KQ7JDSZARPC
+      entity_type: feature
+      section_path: 1.3.3
+      byte_offset: 5133
+    - entity_id: FEAT-01KQ7JDSZARPC
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 7604
+    - entity_id: FEAT-01KQ7JDSVMP4E
+      entity_type: feature
+      section_path: 1.4.2
+      byte_offset: 8553
+    - entity_id: FEAT-01KQ7JDT341E8
+      entity_type: feature
+      section_path: 1.4.2
+      byte_offset: 8769
+    - entity_id: FEAT-01KQ7JDSZARPC
+      entity_type: feature
+      section_path: 1.4.2
+      byte_offset: 8989
+    - entity_id: FEAT-01KQ7JDT11MH6
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 9504
+    - entity_id: FEAT-01KQ7JDT511BZ
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 10670
+    - entity_id: FEAT-01KQ7JDSVMP4E
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 11322
+    - entity_id: FEAT-01KQ7JDSZARPC
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 11517
+    - entity_id: FEAT-01KQ7JDT341E8
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 11707
+    - entity_id: TASK-01KQ7NS85DQX3
+      entity_type: task
+      section_path: 1.3.3
+      byte_offset: 7330
+    - entity_id: TASK-01KQ7NS85DQX3
+      entity_type: task
+      section_path: 1.4.1
+      byte_offset: 7553
+    - entity_id: TASK-01KQ7PWS50F6Y
+      entity_type: task
+      section_path: 1.4.3
+      byte_offset: 10009
+    - entity_id: TASK-01KQ7PWS52VG3
+      entity_type: task
+      section_path: 1.4.3
+      byte_offset: 10084
+    - entity_id: TASK-01KQ7PWS55NWM
+      entity_type: task
+      section_path: 1.4.3
+      byte_offset: 10141
+    - entity_id: TASK-01KQ7PWS57AGV
+      entity_type: task
+      section_path: 1.4.3
+      byte_offset: 10206
+    - entity_id: TASK-01KQ7PWS58H50
+      entity_type: task
+      section_path: 1.4.3
+      byte_offset: 10294
+    - entity_id: BUG-01KPVGMMP56GC
+      entity_type: bug
+      section_path: "1.6"
+      byte_offset: 12742
+    - entity_id: P37-file-names-and-actions
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 293
+    - entity_id: P37-file-names-and-actions
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 13745
+cross_doc_links:
+    - target_path: work/design/p37-f2-spec-doc-type-and-filename-enforcement.md
+      link_text: work/design/p37-f2-spec-doc-type-and-filename-enforcement.md
+      section_path: 1.4.1
+    - target_path: work/design/p37-f3-spec-kbz-move.md
+      link_text: work/design/p37-f3-spec-kbz-move.md
+      section_path: 1.4.3
+    - target_path: work/design/p37-f3-dev-plan-kbz-move.md
+      link_text: work/design/p37-f3-dev-plan-kbz-move.md
+      section_path: 1.4.3
+    - target_path: work/design/p37-f5-spec-work-tree-migration.md
+      link_text: work/design/p37-f5-spec-work-tree-migration.md
+      section_path: 1.4.4
+    - target_path: work/design/p37-f5-dev-plan-work-tree-migration.md
+      link_text: work/design/p37-f5-dev-plan-work-tree-migration.md
+      section_path: 1.4.4
+    - target_path: work/design/p37-file-names-and-actions.md
+      link_text: work/design/p37-file-names-and-actions.md
+      section_path: "1.7"
+    - target_path: work/design/p37-f1-spec-plan-scoped-feature-display-ids.md
+      link_text: work/design/p37-f1-spec-plan-scoped-feature-display-ids.md
+      section_path: "1.7"
+    - target_path: work/design/p37-f1-dev-plan-plan-scoped-feature-display-ids.md
+      link_text: work/design/p37-f1-dev-plan-plan-scoped-feature-display-ids.md
+      section_path: "1.7"
+    - target_path: work/design/p37-f2-spec-doc-type-and-filename-enforcement.md
+      link_text: work/design/p37-f2-spec-doc-type-and-filename-enforcement.md
+      section_path: "1.7"
+    - target_path: work/design/p37-f2-dev-plan-doc-type-and-filename-enforcement.md
+      link_text: work/design/p37-f2-dev-plan-doc-type-and-filename-enforcement.md
+      section_path: "1.7"
+    - target_path: work/design/p37-f3-spec-kbz-move.md
+      link_text: work/design/p37-f3-spec-kbz-move.md
+      section_path: "1.7"
+    - target_path: work/design/p37-f3-dev-plan-kbz-move.md
+      link_text: work/design/p37-f3-dev-plan-kbz-move.md
+      section_path: "1.7"
+    - target_path: work/design/p37-f4-spec-kbz-delete.md
+      link_text: work/design/p37-f4-spec-kbz-delete.md
+      section_path: "1.7"
+    - target_path: work/design/p37-f4-dev-plan-kbz-delete.md
+      link_text: work/design/p37-f4-dev-plan-kbz-delete.md
+      section_path: "1.7"
+    - target_path: work/design/p37-f5-spec-work-tree-migration.md
+      link_text: work/design/p37-f5-spec-work-tree-migration.md
+      section_path: "1.7"
+    - target_path: work/design/p37-f5-dev-plan-work-tree-migration.md
+      link_text: work/design/p37-f5-dev-plan-work-tree-migration.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T17:15:23.147192Z
+classified: false

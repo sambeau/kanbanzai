@@ -3,7 +3,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-04-28T00:00:00Z           |
-| Status | draft                          |
+| Status | approved |
 | Author | sambeau                        |
 
 ## Related Work

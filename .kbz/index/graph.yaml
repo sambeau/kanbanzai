@@ -1,4 +1,4 @@
-updated_at: 2026-04-27T17:07:51.74676Z
+updated_at: 2026-04-27T17:15:22.406794Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -84663,5 +84663,285 @@ edges:
     - from: P38-plans-and-batches/design-meta-planning-plans-and-batches#1.9
       from_type: section
       to: work/design/p37-file-names-and-actions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff
+      from_type: document
+      to: P37-file-names-and-actions/report-p37-handoff#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1.3
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1.3
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1.3
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1
+      from_type: section
+      to: P37-file-names-and-actions/report-p37-handoff#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/report-p37-handoff#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT341E8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.3.1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.3.2
+      from_type: section
+      to: FEAT-01KQ7JDT341E8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.3.3
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.2
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.2
+      from_type: section
+      to: FEAT-01KQ7JDT341E8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.2
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.3
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.4
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.5
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.5
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.5
+      from_type: section
+      to: FEAT-01KQ7JDT341E8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.3.3
+      from_type: section
+      to: TASK-01KQ7NS85DQX3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.1
+      from_type: section
+      to: TASK-01KQ7NS85DQX3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.3
+      from_type: section
+      to: TASK-01KQ7PWS50F6Y
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.3
+      from_type: section
+      to: TASK-01KQ7PWS52VG3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.3
+      from_type: section
+      to: TASK-01KQ7PWS55NWM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.3
+      from_type: section
+      to: TASK-01KQ7PWS57AGV
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.3
+      from_type: section
+      to: TASK-01KQ7PWS58H50
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.6
+      from_type: section
+      to: BUG-01KPVGMMP56GC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.7
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.1
+      from_type: section
+      to: work/design/p37-f2-spec-doc-type-and-filename-enforcement.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.3
+      from_type: section
+      to: work/design/p37-f3-spec-kbz-move.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.3
+      from_type: section
+      to: work/design/p37-f3-dev-plan-kbz-move.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.4
+      from_type: section
+      to: work/design/p37-f5-spec-work-tree-migration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.4.4
+      from_type: section
+      to: work/design/p37-f5-dev-plan-work-tree-migration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.7
+      from_type: section
+      to: work/design/p37-file-names-and-actions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.7
+      from_type: section
+      to: work/design/p37-f1-spec-plan-scoped-feature-display-ids.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.7
+      from_type: section
+      to: work/design/p37-f1-dev-plan-plan-scoped-feature-display-ids.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.7
+      from_type: section
+      to: work/design/p37-f2-spec-doc-type-and-filename-enforcement.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.7
+      from_type: section
+      to: work/design/p37-f2-dev-plan-doc-type-and-filename-enforcement.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.7
+      from_type: section
+      to: work/design/p37-f3-spec-kbz-move.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.7
+      from_type: section
+      to: work/design/p37-f3-dev-plan-kbz-move.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.7
+      from_type: section
+      to: work/design/p37-f4-spec-kbz-delete.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.7
+      from_type: section
+      to: work/design/p37-f4-dev-plan-kbz-delete.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.7
+      from_type: section
+      to: work/design/p37-f5-spec-work-tree-migration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/report-p37-handoff#1.7
+      from_type: section
+      to: work/design/p37-f5-dev-plan-work-tree-migration.md
       to_type: document
       edge_type: LINKS_TO
