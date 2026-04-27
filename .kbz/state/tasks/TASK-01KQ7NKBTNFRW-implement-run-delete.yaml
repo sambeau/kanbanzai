@@ -3,5 +3,9 @@ parent_feature: FEAT-01KQ7JDT341E8
 slug: implement-run-delete
 name: Implement runDelete in delete_cmd.go
 summary: "Create cmd/kanbanzai/delete_cmd.go with func runDelete(args []string, deps dependencies) error. Implement: --force flag parsing, work/ restriction, file existence check, document record lookup by path, approved-document guard, confirmation prompt, git rm subprocess via exec.Command, atomicity on git rm failure, DeleteDocument call for record cleanup and entity ref clearing, success/warning output. Include deleteUsageText constant. Covers REQ-001 through REQ-012 and REQ-NF-001 through REQ-NF-004."
-status: ready
+status: active
 estimate: "5"
+claimed_at: "2026-04-27T15:01:51Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-27T15:01:51Z"
+dispatched_by: sambeau
