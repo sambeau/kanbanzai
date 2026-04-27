@@ -1,0 +1,100 @@
+document_id: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession
+document_path: work/reviews/review-FEAT-01KQ2E0RR40CD-decompose-apply-supersession.md
+content_hash: 423faa9d98a6d8cd995e3b8d87e0c0fa57cbe860e198ae6742a3e0d253cbce1a
+indexed_at: 2026-04-27T02:31:35.858038Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: FEAT-01KQ2E0RR40CD — Decompose Apply Supersession'
+      byte_offset: 0
+      byte_count: 7507
+      word_count: 878
+      content_hash: 423faa9d98a6d8cd995e3b8d87e0c0fa57cbe860e198ae6742a3e0d253cbce1a
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 597
+          byte_count: 561
+          word_count: 74
+          content_hash: fba2d03f51b600c0b1115457b008f9bb283f6ad8e0fa42b32af12215644bd113
+        - path: "1.2"
+          level: 2
+          title: Review Unit
+          byte_offset: 1158
+          byte_count: 219
+          word_count: 11
+          content_hash: 83eb96783b8fadfbe9ce1e0c7b06387bd10c35c240ffdfad0391770d75738f0e
+        - path: "1.3"
+          level: 2
+          title: Dimensions
+          byte_offset: 1377
+          byte_count: 4872
+          word_count: 593
+          content_hash: 91646a92d68930d6d423630399b703e30d8d2824c2baaa0e4547776a6beb5613
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'spec_conformance: pass'
+              byte_offset: 1392
+              byte_count: 2485
+              word_count: 299
+              content_hash: 318999a3071eb9b3dba3b8beb9dbf647988f312a17058a0b6b77a6983df5902d
+            - path: 1.3.2
+              level: 3
+              title: 'implementation_quality: pass_with_notes'
+              byte_offset: 3877
+              byte_count: 1427
+              word_count: 182
+              content_hash: 83737c903703dd52f40f981f995e13f359df28665f6fd1c0daa48dcf0f60b188
+            - path: 1.3.3
+              level: 3
+              title: 'test_adequacy: pass'
+              byte_offset: 5304
+              byte_count: 945
+              word_count: 110
+              content_hash: 7f454cde27dac1587a6b11435c7a4a2c9366ba57fb5030e71a637df172ae8f24
+        - path: "1.4"
+          level: 2
+          title: Test Run
+          byte_offset: 6249
+          byte_count: 413
+          word_count: 56
+          content_hash: 311e2402fe4a5c7f3498c8b09ed47e9c861f993cfcaa1f1e651a9633a09e97f4
+        - path: "1.5"
+          level: 2
+          title: Finding Summary
+          byte_offset: 6662
+          byte_count: 432
+          word_count: 45
+          content_hash: efc42cdc44df5864ef95c7459c5ba15e6e7be09e0bbfb768379c6c98d470cf2a
+        - path: "1.6"
+          level: 2
+          title: Verdict
+          byte_offset: 7094
+          byte_count: 413
+          word_count: 48
+          content_hash: 1fad6c6dcbc9bc81ad64a96cdce0c189829e3f0d02a7c61e5a2cb3f04f590399
+entity_refs:
+    - entity_id: FEAT-01KQ2E0RR40CD
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 10
+    - entity_id: FEAT-01KQ2E0RR40CD
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 6280
+cross_doc_links:
+    - target_path: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      link_text: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      section_path: "1.2"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T02:31:36.189291Z
+classified: false

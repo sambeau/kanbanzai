@@ -1,4 +1,4 @@
-updated_at: 2026-04-25T17:35:02.046859Z
+updated_at: 2026-04-27T02:38:56.403968Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -82073,5 +82073,530 @@ edges:
     - from: PROJECT/design-kbz-cli-and-binary-rename#1.5.5.2
       from_type: section
       to: work/design/my-feature.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution
+      from_type: document
+      to: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1
+      from_type: section
+      to: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1
+      from_type: section
+      to: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.2
+      from_type: section
+      to: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.2
+      from_type: section
+      to: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.2
+      from_type: section
+      to: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1
+      from_type: section
+      to: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1
+      from_type: section
+      to: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1
+      from_type: section
+      to: FEAT-01KQ2E0RB4P8A
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.2.1
+      from_type: section
+      to: FEAT-style
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.2.1
+      from_type: section
+      to: P30-slug
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.2.1
+      from_type: section
+      to: P30-foo
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution#1.1
+      from_type: section
+      to: work/spec/feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing
+      from_type: document
+      to: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1.2
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1.2
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1.2
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1
+      from_type: section
+      to: P34-agent-workflow-ergonomics
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing#1.1
+      from_type: section
+      to: work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim
+      from_type: document
+      to: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1.7
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim#1.8
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession
+      from_type: document
+      to: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.3
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.3
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.3
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.4
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession#1.2
+      from_type: section
+      to: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics
+      from_type: document
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.8
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.8
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1
+      from_type: section
+      to: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.1
+      from_type: section
+      to: FEAT-01KQ2E0RB4P8A
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.1
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.1
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.1
+      from_type: section
+      to: FEAT-01KQ2E0RNY261
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.1
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.1
+      from_type: section
+      to: FEAT-01KQ2E0RKVYQB
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.2
+      from_type: section
+      to: FEAT-01KQ2E0RB4P8A
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.2
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.2
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.2
+      from_type: section
+      to: FEAT-01KQ2E0RNY261
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.2
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.2
+      from_type: section
+      to: FEAT-01KQ2E0RKVYQB
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.3
+      from_type: section
+      to: FEAT-01KQ2E0RB4P8A
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.3
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.3
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.3
+      from_type: section
+      to: FEAT-01KQ2E0RNY261
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.3
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4.1
+      from_type: section
+      to: FEAT-01KQ2E0RB4P8A
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4.2
+      from_type: section
+      to: FEAT-01KQ2E0RFNBWZ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4.3
+      from_type: section
+      to: FEAT-01KQ2E0RHSNP1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4.4
+      from_type: section
+      to: FEAT-01KQ2E0RNY261
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4.5
+      from_type: section
+      to: FEAT-01KQ2E0RR40CD
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1
+      from_type: section
+      to: P34-agent-workflow-ergonomics
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.4.1
+      from_type: section
+      to: P30-foo
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.6
+      from_type: section
+      to: P34-introduced
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.9
+      from_type: section
+      to: P30-handoff-skill-assembly-prompt-hygiene
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.10
+      from_type: section
+      to: P34-introduced
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.2
+      from_type: section
+      to: work/spec/feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.2
+      from_type: section
+      to: work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.2
+      from_type: section
+      to: work/spec/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.2
+      from_type: section
+      to: work/spec/feat-01kq2e0rny261-decompose-paired-test-tasks.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.2
+      from_type: section
+      to: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.3
+      from_type: section
+      to: work/reviews/review-FEAT-01KQ2E0RB4P8A-plan-id-prefix-resolution.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.3
+      from_type: section
+      to: work/reviews/review-FEAT-01KQ2E0RFNBWZ-task-auto-promotion-on-developing.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.3
+      from_type: section
+      to: work/reviews/review-FEAT-01KQ2E0RHSNP1-idempotent-task-claim.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.3
+      from_type: section
+      to: work/reviews/review-FEAT-01KQ2E0RNY261-decompose-paired-test-tasks.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.3
+      from_type: section
+      to: work/reviews/review-FEAT-01KQ2E0RR40CD-decompose-apply-supersession.md
       to_type: document
       edge_type: LINKS_TO

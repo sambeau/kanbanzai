@@ -1,0 +1,90 @@
+document_id: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing
+document_path: work/reviews/review-FEAT-01KQ2E0RFNBWZ-task-auto-promotion-on-developing.md
+content_hash: abdf0bc6a05bce07d8c256cce883f1e09d6dcff956e3c8a46df954f9c29258f1
+indexed_at: 2026-04-27T02:31:33.623998Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Feature Review: FEAT-01KQ2E0RFNBWZ — Task Auto-Promotion on Developing'
+      byte_offset: 0
+      byte_count: 6803
+      word_count: 793
+      content_hash: abdf0bc6a05bce07d8c256cce883f1e09d6dcff956e3c8a46df954f9c29258f1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Review Unit
+          byte_offset: 739
+          byte_count: 369
+          word_count: 23
+          content_hash: fc5c6102f4814044b5a50298c50cbaaaeb361274ba8d9f8f38ef27f1c4ce3cd6
+        - path: "1.2"
+          level: 2
+          title: Dimensions
+          byte_offset: 1108
+          byte_count: 4750
+          word_count: 563
+          content_hash: b28b4491b54787eeccd9b52911ac36290b341f94664470e14af8592dd866d1d4
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'spec_conformance: pass'
+              byte_offset: 1123
+              byte_count: 2256
+              word_count: 267
+              content_hash: e261a8cc7bb7eadf15742d9c88d51af1715b2c8288d9544b4356c461eedad06f
+            - path: 1.2.2
+              level: 3
+              title: 'implementation_quality: pass_with_notes'
+              byte_offset: 3379
+              byte_count: 1504
+              word_count: 200
+              content_hash: 0488c03d63a88fc2bdf353c8750ac73965f801813537254d0ae7e784c04ff405
+            - path: 1.2.3
+              level: 3
+              title: 'test_adequacy: pass'
+              byte_offset: 4883
+              byte_count: 975
+              word_count: 94
+              content_hash: 9e6086919daed157892556d8a591088c45a71eaeaf0d2b319326f2cd747dbf9b
+        - path: "1.3"
+          level: 2
+          title: Finding Summary
+          byte_offset: 5858
+          byte_count: 120
+          word_count: 25
+          content_hash: 02dc10bc277c1338aaf13899f8886dde73288b0d4bc4953d1ae8f0d582b014ae
+        - path: "1.4"
+          level: 2
+          title: Test Results
+          byte_offset: 5978
+          byte_count: 130
+          word_count: 20
+          content_hash: 123e8fdcc25dd717fbd7a63950f1e494e010dd6069647fe02b07f381e6a91d33
+        - path: "1.5"
+          level: 2
+          title: Verdict
+          byte_offset: 6108
+          byte_count: 695
+          word_count: 104
+          content_hash: ad1682bddd37248376964c33d430515d9ad292d783863633aa0750842ae78070
+entity_refs:
+    - entity_id: FEAT-01KQ2E0RFNBWZ
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 18
+    - entity_id: P34-agent-workflow-ergonomics
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 384
+cross_doc_links:
+    - target_path: work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      link_text: work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T02:31:33.954913Z
+classified: false

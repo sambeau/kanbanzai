@@ -1,0 +1,281 @@
+document_id: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics
+document_path: work/reviews/review-P34-agent-workflow-ergonomics.md
+content_hash: 9be03630fec738335b5272cec3f36c73fac9f4ba00727bfce1a6337723fbd7dc
+indexed_at: 2026-04-27T02:38:56.403968Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Plan Review: P34-agent-workflow-ergonomics — Agent Workflow Ergonomics'
+      byte_offset: 0
+      byte_count: 17818
+      word_count: 2281
+      content_hash: 9be03630fec738335b5272cec3f36c73fac9f4ba00727bfce1a6337723fbd7dc
+      children:
+        - path: "1.1"
+          level: 2
+          title: Feature Census
+          byte_offset: 472
+          byte_count: 1490
+          word_count: 154
+          content_hash: d19d0158c56b094886d179c824796d8e625183604757d8bd0be26f7e0897cf1f
+        - path: "1.2"
+          level: 2
+          title: Specification Approval
+          byte_offset: 1962
+          byte_count: 929
+          word_count: 73
+          content_hash: b2d172644e694e5da66c9b09e8b3efe907014a0f43acd98aeeb6c50a8f83eefe
+        - path: "1.3"
+          level: 2
+          title: Feature Review Report Status
+          byte_offset: 2891
+          byte_count: 940
+          word_count: 65
+          content_hash: bbf1ade41000f674da4f8a6afea4828bc2d6b749bb3b76ee2bc5ca0ddf8cbcc2
+        - path: "1.4"
+          level: 2
+          title: Spec Conformance Detail
+          byte_offset: 3831
+          byte_count: 6065
+          word_count: 839
+          content_hash: 632e09fbe6356699c83c3dd7864e7cba8c961af7acc0bb8b8b4c0625adfd9fe1
+          children:
+            - path: 1.4.1
+              level: 3
+              title: FEAT-01KQ2E0RB4P8A — Plan ID Prefix Resolution
+              byte_offset: 4028
+              byte_count: 1322
+              word_count: 183
+              content_hash: 4859a2fc2fee56d64eee6b2e9a13145018d2b87fc790c43326f150d52bac61fc
+            - path: 1.4.2
+              level: 3
+              title: FEAT-01KQ2E0RFNBWZ — Task Auto-Promotion on Developing
+              byte_offset: 5350
+              byte_count: 1016
+              word_count: 143
+              content_hash: 4f0427a405b9b0c157207512b4c71e8ecaab557d20b7ea9d31ce787bf391a30b
+            - path: 1.4.3
+              level: 3
+              title: FEAT-01KQ2E0RHSNP1 — Next Tool UX Improvements
+              byte_offset: 6366
+              byte_count: 1193
+              word_count: 165
+              content_hash: b155cca0e621f35eda849440cf891d05c42666dbc7d8d161e30e3ad428f8e2a0
+            - path: 1.4.4
+              level: 3
+              title: FEAT-01KQ2E0RNY261 — Decompose Paired Test Tasks
+              byte_offset: 7559
+              byte_count: 1137
+              word_count: 160
+              content_hash: e83437db4d2698327f991635a90e2817b881959106ea594937a51baf346af1f5
+            - path: 1.4.5
+              level: 3
+              title: FEAT-01KQ2E0RR40CD — Decompose Apply Supersession
+              byte_offset: 8696
+              byte_count: 1200
+              word_count: 161
+              content_hash: e72435bf5a25a3ff27340299ab0510f6b60fa2e182b44b3e7614f6fd7829345d
+        - path: "1.5"
+          level: 2
+          title: Documentation Currency
+          byte_offset: 9896
+          byte_count: 945
+          word_count: 133
+          content_hash: b87913e208ce731573be6bb8a0072a189d8c6e86dd9dcc906b399499405d9f27
+        - path: "1.6"
+          level: 2
+          title: Cross-Cutting Checks
+          byte_offset: 10841
+          byte_count: 1874
+          word_count: 268
+          content_hash: 67de7e6a85ccb9cf4fcb7b97f4a371cd0a49ed75bd5831f920e55976671e7139
+        - path: "1.7"
+          level: 2
+          title: Conformance Gaps
+          byte_offset: 12715
+          byte_count: 880
+          word_count: 126
+          content_hash: a4b8aa427ff644682554da7c290e5cd0046860f0ac90f5d9c0bc0bd129857894
+        - path: "1.8"
+          level: 2
+          title: Retrospective Observations
+          byte_offset: 13595
+          byte_count: 2334
+          word_count: 315
+          content_hash: 64f6b7cccd85ada34b9a86a10d4648a6eae12c680e21694cbcd8db09ca8470b0
+          children:
+            - path: 1.8.1
+              level: 3
+              title: What Worked Well
+              byte_offset: 13626
+              byte_count: 1317
+              word_count: 173
+              content_hash: 253472fa950965222ba5cac60ad769cc33e1d43ea59bc6d7dd6a88ea89bf44bc
+            - path: 1.8.2
+              level: 3
+              title: Areas for Improvement
+              byte_offset: 14943
+              byte_count: 986
+              word_count: 139
+              content_hash: a89d3935c1e23909858c759dfb5d56d41e2e417b0d4bc85aa2ec98f38fa6e111
+        - path: "1.9"
+          level: 2
+          title: Plan Summary
+          byte_offset: 15929
+          byte_count: 1226
+          word_count: 162
+          content_hash: c41cf6772b991e5d7f993f44b29ecb368bfc77aa8a0fb55f20d8d350694ea059
+        - path: "1.10"
+          level: 2
+          title: Verdict
+          byte_offset: 17155
+          byte_count: 663
+          word_count: 109
+          content_hash: 08e0344c53a7d5bf853b33bb854a3f429a7829ecf54e5940667febc092706511
+entity_refs:
+    - entity_id: FEAT-01KQ2E0RB4P8A
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 749
+    - entity_id: FEAT-01KQ2E0RFNBWZ
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 878
+    - entity_id: FEAT-01KQ2E0RHSNP1
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1007
+    - entity_id: FEAT-01KQ2E0RNY261
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1136
+    - entity_id: FEAT-01KQ2E0RR40CD
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1265
+    - entity_id: FEAT-01KQ2E0RKVYQB
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1394
+    - entity_id: FEAT-01KQ2E0RB4P8A
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 2201
+    - entity_id: FEAT-01KQ2E0RFNBWZ
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 2306
+    - entity_id: FEAT-01KQ2E0RHSNP1
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 2415
+    - entity_id: FEAT-01KQ2E0RNY261
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 2520
+    - entity_id: FEAT-01KQ2E0RR40CD
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 2625
+    - entity_id: FEAT-01KQ2E0RKVYQB
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 2730
+    - entity_id: FEAT-01KQ2E0RB4P8A
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 3166
+    - entity_id: FEAT-01KQ2E0RFNBWZ
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 3286
+    - entity_id: FEAT-01KQ2E0RHSNP1
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 3406
+    - entity_id: FEAT-01KQ2E0RNY261
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 3526
+    - entity_id: FEAT-01KQ2E0RR40CD
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 3646
+    - entity_id: FEAT-01KQ2E0RB4P8A
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 4032
+    - entity_id: FEAT-01KQ2E0RFNBWZ
+      entity_type: feature
+      section_path: 1.4.2
+      byte_offset: 5354
+    - entity_id: FEAT-01KQ2E0RHSNP1
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 6370
+    - entity_id: FEAT-01KQ2E0RNY261
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 7563
+    - entity_id: FEAT-01KQ2E0RR40CD
+      entity_type: feature
+      section_path: 1.4.5
+      byte_offset: 8700
+    - entity_id: P34-agent-workflow-ergonomics
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 15
+    - entity_id: P30-foo
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 4846
+    - entity_id: P34-introduced
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 12413
+    - entity_id: P30-handoff-skill-assembly-prompt-hygiene
+      entity_type: plan
+      section_path: "1.9"
+      byte_offset: 16243
+    - entity_id: P34-introduced
+      entity_type: plan
+      section_path: "1.10"
+      byte_offset: 17467
+cross_doc_links:
+    - target_path: work/spec/feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      link_text: work/spec/feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      section_path: "1.2"
+    - target_path: work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      link_text: work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      section_path: "1.2"
+    - target_path: work/spec/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+      link_text: work/spec/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+      section_path: "1.2"
+    - target_path: work/spec/feat-01kq2e0rny261-decompose-paired-test-tasks.md
+      link_text: work/spec/feat-01kq2e0rny261-decompose-paired-test-tasks.md
+      section_path: "1.2"
+    - target_path: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      link_text: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      section_path: "1.2"
+    - target_path: work/reviews/review-FEAT-01KQ2E0RB4P8A-plan-id-prefix-resolution.md
+      link_text: work/reviews/review-FEAT-01KQ2E0RB4P8A-plan-id-prefix-resolution.md
+      section_path: "1.3"
+    - target_path: work/reviews/review-FEAT-01KQ2E0RFNBWZ-task-auto-promotion-on-developing.md
+      link_text: work/reviews/review-FEAT-01KQ2E0RFNBWZ-task-auto-promotion-on-developing.md
+      section_path: "1.3"
+    - target_path: work/reviews/review-FEAT-01KQ2E0RHSNP1-idempotent-task-claim.md
+      link_text: work/reviews/review-FEAT-01KQ2E0RHSNP1-idempotent-task-claim.md
+      section_path: "1.3"
+    - target_path: work/reviews/review-FEAT-01KQ2E0RNY261-decompose-paired-test-tasks.md
+      link_text: work/reviews/review-FEAT-01KQ2E0RNY261-decompose-paired-test-tasks.md
+      section_path: "1.3"
+    - target_path: work/reviews/review-FEAT-01KQ2E0RR40CD-decompose-apply-supersession.md
+      link_text: work/reviews/review-FEAT-01KQ2E0RR40CD-decompose-apply-supersession.md
+      section_path: "1.3"
+conventional_roles:
+    - section_path: "1.9"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T02:38:56.897393Z
+classified: false

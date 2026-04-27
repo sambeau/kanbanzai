@@ -1,0 +1,92 @@
+document_id: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim
+document_path: work/reviews/review-FEAT-01KQ2E0RHSNP1-idempotent-task-claim.md
+content_hash: 064edc0a296985bf1246f6e1512f2fb0980bfe89292ff6295931745a3ee25d47
+indexed_at: 2026-04-27T02:31:34.706388Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: FEAT-01KQ2E0RHSNP1 — Next Tool UX Improvements'
+      byte_offset: 0
+      byte_count: 8170
+      word_count: 947
+      content_hash: 064edc0a296985bf1246f6e1512f2fb0980bfe89292ff6295931745a3ee25d47
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 658
+          byte_count: 618
+          word_count: 83
+          content_hash: c6db7bf8081381037217468fc6829f7bbdf56de58674d2c43c4b8f5fa60aa354
+        - path: "1.2"
+          level: 2
+          title: Review Unit
+          byte_offset: 1276
+          byte_count: 429
+          word_count: 33
+          content_hash: 2de05dfcdc3bc5fc8410f258efb2bae903d56dfe6fec788cd878ce71f5007356
+        - path: "1.3"
+          level: 2
+          title: Spec Conformance
+          byte_offset: 1705
+          byte_count: 2279
+          word_count: 256
+          content_hash: a1cd6c7e193fc7fa91b48fd7881a1af3eb2f56a771f48b7c4f5468fe4f5b906a
+        - path: "1.4"
+          level: 2
+          title: Implementation Quality
+          byte_offset: 3984
+          byte_count: 1710
+          word_count: 222
+          content_hash: 7a40f8426c2f4276ffee6a64f1e8ea20d590724baa79c7e588c932401de06885
+        - path: "1.5"
+          level: 2
+          title: Test Adequacy
+          byte_offset: 5694
+          byte_count: 1000
+          word_count: 135
+          content_hash: c703da22a292b04e15aa0eae325c58a2c08551fdd7607a5c148dd9d3ad00cef7
+        - path: "1.6"
+          level: 2
+          title: Finding Summary
+          byte_offset: 6694
+          byte_count: 357
+          word_count: 33
+          content_hash: 578b9e9d61353fa278abc4f422e71d2644d35d79462f142da811963ce04a4733
+        - path: "1.7"
+          level: 2
+          title: Test Run
+          byte_offset: 7051
+          byte_count: 384
+          word_count: 40
+          content_hash: 2de8532170ddaad84d7a9174c445e9a50aa84af414904ab84bd3501612eb5615
+        - path: "1.8"
+          level: 2
+          title: Verdict
+          byte_offset: 7435
+          byte_count: 735
+          word_count: 93
+          content_hash: b525f1f9b473ddb1ecc7b8bf1d435225fa8ba54ede96c54a029631a1c5eade39
+entity_refs:
+    - entity_id: FEAT-01KQ2E0RHSNP1
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 10
+    - entity_id: FEAT-01KQ2E0RHSNP1
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 7082
+    - entity_id: FEAT-01KQ2E0RHSNP1
+      entity_type: feature
+      section_path: "1.8"
+      byte_offset: 7851
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T02:31:35.033589Z
+classified: false

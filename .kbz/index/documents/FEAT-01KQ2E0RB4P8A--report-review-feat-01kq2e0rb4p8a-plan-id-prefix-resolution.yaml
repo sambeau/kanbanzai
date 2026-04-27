@@ -1,0 +1,91 @@
+document_id: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution
+document_path: work/reviews/review-FEAT-01KQ2E0RB4P8A-plan-id-prefix-resolution.md
+content_hash: 0e9009c4ef16bbdc31ad09f28804f400430706723ce1e8a76195fc64fbaceea6
+indexed_at: 2026-04-27T02:31:32.298634Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: FEAT-01KQ2E0RB4P8A — Plan ID Prefix Resolution'
+      byte_offset: 0
+      byte_count: 6968
+      word_count: 792
+      content_hash: 0e9009c4ef16bbdc31ad09f28804f400430706723ce1e8a76195fc64fbaceea6
+      children:
+        - path: "1.1"
+          level: 2
+          title: Review Unit
+          byte_offset: 602
+          byte_count: 709
+          word_count: 63
+          content_hash: 0a73666c54276d9a4010f7bf507b357987021e7c471105e4c9157354a4e63e6d
+        - path: "1.2"
+          level: 2
+          title: Dimensions
+          byte_offset: 1311
+          byte_count: 4744
+          word_count: 560
+          content_hash: e8e1613cd2cd73d5d80f44179912a8bc8b994b990b04ae6b50a9dfc605fabbab
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'spec_conformance: pass'
+              byte_offset: 1326
+              byte_count: 1814
+              word_count: 195
+              content_hash: 3702441f7962af6a7d6879aeb3b9d485becc8157c47416d11b8321c7223cd547
+            - path: 1.2.2
+              level: 3
+              title: 'implementation_quality: pass'
+              byte_offset: 3140
+              byte_count: 1943
+              word_count: 244
+              content_hash: 12470effbe674d99f0ff70c9752119c2146988663198e2456bade61188f051a9
+            - path: 1.2.3
+              level: 3
+              title: 'test_adequacy: pass'
+              byte_offset: 5083
+              byte_count: 972
+              word_count: 119
+              content_hash: acb55f1b8bb8bf947b1dd7a3e284363d2ab7e74078ae5ee6ba30d7fae301816a
+        - path: "1.3"
+          level: 2
+          title: Finding Summary
+          byte_offset: 6055
+          byte_count: 463
+          word_count: 60
+          content_hash: 0fb60ae0484bc03b9c76c10b944345681f1709f717668a5f3dceb005f9bbc29d
+        - path: "1.4"
+          level: 2
+          title: Overall Verdict
+          byte_offset: 6518
+          byte_count: 450
+          word_count: 57
+          content_hash: 0cdcbc89dba1399f1894be940ec95515632166e9cf87b5d139a1a47f1050ad9f
+entity_refs:
+    - entity_id: FEAT-01KQ2E0RB4P8A
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 10
+    - entity_id: FEAT-style
+      entity_type: feature
+      section_path: 1.2.1
+      byte_offset: 2264
+    - entity_id: P30-slug
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 2098
+    - entity_id: P30-foo
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 2594
+cross_doc_links:
+    - target_path: work/spec/feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      link_text: work/spec/feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T02:31:32.777664Z
+classified: false
