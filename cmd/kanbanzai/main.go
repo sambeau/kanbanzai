@@ -112,6 +112,8 @@ func run(args []string, deps dependencies) error {
 		return runDoc(args[1:], deps)
 	case "delete":
 		return runDelete(args[1:], deps)
+	case "move":
+		return runMove(args[1:], deps)
 	case "health":
 		return runHealth(deps)
 
@@ -321,6 +323,7 @@ Core commands:
   handoff <task-id>          Print a sub-agent prompt
   entity <action> [opts]     Create, get, list, or transition entities
   doc <action> [opts]        Register, approve, or list documents
+  move <src> <plan-id>       Move a document file to a plan's canonical location
   health                     Run a health check
 
 Feature group commands:

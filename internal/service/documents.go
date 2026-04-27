@@ -1399,6 +1399,26 @@ func (s *DocumentService) DeleteDocument(input DeleteDocumentInput) (DocumentRes
 // inferDocTypeFromPath infers the document type from the path's directory
 // component. Returns an empty string if no type can be inferred, in which
 // case the caller should keep the existing type.
+// documentToResult converts a model.DocumentRecord to a DocumentResult.
+// The RecordPath field is not set here; callers must set it after the fact.
+func documentToResult(doc model.DocumentRecord) DocumentResult {
+	return DocumentResult{
+		ID:           doc.ID,
+		Path:         doc.Path,
+		Type:         string(doc.Type),
+		Title:        doc.Title,
+		Status:       string(doc.Status),
+		Owner:        doc.Owner,
+		ContentHash:  doc.ContentHash,
+		Created:      doc.Created,
+		Updated:      doc.Updated,
+		ApprovedBy:   doc.ApprovedBy,
+		ApprovedAt:   doc.ApprovedAt,
+		Supersedes:   doc.Supersedes,
+		SupersededBy: doc.SupersededBy,
+	}
+}
+
 func inferDocTypeFromPath(path string) string {
 	lower := strings.ToLower(filepath.ToSlash(path))
 	switch {
