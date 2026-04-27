@@ -5,6 +5,7 @@ parent: P37-file-names-and-actions
 status: dev-planning
 summary: "New CLI/MCP command: kbz delete <file> deletes a work file and its document record using git rm. --force required for approved documents. Reports what was deleted."
 spec: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete
+dev_plan: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete
 created: "2026-04-27T13:35:26Z"
 created_by: sambeau
 overrides:
