@@ -4,3 +4,9 @@ slug: tests-all-acceptance-criteria
 name: Tests covering all acceptance criteria
 summary: "Write tests for all 20 ACs: unit tests (AC-001 to AC-006) for model and CreateFeature, integration tests (AC-007 to AC-014) for resolution and CLI/MCP output, migration tests (AC-015, AC-016, AC-020) for backfill correctness, backward-compat tests (AC-018, AC-019), and a performance test (AC-017, 1000-feature fixture, 100ms SLA)."
 status: queued
+depends_on:
+  - TASK-01KQ7NBP4MMWG
+  - TASK-01KQ7NBP7FVJD
+  - TASK-01KQ7NBP9M6M8
+  - TASK-01KQ7NBPBZ6PP
+  - TASK-01KQ7NBPEHHJM

@@ -4,3 +4,5 @@ slug: update-cli-mcp-output
 name: Update CLI output and MCP responses
 summary: "CLI: update printGetResult, printListResults, printCreateResult, printStatusUpdateResult to show display_id as primary identifier when present in state map. MCP: verify entity tool response builders pass display_id through from the state map (should be automatic once T1 is done)."
 status: queued
+depends_on:
+  - TASK-01KQ7NBP9M6M8

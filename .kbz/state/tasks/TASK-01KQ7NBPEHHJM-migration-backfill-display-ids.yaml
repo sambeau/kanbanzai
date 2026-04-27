@@ -4,3 +4,6 @@ slug: migration-backfill-display-ids
 name: Migration backfill display_ids
 summary: "Implement MigrateDisplayIDs() in internal/service/migration.go. For each plan: scan features with no display_id, sort by created timestamp, assign P{n}-F{seq} in order, write feature files, then write plan counter to max_seq+1. Idempotent. Wire into server startup migration runner."
 status: queued
+depends_on:
+  - TASK-01KQ7NBP4MMWG
+  - TASK-01KQ7NBP7FVJD

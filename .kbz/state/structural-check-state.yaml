@@ -6,7 +6,7 @@ entries:
     acceptance_criteria/specification:
         mode: warning
         consecutive_clean: 0
-        false_positive_count: 6
+        false_positive_count: 7
     cross_reference/design:
         mode: warning
         consecutive_clean: 0
@@ -14,7 +14,7 @@ entries:
     cross_reference/specification:
         mode: warning
         consecutive_clean: 0
-        false_positive_count: 6
+        false_positive_count: 7
     required_sections/design:
         mode: warning
         consecutive_clean: 0
@@ -22,4 +22,4 @@ entries:
     required_sections/specification:
         mode: warning
         consecutive_clean: 0
-        false_positive_count: 7
+        false_positive_count: 8
