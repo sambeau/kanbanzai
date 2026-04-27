@@ -247,12 +247,24 @@ func runEntityTransition(args []string, deps dependencies) error {
 
 // ─── Shared print helpers ────────────────────────────────────────────────────
 
+// featureDisplayLabel returns the P{n}-F{m} display_id for features when
+// available, otherwise falls back to the TSID break-hyphen form.
+func featureDisplayLabel(entityType string, state map[string]any, canonicalID string) string {
+	if entityType == "feature" {
+		if did, ok := state["display_id"].(string); ok && did != "" {
+			return did
+		}
+	}
+	return id.FormatFullDisplay(canonicalID)
+}
+
 func printCreateResult(w io.Writer, result service.CreateResult) error {
+	label := featureDisplayLabel(result.Type, result.State, result.ID)
 	_, err := fmt.Fprintf(
 		w,
 		"created %s\nid: %s\nslug: %s\npath: %s\n",
 		result.Type,
-		id.FormatFullDisplay(result.ID),
+		label,
 		result.Slug,
 		result.Path,
 	)
@@ -260,11 +272,12 @@ func printCreateResult(w io.Writer, result service.CreateResult) error {
 }
 
 func printGetResult(w io.Writer, result service.GetResult) error {
+	label := featureDisplayLabel(result.Type, result.State, result.ID)
 	_, err := fmt.Fprintf(
 		w,
 		"type: %s\nid: %s\nslug: %s\npath: %s\nstatus: %v\n",
 		result.Type,
-		id.FormatFullDisplay(result.ID),
+		label,
 		result.Slug,
 		result.Path,
 		result.State["status"],
@@ -283,10 +296,11 @@ func printListResults(w io.Writer, entityType string, svc entityService) error {
 	}
 
 	for _, result := range results {
+		label := featureDisplayLabel(entityType, result.State, result.ID)
 		if _, err := fmt.Fprintf(
 			w,
 			"%s\t%s\t%s\t%v\n",
-			id.FormatFullDisplay(result.ID),
+			label,
 			result.Slug,
 			result.Path,
 			result.State["status"],
@@ -299,11 +313,12 @@ func printListResults(w io.Writer, entityType string, svc entityService) error {
 }
 
 func printStatusUpdateResult(w io.Writer, result service.GetResult) error {
+	label := featureDisplayLabel(result.Type, result.State, result.ID)
 	_, err := fmt.Fprintf(
 		w,
 		"updated %s\nid: %s\nslug: %s\npath: %s\nstatus: %v\n",
 		result.Type,
-		id.FormatFullDisplay(result.ID),
+		label,
 		result.Slug,
 		result.Path,
 		result.State["status"],
