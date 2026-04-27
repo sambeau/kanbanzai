@@ -3,10 +3,16 @@ parent_feature: FEAT-01KQ7JDSVMP4E
 slug: add-display-id-resolution
 name: "Add P{n}-F{m} input resolution"
 summary: "Add IsFeatureDisplayID() and ResolveFeatureDisplayID() to EntityService. Hook resolution into Get, UpdateStatus, UpdateEntity (before ResolvePrefix calls) and into List for ID filters. Add display_id index to entity cache for warm-path performance. Case-insensitive matching."
-status: active
+status: done
 depends_on:
   - TASK-01KQ7NBP4MMWG
+files_planned:
+  - internal/service/entities.go
+  - internal/cache/cache.go
+completed: "2026-04-27T16:13:44Z"
 claimed_at: "2026-04-27T15:23:17Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-27T15:23:17Z"
 dispatched_by: sambeau
+completion_summary: "Added featureDisplayIDPattern regexp, IsFeatureDisplayID helper, ResolveFeatureDisplayID method (cache-fast-path + filesystem-scan fallback), and display-ID resolution hooks at the top of Get(), UpdateStatus(), and UpdateEntity(). Also added LookupByDisplayID to internal/cache/cache.go for O(1) SQLite lookup."
+verification: "go test -race -run TestDisplayID_AC007,AC008,AC009,AC010,AC011,AC012,AC018,AC019 ./internal/service/ — all pass"

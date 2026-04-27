@@ -3,10 +3,15 @@ parent_feature: FEAT-01KQ7JDSVMP4E
 slug: tests-all-acceptance-criteria
 name: Tests covering all acceptance criteria
 summary: "Write tests for all 20 ACs: unit tests (AC-001 to AC-006) for model and CreateFeature, integration tests (AC-007 to AC-014) for resolution and CLI/MCP output, migration tests (AC-015, AC-016, AC-020) for backfill correctness, backward-compat tests (AC-018, AC-019), and a performance test (AC-017, 1000-feature fixture, 100ms SLA)."
-status: queued
+status: done
 depends_on:
   - TASK-01KQ7NBP4MMWG
   - TASK-01KQ7NBP7FVJD
   - TASK-01KQ7NBP9M6M8
   - TASK-01KQ7NBPBZ6PP
   - TASK-01KQ7NBPEHHJM
+files_planned:
+  - internal/service/display_id_test.go
+completed: "2026-04-27T16:13:44Z"
+completion_summary: "Created internal/service/display_id_test.go with 20 tests covering all ACs: AC-001–AC-006 (plan/feature creation + counter), AC-007–AC-012 (display ID resolution in Get/UpdateEntity/UpdateStatus/List), AC-013–AC-014 (MCP state map + IsFeatureDisplayID), AC-015–AC-016+AC-020 (migration backfill), AC-017 (1000-feature performance SLA ≤100ms), AC-018–AC-019 (backward compat with canonical TSID and break-hyphen)."
+verification: go test -race -run TestDisplayID ./internal/service/ — all 20 pass

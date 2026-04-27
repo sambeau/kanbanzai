@@ -3,6 +3,12 @@ parent_feature: FEAT-01KQ7JDSVMP4E
 slug: update-cli-mcp-output
 name: Update CLI output and MCP responses
 summary: "CLI: update printGetResult, printListResults, printCreateResult, printStatusUpdateResult to show display_id as primary identifier when present in state map. MCP: verify entity tool response builders pass display_id through from the state map (should be automatic once T1 is done)."
-status: queued
+status: done
 depends_on:
   - TASK-01KQ7NBP9M6M8
+files_planned:
+  - cmd/kanbanzai/entity_cmd.go
+  - internal/mcp/entity_tool.go
+completed: "2026-04-27T16:13:44Z"
+completion_summary: "Added featureDisplayLabel() helper to entity_cmd.go that returns the P{n}-F{m} display_id when available, falling back to TSID break-hyphen form. Updated printCreateResult, printGetResult, printListResults, and printStatusUpdateResult to use it. In mcp/entity_tool.go, the entityFullRecord function now prefers the feature's display_id from state when it is a valid P{n}-F{m} pattern."
+verification: go build ./... passes; TestDisplayID_AC013 confirms display_id is in MCP state map

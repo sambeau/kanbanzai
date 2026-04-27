@@ -3,7 +3,13 @@ parent_feature: FEAT-01KQ7JDSVMP4E
 slug: migration-backfill-display-ids
 name: Migration backfill display_ids
 summary: "Implement MigrateDisplayIDs() in internal/service/migration.go. For each plan: scan features with no display_id, sort by created timestamp, assign P{n}-F{seq} in order, write feature files, then write plan counter to max_seq+1. Idempotent. Wire into server startup migration runner."
-status: ready
+status: done
 depends_on:
   - TASK-01KQ7NBP4MMWG
   - TASK-01KQ7NBP7FVJD
+files_planned:
+  - internal/service/migration.go
+  - internal/mcp/server.go
+completed: "2026-04-27T16:13:44Z"
+completion_summary: "Added MigrateDisplayIDs() in internal/service/migration.go. Lists all plans, groups un-backfilled features by parent plan, sorts by created timestamp, assigns P{n}-F{m} IDs sequentially, writes features, then updates plan.next_feature_seq. Registered as a non-fatal startup migration in internal/mcp/server.go."
+verification: "TestDisplayID_AC015, AC016, AC020 all pass"
