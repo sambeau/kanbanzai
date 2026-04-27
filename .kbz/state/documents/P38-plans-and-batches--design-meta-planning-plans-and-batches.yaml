@@ -2,9 +2,11 @@ id: P38-plans-and-batches/design-meta-planning-plans-and-batches
 path: work/design/meta-planning-plans-and-batches.md
 type: design
 title: "Meta-Planning: Plans and Batches — Design"
-status: draft
+status: approved
 owner: P38-plans-and-batches
-content_hash: eee3a0cb3272dc547abe0b7cf1e816770a1baccb89dbf19b3e6416a84d458c14
+approved_by: sambeau
+approved_at: "2026-04-27T17:09:28Z"
+content_hash: 87004bff82dca2528ef1198beb13088e7c7c86af9100bd691eb06452a8e63df9
 created: "2026-04-27T17:07:51Z"
 created_by: sambeau
-updated: "2026-04-27T17:07:51Z"
+updated: "2026-04-27T17:09:28Z"
